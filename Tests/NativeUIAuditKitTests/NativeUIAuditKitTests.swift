@@ -98,4 +98,38 @@ struct NativeUIAuditKitTests {
         #expect(decoded.visibleText == "Continue")
         #expect(decoded.confidenceSource == NativeUIConfidenceSource.pixelModel)
     }
+
+    @Test("All 41 element type rawValues survive Codable round-trip")
+    func allElementTypesRoundTrip() throws {
+        #expect(NativeUIElementType.allCases.count == 41)
+        for type_ in NativeUIElementType.allCases {
+            let encoded = try JSONEncoder().encode(type_)
+            let decoded = try JSONDecoder().decode(NativeUIElementType.self, from: encoded)
+            #expect(decoded == type_, "rawValue round-trip failed for \(type_.rawValue)")
+            // rawValue must not have changed from the canonical string
+            let rawString = String(data: encoded, encoding: .utf8)!
+                .trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+            #expect(rawString == type_.rawValue)
+        }
+    }
+
+    @Test("NativeUIElementState optional fields round-trip when set")
+    func newStateFieldsRoundTrip() throws {
+        let state = NativeUIElementState(isFocused: true, isLoading: true, isSkeleton: true)
+        let data = try JSONEncoder().encode(state)
+        let decoded = try JSONDecoder().decode(NativeUIElementState.self, from: data)
+        #expect(decoded.isLoading == true)
+        #expect(decoded.isSkeleton == true)
+        #expect(decoded.isFocused == true)
+    }
+
+    @Test("NativeUIElementState nil optional fields are omitted from JSON")
+    func nilStateFieldsOmittedFromJSON() throws {
+        let state = NativeUIElementState()
+        let data = try JSONEncoder().encode(state)
+        let json = String(data: data, encoding: .utf8)!
+        #expect(!json.contains("isLoading"), "nil isLoading must not appear in JSON")
+        #expect(!json.contains("isSkeleton"), "nil isSkeleton must not appear in JSON")
+        #expect(!json.contains("isFocused"), "nil isFocused must not appear in JSON")
+    }
 }

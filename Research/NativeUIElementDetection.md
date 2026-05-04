@@ -129,7 +129,7 @@ CLI extension for `screenaudit validate`:
 
 ---
 
-## 5. Element Taxonomy v0
+## 5. Element Taxonomy v1
 
 ### 5.1 Design Principle: Semantic Roles
 
@@ -137,21 +137,61 @@ The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit cla
 
 - `primaryButton` survives iOS redesigns; `UIButton.ButtonType.system` does not
 - `navigationBar` survives SwiftUI-vs-UIKit rendering changes; `UINavigationBar` does not
-- Role strings are the `rawValue` of `NativeUIElementType` in the package — any renaming is a major version bump
+- Role strings are the `rawValue` of `NativeUIElementType` in the package — any renaming is a major version bump; adding new cases is a minor version bump
 
-### 5.2 Initial Class Set (≤20 for v1)
+### 5.2 Full 41-Class Taxonomy (Schema v1.0)
 
-**Chrome:**
-`statusBar` · `navigationBar` · `tabBar` · `toolbar` · `sidebar` · `homeIndicator` · `dynamicIsland`
+*Frozen with annotation.schema.json v1.0. `rawValue` strings are stable public API.*
 
-**Controls:**
-`primaryButton` · `secondaryButton` · `destructiveButton` · `cancelAction` · `textField` · `secureField` · `toggle` · `slider` · `segmentedControl` · `picker` · `stepperControl` · `searchField`
-
-**Containers:**
-`alert` · `actionSheet` · `sheet` · `popover` · `listRow` · `collectionItem`
-
-**Special:**
-`webContent` (WKWebView with native-like controls) · `unknown`
+| Class | rawValue | Description | Platform scope |
+|---|---|---|---|
+| **Chrome** | | | |
+| `statusBar` | `"statusBar"` | System status bar (time, battery, signal) | All |
+| `navigationBar` | `"navigationBar"` | In-app navigation bar (title, back button) | All |
+| `tabBar` | `"tabBar"` | Bottom tab bar (iOS) / top tab bar (tvOS) | All |
+| `toolbar` | `"toolbar"` | Bottom toolbar (iOS) / NSToolbar (macOS) | All |
+| `sidebar` | `"sidebar"` | Split-view sidebar panel | iPadOS, macOS |
+| `homeIndicator` | `"homeIndicator"` | Home indicator pill (~134×5pt on iPhone) | iOS only |
+| `dynamicIsland` | `"dynamicIsland"` | Dynamic Island pill (iPhone 14 Pro+) | iOS only |
+| **Controls** | | | |
+| `primaryButton` | `"primaryButton"` | Primary call-to-action button | All |
+| `secondaryButton` | `"secondaryButton"` | Secondary / outline / ghost button | All |
+| `destructiveButton` | `"destructiveButton"` | Destructive-style button (red tint) | All |
+| `cancelAction` | `"cancelAction"` | Cancel button or link | All |
+| `textField` | `"textField"` | Single-line text input | All |
+| `secureField` | `"secureField"` | Password / secure text input | All |
+| `toggle` | `"toggle"` | UISwitch / SwiftUI Toggle | All |
+| `slider` | `"slider"` | UISlider / SwiftUI Slider | All |
+| `segmentedControl` | `"segmentedControl"` | UISegmentedControl / Picker(.segmented) | All |
+| `picker` | `"picker"` | UIPickerView / date picker / wheel picker | All |
+| `stepperControl` | `"stepperControl"` | UIStepper / SwiftUI Stepper | All |
+| `searchField` | `"searchField"` | UISearchController / SwiftUI searchable | All |
+| `menuButton` | `"menuButton"` | UIButton with .menu / SwiftUI Menu (pull-down trigger) | iOS, iPadOS, macOS |
+| `colorWell` | `"colorWell"` | UIColorWell / SwiftUI ColorPicker | iPadOS, macOS (rare iOS) |
+| **Content** | | | |
+| `label` | `"label"` | UILabel / SwiftUI Text (standalone, non-interactive) | All |
+| `imageView` | `"imageView"` | UIImageView / SwiftUI Image (standalone image/media) | All |
+| `link` | `"link"` | Tappable URL link within text | All |
+| `mapView` | `"mapView"` | MKMapView embedded in a screen | iOS, iPadOS, macOS |
+| **Indicators** | | | |
+| `activityIndicator` | `"activityIndicator"` | Spinning progress indicator (UIActivityIndicatorView) | All |
+| `progressView` | `"progressView"` | Linear progress bar (UIProgressView) | All |
+| `pageControl` | `"pageControl"` | UIPageControl (carousel/pager dots) | iOS, iPadOS |
+| `scrollIndicator` | `"scrollIndicator"` | Scroll position indicator bar (vertical/horizontal) | All |
+| `refreshControl` | `"refreshControl"` | Pull-to-refresh spinner in list header | iOS, iPadOS |
+| **Containers** | | | |
+| `alert` | `"alert"` | UIAlertController (.alert) / SwiftUI Alert | All |
+| `actionSheet` | `"actionSheet"` | UIAlertController (.actionSheet) / SwiftUI confirmationDialog | iOS, iPadOS |
+| `sheet` | `"sheet"` | Modal sheet (bottom on iOS, centered on macOS) | All |
+| `popover` | `"popover"` | UIPopoverController / SwiftUI popover | iPadOS, macOS |
+| `listRow` | `"listRow"` | Individual row in a UITableView / SwiftUI List | All |
+| `collectionItem` | `"collectionItem"` | Cell in a UICollectionView / LazyVGrid / shelf | All |
+| `disclosureGroup` | `"disclosureGroup"` | SwiftUI DisclosureGroup / UIKit disclosure cell | All |
+| `tooltip` | `"tooltip"` | Pointer-hover tooltip (iPadOS / macOS) | iPadOS, macOS |
+| `contextMenu` | `"contextMenu"` | UIContextMenuInteraction preview + action list | iOS, iPadOS, macOS |
+| **Special** | | | |
+| `webContent` | `"webContent"` | WKWebView with native-like controls | All |
+| `unknown` | `"unknown"` | Element that looks native but cannot be confidently classed | All |
 
 ### 5.3 Secondary Labels (Post-Processing, Not Detector Classes)
 

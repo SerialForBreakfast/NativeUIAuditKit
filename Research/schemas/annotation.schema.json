@@ -1,0 +1,253 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/josephmccraw/NativeUIAuditKit/schemas/annotation.schema.json",
+  "title": "NativeUIAuditKit Annotation",
+  "description": "Schema v1.0 — a single annotation file paired 1:1 with a generator-produced PNG. Stable API: elementType rawValues and top-level field names are frozen. Adding fields is a minor version bump; removing or renaming is a major version bump.",
+  "type": "object",
+  "required": ["schemaVersion", "imageSHA256", "image", "generatorProfile", "elements"],
+  "additionalProperties": false,
+  "properties": {
+
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version. Frozen at 1.0 when this file was tagged."
+    },
+
+    "imageSHA256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hex digest of the paired PNG file. If the PNG is regenerated this checksum changes and the annotation is invalidated."
+    },
+
+    "image": {
+      "type": "object",
+      "description": "Capture-time metadata for the paired screenshot.",
+      "required": [
+        "fileName", "pixelWidth", "pixelHeight", "scale",
+        "platform", "osVersion", "deviceName", "interfaceIdiom",
+        "orientation", "colorScheme", "dynamicTypeSize", "locale",
+        "layoutDirection", "safeAreaInsets",
+        "reduceTransparency", "increaseContrast", "boldText",
+        "buttonShapes", "onOffLabels", "smartInvert"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fileName":        { "type": "string" },
+        "pixelWidth":      { "type": "integer", "minimum": 1 },
+        "pixelHeight":     { "type": "integer", "minimum": 1 },
+        "scale":           { "type": "integer", "enum": [2, 3] },
+        "platform":        { "type": "string", "enum": ["iOS", "iPadOS", "tvOS", "macOS"] },
+        "osVersion":       { "type": "string" },
+        "deviceName":      { "type": "string" },
+        "interfaceIdiom":  { "type": "string", "enum": ["phone", "pad", "tv", "mac"] },
+        "orientation":     { "type": "string", "enum": ["portrait", "landscape"] },
+        "colorScheme":     { "type": "string", "enum": ["light", "dark"] },
+        "dynamicTypeSize": {
+          "type": "string",
+          "enum": [
+            "xSmall", "small", "medium", "large", "xLarge", "xxLarge", "xxxLarge",
+            "accessibilityMedium", "accessibilityLarge", "accessibilityExtraLarge",
+            "accessibilityExtraExtraLarge", "accessibilityExtraExtraExtraLarge"
+          ]
+        },
+        "locale":          { "type": "string" },
+        "layoutDirection": { "type": "string", "enum": ["ltr", "rtl"] },
+        "safeAreaInsets": {
+          "type": "object",
+          "required": ["top", "left", "bottom", "right"],
+          "additionalProperties": false,
+          "properties": {
+            "top":    { "type": "number" },
+            "left":   { "type": "number" },
+            "bottom": { "type": "number" },
+            "right":  { "type": "number" }
+          }
+        },
+        "reduceTransparency": { "type": "boolean" },
+        "increaseContrast":   { "type": "boolean" },
+        "boldText":           { "type": "boolean" },
+        "buttonShapes":       { "type": "boolean" },
+        "onOffLabels":        { "type": "boolean" },
+        "smartInvert":        { "type": "boolean" }
+      }
+    },
+
+    "generatorProfile": {
+      "type": "object",
+      "description": "Generator metadata for reproducibility and bias auditing.",
+      "required": [
+        "templateFamily", "seed", "generatorVersion",
+        "isolationTemplate", "lowDensity", "simulatorState"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "templateFamily":    { "type": "string" },
+        "seed":              { "type": "integer" },
+        "generatorVersion":  { "type": "string" },
+        "isolationTemplate": {
+          "type": "boolean",
+          "description": "True when the image contains only a single element class on a neutral background."
+        },
+        "lowDensity": {
+          "type": "boolean",
+          "description": "True when the template intentionally renders fewer than 4 elements to prevent co-occurrence bias."
+        },
+        "simulatorState": {
+          "type": "object",
+          "description": "xcrun simctl status_bar override values applied before this batch.",
+          "required": [
+            "time", "batteryLevel", "batteryState",
+            "cellularBars", "wifiBars", "operatorName"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "time":          { "type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$" },
+            "batteryLevel":  { "type": "integer", "enum": [10, 25, 50, 75, 100] },
+            "batteryState":  { "type": "string", "enum": ["charging", "discharging"] },
+            "cellularBars":  { "type": "integer", "enum": [0, 1, 3, 5] },
+            "wifiBars":      { "type": "integer", "enum": [0, 1, 3] },
+            "operatorName":  { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "elements": {
+      "type": "array",
+      "description": "All annotated UI elements in this image.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "elementType", "framework",
+          "boundsPixels", "boundsPoints", "boundsVisionNormalized",
+          "traits", "state", "occluded", "excluded", "knownIssues"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable deterministic identifier within this annotation file."
+          },
+          "elementType": {
+            "type": "string",
+            "enum": [
+              "statusBar", "navigationBar", "tabBar", "toolbar", "sidebar",
+              "homeIndicator", "dynamicIsland",
+              "primaryButton", "secondaryButton", "destructiveButton", "cancelAction",
+              "textField", "secureField", "toggle", "slider", "segmentedControl",
+              "picker", "stepperControl", "searchField", "menuButton", "colorWell",
+              "label", "imageView", "link", "mapView",
+              "activityIndicator", "progressView", "pageControl",
+              "scrollIndicator", "refreshControl",
+              "alert", "actionSheet", "sheet", "popover",
+              "listRow", "collectionItem", "disclosureGroup", "tooltip", "contextMenu",
+              "webContent", "unknown"
+            ],
+            "description": "Stable semantic role. rawValue strings are frozen at schema v1.0."
+          },
+          "framework": {
+            "type": "string",
+            "enum": ["SwiftUI", "UIKit", "AppKit", "tvOS-UIKit"],
+            "description": "Rendering framework used to produce this element."
+          },
+          "boundsPixels": {
+            "$ref": "#/definitions/rect",
+            "description": "Bounding box in screenshot pixel coordinates. Origin: top-left."
+          },
+          "boundsPoints": {
+            "$ref": "#/definitions/rect",
+            "description": "Bounding box in UIKit/SwiftUI point coordinates. Origin: top-left."
+          },
+          "boundsVisionNormalized": {
+            "$ref": "#/definitions/normalizedRect",
+            "description": "Bounding box in Vision-normalized coordinates [0,1]. Origin: bottom-left (Vision convention)."
+          },
+          "visibleText": {
+            "type": ["string", "null"],
+            "description": "Text visible inside the element as it appears in the screenshot."
+          },
+          "accessibilityLabel": {
+            "type": ["string", "null"],
+            "description": "Accessibility label exported from the generator view hierarchy."
+          },
+          "accessibilityHint": {
+            "type": ["string", "null"],
+            "description": "Accessibility hint exported from the generator view hierarchy."
+          },
+          "traits": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Accessibility traits from the generator (UIAccessibilityTraits)."
+          },
+          "state": {
+            "type": "object",
+            "required": ["isEnabled", "isSelected"],
+            "additionalProperties": false,
+            "properties": {
+              "isEnabled":   { "type": "boolean" },
+              "isSelected":  { "type": "boolean" },
+              "isFocused":   { "type": "boolean", "description": "True when element holds tvOS focus ring." },
+              "isLoading":   { "type": "boolean", "description": "True when element shows an in-progress spinner." },
+              "isSkeleton":  { "type": "boolean", "description": "True when element is a shimmer/skeleton placeholder." }
+            }
+          },
+          "occluded": {
+            "type": "boolean",
+            "description": "True when the element is partially outside the image boundary or behind another surface."
+          },
+          "occlusionType": {
+            "type": ["string", "null"],
+            "enum": ["scroll", "imageBoundary", "splitView", "keyboard", null],
+            "description": "How the element is occluded. Required when occluded=true."
+          },
+          "excluded": {
+            "type": "boolean",
+            "description": "True when the element was omitted from annotations (e.g. <20% visible)."
+          },
+          "exclusionReason": {
+            "type": ["string", "null"],
+            "description": "Reason the element was excluded. Required when excluded=true."
+          },
+          "knownIssues": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "truncatedText", "clippedElement", "overlappingElements",
+                "tappableTargetTooSmall", "contrastRisk", "dynamicTypeOverflow",
+                "rtlMirroringFailure", "missingLabel", "offScreen"
+              ]
+            },
+            "description": "Intentional audit failures present in this element (used for known-bad dataset)."
+          }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "rect": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "x":      { "type": "number" },
+        "y":      { "type": "number" },
+        "width":  { "type": "number", "minimum": 0 },
+        "height": { "type": "number", "minimum": 0 }
+      }
+    },
+    "normalizedRect": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "x":      { "type": "number", "minimum": 0, "maximum": 1 },
+        "y":      { "type": "number", "minimum": 0, "maximum": 1 },
+        "width":  { "type": "number", "minimum": 0, "maximum": 1 },
+        "height": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

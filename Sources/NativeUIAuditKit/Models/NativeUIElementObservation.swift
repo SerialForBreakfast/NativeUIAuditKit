@@ -87,6 +87,21 @@ public enum NativeUIElementType: String, Codable, Sendable, CaseIterable {
     case picker
     case stepperControl
     case searchField
+    case menuButton
+    case colorWell
+
+    // Content
+    case label
+    case imageView
+    case link
+    case mapView
+
+    // Indicators
+    case activityIndicator
+    case progressView
+    case pageControl
+    case scrollIndicator
+    case refreshControl
 
     // Containers
     case alert
@@ -95,6 +110,9 @@ public enum NativeUIElementType: String, Codable, Sendable, CaseIterable {
     case popover
     case listRow
     case collectionItem
+    case disclosureGroup
+    case tooltip
+    case contextMenu
 
     // Special
     case webContent
@@ -129,15 +147,52 @@ public enum NativeUIAccessibilityTrait: String, Codable, Sendable {
 // MARK: - Element State
 
 /// Visible state of a detected UI element.
-public struct NativeUIElementState: Codable, Sendable, Equatable {
+public struct NativeUIElementState: Sendable, Equatable {
     public var isEnabled: Bool
     public var isSelected: Bool
-    public var isFocused: Bool
+    /// True when the element holds a tvOS focus ring. Nil when not applicable.
+    public var isFocused: Bool?
+    /// True when the element displays an in-progress spinner. Nil when not applicable.
+    public var isLoading: Bool?
+    /// True when the element is a shimmer/skeleton placeholder. Nil when not applicable.
+    public var isSkeleton: Bool?
 
-    public init(isEnabled: Bool = true, isSelected: Bool = false, isFocused: Bool = false) {
+    public init(
+        isEnabled: Bool = true,
+        isSelected: Bool = false,
+        isFocused: Bool? = nil,
+        isLoading: Bool? = nil,
+        isSkeleton: Bool? = nil
+    ) {
         self.isEnabled = isEnabled
         self.isSelected = isSelected
         self.isFocused = isFocused
+        self.isLoading = isLoading
+        self.isSkeleton = isSkeleton
+    }
+}
+
+extension NativeUIElementState: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case isEnabled, isSelected, isFocused, isLoading, isSkeleton
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        isEnabled  = try c.decode(Bool.self, forKey: .isEnabled)
+        isSelected = try c.decode(Bool.self, forKey: .isSelected)
+        isFocused  = try c.decodeIfPresent(Bool.self, forKey: .isFocused)
+        isLoading  = try c.decodeIfPresent(Bool.self, forKey: .isLoading)
+        isSkeleton = try c.decodeIfPresent(Bool.self, forKey: .isSkeleton)
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(isEnabled,  forKey: .isEnabled)
+        try c.encode(isSelected, forKey: .isSelected)
+        try c.encodeIfPresent(isFocused,  forKey: .isFocused)
+        try c.encodeIfPresent(isLoading,  forKey: .isLoading)
+        try c.encodeIfPresent(isSkeleton, forKey: .isSkeleton)
     }
 }
 
