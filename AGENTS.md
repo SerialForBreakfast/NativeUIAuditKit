@@ -14,12 +14,14 @@ is the sole authority**.
 NativeUIAuditKit is a research-first Swift Package building toward a `VNCoreMLRequest`-backed
 native Apple UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElementRequest`.
 
-**Current state: Phase 0 scaffold.** The API shape is defined. No CoreML model or inference logic
-exists yet. The primary value right now is the research documentation in `Research/` and the
-task roadmap in `Tasks.md`.
+**Current state: Phase 1 complete.** The coordinate export strategy is proven. No CoreML model or
+inference logic exists yet. The primary value right now is the research documentation in `Research/`
+and the task roadmap in `Tasks.md`.
 
 Read `Research/NativeUIElementDetection.md` before making any code changes.
 Read `Tasks.md` to understand what phase the package is in.
+Read `Research/BestPractices.md` before writing any SwiftUI layout, UIKit rendering, coordinate
+conversion, or test infrastructure code.
 
 ---
 
@@ -59,6 +61,29 @@ Do not use any external build system. Do not require Xcode, simulator, or networ
 
 **Tests must be fully offline.** The smoke tests verify API shape and Codable correctness only.
 Detector tests (Phase 6+) will require `.mlpackage` from the separate `NativeUIAuditKitModels` package.
+
+---
+
+## Best Practices — Read Before You Code
+
+`Research/BestPractices.md` is a living record of mistakes made and lessons learned during
+development. It is not optional reading — it exists to prevent repeating known errors.
+
+**Read `Research/BestPractices.md` before working on any of the following:**
+
+| Topic | Relevant entries |
+|-------|-----------------|
+| SwiftUI element positioning or layout | BP-01 (`.offset()` vs padding), BP-02 (safe area) |
+| `GeometryReader` / coordinate capture | BP-01, BP-02, BP-03 (clipping), BP-04 (timing) |
+| Writing tests for rendering or coordinates | BP-05 (test the real mechanism), BP-06 (async), BP-07 (`@MainActor`) |
+| Xcode project scaffolding | BP-08 (minimal pbxproj), BP-09 (nested class error) |
+| Coordinate system conversions | BP-10 (all three reps), BP-11 (scale source), BP-10 (Vision y-flip) |
+| Any new generator template | BP-01, BP-02, BP-03, BP-04, BP-10, BP-11 |
+
+**When you discover a new mistake or a better approach, add it to `Research/BestPractices.md`
+before closing the task.** Each entry must include: what went wrong, the correct approach, and
+why it matters. Do not pad the document with obvious advice — only record findings that were
+actually discovered the hard way or that would be non-obvious to a knowledgeable Swift developer.
 
 ---
 

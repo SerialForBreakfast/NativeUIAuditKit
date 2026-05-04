@@ -29,24 +29,60 @@ Training data strategy: [`Research/TrainingDataStrategy.md`](Research/TrainingDa
 
 ---
 
-## Phase 1: Coordinate Spike (P0 blocker) [~]
+## Phase 1: Coordinate Spike (P0 blocker) ✅
 
 *Goal: Prove that exported element coordinates align with PNG pixels before any dataset generation. Nothing downstream of this phase is reliable until it completes.*
 
-Full spike protocol and results template: [`Research/CoordinateSpike.md`](Research/CoordinateSpike.md)  
-Fixture code (copy into Xcode project): [`CoordinateSpike/`](CoordinateSpike/)
+**COMPLETE — 2026-05-04 — All 5 acceptance criteria met. See `Research/CoordinateSpike.md` for full results.**
+
+Full spike results: [`Research/CoordinateSpike.md`](Research/CoordinateSpike.md)  
+Fixture code: [`CoordinateSpike/`](CoordinateSpike/)  
+Test runner: [`CoordSpikeRunner/`](CoordSpikeRunner/)  
+Run script: [`CoordinateSpike/Scripts/run_spike.sh`](CoordinateSpike/Scripts/run_spike.sh)
+
+### Group A — Fixture (complete)
 
 - [x] Write `Research/CoordinateSpike.md` — methodology, protocol, results template, acceptance criteria
-- [x] Write `CoordinateSpike/CoordSpikeView.swift` — SwiftUI fixture: Button + TextField + Label at fixed positions
-- [x] Write `CoordinateSpike/CoordSpikeUITests.swift` — XCTest UI test measuring XCUIElement.frame vs declared ground truth at @2x and @3x
-- [ ] **Run on iPhone 14 Pro Simulator (@3x)** — fill in Results section of `Research/CoordinateSpike.md`
-- [ ] **Run on iPhone SE Simulator (@2x)** — fill in Results section of `Research/CoordinateSpike.md`
-- [ ] Resolve SwiftUI frame export strategy (GeometryReader preference keys vs `XCUIElement.frame`) — document decision in `Research/CoordinateSpike.md`
-- [ ] Investigate known risks (safe area shift, `clipsToBounds` frame vs `accessibilityFrame`, transform divergence) — document outcome
-- [ ] Confirm ≤2px alignment at both scale factors — mark acceptance criteria checked in `Research/CoordinateSpike.md`
-- [ ] Update `Research/NativeUIElementDetection.md` Section 6 with chosen coordinate strategy
+- [x] `CoordinateSpike/CoordSpikeView.swift` — rewrote fixture: padding-based layout (not `.offset()`); `.ignoresSafeArea(.all)` on ZStack; `onFramesCaptured` callback; `CoordSpikeClippedVariant`; `CoordSpikeNoSafeAreaVariant`
 
-**Gate:** Do not begin Phase 2 until all acceptance criteria in `Research/CoordinateSpike.md` are checked.
+### Group B — Tests (complete)
+
+- [x] `CoordinateSpike/CoordSpikeHostedTests.swift` — 6 hosted unit tests using `UIHostingController` + `UIGraphicsImageRenderer`; retired `CoordSpikeUITests.swift` (tested wrong mechanism — XCUITest accessibility frames)
+  - [x] `testGeometryReaderAlignment` — frames vs declared ground truth ±2pt
+  - [x] `testPixelCoordinateAlignment` — pixel color sampling at expected button bounds
+  - [x] `testVisionNormalizedConversion` — formula `y_vision = 1.0 − (y_px + h_px) / H_px`
+  - [x] `testSafeAreaOriginShift` — documents safe area inset (62pt on iPhone 17 Pro, 20pt on SE)
+  - [x] `testClipToBoundsFrameReporting` — documents GeometryReader = layout frame, not clipped rect
+  - [x] `testAnimationFrameStability` — frames stable across two layout passes
+  - [x] JSON `XCTAttachment` output on every test
+
+### Group C — Runner project (complete)
+
+- [x] `CoordSpikeRunner/CoordSpikeRunner.xcodeproj` — hand-authored Xcode project; iOS 17+ deployment target; Swift 6 strict concurrency; minimal app host + test target
+- [x] `CoordSpikeRunner/CoordSpikeRunner/AppDelegate.swift` — headless `@main` app delegate
+- [x] `CoordinateSpike/Scripts/run_spike.sh` — runs both @3x and @2x in sequence
+
+### Group D — Results (complete)
+
+- [x] **iPhone 17 Pro @3x (iOS 26.4)** — 6/6 PASS — 0 pt delta on all three elements
+- [x] **iPhone SE 3rd gen @2x (iOS 17.5)** — 6/6 PASS — 0 pt delta on all three elements
+
+### Group E — Documentation (complete)
+
+- [x] `Research/CoordinateSpike.md` — results tables filled; strategy decision documented; all known risks resolved; all 5 acceptance criteria checked
+- [x] `Research/NativeUIElementDetection.md` Section 6.4 — updated with confirmed `UIHostingController` + `GeometryReader` export strategy, conversion formulas, and generator requirements
+
+### Key findings
+
+| Finding | Implication for generator |
+|---------|--------------------------|
+| GeometryReader global frame = declared position at 0 pt delta | Use GeometryReader as ground truth source (Option B confirmed) |
+| ZStack must apply `.ignoresSafeArea(.all)` — not just background Color | Prevents 20–62 pt y-offset depending on device |
+| `.offset()` does not move layout frame | Must use padding-based layout in all generator templates |
+| GeometryReader reports layout frame, not clipped visible rect | Generator must intersect with `.clipped()` container bounds |
+| 150ms RunLoop wait is sufficient for frame stability | Safe delay before screenshot capture |
+
+**Gate:** All acceptance criteria in `Research/CoordinateSpike.md` checked. ✓ Proceed to Phase 2.
 
 ---
 
@@ -117,8 +153,9 @@ The original 27-class taxonomy is extended to ~41 classes. New additions address
 - [ ] Create `NativeUIDatasetGenerator` app target in `Package.swift`
 - [ ] Implement screenshot capture pipeline: render → `CATransaction.flush()` → `RunLoop.main.run(until: Date() + 0.05)` → read frames → export JSON → capture PNG → compute `imageSHA256`
 - [ ] Implement `--seed N` CLI argument for deterministic reproduction
-- [ ] Implement manifest writer: records `datasetVersion`, `generatorVersion`, `totalImages`, split assignments, `generationDate`, and per-image entries
+- [ ] Implement manifest writer: records `datasetVersion`, `generatorVersion`, `totalImages`, split assignments, `generationDate`, per-image entries, and `generatorProfile.isolationTemplate` flag
 - [ ] Implement dataset balance report generator: `reports/dataset_balance.md` and `reports/class_distribution.json`
+- [ ] Implement element density check: flag images with fewer than 2 annotated elements as `generatorProfile.lowDensity: true`; enforce that isolation templates (single-element) do not exceed 10% of any class's instances
 
 ### Phase 3c: SwiftUI Templates (First 3)
 
@@ -163,9 +200,9 @@ The original 27-class taxonomy is extended to ~41 classes. New additions address
 
 ---
 
-## Phase 5: Known-Bad UI Generator
+## Phase 5: Known-Bad UI Generator and Evaluation Tooling
 
-*Goal: Intentional failure cases labeled so audit rules can detect them. Hard negatives for false-positive prevention.*
+*Goal: Intentional failure cases labeled so audit rules can detect them. Hard negatives for false-positive prevention. Also builds the confusion matrix tooling needed to interpret Phase 6+ training results.*
 
 - [ ] Implement truncated label generation: constrained width, `.lineBreakMode = .byTruncatingTail`, confirm `…` character present
 - [ ] Implement clipped content generation: `clipsToBounds = true` with overflowing content
@@ -179,6 +216,8 @@ The original 27-class taxonomy is extended to ~41 classes. New additions address
 - [ ] Tag all known-bad images with `knownIssues` array in annotation JSON
 - [ ] Generate ≥500 known-bad images
 - [ ] Verify these images split across train/validation/test by template family (same split rule as all other images)
+- [ ] Write `scripts/confusion_matrix.py` — Python script using `supervision` library's `ConfusionMatrix` against YOLO predictions vs. ground truth annotations on the withheld-template test set; outputs `reports/confusion_matrix_v{N}.png` and per-class precision/recall CSV; run after every Phase 6+ training checkpoint
+- [ ] Write `scripts/centroid_distribution.py` — checks predicted bounding box centroid distribution vs. training set distribution per class; flags spatial prior bias (>80% of predictions clustering in <30% of image area)
 
 ---
 
@@ -209,44 +248,69 @@ The original 27-class taxonomy is extended to ~41 classes. New additions address
 
 ## Phase 6: iOS + iPadOS Model — 5-Class Vertical Slice
 
-*Goal: A working iOS/iPadOS CoreML detector for 5 classes, integrated into `NativeUIDetectionRequest`. Validates the full pipeline before expanding to all 41 classes.*
+*Goal: A working iOS/iPadOS CoreML detector for 5 classes, integrated into `NativeUIDetectionRequest`. Validates the full pipeline before expanding to all 41 classes. Uses Create ML for speed — the goal is proving the pipeline, not squeezing accuracy.*
 
-**Prerequisite:** Phases 3a–5 complete. DS-G1 through DS-G4 quality gates pass (see `Research/TrainingDataStrategy.md` Section 12).
+**Prerequisite:** Phases 3a–5 complete. DS-G1 through DS-G8 quality gates pass (see `Research/TrainingDataStrategy.md` Section 12). Minimum element density check passes: no class has >10% of instances from single-element isolation templates.
 
-- [ ] Run pre-training dataset quality report: imbalance ≤5:1, SHA256 match rate = 1.0, no invalid boxes, zero split contamination, all 5 classes meet instance floors
+- [ ] Run pre-training dataset quality report: imbalance ≤5:1, SHA256 match rate = 1.0, no invalid boxes, zero split contamination, all 5 classes meet instance floors; isolation template cap ≤10% per class
 - [ ] Prepare 5-class training split: `primaryButton`, `navigationBar`, `alert`, `textField`, `toggle`
 - [ ] Apply template-family–aware split: 70/20/10 train/validation/test — zero template family overlap between splits; withhold iPad Pro 13" device family from training
 - [ ] Train Create ML `MLObjectDetector` (10,000 iterations, `scenePrint` revision 2 feature extractor)
 - [ ] Export `.mlpackage` to `NativeUIAuditKitModels/` (separate package, not committed to this repo)
-- [ ] Wire `VNCoreMLRequest` into `NativeUIDetectionRequest.perform(on:sidecar:)`; implement tiling strategy (2–3 overlapping 640×640 crops, NMS across crops)
+- [ ] Wire `VNCoreMLRequest` into `NativeUIDetectionRequest.perform(on:sidecar:)`; replace ad-hoc tiling with SAHI (Slicing Aided Hyper Inference) — overlapping slice grid with calibrated NMS merge (see `Research/TrainingDataStrategy.md` Section 16.4)
 - [ ] Implement model selection routing: `sidecar.platform` → choose model; pixel-only → heuristic classifier (aspect ratio, tab bar position, status bar presence)
 - [ ] Run evaluation: mAP@0.5, mAP@0.75, per-class AP, small-object recall
+- [ ] Run confusion matrix report using `supervision` library — output `reports/confusion_matrix_v1.png`; flag the known high-risk pairs listed in `Research/TrainingDataStrategy.md` Section 16.9
 - [ ] Run content-agnostic test: blur all text in 200 test images; verify mAP for non-text-dependent classes drops <10 points
-- [ ] Run on 10 real App Store screenshots (personal device); document failure modes in `Research/TrainingDataStrategy.md`
+- [ ] **Benchmark on physical iPhone hardware** (not simulator): measure inference latency, cold load time, ANE utilization using Instruments → Core ML Instrument (targets: <200ms inference, <3s cold load; see Section 16.7)
+- [ ] Run on 10 real App Store screenshots (personal device); document failure modes
 - [ ] Adjust confidence thresholds from precision/recall tradeoff analysis
 - [ ] Write `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift` — version manifest with `calibrationOsRange`, `trainedClasses`, `trainingDatasetVersion`
 
-**Gate (DS-G6):** mAP@0.5 ≥ 0.70 on withheld-template validation set (prototype bar). Document gap between synthetic mAP and real-app mAP.
+**Gate (DS-G6):** mAP@0.5 ≥ 0.70 on withheld-template validation set (prototype bar). Physical device latency < 200ms. Document gap between synthetic mAP and real-app mAP.
+
+---
+
+## Phase 6 Gate: Foundation Models Baseline Evaluation
+
+*Goal: Before investing in full 41-class custom training, determine whether Apple's on-device Foundation Model (Apple Intelligence, ~3B params) provides a viable alternative or starting point. This is a fork-in-the-road evaluation that could significantly change Phase 6a's approach.*
+
+**Run immediately after Phase 6 gate passes.**
+
+- [ ] Run Apple Foundation Models framework against the withheld-template test set (all 41 classes)
+- [ ] Record per-class AP, overall mAP@0.5, and inference latency on physical device
+- [ ] Apply the decision matrix (see `Research/TrainingDataStrategy.md` Section 16.5):
+  - mAP < 0.50 → proceed with full custom training as planned
+  - mAP 0.50–0.75 → evaluate Foundation Model as teacher for knowledge distillation
+  - mAP > 0.75 zero-shot → evaluate LoRA adapter fine-tuning before committing to full custom training
+- [ ] Document decision and rationale in `Research/TrainingDataStrategy.md`
+
+**This phase has no "skip" option.** Running this evaluation costs one day. Skipping it and discovering the Foundation Model outperforms our custom model after months of training costs months.
 
 ---
 
 ## Phase 6a: iOS + iPadOS Model — Full 41-Class
 
-*Goal: Expand the iOS model to all 41 element classes.*
+*Goal: Expand the iOS model to all 41 element classes. Architecture decision from the Foundation Models baseline evaluation (above) determines whether this is custom YOLO11 training, fine-tuning, or distillation.*
 
-**Prerequisite:** Phase 5b complete. All 41 classes meet per-class instance floors.
+**Prerequisite:** Phase 5b complete. Foundation Models baseline evaluation complete. All 41 classes meet per-class instance floors.
 
-- [ ] Run DS-G7 quality gate: all 41 classes meet instance floors
-- [ ] Confirm no class pair has co-occurrence >95% (flag in pre-training report)
-- [ ] Train full 41-class model (increase iterations to 20,000 minimum; consider YOLO/DETR if Create ML plateaus below 0.80)
+- [ ] Run DS-G7 quality gate: all 41 classes meet instance floors; isolation template cap ≤10% per class
+- [ ] Confirm no class pair has co-occurrence >95% (from pre-training report)
+- [ ] **Switch to YOLO11 (anchor-free) via PyTorch → coremltools** — Create ML's anchor-based `MLObjectDetector` is not suited for the extreme aspect ratios in this taxonomy (navigationBar ~20:1, homeIndicator ~50:1); see `Research/TrainingDataStrategy.md` Section 16.1
+- [ ] Enable **Focal Loss** (`gamma=2.0, alpha=0.25` defaults; tune alpha per-class from inverse class frequency) — see Section 16.2
+- [ ] Enable **OHEM (Online Hard Example Mining)** in training loop — rank proposals by loss each epoch, upsample top-K; see Section 16.3
+- [ ] After first training run: compute per-epoch entropy on 1,000 held-out unlabeled generated images; identify high-uncertainty template families; prioritize generating more examples for those families (**active learning loop**, Section 16.6)
 - [ ] Run per-template AP analysis — flag any template with AP >0.95 when overall mAP <0.85
-- [ ] Run confusion matrix report; confirm high-risk pairs (alert/sheet, listRow/collectionItem, toolbar/tabBar)
-- [ ] Run INT8 quantization benchmark: compare quantized vs FP16 on small-element test subset; document mAP delta
-- [ ] Verify model binary <50MB; inference latency <200ms on M1 via tiling strategy
+- [ ] Run confusion matrix report — compare to Phase 6 baseline; confirm high-risk pairs are improving
+- [ ] Check for spatial prior bias: compare predicted bounding box centroid distribution to training set distribution; flag if >80% of any class's predictions cluster in <30% of image area (see Section 16.10)
+- [ ] Run INT8 quantization benchmark: compare quantized vs FP16 on small-element test subset; document mAP delta; prefer FP16 if small-element mAP drops >5 points
+- [ ] Implement knowledge distillation pipeline if model exceeds 50MB: train YOLO11-Nano student from YOLO11-Medium teacher; see Section 16.8 of TrainingDataStrategy
+- [ ] **Benchmark on physical iPhone hardware**: inference < 200ms, cold load < 3s, model < 50MB
 - [ ] Collect 200-image real-world validation set: personal device App Store screenshots, manual annotation via overlay viewer, stored in `NativeUIAuditKit-Dataset/golden_real_world/` (never committed)
-- [ ] Report real-world mAP separately from synthetic test mAP; document gap
+- [ ] Report real-world mAP separately from synthetic test mAP; document gap in `Research/TrainingDataStrategy.md`
 
-**Gate (DS-G8):** withheld-template mAP ≥ 0.85 across all 41 classes.
+**Gate (DS-G8):** withheld-template mAP ≥ 0.85 across all 41 classes. Physical device < 200ms. Real-world gap documented.
 
 ---
 

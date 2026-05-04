@@ -600,3 +600,186 @@ Example: `ios_iphone15pro_26_3_light_xl_loginform_000042.png`
 ### 15.4 Model versioning
 
 Each `.mlpackage` records `calibrationOsRange`, `trainedClasses`, and `trainingDatasetVersion` in its metadata. Every `NativeUIElementObservation` report includes `modelId` for reproducibility. Major Apple visual refreshes require a new model version — never patch an existing model's training data in-place after an OS redesign.
+
+---
+
+## 16. Research Findings and Open Questions
+
+*Added 2026-05-04. Based on a literature sweep of GUI detection, object detection best practices, and Apple platform ML. Each item is either an adopted decision, a technique to incorporate, or an explicit fork-in-the-road requiring evaluation before committing.*
+
+---
+
+### 16.1 Architecture: Anchor-Free Is the Right Default
+
+**Finding:** Our element taxonomy has extreme aspect ratios — `navigationBar` is roughly 20:1 wide, `homeIndicator` is ~50:1, `statusBar` is ~12:1, `toggle` is nearly 2:1, `slider` thumb is ~1:1. Anchor-based detectors (including Create ML's `MLObjectDetector`) use k-means anchor priors derived from the training set. When the aspect ratio distribution spans 50:1 across classes, anchor grids fail: anchors sized for navigation bars are useless for toggle detection, and vice versa.
+
+**Decision:** YOLO11 (anchor-free by default) or RT-DETR is the recommended architecture for Phase 6a onward. Create ML's `MLObjectDetector` remains valid for the 5-class Phase 6 prototype — the prototype is about validating the pipeline, not squeezing accuracy. If Create ML's prototype achieves mAP ≥ 0.70, switch to YOLO11 via PyTorch → coremltools for Phase 6a.
+
+**Implementation note:** Anchor-free detectors regress bounding boxes from element centers, which naturally handles arbitrary aspect ratios. No k-means anchor calibration step required. YOLO11 exports to CoreML via `ultralytics.export(format='coreml')` with direct `.mlpackage` output.
+
+**Sources:** Ultralytics anchor-free documentation; *Improving GUI Element Detection with a Refined YOLO11-Based Approach* (ACM 2025).
+
+---
+
+### 16.2 Training: Focal Loss for Class Imbalance
+
+**Finding:** Our dataset has a structural class imbalance: `navigationBar` appears in nearly every screenshot; `stepperControl` and `colorWell` appear rarely. Standard cross-entropy loss is dominated by the easy, common classes. Focal Loss (Lin et al., RetinaNet 2017) down-weights well-classified examples and focuses training on hard negatives. Batch-Balanced Focal Loss (BBFL) combines batch composition control with focal loss for further improvement.
+
+**Decision:** Use focal loss in all Phase 6a+ training runs. Create ML does not support custom loss functions — this is a second concrete argument for moving to PyTorch training before Phase 6a.
+
+**Parameters:** Start with `gamma=2.0, alpha=0.25` (RetinaNet defaults). Tune alpha per-class using the inverse class frequency from the training split's class distribution report.
+
+**Sources:** *Focal Loss for Dense Object Detection* (Lin et al., CVPR 2017); *Batch-balanced focal loss* (PMC 2023).
+
+---
+
+### 16.3 Training: Online Hard Example Mining (OHEM)
+
+**Finding:** OHEM (Shrivastava et al., CVPR 2016) is a standard training technique: each iteration, rank all region proposals by their current loss, then upsample the top-K highest-loss examples into the mini-batch. This automatically surfaces the images and elements the model finds hardest, without requiring manual curation. Consistent 2–3% mAP improvement with minimal overhead.
+
+**Decision:** Integrate OHEM into all Phase 6a+ training runs. YOLO11's training loop supports hard example weighting via custom samplers; can also be implemented as a custom `DataLoader` that re-weights samples by loss from the previous epoch.
+
+**Relationship to our dataset strategy:** OHEM operates during training — it does not replace the pre-training quality gates or the simulator state sweep. It complements the existing approach by automatically finding training images where the generator produced edge cases the model struggles with.
+
+---
+
+### 16.4 Inference: SAHI (Slicing Aided Hyper Inference)
+
+**Finding:** SAHI is a published inference technique (Akyon et al., CVPR 2022) that tiles the input image into overlapping slices, runs the detector on each slice, then merges predictions with calibrated NMS. Unlike our ad-hoc tiling strategy (designed independently), SAHI has published NMS parameters calibrated for small-object performance: 2–5% mAP gain on COCO small-object subsets.
+
+**Decision:** Replace our custom tiling implementation in Phase 6 with SAHI. It handles the same problem (small elements like `homeIndicator` becoming sub-8px after downsampling to 640×640) with a validated, maintained implementation. SAHI has a CoreML integration path via Python preprocessing before the CoreML call.
+
+**Practical integration:** SAHI runs as a pre/post-processing wrapper around the CoreML model call. The `NativeUIDetectionRequest.perform(on:sidecar:)` implementation runs SAHI slicing in Swift (port the overlap/merge logic) or calls into a Python preprocessing step. For on-device CI use, implement in Swift directly.
+
+**Do NOT use TTA (Test-Time Augmentation):** Research confirms TTA provides only ~1–2% mAP gain on static screenshots and introduces ghost detections at UI element boundaries from averaged flipped predictions. Skip it.
+
+**Sources:** *Slicing Aided Hyper Inference and Fine-tuning for Small Object Detection* (Akyon et al., CVPR 2022).
+
+---
+
+### 16.5 Fork-in-the-Road: Apple Foundation Models as Baseline
+
+**Finding:** Apple shipped a ~3B parameter on-device multimodal vision model as part of Apple Intelligence (2025). The Foundation Models framework allows developer access to this model for inference. It supports image understanding with zero-shot and few-shot prompting. This is a fundamentally different approach from training a custom CoreML detector.
+
+**Why this matters:** If Apple's foundation model achieves mAP ≥ 0.70 on our 41-class test set with zero training — or ≥ 0.80 with a small fine-tuning step — the case for training a custom 41-class detector from scratch weakens significantly.
+
+**Decision: Evaluate before Phase 6a.** After Phase 6 (5-class prototype), before committing to full 41-class training, run Apple's Foundation Model against the withheld-template test set. Record per-class AP. Use these results to make a data-driven architecture decision:
+
+| Scenario | Decision |
+|---|---|
+| Foundation Model mAP < 0.50 on withheld test | Proceed with custom 41-class training as planned |
+| Foundation Model mAP 0.50–0.75 | Use foundation model as teacher for knowledge distillation; augment with custom fine-tuning |
+| Foundation Model mAP > 0.75 zero-shot | Evaluate whether LoRA adapter fine-tuning on our synthetic dataset can push to 0.85 without full custom training |
+
+**Constraints:** Foundation Models framework has latency characteristics that may exceed our <200ms target. Measure inference time on actual hardware (see Section 16.7). The framework requires iOS 18.1+ / macOS 15.1+ which may affect minimum deployment target requirements.
+
+**Sources:** *Apple Intelligence Foundation Models* (Apple ML Research, 2025); Foundation Models framework documentation.
+
+---
+
+### 16.6 Active Learning for Synthetic Generation Prioritization
+
+**Finding:** Combining synthetic pre-training with active learning significantly outperforms random template sweeps for expanding the dataset. The approach: (1) pre-train on the initial synthetic dataset; (2) measure prediction entropy on a held-out set of unlabeled generated images; (3) prioritize generating more examples for the high-entropy (high-uncertainty) image types. This focuses generation budget on gaps rather than uniformly expanding all classes.
+
+**Decision:** Incorporate after Phase 6 prototype. The active learning loop is:
+
+```
+Phase 6 model trained on 5 classes
+→ Run against 1,000 newly generated (unannotated) candidate images
+→ Rank by prediction entropy (high entropy = model is uncertain)
+→ Annotate and add the top-200 highest-entropy images to training
+→ Retrain and repeat
+```
+
+This is especially valuable for rare classes (stepperControl, colorWell) where we know we need more data but don't know *which* visual variants are hardest. The model tells us.
+
+**Implementation:** Entropy computation runs in Python against the YOLO model outputs before CoreML conversion. The generator's `--seed N` reproducibility means any high-entropy image can be exactly re-generated with full annotation.
+
+**Sources:** *Combining Synthetic and Active Learning for Object Detection* (MDPI Imaging 2024).
+
+---
+
+### 16.7 Real-Device Hardware Benchmarking (Not Simulator)
+
+**Finding:** CoreML runtime performance on actual iPhone hardware differs from M1 simulator in measurable ways. The Apple Neural Engine (ANE) on iPhone uses a different execution profile than the M1 ANE. Simulator CoreML runs on the Mac ANE. Load time, compile time, and inference time must all be measured on a real device.
+
+**Decision:** Add explicit real-device benchmarking gates to Phase 6 and Phase 6a. Targets:
+
+| Metric | Target | Measured on |
+|---|---|---|
+| Per-image inference time | < 200ms | iPhone 14 or later (physical device) |
+| Model load time (cold) | < 3s | iPhone 14 or later |
+| Model file size | < 50MB | `.mlpackage` bundle |
+| ANE utilization | > 80% | Instruments → Core ML Instrument |
+
+Measure using `XCTest` performance tests with `measure(metrics: [XCTClockMetric(), XCTMemoryMetric()])` on device. Do not gate Phase 6a on simulator benchmarks.
+
+**Sources:** *Improve Object Detection Models in Create ML* (Apple Tech Talks 10155); coremltools optimization documentation.
+
+---
+
+### 16.8 Minimum Element Density Per Training Image
+
+**Finding:** YOLO UI detection research found that images with fewer than 2 UI elements degrade training quality — the model sees mostly background with one small element and learns background features rather than element features.
+
+**Impact on our dataset:** Our single-element isolation templates (Section 3.5 of this document — used for co-occurrence bias prevention) violate this guideline. These templates are valuable for preventing co-occurrence bias, but they should not dominate training.
+
+**Decision:** Implement a two-track approach:
+
+- **Standard training images:** Minimum 2 UI elements per image. This is the default for all template-family-based generation.
+- **Isolation template images (single-element):** Cap at 10% of any class's training instances. Flag in manifest as `generatorProfile.isolationTemplate: true`. These are valuable for co-occurrence bias prevention but must be a minority.
+
+**Implementation:** Add an element count check to the pre-training dataset quality report. Flag any class where >10% of training instances come from isolation templates.
+
+---
+
+### 16.9 Confusion Matrix Tooling as Explicit Deliverable
+
+**Finding:** mAP alone masks systematic failure patterns between visually similar classes. A per-class confusion matrix, computed at IoU=0.5, reveals which class pairs the model confuses most. This drives targeted template and training improvements. It is not generated automatically by Create ML or standard CoreML evaluation.
+
+**Decision:** Build a confusion matrix evaluation script as part of Phase 6 deliverables. Run it after every training checkpoint.
+
+**Known high-risk confusion pairs (based on visual similarity):**
+
+| Pair | Likely confusion cause |
+|---|---|
+| `alert` ↔ `sheet` | Both are modal overlays; differ by corner radius and dim level |
+| `sheet` ↔ `popover` | Size and arrow anchor; popover has directional arrow |
+| `primaryButton` ↔ `secondaryButton` | Fill vs. tinted style; depends on system accent color |
+| `listRow` ↔ `collectionItem` | Both rectangular cells; layout axis differs |
+| `toolbar` ↔ `tabBar` | Position (tvOS: both at top; macOS: toolbar below title bar) |
+| `activityIndicator` ↔ `refreshControl` | Both are spinners; differ by position and context |
+| `label` ↔ `link` | Visually identical; link has underline only with buttonShapes enabled |
+| `navigationBar` ↔ `toolbar` | Both horizontal bars with buttons; toolbar is secondary |
+
+**Tooling:** Python script using `supervision` library's `ConfusionMatrix` class. Runs on YOLO predictions vs. ground truth annotations on the withheld-template test set. Output: per-class precision/recall table + confusion matrix heatmap saved to `reports/confusion_matrix_v{N}.png`.
+
+**Sources:** *Multiclass Confusion Matrix for Object Detection* (Tenyks, 2023); `roboflow/supervision` library.
+
+---
+
+### 16.10 Synthetic Feedback Loop Warning
+
+**Finding:** *Fairness Feedback Loops* research (arXiv 2024) demonstrates that training on purely synthetic data amplifies existing biases through recursive generation cycles. For UI detection: if the generator templates encode a biased set of layouts (e.g., primaryButton always bottom-right), the model learns that spatial prior, which then reinforces the generator's design choices in future iterations.
+
+**Mitigations already in plan:**
+- Template diversity requirement (50 distinct templates, no archetype >25%)
+- Real-world validation set (200 personal-device screenshots)
+- RTL layout mirroring
+- Unusual-context templates (controls in non-standard positions)
+
+**Additional mitigation:** After Phase 6a, run the model's predictions on the 200-image real-world validation set and compare the predicted bounding box centroid distribution to the training set centroid distribution. If predictions cluster (e.g., 90% of primaryButton predictions are in the bottom 20% of the image), the model has learned a spatial prior, not a visual feature. If detected, add explicitly off-position templates (primary button at top, navigation bar at bottom) to the training set.
+
+**Sources:** *Fairness Feedback Loops: Training on Synthetic Data Amplifies Bias* (arXiv 2403.07857, 2024).
+
+---
+
+### 16.11 Landscape: Existing Accessibility ML Work
+
+**Competitive context** (not a training technique, but informs positioning):
+
+- **Apple Screen Recognition** (shipping): Computer vision + ML for VoiceOver content detection. Uses a similar approach (screenshot → element detection → semantic labels) but is proprietary, targets VoiceOver specifically, and is not exposed as a developer API.
+- **ScreenAudit** (arXiv 2025): LLM-powered accessibility detection achieving 69% issue coverage vs. 31% for traditional checkers. Uses GPT-4V-class models — incompatible with our <200ms on-device constraint.
+- **FixAlly** (Apple ML Research): Suggests code-level fixes for detected accessibility issues. Downstream of detection, not a detection approach.
+
+**Implication:** NativeUIAuditKit fills a specific gap: fast (<200ms), on-device, no-cloud, bounding-box-level detection of native Apple elements integrated with ScreenAuditKit contracts. None of the existing tools target this exact combination. The Foundation Models baseline evaluation (Section 16.5) is the most important open question for positioning.

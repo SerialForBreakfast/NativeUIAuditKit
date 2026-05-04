@@ -273,6 +273,59 @@ Three coordinate systems are stored in every annotation. This is mandatory — A
 
 Training pipelines select the format required by Create ML (pixel bounding boxes), coremltools (normalized), or custom PyTorch loaders. Storing all three eliminates re-derivation bugs caused by wrong scale assumptions.
 
+#### Confirmed Export Strategy (Phase 1 Coordinate Spike — 2026-05-04)
+
+**Strategy:** `UIHostingController` + `GeometryReader` + `PreferenceKey` in `.global` coordinate space.
+
+Validated at 0 pt delta (well within the ≤2 pt requirement) on:
+- iPhone 17 Pro @3x (iOS 26.4) — screen 393×852 pt, 1179×2556 px
+- iPhone SE 3rd gen @2x (iOS 17.5) — screen 375×667 pt, 750×1334 px
+
+**Implementation pattern:**
+
+```swift
+// In the generator view, wrap each element:
+someElement
+    .background(
+        GeometryReader { proxy in
+            Color.clear.preference(
+                key: FramePreference.self,
+                value: [elementID: proxy.frame(in: .global)]
+            )
+        }
+    )
+```
+
+**Critical requirements confirmed by the spike:**
+
+1. Apply `.ignoresSafeArea(.all)` to the top-level `ZStack` (not just the background `Color`).
+   Without this, all y-coordinates are shifted by the safe area inset
+   (62 pt on iPhone 17 Pro, 20 pt on iPhone SE).
+
+2. Use padding-based layout (`.padding(.top, y).padding(.leading, x)`) — never `.offset()`.
+   `.offset()` does not move the layout frame, so `GeometryReader` reports the pre-offset origin.
+
+3. For clipped elements: `GeometryReader` reports the element's **layout frame**, not the
+   visible clipped rect. The generator must intersect each element frame with its parent
+   `.clipped()` container bounds to get the accurate visible-area annotation.
+
+4. Wait at least 150 ms (one RunLoop pass) after layout before capturing frames.
+   Frames are stable across multiple layout passes within this window.
+
+**Conversion formulas (confirmed correct):**
+
+```
+boundsPixels.x = boundsPoints.x × UIScreen.main.scale
+boundsPixels.y = boundsPoints.y × UIScreen.main.scale
+
+boundsVisionNormalized.x = boundsPixels.minX / screenWidth_px
+boundsVisionNormalized.y = 1.0 − (boundsPixels.minY + boundsPixels.height) / screenHeight_px
+boundsVisionNormalized.width  = boundsPixels.width  / screenWidth_px
+boundsVisionNormalized.height = boundsPixels.height / screenHeight_px
+```
+
+See `Research/CoordinateSpike.md` for the full results tables and detailed test code.
+
 ---
 
 ## 7. Native UI Generator Architecture

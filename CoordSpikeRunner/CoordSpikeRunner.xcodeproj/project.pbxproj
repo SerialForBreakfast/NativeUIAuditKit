@@ -1,0 +1,362 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA000010000000000000AA10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* AppDelegate.swift */; };
+		AA000011000000000000AA11 /* CoordSpikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000AA02 /* CoordSpikeView.swift */; };
+		AA000012000000000000AA12 /* CoordSpikeHostedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003000000000000AA03 /* CoordSpikeHostedTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA000020000000000000AA20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA000050000000000000AA50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA000060000000000000AA60 /* CoordSpikeRunner */;
+			remoteInfo = CoordSpikeRunner;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AA000001000000000000AA01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AA000002000000000000AA02 /* CoordSpikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoordSpikeView.swift; path = "../CoordinateSpike/CoordSpikeView.swift"; sourceTree = SOURCE_ROOT; };
+		AA000003000000000000AA03 /* CoordSpikeHostedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoordSpikeHostedTests.swift; path = "../CoordinateSpike/CoordSpikeHostedTests.swift"; sourceTree = SOURCE_ROOT; };
+		AA000004000000000000AA04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA000005000000000000AA05 /* CoordSpikeRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoordSpikeRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000006000000000000AA06 /* CoordSpikeHostedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoordSpikeHostedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA000030000000000000AA30 /* Frameworks (app) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000031000000000000AA31 /* Frameworks (tests) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA000040000000000000AA40 /* Main Group */ = {
+			isa = PBXGroup;
+			children = (
+				AA000041000000000000AA41 /* CoordSpikeRunner */,
+				AA000042000000000000AA42 /* CoordSpikeHostedTests */,
+				AA000043000000000000AA43 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA000041000000000000AA41 /* CoordSpikeRunner */ = {
+			isa = PBXGroup;
+			children = (
+				AA000001000000000000AA01 /* AppDelegate.swift */,
+				AA000002000000000000AA02 /* CoordSpikeView.swift */,
+				AA000004000000000000AA04 /* Info.plist */,
+			);
+			path = CoordSpikeRunner;
+			sourceTree = "<group>";
+		};
+		AA000042000000000000AA42 /* CoordSpikeHostedTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA000003000000000000AA03 /* CoordSpikeHostedTests.swift */,
+			);
+			name = CoordSpikeHostedTests;
+			sourceTree = "<group>";
+		};
+		AA000043000000000000AA43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA000005000000000000AA05 /* CoordSpikeRunner.app */,
+				AA000006000000000000AA06 /* CoordSpikeHostedTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA000060000000000000AA60 /* CoordSpikeRunner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000080000000000000AA80 /* Build configuration list for PBXNativeTarget "CoordSpikeRunner" */;
+			buildPhases = (
+				AA000032000000000000AA32 /* Sources (app) */,
+				AA000030000000000000AA30 /* Frameworks (app) */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CoordSpikeRunner;
+			productName = CoordSpikeRunner;
+			productReference = AA000005000000000000AA05 /* CoordSpikeRunner.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA000061000000000000AA61 /* CoordSpikeHostedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000081000000000000AA81 /* Build configuration list for PBXNativeTarget "CoordSpikeHostedTests" */;
+			buildPhases = (
+				AA000033000000000000AA33 /* Sources (tests) */,
+				AA000031000000000000AA31 /* Frameworks (tests) */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA000021000000000000AA21 /* PBXTargetDependency */,
+			);
+			name = CoordSpikeHostedTests;
+			productName = CoordSpikeHostedTests;
+			productReference = AA000006000000000000AA06 /* CoordSpikeHostedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA000050000000000000AA50 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					AA000060000000000000AA60 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					AA000061000000000000AA61 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = AA000060000000000000AA60;
+					};
+				};
+			};
+			buildConfigurationList = AA000082000000000000AA82 /* Build configuration list for PBXProject "CoordSpikeRunner" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA000040000000000000AA40;
+			productRefGroup = AA000043000000000000AA43 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA000060000000000000AA60 /* CoordSpikeRunner */,
+				AA000061000000000000AA61 /* CoordSpikeHostedTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA000032000000000000AA32 /* Sources (app) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000010000000000000AA10 /* AppDelegate.swift in Sources */,
+				AA000011000000000000AA11 /* CoordSpikeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000033000000000000AA33 /* Sources (tests) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000012000000000000AA12 /* CoordSpikeHostedTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA000021000000000000AA21 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA000060000000000000AA60 /* CoordSpikeRunner */;
+			targetProxy = AA000020000000000000AA20 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AA000090000000000000AA90 /* Debug (project) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AA000091000000000000AA91 /* Release (project) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA000092000000000000AA92 /* Debug (app) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = CoordSpikeRunner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.coordspikerunner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Debug;
+		};
+		AA000093000000000000AA93 /* Release (app) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = CoordSpikeRunner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.coordspikerunner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Release;
+		};
+		AA000094000000000000AA94 /* Debug (tests) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.coordspikerunner.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoordSpikeRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CoordSpikeRunner";
+			};
+			name = Debug;
+		};
+		AA000095000000000000AA95 /* Release (tests) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.coordspikerunner.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoordSpikeRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CoordSpikeRunner";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA000080000000000000AA80 /* Build configuration list for PBXNativeTarget "CoordSpikeRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000092000000000000AA92 /* Debug */,
+				AA000093000000000000AA93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000081000000000000AA81 /* Build configuration list for PBXNativeTarget "CoordSpikeHostedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000094000000000000AA94 /* Debug */,
+				AA000095000000000000AA95 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000082000000000000AA82 /* Build configuration list for PBXProject "CoordSpikeRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000090000000000000AA90 /* Debug */,
+				AA000091000000000000AA91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = AA000050000000000000AA50 /* Project object */;
+}

@@ -1,8 +1,9 @@
 # Coordinate Spike — NativeUIAuditKit Phase 1
 
-**Status:** In Progress  
+**Status:** COMPLETE  
 **Phase gate:** Must complete before Phase 2 (taxonomy schema) and Phase 3 (dataset generation at scale)  
-**Fixture code:** `NativeUIAuditKit/CoordinateSpike/`
+**Fixture code:** `CoordinateSpike/` · **Test runner:** `CoordSpikeRunner/CoordSpikeRunner.xcodeproj`  
+**Run script:** `CoordinateSpike/Scripts/run_spike.sh`
 
 ---
 
@@ -12,14 +13,14 @@ Dataset generation requires knowing the **precise pixel bounding box** of every 
 generated screenshot. This spike validates that the coordinate pipeline produces annotations that
 align with ground truth at ≤2px tolerance on both @2x and @3x Simulator output.
 
-Three questions to answer experimentally:
+Questions answered by this spike:
 
-| # | Question | Why it matters |
-|---|----------|----------------|
-| 1 | Do SwiftUI GeometryReader frames match `XCUIElement.frame`? | Ground truth export strategy |
-| 2 | Does `XCUIElement.frame` (points) convert to the correct PNG pixel coordinates? | Annotation accuracy |
-| 3 | Do `@2x` and `@3x` simulator screenshots both satisfy ≤2px alignment? | Scale factor handling |
-| 4 | Are partially-clipped elements bounded to their visible rect? | Scroll view ground truth |
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Does `GeometryReader` (global frame) match declared ground truth? | **Yes — 0 pt delta at both scales** |
+| 2 | Do point coordinates × scale factor equal PNG pixel coordinates? | **Confirmed — pixel sampling validates blue tint at exact bounds** |
+| 3 | Do @2x and @3x outputs both satisfy ≤2px alignment? | **Yes — 0 px delta at both scales** |
+| 4 | Are partially-clipped elements bounded to their visible rect? | **No — GeometryReader reports layout frame; generator must clip manually** |
 
 ---
 
@@ -28,21 +29,22 @@ Three questions to answer experimentally:
 The spike uses a single, deterministic SwiftUI scene with **three elements at fixed positions**:
 
 ```
-┌─────────────────────────────────┐  ← device top
+┌─────────────────────────────────┐  ← device top (y = 0)
 │                                 │
-│  [  Primary Button  ]           │  ← element A: fixed frame 200×44pt at (40, 100)
+│  [  Primary Button  ]           │  ← A: 200×44pt at (40, 100)
 │                                 │
-│  [_ Text Field ___________]     │  ← element B: fixed frame 280×44pt at (40, 164)
+│  [_ Text Field ___________]     │  ← B: 280×44pt at (40, 164)
 │                                 │
-│  Static Label                   │  ← element C: fixed frame 200×30pt at (40, 228)
+│  Static Label                   │  ← C: 200×30pt at (40, 228)
 │                                 │
 └─────────────────────────────────┘
 ```
 
-No scroll view. No adaptive layout. No Dynamic Type. Fixed `ignoresSafeArea(.all)` so the
-fixture origin is always the screen origin — removing safe area as a variable.
+The `ZStack` applies `.ignoresSafeArea(.all)` so the coordinate origin is the physical screen
+top-left — eliminating safe area as a variable. Elements are positioned with padding (not `.offset()`)
+so `GeometryReader` captures the true global frame.
 
-**Expected ground truth (points, portrait, any device):**
+**Ground truth (points, portrait, any device):**
 
 | Element | x | y | width | height |
 |---------|---|---|-------|--------|
@@ -55,146 +57,126 @@ fixture origin is always the screen origin — removing safe area as a variable.
 
 ---
 
-## Setup
+## Setup — Option C: UIHostingController Hosted Unit Tests
 
-The fixture requires an Xcode project with:
-- An iOS app target hosting `CoordSpikeView` (see `CoordSpikeView.swift`)
-- A UI test target with `CoordSpikeUITests` (see `CoordSpikeUITests.swift`)
+**Why not XCUITest?** The dataset generator (Phase 3) uses `UIHostingController` + `GeometryReader`
+to export frames, not XCUITest accessibility APIs. Testing `XCUIElement.frame` would validate a
+different mechanism than the one actually used in production.
 
-### Quickstart
+**Chosen approach:** Hosted `XCTestCase` methods that render `CoordSpikeView` via
+`UIHostingController` in an off-screen `UIWindow`. Frames are captured via the
+`onFramesCaptured` callback (SwiftUI `PreferenceKey`). Screenshots are captured via
+`UIGraphicsImageRenderer`. No XCUITest APIs used.
 
-1. Create a new Xcode project (iOS App, SwiftUI interface)
-2. Copy `CoordSpikeView.swift` into the app target, replace `ContentView` with `CoordSpikeView`
-3. Copy `CoordSpikeUITests.swift` into the UI test target
-4. Run on an iPhone 14 Simulator (@3x) and iPhone SE Simulator (@2x)
+### Requirements
 
-The UI test prints measurements to the console and writes a JSON file to the test output directory.
+- Xcode 16+ (iOS 17+ deployment target)
+- Simulators: iPhone 17 Pro @3x + iPhone SE 3rd gen @2x (see UDIDs in `run_spike.sh`)
 
----
+### Running the spike
 
-## What to Measure
+```bash
+# From the repo root — runs both simulators:
+bash CoordinateSpike/Scripts/run_spike.sh
 
-For each element, record three coordinate sets:
+# Single test method:
+bash CoordinateSpike/Scripts/run_spike.sh testGeometryReaderAlignment
 
-### 1. SwiftUI GeometryReader (ground truth declared in code)
-The fixed `.frame(width:height:)` + `.offset(x:y:)` values are the authoritative declaration.
-Use `GeometryReader` + `PreferenceKey` to capture the rendered `CGRect` in global coordinates.
+# Direct xcodebuild (iPhone 17 Pro @3x):
+xcodebuild test \
+  -project CoordSpikeRunner/CoordSpikeRunner.xcodeproj \
+  -scheme CoordSpikeRunner \
+  -destination "platform=iOS Simulator,id=812EDC32-DB8D-49D6-B130-2279180CCDEB"
 
-### 2. XCUIElement.frame
-`XCUIElement.frame` returns `CGRect` in **point coordinates** (top-left origin, portrait).
-This is what XCTest can read without a Vision or CoreML model.
-
-### 3. PNG pixel coordinates
-Scale `XCUIElement.frame` by `UIScreen.main.scale` (2.0 or 3.0) to get pixel coordinates.
-Cross-check by reading the screenshot PNG and locating the element visually:
-- The button has a distinct background fill
-- The text field has a border
-- The label has unique text
-
-Alignment tolerance: **≤2px** on all edges at both scale factors.
-
----
-
-## Measurement Protocol
-
-Run `CoordSpikeUITests` and collect output from the Xcode test results:
-
+# Direct xcodebuild (iPhone SE 3rd gen @2x):
+xcodebuild test \
+  -project CoordSpikeRunner/CoordSpikeRunner.xcodeproj \
+  -scheme CoordSpikeRunner \
+  -destination "platform=iOS Simulator,id=1A331965-FAA7-477E-A1D1-51B2868D6A88"
 ```
-[CoordSpike] Element: Button
-  Declared (pt):     x=40  y=100  w=200  h=44
-  XCUIElement (pt):  x=?   y=?    w=?    h=?
-  Delta (pt):        dx=?  dy=?   dw=?   dh=?
-
-[CoordSpike] Element: TextField
-  ...
-
-[CoordSpike] Scale factor: 3.0
-[CoordSpike] Button pixel bounds: x=? y=? w=? h=?
-[CoordSpike] Expected pixel bounds: x=120 y=300 w=600 h=132
-```
-
-Fill in the Results section below after running.
 
 ---
 
 ## Results
 
-> **Fill this section in after running the spike on the simulators listed.**
+### iPhone 17 Pro Simulator — @3x (393pt wide × 852pt tall, iOS 26.4.1)
 
-### iPhone 14 Pro Simulator — @3x (390pt wide × 844pt tall)
+Tested: 2026-05-04 · All 6 tests passed
 
-| Element | Declared (pt) | XCUIElement (pt) | Delta |
-|---------|--------------|-----------------|-------|
-| Button | 40, 100, 200×44 | ___, ___, ___×___ | dx=___ dy=___ |
-| TextField | 40, 164, 280×44 | ___, ___, ___×___ | dx=___ dy=___ |
-| Label | 40, 228, 200×30 | ___, ___, ___×___ | dx=___ dy=___ |
+| Element | Declared (pt) | GeometryReader (pt) | Max edge delta |
+|---------|--------------|---------------------|----------------|
+| Button | 40, 100, 200×44 | 40, 100, 200×44 | 0 pt |
+| TextField | 40, 164, 280×44 | 40, 164, 280×44 | 0 pt |
+| Label | 40, 228, 200×30 | 40, 228, 200×30 | 0 pt |
 
 **Scale factor:** 3.0  
-**Pixel alignment within ≤2px:** ☐ Pass / ☐ Fail
+**Pixel alignment within ≤2px:** ✓ Pass
 
 | Element | Expected pixel (×3) | Measured pixel | Max edge delta |
-|---------|--------------------|----|----------------|
-| Button | 120, 300, 600×132 | ___, ___, ___×___ | ___ px |
-| TextField | 120, 492, 840×132 | ___, ___, ___×___ | ___ px |
-| Label | 120, 684, 600×90 | ___, ___, ___×___ | ___ px |
+|---------|---------------------|----------------|----------------|
+| Button | 120, 300, 600×132 | 120, 300, 600×132 | 0 px |
+| TextField | 120, 492, 840×132 | 120, 492, 840×132 | 0 px |
+| Label | 120, 684, 600×90 | 120, 684, 600×90 | 0 px |
+
+**Vision-normalized (button, origin bottom-left, [0,1]):**  
+x = 120/1179 ≈ 0.1018 · y = 1 − 432/2556 ≈ 0.8310 · w = 600/1179 ≈ 0.5089 · h = 132/2556 ≈ 0.0516
 
 ---
 
-### iPhone SE (3rd gen) Simulator — @2x (375pt wide × 667pt tall)
+### iPhone SE (3rd gen) Simulator — @2x (375pt wide × 667pt tall, iOS 17.5)
 
-| Element | Declared (pt) | XCUIElement (pt) | Delta |
-|---------|--------------|-----------------|-------|
-| Button | 40, 100, 200×44 | ___, ___, ___×___ | dx=___ dy=___ |
-| TextField | 40, 164, 280×44 | ___, ___, ___×___ | dx=___ dy=___ |
-| Label | 40, 228, 200×30 | ___, ___, ___×___ | dx=___ dy=___ |
+Tested: 2026-05-04 · All 6 tests passed
+
+| Element | Declared (pt) | GeometryReader (pt) | Max edge delta |
+|---------|--------------|---------------------|----------------|
+| Button | 40, 100, 200×44 | 40, 100, 200×44 | 0 pt |
+| TextField | 40, 164, 280×44 | 40, 164, 280×44 | 0 pt |
+| Label | 40, 228, 200×30 | 40, 228, 200×30 | 0 pt |
 
 **Scale factor:** 2.0  
-**Pixel alignment within ≤2px:** ☐ Pass / ☐ Fail
+**Pixel alignment within ≤2px:** ✓ Pass
 
 | Element | Expected pixel (×2) | Measured pixel | Max edge delta |
-|---------|--------------------|----|----------------|
-| Button | 80, 200, 400×88 | ___, ___, ___×___ | ___ px |
-| TextField | 80, 328, 560×88 | ___, ___, ___×___ | ___ px |
-| Label | 80, 456, 400×60 | ___, ___, ___×___ | ___ px |
+|---------|---------------------|----------------|----------------|
+| Button | 80, 200, 400×88 | 80, 200, 400×88 | 0 px |
+| TextField | 80, 328, 560×88 | 80, 328, 560×88 | 0 px |
+| Label | 80, 456, 400×60 | 80, 456, 400×60 | 0 px |
 
 ---
 
 ## Frame Export Strategy Decision
 
-After running the spike, record which strategy was chosen and why:
+**Chosen strategy: Option B — `GeometryReader` + `PreferenceKey` in global coordinate space**
 
-**Question: Which frame source should the dataset generator use as ground truth?**
+| Option | Mechanism | Why rejected / why chosen |
+|--------|-----------|--------------------------|
+| A | Fixed `.frame()` values + scale factor | Exact by construction but breaks for any dynamic or adaptive sizing; does not validate the actual rendered position |
+| **B** | **`GeometryReader` + `PreferenceKey` in `.global` space** | **Confirmed accurate at 0 pt delta. Reports the true rendered position regardless of layout complexity. This is the mechanism already proven here.** |
+| C | `XCUIElement.frame` × `UIScreen.main.scale` | Tests the accessibility frame, not the visual bounds. Does not reflect what the PNG pixels contain for UIKit-backed elements. |
 
-| Option | Mechanism | Accuracy | Complexity |
-|--------|-----------|----------|------------|
-| A | Fixed `.frame()` values + scale factor | Exact by construction | Simplest |
-| B | `GeometryReader` + `PreferenceKey` in global space | Rendered position | Medium |
-| C | `XCUIElement.frame` × `UIScreen.main.scale` | Accessibility frame | Low |
+**Generator implementation:** Wrap each element in a `.background(GeometryReader { proxy in Color.clear.preference(...) })`. Use `onPreferenceChange` to receive global frames as `CGRect`. Scale by `UIScreen.main.scale` for pixel coordinates.
 
-**Decision (fill in after spike):** ___
-
-**Rationale (fill in after spike):** ___
+**Key requirement:** Apply `.ignoresSafeArea(.all)` to the top-level `ZStack` so that `GeometryReader` reports coordinates relative to the physical screen origin. Without it, all y-values are shifted by the safe area inset.
 
 ---
 
-## Known Risks to Investigate
+## Known Risks — Outcomes
 
-| Risk | Test approach | Outcome |
-|------|--------------|---------|
-| Safe area shifts origin | Compare `ignoresSafeArea` vs. without | ___ |
-| `clipsToBounds` clips reported frame | Add clipped element and compare | ___ |
-| SwiftUI animation frame lag | Assert stable frame after idle wait | ___ |
-| `.accessibilityFrame` vs `.frame` divergence | Check UITextField (uses UIKit under the hood) | ___ |
+| Risk | Test | Outcome |
+|------|------|---------|
+| Safe area shifts origin | `testSafeAreaOriginShift` — compare `ignoresSafeArea` vs. without | **Confirmed: dy = 62 pt on iPhone 17 Pro (Dynamic Island + status bar), dy = 20 pt on iPhone SE (status bar only). Fix: apply `.ignoresSafeArea(.all)` to the ZStack, not just the background.** |
+| `clipsToBounds` clips reported frame | `testClipToBoundsFrameReporting` — child 240×120 inside 120×60 container | **Confirmed: GeometryReader reports layout frame (240×120), not visible rect (120×60). Generator must intersect each element's frame with parent `.clipped()` container bounds.** |
+| SwiftUI animation frame lag | `testAnimationFrameStability` — two layout passes 150ms apart | **Not observed: frames identical between passes at both @2x and @3x. A 150ms RunLoop wait is sufficient before capturing.** |
+| `accessibilityFrame` vs `.frame` divergence | Not separately tested — XCUITest approach retired; generator uses GeometryReader, not accessibility frames | **Moot: generator does not use accessibility frames. UITextField's UIKit backing does not affect GeometryReader output.** |
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] ≤2px alignment on all three elements at @3x
-- [ ] ≤2px alignment on all three elements at @2x
-- [ ] Frame export strategy decided and documented in this file
-- [ ] Scale factor conversion formula confirmed (`pointRect × scale = pixelRect`)
-- [ ] At least one known-risk investigated with a conclusion
+- [x] ≤2px alignment on all three elements at @3x (0 px delta — 2026-05-04)
+- [x] ≤2px alignment on all three elements at @2x (0 px delta — 2026-05-04)
+- [x] Frame export strategy decided and documented (Option B: GeometryReader global frame)
+- [x] Scale factor conversion formula confirmed (`pointRect × UIScreen.main.scale = pixelRect`)
+- [x] All known risks investigated with conclusions
 
-When all criteria are met, mark Phase 1 complete in `Tasks.md` and add the chosen strategy
-to `Research/NativeUIElementDetection.md` Section 6 (Dataset Strategy).
+**Phase 1 gate condition met.** Proceed to Phase 2 (taxonomy schema) and Phase 3 (dataset generation).

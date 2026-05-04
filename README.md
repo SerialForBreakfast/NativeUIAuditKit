@@ -120,8 +120,9 @@ Training data strategy: [`Research/TrainingDataStrategy.md`](Research/TrainingDa
 | **4: UIKit Generator** | ⬜ | UIKit-rendered controls (anti-overfitting requirement) | ≥2,000 UIKit images; class imbalance ≤5:1 |
 | **5: Known-Bad UI** | ⬜ | Intentional failure cases + hard negatives | ≥500 known-bad images; `knownIssues` tagged |
 | **5b: Extended Templates** | ⬜ | ≥50 distinct SwiftUI templates; full state/accessibility sweep | No archetype >25% of images |
-| **6: iOS Model (5-class)** | ⬜ | First working CoreML detector; validates full pipeline | mAP@0.5 ≥ 0.70 on withheld-template test |
-| **6a: iOS Model (41-class)** | ⬜ | Full taxonomy; real-world validation gap documented | mAP@0.5 ≥ 0.85 on withheld-template test |
+| **6: iOS Model (5-class)** | ⬜ | First working CoreML detector; validates full pipeline | mAP@0.5 ≥ 0.70 on withheld-template test; physical device < 200ms |
+| **6→6a gate: Foundation Models eval** | ⬜ | Run Apple Intelligence vision model against 41-class test set before committing to full custom training | Decision documented; see `TrainingDataStrategy.md` §16.5 |
+| **6a: iOS Model (41-class)** | ⬜ | Anchor-free YOLO11 + focal loss + OHEM; real-world validation gap documented | mAP@0.5 ≥ 0.85 on withheld-template test; physical device < 200ms |
 | **6b: tvOS Model** | ⬜ | Focus state, top-of-screen tab bar | mAP@0.5 ≥ 0.80 on tvOS withheld test |
 | **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | mAP@0.5 ≥ 0.80 on macOS withheld test |
 | **7: OCR Fusion** | ⬜ | Visible text + truncation/clipping rules | Unit tests pass on known-bad fixtures |
@@ -149,6 +150,10 @@ Training data strategy: [`Research/TrainingDataStrategy.md`](Research/TrainingDa
 **Why ~41 classes and not more?** The taxonomy covers every common native Apple UI element that can be reliably bounded from a screenshot. Window chrome (macOS title bar, dock, menu bar) is excluded in v1 — the macOS model uses `navigationBar` for in-app navigation; window chrome detection requires a separate use case that is not part of the ScreenAuditKit contract validation goal. visionOS ornaments are deferred until a reliable screenshot capture workflow exists.
 
 **Why withhold entire template families from validation, not random 80/20?** A random split of images from the same generator templates leaks template structure into the validation set. The model memorizes generator patterns rather than generalizing to new screens. Template-family splits test genuine generalization.
+
+**Why anchor-free (YOLO11/RT-DETR) for the full 41-class model?** The element taxonomy spans ~50:1 in aspect ratio — from the homeIndicator (~134×5pt, ratio ~27:1) to a collectionItem (roughly square). Anchor-based detectors use k-means priors that cannot cover this range without severe anchor-to-class mismatch. Create ML's `MLObjectDetector` (anchor-based) is used for the 5-class prototype where the aspect ratio spread is manageable; anchor-free architecture is required for the full taxonomy.
+
+**Why evaluate Apple Foundation Models before Phase 6a?** Apple Intelligence ships a ~3B parameter on-device multimodal vision model. If it achieves strong zero-shot mAP on our test set, months of custom training effort may be better spent on fine-tuning or distillation rather than full training from scratch. This is a one-day evaluation that gates a multi-month commitment.
 
 ---
 
