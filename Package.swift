@@ -18,10 +18,14 @@ let package = Package(
             name: "NativeUIAuditKit",
             path: "Sources/NativeUIAuditKit"
         ),
+        // macOS orchestrator — drives xcrun commands, writes annotations, manages the manifest.
+        // Templates/ is iOS-only; it lives in the separate GeneratorRunner Xcode project
+        // and is never compiled into this SPM target. Explicitly excluded to suppress warnings.
         .executableTarget(
             name: "NativeUIDatasetGenerator",
             path: "NativeUIDatasetGenerator",
-            sources: ["Sources", "Templates"],
+            exclude: ["Templates"],
+            sources: ["Sources"],
             resources: [.copy("Assets/Wallpapers")]
         ),
         .executableTarget(

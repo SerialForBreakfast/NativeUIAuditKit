@@ -1,8 +1,11 @@
 // SettingsListTemplate.swift
-// NativeUIDatasetGenerator — Phase 3c-2
+// NativeUIDatasetGenerator — iOS GeneratorRunner target only
 //
 // Parameterised SwiftUI settings list template.
-// Produces training images containing:
+// Compiled exclusively into the iOS GeneratorRunner Xcode target.
+// No platform guards needed — this file never compiles on macOS.
+//
+// Annotated elements:
 //   navigationBar, tabBar, toggle, listRow, disclosureGroup, label, homeIndicator
 //
 // Layout rules (Phase 1 mandates):
@@ -94,6 +97,8 @@ public struct SettingsListConfig: Sendable {
 
 /// SwiftUI view rendering a settings screen and annotating UI elements via `.captureFrame(id:)`.
 ///
+/// **Platform scope:** iOS GeneratorRunner target only.
+///
 /// **Annotated elements:** `navigationBar`, `tabBar`, `toggle`, `listRow`,
 /// `disclosureGroup`, `label`, `homeIndicator` (when device has one).
 public struct SettingsListTemplate: View {
@@ -103,7 +108,6 @@ public struct SettingsListTemplate: View {
         self.config = config
     }
 
-    #if canImport(UIKit)
     public var body: some View {
         TabView {
             NavigationStack {
@@ -151,9 +155,7 @@ public struct SettingsListTemplate: View {
                             }
                         }
                     }
-                    #if os(iOS)
                     .listStyle(.insetGrouped)
-                    #endif
 
                     // Home indicator pill (when device profile has one)
                     if config.showHomeIndicator {
@@ -170,9 +172,7 @@ public struct SettingsListTemplate: View {
                 }
                 .ignoresSafeArea(.all)
                 .navigationTitle(config.title)
-                #if os(iOS)
                 .navigationBarTitleDisplayMode(.large)
-                #endif
                 .colorScheme(config.colorScheme)
             }
             .captureFrame(id: "navigationBar")
@@ -193,8 +193,4 @@ public struct SettingsListTemplate: View {
         .captureFrame(id: "tabBar")
         .colorScheme(config.colorScheme)
     }
-    #else
-    // macOS compilation stub — SettingsListTemplate runs only in iOS Simulator context.
-    public var body: some View { EmptyView() }
-    #endif
 }

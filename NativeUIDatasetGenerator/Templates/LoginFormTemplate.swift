@@ -1,19 +1,23 @@
 // LoginFormTemplate.swift
-// NativeUIDatasetGenerator — Phase 3c-1
+// NativeUIDatasetGenerator — iOS GeneratorRunner target only
 //
 // Parameterised SwiftUI login/signup form template.
-// Produces training images containing:
-//   navigationBar, primaryButton, secondaryButton, textField, secureField, label, link
+// Compiled exclusively into the iOS GeneratorRunner Xcode target.
+// No platform guards needed — this file never compiles on macOS.
+//
+// Annotated elements:
+//   navigationBar, textField, secureField, label, primaryButton,
+//   secondaryButton, link
 //
 // Layout rules (Phase 1 mandates):
 //   - Root ZStack carries .ignoresSafeArea(.all)
 //   - All element offsets use padding — never .offset()
 //   - Every annotated element attaches .captureFrame(id:)
 //
-// Parameter sweep for a full generation run:
-//   2 color schemes × 3 DynamicType sizes × 2 device sizes = 12 variants minimum.
+// Parameter sweep: 2 color schemes × 3 DynamicType sizes × 2 device sizes = 12 variants minimum.
 
 import SwiftUI
+import UIKit
 
 // MARK: - LoginFormConfig
 
@@ -29,7 +33,7 @@ public struct LoginFormConfig: Sendable {
     public var showForgotPassword: Bool
     /// When `true`, a "Sign up instead" secondary button is rendered below the primary button.
     public var showSignUpButton: Bool
-    /// When `true`, the email field shows a red border and an inline error label.
+    /// When `true`, the email field renders in an error state (red border + error label).
     public var emailErrorState: Bool
     /// Color scheme applied to the view.
     public var colorScheme: ColorScheme
@@ -55,18 +59,18 @@ public struct LoginFormConfig: Sendable {
     /// Deterministic factory — same `seed` always produces the same config.
     public static func make(seed: UInt64, corpus: inout ContentCorpus) -> LoginFormConfig {
         var rng = SeededRNG(seed: seed)
-        let showForgot  = rng.next() % 2 == 0
-        let showSignUp  = rng.next() % 2 == 0
-        let errorState  = rng.next() % 4 == 0   // ~25% chance
-        let dark        = rng.next() % 2 == 0
+        let showForgot    = rng.next() % 2 == 0
+        let showSignUp    = rng.next() % 2 == 0
+        let emailError    = rng.next() % 4 == 0   // ~25% show error state
+        let dark          = rng.next() % 2 == 0
 
         return LoginFormConfig(
             title: corpus.navigationTitle(),
-            emailPlaceholder: corpus.email(),
-            primaryButtonLabel: corpus.buttonLabel(),
+            emailPlaceholder: corpus.emailPlaceholder(),
+            primaryButtonLabel: corpus.primaryButtonLabel(),
             showForgotPassword: showForgot,
             showSignUpButton: showSignUp,
-            emailErrorState: errorState,
+            emailErrorState: emailError,
             colorScheme: dark ? .dark : .light
         )
     }
@@ -74,17 +78,10 @@ public struct LoginFormConfig: Sendable {
 
 // MARK: - LoginFormTemplate
 
-/// SwiftUI view that renders a login form and annotates every UI element via `.captureFrame(id:)`.
+/// SwiftUI view rendering a login/signup screen and annotating UI elements
+/// via `.captureFrame(id:)`.
 ///
-/// **Annotated elements:** `navigationBar`, `textField`, `secureField`, `label`,
-/// `primaryButton`, `secondaryButton` (conditional), `link` (conditional).
-///
-/// The `onFramesCaptured` closure is connected to the root ZStack's
-/// `.onPreferenceChange(FramePreference.self)` so that the screenshot capture pipeline
-/// can receive element frames without the view needing to know about `UIHostingController`.
-///
-/// **Platform scope:** iOS/iPadOS only. The macOS build provides a compile-time stub;
-/// the real implementation runs only inside the iOS Simulator via the generator runner.
+/// **Platform scope:** iOS GeneratorRunner target only.
 public struct LoginFormTemplate: View {
     public let config: LoginFormConfig
 
@@ -92,16 +89,10 @@ public struct LoginFormTemplate: View {
         self.config = config
     }
 
-    #if canImport(UIKit)
     public var body: some View {
         NavigationStack {
-                ZStack(alignment: .topLeading) {
-                // Background (UIColor.systemBackground is iOS/UIKit-only; fall back to white on macOS)
-                #if canImport(UIKit)
+            ZStack(alignment: .topLeading) {
                 Color(UIColor.systemBackground).ignoresSafeArea()
-                #else
-                Color.white.ignoresSafeArea()
-                #endif
 
                 VStack(alignment: .leading, spacing: 0) {
                     // Email label
@@ -198,17 +189,9 @@ public struct LoginFormTemplate: View {
             }
             .ignoresSafeArea(.all)
             .navigationTitle(config.title)
-                #if os(iOS)
-                .navigationBarTitleDisplayMode(.large)
-                #endif
-            // Note: the navigationBar itself is annotated via the hosting window bounds,
-            // not a captureFrame modifier — NavigationStack chrome is outside the ZStack.
+            .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)
         }
         .captureFrame(id: "navigationBar")
     }
-    #else
-    // macOS compilation stub — LoginFormTemplate runs only in iOS Simulator context.
-    public var body: some View { EmptyView() }
-    #endif
 }

@@ -78,7 +78,8 @@ development. It is not optional reading — it exists to prevent repeating known
 | Writing tests for rendering or coordinates | BP-05 (test the real mechanism), BP-06 (async), BP-07 (`@MainActor`) |
 | Xcode project scaffolding | BP-08 (minimal pbxproj), BP-09 (nested class error) |
 | Coordinate system conversions | BP-10 (all three reps), BP-11 (scale source), BP-10 (Vision y-flip) |
-| Any new generator template | BP-01, BP-02, BP-03, BP-04, BP-10, BP-11 |
+| Any new generator template | BP-01, BP-02, BP-03, BP-04, BP-10, BP-11, BP-15 |
+|| Adding a new SPM target or Xcode project | BP-15 (platform boundary rule) |
 
 **When you discover a new mistake or a better approach, add it to `Research/BestPractices.md`
 before closing the task.** Each entry must include: what went wrong, the correct approach, and
@@ -142,6 +143,28 @@ Do not make types `public` speculatively. Every `public` symbol needs a doc comm
 
 Swift 6 strict concurrency. Every new type must be `Sendable`. No `@MainActor` on data types.
 No `Task.detached` without documented justification. No global mutable state.
+
+---
+
+## Platform Boundary Rule — No Compiler Flags in View Code
+
+SwiftUI templates and UIKit rendering code are **iOS-only**. The macOS SPM orchestrator target must never compile them. Violating this forces `#if canImport(UIKit)` / `#if os(iOS)` guards into every view file, which is a maintenance hazard.
+
+**The correct split:**
+
+| Layer | Target | Platform |
+|-------|--------|----------|
+| `CaptureTypes.swift` (shared value types) | `NativeUIDatasetGenerator` SPM | macOS |
+| `Sources/` (orchestration, annotation, manifest) | `NativeUIDatasetGenerator` SPM | macOS |
+| `Templates/` (SwiftUI views, `ScreenshotCapture`) | `GeneratorRunner` Xcode project | iOS |
+
+**Rules:**
+- Templates must import `SwiftUI` (and `UIKit` where needed) with no `#if` guards.
+- The SPM target declares `exclude: ["Templates"]` so it never sees iOS-only files.
+- The iOS Xcode project references shared `Sources/` Swift files by relative path.
+- If you are about to add `#if canImport(UIKit)` to a SwiftUI view body, stop — the file is in the wrong target.
+
+See `Research/BestPractices.md` **BP-15** for the full rationale.
 
 ---
 

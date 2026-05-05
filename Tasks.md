@@ -456,18 +456,40 @@ These tasks require an Xcode app target and must run on Simulator.
 **Requires:** Nothing for the Package.swift edit itself  
 **Blocks:** TASK-3b-2, TASK-3b-3, TASK-3c-1
 
-Add an executable target `NativeUIDatasetGenerator` that compiles on macOS 15+ (it drives the iOS Simulator via `xcrun simctl`, so the host is macOS). The target should import only Foundation, CoreGraphics, and the local `GeneratorConfig`, `ContentCorpus`, `SimulatorStateManager` sources.
+macOS orchestrator executable. Drives `xcrun simctl`, writes annotation JSON, manages the manifest.
+`Templates/` is excluded from this target — it lives in the iOS GeneratorRunner Xcode project only.
 
 **AC:**
-- `swift build --target NativeUIDatasetGenerator` succeeds
+- `swift build --target NativeUIDatasetGenerator` succeeds with zero warnings
 - `swift run NativeUIDatasetGenerator --help` prints usage (even if bare-bones)
-- No test target modification required
+- No iOS-only `#if` guards in any `Sources/` file
+
+---
+
+#### TASK-3b-1a: Create `GeneratorRunner` iOS Xcode project 🔲
+
+**File:** `GeneratorRunner/GeneratorRunner.xcodeproj` (new)  
+**Requires:** TASK-3b-1, TASK-3b-2 complete  
+**Blocks:** TASK-3c first runs on a real simulator
+
+iOS app target (iPhone deployment target: iOS 17+) that:
+- Compiles all files in `NativeUIDatasetGenerator/Templates/` (including `ScreenshotCapture.swift`)
+- References shared files from `NativeUIDatasetGenerator/Sources/` by relative path (same pattern as `CoordSpikeRunner`)
+- Runs in the simulator via `xcrun simctl install` + `xcrun simctl launch`
+
+**Pattern:** Mirror `CoordSpikeRunner/` directory layout: minimal `xcodeproj`, no storyboard, `@main` Swift entry point.
+
+**AC:**
+- `xcodebuild -project GeneratorRunner/GeneratorRunner.xcodeproj -scheme GeneratorRunner -destination 'platform=iOS Simulator,...' build` succeeds
+- No `#if canImport(UIKit)` or `#if os(iOS)` guards in any template file
+- `ScreenshotCapture.capture` compiles without guards because UIKit is always available in this target
 
 ---
 
 #### TASK-3b-2: Screenshot capture pipeline ✅
 
-**File:** `NativeUIDatasetGenerator/Sources/ScreenshotCapture.swift` (new)  
+**Files:** `NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift` (iOS-only, no guards),  
+`NativeUIDatasetGenerator/Sources/CaptureTypes.swift` (shared types, macOS + iOS)  
 **Requires:** TASK-3b-1 complete, Phase 1 findings (150ms stabilization, `.ignoresSafeArea`, padding layout)  
 **Parallel with:** TASK-3a-4 (different files)
 
@@ -662,6 +684,8 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 ### Phase 3c: First 3 SwiftUI Templates
 
 *Requires TASK-3b-2 complete (capture pipeline). These 3 templates can be built in parallel by different engineers.*
+
+**Platform note:** All templates in this phase are **iOS-only**. They live in `NativeUIDatasetGenerator/Templates/` and are compiled exclusively by the `GeneratorRunner` iOS Xcode project (TASK-3b-1a). No `#if canImport(UIKit)` or `#if os(iOS)` guards are permitted in any template file — see BP-15.
 
 ---
 
