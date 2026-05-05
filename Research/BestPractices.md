@@ -249,6 +249,7 @@ Test output is transient. The `.xcresult` bundle is not committed. The `Research
 
 ### BP-15: Never use compiler flags to paper over a platform mismatch in view code
 
+
 **Problem:** SwiftUI templates written for iOS were placed in the macOS SPM target. The resulting `#if canImport(UIKit)` / `#if os(iOS)` guards spread through every view file, obscuring intent and creating permanent maintenance debt.
 
 **Root cause:** Putting iOS-only files in a multi-platform SPM target forces every iOS API call to be guarded individually. Method chaining breaks at guard boundaries. `EmptyView()` stubs must be maintained as false alternatives.
@@ -266,3 +267,126 @@ Test output is transient. The `.xcresult` bundle is not committed. The `Research
 The iOS Xcode project (`GeneratorRunner`) references the shared `Sources/` Swift files by relative path — the same pattern `CoordSpikeRunner` uses. The SPM target declares `exclude: ["Templates"]` so it never sees the iOS-only files.
 
 **Result:** Zero `#if` guards in any view file. Each file compiles cleanly in its intended context.
+
+---
+
+## XCTest Artifact Extraction
+
+### BP-16: Use `xcresulttool` object-graph traversal, not SQLite, to extract XCTAttachments
+
+The `.xcresult` bundle format changed in Xcode 16. Prior to Xcode 16, bundles contained a `database.sqlite3` file with an `Attachments` table that could be queried directly. From Xcode 16 onward, the bundle uses an opaque `Data/` blob store — no SQLite file is present.
+
+**Wrong (breaks on Xcode 16+):**
+```bash
+sqlite3 "$XCRESULT/database.sqlite3" \
+  "SELECT filenameOverride || '|' || xcResultKitPayloadRefId FROM Attachments WHERE uniformTypeIdentifier = 'public.png';"
+```
+
+**Correct (works across all versions):**
+```bash
+# 1. Get the root JSON
+xcrun xcresulttool get --legacy --path "$XCRESULT" --format json
+
+# 2. Navigate: root → ActionRecord.actionResult.testsRef
+# 3. For each ActionTestMetadata, follow summaryRef
+# 4. Collect ActionTestAttachment.payloadRef.id values
+# 5. Export each:
+xcrun xcresulttool export object --legacy \
+    --path "$XCRESULT" --id "$REF_ID" \
+    --output-path out.png --type file
+```
+
+**Key path through the object graph:**
+```
+ActionsInvocationRecord
+  └─ actions[]
+       └─ ActionRecord.actionResult.testsRef     → (fetch with --id)
+            └─ ActionTestPlanRunSummaries
+                 └─ summaries[].testableSummaries[].tests[]
+                      └─ ActionTestMetadata.summaryRef   → (fetch with --id)
+                           └─ ActionTestSummary
+                                └─ activitySummaries[].attachments[]
+                                     └─ ActionTestAttachment.payloadRef.id
+```
+
+See `scripts/_xcresult_attachments.py` for the full implementation. The `--legacy` flag is required in Xcode 16+; omitting it causes the command to exit 64.
+
+---
+
+## Bounding Box Capture
+
+### BP-17: Capture chrome element frames via UIKit hierarchy scan, not `.captureFrame` on container views
+
+**Problem:** Attaching `.captureFrame(id: "navigationBar")` to a `NavigationStack` or `.captureFrame(id: "tabBar")` to a `TabView` produces a frame covering the entire container (essentially the full screen height), not the chrome strip.
+
+**Why it happens:** `.captureFrame` uses a `background(GeometryReader)` that reads the view's layout frame. `NavigationStack` and `TabView` fill their entire allocated space — the nav bar and tab bar chrome are *rendered inside* these containers by UIKit, not exposed as discrete SwiftUI views.
+
+**Correct approach:** After layout stabilises, walk the UIKit view hierarchy from `hosting.view` to locate `UINavigationBar` and `UITabBar` instances, then convert their bounds to the hosting view's coordinate space:
+
+```swift
+private static func detectChromeFrames(in hostingView: UIView) -> [String: CGRect] {
+    var result: [String: CGRect] = [:]
+    func walk(_ view: UIView) {
+        guard !view.isHidden, view.alpha > 0.01 else { return }
+        switch view {
+        case let navBar as UINavigationBar:
+            if result["navigationBar"] == nil {
+                result["navigationBar"] = navBar.convert(navBar.bounds, to: hostingView)
+            }
+        case let tabBar as UITabBar:
+            if result["tabBar"] == nil {
+                result["tabBar"] = tabBar.convert(tabBar.bounds, to: hostingView)
+            }
+            // Divide the bar width evenly using UITabBar.items?.count.
+            // iOS always distributes tab items uniformly, so this gives accurate
+            // bounding boxes without navigating private UIKit view hierarchies.
+            // Note: On iOS 26 Liquid Glass, UITabBarButton subviews are no longer
+            // UIControl instances — class-based subview filtering is unreliable.
+            // UITabBar.items is a stable public API that works across all versions.
+            let tabBarGlobalFrame = result["tabBar"]!
+            let itemCount = tabBar.items?.count ?? 0
+            if itemCount > 0 {
+                let itemWidth = tabBarGlobalFrame.width / CGFloat(itemCount)
+                for i in 0..<itemCount {
+                    result["tabBarItem_\(i)"] = CGRect(
+                        x: tabBarGlobalFrame.minX + CGFloat(i) * itemWidth,
+                        y: tabBarGlobalFrame.minY,
+                        width: itemWidth,
+                        height: tabBarGlobalFrame.height
+                    )
+                }
+            }
+        default: break
+        }
+        view.subviews.forEach { walk($0) }
+    }
+    walk(hostingView)
+    return result
+}
+```
+
+`detectChromeFrames` is called after the 150 ms stabilisation wait and its results are merged into `capturedFrames`, overwriting any template-level `.captureFrame` values for the same keys.
+
+**Do not place `.captureFrame(id: "navigationBar")` or `.captureFrame(id: "tabBar")` in templates** — those keys are now owned by the UIKit scan.
+
+---
+
+### BP-18: Place `.captureFrame` before layout-spacing padding, not after
+
+`.captureFrame` adds a `background(GeometryReader)` that reads the frame of the view it wraps. Applying it *outside* a `.padding()` modifier means the GeometryReader measures the padded container (including the whitespace), not the element's visual boundary.
+
+**Wrong — captures frame including the 16 pt margins:**
+```swift
+Slider(value: $v)
+    .padding(.horizontal, 16)
+    .captureFrame(id: "slider_0")   // reads padded container → x ≈ 0, w ≈ 393
+```
+
+**Correct — captures the slider's own visual frame:**
+```swift
+Slider(value: $v)
+    .captureFrame(id: "slider_0")   // reads slider frame → x = 16, w = 361
+    .padding(.horizontal, 16)
+```
+
+**Rule:** `.captureFrame` is always the innermost annotation modifier. Any `.padding`, `.clipShape`, or other layout modifier that adds space *around* the element goes outside it.

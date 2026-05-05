@@ -193,9 +193,9 @@ public struct KitchenSinkTemplate: View {
                             .padding(.top, 6)
 
                             Slider(value: .constant(config.sliderValue))
+                                .captureFrame(id: "slider_0")
                                 .padding(.horizontal, 16)
                                 .padding(.top, 8)
-                                .captureFrame(id: "slider_0")
 
                             divider()
 
@@ -237,9 +237,9 @@ public struct KitchenSinkTemplate: View {
                                 Text("Done").tag(2)
                             }
                             .pickerStyle(.segmented)
+                            .captureFrame(id: "segmentedControl_0")
                             .padding(.horizontal, 16)
                             .padding(.top, 6)
-                            .captureFrame(id: "segmentedControl_0")
 
                             Picker("Options", selection: .constant(config.pickerSelection)) {
                                 Text("Name").tag(0)
@@ -249,8 +249,8 @@ public struct KitchenSinkTemplate: View {
                             .pickerStyle(.wheel)
                             .frame(height: 88)
                             .clipped()
-                            .padding(.horizontal, 16)
                             .captureFrame(id: "picker_0")
+                            .padding(.horizontal, 16)
 
                             divider()
 
@@ -342,9 +342,9 @@ public struct KitchenSinkTemplate: View {
                             } label: {
                                 Text("Advanced Settings")
                             }
+                            .captureFrame(id: "disclosureGroup_0")
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
-                            .captureFrame(id: "disclosureGroup_0")
 
                             // Breathing room so the home indicator doesn't overlap content
                             Spacer().frame(height: 60)
@@ -365,13 +365,11 @@ public struct KitchenSinkTemplate: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .colorScheme(config.colorScheme)
             }
-            .captureFrame(id: "navigationBar")
             .tabItem { Label("Home", systemImage: "house") }
 
             Text("").tabItem { Label("Search", systemImage: "magnifyingglass") }
             Text("").tabItem { Label("Profile", systemImage: "person") }
         }
-        .captureFrame(id: "tabBar")
         .colorScheme(config.colorScheme)
     }
 

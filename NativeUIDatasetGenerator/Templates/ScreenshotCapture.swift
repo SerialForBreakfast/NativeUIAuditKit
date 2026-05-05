@@ -78,6 +78,13 @@ public enum ScreenshotCapture {
             throw ScreenshotCaptureError.frameStabilizationTimeout
         }
 
+        // Auto-detect UINavigationBar and UITabBar from the UIKit hierarchy.
+        // Templates use .captureFrame on container views (NavigationStack, TabView) which
+        // yields the full container frame — not the chrome strip. Walking the UIView tree
+        // finds the actual UIKit chrome views and reads their real frames.
+        let chromeFrames = detectChromeFrames(in: hosting.view)
+        capturedFrames.merge(chromeFrames) { _, detected in detected }
+
         let format = UIGraphicsImageRendererFormat()
         format.scale = screen.scale
         let renderer = UIGraphicsImageRenderer(bounds: bounds, format: format)
@@ -111,6 +118,55 @@ public enum ScreenshotCapture {
             pointSize: bounds.size,
             scale: scaleInt
         )
+    }
+}
+
+// MARK: - Chrome detection
+
+extension ScreenshotCapture {
+
+    /// Walks the UIView hierarchy rooted at `hostingView` and returns the frames of
+    /// the first visible `UINavigationBar` and `UITabBar` found, converted into the
+    /// hosting view's coordinate space (= SwiftUI `.global` space).
+    ///
+    /// Called after layout stabilises so the bars are positioned and sized correctly.
+    private static func detectChromeFrames(in hostingView: UIView) -> [String: CGRect] {
+        var result: [String: CGRect] = [:]
+        func walk(_ view: UIView) {
+            guard !view.isHidden, view.alpha > 0.01 else { return }
+            switch view {
+            case let navBar as UINavigationBar:
+                if result["navigationBar"] == nil {
+                    result["navigationBar"] = navBar.convert(navBar.bounds, to: hostingView)
+                }
+            case let tabBar as UITabBar:
+                if result["tabBar"] == nil {
+                    result["tabBar"] = tabBar.convert(tabBar.bounds, to: hostingView)
+                }
+                // Detect individual tab items using UITabBar.items?.count.
+                // iOS always distributes tab items uniformly across the bar width, so
+                // dividing the bar rect evenly gives accurate bounding boxes without
+                // navigating private UIKit view hierarchies (which changed in iOS 26).
+                let tabBarGlobalFrame = result["tabBar"]!
+                let itemCount = tabBar.items?.count ?? 0
+                if itemCount > 0 {
+                    let itemWidth = tabBarGlobalFrame.width / CGFloat(itemCount)
+                    for i in 0..<itemCount {
+                        result["tabBarItem_\(i)"] = CGRect(
+                            x: tabBarGlobalFrame.minX + CGFloat(i) * itemWidth,
+                            y: tabBarGlobalFrame.minY,
+                            width: itemWidth,
+                            height: tabBarGlobalFrame.height
+                        )
+                    }
+                }
+            default:
+                break
+            }
+            view.subviews.forEach { walk($0) }
+        }
+        walk(hostingView)
+        return result
     }
 }
 

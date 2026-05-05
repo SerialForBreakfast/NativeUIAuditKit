@@ -8,8 +8,8 @@
 //   kitchen_sink_debug.png    — same PNG with colored boxes + element ID labels burned in
 //
 // How to inspect output:
-//   xcrun simctl get_app_container <UDID> com.nativeuiauditkit.generatorrunner data
-//   Then open Documents/debug/kitchen_sink_debug.png in Preview.
+//   Open the .xcresult in Xcode → test navigator → expand the test → click the attachment.
+//   Or: open .build/debug-output/KitchenSinkValidation.xcresult directly.
 //
 // What to check:
 //   - Every annotated element has a tight box (not the whole screen, not zero-sized)
@@ -29,7 +29,7 @@ final class KitchenSinkValidationTest: XCTestCase {
     /// Every element type that KitchenSinkTemplate must capture.
     /// If any of these is missing, the test fails before you even look at the image.
     private static let requiredElementTypes: Set<String> = [
-        "navigationBar", "tabBar", "homeIndicator",
+        "navigationBar", "tabBar", "tabBarItem", "homeIndicator",
         "label", "imageView", "link",
         "primaryButton", "secondaryButton", "destructiveButton", "cancelAction",
         "toggle", "slider", "stepperControl",
@@ -43,11 +43,6 @@ final class KitchenSinkValidationTest: XCTestCase {
     // MARK: - Smoke test
 
     func testKitchenSinkBoundingBoxes() async throws {
-        let debugDir = FileManager.default
-            .urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appending(path: "debug", directoryHint: .isDirectory)
-        try FileManager.default.createDirectory(at: debugDir, withIntermediateDirectories: true)
-
         // Fixed seed so the same image is produced on every run.
         let seed: UInt64 = 9_999
         var corpus = ContentCorpus(seed: seed)
@@ -63,14 +58,18 @@ final class KitchenSinkValidationTest: XCTestCase {
             config: generatorConfig
         )
 
-        // Write clean PNG
-        let rawURL = debugDir.appending(path: "kitchen_sink_raw.png")
-        try result.png.write(to: rawURL)
+        // Attach clean PNG to test result — stored in .xcresult, never outside the project.
+        let rawAttachment = XCTAttachment(data: result.png, uniformTypeIdentifier: "public.png")
+        rawAttachment.name = "kitchen_sink_raw.png"
+        rawAttachment.lifetime = .keepAlways
+        add(rawAttachment)
 
-        // Write debug-annotated PNG
+        // Attach debug-annotated PNG (boxes + labels burned in).
         let debugPNG = BoundingBoxDebugRenderer.render(result)
-        let debugURL = debugDir.appending(path: "kitchen_sink_debug.png")
-        try debugPNG.write(to: debugURL)
+        let debugAttachment = XCTAttachment(data: debugPNG, uniformTypeIdentifier: "public.png")
+        debugAttachment.name = "kitchen_sink_debug.png"
+        debugAttachment.lifetime = .keepAlways
+        add(debugAttachment)
 
         // MARK: Structural assertions
 
@@ -121,10 +120,7 @@ final class KitchenSinkValidationTest: XCTestCase {
 
         // Print summary to the test log for quick scan
         print("✅ KitchenSink captured \(result.elements.count) elements")
-        print("   Raw PNG : \(rawURL.path)")
-        print("   Debug PNG: \(debugURL.path)")
-        print("   Retrieve with:")
-        print("   open $(xcrun simctl get_app_container booted com.nativeuiauditkit.generatorrunner data)/Documents/debug/")
+        print("   Attachments stored in .xcresult — open in Xcode test navigator to inspect.")
 
         for el in result.elements.sorted(by: { $0.id < $1.id }) {
             print(String(format: "   %-36s  (%.0f,%.0f) %.0f×%.0f",
