@@ -145,11 +145,12 @@ public enum BoundingBoxDebugRenderer {
         UIGraphicsPushContext(ctx)
         let pill = UIBezierPath(roundedRect: tagRect, cornerRadius: 2 * scale)
 
-        // Dark halo behind the pill for contrast on any background.
+        // Semi-transparent pill: low enough alpha to see the underlying pixel content,
+        // high enough for the label text to remain legible. Dark halo adds contrast.
         ctx.saveGState()
         ctx.setShadow(offset: .zero, blur: 2 * scale,
-                      color: UIColor.black.withAlphaComponent(0.8).cgColor)
-        color.withAlphaComponent(0.92).setFill()
+                      color: UIColor.black.withAlphaComponent(0.6).cgColor)
+        color.withAlphaComponent(0.55).setFill()
         pill.fill()
         ctx.restoreGState()
 
