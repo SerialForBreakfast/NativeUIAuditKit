@@ -7,16 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		/* App target — minimal host process, no business logic */
 		BB000010000000000000BB10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB01 /* AppDelegate.swift */; };
-		BB000011000000000000BB11 /* CaptureTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002000000000000BB02 /* CaptureTypes.swift */; };
-		BB000012000000000000BB12 /* GeneratorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003000000000000BB03 /* GeneratorConfig.swift */; };
-		BB000013000000000000BB13 /* ContentCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000004000000000000BB04 /* ContentCorpus.swift */; };
-		BB000014000000000000BB14 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000005000000000000BB05 /* SeededRNG.swift */; };
-		BB000015000000000000BB15 /* ScreenshotCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000006000000000000BB06 /* ScreenshotCapture.swift */; };
-		BB000016000000000000BB16 /* LoginFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000007000000000000BB07 /* LoginFormTemplate.swift */; };
-		BB000017000000000000BB17 /* SettingsListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000008000000000000BB08 /* SettingsListTemplate.swift */; };
-		BB000018000000000000BB18 /* AlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000009000000000000BB09 /* AlertTemplate.swift */; };
+		/* Test target — all shared sources compiled directly into the test bundle */
+		CC000011000000000000CC11 /* CaptureTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002000000000000BB02 /* CaptureTypes.swift */; };
+		CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003000000000000BB03 /* GeneratorConfig.swift */; };
+		CC000013000000000000CC13 /* ContentCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000004000000000000BB04 /* ContentCorpus.swift */; };
+		CC000014000000000000CC14 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000005000000000000BB05 /* SeededRNG.swift */; };
+		CC000015000000000000CC15 /* ScreenshotCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000006000000000000BB06 /* ScreenshotCapture.swift */; };
+		CC000016000000000000CC16 /* LoginFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000007000000000000BB07 /* LoginFormTemplate.swift */; };
+		CC000017000000000000CC17 /* SettingsListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000008000000000000BB08 /* SettingsListTemplate.swift */; };
+		CC000018000000000000CC18 /* AlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000009000000000000BB09 /* AlertTemplate.swift */; };
+		CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001A000000000000BB1A /* AnnotationWriter.swift */; };
+		CC00001B000000000000CC1B /* DatasetManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001C000000000000BB1C /* DatasetManifest.swift */; };
+		CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000001000000000000CC01 /* GenerateDatasetTests.swift */; };
+		CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */; };
+		CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */; };
+		CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CC000020000000000000CC20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB000050000000000000BB50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000060000000000000BB60 /* GeneratorRunner */;
+			remoteInfo = GeneratorRunner;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		BB000001000000000000BB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,10 +48,24 @@
 		BB000009000000000000BB09 /* AlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/AlertTemplate.swift"; sourceTree = SOURCE_ROOT; };
 		BB00000A000000000000BB0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB00000B000000000000BB0B /* GeneratorRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeneratorRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB00001A000000000000BB1A /* AnnotationWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnotationWriter.swift; path = "../NativeUIDatasetGenerator/Sources/AnnotationWriter.swift"; sourceTree = SOURCE_ROOT; };
+		BB00001C000000000000BB1C /* DatasetManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatasetManifest.swift; path = "../NativeUIDatasetGenerator/Sources/DatasetManifest.swift"; sourceTree = SOURCE_ROOT; };
+		BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KitchenSinkTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/KitchenSinkTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoundingBoxDebugRenderer.swift; path = "../NativeUIDatasetGenerator/Templates/BoundingBoxDebugRenderer.swift"; sourceTree = SOURCE_ROOT; };
+		CC000001000000000000CC01 /* GenerateDatasetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateDatasetTests.swift; sourceTree = "<group>"; };
+		CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSinkValidationTest.swift; sourceTree = "<group>"; };
+		CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneratorRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BB000030000000000000BB30 /* Frameworks */ = {
+		BB000030000000000000BB30 /* Frameworks (app) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC000030000000000000CC30 /* Frameworks (tests) */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -49,6 +81,7 @@
 				BB000041000000000000BB41 /* GeneratorRunner */,
 				BB000042000000000000BB42 /* Shared Sources */,
 				BB000043000000000000BB43 /* Templates */,
+				CC000041000000000000CC41 /* GeneratorRunnerTests */,
 				BB000044000000000000BB44 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +102,8 @@
 				BB000003000000000000BB03 /* GeneratorConfig.swift */,
 				BB000004000000000000BB04 /* ContentCorpus.swift */,
 				BB000005000000000000BB05 /* SeededRNG.swift */,
+				BB00001A000000000000BB1A /* AnnotationWriter.swift */,
+				BB00001C000000000000BB1C /* DatasetManifest.swift */,
 			);
 			name = "Shared Sources";
 			sourceTree = "<group>";
@@ -80,14 +115,26 @@
 				BB000007000000000000BB07 /* LoginFormTemplate.swift */,
 				BB000008000000000000BB08 /* SettingsListTemplate.swift */,
 				BB000009000000000000BB09 /* AlertTemplate.swift */,
+				BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */,
+				BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */,
 			);
 			name = Templates;
+			sourceTree = "<group>";
+		};
+		CC000041000000000000CC41 /* GeneratorRunnerTests */ = {
+			isa = PBXGroup;
+			children = (
+				CC000001000000000000CC01 /* GenerateDatasetTests.swift */,
+				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
+			);
+			path = GeneratorRunnerTests;
 			sourceTree = "<group>";
 		};
 		BB000044000000000000BB44 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				BB00000B000000000000BB0B /* GeneratorRunner.app */,
+				CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,6 +158,23 @@
 			productReference = BB00000B000000000000BB0B /* GeneratorRunner.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CC000060000000000000CC60 /* GeneratorRunnerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC000080000000000000CC80 /* Build configuration list for PBXNativeTarget "GeneratorRunnerTests" */;
+			buildPhases = (
+				CC000032000000000000CC32 /* Sources */,
+				CC000030000000000000CC30 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC000021000000000000CC21 /* PBXTargetDependency */,
+			);
+			name = GeneratorRunnerTests;
+			productName = GeneratorRunnerTests;
+			productReference = CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -123,6 +187,10 @@
 				TargetAttributes = {
 					BB000060000000000000BB60 = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					CC000060000000000000CC60 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = BB000060000000000000BB60;
 					};
 				};
 			};
@@ -140,28 +208,53 @@
 			projectRoot = "";
 			targets = (
 				BB000060000000000000BB60 /* GeneratorRunner */,
+				CC000060000000000000CC60 /* GeneratorRunnerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BB000032000000000000BB32 /* Sources */ = {
+		BB000032000000000000BB32 /* Sources (app) */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				/* App is a minimal host process — all business logic compiles in the test bundle. */
 				BB000010000000000000BB10 /* AppDelegate.swift in Sources */,
-				BB000011000000000000BB11 /* CaptureTypes.swift in Sources */,
-				BB000012000000000000BB12 /* GeneratorConfig.swift in Sources */,
-				BB000013000000000000BB13 /* ContentCorpus.swift in Sources */,
-				BB000014000000000000BB14 /* SeededRNG.swift in Sources */,
-				BB000015000000000000BB15 /* ScreenshotCapture.swift in Sources */,
-				BB000016000000000000BB16 /* LoginFormTemplate.swift in Sources */,
-				BB000017000000000000BB17 /* SettingsListTemplate.swift in Sources */,
-				BB000018000000000000BB18 /* AlertTemplate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC000032000000000000CC32 /* Sources (tests) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				/* All shared sources compile directly into the self-contained test bundle. */
+				/* No BUNDLE_LOADER — avoids duplicate symbols; TEST_HOST provides UIKit context. */
+				CC000011000000000000CC11 /* CaptureTypes.swift in Sources */,
+				CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */,
+				CC000013000000000000CC13 /* ContentCorpus.swift in Sources */,
+				CC000014000000000000CC14 /* SeededRNG.swift in Sources */,
+				CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */,
+				CC00001B000000000000CC1B /* DatasetManifest.swift in Sources */,
+				CC000015000000000000CC15 /* ScreenshotCapture.swift in Sources */,
+				CC000016000000000000CC16 /* LoginFormTemplate.swift in Sources */,
+				CC000017000000000000CC17 /* SettingsListTemplate.swift in Sources */,
+				CC000018000000000000CC18 /* AlertTemplate.swift in Sources */,
+				CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */,
+				CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */,
+				CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */,
+				CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CC000021000000000000CC21 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB000060000000000000BB60 /* GeneratorRunner */;
+			targetProxy = CC000020000000000000CC20 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		BB000090000000000000BB90 /* Debug (project) */ = {
@@ -259,6 +352,47 @@
 			};
 			name = Release;
 		};
+		CC000092000000000000CC92 /* Debug (tests) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				/* No BUNDLE_LOADER — test bundle is self-contained; TEST_HOST only provides UIKit context. */
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GeneratorRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GeneratorRunner";
+			};
+			name = Debug;
+		};
+		CC000093000000000000CC93 /* Release (tests) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner.tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GeneratorRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GeneratorRunner";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -267,6 +401,15 @@
 			buildConfigurations = (
 				BB000092000000000000BB92 /* Debug */,
 				BB000093000000000000BB93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC000080000000000000CC80 /* Build configuration list for PBXNativeTarget "GeneratorRunnerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC000092000000000000CC92 /* Debug */,
+				CC000093000000000000CC93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

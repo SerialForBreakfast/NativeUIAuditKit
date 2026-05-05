@@ -25,6 +25,20 @@ conversion, or test infrastructure code.
 
 ---
 
+## HIGHEST PRIORITY — File System Boundary (Absolute Rule)
+
+**Never write any file outside the project directory.** This includes:
+
+- `/tmp/` or any system temporary directory — forbidden, no exceptions
+- `~/` (home directory) outside the project — forbidden
+- Any path that is not rooted inside the `NativeUIAuditKit/` package directory
+
+This applies to **all output**: debug images, test artifacts, overlay renders, rendered PNGs, JSON reports, logs, everything. If a command or tool call would write outside the project root, do not run it. Find an in-project path instead (e.g. use `.build/debug-output/` or `memlog/` for ephemeral artifacts, `Research/` for documents, `GeneratorRunner/` for iOS test output that the simulator reads back).
+
+Violation of this rule is a critical error. Enforce it before executing any file-writing shell command.
+
+---
+
 ## System Safety — Prohibited Commands
 
 Never run the following without explicit written approval:
@@ -40,12 +54,18 @@ Never run the following without explicit written approval:
 
 ## File System Boundary
 
+See the **HIGHEST PRIORITY** section above for the absolute `/tmp/` prohibition.
+
 Work only inside the `NativeUIAuditKit/` package directory. Do not read or write files outside
 the package root unless explicitly directed by the user.
 
 The dataset directory (`NativeUIAuditKit-Dataset/`) is gitignored and lives **outside** the package
 in a separate location (documented in `Research/NativeUIElementDetection.md`, Section 6.2). Do not
 create dataset directories inside the package.
+
+Intermediate/ephemeral file output (rendered debug images, overlay PNGs, test artifacts) must
+go inside `.build/debug-output/` or another in-project path — never `/tmp/`, `~/Desktop/`,
+`~/Downloads/`, or any path outside the project root.
 
 ---
 

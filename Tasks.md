@@ -771,7 +771,7 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 ---
 
-#### TASK-3e-1: First generation run
+#### TASK-3e-1: First generation run ✅
 
 **Requires:** All of Phase 3a, 3b, 3c complete  
 **Produces:** ≥500 annotated images in `NativeUIAuditKit-Dataset/train/` and `validation/`

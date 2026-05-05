@@ -177,14 +177,23 @@ func runSpotCheck() {
 
 /// Draw bounding boxes from `annotationPath` onto the PNG at `imagePath`.
 /// Returns the overlaid PNG data.
+///
+/// Uses `NSImage(size:flipped:drawingHandler:)` with `flipped: true` so the drawing
+/// handler operates in a top-left-origin coordinate system that matches the iOS
+/// `boundsPixels` annotation coordinates. This avoids the manual CGContext y-flip
+/// gymnastics that previously caused the source image to appear inverted and
+/// `CTFrameDraw` label text to render horizontally mirrored.
+///
+/// - Parameters:
+///   - imagePath: Absolute path to the source PNG.
+///   - annotationPath: Absolute path to the paired annotation JSON.
+/// - Returns: PNG data with colored bounding boxes and element-type labels burned in.
 func renderOverlay(imagePath: String, annotationPath: String) -> Result<Data, Error> {
-    // Load PNG
-    guard let nsImage = NSImage(contentsOfFile: imagePath),
-          let cgImage = nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+    guard let sourceImage = NSImage(contentsOfFile: imagePath) else {
         return .failure(OverlayError.imageLoadFailed(imagePath))
     }
 
-    // Load annotation JSON
+    // Load annotation JSON.
     let annotationURL = URL(fileURLWithPath: annotationPath)
     guard let jsonData = try? Data(contentsOf: annotationURL),
           let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
@@ -195,77 +204,60 @@ func renderOverlay(imagePath: String, annotationPath: String) -> Result<Data, Er
     let imageInfo = json["image"] as? [String: Any]
     let scale = (imageInfo?["scale"] as? Int) ?? 1
 
-    // Canvas dimensions in points (annotation boundsPixels are in pixels → divide by scale)
-    let pixelW = CGFloat(cgImage.width)
-    let pixelH = CGFloat(cgImage.height)
-
-    // Create context at pixel resolution.
-    let colorSpace = CGColorSpaceCreateDeviceRGB()
-    guard let ctx = CGContext(
-        data: nil,
-        width: Int(pixelW),
-        height: Int(pixelH),
-        bitsPerComponent: 8,
-        bytesPerRow: 0,
-        space: colorSpace,
-        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-    ) else {
-        return .failure(OverlayError.contextCreationFailed)
+    // boundsPixels coordinates are in pixels; draw at that resolution.
+    guard let cgSource = sourceImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+        return .failure(OverlayError.imageLoadFailed(imagePath))
     }
+    let pixelW = CGFloat(cgSource.width)
+    let pixelH = CGFloat(cgSource.height)
+    let canvasSize = NSSize(width: pixelW, height: pixelH)
 
-    // Draw source image (CoreGraphics uses bottom-left origin; flip with transform).
-    ctx.saveGState()
-    ctx.translateBy(x: 0, y: pixelH)
-    ctx.scaleBy(x: 1, y: -1)
-    ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: pixelW, height: pixelH))
-    ctx.restoreGState()
+    // NSImage(size:flipped:drawingHandler:) with flipped: true gives a top-left-origin
+    // drawing context. NSImage.draw(in:), NSBezierPath, and NSAttributedString all
+    // behave correctly in this space — no manual CTM gymnastics required.
+    let outputImage = NSImage(size: canvasSize, flipped: true) { _ in
+        // Draw the source image filling the full canvas.
+        sourceImage.draw(in: NSRect(origin: .zero, size: canvasSize))
 
-    // Flip for subsequent drawing so (0,0) = top-left.
-    ctx.translateBy(x: 0, y: pixelH)
-    ctx.scaleBy(x: 1, y: -1)
+        for element in elements {
+            guard let typeStr = element["elementType"] as? String,
+                  let bpRaw  = element["boundsPixels"] as? [String: Any],
+                  let bpx    = bpRaw["x"] as? Double,
+                  let bpy    = bpRaw["y"] as? Double,
+                  let bpw    = bpRaw["width"] as? Double,
+                  let bph    = bpRaw["height"] as? Double else { continue }
 
-    // Draw element boxes.
-    for element in elements {
-        guard let typeStr  = element["elementType"] as? String,
-              let bpRaw    = element["boundsPixels"] as? [String: Any],
-              let bpx      = bpRaw["x"] as? Double,
-              let bpy      = bpRaw["y"] as? Double,
-              let bpw      = bpRaw["width"] as? Double,
-              let bph      = bpRaw["height"] as? Double else { continue }
+            let excluded = element["excluded"] as? Bool ?? false
+            guard !excluded else { continue }
 
-        let occluded = element["occluded"] as? Bool ?? false
-        let excluded = element["excluded"] as? Bool ?? false
-        guard !excluded else { continue }
+            let occluded = element["occluded"] as? Bool ?? false
+            let boxRect  = NSRect(x: bpx, y: bpy, width: bpw, height: bph)
+            let nsColor  = strokeNSColor(forType: typeStr)
+            let lineW    = CGFloat(max(2, scale))
 
-        let boxRect = CGRect(x: bpx, y: bpy, width: bpw, height: bph)
-        let color   = strokeColor(forType: typeStr)
-        let lineW   = CGFloat(max(2, scale))
+            // Rounded rect stroke.
+            let path = NSBezierPath(roundedRect: boxRect.insetBy(dx: lineW / 2, dy: lineW / 2),
+                                    xRadius: 4, yRadius: 4)
+            path.lineWidth = lineW
+            if occluded {
+                let dash: [CGFloat] = [lineW * 4, lineW * 2]
+                path.setLineDash(dash, count: 2, phase: 0)
+            }
+            nsColor.setStroke()
+            path.stroke()
 
-        ctx.setStrokeColor(color)
-        ctx.setLineWidth(lineW)
-        if occluded {
-            ctx.setLineDash(phase: 0, lengths: [lineW * 4, lineW * 2])
-        } else {
-            ctx.setLineDash(phase: 0, lengths: [])
+            // Label tag above the box.
+            drawLabel(text: typeStr, at: NSPoint(x: bpx, y: bpy), color: nsColor, scale: scale)
         }
-
-        // Rounded rect stroke.
-        let path = CGPath(
-            roundedRect: boxRect.insetBy(dx: lineW / 2, dy: lineW / 2),
-            cornerWidth: 4, cornerHeight: 4, transform: nil
-        )
-        ctx.addPath(path)
-        ctx.strokePath()
-
-        // Label background + text.
-        drawLabel(ctx: ctx, text: typeStr, at: CGPoint(x: bpx, y: bpy), color: color, scale: scale)
+        return true
     }
 
-    guard let outputCGImage = ctx.makeImage() else {
+    // Convert to PNG via a CGImage snapshot.
+    guard let cgOutput = outputImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
         return .failure(OverlayError.renderFailed)
     }
-
-    let bitmap = NSBitmapImageRep(cgImage: outputCGImage)
+    let bitmap = NSBitmapImageRep(cgImage: cgOutput)
+    bitmap.size = canvasSize
     guard let pngData = bitmap.representation(using: .png, properties: [:]) else {
         return .failure(OverlayError.renderFailed)
     }
@@ -274,57 +266,65 @@ func renderOverlay(imagePath: String, annotationPath: String) -> Result<Data, Er
 
 // MARK: - Colour coding (per class group)
 
-func strokeColor(forType type: String) -> CGColor {
+/// Returns the `NSColor` stroke colour for a given element type string.
+/// Matches the same group palette used by `BoundingBoxDebugRenderer` on the iOS side.
+func strokeNSColor(forType type: String) -> NSColor {
     switch type {
     case "statusBar", "navigationBar", "tabBar", "toolbar", "sidebar", "homeIndicator", "dynamicIsland":
-        return CGColor(red: 0.13, green: 0.59, blue: 0.95, alpha: 1)   // blue — chrome
+        return NSColor(red: 0.13, green: 0.59, blue: 0.95, alpha: 1)   // blue — chrome
     case "primaryButton", "secondaryButton", "destructiveButton", "cancelAction",
          "textField", "secureField", "toggle", "slider", "segmentedControl",
          "picker", "stepperControl", "searchField", "menuButton", "colorWell":
-        return CGColor(red: 0.18, green: 0.80, blue: 0.44, alpha: 1)   // green — controls
+        return NSColor(red: 0.18, green: 0.80, blue: 0.44, alpha: 1)   // green — controls
     case "alert", "actionSheet", "sheet", "popover", "listRow", "collectionItem",
          "disclosureGroup", "tooltip", "contextMenu":
-        return CGColor(red: 1.00, green: 0.60, blue: 0.00, alpha: 1)   // orange — containers
+        return NSColor(red: 1.00, green: 0.60, blue: 0.00, alpha: 1)   // orange — containers
     case "activityIndicator", "progressView", "pageControl", "scrollIndicator", "refreshControl":
-        return CGColor(red: 0.60, green: 0.20, blue: 0.80, alpha: 1)   // purple — indicators
+        return NSColor(red: 0.60, green: 0.20, blue: 0.80, alpha: 1)   // purple — indicators
     default:
-        return CGColor(red: 0.55, green: 0.55, blue: 0.55, alpha: 1)   // grey — special / unknown
+        return NSColor(red: 0.55, green: 0.55, blue: 0.55, alpha: 1)   // grey — special / unknown
     }
 }
 
 // MARK: - Label drawing
 
-func drawLabel(ctx: CGContext, text: String, at point: CGPoint, color: CGColor, scale: Int) {
-    let fontSize = CGFloat(max(14, scale * 8))
+/// Draws a filled pill tag with monospaced `text` just above `point` (top-left of element box).
+///
+/// Called from inside an `NSImage(size:flipped:drawingHandler:)` handler where the coordinate
+/// system has top-left origin and y increases downward. `NSAttributedString.draw(in:)` in
+/// this context renders text correctly without any additional CTM adjustment.
+///
+/// - Parameters:
+///   - text: The element type string to display (e.g. `"textField_0"`).
+///   - point: Top-left corner of the bounding box (top-left-origin pixel coordinates).
+///   - color: Fill colour for the pill background; white text is used for contrast.
+///   - scale: Pixel scale factor (1, 2, or 3) — controls font size and padding.
+func drawLabel(text: String, at point: NSPoint, color: NSColor, scale: Int) {
+    let fontSize = CGFloat(max(10, scale * 7))
     let attrs: [NSAttributedString.Key: Any] = [
         .font: NSFont.monospacedSystemFont(ofSize: fontSize, weight: .medium),
-        .foregroundColor: NSColor(cgColor: CGColor(red: 1, green: 1, blue: 1, alpha: 1))!,
+        .foregroundColor: NSColor.white,
     ]
     let str = NSAttributedString(string: text, attributes: attrs)
-    let size = str.size()
-    let padding: CGFloat = 3 * CGFloat(scale)
-    let labelRect = CGRect(
-        x: point.x,
-        y: max(0, point.y - size.height - padding * 2),
-        width: size.width + padding * 2,
-        height: size.height + padding * 2
-    )
+    let textSize = str.size()
+    let hPad = 3.0 * CGFloat(scale)
+    let vPad = 2.0 * CGFloat(scale)
 
-    // Background pill
-    ctx.setFillColor(color.copy(alpha: 0.85)!)
-    let pillPath = CGPath(roundedRect: labelRect, cornerWidth: 3, cornerHeight: 3, transform: nil)
-    ctx.addPath(pillPath)
-    ctx.fillPath()
+    let tagW = textSize.width  + hPad * 2
+    let tagH = textSize.height + vPad * 2
 
-    // Text (NSAttributedString → Core Text)
-    ctx.saveGState()
-    ctx.textMatrix = .identity
-    let framesetter = CTFramesetterCreateWithAttributedString(str)
-    let textPath = CGPath(rect: CGRect(x: labelRect.minX + padding, y: labelRect.minY + padding,
-                                       width: size.width, height: size.height), transform: nil)
-    let frame = CTFramesetterCreateFrame(framesetter, CFRange(location: 0, length: 0), textPath, nil)
-    CTFrameDraw(frame, ctx)
-    ctx.restoreGState()
+    // Place tag just above the box top edge; clamp so it doesn't go above y=0.
+    let tagY = max(0, point.y - tagH - CGFloat(scale))
+    let tagRect = NSRect(x: point.x, y: tagY, width: tagW, height: tagH)
+
+    // Filled rounded-rect background.
+    let pill = NSBezierPath(roundedRect: tagRect, xRadius: 3, yRadius: 3)
+    color.withAlphaComponent(0.88).setFill()
+    pill.fill()
+
+    // Text — NSAttributedString.draw(in:) is correct in a flipped NSImage context.
+    str.draw(in: NSRect(x: tagRect.minX + hPad, y: tagRect.minY + vPad,
+                        width: textSize.width, height: textSize.height))
 }
 
 // MARK: - Helpers
