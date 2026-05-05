@@ -1,0 +1,287 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BB000010000000000000BB10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB01 /* AppDelegate.swift */; };
+		BB000011000000000000BB11 /* CaptureTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002000000000000BB02 /* CaptureTypes.swift */; };
+		BB000012000000000000BB12 /* GeneratorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003000000000000BB03 /* GeneratorConfig.swift */; };
+		BB000013000000000000BB13 /* ContentCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000004000000000000BB04 /* ContentCorpus.swift */; };
+		BB000014000000000000BB14 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000005000000000000BB05 /* SeededRNG.swift */; };
+		BB000015000000000000BB15 /* ScreenshotCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000006000000000000BB06 /* ScreenshotCapture.swift */; };
+		BB000016000000000000BB16 /* LoginFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000007000000000000BB07 /* LoginFormTemplate.swift */; };
+		BB000017000000000000BB17 /* SettingsListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000008000000000000BB08 /* SettingsListTemplate.swift */; };
+		BB000018000000000000BB18 /* AlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000009000000000000BB09 /* AlertTemplate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BB000001000000000000BB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BB000002000000000000BB02 /* CaptureTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CaptureTypes.swift; path = "../NativeUIDatasetGenerator/Sources/CaptureTypes.swift"; sourceTree = SOURCE_ROOT; };
+		BB000003000000000000BB03 /* GeneratorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneratorConfig.swift; path = "../NativeUIDatasetGenerator/Sources/GeneratorConfig.swift"; sourceTree = SOURCE_ROOT; };
+		BB000004000000000000BB04 /* ContentCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentCorpus.swift; path = "../NativeUIDatasetGenerator/Sources/ContentCorpus.swift"; sourceTree = SOURCE_ROOT; };
+		BB000005000000000000BB05 /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeededRNG.swift; path = "../NativeUIDatasetGenerator/Sources/SeededRNG.swift"; sourceTree = SOURCE_ROOT; };
+		BB000006000000000000BB06 /* ScreenshotCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScreenshotCapture.swift; path = "../NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift"; sourceTree = SOURCE_ROOT; };
+		BB000007000000000000BB07 /* LoginFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginFormTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BB000008000000000000BB08 /* SettingsListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsListTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BB000009000000000000BB09 /* AlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/AlertTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BB00000A000000000000BB0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB00000B000000000000BB0B /* GeneratorRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeneratorRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BB000030000000000000BB30 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BB000040000000000000BB40 /* Main Group */ = {
+			isa = PBXGroup;
+			children = (
+				BB000041000000000000BB41 /* GeneratorRunner */,
+				BB000042000000000000BB42 /* Shared Sources */,
+				BB000043000000000000BB43 /* Templates */,
+				BB000044000000000000BB44 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BB000041000000000000BB41 /* GeneratorRunner */ = {
+			isa = PBXGroup;
+			children = (
+				BB000001000000000000BB01 /* AppDelegate.swift */,
+				BB00000A000000000000BB0A /* Info.plist */,
+			);
+			path = GeneratorRunner;
+			sourceTree = "<group>";
+		};
+		BB000042000000000000BB42 /* Shared Sources */ = {
+			isa = PBXGroup;
+			children = (
+				BB000002000000000000BB02 /* CaptureTypes.swift */,
+				BB000003000000000000BB03 /* GeneratorConfig.swift */,
+				BB000004000000000000BB04 /* ContentCorpus.swift */,
+				BB000005000000000000BB05 /* SeededRNG.swift */,
+			);
+			name = "Shared Sources";
+			sourceTree = "<group>";
+		};
+		BB000043000000000000BB43 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				BB000006000000000000BB06 /* ScreenshotCapture.swift */,
+				BB000007000000000000BB07 /* LoginFormTemplate.swift */,
+				BB000008000000000000BB08 /* SettingsListTemplate.swift */,
+				BB000009000000000000BB09 /* AlertTemplate.swift */,
+			);
+			name = Templates;
+			sourceTree = "<group>";
+		};
+		BB000044000000000000BB44 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB00000B000000000000BB0B /* GeneratorRunner.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BB000060000000000000BB60 /* GeneratorRunner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB000080000000000000BB80 /* Build configuration list for PBXNativeTarget "GeneratorRunner" */;
+			buildPhases = (
+				BB000032000000000000BB32 /* Sources */,
+				BB000030000000000000BB30 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GeneratorRunner;
+			productName = GeneratorRunner;
+			productReference = BB00000B000000000000BB0B /* GeneratorRunner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BB000050000000000000BB50 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					BB000060000000000000BB60 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = BB000082000000000000BB82 /* Build configuration list for PBXProject "GeneratorRunner" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BB000040000000000000BB40;
+			productRefGroup = BB000044000000000000BB44 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BB000060000000000000BB60 /* GeneratorRunner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BB000032000000000000BB32 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB000010000000000000BB10 /* AppDelegate.swift in Sources */,
+				BB000011000000000000BB11 /* CaptureTypes.swift in Sources */,
+				BB000012000000000000BB12 /* GeneratorConfig.swift in Sources */,
+				BB000013000000000000BB13 /* ContentCorpus.swift in Sources */,
+				BB000014000000000000BB14 /* SeededRNG.swift in Sources */,
+				BB000015000000000000BB15 /* ScreenshotCapture.swift in Sources */,
+				BB000016000000000000BB16 /* LoginFormTemplate.swift in Sources */,
+				BB000017000000000000BB17 /* SettingsListTemplate.swift in Sources */,
+				BB000018000000000000BB18 /* AlertTemplate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BB000090000000000000BB90 /* Debug (project) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BB000091000000000000BB91 /* Release (project) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BB000092000000000000BB92 /* Debug (app) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = GeneratorRunner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Debug;
+		};
+		BB000093000000000000BB93 /* Release (app) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = GeneratorRunner/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BB000080000000000000BB80 /* Build configuration list for PBXNativeTarget "GeneratorRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB000092000000000000BB92 /* Debug */,
+				BB000093000000000000BB93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB000082000000000000BB82 /* Build configuration list for PBXProject "GeneratorRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB000090000000000000BB90 /* Debug */,
+				BB000091000000000000BB91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = BB000050000000000000BB50 /* Project object */;
+}

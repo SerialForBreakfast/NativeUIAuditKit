@@ -66,8 +66,8 @@ public struct LoginFormConfig: Sendable {
 
         return LoginFormConfig(
             title: corpus.navigationTitle(),
-            emailPlaceholder: corpus.emailPlaceholder(),
-            primaryButtonLabel: corpus.primaryButtonLabel(),
+            emailPlaceholder: corpus.email(),
+            primaryButtonLabel: corpus.buttonLabel(),
             showForgotPassword: showForgot,
             showSignUpButton: showSignUp,
             emailErrorState: emailError,

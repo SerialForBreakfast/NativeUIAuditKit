@@ -70,7 +70,8 @@ public enum ScreenshotCapture {
         hosting.view.layoutIfNeeded()
 
         // 150 ms stabilization — see Research/BestPractices.md BP-04.
-        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.15))
+        // Task.sleep is the correct primitive inside an async function (BP-06).
+        try await Task.sleep(for: .milliseconds(150))
 
         guard framesReceived else {
             window.isHidden = true
@@ -121,7 +122,9 @@ public enum ScreenshotCapture {
 /// Templates attach `.captureFrame(id:)` to each annotated element. The iOS runner
 /// listens at the root with `.onPreferenceChange(FramePreference.self)`.
 public struct FramePreference: PreferenceKey {
-    public static var defaultValue: [String: CGRect] = [:]
+    // Computed property avoids nonisolated global mutable state (Swift 6 requirement).
+    // PreferenceKey.defaultValue only needs `get`, so a computed var satisfies the protocol.
+    public static var defaultValue: [String: CGRect] { [:] }
     public static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
         value.merge(nextValue()) { _, new in new }
     }

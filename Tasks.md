@@ -466,7 +466,7 @@ macOS orchestrator executable. Drives `xcrun simctl`, writes annotation JSON, ma
 
 ---
 
-#### TASK-3b-1a: Create `GeneratorRunner` iOS Xcode project 🔲
+#### TASK-3b-1a: Create `GeneratorRunner` iOS Xcode project ✅
 
 **File:** `GeneratorRunner/GeneratorRunner.xcodeproj` (new)  
 **Requires:** TASK-3b-1, TASK-3b-2 complete  
