@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:NativeUIAuditKit}",
+            "name": "Debug NativeUIDatasetGenerator",
+            "target": "NativeUIDatasetGenerator",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug NativeUIDatasetGenerator"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:NativeUIAuditKit}",
+            "name": "Release NativeUIDatasetGenerator",
+            "target": "NativeUIDatasetGenerator",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release NativeUIDatasetGenerator"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:NativeUIAuditKit}",
+            "name": "Debug NativeUIDatasetGeneratorOverlay",
+            "target": "NativeUIDatasetGeneratorOverlay",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug NativeUIDatasetGeneratorOverlay"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:NativeUIAuditKit}",
+            "name": "Release NativeUIDatasetGeneratorOverlay",
+            "target": "NativeUIDatasetGeneratorOverlay",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release NativeUIDatasetGeneratorOverlay"
+        }
+    ]
+}

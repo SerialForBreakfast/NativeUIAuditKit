@@ -18,6 +18,16 @@ let package = Package(
             name: "NativeUIAuditKit",
             path: "Sources/NativeUIAuditKit"
         ),
+        .executableTarget(
+            name: "NativeUIDatasetGenerator",
+            path: "NativeUIDatasetGenerator",
+            sources: ["Sources", "Templates"],
+            resources: [.copy("Assets/Wallpapers")]
+        ),
+        .executableTarget(
+            name: "NativeUIDatasetGeneratorOverlay",
+            path: "NativeUIDatasetGeneratorOverlay/Sources"
+        ),
         .testTarget(
             name: "NativeUIAuditKitTests",
             dependencies: ["NativeUIAuditKit"],

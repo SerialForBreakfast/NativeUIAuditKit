@@ -65,9 +65,9 @@ See [`Research/CoordinateSpike.md`](Research/CoordinateSpike.md) for full result
 
 ---
 
-## Phase 2: Taxonomy Expansion & Schema v1
+## Phase 2: Taxonomy Expansion & Schema v1 ✅
 
-*Goal: Expand `NativeUIElementType` to 41 classes and produce a frozen, versioned annotation schema. Stream A (Swift) and Stream B (schema files) are independent and can run in parallel.*
+*Complete 2026-05-04. All 41 types in enum, schema v1.0 written, category_map frozen (alphabetical), OCRFusionPolicy documented. 9/9 tests pass.*
 
 **Hard deadline:** `NativeUIElementType.rawValue` strings become stable public API the moment the schema is tagged v1.0. Additions after tagging = minor version bump. Renames = major version bump. Do not freeze until all 41 classes are final.
 
@@ -79,7 +79,7 @@ See [`Research/CoordinateSpike.md`](Research/CoordinateSpike.md) for full result
 
 ---
 
-#### TASK-2a-1: Add 14 new `NativeUIElementType` cases
+#### TASK-2a-1: Add 14 new `NativeUIElementType` cases ✅
 
 **File:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`  
 **Requires:** Nothing — unblocked immediately  
@@ -112,7 +112,7 @@ Add the following 14 cases to the `NativeUIElementType` enum. `rawValue` must ex
 
 ---
 
-#### TASK-2a-2: Extend `NativeUIElementState`
+#### TASK-2a-2: Extend `NativeUIElementState` ✅
 
 **File:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`  
 **Requires:** Nothing — unblocked immediately  
@@ -137,7 +137,7 @@ All three must be optional (nil = state not applicable or not observed), `Codabl
 
 ---
 
-#### TASK-2a-3: Update Codable round-trip tests
+#### TASK-2a-3: Update Codable round-trip tests ✅
 
 **File:** `Tests/NativeUIAuditKitTests/NativeUIAuditKitTests.swift`  
 **Requires:** TASK-2a-1 and TASK-2a-2 complete  
@@ -157,7 +157,7 @@ Extend the existing Codable round-trip tests to cover all 14 new element types a
 
 ---
 
-#### TASK-2a-4: Update `NativeUIElementDetection.md` Section 5
+#### TASK-2a-4: Update `NativeUIElementDetection.md` Section 5 ✅
 
 **File:** `Research/NativeUIElementDetection.md`  
 **Requires:** TASK-2a-1 complete  
@@ -176,7 +176,7 @@ Replace the class list in Section 5.2 with the full 41-class taxonomy. Preserve 
 
 ---
 
-#### TASK-2b-1: Write `Research/schemas/annotation.schema.json` v1.0
+#### TASK-2b-1: Write `Research/schemas/annotation.schema.json` v1.0 ✅
 
 **File:** `Research/schemas/annotation.schema.json` (new file)  
 **Requires:** Nothing — unblocked immediately  
@@ -200,7 +200,7 @@ Write a JSON Schema (draft-07) that validates a single annotation file. The sche
 
 ---
 
-#### TASK-2b-2: Write `Research/schemas/category_map.json`
+#### TASK-2b-2: Write `Research/schemas/category_map.json` ✅
 
 **File:** `Research/schemas/category_map.json` (new file)  
 **Requires:** TASK-2a-1 complete (need final list of all 41 rawValues)  
@@ -228,7 +228,7 @@ Assign IDs 0–40 in alphabetical order of rawValue string. Use `supercategory` 
 
 ---
 
-#### TASK-2b-3: Write `Research/OCRFusionPolicy.md`
+#### TASK-2b-3: Write `Research/OCRFusionPolicy.md` ✅
 
 **File:** `Research/OCRFusionPolicy.md` (new file)  
 **Requires:** Nothing — unblocked immediately  
@@ -265,7 +265,7 @@ These tasks only require a Swift file and have no Xcode/Simulator dependency. Th
 
 ---
 
-#### TASK-3a-1: `GeneratorConfig.swift` — core data types
+#### TASK-3a-1: `GeneratorConfig.swift` — core data types ✅
 
 **File:** `NativeUIDatasetGenerator/Sources/GeneratorConfig.swift` (new)  
 **Requires:** TASK-2b-1 complete (schema defines the metadata fields)  
@@ -333,7 +333,7 @@ Include 5 predefined `OSVisualProfile` static instances: `ios17`, `ios18`, `ios2
 
 ---
 
-#### TASK-3a-2: `ContentCorpus.swift` — seeded text generation
+#### TASK-3a-2: `ContentCorpus.swift` — seeded text generation ✅
 
 **File:** `NativeUIDatasetGenerator/Sources/ContentCorpus.swift` (new)  
 **Requires:** Nothing — unblocked immediately  
@@ -378,7 +378,7 @@ struct ContentCorpus {
 
 ---
 
-#### TASK-3a-3: Wallpaper archetype assets
+#### TASK-3a-3: Wallpaper archetype assets ✅
 
 **Files:** `NativeUIDatasetGenerator/Assets/Wallpapers/` (6 PNG files, new directory)  
 **Requires:** Nothing — unblocked immediately  
@@ -402,7 +402,7 @@ Create 6 abstract wallpaper PNG assets at 1290×2796px (iPhone 15 Pro Max native
 
 ---
 
-#### TASK-3a-4: `SimulatorStateManager.swift`
+#### TASK-3a-4: `SimulatorStateManager.swift` ✅
 
 **File:** `NativeUIDatasetGenerator/Sources/SimulatorStateManager.swift` (new)  
 **Requires:** TASK-3a-1 complete (`SimulatorStateOverride` type)  
@@ -450,7 +450,7 @@ These tasks require an Xcode app target and must run on Simulator.
 
 ---
 
-#### TASK-3b-1: Add `NativeUIDatasetGenerator` app target to `Package.swift`
+#### TASK-3b-1: Add `NativeUIDatasetGenerator` app target to `Package.swift` ✅
 
 **File:** `Package.swift`  
 **Requires:** Nothing for the Package.swift edit itself  
@@ -465,7 +465,7 @@ Add an executable target `NativeUIDatasetGenerator` that compiles on macOS 15+ (
 
 ---
 
-#### TASK-3b-2: Screenshot capture pipeline
+#### TASK-3b-2: Screenshot capture pipeline ✅
 
 **File:** `NativeUIDatasetGenerator/Sources/ScreenshotCapture.swift` (new)  
 **Requires:** TASK-3b-1 complete, Phase 1 findings (150ms stabilization, `.ignoresSafeArea`, padding layout)  
@@ -507,7 +507,7 @@ struct ScreenshotCapture {
 
 ---
 
-#### TASK-3b-3: Annotation JSON writer and manifest
+#### TASK-3b-3: Annotation JSON writer and manifest ✅
 
 **Files:** `NativeUIDatasetGenerator/Sources/AnnotationWriter.swift`, `NativeUIDatasetGenerator/Sources/DatasetManifest.swift` (new)  
 **Requires:** TASK-3b-2 complete, TASK-2b-1 complete (schema defines the format)  
@@ -547,7 +547,7 @@ struct ManifestEntry: Codable {
 
 ---
 
-#### TASK-3b-4: Dataset balance report
+#### TASK-3b-4: Dataset balance report ✅
 
 **File:** `NativeUIDatasetGenerator/Sources/BalanceReport.swift` and `scripts/generate_balance_report.py` (new)  
 **Requires:** TASK-3b-3 complete (needs manifest format)  
@@ -572,7 +572,7 @@ These are pure Python scripts. They only need to know the annotation JSON format
 
 ---
 
-#### TASK-5e-1: `scripts/confusion_matrix.py`
+#### TASK-5e-1: `scripts/confusion_matrix.py` ✅
 
 **File:** `scripts/confusion_matrix.py` (new)  
 **Requires:** TASK-2b-1 complete (needs category_map for class names), TASK-2b-2 complete  
@@ -604,7 +604,7 @@ Usage: python scripts/confusion_matrix.py \
 
 ---
 
-#### TASK-5e-2: `scripts/centroid_distribution.py`
+#### TASK-5e-2: `scripts/centroid_distribution.py` ✅
 
 **File:** `scripts/centroid_distribution.py` (new)  
 **Requires:** TASK-2b-1 complete  
@@ -636,7 +636,7 @@ Usage: python scripts/centroid_distribution.py \
 
 ---
 
-#### TASK-3d-1: Overlay viewer
+#### TASK-3d-1: Overlay viewer ✅
 
 **File:** `NativeUIDatasetGeneratorOverlay/` (new Xcode app or SPM executable target)  
 **Requires:** TASK-2b-1 complete (needs annotation format), TASK-3b-3 complete (needs the annotation files it reads)  
@@ -665,7 +665,7 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 ---
 
-#### TASK-3c-1: Login/signup form template
+#### TASK-3c-1: Login/signup form template ✅
 
 **File:** `NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift` (new)  
 **Requires:** TASK-3b-2, TASK-3a-1 (GeneratorConfig), TASK-3a-2 (ContentCorpus)  
@@ -699,7 +699,7 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 ---
 
-#### TASK-3c-2: Settings grouped list template
+#### TASK-3c-2: Settings grouped list template ✅
 
 **File:** `NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift` (new)  
 **Requires:** TASK-3b-2, TASK-3a-1, TASK-3a-2  
@@ -720,7 +720,7 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 ---
 
-#### TASK-3c-3: Alert template
+#### TASK-3c-3: Alert template ✅
 
 **File:** `NativeUIDatasetGenerator/Templates/AlertTemplate.swift` (new)  
 **Requires:** TASK-3b-2, TASK-3a-1, TASK-3a-2  
