@@ -24,6 +24,12 @@
 		CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */; };
 		CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */; };
 		CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */; };
+		/* Phase 4 — UIKit generator templates and coord tests */
+		DD000011000000000000DD11 /* UIKitCaptureSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000001000000000000DD01 /* UIKitCaptureSupport.swift */; };
+		DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002000000000000DD02 /* UIKitFormViewController.swift */; };
+		DD000013000000000000DD13 /* UIKitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000003000000000000DD03 /* UIKitListViewController.swift */; };
+		DD000014000000000000DD14 /* UIKitControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000004000000000000DD04 /* UIKitControlsViewController.swift */; };
+		DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000005000000000000DD05 /* UIKitCoordTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +61,13 @@
 		CC000001000000000000CC01 /* GenerateDatasetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateDatasetTests.swift; sourceTree = "<group>"; };
 		CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSinkValidationTest.swift; sourceTree = "<group>"; };
 		CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneratorRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		/* Phase 4 — UIKit generator templates */
+		DD000001000000000000DD01 /* UIKitCaptureSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitCaptureSupport.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitCaptureSupport.swift"; sourceTree = SOURCE_ROOT; };
+		DD000002000000000000DD02 /* UIKitFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitFormViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitFormViewController.swift"; sourceTree = SOURCE_ROOT; };
+		DD000003000000000000DD03 /* UIKitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitListViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitListViewController.swift"; sourceTree = SOURCE_ROOT; };
+		DD000004000000000000DD04 /* UIKitControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitControlsViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitControlsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		/* Phase 4 — UIKit coord tests */
+		DD000005000000000000DD05 /* UIKitCoordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitCoordTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +130,10 @@
 				BB000009000000000000BB09 /* AlertTemplate.swift */,
 				BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */,
 				BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */,
+				DD000001000000000000DD01 /* UIKitCaptureSupport.swift */,
+				DD000002000000000000DD02 /* UIKitFormViewController.swift */,
+				DD000003000000000000DD03 /* UIKitListViewController.swift */,
+				DD000004000000000000DD04 /* UIKitControlsViewController.swift */,
 			);
 			name = Templates;
 			sourceTree = "<group>";
@@ -126,6 +143,7 @@
 			children = (
 				CC000001000000000000CC01 /* GenerateDatasetTests.swift */,
 				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
+				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
 			);
 			path = GeneratorRunnerTests;
 			sourceTree = "<group>";
@@ -241,8 +259,13 @@
 				CC000018000000000000CC18 /* AlertTemplate.swift in Sources */,
 				CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */,
 				CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */,
+				DD000011000000000000DD11 /* UIKitCaptureSupport.swift in Sources */,
+				DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */,
+				DD000013000000000000DD13 /* UIKitListViewController.swift in Sources */,
+				DD000014000000000000DD14 /* UIKitControlsViewController.swift in Sources */,
 				CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */,
 				CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */,
+				DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

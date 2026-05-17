@@ -104,9 +104,32 @@ final class GenerateDatasetTests: XCTestCase {
     }
 
     /// Generates 200 settings-list template images (seeds 3001–3200).
-    /// Runs last — final manifest write includes all 600 entries.
     func testGenerateSettingsListImages() async throws {
         try await generateImages(templateFamily: "SettingsList", count: 200, startSeed: 3001)
+    }
+
+    // MARK: - Phase 4: UIKit generator (≥2,000 images, anti-overfitting requirement)
+
+    /// Generates 700 UIKit form (sign-in) template images (seeds 4001–4700).
+    /// UIKitFormViewController: navigationBar + label × 2 + textField + secureField +
+    /// primaryButton + secondaryButton.
+    func testGenerateUIKitFormImages() async throws {
+        try await generateUIKitImages(templateFamily: "UIKitForm", count: 700, startSeed: 4001)
+    }
+
+    /// Generates 700 UIKit list template images (seeds 5001–5700).
+    /// UIKitListViewController: navigationBar + tabBar + tabBarItem × 4 +
+    /// listRow × 5 + toggle × 2.
+    func testGenerateUIKitListImages() async throws {
+        try await generateUIKitImages(templateFamily: "UIKitList", count: 700, startSeed: 5001)
+    }
+
+    /// Generates 700 UIKit controls showcase images (seeds 6001–6700).
+    /// UIKitControlsViewController: navigationBar + slider + segmentedControl +
+    /// activityIndicator + progressView + pageControl + toggle.
+    /// Runs last — manifest write after this method includes all 2,700 entries.
+    func testGenerateUIKitControlsImages() async throws {
+        try await generateUIKitImages(templateFamily: "UIKitControls", count: 700, startSeed: 6001)
     }
 
     // MARK: - Core generation loop
@@ -231,6 +254,83 @@ final class GenerateDatasetTests: XCTestCase {
         )
     }
 
+    // MARK: - UIKit generation loop (Phase 4)
+
+    /// Generates `count` UIKit images for the given template family.
+    ///
+    /// Mirrors `generateImages` but calls `ScreenshotCapture.captureUIKit` via a UIKit
+    /// VC factory instead of the SwiftUI capture path.
+    private func generateUIKitImages(
+        templateFamily: String,
+        count: Int,
+        startSeed: UInt64
+    ) async throws {
+        let manifestURL = datasetDir.appending(path: "manifest.json")
+        var manifest = try DatasetManifest.load(from: manifestURL)
+
+        for i in 0..<count {
+            let seed = startSeed + UInt64(i)
+            let state = simulatorStates[i % simulatorStates.count]
+            let config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+
+            let result = try await captureUIKit(templateFamily: templateFamily, seed: seed, config: config)
+
+            let imageIndex = manifest.imageCount + 1
+            let split = splitFor(imageIndex: imageIndex)
+            let baseName = String(format: "img_%06d", imageIndex)
+            let pngName  = baseName + ".png"
+            let jsonName = baseName + ".json"
+
+            let splitDir = datasetDir.appending(path: split.rawValue, directoryHint: .isDirectory)
+            try result.png.write(to: splitDir.appending(path: pngName))
+            try AnnotationWriter.write(
+                result: result,
+                config: config,
+                imageFileName: pngName,
+                templateFamily: templateFamily,
+                generatorVersion: "0.1.0",
+                to: splitDir.appending(path: jsonName)
+            )
+
+            let entry = ManifestEntry(
+                fileName: "\(split.rawValue)/\(pngName)",
+                split: split,
+                sha256: result.sha256,
+                templateFamily: templateFamily,
+                generatorSeed: seed,
+                simulatorState: state,
+                isolationTemplate: config.isolationTemplate,
+                lowDensity: config.lowDensity,
+                deviceName: config.deviceName,
+                pixelScale: config.pixelScale
+            )
+            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
+        }
+
+        try manifest.save(to: manifestURL)
+    }
+
+    /// Dispatches to the correct UIKit VC factory and calls `captureUIKit`.
+    private func captureUIKit(
+        templateFamily: String,
+        seed: UInt64,
+        config: GeneratorRunConfig
+    ) async throws -> CaptureResult {
+        switch templateFamily {
+        case "UIKitForm":
+            let vc = UIKitFormViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "UIKitList":
+            let vc = UIKitListViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "UIKitControls":
+            let vc = UIKitControlsViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        default:
+            throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
+        }
+    }
+
     // MARK: - Helpers
 
     /// Assigns a `DatasetSplit` based on a 10-bucket rotation: 80% train, 10% validation, 10% test.
@@ -261,7 +361,7 @@ enum GenerateDatasetError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .unknownTemplateFamily(let family):
-            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert."
+            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls."
         }
     }
 }

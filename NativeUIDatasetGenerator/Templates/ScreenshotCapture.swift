@@ -140,7 +140,9 @@ extension ScreenshotCapture {
     /// hosting view's coordinate space (= SwiftUI `.global` space).
     ///
     /// Called after layout stabilises so the bars are positioned and sized correctly.
-    private static func detectChromeFrames(in hostingView: UIView) -> [String: CGRect] {
+    /// Internal (not private) so `UIKitCaptureSupport.swift` can call it on the same
+    /// module boundary — all sources compile into a single test bundle.
+    static func detectChromeFrames(in hostingView: UIView) -> [String: CGRect] {
         var result: [String: CGRect] = [:]
         func walk(_ view: UIView) {
             guard !view.isHidden, view.alpha > 0.01 else { return }
