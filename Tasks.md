@@ -811,7 +811,7 @@ Run the overlay viewer's spot-check mode on 50 random samples from the Phase 3e-
 
 ---
 
-#### TASK-4-1: UIKit coordinate export validation
+#### TASK-4-1: UIKit coordinate export validation ✅ Complete (2026-05-17)
 
 **File:** `NativeUIDatasetGenerator/Tests/UIKitCoordTests.swift` (new)  
 **Requires:** TASK-3b-2 (capture pipeline)
@@ -825,7 +825,7 @@ Before generating at scale, verify UIKit frame export. Create a `UIViewControlle
 
 ---
 
-#### TASK-4-2: `UIKitGeneratorViewController`
+#### TASK-4-2: `UIKitGeneratorViewController` ✅ Complete (2026-05-17)
 
 **File:** `NativeUIDatasetGenerator/Templates/UIKit/UIKitGeneratorViewController.swift` (new)  
 **Requires:** TASK-4-1 passing, TASK-3b-2 (capture pipeline), TASK-3a-2 (ContentCorpus)
