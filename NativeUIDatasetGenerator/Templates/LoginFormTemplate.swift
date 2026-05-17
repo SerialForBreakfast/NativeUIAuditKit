@@ -6,13 +6,13 @@
 // No platform guards needed — this file never compiles on macOS.
 //
 // Annotated elements:
-//   navigationBar, textField, secureField, label, primaryButton,
-//   secondaryButton, link
+//   navigationBar (auto-detected via UIKit scan in ScreenshotCapture)
+//   textField, secureField, label, primaryButton, secondaryButton, link
 //
 // Layout rules (Phase 1 mandates):
 //   - Root ZStack carries .ignoresSafeArea(.all)
 //   - All element offsets use padding — never .offset()
-//   - Every annotated element attaches .captureFrame(id:)
+//   - Every annotated element attaches .captureFrame(id:) BEFORE layout-spacing padding (BP-18)
 //
 // Parameter sweep: 2 color schemes × 3 DynamicType sizes × 2 device sizes = 12 variants minimum.
 
@@ -82,6 +82,10 @@ public struct LoginFormConfig: Sendable {
 /// via `.captureFrame(id:)`.
 ///
 /// **Platform scope:** iOS GeneratorRunner target only.
+///
+/// **Chrome note:** `navigationBar` is captured automatically by
+/// `ScreenshotCapture.detectChromeFrames` — do not add `.captureFrame(id: "navigationBar")`
+/// to the `NavigationStack` container (BP-17).
 public struct LoginFormTemplate: View {
     public let config: LoginFormConfig
 
@@ -95,15 +99,15 @@ public struct LoginFormTemplate: View {
                 Color(UIColor.systemBackground).ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-                    // Email label
+                    // Email label — captureFrame before layout-spacing padding (BP-18)
                     Text("Email")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                        .captureFrame(id: "label_email")
                         .padding(.leading, 20)
                         .padding(.top, 32)
-                        .captureFrame(id: "label_email")
 
-                    // Email text field
+                    // Email text field — inner padding(.12) is visual; outer padding is layout spacing
                     TextField(config.emailPlaceholder, text: .constant(""))
                         .keyboardType(.emailAddress)
                         .autocorrectionDisabled()
@@ -116,27 +120,27 @@ public struct LoginFormTemplate: View {
                                     lineWidth: config.emailErrorState ? 2 : 1
                                 )
                         )
+                        .captureFrame(id: "textField_email")
                         .padding(.horizontal, 20)
                         .padding(.top, 6)
-                        .captureFrame(id: "textField_email")
 
                     // Error label (conditional)
                     if config.emailErrorState {
                         Text("Please enter a valid email address.")
                             .font(.caption)
                             .foregroundStyle(.red)
+                            .captureFrame(id: "label_emailError")
                             .padding(.leading, 20)
                             .padding(.top, 4)
-                            .captureFrame(id: "label_emailError")
                     }
 
                     // Password label
                     Text("Password")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                        .captureFrame(id: "label_password")
                         .padding(.leading, 20)
                         .padding(.top, 20)
-                        .captureFrame(id: "label_password")
 
                     // Secure field
                     SecureField("Password", text: .constant(""))
@@ -146,17 +150,17 @@ public struct LoginFormTemplate: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
                         )
+                        .captureFrame(id: "secureField_password")
                         .padding(.horizontal, 20)
                         .padding(.top, 6)
-                        .captureFrame(id: "secureField_password")
 
                     // Forgot password link (conditional)
                     if config.showForgotPassword {
                         Button("Forgot password?") {}
                             .font(.subheadline)
+                            .captureFrame(id: "link_forgotPassword")
                             .padding(.leading, 20)
                             .padding(.top, 8)
-                            .captureFrame(id: "link_forgotPassword")
                     }
 
                     Spacer().frame(minHeight: 32)
@@ -167,8 +171,8 @@ public struct LoginFormTemplate: View {
                         .background(Color.accentColor)
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(.horizontal, 20)
                         .captureFrame(id: "primaryButton_submit")
+                        .padding(.horizontal, 20)
 
                     // Secondary button (conditional)
                     if config.showSignUpButton {
@@ -179,9 +183,9 @@ public struct LoginFormTemplate: View {
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(Color.accentColor, lineWidth: 1)
                             )
+                            .captureFrame(id: "secondaryButton_signUp")
                             .padding(.horizontal, 20)
                             .padding(.top, 12)
-                            .captureFrame(id: "secondaryButton_signUp")
                     }
 
                     Spacer()
@@ -192,6 +196,7 @@ public struct LoginFormTemplate: View {
             .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)
         }
-        .captureFrame(id: "navigationBar")
+        // navigationBar is auto-detected by ScreenshotCapture.detectChromeFrames (BP-17).
+        // Do NOT add .captureFrame(id: "navigationBar") here.
     }
 }

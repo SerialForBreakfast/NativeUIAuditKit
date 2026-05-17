@@ -157,15 +157,16 @@ public struct SettingsListTemplate: View {
                     }
                     .listStyle(.insetGrouped)
 
-                    // Home indicator pill (when device profile has one)
+                    // Home indicator pill (when device profile has one).
+                    // captureFrame before padding so the box is tight to the pill (BP-18).
                     if config.showHomeIndicator {
                         VStack {
                             Spacer()
                             Capsule()
                                 .fill(Color.primary.opacity(0.3))
                                 .frame(width: 134, height: 5)
-                                .padding(.bottom, 8)
                                 .captureFrame(id: "homeIndicator")
+                                .padding(.bottom, 8)
                         }
                         .frame(maxWidth: .infinity)
                     }
@@ -175,7 +176,7 @@ public struct SettingsListTemplate: View {
                 .navigationBarTitleDisplayMode(.large)
                 .colorScheme(config.colorScheme)
             }
-            .captureFrame(id: "navigationBar")
+            // navigationBar is auto-detected by ScreenshotCapture.detectChromeFrames (BP-17).
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
@@ -190,7 +191,7 @@ public struct SettingsListTemplate: View {
                 Text("").tabItem { Label("Profile", systemImage: "person") }
             }
         }
-        .captureFrame(id: "tabBar")
+        // tabBar and tabBarItem_N are auto-detected by ScreenshotCapture.detectChromeFrames (BP-17).
         .colorScheme(config.colorScheme)
     }
 }

@@ -6,7 +6,8 @@
       "Bash(python3 -c ' *)",
       "Bash(sqlite3 \"/Users/josephmccraw/Dropbox/My Mac \\(MacBook-Air\\)/Documents/GitHub/NativeUIAuditKit/.build/debug-output/KitchenSinkValidation.xcresult/database.sqlite3\" \".tables\")",
       "Bash(scripts/extract-xcresult-images.sh)",
-      "Bash(XCRESULT=\".build/debug-output/KitchenSinkValidation.xcresult\" scripts/extract-xcresult-images.sh)"
+      "Bash(XCRESULT=\".build/debug-output/KitchenSinkValidation.xcresult\" scripts/extract-xcresult-images.sh)",
+      "Bash(xcrun simctl *)"
     ]
   }
 }
