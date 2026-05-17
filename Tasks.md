@@ -251,11 +251,11 @@ Document the rules for associating `VNRecognizeTextRequest` output to detected e
 
 ---
 
-## Phase 3: Dataset Generator Foundation
+## Phase 3: Dataset Generator Foundation ✅
 
-*Goal: The infrastructure that all subsequent generation depends on. This phase produces no training images — only the machinery that generates them. Several components are fully independent and can be built in parallel.*
+*Complete 2026-05-17. 600 images generated (200 Alert / 200 LoginForm / 200 SettingsList). SHA256 match rate = 1.0. Simulator state sweep: 5 distinct time values confirmed. Spot-check: 50/50 pass (`reports/spotcheck_v1.json`).*
 
-**Phase gate:** Overlay viewer shows correct element bounds on 50 random samples. `imageSHA256` match rate = 1.0. Simulator state overrides confirmed in annotation metadata of generated images.
+**Phase gate:** ✅ Overlay viewer shows correct element bounds on 50 random samples. ✅ `imageSHA256` match rate = 1.0. ✅ Simulator state overrides confirmed in annotation metadata.
 
 ---
 
@@ -787,7 +787,7 @@ Run the generator across all 3 templates with the full parameter sweep including
 
 ---
 
-#### TASK-3e-2: Spot-check validation
+#### TASK-3e-2: Spot-check validation ✅
 
 **Requires:** TASK-3e-1 complete, TASK-3d-1 (overlay viewer) complete
 
@@ -798,7 +798,7 @@ Run the overlay viewer's spot-check mode on 50 random samples from the Phase 3e-
 - Any failure triggers investigation: if a generator bug is found, halt generation, fix, and re-run TASK-3e-1
 - `reports/spotcheck_v1.json` exists and shows ≥47/50 Pass
 
-**Phase 3 gate:** TASK-3e-2 passes. `imageSHA256` rate = 1.0. Simulator state sweep confirmed.
+**Phase 3 gate:** ✅ TASK-3e-2 passes (50/50). ✅ `imageSHA256` rate = 1.0. ✅ Simulator state sweep confirmed (5 distinct times).
 
 ---
 

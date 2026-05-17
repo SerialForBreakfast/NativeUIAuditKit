@@ -2,7 +2,7 @@
 
 A portable Swift package for detecting native Apple platform UI elements in screenshot PNGs, designed as a drop-in complement to [ScreenAuditKit](../ScreenAuditKit/).
 
-**Current state:** Phase 3 dataset generator complete. The API shape is fully defined and buildable. `NativeUIDetectionRequest.perform(on:sidecar:)` throws `NativeUIDetectionError.modelUnavailable` until the `NativeUIAuditKitModels` package ships. The dataset generator, annotation pipeline, and first 600 synthetic training images are working.
+**Current state:** Phases 0–3 complete. The API shape is fully defined and buildable. `NativeUIDetectionRequest.perform(on:sidecar:)` throws `NativeUIDetectionError.modelUnavailable` until the `NativeUIAuditKitModels` package ships. The dataset generator, annotation pipeline, and first 600 synthetic training images are verified and ready. Phase 4 (UIKit generator) is next.
 
 ---
 
@@ -174,7 +174,7 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **0: Scaffold** | ✅ Done | Buildable package + research docs | — |
 | **1: Coordinate Spike** | ✅ Done | Prove exported coords align with PNG pixels ≤2px | ≤2pt delta on all elements @2x and @3x |
 | **2: Taxonomy + Schema v1** | ✅ Done | Expand to ~41 classes; freeze annotation schema | Schema tagged v1.0; 9/9 tests pass |
-| **3: Dataset Generator** | 🔄 In progress | SwiftUI templates + first generation run | Overlay spot-check; `imageSHA256` match = 1.0 ✅ |
+| **3: Dataset Generator** | ✅ Done | SwiftUI templates + first generation run | 50/50 spot-check pass; `imageSHA256` = 1.0; 5 simulator state times ✅ |
 | **4: UIKit Generator** | ⬜ | UIKit-rendered controls (anti-overfitting requirement) | ≥2,000 UIKit images; class imbalance ≤5:1 |
 | **5: Known-Bad UI** | ⬜ | Intentional failure cases + hard negatives | ≥500 known-bad images; `knownIssues` tagged |
 | **5b: Extended Templates** | ⬜ | ≥50 distinct SwiftUI templates; full state/accessibility sweep | No archetype >25% of images |
@@ -186,9 +186,6 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **7: OCR Fusion** | ⬜ | Visible text + truncation/clipping rules | Unit tests pass on known-bad fixtures |
 | **8: Device/OS Inference** | ⬜ | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked candidates |
 | **9: ScreenAuditKit Integration** | ⬜ | Drop-in protocol; contract fields; CLI flag | All ScreenAuditKit tests pass |
-
-### Phase 3 remaining work
-- **TASK-3e-2** — overlay spot-check: run `BoundingBoxDebugRenderer` on 50 random samples from the Phase 3e-1 output and verify all boxes are tight and correctly positioned (Phase 3 gate)
 
 ---
 

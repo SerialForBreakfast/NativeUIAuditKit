@@ -11,7 +11,10 @@
       "Bash(xcodebuild build-for-testing *)",
       "Bash(xcodebuild test *)",
       "Bash(python3 -m json.tool)",
-      "Bash(find ~/Library/Developer/CoreSimulator/Devices/AE2A4F09-CCE3-43C4-B96F-4E03CDCB4107 -name \"dataset\" -type d 2>/dev/null | head -3)"
+      "Bash(find ~/Library/Developer/CoreSimulator/Devices/AE2A4F09-CCE3-43C4-B96F-4E03CDCB4107 -name \"dataset\" -type d 2>/dev/null | head -3)",
+      "Bash(swift build *)",
+      "Bash(mkdir -p reports)",
+      "Bash(.build/debug/NativeUIDatasetGeneratorOverlay spot-check *)"
     ]
   }
 }
