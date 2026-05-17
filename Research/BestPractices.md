@@ -390,3 +390,36 @@ Slider(value: $v)
 ```
 
 **Rule:** `.captureFrame` is always the innermost annotation modifier. Any `.padding`, `.clipShape`, or other layout modifier that adds space *around* the element goes outside it.
+
+---
+
+### BP-19: Use the OSVisualProfile's canonical screen size for the rendering window, not `UIScreen.main.bounds`
+
+**Problem:** In a hosted `XCTest` context, `UIScreen.main.bounds` returns the simulator's *reported* logical resolution, which can differ from the device's specification. On the iPhone 17 Pro simulator running iOS 26, `UIScreen.main.bounds` was observed to return `320×480pt` instead of the expected `393×852pt`. This caused UIKit chrome (UINavigationBar, UITabBar) to be positioned incorrectly relative to the off-screen rendering window, producing wrong frame coordinates for `detectChromeFrames`.
+
+**Symptoms:**
+- `navigationBar` reported with an unrealistically large height (e.g. 335pt for a 480pt-tall canvas)
+- `tabBar` positioned at the top of the screen (y ≈ 62pt) instead of the bottom
+
+**Correct approach:** Store a `screenSize: CGSize` on `OSVisualProfile` and pass it explicitly to `ScreenshotCapture.capture` via `windowSize`. Never rely on `UIScreen.main.bounds` for the off-screen rendering window:
+
+```swift
+// OSVisualProfile predefined profile:
+public static let ios26 = OSVisualProfile(
+    ...
+    screenSize: CGSize(width: 393, height: 852)   // iPhone 17 Pro logical resolution
+)
+
+// ScreenshotCapture.capture:
+let canonicalSize = windowSize ?? config.osProfile.screenSize
+let bounds = CGRect(origin: .zero, size: canonicalSize)
+```
+
+**Also:** use `config.pixelScale` (from `GeneratorRunConfig`) for `UIGraphicsImageRendererFormat.scale` rather than `UIScreen.main.scale`. This ensures images rendered with an ios17-profile config come out @2x (750×1334px) even when the simulator hardware is @3x.
+
+**Verified canonical sizes:**
+
+| Profile | Logical size | Scale | Output pixels |
+|---|---|---|---|
+| ios17 (iPhone SE 3rd gen) | 375×667pt | @2x | 750×1334px |
+| ios26 (iPhone 17 Pro) | 393×852pt | @3x | 1179×2556px |

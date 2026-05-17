@@ -7,7 +7,11 @@
       "Bash(sqlite3 \"/Users/josephmccraw/Dropbox/My Mac \\(MacBook-Air\\)/Documents/GitHub/NativeUIAuditKit/.build/debug-output/KitchenSinkValidation.xcresult/database.sqlite3\" \".tables\")",
       "Bash(scripts/extract-xcresult-images.sh)",
       "Bash(XCRESULT=\".build/debug-output/KitchenSinkValidation.xcresult\" scripts/extract-xcresult-images.sh)",
-      "Bash(xcrun simctl *)"
+      "Bash(xcrun simctl *)",
+      "Bash(xcodebuild build-for-testing *)",
+      "Bash(xcodebuild test *)",
+      "Bash(python3 -m json.tool)",
+      "Bash(find ~/Library/Developer/CoreSimulator/Devices/AE2A4F09-CCE3-43C4-B96F-4E03CDCB4107 -name \"dataset\" -type d 2>/dev/null | head -3)"
     ]
   }
 }

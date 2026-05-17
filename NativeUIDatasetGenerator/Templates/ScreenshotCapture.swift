@@ -43,7 +43,12 @@ public enum ScreenshotCapture {
         config: GeneratorRunConfig
     ) async throws -> CaptureResult {
         let screen = UIScreen.main
-        let bounds = CGRect(origin: .zero, size: windowSize ?? screen.bounds.size)
+        // Use the canonical device screen size from the OS profile when no explicit
+        // windowSize is provided. UIScreen.main.bounds is unreliable in hosted test
+        // contexts — the simulator may report an unexpected logical resolution that
+        // causes UIKit chrome (UINavigationBar, UITabBar) to be positioned incorrectly.
+        let canonicalSize = windowSize ?? config.osProfile.screenSize
+        let bounds = CGRect(origin: .zero, size: canonicalSize)
 
         // Off-screen window — not part of the visible window hierarchy.
         let window = UIWindow(frame: bounds)
@@ -85,8 +90,13 @@ public enum ScreenshotCapture {
         let chromeFrames = detectChromeFrames(in: hosting.view)
         capturedFrames.merge(chromeFrames) { _, detected in detected }
 
+        // Render at the profile's intended pixel scale, not the simulator's physical scale.
+        // This ensures ios17-profile images come out @2x (750×1334px for iPhone SE) and
+        // ios26-profile images come out @3x (1179×2556px for iPhone 17 Pro), regardless
+        // of which simulator hardware runs the tests.
+        let renderScale = CGFloat(config.pixelScale)
         let format = UIGraphicsImageRendererFormat()
-        format.scale = screen.scale
+        format.scale = renderScale
         let renderer = UIGraphicsImageRenderer(bounds: bounds, format: format)
         let image = renderer.image { _ in
             hosting.view.drawHierarchy(in: bounds, afterScreenUpdates: true)
@@ -102,9 +112,9 @@ public enum ScreenshotCapture {
         let sha = SHA256.hash(data: pngData)
         let hex = sha.map { String(format: "%02x", $0) }.joined()
 
-        let pixelW = bounds.width * screen.scale
-        let pixelH = bounds.height * screen.scale
-        let scaleInt = Int(screen.scale.rounded())
+        let pixelW = bounds.width * renderScale
+        let pixelH = bounds.height * renderScale
+        let scaleInt = config.pixelScale
 
         let elements = capturedFrames.map { id, frame in
             AnnotatedElement(id: id, elementType: id, frame: frame)

@@ -14,6 +14,11 @@ public struct OSVisualProfile: Codable, Sendable {
     public var navBarIsTranslucent: Bool
     public var safeAreaTopInset: CGFloat
     public var safeAreaBottomInset: CGFloat
+    /// Canonical logical screen size in points for this device/OS profile.
+    /// Used as the off-screen window size in ScreenshotCapture.capture so that UIKit
+    /// chrome (UINavigationBar, UITabBar) is rendered at the correct device geometry.
+    /// Do NOT use UIScreen.main.bounds — the simulator may report a different size.
+    public var screenSize: CGSize
 
     public enum TabBarStyle: String, Codable, Sendable {
         case classic       // iOS 17 and earlier — opaque bar at bottom
@@ -28,7 +33,7 @@ public struct OSVisualProfile: Codable, Sendable {
 
     // MARK: Predefined profiles
 
-    /// iPhone, iOS 17 — notch, home indicator, classic chrome
+    /// iPhone SE 3rd gen, iOS 17 — notch, home indicator, classic chrome, 375×667pt @2x
     public static let ios17 = OSVisualProfile(
         tabBarStyle: .classic,
         navBarStyle: .classic,
@@ -37,10 +42,11 @@ public struct OSVisualProfile: Codable, Sendable {
         hasNotch: true,
         navBarIsTranslucent: true,
         safeAreaTopInset: 47,
-        safeAreaBottomInset: 34
+        safeAreaBottomInset: 34,
+        screenSize: CGSize(width: 375, height: 667)
     )
 
-    /// iPhone, iOS 18 — Dynamic Island, floating tab bar
+    /// iPhone 15 Pro, iOS 18 — Dynamic Island, floating tab bar, 393×852pt @3x
     public static let ios18 = OSVisualProfile(
         tabBarStyle: .floating,
         navBarStyle: .classic,
@@ -49,10 +55,11 @@ public struct OSVisualProfile: Codable, Sendable {
         hasNotch: false,
         navBarIsTranslucent: true,
         safeAreaTopInset: 59,
-        safeAreaBottomInset: 34
+        safeAreaBottomInset: 34,
+        screenSize: CGSize(width: 393, height: 852)
     )
 
-    /// iPhone, iOS 26 — Liquid Glass chrome, Dynamic Island
+    /// iPhone 17 Pro, iOS 26 — Liquid Glass chrome, Dynamic Island, 393×852pt @3x
     public static let ios26 = OSVisualProfile(
         tabBarStyle: .liquidGlass,
         navBarStyle: .liquidGlass,
@@ -60,8 +67,9 @@ public struct OSVisualProfile: Codable, Sendable {
         hasHomeIndicator: true,
         hasNotch: false,
         navBarIsTranslucent: true,
-        safeAreaTopInset: 59,
-        safeAreaBottomInset: 34
+        safeAreaTopInset: 62,
+        safeAreaBottomInset: 34,
+        screenSize: CGSize(width: 393, height: 852)
     )
 
     /// Apple TV, tvOS 17/18 — no status bar, tab bar at top, no safe-area notch
@@ -73,7 +81,8 @@ public struct OSVisualProfile: Codable, Sendable {
         hasNotch: false,
         navBarIsTranslucent: false,
         safeAreaTopInset: 60,   // tvOS overscan margin
-        safeAreaBottomInset: 60
+        safeAreaBottomInset: 60,
+        screenSize: CGSize(width: 1920, height: 1080)
     )
 
     /// macOS 15 — window chrome, NSToolbar, no safe-area notch
@@ -85,7 +94,8 @@ public struct OSVisualProfile: Codable, Sendable {
         hasNotch: false,
         navBarIsTranslucent: true,
         safeAreaTopInset: 52,   // title bar + toolbar height
-        safeAreaBottomInset: 0
+        safeAreaBottomInset: 0,
+        screenSize: CGSize(width: 1280, height: 800)
     )
 }
 
