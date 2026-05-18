@@ -39,17 +39,22 @@ public struct UIKitAnnotatedView {
     public weak var view: UIView?
     /// Visible text if the template knows it at capture time; `nil` otherwise.
     public let visibleText: String?
+    /// Known UI issues present in this element (e.g. `["truncatedText"]`).
+    /// Leave empty for all elements in "good" templates; set in known-bad generators.
+    public let knownIssues: [String]
 
     public init(
         id: String,
         elementType: String,
         view: UIView,
-        visibleText: String? = nil
+        visibleText: String? = nil,
+        knownIssues: [String] = []
     ) {
         self.id = id
         self.elementType = elementType
         self.view = view
         self.visibleText = visibleText
+        self.knownIssues = knownIssues
     }
 }
 
@@ -114,7 +119,8 @@ extension ScreenshotCapture {
                 elementType: annotated.elementType,
                 framework: "UIKit",
                 frame: frame,
-                visibleText: annotated.visibleText
+                visibleText: annotated.visibleText,
+                knownIssues: annotated.knownIssues
             ))
         }
 

@@ -33,6 +33,9 @@
 		/* Phase 4-2 — UIKitGeneratorViewController + validation test */
 		EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */; };
 		EE000012000000000000EE12 /* UIKitGeneratorValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */; };
+		/* Phase 5a — Known-bad templates and validation tests */
+		FF000011000000000000FF11 /* TruncatedLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000001000000000000FF01 /* TruncatedLabelViewController.swift */; };
+		FF000012000000000000FF12 /* TruncatedLabelValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		/* Phase 4-2 — comprehensive UIKit generator VC */
 		EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitGeneratorViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitGeneratorViewController.swift"; sourceTree = SOURCE_ROOT; };
 		EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitGeneratorValidationTest.swift; sourceTree = "<group>"; };
+		/* Phase 5a — Known-bad templates */
+		FF000001000000000000FF01 /* TruncatedLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TruncatedLabelViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/TruncatedLabelViewController.swift"; sourceTree = SOURCE_ROOT; };
+		FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/TruncatedLabelValidationTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,8 +147,17 @@
 				DD000003000000000000DD03 /* UIKitListViewController.swift */,
 				DD000004000000000000DD04 /* UIKitControlsViewController.swift */,
 				EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */,
+				FF000040000000000000FF40 /* KnownBad */,
 			);
 			name = Templates;
+			sourceTree = "<group>";
+		};
+		FF000040000000000000FF40 /* KnownBad */ = {
+			isa = PBXGroup;
+			children = (
+				FF000001000000000000FF01 /* TruncatedLabelViewController.swift */,
+			);
+			name = KnownBad;
 			sourceTree = "<group>";
 		};
 		CC000041000000000000CC41 /* GeneratorRunnerTests */ = {
@@ -152,8 +167,17 @@
 				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
 				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
 				EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */,
+				FF000041000000000000FF41 /* KnownBad */,
 			);
 			path = GeneratorRunnerTests;
+			sourceTree = "<group>";
+		};
+		FF000041000000000000FF41 /* KnownBad */ = {
+			isa = PBXGroup;
+			children = (
+				FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */,
+			);
+			name = KnownBad;
 			sourceTree = "<group>";
 		};
 		BB000044000000000000BB44 /* Products */ = {
@@ -276,6 +300,9 @@
 				DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */,
 				EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */,
 				EE000012000000000000EE12 /* UIKitGeneratorValidationTest.swift in Sources */,
+				/* Phase 5a — Known-bad templates and validation tests */
+				FF000011000000000000FF11 /* TruncatedLabelViewController.swift in Sources */,
+				FF000012000000000000FF12 /* TruncatedLabelValidationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

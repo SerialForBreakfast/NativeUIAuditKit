@@ -30,19 +30,24 @@ public struct AnnotatedElement: Sendable {
     public let frame: CGRect
     /// Visible text inside the element, if the template knows it at capture time.
     public let visibleText: String?
+    /// Known UI issues present in this element (e.g. `["truncatedText"]`).
+    /// Empty for all elements in "good" templates; populated by known-bad generators.
+    public let knownIssues: [String]
 
     public init(
         id: String,
         elementType: String,
         framework: String = "SwiftUI",
         frame: CGRect,
-        visibleText: String? = nil
+        visibleText: String? = nil,
+        knownIssues: [String] = []
     ) {
         self.id = id
         self.elementType = elementType
         self.framework = framework
         self.frame = frame
         self.visibleText = visibleText
+        self.knownIssues = knownIssues
     }
 }
 

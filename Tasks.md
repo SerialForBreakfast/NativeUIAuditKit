@@ -902,20 +902,23 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 ---
 
-#### TASK-5a-1: Truncated label generator
+#### ✅ TASK-5a-1: Truncated label generator — Complete (2026-05-18)
 
-**File:** `NativeUIDatasetGenerator/Templates/KnownBad/TruncatedLabelTemplate.swift`  
-**Requires:** TASK-3b-2
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/TruncatedLabelViewController.swift` — UIKit VC, 4–6 label rows in containers 30–65% of screen width, all annotated `label` + `knownIssues: ["truncatedText"]`
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/TruncatedLabelValidationTest.swift` — 4-test suite (knownIssues integrity, Vision `…` detection, seed reproducibility, 50-seed sweep)
 
-Render a `UILabel` (or SwiftUI `Text`) whose content is wider than its container. Force `.lineBreakMode = .byTruncatingTail` / `.truncationMode(.tail)`. Confirm the `…` (U+2026) character appears in the rendered text using `VNRecognizeTextRequest`.
-
-Annotate as: `label` with `knownIssues: ["truncatedText"]`. The bounding box covers the visible element bounds (not the full text extent).
+**Infrastructure added (TASK-5a prerequisites):**
+- `knownIssues: [String]` field on `AnnotatedElement` (CaptureTypes.swift)
+- `knownIssues: [String]` field on `UIKitAnnotatedView` (UIKitCaptureSupport.swift)
+- `AnnotationWriter` now writes `elem.knownIssues` instead of hardcoded `[]`
+- Both new files registered in `GeneratorRunner.xcodeproj/project.pbxproj`
 
 **AC:**
-- Generated images visually show truncated text with `…` character (verified by spot-check)
-- `knownIssues` array in annotation contains `"truncatedText"` for every truncated element
-- A `VNRecognizeTextRequest` run on the generated image detects the `…` character within the element bounds
-- Generate ≥50 images in this category
+- ✅ Generated images visually show truncated text with `…` character (verified by spot-check)
+- ✅ `knownIssues` array in annotation contains `"truncatedText"` for every truncated element
+- ✅ A `VNRecognizeTextRequest` run on the generated image detects the `…` character within the element bounds
+- ✅ Generate ≥50 images in this category (tested via 50-seed sweep in validation test)
 
 ---
 

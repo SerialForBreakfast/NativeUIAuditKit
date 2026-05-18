@@ -154,7 +154,7 @@ public enum AnnotationWriter {
                 occlusionType: nil,
                 excluded: false,
                 exclusionReason: nil,
-                knownIssues: []
+                knownIssues: elem.knownIssues
             )
         }
 
