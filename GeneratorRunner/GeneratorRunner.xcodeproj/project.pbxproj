@@ -36,6 +36,22 @@
 		/* Phase 5a — Known-bad templates and validation tests */
 		FF000011000000000000FF11 /* TruncatedLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000001000000000000FF01 /* TruncatedLabelViewController.swift */; };
 		FF000012000000000000FF12 /* TruncatedLabelValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */; };
+		GG000011000000000000GG11 /* ClippedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = GG000001000000000000GG01 /* ClippedContentViewController.swift */; };
+		GG000012000000000000GG12 /* ClippedContentValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = GG000002000000000000GG02 /* ClippedContentValidationTest.swift */; };
+		HH000011000000000000HH11 /* SmallHitTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH000001000000000000HH01 /* SmallHitTargetViewController.swift */; };
+		HH000012000000000000HH12 /* SmallHitTargetValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH000002000000000000HH02 /* SmallHitTargetValidationTest.swift */; };
+		II000011000000000000II11 /* OverlappingControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = II000001000000000000II01 /* OverlappingControlsViewController.swift */; };
+		II000012000000000000II12 /* OverlappingControlsValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = II000002000000000000II02 /* OverlappingControlsValidationTest.swift */; };
+		JJ000011000000000000JJ11 /* DynamicTypeOverflowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = JJ000001000000000000JJ01 /* DynamicTypeOverflowViewController.swift */; };
+		JJ000012000000000000JJ12 /* DynamicTypeOverflowValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = JJ000002000000000000JJ02 /* DynamicTypeOverflowValidationTest.swift */; };
+		KK000011000000000000KK11 /* RTLMirroringFailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = KK000001000000000000KK01 /* RTLMirroringFailureViewController.swift */; };
+		KK000012000000000000KK12 /* RTLMirroringFailureValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = KK000002000000000000KK02 /* RTLMirroringFailureValidationTest.swift */; };
+		LL000011000000000000LL11 /* OffScreenElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = LL000001000000000000LL01 /* OffScreenElementViewController.swift */; };
+		LL000012000000000000LL12 /* OffScreenElementValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = LL000002000000000000LL02 /* OffScreenElementValidationTest.swift */; };
+		MM000011000000000000MM11 /* OccludedElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = MM000001000000000000MM01 /* OccludedElementViewController.swift */; };
+		MM000012000000000000MM12 /* OccludedElementValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = MM000002000000000000MM02 /* OccludedElementValidationTest.swift */; };
+		NN000011000000000000NN11 /* HardNegativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = NN000001000000000000NN01 /* HardNegativeViewController.swift */; };
+		NN000012000000000000NN12 /* HardNegativeValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = NN000002000000000000NN02 /* HardNegativeValidationTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +96,22 @@
 		/* Phase 5a — Known-bad templates */
 		FF000001000000000000FF01 /* TruncatedLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TruncatedLabelViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/TruncatedLabelViewController.swift"; sourceTree = SOURCE_ROOT; };
 		FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/TruncatedLabelValidationTest.swift; sourceTree = "<group>"; };
+		GG000001000000000000GG01 /* ClippedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClippedContentViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/ClippedContentViewController.swift"; sourceTree = SOURCE_ROOT; };
+		GG000002000000000000GG02 /* ClippedContentValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/ClippedContentValidationTest.swift; sourceTree = "<group>"; };
+		HH000001000000000000HH01 /* SmallHitTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SmallHitTargetViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/SmallHitTargetViewController.swift"; sourceTree = SOURCE_ROOT; };
+		HH000002000000000000HH02 /* SmallHitTargetValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/SmallHitTargetValidationTest.swift; sourceTree = "<group>"; };
+		II000001000000000000II01 /* OverlappingControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverlappingControlsViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/OverlappingControlsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		II000002000000000000II02 /* OverlappingControlsValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OverlappingControlsValidationTest.swift; sourceTree = "<group>"; };
+		JJ000001000000000000JJ01 /* DynamicTypeOverflowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DynamicTypeOverflowViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/DynamicTypeOverflowViewController.swift"; sourceTree = SOURCE_ROOT; };
+		JJ000002000000000000JJ02 /* DynamicTypeOverflowValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/DynamicTypeOverflowValidationTest.swift; sourceTree = "<group>"; };
+		KK000001000000000000KK01 /* RTLMirroringFailureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RTLMirroringFailureViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/RTLMirroringFailureViewController.swift"; sourceTree = SOURCE_ROOT; };
+		KK000002000000000000KK02 /* RTLMirroringFailureValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/RTLMirroringFailureValidationTest.swift; sourceTree = "<group>"; };
+		LL000001000000000000LL01 /* OffScreenElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OffScreenElementViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/OffScreenElementViewController.swift"; sourceTree = SOURCE_ROOT; };
+		LL000002000000000000LL02 /* OffScreenElementValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OffScreenElementValidationTest.swift; sourceTree = "<group>"; };
+		MM000001000000000000MM01 /* OccludedElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OccludedElementViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/OccludedElementViewController.swift"; sourceTree = SOURCE_ROOT; };
+		MM000002000000000000MM02 /* OccludedElementValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OccludedElementValidationTest.swift; sourceTree = "<group>"; };
+		NN000001000000000000NN01 /* HardNegativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HardNegativeViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift"; sourceTree = SOURCE_ROOT; };
+		NN000002000000000000NN02 /* HardNegativeValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/HardNegativeValidationTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +188,14 @@
 			isa = PBXGroup;
 			children = (
 				FF000001000000000000FF01 /* TruncatedLabelViewController.swift */,
+				GG000001000000000000GG01 /* ClippedContentViewController.swift */,
+				HH000001000000000000HH01 /* SmallHitTargetViewController.swift */,
+				II000001000000000000II01 /* OverlappingControlsViewController.swift */,
+				JJ000001000000000000JJ01 /* DynamicTypeOverflowViewController.swift */,
+				KK000001000000000000KK01 /* RTLMirroringFailureViewController.swift */,
+				LL000001000000000000LL01 /* OffScreenElementViewController.swift */,
+				MM000001000000000000MM01 /* OccludedElementViewController.swift */,
+				NN000001000000000000NN01 /* HardNegativeViewController.swift */,
 			);
 			name = KnownBad;
 			sourceTree = "<group>";
@@ -176,6 +216,14 @@
 			isa = PBXGroup;
 			children = (
 				FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */,
+				GG000002000000000000GG02 /* ClippedContentValidationTest.swift */,
+				HH000002000000000000HH02 /* SmallHitTargetValidationTest.swift */,
+				II000002000000000000II02 /* OverlappingControlsValidationTest.swift */,
+				JJ000002000000000000JJ02 /* DynamicTypeOverflowValidationTest.swift */,
+				KK000002000000000000KK02 /* RTLMirroringFailureValidationTest.swift */,
+				LL000002000000000000LL02 /* OffScreenElementValidationTest.swift */,
+				MM000002000000000000MM02 /* OccludedElementValidationTest.swift */,
+				NN000002000000000000NN02 /* HardNegativeValidationTest.swift */,
 			);
 			name = KnownBad;
 			sourceTree = "<group>";
@@ -303,6 +351,22 @@
 				/* Phase 5a — Known-bad templates and validation tests */
 				FF000011000000000000FF11 /* TruncatedLabelViewController.swift in Sources */,
 				FF000012000000000000FF12 /* TruncatedLabelValidationTest.swift in Sources */,
+				GG000011000000000000GG11 /* ClippedContentViewController.swift in Sources */,
+				GG000012000000000000GG12 /* ClippedContentValidationTest.swift in Sources */,
+				HH000011000000000000HH11 /* SmallHitTargetViewController.swift in Sources */,
+				HH000012000000000000HH12 /* SmallHitTargetValidationTest.swift in Sources */,
+				II000011000000000000II11 /* OverlappingControlsViewController.swift in Sources */,
+				II000012000000000000II12 /* OverlappingControlsValidationTest.swift in Sources */,
+				JJ000011000000000000JJ11 /* DynamicTypeOverflowViewController.swift in Sources */,
+				JJ000012000000000000JJ12 /* DynamicTypeOverflowValidationTest.swift in Sources */,
+				KK000011000000000000KK11 /* RTLMirroringFailureViewController.swift in Sources */,
+				KK000012000000000000KK12 /* RTLMirroringFailureValidationTest.swift in Sources */,
+				LL000011000000000000LL11 /* OffScreenElementViewController.swift in Sources */,
+				LL000012000000000000LL12 /* OffScreenElementValidationTest.swift in Sources */,
+				MM000011000000000000MM11 /* OccludedElementViewController.swift in Sources */,
+				MM000012000000000000MM12 /* OccludedElementValidationTest.swift in Sources */,
+				NN000011000000000000NN11 /* HardNegativeViewController.swift in Sources */,
+				NN000012000000000000NN12 /* HardNegativeValidationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

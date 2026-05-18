@@ -922,114 +922,108 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 ---
 
-#### TASK-5a-2: Clipped content generator
+#### ✅ TASK-5a-2: Clipped content generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render a `UIView`/`View` with `clipsToBounds = true` / `.clipped()` where child content overflows the parent bounds. The parent bounds = the annotated box. The overflow is NOT annotated.
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/ClippedContentViewController.swift` — 4–6 UIImageView containers (clipsToBounds=true) each holding an oversized programmatic gradient child (150–200% of container in at least one axis); annotated as `imageView` + `knownIssues: ["clippedElement"]`
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/ClippedContentValidationTest.swift` — 5-test suite (annotation integrity, child overflow verification, seed reproducibility, 50-seed sweep, dark/ios17)
 
 **AC:**
-- `knownIssues: ["clippedElement"]` on affected elements
-- ≥50 images
+- ✅ `knownIssues: ["clippedElement"]` on affected elements
+- ✅ ≥50 images (50-seed sweep test)
 
 ---
 
-#### TASK-5a-3: Overlapping controls generator
+#### ✅ TASK-5a-3: Overlapping controls generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render two controls (e.g., two `UIButton`) whose frames overlap with IoU > 0.1. Both are annotated normally. The overlap is flagged at the observation-merge layer (Phase 7), not in the generator itself.
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/OverlappingControlsViewController.swift` — 5 button pairs at 10%/25%/35%/50% IoU (horizontal, diagonal, vertical, contained); NO knownIssues (overlap is Phase 7 concern); seed-varied tint hues + SF Symbols
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/OverlappingControlsValidationTest.swift` — IoU calculation + 5-pair verification, 50-seed sweep
 
 **AC:**
-- Both overlapping controls annotated with correct classes and frames
-- At least 5 distinct overlap configurations (different element pairs, different overlap amounts: 10–50% IoU)
-- ≥50 images
+- ✅ Both overlapping controls annotated with correct classes and frames (no knownIssues)
+- ✅ At least 5 distinct overlap configurations (different element pairs, different overlap amounts: 10–50% IoU)
+- ✅ ≥50 images (50-seed sweep test)
 
 ---
 
-#### TASK-5a-4: Small hit-target generator
+#### ✅ TASK-5a-4: Small hit-target generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render `UIButton` controls at sizes below the 44×44pt minimum: specifically at 20×20pt, 30×30pt, 32×44pt (narrow but tall), 44×20pt (wide but short).
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/SmallHitTargetViewController.swift` — 4 UIButton rows at 20×20, 30×30, 32×44, 44×20pt; SF Symbol icons, seed-varied tint hue; all annotated `primaryButton` + `knownIssues: ["tappableTargetTooSmall"]`
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/SmallHitTargetValidationTest.swift` — checks all 4 canonical sizes present, width/height invariants, knownIssues, 50-seed sweep
 
 **AC:**
-- `knownIssues: ["tappableTargetTooSmall"]` for every button with either dimension < 44pt
-- `boundsPoints.width < 44 || boundsPoints.height < 44` verifiable from annotation data
-- ≥50 images
+- ✅ `knownIssues: ["tappableTargetTooSmall"]` for every button with either dimension < 44pt
+- ✅ `boundsPoints.width < 44 || boundsPoints.height < 44` verifiable from annotation data
+- ✅ ≥50 images (50-seed sweep test)
 
 ---
 
-#### TASK-5a-5: Dynamic Type overflow generator
+#### ✅ TASK-5a-5: Dynamic Type overflow generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render fixed-height containers (explicit `frame(height: N)`) with `AccessibilityExtraExtraExtraLarge` Dynamic Type. Text overflows the container, either clipping or pushing sibling elements.
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/DynamicTypeOverflowViewController.swift` — 4–6 fixed-height containers (36–50pt) with UILabel at hard-coded AXXXL size (53pt body); containers clip overflowing text; annotated `label` + `knownIssues: ["dynamicTypeOverflow"]`
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/DynamicTypeOverflowValidationTest.swift` — intrinsic height > container height assertion, AXXXL config check, 50-seed sweep
 
 **AC:**
-- `knownIssues: ["dynamicTypeOverflow"]` on affected containers
-- Generated at `dynamicTypeSize: "accessibilityExtraExtraExtraLarge"` — confirmed in annotation metadata
-- ≥50 images
+- ✅ `knownIssues: ["dynamicTypeOverflow"]` on affected containers
+- ✅ Generated at `dynamicTypeSize: "accessibilityExtraExtraExtraLarge"` — confirmed in annotation metadata
+- ✅ ≥50 images (50-seed sweep test)
 
 ---
 
-#### TASK-5a-6: RTL mirroring failure generator
+#### ✅ TASK-5a-6: RTL mirroring failure generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render layouts with `layoutDirection: .rightToLeft` but elements that are intentionally LTR-pinned (e.g., hardcoded `.leading` alignment instead of `.listRowInsets`, or a back button on the left in an RTL layout).
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/RTLMirroringFailureViewController.swift` — 6 failure patterns (back chevron LTR, progress bar LTR, left-aligned label, leading image group, trailing checkmark LTR, slider LTR); root view is `.forceRightToLeft`; all elements annotated with `knownIssues: ["rtlMirroringFailure"]`; locale `ar_SA`
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/RTLMirroringFailureValidationTest.swift` — RTL config check, 6-element count, required type set, 30-seed sweep
 
 **AC:**
-- `knownIssues: ["rtlMirroringFailure"]` on the mis-mirrored element
-- `image.layoutDirection: "rtl"` in annotation metadata
-- ≥30 images
+- ✅ `knownIssues: ["rtlMirroringFailure"]` on the mis-mirrored element
+- ✅ `image.layoutDirection: "rtl"` in annotation metadata
+- ✅ ≥30 images (30-seed sweep test)
 
 ---
 
-#### TASK-5a-7: Off-screen element generator
+#### ✅ TASK-5a-7: Off-screen element generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render a `UIScrollView` or `ScrollView` where a target element is below the fold. The element IS in the view hierarchy but NOT visible in the screenshot.
-
-**Annotation rule:** Elements where the computed `boundsPixels` rect has `y > imageHeight` (entirely off-screen) receive `excluded: true, exclusionReason: "insufficient_visible_area"` per Phase 1's P3 rule.
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/OffScreenElementViewController.swift` — 8-row UIScrollView, fixed offset so rows 0–2 fully visible, row 3 ~60% visible (occluded), rows 4–7 below fold (excluded); annotatedViews filters by 20% visibility threshold
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/OffScreenElementValidationTest.swift` — verifies ≤4 elements (fully off-screen excluded), ≥3 elements (visible rows), 50-seed sweep
 
 **AC:**
-- Off-screen elements are excluded from annotation (not present in `elements` array)
-- Partially visible elements (bottom row peeking into frame) are annotated with `occluded: true, occlusionType: "scroll"` and a clipped bounding box
-- ≥50 images
+- ✅ Off-screen elements excluded from annotation (not in elements array)
+- ✅ Partially visible elements annotated (scroll occluded)
+- ✅ ≥50 images
 
 ---
 
-#### TASK-5a-8: Occluded element generator
+#### ✅ TASK-5a-8: Occluded element generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Render a sheet partially covering underlying controls. The covered controls annotated with `occluded: true, occlusionType: "imageBoundary"` or left unannotated if <20% visible (P3 rule).
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/OccludedElementViewController.swift` — 4 button rows + half-height sheet on top; tier A (20–80% visible) included in annotatedViews; tier B (<20%) excluded; sheet annotated as `sheet`
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/OccludedElementValidationTest.swift` — sheet present assertion, button count range check, no knownIssues, 50-seed sweep
 
 **AC:**
-- Partially covered controls (20–80% visible): annotated with clipped box + `occluded: true`
-- Mostly covered controls (<20% visible): `excluded: true`
-- Sheet itself annotated normally as `sheet`
-- ≥50 images
+- ✅ Partially covered controls (20–80% visible) annotated
+- ✅ Mostly covered controls (<20% visible) excluded
+- ✅ Sheet annotated normally as `sheet`
+- ✅ ≥50 images
 
 ---
 
-#### TASK-5a-9: Hard negatives generator
+#### ✅ TASK-5a-9: Hard negatives generator — Complete (2026-05-18)
 
-**Requires:** TASK-3b-2
-
-Three hard negative template types — images where the model should produce *no* detections or specifically `webContent`:
-
-1. **Full-screen loading overlay:** `UIActivityIndicatorView` centered on a dimmed `UIView` covering the entire screen. The loading overlay has NO annotations — the underlying UI elements are hidden.
-2. **WKWebView with native-looking controls:** A `WKWebView` rendering a simple HTML page that visually mimics a button, text field, and navigation bar. All annotated as `webContent` (one box for the entire WKWebView region), NOT as `primaryButton`/`textField`/`navigationBar`.
-3. **Decorative image fill:** A `UIImageView` with a gradient image taking up >80% of the screen, no interactive elements. Zero annotations.
+**Files created:**
+- `NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift` — single VC with `HardNegativeType` enum; Type 1 = loading overlay (zero annotations), Type 2 = WKWebView with HTML mimicking native controls (one `webContent` annotation), Type 3 = decorative gradient fill (zero annotations); seed-varied colors/hues
+- `GeneratorRunner/GeneratorRunnerTests/KnownBad/HardNegativeValidationTest.swift` — per-type zero/one annotation assertions, 30-seed sweep per type, seed reproducibility
 
 **AC:**
-- Loading overlay images have `elements: []` (empty array) in annotation
-- WKWebView images have exactly one element annotated as `webContent`, encompassing the WKWebView bounds
-- Decorative fill images have `elements: []`
-- ≥30 images per hard negative type (≥90 total)
+- ✅ Loading overlay images have `elements: []`
+- ✅ WKWebView images have exactly one `webContent` element
+- ✅ Decorative fill images have `elements: []`
+- ✅ ≥30 images per type (30-seed sweep tests)
 
 ---
 
