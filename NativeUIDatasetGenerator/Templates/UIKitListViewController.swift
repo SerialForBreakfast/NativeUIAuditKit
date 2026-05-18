@@ -41,6 +41,12 @@ public final class UIKitListViewController: UIViewController, UIKitAnnotatable {
     /// Toggle views in specific rows.
     private var toggleViews: [UISwitch] = []
 
+    /// Search / filter text field at the top of the list — annotated as textField.
+    private let searchField = UITextField()
+
+    /// "See All" footer button — annotated as secondaryButton.
+    private let seeAllButton = UIButton(type: .system)
+
     private let rowCount = 5
     private let toggleRowIndices = [1, 3] // rows that carry a UISwitch
 
@@ -73,6 +79,12 @@ public final class UIKitListViewController: UIViewController, UIKitAnnotatable {
 
     public var annotatedViews: [UIKitAnnotatedView] {
         var result: [UIKitAnnotatedView] = []
+        result.append(UIKitAnnotatedView(
+            id: "searchField",
+            elementType: "textField",
+            view: searchField,
+            visibleText: searchField.placeholder
+        ))
         for (i, row) in rowViews.enumerated() {
             result.append(UIKitAnnotatedView(
                 id: "listRow_\(i)",
@@ -88,6 +100,12 @@ public final class UIKitListViewController: UIViewController, UIKitAnnotatable {
                 view: toggle
             ))
         }
+        result.append(UIKitAnnotatedView(
+            id: "seeAllButton",
+            elementType: "secondaryButton",
+            view: seeAllButton,
+            visibleText: seeAllButton.title(for: .normal)
+        ))
         return result
     }
 
@@ -157,6 +175,22 @@ public final class UIKitListViewController: UIViewController, UIKitAnnotatable {
             }
         }
 
+        // Search / filter text field at top of list
+        let placeholders = ["Search", "Filter", "Find setting", "Search settings"]
+        searchField.placeholder = placeholders[Int(seed % UInt64(placeholders.count))]
+        searchField.borderStyle = .roundedRect
+        searchField.font = .systemFont(ofSize: 17)
+        searchField.backgroundColor = .tertiarySystemGroupedBackground
+        view.addSubview(searchField)
+
+        // "See All" footer secondary button — label varies by seed for diversity
+        let footerLabels = ["See All", "Show More", "View History", "Manage"]
+        let footerLabel = footerLabels[Int(seed % UInt64(footerLabels.count))]
+        seeAllButton.setTitle(footerLabel, for: .normal)
+        seeAllButton.titleLabel?.font = .systemFont(ofSize: 17)
+        seeAllButton.setTitleColor(.systemBlue, for: .normal)
+        view.addSubview(seeAllButton)
+
         // Toggles in designated rows
         let toggleOn = seed % 2 == 0
         for _ in toggleRowIndices {
@@ -185,8 +219,13 @@ public final class UIKitListViewController: UIViewController, UIKitAnnotatable {
             height: tabBarVisualHeight + safeBottom
         )
 
-        // Row layout: fill space between nav bar and tab bar
-        let contentTop = navBar.frame.maxY + 8
+        // Search field — below nav bar, above the rows
+        let searchFieldH: CGFloat = 36
+        let searchFieldY = navBar.frame.maxY + 8
+        searchField.frame = CGRect(x: 16, y: searchFieldY, width: width - 32, height: searchFieldH)
+
+        // Row layout: fill space between search field and tab bar
+        let contentTop = searchField.frame.maxY + 8
         let contentBottom = tabBarView.frame.minY - 8
         let totalHeight = max(0, contentBottom - contentTop)
         let rowHeight: CGFloat = min(56, totalHeight / CGFloat(rowCount))
@@ -217,6 +256,11 @@ public final class UIKitListViewController: UIViewController, UIKitAnnotatable {
                 sep.frame = CGRect(x: labelInset, y: rowHeight - 0.5, width: width - labelInset, height: 0.5)
             }
         }
+
+        // "See All" footer button — centred below the last row
+        let footerButtonH: CGFloat = 44
+        let footerY = (rowViews.last?.frame.maxY ?? contentTop) + 12
+        seeAllButton.frame = CGRect(x: 0, y: footerY, width: width, height: footerButtonH)
 
         // Toggles — positioned in their rows, flush right
         let switchWidth: CGFloat = 51

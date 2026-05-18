@@ -802,12 +802,13 @@ Run the overlay viewer's spot-check mode on 50 random samples from the Phase 3e-
 
 ---
 
-## Phase 4: UIKit Generator
+## Phase 4: UIKit Generator ✅ Complete (2026-05-18)
 
 *Goal: Supplement SwiftUI data with UIKit-rendered controls to prevent SwiftUI rendering artifact overfitting. Must complete before Phase 6.*
 
 **Requires:** Phase 3 gate passed (generator infrastructure stable)  
-**Parallel with:** Phase 5 (Known-Bad), Phase 5b (Extended Templates)
+**Parallel with:** Phase 5 (Known-Bad), Phase 5b (Extended Templates)  
+**Gate:** OPEN — all TASK-4-3 ACs passed, 2,700 images verified, ratio 4.98×
 
 ---
 
@@ -866,18 +867,23 @@ Frame export: `view.convert(subview.bounds, to: nil)` for all subviews. Hidden o
 
 ---
 
-#### TASK-4-3: UIKit generation run
+#### TASK-4-3: UIKit generation run ✅ Complete (2026-05-18)
 
 **Requires:** TASK-4-2 complete, TASK-3a-4 (SimulatorStateManager)
 
 Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 **AC:**
-- ≥2,000 annotated UIKit images generated
-- Simulator state overrides confirmed in annotation metadata
-- After merging with SwiftUI dataset: class imbalance ratio ≤5:1 across all classes represented in both frameworks
-- No single UIKit template contributes >15% of any class's total instance count
-- `imageSHA256` match rate = 1.0
+- ✅ ≥2,000 annotated UIKit images generated — **2,100 UIKit** (700 × UIKitControls/Form/List)
+- ✅ Simulator state overrides confirmed in annotation metadata — **5 distinct times** (07:00, 09:41, 12:30, 18:05, 22:15)
+- ✅ After merging with SwiftUI dataset: class imbalance ratio ≤5:1 — **4.98× (listRow/primaryButton)**
+- ✅ No single UIKit template contributes >15% of any class — all OK
+- ✅ `imageSHA256` match rate = 1.0 — **2,700/2,700 verified**
+
+**Dataset stats:** 2,700 images total · 21 canonical element classes · train/val/test 80/10/10  
+**Verification script:** `scripts/verify_dataset_phase4.py`  
+**Balance report:** `reports/dataset_balance_phase4.md`  
+**Dataset location:** `.build/debug-output/dataset/`
 
 ---
 

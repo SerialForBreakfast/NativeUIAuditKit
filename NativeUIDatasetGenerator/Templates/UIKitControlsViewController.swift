@@ -38,6 +38,10 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
     private let progressView = UIProgressView(progressViewStyle: .default)
     private let pageControl = UIPageControl()
     private let toggle = UISwitch()
+    /// Password secure text field — annotated as secureField.
+    private let secureTextField = UITextField()
+    /// "Reset" secondary button at the bottom of the controls showcase.
+    private let resetButton = UIButton(type: .system)
 
     // MARK: - Section labels (visual context only, not annotated)
 
@@ -47,6 +51,7 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
     private let progressLabel = UILabel()
     private let pageLabel = UILabel()
     private let toggleLabel = UILabel()
+    private let secureLabel = UILabel()
 
     // MARK: - Init
 
@@ -83,6 +88,9 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
             UIKitAnnotatedView(id: "progressView",      elementType: "progressView",      view: progressView),
             UIKitAnnotatedView(id: "pageControl",       elementType: "pageControl",       view: pageControl),
             UIKitAnnotatedView(id: "toggle",            elementType: "toggle",            view: toggle),
+            UIKitAnnotatedView(id: "secureTextField",   elementType: "secureField",       view: secureTextField),
+            UIKitAnnotatedView(id: "resetButton",       elementType: "secondaryButton",   view: resetButton,
+                               visibleText: resetButton.title(for: .normal)),
         ]
     }
 
@@ -151,13 +159,28 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
         // Toggle — state alternates by seed
         toggle.isOn = seed % 2 == 0
 
+        // "Reset" secondary button at the bottom
+        let resetLabels = ["Reset to Defaults", "Reset All", "Restore Defaults", "Clear Settings"]
+        let resetLabel = resetLabels[Int(seed % UInt64(resetLabels.count))]
+        resetButton.setTitle(resetLabel, for: .normal)
+        resetButton.titleLabel?.font = .systemFont(ofSize: 17)
+        resetButton.setTitleColor(.systemBlue, for: .normal)
+
+        // Secure text field — password style
+        configureSectionLabel(secureLabel, text: "Secure Input")
+        secureTextField.isSecureTextEntry = true
+        secureTextField.placeholder = "Password"
+        secureTextField.borderStyle = .roundedRect
+        secureTextField.font = .systemFont(ofSize: 17)
+        secureTextField.text = String(repeating: "•", count: Int(seed % 8) + 6) // varies by seed
+
         // Add section labels to hierarchy
-        for label in [sliderLabel, segmentLabel, activityLabel, progressLabel, pageLabel, toggleLabel] {
+        for label in [sliderLabel, segmentLabel, activityLabel, progressLabel, pageLabel, toggleLabel, secureLabel] {
             view.addSubview(label)
         }
 
         // Add annotated controls to hierarchy
-        for control in [slider, segmentedControl, activityIndicator, progressView, pageControl, toggle] as [UIView] {
+        for control in [slider, segmentedControl, activityIndicator, progressView, pageControl, toggle, secureTextField, resetButton] as [UIView] {
             view.addSubview(control)
         }
     }
@@ -165,11 +188,13 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
     private func layoutViews() {
         let safeTop = runConfig.osProfile.safeAreaTopInset
         let width = view.bounds.width
+        let height = view.bounds.height
         let hPad: CGFloat = 24
         let controlWidth = width - 2 * hPad
         let labelHeight: CGFloat = 16
         let controlSpacing: CGFloat = 8
-        let rowSpacing: CGFloat = 32
+        // Compact spacing on sub-700pt screens (e.g. ios17 iPhone SE / standard @2x)
+        let rowSpacing: CGFloat = height < 700 ? 18 : 32
 
         // Navigation bar
         navBar.frame = CGRect(x: 0, y: 0, width: width, height: safeTop + 44)
@@ -211,5 +236,15 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
         toggleLabel.frame = CGRect(x: hPad, y: y, width: controlWidth, height: labelHeight)
         y += labelHeight + controlSpacing
         toggle.frame = CGRect(x: hPad, y: y, width: 51, height: 31)
+        y += 31 + rowSpacing
+
+        // Secure text field
+        secureLabel.frame = CGRect(x: hPad, y: y, width: controlWidth, height: labelHeight)
+        y += labelHeight + controlSpacing
+        secureTextField.frame = CGRect(x: hPad, y: y, width: controlWidth, height: 36)
+        y += 36 + rowSpacing
+
+        // "Reset" secondary button — centred, full-width tap target
+        resetButton.frame = CGRect(x: 0, y: y, width: width, height: 44)
     }
 }

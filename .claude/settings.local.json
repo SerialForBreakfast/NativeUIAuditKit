@@ -14,7 +14,9 @@
       "Bash(find ~/Library/Developer/CoreSimulator/Devices/AE2A4F09-CCE3-43C4-B96F-4E03CDCB4107 -name \"dataset\" -type d 2>/dev/null | head -3)",
       "Bash(swift build *)",
       "Bash(mkdir -p reports)",
-      "Bash(.build/debug/NativeUIDatasetGeneratorOverlay spot-check *)"
+      "Bash(.build/debug/NativeUIDatasetGeneratorOverlay spot-check *)",
+      "Bash(# Check the build time of the test bundle to see if it recompiled *)",
+      "Bash(find ~/Library/Developer/CoreSimulator/Devices -name \"manifest.json\" -newer \"/Users/josephmccraw/Dropbox/My Mac \\(MacBook-Air\\)/Documents/GitHub/NativeUIAuditKit/NativeUIDatasetGenerator/Templates/UIKitListViewController.swift\" 2>/dev/null)"
     ]
   }
 }
