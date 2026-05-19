@@ -143,7 +143,11 @@ final class GenerateDatasetTests: XCTestCase {
     private func generateImages(
         templateFamily: String,
         count: Int,
-        startSeed: UInt64
+        startSeed: UInt64,
+        locale: String = "en_US",
+        layoutDirection: GeneratorLayoutDirection = .ltr,
+        forceProfile: OSVisualProfile? = nil,
+        accessibilityFlags: AccessibilityFlags = .default
     ) async throws {
         let manifestURL = datasetDir.appending(path: "manifest.json")
         var manifest = try DatasetManifest.load(from: manifestURL)
@@ -151,7 +155,16 @@ final class GenerateDatasetTests: XCTestCase {
         for i in 0..<count {
             let seed = startSeed + UInt64(i)
             let state = simulatorStates[i % simulatorStates.count]
-            let config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+            var config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+            // Apply optional overrides.
+            if let profile = forceProfile {
+                config.osProfile = profile
+                config.deviceName = profile == .ios26 ? "iPhone 17 Pro" : "iPhone SE (3rd generation)"
+                config.pixelScale = profile == .ios26 ? 3 : 2
+            }
+            config.locale = locale
+            config.layoutDirection = layoutDirection
+            config.accessibilityFlags = accessibilityFlags
 
             var corpus = ContentCorpus(seed: seed)
             let result = try await capture(templateFamily: templateFamily, seed: seed, config: config, corpus: &corpus)
@@ -218,6 +231,66 @@ final class GenerateDatasetTests: XCTestCase {
         case "Alert":
             let alertConfig = AlertConfig.make(seed: seed, corpus: &corpus)
             return try await ScreenshotCapture.capture(AlertTemplate(config: alertConfig), config: config)
+        case "TabViewNavigation":
+            let tabConfig = TabViewNavigationConfig.make(seed: seed, corpus: &corpus, osProfile: config.osProfile)
+            return try await ScreenshotCapture.capture(TabViewNavigationTemplate(config: tabConfig), config: config)
+        case "Sheet":
+            let sheetConfig = SheetConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(SheetTemplate(config: sheetConfig), config: config)
+        case "SearchResults":
+            let srConfig = SearchResultsConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(SearchResultsTemplate(config: srConfig), config: config)
+        case "FormValidation":
+            let fvConfig = FormValidationConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(FormValidationTemplate(config: fvConfig), config: config)
+        case "EmptyState":
+            let esConfig = EmptyStateConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(EmptyStateTemplate(config: esConfig), config: config)
+        case "LoadingSkeleton":
+            let lsConfig = LoadingSkeletonConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(LoadingSkeletonTemplate(config: lsConfig), config: config)
+        case "MediaCardGrid":
+            let mcgConfig = MediaCardGridConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(MediaCardGridTemplate(config: mcgConfig), config: config)
+        case "OnboardingPage":
+            let obConfig = OnboardingPageConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(OnboardingPageTemplate(config: obConfig), config: config)
+        case "PickerDateEntry":
+            let pdConfig = PickerDateEntryConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(PickerDateEntryTemplate(config: pdConfig), config: config)
+        case "ActionSheet":
+            let asConfig = ActionSheetConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ActionSheetTemplate(config: asConfig), config: config)
+        case "Popover":
+            let popConfig = PopoverConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(PopoverTemplate(config: popConfig), config: config)
+        case "RTLMirror":
+            let rtlConfig = RTLMirrorConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(RTLMirrorTemplate(config: rtlConfig), config: config)
+        case "LiquidGlassNav":
+            let lgnConfig = LiquidGlassNavConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(LiquidGlassNavTemplate(config: lgnConfig), config: config)
+        case "LiquidGlassTab":
+            let lgtConfig = LiquidGlassTabConfig.make(seed: seed, corpus: &corpus, osProfile: config.osProfile)
+            return try await ScreenshotCapture.capture(LiquidGlassTabTemplate(config: lgtConfig), config: config)
+        case "SettingsDisclosure":
+            let sdConfig = SettingsDisclosureConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(SettingsDisclosureTemplate(config: sdConfig), config: config)
+        case "RefreshControl":
+            let rcConfig = RefreshControlConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(RefreshControlTemplate(config: rcConfig), config: config)
+        case "ContextMenu":
+            let cmConfig = ContextMenuConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ContextMenuTemplate(config: cmConfig), config: config)
+        case "MapOverlays":
+            let moConfig = MapOverlaysConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(MapOverlaysTemplate(config: moConfig), config: config)
+        case "Stepper":
+            let stConfig = StepperConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(StepperTemplate(config: stConfig), config: config)
+        case "ProgressActivity":
+            let paConfig = ProgressActivityConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ProgressActivityTemplate(config: paConfig), config: config)
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
         }
@@ -329,6 +402,227 @@ final class GenerateDatasetTests: XCTestCase {
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
         }
+    }
+
+    // MARK: - Phase 5b: Extended SwiftUI templates
+
+    /// Generates 400 tab-view-navigation template images (seeds 8101–8500).
+    /// Annotates tabBar (auto), navigationBar (auto), homeIndicator, dynamicIsland.
+    func testGenerateTabViewNavigationImages() async throws {
+        try await generateImages(templateFamily: "TabViewNavigation", count: 400, startSeed: 8101)
+    }
+
+    /// Generates 400 sheet / half-sheet template images (seeds 8501–8900).
+    /// Annotates sheet, primaryButton, cancelAction, label.
+    /// Height variants: full (~90%), half (~50%), third (~35%).
+    func testGenerateSheetImages() async throws {
+        try await generateImages(templateFamily: "Sheet", count: 400, startSeed: 8501)
+    }
+
+    /// Generates 400 search results template images (seeds 8901–9300).
+    /// Annotates searchField, navigationBar (auto), listRow, label.
+    func testGenerateSearchResultsImages() async throws {
+        try await generateImages(templateFamily: "SearchResults", count: 400, startSeed: 8901)
+    }
+
+    /// Generates 400 form-with-validation template images (seeds 9301–9700).
+    /// Annotates textField, secureField, toggle, primaryButton, label.
+    /// ~25% of images show inline validation error states.
+    func testGenerateFormValidationImages() async throws {
+        try await generateImages(templateFamily: "FormValidation", count: 400, startSeed: 9301)
+    }
+
+    /// Generates 400 empty state template images (seeds 9701–10100).
+    /// Annotates primaryButton, imageView, label.
+    func testGenerateEmptyStateImages() async throws {
+        try await generateImages(templateFamily: "EmptyState", count: 400, startSeed: 9701)
+    }
+
+    /// Generates 400 loading / skeleton state template images (seeds 10101–10500).
+    /// Annotates activityIndicator, progressView, listRow (skeleton rows).
+    func testGenerateLoadingSkeletonImages() async throws {
+        try await generateImages(templateFamily: "LoadingSkeleton", count: 400, startSeed: 10101)
+    }
+
+    /// Generates 400 media card grid template images (seeds 10501–10900).
+    /// Annotates collectionItem, imageView, label.
+    /// Column count varies between 2 and 3; card count 4–9.
+    func testGenerateMediaCardGridImages() async throws {
+        try await generateImages(templateFamily: "MediaCardGrid", count: 400, startSeed: 10501)
+    }
+
+    /// Generates 400 onboarding page template images (seeds 10901–11300).
+    /// Annotates pageControl, primaryButton, imageView, label.
+    func testGenerateOnboardingPageImages() async throws {
+        try await generateImages(templateFamily: "OnboardingPage", count: 400, startSeed: 10901)
+    }
+
+    /// Generates 400 picker / date entry template images (seeds 11301–11700).
+    /// Annotates picker, navigationBar (auto), primaryButton, cancelAction.
+    /// Picker style varies: wheel, compact, graphical.
+    func testGeneratePickerDateEntryImages() async throws {
+        try await generateImages(templateFamily: "PickerDateEntry", count: 400, startSeed: 11301)
+    }
+
+    /// Generates 400 action sheet template images (seeds 11701–12100).
+    /// Annotates actionSheet, destructiveButton, cancelAction.
+    func testGenerateActionSheetImages() async throws {
+        try await generateImages(templateFamily: "ActionSheet", count: 400, startSeed: 11701)
+    }
+
+    /// Generates 400 popover template images (seeds 12101–12500).
+    /// Annotates popover, label, secondaryButton.
+    /// Popover anchor position varies: top, mid, bottom.
+    func testGeneratePopoverImages() async throws {
+        try await generateImages(templateFamily: "Popover", count: 400, startSeed: 12101)
+    }
+
+    /// Generates 400 RTL mirror template images (seeds 12501–12900).
+    /// Same elements as Phase 3c templates; forced right-to-left layout.
+    /// locale: ar_SA; layoutDirection: .rtl.
+    func testGenerateRTLMirrorImages() async throws {
+        try await generateImages(
+            templateFamily: "RTLMirror", count: 400, startSeed: 12501,
+            locale: "ar_SA", layoutDirection: .rtl
+        )
+    }
+
+    /// Generates 400 Liquid Glass iOS 26 navbar template images (seeds 12901–13300).
+    /// Forces .ios26 OSVisualProfile for Liquid Glass rendering.
+    func testGenerateLiquidGlassNavImages() async throws {
+        try await generateImages(templateFamily: "LiquidGlassNav", count: 400, startSeed: 12901,
+                                 forceProfile: .ios26)
+    }
+
+    /// Generates 400 Liquid Glass iOS 26 tabbar template images (seeds 13301–13700).
+    /// Forces .ios26 OSVisualProfile for Liquid Glass tab bar rendering.
+    func testGenerateLiquidGlassTabImages() async throws {
+        try await generateImages(templateFamily: "LiquidGlassTab", count: 400, startSeed: 13301,
+                                 forceProfile: .ios26)
+    }
+
+    /// Generates 400 settings-with-disclosure-groups template images (seeds 13701–14100).
+    /// Annotates navigationBar (auto), disclosureGroup, listRow, toggle, label.
+    func testGenerateSettingsDisclosureImages() async throws {
+        try await generateImages(templateFamily: "SettingsDisclosure", count: 400, startSeed: 13701)
+    }
+
+    /// Generates 400 refresh control in list template images (seeds 14101–14500).
+    /// Annotates navigationBar (auto), listRow, refreshControl.
+    func testGenerateRefreshControlImages() async throws {
+        try await generateImages(templateFamily: "RefreshControl", count: 400, startSeed: 14101)
+    }
+
+    /// Generates 400 context menu template images (seeds 14501–14900).
+    /// Annotates contextMenu, listRow, label.
+    func testGenerateContextMenuImages() async throws {
+        try await generateImages(templateFamily: "ContextMenu", count: 400, startSeed: 14501)
+    }
+
+    /// Generates 400 map with overlays template images (seeds 14901–15300).
+    /// Annotates mapView, navigationBar (auto), primaryButton.
+    func testGenerateMapOverlaysImages() async throws {
+        try await generateImages(templateFamily: "MapOverlays", count: 400, startSeed: 14901)
+    }
+
+    /// Generates 400 stepper + quantity controls template images (seeds 15301–15700).
+    /// Annotates stepperControl, label, navigationBar (auto).
+    func testGenerateStepperImages() async throws {
+        try await generateImages(templateFamily: "Stepper", count: 400, startSeed: 15301)
+    }
+
+    /// Generates 400 progress + activity combined template images (seeds 15701–16100).
+    /// Annotates progressView, activityIndicator, label, cancelAction.
+    func testGenerateProgressActivityImages() async throws {
+        try await generateImages(templateFamily: "ProgressActivity", count: 400, startSeed: 15701)
+    }
+
+    // MARK: - TASK-5b-21: Accessibility variant sweep
+    //
+    // For every template that includes navigationBar or tabBar, generate variants
+    // with a single accessibility flag active. 10 templates × 50 images × 4 flags
+    // = 2,000 accessibility-variant images total.
+    //
+    // Trait overrides applied in ScreenshotCapture.capture():
+    //   boldText         → traitOverrides.legibilityWeight = .bold
+    //   increaseContrast → traitOverrides.accessibilityContrast = .high
+    //   reduceTransparency → traitOverrides.accessibilityContrast = .high
+    //                        (nav bar renders with opaque high-contrast material)
+    //   buttonShapes     → recorded in annotation metadata; UIKit system buttons
+    //                       render with shape backgrounds in future UIKit pass
+    //
+    // Seed ranges: 20001–20500 (reduceTransparency), 21001–21500 (increaseContrast),
+    //              22001–22500 (boldText), 23001–23500 (buttonShapes).
+    // Each template family uses a 50-seed block within its range (base + 0*50 … 9*50).
+
+    /// Generates 500 reduce-transparency variants (seeds 20001–20500).
+    /// 50 images each for 10 nav/tab-bearing templates.
+    /// Nav bar and tab bar materials render with high-contrast opaque backgrounds.
+    func testGenerateReduceTransparencyVariants() async throws {
+        let flags = AccessibilityFlags(reduceTransparency: true)
+        try await generateImages(templateFamily: "TabViewNavigation",  count: 50, startSeed: 20001, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SearchResults",       count: 50, startSeed: 20051, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsList",        count: 50, startSeed: 20101, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "PickerDateEntry",     count: 50, startSeed: 20151, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassNav",      count: 50, startSeed: 20201, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassTab",      count: 50, startSeed: 20251, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsDisclosure",  count: 50, startSeed: 20301, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "RefreshControl",      count: 50, startSeed: 20351, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "MapOverlays",         count: 50, startSeed: 20401, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "Stepper",             count: 50, startSeed: 20451, accessibilityFlags: flags)
+    }
+
+    /// Generates 500 increase-contrast variants (seeds 21001–21500).
+    /// 50 images each for 10 nav/tab-bearing templates.
+    /// UIKit applies high-contrast system colors; nav bar uses opaque material.
+    func testGenerateIncreaseContrastVariants() async throws {
+        let flags = AccessibilityFlags(increaseContrast: true)
+        try await generateImages(templateFamily: "TabViewNavigation",  count: 50, startSeed: 21001, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SearchResults",       count: 50, startSeed: 21051, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsList",        count: 50, startSeed: 21101, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "PickerDateEntry",     count: 50, startSeed: 21151, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassNav",      count: 50, startSeed: 21201, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassTab",      count: 50, startSeed: 21251, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsDisclosure",  count: 50, startSeed: 21301, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "RefreshControl",      count: 50, startSeed: 21351, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "MapOverlays",         count: 50, startSeed: 21401, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "Stepper",             count: 50, startSeed: 21451, accessibilityFlags: flags)
+    }
+
+    /// Generates 500 bold-text variants (seeds 22001–22500).
+    /// 50 images each for 10 nav/tab-bearing templates.
+    /// UIKit renders all system fonts at bold weight via traitOverrides.legibilityWeight.
+    func testGenerateBoldTextVariants() async throws {
+        let flags = AccessibilityFlags(boldText: true)
+        try await generateImages(templateFamily: "TabViewNavigation",  count: 50, startSeed: 22001, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SearchResults",       count: 50, startSeed: 22051, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsList",        count: 50, startSeed: 22101, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "PickerDateEntry",     count: 50, startSeed: 22151, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassNav",      count: 50, startSeed: 22201, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassTab",      count: 50, startSeed: 22251, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsDisclosure",  count: 50, startSeed: 22301, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "RefreshControl",      count: 50, startSeed: 22351, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "MapOverlays",         count: 50, startSeed: 22401, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "Stepper",             count: 50, startSeed: 22451, accessibilityFlags: flags)
+    }
+
+    /// Generates 500 button-shapes variants (seeds 23001–23500).
+    /// 50 images each for 10 nav/tab-bearing templates.
+    /// `buttonShapes: true` is recorded in annotation metadata. Future UIKit templates
+    /// will add explicit shape backgrounds; SwiftUI system buttons already show shapes
+    /// when legibilityWeight is elevated (co-applied here for maximum visual coverage).
+    func testGenerateButtonShapesVariants() async throws {
+        let flags = AccessibilityFlags(buttonShapes: true, boldText: true)
+        try await generateImages(templateFamily: "TabViewNavigation",  count: 50, startSeed: 23001, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SearchResults",       count: 50, startSeed: 23051, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsList",        count: 50, startSeed: 23101, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "PickerDateEntry",     count: 50, startSeed: 23151, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassNav",      count: 50, startSeed: 23201, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "LiquidGlassTab",      count: 50, startSeed: 23251, forceProfile: .ios26, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "SettingsDisclosure",  count: 50, startSeed: 23301, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "RefreshControl",      count: 50, startSeed: 23351, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "MapOverlays",         count: 50, startSeed: 23401, accessibilityFlags: flags)
+        try await generateImages(templateFamily: "Stepper",             count: 50, startSeed: 23451, accessibilityFlags: flags)
     }
 
     // MARK: - Phase 5a: Known-bad generator (TASK-5a-10)
@@ -604,7 +898,7 @@ enum GenerateDatasetError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .unknownTemplateFamily(let family):
-            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3."
+            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity. A11y variants use the same family names."
         }
     }
 }

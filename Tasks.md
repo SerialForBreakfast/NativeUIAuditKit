@@ -1060,7 +1060,7 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 ---
 
-## Phase 5b: Extended SwiftUI Templates
+## Phase 5b: Extended SwiftUI Templates [~] — Templates + a11y sweep complete; TASK-5b-22 remaining
 
 *Goal: Expand to ≥50 structurally distinct templates before Phase 6 training. Templates can be built and tested independently.*
 
@@ -1072,33 +1072,44 @@ For each template below, the AC is the same pattern as TASK-3c-1: correct spot-c
 
 | Task | Template name | Elements to annotate |
 |---|---|---|
-| TASK-5b-1 | Tab view with navigation | `tabBar`, `navigationBar`, `homeIndicator`, `dynamicIsland` |
-| TASK-5b-2 | Sheet / half-sheet | `sheet`, `primaryButton`, `cancelAction`, `label` |
-| TASK-5b-3 | Search results | `searchField`, `navigationBar`, `listRow`, `label` |
-| TASK-5b-4 | Form with validation | `textField`, `secureField`, `toggle`, `primaryButton`, `label` |
-| TASK-5b-5 | Empty state screen | `primaryButton`, `imageView`, `label` |
-| TASK-5b-6 | Loading / skeleton state | `activityIndicator`, `progressView`, `listRow` (`isSkeleton: true`) |
-| TASK-5b-7 | Media card grid | `collectionItem`, `imageView`, `label` |
-| TASK-5b-8 | Onboarding page | `pageControl`, `primaryButton`, `imageView`, `label` |
-| TASK-5b-9 | Picker / date entry | `picker`, `navigationBar`, `primaryButton`, `cancelAction` |
-| TASK-5b-10 | Action sheet | `actionSheet`, `destructiveButton`, `cancelAction` |
-| TASK-5b-11 | Popover | `popover`, `label`, `secondaryButton` |
-| TASK-5b-12 | RTL mirrors (all Phase 3c) | All same elements, `layoutDirection: .rightToLeft` |
-| TASK-5b-13 | Liquid Glass iOS 26 navbar | `navigationBar` (liquidGlass profile), `primaryButton`, `label` |
-| TASK-5b-14 | Liquid Glass iOS 26 tabbar | `tabBar` (liquidGlass), `navigationBar`, `homeIndicator` |
-| TASK-5b-15 | Settings with disclosure groups | `navigationBar`, `disclosureGroup`, `listRow`, `toggle`, `label` |
-| TASK-5b-16 | Refresh control in list | `navigationBar`, `listRow`, `refreshControl` |
-| TASK-5b-17 | Context menu preview | `contextMenu`, `listRow`, `label` |
-| TASK-5b-18 | Map with overlays | `mapView`, `navigationBar`, `primaryButton` |
-| TASK-5b-19 | stepper + quantity controls | `stepperControl`, `label`, `navigationBar` |
-| TASK-5b-20 | Progress + activity combined | `progressView`, `activityIndicator`, `label`, `cancelAction` |
+| ✅ TASK-5b-1 | Tab view with navigation | `tabBar`, `navigationBar`, `homeIndicator`, `dynamicIsland` |
+| ✅ TASK-5b-2 | Sheet / half-sheet | `sheet`, `primaryButton`, `cancelAction`, `label` |
+| ✅ TASK-5b-3 | Search results | `searchField`, `navigationBar`, `listRow`, `label` |
+| ✅ TASK-5b-4 | Form with validation | `textField`, `secureField`, `toggle`, `primaryButton`, `label` |
+| ✅ TASK-5b-5 | Empty state screen | `primaryButton`, `imageView`, `label` |
+| ✅ TASK-5b-6 | Loading / skeleton state | `activityIndicator`, `progressView`, `listRow` (`isSkeleton: true`) |
+| ✅ TASK-5b-7 | Media card grid | `collectionItem`, `imageView`, `label` |
+| ✅ TASK-5b-8 | Onboarding page | `pageControl`, `primaryButton`, `imageView`, `label` |
+| ✅ TASK-5b-9 | Picker / date entry | `picker`, `navigationBar`, `primaryButton`, `cancelAction` |
+| ✅ TASK-5b-10 | Action sheet | `actionSheet`, `destructiveButton`, `cancelAction` |
+| ✅ TASK-5b-11 | Popover | `popover`, `label`, `secondaryButton` |
+| ✅ TASK-5b-12 | RTL mirrors (all Phase 3c) | All same elements, `layoutDirection: .rightToLeft` |
+| ✅ TASK-5b-13 | Liquid Glass iOS 26 navbar | `navigationBar` (liquidGlass profile), `primaryButton`, `label` |
+| ✅ TASK-5b-14 | Liquid Glass iOS 26 tabbar | `tabBar` (liquidGlass), `navigationBar`, `homeIndicator` |
+| ✅ TASK-5b-15 | Settings with disclosure groups | `navigationBar`, `disclosureGroup`, `listRow`, `toggle`, `label` |
+| ✅ TASK-5b-16 | Refresh control in list | `navigationBar`, `listRow`, `refreshControl` |
+| ✅ TASK-5b-17 | Context menu preview | `contextMenu`, `listRow`, `label` |
+| ✅ TASK-5b-18 | Map with overlays | `mapView`, `navigationBar`, `primaryButton` |
+| ✅ TASK-5b-19 | stepper + quantity controls | `stepperControl`, `label`, `navigationBar` |
+| ✅ TASK-5b-20 | Progress + activity combined | `progressView`, `activityIndicator`, `label`, `cancelAction` |
 
 **Additional sweep tasks (apply to all templates):**
 
-#### TASK-5b-21: Accessibility variant sweep
+#### ✅ TASK-5b-21: Accessibility variant sweep
 
 **Requires:** All TASK-5b-1 through 5b-20 complete  
 For every template that includes `navigationBar` or `tabBar`, generate variants with `reduceTransparency: true` (15% of images), `increaseContrast: true` (15%), `boldText: true` (10%), and `buttonShapes: true` (10%) per `Research/TrainingDataStrategy.md` Section 10.
+
+**Implementation:** 4 test methods × 10 templates × 50 images = 2,000 accessibility-variant images.
+- `testGenerateReduceTransparencyVariants()` seeds 20001–20500
+- `testGenerateIncreaseContrastVariants()` seeds 21001–21500
+- `testGenerateBoldTextVariants()` seeds 22001–22500
+- `testGenerateButtonShapesVariants()` seeds 23001–23500
+
+Trait overrides applied in `ScreenshotCapture.capture()` via `UIViewController.traitOverrides` (iOS 17+):
+- `boldText` → `traitOverrides.legibilityWeight = .bold`
+- `increaseContrast` / `reduceTransparency` → `traitOverrides.accessibilityContrast = .high`
+- `buttonShapes` (+ co-applied boldText) → recorded in annotation metadata
 
 **AC:** Annotation metadata shows the correct accessibility flags. Total images across all accessibility variants ≥2,000.
 
