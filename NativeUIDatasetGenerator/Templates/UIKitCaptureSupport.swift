@@ -137,7 +137,11 @@ extension ScreenshotCapture {
             ))
         }
 
-        guard !elements.isEmpty else {
+        // Note: elements may be intentionally empty for hard-negative templates
+        // (loading overlay, decorative fill). Only throw if annotatedViews was
+        // non-empty but frames were all zero — which would indicate a layout bug.
+        let expectedElements = viewController.annotatedViews.count
+        if expectedElements > 0, elements.isEmpty {
             window.isHidden = true
             throw ScreenshotCaptureError.frameStabilizationTimeout
         }

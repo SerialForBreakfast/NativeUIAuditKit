@@ -331,6 +331,249 @@ final class GenerateDatasetTests: XCTestCase {
         }
     }
 
+    // MARK: - Phase 5a: Known-bad generator (TASK-5a-10)
+
+    /// Generates 60 truncated-label images (seeds 7001–7060).
+    /// knownIssues: ["truncatedText"] on every label element.
+    func testGenerateTruncatedLabelImages() async throws {
+        try await generateKnownBadImages(templateFamily: "TruncatedLabel", count: 60, startSeed: 7001)
+    }
+
+    /// Generates 60 clipped-content images (seeds 7101–7160).
+    /// knownIssues: ["clippedElement"] on every imageView element.
+    func testGenerateClippedContentImages() async throws {
+        try await generateKnownBadImages(templateFamily: "ClippedContent", count: 60, startSeed: 7101)
+    }
+
+    /// Generates 60 overlapping-controls images (seeds 7201–7260).
+    /// No knownIssues — overlap flagged at Phase 7 inference time.
+    func testGenerateOverlappingControlsImages() async throws {
+        try await generateKnownBadImages(templateFamily: "OverlappingControls", count: 60, startSeed: 7201)
+    }
+
+    /// Generates 60 small-hit-target images (seeds 7301–7360).
+    /// knownIssues: ["tappableTargetTooSmall"] on buttons with dimensions < 44pt.
+    func testGenerateSmallHitTargetImages() async throws {
+        try await generateKnownBadImages(templateFamily: "SmallHitTarget", count: 60, startSeed: 7301)
+    }
+
+    /// Generates 60 Dynamic Type overflow images (seeds 7401–7460).
+    /// knownIssues: ["dynamicTypeOverflow"]. Uses accessibilityExtraExtraExtraLarge DT.
+    func testGenerateDynamicTypeOverflowImages() async throws {
+        try await generateKnownBadImages(
+            templateFamily: "DynamicTypeOverflow", count: 60, startSeed: 7401,
+            dynamicTypeOverride: .accessibilityExtraExtraExtraLarge
+        )
+    }
+
+    /// Generates 40 RTL mirroring failure images (seeds 7501–7540).
+    /// knownIssues: ["rtlMirroringFailure"]. Uses RTL layout + ar_SA locale.
+    func testGenerateRTLMirroringFailureImages() async throws {
+        try await generateKnownBadImages(
+            templateFamily: "RTLMirroringFailure", count: 40, startSeed: 7501,
+            layoutDirection: .rtl, locale: "ar_SA"
+        )
+    }
+
+    /// Generates 60 off-screen element images (seeds 7601–7660).
+    /// Off-screen rows excluded; partial row annotated via scroll viewport filter.
+    func testGenerateOffScreenElementImages() async throws {
+        try await generateKnownBadImages(templateFamily: "OffScreenElement", count: 60, startSeed: 7601)
+    }
+
+    /// Generates 60 occluded-element images (seeds 7701–7760).
+    /// Sheet annotated as `sheet`; partially covered buttons annotated with full frame.
+    func testGenerateOccludedElementImages() async throws {
+        try await generateKnownBadImages(templateFamily: "OccludedElement", count: 60, startSeed: 7701)
+    }
+
+    /// Generates 40 loading-overlay hard-negative images (seeds 7801–7840).
+    /// elements: [] — model should produce no detections.
+    func testGenerateHardNegativeLoadingImages() async throws {
+        try await generateKnownBadImages(
+            templateFamily: "HardNegative_1", count: 40, startSeed: 7801,
+            hardNegativeSplit: true
+        )
+    }
+
+    /// Generates 40 WKWebView hard-negative images (seeds 7901–7940).
+    /// elements: [webContent] — exactly one webContent annotation.
+    func testGenerateHardNegativeWebContentImages() async throws {
+        try await generateKnownBadImages(
+            templateFamily: "HardNegative_2", count: 40, startSeed: 7901,
+            hardNegativeSplit: true
+        )
+    }
+
+    /// Generates 40 decorative-fill hard-negative images (seeds 8001–8040).
+    /// elements: [] — model should produce no detections.
+    func testGenerateHardNegativeDecorativeImages() async throws {
+        try await generateKnownBadImages(
+            templateFamily: "HardNegative_3", count: 40, startSeed: 8001,
+            hardNegativeSplit: true
+        )
+    }
+
+    // MARK: - Known-bad generation loop (Phase 5a)
+
+    /// Generates `count` known-bad UIKit images for the given template family.
+    ///
+    /// - Parameters:
+    ///   - templateFamily: One of the Phase 5a known-bad family names.
+    ///   - count: Number of images to generate.
+    ///   - startSeed: First seed value.
+    ///   - dynamicTypeOverride: If non-nil, use this DT size instead of the standard cycle.
+    ///   - layoutDirection: If non-nil, force this layout direction.
+    ///   - locale: Locale override (defaults to "en_US").
+    ///   - hardNegativeSplit: If true, use 70% train / 30% validation split (no test split).
+    private func generateKnownBadImages(
+        templateFamily: String,
+        count: Int,
+        startSeed: UInt64,
+        dynamicTypeOverride: GeneratorDynamicTypeSize? = nil,
+        layoutDirection: GeneratorLayoutDirection = .ltr,
+        locale: String = "en_US",
+        hardNegativeSplit: Bool = false
+    ) async throws {
+        let manifestURL = datasetDir.appending(path: "manifest.json")
+        var manifest = try DatasetManifest.load(from: manifestURL)
+
+        for i in 0..<count {
+            let seed = startSeed + UInt64(i)
+            let state = simulatorStates[i % simulatorStates.count]
+
+            let dtSize = dynamicTypeOverride ?? dynamicTypeSize(for: i)
+            let config = makeKnownBadConfig(
+                seed: seed, index: i, templateFamily: templateFamily, state: state,
+                dynamicTypeSize: dtSize, layoutDirection: layoutDirection, locale: locale
+            )
+
+            let result = try await captureKnownBad(
+                templateFamily: templateFamily, seed: seed, config: config
+            )
+
+            let imageIndex = manifest.imageCount + 1
+            let split = hardNegativeSplit
+                ? hardNegativeSplitFor(imageIndex: imageIndex)
+                : splitFor(imageIndex: imageIndex)
+            let baseName = String(format: "img_%06d", imageIndex)
+            let pngName  = baseName + ".png"
+            let jsonName = baseName + ".json"
+
+            let splitDir = datasetDir.appending(path: split.rawValue, directoryHint: .isDirectory)
+            try result.png.write(to: splitDir.appending(path: pngName))
+            try AnnotationWriter.write(
+                result: result,
+                config: config,
+                imageFileName: pngName,
+                templateFamily: templateFamily,
+                generatorVersion: "0.1.0",
+                to: splitDir.appending(path: jsonName)
+            )
+
+            let entry = ManifestEntry(
+                fileName: "\(split.rawValue)/\(pngName)",
+                split: split,
+                sha256: result.sha256,
+                templateFamily: templateFamily,
+                generatorSeed: seed,
+                simulatorState: state,
+                isolationTemplate: config.isolationTemplate,
+                lowDensity: config.lowDensity,
+                deviceName: config.deviceName,
+                pixelScale: config.pixelScale
+            )
+            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
+        }
+
+        try manifest.save(to: manifestURL)
+    }
+
+    /// Dispatches to the correct known-bad VC factory.
+    private func captureKnownBad(
+        templateFamily: String,
+        seed: UInt64,
+        config: GeneratorRunConfig
+    ) async throws -> CaptureResult {
+        switch templateFamily {
+        case "TruncatedLabel":
+            let vc = TruncatedLabelViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "ClippedContent":
+            let vc = ClippedContentViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "OverlappingControls":
+            let vc = OverlappingControlsViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "SmallHitTarget":
+            let vc = SmallHitTargetViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "DynamicTypeOverflow":
+            let vc = DynamicTypeOverflowViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "RTLMirroringFailure":
+            let vc = RTLMirroringFailureViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "OffScreenElement":
+            let vc = OffScreenElementViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "OccludedElement":
+            let vc = OccludedElementViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "HardNegative_1":
+            let vc = HardNegativeViewController(type: .loadingOverlay, seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "HardNegative_2":
+            // WKWebView needs extra stabilisation time beyond the standard 150ms.
+            // Sleep an additional 500ms before capture to allow HTML to render.
+            try await Task.sleep(for: .milliseconds(500))
+            let vc = HardNegativeViewController(type: .webContent, seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "HardNegative_3":
+            let vc = HardNegativeViewController(type: .decorativeFill, seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        default:
+            throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
+        }
+    }
+
+    /// Builds a `GeneratorRunConfig` for a known-bad template image.
+    private func makeKnownBadConfig(
+        seed: UInt64,
+        index: Int,
+        templateFamily: String,
+        state: SimulatorStateOverride,
+        dynamicTypeSize: GeneratorDynamicTypeSize,
+        layoutDirection: GeneratorLayoutDirection,
+        locale: String
+    ) -> GeneratorRunConfig {
+        let highDPI = index % 2 == 0
+        let osProfile: OSVisualProfile = highDPI ? .ios26 : .ios17
+        let deviceName = highDPI ? "iPhone 17 Pro" : "iPhone SE (3rd generation)"
+        let pixelScale = highDPI ? 3 : 2
+
+        return GeneratorRunConfig(
+            seed: seed,
+            templateFamily: templateFamily,
+            osProfile: osProfile,
+            simulatorOverride: state,
+            colorScheme: index % 2 == 0 ? .dark : .light,
+            dynamicTypeSize: dynamicTypeSize,
+            deviceName: deviceName,
+            pixelScale: pixelScale,
+            locale: locale,
+            layoutDirection: layoutDirection,
+            accessibilityFlags: .default
+        )
+    }
+
+    /// Hard-negative split: 70% train, 30% validation (no test split).
+    /// Per spec: "Hard negatives are distributed evenly: 30% in validation, 70% in train."
+    private func hardNegativeSplitFor(imageIndex: Int) -> DatasetSplit {
+        // Roughly 3 in 10 go to validation
+        return (imageIndex % 10) < 3 ? .validation : .train
+    }
+
     // MARK: - Helpers
 
     /// Assigns a `DatasetSplit` based on a 10-bucket rotation: 80% train, 10% validation, 10% test.
@@ -361,7 +604,7 @@ enum GenerateDatasetError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .unknownTemplateFamily(let family):
-            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls."
+            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3."
         }
     }
 }
