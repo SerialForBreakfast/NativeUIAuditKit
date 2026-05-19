@@ -69,6 +69,24 @@ public enum ScreenshotCapture {
         hosting.view.backgroundColor = .clear
         window.rootViewController = hosting
 
+        // Apply accessibility trait overrides so UIKit chrome (nav bar material,
+        // font weight) and SwiftUI elements render with the requested accessibility
+        // appearance without changing system-wide UIAccessibility settings.
+        // `traitOverrides` is available on iOS 17+; the generator target requires iOS 17.
+        if #available(iOS 17.0, *) {
+            let flags = config.accessibilityFlags
+            // Bold text: UIKit and SwiftUI render system fonts at bold weight.
+            if flags.boldText {
+                hosting.traitOverrides.legibilityWeight = .bold
+            }
+            // Increase contrast / reduce transparency: both cases benefit from
+            // UIKit's high-contrast rendering (nav bar uses opaque material instead
+            // of blur; system colors use higher-contrast variants).
+            if flags.increaseContrast || flags.reduceTransparency {
+                hosting.traitOverrides.accessibilityContrast = .high
+            }
+        }
+
         window.setNeedsLayout()
         window.layoutIfNeeded()
         hosting.view.setNeedsLayout()
