@@ -423,3 +423,47 @@ let bounds = CGRect(origin: .zero, size: canonicalSize)
 |---|---|---|---|
 | ios17 (iPhone SE 3rd gen) | 375×667pt | @2x | 750×1334px |
 | ios26 (iPhone 17 Pro) | 393×852pt | @3x | 1179×2556px |
+
+---
+
+### BP-20: Never use the capture-frame ID as the element type — always derive `elementType` from the ID prefix
+
+**Problem discovered:** `ScreenshotCapture.swift` originally passed `elementType: id` when constructing `AnnotatedElement` from SwiftUI `captureFrame` results:
+
+```swift
+// WRONG — stores full ID ("cancelAction_alert", "label_title") as the class
+let elements = capturedFrames.map { id, frame in
+    AnnotatedElement(id: id, elementType: id, frame: frame)
+}
+```
+
+Templates use descriptive IDs like `cancelAction_alert`, `label_title`, `slider_0`, `imageView_hero`. When `elementType` is set to the full ID, the manifest's `classDistribution` accumulates hundreds of spurious keys (`cancelAction_alert`, `cancelAction_0`, `label_title`, `label_section_header` …) instead of the 41 canonical class names. This corrupts training labels and makes dataset balance analysis meaningless.
+
+**Root cause:** The element ID and the element type serve different purposes. The ID is a unique locator within a template render; the type is the canonical model class. Templates should (and do) follow the convention `{elementType}_{descriptor}` — the type is always the camelCase prefix before the first underscore.
+
+**Correct approach:** Strip the suffix at the single point where `AnnotatedElement` is constructed in the SwiftUI capture path:
+
+```swift
+// CORRECT — extracts canonical class from the ID convention
+let elements = capturedFrames.map { id, frame in
+    let elementType = id.components(separatedBy: "_").first ?? id
+    return AnnotatedElement(id: id, elementType: elementType, frame: frame)
+}
+```
+
+**ID naming convention (mandatory for all templates):**
+
+| ID pattern | Derived `elementType` | Notes |
+|---|---|---|
+| `slider_0`, `slider_1` | `slider` | Numeric suffix for multiple instances |
+| `label_title`, `label_body` | `label` | Descriptive suffix to distinguish roles |
+| `cancelAction_alert` | `cancelAction` | Context suffix |
+| `primaryButton_alertOK` | `primaryButton` | Role suffix |
+| `navigationBar`, `tabBar` | `navigationBar`, `tabBar` | Pure class names (no suffix) — still correct after split |
+| `imageView_hero` | `imageView` | Named region |
+
+IDs that do not start with a canonical class name will produce incorrect element types. All template authors must prefix the ID with the exact canonical class string.
+
+**Detection:** After any generation run, verify `manifest.classDistribution` has ≤ 41 keys and none contain a `_` (except `tabBarItem` which is a canonical class name). A classDistribution with hundreds of keys is diagnostic of this bug.
+
+**Impact of getting this wrong:** If an entire generation run completes with the bug active, all annotation JSONs have wrong `elementType` values. The only safe recovery is to fix the source and re-run — post-hoc patching of thousands of JSON files outside the project is error-prone and not reproducible.

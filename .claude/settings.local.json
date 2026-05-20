@@ -16,7 +16,9 @@
       "Bash(mkdir -p reports)",
       "Bash(.build/debug/NativeUIDatasetGeneratorOverlay spot-check *)",
       "Bash(# Check the build time of the test bundle to see if it recompiled *)",
-      "Bash(find ~/Library/Developer/CoreSimulator/Devices -name \"manifest.json\" -newer \"/Users/josephmccraw/Dropbox/My Mac \\(MacBook-Air\\)/Documents/GitHub/NativeUIAuditKit/NativeUIDatasetGenerator/Templates/UIKitListViewController.swift\" 2>/dev/null)"
+      "Bash(find ~/Library/Developer/CoreSimulator/Devices -name \"manifest.json\" -newer \"/Users/josephmccraw/Dropbox/My Mac \\(MacBook-Air\\)/Documents/GitHub/NativeUIAuditKit/NativeUIDatasetGenerator/Templates/UIKitListViewController.swift\" 2>/dev/null)",
+      "Bash(bc)",
+      "Bash(awk '{s+=$1} END {print \"Total expected images:\", s}')"
     ]
   }
 }

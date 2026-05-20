@@ -20,6 +20,7 @@
 		CC000018000000000000CC18 /* AlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000009000000000000BB09 /* AlertTemplate.swift */; };
 		CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001A000000000000BB1A /* AnnotationWriter.swift */; };
 		CC00001B000000000000CC1B /* DatasetManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001C000000000000BB1C /* DatasetManifest.swift */; };
+		CC000022000000000000CC22 /* BalanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000020000000000000BB20 /* BalanceReport.swift */; };
 		CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000001000000000000CC01 /* GenerateDatasetTests.swift */; };
 		CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */; };
 		CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */; };
@@ -73,6 +74,21 @@
 		A6000011000000000000A611 /* MapOverlaysTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6000001000000000000A601 /* MapOverlaysTemplate.swift */; };
 		A7000011000000000000A711 /* StepperTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7000001000000000000A701 /* StepperTemplate.swift */; };
 		A8000011000000000000A811 /* ProgressActivityTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8000001000000000000A801 /* ProgressActivityTemplate.swift */; };
+		/* Phase 5b-22 — 13 gap-filling templates (families 38–50) */
+		B1000011000000000000B111 /* ColorPickerTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000000000000B101 /* ColorPickerTemplate.swift */; };
+		B2000011000000000000B211 /* MenuButtonTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000B201 /* MenuButtonTemplate.swift */; };
+		B3000011000000000000B311 /* LinkRichTextTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000001000000000000B301 /* LinkRichTextTemplate.swift */; };
+		B4000011000000000000B411 /* SliderPanelTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000001000000000000B401 /* SliderPanelTemplate.swift */; };
+		B5000011000000000000B511 /* SegmentedFilterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001000000000000B501 /* SegmentedFilterTemplate.swift */; };
+		B6000011000000000000B611 /* CardDetailTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001000000000000B601 /* CardDetailTemplate.swift */; };
+		B7000011000000000000B711 /* MultiSectionFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001000000000000B701 /* MultiSectionFormTemplate.swift */; };
+		B8000011000000000000B811 /* ToolbarActionsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001000000000000B801 /* ToolbarActionsTemplate.swift */; };
+		B9000011000000000000B911 /* WizardStepFlowTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001000000000000B901 /* WizardStepFlowTemplate.swift */; };
+		BA000011000000000000BA11 /* NotificationCenterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001000000000000BA01 /* NotificationCenterTemplate.swift */; };
+		BB000011000000000000BB11 /* GalleryPageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001000000000000BF01 /* GalleryPageTemplate.swift */; };
+		BC000011000000000000BC11 /* iPadSidebarTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000001000000000000BC01 /* iPadSidebarTemplate.swift */; };
+		BD000011000000000000BD11 /* AlertWithTextFieldTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */; };
+		BE000011000000000000BE11 /* SettingsToggleDenseTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +115,7 @@
 		BB00000B000000000000BB0B /* GeneratorRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeneratorRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB00001A000000000000BB1A /* AnnotationWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnotationWriter.swift; path = "../NativeUIDatasetGenerator/Sources/AnnotationWriter.swift"; sourceTree = SOURCE_ROOT; };
 		BB00001C000000000000BB1C /* DatasetManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatasetManifest.swift; path = "../NativeUIDatasetGenerator/Sources/DatasetManifest.swift"; sourceTree = SOURCE_ROOT; };
+		BB000020000000000000BB20 /* BalanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BalanceReport.swift; path = "../NativeUIDatasetGenerator/Sources/BalanceReport.swift"; sourceTree = SOURCE_ROOT; };
 		BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KitchenSinkTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/KitchenSinkTemplate.swift"; sourceTree = SOURCE_ROOT; };
 		BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoundingBoxDebugRenderer.swift; path = "../NativeUIDatasetGenerator/Templates/BoundingBoxDebugRenderer.swift"; sourceTree = SOURCE_ROOT; };
 		CC000001000000000000CC01 /* GenerateDatasetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateDatasetTests.swift; sourceTree = "<group>"; };
@@ -154,6 +171,21 @@
 		A6000001000000000000A601 /* MapOverlaysTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapOverlaysTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift"; sourceTree = SOURCE_ROOT; };
 		A7000001000000000000A701 /* StepperTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StepperTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/StepperTemplate.swift"; sourceTree = SOURCE_ROOT; };
 		A8000001000000000000A801 /* ProgressActivityTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressActivityTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ProgressActivityTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		/* Phase 5b-22 — 13 gap-filling template file references */
+		B1000001000000000000B101 /* ColorPickerTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorPickerTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ColorPickerTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B2000001000000000000B201 /* MenuButtonTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuButtonTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B3000001000000000000B301 /* LinkRichTextTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinkRichTextTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LinkRichTextTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B4000001000000000000B401 /* SliderPanelTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SliderPanelTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SliderPanelTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B5000001000000000000B501 /* SegmentedFilterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegmentedFilterTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SegmentedFilterTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B6000001000000000000B601 /* CardDetailTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardDetailTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/CardDetailTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B7000001000000000000B701 /* MultiSectionFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MultiSectionFormTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MultiSectionFormTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B8000001000000000000B801 /* ToolbarActionsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolbarActionsTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ToolbarActionsTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		B9000001000000000000B901 /* WizardStepFlowTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WizardStepFlowTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/WizardStepFlowTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BA000001000000000000BA01 /* NotificationCenterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationCenterTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BF000001000000000000BF01 /* GalleryPageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryPageTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/GalleryPageTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BC000001000000000000BC01 /* iPadSidebarTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iPadSidebarTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/iPadSidebarTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertWithTextFieldTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/AlertWithTextFieldTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsToggleDenseTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SettingsToggleDenseTemplate.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +235,7 @@
 				BB000005000000000000BB05 /* SeededRNG.swift */,
 				BB00001A000000000000BB1A /* AnnotationWriter.swift */,
 				BB00001C000000000000BB1C /* DatasetManifest.swift */,
+				BB000020000000000000BB20 /* BalanceReport.swift */,
 			);
 			name = "Shared Sources";
 			sourceTree = "<group>";
@@ -242,6 +275,20 @@
 				A6000001000000000000A601 /* MapOverlaysTemplate.swift */,
 				A7000001000000000000A701 /* StepperTemplate.swift */,
 				A8000001000000000000A801 /* ProgressActivityTemplate.swift */,
+				B1000001000000000000B101 /* ColorPickerTemplate.swift */,
+				B2000001000000000000B201 /* MenuButtonTemplate.swift */,
+				B3000001000000000000B301 /* LinkRichTextTemplate.swift */,
+				B4000001000000000000B401 /* SliderPanelTemplate.swift */,
+				B5000001000000000000B501 /* SegmentedFilterTemplate.swift */,
+				B6000001000000000000B601 /* CardDetailTemplate.swift */,
+				B7000001000000000000B701 /* MultiSectionFormTemplate.swift */,
+				B8000001000000000000B801 /* ToolbarActionsTemplate.swift */,
+				B9000001000000000000B901 /* WizardStepFlowTemplate.swift */,
+				BA000001000000000000BA01 /* NotificationCenterTemplate.swift */,
+				BF000001000000000000BF01 /* GalleryPageTemplate.swift */,
+				BC000001000000000000BC01 /* iPadSidebarTemplate.swift */,
+				BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */,
+				BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */,
 			);
 			name = Templates;
 			sourceTree = "<group>";
@@ -395,6 +442,7 @@
 				CC000014000000000000CC14 /* SeededRNG.swift in Sources */,
 				CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */,
 				CC00001B000000000000CC1B /* DatasetManifest.swift in Sources */,
+				CC000022000000000000CC22 /* BalanceReport.swift in Sources */,
 				CC000015000000000000CC15 /* ScreenshotCapture.swift in Sources */,
 				CC000016000000000000CC16 /* LoginFormTemplate.swift in Sources */,
 				CC000017000000000000CC17 /* SettingsListTemplate.swift in Sources */,
@@ -450,6 +498,20 @@
 				A6000011000000000000A611 /* MapOverlaysTemplate.swift in Sources */,
 				A7000011000000000000A711 /* StepperTemplate.swift in Sources */,
 				A8000011000000000000A811 /* ProgressActivityTemplate.swift in Sources */,
+				B1000011000000000000B111 /* ColorPickerTemplate.swift in Sources */,
+				B2000011000000000000B211 /* MenuButtonTemplate.swift in Sources */,
+				B3000011000000000000B311 /* LinkRichTextTemplate.swift in Sources */,
+				B4000011000000000000B411 /* SliderPanelTemplate.swift in Sources */,
+				B5000011000000000000B511 /* SegmentedFilterTemplate.swift in Sources */,
+				B6000011000000000000B611 /* CardDetailTemplate.swift in Sources */,
+				B7000011000000000000B711 /* MultiSectionFormTemplate.swift in Sources */,
+				B8000011000000000000B811 /* ToolbarActionsTemplate.swift in Sources */,
+				B9000011000000000000B911 /* WizardStepFlowTemplate.swift in Sources */,
+				BA000011000000000000BA11 /* NotificationCenterTemplate.swift in Sources */,
+				BB000011000000000000BB11 /* GalleryPageTemplate.swift in Sources */,
+				BC000011000000000000BC11 /* iPadSidebarTemplate.swift in Sources */,
+				BD000011000000000000BD11 /* AlertWithTextFieldTemplate.swift in Sources */,
+				BE000011000000000000BE11 /* SettingsToggleDenseTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

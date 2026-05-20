@@ -5,7 +5,7 @@ import Foundation
 
 /// Parameterized visual profile for a device/OS pairing.
 /// Controls which chrome style is rendered — no need to run multiple simulator OS versions.
-public struct OSVisualProfile: Codable, Sendable {
+public struct OSVisualProfile: Codable, Sendable, Equatable {
     public var tabBarStyle: TabBarStyle
     public var navBarStyle: NavBarStyle
     public var hasDynamicIsland: Bool

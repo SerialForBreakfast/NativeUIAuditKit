@@ -11,7 +11,7 @@
 
 import XCTest
 import UIKit
-import Vision
+@preconcurrency import Vision
 
 // MARK: - TruncatedLabelValidationTest
 
@@ -101,15 +101,23 @@ final class TruncatedLabelValidationTest: XCTestCase {
         }
 
         // Run VNRecognizeTextRequest synchronously on this test's background queue.
-        // We need the call to complete before assertions, so wrap in continuation.
-        let observations: [VNRecognizedTextObservation] = try await withCheckedThrowingContinuation { continuation in
+        // We extract only Sendable primitives (String, CGRect) from the Vision
+        // observations before calling continuation.resume, sidestepping the
+        // Swift 6 "sending non-Sendable" error for VNRecognizedTextObservation.
+        typealias ObsData = (string: String, boundingBox: CGRect)
+        let observations: [ObsData] = try await withCheckedThrowingContinuation { continuation in
             let request = VNRecognizeTextRequest { req, error in
                 if let error {
                     continuation.resume(throwing: error)
                     return
                 }
-                let obs = req.results as? [VNRecognizedTextObservation] ?? []
-                continuation.resume(returning: obs)
+                let raw = req.results as? [VNRecognizedTextObservation] ?? []
+                // Extract Sendable data before crossing the concurrency boundary.
+                let data: [ObsData] = raw.compactMap { ob in
+                    guard let candidate = ob.topCandidates(1).first else { return nil }
+                    return (string: candidate.string, boundingBox: ob.boundingBox)
+                }
+                continuation.resume(returning: data)
             }
             request.recognitionLevel = .accurate
             request.usesLanguageCorrection = false
@@ -135,8 +143,7 @@ final class TruncatedLabelValidationTest: XCTestCase {
         var foundEllipsis = false
 
         for obs in observations {
-            guard let candidate = obs.topCandidates(1).first else { continue }
-            guard candidate.string.contains("…") else { continue }
+            guard obs.string.contains("…") else { continue }
 
             // Vision normalised rect: origin bottom-left, (0,0)–(1,1)
             let vBox = obs.boundingBox
@@ -167,7 +174,7 @@ final class TruncatedLabelValidationTest: XCTestCase {
         XCTAssertTrue(
             foundEllipsis,
             "VNRecognizeTextRequest did not detect '…' overlapping any element bounds. " +
-            "Recognized strings: \(observations.compactMap { $0.topCandidates(1).first?.string }.prefix(10))"
+            "Recognized strings: \(observations.map(\.string).prefix(10))"
         )
     }
 

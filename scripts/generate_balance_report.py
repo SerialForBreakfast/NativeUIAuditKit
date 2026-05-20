@@ -72,6 +72,62 @@ def imbalance_ratio(distribution: dict[str, int]) -> float | None:
 # Output writers
 # ---------------------------------------------------------------------------
 
+def write_markdown(
+    distribution: dict[str, int],
+    image_count: int,
+    floor: int,
+    output_path: Path,
+) -> None:
+    """Write a Markdown balance report matching the BalanceReport.swift format."""
+    from datetime import datetime, timezone
+
+    ratio = imbalance_ratio(distribution)
+    flagged = flag_classes(distribution, floor)
+
+    lines: list[str] = [
+        "# Dataset Balance Report",
+        "",
+        f"Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}",
+        f"Total images: {image_count}",
+        "",
+    ]
+
+    if ratio is not None:
+        flag = " ⚠️" if ratio > 5.0 else ""
+        lines.append(f"**Imbalance ratio (max/min):** {ratio:.1f}{flag}")
+    else:
+        lines.append("**Imbalance ratio:** n/a (fewer than 2 classes observed)")
+    lines.append("")
+
+    if not flagged:
+        lines.append(f"All classes meet the minimum instance floor of {floor}.")
+    else:
+        lines.append(f"**Under-represented classes (< {floor} instances):** {len(flagged)}")
+    lines.append("")
+
+    lines += [
+        "## Per-Class Instance Counts",
+        "",
+        "| Class | Instances | Status |",
+        "|---|---|---|",
+    ]
+    for cls in sorted(distribution.keys()):
+        count = distribution[cls]
+        if count == 0:
+            status = "⚠️ MISSING"
+        elif count < floor:
+            status = "⚠️ LOW"
+        else:
+            status = "OK"
+        lines.append(f"| `{cls}` | {count} | {status} |")
+
+    lines += ["", f"*Floor = {floor} instances per class*"]
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Saved Markdown balance report: {output_path}")
+
+
 def write_json(distribution: dict[str, int], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
@@ -173,6 +229,8 @@ def main(argv: list[str] | None = None) -> None:
         print(f"All classes meet the floor of {args.floor} instances.")
 
     v = args.version
+    write_markdown(distribution, image_count, args.floor,
+                   args.reports_dir / "dataset_balance.md")
     write_json(distribution, args.reports_dir / f"class_distribution_v{v}.json")
     write_histogram(distribution, args.reports_dir / f"class_distribution_v{v}.png",
                     args.floor, v)

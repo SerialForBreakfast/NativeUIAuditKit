@@ -98,12 +98,13 @@ public struct PopoverTemplate: View {
             let popoverH: CGFloat = CGFloat(44 + config.actionItems.count * 44 + 16)
 
             let anchorX: CGFloat = proxy.size.width - popoverW - 16
-            let anchorY: CGFloat
-            switch config.anchorPosition {
-            case .top:    anchorY = 80
-            case .mid:    anchorY = proxy.size.height / 2 - popoverH / 2
-            case .bottom: anchorY = proxy.size.height - popoverH - 120
-            }
+            let anchorY: CGFloat = {
+                switch config.anchorPosition {
+                case .top:    return 80
+                case .mid:    return proxy.size.height / 2 - popoverH / 2
+                case .bottom: return proxy.size.height - popoverH - 120
+                }
+            }()
 
             ZStack(alignment: .topLeading) {
                 // Background content (simulates the screen behind the popover)

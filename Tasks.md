@@ -1113,15 +1113,37 @@ Trait overrides applied in `ScreenshotCapture.capture()` via `UIViewController.t
 
 **AC:** Annotation metadata shows the correct accessibility flags. Total images across all accessibility variants ≥2,000.
 
-#### TASK-5b-22: Phase 5b generation run
+#### [~] TASK-5b-22: Phase 5b generation run — **IN PROGRESS** (xcodebuild test running 2026-05-19)
 
 **Requires:** All TASK-5b-1 through 5b-21 complete
 
+**Template count: 51 unique families** (37 original + 14 gap-filling: ColorPicker, MenuButton,
+LinkRichText, SliderPanel, SegmentedFilter, CardDetail, MultiSectionForm, ToolbarActions,
+WizardStepFlow, NotificationCenter, GalleryPage, iPadSidebar, AlertWithTextField, SettingsToggleDense).
+New classes covered: `colorWell`, `menuButton`, `link`, `toolbar`, `sidebar`.
+
 **AC:**
-- ≥8,000 SwiftUI images total across all templates (Phase 3c + Phase 5b)
-- ≥50 structurally distinct templates counted in manifest
+- ≥8,000 SwiftUI images total across all templates — **16,080 expected** ← run in progress
+- ≥50 structurally distinct templates counted in manifest ← **51 families registered** ✅
 - No archetype group (forms/lists/modals/etc.) contributes >25% of total images
-- `reports/dataset_balance.md` generated and reviewed
+- `reports/dataset_balance.md` generated and reviewed ← pending run completion
+
+**Post-run steps:**
+```bash
+# 1. Get simulator container path
+CONTAINER=$(xcrun simctl get_app_container 812EDC32-DB8D-49D6-B130-2279180CCDEB com.nativeuiauditkit.generatorrunner data)
+# 2. Generate balance report + histogram
+python scripts/generate_balance_report.py \
+    --manifest "$CONTAINER/Documents/dataset/manifest.json" \
+    --reports-dir reports \
+    --floor 100 \
+    --version 2
+# 3. Run final testZZZWriteBalanceReport to confirm balance from within the test bundle
+xcodebuild test -project GeneratorRunner/GeneratorRunner.xcodeproj \
+    -scheme GeneratorRunnerTests \
+    -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=26.4.1' \
+    -only-testing:GeneratorRunnerTests/GenerateDatasetTests/testZZZWriteBalanceReport
+```
 
 ---
 

@@ -135,7 +135,11 @@ public enum ScreenshotCapture {
         let scaleInt = config.pixelScale
 
         let elements = capturedFrames.map { id, frame in
-            AnnotatedElement(id: id, elementType: id, frame: frame)
+            // elementType is the class prefix of the captureFrame id.
+            // Convention: id = "{elementType}_{suffix}" (e.g. "slider_0", "label_title").
+            // Strip the suffix so classDistribution records canonical types ("slider", "label").
+            let elementType = id.components(separatedBy: "_").first ?? id
+            return AnnotatedElement(id: id, elementType: elementType, frame: frame)
         }
 
         return CaptureResult(
@@ -168,6 +172,12 @@ extension ScreenshotCapture {
             case let navBar as UINavigationBar:
                 if result["navigationBar"] == nil {
                     result["navigationBar"] = navBar.convert(navBar.bounds, to: hostingView)
+                }
+            case let toolbar as UIToolbar:
+                // Bottom toolbar (from .toolbar { ToolbarItemGroup(placement: .bottomBar) }).
+                // Distinct from UITabBar — narrower height, content-editing context.
+                if result["toolbar"] == nil {
+                    result["toolbar"] = toolbar.convert(toolbar.bounds, to: hostingView)
                 }
             case let tabBar as UITabBar:
                 if result["tabBar"] == nil {

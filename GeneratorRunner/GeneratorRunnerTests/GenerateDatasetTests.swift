@@ -291,6 +291,48 @@ final class GenerateDatasetTests: XCTestCase {
         case "ProgressActivity":
             let paConfig = ProgressActivityConfig.make(seed: seed, corpus: &corpus)
             return try await ScreenshotCapture.capture(ProgressActivityTemplate(config: paConfig), config: config)
+        case "ColorPicker":
+            let cpConfig = ColorPickerConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ColorPickerTemplate(config: cpConfig), config: config)
+        case "MenuButton":
+            let mbConfig = MenuButtonConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(MenuButtonTemplate(config: mbConfig), config: config)
+        case "LinkRichText":
+            let lrtConfig = LinkRichTextConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(LinkRichTextTemplate(config: lrtConfig), config: config)
+        case "SliderPanel":
+            let spConfig = SliderPanelConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(SliderPanelTemplate(config: spConfig), config: config)
+        case "SegmentedFilter":
+            let sfConfig = SegmentedFilterConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(SegmentedFilterTemplate(config: sfConfig), config: config)
+        case "CardDetail":
+            let cdConfig = CardDetailConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(CardDetailTemplate(config: cdConfig), config: config)
+        case "MultiSectionForm":
+            let msfConfig = MultiSectionFormConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(MultiSectionFormTemplate(config: msfConfig), config: config)
+        case "ToolbarActions":
+            let taConfig = ToolbarActionsConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ToolbarActionsTemplate(config: taConfig), config: config)
+        case "WizardStepFlow":
+            let wsfConfig = WizardStepFlowConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(WizardStepFlowTemplate(config: wsfConfig), config: config)
+        case "NotificationCenter":
+            let ncConfig = NotificationCenterConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(NotificationCenterTemplate(config: ncConfig), config: config)
+        case "GalleryPage":
+            let gpConfig = GalleryPageConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(GalleryPageTemplate(config: gpConfig), config: config)
+        case "iPadSidebar":
+            let isConfig = iPadSidebarConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(iPadSidebarTemplate(config: isConfig), config: config)
+        case "AlertWithTextField":
+            let awtConfig = AlertWithTextFieldConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(AlertWithTextFieldTemplate(config: awtConfig), config: config)
+        case "SettingsToggleDense":
+            let stdConfig = SettingsToggleDenseConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(SettingsToggleDenseTemplate(config: stdConfig), config: config)
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
         }
@@ -537,6 +579,92 @@ final class GenerateDatasetTests: XCTestCase {
         try await generateImages(templateFamily: "ProgressActivity", count: 400, startSeed: 15701)
     }
 
+    // MARK: - Phase 5b-22: Gap-filling templates (families 38–50, seeds 24001–26600)
+
+    /// Generates 200 color picker / color well images (seeds 24001–24200).
+    /// Covers colorWell — a class absent from all prior templates.
+    func testGenerateColorPickerImages() async throws {
+        try await generateImages(templateFamily: "ColorPicker", count: 200, startSeed: 24001)
+    }
+
+    /// Generates 200 menu button (pull-down) template images (seeds 24201–24400).
+    /// Covers menuButton — SwiftUI Menu trigger in closed state.
+    func testGenerateMenuButtonImages() async throws {
+        try await generateImages(templateFamily: "MenuButton", count: 200, startSeed: 24201)
+    }
+
+    /// Generates 200 link / rich-text article images (seeds 24401–24600).
+    /// Covers link — tappable URL text embedded in scrollable content.
+    func testGenerateLinkRichTextImages() async throws {
+        try await generateImages(templateFamily: "LinkRichText", count: 200, startSeed: 24401)
+    }
+
+    /// Generates 200 multi-slider panel images (seeds 24601–24800).
+    /// Covers slider in a SwiftUI-native multi-row panel (distinct from UIKitControls).
+    func testGenerateSliderPanelImages() async throws {
+        try await generateImages(templateFamily: "SliderPanel", count: 200, startSeed: 24601)
+    }
+
+    /// Generates 200 segmented control + filter list images (seeds 24801–25000).
+    /// Covers segmentedControl driving a filtered list — SwiftUI Picker(.segmented).
+    func testGenerateSegmentedFilterImages() async throws {
+        try await generateImages(templateFamily: "SegmentedFilter", count: 200, startSeed: 24801)
+    }
+
+    /// Generates 200 card detail (full-bleed header) images (seeds 25001–25200).
+    /// No NavigationStack — teaches model to detect elements outside nav-bar context.
+    func testGenerateCardDetailImages() async throws {
+        try await generateImages(templateFamily: "CardDetail", count: 200, startSeed: 25001)
+    }
+
+    /// Generates 200 multi-section form images (seeds 25201–25400).
+    /// textField + secureField + picker (inline) + stepperControl + toggle in one screen.
+    func testGenerateMultiSectionFormImages() async throws {
+        try await generateImages(templateFamily: "MultiSectionForm", count: 200, startSeed: 25201)
+    }
+
+    /// Generates 200 toolbar actions images (seeds 25401–25600).
+    /// Covers bottom UIToolbar auto-detected alongside navigationBar.
+    func testGenerateToolbarActionsImages() async throws {
+        try await generateImages(templateFamily: "ToolbarActions", count: 200, startSeed: 25401)
+    }
+
+    /// Generates 200 wizard step-flow images (seeds 25601–25800).
+    /// Step progress bar (progressView) + textField + primaryButton + secondaryButton.
+    func testGenerateWizardStepFlowImages() async throws {
+        try await generateImages(templateFamily: "WizardStepFlow", count: 200, startSeed: 25601)
+    }
+
+    /// Generates 200 notification-center style images (seeds 25801–26000).
+    /// Rounded notification cards (listRow) on a translucent wallpaper background.
+    func testGenerateNotificationCenterImages() async throws {
+        try await generateImages(templateFamily: "NotificationCenter", count: 200, startSeed: 25801)
+    }
+
+    /// Generates 200 gallery page carousel images (seeds 26001–26200).
+    /// imageView + pageControl + conditionally primaryButton on last slide.
+    func testGenerateGalleryPageImages() async throws {
+        try await generateImages(templateFamily: "GalleryPage", count: 200, startSeed: 26001)
+    }
+
+    /// Generates 200 iPadOS sidebar split-view images (seeds 26201–26400).
+    /// sidebar + listRow (sidebar rows) + imageView (detail hero).
+    func testGenerateiPadSidebarImages() async throws {
+        try await generateImages(templateFamily: "iPadSidebar", count: 200, startSeed: 26201)
+    }
+
+    /// Generates 200 alert-with-textField images (seeds 26401–26600).
+    /// alert + textField embedded together — covers the common "input alert" iOS pattern.
+    func testGenerateAlertWithTextFieldImages() async throws {
+        try await generateImages(templateFamily: "AlertWithTextField", count: 200, startSeed: 26401)
+    }
+
+    /// Generates 200 dense toggle-only settings images (seeds 26601–26800).
+    /// 6–12 toggles per screen with disabled variants — maximises toggle class instances.
+    func testGenerateSettingsToggleDenseImages() async throws {
+        try await generateImages(templateFamily: "SettingsToggleDense", count: 200, startSeed: 26601)
+    }
+
     // MARK: - TASK-5b-21: Accessibility variant sweep
     //
     // For every template that includes navigationBar or tabBar, generate variants
@@ -612,7 +740,7 @@ final class GenerateDatasetTests: XCTestCase {
     /// will add explicit shape backgrounds; SwiftUI system buttons already show shapes
     /// when legibilityWeight is elevated (co-applied here for maximum visual coverage).
     func testGenerateButtonShapesVariants() async throws {
-        let flags = AccessibilityFlags(buttonShapes: true, boldText: true)
+        let flags = AccessibilityFlags(boldText: true, buttonShapes: true)
         try await generateImages(templateFamily: "TabViewNavigation",  count: 50, startSeed: 23001, accessibilityFlags: flags)
         try await generateImages(templateFamily: "SearchResults",       count: 50, startSeed: 23051, accessibilityFlags: flags)
         try await generateImages(templateFamily: "SettingsList",        count: 50, startSeed: 23101, accessibilityFlags: flags)
@@ -887,6 +1015,37 @@ final class GenerateDatasetTests: XCTestCase {
         ]
         return sizes[index % sizes.count]
     }
+
+    // MARK: - TASK-5b-22: Balance report (runs last alphabetically)
+
+    /// Generates `reports/dataset_balance.md` from the completed manifest.
+    ///
+    /// Runs last alphabetically so it sees the full manifest from all prior test methods.
+    /// Writes `balance_report.md` to the dataset directory for retrieval via
+    /// `xcrun simctl get_app_container` after the test run completes.
+    func testZZZWriteBalanceReport() throws {
+        let manifestURL = datasetDir.appending(path: "manifest.json")
+        let manifest = try DatasetManifest.load(from: manifestURL)
+
+        let reportURL = datasetDir.appending(path: "balance_report.md")
+        try BalanceReport.write(from: manifest, to: reportURL)
+
+        // Also attach to the test result for inline review in Xcode
+        let content = BalanceReport.generate(from: manifest)
+        let attachment = XCTAttachment(string: content)
+        attachment.name = "dataset_balance.md"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+
+        // Fail the test if the imbalance ratio exceeds the 5:1 ceiling from the plan
+        if let ratio = manifest.imbalanceRatio {
+            XCTAssertLessThanOrEqual(
+                ratio, 5.0,
+                "Imbalance ratio \(String(format: "%.1f", ratio)):1 exceeds the 5:1 ceiling. " +
+                "Subsample over-represented classes before Phase 6 training."
+            )
+        }
+    }
 }
 
 // MARK: - GenerateDatasetError
@@ -898,7 +1057,7 @@ enum GenerateDatasetError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .unknownTemplateFamily(let family):
-            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity. A11y variants use the same family names."
+            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity, ColorPicker, MenuButton, LinkRichText, SliderPanel, SegmentedFilter, CardDetail, MultiSectionForm, ToolbarActions, WizardStepFlow, NotificationCenter, GalleryPage, iPadSidebar, AlertWithTextField, SettingsToggleDense. A11y variants use the same family names."
         }
     }
 }
