@@ -1,11 +1,11 @@
 # Dataset Balance Report
 
-Generated: 2026-05-20T05:59:21Z
-Total images: 16080
+Generated: 2026-05-21T00:15:18Z
+Total images: 16440
 
-**Imbalance ratio (max/min):** 1099.8 ⚠️
+**Imbalance ratio (max/min):** 219.9 ⚠️
 
-**Under-represented classes (< 100 instances):** 1
+All classes meet the minimum instance floor of 100.
 
 ## Per-Class Instance Counts
 
@@ -47,6 +47,6 @@ Total images: 16080
 | `tabBarItem` | 9202 | OK |
 | `textField` | 3145 | OK |
 | `toggle` | 8137 | OK |
-| `webContent` | 40 | ⚠️ LOW |
+| `webContent` | 400 | OK |
 
 *Floor = 100 instances per class*

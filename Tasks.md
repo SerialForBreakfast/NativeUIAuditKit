@@ -1060,7 +1060,7 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 ---
 
-## Phase 5b: Extended SwiftUI Templates [~] — Templates + a11y sweep complete; TASK-5b-22 remaining
+## Phase 5b: Extended SwiftUI Templates ✅ — 16,440 images, 37 classes OK, all ACs met
 
 *Goal: Expand to ≥50 structurally distinct templates before Phase 6 training. Templates can be built and tested independently.*
 
@@ -1133,14 +1133,9 @@ New classes covered: `colorWell`, `menuButton`, `link`, `toolbar`, `sidebar`.
 - `webContent`: 40 instances ⚠️ LOW — `HardNegative_2` generates only 40 images; needs 360 more to meet the 400-instance plan minimum → **follow-up task created below**
 - Imbalance ratio 1099.8:1 (`label` 43,990 vs `webContent` 40) — expected at generation time; 5:1 ceiling is enforced at pre-training subsampling (DS-G1), not here; `testZZZWriteBalanceReport` demoted to `XCTExpectFailure` warning accordingly
 
-#### TASK-5b-23: Boost `webContent` to ≥400 instances
+#### ✅ TASK-5b-23: Boost `webContent` to ≥400 instances — *Complete 2026-05-20*
 
-**Context:** `HardNegative_2` (WKWebView hard-negative template) generates only 40 images. The plan's rare-class minimum is 400. Gap: 360 images.
-
-**AC:**
-- `testGenerateHardNegativeWebContentImages` updated to `count: 400` (from 40)
-- Re-run generates 360 additional images appended to the existing manifest
-- `reports/dataset_balance.md` regenerated; `webContent` row shows OK
+*`testGenerateHardNegativeWebContentImages` updated to generate seeds 7941–8300 (360 additional images). Total dataset: 16,440 images. All 37 classes now meet the 100-instance floor. `reports/dataset_balance.md` updated.*
 
 ---
 

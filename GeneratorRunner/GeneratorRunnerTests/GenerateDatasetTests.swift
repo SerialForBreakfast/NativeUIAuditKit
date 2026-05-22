@@ -821,8 +821,10 @@ final class GenerateDatasetTests: XCTestCase {
     /// Generates 40 WKWebView hard-negative images (seeds 7901–7940).
     /// elements: [webContent] — exactly one webContent annotation.
     func testGenerateHardNegativeWebContentImages() async throws {
+        // Seeds 7901–7940 (40 images) were generated in the initial Phase 5a run.
+        // TASK-5b-23: generate 360 more (seeds 7941–8300) to reach the 400-instance floor.
         try await generateKnownBadImages(
-            templateFamily: "HardNegative_2", count: 40, startSeed: 7901,
+            templateFamily: "HardNegative_2", count: 360, startSeed: 7941,
             hardNegativeSplit: true
         )
     }
