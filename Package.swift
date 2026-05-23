@@ -32,6 +32,15 @@ let package = Package(
             name: "NativeUIDatasetGeneratorOverlay",
             path: "NativeUIDatasetGeneratorOverlay/Sources"
         ),
+        // Trains the 5-class iOS object-detection model via Create ML.
+        // macOS-only; requires Xcode (CreateML framework).
+        .executableTarget(
+            name: "NativeUITrainer",
+            path: "NativeUITrainer/Sources",
+            linkerSettings: [
+                .linkedFramework("CreateML", .when(platforms: [.macOS]))
+            ]
+        ),
         .testTarget(
             name: "NativeUIAuditKitTests",
             dependencies: ["NativeUIAuditKit"],

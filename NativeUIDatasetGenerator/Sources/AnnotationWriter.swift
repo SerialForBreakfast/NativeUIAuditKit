@@ -131,12 +131,19 @@ public enum AnnotationWriter {
                 height: (Double(f.height) * scale).rounded()
             )
             // Vision coordinate system: x from left, y from bottom, values in [0,1].
-            let xNorm = Double(f.minX) / widthPt
-            let yNorm = 1.0 - (Double(f.minY) + Double(f.height)) / heightPt
-            let wNorm = Double(f.width) / widthPt
-            let hNorm = Double(f.height) / heightPt
+            // Clamp to [0,1] per plan rule BP-P1: elements that overflow the screen
+            // boundary are clipped to the image boundary (e.g. toolbar items near screen edge).
+            let xNormRaw = Double(f.minX) / widthPt
+            let yNormRaw = 1.0 - (Double(f.minY) + Double(f.height)) / heightPt
+            let wNormRaw = Double(f.width) / widthPt
+            let hNormRaw = Double(f.height) / heightPt
+            let xNorm = max(0.0, min(1.0, xNormRaw))
+            let yNorm = max(0.0, min(1.0, yNormRaw))
+            // After clamping origin, shrink dimension so the far edge stays ≤ 1.
+            let wNorm = max(0.0, min(wNormRaw, 1.0 - xNorm))
+            let hNorm = max(0.0, min(hNormRaw, 1.0 - yNorm))
             let boundsVision = AnnotationJSON.BoundingRect(
-                x: xNorm, y: max(0, yNorm), width: wNorm, height: hNorm
+                x: xNorm, y: yNorm, width: wNorm, height: hNorm
             )
 
             return AnnotationJSON.Element(

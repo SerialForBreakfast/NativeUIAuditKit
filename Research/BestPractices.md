@@ -467,3 +467,104 @@ IDs that do not start with a canonical class name will produce incorrect element
 **Detection:** After any generation run, verify `manifest.classDistribution` has ≤ 41 keys and none contain a `_` (except `tabBarItem` which is a canonical class name). A classDistribution with hundreds of keys is diagnostic of this bug.
 
 **Impact of getting this wrong:** If an entire generation run completes with the bug active, all annotation JSONs have wrong `elementType` values. The only safe recovery is to fix the source and re-run — post-hoc patching of thousands of JSON files outside the project is error-prone and not reproducible.
+
+---
+
+### BP-21: Clamp all four Vision-normalized coordinates to [0,1] and shrink dimensions to keep the far edge ≤ 1
+
+**Problem discovered:** `AnnotationWriter.swift` applied `max(0, yNorm)` to clamp the Vision y-coordinate but left `xNorm` unclamped. When `ToolbarActionsTemplate` placed toolbar buttons near the left screen edge, UIKit's auto-centering produced frames with `minX` slightly less than zero (e.g., -3.8pt for a 393pt-wide screen), yielding `xNorm ≈ -0.038`. These negative x values failed the QG-4 bounding-box validity gate.
+
+**Root cause:** Elements that span the screen boundary (toolbar items, status bar corners, Dynamic Island at extreme seeds) produce frames whose logical coordinates extend slightly outside [0, screenWidth] × [0, screenHeight]. This is correct UIKit geometry — the element is physically there — but Vision-normalized coordinates are defined on [0,1]×[0,1] and must be clipped.
+
+**Correct approach:** After computing raw normalized values, clamp origin to [0,1] and then shrink the dimension so the far edge also stays ≤ 1:
+
+```swift
+let xNorm = max(0.0, min(1.0, xNormRaw))
+let yNorm = max(0.0, min(1.0, yNormRaw))
+// Shrink so far edge stays within bounds after origin clamp
+let wNorm = max(0.0, min(wNormRaw, 1.0 - xNorm))
+let hNorm = max(0.0, min(hNormRaw, 1.0 - yNorm))
+```
+
+**Do not** clamp only `y` and leave `x` unclamped. Do not clamp `x` without also adjusting `width`.
+
+**Detection:** Run `DatasetQualityAuditTests/testQG4_boundingBoxValidity` — it checks `x < 0`, `y < 0`, `x+w > 1`, `y+h > 1` with a 0.001 tolerance. Any generation run should produce zero QG-4 violations. The template most likely to trigger this is any template that uses `UIToolbar` with tightly-packed items (e.g., `ToolbarActionsTemplate`).
+
+---
+
+### BP-22: `MLObjectDetector` uses `objectPrint`, NOT `scenePrint`
+
+**Problem discovered:** The training plan specified `scenePrint(revision: 2)` as the feature extractor for object detection. This is wrong — `scenePrint` belongs to `MLImageClassifier`. `MLObjectDetector` has its own `FeatureExtractorType` enum with only one case: `.objectPrint(revision: Int = 1)`.
+
+**Correct types:**
+- Image classification: `MLImageClassifier.ModelParameters` → `featureExtractor: .scenePrint(revision: 1|2)`
+- Object detection: `MLObjectDetector.ModelParameters` → `algorithm: .transferLearning(.objectPrint(revision: 1))`
+
+**Correct `ModelParameters` init for MLObjectDetector (macOS 11+):**
+```swift
+let parameters = MLObjectDetector.ModelParameters(
+    validation: .dataSource(valSource),
+    batchSize: 32,
+    maxIterations: 10_000,
+    gridSize: CGSize(width: 13, height: 13),
+    algorithm: .transferLearning(.objectPrint(revision: 1))
+)
+```
+
+**Note:** The older 2-param init `init(validation:batchSize:maxIterations:)` exists but lacks `gridSize` and `algorithm` — use the full macOS 11 init instead.
+
+---
+
+### BP-23: `MLObjectDetector.DataSource` uses a single consolidated JSON, not per-image JSONs
+
+**Problem discovered:** The first draft of `CreateMLExporter` wrote one JSON file per image (e.g., `img001.json` alongside `img001.png`). This matches what some third-party Create ML tutorials show, but the actual `MLObjectDetector.DataSource` cases are:
+- `.directoryWithImagesAndJsonAnnotation(at:)` — ONE JSON file in the directory for ALL images
+- `.directoryWithImages(at:annotationFile:)` — images in one dir, single JSON path passed explicitly
+
+Using per-image JSONs with `.directoryWithImagesAndJsonAnnotation` causes a fatal crash at load time:
+```
+Fatal error: Expecting one JSON file with object annotations, found 4509.
+```
+
+**Correct approach:** Write a single `annotations.json` using `directoryWithImages(at:annotationFile:)`:
+```json
+[
+  {
+    "imagefilename": "img001.png",
+    "annotation": [
+      {"label": "button", "coordinates": {"x": 100, "y": 100, "width": 50, "height": 30}}
+    ]
+  }
+]
+```
+Key names are `imagefilename` (not `image`) and `annotation` (not `annotations`).
+
+**Annotation type:** coordinates are center-based pixels, top-left origin — match with:
+```swift
+.boundingBox(units: .pixel, origin: .topLeft, anchor: .center)
+```
+
+---
+
+### BP-24: `MLObjectDetector` evaluation requires NORMALIZED annotation coordinates
+
+**Problem discovered:** `MLObjectDetector.evaluation(on:)` does not accept an `annotationType` parameter. It reads coordinates from the annotation JSON and compares them against model predictions in normalized [0,1] space. If the annotation JSON contains raw **pixel** coordinates (e.g., `cx=590` for a 1179px-wide image), `evaluation(on:)` treats them as normalized values (`cx=590`), which are wildly out of bounds. The resulting IoU against the model's normalized predictions (e.g., `cx=0.5`) is effectively 0 for every box → mAP ≈ 0.
+
+**Evidence:** Training with pixel coordinates, 10,000 iterations of objectPrint transfer learning, mAP@0.5 = 0.0018. Switching to normalized coordinates → retraining.
+
+**Root cause:** `MLObjectDetector.init(trainingData:parameters:annotationType:)` uses `annotationType` to convert training annotation coordinates internally. But `evaluation(on:dataSource)` has no `annotationType` parameter — it assumes the annotation JSON uses the same coordinate format as the model output (normalized [0,1]).
+
+**Correct approach:** Always export annotation JSON with **normalized [0,1]** coordinates. Use:
+```swift
+annotationType: .boundingBox(units: .normalized, origin: .topLeft, anchor: .center)
+```
+
+**Coordinate conversion (from our dataset's `boundsVisionNormalized`):**
+```swift
+// Vision: x=left, y=bottom (bottom-left origin, [0,1])
+// Create ML normalized: cx, cy center-based top-left origin [0,1]
+let cx = vn.x + vn.width  / 2
+let cy = 1.0 - vn.y - vn.height / 2    // flip y-axis
+```
+
+**Note:** `boundsVisionNormalized` is already clamped to [0,1] (BP-21), making it the safest source for normalized coordinates. Do NOT compute normalized coords from pixel values + image dimensions — that requires reading PNG dimensions for every image.

@@ -1,0 +1,16 @@
+{
+  "algorithm" : "transferLearning",
+  "batchSize" : 32,
+  "datasetVersion" : "unknown",
+  "featureExtractor" : "objectPrint_v1",
+  "maxIterations" : 10000,
+  "subsamplingCapPerClass" : 2000,
+  "trainedAt" : "2026-05-23T00:24:30Z",
+  "trainingClasses" : [
+    "alert",
+    "navigationBar",
+    "primaryButton",
+    "textField",
+    "toggle"
+  ]
+}

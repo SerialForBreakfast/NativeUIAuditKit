@@ -25,6 +25,7 @@
 		CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */; };
 		CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */; };
 		CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */; };
+		CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */; };
 		/* Phase 4 — UIKit generator templates and coord tests */
 		DD000011000000000000DD11 /* UIKitCaptureSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000001000000000000DD01 /* UIKitCaptureSupport.swift */; };
 		DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002000000000000DD02 /* UIKitFormViewController.swift */; };
@@ -120,6 +121,7 @@
 		BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoundingBoxDebugRenderer.swift; path = "../NativeUIDatasetGenerator/Templates/BoundingBoxDebugRenderer.swift"; sourceTree = SOURCE_ROOT; };
 		CC000001000000000000CC01 /* GenerateDatasetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateDatasetTests.swift; sourceTree = "<group>"; };
 		CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSinkValidationTest.swift; sourceTree = "<group>"; };
+		CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetQualityAuditTests.swift; sourceTree = "<group>"; };
 		CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneratorRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		/* Phase 4 — UIKit generator templates */
 		DD000001000000000000DD01 /* UIKitCaptureSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitCaptureSupport.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitCaptureSupport.swift"; sourceTree = SOURCE_ROOT; };
@@ -314,6 +316,7 @@
 			children = (
 				CC000001000000000000CC01 /* GenerateDatasetTests.swift */,
 				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
+				CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */,
 				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
 				EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */,
 				FF000041000000000000FF41 /* KnownBad */,
@@ -455,6 +458,7 @@
 				DD000014000000000000DD14 /* UIKitControlsViewController.swift in Sources */,
 				CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */,
 				CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */,
+				CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */,
 				DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */,
 				EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */,
 				EE000012000000000000EE12 /* UIKitGeneratorValidationTest.swift in Sources */,

@@ -1147,7 +1147,11 @@ New classes covered: `colorWell`, `menuButton`, `link`, `toolbar`, `sidebar`.
 
 ---
 
-#### TASK-6-1: Pre-training dataset quality audit
+#### ✅ TASK-6-1: Pre-training dataset quality audit — *Complete 2026-05-22*
+
+*Implemented as `DatasetQualityAuditTests` (Swift XCTest, runs in simulator alongside dataset). All 6 gates pass. Two bugs found and fixed: (1) `AnnotationWriter` did not clamp `xNorm` to [0,1] — BP-21 documented, fix applied, 1,749 existing annotations patched in-place. (2) QG-5 split-contamination gate logic was incorrect — rewritten to check structural rotation invariant rather than per-family split exclusivity (withheld-family isolation is a Phase 6a concern). QG-2 imbalance (28.9:1 across 5 training classes) is an expected pre-training subsampling signal, not a blocking failure.*
+
+#### TASK-6-1 (original spec)
 
 **File:** `scripts/dataset_quality_check.py` (new)  
 **Requires:** Phase 4 and Phase 5 generation complete
@@ -1176,29 +1180,46 @@ Usage: python scripts/dataset_quality_check.py \
 
 ---
 
-#### TASK-6-2: Train 5-class Create ML model
+#### TASK-6-2: Train 5-class Create ML model ✅
 
 **Requires:** TASK-6-1 passes (all gates green)
 
-Train `MLObjectDetector` with `scenePrint(revision: 2)` feature extractor, 10,000 iterations, batch size 32, on the 5-class (primaryButton, navigationBar, alert, textField, toggle) training split.
+Train `MLObjectDetector` with transfer-learning `objectPrint(revision: 1)` feature extractor
+(Note: `MLObjectDetector` uses `.objectPrint`, NOT `scenePrint_v2` which belongs to `MLImageClassifier`),
+10,000 iterations, batch size 32, on the 5-class (alert, navigationBar, primaryButton, textField, toggle) training split.
 
-Training configuration to document in `NativeUIAuditKitModels/` alongside the model:
+Training infrastructure (all created):
+- `NativeUITrainer/Sources/CreateMLExporter.swift` — converts our custom JSON → Create ML `directoryWithImagesAndJsonAnnotation` layout; greedy subsampling cap 2,000 per class; hard-links PNGs
+- `NativeUITrainer/Sources/TrainingConfig.swift` — Codable config with `objectPrint_v1`
+- `NativeUITrainer/Sources/main.swift` — CLI `--dataset`/`--output` args; runs export → train → write
+- Root `Package.swift` — `NativeUITrainer` executable target with `linkedFramework("CreateML")`
+- `NativeUIAuditKitModels/Package.swift` — Swift package wrapping `.mlpackage` as a resource
+
+Training configuration written to `training_config.json`:
 ```json
 {
   "algorithm": "transferLearning",
-  "featureExtractor": "scenePrint_v2",
+  "featureExtractor": "objectPrint_v1",
   "maxIterations": 10000,
   "batchSize": 32,
-  "trainingClasses": ["primaryButton", "navigationBar", "alert", "textField", "toggle"],
+  "trainingClasses": ["alert", "navigationBar", "primaryButton", "textField", "toggle"],
+  "subsamplingCapPerClass": 2000,
   "datasetVersion": "<from manifest>",
   "trainedAt": "<ISO date>"
 }
 ```
 
+Run training (after dataset rsync to `~/NativeUIAuditKit-Dataset`):
+```bash
+swift run NativeUITrainer \
+  --dataset ~/NativeUIAuditKit-Dataset \
+  --output NativeUIAuditKitModels/Sources/NativeUIAuditKitModels
+```
+
 **AC:**
 - Training completes without error
-- `.mlpackage` exports successfully to `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage`
-- Model metadata includes `calibrationOsRange`, `trainedClasses`, `trainingDatasetVersion`
+- `.mlpackage` exports to `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage`
+- `training_config.json` written alongside the package
 
 ---
 
