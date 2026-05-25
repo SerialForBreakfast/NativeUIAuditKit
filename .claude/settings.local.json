@@ -21,7 +21,8 @@
       "Bash(awk '{s+=$1} END {print \"Total expected images:\", s}')",
       "Bash(find /Applications/Xcode.app -name \"MLObjectDetector*\" 2>/dev/null | head -5 *)",
       "Bash(cat)",
-      "Bash(xcrun swift *)"
+      "Bash(xcrun swift *)",
+      "Bash(swift scripts/verify_strip_export.swift)"
     ]
   }
 }

@@ -568,3 +568,55 @@ let cy = 1.0 - vn.y - vn.height / 2    // flip y-axis
 ```
 
 **Note:** `boundsVisionNormalized` is already clamped to [0,1] (BP-21), making it the safest source for normalized coordinates. Do NOT compute normalized coords from pixel values + image dimensions — that requires reading PNG dimensions for every image.
+
+---
+
+### BP-25: Use `.scaleFill` for VNCoreMLRequest on objectPrint portrait images — `.scaleFit` causes ~2× width blowup
+
+**Wrong:**
+```swift
+let req = VNCoreMLRequest(model: vnModel)
+req.imageCropAndScaleOption = .scaleFit   // default — letterboxes portrait images
+```
+
+**Correct:**
+```swift
+let req = VNCoreMLRequest(model: vnModel)
+req.imageCropAndScaleOption = .scaleFill  // matches Create ML training preprocessing
+```
+
+**Why it matters:** Create ML trains objectPrint models by stretching images to fill 299×299 (scale fill). When you run inference with `.scaleFit` instead, Vision letterboxes portrait images (e.g., 1179×2556 fills only 138px of the 299-wide input), but the model's predicted widths are still in the 299-wide training coordinate space. When Vision maps those predicted widths back to the original image, they appear ~2.17× too large (299/138 ≈ 2.17). This pushes IoU from 0.992 down to 0.457 — just below the 0.5 AP threshold — so every detection is a false positive and mAP@0.5 ≈ 0.
+
+**Empirical verification (img_000409.png, alert class):**
+- `.scaleFit` → predicted w=1.500, IoU=0.457 (miss)
+- `.scaleFill` → predicted w=0.688, IoU=0.992 (TP)
+
+**Corollary:** `MLObjectDetector.evaluation(on:)` uses `.scaleFit` internally and cannot be overridden — reported mAP is meaningless for non-square portrait screenshots. Use a custom eval loop with `.scaleFill` for accurate metrics.
+
+**SAHI tiles:** Square 640×640 tiles are unaffected (both options are equivalent when aspect ratio = 1:1). Still, default to `.scaleFill` everywhere for consistency.
+
+---
+
+### BP-26: objectPrint YOLO anchors cannot regress extreme-aspect-ratio boxes — train on square-cropped images
+
+**Symptom:** Per-class AP = 0.00 for `navigationBar` (w≈1.0, h≈0.063, ratio 16:1) and `textField` (w≈0.69, h≈0.032, ratio 21:1), even with 3,700+ training instances. The model emits 14,661 candidates for a pure-navigationBar validation image, but max confidence across all classes is 0.0024 — effectively zero. Classes with more typical aspect ratios train well: `alert` (2.7:1 → AP 0.91), `toggle` (3.6:1 → AP 0.60).
+
+**Root cause:** Create ML's objectPrint uses a YOLO-style 13×13 detection grid with learned anchor boxes. Anchor widths and heights are clustered from COCO-like training data where objects have moderate aspect ratios. Regressing a bounding box 16× wider than it is tall requires predicting `exp(tw) ≈ 16/anchor_w`, which is a large, high-variance regression target. The network does not converge for this class even with thousands of training examples.
+
+**Fix — train on square crops of the portrait image instead of the full image:**
+
+Split each 1179×2556 training image into overlapping square tiles before passing to Create ML:
+- Tile 0 (top):    rows 0–1178
+- Tile 1 (middle): rows 688–1867 (50% overlap)
+- Tile 2 (bottom): rows 1377–2555
+
+For each tile, clip and translate annotations into tile coordinates and discard off-tile boxes. In tile-0 normalized space, navigationBar becomes:
+- h_tile = (0.063 × 2556) / 1179 ≈ 0.137   (aspect ratio 7.3:1 — learnable)
+- textField h_tile ≈ 0.127                    (aspect ratio 5.4:1)
+- primaryButton h_tile ≈ 0.112                (aspect ratio 6.2:1)
+
+At inference time, the SAHI tile pipeline generates the same square crops → coordinates map cleanly to model space with no re-conversion needed.
+
+**Training data impact:** 3× more records per image; navBar/textField will be in Tile 0 only (or also Tile 1 if near mid-screen).
+
+**Implement in:** `CreateMLExporter.swift` — add a `squareTile: Bool` export option (default `true`). `scripts/eval_map.swift` already uses `.scaleFill` and will remain valid.

@@ -62,6 +62,7 @@ let config = TrainingConfig(
     batchSize: TrainingConfig.default.batchSize,
     trainingClasses: TrainingConfig.default.trainingClasses,
     subsamplingCapPerClass: TrainingConfig.default.subsamplingCapPerClass,
+    stripFraction: TrainingConfig.default.stripFraction,
     datasetVersion: {
         let manifestURL = args.datasetDir.appending(path: "manifest.json")
         if let data = try? Data(contentsOf: manifestURL),
@@ -94,17 +95,21 @@ let trainResult = try CreateMLExporter.export(
     to: trainExport,
     targetClasses: targetClasses,
     split: "train",
-    capPerClass: cap
+    capPerClass: cap,
+    stripFraction: config.stripFraction
 )
 
 print()
 print("  [validation]")
+// Validation uses full images only (strips are a training-time augmentation;
+// evaluation uses the original images to match real-world inference conditions).
 let valResult = try CreateMLExporter.export(
     datasetDir: args.datasetDir,
     to: valExport,
     targetClasses: targetClasses,
     split: "validation",
-    capPerClass: cap
+    capPerClass: cap,
+    stripFraction: 0.0
 )
 
 // MARK: - Step 2: Build Create ML data sources
@@ -133,6 +138,7 @@ print("── Step 3: Training (this takes a while) ─────────�
 print("  Algorithm        : transferLearning(objectPrint revision:1)")
 print("  Max iterations   : \(config.maxIterations)")
 print("  Batch size       : \(config.batchSize)")
+print("  Strip fraction   : \(config.stripFraction > 0 ? String(format: "%.0f%%", config.stripFraction * 100) + " height, 50% overlap" : "disabled (full image only)")")
 print("  Classes          : \(config.trainingClasses.joined(separator: ", "))")
 print()
 
