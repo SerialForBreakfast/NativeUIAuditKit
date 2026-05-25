@@ -1180,50 +1180,58 @@ Usage: python scripts/dataset_quality_check.py \
 
 ---
 
-#### TASK-6-2: Train 5-class Create ML model ✅
+#### TASK-6-2: Train 5-class Create ML model [~] — Infrastructure complete; Run 003 in progress
 
 **Requires:** TASK-6-1 passes (all gates green)
 
-Train `MLObjectDetector` with transfer-learning `objectPrint(revision: 1)` feature extractor
-(Note: `MLObjectDetector` uses `.objectPrint`, NOT `scenePrint_v2` which belongs to `MLImageClassifier`),
-10,000 iterations, batch size 32, on the 5-class (alert, navigationBar, primaryButton, textField, toggle) training split.
+**⚠️ Before starting or resuming work on this task, read:**
+- `Research/ExperimentLog.md` — all prior training runs (Runs 001–003) and their outcomes
+- `Research/Phase6LessonsLearned.md` — two critical bugs documented here
+- `Research/TrainingRunbook.md` — step-by-step training and evaluation procedure
 
-Training infrastructure (all created):
-- `NativeUITrainer/Sources/CreateMLExporter.swift` — converts our custom JSON → Create ML `directoryWithImagesAndJsonAnnotation` layout; greedy subsampling cap 2,000 per class; hard-links PNGs
-- `NativeUITrainer/Sources/TrainingConfig.swift` — Codable config with `objectPrint_v1`
-- `NativeUITrainer/Sources/main.swift` — CLI `--dataset`/`--output` args; runs export → train → write
-- Root `Package.swift` — `NativeUITrainer` executable target with `linkedFramework("CreateML")`
-- `NativeUIAuditKitModels/Package.swift` — Swift package wrapping `.mlpackage` as a resource
+**Infrastructure complete (all files exist and build):**
+- `NativeUITrainer/Sources/CreateMLExporter.swift` — custom JSON → Create ML format with horizontal strip tiling (22% height, 50% overlap)
+- `NativeUITrainer/Sources/TrainingConfig.swift` — `maxIterations: 25_000`, `stripFraction: 0.22`
+- `NativeUITrainer/Sources/main.swift` — CLI `--dataset`/`--output`
+- Root `Package.swift` — `NativeUITrainer` executable with `linkedFramework("CreateML")`
+- `NativeUIAuditKitModels/Package.swift` — resource: `.process("NativeUIDetector_v1.mlpackage.mlmodel")` (flat file, NOT a directory)
 
-Training configuration written to `training_config.json`:
-```json
-{
-  "algorithm": "transferLearning",
-  "featureExtractor": "objectPrint_v1",
-  "maxIterations": 10000,
-  "batchSize": 32,
-  "trainingClasses": ["alert", "navigationBar", "primaryButton", "textField", "toggle"],
-  "subsamplingCapPerClass": 2000,
-  "datasetVersion": "<from manifest>",
-  "trainedAt": "<ISO date>"
-}
+**Known bugs documented:**
+- BP-25: `MLObjectDetector.evaluation(on:)` uses `.scaleFit` → mAP≈0 for portrait images. Use `scripts/eval_map.swift` with `.scaleFill` instead.
+- BP-26: YOLO anchor assignment fails for aspect ratios >~8:1 (navigationBar=16:1, textField=21:1). Fixed by horizontal strip tiling (transforms aspect ratios to ≤3.5:1 in strip space).
+
+**Run history:**
+- Run 001 (2026-05-22): pixel coordinates → all APs=0.00 (coordinates were not normalized)
+- Run 002 (2026-05-23): normalized coordinates → mAP=0.336, but navBar/textField AP=0.00 (anchor assignment failure)
+- Run 003 (2026-05-24): strip-tiled, 25K iterations → **IN PROGRESS** (PID 7107, `NativeUITrainer/training.log`)
+
+**Run training (from package root):**
+```bash
+nohup swift run NativeUITrainer \
+  --dataset <path-to-NativeUIAuditKit-Dataset> \
+  --output  NativeUIAuditKitModels/Sources/NativeUIAuditKitModels \
+  >> NativeUITrainer/training.log 2>&1 &
+echo "PID: $!"
 ```
 
-Run training (after dataset rsync to `~/NativeUIAuditKit-Dataset`):
+**After training completes — mandatory evaluation:**
 ```bash
-swift run NativeUITrainer \
-  --dataset ~/NativeUIAuditKit-Dataset \
-  --output NativeUIAuditKitModels/Sources/NativeUIAuditKitModels
+swift scripts/test_model_predictions.swift   # spot check — alert IoU > 0.9?
+swift scripts/eval_map.swift                 # full 1364-image mAP evaluation
 ```
 
 **AC:**
 - Training completes without error
-- `.mlpackage` exports to `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage`
-- `training_config.json` written alongside the package
+- `NativeUIDetector_v1.mlpackage.mlmodel` exists in `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/`
+- `training_config.json` written alongside the model
+- `scripts/eval_map.swift` reports mAP > 0.00 for navigationBar and textField (Run 003 target)
+- Update `Research/ExperimentLog.md` with Run 003 final metrics when complete
 
 ---
 
-#### TASK-6-3: Implement SAHI inference in `NativeUIDetectionRequest`
+#### TASK-6-3: Implement SAHI inference in `NativeUIDetectionRequest` ✅ — *Complete 2026-05-24*
+
+*Implemented 3-pass inference: (1) full-image `.scaleFill`, (2) SAHI 640×640 tiles at 480px stride on 2× upscaled image, (3) horizontal strip pass matching training strip geometry. Static cached `VNCoreMLModel`. NMS at IoU 0.45 same-class. Model dev fallback searches relative to `#filePath`. Compiles clean under Swift 6.*
 
 **File:** `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
 **Requires:** TASK-6-2 complete (need a model to test against)
@@ -1252,7 +1260,9 @@ Replace the placeholder inference stub with a real implementation using SAHI (Sl
 
 ---
 
-#### TASK-6-4: Implement `ModelRegistry`
+#### TASK-6-4: Implement `ModelRegistry` ✅ — *Complete 2026-05-24*
+
+*`ModelDescriptor` (Sendable, Codable, Equatable) + `OSVersionRange` + `ModelRegistry.iOS` static descriptor. `trainedClasses` sorted alphabetically on init. JSON round-trip verified. `swift build` on `NativeUIAuditKitModels` passes.*
 
 **File:** `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift` (new)  
 **Requires:** TASK-6-2 (need the model file)  
