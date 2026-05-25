@@ -26,6 +26,8 @@
 		CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */; };
 		CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */; };
 		CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */; };
+		/* Phase 6 — Model benchmark */
+		BF000011000000000000BF11 /* ModelBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001000000000000BF01 /* ModelBenchmarkTests.swift */; };
 		/* Phase 4 — UIKit generator templates and coord tests */
 		DD000011000000000000DD11 /* UIKitCaptureSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000001000000000000DD01 /* UIKitCaptureSupport.swift */; };
 		DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002000000000000DD02 /* UIKitFormViewController.swift */; };
@@ -122,6 +124,8 @@
 		CC000001000000000000CC01 /* GenerateDatasetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateDatasetTests.swift; sourceTree = "<group>"; };
 		CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSinkValidationTest.swift; sourceTree = "<group>"; };
 		CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetQualityAuditTests.swift; sourceTree = "<group>"; };
+		/* Phase 6 — Model benchmark */
+		BF000001000000000000BF01 /* ModelBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelBenchmarkTests.swift; sourceTree = "<group>"; };
 		CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneratorRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		/* Phase 4 — UIKit generator templates */
 		DD000001000000000000DD01 /* UIKitCaptureSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitCaptureSupport.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitCaptureSupport.swift"; sourceTree = SOURCE_ROOT; };
@@ -318,6 +322,7 @@
 				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
 				CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */,
 				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
+				BF000001000000000000BF01 /* ModelBenchmarkTests.swift */,
 				EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */,
 				FF000041000000000000FF41 /* KnownBad */,
 			);
@@ -516,6 +521,8 @@
 				BC000011000000000000BC11 /* iPadSidebarTemplate.swift in Sources */,
 				BD000011000000000000BD11 /* AlertWithTextFieldTemplate.swift in Sources */,
 				BE000011000000000000BE11 /* SettingsToggleDenseTemplate.swift in Sources */,
+				/* Phase 6 — Model benchmark */
+				BF000011000000000000BF11 /* ModelBenchmarkTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
