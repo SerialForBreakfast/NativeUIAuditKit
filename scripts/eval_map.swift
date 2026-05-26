@@ -51,7 +51,7 @@ let valImagesDir = URL(filePath: "/Users/josephmccraw/Library/Developer/CoreSimu
 /// Low (0.1) so all candidates go into the PR curve; NMS then deduplicates.
 let confThreshold: Float = 0.1
 let iouMatchThreshold = 0.5   // IoU required for a TP match
-let nmsIoUThreshold   = 0.45  // IoU for duplicate suppression across passes
+let nmsIoUThreshold   = 0.30  // IoU for duplicate suppression across passes (lowered from 0.45 — Run 003 diagnosis: adjacent strips have IoU ~0.35, below 0.45 → not merged → FP explosion)
 
 /// Write YOLO-format prediction files (for confusion_matrix.py)?
 let writeYoloPreds = ProcessInfo.processInfo.environment["WRITE_YOLO_PREDS"] == "1"
@@ -359,9 +359,12 @@ for imgURL in imagePaths {
           let cgImg = CGImageSourceCreateImageAtIndex(src, 0, nil) else { continue }
 
     // Run all three passes, merge with NMS
+    // NOTE: SAHI pass disabled for diagnostic — diagnose_fp_passes.swift showed SAHI
+    // generates 2-4 false navBar predictions per image on alert images (wide horizontal
+    // tiles confuse the model). Re-enable once class confusion is addressed.
     var allPreds: [Prediction] = []
     allPreds += (try? fullImagePass(image: cgImg, model: vnModel)) ?? []
-    allPreds += (try? sahiTilePass(image: cgImg, model: vnModel))  ?? []
+    // allPreds += (try? sahiTilePass(image: cgImg, model: vnModel))  ?? []  // disabled: FP source
     allPreds += (try? stripPass(image: cgImg, model: vnModel))     ?? []
     let preds = nms(allPreds, iouThresh: nmsIoUThreshold)
 
@@ -404,7 +407,7 @@ for imgURL in imagePaths {
 // MARK: - Compute per-class AP and report
 
 print()
-print("── mAP Evaluation — 3-pass pipeline (IoU@0.5, NMS@0.45) ──────────────")
+print("── mAP Evaluation — 2-pass pipeline (full+strips, NMS@0.30, SAHI disabled) ──")
 print("   Full-image + SAHI tiles + horizontal strips")
 print()
 

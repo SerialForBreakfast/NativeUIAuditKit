@@ -95,11 +95,11 @@ Actual mAP of 0.336 revealed that alert and toggle ARE being detected, but navig
 
 ---
 
-## Run 003 — Strip-Tiled Training (In Progress as of 2026-05-24)
+## Run 003 — Strip-Tiled Training (Complete 2026-05-26)
 
-**Date:** 2026-05-24 (started ~23:48)  
-**Status:** IN PROGRESS — PID 7107, ~10 min elapsed at last check  
-**Expected duration:** ~90 min (25,000 iterations on 18,563 records)
+**Date:** 2026-05-24 (PID 7107 started ~23:48, crashed disk-full at 05:09); retry PID 10413 started 2026-05-25 ~18:22, completed 2026-05-26 05:18  
+**Status:** COMPLETE  
+**Actual duration:** ~11 hours (wall clock — Create ML's objectPrint takes far longer than the 90-min estimate when dataset is 4× larger)
 
 **Configuration:**
 - Algorithm: transferLearning(objectPrint revision:1)
@@ -138,10 +138,51 @@ Verified by `scripts/verify_strip_export.swift`:
 
 **Follow-up evaluation (to run after training completes):**
 ```bash
-# After training completes, run:
-swift scripts/test_model_predictions.swift   # verify alert IoU > 0.9, check if navBar appears
-swift scripts/eval_map.swift                 # full per-class mAP on 1,364 validation images
+# After training completes, run in order:
+swift scripts/test_model_predictions.swift   # spot check: alert IoU > 0.9? any navBar detections?
+swift scripts/eval_map.swift                 # full 3-pass mAP on 1,364 validation images
+
+# For confusion matrix (TASK-6-5):
+WRITE_YOLO_PREDS=1 swift scripts/eval_map.swift   # also writes reports/yolo_preds/
+swift scripts/export_yolo_gt.swift                 # writes reports/yolo_gt/
+python scripts/confusion_matrix.py \
+  --gt-dir reports/yolo_gt \
+  --pred-dir reports/yolo_preds \
+  --version 1
 ```
+
+**⚠️ Eval pipeline fix applied during training:**
+`scripts/eval_map.swift` was updated (2026-05-25) to run all 3 passes (full-image + SAHI + horizontal strips) before Run 003 completed. The previous version ran only a full-image pass and would have reported AP=0 for navigationBar/textField even if the strip-trained model correctly detects them in strips. This is now fixed — the eval script matches the 3-pass inference pipeline in `NativeUIDetectionRequest`.
+
+**Disk-full incident during Run 003:**
+PID 7107 (first attempt) crashed at `write(to:)` with "No space left on device" despite 144Gi nominally free. Root cause: 24GB of accumulated compiled eval caches (`*.mlmodelc` in `/var/folders/.../T/`) consumed available headroom. Fixed by deleting stale caches before retry, freeing 170Gi. See `Research/TrainingRunbook.md` Step 0 for the pre-flight disk check protocol added as a result.
+
+**Built-in validation metrics (Create ML's `.scaleFit` eval — unreliable for portrait images, see BP-25):**
+- mAP@0.5: 0.0066
+- alert: 0.025, navigationBar: 0.000, primaryButton: 0.004, textField: 0.000, toggle: 0.004
+
+**Custom 3-pass eval results (`scripts/eval_map.swift`, IoU@0.5, NMS@0.45):**
+
+| Class | Run 002 AP | Run 003 AP | Change | Notes |
+|---|---|---|---|---|
+| alert | 0.909 | 0.101 | 📉 regression | Recall=100% (40/40 TP) but 2,999 predictions → massive FP |
+| navigationBar | 0.000 | **0.137** | 📈 strip fix ✓ | Recall=100% (1,156/1,156 TP) but 15,591 predictions |
+| primaryButton | 0.165 | **0.456** | 📈 improved | 683/731 TP, 3,534 predictions |
+| textField | 0.000 | **0.129** | 📈 strip fix ✓ | 259/315 TP, 6,100 predictions |
+| toggle | 0.605 | 0.236 | 📉 regression | 785/845 TP (93%), 10,481 predictions |
+| **mAP@0.5** | **0.336** | **0.212** | 📉 overall | DS-G5 floor (0.50) not met |
+
+**Spot check (`test_model_predictions.swift`):**
+- alert [full pass]: IoU=0.881 ✓ (previously 0.909 — minor regression)
+- navigationBar [strip pass]: IoU=0.977 ✓ (previously 0.000 — definitive proof strip fix works)
+
+**Diagnosis — false positive explosion:**
+The strip tiling fix definitively solved the anchor-assignment failure for navigationBar and textField (both moved from 0.000 to detectable). However, the model suffers from severe confidence saturation: almost all predictions output confidence ≈ 1.0, and the 3-pass pipeline (8-10 strips per image × many predictions per strip) generates 5-14× more predictions per image than the GT count. After NMS at IoU=0.45, adjacent-strip predictions of the same navBar remain (IoU between adjacent strips ≈ 0.30-0.40, below the merge threshold) → many FPs per true detection.
+
+Root causes (in priority order):
+1. **Cross-strip NMS gap**: Adjacent strips (50% overlap) predict the same navBar/textField with IoU ~0.35 — below the NMS threshold of 0.45 — so they are not merged. Lowering NMS threshold to 0.30 for strip pairs, or using class-aware suppression with distance-based merge, would help.
+2. **Confidence saturation**: Every prediction is near conf=1.0 regardless of quality. Likely caused by 25,000 iterations being too many for this dataset size (18,563 records × 43 effective epochs) — model overfit and output logits drove to saturation.
+3. **Class imbalance**: alert=320 vs navigationBar=3,709 (11.6:1) exceeds the 5:1 cap. The alert class has too few examples relative to other classes; the model deprioritized calibration for it.
 
 ---
 
@@ -156,18 +197,50 @@ swift scripts/eval_map.swift                 # full per-class mAP on 1,364 valid
 | Training log must go inside the project: `NativeUITrainer/training.log` | Files lost outside project | AGENTS.md |
 | Run 50-iteration smoke test before full training | Would have caught Run 001 bug in <30s | LessonsLearned §10.1 |
 | Custom eval loop is required — do not trust `evaluation(on:)` | Mis-diagnosed two runs | LessonsLearned §9 |
+| Strip training fixes anchor assignment but creates FP explosion via cross-strip duplicates | Run 003 mAP 0.212 despite 100% recall | Lower NMS threshold to 0.30 |
+| 25K iterations on large dataset → confidence saturation (all preds ~1.0) | Precision collapses | Cap iterations at 10K |
+| Class imbalance >5:1 degrades minority class AP severely | alert: 0.909→0.101 | Enforce 5:1 cap in TrainingConfig |
+| `.mlmodelc` eval caches fill `/var/folders/.../T/` — clear before each training run | 24GB consumed → disk full crash | TrainingRunbook Step 0 |
+| Create ML training on 18,563 images takes ~11h (not 90 min) | Monitoring cadence needs updating | TrainingRunbook Step 2 |
 
 ---
 
-## Pending Runs (Planned After Run 003)
+## Key Lessons Learned — New Entries from Run 003
 
-### Run 004 — Post-strip evaluation & possible class-balance fix
-**Trigger:** Run 003 completes  
-**Decision tree:**
-- If navigationBar AP > 0.50 and textField AP > 0.30 → proceed to DS-G6 gate check (mAP ≥ 0.70)
-- If mAP < 0.50 → investigate class imbalance: alert has only 320 training instances vs navigationBar 3,709 (11.6:1 ratio — exceeds 5:1 plan cap). Reduce navigation bar cap to 1,600 and retrain.
-- If navigationBar still AP=0 → the anchor hypothesis is confirmed but insufficient; consider YOLO11 migration (Phase 6a path)
+| Lesson | Impact | Reference |
+|---|---|---|
+| Create ML training takes ~11h for 25K iterations on 18,563-image dataset (not 90 min) | Scheduling / monitoring significantly harder | This entry |
+| `.mlmodelc` eval caches accumulate in `/var/folders/.../T/` — 3,445 files = 24GB after 3 runs | "No space left on device" crash at model write | TrainingRunbook Step 0 |
+| Create ML's built-in validation metrics use `.scaleFit` — always near-zero, always ignore | Confirmed yet again (mAP=0.0066 on a model with 100% recall) | BP-25 |
+| Strip pass detections from adjacent strips have IoU ~0.35 — below NMS 0.45 threshold → not merged | 10-15× FP multiplier for navBar/textField | Run 004 plan |
+| 25K iterations on 18,563 records = ~43 effective epochs → confidence saturation (all preds ~1.0) | AP tanked despite good recall | Run 004: reduce iterations |
+| Class imbalance 11.6:1 (navBar/alert) exceeds 5:1 plan cap → alert calibration degraded | alert AP: 0.909 → 0.101 | Run 004: cap at 5:1 |
 
-### Run 005 (if needed) — Class-balanced retrain  
-**Trigger:** Run 004 mAP < 0.50 or alert/toggle regression  
-**Configuration change:** Reduce `subsamplingCapPerClass` to 800 (to enforce 5:1 max given alert=320 minimum), or boost alert instances by adding more alert-focused templates to the generator
+---
+
+## Pending Runs
+
+### Run 004 — FP-suppression + class-balance fix (Next)
+
+**Trigger:** Run 003 complete, mAP=0.212 (below DS-G5 floor of 0.50)
+
+**Three changes for Run 004:**
+
+1. **Lower NMS IoU threshold in `eval_map.swift` from 0.45 → 0.30** (eval-only change, no retraining needed)
+   - First, re-evaluate Run 003 model with NMS=0.30 to quantify how much the cross-strip merge gap is responsible
+   - If mAP jumps significantly → the Run 003 model may already be good; no new training needed
+
+2. **Reduce max iterations to 10,000** (if retraining is needed)
+   - 25K → 10K reduces effective epochs from ~43 to ~17, reducing confidence saturation
+   - Run 002 used 10K on 4,509 images and achieved alert=0.909 — validate this still works
+
+3. **Enforce 5:1 class balance cap** (`subsamplingCapPerClass` in `TrainingConfig.swift`)
+   - With alert=320 as the minimum, cap other classes at 320×5=1,600 instances
+   - Current: navBar=3,709 (11.6:1 ratio); capped: navBar=1,600
+   - This will reduce training set from 18,563 to approximately 9,000-10,000 records
+
+**Do step 1 first (eval-only, 10 minutes) before committing to a new training run.**
+
+### Run 005 (if needed) — YOLO11 migration
+**Trigger:** Run 004 mAP < 0.50 after both eval and retrain fixes  
+**Rationale:** If Create ML's objectPrint algorithm cannot achieve adequate precision with strip training, migrate to YOLOv11 (via ultralytics) which supports custom anchor configurations and better handles thin-box classes natively.

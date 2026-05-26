@@ -3,9 +3,10 @@
   "batchSize" : 32,
   "datasetVersion" : "unknown",
   "featureExtractor" : "objectPrint_v1",
-  "maxIterations" : 10000,
+  "maxIterations" : 25000,
+  "stripFraction" : 0.22,
   "subsamplingCapPerClass" : 2000,
-  "trainedAt" : "2026-05-24T08:39:17Z",
+  "trainedAt" : "2026-05-26T01:02:12Z",
   "trainingClasses" : [
     "alert",
     "navigationBar",

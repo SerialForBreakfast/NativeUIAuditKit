@@ -40,3 +40,61 @@ Parsing JSON records from /Users/josephmccraw/Library/Developer/CoreSimulator/De
 Successfully parsed 18563 elements from the JSON file /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/train/annotations.json
 Parsing JSON records from /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json
 Successfully parsed 1364 elements from the JSON file /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json
+Swift/ErrorType.swift:254: Fatal error: Error raised at top level: Error Domain=NSCocoaErrorDomain Code=640 "You can’t save the file “NativeUIDetector_v1.mlpackage.mlmodel” because the volume “Macintosh HD” is out of space." UserInfo={NSFilePath=/Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage.mlmodel, NSURL=file:///Users/josephmccraw/Dropbox/My%20Mac%20(MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage.mlmodel/, NSUnderlyingError=0x79ced3d20 {Error Domain=NSPOSIXErrorDomain Code=28 "No space left on device"}}
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'NativeUITrainer' complete! (1.02s)
+── Step 1: Exporting to Create ML format ──────────────────────────────
+Dataset : /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset
+Export  : /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export
+
+  [train]
+  Exported 18563 images to /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/train
+    (4509 full images + 14054 strips)
+    alert: 320 instances (full-image count)
+    navigationBar: 3709 instances (full-image count)
+    primaryButton: 3120 instances (full-image count)
+    textField: 2000 instances (full-image count)
+    toggle: 2740 instances (full-image count)
+
+  [validation]
+  Exported 1364 images to /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation
+    (1364 full images + 0 strips)
+    alert: 40 instances (full-image count)
+    navigationBar: 1156 instances (full-image count)
+    primaryButton: 731 instances (full-image count)
+    textField: 315 instances (full-image count)
+    toggle: 845 instances (full-image count)
+
+── Step 2: Configuring Create ML data sources ─────────────────────────
+
+── Step 3: Training (this takes a while) ──────────────────────────────
+  Algorithm        : transferLearning(objectPrint revision:1)
+  Max iterations   : 25000
+  Batch size       : 32
+  Strip fraction   : 22% height, 50% overlap
+  Classes          : alert, navigationBar, primaryButton, textField, toggle
+
+Parsing JSON records from /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/train/annotations.json
+Successfully parsed 18563 elements from the JSON file /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/train/annotations.json
+Parsing JSON records from /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json
+Successfully parsed 1364 elements from the JSON file /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json
+
+── Step 4: Validation metrics ─────────────────────────────────────────
+  Validation mAP@0.5  : 0.0066
+  Validation mAP@0.5:0.95: 0.0017
+
+    AP@0.5  alert: 0.0250
+    AP@0.5  navigationBar: 0.0000
+    AP@0.5  primaryButton: 0.0041
+    AP@0.5  textField: 0.0000
+    AP@0.5  toggle: 0.0037
+
+── Step 5: Writing outputs ─────────────────────────────────────────────
+  .mlpackage → /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage
+  training_config.json → /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/training_config.json
+
+Done. NativeUIDetector_v1 trained at 2026-05-26T01:02:12Z
+  Training instance counts  : ["primaryButton": 3120, "alert": 320, "textField": 2000, "toggle": 2740, "navigationBar": 3709]
+  Validation instance counts: ["alert": 40, "navigationBar": 1156, "textField": 315, "toggle": 845, "primaryButton": 731]

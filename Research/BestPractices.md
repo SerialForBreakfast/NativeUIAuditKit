@@ -597,26 +597,34 @@ req.imageCropAndScaleOption = .scaleFill  // matches Create ML training preproce
 
 ---
 
-### BP-26: objectPrint YOLO anchors cannot regress extreme-aspect-ratio boxes — train on square-cropped images
+### BP-26: objectPrint YOLO anchors cannot regress extreme-aspect-ratio boxes — use horizontal strip tiling
 
 **Symptom:** Per-class AP = 0.00 for `navigationBar` (w≈1.0, h≈0.063, ratio 16:1) and `textField` (w≈0.69, h≈0.032, ratio 21:1), even with 3,700+ training instances. The model emits 14,661 candidates for a pure-navigationBar validation image, but max confidence across all classes is 0.0024 — effectively zero. Classes with more typical aspect ratios train well: `alert` (2.7:1 → AP 0.91), `toggle` (3.6:1 → AP 0.60).
 
-**Root cause:** Create ML's objectPrint uses a YOLO-style 13×13 detection grid with learned anchor boxes. Anchor widths and heights are clustered from COCO-like training data where objects have moderate aspect ratios. Regressing a bounding box 16× wider than it is tall requires predicting `exp(tw) ≈ 16/anchor_w`, which is a large, high-variance regression target. The network does not converge for this class even with thousands of training examples.
+**Root cause:** Create ML's objectPrint uses a YOLO-style 13×13 detection grid with learned anchor boxes. Anchor assignment matches each GT box to the anchor with the highest center-IoU. For a 16:1 box (w=1.0, h=0.063), even a (0.5, 0.5) anchor gives center-IoU ≈ 0.11 — well below the ~0.4–0.5 assignment threshold. No anchor is ever matched → no gradient → the class is never learned, regardless of how many training instances exist.
 
-**Fix — train on square crops of the portrait image instead of the full image:**
+**Fix — horizontal strip tiling (what was actually implemented):**
 
-Split each 1179×2556 training image into overlapping square tiles before passing to Create ML:
-- Tile 0 (top):    rows 0–1178
-- Tile 1 (middle): rows 688–1867 (50% overlap)
-- Tile 2 (bottom): rows 1377–2555
+NOT square tiles. The actual fix uses overlapping horizontal strips at 22% of image height with 50% overlap stride. For a 1179×2556 image, each strip is 1179×562px. Parameters: `stripFraction = 0.22`, `stride = stripH / 2`.
 
-For each tile, clip and translate annotations into tile coordinates and discard off-tile boxes. In tile-0 normalized space, navigationBar becomes:
-- h_tile = (0.063 × 2556) / 1179 ≈ 0.137   (aspect ratio 7.3:1 — learnable)
-- textField h_tile ≈ 0.127                    (aspect ratio 5.4:1)
-- primaryButton h_tile ≈ 0.112                (aspect ratio 6.2:1)
+For navigationBar (full width, near top of screen), in the strip's normalized coordinate space:
+- width = 1.0 (unchanged — strip uses full image width)
+- height = h_full × (imageH / stripH) = 0.063 × (2556/562) ≈ 0.286
+- **Aspect ratio in strip space: ~3.5:1** (down from 16:1) — achieves anchor-assignment IoU > 0.4
 
-At inference time, the SAHI tile pipeline generates the same square crops → coordinates map cleanly to model space with no re-conversion needed.
+For textField: **~2.5:1** in strip space. For primaryButton: **~2.0:1**.
 
-**Training data impact:** 3× more records per image; navBar/textField will be in Tile 0 only (or also Tile 1 if near mid-screen).
+Verified by `scripts/verify_strip_export.swift` (run smoke test before every training run):
+- navigationBar strip AR: 1.83:1 ✓
+- textField strip AR:      2.46:1 ✓
+- primaryButton strip AR:  1.96:1 ✓
 
-**Implement in:** `CreateMLExporter.swift` — add a `squareTile: Bool` export option (default `true`). `scripts/eval_map.swift` already uses `.scaleFill` and will remain valid.
+Full images are also included alongside strips (for alert and toggle coverage, which don't need strip treatment). Validation uses full images only — strips are a training-time augmentation only.
+
+**Training data impact:** 18,563 total training records (4,509 full images + 14,054 strips) vs 4,509 without stripping.
+
+**Inference impact:** Add a matching strip pass at inference time. The model was trained on strips, so it must also be evaluated on strips. Both `scripts/eval_map.swift` and `NativeUIDetectionRequest` run a dedicated horizontal strip pass (same parameters: 22% height, 50% overlap).
+
+**Implemented in:** `NativeUITrainer/Sources/CreateMLExporter.swift` (`stripFraction` parameter), `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift` (`stripPass`), `scripts/eval_map.swift` (`stripPass` function).
+
+**Do NOT evaluate a strip-trained model with only a full-image VNCoreMLRequest.** That will still show AP=0 for navigationBar and textField because the full-image pass suffers from the same anchor-assignment problem that training fixed. You must run the strip pass at eval time too.

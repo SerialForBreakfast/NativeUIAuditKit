@@ -60,3 +60,20 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# NativeUIAuditKit — model artifacts and evaluation outputs
+NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/*.mlpackage
+NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/*.mlpackage.mlmodel
+NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/training_config.json
+NativeUITrainer/training.log
+NativeUITrainer/strip_smoke_test/
+
+# Evaluation reports (generated outputs — not source)
+reports/yolo_preds/
+reports/yolo_gt/
+reports/blurred_eval_images/
+reports/real_world_screenshots/
+reports/eval_results.json
+reports/confusion_matrix_v*.png
+reports/per_class_metrics_v*.csv
+reports/centroid_bias_v*.json

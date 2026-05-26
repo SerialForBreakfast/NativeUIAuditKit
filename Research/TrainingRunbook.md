@@ -18,6 +18,36 @@ Before starting any training run, confirm:
 
 ---
 
+## Step 0 — Disk Space Pre-Flight (New — Required After Run 003)
+
+**Root cause discovered during Run 003:** Create ML writes ~23 GB of UUID-named training checkpoint files to `/var/folders/.../T/CreateMLModels/` during a 25,000-iteration run. These are NOT automatically cleaned up after a failed run. Combined with accumulated compiled-model caches (`.mlmodelc` files from `eval_map.swift` runs), this consumed all available headroom at the moment of the final `write(to:)` — causing the "No space left on device" crash even with nominally 144 GB free.
+
+### Before every training run:
+
+```bash
+# 1. Check free space — need > 50 GB free AFTER accounting for CreateMLModels growth
+df -h /System/Volumes/Data
+
+# 2. Check for stale CreateMLModels checkpoints from a prior failed run
+du -sh /var/folders/*/b*/T/CreateMLModels/ 2>/dev/null
+
+# 3. If previous run failed: delete its stale checkpoints (safe — not used by new run)
+# (replace path with actual path from step 2)
+rm -rf /var/folders/4w/b85wbq0d43vdx6rpgpc2jxhm0000gn/T/CreateMLModels/
+
+# 4. Delete accumulated compiled eval caches (re-created on next eval_map.swift run)
+find /var/folders/*/b*/T/ -maxdepth 1 -name "*.mlmodelc" -type d -print0 | xargs -0 rm -rf
+
+# 5. Delete any 0-byte stub from a prior failed model write
+ls -la NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage.mlmodel 2>/dev/null
+# If it exists and is 0 bytes, delete it:
+# rm -f NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage.mlmodel
+```
+
+**Minimum safe free space before training:** 50 GB (model write is ~7 MB; training temp files peak at ~23 GB).
+
+---
+
 ## Step 1 — Pre-Flight Checks (Do Not Skip)
 
 Skipping pre-flight cost two 45-minute training runs. Run every check.

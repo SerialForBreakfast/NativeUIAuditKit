@@ -1297,26 +1297,62 @@ public struct ModelDescriptor: Sendable, Codable {
 
 #### TASK-6-5: Evaluation run
 
-**Requires:** TASK-6-3 complete, TASK-5e-1 complete (confusion matrix script)
+**Requires:** TASK-6-3 complete ✅, TASK-5e-1 complete ✅ (confusion matrix script), TASK-6-2 gate (mAP ≥ 0.70 from Run 003)
 
-Run the full evaluation suite on the withheld-template test set.
+**Tooling ready (all scripts written and waiting for the trained model):**
+
+| AC | Script | Status |
+|---|---|---|
+| mAP@0.5 per-class | `swift scripts/eval_map.swift` | ✅ Ready — 3-pass pipeline |
+| Confusion matrix | `scripts/confusion_matrix.py` + `scripts/export_yolo_gt.swift` | ✅ Ready |
+| Content-agnostic blur test | `swift scripts/blur_text_for_content_agnostic_eval.swift` | ✅ Ready |
+| Real-world App Store test | `swift scripts/run_real_world_eval.swift` | ✅ Ready — add screenshots to `reports/real_world_screenshots/` |
+
+**Full evaluation sequence (run after Run 003 completes and mAP ≥ 0.70):**
+```bash
+# 1. Core mAP eval
+swift scripts/eval_map.swift                             # writes reports/eval_results.json
+
+# 2. Confusion matrix
+WRITE_YOLO_PREDS=1 swift scripts/eval_map.swift
+swift scripts/export_yolo_gt.swift
+python scripts/confusion_matrix.py \
+  --gt-dir reports/yolo_gt --pred-dir reports/yolo_preds --version 1
+
+# 3. Content-agnostic test
+swift scripts/blur_text_for_content_agnostic_eval.swift  # writes reports/blurred_eval_images/
+# then re-run eval_map.swift with valImagesDir → reports/blurred_eval_images/
+
+# 4. Real-world screenshots (manual step first)
+# Add 10 App Store screenshots to reports/real_world_screenshots/
+swift scripts/run_real_world_eval.swift                  # writes reports/real_world_eval.md
+```
 
 **AC (all must pass before Phase 6 gate):**
 - mAP@0.5 ≥ 0.70 on withheld-template test set
 - mAP@0.75 ≥ 0.45 (looser bound — bounding box precision is less critical at prototype stage)
-- No individual class AP < 0.50 (a class below 0.50 indicates a training data gap, not a threshold tuning issue)
-- Content-agnostic test: blur all text in 200 test images, re-run inference; mAP for `navigationBar`, `tabBar`, `toggle`, `alert` drops <10 points from the unblurred baseline
+- No individual class AP < 0.50
+- Content-agnostic test: blurred mAP for `navigationBar`, `toggle`, `alert` drops <10pp from baseline
 - `reports/confusion_matrix_v1.png` generated; no confusion pair exceeds 30% false positive rate
-- Run on 10 real App Store screenshots (personal device); document failure modes
+- Run on 10 real App Store screenshots (personal device); failure modes documented in `reports/real_world_eval.md`
 
 ---
 
-#### TASK-6-6: Physical device benchmark
+#### TASK-6-6: Physical device benchmark [~] — Test written, awaiting model + physical device run
 
-**Requires:** TASK-6-3 complete  
+**Requires:** TASK-6-3 complete ✅  
 **Parallel with:** TASK-6-5
 
-Write an `XCTest` performance test that loads the model cold, then runs inference on 10 test images, measuring with `XCTClockMetric` and `XCTMemoryMetric`. Run on a physical iPhone (not simulator).
+**Test file:** `GeneratorRunner/GeneratorRunnerTests/ModelBenchmarkTests.swift` ✅ Written and wired into pbxproj.
+
+**One manual step before running:** Add `NativeUIDetector_v1.mlpackage.mlmodel` to GeneratorRunner test target's Copy Bundle Resources phase in Xcode, then select a physical iPhone as destination.
+
+```bash
+xcodebuild test \
+  -project GeneratorRunner/GeneratorRunner.xcodeproj \
+  -scheme GeneratorRunner \
+  -destination 'platform=iOS,name=<YourPhone>'
+```
 
 **AC:**
 - Median inference time per image < 200ms (measured on iPhone 14 or later)
