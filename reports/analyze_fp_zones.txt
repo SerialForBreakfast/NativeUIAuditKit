@@ -1,0 +1,29 @@
+Loaded 1364 validation images
+
+======================================================================
+
+Zone: upper-mid (y=0.15–0.35)
+  Strip y-range: [0.15, 0.35]  strip height=0.22
+  Images with ≥1 GT element captured in this zone: 379
+
+  GT class counts in this zone (sorted by frequency):
+    toggle                   370  ( 49.2%)  ████████████████████████  ← textField FP zone
+    primaryButton            197  ( 26.2%)  █████████████  ← textField FP zone
+    textField                145  ( 19.3%)  █████████  ← (real textField)
+    alert                     40  (  5.3%)  ██  ← textField FP zone
+
+Zone: bottom    (y=0.75–1.00)
+  Strip y-range: [0.75, 1.00]  strip height=0.22
+  Images with ≥1 GT element captured in this zone: 431
+
+  GT class counts in this zone (sorted by frequency):
+    primaryButton            411  ( 87.3%)  ███████████████████████████████████████████  ← textField FP zone
+    toggle                    60  ( 12.7%)  ██████  ← textField FP zone
+
+======================================================================
+
+Interpretation:
+  Non-textField elements that appear frequently in both FP zones are the
+  primary candidates for hard-negative strip generation in Run 005.
+  Generate strips containing ONLY those elements (no textField label),
+  so the model learns they are NOT textFields in strip context.

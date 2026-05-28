@@ -1,0 +1,62 @@
+Loading model...
+Model loaded ✓
+
+Images with textField GT: 295
+Running strip pass on each...
+
+──────────────────────────────────────────────────────────────────────
+
+── textField FP Classification ─────────────────────────────────────
+  Images with textField GT : 295
+  Total predictions        : 368
+  True positives (IoU≥0.50): 259  (recall=0.822)
+  Missed GTs               : 56
+  Total FPs                : 109  (precision=0.704)
+
+  FP breakdown:
+    NEAR-DUPLICATE  (IoU ≥ 0.05 with a GT textField): 1  (0.9%)
+    FALSE-CLASS     (IoU < 0.05, no GT nearby)      : 108  (99.1%)
+
+── Near-duplicate IoU distribution (0=no overlap, 0.5=would-be-TP) ──
+  0.05–0.10 :    1  ███████████████
+  0.10–0.20 :    0  
+  0.20–0.30 :    0  
+  0.30–0.40 :    0  
+  0.40–0.50 :    0  
+  avg near-dup IoU: 0.052
+
+── Near-duplicate FPs — strip y-start distribution ──
+  0.00–0.15 (top, navBar zone)       :    0  
+  0.15–0.35 (upper-mid)              :    1  ███████████████
+  0.35–0.55 (center)                 :    0  
+  0.55–0.75 (lower-mid)              :    0  
+  0.75–1.00 (bottom)                 :    0  
+
+── False-class FPs — strip y-start distribution ──
+  0.00–0.15 (top, navBar zone)       :    0  
+  0.15–0.35 (upper-mid)              :   36  █████████
+  0.35–0.55 (center)                 :    1  
+  0.55–0.75 (lower-mid)              :    1  
+  0.75–1.00 (bottom)                 :   70  ███████████████████
+
+── Top 10 worst images by total FP count ───────────────────────────
+  filename                               GT  TP  nearDup  falseClass  missed
+  img_010499.png                           1   0   0        2           1
+  img_000569.png                           1   1   1        0           0
+  img_000609.png                           1   1   0        1           0
+  img_000639.png                           1   1   0        1           0
+  img_000679.png                           1   1   0        1           0
+  img_007149.png                           2   0   0        1           2
+  img_007169.png                           2   1   0        1           1
+  img_007179.png                           2   0   0        1           2
+  img_007189.png                           2   1   0        1           1
+  img_007199.png                           2   1   0        1           1
+
+── Interpretation ──────────────────────────────────────────────────
+  If NEAR-DUPLICATE >> FALSE-CLASS:
+    → Same textField detected from multiple strips; tighter dedup may help
+    → Consider: lower NMS threshold for textField, or x-overlap grouping
+  If FALSE-CLASS >> NEAR-DUPLICATE:
+    → Model fires on non-textField elements in strip context
+    → Requires hard-negative training data (sliders, dividers, search bars)
+──────────────────────────────────────────────────────────────────────

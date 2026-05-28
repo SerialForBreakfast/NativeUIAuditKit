@@ -1,0 +1,36 @@
+Loaded 1364 validation images
+Loading model from: NativeUIDetector_v1.mlpackage.mlmodel
+Running per-class-routed inference on 1364 images...
+  Full-image → alert, primaryButton
+  Strip pass → navigationBar, textField, primaryButton, toggle
+  Conf override → primaryButton≥0.95, toggle≥0.95
+  100/1364  (717s remaining)
+  200/1364  (542s remaining)
+  300/1364  (474s remaining)
+  400/1364  (444s remaining)
+  500/1364  (372s remaining)
+  600/1364  (320s remaining)
+  700/1364  (280s remaining)
+  800/1364  (234s remaining)
+  900/1364  (186s remaining)
+  1000/1364  (142s remaining)
+  1100/1364  (101s remaining)
+  1200/1364  (64s remaining)
+  1300/1364  (24s remaining)
+
+── mAP Evaluation — per-class-routed + conf overrides (NMS@0.30, SAHI disabled) ──
+   Full-image → alert, primaryButton
+   Strip pass → navigationBar, textField, primaryButton, toggle
+   Conf≥0.95  → primaryButton, toggle
+
+  ✓ AP@0.5  alert               : 1.0000   GT=40  TP=40  pred=40
+  ✓ AP@0.5  navigationBar       : 0.8454   GT=1156  TP=1156  pred=1917
+  ✓ AP@0.5  primaryButton       : 0.5989   GT=731  TP=655  pred=1087
+  ✗ AP@0.5  textField           : 0.3837   GT=315  TP=259  pred=968
+  ✓ AP@0.5  toggle              : 0.8497   GT=845  TP=781  pred=1052
+
+  mAP@0.5 : 0.7355   (503s elapsed)
+
+  ~  DS-G6 mAP PASS but some class AP < 0.50 — investigate failing classes
+
+Results written to: /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/reports/eval_results.json

@@ -1,0 +1,70 @@
+Loading model...
+Model loaded ✓
+All val images: 1364 | images with primaryButton GT: 623
+
+──────────────────────────────────────────────────────────────────────
+  200/1364...
+  400/1364...
+  600/1364...
+  800/1364...
+  1000/1364...
+  1200/1364...
+
+── primaryButton FP Classification (1364 val images) ──────────────────
+  Total GT instances   : 731  (in 623 images)
+  Total predictions    : 1366
+  True positives       : 663  recall=0.907
+  Missed GTs           : 68
+  Total FPs            : 703  precision=0.485
+
+  FP breakdown:
+    NEAR-DUPLICATE (IoU ≥ 0.05 with a GT): 20  (2.8%)
+    FALSE-CLASS    (IoU < 0.05, no GT nearby): 683  (97.2%)
+
+── Confidence distribution (TP vs FP) ─────────────────────────────
+  TP confidence — mean: 0.997  median: 1.000  n=663
+  FP confidence — mean: 0.914  median: 0.994  n=703
+
+  Precision at confidence thresholds (recall in parentheses):
+  ✗ conf≥0.10: precision=0.485  recall=0.907  pred=1366
+  ✗ conf≥0.30: precision=0.485  recall=0.907  pred=1366
+  ✗ conf≥0.50: precision=0.489  recall=0.907  pred=1355
+  ✓ conf≥0.70: precision=0.514  recall=0.903  pred=1284
+  ✓ conf≥0.90: precision=0.556  recall=0.896  pred=1179
+  ✓ conf≥0.95: precision=0.603  recall=0.896  pred=1087
+
+── FP strip y-start distribution ──────────────────────────────────
+  0.00–0.15 (top / navBar zone)         :  128  █████
+  0.15–0.35 (upper-mid)                 :  118  █████
+  0.35–0.55 (center)                    :  122  █████
+  0.55–0.75 (lower-mid)                 :    5  
+  0.75–1.00 (bottom / tab bar zone)     :  300  █████████████
+  From full-image pass: 30
+
+── Near-duplicate IoU distribution ────────────────────────────────
+  0.05–0.10 : 2
+  0.10–0.20 : 1
+  0.20–0.30 : 5
+  0.30–0.40 : 4
+  0.40–0.50 : 8
+
+── Top 12 worst images by FP count ────────────────────────────────
+  filename                               GT  TP  nearDup  falseClass  missed
+  img_006679.png                           0   0   0       9          0
+  img_006859.png                           0   0   0       9          0
+  img_006799.png                           0   0   0       8          0
+  img_006879.png                           0   0   0       7          0
+  img_006579.png                           0   0   0       6          0
+  img_006599.png                           0   0   0       6          0
+  img_006659.png                           0   0   0       6          0
+  img_006739.png                           0   0   0       6          0
+  img_006779.png                           0   0   0       6          0
+  img_006639.png                           0   0   0       5          0
+  img_006759.png                           0   0   0       5          0
+  img_006819.png                           0   0   0       5          0
+
+── Interpretation ──────────────────────────────────────────────────
+  NEAR-DUPLICATE >> FALSE-CLASS → pipeline fix (NMS/dedup), no retrain
+  FALSE-CLASS >> NEAR-DUPLICATE → hard-negative training data needed
+  Confidence gap TP–FP = 0.082 → per-class threshold may help
+──────────────────────────────────────────────────────────────────────

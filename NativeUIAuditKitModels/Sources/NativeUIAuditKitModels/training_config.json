@@ -6,7 +6,7 @@
   "maxIterations" : 25000,
   "stripFraction" : 0.22,
   "subsamplingCapPerClass" : 2000,
-  "trainedAt" : "2026-05-26T01:02:12Z",
+  "trainedAt" : "2026-05-28T03:05:28Z",
   "trainingClasses" : [
     "alert",
     "navigationBar",

@@ -441,6 +441,9 @@ final class GenerateDatasetTests: XCTestCase {
         case "UIKitControls":
             let vc = UIKitControlsViewController(seed: seed, config: config)
             return try await ScreenshotCapture.captureUIKit(vc, config: config)
+        case "UIKitToggleForm":
+            let vc = UIKitToggleFormViewController(seed: seed, config: config)
+            return try await ScreenshotCapture.captureUIKit(vc, config: config)
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
         }
@@ -663,6 +666,25 @@ final class GenerateDatasetTests: XCTestCase {
     /// 6–12 toggles per screen with disabled variants — maximises toggle class instances.
     func testGenerateSettingsToggleDenseImages() async throws {
         try await generateImages(templateFamily: "SettingsToggleDense", count: 200, startSeed: 26601)
+    }
+
+    // MARK: - Run 005: Hard-negative templates for textField confusion
+
+    /// Generates 300 UIKit toggle-form hard-negative images (seeds 26801–27100).
+    ///
+    /// Root cause: the model fires "textField" on toggle and primaryButton elements
+    /// in strip context. Zone analysis showed:
+    ///   - Upper-mid zone (y=0.15-0.35): toggle=49%, primaryButton=26% of textField FPs
+    ///   - Bottom zone   (y=0.75-1.00): primaryButton=87% of textField FPs
+    ///
+    /// This template is a form-lookalike (insetGrouped sections) with UISwitch rows
+    /// and a bottom CTA primaryButton — ZERO textField elements. The model must learn
+    /// to distinguish toggle/primaryButton from textField in these exact strip zones.
+    ///
+    /// Annotated: toggle × 4–10, primaryButton × 1, navigationBar (auto-detected).
+    /// NOT annotated: textField (absent), tabBar (absent), searchField (absent).
+    func testGenerateUIKitToggleFormImages() async throws {
+        try await generateUIKitImages(templateFamily: "UIKitToggleForm", count: 300, startSeed: 26801)
     }
 
     // MARK: - TASK-5b-21: Accessibility variant sweep
@@ -1066,7 +1088,7 @@ enum GenerateDatasetError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .unknownTemplateFamily(let family):
-            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity, ColorPicker, MenuButton, LinkRichText, SliderPanel, SegmentedFilter, CardDetail, MultiSectionForm, ToolbarActions, WizardStepFlow, NotificationCenter, GalleryPage, iPadSidebar, AlertWithTextField, SettingsToggleDense. A11y variants use the same family names."
+            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, UIKitToggleForm, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity, ColorPicker, MenuButton, LinkRichText, SliderPanel, SegmentedFilter, CardDetail, MultiSectionForm, ToolbarActions, WizardStepFlow, NotificationCenter, GalleryPage, iPadSidebar, AlertWithTextField, SettingsToggleDense, UIKitToggleForm. A11y variants use the same family names."
         }
     }
 }

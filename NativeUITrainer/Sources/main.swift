@@ -20,33 +20,41 @@ import CreateML
 // MARK: - Argument parsing
 
 struct Args {
-    let datasetDir: URL
-    let outputDir:  URL
+    let datasetDir:  URL
+    let outputDir:   URL
+    /// When true, skip the CreateML export step and use the existing
+    /// createml_export/ directory as-is.  Use when train images have been
+    /// deleted from dataset/train/ after a prior run and you have already
+    /// augmented createml_export/ manually (e.g. via augment_createml_export.py).
+    let skipExport:  Bool
 
     static func parse() -> Args {
         var datasetPath: String?
         var outputPath:  String?
+        var skipExport = false
 
         var args = CommandLine.arguments.dropFirst()
         while !args.isEmpty {
             let flag = args.removeFirst()
             switch flag {
-            case "--dataset": datasetPath = args.isEmpty ? nil : String(args.removeFirst())
-            case "--output":  outputPath  = args.isEmpty ? nil : String(args.removeFirst())
+            case "--dataset":      datasetPath = args.isEmpty ? nil : String(args.removeFirst())
+            case "--output":       outputPath  = args.isEmpty ? nil : String(args.removeFirst())
+            case "--skip-export":  skipExport = true
             default: break
             }
         }
 
         guard let dp = datasetPath, let op = outputPath else {
             fputs("""
-            Usage: NativeUITrainer --dataset <dataset-root> --output <models-dir>\n
+            Usage: NativeUITrainer --dataset <dataset-root> --output <models-dir> [--skip-export]\n
             """, stderr)
             exit(1)
         }
 
         return Args(
-            datasetDir: URL(filePath: dp),
-            outputDir:  URL(filePath: op)
+            datasetDir:  URL(filePath: dp),
+            outputDir:   URL(filePath: op),
+            skipExport:  skipExport
         )
     }
 }
@@ -89,28 +97,55 @@ print("Dataset : \(args.datasetDir.path)")
 print("Export  : \(exportRoot.path)")
 print()
 
-print("  [train]")
-let trainResult = try CreateMLExporter.export(
-    datasetDir: args.datasetDir,
-    to: trainExport,
-    targetClasses: targetClasses,
-    split: "train",
-    capPerClass: cap,
-    stripFraction: config.stripFraction
-)
+let trainResult: ExportResult
+let valResult: ExportResult
 
-print()
-print("  [validation]")
-// Validation uses full images only (strips are a training-time augmentation;
-// evaluation uses the original images to match real-world inference conditions).
-let valResult = try CreateMLExporter.export(
-    datasetDir: args.datasetDir,
-    to: valExport,
-    targetClasses: targetClasses,
-    split: "validation",
-    capPerClass: cap,
-    stripFraction: 0.0
-)
+if args.skipExport {
+    // --skip-export: reuse the existing createml_export/ as-is.
+    // The caller is responsible for ensuring createml_export/ is up to date
+    // (e.g. after running scripts/augment_createml_export.py).
+    print("  [skip-export] Using existing createml_export/ (--skip-export flag set)")
+    let trainImagesDir    = trainExport.appending(path: "images",       directoryHint: .isDirectory)
+    let trainAnnotFile    = trainExport.appending(path: "annotations.json")
+    let valImagesDir      = valExport.appending(path: "images",         directoryHint: .isDirectory)
+    let valAnnotFile      = valExport.appending(path: "annotations.json")
+    // Report approximate counts from existing annotation files
+    func countEntries(at url: URL) -> Int {
+        guard let data = try? Data(contentsOf: url),
+              let arr = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+        else { return 0 }
+        return arr.count
+    }
+    let trainCount = countEntries(at: trainAnnotFile)
+    let valCount   = countEntries(at: valAnnotFile)
+    print("  [train]      \(trainCount) entries in existing annotations.json")
+    print("  [validation] \(valCount) entries in existing annotations.json")
+    trainResult = ExportResult(imagesDir: trainImagesDir, annotationFile: trainAnnotFile, classCounts: [:])
+    valResult   = ExportResult(imagesDir: valImagesDir,   annotationFile: valAnnotFile,   classCounts: [:])
+} else {
+    print("  [train]")
+    trainResult = try CreateMLExporter.export(
+        datasetDir: args.datasetDir,
+        to: trainExport,
+        targetClasses: targetClasses,
+        split: "train",
+        capPerClass: cap,
+        stripFraction: config.stripFraction
+    )
+
+    print()
+    print("  [validation]")
+    // Validation uses full images only (strips are a training-time augmentation;
+    // evaluation uses the original images to match real-world inference conditions).
+    valResult = try CreateMLExporter.export(
+        datasetDir: args.datasetDir,
+        to: valExport,
+        targetClasses: targetClasses,
+        split: "validation",
+        capPerClass: cap,
+        stripFraction: 0.0
+    )
+}
 
 // MARK: - Step 2: Build Create ML data sources
 

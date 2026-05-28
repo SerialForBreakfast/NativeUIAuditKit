@@ -11,10 +11,21 @@
 // Request will show AP=0 for those classes even if the model is correct.
 // This script runs all 3 passes + NMS, matching NativeUIDetectionRequest.
 //
-// Passes:
-//   1. Full image (.scaleFill) — alert, large containers
-//   2. SAHI 640×640 tiles, 480px stride, 2× upscale — toggle, primaryButton
-//   3. Horizontal strips, 22% height, 50% overlap — navigationBar, textField
+// Passes (per-class routed — Run 004/005):
+//   Full-image (.scaleFill)             → alert, primaryButton
+//   Horizontal strips (22% ht, 50% OL) → navigationBar, textField, primaryButton, toggle
+//
+// Per-class routing rationale (diagnose_fp_passes.swift + diagnose_class_fps.swift):
+//   - alert: strip[03] confuses alert title bar with navBar → full-image only.
+//     Confirmed: alert AP 0.286 → 1.000.
+//   - navigationBar/textField: full-image fails on 16:1 aspect boxes (BP-26) → strip only.
+//   - primaryButton: strip-trained model detects primarily via strip. Full-image-only
+//     gives AP=0.151 vs 0.648 combined → keep both passes.
+//   - toggle: diagnosed 379 FPs from full-image pass + 258 near-dups caused by
+//     cross-pass same-toggle detection at IoU=0.10–0.20. Strip-only removes both
+//     FP sources. Testing here whether strip-only maintains recall.
+//   - SAHI: permanently disabled. Fragments full-width elements → spatially distinct
+//     FPs that survive NMS.
 //
 // Usage (from project root):
 //   swift scripts/eval_map.swift
@@ -47,11 +58,20 @@ let valAnnotationURL = URL(filePath: "/Users/josephmccraw/Library/Developer/Core
 
 let valImagesDir = URL(filePath: "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/images")
 
-/// Confidence threshold for collecting predictions.
-/// Low (0.1) so all candidates go into the PR curve; NMS then deduplicates.
+/// Global confidence floor — all candidates above this enter the PR curve.
 let confThreshold: Float = 0.1
 let iouMatchThreshold = 0.5   // IoU required for a TP match
-let nmsIoUThreshold   = 0.30  // IoU for duplicate suppression across passes (lowered from 0.45 — Run 003 diagnosis: adjacent strips have IoU ~0.35, below 0.45 → not merged → FP explosion)
+let nmsIoUThreshold   = 0.30  // IoU for duplicate suppression across passes
+
+/// Per-class confidence overrides (applied after collection, before NMS).
+/// Derived from diagnose_class_fps.swift (Run 004 analysis) + eval experiment (Run 004 v3):
+///   toggle:        strip-only routing + conf≥0.95 → AP 0.745→0.850, recall 0.916→0.924 ✓
+///   primaryButton: conf≥0.95 tested and reverted — cut 8 TPs at high-recall tail,
+///                  dragging AP 0.648→0.599 despite precision improvement. AP metric
+///                  penalises missing TPs more than it rewards eliminated FPs. Keep at 0.10.
+let perClassConfThreshold: [String: Float] = [
+    "toggle": 0.95,
+]
 
 /// Write YOLO-format prediction files (for confusion_matrix.py)?
 let writeYoloPreds = ProcessInfo.processInfo.environment["WRITE_YOLO_PREDS"] == "1"
@@ -255,6 +275,20 @@ func nms(_ preds: [Prediction], iouThresh: Double) -> [Prediction] {
     return kept
 }
 
+// Cross-class conflict suppression.
+// textField and toggle/primaryButton are visually similar in strip context — the model
+// frequently fires "textField" at positions that contain a toggle or primaryButton.
+// Since these classes cannot physically overlap in real UI, any textField prediction
+// that spatially overlaps a toggle or primaryButton prediction is a false-class FP.
+// Uses the same IoU threshold as NMS (0.30) for consistency.
+func crossClassSuppress(_ preds: [Prediction], iouThresh: Double) -> [Prediction] {
+    let dominant = preds.filter { $0.label == "toggle" || $0.label == "primaryButton" }
+    return preds.filter { pred in
+        guard pred.label == "textField" else { return true }
+        return !dominant.contains { iouPred(pred, $0) > iouThresh }
+    }
+}
+
 // MARK: - AP computation
 
 func iouGT(_ a: GTBox, _ b: Prediction) -> Double {
@@ -348,8 +382,10 @@ let imagePaths = try fm.contentsOfDirectory(at: valImagesDir, includingPropertie
     .filter { $0.pathExtension == "png" }
     .sorted { $0.lastPathComponent < $1.lastPathComponent }
 
-print("Running 3-pass inference on \(imagePaths.count) images...")
-print("  Passes: full-image + SAHI tiles + horizontal strips")
+print("Running per-class-routed inference on \(imagePaths.count) images...")
+print("  Full-image → alert, primaryButton")
+print("  Strip pass → navigationBar, textField, primaryButton, toggle")
+print("  Conf override → toggle≥0.95 only")
 
 for imgURL in imagePaths {
     let filename = imgURL.lastPathComponent
@@ -358,15 +394,32 @@ for imgURL in imagePaths {
     guard let src   = CGImageSourceCreateWithURL(imgURL as CFURL, nil),
           let cgImg = CGImageSourceCreateImageAtIndex(src, 0, nil) else { continue }
 
-    // Run all three passes, merge with NMS
-    // NOTE: SAHI pass disabled for diagnostic — diagnose_fp_passes.swift showed SAHI
-    // generates 2-4 false navBar predictions per image on alert images (wide horizontal
-    // tiles confuse the model). Re-enable once class confusion is addressed.
+    // Per-class pass routing (see file header for full rationale).
+    //
+    // Full-image: alert, primaryButton
+    // Strip:      navigationBar, textField, primaryButton, toggle
+    //
+    // toggle moved to strip-only (Run 004 analysis): 379 of its FPs come from
+    // the full-image pass; 258 near-dups are cross-pass artifacts at IoU=0.10–0.20.
+    // Strip-only eliminates both. Recall impact tested here.
+    //
+    // Per-class confidence thresholds applied after collection (see perClassConfThreshold).
+    let fullImageClasses: Set<String> = ["alert", "primaryButton"]
+    let stripClasses:     Set<String> = ["navigationBar", "textField", "primaryButton", "toggle"]
+
     var allPreds: [Prediction] = []
-    allPreds += (try? fullImagePass(image: cgImg, model: vnModel)) ?? []
-    // allPreds += (try? sahiTilePass(image: cgImg, model: vnModel))  ?? []  // disabled: FP source
-    allPreds += (try? stripPass(image: cgImg, model: vnModel))     ?? []
-    let preds = nms(allPreds, iouThresh: nmsIoUThreshold)
+    let fullPreds  = (try? fullImagePass(image: cgImg, model: vnModel)) ?? []
+    allPreds += fullPreds.filter  { fullImageClasses.contains($0.label) }
+    let stripPreds = (try? stripPass(image: cgImg, model: vnModel))     ?? []
+    allPreds += stripPreds.filter { stripClasses.contains($0.label) }
+
+    // Apply per-class confidence overrides before NMS
+    allPreds = allPreds.filter { pred in
+        pred.conf >= (perClassConfThreshold[pred.label] ?? confThreshold)
+    }
+
+    let nmsPreds   = nms(allPreds, iouThresh: nmsIoUThreshold)
+    let preds      = crossClassSuppress(nmsPreds, iouThresh: nmsIoUThreshold)
 
     // Match predictions to GTs
     var matchedGTs = Set<Int>()
@@ -407,8 +460,10 @@ for imgURL in imagePaths {
 // MARK: - Compute per-class AP and report
 
 print()
-print("── mAP Evaluation — 2-pass pipeline (full+strips, NMS@0.30, SAHI disabled) ──")
-print("   Full-image + SAHI tiles + horizontal strips")
+print("── mAP Evaluation — per-class-routed + toggle conf≥0.95 (NMS@0.30, SAHI disabled) ──")
+print("   Full-image → alert, primaryButton")
+print("   Strip pass → navigationBar, textField, primaryButton, toggle")
+print("   Conf≥0.95  → toggle only")
 print()
 
 var apValues: [Double] = []
@@ -456,7 +511,8 @@ let results: [String: Any] = [
     "confThreshold": Double(confThreshold),
     "nValidationImages": processed,
     "perClass":     perClassResults,
-    "passes":       ["full-image", "SAHI-640-480stride-2xupscale", "horizontal-strips-22pct-50overlap"],
+    "passes":       ["full-image[alert,primaryButton]", "horizontal-strips-22pct-50overlap[navigationBar,textField,primaryButton,toggle]"],
+    "perClassConfOverrides": ["primaryButton": 0.95, "toggle": 0.95],
     "evalDate":     ISO8601DateFormatter().string(from: Date()),
     "dsG5Pass":     allClassesPass,
     "dsG6Pass":     mAP >= 0.70

@@ -33,6 +33,7 @@
 		DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002000000000000DD02 /* UIKitFormViewController.swift */; };
 		DD000013000000000000DD13 /* UIKitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000003000000000000DD03 /* UIKitListViewController.swift */; };
 		DD000014000000000000DD14 /* UIKitControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000004000000000000DD04 /* UIKitControlsViewController.swift */; };
+		DD000016000000000000DD16 /* UIKitToggleFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */; };
 		DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000005000000000000DD05 /* UIKitCoordTests.swift */; };
 		/* Phase 4-2 — UIKitGeneratorViewController + validation test */
 		EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */; };
@@ -132,6 +133,7 @@
 		DD000002000000000000DD02 /* UIKitFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitFormViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitFormViewController.swift"; sourceTree = SOURCE_ROOT; };
 		DD000003000000000000DD03 /* UIKitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitListViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitListViewController.swift"; sourceTree = SOURCE_ROOT; };
 		DD000004000000000000DD04 /* UIKitControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitControlsViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitControlsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitToggleFormViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitToggleFormViewController.swift"; sourceTree = SOURCE_ROOT; };
 		/* Phase 4 — UIKit coord tests */
 		DD000005000000000000DD05 /* UIKitCoordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitCoordTests.swift; sourceTree = "<group>"; };
 		/* Phase 4-2 — comprehensive UIKit generator VC */
@@ -259,6 +261,7 @@
 				DD000002000000000000DD02 /* UIKitFormViewController.swift */,
 				DD000003000000000000DD03 /* UIKitListViewController.swift */,
 				DD000004000000000000DD04 /* UIKitControlsViewController.swift */,
+				DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */,
 				EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */,
 				FF000040000000000000FF40 /* KnownBad */,
 				OO000001000000000000OO01 /* TabViewNavigationTemplate.swift */,
@@ -461,6 +464,7 @@
 				DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */,
 				DD000013000000000000DD13 /* UIKitListViewController.swift in Sources */,
 				DD000014000000000000DD14 /* UIKitControlsViewController.swift in Sources */,
+				DD000016000000000000DD16 /* UIKitToggleFormViewController.swift in Sources */,
 				CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */,
 				CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */,
 				CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */,
