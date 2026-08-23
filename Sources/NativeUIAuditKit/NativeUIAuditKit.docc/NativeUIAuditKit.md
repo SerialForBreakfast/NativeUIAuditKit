@@ -5,17 +5,12 @@ no cloud calls, no image tokens spent on a multimodal LLM.
 
 ## Overview
 
-This is the higher-level Vision-style detection API, built on the `NativeUIAuditKitModels`
-product. If you only need the trained model itself (no Vision framework wrapper — for
-example if you're rolling your own inference pipeline, as
-[ViewLens](https://github.com/SerialForBreakfast/ViewLens) does), depend on
-`NativeUIAuditKitModels` directly instead — see its own documentation catalog.
-
-> Important: ``NativeUIDetectionRequest``'s multi-pass pipeline (full-image + SAHI tiling +
-> horizontal strips) was built for the superseded Create ML v1 model and has not yet been
-> updated for the current YOLO11n model. It is not the recommended entry point right now.
-> For working, tested model access, use `NativeUIModelAsset` from `NativeUIAuditKitModels`
-> directly. This will be resolved in a future release.
+This is the higher-level detection API — a request/observation ergonomic (similar shape to
+Apple's own Vision framework requests), built on the `NativeUIAuditKitModels` product's
+YOLO11n model with a single-pass letterboxed inference pipeline (no Vision framework
+dependency itself). If you only need the trained model and want to roll your own inference
+— as [ViewLens](https://github.com/SerialForBreakfast/ViewLens) does — depend on
+`NativeUIAuditKitModels` directly instead; see its own documentation catalog.
 
 ## Getting Started
 

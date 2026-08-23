@@ -48,10 +48,21 @@ against the 0.935 mAP@0.5 figure below. Full API docs: `swift package generate-d
 (DocC), or see the module documentation comments in
 [`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift).
 
-> **Known limitation:** `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's
-> higher-level Vision-style wrapper) still targets the superseded Create ML v1 model and its
-> strip/SAHI-tiling pipeline — it has not yet been updated for the YOLO11n model above. Use
-> `NativeUIAuditKitModels` directly (as shown above) until this is resolved.
+`NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level Vision-style
+wrapper) is fully migrated to the YOLO11n model as of `2.0.0` — single-pass letterboxed
+inference, no Vision framework dependency, no strip/SAHI tiling (see Phase 6d in
+[Tasks.md](Tasks.md)). Either product is safe to use:
+
+```swift
+import NativeUIAuditKit
+
+let request = NativeUIDetectionRequest()   // default minimumConfidence = 0.5
+let observations = try await request.perform(on: screenshotCGImage)
+
+for obs in observations {
+    print(obs.elementType, obs.confidence, obs.boundingBoxPixels)
+}
+```
 
 ---
 
@@ -329,6 +340,7 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **4: UIKit Generator** | ✅ Done | UIKit-rendered controls (anti-overfitting) | UIKit templates live; ~20k training entries |
 | **5: Hard Negatives** | 🔄 In progress | Hard-negative templates targeting known FP zones | UIKitToggleForm ✓; more templates planned |
 | **6: iOS Model (5-class)** | 🔄 In progress | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.935, YOLO11n); device latency ✓ (~7.5ms) |
+| **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline (see [Tasks.md](Tasks.md#phase-6d-nativeuidetectionrequest-v2-migration)) | TASK-6d-1 through 6d-7 pass |
 | **6→6a: Foundation Models eval** | ⬜ | Evaluate Apple Intelligence vision model before full 41-class training | Decision documented |
 | **6a: iOS Model (41-class)** | ⬜ | Anchor-free YOLO11 + focal loss; all 41 classes | mAP@0.5 ≥ 0.85 on withheld-template test |
 | **6b: tvOS Model** | ⬜ | Focus state, top tab bar | mAP@0.5 ≥ 0.80 |
@@ -338,9 +350,8 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **9: ScreenAuditKit Integration** | ⬜ | Drop-in protocol; contract fields; CLI flag | All ScreenAuditKit tests pass |
 
 **Immediate next steps:**
-1. Promote `best.mlpackage` (YOLO11n) from `NativeUITrainer/yolo_runs/` into the packaged `NativeUIAuditKitModels/` model
-2. Withheld-template generalization test (template-family split, not random split)
-3. Phase 6→6a evaluation gate: test Apple Foundation Models zero-shot before committing to full 41-class training
+1. Withheld-template generalization test (template-family split, not random split)
+2. Phase 6→6a evaluation gate: test Apple Foundation Models zero-shot before committing to full 41-class training
 
 ---
 

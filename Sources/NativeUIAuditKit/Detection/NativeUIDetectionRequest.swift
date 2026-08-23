@@ -1,23 +1,23 @@
 // NativeUIDetectionRequest.swift
 // NativeUIAuditKit
 //
-// Three-pass inference pipeline:
-//   Pass 1 — Full image (scaleFill): catches large elements (alert).
-//   Pass 2 — SAHI square tiles 640×640 at 480px stride on a 2× upscaled image:
-//            catches medium/small objects (toggle, primaryButton).
-//   Pass 3 — Horizontal strips (22% height, 50% overlap): catches full-width thin
-//            elements (navigationBar, textField) after retraining with strip data.
-//            Returns 0 results with the v1 model trained on full images only.
+// Single-pass letterboxed inference against the YOLO11n model shipped by
+// NativeUIAuditKitModels. The model is anchor-free, so — unlike the superseded Create ML
+// v1 pipeline this replaced — no strip tiling or SAHI tiling is needed to cover thin or
+// small classes; one 640×640 letterboxed pass handles every class (mAP@0.5 = 0.935 on the
+// held-out validation set with zero tiling, see Research/ExperimentLog.md Run 006).
 //
-// All passes produce Vision-normalized coordinates (bottom-left origin, [0,1]).
-// Global NMS at IoU 0.45 merges duplicates across passes.
-//
-// See BP-25 (scaleFill), BP-26 (strip tiling) in Research/BestPractices.md.
+// Letterbox → CVPixelBuffer → MLModel.prediction → inverse-letterbox → greedy NMS,
+// ported verbatim from scripts/eval_yolo_map.swift (validated against the shipped mAP
+// figure). The model's own CoreML graph already applies NMS internally (iouThreshold
+// input below); the greedy pass afterward catches any remaining near-duplicates, matching
+// eval_yolo_map.swift's proven approach — not redundant, just a tighter second pass at a
+// different threshold (0.30 vs the model's internal 0.45).
 
 import CoreGraphics
 import CoreML
 import Foundation
-import Vision
+import NativeUIAuditKitModels
 
 // MARK: - Configuration
 
@@ -47,19 +47,19 @@ public struct NativeUIDetectionRequest: Sendable {
         sidecar: NativeUISidecar? = nil
     ) async throws -> [NativeUIElementObservation] {
 
-        let model = try Self.loadModel()
+        let model = try await NativeUIModelAsset.loadModel()
         let confThreshold = Float(configuration.minimumConfidence)
+        let classLabels = NativeUIModelAsset.metadata.classLabels
+        let nmsIoU = Double(NativeUIModelAsset.metadata.recommendedNMSIoUThreshold)
 
-        // Run all three passes off the main actor
         let raw: [RawPrediction] = try await Task.detached(priority: .userInitiated) {
-            var preds: [RawPrediction] = []
-            preds += try Self.fullImagePass(screenshot, model: model)
-            preds += try Self.sahiTilePass(screenshot, model: model)
-            preds += try Self.stripPass(screenshot, model: model)
-            return preds
+            try Self.runYOLO(screenshot, model: model, classLabels: classLabels, confFloor: confThreshold)
         }.value
 
-        let kept = Self.nms(raw, iouThreshold: 0.45, confThreshold: confThreshold)
+        // Greedy same-class NMS as a second pass, matching scripts/eval_yolo_map.swift —
+        // the model's own CoreML graph already runs NMS internally (iouThreshold input
+        // below), this catches any remaining near-duplicates at a tighter threshold.
+        let kept = Self.nms(raw, iouThreshold: nmsIoU)
         let w = screenshot.width
         let h = screenshot.height
         return kept
@@ -71,7 +71,6 @@ public struct NativeUIDetectionRequest: Sendable {
 // MARK: - Errors
 
 public enum NativeUIDetectionError: Error, Sendable, Equatable {
-    case modelUnavailable
     case imagePreprocessingFailed
     case unexpectedModelOutput(String)
 }
@@ -81,229 +80,142 @@ public enum NativeUIDetectionError: Error, Sendable, Equatable {
 private struct RawPrediction: Sendable {
     let label: String
     let confidence: Float
-    /// Vision normalized coords: bottom-left origin, [0,1].
-    let vx: Double   // minX (left edge)
-    let vy: Double   // minY (bottom edge, from image bottom)
-    let vw: Double
-    let vh: Double
+    /// Center-form, top-left-origin normalized coords in ORIGINAL image space, [0,1]
+    /// (standard YOLO/COCO convention — matches scripts/eval_yolo_map.swift's Prediction).
+    let cx, cy, w, h: Double
 }
 
-// MARK: - Model loading
+// MARK: - Letterbox + inference (ported from scripts/eval_yolo_map.swift)
 
 extension NativeUIDetectionRequest {
 
-    // Cached compiled model URL — set once, read-only thereafter.
-    nonisolated(unsafe) private static var _compiledModelURL: URL? = nil
-    nonisolated(unsafe) private static var _vnModel: VNCoreMLModel? = nil
+    private static let yoloImgSize = 640
 
-    private static func loadModel() throws -> VNCoreMLModel {
-        if let cached = _vnModel { return cached }
-
-        // Search all bundles for a compiled .mlmodelc resource
-        let allBundles = Bundle.allBundles + Bundle.allFrameworks
-        var modelURL: URL?
-
-        for bundle in allBundles {
-            if let url = bundle.url(forResource: "NativeUIDetector_v1", withExtension: "mlmodelc") {
-                modelURL = url
-                break
-            }
-        }
-
-        // Development fallback: uncompiled .mlmodel in the models package source tree
-        if modelURL == nil {
-            let devPath = URL(filePath: #filePath)   // this file
-                .deletingLastPathComponent()          // Detection/
-                .deletingLastPathComponent()          // NativeUIAuditKit/
-                .deletingLastPathComponent()          // Sources/
-                .deletingLastPathComponent()          // project root
-                .appending(path: "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage.mlmodel")
-            if FileManager.default.fileExists(atPath: devPath.path) {
-                modelURL = try MLModel.compileModel(at: devPath)
-                _compiledModelURL = modelURL
-            }
-        }
-
-        guard let url = modelURL else {
-            throw NativeUIDetectionError.modelUnavailable
-        }
-
-        let mlModel = try MLModel(contentsOf: url)
-        let vnModel = try VNCoreMLModel(for: mlModel)
-        _vnModel = vnModel
-        return vnModel
+    private struct LetterboxResult {
+        let image: CGImage
+        let newW, newH, padX, padY: Int
     }
-}
 
-// MARK: - Pass 1: Full image
+    /// Letterbox-resize to 640×640, preserving aspect ratio. Padding filled with YOLO
+    /// standard gray (114, 114, 114) — must match training preprocessing.
+    private static func letterbox(_ source: CGImage) -> LetterboxResult? {
+        let origW  = Double(source.width)
+        let origH  = Double(source.height)
+        let scale  = min(Double(yoloImgSize) / origW, Double(yoloImgSize) / origH)
+        let newW   = Int(origW * scale)
+        let newH   = Int(origH * scale)
+        let padX   = (yoloImgSize - newW) / 2
+        let padY   = (yoloImgSize - newH) / 2
 
-extension NativeUIDetectionRequest {
-
-    private static func fullImagePass(
-        _ image: CGImage,
-        model: VNCoreMLModel
-    ) throws -> [RawPrediction] {
-        let req = VNCoreMLRequest(model: model)
-        req.imageCropAndScaleOption = .scaleFill   // BP-25: must match training preprocessing
-        try VNImageRequestHandler(cgImage: image).perform([req])
-        return (req.results as? [VNRecognizedObjectObservation] ?? [])
-            .map { obs in
-                let b = obs.boundingBox
-                return RawPrediction(
-                    label:      obs.labels.first?.identifier ?? "unknown",
-                    confidence: obs.confidence,
-                    vx: Double(b.minX),
-                    vy: Double(b.minY),
-                    vw: Double(b.width),
-                    vh: Double(b.height)
-                )
-            }
-    }
-}
-
-// MARK: - Pass 2: SAHI square tiles
-
-extension NativeUIDetectionRequest {
-
-    private static let sahiTileSize: Int = 640
-    private static let sahiStride:   Int = 480   // 25% overlap
-    private static let sahiScale:    Double = 2.0
-
-    private static func sahiTilePass(
-        _ image: CGImage,
-        model: VNCoreMLModel
-    ) throws -> [RawPrediction] {
-        let origW = image.width
-        let origH = image.height
-        let scaledW = Int(Double(origW) * sahiScale)
-        let scaledH = Int(Double(origH) * sahiScale)
-
-        // Upscale image 2×
-        guard let scaledCtx = CGContext(
-            data: nil, width: scaledW, height: scaledH,
+        guard let ctx = CGContext(
+            data: nil, width: yoloImgSize, height: yoloImgSize,
             bitsPerComponent: 8, bytesPerRow: 0,
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
-        ) else { return [] }
-        // CGContext is bottom-left; draw fills [0, scaledH] in y
-        scaledCtx.draw(image, in: CGRect(x: 0, y: 0, width: scaledW, height: scaledH))
-        guard let scaledImage = scaledCtx.makeImage() else { return [] }
+        ) else { return nil }
 
-        var predictions: [RawPrediction] = []
+        ctx.setFillColor(CGColor(red: 114/255.0, green: 114/255.0, blue: 114/255.0, alpha: 1.0))
+        ctx.fill(CGRect(x: 0, y: 0, width: yoloImgSize, height: yoloImgSize))
+        ctx.draw(source, in: CGRect(x: padX, y: padY, width: newW, height: newH))
 
-        // Tile origin is in 2× pixel space (top-left for CGImage cropping)
-        var tileOriginY = 0
-        while tileOriginY < scaledH {
-            let clampedTileH = min(sahiTileSize, scaledH - tileOriginY)
-            var tileOriginX = 0
-            while tileOriginX < scaledW {
-                let clampedTileW = min(sahiTileSize, scaledW - tileOriginX)
-                defer { tileOriginX += sahiStride }
-                guard let tileImage = cropCGImage(
-                    scaledImage,
-                    originX: tileOriginX, originY: tileOriginY,
-                    width: clampedTileW, height: clampedTileH
-                ) else { continue }
-
-                let req = VNCoreMLRequest(model: model)
-                // Square tiles: scaleFill == scaleFit (no letterboxing). Use scaleFill for consistency.
-                req.imageCropAndScaleOption = .scaleFill
-                try VNImageRequestHandler(cgImage: tileImage).perform([req])
-
-                let tileResults = req.results as? [VNRecognizedObjectObservation] ?? []
-                for obs in tileResults {
-                    let b = obs.boundingBox
-
-                    // Convert tile-local Vision coords → full-2× image Vision coords → original image Vision coords.
-                    // In 2× pixel space (top-left origin):
-                    //   left_px   = tileOriginX + b.minX  * clampedTileW
-                    //   bottom_px from image bottom = (scaledH - tileOriginY - clampedTileH) + b.minY * clampedTileH
-                    let leftPx   = Double(tileOriginX) + Double(b.minX)  * Double(clampedTileW)
-                    let bottomPx = Double(scaledH - tileOriginY - clampedTileH) + Double(b.minY) * Double(clampedTileH)
-                    let boxW     = Double(b.width)  * Double(clampedTileW)
-                    let boxH     = Double(b.height) * Double(clampedTileH)
-
-                    // Normalize to 2× image (= original image content, same Vision coords)
-                    let vx = leftPx   / Double(scaledW)
-                    let vy = bottomPx / Double(scaledH)
-                    let vw = boxW     / Double(scaledW)
-                    let vh = boxH     / Double(scaledH)
-
-                    predictions.append(RawPrediction(
-                        label:      obs.labels.first?.identifier ?? "unknown",
-                        confidence: obs.confidence,
-                        vx: vx, vy: vy, vw: vw, vh: vh
-                    ))
-                }
-            }
-            tileOriginY += sahiStride
-            if tileOriginY > scaledH - sahiStride && tileOriginY < scaledH {
-                tileOriginY = scaledH - sahiTileSize  // ensure bottom row is always covered
-            } else if tileOriginY >= scaledH { break }
-        }
-
-        return predictions
+        guard let boxed = ctx.makeImage() else { return nil }
+        return LetterboxResult(image: boxed, newW: newW, newH: newH, padX: padX, padY: padY)
     }
-}
 
-// MARK: - Pass 3: Horizontal strips (matches training strip augmentation)
+    private static func makePixelBuffer(_ image: CGImage) -> CVPixelBuffer? {
+        let attrs = [
+            kCVPixelBufferCGImageCompatibilityKey: true,
+            kCVPixelBufferCGBitmapContextCompatibilityKey: true,
+        ] as CFDictionary
+        var buf: CVPixelBuffer?
+        guard CVPixelBufferCreate(kCFAllocatorDefault, image.width, image.height,
+                                  kCVPixelFormatType_32BGRA, attrs, &buf) == kCVReturnSuccess,
+              let pixelBuf = buf else { return nil }
 
-extension NativeUIDetectionRequest {
+        CVPixelBufferLockBaseAddress(pixelBuf, [])
+        defer { CVPixelBufferUnlockBaseAddress(pixelBuf, []) }
 
-    /// Fraction of image height per strip — must match `TrainingConfig.default.stripFraction`.
-    private static let stripFraction: Double = 0.22
+        guard let ctx = CGContext(
+            data: CVPixelBufferGetBaseAddress(pixelBuf),
+            width: image.width, height: image.height,
+            bitsPerComponent: 8,
+            bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuf),
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
+        ) else { return nil }
 
-    private static func stripPass(
+        ctx.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+        return pixelBuf
+    }
+
+    /// Single letterboxed pass through the model. `iouThreshold: 0.45` is the model's
+    /// internal NMS input (see scripts/eval_yolo_map.swift); `confFloor` gates which
+    /// candidates are kept before the second, tighter greedy NMS pass in `perform(on:)`.
+    private static func runYOLO(
         _ image: CGImage,
-        model: VNCoreMLModel
+        model: MLModel,
+        classLabels: [String],
+        confFloor: Float
     ) throws -> [RawPrediction] {
-        let imageW = image.width
-        let imageH = image.height
-        let stripH = max(1, Int(Double(imageH) * stripFraction))
-        let stride  = max(1, stripH / 2)
-
-        var predictions: [RawPrediction] = []
-
-        var stripY = 0
-        while stripY + stripH <= imageH {
-            defer { stripY += stride }
-
-            guard let stripImage = cropCGImage(
-                image,
-                originX: 0, originY: stripY,
-                width: imageW, height: stripH
-            ) else { continue }
-
-            let req = VNCoreMLRequest(model: model)
-            req.imageCropAndScaleOption = .scaleFill
-            try VNImageRequestHandler(cgImage: stripImage).perform([req])
-
-            let stripResults = req.results as? [VNRecognizedObjectObservation] ?? []
-            for obs in stripResults {
-                let b = obs.boundingBox
-
-                // Convert strip-local Vision coords → full-image Vision coords.
-                // Strip in Vision space (bottom-left origin):
-                //   stripBottomVision = distance from image bottom to strip's bottom edge
-                //   = 1.0 - (stripY + stripH) / imageH
-                let stripBottomVision = 1.0 - Double(stripY + stripH) / Double(imageH)
-                let stripHeightVision = Double(stripH) / Double(imageH)
-
-                // x is unchanged (full-width strip). y scales with stripHeightVision.
-                let vx = Double(b.minX)
-                let vy = stripBottomVision + Double(b.minY) * stripHeightVision
-                let vw = Double(b.width)
-                let vh = Double(b.height) * stripHeightVision
-
-                predictions.append(RawPrediction(
-                    label:      obs.labels.first?.identifier ?? "unknown",
-                    confidence: obs.confidence,
-                    vx: vx, vy: vy, vw: vw, vh: vh
-                ))
-            }
+        guard let lb = letterbox(image), let pixelBuf = makePixelBuffer(lb.image) else {
+            throw NativeUIDetectionError.imagePreprocessingFailed
         }
 
-        return predictions
+        let input = try MLDictionaryFeatureProvider(dictionary: [
+            "image":               MLFeatureValue(pixelBuffer: pixelBuf),
+            "iouThreshold":        MLFeatureValue(double: 0.45),
+            "confidenceThreshold": MLFeatureValue(double: Double(confFloor)),
+        ])
+        let output = try model.prediction(from: input)
+
+        guard let confArr  = output.featureValue(for: "confidence")?.multiArrayValue,
+              let coordArr = output.featureValue(for: "coordinates")?.multiArrayValue else {
+            throw NativeUIDetectionError.unexpectedModelOutput("missing confidence/coordinates output")
+        }
+
+        let n      = confArr.shape[0].intValue
+        let nTotal = confArr.shape[1].intValue
+        let nCheck = min(classLabels.count, nTotal)
+
+        let cs0 = confArr.strides[0].intValue
+        let cs1 = confArr.strides[1].intValue
+        let xs0 = coordArr.strides[0].intValue
+
+        let sz    = Double(yoloImgSize)
+        let newWd = Double(lb.newW)
+        let newHd = Double(lb.newH)
+        let pxD   = Double(lb.padX)
+        let pyD   = Double(lb.padY)
+
+        var preds: [RawPrediction] = []
+        for i in 0..<n {
+            var bestConf: Float = 0
+            var bestClass = 0
+            for c in 0..<nCheck {
+                let v = confArr[i * cs0 + c * cs1].floatValue
+                if v > bestConf { bestConf = v; bestClass = c }
+            }
+            guard bestConf >= confFloor else { continue }
+
+            // Raw coords normalized to the 640×640 letterboxed frame; inverse-letterbox
+            // back to original-image-normalized, top-left-origin, center-form coords.
+            let cx640 = coordArr[i * xs0 + 0].doubleValue
+            let cy640 = coordArr[i * xs0 + 1].doubleValue
+            let w640  = coordArr[i * xs0 + 2].doubleValue
+            let h640  = coordArr[i * xs0 + 3].doubleValue
+
+            let cxOrig = (cx640 * sz - pxD) / newWd
+            let cyOrig = (cy640 * sz - pyD) / newHd
+            let wOrig  = w640 * sz / newWd
+            let hOrig  = h640 * sz / newHd
+
+            preds.append(RawPrediction(
+                label: classLabels[bestClass],
+                confidence: bestConf,
+                cx: cxOrig, cy: cyOrig, w: wOrig, h: hOrig
+            ))
+        }
+        return preds
     }
 }
 
@@ -311,14 +223,8 @@ extension NativeUIDetectionRequest {
 
 extension NativeUIDetectionRequest {
 
-    private static func nms(
-        _ predictions: [RawPrediction],
-        iouThreshold: Double,
-        confThreshold: Float
-    ) -> [RawPrediction] {
-        let filtered = predictions.filter { $0.confidence >= confThreshold }
-        let sorted   = filtered.sorted { $0.confidence > $1.confidence }
-
+    private static func nms(_ predictions: [RawPrediction], iouThreshold: Double) -> [RawPrediction] {
+        let sorted = predictions.sorted { $0.confidence > $1.confidence }
         var kept: [RawPrediction] = []
         var suppressed = Set<Int>()
 
@@ -337,12 +243,12 @@ extension NativeUIDetectionRequest {
     }
 
     private static func iou(_ a: RawPrediction, _ b: RawPrediction) -> Double {
-        let ax1 = a.vx, ax2 = a.vx + a.vw, ay1 = a.vy, ay2 = a.vy + a.vh
-        let bx1 = b.vx, bx2 = b.vx + b.vw, by1 = b.vy, by2 = b.vy + b.vh
+        let ax1 = a.cx - a.w/2, ax2 = a.cx + a.w/2, ay1 = a.cy - a.h/2, ay2 = a.cy + a.h/2
+        let bx1 = b.cx - b.w/2, bx2 = b.cx + b.w/2, by1 = b.cy - b.h/2, by2 = b.cy + b.h/2
         let ix = max(0, min(ax2, bx2) - max(ax1, bx1))
         let iy = max(0, min(ay2, by2) - max(ay1, by1))
         let inter = ix * iy
-        let union = a.vw * a.vh + b.vw * b.vh - inter
+        let union = a.w * a.h + b.w * b.h - inter
         return union > 0 ? inter / union : 0
     }
 }
@@ -358,16 +264,24 @@ extension NativeUIDetectionRequest {
     ) -> NativeUIElementObservation? {
         guard let elementType = NativeUIElementType(rawValue: pred.label) else { return nil }
 
-        let visionRect = NativeUIRect(x: pred.vx, y: pred.vy, width: pred.vw, height: pred.vh)
+        // pred.{cx,cy,w,h} are top-left-origin, center-form, normalized [0,1].
+        let topLeftX = pred.cx - pred.w / 2
+        let topLeftY = pred.cy - pred.h / 2
 
-        // Convert Vision (bottom-left) to pixel (top-left):
-        //   px_x = vx × imageWidth
-        //   px_y = (1 - vy - vh) × imageHeight   ← flip y, measure from top
+        // Vision-normalized (bottom-left origin) — required for Phase 7 OCR fusion
+        // alignment with VNRecognizeTextRequest output. x unaffected; y flips.
+        let visionRect = NativeUIRect(
+            x: topLeftX,
+            y: 1.0 - pred.cy - pred.h / 2,
+            width: pred.w,
+            height: pred.h
+        )
+
         let pixelRect = NativeUIRect(
-            x:      pred.vx * Double(imageWidth),
-            y:      (1.0 - pred.vy - pred.vh) * Double(imageHeight),
-            width:  pred.vw * Double(imageWidth),
-            height: pred.vh * Double(imageHeight)
+            x:      topLeftX * Double(imageWidth),
+            y:      topLeftY * Double(imageHeight),
+            width:  pred.w * Double(imageWidth),
+            height: pred.h * Double(imageHeight)
         )
 
         return NativeUIElementObservation(
@@ -378,34 +292,6 @@ extension NativeUIDetectionRequest {
             confidenceSource: .pixelModel
         )
     }
-}
-
-// MARK: - CGImage crop helper
-
-/// Crops a CGImage to the given rectangle using a CGContext.
-/// `originY` is measured from the TOP of the image (screen convention).
-private func cropCGImage(
-    _ source: CGImage,
-    originX: Int,
-    originY: Int,
-    width: Int,
-    height: Int
-) -> CGImage? {
-    guard let ctx = CGContext(
-        data: nil,
-        width: width, height: height,
-        bitsPerComponent: 8, bytesPerRow: 0,
-        space: CGColorSpaceCreateDeviceRGB(),
-        bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
-    ) else { return nil }
-
-    // CGContext is bottom-left origin. To expose rows [originY, originY+height) from the top:
-    // draw the full source so that source row (originY+height) from top lands at context y=0.
-    // source.height - (originY + height) = distance of that row from the source bottom.
-    let drawY = -(source.height - originY - height)
-    ctx.draw(source, in: CGRect(x: -originX, y: drawY,
-                                 width: source.width, height: source.height))
-    return ctx.makeImage()
 }
 
 // MARK: - Sidecar / supporting types (unchanged)

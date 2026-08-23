@@ -47,12 +47,23 @@ you need CPU-only inference for testing.
 
 The model expects a 640×640 letterboxed input (aspect-ratio-preserving resize with gray
 fill, matching standard YOLO preprocessing) and returns predictions with NMS already baked
-into the CoreML graph — no separate NMS pass needed. For a complete, tested reference
-implementation of the letterbox → predict → parse pipeline (including the stride-based
-`MLMultiArray` output parsing), see
+into the CoreML graph. For a complete, tested reference implementation of the letterbox →
+predict → parse pipeline (including the stride-based `MLMultiArray` output parsing), see
 [`scripts/eval_yolo_map.swift`](https://github.com/<org>/NativeUIAuditKit/blob/main/scripts/eval_yolo_map.swift)
-in the repository — this is the exact logic validated against the 0.935 mAP@0.5 figure.
+in the repository — this is the exact logic validated against the 0.935 mAP@0.5 figure, and
+the same logic `NativeUIDetectionRequest` runs internally.
 
-> Note: `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level Vision-style
-> wrapper) has not yet been updated to this preprocessing and is not the recommended path
-> today — see the module overview for details.
+## Or Use the Higher-Level Request API
+
+If you'd rather not implement letterboxing yourself, depend on the `NativeUIAuditKit`
+product instead — it wraps this exact pipeline behind a request/observation API:
+
+```swift
+import NativeUIAuditKit
+
+let request = NativeUIDetectionRequest()   // default minimumConfidence = 0.5
+let observations = try await request.perform(on: screenshotCGImage)
+```
+
+Each ``NativeUIElementObservation`` carries the element's semantic type, confidence, and
+bounding box in both Vision-normalized and pixel coordinate systems.

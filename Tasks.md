@@ -1365,6 +1365,151 @@ xcodebuild test \
 
 ---
 
+## Phase 6d: `NativeUIDetectionRequest` v2 Migration ✅
+
+*`NativeUIAuditKit` 2.0.0 shipped the YOLO11n model via `NativeUIAuditKitModels` (see
+`CHANGELOG.md`), but `NativeUIDetectionRequest` — the higher-level Vision-style API in the
+`NativeUIAuditKit` product — was never updated to use it. It still targeted the superseded
+v1 model and a 3-pass Vision-framework pipeline (full-image + SAHI tiling + horizontal
+strips) built specifically to work around v1's anchor-based architecture. None of that was
+needed for v2's anchor-free model, and the mismatch was actively wrong, not just stale — see
+TASK-6d-6.*
+
+**Requires:** `NativeUIAuditKitModels` 2.0.0 (done)  
+**Blocks:** Phase 7 (OCR fusion merges its output; building fusion on the stale pipeline
+would need redoing), Phase 9 (ScreenAuditKit integration exposes this API directly)  
+**Completed:** 2026-08-23, before the `2.0.0` tag was cut
+
+---
+
+#### TASK-6d-1: Point model loading at `NativeUIAuditKitModels` ✅
+
+**File:** `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift` — `loadModel()`
+
+Replace the `Bundle.allBundles`/`Bundle.allFrameworks` search for `"NativeUIDetector_v1"`
+and the `#filePath`-relative dev-fallback (which compiles the raw
+`NativeUIDetector_v1.mlpackage.mlmodel` on disk via `MLModel.compileModel(at:)`) with a
+direct call to `NativeUIModelAsset.loadModel()` from `NativeUIAuditKitModels` (already a
+target dependency).
+
+**AC:**
+- No `Bundle` search, no `#filePath`-relative fallback, no on-the-fly compilation remains
+- Model loads via `NativeUIModelAsset` only
+
+---
+
+#### TASK-6d-2: Single-pass letterboxed inference, replacing the 3-pass pipeline ✅
+
+**File:** same — `fullImagePass`, `sahiTilePass`, `stripPass`
+
+Remove all three passes. They exist to work around v1's anchor-based, strip-trained
+architecture (thin classes like `navigationBar` needed strip tiling; small classes needed
+SAHI tiling) — v2 is anchor-free and needs none of it; a single 640×640 letterboxed pass
+covers every class per the Run 006 eval (mAP@0.5 = 0.935 with zero tiling).
+
+Port `letterbox()`, `makePixelBuffer()`, and the stride-based `MLMultiArray` output parsing
+verbatim from [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) — already
+validated against the shipped mAP figure. Replace `VNCoreMLRequest`/Vision framework calls
+with direct `MLModel.prediction(from:)`, matching the model's actual input contract (`image`,
+`iouThreshold`, `confidenceThreshold` feature values).
+
+**AC:**
+- `perform(on:)` runs exactly one letterboxed pass, no Vision framework dependency for
+  inference itself
+- Detections on a known test image match `eval_yolo_map.swift`'s output within floating-point
+  tolerance
+
+---
+
+#### TASK-6d-3: Reassess the NMS pass ✅ — kept, not removed
+
+**File:** same — `nms(_:iouThreshold:)`
+
+**Resolution:** kept a second greedy NMS pass, matching `scripts/eval_yolo_map.swift`'s
+proven approach — that script calls the model with `iouThreshold: 0.45` as an *input*
+(governing the CoreML graph's own internal NMS), then runs a separate, tighter greedy NMS
+at 0.30 afterward to catch remaining near-duplicates. This is not redundant: two different
+thresholds doing two different jobs. `perform(on:)` now does the same — model's internal
+NMS at 0.45, then `NativeUIModelAsset.metadata.recommendedNMSIoUThreshold` (0.30) as the
+second pass.
+
+**AC:** No duplicate/near-duplicate detections in output for a multi-element test image —
+confirmed via `detectionRequestFindsRealElements` in `NativeUIAuditKitTests.swift`.
+
+---
+
+#### TASK-6d-4: Coordinate conversion correctness ✅
+
+**File:** same — `toObservation(_:imageWidth:imageHeight:)`
+
+Update to convert from the letterbox inverse-transform (`cx_orig = (cx*640 - padX) / newW`,
+per `eval_yolo_map.swift`) rather than the old strip/SAHI tile-to-full-image conversion math.
+Preserve the existing `NativeUIElementObservation` contract — both `boundingBox`
+(Vision-normalized, bottom-left) and `boundingBoxPixels` (top-left) must still be populated,
+since Phase 7's OCR fusion expects Vision-normalized coordinates to align with
+`VNRecognizeTextRequest` output.
+
+**AC:** Coordinates match `eval_yolo_map.swift` ground truth within 1px on a representative
+screenshot.
+
+---
+
+#### TASK-6d-5: Confidence/threshold plumbing ✅
+
+**File:** same — `NativeUIDetectionConfiguration`
+
+**Resolution:** `minimumConfidence` is passed directly as the model's `confidenceThreshold`
+input feature (the cheaper, more correct option — lets the CoreML graph's own NMS work with
+the right candidate set rather than filtering after the fact).
+
+**AC:** Raising `minimumConfidence` measurably reduces low-confidence detections in output —
+confirmed via `detectionRequestRespectsMinimumConfidence` in `NativeUIAuditKitTests.swift`.
+
+---
+
+#### TASK-6d-6: Fix the live test regression ✅
+
+**File:** `Tests/NativeUIAuditKitTests/NativeUIAuditKitTests.swift`
+
+**Confirmed, not just suspected:** the old `detectionRequestThrowsModelUnavailable` test's
+dev-fallback path was genuinely hanging — `swift test` was still running after 10 minutes of
+CPU time before being killed, consistent with a stuck `MLModel.compileModel(at:)` call on the
+stale raw v1 model. Deleting the fallback (TASK-6d-1) removed the hang entirely.
+
+**Resolution:** replaced with two real tests — `detectionRequestFindsRealElements` and
+`detectionRequestRespectsMinimumConfidence` — against a new fixture,
+`Tests/NativeUIAuditKitTests/Fixtures/kitchen_sink_screen.png` (1179×2556, cropped from a
+clean/non-overlay `KitchenSinkValidationTest` capture; declared as a `.copy()` resource on
+the `NativeUIAuditKitTests` target in `Package.swift`).
+
+**AC:**
+- No test asserts `.modelUnavailable` — the case was removed from `NativeUIDetectionError`
+  entirely, since it's unreachable now that `NativeUIModelAsset` always resolves a bundled model
+- New tests assert real detections against the fixture — full suite now runs in ~0.2s
+  (previously hung indefinitely)
+
+---
+
+#### TASK-6d-7: Update docs once the above lands ✅
+
+**Files:** `README.md`, `Sources/NativeUIAuditKit/NativeUIAuditKit.docc/NativeUIAuditKit.md`,
+`Sources/NativeUIAuditKit/NativeUIAuditKit.docc/GettingStarted.md`
+
+Removed the "Known Limitation" callouts added when `NativeUIAuditKitModels` shipped ahead of
+this migration. README and DocC now show a `NativeUIDetectionRequest` Quick Start alongside
+the `NativeUIAuditKitModels` one.
+
+**AC:** README/DocC Quick Start can recommend `NativeUIDetectionRequest` as equally valid to
+`NativeUIAuditKitModels` direct usage. ✅
+
+---
+
+**Phase 6d gate: PASSED.** TASK-6d-1 through TASK-6d-7 all complete — `NativeUIDetectionRequest`
+is the recommended primary API again; Phase 7 (OCR fusion) can build directly on its output
+with confidence the underlying detector is current.
+
+---
+
 ## Phase 6 Gate: Foundation Models Baseline Evaluation
 
 *One mandatory evaluation day before committing to 41-class custom training. No "skip" option.*

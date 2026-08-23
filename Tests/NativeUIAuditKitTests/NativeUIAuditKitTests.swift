@@ -11,23 +11,49 @@ struct NativeUIAuditKitTests {
         #expect(!NativeUIAuditKit.version.isEmpty)
     }
 
-    @Test("Detection request throws modelUnavailable before model ships")
-    func detectionRequestThrowsModelUnavailable() async throws {
-        let request = NativeUIDetectionRequest()
-        let size = CGSize(width: 390, height: 844)
-        let context = CGContext(
-            data: nil,
-            width: Int(size.width),
-            height: Int(size.height),
-            bitsPerComponent: 8,
-            bytesPerRow: 0,
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+    @Test("Detection request finds real elements on the kitchen sink fixture")
+    func detectionRequestFindsRealElements() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "kitchen_sink_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+        let provider = CGDataProvider(data: data as CFData)!
+        let image = CGImage(
+            pngDataProviderSource: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
         )!
-        let image = context.makeImage()!
-        await #expect(throws: NativeUIDetectionError.modelUnavailable) {
-            _ = try await request.perform(on: image)
+
+        let request = NativeUIDetectionRequest()
+        let observations = try await request.perform(on: image)
+
+        #expect(!observations.isEmpty, "expected at least one detected element on the kitchen sink fixture")
+        for obs in observations {
+            #expect(obs.confidence >= 0.5, "\(obs.elementType): below the default minimumConfidence")
+            #expect(obs.boundingBoxPixels.width > 0, "\(obs.elementType): zero-width pixel box")
+            #expect(obs.boundingBoxPixels.height > 0, "\(obs.elementType): zero-height pixel box")
         }
+    }
+
+    @Test("Detection request confidence threshold filters output")
+    func detectionRequestRespectsMinimumConfidence() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "kitchen_sink_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+        let provider = CGDataProvider(data: data as CFData)!
+        let image = CGImage(
+            pngDataProviderSource: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+        )!
+
+        let permissive = NativeUIDetectionRequest(configuration: .init(minimumConfidence: 0.05))
+        let strict = NativeUIDetectionRequest(configuration: .init(minimumConfidence: 0.95))
+
+        let permissiveResults = try await permissive.perform(on: image)
+        let strictResults = try await strict.perform(on: image)
+
+        #expect(strictResults.count <= permissiveResults.count,
+            "raising minimumConfidence should not increase the number of detections")
     }
 
     @Test("NativeUIRect round-trips through CGRect")

@@ -32,16 +32,27 @@ exist before this release.
   default; the superseded Create ML descriptor is preserved as `ModelRegistry.iOS_v1`.
 - `NativeUIAuditKitModelsTests` target with smoke tests confirming the bundled model
   resource resolves and loads via `MLModel`.
+- `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level API) migrated to
+  the YOLO11n model — single-pass letterboxed inference ported from
+  `scripts/eval_yolo_map.swift`, replacing the superseded v1 model's 3-pass Vision-framework
+  pipeline (full-image + SAHI tiling + horizontal strips). No Vision framework dependency
+  remains in this target. `minimumConfidence` now passes directly as the model's
+  `confidenceThreshold` input.
+- Two new tests (`detectionRequestFindsRealElements`,
+  `detectionRequestRespectsMinimumConfidence`) against a real fixture,
+  `Tests/NativeUIAuditKitTests/Fixtures/kitchen_sink_screen.png`.
 
 ### Changed
 - `.gitignore` no longer blocks the packaged model resource or its training config — only
   raw/unpromoted training-run artifacts remain ignored.
 
-### Known Limitations
-- `NativeUIDetectionRequest` (part of the `NativeUIAuditKit` product) still targets the
-  superseded v1 model path and its strip/SAHI-tiling Vision pipeline — it has not been
-  updated for the YOLO11n model's expected 640×640 letterboxed input. Use
-  `NativeUIAuditKitModels` directly until this is resolved in a future release.
+### Removed
+- `NativeUIDetectionError.modelUnavailable` — unreachable now that `NativeUIModelAsset`
+  always resolves a bundled model; the case and the test asserting it were removed together.
+- The old `detectionRequestThrowsModelUnavailable` test, which asserted a throw that no
+  longer happens and whose dev-fallback path (compiling the stale raw v1 model on the fly)
+  was found to genuinely hang — confirmed by a `swift test` run stuck at 10+ minutes CPU
+  time before being killed.
 
 ## [1.0.0] — 2026-05-03
 

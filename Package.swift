@@ -71,7 +71,8 @@ let package = Package(
         .testTarget(
             name: "NativeUIAuditKitTests",
             dependencies: ["NativeUIAuditKit"],
-            path: "Tests/NativeUIAuditKitTests"
+            path: "Tests/NativeUIAuditKitTests",
+            resources: [.copy("Fixtures/kitchen_sink_screen.png")]
         ),
         .testTarget(
             name: "NativeUIAuditKitModelsTests",
