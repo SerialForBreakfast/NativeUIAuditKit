@@ -63,17 +63,20 @@ public final class OverlappingControlsViewController: UIViewController, UIKitAnn
     // MARK: - Constants
 
     private static let configs: [OverlapConfig] = [
-        // 0: Horizontal, ~10% IoU — slight overlap on right edge
+        // 0: Horizontal, ~12% IoU — slight overlap on right edge
+        // (bOffsetX: 108 originally computed to ~5.3% IoU, below the >0.1 acceptance
+        // threshold — verified against ClippedContentValidationTest's IoU formula)
         OverlapConfig(buttonAWidth: 120, buttonAHeight: 44, buttonBWidth: 120, buttonBHeight: 44,
-                      bOffsetX: 108, bOffsetY: 0,
-                      label: "Horizontal ~10% IoU"),
-        // 1: Horizontal, ~25% IoU
+                      bOffsetX: 95, bOffsetY: 0,
+                      label: "Horizontal ~12% IoU"),
+        // 1: Horizontal, ~14% IoU
         OverlapConfig(buttonAWidth: 100, buttonAHeight: 44, buttonBWidth: 100, buttonBHeight: 44,
                       bOffsetX: 75, bOffsetY: 0,
-                      label: "Horizontal ~25% IoU"),
+                      label: "Horizontal ~14% IoU"),
         // 2: Diagonal, ~35% IoU (offset in both axes)
+        // (bOffsetX/Y: 52 originally computed to ~6.5% IoU — below threshold)
         OverlapConfig(buttonAWidth: 80, buttonAHeight: 80, buttonBWidth: 80, buttonBHeight: 80,
-                      bOffsetX: 52, bOffsetY: 52,
+                      bOffsetX: 22, bOffsetY: 22,
                       label: "Diagonal ~35% IoU"),
         // 3: ~50% IoU — second button starts at midpoint of first
         OverlapConfig(buttonAWidth: 160, buttonAHeight: 44, buttonBWidth: 80, buttonBHeight: 44,

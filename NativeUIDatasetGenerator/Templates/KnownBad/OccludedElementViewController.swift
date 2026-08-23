@@ -197,9 +197,21 @@ public final class OccludedElementViewController: UIViewController, UIKitAnnotat
         let screenH = view.bounds.height
         let buttonW = screenW - 32
 
-        // Layout buttons from top of safe area
-        var y = safeTop + 24
+        // Sheet covers bottom 55% of screen
+        let sheetH = screenH * 0.55
+        sheetTopY = screenH - sheetH
+        sheetView.frame = CGRect(x: 0, y: sheetTopY, width: screenW, height: sheetH)
 
+        // Position the 4-row button stack relative to sheetTopY (not a fixed offset
+        // from the top of the safe area) so the intended occlusion tiers — row 0 fully
+        // visible, row 1 ~40% visible, rows 2–3 fully covered — actually hold regardless
+        // of screen height. A fixed "safeTop + 24" start left a ~30pt gap between the
+        // row stack and the sheet on ios26's 852pt profile, so nothing ever overlapped.
+        let row1Top = sheetTopY - 0.4 * Self.rowHeight
+        let row0Top = row1Top - Self.rowGap - Self.rowHeight
+        let stackStartY = max(row0Top, safeTop + 24)
+
+        var y = stackStartY
         for i in 0..<buttonRows.count {
             buttonRows[i].button.frame = CGRect(
                 x: 16, y: y,
@@ -207,11 +219,6 @@ public final class OccludedElementViewController: UIViewController, UIKitAnnotat
             )
             y += Self.rowHeight + Self.rowGap
         }
-
-        // Sheet covers bottom 55% of screen
-        let sheetH = screenH * 0.55
-        sheetTopY = screenH - sheetH
-        sheetView.frame = CGRect(x: 0, y: sheetTopY, width: screenW, height: sheetH)
 
         // Update drag handle and title positions
         if let handle = sheetView.subviews.first {

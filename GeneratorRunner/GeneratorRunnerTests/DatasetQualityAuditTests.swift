@@ -15,17 +15,21 @@
 // The 5 Phase-6 training classes (vertical slice):
 //   primaryButton, navigationBar, alert, textField, toggle
 //
+// Class is prefixed "ZZZ" so XCTest's default alphabetical suite ordering runs
+// it after GenerateDatasetTests — this audit reads manifest.json, which only
+// exists once dataset generation has run earlier in the same test pass.
+//
 // Run individually:
-//   xcodebuild test … -only-testing:GeneratorRunnerTests/DatasetQualityAuditTests
+//   xcodebuild test … -only-testing:GeneratorRunnerTests/ZZZDatasetQualityAuditTests
 
 import XCTest
 import CryptoKit
 import Foundation
 
-// MARK: - DatasetQualityAuditTests
+// MARK: - ZZZDatasetQualityAuditTests
 
 @MainActor
-final class DatasetQualityAuditTests: XCTestCase {
+final class ZZZDatasetQualityAuditTests: XCTestCase {
 
     // MARK: - Configuration
 

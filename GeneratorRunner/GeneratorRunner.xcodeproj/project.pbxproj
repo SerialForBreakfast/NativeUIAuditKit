@@ -3,13 +3,38 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		/* App target — minimal host process, no business logic */
+		441F8DD9303AA23E006C6411 /* best.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = 441F8DD8303AA23E006C6411 /* best.mlpackage */; };
+		442E9998303AC04700EB0E2B /* YOLOBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E9997303AC04700EB0E2B /* YOLOBenchmarkTests.swift */; };
+		442E999A303AC22900EB0E2B /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 442E9999303AC22900EB0E2B /* TestPlan.xctestplan */; };
+		A1000011000000000000A111 /* LiquidGlassNavTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000000000000A101 /* LiquidGlassNavTemplate.swift */; };
+		A2000011000000000000A211 /* LiquidGlassTabTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000A201 /* LiquidGlassTabTemplate.swift */; };
+		A3000011000000000000A311 /* SettingsDisclosureTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3000001000000000000A301 /* SettingsDisclosureTemplate.swift */; };
+		A4000011000000000000A411 /* RefreshControlTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4000001000000000000A401 /* RefreshControlTemplate.swift */; };
+		A5000011000000000000A511 /* ContextMenuTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5000001000000000000A501 /* ContextMenuTemplate.swift */; };
+		A6000011000000000000A611 /* MapOverlaysTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6000001000000000000A601 /* MapOverlaysTemplate.swift */; };
+		A7000011000000000000A711 /* StepperTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7000001000000000000A701 /* StepperTemplate.swift */; };
+		A8000011000000000000A811 /* ProgressActivityTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8000001000000000000A801 /* ProgressActivityTemplate.swift */; };
+		B1000011000000000000B111 /* ColorPickerTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000000000000B101 /* ColorPickerTemplate.swift */; };
+		B2000011000000000000B211 /* MenuButtonTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000B201 /* MenuButtonTemplate.swift */; };
+		B3000011000000000000B311 /* LinkRichTextTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000001000000000000B301 /* LinkRichTextTemplate.swift */; };
+		B4000011000000000000B411 /* SliderPanelTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000001000000000000B401 /* SliderPanelTemplate.swift */; };
+		B5000011000000000000B511 /* SegmentedFilterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001000000000000B501 /* SegmentedFilterTemplate.swift */; };
+		B6000011000000000000B611 /* CardDetailTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001000000000000B601 /* CardDetailTemplate.swift */; };
+		B7000011000000000000B711 /* MultiSectionFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001000000000000B701 /* MultiSectionFormTemplate.swift */; };
+		B8000011000000000000B811 /* ToolbarActionsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001000000000000B801 /* ToolbarActionsTemplate.swift */; };
+		B9000011000000000000B911 /* WizardStepFlowTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001000000000000B901 /* WizardStepFlowTemplate.swift */; };
+		BA000011000000000000BA11 /* NotificationCenterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001000000000000BA01 /* NotificationCenterTemplate.swift */; };
 		BB000010000000000000BB10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB01 /* AppDelegate.swift */; };
-		/* Test target — all shared sources compiled directly into the test bundle */
+		BB000011000000000000BB11 /* GalleryPageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001000000000000BF01 /* GalleryPageTemplate.swift */; };
+		BC000011000000000000BC11 /* iPadSidebarTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000001000000000000BC01 /* iPadSidebarTemplate.swift */; };
+		BD000011000000000000BD11 /* AlertWithTextFieldTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */; };
+		BE000011000000000000BE11 /* SettingsToggleDenseTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */; };
+		BF000011000000000000BF11 /* GalleryPageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001000000000000BF01 /* GalleryPageTemplate.swift */; };
+		CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000001000000000000CC01 /* GenerateDatasetTests.swift */; };
 		CC000011000000000000CC11 /* CaptureTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002000000000000BB02 /* CaptureTypes.swift */; };
 		CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003000000000000BB03 /* GeneratorConfig.swift */; };
 		CC000013000000000000CC13 /* ContentCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000004000000000000BB04 /* ContentCorpus.swift */; };
@@ -20,44 +45,37 @@
 		CC000018000000000000CC18 /* AlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000009000000000000BB09 /* AlertTemplate.swift */; };
 		CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001A000000000000BB1A /* AnnotationWriter.swift */; };
 		CC00001B000000000000CC1B /* DatasetManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001C000000000000BB1C /* DatasetManifest.swift */; };
-		CC000022000000000000CC22 /* BalanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000020000000000000BB20 /* BalanceReport.swift */; };
-		CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000001000000000000CC01 /* GenerateDatasetTests.swift */; };
 		CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */; };
 		CC00001E000000000000CC1E /* BoundingBoxDebugRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */; };
 		CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */; };
+		CC000022000000000000CC22 /* BalanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000020000000000000BB20 /* BalanceReport.swift */; };
 		CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */; };
-		/* Phase 6 — Model benchmark */
-		BF000011000000000000BF11 /* ModelBenchmarkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001000000000000BF01 /* ModelBenchmarkTests.swift */; };
-		/* Phase 4 — UIKit generator templates and coord tests */
 		DD000011000000000000DD11 /* UIKitCaptureSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000001000000000000DD01 /* UIKitCaptureSupport.swift */; };
 		DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002000000000000DD02 /* UIKitFormViewController.swift */; };
 		DD000013000000000000DD13 /* UIKitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000003000000000000DD03 /* UIKitListViewController.swift */; };
 		DD000014000000000000DD14 /* UIKitControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000004000000000000DD04 /* UIKitControlsViewController.swift */; };
-		DD000016000000000000DD16 /* UIKitToggleFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */; };
 		DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000005000000000000DD05 /* UIKitCoordTests.swift */; };
-		/* Phase 4-2 — UIKitGeneratorViewController + validation test */
+		DD000016000000000000DD16 /* UIKitToggleFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */; };
 		EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */; };
 		EE000012000000000000EE12 /* UIKitGeneratorValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */; };
-		/* Phase 5a — Known-bad templates and validation tests */
 		FF000011000000000000FF11 /* TruncatedLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000001000000000000FF01 /* TruncatedLabelViewController.swift */; };
-		FF000012000000000000FF12 /* TruncatedLabelValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */; };
+		FF000012000000000000FF12 /* KnownBad/TruncatedLabelValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000002000000000000FF02 /* KnownBad/TruncatedLabelValidationTest.swift */; };
 		GG000011000000000000GG11 /* ClippedContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = GG000001000000000000GG01 /* ClippedContentViewController.swift */; };
-		GG000012000000000000GG12 /* ClippedContentValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = GG000002000000000000GG02 /* ClippedContentValidationTest.swift */; };
+		GG000012000000000000GG12 /* KnownBad/ClippedContentValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = GG000002000000000000GG02 /* KnownBad/ClippedContentValidationTest.swift */; };
 		HH000011000000000000HH11 /* SmallHitTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH000001000000000000HH01 /* SmallHitTargetViewController.swift */; };
-		HH000012000000000000HH12 /* SmallHitTargetValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH000002000000000000HH02 /* SmallHitTargetValidationTest.swift */; };
+		HH000012000000000000HH12 /* KnownBad/SmallHitTargetValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH000002000000000000HH02 /* KnownBad/SmallHitTargetValidationTest.swift */; };
 		II000011000000000000II11 /* OverlappingControlsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = II000001000000000000II01 /* OverlappingControlsViewController.swift */; };
-		II000012000000000000II12 /* OverlappingControlsValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = II000002000000000000II02 /* OverlappingControlsValidationTest.swift */; };
+		II000012000000000000II12 /* KnownBad/OverlappingControlsValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = II000002000000000000II02 /* KnownBad/OverlappingControlsValidationTest.swift */; };
 		JJ000011000000000000JJ11 /* DynamicTypeOverflowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = JJ000001000000000000JJ01 /* DynamicTypeOverflowViewController.swift */; };
-		JJ000012000000000000JJ12 /* DynamicTypeOverflowValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = JJ000002000000000000JJ02 /* DynamicTypeOverflowValidationTest.swift */; };
+		JJ000012000000000000JJ12 /* KnownBad/DynamicTypeOverflowValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = JJ000002000000000000JJ02 /* KnownBad/DynamicTypeOverflowValidationTest.swift */; };
 		KK000011000000000000KK11 /* RTLMirroringFailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = KK000001000000000000KK01 /* RTLMirroringFailureViewController.swift */; };
-		KK000012000000000000KK12 /* RTLMirroringFailureValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = KK000002000000000000KK02 /* RTLMirroringFailureValidationTest.swift */; };
+		KK000012000000000000KK12 /* KnownBad/RTLMirroringFailureValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = KK000002000000000000KK02 /* KnownBad/RTLMirroringFailureValidationTest.swift */; };
 		LL000011000000000000LL11 /* OffScreenElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = LL000001000000000000LL01 /* OffScreenElementViewController.swift */; };
-		LL000012000000000000LL12 /* OffScreenElementValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = LL000002000000000000LL02 /* OffScreenElementValidationTest.swift */; };
+		LL000012000000000000LL12 /* KnownBad/OffScreenElementValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = LL000002000000000000LL02 /* KnownBad/OffScreenElementValidationTest.swift */; };
 		MM000011000000000000MM11 /* OccludedElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = MM000001000000000000MM01 /* OccludedElementViewController.swift */; };
-		MM000012000000000000MM12 /* OccludedElementValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = MM000002000000000000MM02 /* OccludedElementValidationTest.swift */; };
+		MM000012000000000000MM12 /* KnownBad/OccludedElementValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = MM000002000000000000MM02 /* KnownBad/OccludedElementValidationTest.swift */; };
 		NN000011000000000000NN11 /* HardNegativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = NN000001000000000000NN01 /* HardNegativeViewController.swift */; };
-		NN000012000000000000NN12 /* HardNegativeValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = NN000002000000000000NN02 /* HardNegativeValidationTest.swift */; };
-		/* Phase 5b — Extended SwiftUI templates */
+		NN000012000000000000NN12 /* KnownBad/HardNegativeValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = NN000002000000000000NN02 /* KnownBad/HardNegativeValidationTest.swift */; };
 		OO000011000000000000OO11 /* TabViewNavigationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = OO000001000000000000OO01 /* TabViewNavigationTemplate.swift */; };
 		PP000011000000000000PP11 /* SheetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = PP000001000000000000PP01 /* SheetTemplate.swift */; };
 		QQ000011000000000000QQ11 /* SearchResultsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = QQ000001000000000000QQ01 /* SearchResultsTemplate.swift */; };
@@ -70,29 +88,6 @@
 		XX000011000000000000XX11 /* ActionSheetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = XX000001000000000000XX01 /* ActionSheetTemplate.swift */; };
 		YY000011000000000000YY11 /* PopoverTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = YY000001000000000000YY01 /* PopoverTemplate.swift */; };
 		ZZ000011000000000000ZZ11 /* RTLMirrorTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ZZ000001000000000000ZZ01 /* RTLMirrorTemplate.swift */; };
-		A1000011000000000000A111 /* LiquidGlassNavTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001000000000000A101 /* LiquidGlassNavTemplate.swift */; };
-		A2000011000000000000A211 /* LiquidGlassTabTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000A201 /* LiquidGlassTabTemplate.swift */; };
-		A3000011000000000000A311 /* SettingsDisclosureTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3000001000000000000A301 /* SettingsDisclosureTemplate.swift */; };
-		A4000011000000000000A411 /* RefreshControlTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4000001000000000000A401 /* RefreshControlTemplate.swift */; };
-		A5000011000000000000A511 /* ContextMenuTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5000001000000000000A501 /* ContextMenuTemplate.swift */; };
-		A6000011000000000000A611 /* MapOverlaysTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6000001000000000000A601 /* MapOverlaysTemplate.swift */; };
-		A7000011000000000000A711 /* StepperTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7000001000000000000A701 /* StepperTemplate.swift */; };
-		A8000011000000000000A811 /* ProgressActivityTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8000001000000000000A801 /* ProgressActivityTemplate.swift */; };
-		/* Phase 5b-22 — 13 gap-filling templates (families 38–50) */
-		B1000011000000000000B111 /* ColorPickerTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000001000000000000B101 /* ColorPickerTemplate.swift */; };
-		B2000011000000000000B211 /* MenuButtonTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000001000000000000B201 /* MenuButtonTemplate.swift */; };
-		B3000011000000000000B311 /* LinkRichTextTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3000001000000000000B301 /* LinkRichTextTemplate.swift */; };
-		B4000011000000000000B411 /* SliderPanelTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4000001000000000000B401 /* SliderPanelTemplate.swift */; };
-		B5000011000000000000B511 /* SegmentedFilterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000001000000000000B501 /* SegmentedFilterTemplate.swift */; };
-		B6000011000000000000B611 /* CardDetailTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000001000000000000B601 /* CardDetailTemplate.swift */; };
-		B7000011000000000000B711 /* MultiSectionFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7000001000000000000B701 /* MultiSectionFormTemplate.swift */; };
-		B8000011000000000000B811 /* ToolbarActionsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8000001000000000000B801 /* ToolbarActionsTemplate.swift */; };
-		B9000011000000000000B911 /* WizardStepFlowTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9000001000000000000B901 /* WizardStepFlowTemplate.swift */; };
-		BA000011000000000000BA11 /* NotificationCenterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA000001000000000000BA01 /* NotificationCenterTemplate.swift */; };
-		BB000011000000000000BB11 /* GalleryPageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000001000000000000BF01 /* GalleryPageTemplate.swift */; };
-		BC000011000000000000BC11 /* iPadSidebarTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC000001000000000000BC01 /* iPadSidebarTemplate.swift */; };
-		BD000011000000000000BD11 /* AlertWithTextFieldTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */; };
-		BE000011000000000000BE11 /* SettingsToggleDenseTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,111 +95,106 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = BB000050000000000000BB50 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = BB000060000000000000BB60 /* GeneratorRunner */;
+			remoteGlobalIDString = BB000060000000000000BB60;
 			remoteInfo = GeneratorRunner;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		441F8DD8303AA23E006C6411 /* best.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = best.mlpackage; path = ../NativeUITrainer/yolo_runs/yolo11n_e100/weights/best.mlpackage; sourceTree = "<group>"; };
+		442E9997303AC04700EB0E2B /* YOLOBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLOBenchmarkTests.swift; sourceTree = "<group>"; };
+		442E9999303AC22900EB0E2B /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		A1000001000000000000A101 /* LiquidGlassNavTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiquidGlassNavTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/LiquidGlassNavTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A2000001000000000000A201 /* LiquidGlassTabTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiquidGlassTabTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/LiquidGlassTabTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A3000001000000000000A301 /* SettingsDisclosureTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDisclosureTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SettingsDisclosureTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A4000001000000000000A401 /* RefreshControlTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RefreshControlTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/RefreshControlTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A5000001000000000000A501 /* ContextMenuTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContextMenuTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ContextMenuTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A6000001000000000000A601 /* MapOverlaysTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapOverlaysTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A7000001000000000000A701 /* StepperTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StepperTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/StepperTemplate.swift; sourceTree = SOURCE_ROOT; };
+		A8000001000000000000A801 /* ProgressActivityTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressActivityTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ProgressActivityTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B1000001000000000000B101 /* ColorPickerTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorPickerTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ColorPickerTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B2000001000000000000B201 /* MenuButtonTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuButtonTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B3000001000000000000B301 /* LinkRichTextTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinkRichTextTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/LinkRichTextTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B4000001000000000000B401 /* SliderPanelTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SliderPanelTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SliderPanelTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B5000001000000000000B501 /* SegmentedFilterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegmentedFilterTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SegmentedFilterTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B6000001000000000000B601 /* CardDetailTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardDetailTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/CardDetailTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B7000001000000000000B701 /* MultiSectionFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MultiSectionFormTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/MultiSectionFormTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B8000001000000000000B801 /* ToolbarActionsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolbarActionsTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ToolbarActionsTemplate.swift; sourceTree = SOURCE_ROOT; };
+		B9000001000000000000B901 /* WizardStepFlowTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WizardStepFlowTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/WizardStepFlowTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BA000001000000000000BA01 /* NotificationCenterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationCenterTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift; sourceTree = SOURCE_ROOT; };
 		BB000001000000000000BB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BB000002000000000000BB02 /* CaptureTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CaptureTypes.swift; path = "../NativeUIDatasetGenerator/Sources/CaptureTypes.swift"; sourceTree = SOURCE_ROOT; };
-		BB000003000000000000BB03 /* GeneratorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneratorConfig.swift; path = "../NativeUIDatasetGenerator/Sources/GeneratorConfig.swift"; sourceTree = SOURCE_ROOT; };
-		BB000004000000000000BB04 /* ContentCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentCorpus.swift; path = "../NativeUIDatasetGenerator/Sources/ContentCorpus.swift"; sourceTree = SOURCE_ROOT; };
-		BB000005000000000000BB05 /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeededRNG.swift; path = "../NativeUIDatasetGenerator/Sources/SeededRNG.swift"; sourceTree = SOURCE_ROOT; };
-		BB000006000000000000BB06 /* ScreenshotCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScreenshotCapture.swift; path = "../NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift"; sourceTree = SOURCE_ROOT; };
-		BB000007000000000000BB07 /* LoginFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginFormTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BB000008000000000000BB08 /* SettingsListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsListTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BB000009000000000000BB09 /* AlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/AlertTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		BB000002000000000000BB02 /* CaptureTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CaptureTypes.swift; path = ../NativeUIDatasetGenerator/Sources/CaptureTypes.swift; sourceTree = SOURCE_ROOT; };
+		BB000003000000000000BB03 /* GeneratorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneratorConfig.swift; path = ../NativeUIDatasetGenerator/Sources/GeneratorConfig.swift; sourceTree = SOURCE_ROOT; };
+		BB000004000000000000BB04 /* ContentCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentCorpus.swift; path = ../NativeUIDatasetGenerator/Sources/ContentCorpus.swift; sourceTree = SOURCE_ROOT; };
+		BB000005000000000000BB05 /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeededRNG.swift; path = ../NativeUIDatasetGenerator/Sources/SeededRNG.swift; sourceTree = SOURCE_ROOT; };
+		BB000006000000000000BB06 /* ScreenshotCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScreenshotCapture.swift; path = ../NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift; sourceTree = SOURCE_ROOT; };
+		BB000007000000000000BB07 /* LoginFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginFormTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BB000008000000000000BB08 /* SettingsListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsListTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BB000009000000000000BB09 /* AlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/AlertTemplate.swift; sourceTree = SOURCE_ROOT; };
 		BB00000A000000000000BB0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB00000B000000000000BB0B /* GeneratorRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeneratorRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00001A000000000000BB1A /* AnnotationWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnotationWriter.swift; path = "../NativeUIDatasetGenerator/Sources/AnnotationWriter.swift"; sourceTree = SOURCE_ROOT; };
-		BB00001C000000000000BB1C /* DatasetManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatasetManifest.swift; path = "../NativeUIDatasetGenerator/Sources/DatasetManifest.swift"; sourceTree = SOURCE_ROOT; };
-		BB000020000000000000BB20 /* BalanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BalanceReport.swift; path = "../NativeUIDatasetGenerator/Sources/BalanceReport.swift"; sourceTree = SOURCE_ROOT; };
-		BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KitchenSinkTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/KitchenSinkTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoundingBoxDebugRenderer.swift; path = "../NativeUIDatasetGenerator/Templates/BoundingBoxDebugRenderer.swift"; sourceTree = SOURCE_ROOT; };
+		BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KitchenSinkTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/KitchenSinkTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BB00000D000000000000BB0D /* BoundingBoxDebugRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoundingBoxDebugRenderer.swift; path = ../NativeUIDatasetGenerator/Templates/BoundingBoxDebugRenderer.swift; sourceTree = SOURCE_ROOT; };
+		BB00001A000000000000BB1A /* AnnotationWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnotationWriter.swift; path = ../NativeUIDatasetGenerator/Sources/AnnotationWriter.swift; sourceTree = SOURCE_ROOT; };
+		BB00001C000000000000BB1C /* DatasetManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatasetManifest.swift; path = ../NativeUIDatasetGenerator/Sources/DatasetManifest.swift; sourceTree = SOURCE_ROOT; };
+		BB000020000000000000BB20 /* BalanceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BalanceReport.swift; path = ../NativeUIDatasetGenerator/Sources/BalanceReport.swift; sourceTree = SOURCE_ROOT; };
+		BC000001000000000000BC01 /* iPadSidebarTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iPadSidebarTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/iPadSidebarTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertWithTextFieldTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/AlertWithTextFieldTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsToggleDenseTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SettingsToggleDenseTemplate.swift; sourceTree = SOURCE_ROOT; };
+		BF000001000000000000BF01 /* GalleryPageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryPageTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/GalleryPageTemplate.swift; sourceTree = SOURCE_ROOT; };
 		CC000001000000000000CC01 /* GenerateDatasetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateDatasetTests.swift; sourceTree = "<group>"; };
 		CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSinkValidationTest.swift; sourceTree = "<group>"; };
-		CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetQualityAuditTests.swift; sourceTree = "<group>"; };
-		/* Phase 6 — Model benchmark */
-		BF000001000000000000BF01 /* ModelBenchmarkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelBenchmarkTests.swift; sourceTree = "<group>"; };
 		CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneratorRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		/* Phase 4 — UIKit generator templates */
-		DD000001000000000000DD01 /* UIKitCaptureSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitCaptureSupport.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitCaptureSupport.swift"; sourceTree = SOURCE_ROOT; };
-		DD000002000000000000DD02 /* UIKitFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitFormViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitFormViewController.swift"; sourceTree = SOURCE_ROOT; };
-		DD000003000000000000DD03 /* UIKitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitListViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitListViewController.swift"; sourceTree = SOURCE_ROOT; };
-		DD000004000000000000DD04 /* UIKitControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitControlsViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitControlsViewController.swift"; sourceTree = SOURCE_ROOT; };
-		DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitToggleFormViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitToggleFormViewController.swift"; sourceTree = SOURCE_ROOT; };
-		/* Phase 4 — UIKit coord tests */
+		CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetQualityAuditTests.swift; sourceTree = "<group>"; };
+		DD000001000000000000DD01 /* UIKitCaptureSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitCaptureSupport.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitCaptureSupport.swift; sourceTree = SOURCE_ROOT; };
+		DD000002000000000000DD02 /* UIKitFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitFormViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitFormViewController.swift; sourceTree = SOURCE_ROOT; };
+		DD000003000000000000DD03 /* UIKitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitListViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitListViewController.swift; sourceTree = SOURCE_ROOT; };
+		DD000004000000000000DD04 /* UIKitControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitControlsViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitControlsViewController.swift; sourceTree = SOURCE_ROOT; };
 		DD000005000000000000DD05 /* UIKitCoordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitCoordTests.swift; sourceTree = "<group>"; };
-		/* Phase 4-2 — comprehensive UIKit generator VC */
-		EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitGeneratorViewController.swift; path = "../NativeUIDatasetGenerator/Templates/UIKitGeneratorViewController.swift"; sourceTree = SOURCE_ROOT; };
+		DD000006000000000000DD06 /* UIKitToggleFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitToggleFormViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitToggleFormViewController.swift; sourceTree = SOURCE_ROOT; };
+		EE000001000000000000EE01 /* UIKitGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitGeneratorViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitGeneratorViewController.swift; sourceTree = SOURCE_ROOT; };
 		EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitGeneratorValidationTest.swift; sourceTree = "<group>"; };
-		/* Phase 5a — Known-bad templates */
-		FF000001000000000000FF01 /* TruncatedLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TruncatedLabelViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/TruncatedLabelViewController.swift"; sourceTree = SOURCE_ROOT; };
-		FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/TruncatedLabelValidationTest.swift; sourceTree = "<group>"; };
-		GG000001000000000000GG01 /* ClippedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClippedContentViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/ClippedContentViewController.swift"; sourceTree = SOURCE_ROOT; };
-		GG000002000000000000GG02 /* ClippedContentValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/ClippedContentValidationTest.swift; sourceTree = "<group>"; };
-		HH000001000000000000HH01 /* SmallHitTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SmallHitTargetViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/SmallHitTargetViewController.swift"; sourceTree = SOURCE_ROOT; };
-		HH000002000000000000HH02 /* SmallHitTargetValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/SmallHitTargetValidationTest.swift; sourceTree = "<group>"; };
-		II000001000000000000II01 /* OverlappingControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverlappingControlsViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/OverlappingControlsViewController.swift"; sourceTree = SOURCE_ROOT; };
-		II000002000000000000II02 /* OverlappingControlsValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OverlappingControlsValidationTest.swift; sourceTree = "<group>"; };
-		JJ000001000000000000JJ01 /* DynamicTypeOverflowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DynamicTypeOverflowViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/DynamicTypeOverflowViewController.swift"; sourceTree = SOURCE_ROOT; };
-		JJ000002000000000000JJ02 /* DynamicTypeOverflowValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/DynamicTypeOverflowValidationTest.swift; sourceTree = "<group>"; };
-		KK000001000000000000KK01 /* RTLMirroringFailureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RTLMirroringFailureViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/RTLMirroringFailureViewController.swift"; sourceTree = SOURCE_ROOT; };
-		KK000002000000000000KK02 /* RTLMirroringFailureValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/RTLMirroringFailureValidationTest.swift; sourceTree = "<group>"; };
-		LL000001000000000000LL01 /* OffScreenElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OffScreenElementViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/OffScreenElementViewController.swift"; sourceTree = SOURCE_ROOT; };
-		LL000002000000000000LL02 /* OffScreenElementValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OffScreenElementValidationTest.swift; sourceTree = "<group>"; };
-		MM000001000000000000MM01 /* OccludedElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OccludedElementViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/OccludedElementViewController.swift"; sourceTree = SOURCE_ROOT; };
-		MM000002000000000000MM02 /* OccludedElementValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OccludedElementValidationTest.swift; sourceTree = "<group>"; };
-		NN000001000000000000NN01 /* HardNegativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HardNegativeViewController.swift; path = "../NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift"; sourceTree = SOURCE_ROOT; };
-		NN000002000000000000NN02 /* HardNegativeValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/HardNegativeValidationTest.swift; sourceTree = "<group>"; };
-		/* Phase 5b — Extended SwiftUI templates */
-		OO000001000000000000OO01 /* TabViewNavigationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabViewNavigationTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/TabViewNavigationTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		PP000001000000000000PP01 /* SheetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SheetTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SheetTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		QQ000001000000000000QQ01 /* SearchResultsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultsTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SearchResultsTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		RR000001000000000000RR01 /* FormValidationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormValidationTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/FormValidationTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		SS000001000000000000SS01 /* EmptyStateTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyStateTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/EmptyStateTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		TT000001000000000000TT01 /* LoadingSkeletonTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingSkeletonTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LoadingSkeletonTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		UU000001000000000000UU01 /* MediaCardGridTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaCardGridTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MediaCardGridTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		VV000001000000000000VV01 /* OnboardingPageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingPageTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/OnboardingPageTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		WW000001000000000000WW01 /* PickerDateEntryTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PickerDateEntryTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/PickerDateEntryTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		XX000001000000000000XX01 /* ActionSheetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActionSheetTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ActionSheetTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		YY000001000000000000YY01 /* PopoverTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopoverTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/PopoverTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		ZZ000001000000000000ZZ01 /* RTLMirrorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RTLMirrorTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/RTLMirrorTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A1000001000000000000A101 /* LiquidGlassNavTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiquidGlassNavTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LiquidGlassNavTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A2000001000000000000A201 /* LiquidGlassTabTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LiquidGlassTabTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LiquidGlassTabTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A3000001000000000000A301 /* SettingsDisclosureTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDisclosureTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SettingsDisclosureTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A4000001000000000000A401 /* RefreshControlTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RefreshControlTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/RefreshControlTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A5000001000000000000A501 /* ContextMenuTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContextMenuTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ContextMenuTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A6000001000000000000A601 /* MapOverlaysTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapOverlaysTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A7000001000000000000A701 /* StepperTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StepperTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/StepperTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		A8000001000000000000A801 /* ProgressActivityTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressActivityTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ProgressActivityTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		/* Phase 5b-22 — 13 gap-filling template file references */
-		B1000001000000000000B101 /* ColorPickerTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorPickerTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ColorPickerTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B2000001000000000000B201 /* MenuButtonTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuButtonTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B3000001000000000000B301 /* LinkRichTextTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LinkRichTextTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/LinkRichTextTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B4000001000000000000B401 /* SliderPanelTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SliderPanelTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SliderPanelTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B5000001000000000000B501 /* SegmentedFilterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SegmentedFilterTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SegmentedFilterTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B6000001000000000000B601 /* CardDetailTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardDetailTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/CardDetailTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B7000001000000000000B701 /* MultiSectionFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MultiSectionFormTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/MultiSectionFormTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B8000001000000000000B801 /* ToolbarActionsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolbarActionsTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/ToolbarActionsTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		B9000001000000000000B901 /* WizardStepFlowTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WizardStepFlowTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/WizardStepFlowTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BA000001000000000000BA01 /* NotificationCenterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationCenterTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BF000001000000000000BF01 /* GalleryPageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GalleryPageTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/GalleryPageTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BC000001000000000000BC01 /* iPadSidebarTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iPadSidebarTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/iPadSidebarTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertWithTextFieldTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/AlertWithTextFieldTemplate.swift"; sourceTree = SOURCE_ROOT; };
-		BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsToggleDenseTemplate.swift; path = "../NativeUIDatasetGenerator/Templates/SettingsToggleDenseTemplate.swift"; sourceTree = SOURCE_ROOT; };
+		FF000001000000000000FF01 /* TruncatedLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TruncatedLabelViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/TruncatedLabelViewController.swift; sourceTree = SOURCE_ROOT; };
+		FF000002000000000000FF02 /* KnownBad/TruncatedLabelValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/TruncatedLabelValidationTest.swift; sourceTree = "<group>"; };
+		GG000001000000000000GG01 /* ClippedContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClippedContentViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/ClippedContentViewController.swift; sourceTree = SOURCE_ROOT; };
+		GG000002000000000000GG02 /* KnownBad/ClippedContentValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/ClippedContentValidationTest.swift; sourceTree = "<group>"; };
+		HH000001000000000000HH01 /* SmallHitTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SmallHitTargetViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/SmallHitTargetViewController.swift; sourceTree = SOURCE_ROOT; };
+		HH000002000000000000HH02 /* KnownBad/SmallHitTargetValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/SmallHitTargetValidationTest.swift; sourceTree = "<group>"; };
+		II000001000000000000II01 /* OverlappingControlsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverlappingControlsViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/OverlappingControlsViewController.swift; sourceTree = SOURCE_ROOT; };
+		II000002000000000000II02 /* KnownBad/OverlappingControlsValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OverlappingControlsValidationTest.swift; sourceTree = "<group>"; };
+		JJ000001000000000000JJ01 /* DynamicTypeOverflowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DynamicTypeOverflowViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/DynamicTypeOverflowViewController.swift; sourceTree = SOURCE_ROOT; };
+		JJ000002000000000000JJ02 /* KnownBad/DynamicTypeOverflowValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/DynamicTypeOverflowValidationTest.swift; sourceTree = "<group>"; };
+		KK000001000000000000KK01 /* RTLMirroringFailureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RTLMirroringFailureViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/RTLMirroringFailureViewController.swift; sourceTree = SOURCE_ROOT; };
+		KK000002000000000000KK02 /* KnownBad/RTLMirroringFailureValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/RTLMirroringFailureValidationTest.swift; sourceTree = "<group>"; };
+		LL000001000000000000LL01 /* OffScreenElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OffScreenElementViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/OffScreenElementViewController.swift; sourceTree = SOURCE_ROOT; };
+		LL000002000000000000LL02 /* KnownBad/OffScreenElementValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OffScreenElementValidationTest.swift; sourceTree = "<group>"; };
+		MM000001000000000000MM01 /* OccludedElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OccludedElementViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/OccludedElementViewController.swift; sourceTree = SOURCE_ROOT; };
+		MM000002000000000000MM02 /* KnownBad/OccludedElementValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/OccludedElementValidationTest.swift; sourceTree = "<group>"; };
+		NN000001000000000000NN01 /* HardNegativeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HardNegativeViewController.swift; path = ../NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift; sourceTree = SOURCE_ROOT; };
+		NN000002000000000000NN02 /* KnownBad/HardNegativeValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBad/HardNegativeValidationTest.swift; sourceTree = "<group>"; };
+		OO000001000000000000OO01 /* TabViewNavigationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabViewNavigationTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/TabViewNavigationTemplate.swift; sourceTree = SOURCE_ROOT; };
+		PP000001000000000000PP01 /* SheetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SheetTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SheetTemplate.swift; sourceTree = SOURCE_ROOT; };
+		QQ000001000000000000QQ01 /* SearchResultsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultsTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SearchResultsTemplate.swift; sourceTree = SOURCE_ROOT; };
+		RR000001000000000000RR01 /* FormValidationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormValidationTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/FormValidationTemplate.swift; sourceTree = SOURCE_ROOT; };
+		SS000001000000000000SS01 /* EmptyStateTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyStateTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/EmptyStateTemplate.swift; sourceTree = SOURCE_ROOT; };
+		TT000001000000000000TT01 /* LoadingSkeletonTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingSkeletonTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/LoadingSkeletonTemplate.swift; sourceTree = SOURCE_ROOT; };
+		UU000001000000000000UU01 /* MediaCardGridTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaCardGridTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/MediaCardGridTemplate.swift; sourceTree = SOURCE_ROOT; };
+		VV000001000000000000VV01 /* OnboardingPageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingPageTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/OnboardingPageTemplate.swift; sourceTree = SOURCE_ROOT; };
+		WW000001000000000000WW01 /* PickerDateEntryTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PickerDateEntryTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/PickerDateEntryTemplate.swift; sourceTree = SOURCE_ROOT; };
+		XX000001000000000000XX01 /* ActionSheetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActionSheetTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ActionSheetTemplate.swift; sourceTree = SOURCE_ROOT; };
+		YY000001000000000000YY01 /* PopoverTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopoverTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/PopoverTemplate.swift; sourceTree = SOURCE_ROOT; };
+		ZZ000001000000000000ZZ01 /* RTLMirrorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RTLMirrorTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/RTLMirrorTemplate.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BB000030000000000000BB30 /* Frameworks (app) */ = {
+		BB000030000000000000BB30 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC000030000000000000CC30 /* Frameworks (tests) */ = {
+		CC000030000000000000CC30 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -214,9 +204,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BB000040000000000000BB40 /* Main Group */ = {
+		BB000040000000000000BB40 = {
 			isa = PBXGroup;
 			children = (
+				442E9999303AC22900EB0E2B /* TestPlan.xctestplan */,
+				441F8DD8303AA23E006C6411 /* best.mlpackage */,
 				BB000041000000000000BB41 /* GeneratorRunner */,
 				BB000042000000000000BB42 /* Shared Sources */,
 				BB000043000000000000BB43 /* Templates */,
@@ -294,12 +286,35 @@
 				B8000001000000000000B801 /* ToolbarActionsTemplate.swift */,
 				B9000001000000000000B901 /* WizardStepFlowTemplate.swift */,
 				BA000001000000000000BA01 /* NotificationCenterTemplate.swift */,
-				BF000001000000000000BF01 /* GalleryPageTemplate.swift */,
 				BC000001000000000000BC01 /* iPadSidebarTemplate.swift */,
 				BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */,
 				BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */,
 			);
 			name = Templates;
+			sourceTree = "<group>";
+		};
+		BB000044000000000000BB44 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB00000B000000000000BB0B /* GeneratorRunner.app */,
+				CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC000041000000000000CC41 /* GeneratorRunnerTests */ = {
+			isa = PBXGroup;
+			children = (
+				442E9997303AC04700EB0E2B /* YOLOBenchmarkTests.swift */,
+				CC000001000000000000CC01 /* GenerateDatasetTests.swift */,
+				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
+				CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */,
+				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
+				BF000001000000000000BF01 /* GalleryPageTemplate.swift */,
+				EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */,
+				FF000041000000000000FF41 /* KnownBad */,
+			);
+			path = GeneratorRunnerTests;
 			sourceTree = "<group>";
 		};
 		FF000040000000000000FF40 /* KnownBad */ = {
@@ -318,43 +333,20 @@
 			name = KnownBad;
 			sourceTree = "<group>";
 		};
-		CC000041000000000000CC41 /* GeneratorRunnerTests */ = {
-			isa = PBXGroup;
-			children = (
-				CC000001000000000000CC01 /* GenerateDatasetTests.swift */,
-				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
-				CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */,
-				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
-				BF000001000000000000BF01 /* ModelBenchmarkTests.swift */,
-				EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */,
-				FF000041000000000000FF41 /* KnownBad */,
-			);
-			path = GeneratorRunnerTests;
-			sourceTree = "<group>";
-		};
 		FF000041000000000000FF41 /* KnownBad */ = {
 			isa = PBXGroup;
 			children = (
-				FF000002000000000000FF02 /* TruncatedLabelValidationTest.swift */,
-				GG000002000000000000GG02 /* ClippedContentValidationTest.swift */,
-				HH000002000000000000HH02 /* SmallHitTargetValidationTest.swift */,
-				II000002000000000000II02 /* OverlappingControlsValidationTest.swift */,
-				JJ000002000000000000JJ02 /* DynamicTypeOverflowValidationTest.swift */,
-				KK000002000000000000KK02 /* RTLMirroringFailureValidationTest.swift */,
-				LL000002000000000000LL02 /* OffScreenElementValidationTest.swift */,
-				MM000002000000000000MM02 /* OccludedElementValidationTest.swift */,
-				NN000002000000000000NN02 /* HardNegativeValidationTest.swift */,
+				FF000002000000000000FF02 /* KnownBad/TruncatedLabelValidationTest.swift */,
+				GG000002000000000000GG02 /* KnownBad/ClippedContentValidationTest.swift */,
+				HH000002000000000000HH02 /* KnownBad/SmallHitTargetValidationTest.swift */,
+				II000002000000000000II02 /* KnownBad/OverlappingControlsValidationTest.swift */,
+				JJ000002000000000000JJ02 /* KnownBad/DynamicTypeOverflowValidationTest.swift */,
+				KK000002000000000000KK02 /* KnownBad/RTLMirroringFailureValidationTest.swift */,
+				LL000002000000000000LL02 /* KnownBad/OffScreenElementValidationTest.swift */,
+				MM000002000000000000MM02 /* KnownBad/OccludedElementValidationTest.swift */,
+				NN000002000000000000NN02 /* KnownBad/HardNegativeValidationTest.swift */,
 			);
 			name = KnownBad;
-			sourceTree = "<group>";
-		};
-		BB000044000000000000BB44 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BB00000B000000000000BB0B /* GeneratorRunner.app */,
-				CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,6 +374,7 @@
 			buildPhases = (
 				CC000032000000000000CC32 /* Sources */,
 				CC000030000000000000CC30 /* Frameworks */,
+				441F8DD7303AA20B006C6411 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -431,22 +424,31 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		441F8DD7303AA20B006C6411 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				442E999A303AC22900EB0E2B /* TestPlan.xctestplan in Resources */,
+				441F8DD9303AA23E006C6411 /* best.mlpackage in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		BB000032000000000000BB32 /* Sources (app) */ = {
+		BB000032000000000000BB32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				/* App is a minimal host process — all business logic compiles in the test bundle. */
 				BB000010000000000000BB10 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC000032000000000000CC32 /* Sources (tests) */ = {
+		CC000032000000000000CC32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				/* All shared sources compile directly into the self-contained test bundle. */
-				/* No BUNDLE_LOADER — avoids duplicate symbols; TEST_HOST provides UIKit context. */
 				CC000011000000000000CC11 /* CaptureTypes.swift in Sources */,
 				CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */,
 				CC000013000000000000CC13 /* ContentCorpus.swift in Sources */,
@@ -469,28 +471,27 @@
 				CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */,
 				CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */,
 				DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */,
+				442E9998303AC04700EB0E2B /* YOLOBenchmarkTests.swift in Sources */,
 				EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */,
 				EE000012000000000000EE12 /* UIKitGeneratorValidationTest.swift in Sources */,
-				/* Phase 5a — Known-bad templates and validation tests */
 				FF000011000000000000FF11 /* TruncatedLabelViewController.swift in Sources */,
-				FF000012000000000000FF12 /* TruncatedLabelValidationTest.swift in Sources */,
+				FF000012000000000000FF12 /* KnownBad/TruncatedLabelValidationTest.swift in Sources */,
 				GG000011000000000000GG11 /* ClippedContentViewController.swift in Sources */,
-				GG000012000000000000GG12 /* ClippedContentValidationTest.swift in Sources */,
+				GG000012000000000000GG12 /* KnownBad/ClippedContentValidationTest.swift in Sources */,
 				HH000011000000000000HH11 /* SmallHitTargetViewController.swift in Sources */,
-				HH000012000000000000HH12 /* SmallHitTargetValidationTest.swift in Sources */,
+				HH000012000000000000HH12 /* KnownBad/SmallHitTargetValidationTest.swift in Sources */,
 				II000011000000000000II11 /* OverlappingControlsViewController.swift in Sources */,
-				II000012000000000000II12 /* OverlappingControlsValidationTest.swift in Sources */,
+				II000012000000000000II12 /* KnownBad/OverlappingControlsValidationTest.swift in Sources */,
 				JJ000011000000000000JJ11 /* DynamicTypeOverflowViewController.swift in Sources */,
-				JJ000012000000000000JJ12 /* DynamicTypeOverflowValidationTest.swift in Sources */,
+				JJ000012000000000000JJ12 /* KnownBad/DynamicTypeOverflowValidationTest.swift in Sources */,
 				KK000011000000000000KK11 /* RTLMirroringFailureViewController.swift in Sources */,
-				KK000012000000000000KK12 /* RTLMirroringFailureValidationTest.swift in Sources */,
+				KK000012000000000000KK12 /* KnownBad/RTLMirroringFailureValidationTest.swift in Sources */,
 				LL000011000000000000LL11 /* OffScreenElementViewController.swift in Sources */,
-				LL000012000000000000LL12 /* OffScreenElementValidationTest.swift in Sources */,
+				LL000012000000000000LL12 /* KnownBad/OffScreenElementValidationTest.swift in Sources */,
 				MM000011000000000000MM11 /* OccludedElementViewController.swift in Sources */,
-				MM000012000000000000MM12 /* OccludedElementValidationTest.swift in Sources */,
+				MM000012000000000000MM12 /* KnownBad/OccludedElementValidationTest.swift in Sources */,
 				NN000011000000000000NN11 /* HardNegativeViewController.swift in Sources */,
-				NN000012000000000000NN12 /* HardNegativeValidationTest.swift in Sources */,
-				/* Phase 5b — Extended SwiftUI templates */
+				NN000012000000000000NN12 /* KnownBad/HardNegativeValidationTest.swift in Sources */,
 				OO000011000000000000OO11 /* TabViewNavigationTemplate.swift in Sources */,
 				PP000011000000000000PP11 /* SheetTemplate.swift in Sources */,
 				QQ000011000000000000QQ11 /* SearchResultsTemplate.swift in Sources */,
@@ -525,8 +526,7 @@
 				BC000011000000000000BC11 /* iPadSidebarTemplate.swift in Sources */,
 				BD000011000000000000BD11 /* AlertWithTextFieldTemplate.swift in Sources */,
 				BE000011000000000000BE11 /* SettingsToggleDenseTemplate.swift in Sources */,
-				/* Phase 6 — Model benchmark */
-				BF000011000000000000BF11 /* ModelBenchmarkTests.swift in Sources */,
+				BF000011000000000000BF11 /* GalleryPageTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,7 +541,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		BB000090000000000000BB90 /* Debug (project) */ = {
+		BB000090000000000000BB90 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -571,7 +571,7 @@
 			};
 			name = Debug;
 		};
-		BB000091000000000000BB91 /* Release (project) */ = {
+		BB000091000000000000BB91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -584,9 +584,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -598,80 +596,85 @@
 			};
 			name = Release;
 		};
-		BB000092000000000000BB92 /* Debug (app) */ = {
+		BB000092000000000000BB92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CODE_SIGNING_ALLOWED = NO;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWZ25NGH8K;
 				INFOPLIST_FILE = GeneratorRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nativeuiauditkit.generatorrunner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
-		BB000093000000000000BB93 /* Release (app) */ = {
+		BB000093000000000000BB93 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CODE_SIGNING_ALLOWED = NO;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWZ25NGH8K;
 				INFOPLIST_FILE = GeneratorRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nativeuiauditkit.generatorrunner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Release;
 		};
-		CC000092000000000000CC92 /* Debug (tests) */ = {
+		CC000092000000000000CC92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				/* No BUNDLE_LOADER — test bundle is self-contained; TEST_HOST only provides UIKit context. */
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CODE_SIGNING_ALLOWED = NO;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWZ25NGH8K;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner.tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nativeuiauditkit.generatorrunner.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GeneratorRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GeneratorRunner";
 			};
 			name = Debug;
 		};
-		CC000093000000000000CC93 /* Release (tests) */ = {
+		CC000093000000000000CC93 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				CODE_SIGNING_ALLOWED = NO;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RWZ25NGH8K;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nativeuiauditkit.generatorrunner.tests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nativeuiauditkit.generatorrunner.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GeneratorRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GeneratorRunner";
 			};
@@ -689,15 +692,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC000080000000000000CC80 /* Build configuration list for PBXNativeTarget "GeneratorRunnerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC000092000000000000CC92 /* Debug */,
-				CC000093000000000000CC93 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		BB000082000000000000BB82 /* Build configuration list for PBXProject "GeneratorRunner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -707,8 +701,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CC000080000000000000CC80 /* Build configuration list for PBXNativeTarget "GeneratorRunnerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC000092000000000000CC92 /* Debug */,
+				CC000093000000000000CC93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = BB000050000000000000BB50 /* Project object */;
 }

@@ -1,0 +1,24 @@
+{
+  "algorithm" : "YOLO11n",
+  "batchSize" : 32,
+  "datasetVersion" : "run006-20632entries",
+  "epochs" : 100,
+  "inputSize" : 640,
+  "trainedAt" : "2026-08-23T00:50:26Z",
+  "trainingEntries" : 20632,
+  "validationImages" : 1394,
+  "trainingClasses" : [
+    "alert",
+    "navigationBar",
+    "primaryButton",
+    "textField",
+    "toggle"
+  ],
+  "mAP50" : {
+    "pt" : 0.968,
+    "coreml" : 0.9346
+  },
+  "nmsIouThreshold" : 0.30,
+  "confidenceFloor" : 0.001,
+  "exportedVia" : "coremltools 9.0"
+}

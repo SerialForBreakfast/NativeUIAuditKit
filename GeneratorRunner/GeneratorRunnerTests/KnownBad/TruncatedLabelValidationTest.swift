@@ -143,7 +143,10 @@ final class TruncatedLabelValidationTest: XCTestCase {
         var foundEllipsis = false
 
         for obs in observations {
-            guard obs.string.contains("…") else { continue }
+            // With usesLanguageCorrection = false, VNRecognizeTextRequest commonly
+            // transcribes the single "…" glyph as three literal periods rather than
+            // preserving the Unicode ellipsis codepoint — accept either form.
+            guard obs.string.contains("…") || obs.string.hasSuffix("...") else { continue }
 
             // Vision normalised rect: origin bottom-left, (0,0)–(1,1)
             let vBox = obs.boundingBox

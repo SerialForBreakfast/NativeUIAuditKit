@@ -1,0 +1,18 @@
+# Requirements for YOLO11 training + eval pipeline
+# Install ONLY via: .venv-yolo/bin/python -m pip install -r scripts/requirements-yolo-eval.txt
+# venv lives at: NativeUIAuditKit/.venv-yolo/  (git-ignored)
+# To remove completely: rm -rf .venv-yolo
+#
+# Pinned from environment installed 2026-08-20 (Python 3.14.3, macOS arm64)
+
+ultralytics==8.4.124
+torch==2.13.0
+torchvision==0.28.0
+# numpy 2.3.5 auto-pinned by coremltools 9.0 (replaced 2.5.2 at first CoreML export)
+numpy==2.3.5
+opencv-python==5.0.0.93
+pillow==12.3.0
+matplotlib==3.11.1
+# coremltools auto-installed by ultralytics at first CoreML export
+# NOTE: ops.py line 3048 was patched to call .item() before int() — numpy 2.x compat fix
+coremltools==9.0

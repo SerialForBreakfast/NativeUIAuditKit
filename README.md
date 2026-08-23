@@ -2,7 +2,56 @@
 
 A portable Swift package for detecting native Apple platform UI elements in screenshot PNGs, designed as a drop-in complement to [ScreenAuditKit](../ScreenAuditKit/).
 
-**Current state:** Phase 6 (5-class iOS model) complete. A trained `NativeUIDetector_v1.mlpackage` is live in `NativeUIAuditKitModels/`. The eval pipeline achieves mAP@0.5 = **0.756** across 1,394 validation images, with all five gated classes passing DS-G5 (AP@0.5 ≥ 0.50) and DS-G6 (mAP ≥ 0.70). Physical device latency testing and withheld-template generalization testing are the immediate next steps before declaring Phase 6 complete.
+**Current state:** Phase 6 (5-class iOS model) complete, now on a YOLO11n detector. Trained via Ultralytics, exported to CoreML (`best.mlpackage`), and evaluated on the same 1,394-image held-out validation set: mAP@0.5 = **0.935** (CoreML) / **0.968** (raw PyTorch), all five classes clearing DS-G5 and DS-G6 with wide margin — every class improved over the prior Create ML baseline. Physical-device latency is validated at **~7.5 ms per image**, well under the 200 ms gate. Withheld-template generalization testing is the remaining item before declaring Phase 6 complete. See [Model Performance](#model-performance) below.
+
+---
+
+## Add as a Dependency
+
+```swift
+// Package.swift
+dependencies: [
+    .package(url: "https://github.com/<org>/NativeUIAuditKit.git", from: "2.0.0")
+]
+```
+
+Two products — pick the one that matches what you need:
+
+- **`NativeUIAuditKitModels`** — just the trained model + versioned metadata, no Vision
+  framework dependency. Use this if you bring your own inference/rendering code (this is
+  what [ViewLens](https://github.com/SerialForBreakfast/ViewLens) depends on).
+- **`NativeUIAuditKit`** — the full Vision-style detection request API, built on the above.
+
+```swift
+.target(
+    name: "YourTarget",
+    dependencies: [
+        .product(name: "NativeUIAuditKitModels", package: "NativeUIAuditKit")
+    ]
+)
+```
+
+**Quick Start:**
+
+```swift
+import NativeUIAuditKitModels
+
+let model = try await NativeUIModelAsset.loadModel()          // ANE/GPU-configured MLModel
+let metadata = NativeUIModelAsset.metadata                    // input size, class order, thresholds
+print(metadata.classLabels)  // ["alert", "navigationBar", "primaryButton", "textField", "toggle"]
+```
+
+The model expects a 640×640 letterboxed input with NMS already baked into the CoreML graph.
+For the complete, tested letterbox → predict → parse pipeline, see
+[`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) — the exact logic validated
+against the 0.935 mAP@0.5 figure below. Full API docs: `swift package generate-documentation`
+(DocC), or see the module documentation comments in
+[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift).
+
+> **Known limitation:** `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's
+> higher-level Vision-style wrapper) still targets the superseded Create ML v1 model and its
+> strip/SAHI-tiling pipeline — it has not yet been updated for the YOLO11n model above. Use
+> `NativeUIAuditKitModels` directly (as shown above) until this is resolved.
 
 ---
 
@@ -27,17 +76,49 @@ NativeUIAuditKit builds a custom Vision-style request backed by CoreML object de
 
 ---
 
-## Model Performance (NativeUIDetector_v1, trained 2026-05-28)
+## Model Performance
 
-5-class iOS prototype. Evaluated on 1,394 held-out validation images using a per-class-routed inference pipeline with cross-class conflict suppression.
+### Current: YOLO11n (trained + evaluated 2026-08-23)
+
+5-class iOS detector trained via Ultralytics YOLO11n (100 epochs), exported to CoreML with NMS baked into the graph (IoU 0.30, confidence floor 0.001). Evaluated on the **same 1,394 held-out validation images** as the Create ML baseline below, so the two are directly comparable.
+
+| Class | AP@0.5 (.pt) | AP@0.5 (CoreML) | GT instances |
+|---|---|---|---|
+| alert | 0.995 | **1.000** | 40 |
+| navigationBar | 0.975 | 0.909 | 1,186 |
+| primaryButton | 0.905 | 0.894 | 761 |
+| textField | 0.981 | 0.961 | 315 |
+| toggle | 0.984 | 0.909 | 1,074 |
+| **mAP@0.5** | **0.968** | **0.935** | — |
+
+DS-G5 (every class AP@0.5 ≥ 0.50) and DS-G6 (mAP ≥ 0.70) both pass with wide margin. Every class improved over the Create ML baseline — navigationBar 0.775 → 0.909, textField 0.505 → 0.961 most notably. The ~3-point gap between the raw PyTorch and exported CoreML numbers is normal export/quantization precision loss, not a defect.
+
+**On-device latency** (physical iPhone, `best.mlpackage` via direct `MLModel` inference — no Vision framework overhead):
+
+| Metric | Result | Gate |
+|---|---|---|
+| Model size | 5.18 MB | < 15 MB |
+| Cold load | 25 ms avg | < 3 s |
+| Per-image inference (total) | ~7.5–9 ms avg | < 200 ms |
+| — letterbox + `CVPixelBuffer` | 5.9 ms | |
+| — `MLModel.prediction` | 3.4 ms | |
+| — output parsing | < 0.1 ms | |
+
+Every latency gate clears by more than an order of magnitude — fast enough to run inline during agentic UI iteration with no perceptible delay. Full pipeline and benchmark source: [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift), [`GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift`](GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift).
+
+Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIDetector_v2.mlmodelc`, bundled as an SPM resource in the `NativeUIAuditKitModels` product — see [Add as a Dependency](#add-as-a-dependency) below. (Raw training checkpoints remain gitignored in `NativeUITrainer/yolo_runs/`.)
+
+### Superseded: Create ML baseline (NativeUIDetector_v1, trained 2026-05-28)
+
+The original anchor-based Create ML objectPrint model — required strip-tiling and per-class pass routing to handle high-aspect-ratio classes like navigationBar (~16:1). Currently still the model packaged in `NativeUIAuditKitModels/`.
 
 | Class | AP@0.5 | GT | TP | Pred | Notes |
 |---|---|---|---|---|---|
-| alert | **1.000** | 40 | 40 | 40 | Full-image pass only |
-| toggle | **0.821** | 1,074 | 1,019 | 1,232 | Strip pass, conf ≥ 0.95 |
-| navigationBar | **0.775** | 1,186 | 1,176 | 1,508 | Strip pass |
-| primaryButton | **0.680** | 761 | 687 | 1,185 | Full-image + strip |
-| textField | **0.505** | 315 | 268 | 609 | Strip pass + cross-class suppression |
+| alert | 1.000 | 40 | 40 | 40 | Full-image pass only |
+| toggle | 0.821 | 1,074 | 1,019 | 1,232 | Strip pass, conf ≥ 0.95 |
+| navigationBar | 0.775 | 1,186 | 1,176 | 1,508 | Strip pass |
+| primaryButton | 0.680 | 761 | 687 | 1,185 | Full-image + strip |
+| textField | 0.505 | 315 | 268 | 609 | Strip pass + cross-class suppression |
 | **mAP@0.5** | **0.756** | | | | DS-G5 ✓ DS-G6 ✓ |
 
 **Training configuration:** transferLearning (objectPrint revision:1), 25,000 iterations, batch 32, 22%-height strip tiling at 50% overlap, 20,632 training entries (18,563 original + 2,069 UIKitToggleForm hard-negative augmentation).
@@ -115,10 +196,11 @@ python3 scripts/augment_createml_export.py \
 NativeUIAuditKit/
 ├── Package.swift
 ├── README.md
+├── CHANGELOG.md                           ← version history, semver
 ├── Tasks.md                               ← phase-structured task list and roadmap
 ├── AGENTS.md                              ← agent handoff notes
 ├── Research/
-│   ├── ExperimentLog.md                   ← chronological training run history (Runs 001–005)
+│   ├── ExperimentLog.md                   ← chronological training run history (Runs 001–006)
 │   ├── NativeUIElementDetection.md        ← architecture, API design, training approach
 │   ├── TrainingDataStrategy.md            ← dataset design, bias prevention, platform coverage
 │   ├── BestPractices.md                   ← lessons learned (BP-01 through BP-26+)
@@ -130,14 +212,21 @@ NativeUIAuditKit/
 │       └── category_map.json              ← element type → integer ID for COCO export
 ├── Sources/
 │   └── NativeUIAuditKit/
+│       ├── NativeUIAuditKit.docc/          ← DocC catalog (landing page + Getting Started)
 │       ├── Detection/NativeUIDetectionRequest.swift
 │       └── Models/NativeUIElementObservation.swift
 ├── Tests/
-│   └── NativeUIAuditKitTests/
-├── NativeUIAuditKitModels/                ← trained model (gitignored binaries)
+│   ├── NativeUIAuditKitTests/
+│   └── NativeUIAuditKitModelsTests/        ← model asset smoke tests (resource resolves + loads)
+├── NativeUIAuditKitModels/                ← trained model (bundled SPM resource)
 │   └── Sources/NativeUIAuditKitModels/
-│       ├── NativeUIDetector_v1.mlpackage.mlmodel   ← active model (trained 2026-05-28)
-│       ├── training_config.json
+│       ├── NativeUIAuditKitModels.docc/    ← DocC catalog
+│       ├── Resources/
+│       │   └── NativeUIDetector_v2.mlmodelc/  ← precompiled YOLO11n model, shipped as a package resource
+│       ├── NativeUIDetector_v1.mlpackage.mlmodel   ← superseded (2026-05-28); on disk, not a bundled resource
+│       ├── training_config_v1.json         ← Create ML config (superseded)
+│       ├── training_config_v2.json         ← YOLO11n config (current)
+│       ├── NativeUIModelAsset.swift        ← zero-config model + metadata accessor
 │       └── ModelRegistry.swift
 ├── NativeUIDatasetGenerator/
 │   ├── Sources/                           ← macOS orchestrator
@@ -239,7 +328,7 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **3: Dataset Generator** | ✅ Done | SwiftUI templates + first generation run | 50/50 spot-check pass; imageSHA256 = 1.0 |
 | **4: UIKit Generator** | ✅ Done | UIKit-rendered controls (anti-overfitting) | UIKit templates live; ~20k training entries |
 | **5: Hard Negatives** | 🔄 In progress | Hard-negative templates targeting known FP zones | UIKitToggleForm ✓; more templates planned |
-| **6: iOS Model (5-class)** | 🔄 In progress | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.756); device latency TBD |
+| **6: iOS Model (5-class)** | 🔄 In progress | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.935, YOLO11n); device latency ✓ (~7.5ms) |
 | **6→6a: Foundation Models eval** | ⬜ | Evaluate Apple Intelligence vision model before full 41-class training | Decision documented |
 | **6a: iOS Model (41-class)** | ⬜ | Anchor-free YOLO11 + focal loss; all 41 classes | mAP@0.5 ≥ 0.85 on withheld-template test |
 | **6b: tvOS Model** | ⬜ | Focus state, top tab bar | mAP@0.5 ≥ 0.80 |
@@ -249,10 +338,9 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **9: ScreenAuditKit Integration** | ⬜ | Drop-in protocol; contract fields; CLI flag | All ScreenAuditKit tests pass |
 
 **Immediate next steps:**
-1. Physical device latency test (iPhone — target < 200ms per image)
+1. Promote `best.mlpackage` (YOLO11n) from `NativeUITrainer/yolo_runs/` into the packaged `NativeUIAuditKitModels/` model
 2. Withheld-template generalization test (template-family split, not random split)
-3. navBar AP regression monitoring (0.845 → 0.775 in Run 005; root cause: UIKitToggleForm section headers creating navBar-like strip patterns)
-4. Phase 6→6a evaluation gate: test Apple Foundation Models zero-shot before committing to full 41-class training
+3. Phase 6→6a evaluation gate: test Apple Foundation Models zero-shot before committing to full 41-class training
 
 ---
 

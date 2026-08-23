@@ -148,8 +148,13 @@ public final class HardNegativeViewController: UIViewController, UIKitAnnotatabl
             spinner = UIActivityIndicatorView(style: .medium)
             spinner.color = .white
         }
-        spinner.startAnimating()
-        // Freeze at a fixed frame (animationsEnabled=false above stops the rotation animation)
+        // Deliberately never call startAnimating(). UIActivityIndicatorView tracks its
+        // own isAnimating state internally and can reinstate the rotation CAAnimation on
+        // a later layout/window-attach pass even after layer.removeAllAnimations() — that
+        // approach was tried and still produced non-deterministic captures. Staying in the
+        // stopped state renders the full static spinner glyph with no rotation at all;
+        // hidesWhenStopped just needs to be disabled so it doesn't hide itself.
+        spinner.hidesWhenStopped = false
         overlay.addSubview(spinner)
         spinnerView = spinner
     }

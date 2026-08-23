@@ -45,22 +45,80 @@ public struct OSVersionRange: Sendable, Codable, Equatable {
     }
 }
 
+/// Tensor-level contract for a model that ships with `NativeUIAuditKitModels` — the single
+/// source of truth for input size, class label order, and recommended inference thresholds.
+/// Consumers should read these values rather than hardcoding them, so a future model update
+/// (different input size, reordered classes) can't silently produce wrong bounding boxes.
+public struct ModelMetadata: Sendable, Codable, Equatable {
+    public let modelId: String
+    public let architecture: String
+    public let inputWidth: Int
+    public let inputHeight: Int
+    /// Class labels in the exact order the model's output tensor uses — NOT sorted.
+    public let classLabels: [String]
+    public let defaultConfidenceThreshold: Float
+    public let recommendedNMSIoUThreshold: Float
+    public let mAP50: Double
+
+    public init(
+        modelId: String,
+        architecture: String,
+        inputWidth: Int,
+        inputHeight: Int,
+        classLabels: [String],
+        defaultConfidenceThreshold: Float,
+        recommendedNMSIoUThreshold: Float,
+        mAP50: Double
+    ) {
+        self.modelId = modelId
+        self.architecture = architecture
+        self.inputWidth = inputWidth
+        self.inputHeight = inputHeight
+        self.classLabels = classLabels
+        self.defaultConfidenceThreshold = defaultConfidenceThreshold
+        self.recommendedNMSIoUThreshold = recommendedNMSIoUThreshold
+        self.mAP50 = mAP50
+    }
+}
+
 /// Registry of shipped model descriptors.
 ///
 /// Add new descriptors here as additional platform models (tvOS, macOS) are trained.
 public enum ModelRegistry {
 
-    /// iOS + iPadOS 5-class prototype (alert, navigationBar, primaryButton, textField, toggle).
+    /// iOS + iPadOS 5-class prototype — YOLO11n, current default (v2.0).
     ///
-    /// v1.0 training notes:
-    /// - Trained with horizontal strip tiling (22% height, 50% overlap) to fix anchor-assignment
-    ///   failure for navigationBar and textField (BP-26).
-    /// - Full-image entries also included for alert and toggle coverage.
+    /// Evaluated on 1,394 held-out validation images: mAP@0.5 = 0.935 (CoreML) / 0.968 (.pt).
+    /// Anchor-free architecture; no strip tiling or per-class pass routing required (unlike v1).
+    /// See Research/ExperimentLog.md Run 006 for full training/eval history.
     public static let iOS = ModelDescriptor(
+        modelId: "nativeui-ios-v2.0",
+        calibrationOsRange: OSVersionRange(min: "iOS 17.0", max: "iOS 26.x"),
+        trainedClasses: ["alert", "navigationBar", "primaryButton", "textField", "toggle"],
+        trainingDatasetVersion: "run006-20632entries",
+        minimumDeploymentTarget: "iOS 17.0"
+    )
+
+    /// Tensor-level contract for the current default model (`iOS`, v2.0). Use this — not
+    /// hardcoded constants — for input size, class order, and inference thresholds.
+    public static let v2Metadata = ModelMetadata(
+        modelId: "nativeui-ios-v2.0",
+        architecture: "YOLO11n",
+        inputWidth: 640,
+        inputHeight: 640,
+        classLabels: ["alert", "navigationBar", "primaryButton", "textField", "toggle"],
+        defaultConfidenceThreshold: 0.25,
+        recommendedNMSIoUThreshold: 0.30,
+        mAP50: 0.9346
+    )
+
+    /// Superseded Create ML objectPrint model (trained 2026-05-28). Kept for consumers
+    /// pinned to it; `iOS` now points at the YOLO11n v2.0 model by default.
+    public static let iOS_v1 = ModelDescriptor(
         modelId: "nativeui-ios-v1.0",
         calibrationOsRange: OSVersionRange(min: "iOS 17.0", max: "iOS 26.x"),
         trainedClasses: ["alert", "navigationBar", "primaryButton", "textField", "toggle"],
-        trainingDatasetVersion: "unknown",   // updated when manifest.json datasetVersion is set
+        trainingDatasetVersion: "unknown",
         minimumDeploymentTarget: "iOS 17.0"
     )
 }

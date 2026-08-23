@@ -434,8 +434,46 @@ navBar regressed 0.845 → 0.7745 in Run 005. Diagnostic (`diagnose_class_fps.sw
 
 ---
 
+## Run 006 — YOLO11n Migration (Complete 2026-08-23)
+
+**Trigger:** navBar regression in Run 005 (0.845 → 0.7745) traced to Create ML's objectPrint anchor mismatch on thin, full-width elements — same structural limitation flagged in the original Run 006 rationale below. Migrated to YOLO11n rather than continuing to patch the anchor-based pipeline.
+
+**Training:** Ultralytics YOLO11n, 100 epochs, same 20,632-entry training set used for Run 005 (`scripts/train_yolo.py`, `.venv-yolo`). No strip tiling required — YOLO11's anchor-free head handles the ~16:1 navigationBar aspect ratio natively, eliminating the strip-pass/full-image-pass routing complexity from Runs 003–005.
+
+**Export:** `scripts/export_yolo_coreml.py` (`.venv-coreml`, coremltools 9.0) → `best.mlpackage`, NMS baked into the CoreML graph (IoU 0.30, confidence floor 0.001). Model size 5.18MB.
+
+**Eval — same 1,394 held-out validation images as Runs 001–005** (`scripts/eval_yolo_map.swift` for CoreML via direct `MLModel` inference; Python `ultralytics` val for the raw `.pt` checkpoint):
+
+| Class | Run 005 (Create ML) | Run 006 .pt | Run 006 CoreML | Change vs Run 005 |
+|---|---|---|---|---|
+| alert | 1.000 | 0.995 | **1.000** | — |
+| navigationBar | 0.7745 | 0.975 | 0.909 | **+0.135** |
+| primaryButton | 0.6799 | 0.905 | 0.894 | **+0.214** |
+| textField | 0.505 | 0.981 | 0.961 | **+0.456** |
+| toggle | 0.8213 | 0.984 | 0.909 | **+0.088** |
+| **mAP@0.5** | **0.756** | **0.968** | **0.935** | **+0.179** |
+| DS-G5 | ✓ | ✓ | ✓ | |
+| DS-G6 | ✓ | ✓ | ✓ | |
+
+Every class improved, with the largest gains exactly where Create ML struggled most (textField +0.456, primaryButton +0.214, navigationBar +0.135) — confirming the anchor-free architecture resolves the root cause rather than just shifting the tradeoff. The ~3-point .pt-vs-CoreML gap is normal export precision loss; no per-class routing or cross-class suppression was needed at inference time.
+
+**Physical-device latency** (`GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift`, direct `MLModel` inference, no Vision framework):
+
+| Metric | Result | Gate |
+|---|---|---|
+| Cold load | 25ms avg | < 3s |
+| Per-image inference | ~7.5–9ms avg (letterbox 5.9ms + predict 3.4ms + parse <0.1ms) | < 200ms |
+
+All latency gates pass by more than an order of magnitude — resolves the "Physical device latency test" item that had been the last open Phase 6 gate.
+
+**Status:** `best.mlpackage` lives in `NativeUITrainer/yolo_runs/yolo11n_e100/weights/` (gitignored). Not yet promoted into the packaged `NativeUIAuditKitModels/` model — Create ML's `NativeUIDetector_v1` remains the shipped model pending that swap.
+
+---
+
 ## Pending Runs
 
-### Run 006 (if needed) — YOLO11 migration
-**Trigger:** Run 005 textField AP still below 0.50 after targeted hard negatives  
-**Rationale:** If Create ML's objectPrint algorithm cannot achieve adequate precision for thin full-width elements with strip training, migrate to YOLOv11 (via ultralytics) which supports custom anchor configurations and better handles thin-box classes natively. This is a significant infrastructure change — exhaust all Create ML options first.
+### Run 006 (superseded — see completed entry above)
+**Original trigger:** Run 005 textField AP still below 0.50 after targeted hard negatives  
+**Original rationale:** If Create ML's objectPrint algorithm cannot achieve adequate precision for thin full-width elements with strip training, migrate to YOLOv11 (via ultralytics) which supports custom anchor configurations and better handles thin-box classes natively. This is a significant infrastructure change — exhaust all Create ML options first.
+
+This trigger fired after the Run 005 navBar regression; the migration is documented above as the completed Run 006.

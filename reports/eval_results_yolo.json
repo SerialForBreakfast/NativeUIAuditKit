@@ -1,0 +1,29 @@
+{
+  "model": "yolo11n_e100",
+  "mAP50": 0.968,
+  "dsG5Pass": true,
+  "dsG6Pass": true,
+  "evalDate": "2026-08-23T00:50:26Z",
+  "perClass": [
+    {
+      "class": "alert",
+      "ap50": 0.995
+    },
+    {
+      "class": "navigationBar",
+      "ap50": 0.9746
+    },
+    {
+      "class": "primaryButton",
+      "ap50": 0.9051
+    },
+    {
+      "class": "textField",
+      "ap50": 0.9808
+    },
+    {
+      "class": "toggle",
+      "ap50": 0.9844
+    }
+  ]
+}

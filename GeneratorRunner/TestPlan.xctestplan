@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "D1579BE6-15BB-487C-9654-F9C46BFB0621",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:GeneratorRunner.xcodeproj",
+        "identifier" : "CC000060000000000000CC60",
+        "name" : "GeneratorRunnerTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,48 @@
+{
+  "confFloor" : 0.0010000000474974513,
+  "dsG5Pass" : true,
+  "dsG6Pass" : true,
+  "evalDate" : "2026-08-23T01:34:00Z",
+  "iouThreshold" : 0.5,
+  "mAP50" : 0.93460876962934414,
+  "model" : "yolo11n_e100_coreml",
+  "nmsThreshold" : 0.29999999999999999,
+  "nValidationImages" : 1394,
+  "perClass" : [
+    {
+      "ap50" : 1,
+      "class" : "alert",
+      "nGT" : 40,
+      "nPred" : 66,
+      "nTP" : 40
+    },
+    {
+      "ap50" : 0.90909090909090906,
+      "class" : "navigationBar",
+      "nGT" : 1186,
+      "nPred" : 1453,
+      "nTP" : 1159
+    },
+    {
+      "ap50" : 0.89391478226875376,
+      "class" : "primaryButton",
+      "nGT" : 761,
+      "nPred" : 2032,
+      "nTP" : 695
+    },
+    {
+      "ap50" : 0.96094724769614859,
+      "class" : "textField",
+      "nGT" : 315,
+      "nPred" : 1762,
+      "nTP" : 315
+    },
+    {
+      "ap50" : 0.90909090909090906,
+      "class" : "toggle",
+      "nGT" : 1074,
+      "nPred" : 2627,
+      "nTP" : 1062
+    }
+  ]
+}
