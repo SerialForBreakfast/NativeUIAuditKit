@@ -50,6 +50,8 @@
 		CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */; };
 		CC000022000000000000CC22 /* BalanceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000020000000000000BB20 /* BalanceReport.swift */; };
 		CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */; };
+		9A000002000000000000AA02 /* AnalyticsDashboardTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A000001000000000000AA01 /* AnalyticsDashboardTemplate.swift */; };
+		9A000004000000000000AA04 /* GeneralizationHoldoutTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A000003000000000000AA03 /* GeneralizationHoldoutTest.swift */; };
 		DD000011000000000000DD11 /* UIKitCaptureSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000001000000000000DD01 /* UIKitCaptureSupport.swift */; };
 		DD000012000000000000DD12 /* UIKitFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002000000000000DD02 /* UIKitFormViewController.swift */; };
 		DD000013000000000000DD13 /* UIKitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000003000000000000DD03 /* UIKitListViewController.swift */; };
@@ -146,6 +148,8 @@
 		CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenSinkValidationTest.swift; sourceTree = "<group>"; };
 		CC00000B000000000000CC0B /* GeneratorRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneratorRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetQualityAuditTests.swift; sourceTree = "<group>"; };
+		9A000001000000000000AA01 /* AnalyticsDashboardTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnalyticsDashboardTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/AnalyticsDashboardTemplate.swift; sourceTree = SOURCE_ROOT; };
+		9A000003000000000000AA03 /* GeneralizationHoldoutTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralizationHoldoutTest.swift; sourceTree = "<group>"; };
 		DD000001000000000000DD01 /* UIKitCaptureSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitCaptureSupport.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitCaptureSupport.swift; sourceTree = SOURCE_ROOT; };
 		DD000002000000000000DD02 /* UIKitFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitFormViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitFormViewController.swift; sourceTree = SOURCE_ROOT; };
 		DD000003000000000000DD03 /* UIKitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIKitListViewController.swift; path = ../NativeUIDatasetGenerator/Templates/UIKitListViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -289,6 +293,7 @@
 				BC000001000000000000BC01 /* iPadSidebarTemplate.swift */,
 				BD000001000000000000BD01 /* AlertWithTextFieldTemplate.swift */,
 				BE000001000000000000BE01 /* SettingsToggleDenseTemplate.swift */,
+				9A000001000000000000AA01 /* AnalyticsDashboardTemplate.swift */,
 			);
 			name = Templates;
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 				CC000001000000000000CC01 /* GenerateDatasetTests.swift */,
 				CC000002000000000000CC02 /* KitchenSinkValidationTest.swift */,
 				CC000024000000000000CC24 /* DatasetQualityAuditTests.swift */,
+				9A000003000000000000AA03 /* GeneralizationHoldoutTest.swift */,
 				DD000005000000000000DD05 /* UIKitCoordTests.swift */,
 				BF000001000000000000BF01 /* GalleryPageTemplate.swift */,
 				EE000002000000000000EE02 /* UIKitGeneratorValidationTest.swift */,
@@ -470,6 +476,8 @@
 				CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */,
 				CC00001F000000000000CC1F /* KitchenSinkValidationTest.swift in Sources */,
 				CC000023000000000000CC23 /* DatasetQualityAuditTests.swift in Sources */,
+				9A000002000000000000AA02 /* AnalyticsDashboardTemplate.swift in Sources */,
+				9A000004000000000000AA04 /* GeneralizationHoldoutTest.swift in Sources */,
 				DD000015000000000000DD15 /* UIKitCoordTests.swift in Sources */,
 				442E9998303AC04700EB0E2B /* YOLOBenchmarkTests.swift in Sources */,
 				EE000011000000000000EE11 /* UIKitGeneratorViewController.swift in Sources */,

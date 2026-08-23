@@ -2,7 +2,7 @@
 
 Chronological record of every training run and major technical decision in Phase 6. Written so that any future agent or engineer can reconstruct what was tried, why, and what the outcome was — without reading the full conversation history.
 
-Last updated: 2026-05-27
+Last updated: 2026-08-23
 
 ---
 
@@ -477,3 +477,80 @@ All latency gates pass by more than an order of magnitude — resolves the "Phys
 **Original rationale:** If Create ML's objectPrint algorithm cannot achieve adequate precision for thin full-width elements with strip training, migrate to YOLOv11 (via ultralytics) which supports custom anchor configurations and better handles thin-box classes natively. This is a significant infrastructure change — exhaust all Create ML options first.
 
 This trigger fired after the Run 005 navBar regression; the migration is documented above as the completed Run 006.
+
+---
+
+## Generalization Holdout Check (2026-08-23)
+
+**Motivation:** Run 006's 0.935 mAP@0.5 was measured on a random 8:1:1 split *within* each
+of the 51 trained template families (confirmed via the dataset manifest — every family
+appears in all three splits at proportional ratios, e.g. `ActionSheet: {train: 320,
+validation: 40, test: 40}`). `QG5_splitContamination`'s own comment in
+`DatasetQualityAuditTests.swift` states plainly: *"Full withheld-family isolation is
+enforced in Phase 6a"* — true template-family holdout was deliberately deferred, not done
+for the 5-class prototype. That leaves an open question: does 0.935 hold up on a layout the
+model has never seen at all, or is it inflated by structural familiarity?
+
+**Method — deliberately lighter than a full Phase 6a-style holdout retrain.** Retraining
+with families excluded matches the project's own stated methodology for that later phase,
+but costs real training time for a 5-class model about to be superseded by Phase 6a anyway.
+Instead: evaluate the **already-shipped** `nativeui-ios-v2.0` model against a brand-new
+template — `AnalyticsDashboardTemplate.swift` — that is genuinely novel in two ways:
+1. **Content is new** (different seeds, different generated text), same as any validation split.
+2. **Layout structure is new** — a 2-column metric-card grid (`LazyVGrid`) with toggles
+   embedded inside cards, a search bar pinned directly under the nav bar (not inside a
+   `Form`), and a floating circular action button (FAB) bottom-right. No existing template
+   among the 51 combines these three patterns; all are list/form/single-card layouts.
+
+Critically, this template is **never registered** in `GenerateDatasetTests.swift`'s
+dispatcher — zero images from it exist anywhere in the train/validation/test manifest. This
+answers a narrower question than full family-holdout retraining ("does the *current shipped
+model* generalize to an unseen layout?") rather than the broader one Phase 6a will answer
+("does the *training methodology* produce a model that generalizes?") — but it's a real,
+honest signal for a fraction of the cost.
+
+Implementation: `GeneratorRunner/GeneratorRunnerTests/GeneralizationHoldoutTest.swift` — 40
+seeds, same letterbox/inference/AP-computation logic as `scripts/eval_yolo_map.swift`
+(11-point interpolation, IoU@0.5 match threshold), run directly against the bundled
+`best.mlmodelc`.
+
+**First run — methodology bug, not a model finding:** initial toggle GT boxes wrapped the
+switch *and* its visible "Auto-refresh" label as one wide box. Every existing template uses
+`.labelsHidden()` on `Toggle` before `.captureFrame` — the trained `toggle` class means
+switch-only, narrow. That shape mismatch alone collapsed toggle AP to 0.000 (GT=80,
+preds=207) despite the model plausibly still locating switches correctly — it just couldn't
+match against a differently-shaped ground truth box. Fixed by separating the label into its
+own `label_toggle_caption_N` frame and applying `.labelsHidden()` to the `Toggle`, matching
+established convention. Documented here because it's a real trap: a holdout test's own
+annotation convention has to match training convention, or the result measures the wrong
+thing entirely.
+
+**Result (corrected):**
+
+| Class | AP@0.5 (holdout) | AP@0.5 (baseline) | GT | Preds |
+|---|---|---|---|---|
+| navigationBar | 1.000 | 0.909 | 40 | 86 |
+| primaryButton | 1.000 | 0.894 | 40 | 99 |
+| toggle | 1.000 | 0.909 | 80 | 184 |
+| textField | 0.734 | 0.961 | 40 | 119 |
+| **mAP@0.5** | **0.934** | **0.935** | — | — |
+
+**Δ = -0.001.** The headline number holds up essentially exactly on a genuinely unseen
+layout — strong evidence 0.935 was not inflated by template-family memorization for
+navigationBar, primaryButton, and toggle at least.
+
+**textField is the one real signal worth flagging, not glossing over.** It dropped from
+0.961 to 0.734. The holdout template's search bar is a mocked control (`HStack` with a
+magnifying-glass `Image` + secondary-colored placeholder `Text` inside a stadium-shaped
+background) — visually distinct from every trained textField, which are all real
+`TextField`/`SecureField` controls with a plain rounded-rect background and no icon. This
+result most plausibly reflects a real gap on that specific visual *style* (icon-prefixed
+search-bar-shaped fields) rather than a general textField weakness — but it hasn't been
+isolated from "genuinely novel layout" as a confound, since this holdout only tested one
+template. Worth a follow-up holdout template using a real `TextField` in an unfamiliar
+layout to separate "new control style" from "new layout" as the cause.
+
+**Reading this result:** treat as a positive, real-but-narrow signal that the current model
+generalizes reasonably well beyond its exact training layouts, with a flagged textField-style
+caveat — not as a substitute for Phase 6a's planned full family-holdout methodology, which
+remains the rigorous version of this question for the 41-class model.

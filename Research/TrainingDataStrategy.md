@@ -657,23 +657,19 @@ Each `.mlpackage` records `calibrationOsRange`, `trainedClasses`, and `trainingD
 
 ---
 
-### 16.5 Fork-in-the-Road: Apple Foundation Models as Baseline
+### 16.5 Fork-in-the-Road: Apple Foundation Models as Baseline — RESOLVED (2026-08-23), evaluation skipped, proceeding to Phase 6a
 
-**Finding:** Apple shipped a ~3B parameter on-device multimodal vision model as part of Apple Intelligence (2025). The Foundation Models framework allows developer access to this model for inference. It supports image understanding with zero-shot and few-shot prompting. This is a fundamentally different approach from training a custom CoreML detector.
+**Original premise (superseded by verified findings below):** this section assumed Apple's `FoundationModels` framework supported "image understanding with zero-shot and few-shot prompting." That assumption did not hold up against the actual shipped API — see below.
 
-**Why this matters:** If Apple's foundation model achieves mAP ≥ 0.70 on our 41-class test set with zero training — or ≥ 0.80 with a small fine-tuning step — the case for training a custom 41-class detector from scratch weakens significantly.
+**Verified finding (2026-08-23, Xcode 26 / macOS 26.5.2):** inspected the `FoundationModels` public API surface directly — `.swiftinterface` files for both the macOS and iOS SDKs — and found **zero image-input types anywhere in the module**: no `CGImage`, `CIImage`, `UIImage`, or `ImageContent`. `Prompt` is purely text/string-based, constructed via `PromptBuilder` from string components. Apple's on-device Foundation Models framework, as actually shipped in this release, has no image input capability at all. This is independent of `SystemLanguageModel.default.availability` (which returned `.appleIntelligenceNotEnabled` before enabling Apple Intelligence on the dev machine, then `.modelNotReady` afterward, consistent with on-device model assets still downloading) — even a fully `.available` model would not unblock this, because the capability itself does not exist in the framework's public API.
 
-**Decision: Evaluate before Phase 6a.** After Phase 6 (5-class prototype), before committing to full 41-class training, run Apple's Foundation Model against the withheld-template test set. Record per-class AP. Use these results to make a data-driven architecture decision:
+**Decision: skip the Foundation Models evaluation gate; proceed directly to Phase 6a.** The originally planned harness (`TASK-6g-1`: send withheld-template screenshots to Foundation Models with a zero-shot detection prompt) cannot be built against this API as specified. Two paths were considered:
+1. Redesign the evaluation around a cloud-hosted multimodal API, used one-time for this research decision only (never shipped).
+2. Skip the gate entirely and proceed to custom 41-class training on the strength of evidence already in hand.
 
-| Scenario | Decision |
-|---|---|
-| Foundation Model mAP < 0.50 on withheld test | Proceed with custom 41-class training as planned |
-| Foundation Model mAP 0.50–0.75 | Use foundation model as teacher for knowledge distillation; augment with custom fine-tuning |
-| Foundation Model mAP > 0.75 zero-shot | Evaluate whether LoRA adapter fine-tuning on our synthetic dataset can push to 0.85 without full custom training |
+**Chose path 2**, for two reasons: it keeps the project's "no cloud dependency" design principle intact even for research/decision-making, not just shipped code — and the generalization holdout check completed the same day (`Research/ExperimentLog.md`, "Generalization Holdout Check") already provides independent, positive evidence that the current architecture (anchor-free YOLO11, single-pass letterboxed inference) generalizes well to unseen layouts (mAP 0.934 vs. 0.935 in-distribution on a genuinely novel template) — reducing the risk that custom training is the wrong bet, which was the underlying concern this gate existed to de-risk in the first place.
 
-**Constraints:** Foundation Models framework has latency characteristics that may exceed our <200ms target. Measure inference time on actual hardware (see Section 16.7). The framework requires iOS 18.1+ / macOS 15.1+ which may affect minimum deployment target requirements.
-
-**Sources:** *Apple Intelligence Foundation Models* (Apple ML Research, 2025); Foundation Models framework documentation.
+**Sources:** `FoundationModels.swiftinterface`, macOS 26.5.2 SDK (Xcode 26) — verified directly, superseding the original secondary-source claim about image support.
 
 ---
 

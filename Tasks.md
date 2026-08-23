@@ -1299,6 +1299,17 @@ public struct ModelDescriptor: Sendable, Codable {
 
 **Requires:** TASK-6-3 complete ✅, TASK-5e-1 complete ✅ (confusion matrix script), TASK-6-2 gate (mAP ≥ 0.70 from Run 003)
 
+**Note (2026-08-23):** the "withheld-template test set" AC below was never backed by a true
+family-holdout split — the dataset manifest confirms all 51 template families are split
+8:1:1 proportionally, not held out. A lighter, cheaper substitute now exists:
+`GeneratorRunner/GeneratorRunnerTests/GeneralizationHoldoutTest.swift` evaluates the shipped
+`nativeui-ios-v2.0` model against `AnalyticsDashboardTemplate.swift`, a template never
+registered in the generation dispatcher — mAP@0.5 = 0.934 vs. 0.935 in-distribution (Δ =
+-0.001), with a flagged textField-style caveat. Full details and methodology limitations in
+`Research/ExperimentLog.md` under "Generalization Holdout Check." This is **not** the same
+rigor as a true family-holdout retrain (that's still Phase 6a's job) — treat the AC below as
+partially, informally addressed, not closed.
+
 **Tooling ready (all scripts written and waiting for the trained model):**
 
 | AC | Script | Status |
@@ -1517,16 +1528,37 @@ with confidence the underlying detector is current.
 **Requires:** Phase 6 gate passed  
 **Time estimate:** 1 day
 
+**⚠️ BLOCKED — confirmed infeasible as specified (2026-08-23).** Checked the `FoundationModels`
+public API surface directly (`.swiftinterface` for both macOS and iOS SDKs, Xcode 26 / macOS
+26.5.2): zero `CGImage`/`CIImage`/`UIImage`/`ImageContent` types anywhere in the module.
+`Prompt` is purely string-based, built via `PromptBuilder` from text components. **Apple's
+on-device Foundation Models framework has no image input capability in this release** —
+TASK-6g-1's design (send a screenshot + zero-shot prompt to Foundation Models) cannot be
+implemented against this API at all, independent of whether Apple Intelligence is enabled or
+the on-device model has finished downloading (`SystemLanguageModel.default.availability`
+returned `.appleIntelligenceNotEnabled` before enabling it, then `.modelNotReady` after — but
+even a `.available` result wouldn't unblock this, since the capability itself doesn't exist).
+
+**Resolution (2026-08-23): gate skipped, decision made without a Foundation Models measurement.**
+Two paths were on the table once the API blocker was confirmed — redesign the eval around a
+cloud multimodal API for this one research decision (never shipped), or skip the gate and
+proceed straight to Phase 6a. Chose the latter: it keeps the "no cloud dependency" principle
+intact even for research/decision-making, and the same-day generalization holdout check
+(`Research/ExperimentLog.md`) already provides independent positive evidence (mAP 0.934 on a
+genuinely unseen layout vs. 0.935 in-distribution) that the current architecture generalizes
+well — reducing the risk this gate existed to de-risk in the first place. Full rationale in
+`Research/TrainingDataStrategy.md` Section 16.5.
+
 ---
 
-#### TASK-6g-1: Foundation Models evaluation harness
+#### TASK-6g-1: Foundation Models evaluation harness — SKIPPED, not implementable as specified
 
 **File:** `scripts/foundation_model_eval.py` or a Swift `XCTest` target  
 **Requires:** TASK-6-5 complete (have the withheld-template test set ready)
 
-Build an evaluation harness that sends each test image to Apple's Foundation Models framework with a zero-shot prompt and records predictions.
+~~Build an evaluation harness that sends each test image to Apple's Foundation Models framework with a zero-shot prompt and records predictions.~~ **Not built** — the `FoundationModels` framework has no image-input API to send screenshots to (verified against the shipped `.swiftinterface`, see blocker above). Original prompt template and ACs preserved below for the record, in case a future Apple release adds multimodal support and this becomes implementable.
 
-Prompt template:
+Prompt template (never executed):
 ```
 Identify all visible native Apple UI elements in this screenshot. 
 For each element, provide: the element type (from this list: {41 class names}), 
@@ -1534,9 +1566,7 @@ and its bounding box as [x_min, y_min, x_max, y_max] normalized to [0,1].
 Return JSON array.
 ```
 
-Parse the JSON response, convert to the same format as YOLO predictions, run through `confusion_matrix.py`.
-
-**AC:**
+**Original AC (not attempted):**
 - Harness runs on all images in the withheld-template test set
 - Records per-class AP and overall mAP@0.5
 - Records median inference latency on physical device
@@ -1544,11 +1574,15 @@ Parse the JSON response, convert to the same format as YOLO predictions, run thr
 
 ---
 
-#### TASK-6g-2: Architecture decision
+#### TASK-6g-2: Architecture decision — RESOLVED without a measurement
 
 **Requires:** TASK-6g-1 complete
 
-Apply the decision matrix from `Research/TrainingDataStrategy.md` Section 16.5:
+**The decision matrix below was never applied against a measured mAP — TASK-6g-1 could not
+run.** Decision made directly: proceed to Phase 6a. See the resolution note above and
+`Research/TrainingDataStrategy.md` Section 16.5 for full rationale.
+
+Original decision matrix (preserved for reference, never applied):
 
 | Foundation Model mAP | Decision |
 |---|---|
@@ -1568,7 +1602,7 @@ Document the decision and mAP result in `Research/TrainingDataStrategy.md` under
 
 *Goal: Production-quality iOS model across all 41 classes using anchor-free YOLO11 with focal loss and OHEM.*
 
-**Requires:** Phase 6 gate passed, Phase 6 Gate evaluation complete, Phase 5b complete, all 41 classes meet instance floors
+**Requires:** Phase 6 gate passed ✅, Phase 6 Gate evaluation complete ✅ (skipped without measurement — see TASK-6g-2 resolution, 2026-08-23), Phase 5b complete ✅, all 41 classes meet instance floors
 
 ---
 
