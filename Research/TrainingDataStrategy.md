@@ -671,6 +671,10 @@ Each `.mlpackage` records `calibrationOsRange`, `trainedClasses`, and `trainingD
 
 **Sources:** `FoundationModels.swiftinterface`, macOS 26.5.2 SDK (Xcode 26) — verified directly, superseding the original secondary-source claim about image support.
 
+### 16.5.1 Phase 6a start (2026-08-23)
+
+Run 007 trains YOLO11m on native annotations with a **family-holdout** split (BP-27). The iOS generator currently supplies **36 of 41** taxonomy classes. Platform-exclusive `tooltip` and `scrollIndicator` (Section 1.4) plus generator gaps `statusBar`, `toolbar`, and the unused `unknown` bucket have 0 iOS boxes. Training still uses the frozen 41-slot `category_map.json` so IDs stay stable. DS-G8 cannot fully pass until those five classes are generated. Extra generator label `tabBarItem` is dropped (BP-28).
+
 ---
 
 ### 16.6 Active Learning for Synthetic Generation Prioritization

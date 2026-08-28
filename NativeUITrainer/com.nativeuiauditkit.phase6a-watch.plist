@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.nativeuiauditkit.phase6a-watch</string>
+	<key>WorkingDirectory</key>
+	<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/caffeinate</string>
+		<string>-dims</string>
+		<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/bin/python</string>
+		<string>-u</string>
+		<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/watch_phase6a.py</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/watch_phase6a.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/watch_phase6a.log</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>TMPDIR</key>
+		<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/.tmp</string>
+		<key>TMP</key>
+		<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/.tmp</string>
+		<key>YOLO_CONFIG_DIR</key>
+		<string>/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/.ultralytics</string>
+		<key>PYTHONUNBUFFERED</key>
+		<string>1</string>
+		<key>HOME</key>
+		<string>/Users/josephmccraw</string>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>LANG</key>
+		<string>en_US.UTF-8</string>
+	</dict>
+</dict>
+</plist>

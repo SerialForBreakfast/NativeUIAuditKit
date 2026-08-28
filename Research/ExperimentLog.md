@@ -554,3 +554,69 @@ layout to separate "new control style" from "new layout" as the cause.
 generalizes reasonably well beyond its exact training layouts, with a flagged textField-style
 caveat — not as a substitute for Phase 6a's planned full family-holdout methodology, which
 remains the rigorous version of this question for the 41-class model.
+
+---
+
+## Run 007 — YOLO11m 41-class, family holdout (Started 2026-08-23)
+
+**Trigger:** Phase 6a unblocked. Foundation Models eval skipped (no image API). Run 006
+5-class YOLO11n is shipped. True family-holdout 41-class training is the next gate.
+
+**Status:** COMPLETE 2026-08-27 — early-stop at epoch 93/100 (patience 15).
+Resumed-run wall time 24.2 h after the power-cut resume. `best.pt` re-validated
+at **mAP@0.5 = 0.981**, **mAP@0.5:0.95 = 0.919** (2,936 val images, 25,565
+boxes). CSV peak mAP50 = 0.984 at epoch 39; peak mAP50-95 = 0.919 at epoch 40.
+Watchdog PID 3889 exited 0. Weights:
+`NativeUITrainer/yolo_runs/phase6a_r007/weights/best.pt` (40.6 MB, optimizer
+stripped). Next: TASK-6a-4 CoreML export.
+
+**Dry-run (2026-08-23):** 575 train images, batch=4, MPS M4, ~4.6 GB. Epoch 1
+mAP50 ≈ 0; epoch 2 mAP50 = 0.00068 (cls 5.14 → 2.65). OHEM callback works
+(Ultralytics 8.4 has no `trainer.batch`; stashed via `preprocess_batch`).
+`tabBarItem` dropped (9,202 boxes). Splits 11,504 / 2,936 / 2,000.
+
+**Configuration:**
+- Architecture: YOLO11m (`yolo11m.pt`), imgsz 640, 100 epochs, patience 15, MPS
+- Labels: native annotation JSON → YOLO txt + COCO JSON (`scripts/export_coco.py`)
+- Class IDs: frozen `Research/schemas/category_map.json` 0–40
+- Split: family holdout (BP-27). Withheld: `CardDetail`, `WizardStepFlow`,
+  `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`,
+  `EmptyState`, `OnboardingPage`. Not withheld (unique rare-class sources):
+  `ColorPicker`, `MenuButton`, `iPadSidebar`, `MapOverlays`, `HardNegative_2`
+- Loss: Ultralytics box+cls+dfl (no `loss="focal"` kwarg). Inverse-frequency α from
+  `scripts/class_weights.json`. OHEM replaces easy slots with a 2nd copy of the
+  top 20% hardest images (same length, BP-29) — appending crashed Run 007
+- Output: `NativeUITrainer/yolo_runs/phase6a_r007/` and
+  `NativeUITrainer/yolo_dataset_41class/` (in-package, gitignored)
+- PID / log: **3889** (train) + **3866** (`watch_phase6a.py` / caffeinate)
+  / `NativeUITrainer/training_6a.log`. Power-loss resume 2026-08-26 from
+  epoch-45 `last.pt` (BP-30).
+
+**Known coverage gap (does not block the run, does block DS-G8):**
+iOS generator has 36 of 41 taxonomy classes. Zero instances: `statusBar`, `toolbar`,
+`scrollIndicator`, `tooltip`, `unknown`. Extra label `tabBarItem` dropped (BP-28).
+Empty classes keep their frozen IDs so later generator fills do not reshuffle the head.
+
+**Expected outcome:**
+- Dry-run (`--epochs 2 --batch 4`, 5% fraction) completes without error
+- Full run: overall mAP@0.5 on holdout families; per-class AP for the 36 present classes
+- DS-G8 (no class AP < 0.65 across 41) will fail on the five empty classes until
+  generator coverage is added
+
+**Outcome (2026-08-27):**
+- Stopped early epoch 93 (patience 15). Best checkpoint re-val: P=0.950 R=0.974
+  mAP50=0.981 mAP50-95=0.919 on the 2,936-image val split (holdout families).
+- All 36 classes with val instances have AP@0.5 ≥ 0.835 (`webContent` lowest
+  among present classes). Thin bars remain weak at 0.5:0.95
+  (`homeIndicator` 0.461, `progressView` 0.465) — IoU tightness, not misses.
+- Five empty classes still have 0 AP (`statusBar`, `toolbar`, `scrollIndicator`,
+  `tooltip`, `unknown`). DS-G8 cannot pass until generator coverage.
+- `best.pt` / `last.pt` stripped to 40.6 MB. Epoch snapshots `epoch45.pt`–
+  `epoch92.pt` remain (full optimizer state, ~154 MB each).
+- CoreML export (TASK-6a-4, 2026-08-27): FP16 + NMS
+  `NativeUITrainer/yolo_runs/phase6a_r007/weights/best.mlpackage` **38.5 MB**
+  (< 50 MB → TASK-6a-6 distillation not required). Swift `MLModel.compileModel`
+  + `MLModel(contentsOf:)` loads; inputs `image` 640×640, `iouThreshold`,
+  `confidenceThreshold`; outputs `confidence`, `coordinates`. INT8 still due
+  for TASK-6a-5. Do not copy into `NativeUIAuditKitModels` until 6a-7 eval.
+

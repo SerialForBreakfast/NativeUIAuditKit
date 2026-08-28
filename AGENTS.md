@@ -14,14 +14,17 @@ is the sole authority**.
 NativeUIAuditKit is a research-first Swift Package building a `VNCoreMLRequest`-backed native Apple
 UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElementRequest`.
 
-**Current state: Phase 6 — Model Training (iOS 5-class prototype)**
+**Current state: Phase 6a — 41-class YOLO11 training (iOS)**
 
 - Phases 0–5b: **Complete.** Scaffold, coordinate spike, taxonomy (41 classes), schema v1.0, dataset
   generator (SwiftUI + UIKit templates, 16,440 images), known-bad generator, Phase 5b extended templates.
-- Phase 6: **In progress.** Training the first 5-class Create ML model (alert, navigationBar,
-  primaryButton, textField, toggle). Three training runs attempted; Run 003 (strip-tiled) is the
-  current active training run.
-- Phases 6a–7: **Blocked** on Phase 6 gate (mAP@0.5 ≥ 0.70 on withheld test set).
+- Phase 6 (5-class): **Complete.** Create ML prototype retired; shipped detector is YOLO11n
+  (`nativeui-ios-v2.0`, mAP@0.5 = 0.935 CoreML). Run 006 + generalization holdout (mAP 0.934).
+- Phase 6 gate (Foundation Models eval): **Skipped** 2026-08-23 — no image-input API.
+- Phase 6a: **In progress.** Run 007 YOLO11m **training complete** 2026-08-27
+  (early-stop epoch 93, best mAP@0.5 = 0.981 val). Next: CoreML export
+  (TASK-6a-4). See `Research/ExperimentLog.md`.
+- Phase 7: Unblocked on the 5-class live detector; 41-class production gate is still Phase 6a.
 
 **Before making any code changes, read in this order:**
 1. `Research/NativeUIElementDetection.md` — architecture authority
@@ -115,16 +118,22 @@ without re-reading the full conversation history.
 | `NativeUIAuditKitModels/Package.swift` | Declares `.mlpackage.mlmodel` as a resource |
 | `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift` | 3-pass inference: fullImage + SAHI tiles + horizontal strips |
 
-### Training run command
+### Training run command (Phase 6a — YOLO11)
 
 ```bash
 # Always run from the NativeUIAuditKit package root
-nohup swift run NativeUITrainer \
-  --dataset <path-to-dataset-root> \
-  --output  NativeUIAuditKitModels/Sources/NativeUIAuditKitModels \
-  >> NativeUITrainer/training.log 2>&1 &
+# 1) Export native JSON → YOLO + COCO (family holdout)
+.venv-yolo/bin/python scripts/export_coco.py --dataset <path-to-NativeUIAuditKit-Dataset>
+# 2) Class weights
+.venv-yolo/bin/python scripts/compute_class_weights.py
+# 3) Dry-run, then full train
+.venv-yolo/bin/python scripts/train_ios_model.py --dry-run
+nohup .venv-yolo/bin/python scripts/train_ios_model.py \
+  >> NativeUITrainer/training_6a.log 2>&1 &
 echo "PID: $!"
 ```
+
+**Log is at `NativeUITrainer/training_6a.log`.** The Create ML `NativeUITrainer` CLI is retired for production training (Run 006+).
 
 **Log is at `NativeUITrainer/training.log`.** Tail it to check progress:
 ```bash

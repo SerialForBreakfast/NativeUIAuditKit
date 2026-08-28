@@ -1606,7 +1606,9 @@ Document the decision and mAP result in `Research/TrainingDataStrategy.md` under
 
 ---
 
-#### TASK-6a-1: YOLO11 training configuration
+#### TASK-6a-1: YOLO11 training configuration [x] — Run 007 complete 2026-08-27
+
+*2026-08-23: `scripts/export_coco.py`, `scripts/train_ios_model.py` added. Export writes to `NativeUITrainer/yolo_dataset_41class/` (in-package) rather than the external dataset store (filesystem-boundary rule). Ultralytics YOLO11 has no `loss="focal"` kwarg — inverse-frequency `class_weights.json` + OHEM is the operational stand-in. Family holdout replaces the generator 8:1:1 split (BP-27). 36/41 taxonomy classes have iOS instances; five empty classes keep frozen IDs (BP-28).*
 
 **File:** `scripts/train_ios_model.py` (new)  
 **Requires:** TASK-2b-2 complete (category_map.json), Phase 5b generation complete
@@ -1639,7 +1641,7 @@ Write `scripts/export_coco.py` — converts our custom JSON annotations to COCO 
 
 ---
 
-#### TASK-6a-2: Focal loss alpha calibration
+#### TASK-6a-2: Focal loss alpha calibration [x] — `scripts/class_weights.json` used in Run 007
 
 **File:** `scripts/compute_class_weights.py` (new)  
 **Requires:** TASK-6-1 (dataset quality check), Phase 5b generation complete
@@ -1659,7 +1661,7 @@ Compute per-class focal loss alpha weights from inverse class frequency in the t
 
 ---
 
-#### TASK-6a-3: OHEM callback
+#### TASK-6a-3: OHEM callback [x] — same-length replacement (BP-29); used through Run 007
 
 **File:** `scripts/ohem_callback.py` (new)  
 **Requires:** Nothing beyond YOLO knowledge — unblocked
@@ -1681,7 +1683,7 @@ class OHEMCallback:
 
 ---
 
-#### TASK-6a-4: CoreML export pipeline
+#### TASK-6a-4: CoreML export pipeline [~] — Run 007 `best.pt` ready 2026-08-27
 
 **File:** `scripts/export_to_coreml.py` (new)  
 **Requires:** Successful YOLO11 training run

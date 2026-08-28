@@ -342,7 +342,7 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **6: iOS Model (5-class)** | 🔄 In progress | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.935, YOLO11n); device latency ✓ (~7.5ms) |
 | **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline (see [Tasks.md](Tasks.md#phase-6d-nativeuidetectionrequest-v2-migration)) | TASK-6d-1 through 6d-7 pass |
 | **6→6a: Foundation Models eval** | ✅ Skipped | Confirmed infeasible — `FoundationModels` has no image input API (verified against shipped `.swiftinterface`) | Decision documented without a measurement — proceeding to 6a |
-| **6a: iOS Model (41-class)** | ⬜ | Anchor-free YOLO11 + focal loss; all 41 classes | mAP@0.5 ≥ 0.85 on withheld-template test |
+| **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout; 36/41 classes in iOS data | mAP@0.5 ≥ 0.85 on withheld-template test |
 | **6b: tvOS Model** | ⬜ | Focus state, top tab bar | mAP@0.5 ≥ 0.80 |
 | **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | mAP@0.5 ≥ 0.80 |
 | **7: OCR Fusion** | ⬜ | Visible text + truncation/clipping rules | Unit tests pass on known-bad fixtures |
@@ -350,8 +350,8 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **9: ScreenAuditKit Integration** | ⬜ | Drop-in protocol; contract fields; CLI flag | All ScreenAuditKit tests pass |
 
 **Immediate next steps:**
-1. Begin Phase 6a (41-class YOLO11 training) — both gates ahead of it are now resolved: Foundation Models eval confirmed infeasible on-device (skipped, decision documented in `Research/TrainingDataStrategy.md` §16.5) and the generalization holdout check (mAP 0.934 on an unseen layout) provides independent evidence the architecture generalizes well
-2. True family-holdout retrain (matching Phase 6a's own stated methodology, heavier than the holdout check above) happens naturally as part of Phase 6a's dataset design — see `TASK-6a-1`
+1. Phase 6a is underway (Run 007) — YOLO11m, family-holdout split, native JSON → YOLO export. Five taxonomy classes have 0 iOS instances (`statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`); DS-G8 cannot fully pass until those are generated.
+2. After Run 007: CoreML export (TASK-6a-4), quantization bench (TASK-6a-5), then the full 41-class eval (TASK-6a-7).
 
 ---
 

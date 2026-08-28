@@ -628,3 +628,43 @@ Full images are also included alongside strips (for alert and toggle coverage, w
 **Implemented in:** `NativeUITrainer/Sources/CreateMLExporter.swift` (`stripFraction` parameter), `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift` (`stripPass`), `scripts/eval_map.swift` (`stripPass` function).
 
 **Do NOT evaluate a strip-trained model with only a full-image VNCoreMLRequest.** That will still show AP=0 for navigationBar and textField because the full-image pass suffers from the same anchor-assignment problem that training fixed. You must run the strip pass at eval time too.
+
+---
+
+### BP-27: Phase 6a splits must withhold entire template families — the generator 8:1:1 split is not a holdout
+
+**Wrong:** Train YOLO11 on the generator's `train/` folder and report mAP on `test/`. Those folders are an 8:1:1 split *within each family* (QG-5). Every layout the model sees at test time was also seen at train time.
+
+**Correct:** Move every image from a chosen set of families into `test/`, regardless of the original split. Train and validate only on the remaining families. Default holdout (Run 007): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Never withhold a family that is the unique source of a rare class (`ColorPicker` / colorWell, `MenuButton` / menuButton, `iPadSidebar` / sidebar, `MapOverlays` / mapView, `HardNegative_2` / webContent).
+
+**Why:** Phase 6a's gate is mAP on a withheld-template test. Measuring on the generator test split repeats Run 006's in-distribution number and does not answer the gate.
+
+---
+
+### BP-28: Drop generator labels that are not in the frozen 41-class taxonomy
+
+**Wrong:** Train on every `elementType` string in the annotation JSON, including `tabBarItem`.
+
+**Correct:** Keep only names in `Research/schemas/category_map.json`. `tabBarItem` is a chrome auto-detect artifact (parent `tabBar` is already labeled). Five taxonomy classes currently have 0 iOS instances (`statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`) — they stay in the 41-slot name list so IDs remain frozen, but they contribute no boxes until the generator covers them.
+
+**Why:** Extra heads waste capacity and scramble the frozen ID map. Empty classes with reserved IDs are cheaper to fill later than a remapped taxonomy.
+
+---
+
+### BP-29: OHEM must keep YOLO dataset length constant — never append to `im_files` without resizing `ims`
+
+**Wrong:** At `on_train_epoch_end`, append extra copies of hard images onto `dataset.im_files` and `dataset.labels` (11,504 → 13,804).
+
+**Correct:** Replace easy-image slots with extra copies of the hard images so `len(im_files)` stays equal to the original `ni`. Reset `ims` / `im_hw0` / `im_hw` / `npy_files` to match. Call `train_loader.reset()` so workers pick up the new list.
+
+**Why:** Ultralytics `BaseDataset.load_image` indexes `self.ims[i]` (sized once at init). `nb = len(train_loader)` is captured *once* before the epoch loop, but `SequentialSampler` (used with `rect=True`) uses live `len(dataset)`. After OHEM grows `labels`, epoch 2's loader yields more batches than `nb`. tqdm shows `2876/2876`, then the next index is `>= ni` → `IndexError: list index out of range`. Run 007 died at the end of epoch 2 this way. Same-length replacement keeps the sampler, `nb`, and `ims` aligned.
+
+---
+
+### BP-30: Resume Phase 6a from `last.pt` after a power cut; do not restart from `yolo11m.pt`
+
+**Wrong:** After a reboot, run `train_ios_model.py` without `--resume`. That starts epoch 1 again and overwrites the run directory.
+
+**Correct:** `last.pt` is only valid at epoch boundaries. Mid-epoch progress is lost. Resume with `--resume NativeUITrainer/yolo_runs/phase6a_r007/weights/last.pt`. If `last.pt` is unreadable (cut during the write), use `last.prev.pt`. Keep the machine awake with `caffeinate` and run `scripts/watch_phase6a.py` so a crash or logout restarts the resume loop until Ultralytics exits 0 (100 epochs or patience).
+
+**Why:** Run 007 lost power mid-epoch 46. `results.csv` and `last.pt` had finished epoch 45 (best mAP50 = 0.984 at epoch 39). A fresh start would throw that away. The watchdog is how the run actually finishes unattended.

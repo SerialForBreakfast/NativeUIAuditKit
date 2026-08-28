@@ -1,7 +1,7 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
-**Status:** Research / pre-spike  
-**As of:** 2026-05-03  
+**Status:** Phase 6 complete (5-class YOLO11n); Phase 6a (41-class YOLO11) in progress  
+**As of:** 2026-08-23  
 **Audience:** NativeUIAuditKit maintainers and ScreenAuditKit contributors  
 **Related:**  
 - [`../Research/References.md`](References.md) — Apple docs and prior art  
@@ -507,7 +507,42 @@ try model.write(to: outputURL.appendingPathComponent("NativeUIDetector.mlpackage
 
 Use for the first 5-class vertical slice. Move to Option B if mAP plateaus below 0.80.
 
-### 8.3 Option B: YOLO/DETR-Style → coremltools (Production)
+### 8.3 Option B: YOLO11 → Ultralytics CoreML export (Production — Phase 6a)
+
+**Decision (2026-08-23):** Phase 6a trains an **anchor-free YOLO11** detector on the full 41-class taxonomy via Ultralytics, then exports with `format=coreml, nms=True`. Run 006 already proved this path on the 5-class prototype (mAP@0.5 = 0.935 CoreML). Create ML `objectPrint` is retired for production training (BP-26).
+
+**Configuration (Run 007):**
+
+| Knob | Value | Rationale |
+|---|---|---|
+| Architecture | YOLO11m | Specified production starting point; distill to nano if FP16 > 50 MB |
+| Image size | 640 | Matches Run 006 inference contract (letterbox) |
+| Epochs | 100, patience 15 | Early-stop before overfitting to generator textures |
+| Batch | auto (`-1`) on MPS | MacBook Air unified memory; override with `--batch` if OOM |
+| Loss | Ultralytics default box+cls+dfl, plus inverse-frequency class weights | Ultralytics YOLO11 has no `loss="focal"` train kwarg; class α from `scripts/class_weights.json` is the operational stand-in |
+| Hard examples | OHEM callback, top 20% train images replace easy slots next epoch (same length, BP-29) | Matches TrainingDataStrategy §16.3 |
+| Split | **Family holdout**, not the generator's 8:1:1-within-family split | Section 8.5; QG-5 deferred this to Phase 6a |
+| Labels | Native annotation JSON → YOLO txt + COCO JSON | Do **not** reuse the 5-class Create ML export |
+| Output | `NativeUITrainer/yolo_dataset_41class/` (in-package, gitignored) | Filesystem-boundary rule: never write `dataset.yaml` into the external dataset store |
+
+**Coordinate conversion** (Vision bottom-left → YOLO/COCO top-left, center-anchored, normalized):
+
+```
+cx = vn.x + vn.width  / 2
+cy = 1.0 - vn.y - vn.height / 2
+w  = vn.width
+h  = vn.height
+```
+
+Same formula as `CreateMLExporter` (BP-10). Source field: `boundsVisionNormalized`.
+
+**Class coverage (known gap, documented 2026-08-23):** the iOS generator dataset has **36 of 41** taxonomy classes. Five taxonomy classes have 0 instances: `statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`. Extra generator label `tabBarItem` is **dropped** (not in the frozen taxonomy; parent `tabBar` is already labeled). Training uses frozen `category_map.json` IDs 0–40 so later generator fills do not reshuffle IDs. The DS-G8 per-class AP ≥ 0.65 gate **cannot** pass for the five empty classes until generator coverage is added.
+
+Default withheld families (not unique sources of rare classes): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Do **not** withhold `ColorPicker`, `MenuButton`, `iPadSidebar`, `MapOverlays`, or `HardNegative_2`.
+
+Scripts: `scripts/export_coco.py`, `scripts/compute_class_weights.py`, `scripts/ohem_callback.py`, `scripts/train_ios_model.py`.
+
+### 8.3.1 Historical: YOLO/DETR-Style → coremltools (superseded by 8.3)
 
 For higher performance after the data pipeline is stable. YOLOv8 or RT-DETR converted via `coremltools` gives better small-object detection and more tuning flexibility.
 
