@@ -21,9 +21,9 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 - Phase 6 (5-class): **Complete.** Create ML prototype retired; shipped detector is YOLO11n
   (`nativeui-ios-v2.0`, mAP@0.5 = 0.935 CoreML). Run 006 + generalization holdout (mAP 0.934).
 - Phase 6 gate (Foundation Models eval): **Skipped** 2026-08-23 — no image-input API.
-- Phase 6a: **In progress.** Run 007 YOLO11m **training complete** 2026-08-27
-  (early-stop epoch 93, best mAP@0.5 = 0.981 val). Next: CoreML export
-  (TASK-6a-4). See `Research/ExperimentLog.md`.
+- Phase 6a: **In progress.** Run 007 holdout test mAP@0.5 = 0.358 (DS-G8 fail).
+  Ship NMS FP16 38.5 MB. TASK-6a-8 templates ready; next is dataset regen then
+  Run 008 (not another train on the same images). See `Research/ExperimentLog.md`.
 - Phase 7: Unblocked on the 5-class live detector; 41-class production gate is still Phase 6a.
 
 **Before making any code changes, read in this order:**

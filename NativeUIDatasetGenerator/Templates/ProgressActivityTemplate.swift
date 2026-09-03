@@ -7,6 +7,7 @@
 // Annotated elements:
 //   progressView      — linear progress bars (1–3 of them)
 //   activityIndicator — spinning activity indicators (1–2)
+//   pageControl       — isolated SwiftUI dots (Onboarding/Gallery holdout style)
 //   label             — descriptive text for each progress/activity item
 //   cancelAction      — cancel / stop button
 //
@@ -33,6 +34,10 @@ public struct ProgressActivityConfig: Sendable {
     public var activityItems: [String]
     /// Cancel button label.
     public var cancelLabel: String
+    /// Isolated page-indicator count (2–5). Matches holdout Onboarding/Gallery dots.
+    public var pageCount: Int
+    /// Zero-based current page for `pageControl_0`.
+    public var currentPage: Int
     /// Color scheme applied to the view.
     public var colorScheme: ColorScheme
 
@@ -41,12 +46,16 @@ public struct ProgressActivityConfig: Sendable {
         progressItems: [(label: String, fraction: Double)],
         activityItems: [String],
         cancelLabel: String,
+        pageCount: Int,
+        currentPage: Int,
         colorScheme: ColorScheme
     ) {
         self.title = title
         self.progressItems = progressItems
         self.activityItems = activityItems
         self.cancelLabel = cancelLabel
+        self.pageCount = pageCount
+        self.currentPage = currentPage
         self.colorScheme = colorScheme
     }
 
@@ -68,11 +77,14 @@ public struct ProgressActivityConfig: Sendable {
             activityItems.append(corpus.listRowTitle())
         }
 
+        let pages = 2 + Int(rng.next() % 4)
         return ProgressActivityConfig(
             title: corpus.navigationTitle(),
             progressItems: progressItems,
             activityItems: activityItems,
             cancelLabel: "Cancel",
+            pageCount: pages,
+            currentPage: Int(rng.next() % UInt64(pages)),
             colorScheme: dark ? .dark : .light
         )
     }
@@ -153,6 +165,14 @@ public struct ProgressActivityTemplate: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
+
+                NativeUIPageDotsView(
+                    pageCount: config.pageCount,
+                    currentPage: config.currentPage
+                )
+                .frame(maxWidth: .infinity)
+                .captureFrame(id: "pageControl_0")
+                .padding(.top, 24)
 
                 Spacer()
 

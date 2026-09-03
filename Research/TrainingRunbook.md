@@ -260,8 +260,9 @@ Multiple `.json` files exist in the export images directory. The `directoryWithI
 | `scripts/inspect_model_outputs.swift` | Raw YOLO tensor inspection |
 | `scripts/verify_strip_export.swift` | Strip dimension and coordinate validation |
 | `Research/ExperimentLog.md` | All training runs — read before starting a new one |
+| `Research/ADR-0006-Training-Iteration-Efficiency.md` | Training iteration efficiency & host hygiene decisions (Run 009+) |
 | `Research/Phase6LessonsLearned.md` | Detailed technical findings from Phase 6 |
-| `Research/BestPractices.md` | All known pitfalls (BP-25: scaleFit bug, BP-26: anchor assignment) |
+| `Research/BestPractices.md` | All known pitfalls (BP-25: scaleFit bug, BP-26: anchor assignment, BP-33-35: MPS efficiency) |
 
 ---
 

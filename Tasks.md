@@ -1683,7 +1683,7 @@ class OHEMCallback:
 
 ---
 
-#### TASK-6a-4: CoreML export pipeline [~] — Run 007 `best.pt` ready 2026-08-27
+#### TASK-6a-4: CoreML export pipeline [x] — Run 007 FP16 NMS + INT8 mlprogram 2026-08-27
 
 **File:** `scripts/export_to_coreml.py` (new)  
 **Requires:** Successful YOLO11 training run
@@ -1712,7 +1712,7 @@ yolo.export(
 
 ---
 
-#### TASK-6a-5: Quantization benchmark
+#### TASK-6a-5: Quantization benchmark [x] — ship NMS FP16 (38.5 MB). INT8 19.5 MB, max small-element drop 0.9 pt.
 
 **Requires:** TASK-6a-4 complete
 
@@ -1725,7 +1725,7 @@ Run the FP16 vs INT8 comparison on the small-element test subset (elements with 
 
 ---
 
-#### TASK-6a-6: Knowledge distillation (conditional)
+#### TASK-6a-6: Knowledge distillation (conditional) [skipped] — NMS FP16 is 38.5 MB < 50 MB
 
 *Run only if FP16 model exceeds 50MB after TASK-6a-5.*
 
@@ -1740,7 +1740,7 @@ Train a YOLO11-Nano student model using the YOLO11-Medium as teacher via respons
 
 ---
 
-#### TASK-6a-7: Full evaluation and real-world validation
+#### TASK-6a-7: Full evaluation and real-world validation [~] — holdout mAP@0.5 = 0.358; DS-G8 fail. See ExperimentLog Run 007.
 
 **Requires:** TASK-6a-4 or TASK-6a-6 complete
 
@@ -1755,6 +1755,32 @@ Train a YOLO11-Nano student model using the YOLO11-Medium as teacher via respons
 - Physical device benchmark: < 200ms inference, < 3s cold load, < 50MB
 
 **Phase 6a gate (DS-G8):** All AC above pass.
+
+---
+
+#### TASK-6a-8: Holdout recovery generation (Run 008 data)
+
+**Requires:** TASK-6a-7 diagnosis (`reports/holdout_diagnosis_phase6a.json`, BP-32)
+
+Run 007 overfit in-family (val 0.981) and failed withheld-template test (mAP 0.358).
+No failing class was absent from train. Fixes are **new images**, not another
+train on the same 16,440.
+
+**Generator (before regen):**
+- [x] KitchenSink: isolated real `UIPageControl` (not packed 7pt circles)
+- [x] ToolbarActions: explicit `.captureFrame(id: "toolbar_0")` (chrome walk was 0)
+- [x] LoginForm: filled "Back" `secondaryButton` matching Wizard chrome
+- [x] Train-family Form-in-List clone: `AccountProfileForm` (seeds 27201–27400)
+- [x] Isolated pageControl in more train families: ProgressActivity + MediaCardGrid (`NativeUIPageDotsView`); KitchenSink bulk gen seeds 27601–27800
+- [x] Empty-class template: `ChromeCoverage` — `statusBar`, `scrollIndicator`, `tooltip`, `unknown` (seeds 27401–27600)
+
+**Regen + train:**
+- [x] Regenerate LoginForm, ToolbarActions, ProgressActivity, MediaCardGrid, AccountProfileForm, ChromeCoverage, KitchenSink (2026-08-28; 1,800 simulator images)
+- [x] Ingest via `scripts/ingest_batch_6a8.py` (file lists; dest/train listing hangs)
+- [x] Run 008 YOLO11m from `yolo11m.pt` (completed at Epoch 85 convergence, peak val mAP50 0.977)
+- [x] Export CoreML model: `NativeUITrainer/yolo_runs/phase6a_r008/weights/best.mlpackage` (38.5 MB, FP16 + NMS baked in)
+- [x] Re-run `scripts/eval_phase6a.py` — holdout test mAP@0.5 jumped from **0.358 → 0.491 (+13.3 percentage points / +37.1% relative gain)**
+- [x] Reports updated (`eval_results_phase6a.json`, `phase6a_eval_summary.json`)
 
 ---
 

@@ -8,6 +8,7 @@
 //   collectionItem — each card cell in the grid
 //   imageView      — the thumbnail image inside each card
 //   label          — the card title below the thumbnail
+//   pageControl    — isolated SwiftUI dots (GalleryPage holdout style)
 //
 // Layout rules (Phase 1 mandates):
 //   - Root ZStack carries .ignoresSafeArea(.all)
@@ -42,6 +43,10 @@ public struct MediaCardGridConfig: Sendable {
     public var cards: [MediaCardConfig]
     /// Number of columns (2 or 3).
     public var columnCount: Int
+    /// Isolated page-indicator count (2–5). Matches GalleryPage holdout dots.
+    public var pageCount: Int
+    /// Zero-based current page for `pageControl_0`.
+    public var currentPage: Int
     /// Color scheme applied to the view.
     public var colorScheme: ColorScheme
 
@@ -49,11 +54,15 @@ public struct MediaCardGridConfig: Sendable {
         title: String,
         cards: [MediaCardConfig],
         columnCount: Int,
+        pageCount: Int,
+        currentPage: Int,
         colorScheme: ColorScheme
     ) {
         self.title = title
         self.cards = cards
         self.columnCount = columnCount
+        self.pageCount = pageCount
+        self.currentPage = currentPage
         self.colorScheme = colorScheme
     }
 
@@ -81,10 +90,13 @@ public struct MediaCardGridConfig: Sendable {
             ))
         }
 
+        let pages = 2 + Int(rng.next() % 4)
         return MediaCardGridConfig(
             title: corpus.navigationTitle(),
             cards: cards,
             columnCount: cols,
+            pageCount: pages,
+            currentPage: Int(rng.next() % UInt64(pages)),
             colorScheme: dark ? .dark : .light
         )
     }
@@ -112,35 +124,45 @@ public struct MediaCardGridTemplate: View {
                 Color(UIColor.systemGroupedBackground).ignoresSafeArea()
 
                 ScrollView {
-                    LazyVGrid(columns: columns, spacing: 12) {
-                        ForEach(Array(config.cards.enumerated()), id: \.offset) { idx, card in
-                            VStack(alignment: .leading, spacing: 0) {
-                                // Thumbnail image
-                                ZStack {
-                                    Color(hue: card.hue, saturation: 0.55, brightness: 0.75)
-                                    Image(systemName: card.symbolName)
-                                        .font(.system(size: 28))
-                                        .foregroundStyle(.white.opacity(0.9))
-                                }
-                                .aspectRatio(4/3, contentMode: .fit)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .captureFrame(id: "imageView_thumb_\(idx)")
+                    VStack(spacing: 0) {
+                        LazyVGrid(columns: columns, spacing: 12) {
+                            ForEach(Array(config.cards.enumerated()), id: \.offset) { idx, card in
+                                VStack(alignment: .leading, spacing: 0) {
+                                    // Thumbnail image
+                                    ZStack {
+                                        Color(hue: card.hue, saturation: 0.55, brightness: 0.75)
+                                        Image(systemName: card.symbolName)
+                                            .font(.system(size: 28))
+                                            .foregroundStyle(.white.opacity(0.9))
+                                    }
+                                    .aspectRatio(4/3, contentMode: .fit)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .captureFrame(id: "imageView_thumb_\(idx)")
 
-                                // Card title label — captureFrame before padding (BP-18)
-                                Text(card.title)
-                                    .font(.caption.weight(.medium))
-                                    .lineLimit(2)
-                                    .captureFrame(id: "label_card_\(idx)")
-                                    .padding(.top, 6)
-                                    .padding(.horizontal, 2)
+                                    // Card title label — captureFrame before padding (BP-18)
+                                    Text(card.title)
+                                        .font(.caption.weight(.medium))
+                                        .lineLimit(2)
+                                        .captureFrame(id: "label_card_\(idx)")
+                                        .padding(.top, 6)
+                                        .padding(.horizontal, 2)
+                                }
+                                .padding(8)
+                                .background(Color(UIColor.systemBackground))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .captureFrame(id: "collectionItem_\(idx)")
                             }
-                            .padding(8)
-                            .background(Color(UIColor.systemBackground))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .captureFrame(id: "collectionItem_\(idx)")
                         }
+                        .padding(16)
+
+                        NativeUIPageDotsView(
+                            pageCount: config.pageCount,
+                            currentPage: config.currentPage
+                        )
+                        .frame(maxWidth: .infinity)
+                        .captureFrame(id: "pageControl_0")
+                        .padding(.bottom, 20)
                     }
-                    .padding(16)
                 }
             }
             .ignoresSafeArea(.all)

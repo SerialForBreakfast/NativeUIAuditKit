@@ -1,0 +1,570 @@
+{
+  "note": "zero_shot_holdout=true means the class appears in the withheld test split but has 0 train boxes \u2014 BP-27 unique-source violation. Otherwise AP=0 is a visual-style miss (train saw a different chrome).",
+  "splits": {
+    "train_images": 11504,
+    "val_images": 2936,
+    "test_images": 2000
+  },
+  "per_class": [
+    {
+      "class": "actionSheet",
+      "train": 320,
+      "val": 80,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "activityIndicator",
+      "train": 1255,
+      "val": 317,
+      "test": 0,
+      "train_frac_of_all": 0.7983,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "alert",
+      "train": 320,
+      "val": 80,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "cancelAction",
+      "train": 1700,
+      "val": 426,
+      "test": 0,
+      "train_frac_of_all": 0.7996,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "collectionItem",
+      "train": 2094,
+      "val": 529,
+      "test": 0,
+      "train_frac_of_all": 0.7983,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "colorWell",
+      "train": 263,
+      "val": 68,
+      "test": 0,
+      "train_frac_of_all": 0.7946,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "contextMenu",
+      "train": 320,
+      "val": 80,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "destructiveButton",
+      "train": 362,
+      "val": 96,
+      "test": 0,
+      "train_frac_of_all": 0.7904,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "disclosureGroup",
+      "train": 1722,
+      "val": 420,
+      "test": 0,
+      "train_frac_of_all": 0.8039,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "dynamicIsland",
+      "train": 240,
+      "val": 60,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "homeIndicator",
+      "train": 1280,
+      "val": 320,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "imageView",
+      "train": 2653,
+      "val": 670,
+      "test": 1900,
+      "train_frac_of_all": 0.5079,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "label",
+      "train": 27748,
+      "val": 6921,
+      "test": 9321,
+      "train_frac_of_all": 0.6308,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "link",
+      "train": 375,
+      "val": 92,
+      "test": 0,
+      "train_frac_of_all": 0.803,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "listRow",
+      "train": 25572,
+      "val": 6396,
+      "test": 700,
+      "train_frac_of_all": 0.7828,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "mapView",
+      "train": 480,
+      "val": 120,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "menuButton",
+      "train": 240,
+      "val": 60,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "navigationBar",
+      "train": 8618,
+      "val": 2151,
+      "test": 800,
+      "train_frac_of_all": 0.7449,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "pageControl",
+      "train": 560,
+      "val": 140,
+      "test": 600,
+      "train_frac_of_all": 0.4308,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "picker",
+      "train": 480,
+      "val": 120,
+      "test": 200,
+      "train_frac_of_all": 0.6,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "popover",
+      "train": 320,
+      "val": 80,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "primaryButton",
+      "train": 4688,
+      "val": 1172,
+      "test": 1366,
+      "train_frac_of_all": 0.6488,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "progressView",
+      "train": 1386,
+      "val": 348,
+      "test": 200,
+      "train_frac_of_all": 0.7166,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "refreshControl",
+      "train": 480,
+      "val": 120,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "scrollIndicator",
+      "train": 0,
+      "val": 0,
+      "test": 0,
+      "train_frac_of_all": null,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "searchField",
+      "train": 480,
+      "val": 120,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "secondaryButton",
+      "train": 3185,
+      "val": 792,
+      "test": 341,
+      "train_frac_of_all": 0.7376,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "secureField",
+      "train": 1600,
+      "val": 400,
+      "test": 200,
+      "train_frac_of_all": 0.7273,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "segmentedControl",
+      "train": 720,
+      "val": 180,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "sheet",
+      "train": 368,
+      "val": 92,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "sidebar",
+      "train": 160,
+      "val": 40,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "slider",
+      "train": 1076,
+      "val": 263,
+      "test": 0,
+      "train_frac_of_all": 0.8036,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "statusBar",
+      "train": 0,
+      "val": 0,
+      "test": 0,
+      "train_frac_of_all": null,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "stepperControl",
+      "train": 1680,
+      "val": 432,
+      "test": 200,
+      "train_frac_of_all": 0.7266,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "tabBar",
+      "train": 1840,
+      "val": 460,
+      "test": 0,
+      "train_frac_of_all": 0.8,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "textField",
+      "train": 2114,
+      "val": 531,
+      "test": 500,
+      "train_frac_of_all": 0.6722,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "toggle",
+      "train": 5043,
+      "val": 1273,
+      "test": 1821,
+      "train_frac_of_all": 0.6198,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "toolbar",
+      "train": 0,
+      "val": 0,
+      "test": 0,
+      "train_frac_of_all": null,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "tooltip",
+      "train": 0,
+      "val": 0,
+      "test": 0,
+      "train_frac_of_all": null,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "unknown",
+      "train": 0,
+      "val": 0,
+      "test": 0,
+      "train_frac_of_all": null,
+      "zero_shot_holdout": false
+    },
+    {
+      "class": "webContent",
+      "train": 280,
+      "val": 120,
+      "test": 0,
+      "train_frac_of_all": 0.7,
+      "zero_shot_holdout": false
+    }
+  ],
+  "failing_holdout_classes": [
+    {
+      "class": "imageView",
+      "train": 2653,
+      "val": 670,
+      "test": 1900,
+      "miss_rate": 0.3711,
+      "matched_as": [
+        {
+          "class": "__miss__",
+          "n": 705
+        },
+        {
+          "class": "primaryButton",
+          "n": 461
+        },
+        {
+          "class": "imageView",
+          "n": 397
+        },
+        {
+          "class": "colorWell",
+          "n": 137
+        },
+        {
+          "class": "picker",
+          "n": 55
+        },
+        {
+          "class": "toggle",
+          "n": 42
+        },
+        {
+          "class": "listRow",
+          "n": 41
+        },
+        {
+          "class": "link",
+          "n": 14
+        }
+      ]
+    },
+    {
+      "class": "listRow",
+      "train": 25572,
+      "val": 6396,
+      "test": 700,
+      "miss_rate": 0.2571,
+      "matched_as": [
+        {
+          "class": "label",
+          "n": 220
+        },
+        {
+          "class": "imageView",
+          "n": 215
+        },
+        {
+          "class": "__miss__",
+          "n": 180
+        },
+        {
+          "class": "picker",
+          "n": 20
+        },
+        {
+          "class": "contextMenu",
+          "n": 19
+        },
+        {
+          "class": "primaryButton",
+          "n": 16
+        },
+        {
+          "class": "alert",
+          "n": 12
+        },
+        {
+          "class": "textField",
+          "n": 10
+        }
+      ]
+    },
+    {
+      "class": "pageControl",
+      "train": 560,
+      "val": 140,
+      "test": 600,
+      "miss_rate": 0.975,
+      "matched_as": [
+        {
+          "class": "__miss__",
+          "n": 585
+        },
+        {
+          "class": "activityIndicator",
+          "n": 14
+        },
+        {
+          "class": "label",
+          "n": 1
+        }
+      ]
+    },
+    {
+      "class": "picker",
+      "train": 480,
+      "val": 120,
+      "test": 200,
+      "miss_rate": 0.335,
+      "matched_as": [
+        {
+          "class": "listRow",
+          "n": 133
+        },
+        {
+          "class": "__miss__",
+          "n": 67
+        }
+      ]
+    },
+    {
+      "class": "secondaryButton",
+      "train": 3185,
+      "val": 792,
+      "test": 341,
+      "miss_rate": 0.0,
+      "matched_as": [
+        {
+          "class": "cancelAction",
+          "n": 311
+        },
+        {
+          "class": "primaryButton",
+          "n": 28
+        },
+        {
+          "class": "destructiveButton",
+          "n": 2
+        }
+      ]
+    },
+    {
+      "class": "secureField",
+      "train": 1600,
+      "val": 400,
+      "test": 200,
+      "miss_rate": 0.5,
+      "matched_as": [
+        {
+          "class": "listRow",
+          "n": 100
+        },
+        {
+          "class": "__miss__",
+          "n": 100
+        }
+      ]
+    },
+    {
+      "class": "stepperControl",
+      "train": 1680,
+      "val": 432,
+      "test": 200,
+      "miss_rate": 0.81,
+      "matched_as": [
+        {
+          "class": "__miss__",
+          "n": 162
+        },
+        {
+          "class": "listRow",
+          "n": 38
+        }
+      ]
+    },
+    {
+      "class": "textField",
+      "train": 2114,
+      "val": 531,
+      "test": 500,
+      "miss_rate": 0.102,
+      "matched_as": [
+        {
+          "class": "listRow",
+          "n": 314
+        },
+        {
+          "class": "secureField",
+          "n": 63
+        },
+        {
+          "class": "__miss__",
+          "n": 51
+        },
+        {
+          "class": "textField",
+          "n": 37
+        },
+        {
+          "class": "label",
+          "n": 33
+        },
+        {
+          "class": "disclosureGroup",
+          "n": 2
+        }
+      ]
+    },
+    {
+      "class": "toggle",
+      "train": 5043,
+      "val": 1273,
+      "test": 1821,
+      "miss_rate": 0.0324,
+      "matched_as": [
+        {
+          "class": "toggle",
+          "n": 1362
+        },
+        {
+          "class": "listRow",
+          "n": 400
+        },
+        {
+          "class": "__miss__",
+          "n": 59
+        }
+      ]
+    }
+  ],
+  "zero_shot": []
+}

@@ -122,6 +122,19 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Resolve --resume before chdir. A relative last.pt is otherwise looked
+    # up under NativeUITrainer/weights/ and raises FileNotFoundError (BP-30).
+    if args.resume:
+        resume_path = Path(args.resume).expanduser()
+        if not resume_path.is_absolute():
+            resume_path = (PROJECT_ROOT / resume_path).resolve()
+        else:
+            resume_path = resume_path.resolve()
+        if not resume_path.is_file():
+            print(f"ERROR: --resume not found: {resume_path}")
+            sys.exit(1)
+        args.resume = str(resume_path)
+
     # Point Ultralytics weight downloads at NativeUITrainer/weights.
     os.chdir(WEIGHTS_DIR)
 

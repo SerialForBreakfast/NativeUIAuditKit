@@ -7,7 +7,8 @@
 - [`../Research/References.md`](References.md) — Apple docs and prior art  
 - [`../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md`](../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md) — feasibility ADR  
 - [`../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)  
-- [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)
+- [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)  
+- [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) — Apple Silicon training iteration efficiency ADR
 
 ---
 
@@ -536,7 +537,9 @@ h  = vn.height
 
 Same formula as `CreateMLExporter` (BP-10). Source field: `boundsVisionNormalized`.
 
-**Class coverage (known gap, documented 2026-08-23):** the iOS generator dataset has **36 of 41** taxonomy classes. Five taxonomy classes have 0 instances: `statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`. Extra generator label `tabBarItem` is **dropped** (not in the frozen taxonomy; parent `tabBar` is already labeled). Training uses frozen `category_map.json` IDs 0–40 so later generator fills do not reshuffle IDs. The DS-G8 per-class AP ≥ 0.65 gate **cannot** pass for the five empty classes until generator coverage is added.
+**Class coverage (known gap, documented 2026-08-23):** the iOS generator dataset has **36 of 41** taxonomy classes. Five taxonomy classes have 0 instances: `statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`. Extra generator label `tabBarItem` is **dropped**. Training uses frozen `category_map.json` IDs 0–40.
+
+**Holdout outcome (Run 007, 2026-08-27):** in-family val mAP@0.5 = 0.981; withheld-template **test** mAP@0.5 = **0.358** (DS-G8 fail). No failing class was missing from train (BP-32). `toolbar` is still 0 boxes because `detectChromeFrames` never saw SwiftUI `.bottomBar`. TASK-6a-8 generator recovery (templates ready, dataset not yet regenerated): KitchenSink isolated `UIPageControl`; ToolbarActions explicit `toolbar_0`; LoginForm filled "Back" `secondaryButton`; train family `AccountProfileForm` (Form-in-List clone); ProgressActivity + MediaCardGrid isolated SwiftUI dots; `ChromeCoverage` for `statusBar` / `scrollIndicator` / `tooltip` / `unknown`. Do not copy 41-class weights into `NativeUIAuditKitModels` until DS-G8.
 
 Default withheld families (not unique sources of rare classes): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Do **not** withhold `ColorPicker`, `MenuButton`, `iPadSidebar`, `MapOverlays`, or `HardNegative_2`.
 

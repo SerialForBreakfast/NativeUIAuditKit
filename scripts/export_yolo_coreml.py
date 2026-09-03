@@ -76,6 +76,12 @@ def parse_args():
                    help="Bake NMS into the CoreML graph (default: True)")
     p.add_argument("--half",    action="store_true", default=False,
                    help="Export FP16 (smaller, slightly less accurate)")
+    p.add_argument(
+        "--int8",
+        action="store_true",
+        default=False,
+        help="8-bit k-means weight palettization (Ultralytics quantize=8). Writes <stem>_int8.mlpackage.",
+    )
     return p.parse_args()
 
 
@@ -97,22 +103,51 @@ def main():
     _patch_coremltools()
 
     print(f"Exporting {weights} → CoreML")
-    print(f"  imgsz : {args.imgsz}")
-    print(f"  nms   : {args.nms}")
-    print(f"  half  : {args.half}")
+    print(f"  imgsz    : {args.imgsz}")
+    print(f"  nms      : {args.nms}")
+    print(f"  half     : {args.half}")
+    print(f"  int8     : {args.int8}")
 
-    model = YOLO(str(weights))
-    exported = model.export(
-        format  = "coreml",
-        imgsz   = args.imgsz,
-        nms     = args.nms,
-        half    = args.half,
-        int8    = False,
-        verbose = True,
-    )
+    if args.int8:
+        # Apple linear INT8 on an already-exported FP16+NMS package.
+        # Ultralytics quantize=8 k-means palettization SIGKILL'd YOLO11m at
+        # palettize_weights 0/227 (see BP-31).
+        import coremltools as ct
+        import coremltools.optimize.coreml as cto
 
-    mlpkg = Path(exported)
-    print(f"\nExported → {mlpkg}")
+        src = weights.with_name(weights.stem + "_fp16.mlpackage")
+        if not src.is_dir():
+            src = weights.with_suffix(".mlpackage")
+        if not src.is_dir():
+            print(f"ERROR: need an FP16 mlpackage beside the .pt (looked for {src})")
+            sys.exit(1)
+        dest = weights.with_name(weights.stem + "_int8.mlpackage")
+        print(f"  source   : {src}")
+        print("  method   : coremltools linear_quantize_weights")
+        mlmodel = ct.models.MLModel(str(src))
+        config = cto.OptimizationConfig(
+            global_config=cto.OpLinearQuantizerConfig(mode="linear_symmetric")
+        )
+        quantized = cto.linear_quantize_weights(mlmodel, config)
+        if dest.exists():
+            shutil.rmtree(dest)
+        quantized.save(str(dest))
+        mlpkg = dest
+        print(f"\nExported → {mlpkg}")
+    else:
+        # quantize=16 is FP16. nms=True defaults to FP16 when quantize is omitted.
+        quantize = 16 if args.half else None
+        print(f"  quantize : {quantize}")
+        model = YOLO(str(weights))
+        exported = model.export(
+            format="coreml",
+            imgsz=args.imgsz,
+            nms=args.nms,
+            quantize=quantize,
+            verbose=True,
+        )
+        mlpkg = Path(exported)
+        print(f"\nExported → {mlpkg}")
 
     if args.output:
         out_dir = Path(args.output).expanduser().resolve()

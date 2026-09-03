@@ -1,0 +1,114 @@
+TASK-6a-8 regen start 2026-08-28T21:16:04Z udid=50B7A5E5-3114-4525-994F-C7D547D3E5B8
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project GeneratorRunner/GeneratorRunner.xcodeproj -scheme GeneratorRunnerTests -destination "platform=iOS Simulator,id=50B7A5E5-3114-4525-994F-C7D547D3E5B8" -derivedDataPath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd -resultBundlePath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/gen_6a8.xcresult "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateLoginFormImages" "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateToolbarActionsImages" "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateProgressActivityImages" "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateMediaCardGridImages" "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateAccountProfileFormImages" "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateChromeCoverageImages" "-only-testing:GeneratorRunnerTests/GenerateDatasetTests/testGenerateKitchenSinkImages" CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/gen_6a8.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:50B7A5E5-3114-4525-994F-C7D547D3E5B8, OS:18.3.1, name:iPhone 16 }
+{ platform:iOS Simulator, arch:x86_64, id:50B7A5E5-3114-4525-994F-C7D547D3E5B8, OS:18.3.1, name:iPhone 16 }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (2 targets)
+    Target 'GeneratorRunnerTests' in project 'GeneratorRunner'
+        ➜ Explicit dependency on target 'GeneratorRunner' in project 'GeneratorRunner'
+    Target 'GeneratorRunner' in project 'GeneratorRunner' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 0706c3af6140082049287906ca979d43
+Build description path: /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Intermediates.noindex/XCBuildData/0706c3af6140082049287906ca979d43.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+    cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner/GeneratorRunner.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+
+ProcessInfoPlistFile /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/Info.plist /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner/GeneratorRunner/Info.plist (in target 'GeneratorRunner' from project 'GeneratorRunner')
+    cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner
+    builtin-infoPlistUtility /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner/GeneratorRunner/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/Info.plist
+
+CopySwiftLibs /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app (in target 'GeneratorRunner' from project 'GeneratorRunner')
+    cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/GeneratorRunner.debug.dylib --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/Frameworks --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/SystemExtensions --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Intermediates.noindex/GeneratorRunner.build/Debug-iphonesimulator/GeneratorRunner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+warning: Skipping duplicate build file in Compile Sources build phase: /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUIDatasetGenerator/Templates/GalleryPageTemplate.swift (in target 'GeneratorRunnerTests' from project 'GeneratorRunner')
+ProcessInfoPlistFile /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/Info.plist /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Intermediates.noindex/GeneratorRunner.build/Debug-iphonesimulator/GeneratorRunnerTests.build/empty-GeneratorRunnerTests.plist (in target 'GeneratorRunnerTests' from project 'GeneratorRunner')
+    cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner
+    builtin-infoPlistUtility /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Intermediates.noindex/GeneratorRunner.build/Debug-iphonesimulator/GeneratorRunnerTests.build/empty-GeneratorRunnerTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/Info.plist
+
+CopySwiftLibs /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest (in target 'GeneratorRunnerTests' from project 'GeneratorRunner')
+    cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/GeneratorRunner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/GeneratorRunnerTests --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/Frameworks --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/PlugIns --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/SystemExtensions --scan-folder /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Intermediates.noindex/GeneratorRunner.build/Debug-iphonesimulator/GeneratorRunnerTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+Test Suite 'Selected tests' started at 2026-08-28 14:16:07.567.
+Test Suite 'GeneratorRunnerTests.xctest' started at 2026-08-28 14:16:07.568.
+Test Suite 'GenerateDatasetTests' started at 2026-08-28 14:16:07.568.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateAccountProfileFormImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateAccountProfileFormImages]' passed (47.902 seconds).
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateChromeCoverageImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateChromeCoverageImages]' passed (43.212 seconds).
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateKitchenSinkImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateKitchenSinkImages]' passed (50.032 seconds).
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateLoginFormImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateLoginFormImages]' passed (43.955 seconds).
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateMediaCardGridImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateMediaCardGridImages]' passed (88.414 seconds).
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateProgressActivityImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateProgressActivityImages]' passed (85.785 seconds).
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateToolbarActionsImages]' started.
+Test Case '-[GeneratorRunnerTests.GenerateDatasetTests testGenerateToolbarActionsImages]' passed (45.871 seconds).
+Test Suite 'GenerateDatasetTests' passed at 2026-08-28 14:22:52.740.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 405.170 (405.173) seconds
+Test Suite 'GeneratorRunnerTests.xctest' passed at 2026-08-28 14:22:52.740.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 405.170 (405.173) seconds
+Test Suite 'Selected tests' passed at 2026-08-28 14:22:52.741.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 405.170 (405.173) seconds
+2026-08-28 14:22:53.022 xcodebuild[80521:2865474] [MT] IDETestOperationsObserverDebug: 406.835 elapsed -- Testing started completed.
+2026-08-28 14:22:53.022 xcodebuild[80521:2865474] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-08-28 14:22:53.022 xcodebuild[80521:2865474] [MT] IDETestOperationsObserverDebug: 406.835 sec, +406.835 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/gen_6a8.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started
+Merging from /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/50B7A5E5-3114-4525-994F-C7D547D3E5B8/data/Containers/Data/Application/457433DD-AA66-4EE8-88A1-2A04E7761279/Documents/dataset
+Loading dest manifest.json (no dest dir listing)…
+Listing source pairs under /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/50B7A5E5-3114-4525-994F-C7D547D3E5B8/data/Containers/Data/Application/457433DD-AA66-4EE8-88A1-2A04E7761279/Documents/dataset…
+Source pairs: 1800  next idx: 016441
+  50/1800 replaced=37 appended=13
+  100/1800 replaced=70 appended=30
+  150/1800 replaced=106 appended=44
+  200/1800 replaced=145 appended=55
+  250/1800 replaced=180 appended=70
+  300/1800 replaced=217 appended=83
+  350/1800 replaced=252 appended=98
+  400/1800 replaced=289 appended=111
+  450/1800 replaced=327 appended=123
+  500/1800 replaced=362 appended=138
+  550/1800 replaced=397 appended=153
+  600/1800 replaced=430 appended=170

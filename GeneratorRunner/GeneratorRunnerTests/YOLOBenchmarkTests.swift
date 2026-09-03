@@ -37,7 +37,8 @@
 // ── MODEL NOT FOUND ──────────────────────────────────────────────────────────
 //
 // If best.mlmodelc is not in the bundle, all tests call XCTSkip.
-// Add the model to Copy Bundle Resources (Step 1 above).
+// The mlpackage is not a required test resource (missing file blocked dataset
+// generation builds). Add it to Copy Bundle Resources only when benchmarking.
 
 import XCTest
 import CoreML

@@ -665,6 +665,67 @@ Full images are also included alongside strips (for alert and toggle coverage, w
 
 **Wrong:** After a reboot, run `train_ios_model.py` without `--resume`. That starts epoch 1 again and overwrites the run directory.
 
-**Correct:** `last.pt` is only valid at epoch boundaries. Mid-epoch progress is lost. Resume with `--resume NativeUITrainer/yolo_runs/phase6a_r007/weights/last.pt`. If `last.pt` is unreadable (cut during the write), use `last.prev.pt`. Keep the machine awake with `caffeinate` and run `scripts/watch_phase6a.py` so a crash or logout restarts the resume loop until Ultralytics exits 0 (100 epochs or patience).
+**Correct:** `last.pt` is only valid at epoch boundaries. Mid-epoch progress is lost. Resume with `--resume NativeUITrainer/yolo_runs/phase6a_r008/weights/last.pt` (script resolves this to an absolute path *before* `chdir` into `NativeUITrainer/weights`). If `last.pt` is unreadable (cut during the write), use `last.prev.pt`. Keep the machine awake with `caffeinate` and run `scripts/watch_phase6a.py` so a crash or logout restarts the resume loop until Ultralytics exits 0 (100 epochs or patience).
 
 **Why:** Run 007 lost power mid-epoch 46. `results.csv` and `last.pt` had finished epoch 45 (best mAP50 = 0.984 at epoch 39). A fresh start would throw that away. The watchdog is how the run actually finishes unattended.
+
+---
+
+### BP-31: CoreML INT8 is linear weight quantize of the FP16 package — do not pass `data=` or `int8=True` to Ultralytics CoreML export
+
+**Wrong:** `YOLO.export(format="coreml", int8=True, data="dataset.yaml")`. Ultralytics 8.4 rejects `data` for `format='coreml'`. `quantize=8` runs k-means palettization (`palettize_weights`) which SIGKILL'd YOLO11m at 0/227 ops. `int8=True` is deprecated.
+
+**Correct:** Export FP16+NMS for on-device shipping (`nms=True` → pipeline). For INT8, export a second `nms=False` FP16 *mlprogram*, then `coremltools.optimize.coreml.linear_quantize_weights`. Do not quantize the NMS pipeline (`linear_quantize_weights` rejects type pipeline). Do not use Ultralytics `quantize=8` palettization on YOLO11m (SIGKILL at `palettize_weights` 0/227). Compare small-element AP on the two nms=False packages (Python NMS) for TASK-6a-5.
+
+**Why:** CoreML INT8 is weight-only. Calibration `data` is an ONNX/OpenVINO concern. The shipped detector still uses the NMS FP16 package if INT8 drops small-element AP >5 pt or if FP16 is already under 50 MB.
+
+---
+
+### BP-32: Family holdout is a style test — non-zero train count is not enough
+
+**Wrong:** Withhold `OnboardingPage` / `GalleryPage` / `WizardStepFlow` / `MultiSectionForm` because those families are not the unique *count* source of `pageControl` / `secondaryButton` / `textField`. KitchenSink still has 700 `pageControl` boxes; LoginForm still has `secondaryButton`.
+
+**Correct:** Before withholding a family, every class it contains must appear in a **train family with similar chrome** (size, isolation, container). Run 007 holdout diagnosis (`reports/holdout_diagnosis_phase6a.json`):
+
+| Class | Train+val | Test | What happened |
+|---|---|---|---|
+| `pageControl` | 700 | 600 | 97.5% miss. Train: packed 7pt circles + UIKit `UIPageControl`. Holdout: isolated onboarding/gallery dots. |
+| `secondaryButton` | 3977 | 341 | 0% miss, 311/341 matched as `cancelAction` (Wizard "Back"). |
+| `textField` | 2645 | 500 | 314/500 matched as `listRow` (Form-in-List). |
+| `picker` / `secureField` / `stepperControl` | plenty | 200 | listRow confusion or miss on MultiSectionForm chrome. |
+| `toolbar` | 0 | 0 | `detectChromeFrames` never saw `UIToolbar` from `.bottomBar`. |
+
+A non-zero box count from a packed kitchen-sink or a toolbar *icon* does not train the holdout *style*.
+
+**Why:** Val mAP 0.981 vs holdout mAP 0.358 is template-texture overfitting plus style zero-shot, not a missing-class unique-source violation (those were none).
+
+---
+
+### BP-33: Disable per-epoch snapshot I/O and metric plotting during MPS training
+
+**Wrong:** Train with `save_period=1` and `plots=True`. This writes ~154 MB weights + optimizer snapshot every epoch (~15.4 GB across 100 epochs) and renders 41x41 confusion matrices and PR curves on CPU at every epoch boundary.
+
+**Correct:** For production runs (Run 009+), set `save_period=-1` (or `5`) and `plots=False`. Keep `last.pt`, `best.pt`, and the `last.prev.pt` backup hook. Rely on `results.csv` for real-time loss/mAP tracking, and generate visual evaluation plots only after training finishes.
+
+**Why:** Saves massive SSD write bandwidth, avoids disk exhaustion crashes (which killed Run 003/007), and eliminates CPU bottlenecks during validation epochs without affecting model accuracy.
+
+---
+
+### BP-34: Never glob or iterate flat directories containing >10k images on APFS — use line-delimited text manifests
+
+**Wrong:** Call `os.listdir()`, `Path.glob("*")`, or `iterdir()` on `dataset/dataset/train` or other large flat export directories.
+
+**Correct:** Generate line-delimited text manifests (`train.txt`, `val.txt`, `test.txt`) and configure YOLO/data pipelines to read directly from text file lists.
+
+**Why:** Flat APFS directories containing >10,000 files cause extreme kernel metadata caching stalls on macOS, hanging Python scripts and blocking terminal execution. Text manifests bypass directory scanning entirely.
+
+---
+
+### BP-35: Reclaim host unified memory and size batches to Apple Silicon memory headroom
+
+**Wrong:** Leave Simulator.app and Xcode open during training runs while keeping `batch=4` on a 24 GB or 32 GB Apple Silicon machine.
+
+**Correct:** Close `Simulator.app` and idle Xcode instances before launching training to release 3–6 GB of unified memory. On machines with ≥24 GB unified memory, scale `batch=8` (and linearly scale `lr0`) or use `--batch -1` AutoBatch.
+
+**Why:** Apple Silicon unified memory is shared between CPU and GPU. Freeing host RAM provides the GPU headroom needed for larger batch sizes, doubling tensor core utilization and cutting wall-clock training time by 25–35%.
+

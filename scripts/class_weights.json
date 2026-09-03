@@ -1,252 +1,253 @@
 {
   "formula": "alpha_i = (total/max(count_i,1)); then normalize to sum=1",
-  "total_boxes_observed": 102022,
+  "total_boxes_observed": 132328,
   "weights": [
     {
       "id": 0,
       "name": "actionSheet",
       "count": 320,
-      "alpha": 0.000617281834773549
+      "alpha": 0.04080499803863415
     },
     {
       "id": 1,
       "name": "activityIndicator",
-      "count": 1255,
-      "alpha": 0.00015739457141636306
+      "count": 2056,
+      "alpha": 0.006350972457374965
     },
     {
       "id": 2,
       "name": "alert",
       "count": 320,
-      "alpha": 0.000617281834773549
+      "alpha": 0.04080499803863415
     },
     {
       "id": 3,
       "name": "cancelAction",
-      "count": 1700,
-      "alpha": 0.0001161942277220798
+      "count": 2300,
+      "alpha": 0.005677217118418664
     },
     {
       "id": 4,
       "name": "collectionItem",
-      "count": 2094,
-      "alpha": 9.433151247733317e-05
+      "count": 4703,
+      "alpha": 0.0027764404363944135
     },
     {
       "id": 5,
       "name": "colorWell",
-      "count": 263,
-      "alpha": 0.0007510653502948125
+      "count": 463,
+      "alpha": 0.028202158471626194
     },
     {
       "id": 6,
       "name": "contextMenu",
       "count": 320,
-      "alpha": 0.000617281834773549
+      "alpha": 0.04080499803863415
     },
     {
       "id": 7,
       "name": "destructiveButton",
-      "count": 362,
-      "alpha": 0.0005456635003523085
+      "count": 562,
+      "alpha": 0.023234162584275672
     },
     {
       "id": 8,
       "name": "disclosureGroup",
-      "count": 1722,
-      "alpha": 0.00011470974862226229
+      "count": 1922,
+      "alpha": 0.006793756177087893
     },
     {
       "id": 9,
       "name": "dynamicIsland",
       "count": 240,
-      "alpha": 0.0008230424463647319
+      "alpha": 0.0544066640515122
     },
     {
       "id": 10,
       "name": "homeIndicator",
-      "count": 1280,
-      "alpha": 0.00015432045869338725
+      "count": 1480,
+      "alpha": 0.0088227022786236
     },
     {
       "id": 11,
       "name": "imageView",
-      "count": 2653,
-      "alpha": 7.445540411893542e-05
+      "count": 5462,
+      "alpha": 0.0023906260293597454
     },
     {
       "id": 12,
       "name": "label",
-      "count": 27748,
-      "alpha": 7.118718002289739e-06
+      "count": 36162,
+      "alpha": 0.0003610862057508691
     },
     {
       "id": 13,
       "name": "link",
-      "count": 375,
-      "alpha": 0.0005267471656734285
+      "count": 675,
+      "alpha": 0.019344591662759893
     },
     {
       "id": 14,
       "name": "listRow",
-      "count": 25572,
-      "alpha": 7.724471575455017e-06
+      "count": 29260,
+      "alpha": 0.00044626108586339467
     },
     {
       "id": 15,
       "name": "mapView",
       "count": 480,
-      "alpha": 0.00041152122318236596
+      "alpha": 0.0272033320257561
     },
     {
       "id": 16,
       "name": "menuButton",
-      "count": 240,
-      "alpha": 0.0008230424463647319
+      "count": 440,
+      "alpha": 0.029676362209915746
     },
     {
       "id": 17,
       "name": "navigationBar",
-      "count": 8618,
-      "alpha": 2.29206529505147e-05
+      "count": 9818,
+      "alpha": 0.001329965305801887
     },
     {
       "id": 18,
       "name": "pageControl",
-      "count": 560,
-      "alpha": 0.00035273247701345654
+      "count": 1560,
+      "alpha": 0.008370256007924954
     },
     {
       "id": 19,
       "name": "picker",
-      "count": 480,
-      "alpha": 0.00041152122318236596
+      "count": 880,
+      "alpha": 0.014838181104957873
     },
     {
       "id": 20,
       "name": "popover",
       "count": 320,
-      "alpha": 0.000617281834773549
+      "alpha": 0.04080499803863415
     },
     {
       "id": 21,
       "name": "primaryButton",
-      "count": 4688,
-      "alpha": 4.2135278824133035e-05
+      "count": 5288,
+      "alpha": 0.002469288837436257
     },
     {
       "id": 22,
       "name": "progressView",
-      "count": 1386,
-      "alpha": 0.0001425181725306895
+      "count": 2380,
+      "alpha": 0.005486386290908794
     },
     {
       "id": 23,
       "name": "refreshControl",
       "count": 480,
-      "alpha": 0.00041152122318236596
+      "alpha": 0.0272033320257561
     },
     {
       "id": 24,
       "name": "scrollIndicator",
-      "count": 0,
-      "alpha": 0.19753018712753567
+      "count": 200,
+      "alpha": 0.06528799686181463
     },
     {
       "id": 25,
       "name": "searchField",
-      "count": 480,
-      "alpha": 0.00041152122318236596
+      "count": 680,
+      "alpha": 0.019202352018180775
     },
     {
       "id": 26,
       "name": "secondaryButton",
-      "count": 3185,
-      "alpha": 6.201889705731104e-05
+      "count": 4276,
+      "alpha": 0.0030536948953140616
     },
     {
       "id": 27,
       "name": "secureField",
-      "count": 1600,
-      "alpha": 0.0001234563669547098
+      "count": 2400,
+      "alpha": 0.005440666405151219
     },
     {
       "id": 28,
       "name": "segmentedControl",
-      "count": 720,
-      "alpha": 0.00027434748212157734
+      "count": 920,
+      "alpha": 0.014193042796046662
     },
     {
       "id": 29,
       "name": "sheet",
       "count": 368,
-      "alpha": 0.0005367668128465643
+      "alpha": 0.03548260699011665
     },
     {
       "id": 30,
       "name": "sidebar",
       "count": 160,
-      "alpha": 0.001234563669547098
+      "alpha": 0.0816099960772683
     },
     {
       "id": 31,
       "name": "slider",
-      "count": 1076,
-      "alpha": 0.00018357824082484728
+      "count": 1276,
+      "alpha": 0.010233228348246809
     },
     {
       "id": 32,
       "name": "statusBar",
-      "count": 0,
-      "alpha": 0.19753018712753567
+      "count": 200,
+      "alpha": 0.06528799686181463
     },
     {
       "id": 33,
       "name": "stepperControl",
-      "count": 1680,
-      "alpha": 0.00011757749233781885
+      "count": 2080,
+      "alpha": 0.006277692005943716
     },
     {
       "id": 34,
       "name": "tabBar",
-      "count": 1840,
-      "alpha": 0.00010735336256931286
+      "count": 2040,
+      "alpha": 0.006400784006060258
     },
     {
       "id": 35,
       "name": "textField",
-      "count": 2114,
-      "alpha": 9.343906675853153e-05
+      "count": 3114,
+      "alpha": 0.004193191834413272
     },
     {
       "id": 36,
       "name": "toggle",
-      "count": 5043,
-      "alpha": 3.916918245638224e-05
+      "count": 5843,
+      "alpha": 0.0022347423194186084
     },
     {
       "id": 37,
       "name": "toolbar",
-      "count": 0,
-      "alpha": 0.19753018712753567
+      "count": 200,
+      "alpha": 0.06528799686181463
     },
     {
       "id": 38,
       "name": "tooltip",
-      "count": 0,
-      "alpha": 0.19753018712753567
+      "count": 200,
+      "alpha": 0.06528799686181463
     },
     {
       "id": 39,
       "name": "unknown",
-      "count": 0,
-      "alpha": 0.19753018712753567
+      "count": 200,
+      "alpha": 0.06528799686181463
     },
     {
       "id": 40,
       "name": "webContent",
       "count": 280,
-      "alpha": 0.0007054649540269131
+      "alpha": 0.04663428347272475
     }
-  ]
+  ],
+  "note": "Run 008: old counts + batch_6a8 extras. Replaced-family old boxes slightly overcounted."
 }

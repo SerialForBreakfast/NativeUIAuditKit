@@ -1,0 +1,394 @@
+{
+  "date": "2026-09-02T09:32:25Z",
+  "fp16_model": "NativeUITrainer/yolo_runs/phase6a_r008/weights/best.mlpackage",
+  "int8_model": null,
+  "fp16_size_mb": 38.527,
+  "int8_size_mb": null,
+  "nms_fp16_size_mb": 38.527,
+  "pt_size_mb": 153.889,
+  "small_element_rule": "boundsPixels.width < 100 OR boundsPixels.height < 100",
+  "iou": 0.5,
+  "focus_classes": [
+    "homeIndicator",
+    "stepperControl",
+    "pageControl",
+    "scrollIndicator",
+    "link"
+  ],
+  "backend": "pytorch_fp16_proxy",
+  "per_class": [
+    {
+      "class": "actionSheet",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "activityIndicator",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "alert",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "cancelAction",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "collectionItem",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "colorWell",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "contextMenu",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "destructiveButton",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "disclosureGroup",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "dynamicIsland",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "homeIndicator",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": true
+    },
+    {
+      "class": "imageView",
+      "n_small_gt": 350,
+      "ap50_fp16": 0.072904,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "label",
+      "n_small_gt": 8619,
+      "ap50_fp16": 0.567411,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "link",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": true
+    },
+    {
+      "class": "listRow",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "mapView",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "menuButton",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "navigationBar",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "pageControl",
+      "n_small_gt": 600,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": true
+    },
+    {
+      "class": "picker",
+      "n_small_gt": 200,
+      "ap50_fp16": 0.186742,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "popover",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "primaryButton",
+      "n_small_gt": 100,
+      "ap50_fp16": 0.075358,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "progressView",
+      "n_small_gt": 200,
+      "ap50_fp16": 0.9999,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "refreshControl",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "scrollIndicator",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": true
+    },
+    {
+      "class": "searchField",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "secondaryButton",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "secureField",
+      "n_small_gt": 200,
+      "ap50_fp16": 0.507224,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "segmentedControl",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "sheet",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "sidebar",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "slider",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "statusBar",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "stepperControl",
+      "n_small_gt": 200,
+      "ap50_fp16": 0.831995,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": true
+    },
+    {
+      "class": "tabBar",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "textField",
+      "n_small_gt": 452,
+      "ap50_fp16": 0.617227,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "toggle",
+      "n_small_gt": 1821,
+      "ap50_fp16": 0.669691,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "toolbar",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "tooltip",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "unknown",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    },
+    {
+      "class": "webContent",
+      "n_small_gt": 0,
+      "ap50_fp16": 0.0,
+      "ap50_int8": null,
+      "delta_points": null,
+      "drop_over_5pt": false,
+      "focus": false
+    }
+  ],
+  "max_drop_points": 0.0,
+  "ship": "fp16",
+  "reason": "INT8 package missing; ship FP16",
+  "distill_required": false
+}

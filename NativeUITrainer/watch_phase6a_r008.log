@@ -1,0 +1,8 @@
+======== watch_phase6a r008 2026-08-31T07:18:09Z pid=87931 ========
+2026-08-31 00:18:09 watch_phase6a start csv_epochs=65 done=False
+2026-08-31 00:18:10 started train_ios_model pid=87946 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r008/weights/last.pt
+======== watch_phase6a r008 2026-09-01T19:35:44Z pid=99590 ========
+2026-09-01 12:35:45 watch_phase6a start csv_epochs=85 done=False
+======== watch_phase6a r008 2026-09-01T19:39:10Z pid=245 ========
+2026-09-01 12:39:10 watch_phase6a start csv_epochs=85 done=False
+2026-09-01 12:42:10 started train_ios_model pid=576 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r008/weights/last.pt

@@ -1,0 +1,410 @@
+{
+  "date": "2026-09-02T09:39:55Z",
+  "classes": [
+    {
+      "class_name": "actionSheet",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "activityIndicator",
+      "training_entropy": null,
+      "prediction_entropy": 1.43989,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 62
+    },
+    {
+      "class_name": "alert",
+      "training_entropy": null,
+      "prediction_entropy": 0.681291,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.45,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 144
+    },
+    {
+      "class_name": "cancelAction",
+      "training_entropy": null,
+      "prediction_entropy": 2.740717,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 586
+    },
+    {
+      "class_name": "collectionItem",
+      "training_entropy": null,
+      "prediction_entropy": 2.793182,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 225
+    },
+    {
+      "class_name": "colorWell",
+      "training_entropy": null,
+      "prediction_entropy": 1.787298,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.45,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 101
+    },
+    {
+      "class_name": "contextMenu",
+      "training_entropy": null,
+      "prediction_entropy": -0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 2
+    },
+    {
+      "class_name": "destructiveButton",
+      "training_entropy": null,
+      "prediction_entropy": 1.695226,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.45,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 76
+    },
+    {
+      "class_name": "disclosureGroup",
+      "training_entropy": null,
+      "prediction_entropy": 3.777164,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 862
+    },
+    {
+      "class_name": "dynamicIsland",
+      "training_entropy": null,
+      "prediction_entropy": 1.459089,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.15,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 112
+    },
+    {
+      "class_name": "homeIndicator",
+      "training_entropy": null,
+      "prediction_entropy": -0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 1
+    },
+    {
+      "class_name": "imageView",
+      "training_entropy": null,
+      "prediction_entropy": 3.711141,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 1303
+    },
+    {
+      "class_name": "label",
+      "training_entropy": null,
+      "prediction_entropy": 5.454372,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 15818
+    },
+    {
+      "class_name": "link",
+      "training_entropy": null,
+      "prediction_entropy": 0.322757,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.75,
+        "cy": 0.3,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 51
+    },
+    {
+      "class_name": "listRow",
+      "training_entropy": null,
+      "prediction_entropy": 5.228839,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 7401
+    },
+    {
+      "class_name": "mapView",
+      "training_entropy": null,
+      "prediction_entropy": 1.502434,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.45,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 266
+    },
+    {
+      "class_name": "menuButton",
+      "training_entropy": null,
+      "prediction_entropy": 0.811278,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 48
+    },
+    {
+      "class_name": "navigationBar",
+      "training_entropy": null,
+      "prediction_entropy": 1.670751,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.15,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 2918
+    },
+    {
+      "class_name": "pageControl",
+      "training_entropy": null,
+      "prediction_entropy": 3.566777,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 690
+    },
+    {
+      "class_name": "picker",
+      "training_entropy": null,
+      "prediction_entropy": 2.960177,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 862
+    },
+    {
+      "class_name": "popover",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "primaryButton",
+      "training_entropy": null,
+      "prediction_entropy": 3.966846,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 2473
+    },
+    {
+      "class_name": "progressView",
+      "training_entropy": null,
+      "prediction_entropy": 3.858204,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 747
+    },
+    {
+      "class_name": "refreshControl",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "scrollIndicator",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "searchField",
+      "training_entropy": null,
+      "prediction_entropy": -0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 26
+    },
+    {
+      "class_name": "secondaryButton",
+      "training_entropy": null,
+      "prediction_entropy": 1.562688,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 19
+    },
+    {
+      "class_name": "secureField",
+      "training_entropy": null,
+      "prediction_entropy": 2.352811,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.3,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 479
+    },
+    {
+      "class_name": "segmentedControl",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "sheet",
+      "training_entropy": null,
+      "prediction_entropy": 2.17086,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.6,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 877
+    },
+    {
+      "class_name": "sidebar",
+      "training_entropy": null,
+      "prediction_entropy": 0.918296,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 3
+    },
+    {
+      "class_name": "slider",
+      "training_entropy": null,
+      "prediction_entropy": 2.998425,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 506
+    },
+    {
+      "class_name": "statusBar",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "stepperControl",
+      "training_entropy": null,
+      "prediction_entropy": 2.349284,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 447
+    },
+    {
+      "class_name": "tabBar",
+      "training_entropy": null,
+      "prediction_entropy": 0.811278,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 4
+    },
+    {
+      "class_name": "textField",
+      "training_entropy": null,
+      "prediction_entropy": 3.330797,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 1103
+    },
+    {
+      "class_name": "toggle",
+      "training_entropy": null,
+      "prediction_entropy": 4.06818,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 2543
+    },
+    {
+      "class_name": "toolbar",
+      "training_entropy": null,
+      "prediction_entropy": -0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 27
+    },
+    {
+      "class_name": "tooltip",
+      "training_entropy": null,
+      "prediction_entropy": 0.0,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 0
+    },
+    {
+      "class_name": "unknown",
+      "training_entropy": null,
+      "prediction_entropy": 1.834681,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 82
+    },
+    {
+      "class_name": "webContent",
+      "training_entropy": null,
+      "prediction_entropy": 0.875196,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 61
+    }
+  ]
+}
