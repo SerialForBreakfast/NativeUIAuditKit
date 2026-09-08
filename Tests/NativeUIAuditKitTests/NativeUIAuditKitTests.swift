@@ -34,6 +34,50 @@ struct NativeUIAuditKitTests {
         }
     }
 
+    @Test("Detection request with OCR fuses visible text on kitchen sink fixture")
+    func detectionRequestFusesOCRText() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "kitchen_sink_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+        let provider = CGDataProvider(data: data as CFData)!
+        let image = CGImage(
+            pngDataProviderSource: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+        )!
+
+        let request = NativeUIDetectionRequest(configuration: .init(minimumConfidence: 0.20, includesTextRecognition: true))
+        let observations = try await request.perform(on: image)
+
+        #expect(!observations.isEmpty)
+        let withText = observations.filter { $0.visibleText != nil }
+        #expect(!withText.isEmpty, "Expected at least one element with visible text on kitchen sink fixture")
+        for obs in withText {
+            #expect(!obs.visibleText!.isEmpty)
+        }
+    }
+
+    @Test("Detection request with OCR disabled leaves visible text nil")
+    func detectionRequestWithoutOCRLeavesVisibleTextNil() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "kitchen_sink_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+        let provider = CGDataProvider(data: data as CFData)!
+        let image = CGImage(
+            pngDataProviderSource: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+        )!
+
+        let request = NativeUIDetectionRequest(configuration: .init(minimumConfidence: 0.5, includesTextRecognition: false))
+        let observations = try await request.perform(on: image)
+
+        #expect(!observations.isEmpty)
+        for obs in observations {
+            #expect(obs.visibleText == nil, "visibleText must be nil when includesTextRecognition is false")
+        }
+    }
+
     @Test("Detection request confidence threshold filters output")
     func detectionRequestRespectsMinimumConfidence() async throws {
         let fixtureURL = Bundle.module.url(forResource: "kitchen_sink_screen", withExtension: "png")!

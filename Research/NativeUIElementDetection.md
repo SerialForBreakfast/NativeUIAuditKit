@@ -539,7 +539,7 @@ Same formula as `CreateMLExporter` (BP-10). Source field: `boundsVisionNormalize
 
 **Class coverage (known gap, documented 2026-08-23):** the iOS generator dataset has **36 of 41** taxonomy classes. Five taxonomy classes have 0 instances: `statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`. Extra generator label `tabBarItem` is **dropped**. Training uses frozen `category_map.json` IDs 0–40.
 
-**Holdout outcome (Run 007, 2026-08-27):** in-family val mAP@0.5 = 0.981; withheld-template **test** mAP@0.5 = **0.358** (DS-G8 fail). No failing class was missing from train (BP-32). `toolbar` is still 0 boxes because `detectChromeFrames` never saw SwiftUI `.bottomBar`. TASK-6a-8 generator recovery (templates ready, dataset not yet regenerated): KitchenSink isolated `UIPageControl`; ToolbarActions explicit `toolbar_0`; LoginForm filled "Back" `secondaryButton`; train family `AccountProfileForm` (Form-in-List clone); ProgressActivity + MediaCardGrid isolated SwiftUI dots; `ChromeCoverage` for `statusBar` / `scrollIndicator` / `tooltip` / `unknown`. Do not copy 41-class weights into `NativeUIAuditKitModels` until DS-G8.
+**Holdout outcome (Run 008, 2026-09-04):** in-family val mAP@0.5 = 0.977; withheld-template **test** mAP@0.5 = **0.491** (DS-G8 fail; Run 007 was 0.358). TASK-6a-8 regen helped (+0.133 mAP) but did not recover the gate. Do not copy 41-class weights into `NativeUIAuditKitModels` until DS-G8.
 
 Default withheld families (not unique sources of rare classes): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Do **not** withhold `ColorPicker`, `MenuButton`, `iPadSidebar`, `MapOverlays`, or `HardNegative_2`.
 

@@ -664,10 +664,16 @@ Do not ship 41-class weights.
 **Trigger:** Run 007 holdout mAP@0.5 = 0.358 (DS-G8 fail, BP-32). Templates ready.
 Do **not** resume Run 007. Train from `yolo11m.pt` on regenerated data.
 
-**Status:** Completed (converged at Epoch 85; stopped training to evaluate `best.pt`).
-- In-family val: best mAP@0.5 = **0.977** (epoch 58); epoch 85 = 0.974 / mAP@0.5:0.95 0.932.
-- CoreML export: `NativeUITrainer/yolo_runs/phase6a_r008/weights/best.mlpackage` (38.5 MB, FP16 + NMS baked in).
-- **Holdout eval (TASK-6a-7, 2026-09-02):** family-holdout **test** (2,000 images, 18,149 boxes) mAP@0.5 = **0.491** (49.1%), mAP50-95 = **0.348**.
+**Status:** TRAINING_COMPLETE 2026-09-04T17:55Z — 100/100 epochs, trainer rc=0.
+Watchdog `watch_phase6a.py` wrote `TRAINING_COMPLETE`. Do **not** copy weights
+into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
+
+- In-family val: best mAP@0.5 = **0.977** (epoch 58); epoch 100 = 0.973 /
+  mAP@0.5:0.95 0.932 (fitness peak 0.933 at epoch 83).
+- CoreML export (mid-run): `best.mlpackage` 38.5 MB FP16+NMS.
+- **Holdout eval (TASK-6a-7, 2026-09-02, `best.pt`):** family-holdout **test**
+  (2,000 images) mAP@0.5 = **0.491**, mAP50-95 = **0.348**. DS-G8 map gate ❌
+  (need ≥ 0.85). Gain vs Run 007: 0.358 → 0.491.
   - **Significant gain over Run 007:** mAP@0.5 jumped from **0.358 → 0.491 (+13.3 percentage points, +37.1% relative improvement)**, validating the TASK-6a-8 template and coverage fixes.
   - Per-class breakthroughs on unseen holdout templates:
     - `stepperControl`: 0.000 → **0.718**

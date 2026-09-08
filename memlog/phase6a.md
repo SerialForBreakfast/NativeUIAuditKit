@@ -7,4 +7,5 @@
 - 2026-08-31: crashed epoch 66 on corrupt `img_008286.png` (dest/train symlink).
   Replaced with local dummy PNG. Relative --resume failed after chdir (BP-30).
   Watchdog resume with absolute last.pt. Best in-family mAP@0.5 = 0.977 (ep 58).
-- 2026-09-01: watchdog parent aborted during epoch 86 val. csv=85. Restarting watch.
+- 2026-09-04: TRAINING_COMPLETE 100/100. Holdout mAP@0.5 = 0.491 (DS-G8 fail).
+  Do not ship. Do not start Phase 6b.

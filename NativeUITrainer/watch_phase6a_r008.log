@@ -6,3 +6,5 @@
 ======== watch_phase6a r008 2026-09-01T19:39:10Z pid=245 ========
 2026-09-01 12:39:10 watch_phase6a start csv_epochs=85 done=False
 2026-09-01 12:42:10 started train_ios_model pid=576 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r008/weights/last.pt
+2026-09-04 10:55:55 train_ios_model pid=576 exited rc=0 csv_epochs=100
+2026-09-04 10:55:55 TRAINING_COMPLETE written (csv epochs=100)
