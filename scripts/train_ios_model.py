@@ -45,8 +45,20 @@ def parse_args():
     p.add_argument(
         "--batch",
         type=int,
-        default=4,
-        help="Batch size. Default 4 fits YOLO11m on M4 MPS (~3.5 GB). -1 = AutoBatch.",
+        default=8,
+        help="Batch size. Default 8 on >=24 GB MPS (ADR-0006 D3). -1 = AutoBatch.",
+    )
+    p.add_argument(
+        "--save-period",
+        type=int,
+        default=-1,
+        help="Save checkpoint every x epochs. Default -1 disables intermediate epoch snapshots (ADR-0006 D1).",
+    )
+    p.add_argument(
+        "--plots",
+        action="store_true",
+        default=False,
+        help="Generate plots and confusion matrices during training. Default False (ADR-0006 D2).",
     )
     p.add_argument("--patience", type=int, default=15)
     p.add_argument("--workers", type=int, default=4)
@@ -56,7 +68,7 @@ def parse_args():
     p.add_argument(
         "--dry-run",
         action="store_true",
-        help="2 epochs, batch=4, 5% of images — smoke-test the pipeline",
+        help="2 epochs, batch=4, 5%% of images — smoke-test the pipeline",
     )
     p.add_argument("--no-ohem", action="store_true", help="Disable OHEM callback")
     return p.parse_args()
@@ -146,6 +158,8 @@ def main():
     print(f"  Batch    : {'auto' if batch == -1 else batch}")
     print(f"  Dataset  : {yaml_path}")
     print(f"  Output   : {output_dir / run_name}")
+    print(f"  SavePeriod: {args.save_period if not args.dry_run else -1}")
+    print(f"  Plots    : {args.plots}")
     print(f"  OHEM     : {not args.no_ohem}")
     if CLASS_WEIGHTS.exists():
         print(f"  α weights: {CLASS_WEIGHTS.relative_to(PROJECT_ROOT)}")
@@ -218,8 +232,8 @@ def main():
         copy_paste=0.0,
         cache=False,
         verbose=True,
-        plots=not args.dry_run,
-        save_period=1 if not args.dry_run else -1,
+        plots=args.plots,
+        save_period=args.save_period if not args.dry_run else -1,
     )
     if args.resume:
         train_kwargs["resume"] = True

@@ -1,0 +1,26 @@
+2026-09-09 15:09:06 watch_phase6a start csv_epochs=1 done=False
+2026-09-09 15:14:00 started train_ios_model pid=4755 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:40:35 train_ios_model pid=4755 exited rc=1 csv_epochs=1
+2026-09-09 15:40:35 non-zero exit; retry in 30s
+2026-09-09 15:41:06 started train_ios_model pid=5747 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:43:20 train_ios_model pid=5747 exited rc=1 csv_epochs=1
+2026-09-09 15:43:20 non-zero exit; retry in 30s
+2026-09-09 15:43:51 started train_ios_model pid=5849 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:46:05 train_ios_model pid=5849 exited rc=1 csv_epochs=1
+2026-09-09 15:46:05 non-zero exit; retry in 30s
+2026-09-09 15:46:36 started train_ios_model pid=5944 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:48:51 train_ios_model pid=5944 exited rc=1 csv_epochs=1
+2026-09-09 15:48:51 non-zero exit; retry in 30s
+2026-09-09 15:49:22 started train_ios_model pid=6046 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:51:37 train_ios_model pid=6046 exited rc=1 csv_epochs=1
+2026-09-09 15:51:37 non-zero exit; retry in 30s
+2026-09-09 15:52:08 started train_ios_model pid=6146 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:54:25 train_ios_model pid=6146 exited rc=1 csv_epochs=1
+2026-09-09 15:54:25 non-zero exit; retry in 30s
+2026-09-09 15:54:56 started train_ios_model pid=6280 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:57:10 train_ios_model pid=6280 exited rc=1 csv_epochs=1
+2026-09-09 15:57:10 non-zero exit; retry in 30s
+2026-09-09 15:57:41 started train_ios_model pid=6393 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-09 15:59:57 train_ios_model pid=6393 exited rc=1 csv_epochs=1
+2026-09-09 15:59:57 non-zero exit; retry in 30s
+2026-09-09 16:00:28 started train_ios_model pid=6504 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt

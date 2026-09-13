@@ -695,3 +695,39 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
 - Checkpoint: `best.pt` (161.4 MB) / `best.mlpackage` (38.5 MB)
 - Next steps for Run 009+: apply ADR-0006 (`batch=8`, `save_period=-1`, `plots=False`) to reduce training iteration wall time by ~70%.
 
+---
+
+## Run 009 — YOLO11m 41-class ADR-0006 Training Optimization (Started 2026-09-08)
+
+**Trigger:** Run 008 established baseline mAP@0.5 = 0.491 on holdout families, but required ~36 hours of wall-clock time with heavy disk I/O (15.4 GB of `epoch*.pt` checkpoints) and CPU-bound metric plotting. Run 009 applies ADR-0006 iteration optimizations to maximize Apple Silicon MPS throughput and eliminate flash churn.
+
+**Status:** IN_PROGRESS (Dry-run verified, launching baseline training).
+
+**Configuration (ADR-0006 Applied):**
+- Architecture: YOLO11m (`weights/yolo11m.pt`)
+- Classes: 41 native Apple UI classes
+- Batch size: `batch=8` (ADR-0006 D3, doubling batch size from 4 on host 24 GB unified RAM; halves steps per epoch from 2,876 to 1,438)
+- Checkpoints: `save_period=-1` (ADR-0006 D1, saves only `best.pt` and `last.pt`, with `last.prev.pt` backup; saves ~15 GB disk writes)
+- Metric plotting: `plots=False` (ADR-0006 D2, disables per-epoch CPU confusion matrices/PR curves during training; evaluated post-run)
+- Optimizer: AdamW, lr0=0.001, lrf=0.01, momentum=0.937, weight_decay=0.0005
+- Augmentations: Mosaic=1.0, OHEM callback enabled (hardest 20% oversampled 2×)
+- Dataset: `NativeUITrainer/yolo_dataset_41class/dataset.yaml` via line-delimited manifests (`train.txt`, `val.txt`, `test.txt`)
+- Target epochs: 100 with patience 15 early stopping
+- Device: Apple Silicon MPS (`mps`), workers=4
+- Output: `NativeUITrainer/yolo_runs/phase6a_r009/`
+
+**Incident & Resolution (2026-09-09):**
+- **Symptom:** At epoch 2 (batch 806/1498), training halted with:
+  `libpng error: PNG input buffer is incomplete`
+  `FileNotFoundError: Image Not Found .../train/images/img_012251.png`
+- **Investigation:**
+  - Ran automated validation across all 11,984 training images (`task-1035`): **0 failures**. All images are intact on disk.
+  - Inspected `img_012251.png`: Valid 16-bit RGBA PNG with Apple `iDOT` chunk.
+  - Root cause: NumPy `np.fromfile` uses C `fread` which does not loop on `EINTR`. Under heavy concurrent disk I/O with 4 multiprocessing workers, an interrupted or short read caused `cv2.imdecode` to receive a truncated buffer, printing `libpng error: PNG input buffer is incomplete` and returning `None`.
+  - In Ultralytics `ultralytics/utils/patches.py`, the PIL fallback (`_imread_pil`) was restricted strictly to `(.avif, .heic, .heif)` extensions, causing OpenCV decode errors on PNGs to return `None` and trigger `FileNotFoundError`.
+- **Fix:**
+  - Patched `ultralytics/utils/patches.py`: If `cv2.imdecode` returns `None`, retry using Python's signal-safe `open().read()` with `np.frombuffer()`. If still `None`, fall back unconditionally to `_imread_pil`.
+  - Added secondary safety net in `ultralytics/data/base.py` (`load_image`) to fall back to PIL before raising `FileNotFoundError`.
+  - Verified `img_012251.png` decodes cleanly into `(2556, 1179, 3) uint8`.
+- **Resume:** `NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt` (Epoch 1, 154 MB) is fully intact and verified loadable. Resumed seamlessly from `last.pt`.
+

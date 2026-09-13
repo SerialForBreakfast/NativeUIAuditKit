@@ -26,9 +26,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 def parse_args():
     p = argparse.ArgumentParser(description="Watch and auto-resume Phase 6a training.")
-    p.add_argument("--name", "--run-name", default="phase6a_r008", help="Run name in NativeUITrainer/yolo_runs")
+    p.add_argument("--name", "--run-name", default="phase6a_r009", help="Run name in NativeUITrainer/yolo_runs")
     p.add_argument("--log", default=None, help="Path to training log")
-    p.add_argument("--batch", type=int, default=4, help="Batch size on resume")
+    p.add_argument("--batch", type=int, default=8, help="Batch size on resume")
     p.add_argument("--epochs", type=int, default=100, help="Target epochs")
     return p.parse_args()
 
@@ -38,7 +38,7 @@ RUN_DIR = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs" / RUN_NAME
 WEIGHTS = RUN_DIR / "weights"
 RESULTS = RUN_DIR / "results.csv"
 DONE = RUN_DIR / "TRAINING_COMPLETE"
-LOG = Path(args.log).resolve() if args.log else (PROJECT_ROOT / "NativeUITrainer" / ("training_6a8.log" if "r008" in RUN_NAME else "training_6a.log"))
+LOG = Path(args.log).resolve() if args.log else (PROJECT_ROOT / "NativeUITrainer" / ("training_6a9.log" if "r009" in RUN_NAME else ("training_6a8.log" if "r008" in RUN_NAME else "training_6a.log")))
 WATCH_LOG = PROJECT_ROOT / "NativeUITrainer" / f"watch_{RUN_NAME}.log"
 PYTHON = PROJECT_ROOT / ".venv-yolo" / "bin" / "python"
 TRAIN = PROJECT_ROOT / "scripts" / "train_ios_model.py"

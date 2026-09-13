@@ -96,6 +96,20 @@ public struct NativeUIDetectionRequest: Sendable {
         return observations
     }
 
+    /// Infers device model, platform, and OS version from image dimensions, detected UI elements, and optional sidecar metadata.
+    public func inferDevice(
+        for image: CGImage,
+        observations: [NativeUIElementObservation] = [],
+        sidecar: NativeUISidecar? = nil
+    ) -> NativeUIDeviceInference {
+        let size = CGSize(width: image.width, height: image.height)
+        return DeviceInference.inferDevice(
+            imageSize: size,
+            observations: observations,
+            sidecar: sidecar
+        )
+    }
+
     /// Runs Apple Vision OCR (`VNRecognizeTextRequest`) on the screenshot off the MainActor.
     public static func recognizeText(in screenshot: CGImage) async throws -> [RecognizedTextRegion] {
         try await Task.detached(priority: .userInitiated) {

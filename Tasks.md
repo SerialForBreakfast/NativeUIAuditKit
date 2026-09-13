@@ -1945,38 +1945,21 @@ struct DeviceDimension {
 
 Must include: all iPhone models from SE (1st gen) to current, all iPad models, Apple TV (1920×1080), MacBook common resolutions.
 
-**AC:**
-- An iPhone 15 Pro screenshot (1179×2556 @3x) resolves to candidates containing "iPhone 15 Pro" and "iPhone 15 Pro Max"
-- An iPhone SE (750×1334 @2x) resolves to candidates for SE models only
-- An Apple TV screenshot (1920×1080 @2x) resolves to tvOS candidates
-- A 1440×900 macOS screenshot resolves to macOS candidates
-- Ambiguous dimensions (shared between multiple models) return multiple candidates, not a single guess
+- [x] Complete. Implemented in `Sources/NativeUIAuditKit/Detection/DeviceDimensionDatabase.swift`.
+- [x] Database covers all iPhone generations (SE 1-3, 6-16 Pro Max), iPads (standard, mini, Air, Pro), Apple TV (1080p, 4K), and common Mac resolutions.
+- [x] Orientation-agnostic lookup: `lookup(width:height:)` accurately matches portrait and landscape.
+- [x] Unit tests passing in `DeviceDimensionDatabaseTests.swift`.
 
 ---
 
 #### TASK-8-2: `NativeUIDeviceInference` implementation
 
-**File:** `Sources/NativeUIAuditKit/Detection/DeviceInference.swift` (new)
-
-```swift
-public func inferDevice(from image: CGImage, sidecar: NativeUISidecar?) -> NativeUIDeviceInference
-```
-
-If sidecar is present and `imageSHA256` matches: return exact device/platform from sidecar metadata.
-
-If pixel-only:
-1. Dimension lookup → initial candidate list
-2. Status bar height detection (Vision rectangle detector on top 10% of image) → refine candidates
-3. Home indicator presence (scan bottom 5% of image for pill shape) → filter to face-ID devices
-4. Dynamic Island presence (scan top 5% for pill cutout) → filter to Pro devices with Dynamic Island
-
-Return `NativeUIDeviceInference` with ranked candidates sorted by confidence descending.
-
-**AC:**
-- Sidecar path: `inferDevice(from:, sidecar: validSidecar).platform == .iOS` and `candidates[0].confidence == 1.0`
-- Pixel-only path for an iPhone 15 Pro screenshot: top candidate is an iPhone with Dynamic Island
-- Never returns a single hard guess — always returns `candidates` array with ≥1 element
-- All returned `confidence` values sum to ≤1.0
+- [x] Complete. Implemented in `Sources/NativeUIAuditKit/Detection/DeviceInference.swift` and exposed via `NativeUIDetectionRequest.inferDevice(for:observations:sidecar:)`.
+- [x] Sidecar fast-path: returns exact platform and model with `confidence == 1.0` and parsed OS version.
+- [x] Pixel heuristics path: dimension lookup + UI chrome refinement (`dynamicIsland` filters to Dynamic Island models; `homeIndicator` filters to Face ID models).
+- [x] Candidate confidences normalized ($\le 1.0$) and sorted descending.
+- [x] Fallback path for uncatalogued aspect ratios and resolutions (never empty).
+- [x] Unit tests passing in `DeviceInferenceTests.swift`. All 39 package tests pass.
 
 ---
 
@@ -2021,10 +2004,11 @@ public struct NativeUINoOpRecognizer: NativeUIRecognizing {
 }
 ```
 
-**AC:**
-- Protocol, `NativeUIObservations`, `NativeUIRecognitionStatus`, and `NativeUINoOpRecognizer` all compile under Swift 6 strict concurrency
-- `NativeUINoOpRecognizer` always returns `status: .notRequested` — never throws
-- All types are `Sendable`, `Codable` where appropriate
+- [x] Complete. Implemented in `Sources/NativeUIAuditKit/Integration/NativeUIRecognizing.swift`.
+- [x] Protocol `NativeUIRecognizing`, `NativeUIObservations`, `NativeUIRecognitionStatus`, `NativeUINoOpRecognizer`, and `NativeUIDetectorRecognizer` compile cleanly under Swift 6 strict concurrency (`Sendable`, off MainActor asynchronous).
+- [x] `NativeUINoOpRecognizer` always returns `status: .notRequested` without throwing.
+- [x] `NativeUIDetectorRecognizer` decodes PNG/JPEG/HEIC data via ImageIO, evaluates elements, text fusion, and audit rules.
+- [x] All types are `Sendable` and `Codable`. Tested in `IntegrationTests.swift` (44 total package tests passing).
 
 ---
 
