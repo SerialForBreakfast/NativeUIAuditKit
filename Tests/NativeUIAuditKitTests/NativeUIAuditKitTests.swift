@@ -98,6 +98,29 @@ struct NativeUIAuditKitTests {
         #expect(decoded.elements[0].visibleText == "Continue")
     }
 
+    @Test("NativeUISidecar rejects unsupported schema versions")
+    func sidecarRejectsUnsupportedSchemaVersion() throws {
+        let sidecar = NativeUISidecar(
+            schemaVersion: "0.9",
+            imageSHA256: "abc123",
+            pixelWidth: 1179,
+            pixelHeight: 2556,
+            scale: 3,
+            platform: "iOS",
+            osVersion: "26.3",
+            deviceName: "iPhone 15 Pro",
+            colorScheme: "light",
+            dynamicTypeSize: "large",
+            locale: "en_US",
+            elements: []
+        )
+        let data = try JSONEncoder().encode(sidecar)
+
+        #expect(throws: DecodingError.self) {
+            _ = try JSONDecoder().decode(NativeUISidecar.self, from: data)
+        }
+    }
+
     @Test("NativeUIElementType has stable raw values for taxonomy v0 classes")
     func elementTypeTaxonomyV0StableRawValues() {
         #expect(NativeUIElementType.primaryButton.rawValue == "primaryButton")

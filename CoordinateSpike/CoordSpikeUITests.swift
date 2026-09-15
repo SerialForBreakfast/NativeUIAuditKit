@@ -31,11 +31,7 @@ final class CoordSpikeUITests: XCTestCase {
         var maxDeltaPx: CGFloat = 0
 
         for spec in declared {
-            let element = app.otherElements[spec.id]
-                .firstMatch
-                .exists
-                ? app.otherElements[spec.id].firstMatch
-                : app.buttons[spec.id].firstMatch
+            let element = element(matching: spec.id)
 
             XCTAssertTrue(element.waitForExistence(timeout: 2), "Element not found: \(spec.id)")
 
@@ -91,6 +87,17 @@ final class CoordSpikeUITests: XCTestCase {
         attachment.name = "coord_spike_screenshot_\(Int(scale))x"
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    private func element(matching id: String) -> XCUIElement {
+        let candidates = [
+            app.buttons[id].firstMatch,
+            app.textFields[id].firstMatch,
+            app.staticTexts[id].firstMatch,
+            app.otherElements[id].firstMatch,
+        ]
+
+        return candidates.first(where: \.exists) ?? candidates[0]
     }
 
     // Bonus: verify that a partially-occluded element's frame clips to visible rect.

@@ -5,6 +5,7 @@
 **Audience:** NativeUIAuditKit maintainers and ScreenAuditKit contributors  
 **Related:**  
 - [`../Research/References.md`](References.md) — Apple docs and prior art  
+- [`tvOSTrainingStrategy.md`](tvOSTrainingStrategy.md) — dedicated tvOS model, TVTestRig capture, and later model-combination gates
 - [`../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md`](../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md) — feasibility ADR  
 - [`../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)  
 - [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)

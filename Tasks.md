@@ -7,7 +7,7 @@
 - `[x]` Done
 - `[!]` Blocked — see note
 
-Full architecture: [`Research/NativeUIElementDetection.md`](Research/NativeUIElementDetection.md)  
+Full architecture: [`Research/NativeUIElementDetection.md`](Research/NativeUIElementDetection.md)
 Training data strategy: [`Research/TrainingDataStrategy.md`](Research/TrainingDataStrategy.md)
 
 ---
@@ -81,8 +81,8 @@ See [`Research/CoordinateSpike.md`](Research/CoordinateSpike.md) for full result
 
 #### TASK-2a-1: Add 14 new `NativeUIElementType` cases ✅
 
-**File:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`  
-**Requires:** Nothing — unblocked immediately  
+**File:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`
+**Requires:** Nothing — unblocked immediately
 **Parallel with:** All of Stream B
 
 Add the following 14 cases to the `NativeUIElementType` enum. `rawValue` must exactly match the string shown (these become the stable annotation format strings):
@@ -114,8 +114,8 @@ Add the following 14 cases to the `NativeUIElementType` enum. `rawValue` must ex
 
 #### TASK-2a-2: Extend `NativeUIElementState` ✅
 
-**File:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`  
-**Requires:** Nothing — unblocked immediately  
+**File:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`
+**Requires:** Nothing — unblocked immediately
 **Parallel with:** TASK-2a-1 (different struct, no conflict)
 
 Add three new optional `Bool?` fields to `NativeUIElementState`:
@@ -139,8 +139,8 @@ All three must be optional (nil = state not applicable or not observed), `Codabl
 
 #### TASK-2a-3: Update Codable round-trip tests ✅
 
-**File:** `Tests/NativeUIAuditKitTests/NativeUIAuditKitTests.swift`  
-**Requires:** TASK-2a-1 and TASK-2a-2 complete  
+**File:** `Tests/NativeUIAuditKitTests/NativeUIAuditKitTests.swift`
+**Requires:** TASK-2a-1 and TASK-2a-2 complete
 **Parallel with:** Stream B tasks
 
 Extend the existing Codable round-trip tests to cover all 14 new element types and the 3 new state fields.
@@ -159,8 +159,8 @@ Extend the existing Codable round-trip tests to cover all 14 new element types a
 
 #### TASK-2a-4: Update `NativeUIElementDetection.md` Section 5 ✅
 
-**File:** `Research/NativeUIElementDetection.md`  
-**Requires:** TASK-2a-1 complete  
+**File:** `Research/NativeUIElementDetection.md`
+**Requires:** TASK-2a-1 complete
 **Parallel with:** TASK-2b-1, 2b-2
 
 Replace the class list in Section 5.2 with the full 41-class taxonomy. Preserve the existing structure and prose around it. Add a table row for each new class with: case name, description, platform scope (all platforms / iOS only / macOS only / etc.).
@@ -178,8 +178,8 @@ Replace the class list in Section 5.2 with the full 41-class taxonomy. Preserve 
 
 #### TASK-2b-1: Write `Research/schemas/annotation.schema.json` v1.0 ✅
 
-**File:** `Research/schemas/annotation.schema.json` (new file)  
-**Requires:** Nothing — unblocked immediately  
+**File:** `Research/schemas/annotation.schema.json` (new file)
+**Requires:** Nothing — unblocked immediately
 **Parallel with:** All of Stream A
 
 Write a JSON Schema (draft-07) that validates a single annotation file. The schema must enforce all fields documented in `Research/TrainingDataStrategy.md` Section 13.1 and the sample in `Research/NativeUIElementDetection.md` Section 6.3.
@@ -202,8 +202,8 @@ Write a JSON Schema (draft-07) that validates a single annotation file. The sche
 
 #### TASK-2b-2: Write `Research/schemas/category_map.json` ✅
 
-**File:** `Research/schemas/category_map.json` (new file)  
-**Requires:** TASK-2a-1 complete (need final list of all 41 rawValues)  
+**File:** `Research/schemas/category_map.json` (new file)
+**Requires:** TASK-2a-1 complete (need final list of all 41 rawValues)
 **Parallel with:** TASK-2b-1
 
 Create a deterministic mapping from `NativeUIElementType.rawValue` string to an integer category ID for COCO-format export and YOLO training. Integer IDs must be stable — do not change them after this file is tagged.
@@ -230,8 +230,8 @@ Assign IDs 0–40 in alphabetical order of rawValue string. Use `supercategory` 
 
 #### TASK-2b-3: Write `Research/OCRFusionPolicy.md` ✅
 
-**File:** `Research/OCRFusionPolicy.md` (new file)  
-**Requires:** Nothing — unblocked immediately  
+**File:** `Research/OCRFusionPolicy.md` (new file)
+**Requires:** Nothing — unblocked immediately
 **Parallel with:** Everything in Phase 2
 
 Document the rules for associating `VNRecognizeTextRequest` output to detected element observations. This document governs Phase 7 implementation.
@@ -267,8 +267,8 @@ These tasks only require a Swift file and have no Xcode/Simulator dependency. Th
 
 #### TASK-3a-1: `GeneratorConfig.swift` — core data types ✅
 
-**File:** `NativeUIDatasetGenerator/Sources/GeneratorConfig.swift` (new)  
-**Requires:** TASK-2b-1 complete (schema defines the metadata fields)  
+**File:** `NativeUIDatasetGenerator/Sources/GeneratorConfig.swift` (new)
+**Requires:** TASK-2b-1 complete (schema defines the metadata fields)
 **Parallel with:** TASK-3a-3, TASK-3a-4, TASK-3d-1
 
 Define the data types that govern every generator run. All types `Codable`, `Sendable`.
@@ -335,8 +335,8 @@ Include 5 predefined `OSVisualProfile` static instances: `ios17`, `ios18`, `ios2
 
 #### TASK-3a-2: `ContentCorpus.swift` — seeded text generation ✅
 
-**File:** `NativeUIDatasetGenerator/Sources/ContentCorpus.swift` (new)  
-**Requires:** Nothing — unblocked immediately  
+**File:** `NativeUIDatasetGenerator/Sources/ContentCorpus.swift` (new)
+**Requires:** Nothing — unblocked immediately
 **Parallel with:** Everything in Phase 3
 
 Write a deterministic, seeded text generator for realistic UI strings. Must be reproducible: same seed → same sequence every time.
@@ -380,8 +380,8 @@ struct ContentCorpus {
 
 #### TASK-3a-3: Wallpaper archetype assets ✅
 
-**Files:** `NativeUIDatasetGenerator/Assets/Wallpapers/` (6 PNG files, new directory)  
-**Requires:** Nothing — unblocked immediately  
+**Files:** `NativeUIDatasetGenerator/Assets/Wallpapers/` (6 PNG files, new directory)
+**Requires:** Nothing — unblocked immediately
 **Parallel with:** Everything
 
 Create 6 abstract wallpaper PNG assets at 1290×2796px (iPhone 15 Pro Max native resolution — scale down as needed). No real photographs. These are used as background layers behind translucent chrome elements to prevent the model from learning a specific blurred color as a chrome feature.
@@ -404,8 +404,8 @@ Create 6 abstract wallpaper PNG assets at 1290×2796px (iPhone 15 Pro Max native
 
 #### TASK-3a-4: `SimulatorStateManager.swift` ✅
 
-**File:** `NativeUIDatasetGenerator/Sources/SimulatorStateManager.swift` (new)  
-**Requires:** TASK-3a-1 complete (`SimulatorStateOverride` type)  
+**File:** `NativeUIDatasetGenerator/Sources/SimulatorStateManager.swift` (new)
+**Requires:** TASK-3a-1 complete (`SimulatorStateOverride` type)
 **Parallel with:** TASK-3a-2, TASK-3a-3, TASK-3d-1
 
 Implement the manager that calls `xcrun simctl status_bar` before and after each generation batch.
@@ -452,8 +452,8 @@ These tasks require an Xcode app target and must run on Simulator.
 
 #### TASK-3b-1: Add `NativeUIDatasetGenerator` app target to `Package.swift` ✅
 
-**File:** `Package.swift`  
-**Requires:** Nothing for the Package.swift edit itself  
+**File:** `Package.swift`
+**Requires:** Nothing for the Package.swift edit itself
 **Blocks:** TASK-3b-2, TASK-3b-3, TASK-3c-1
 
 macOS orchestrator executable. Drives `xcrun simctl`, writes annotation JSON, manages the manifest.
@@ -468,8 +468,8 @@ macOS orchestrator executable. Drives `xcrun simctl`, writes annotation JSON, ma
 
 #### TASK-3b-1a: Create `GeneratorRunner` iOS Xcode project ✅
 
-**File:** `GeneratorRunner/GeneratorRunner.xcodeproj` (new)  
-**Requires:** TASK-3b-1, TASK-3b-2 complete  
+**File:** `GeneratorRunner/GeneratorRunner.xcodeproj` (new)
+**Requires:** TASK-3b-1, TASK-3b-2 complete
 **Blocks:** TASK-3c first runs on a real simulator
 
 iOS app target (iPhone deployment target: iOS 17+) that:
@@ -488,9 +488,9 @@ iOS app target (iPhone deployment target: iOS 17+) that:
 
 #### TASK-3b-2: Screenshot capture pipeline ✅
 
-**Files:** `NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift` (iOS-only, no guards),  
-`NativeUIDatasetGenerator/Sources/CaptureTypes.swift` (shared types, macOS + iOS)  
-**Requires:** TASK-3b-1 complete, Phase 1 findings (150ms stabilization, `.ignoresSafeArea`, padding layout)  
+**Files:** `NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift` (iOS-only, no guards),
+`NativeUIDatasetGenerator/Sources/CaptureTypes.swift` (shared types, macOS + iOS)
+**Requires:** TASK-3b-1 complete, Phase 1 findings (150ms stabilization, `.ignoresSafeArea`, padding layout)
 **Parallel with:** TASK-3a-4 (different files)
 
 Implement the per-image capture pipeline. This is the most critical infrastructure task — every annotation's accuracy depends on it.
@@ -531,8 +531,8 @@ struct ScreenshotCapture {
 
 #### TASK-3b-3: Annotation JSON writer and manifest ✅
 
-**Files:** `NativeUIDatasetGenerator/Sources/AnnotationWriter.swift`, `NativeUIDatasetGenerator/Sources/DatasetManifest.swift` (new)  
-**Requires:** TASK-3b-2 complete, TASK-2b-1 complete (schema defines the format)  
+**Files:** `NativeUIDatasetGenerator/Sources/AnnotationWriter.swift`, `NativeUIDatasetGenerator/Sources/DatasetManifest.swift` (new)
+**Requires:** TASK-3b-2 complete, TASK-2b-1 complete (schema defines the format)
 **Parallel with:** TASK-3d-1
 
 Implement two writers:
@@ -571,8 +571,8 @@ struct ManifestEntry: Codable {
 
 #### TASK-3b-4: Dataset balance report ✅
 
-**File:** `NativeUIDatasetGenerator/Sources/BalanceReport.swift` and `scripts/generate_balance_report.py` (new)  
-**Requires:** TASK-3b-3 complete (needs manifest format)  
+**File:** `NativeUIDatasetGenerator/Sources/BalanceReport.swift` and `scripts/generate_balance_report.py` (new)
+**Requires:** TASK-3b-3 complete (needs manifest format)
 **Parallel with:** TASK-3d-1
 
 Two complementary tools:
@@ -596,8 +596,8 @@ These are pure Python scripts. They only need to know the annotation JSON format
 
 #### TASK-5e-1: `scripts/confusion_matrix.py` ✅
 
-**File:** `scripts/confusion_matrix.py` (new)  
-**Requires:** TASK-2b-1 complete (needs category_map for class names), TASK-2b-2 complete  
+**File:** `scripts/confusion_matrix.py` (new)
+**Requires:** TASK-2b-1 complete (needs category_map for class names), TASK-2b-2 complete
 **Parallel with:** Everything in Phase 3, 4, 5
 
 Write a Python evaluation script using the `supervision` library that:
@@ -628,8 +628,8 @@ Usage: python scripts/confusion_matrix.py \
 
 #### TASK-5e-2: `scripts/centroid_distribution.py` ✅
 
-**File:** `scripts/centroid_distribution.py` (new)  
-**Requires:** TASK-2b-1 complete  
+**File:** `scripts/centroid_distribution.py` (new)
+**Requires:** TASK-2b-1 complete
 **Parallel with:** Everything in Phase 3, 4, 5
 
 Write a Python script that detects spatial prior bias — whether predicted bounding box centroids cluster too tightly compared to the training distribution.
@@ -660,8 +660,8 @@ Usage: python scripts/centroid_distribution.py \
 
 #### TASK-3d-1: Overlay viewer ✅
 
-**File:** `NativeUIDatasetGeneratorOverlay/` (new Xcode app or SPM executable target)  
-**Requires:** TASK-2b-1 complete (needs annotation format), TASK-3b-3 complete (needs the annotation files it reads)  
+**File:** `NativeUIDatasetGeneratorOverlay/` (new Xcode app or SPM executable target)
+**Requires:** TASK-2b-1 complete (needs annotation format), TASK-3b-3 complete (needs the annotation files it reads)
 **Parallel with:** TASK-3a-4, TASK-3b-4
 
 Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given a PNG + its annotation JSON, renders the PNG with colored bounding boxes and element type labels overlaid at `boundsPixels` coordinates.
@@ -691,8 +691,8 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 #### TASK-3c-1: Login/signup form template ✅
 
-**File:** `NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift` (new)  
-**Requires:** TASK-3b-2, TASK-3a-1 (GeneratorConfig), TASK-3a-2 (ContentCorpus)  
+**File:** `NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift` (new)
+**Requires:** TASK-3b-2, TASK-3a-1 (GeneratorConfig), TASK-3a-2 (ContentCorpus)
 **Parallel with:** TASK-3c-2, TASK-3c-3
 
 **Elements to annotate:** `navigationBar`, `primaryButton`, `secondaryButton`, `textField`, `secureField`, `label`, `link`
@@ -725,8 +725,8 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 #### TASK-3c-2: Settings grouped list template ✅
 
-**File:** `NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift` (new)  
-**Requires:** TASK-3b-2, TASK-3a-1, TASK-3a-2  
+**File:** `NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift` (new)
+**Requires:** TASK-3b-2, TASK-3a-1, TASK-3a-2
 **Parallel with:** TASK-3c-1, TASK-3c-3
 
 **Elements to annotate:** `navigationBar`, `tabBar`, `toggle`, `listRow`, `disclosureGroup`, `label`, `homeIndicator` (when device has one)
@@ -746,8 +746,8 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 #### TASK-3c-3: Alert template ✅
 
-**File:** `NativeUIDatasetGenerator/Templates/AlertTemplate.swift` (new)  
-**Requires:** TASK-3b-2, TASK-3a-1, TASK-3a-2  
+**File:** `NativeUIDatasetGenerator/Templates/AlertTemplate.swift` (new)
+**Requires:** TASK-3b-2, TASK-3a-1, TASK-3a-2
 **Parallel with:** TASK-3c-1, TASK-3c-2
 
 **Elements to annotate:** `alert`, `primaryButton`, `cancelAction`, `destructiveButton`, `label`
@@ -773,7 +773,7 @@ Build a macOS SwiftUI app (or command-line tool) for manual spot-checking. Given
 
 #### TASK-3e-1: First generation run ✅
 
-**Requires:** All of Phase 3a, 3b, 3c complete  
+**Requires:** All of Phase 3a, 3b, 3c complete
 **Produces:** ≥500 annotated images in `NativeUIAuditKit-Dataset/train/` and `validation/`
 
 Run the generator across all 3 templates with the full parameter sweep including simulator state overrides.
@@ -806,15 +806,15 @@ Run the overlay viewer's spot-check mode on 50 random samples from the Phase 3e-
 
 *Goal: Supplement SwiftUI data with UIKit-rendered controls to prevent SwiftUI rendering artifact overfitting. Must complete before Phase 6.*
 
-**Requires:** Phase 3 gate passed (generator infrastructure stable)  
-**Parallel with:** Phase 5 (Known-Bad), Phase 5b (Extended Templates)  
+**Requires:** Phase 3 gate passed (generator infrastructure stable)
+**Parallel with:** Phase 5 (Known-Bad), Phase 5b (Extended Templates)
 **Gate:** OPEN — all TASK-4-3 ACs passed, 2,700 images verified, ratio 4.98×
 
 ---
 
 #### TASK-4-1: UIKit coordinate export validation ✅ Complete (2026-05-17)
 
-**File:** `NativeUIDatasetGenerator/Tests/UIKitCoordTests.swift` (new)  
+**File:** `NativeUIDatasetGenerator/Tests/UIKitCoordTests.swift` (new)
 **Requires:** TASK-3b-2 (capture pipeline)
 
 Before generating at scale, verify UIKit frame export. Create a `UIViewController` with 3 subviews at known frames. Export via `view.convert(subview.bounds, to: nil)`. Assert ±2pt alignment with declared frames.
@@ -828,7 +828,7 @@ Before generating at scale, verify UIKit frame export. Create a `UIViewControlle
 
 #### TASK-4-2: `UIKitGeneratorViewController` ✅ Complete (2026-05-17)
 
-**File:** `NativeUIDatasetGenerator/Templates/UIKit/UIKitGeneratorViewController.swift` (new)  
+**File:** `NativeUIDatasetGenerator/Templates/UIKit/UIKitGeneratorViewController.swift` (new)
 **Requires:** TASK-4-1 passing, TASK-3b-2 (capture pipeline), TASK-3a-2 (ContentCorpus)
 
 Build a `UIViewController` that renders a configurable combination of UIKit controls and exports their frames. Supports all UIKit equivalents of the SwiftUI taxonomy.
@@ -880,9 +880,9 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 - ✅ No single UIKit template contributes >15% of any class — all OK
 - ✅ `imageSHA256` match rate = 1.0 — **2,700/2,700 verified**
 
-**Dataset stats:** 2,700 images total · 21 canonical element classes · train/val/test 80/10/10  
-**Verification script:** `scripts/verify_dataset_phase4.py`  
-**Balance report:** `reports/dataset_balance_phase4.md`  
+**Dataset stats:** 2,700 images total · 21 canonical element classes · train/val/test 80/10/10
+**Verification script:** `scripts/verify_dataset_phase4.py`
+**Balance report:** `reports/dataset_balance_phase4.md`
 **Dataset location:** `.build/debug-output/dataset/`
 
 ---
@@ -891,7 +891,7 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 *Goal: Intentional failure cases for audit rule training + the Python evaluation scripts needed in Phase 6+.*
 
-**Requires:** Phase 3 gate passed  
+**Requires:** Phase 3 gate passed
 **Parallel with:** Phase 4, Phase 5b
 
 **Infrastructure shipped:**
@@ -1064,8 +1064,8 @@ Run the UIKit generator with the same simulator state sweep as Phase 3.
 
 *Goal: Expand to ≥50 structurally distinct templates before Phase 6 training. Templates can be built and tested independently.*
 
-**Requires:** Phase 3 gate passed  
-**Parallel with:** Phase 4, Phase 5  
+**Requires:** Phase 3 gate passed
+**Parallel with:** Phase 4, Phase 5
 **Each template task is independent of the others**
 
 For each template below, the AC is the same pattern as TASK-3c-1: correct spot-check (≤1 misaligned box in 5 spot-checked images), all listed element types appear across the parameter sweep, `imageSHA256` match = 1.0.
@@ -1097,7 +1097,7 @@ For each template below, the AC is the same pattern as TASK-3c-1: correct spot-c
 
 #### ✅ TASK-5b-21: Accessibility variant sweep
 
-**Requires:** All TASK-5b-1 through 5b-20 complete  
+**Requires:** All TASK-5b-1 through 5b-20 complete
 For every template that includes `navigationBar` or `tabBar`, generate variants with `reduceTransparency: true` (15% of images), `increaseContrast: true` (15%), `boldText: true` (10%), and `buttonShapes: true` (10%) per `Research/TrainingDataStrategy.md` Section 10.
 
 **Implementation:** 4 test methods × 10 templates × 50 images = 2,000 accessibility-variant images.
@@ -1153,7 +1153,7 @@ New classes covered: `colorWell`, `menuButton`, `link`, `toolbar`, `sidebar`.
 
 #### TASK-6-1 (original spec)
 
-**File:** `scripts/dataset_quality_check.py` (new)  
+**File:** `scripts/dataset_quality_check.py` (new)
 **Requires:** Phase 4 and Phase 5 generation complete
 
 Write a Python script that enforces all pre-training quality gates. Must exit non-zero if any gate fails.
@@ -1233,7 +1233,7 @@ swift scripts/eval_map.swift                 # full 1364-image mAP evaluation
 
 *Implemented 3-pass inference: (1) full-image `.scaleFill`, (2) SAHI 640×640 tiles at 480px stride on 2× upscaled image, (3) horizontal strip pass matching training strip geometry. Static cached `VNCoreMLModel`. NMS at IoU 0.45 same-class. Model dev fallback searches relative to `#filePath`. Compiles clean under Swift 6.*
 
-**File:** `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
+**File:** `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`
 **Requires:** TASK-6-2 complete (need a model to test against)
 
 Replace the placeholder inference stub with a real implementation using SAHI (Slicing Aided Hyper Inference). Do NOT use a custom ad-hoc tiling scheme.
@@ -1264,8 +1264,8 @@ Replace the placeholder inference stub with a real implementation using SAHI (Sl
 
 *`ModelDescriptor` (Sendable, Codable, Equatable) + `OSVersionRange` + `ModelRegistry.iOS` static descriptor. `trainedClasses` sorted alphabetically on init. JSON round-trip verified. `swift build` on `NativeUIAuditKitModels` passes.*
 
-**File:** `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift` (new)  
-**Requires:** TASK-6-2 (need the model file)  
+**File:** `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift` (new)
+**Requires:** TASK-6-2 (need the model file)
 **Parallel with:** TASK-6-3
 
 ```swift
@@ -1351,7 +1351,7 @@ swift scripts/run_real_world_eval.swift                  # writes reports/real_w
 
 #### TASK-6-6: Physical device benchmark [~] — Test written, awaiting model + physical device run
 
-**Requires:** TASK-6-3 complete ✅  
+**Requires:** TASK-6-3 complete ✅
 **Parallel with:** TASK-6-5
 
 **Test file:** `GeneratorRunner/GeneratorRunnerTests/ModelBenchmarkTests.swift` ✅ Written and wired into pbxproj.
@@ -1386,9 +1386,9 @@ strips) built specifically to work around v1's anchor-based architecture. None o
 needed for v2's anchor-free model, and the mismatch was actively wrong, not just stale — see
 TASK-6d-6.*
 
-**Requires:** `NativeUIAuditKitModels` 2.0.0 (done)  
+**Requires:** `NativeUIAuditKitModels` 2.0.0 (done)
 **Blocks:** Phase 7 (OCR fusion merges its output; building fusion on the stale pipeline
-would need redoing), Phase 9 (ScreenAuditKit integration exposes this API directly)  
+would need redoing), Phase 9 (ScreenAuditKit integration exposes this API directly)
 **Completed:** 2026-08-23, before the `2.0.0` tag was cut
 
 ---
@@ -1525,7 +1525,7 @@ with confidence the underlying detector is current.
 
 *One mandatory evaluation day before committing to 41-class custom training. No "skip" option.*
 
-**Requires:** Phase 6 gate passed  
+**Requires:** Phase 6 gate passed
 **Time estimate:** 1 day
 
 **⚠️ BLOCKED — confirmed infeasible as specified (2026-08-23).** Checked the `FoundationModels`
@@ -1553,15 +1553,15 @@ well — reducing the risk this gate existed to de-risk in the first place. Full
 
 #### TASK-6g-1: Foundation Models evaluation harness — SKIPPED, not implementable as specified
 
-**File:** `scripts/foundation_model_eval.py` or a Swift `XCTest` target  
+**File:** `scripts/foundation_model_eval.py` or a Swift `XCTest` target
 **Requires:** TASK-6-5 complete (have the withheld-template test set ready)
 
 ~~Build an evaluation harness that sends each test image to Apple's Foundation Models framework with a zero-shot prompt and records predictions.~~ **Not built** — the `FoundationModels` framework has no image-input API to send screenshots to (verified against the shipped `.swiftinterface`, see blocker above). Original prompt template and ACs preserved below for the record, in case a future Apple release adds multimodal support and this becomes implementable.
 
 Prompt template (never executed):
 ```
-Identify all visible native Apple UI elements in this screenshot. 
-For each element, provide: the element type (from this list: {41 class names}), 
+Identify all visible native Apple UI elements in this screenshot.
+For each element, provide: the element type (from this list: {41 class names}),
 and its bounding box as [x_min, y_min, x_max, y_max] normalized to [0,1].
 Return JSON array.
 ```
@@ -1610,7 +1610,7 @@ Document the decision and mAP result in `Research/TrainingDataStrategy.md` under
 
 *2026-08-23: `scripts/export_coco.py`, `scripts/train_ios_model.py` added. Export writes to `NativeUITrainer/yolo_dataset_41class/` (in-package) rather than the external dataset store (filesystem-boundary rule). Ultralytics YOLO11 has no `loss="focal"` kwarg — inverse-frequency `class_weights.json` + OHEM is the operational stand-in. Family holdout replaces the generator 8:1:1 split (BP-27). 36/41 taxonomy classes have iOS instances; five empty classes keep frozen IDs (BP-28).*
 
-**File:** `scripts/train_ios_model.py` (new)  
+**File:** `scripts/train_ios_model.py` (new)
 **Requires:** TASK-2b-2 complete (category_map.json), Phase 5b generation complete
 
 Configure YOLO11 training via Ultralytics API:
@@ -1643,7 +1643,7 @@ Write `scripts/export_coco.py` — converts our custom JSON annotations to COCO 
 
 #### TASK-6a-2: Focal loss alpha calibration [x] — `scripts/class_weights.json` used in Run 007
 
-**File:** `scripts/compute_class_weights.py` (new)  
+**File:** `scripts/compute_class_weights.py` (new)
 **Requires:** TASK-6-1 (dataset quality check), Phase 5b generation complete
 
 Compute per-class focal loss alpha weights from inverse class frequency in the training split. Output `scripts/class_weights.json`.
@@ -1663,7 +1663,7 @@ Compute per-class focal loss alpha weights from inverse class frequency in the t
 
 #### TASK-6a-3: OHEM callback [x] — same-length replacement (BP-29); used through Run 007
 
-**File:** `scripts/ohem_callback.py` (new)  
+**File:** `scripts/ohem_callback.py` (new)
 **Requires:** Nothing beyond YOLO knowledge — unblocked
 
 Implement Online Hard Example Mining as a Ultralytics training callback. Each epoch, compute per-image loss from the validation batch. In the next epoch, oversample the top-K highest-loss images by doubling their frequency in the DataLoader.
@@ -1685,7 +1685,7 @@ class OHEMCallback:
 
 #### TASK-6a-4: CoreML export pipeline [~] — Run 007 `best.pt` ready 2026-08-27
 
-**File:** `scripts/export_to_coreml.py` (new)  
+**File:** `scripts/export_to_coreml.py` (new)
 **Requires:** Successful YOLO11 training run
 
 Convert the trained `.pt` model to CoreML `.mlpackage` via `coremltools`:
@@ -1758,26 +1758,27 @@ Train a YOLO11-Nano student model using the YOLO11-Medium as teacher via respons
 
 ---
 
-## Phase 6b: tvOS Model
+## Phase 6b-S: tvOS Simulator Model
 
-*Goal: Dedicated tvOS detector. Focus state paradigm and top-of-screen tab bar require separate training.*
+*Goal: Train the first separate `NativeUIModel_tvOS` from tvOS Simulator synthetic app-content data.*
 
-**Requires:** Phase 6a gate passed  
+**Requires:** Phase 6a gate passed and tvOS coordinate validation documented.
 **Parallel with:** Phase 6c
+**Research reference:** [`Research/tvOSTrainingStrategy.md`](Research/tvOSTrainingStrategy.md)
 
 ---
 
-#### TASK-6b-1: tvOS coordinate validation
+#### TASK-6b-S-1: tvOS simulator coordinate validation
 
-Before generating at scale, validate that the Phase 1 coordinate approach works correctly in tvOS Simulator. tvOS uses a different screen resolution (1920×1080 at @2x effective) and no safe area insets in the traditional sense.
+Before generating at scale, validate that the Phase 1 coordinate approach works correctly in tvOS Simulator. tvOS uses a different screen resolution (1920x1080 at @2x effective) and no safe area insets in the traditional sense.
 
 **AC:**
-- A simple tvOS SwiftUI fixture (Button + Label + focused card) passes the same ±2pt alignment test as Phase 1
-- `isFocused: true` state is reflected in the annotation when the tvOS focus engine is on the element
+- A simple tvOS SwiftUI fixture (Button + Label + focused card) passes the same +/-2pt alignment test as Phase 1
+- Simulator-generated focus metadata distinguishes visual focus, selected state, and unknown/not-evaluated focus
 
 ---
 
-#### TASK-6b-2: tvOS generator templates
+#### TASK-6b-S-2: tvOS simulator generator templates
 
 **Files:** `NativeUIDatasetGenerator/Templates/tvOS/` (new directory, 5 templates)
 
@@ -1786,30 +1787,122 @@ Before generating at scale, validate that the Phase 1 coordinate approach works 
 | tvOS shelf/card grid | `collectionItem` (focused + unfocused), `label`, `imageView` |
 | tvOS top tab bar | `tabBar` (at top of screen), `label` |
 | tvOS settings | `listRow`, `toggle`, `label`, `navigationBar` |
-| tvOS playback controls | `slider`, `primaryButton`, `secondaryButton`, `label` |
-| tvOS alert | `alert`, `primaryButton`, `cancelAction` |
-
-Focus state sweep: each template generates one variant with `isFocused: true` on the primary interactive element.
+| tvOS search/keyboard | `searchField`, `listRow`, `collectionItem`, `keyboardKey` |
+| tvOS alert/dialog | `alert`, `primaryButton`, `cancelAction` |
 
 **AC:**
-- `tabBar` annotations appear in the **top 15% of image height** (not bottom) in all tvOS images
-- `isFocused: true` set on the correct element; focus ring visible in spot-check
-- ≥3,000 tvOS images generated
-- `reports/tvos_balance.md` shows all tvOS classes present with ≥400 instances each
+- `tabBar` annotations appear in the top 15% of image height in all tvOS images
+- Focused/unfocused variants are generated for focusable elements
+- >=3,000 tvOS simulator screenshots generated with matching sidecars
+- Simulator hard negatives include hidden playback controls, video-like backgrounds, decorative highlights, and no-focus screens
+- Train/validation/test split is by template family, not near-duplicate random frames
 
 ---
 
-#### TASK-6b-3: Train and export `NativeUIModel_tvOS`
+#### TASK-6b-S-3: Train/export `NativeUIModel_tvOS_sim_v0`
 
-**Requires:** TASK-6b-2 complete
+**Requires:** TASK-6b-S-2 complete
 
-Train using the same YOLO11 approach as Phase 6a (same scripts, different dataset split).
+Train using the same YOLO11 approach as Phase 6a, with a tvOS-only simulator dataset split.
 
 **AC:**
-- mAP@0.5 ≥ 0.80 on tvOS withheld-template test set
-- `tabBar` AP ≥ 0.80 (critical: must not confuse top-of-screen tab bar with toolbar)
-- Model < 50MB, inference < 200ms on Apple TV 4K hardware (or tvOS Simulator as proxy)
-- Exported to `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_tvOS_v1.mlpackage`
+- Offline adapter accepts saved tvOS simulator screenshot in and emits versioned JSON observations out
+- mAP@0.5 >= 0.80 on withheld simulator-template tvOS set
+- `tabBar` AP >= 0.80 and does not confuse top-of-screen tab bar with toolbar
+- Per-role precision/recall, coordinate error distribution, hard-negative false positives, and visual-focus accuracy reported
+- CoreML export parity check passes against the training runtime
+- Exported as a separate tvOS simulator baseline model bundle
+
+**Gate:** Simulator-only results may qualify app-content detection experiments, but they do not qualify OS-owned chrome, VoiceOver, Switch Control, Zoom, Home Screen, Control Center, profile switching, app switcher, or screensaver classes.
+
+---
+
+## Phase 6b-T: TVTestRig Simulator Capture
+
+*Goal: Prove TVTestRig can feed NativeUIAuditKit with repeatable tvOS Simulator captures before using real hardware.*
+
+**Requires:** Phase 6b-S offline adapter complete.
+**Parallel with:** Phase 6c
+**Research reference:** [`Research/tvOSTrainingStrategy.md`](Research/tvOSTrainingStrategy.md)
+
+---
+
+#### TASK-6b-T-1: TVTestRig simulator artifact contract
+
+**AC:**
+- Contract includes PNG path, optional sidecar path, artifact SHA-256, tvOS version, simulator name, capture state, and accessibility settings
+- Artifacts import into NativeUIAuditKit validation without a runtime dependency on TVTestRig
+- Every simulator capture is marked with `captureSource: tvOSSimulatorTVTestRig`
+
+---
+
+#### TASK-6b-T-2: TVTestRig simulator capture report
+
+**AC:**
+- Capture simulator app-content states that overlap generator templates and compare detector outputs against sidecar expectations
+- Capture simulator system states available without real hardware: Home Screen, Settings, search, app switcher, and screensaver if accessible
+- Report repeatability, metadata completeness, unsupported states, and domain gaps versus generator screenshots
+
+**Gate:** Do not move to real-device capture until TVTestRig simulator artifacts are ingestible offline and failures are diagnosable without driving the device live from NativeUIAuditKit.
+
+---
+
+## Phase 6b-R: Real Apple TV Capture and Qualification
+
+*Goal: Qualify OS-navigation and accessibility visual classes using real Apple TV screenshots captured by TVTestRig.*
+
+**Requires:** Phase 6b-T complete and a stable `NativeUIModel_tvOS_sim_v0` baseline.
+**Parallel with:** Phase 6c
+**Research reference:** [`Research/tvOSTrainingStrategy.md`](Research/tvOSTrainingStrategy.md)
+
+---
+
+#### TASK-6b-R-1: Real-device capture dataset
+
+**AC:**
+- Capture >=500 held-out real Apple TV screenshots through TVTestRig for validation and hard negatives
+- Keep real-device captures in a separate dataset track with explicit tvOS version/build metadata
+- Every real-device capture is marked with `captureSource: realAppleTVTVTestRig`
+
+---
+
+#### TASK-6b-R-2: OS navigation and accessibility coverage
+
+**AC:**
+- Capture OS-owned navigation surfaces: Home Screen, Control Center, profile switcher, Settings, app switcher, setup/pairing, Siri/search overlays, system banners, and screensaver
+- Capture accessibility visuals: VoiceOver caption bar, VoiceOver focus outline, Switch Control focus indicator, Zoom magnification indicator, Reduce Motion, Increase Contrast, Button Shapes, and related variants
+- Produce a supported/deferred table for each OS-navigation and accessibility class
+
+---
+
+#### TASK-6b-R-3: Real-device qualification and v1 training decision
+
+**AC:**
+- Evaluate the simulator-trained model against the real-device held-out set and document domain gaps
+- Decide which real-device classes are validation-only, which can enter training, and which require new capture automation
+- Train/export a real-device-improved `NativeUIModel_tvOS_v1` only after provenance and split rules are documented
+- Report per-role precision/recall, coordinate error distribution, hard-negative false positives, focus-state accuracy, and accessibility-surface accuracy
+
+**Gate:** Do not mark OS-owned chrome or accessibility visual classes as supported until real-device captures prove the class meets its published precision/recall target.
+
+---
+
+## Phase 6b-U: Unified Model Experiment
+
+*Goal: Evaluate whether tvOS should remain separate or be folded into a multi-platform detector.*
+
+**Requires:** Dedicated tvOS real-device qualification and current iOS/iPadOS baseline metrics.
+
+**AC:**
+- Train a platform-balanced unified detector candidate
+- Compare unified model against dedicated iOS/iPadOS and tvOS models on identical held-out sets
+- Confirm no platform loses more than 2 percentage points mAP@0.5 compared with its dedicated model
+- Confirm tvOS `tabBar` AP remains >=0.80 and does not regress into toolbar confusion
+- Confirm tvOS focus-state precision/recall remains within 2 percentage points of the dedicated model or focus estimator
+- Confirm iOS false positives do not increase on bottom chrome, status bar, home indicator, or Dynamic Island classes
+- Confirm latency and model size stay within deployment budget
+
+**Gate:** Keep separate models unless every unified-model gate passes.
 
 ---
 
@@ -1817,7 +1910,7 @@ Train using the same YOLO11 approach as Phase 6a (same scripts, different datase
 
 *Goal: Dedicated macOS detector, including AppKit coordinate flip validation.*
 
-**Requires:** Phase 6a gate passed  
+**Requires:** Phase 6a gate passed
 **Parallel with:** Phase 6b
 
 ---
@@ -1912,7 +2005,7 @@ Implement 4 `NativeUIIssue` detection rules, each as a pure function `(NativeUIE
 
 *Goal: `NativeUIDeviceInference` from heuristics for sidecar-less screenshots.*
 
-**Requires:** Phase 7 complete  
+**Requires:** Phase 7 complete
 **Note:** Phases 8 and 7 can be developed in parallel for the heuristic rules (Phase 8 has no ML dependency)
 
 ---

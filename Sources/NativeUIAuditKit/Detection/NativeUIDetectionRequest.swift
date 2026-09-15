@@ -311,6 +311,21 @@ public struct NativeUISidecar: Codable, Sendable {
     public let locale: String
     public let elements: [NativeUISidecarElement]
 
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion
+        case imageSHA256
+        case pixelWidth
+        case pixelHeight
+        case scale
+        case platform
+        case osVersion
+        case deviceName
+        case colorScheme
+        case dynamicTypeSize
+        case locale
+        case elements
+    }
+
     public init(
         schemaVersion: String = currentSchemaVersion,
         imageSHA256: String, pixelWidth: Int, pixelHeight: Int,
@@ -325,6 +340,31 @@ public struct NativeUISidecar: Codable, Sendable {
         self.osVersion = osVersion;          self.deviceName = deviceName
         self.colorScheme = colorScheme;      self.dynamicTypeSize = dynamicTypeSize
         self.locale = locale;                self.elements = elements
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let schemaVersion = try container.decode(String.self, forKey: .schemaVersion)
+        guard schemaVersion == Self.currentSchemaVersion else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .schemaVersion,
+                in: container,
+                debugDescription: "Unsupported NativeUISidecar schemaVersion '\(schemaVersion)'; expected '\(Self.currentSchemaVersion)'."
+            )
+        }
+
+        self.schemaVersion = schemaVersion
+        self.imageSHA256 = try container.decode(String.self, forKey: .imageSHA256)
+        self.pixelWidth = try container.decode(Int.self, forKey: .pixelWidth)
+        self.pixelHeight = try container.decode(Int.self, forKey: .pixelHeight)
+        self.scale = try container.decode(Double.self, forKey: .scale)
+        self.platform = try container.decode(String.self, forKey: .platform)
+        self.osVersion = try container.decode(String.self, forKey: .osVersion)
+        self.deviceName = try container.decode(String.self, forKey: .deviceName)
+        self.colorScheme = try container.decode(String.self, forKey: .colorScheme)
+        self.dynamicTypeSize = try container.decode(String.self, forKey: .dynamicTypeSize)
+        self.locale = try container.decode(String.self, forKey: .locale)
+        self.elements = try container.decode([NativeUISidecarElement].self, forKey: .elements)
     }
 }
 
