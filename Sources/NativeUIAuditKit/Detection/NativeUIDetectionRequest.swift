@@ -23,12 +23,24 @@ import Vision
 // MARK: - Configuration
 
 public struct NativeUIDetectionConfiguration: Sendable {
+    public enum PlatformSelection: String, Sendable, Codable {
+        case auto
+        case iOS
+        case tvOS
+    }
+
     public var minimumConfidence: Double
     public var includesTextRecognition: Bool
+    public var platform: PlatformSelection
 
-    public init(minimumConfidence: Double = 0.5, includesTextRecognition: Bool = true) {
+    public init(
+        minimumConfidence: Double = 0.5,
+        includesTextRecognition: Bool = true,
+        platform: PlatformSelection = .auto
+    ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
+        self.platform = platform
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
@@ -48,10 +60,36 @@ public struct NativeUIDetectionRequest: Sendable {
         sidecar: NativeUISidecar? = nil
     ) async throws -> [NativeUIElementObservation] {
 
-        let model = try await NativeUIModelAsset.loadModel()
+        let effectivePlatform: NativeUIPlatform
+        switch configuration.platform {
+        case .tvOS:
+            effectivePlatform = .tvOS
+        case .iOS:
+            effectivePlatform = .iOS
+        case .auto:
+            if let p = sidecar?.platform, p.lowercased().contains("tv") {
+                effectivePlatform = .tvOS
+            } else if (screenshot.width == 1920 && screenshot.height == 1080) ||
+                      (screenshot.width == 3840 && screenshot.height == 2160) {
+                effectivePlatform = .tvOS
+            } else {
+                effectivePlatform = .iOS
+            }
+        }
+
+        let model: MLModel
+        let metadata: ModelMetadata
+        if effectivePlatform == .tvOS {
+            model = try await NativeUIModelAsset.loadTVOSModel()
+            metadata = NativeUIModelAsset.tvOSMetadata
+        } else {
+            model = try await NativeUIModelAsset.loadModel()
+            metadata = NativeUIModelAsset.metadata
+        }
+
         let confThreshold = Float(configuration.minimumConfidence)
-        let classLabels = NativeUIModelAsset.metadata.classLabels
-        let nmsIoU = Double(NativeUIModelAsset.metadata.recommendedNMSIoUThreshold)
+        let classLabels = metadata.classLabels
+        let nmsIoU = Double(metadata.recommendedNMSIoUThreshold)
 
         let raw: [RawPrediction] = try await Task.detached(priority: .userInitiated) {
             try Self.runYOLO(screenshot, model: model, classLabels: classLabels, confFloor: confThreshold)
@@ -68,6 +106,11 @@ public struct NativeUIDetectionRequest: Sendable {
             .compactMap { Self.toObservation($0, imageWidth: w, imageHeight: h) }
 
         var observations = rawObservations
+
+        // tvOS focus state resolution
+        if effectivePlatform == .tvOS {
+            observations = Self.resolveTVOSFocus(in: screenshot, observations: observations)
+        }
 
         // 1. Vision OCR text fusion (TASK-7-1 & TASK-7-2)
         if configuration.includesTextRecognition {
@@ -90,7 +133,8 @@ public struct NativeUIDetectionRequest: Sendable {
         observations = AuditRules.evaluate(
             observations: observations,
             imageSize: imageSize,
-            scale: sidecar?.scale
+            scale: sidecar?.scale,
+            platform: effectivePlatform
         )
 
         return observations
@@ -367,6 +411,153 @@ extension NativeUIDetectionRequest {
             confidence:      Double(pred.confidence),
             confidenceSource: .pixelModel
         )
+    }
+}
+
+// MARK: - tvOS Focus Resolution
+
+extension NativeUIDetectionRequest {
+
+    private static func resolveTVOSFocus(
+        in screenshot: CGImage,
+        observations: [NativeUIElementObservation]
+    ) -> [NativeUIElementObservation] {
+        let focusableTypes: Set<NativeUIElementType> = [
+            .collectionItem, .listRow, .primaryButton, .secondaryButton,
+            .tabBar, .cancelAction, .toggle
+        ]
+
+        var candidateScores: [(id: UUID, type: NativeUIElementType, score: Double)] = []
+        for obs in observations where focusableTypes.contains(obs.elementType) {
+            let px = obs.boundingBoxPixels
+            let rect = CGRect(x: px.x, y: px.y, width: px.width, height: px.height)
+            let score = evaluateElementFocusScore(
+                cgImage: screenshot,
+                pixelRect: rect,
+                elementType: obs.elementType
+            )
+            candidateScores.append((id: obs.id, type: obs.elementType, score: score))
+        }
+
+        let focusWinnerId: UUID? = candidateScores
+            .filter { item in
+                if item.type == .collectionItem {
+                    return item.score > 0.03
+                } else {
+                    return item.score > 0.45
+                }
+            }
+            .max(by: { $0.score < $1.score })?
+            .id
+
+        return observations.map { obs in
+            guard focusableTypes.contains(obs.elementType) else {
+                return obs
+            }
+            let isFocused = (focusWinnerId != nil && obs.id == focusWinnerId!)
+            var updatedState = obs.state
+            updatedState.isFocused = isFocused
+            return NativeUIElementObservation(
+                id: obs.id,
+                elementType: obs.elementType,
+                boundingBox: obs.boundingBox,
+                boundingBoxPixels: obs.boundingBoxPixels,
+                confidence: obs.confidence,
+                visibleText: obs.visibleText,
+                inferredTraits: obs.inferredTraits,
+                state: updatedState,
+                issues: obs.issues,
+                confidenceSource: obs.confidenceSource
+            )
+        }
+    }
+
+    private static func evaluateElementFocusScore(
+        cgImage: CGImage,
+        pixelRect: CGRect,
+        elementType: NativeUIElementType
+    ) -> Double {
+        let w = cgImage.width
+        let h = cgImage.height
+
+        let cropRect = pixelRect.intersection(CGRect(x: 0, y: 0, width: w, height: h))
+        guard cropRect.width >= 4, cropRect.height >= 4,
+              let cropped = cgImage.cropping(to: cropRect) else {
+            return 0.0
+        }
+
+        let cw = cropped.width
+        let ch = cropped.height
+        let bytesPerPixel = 4
+        let bytesPerRow = cw * bytesPerPixel
+        var rawData = [UInt8](repeating: 0, count: ch * bytesPerRow)
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        guard let ctx = CGContext(
+            data: &rawData,
+            width: cw,
+            height: ch,
+            bitsPerComponent: 8,
+            bytesPerRow: bytesPerRow,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return 0.0 }
+
+        ctx.draw(cropped, in: CGRect(x: 0, y: 0, width: cw, height: ch))
+
+        if elementType == .collectionItem {
+            // In tvOS Home Screen, focused collectionItem has a radiant white perimeter border outline.
+            // Check white pixel ratio along the outer perimeter.
+            let t = max(1, min(6, min(cw, ch) / 4))
+            var whiteCount = 0
+            var totalBorderPixels = 0
+
+            for y in 0..<ch {
+                let isBorderY = (y < t || y >= ch - t)
+                for x in 0..<cw {
+                    let isBorderX = (x < t || x >= cw - t)
+                    if isBorderY || isBorderX {
+                        let offset = (y * bytesPerRow) + (x * bytesPerPixel)
+                        if offset + 3 < rawData.count {
+                            let r = rawData[offset]
+                            let g = rawData[offset + 1]
+                            let b = rawData[offset + 2]
+                            if r > 200 && g > 200 && b > 200 {
+                                whiteCount += 1
+                            }
+                            totalBorderPixels += 1
+                        }
+                    }
+                }
+            }
+            return totalBorderPixels > 0 ? (Double(whiteCount) / Double(totalBorderPixels)) : 0.0
+        } else {
+            // For listRow, primaryButton, tabBar, cancelAction:
+            // When focused, tvOS inverts to solid white high-luminance interior pill.
+            let minX = Int(Double(cw) * 0.15)
+            let maxX = Int(Double(cw) * 0.85)
+            let minY = Int(Double(ch) * 0.15)
+            let maxY = Int(Double(ch) * 0.85)
+
+            let step = max(1, (maxX - minX) / 20)
+            var totalLuminance = 0.0
+            var count = 0
+
+            for y in stride(from: minY, to: maxY, by: max(1, step)) {
+                for x in stride(from: minX, to: maxX, by: max(1, step)) {
+                    let offset = (y * bytesPerRow) + (x * bytesPerPixel)
+                    if offset + 3 < rawData.count {
+                        let r = Double(rawData[offset]) / 255.0
+                        let g = Double(rawData[offset + 1]) / 255.0
+                        let b = Double(rawData[offset + 2]) / 255.0
+                        let lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
+                        totalLuminance += lum
+                        count += 1
+                    }
+                }
+            }
+            return count > 0 ? (totalLuminance / Double(count)) : 0.0
+        }
     }
 }
 

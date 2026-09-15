@@ -40,4 +40,49 @@ public enum NativeUIModelAsset {
     ) async throws -> MLModel {
         try await MLModel.load(contentsOf: defaultModelURL, configuration: configuration)
     }
+
+    /// URL of the compiled (.mlmodelc) tvOS model bundled with this package.
+    public static var tvOSModelURL: URL {
+        guard let url = Bundle.module.url(forResource: "NativeUIModel_tvOS", withExtension: "mlmodelc") else {
+            fatalError("NativeUIModel_tvOS.mlmodelc missing from NativeUIAuditKitModels bundle resources")
+        }
+        return url
+    }
+
+    /// Tensor-level contract (input size, class label order, thresholds) for the bundled tvOS model.
+    public static var tvOSMetadata: ModelMetadata { ModelRegistry.tvOSMetadata }
+
+    /// Loads the bundled tvOS model with the given configuration (defaults to ANE/GPU).
+    public static func loadTVOSModel(
+        configuration: MLModelConfiguration = makeConfiguration()
+    ) async throws -> MLModel {
+        try await MLModel.load(contentsOf: tvOSModelURL, configuration: configuration)
+    }
+
+    /// Resolves the bundled model URL for a given descriptor, if bundled.
+    public static func modelURL(for descriptor: ModelDescriptor) -> URL? {
+        switch descriptor.modelId {
+        case ModelRegistry.tvOS.modelId:
+            return tvOSModelURL
+        case ModelRegistry.iOS.modelId:
+            return defaultModelURL
+        default:
+            return nil
+        }
+    }
+
+    /// Loads a bundled model by its ModelDescriptor.
+    public static func loadModel(
+        descriptor: ModelDescriptor,
+        configuration: MLModelConfiguration = makeConfiguration()
+    ) async throws -> MLModel {
+        guard let url = modelURL(for: descriptor) else {
+            throw NSError(
+                domain: "NativeUIAuditKitModels",
+                code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "No bundled model asset found for descriptor '\(descriptor.modelId)'"]
+            )
+        }
+        return try await MLModel.load(contentsOf: url, configuration: configuration)
+    }
 }

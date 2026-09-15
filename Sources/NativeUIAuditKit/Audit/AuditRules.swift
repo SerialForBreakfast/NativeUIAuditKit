@@ -55,7 +55,8 @@ public enum AuditRules {
     public static func evaluate(
         observations: [NativeUIElementObservation],
         imageSize: CGSize,
-        scale: Double? = nil
+        scale: Double? = nil,
+        platform: NativeUIPlatform? = nil
     ) -> [NativeUIElementObservation] {
 
         let effectiveScale = scale ?? (imageSize.width >= 1000 ? 3.0 : 2.0)
@@ -73,7 +74,8 @@ public enum AuditRules {
                 elementIssues.append(clipIssue)
             }
 
-            if let sizeIssue = checkTappableTargetSize(obs, scale: effectiveScale) {
+            // Tappable target size (44×44 pt) applies to direct touch interfaces; tvOS uses d-pad focus navigation
+            if platform != .tvOS, let sizeIssue = checkTappableTargetSize(obs, scale: effectiveScale) {
                 elementIssues.append(sizeIssue)
             }
 

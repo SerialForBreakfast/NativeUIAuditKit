@@ -99,4 +99,32 @@ struct IntegrationTests {
         #expect(decoded.elements[0].elementType == .primaryButton)
         #expect(decoded.elements[0].visibleText == "Submit")
     }
+
+    @Test("tvOS auto-routing performs detection and resolves active focus")
+    func tvosDetectionAndFocusResolution() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+
+        let recognizer = NativeUIDetectorRecognizer(configuration: .init(minimumConfidence: 0.35, platform: .auto))
+        let result = try await recognizer.recognizeNativeUI(
+            inPNGData: data,
+            path: fixtureURL.path,
+            sidecar: nil
+        )
+
+        #expect(result.status == .success)
+        #expect(!result.elements.isEmpty)
+
+        // Verify tvOS OS UI elements (e.g. collectionItem) are detected
+        let collectionItems = result.elements.filter { $0.elementType == .collectionItem }
+        #expect(!collectionItems.isEmpty)
+
+        // Verify focus state: on tvOS, exactly one element should be identified as focused
+        let focusedElements = result.elements.filter { $0.state.isFocused == true }
+        #expect(focusedElements.count == 1)
+
+        // Verify touch target rule was skipped (exempt on tvOS)
+        let touchIssues = result.elements.flatMap { $0.issues }.filter { $0.kind == .tappableTargetTooSmall }
+        #expect(touchIssues.isEmpty)
+    }
 }

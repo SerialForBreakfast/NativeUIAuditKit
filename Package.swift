@@ -32,9 +32,13 @@ let package = Package(
             // NativeUIDetector_v1.mlpackage.mlmodel is an uncompiled Create ML export, kept
             // on disk for provenance but not shipped as a loadable resource — iOS_v1 exposes
             // its ModelDescriptor metadata only, not a bundled asset. See Task 1/3 notes.
-            exclude: ["NativeUIDetector_v1.mlpackage.mlmodel"],
+            exclude: [
+                "NativeUIDetector_v1.mlpackage.mlmodel",
+                "NativeUIModel_tvOS.mlpackage"
+            ],
             resources: [
                 .copy("Resources/NativeUIDetector_v2.mlmodelc"),
+                .copy("Resources/NativeUIModel_tvOS.mlmodelc"),
                 .copy("training_config_v1.json"),
                 .copy("training_config_v2.json")
             ]
@@ -72,7 +76,10 @@ let package = Package(
             name: "NativeUIAuditKitTests",
             dependencies: ["NativeUIAuditKit"],
             path: "Tests/NativeUIAuditKitTests",
-            resources: [.copy("Fixtures/kitchen_sink_screen.png")]
+            resources: [
+                .copy("Fixtures/kitchen_sink_screen.png"),
+                .copy("Fixtures/tvos_home_screen.png")
+            ]
         ),
         .testTarget(
             name: "NativeUIAuditKitModelsTests",

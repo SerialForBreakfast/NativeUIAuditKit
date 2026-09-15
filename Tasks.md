@@ -1879,6 +1879,21 @@ Train the initial tvOS OS UI model using YOLO11.
 
 ---
 
+#### TASK-6b-S-4: Bundle tvOS model & platform-aware detection [DONE]
+
+Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire auto-routing and focus state resolution into `NativeUIDetectionRequest`.
+
+**AC:**
+- [x] Compile `NativeUIModel_tvOS.mlpackage` into `Resources/NativeUIModel_tvOS.mlmodelc` and bundle via `Package.swift` resources
+- [x] Expose `NativeUIModelAsset.tvOSModelURL`, `tvOSMetadata`, and `loadTVOSModel()`
+- [x] Align `tvOSMetadata.classLabels` with 41-class output tensor indices from `category_map.json`
+- [x] Update `NativeUIDetectionRequest` with `platform: .auto | .iOS | .tvOS` routing (1080p/4K Apple TV screenshots routed automatically to tvOS model)
+- [x] Surface active focus (`state.isFocused: true`) via perimeter border white-pixel and interior luminance scoring
+- [x] Exempt tvOS d-pad interfaces from 44×44 pt touch target audit rule in `AuditRules.swift`
+- [x] Integration tests (`tvosDetectionAndFocusResolution`) and asset tests pass (53/53 tests green)
+
+---
+
 ## Phase 6b-R: Real Apple TV Capture and Qualification
 
 *Goal: Qualify OS-navigation and accessibility visual classes using real Apple TV screenshots captured by TVTestRig.*

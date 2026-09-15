@@ -147,9 +147,15 @@ public enum ModelRegistry {
         inputWidth: 640,
         inputHeight: 640,
         classLabels: [
-            "alert", "cancelAction", "collectionItem", "imageView",
-            "label", "listRow", "navigationBar", "primaryButton",
-            "tabBar", "toggle"
+            "actionSheet", "activityIndicator", "alert", "cancelAction",
+            "collectionItem", "colorWell", "contextMenu", "destructiveButton",
+            "disclosureGroup", "dynamicIsland", "homeIndicator", "imageView",
+            "label", "link", "listRow", "mapView", "menuButton", "navigationBar",
+            "pageControl", "picker", "popover", "primaryButton", "progressView",
+            "refreshControl", "scrollIndicator", "searchField", "secondaryButton",
+            "secureField", "segmentedControl", "sheet", "sidebar", "slider",
+            "statusBar", "stepperControl", "tabBar", "textField", "toggle",
+            "toolbar", "tooltip", "unknown", "webContent"
         ],
         defaultConfidenceThreshold: 0.30,
         recommendedNMSIoUThreshold: 0.30,
