@@ -1801,92 +1801,79 @@ Apply iteration optimizations: `batch=8` (halving epoch steps from 2,876 to 1,43
 
 ---
 
-## Phase 6b: tvOS Model
+## Phase 6b: tvOS Model & OS UI Detection
 
-*Goal: Train the first separate `NativeUIModel_tvOS` from tvOS Simulator synthetic app-content data.*
+*Goal: Train `NativeUIModel_tvOS` prioritizing OS UI detection (Home Screen app grid/shelf, Settings split-views/lists, System Alerts/Dialogs, Top Tab Bar, and Focus State) to enable TVTestRig Apple TV navigation and automation.*
 
-**Requires:** Phase 6a gate passed and tvOS coordinate validation documented.
-**Parallel with:** Phase 6c
+**Requires:** Phase 6a completed; tvOS coordinate validation documented.
 **Research reference:** [`Research/tvOSTrainingStrategy.md`](Research/tvOSTrainingStrategy.md)
 
 ---
 
-#### TASK-6b-S-1: tvOS simulator coordinate validation
+#### TASK-6b-S-1: tvOS simulator coordinate & focus validation
 
-Before generating at scale, validate that the Phase 1 coordinate approach works correctly in tvOS Simulator. tvOS uses a different screen resolution (1920x1080 at @2x effective) and no safe area insets in the traditional sense.
+Before generating at scale, validate that the coordinate pipeline works correctly in tvOS Simulator (1920×1080 landscape) and measures `@FocusState` visual vs. layout frame behavior.
 
 **AC:**
-- A simple tvOS SwiftUI fixture (Button + Label + focused card) passes the same +/-2pt alignment test as Phase 1
-- Simulator-generated focus metadata distinguishes visual focus, selected state, and unknown/not-evaluated focus
+- tvOS coordinate spike fixture (`tvOSCoordSpikeView`) passes $\le 2\text{pt}$ / $\le 2\text{px}$ alignment on tvOS 1080p simulator
+- Document whether `GeometryReader` reports base layout frame or visual transformed/elevated frame when `@FocusState` is active
+- Focus metadata accurately identifies visual focus (`isFocused: true`)
 
 ---
 
-#### TASK-6b-S-2: tvOS simulator generator templates
+#### TASK-6b-S-2: tvOS OS UI generator templates
 
-**Files:** `NativeUIDatasetGenerator/Templates/tvOS/` (new directory, 5 templates)
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/` (5 templates)
 
-| Template | Elements |
+| Template | Primary Roles & Focus Behavior |
 |---|---|
-| tvOS shelf/card grid | `collectionItem` (focused + unfocused), `label`, `imageView` |
-| tvOS top tab bar | `tabBar` (at top of screen), `label` |
-| tvOS settings | `listRow`, `toggle`, `label`, `navigationBar` |
-| tvOS search/keyboard | `searchField`, `listRow`, `collectionItem`, `keyboardKey` |
-| tvOS alert/dialog | `alert`, `primaryButton`, `cancelAction` |
+| `tvOSHomeScreenTemplate` | `collectionItem` (app icons & top shelf), `label` (title); 1 icon focused (1.15× scale, glow, shadow) |
+| `tvOSSettingsTemplate` | `listRow` (settings rows), `toggle`, `label`, `navigationBar`; 1 row focused (solid white pill) |
+| `tvOSAlertTemplate` | `alert` (container), `primaryButton` (action), `cancelAction`; 1 button focused |
+| `tvOSTopTabBarTemplate` | `tabBar` (top 15% pinned), `primaryButton`/`collectionItem` (tabs); 1 active tab |
+| `tvOSHardNegativesTemplate` | Aerial screensavers, ambient dark backgrounds, video frames without controls |
 
 **AC:**
-- `tabBar` annotations appear in the top 15% of image height in all tvOS images
-- Focused/unfocused variants are generated for focusable elements
-- >=3,000 tvOS simulator screenshots generated with matching sidecars
-- Simulator hard negatives include hidden playback controls, video-like backgrounds, decorative highlights, and no-focus screens
-- Train/validation/test split is by template family, not near-duplicate random frames
+- `tabBar` annotations appear in the top 15% of image height in tvOS images
+- `state.isFocused: true` is emitted on the single focused element per focusable template
+- Synthetic OS UI generator produces matching sidecars conforming to `annotation.schema.json`
+- Hard negatives include screensavers and UI-free ambient backgrounds
 
 ---
 
-#### TASK-6b-S-3: Train/export `NativeUIModel_tvOS_sim_v0`
+#### TASK-6b-T-1: TVTestRig artifact contract & ingestion pipeline
 
-**Requires:** TASK-6b-S-2 complete
-
-Train using the same YOLO11 approach as Phase 6a, with a tvOS-only simulator dataset split.
+Establish the data contract and offline ingestion pipeline between TVTestRig and NativeUIAuditKit.
 
 **AC:**
-- Offline adapter accepts saved tvOS simulator screenshot in and emits versioned JSON observations out
-- mAP@0.5 >= 0.80 on withheld simulator-template tvOS set
-- `tabBar` AP >= 0.80 and does not confuse top-of-screen tab bar with toolbar
-- Per-role precision/recall, coordinate error distribution, hard-negative false positives, and visual-focus accuracy reported
-- CoreML export parity check passes against the training runtime
-- Exported as a separate tvOS simulator baseline model bundle
-
-**Gate:** Simulator-only results may qualify app-content detection experiments, but they do not qualify OS-owned chrome, VoiceOver, Switch Control, Zoom, Home Screen, Control Center, profile switching, app switcher, or screensaver classes.
+- Ingestion script (`scripts/ingest_tvos_capture.py`) accepts TVTestRig capture PNG + metadata JSON
+- Validates 1920×1080 or 3840×2160 resolution and SHA-256
+- Marks captures with `captureSource: tvOSSimulatorTVTestRig` or `captureSource: realAppleTVTVTestRig`
+- Zero runtime binary dependency on TVTestRig
 
 ---
 
-## Phase 6b-T: TVTestRig Simulator Capture
+#### TASK-6b-T-2: TVTestRig offline detection CLI
 
-*Goal: Prove TVTestRig can feed NativeUIAuditKit with repeatable tvOS Simulator captures before using real hardware.*
+Provide an offline CLI tool that TVTestRig calls to detect OS UI elements, labels, and active focus.
 
-**Requires:** Phase 6b-S offline adapter complete.
-**Parallel with:** Phase 6c
-**Research reference:** [`Research/tvOSTrainingStrategy.md`](Research/tvOSTrainingStrategy.md)
+**AC:**
+- Standalone CLI `scripts/tvos_detect.swift` accepts `--image <path>` and emits structured `NativeUIObservations` JSON
+- Extracts text via Vision OCR within detected bounding boxes
+- Identifies active focus (`state.isFocused: true`) for the winning focus candidate
+- Provides bounding box pixel rects and normalized rects for TVTestRig d-pad step calculations
 
 ---
 
-#### TASK-6b-T-1: TVTestRig simulator artifact contract
+#### TASK-6b-S-3: Train & export `NativeUIModel_tvOS_v0`
+
+Train the initial tvOS OS UI model using YOLO11.
 
 **AC:**
-- Contract includes PNG path, optional sidecar path, artifact SHA-256, tvOS version, simulator name, capture state, and accessibility settings
-- Artifacts import into NativeUIAuditKit validation without a runtime dependency on TVTestRig
-- Every simulator capture is marked with `captureSource: tvOSSimulatorTVTestRig`
-
----
-
-#### TASK-6b-T-2: TVTestRig simulator capture report
-
-**AC:**
-- Capture simulator app-content states that overlap generator templates and compare detector outputs against sidecar expectations
-- Capture simulator system states available without real hardware: Home Screen, Settings, search, app switcher, and screensaver if accessible
-- Report repeatability, metadata completeness, unsupported states, and domain gaps versus generator screenshots
-
-**Gate:** Do not move to real-device capture until TVTestRig simulator artifacts are ingestible offline and failures are diagnosable without driving the device live from NativeUIAuditKit.
+- Dataset export script `scripts/export_tvos_coco.py` generates YOLO format dataset
+- Training script `scripts/train_tvos_model.py` runs YOLO11 training
+- mAP@0.5 $\ge 0.80$ on held-out OS UI test set
+- CoreML export (`NativeUIModel_tvOS.mlpackage`) with FP16 + NMS
 
 ---
 

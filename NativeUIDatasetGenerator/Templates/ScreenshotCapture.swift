@@ -139,7 +139,8 @@ public enum ScreenshotCapture {
             // Convention: id = "{elementType}_{suffix}" (e.g. "slider_0", "label_title").
             // Strip the suffix so classDistribution records canonical types ("slider", "label").
             let elementType = id.components(separatedBy: "_").first ?? id
-            return AnnotatedElement(id: id, elementType: elementType, frame: frame)
+            let isFocused: Bool? = id.contains("_focused") ? true : (id.contains("_unfocused") ? false : nil)
+            return AnnotatedElement(id: id, elementType: elementType, frame: frame, isFocused: isFocused)
         }
 
         return CaptureResult(

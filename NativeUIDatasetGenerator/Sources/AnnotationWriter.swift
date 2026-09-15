@@ -156,7 +156,7 @@ public enum AnnotationWriter {
                 visibleText: elem.visibleText,
                 accessibilityLabel: nil,
                 traits: [],
-                state: AnnotationJSON.ElementState(),
+                state: AnnotationJSON.ElementState(isEnabled: true, isSelected: false, isFocused: elem.isFocused),
                 occluded: false,
                 occlusionType: nil,
                 excluded: false,
@@ -311,6 +311,18 @@ struct AnnotationJSON: Codable {
             isSkeleton = try c.decodeIfPresent(Bool.self, forKey: .isSkeleton)
         }
 
-        init() {}
+        init(
+            isEnabled: Bool = true,
+            isSelected: Bool = false,
+            isFocused: Bool? = nil,
+            isLoading: Bool? = nil,
+            isSkeleton: Bool? = nil
+        ) {
+            self.isEnabled = isEnabled
+            self.isSelected = isSelected
+            self.isFocused = isFocused
+            self.isLoading = isLoading
+            self.isSkeleton = isSkeleton
+        }
     }
 }

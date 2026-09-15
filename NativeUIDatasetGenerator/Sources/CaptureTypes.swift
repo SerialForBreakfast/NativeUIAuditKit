@@ -33,6 +33,8 @@ public struct AnnotatedElement: Sendable {
     /// Known UI issues present in this element (e.g. `["truncatedText"]`).
     /// Empty for all elements in "good" templates; populated by known-bad generators.
     public let knownIssues: [String]
+    /// Focus state for tvOS elements. `true` when focused, `false` when unfocused, `nil` when not evaluated.
+    public let isFocused: Bool?
 
     public init(
         id: String,
@@ -40,7 +42,8 @@ public struct AnnotatedElement: Sendable {
         framework: String = "SwiftUI",
         frame: CGRect,
         visibleText: String? = nil,
-        knownIssues: [String] = []
+        knownIssues: [String] = [],
+        isFocused: Bool? = nil
     ) {
         self.id = id
         self.elementType = elementType
@@ -48,6 +51,7 @@ public struct AnnotatedElement: Sendable {
         self.frame = frame
         self.visibleText = visibleText
         self.knownIssues = knownIssues
+        self.isFocused = isFocused
     }
 }
 
