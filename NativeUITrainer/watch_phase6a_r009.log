@@ -24,3 +24,5 @@
 2026-09-09 15:59:57 train_ios_model pid=6393 exited rc=1 csv_epochs=1
 2026-09-09 15:59:57 non-zero exit; retry in 30s
 2026-09-09 16:00:28 started train_ios_model pid=6504 resume=/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt
+2026-09-15 07:47:42 train_ios_model pid=6504 exited rc=0 csv_epochs=100
+2026-09-15 07:47:42 TRAINING_COMPLETE written (csv epochs=100)

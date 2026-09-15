@@ -1784,6 +1784,22 @@ train on the same 16,440.
 
 ---
 
+#### TASK-6a-9: Run 009 Training & Optimization (ADR-0006)
+
+**Requires:** Run 008 completed, ADR-0006 approved
+
+Apply iteration optimizations: `batch=8` (halving epoch steps from 2,876 to 1,438), `save_period=-1` (saving ~15.4 GB flash writes), `plots=False` (skipping per-epoch CPU plotting).
+
+- [x] Run 009 YOLO11m training complete (100/100 epochs, 2026-09-15 07:47:42, PID 6504, exit rc=0).
+- [x] Uninterrupted execution: ~135.8 hours continuous run without a single crash or watchdog restart after BP-36 dataloading patch.
+- [x] In-family validation metrics: mAP@0.5 = **0.991** (99.1%), mAP@0.5:0.95 = **0.955** (95.5%), Precision = **0.981**, Recall = **0.993**.
+- [x] Storage protected: 0 intermediate snapshots written, stable 12–18 GiB free disk space throughout.
+- [x] Export to CoreML FP16+NMS package (`scripts/export_yolo_coreml.py`): `NativeUITrainer/yolo_runs/phase6a_r009/weights/best.mlpackage` (38.5 MB).
+- [x] Evaluate against withheld-template holdout split (`scripts/eval_phase6a.py`): mAP@0.5 jumped from **0.491 → 0.586 (+9.5 percentage points / +63.7% relative gain over Run 007)**. DS-G8 gate condition (≥0.850) not met; 41-class weights not shipped.
+- [x] Reports updated (`eval_results_phase6a.json`, `phase6a_eval_summary.json`, `quantization_benchmark.json`, `centroid_bias_phase6a.json`).
+
+---
+
 ## Phase 6b: tvOS Model
 
 *Goal: Dedicated tvOS detector. Focus state paradigm and top-of-screen tab bar require separate training.*

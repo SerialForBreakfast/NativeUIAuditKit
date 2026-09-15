@@ -731,3 +731,42 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - Verified `img_012251.png` decodes cleanly into `(2556, 1179, 3) uint8`.
 - **Resume:** `NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt` (Epoch 1, 154 MB) is fully intact and verified loadable. Resumed seamlessly from `last.pt`.
 
+**Completion & Outcome (2026-09-15):**
+- **Status:** TRAINING_COMPLETE (100/100 epochs, exited rc=0 at 2026-09-15 07:47:42).
+- **Execution Duration:** ~135.8 hours of uninterrupted, zero-restart training on PID `6504` under `watch_phase6a.py` and `caffeinate`.
+- **Final Metrics (Epoch 100/100):**
+  - In-family Val mAP@0.5: **0.991** (99.1%)
+  - In-family Val mAP@0.5:0.95: **0.955** (95.5% — all-time high across all runs)
+  - Precision: **0.981** (98.1%)
+  - Recall: **0.993** (99.3%)
+  - Val Box Loss: **0.1752**
+  - Val Cls Loss: **0.1444**
+  - Val DFL Loss: **0.7396**
+- **Storage & ADR-0006 Verification:**
+  - `save_period=-1` prevented writing 100 intermediate snapshots (~15.4 GB flash writes avoided); disk space remained stable between 12–18 GiB throughout the entire run.
+  - Final inference weights: `NativeUITrainer/yolo_runs/phase6a_r009/weights/best.pt` (40.55 MB, stripped).
+- **CoreML Export (TASK-6a-4):**
+  - Generated `NativeUITrainer/yolo_runs/phase6a_r009/weights/best.mlpackage` (38.5 MB, FP16 half-precision, NMS baked in).
+  - Export completed in 15.4s via `scripts/export_yolo_coreml.py`.
+- **Withheld-Family Holdout Evaluation (TASK-6a-7 / DS-G8 Gate):**
+  - Holdout Test mAP@0.5 = **0.586 (58.6%)** (mAP50-95 = **0.380 / 38.0%**).
+  - **Massive Gen Gains:** Jumped from **0.358 (Run 007) → 0.491 (Run 008) → 0.586 (Run 009)** (+9.5 percentage points over Run 008, +22.8 percentage points / +63.7% relative improvement over Run 007).
+  - **Key Class Generalization on Unseen Layouts:**
+    - `primaryButton`: **0.9999** (~1.000)
+    - `navigationBar`: **0.9997** (~1.000)
+    - `progressView`: **1.0000** (1.000)
+    - `picker`: **0.9949** (0.995)
+    - `secureField`: **0.8906** (0.891)
+    - `toggle`: **0.7206** (0.721)
+    - `textField`: **0.6649** (0.665)
+    - `label`: **0.6426** (0.643)
+    - `stepperControl`: **0.5000**
+    - `imageView`: **0.1512**
+    - `secondaryButton`: **0.0000**
+    - `pageControl`: **0.0000**
+    - `listRow`: **0.0000**
+  - **Content Invariance (Blur Test):** Max non-text probe drop was only **3.93 pt** (limit < 10 pt — PASS).
+  - **Inference Latency Proxy:** Mean = **88.18ms**, P95 = **90.00ms** (< 200ms — PASS); Cold load = **0.0294s** (< 3.0s — PASS); Model size = **38.67 MB** (< 50 MB — PASS).
+  - **Quantization Benchmark (TASK-6a-5):** Recommended shipping **FP16** (size 38.5 MB < 50 MB limit, avoiding 75 pt drop seen on INT8 stepperControl). Distillation not required.
+  - **Production Gate Decision (DS-G8):** Holdout mAP@0.5 is 0.586 (threshold ≥ 0.850). Gate does not pass. Per project guidelines, **do not ship 41-class weights to NativeUIAuditKitModels**; the shipped detector remains the 5-class `nativeui-ios-v2.0` YOLO11n (mAP@0.5 = 0.935).
+
