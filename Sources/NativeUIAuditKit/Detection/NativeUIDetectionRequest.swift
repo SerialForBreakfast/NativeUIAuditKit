@@ -29,36 +29,70 @@ public struct NativeUIDetectionConfiguration: Sendable {
         case tvOS
     }
 
+    public enum ModalityPolicy: String, Sendable, Codable {
+        case strict
+        case permissive
+    }
+
     public var minimumConfidence: Double
     public var includesTextRecognition: Bool
     public var platform: PlatformSelection
+    public var modalityPolicy: ModalityPolicy
 
     public init(
         minimumConfidence: Double = 0.5,
         includesTextRecognition: Bool = true,
-        platform: PlatformSelection = .auto
+        platform: PlatformSelection = .auto,
+        modalityPolicy: ModalityPolicy = .permissive
     ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
         self.platform = platform
+        self.modalityPolicy = modalityPolicy
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
+}
+
+// MARK: - Detailed Result
+
+/// Detailed outcome of a detection request containing observations and per-modality health status.
+public struct NativeUIDetailedDetectionResult: Sendable, Codable {
+    public let elements: [NativeUIElementObservation]
+    public let modalityHealth: ModalityHealth
+
+    public init(elements: [NativeUIElementObservation], modalityHealth: ModalityHealth) {
+        self.elements = elements
+        self.modalityHealth = modalityHealth
+    }
 }
 
 // MARK: - Request
 
 public struct NativeUIDetectionRequest: Sendable {
     public let configuration: NativeUIDetectionConfiguration
+    internal let textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])?
 
     public init(configuration: NativeUIDetectionConfiguration = .default) {
         self.configuration = configuration
+        self.textRecognitionHandler = nil
     }
 
-    public func perform(
+    internal init(
+        configuration: NativeUIDetectionConfiguration = .default,
+        textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])? = nil
+    ) {
+        self.configuration = configuration
+        self.textRecognitionHandler = textRecognitionHandler
+    }
+
+    /// Performs UI detection and returns observations along with honest subsystem health.
+    public func performDetailed(
         on screenshot: CGImage,
         sidecar: NativeUISidecar? = nil
-    ) async throws -> [NativeUIElementObservation] {
+    ) async throws -> NativeUIDetailedDetectionResult {
+
+        var health = ModalityHealth()
 
         let effectivePlatform: NativeUIPlatform
         switch configuration.platform {
@@ -95,9 +129,7 @@ public struct NativeUIDetectionRequest: Sendable {
             try Self.runYOLO(screenshot, model: model, classLabels: classLabels, confFloor: confThreshold)
         }.value
 
-        // Greedy same-class NMS as a second pass, matching scripts/eval_yolo_map.swift —
-        // the model's own CoreML graph already runs NMS internally (iouThreshold input
-        // below), this catches any remaining near-duplicates at a tighter threshold.
+        // Greedy same-class NMS as a second pass
         let kept = Self.nms(raw, iouThreshold: nmsIoU)
         let w = screenshot.width
         let h = screenshot.height
@@ -105,27 +137,56 @@ public struct NativeUIDetectionRequest: Sendable {
             .sorted { $0.confidence > $1.confidence }
             .compactMap { Self.toObservation($0, imageWidth: w, imageHeight: h) }
 
+        health.detector = rawObservations.isEmpty ? .empty : .available
+
         var observations = rawObservations
 
         // tvOS focus state resolution
         if effectivePlatform == .tvOS {
             observations = Self.resolveTVOSFocus(in: screenshot, observations: observations)
+            health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
+        } else {
+            health.focus = .notRequested
         }
 
-        // 1. Vision OCR text fusion (TASK-7-1 & TASK-7-2)
+        // 1. Vision OCR text fusion (TASK-7-1, TASK-7-2, and TASK-6b-WP1-1)
         if configuration.includesTextRecognition {
-            let ocrRegions = (try? await Self.recognizeText(in: screenshot)) ?? []
-            observations = ObservationMerger.associate(
-                elements: observations,
-                ocrRegions: ocrRegions,
-                sidecar: sidecar
-            )
-        } else if let sidecar = sidecar {
-            observations = ObservationMerger.associate(
-                elements: observations,
-                ocrRegions: [],
-                sidecar: sidecar
-            )
+            do {
+                let ocrRegions: [RecognizedTextRegion]
+                if let customHandler = textRecognitionHandler {
+                    ocrRegions = try await customHandler(screenshot)
+                } else {
+                    ocrRegions = try await Self.recognizeText(in: screenshot)
+                }
+                health.ocr = ocrRegions.isEmpty ? .empty : .available
+                observations = ObservationMerger.associate(
+                    elements: observations,
+                    ocrRegions: ocrRegions,
+                    sidecar: sidecar
+                )
+            } catch {
+                let nsError = error as NSError
+                health.ocr = .failed(reason: error.localizedDescription, domain: nsError.domain, code: nsError.code)
+                if configuration.modalityPolicy == .strict {
+                    throw NativeUIDetectionError.modalityFailed(modality: "ocr", reason: error.localizedDescription)
+                }
+                if let sidecar = sidecar {
+                    observations = ObservationMerger.associate(
+                        elements: observations,
+                        ocrRegions: [],
+                        sidecar: sidecar
+                    )
+                }
+            }
+        } else {
+            health.ocr = .notRequested
+            if let sidecar = sidecar {
+                observations = ObservationMerger.associate(
+                    elements: observations,
+                    ocrRegions: [],
+                    sidecar: sidecar
+                )
+            }
         }
 
         // 2. Audit rules evaluation (TASK-7-3)
@@ -136,8 +197,17 @@ public struct NativeUIDetectionRequest: Sendable {
             scale: sidecar?.scale,
             platform: effectivePlatform
         )
+        health.audit = .available
 
-        return observations
+        return NativeUIDetailedDetectionResult(elements: observations, modalityHealth: health)
+    }
+
+    /// Convenience invocation returning observations directly.
+    public func perform(
+        on screenshot: CGImage,
+        sidecar: NativeUISidecar? = nil
+    ) async throws -> [NativeUIElementObservation] {
+        try await performDetailed(on: screenshot, sidecar: sidecar).elements
     }
 
     /// Infers device model, platform, and OS version from image dimensions, detected UI elements, and optional sidecar metadata.
@@ -193,6 +263,7 @@ public struct NativeUIDetectionRequest: Sendable {
 public enum NativeUIDetectionError: Error, Sendable, Equatable {
     case imagePreprocessingFailed
     case unexpectedModelOutput(String)
+    case modalityFailed(modality: String, reason: String)
 }
 
 // MARK: - Internal types

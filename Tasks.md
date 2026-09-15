@@ -35,7 +35,9 @@ Phase 6 gate unlocks:
   └─ Foundation Models evaluation (6-gate)                     ← blocks Phase 6a
 
 Phase 6a gate unlocks:
-  ┌─ STREAM I: tvOS generator + model (Phase 6b)
+  ┌─ STREAM I: tvOS generator + model (Phase 6b-S ✅)
+  │    └─ Phase 6b-WP1: Trustworthy result contract (TVTestRig sprint)
+  │         └─ Phase 6b-R: Real Apple TV qualification
   └─ STREAM J: macOS coordinate spike + model (Phase 6c)       ← I and J are independent
 ```
 
@@ -1891,6 +1893,116 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 - [x] Surface active focus (`state.isFocused: true`) via perimeter border white-pixel and interior luminance scoring
 - [x] Exempt tvOS d-pad interfaces from 44×44 pt touch target audit rule in `AuditRules.swift`
 - [x] Integration tests (`tvosDetectionAndFocusResolution`) and asset tests pass (53/53 tests green)
+
+---
+
+## Phase 6b-WP1: TVTestRig Integration Sprint — Trustworthy Result Contract
+
+*Goal: Address physical Apple TV integration feedback from TVTestRig (2026-09-15 review): expose honest modality health without swallowing errors, provide calibrated focus confidence with explicit abstention, enforce verified model manifests over raw tensor channels, and deliver an actor-backed session for low-latency inspection.*
+
+**Requires:** Phase 6b-S complete (`NativeUIModel_tvOS.mlmodelc` bundled)  
+**Blocks:** Production QA checkpoint gating in TVTestRig
+
+---
+
+#### TASK-6b-WP1-1: Granular Modality Health & Typed Partial Results (P0 / F2) ✅
+
+**Files:** `Sources/NativeUIAuditKit/Integration/NativeUIRecognizing.swift`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
+**Problem:** `(try? await recognizeText(...)) ?? []` swallows OCR failures (e.g. `Foundation._GenericObjCError` on physical Apple TV screenshots). The request reports top-level `.success` with empty text, misleading consumers into mistaking sub-system failures for legitimate text-free screens.
+
+**AC:**
+- [x] Define `ModalityStatus: Sendable, Codable, Equatable`: `.available`, `.notRequested`, `.empty`, `.failed(reason: String, domain: String?, code: Int?)`
+- [x] Define `ModalityHealth: Sendable, Codable, Equatable` tracking individual health for: `detector`, `ocr`, `focus`, and `audit`
+- [x] Expose `public let modalityHealth: ModalityHealth` on `NativeUIObservations`
+- [x] Add `public var modalityPolicy: ModalityPolicy = .permissive` to `NativeUIDetectionConfiguration`:
+  - `.strict`: throws/fails overall request if any requested modality fails
+  - `.permissive`: returns observations from successful modalities while truthfully recording failures in `modalityHealth`
+- [x] Replace `(try? await recognizeText(...)) ?? []` with typed error capture and populate `modalityHealth.ocr = .failed(...)` when Vision OCR fails
+- [x] Unit tests verify:
+  1. OCR execution failure reports `modalityHealth.ocr.isFailed == true` and does not claim unqualified `.success` under `.strict`
+  2. A legitimately text-free image produces `modalityHealth.ocr == .empty`
+  3. Requested modalities populate `.available` on successful execution
+
+---
+
+#### TASK-6b-WP1-2: Focus Confidence, Score Margin & Explicit Abstention (P0 / F1)
+
+**Files:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
+**Problem:** Focus heuristic forces a single winner using `max()` over raw brightness/perimeter scores. High-contrast or bright artwork (e.g. Paramount+ poster, game thumbnails) is falsely selected as focused with detector confidence 0.98, leading to wrong navigation steps.
+
+**AC:**
+- [ ] Extend `NativeUIElementState` with:
+  ```swift
+  public var focusConfidence: Double?           // 0.0 to 1.0 calibrated confidence of being focused
+  public var focusScore: Double?                // Raw heuristic score (perimeter white ratio or luminance)
+  public var isAmbiguousFocus: Bool?            // true when multiple candidates compete within margin threshold
+  ```
+- [ ] Implement **Focus Abstention Policy**:
+  - Evaluate runner-up margin: `margin = winnerScore - runnerUpScore`
+  - If `margin < minFocusMargin` (default: 0.12) or `winnerScore < minFocusThreshold`, mark top candidates with `isAmbiguousFocus: true` and leave `isFocused: nil` (or `false`)
+  - Never assert a winning `isFocused: true` on an ambiguous or low-margin candidate
+- [ ] Add **Peer-Relative Geometry Heuristic** for `collectionItem`:
+  - Focused tvOS app tiles expand physically by 1.15× (visual transform) compared to unscaled grid peers
+  - Contrast candidate area against median same-row peer area to confirm scale expansion
+- [ ] Retain TVTestRig's 7 physical calibration screenshots (`settings`, `settings-main`, `settings-voiceover`, `home`, `home-settings`, `fixture-tone`, `fixture-record`) as regression fixtures
+- [ ] Unit & regression tests verify:
+  1. The 3 Settings rows continue matching with `isFocused: true`
+  2. The 4 non-Settings cases explicitly abstain (`isFocused: nil` or `isAmbiguousFocus: true`) rather than asserting a false-confident wrong target
+
+---
+
+#### TASK-6b-WP1-3: Model Contract, Channel Mapping & Manifest Verification (P0 / F3)
+
+**Files:** `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift`, `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/model_manifest_tvos_v1.json`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
+**Problem:** Ultralytics YOLO11 exports an 80-channel confidence tensor (from COCO pretraining padding). Truncating via `min(classLabels.count, nTotal)` caused index misalignments (e.g. class 4 decoded as `label` instead of `collectionItem`).
+
+**AC:**
+- [ ] Create structured `ModelManifest` and bundle `model_manifest_tvos_v1.json` in `NativeUIAuditKitModels`:
+  - Declares `modelId`, `modelSHA256`, `architecture`, `inputDimensions` (640×640)
+  - Explicit `tensorChannelMapping`: mapping tensor channels 0–40 to `category_map.json` taxonomy strings, explicitly tagging channels 41–79 as `.padding`
+  - Input/output tensor shapes and expected types (`coordinates: Float32 [N, 4]`, `confidence: Float32 [N, 80]`)
+- [ ] Implement `ModelManifestValidator`:
+  - Validates loaded `MLModel` metadata, shapes, and channel count against manifest on load
+  - Rejects mismatched models with typed error `NativeUIDetectionError.incompatibleModelContract(reason: String)`
+- [ ] Update decoder in `NativeUIDetectionRequest.swift` to use explicit channel mapping from manifest rather than contiguous truncation
+- [ ] Unit tests verify:
+  1. Shipped tvOS and iOS models pass manifest validation cleanly
+  2. Mock/corrupt model with mismatched shapes throws `incompatibleModelContract` before running inference
+
+---
+
+#### TASK-6b-WP1-4: Reusable Actor-Backed Detection Session & Stage Timings (P1 / F4)
+
+**Files:** `Sources/NativeUIAuditKit/Detection/NativeUIDetectionSession.swift`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
+**Problem:** Calls take 0.65s–3.5s because `MLModel` is loaded from disk on every single request. TVTestRig needs warm inspection (<100ms) between remote navigation steps without re-instantiating the CoreML runtime.
+
+**AC:**
+- [ ] Create `public actor NativeUIDetectionSession`:
+  - Maintains pre-warmed loaded `MLModel` instances for requested platforms
+  - Reuses Vision request handlers and memory allocations across sequential calls
+  - Exposes thread-safe `perform(on:sidecar:)` and `recognizeNativeUI(inPNGData:path:sidecar:)`
+- [ ] Add `public struct DetectionStageTimings: Sendable, Codable`:
+  - Measures milliseconds spent in: `modelInferenceMs`, `ocrMs`, `focusResolutionMs`, `auditRulesMs`, `totalMs`
+  - Attached to `NativeUIObservations` when diagnostic telemetry is enabled in configuration
+- [ ] Benchmark verifies:
+  - Cold call loads model and records initialization timing
+  - Warm subsequent calls on identical host drop inference latency to <100ms
+  - Clean memory footprint without unbounded accumulation across 50 consecutive frames
+
+---
+
+#### TASK-6b-WP1-5: Model Licensing, Provenance & Distribution Architecture (F5)
+
+**Files:** `NativeUIAuditKitModels/README.md`, `LICENSE`, `Research/LicensingArchitecture.md`  
+**Problem:** Package root declares MIT license, but bundled YOLO11 models carry `MLModelLicenseKey: AGPL-3.0 License` in CoreML metadata from Ultralytics export. Downstream consumers require transparent licensing terms.
+
+**AC:**
+- [ ] Create `Research/LicensingArchitecture.md` documenting:
+  - Swift package code license (MIT)
+  - YOLO11 trained weights attribution and upstream AGPL-3.0 boundary
+  - Options for commercial consumers: Ultralytics enterprise commercial license vs. clean permissive retrain (Apple Create ML / Apache 2.0 TorchVision)
+- [ ] Update `NativeUIAuditKitModels/README.md` and package documentation with explicit provenance and license disclosure for each bundled `.mlmodelc`
+- [ ] Add license validation test in `NativeUIAuditKitModelsTests` asserting metadata license string matches documentation
 
 ---
 
