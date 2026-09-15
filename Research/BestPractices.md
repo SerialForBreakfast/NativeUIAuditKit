@@ -729,3 +729,12 @@ A non-zero box count from a packed kitchen-sink or a toolbar *icon* does not tra
 
 **Why:** Apple Silicon unified memory is shared between CPU and GPU. Freeing host RAM provides the GPU headroom needed for larger batch sizes, doubling tensor core utilization and cutting wall-clock training time by 25–35%.
 
+---
+
+### BP-36: Guard OpenCV image loading against partial APFS buffer reads and Apple-optimized PNGs
+
+**Wrong:** Rely solely on `np.fromfile()` + `cv2.imdecode()` without a universal PIL fallback. When `im is None`, unconditionally raise `FileNotFoundError`.
+
+**Correct:** If `cv2.imdecode()` returns `None` (which triggers `libpng error: PNG input buffer is incomplete`), re-read the file bytes using Python's signal-safe `open().read()`, and if `cv2.imdecode()` still fails, fall back to Pillow (`PIL.Image.open()`). Never gate the PIL fallback to just `(.avif, .heic, .heif)` extensions.
+
+**Why:** Under concurrent multiprocessing dataloading (`workers=4`) on macOS APFS, C stdio `fread()` in `np.fromfile()` can occasionally suffer interrupted or short buffer reads. Furthermore, Apple screenshots with 16-bit RGBA depth or `iDOT` chunks can cause OpenCV's bundled libpng to fail decoding. Pillow's decoder seamlessly handles these images and prevents a fatal training crash after dozens of hours of compute.

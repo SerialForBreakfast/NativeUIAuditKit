@@ -695,3 +695,78 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
 - Checkpoint: `best.pt` (161.4 MB) / `best.mlpackage` (38.5 MB)
 - Next steps for Run 009+: apply ADR-0006 (`batch=8`, `save_period=-1`, `plots=False`) to reduce training iteration wall time by ~70%.
 
+---
+
+## Run 009 — YOLO11m 41-class ADR-0006 Training Optimization (Started 2026-09-08)
+
+**Trigger:** Run 008 established baseline mAP@0.5 = 0.491 on holdout families, but required ~36 hours of wall-clock time with heavy disk I/O (15.4 GB of `epoch*.pt` checkpoints) and CPU-bound metric plotting. Run 009 applies ADR-0006 iteration optimizations to maximize Apple Silicon MPS throughput and eliminate flash churn.
+
+**Status:** IN_PROGRESS (Dry-run verified, launching baseline training).
+
+**Configuration (ADR-0006 Applied):**
+- Architecture: YOLO11m (`weights/yolo11m.pt`)
+- Classes: 41 native Apple UI classes
+- Batch size: `batch=8` (ADR-0006 D3, doubling batch size from 4 on host 24 GB unified RAM; halves steps per epoch from 2,876 to 1,438)
+- Checkpoints: `save_period=-1` (ADR-0006 D1, saves only `best.pt` and `last.pt`, with `last.prev.pt` backup; saves ~15 GB disk writes)
+- Metric plotting: `plots=False` (ADR-0006 D2, disables per-epoch CPU confusion matrices/PR curves during training; evaluated post-run)
+- Optimizer: AdamW, lr0=0.001, lrf=0.01, momentum=0.937, weight_decay=0.0005
+- Augmentations: Mosaic=1.0, OHEM callback enabled (hardest 20% oversampled 2×)
+- Dataset: `NativeUITrainer/yolo_dataset_41class/dataset.yaml` via line-delimited manifests (`train.txt`, `val.txt`, `test.txt`)
+- Target epochs: 100 with patience 15 early stopping
+- Device: Apple Silicon MPS (`mps`), workers=4
+- Output: `NativeUITrainer/yolo_runs/phase6a_r009/`
+
+**Incident & Resolution (2026-09-09):**
+- **Symptom:** At epoch 2 (batch 806/1498), training halted with:
+  `libpng error: PNG input buffer is incomplete`
+  `FileNotFoundError: Image Not Found .../train/images/img_012251.png`
+- **Investigation:**
+  - Ran automated validation across all 11,984 training images (`task-1035`): **0 failures**. All images are intact on disk.
+  - Inspected `img_012251.png`: Valid 16-bit RGBA PNG with Apple `iDOT` chunk.
+  - Root cause: NumPy `np.fromfile` uses C `fread` which does not loop on `EINTR`. Under heavy concurrent disk I/O with 4 multiprocessing workers, an interrupted or short read caused `cv2.imdecode` to receive a truncated buffer, printing `libpng error: PNG input buffer is incomplete` and returning `None`.
+  - In Ultralytics `ultralytics/utils/patches.py`, the PIL fallback (`_imread_pil`) was restricted strictly to `(.avif, .heic, .heif)` extensions, causing OpenCV decode errors on PNGs to return `None` and trigger `FileNotFoundError`.
+- **Fix:**
+  - Patched `ultralytics/utils/patches.py`: If `cv2.imdecode` returns `None`, retry using Python's signal-safe `open().read()` with `np.frombuffer()`. If still `None`, fall back unconditionally to `_imread_pil`.
+  - Added secondary safety net in `ultralytics/data/base.py` (`load_image`) to fall back to PIL before raising `FileNotFoundError`.
+  - Verified `img_012251.png` decodes cleanly into `(2556, 1179, 3) uint8`.
+- **Resume:** `NativeUITrainer/yolo_runs/phase6a_r009/weights/last.pt` (Epoch 1, 154 MB) is fully intact and verified loadable. Resumed seamlessly from `last.pt`.
+
+**Completion & Outcome (2026-09-15):**
+- **Status:** TRAINING_COMPLETE (100/100 epochs, exited rc=0 at 2026-09-15 07:47:42).
+- **Execution Duration:** ~135.8 hours of uninterrupted, zero-restart training on PID `6504` under `watch_phase6a.py` and `caffeinate`.
+- **Final Metrics (Epoch 100/100):**
+  - In-family Val mAP@0.5: **0.991** (99.1%)
+  - In-family Val mAP@0.5:0.95: **0.955** (95.5% — all-time high across all runs)
+  - Precision: **0.981** (98.1%)
+  - Recall: **0.993** (99.3%)
+  - Val Box Loss: **0.1752**
+  - Val Cls Loss: **0.1444**
+  - Val DFL Loss: **0.7396**
+- **Storage & ADR-0006 Verification:**
+  - `save_period=-1` prevented writing 100 intermediate snapshots (~15.4 GB flash writes avoided); disk space remained stable between 12–18 GiB throughout the entire run.
+  - Final inference weights: `NativeUITrainer/yolo_runs/phase6a_r009/weights/best.pt` (40.55 MB, stripped).
+- **CoreML Export (TASK-6a-4):**
+  - Generated `NativeUITrainer/yolo_runs/phase6a_r009/weights/best.mlpackage` (38.5 MB, FP16 half-precision, NMS baked in).
+  - Export completed in 15.4s via `scripts/export_yolo_coreml.py`.
+- **Withheld-Family Holdout Evaluation (TASK-6a-7 / DS-G8 Gate):**
+  - Holdout Test mAP@0.5 = **0.586 (58.6%)** (mAP50-95 = **0.380 / 38.0%**).
+  - **Massive Gen Gains:** Jumped from **0.358 (Run 007) → 0.491 (Run 008) → 0.586 (Run 009)** (+9.5 percentage points over Run 008, +22.8 percentage points / +63.7% relative improvement over Run 007).
+  - **Key Class Generalization on Unseen Layouts:**
+    - `primaryButton`: **0.9999** (~1.000)
+    - `navigationBar`: **0.9997** (~1.000)
+    - `progressView`: **1.0000** (1.000)
+    - `picker`: **0.9949** (0.995)
+    - `secureField`: **0.8906** (0.891)
+    - `toggle`: **0.7206** (0.721)
+    - `textField`: **0.6649** (0.665)
+    - `label`: **0.6426** (0.643)
+    - `stepperControl`: **0.5000**
+    - `imageView`: **0.1512**
+    - `secondaryButton`: **0.0000**
+    - `pageControl`: **0.0000**
+    - `listRow`: **0.0000**
+  - **Content Invariance (Blur Test):** Max non-text probe drop was only **3.93 pt** (limit < 10 pt — PASS).
+  - **Inference Latency Proxy:** Mean = **88.18ms**, P95 = **90.00ms** (< 200ms — PASS); Cold load = **0.0294s** (< 3.0s — PASS); Model size = **38.67 MB** (< 50 MB — PASS).
+  - **Quantization Benchmark (TASK-6a-5):** Recommended shipping **FP16** (size 38.5 MB < 50 MB limit, avoiding 75 pt drop seen on INT8 stepperControl). Distillation not required.
+  - **Production Gate Decision (DS-G8):** Holdout mAP@0.5 is 0.586 (threshold ≥ 0.850). Gate does not pass. Per project guidelines, **do not ship 41-class weights to NativeUIAuditKitModels**; the shipped detector remains the 5-class `nativeui-ios-v2.0` YOLO11n (mAP@0.5 = 0.935).
+

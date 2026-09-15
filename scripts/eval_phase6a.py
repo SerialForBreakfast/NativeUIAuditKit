@@ -316,9 +316,10 @@ def ensure_int8(weights: Path, int8_pkg: Path) -> Path | None:
     import coremltools as ct
     import coremltools.optimize.coreml as cto
 
-    fp16_nms = WEIGHTS_DIR / "best_fp16.mlpackage"
-    fp16_nonms = WEIGHTS_DIR / "best_fp16_nonms.mlpackage"
-    default = WEIGHTS_DIR / "best.mlpackage"
+    weights_dir = weights.parent
+    fp16_nms = weights_dir / "best_fp16.mlpackage"
+    fp16_nonms = weights_dir / "best_fp16_nonms.mlpackage"
+    default = weights_dir / "best.mlpackage"
 
     if not fp16_nonms.is_dir():
         print("Exporting nms=False FP16 mlprogram for INT8 quantization…")
@@ -769,8 +770,9 @@ def main() -> None:
     print("\n--- Mac latency (ANE/CPU proxy; not a physical iPhone) ---")
     bench_imgs = stems[:LATENCY_N]
     latency = {"platform": "macOS M4 proxy", "physical_iphone": False, "n": len(bench_imgs)}
-    nms_fp16 = WEIGHTS_DIR / "best_fp16.mlpackage"
-    pkg_for_lat = nms_fp16 if nms_fp16.is_dir() else (fp16_pkg if fp16_pkg.is_dir() else weights)
+    nms_fp16 = weights_dir / "best_fp16.mlpackage"
+    default_pkg = weights_dir / "best.mlpackage"
+    pkg_for_lat = nms_fp16 if nms_fp16.is_dir() else (default_pkg if default_pkg.is_dir() else (fp16_pkg if fp16_pkg.is_dir() else weights))
     t0 = time.perf_counter()
     lat_model = YOLO(str(pkg_for_lat))
     latency["cold_load_s"] = round(time.perf_counter() - t0, 4)

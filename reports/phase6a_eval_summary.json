@@ -1,15 +1,15 @@
 {
-  "date": "2026-09-02T10:49:30Z",
+  "date": "2026-09-15T18:51:18Z",
   "task_6a_5": {
     "ship": "fp16",
-    "fp16_size_mb": 38.527,
-    "int8_size_mb": null,
-    "max_drop_points": 0.0,
+    "fp16_size_mb": 0.0,
+    "int8_size_mb": 19.47,
+    "max_drop_points": 75.212,
     "distill_required": false,
-    "reason": "INT8 package missing; ship FP16"
+    "reason": "INT8 small-element AP dropped >5 pt vs FP16 on stepperControl"
   },
   "task_6a_7": {
-    "mAP50": 0.490919,
+    "mAP50": 0.585669,
     "map_gate": false,
     "class_floor_gate": true,
     "classes_below_0_65": [],
@@ -21,39 +21,39 @@
       {
         "templateFamily": "MultiSectionForm",
         "n": 200,
-        "mean_entropy": 2.545939
+        "mean_entropy": 2.660619
       },
       {
         "templateFamily": "WizardStepFlow",
         "n": 200,
-        "mean_entropy": 2.320937
-      },
-      {
-        "templateFamily": "OnboardingPage",
-        "n": 400,
-        "mean_entropy": 1.991855
+        "mean_entropy": 2.364757
       },
       {
         "templateFamily": "CardDetail",
         "n": 200,
-        "mean_entropy": 1.787603
+        "mean_entropy": 1.986257
+      },
+      {
+        "templateFamily": "OnboardingPage",
+        "n": 400,
+        "mean_entropy": 1.953467
       },
       {
         "templateFamily": "GalleryPage",
         "n": 200,
-        "mean_entropy": 1.740991
+        "mean_entropy": 1.746425
       }
     ],
     "device_mac_proxy": {
       "platform": "macOS M4 proxy",
       "physical_iphone": false,
       "n": 50,
-      "cold_load_s": 0.0053,
-      "inference_ms_mean": 977.1,
-      "inference_ms_p95": 1198.93,
-      "size_mb": 38.527,
+      "cold_load_s": 0.0294,
+      "inference_ms_mean": 88.18,
+      "inference_ms_p95": 90.0,
+      "size_mb": 38.672,
       "cold_load_pass": true,
-      "inference_pass": false,
+      "inference_pass": true,
       "size_pass": true
     },
     "ds_g8": false

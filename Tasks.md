@@ -1785,6 +1785,22 @@ train on the same 16,440.
 
 ---
 
+#### TASK-6a-9: Run 009 Training & Optimization (ADR-0006)
+
+**Requires:** Run 008 completed, ADR-0006 approved
+
+Apply iteration optimizations: `batch=8` (halving epoch steps from 2,876 to 1,438), `save_period=-1` (saving ~15.4 GB flash writes), `plots=False` (skipping per-epoch CPU plotting).
+
+- [x] Run 009 YOLO11m training complete (100/100 epochs, 2026-09-15 07:47:42, PID 6504, exit rc=0).
+- [x] Uninterrupted execution: ~135.8 hours continuous run without a single crash or watchdog restart after BP-36 dataloading patch.
+- [x] In-family validation metrics: mAP@0.5 = **0.991** (99.1%), mAP@0.5:0.95 = **0.955** (95.5%), Precision = **0.981**, Recall = **0.993**.
+- [x] Storage protected: 0 intermediate snapshots written, stable 12–18 GiB free disk space throughout.
+- [x] Export to CoreML FP16+NMS package (`scripts/export_yolo_coreml.py`): `NativeUITrainer/yolo_runs/phase6a_r009/weights/best.mlpackage` (38.5 MB).
+- [x] Evaluate against withheld-template holdout split (`scripts/eval_phase6a.py`): mAP@0.5 jumped from **0.491 → 0.586 (+9.5 percentage points / +63.7% relative gain over Run 007)**. DS-G8 gate condition (≥0.850) not met; 41-class weights not shipped.
+- [x] Reports updated (`eval_results_phase6a.json`, `phase6a_eval_summary.json`, `quantization_benchmark.json`, `centroid_bias_phase6a.json`).
+
+---
+
 ## Phase 6b: tvOS Model
 
 *Goal: Train the first separate `NativeUIModel_tvOS` from tvOS Simulator synthetic app-content data.*
@@ -2039,38 +2055,21 @@ struct DeviceDimension {
 
 Must include: all iPhone models from SE (1st gen) to current, all iPad models, Apple TV (1920×1080), MacBook common resolutions.
 
-**AC:**
-- An iPhone 15 Pro screenshot (1179×2556 @3x) resolves to candidates containing "iPhone 15 Pro" and "iPhone 15 Pro Max"
-- An iPhone SE (750×1334 @2x) resolves to candidates for SE models only
-- An Apple TV screenshot (1920×1080 @2x) resolves to tvOS candidates
-- A 1440×900 macOS screenshot resolves to macOS candidates
-- Ambiguous dimensions (shared between multiple models) return multiple candidates, not a single guess
+- [x] Complete. Implemented in `Sources/NativeUIAuditKit/Detection/DeviceDimensionDatabase.swift`.
+- [x] Database covers all iPhone generations (SE 1-3, 6-16 Pro Max), iPads (standard, mini, Air, Pro), Apple TV (1080p, 4K), and common Mac resolutions.
+- [x] Orientation-agnostic lookup: `lookup(width:height:)` accurately matches portrait and landscape.
+- [x] Unit tests passing in `DeviceDimensionDatabaseTests.swift`.
 
 ---
 
 #### TASK-8-2: `NativeUIDeviceInference` implementation
 
-**File:** `Sources/NativeUIAuditKit/Detection/DeviceInference.swift` (new)
-
-```swift
-public func inferDevice(from image: CGImage, sidecar: NativeUISidecar?) -> NativeUIDeviceInference
-```
-
-If sidecar is present and `imageSHA256` matches: return exact device/platform from sidecar metadata.
-
-If pixel-only:
-1. Dimension lookup → initial candidate list
-2. Status bar height detection (Vision rectangle detector on top 10% of image) → refine candidates
-3. Home indicator presence (scan bottom 5% of image for pill shape) → filter to face-ID devices
-4. Dynamic Island presence (scan top 5% for pill cutout) → filter to Pro devices with Dynamic Island
-
-Return `NativeUIDeviceInference` with ranked candidates sorted by confidence descending.
-
-**AC:**
-- Sidecar path: `inferDevice(from:, sidecar: validSidecar).platform == .iOS` and `candidates[0].confidence == 1.0`
-- Pixel-only path for an iPhone 15 Pro screenshot: top candidate is an iPhone with Dynamic Island
-- Never returns a single hard guess — always returns `candidates` array with ≥1 element
-- All returned `confidence` values sum to ≤1.0
+- [x] Complete. Implemented in `Sources/NativeUIAuditKit/Detection/DeviceInference.swift` and exposed via `NativeUIDetectionRequest.inferDevice(for:observations:sidecar:)`.
+- [x] Sidecar fast-path: returns exact platform and model with `confidence == 1.0` and parsed OS version.
+- [x] Pixel heuristics path: dimension lookup + UI chrome refinement (`dynamicIsland` filters to Dynamic Island models; `homeIndicator` filters to Face ID models).
+- [x] Candidate confidences normalized ($\le 1.0$) and sorted descending.
+- [x] Fallback path for uncatalogued aspect ratios and resolutions (never empty).
+- [x] Unit tests passing in `DeviceInferenceTests.swift`. All 39 package tests pass.
 
 ---
 
@@ -2115,10 +2114,11 @@ public struct NativeUINoOpRecognizer: NativeUIRecognizing {
 }
 ```
 
-**AC:**
-- Protocol, `NativeUIObservations`, `NativeUIRecognitionStatus`, and `NativeUINoOpRecognizer` all compile under Swift 6 strict concurrency
-- `NativeUINoOpRecognizer` always returns `status: .notRequested` — never throws
-- All types are `Sendable`, `Codable` where appropriate
+- [x] Complete. Implemented in `Sources/NativeUIAuditKit/Integration/NativeUIRecognizing.swift`.
+- [x] Protocol `NativeUIRecognizing`, `NativeUIObservations`, `NativeUIRecognitionStatus`, `NativeUINoOpRecognizer`, and `NativeUIDetectorRecognizer` compile cleanly under Swift 6 strict concurrency (`Sendable`, off MainActor asynchronous).
+- [x] `NativeUINoOpRecognizer` always returns `status: .notRequested` without throwing.
+- [x] `NativeUIDetectorRecognizer` decodes PNG/JPEG/HEIC data via ImageIO, evaluates elements, text fusion, and audit rules.
+- [x] All types are `Sendable` and `Codable`. Tested in `IntegrationTests.swift` (44 total package tests passing).
 
 ---
 

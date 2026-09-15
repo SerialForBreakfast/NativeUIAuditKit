@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-02T09:39:55Z",
+  "date": "2026-09-15T18:17:52Z",
   "classes": [
     {
       "class_name": "actionSheet",
@@ -13,69 +13,65 @@
     {
       "class_name": "activityIndicator",
       "training_entropy": null,
-      "prediction_entropy": 1.43989,
-      "bias_flag": false,
-      "bias_region": null,
+      "prediction_entropy": 1.230934,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.3,
+        "cy": 0.45,
+        "size": 0.3
+      },
       "n_train": null,
-      "n_pred": 62
+      "n_pred": 79
     },
     {
       "class_name": "alert",
       "training_entropy": null,
-      "prediction_entropy": 0.681291,
-      "bias_flag": true,
-      "bias_region": {
-        "cx": 0.45,
-        "cy": 0.45,
-        "size": 0.3
-      },
+      "prediction_entropy": 1.827048,
+      "bias_flag": false,
+      "bias_region": null,
       "n_train": null,
-      "n_pred": 144
+      "n_pred": 198
     },
     {
       "class_name": "cancelAction",
       "training_entropy": null,
-      "prediction_entropy": 2.740717,
+      "prediction_entropy": 2.811824,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 586
+      "n_pred": 576
     },
     {
       "class_name": "collectionItem",
       "training_entropy": null,
-      "prediction_entropy": 2.793182,
+      "prediction_entropy": 2.774151,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 225
+      "n_pred": 338
     },
     {
       "class_name": "colorWell",
       "training_entropy": null,
-      "prediction_entropy": 1.787298,
-      "bias_flag": true,
-      "bias_region": {
-        "cx": 0.45,
-        "cy": 0.45,
-        "size": 0.3
-      },
+      "prediction_entropy": 1.495824,
+      "bias_flag": false,
+      "bias_region": null,
       "n_train": null,
-      "n_pred": 101
+      "n_pred": 17
     },
     {
       "class_name": "contextMenu",
       "training_entropy": null,
-      "prediction_entropy": -0.0,
+      "prediction_entropy": 0.0,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 2
+      "n_pred": 0
     },
     {
       "class_name": "destructiveButton",
       "training_entropy": null,
-      "prediction_entropy": 1.695226,
+      "prediction_entropy": 0.993619,
       "bias_flag": true,
       "bias_region": {
         "cx": 0.45,
@@ -83,21 +79,21 @@
         "size": 0.3
       },
       "n_train": null,
-      "n_pred": 76
+      "n_pred": 115
     },
     {
       "class_name": "disclosureGroup",
       "training_entropy": null,
-      "prediction_entropy": 3.777164,
+      "prediction_entropy": 2.537228,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 862
+      "n_pred": 246
     },
     {
       "class_name": "dynamicIsland",
       "training_entropy": null,
-      "prediction_entropy": 1.459089,
+      "prediction_entropy": 1.497236,
       "bias_flag": true,
       "bias_region": {
         "cx": 0.45,
@@ -105,7 +101,7 @@
         "size": 0.3
       },
       "n_train": null,
-      "n_pred": 112
+      "n_pred": 169
     },
     {
       "class_name": "homeIndicator",
@@ -114,30 +110,30 @@
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 1
+      "n_pred": 2
     },
     {
       "class_name": "imageView",
       "training_entropy": null,
-      "prediction_entropy": 3.711141,
+      "prediction_entropy": 3.371639,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 1303
+      "n_pred": 1356
     },
     {
       "class_name": "label",
       "training_entropy": null,
-      "prediction_entropy": 5.454372,
+      "prediction_entropy": 5.435395,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 15818
+      "n_pred": 15572
     },
     {
       "class_name": "link",
       "training_entropy": null,
-      "prediction_entropy": 0.322757,
+      "prediction_entropy": 0.988953,
       "bias_flag": true,
       "bias_region": {
         "cx": 0.75,
@@ -145,43 +141,39 @@
         "size": 0.3
       },
       "n_train": null,
-      "n_pred": 51
+      "n_pred": 89
     },
     {
       "class_name": "listRow",
       "training_entropy": null,
-      "prediction_entropy": 5.228839,
+      "prediction_entropy": 5.321706,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 7401
+      "n_pred": 7027
     },
     {
       "class_name": "mapView",
       "training_entropy": null,
-      "prediction_entropy": 1.502434,
-      "bias_flag": true,
-      "bias_region": {
-        "cx": 0.45,
-        "cy": 0.45,
-        "size": 0.3
-      },
+      "prediction_entropy": 1.159832,
+      "bias_flag": false,
+      "bias_region": null,
       "n_train": null,
-      "n_pred": 266
+      "n_pred": 146
     },
     {
       "class_name": "menuButton",
       "training_entropy": null,
-      "prediction_entropy": 0.811278,
+      "prediction_entropy": 1.459148,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 48
+      "n_pred": 6
     },
     {
       "class_name": "navigationBar",
       "training_entropy": null,
-      "prediction_entropy": 1.670751,
+      "prediction_entropy": 2.12291,
       "bias_flag": true,
       "bias_region": {
         "cx": 0.45,
@@ -189,61 +181,65 @@
         "size": 0.3
       },
       "n_train": null,
-      "n_pred": 2918
+      "n_pred": 3388
     },
     {
       "class_name": "pageControl",
       "training_entropy": null,
-      "prediction_entropy": 3.566777,
+      "prediction_entropy": 2.938805,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 690
+      "n_pred": 283
     },
     {
       "class_name": "picker",
       "training_entropy": null,
-      "prediction_entropy": 2.960177,
+      "prediction_entropy": 3.219872,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 862
+      "n_pred": 999
     },
     {
       "class_name": "popover",
       "training_entropy": null,
-      "prediction_entropy": 0.0,
+      "prediction_entropy": -0.0,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 0
+      "n_pred": 48
     },
     {
       "class_name": "primaryButton",
       "training_entropy": null,
-      "prediction_entropy": 3.966846,
+      "prediction_entropy": 4.067191,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 2473
+      "n_pred": 2519
     },
     {
       "class_name": "progressView",
       "training_entropy": null,
-      "prediction_entropy": 3.858204,
-      "bias_flag": false,
-      "bias_region": null,
+      "prediction_entropy": 2.150282,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.3,
+        "size": 0.3
+      },
       "n_train": null,
-      "n_pred": 747
+      "n_pred": 316
     },
     {
       "class_name": "refreshControl",
       "training_entropy": null,
-      "prediction_entropy": 0.0,
+      "prediction_entropy": -0.0,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 0
+      "n_pred": 2
     },
     {
       "class_name": "scrollIndicator",
@@ -261,21 +257,61 @@
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 26
+      "n_pred": 21
     },
     {
       "class_name": "secondaryButton",
       "training_entropy": null,
-      "prediction_entropy": 1.562688,
+      "prediction_entropy": 1.835366,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 19
+      "n_pred": 72
     },
     {
       "class_name": "secureField",
       "training_entropy": null,
-      "prediction_entropy": 2.352811,
+      "prediction_entropy": 2.608575,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 507
+    },
+    {
+      "class_name": "segmentedControl",
+      "training_entropy": null,
+      "prediction_entropy": 2.056042,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 101
+    },
+    {
+      "class_name": "sheet",
+      "training_entropy": null,
+      "prediction_entropy": 1.398594,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.45,
+        "cy": 0.75,
+        "size": 0.3
+      },
+      "n_train": null,
+      "n_pred": 504
+    },
+    {
+      "class_name": "sidebar",
+      "training_entropy": null,
+      "prediction_entropy": 0.543564,
+      "bias_flag": false,
+      "bias_region": null,
+      "n_train": null,
+      "n_pred": 32
+    },
+    {
+      "class_name": "slider",
+      "training_entropy": null,
+      "prediction_entropy": 2.144519,
       "bias_flag": true,
       "bias_region": {
         "cx": 0.45,
@@ -283,92 +319,52 @@
         "size": 0.3
       },
       "n_train": null,
-      "n_pred": 479
-    },
-    {
-      "class_name": "segmentedControl",
-      "training_entropy": null,
-      "prediction_entropy": 0.0,
-      "bias_flag": false,
-      "bias_region": null,
-      "n_train": null,
-      "n_pred": 0
-    },
-    {
-      "class_name": "sheet",
-      "training_entropy": null,
-      "prediction_entropy": 2.17086,
-      "bias_flag": true,
-      "bias_region": {
-        "cx": 0.45,
-        "cy": 0.6,
-        "size": 0.3
-      },
-      "n_train": null,
-      "n_pred": 877
-    },
-    {
-      "class_name": "sidebar",
-      "training_entropy": null,
-      "prediction_entropy": 0.918296,
-      "bias_flag": false,
-      "bias_region": null,
-      "n_train": null,
-      "n_pred": 3
-    },
-    {
-      "class_name": "slider",
-      "training_entropy": null,
-      "prediction_entropy": 2.998425,
-      "bias_flag": false,
-      "bias_region": null,
-      "n_train": null,
-      "n_pred": 506
+      "n_pred": 475
     },
     {
       "class_name": "statusBar",
       "training_entropy": null,
-      "prediction_entropy": 0.0,
+      "prediction_entropy": -0.0,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 0
+      "n_pred": 1
     },
     {
       "class_name": "stepperControl",
       "training_entropy": null,
-      "prediction_entropy": 2.349284,
+      "prediction_entropy": 2.168194,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 447
+      "n_pred": 412
     },
     {
       "class_name": "tabBar",
       "training_entropy": null,
-      "prediction_entropy": 0.811278,
+      "prediction_entropy": 0.837015,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 4
+      "n_pred": 104
     },
     {
       "class_name": "textField",
       "training_entropy": null,
-      "prediction_entropy": 3.330797,
+      "prediction_entropy": 2.996074,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 1103
+      "n_pred": 910
     },
     {
       "class_name": "toggle",
       "training_entropy": null,
-      "prediction_entropy": 4.06818,
+      "prediction_entropy": 3.707894,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 2543
+      "n_pred": 2290
     },
     {
       "class_name": "toolbar",
@@ -377,7 +373,7 @@
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 27
+      "n_pred": 1
     },
     {
       "class_name": "tooltip",
@@ -391,20 +387,24 @@
     {
       "class_name": "unknown",
       "training_entropy": null,
-      "prediction_entropy": 1.834681,
-      "bias_flag": false,
-      "bias_region": null,
+      "prediction_entropy": -0.0,
+      "bias_flag": true,
+      "bias_region": {
+        "cx": 0.75,
+        "cy": 0.45,
+        "size": 0.3
+      },
       "n_train": null,
-      "n_pred": 82
+      "n_pred": 57
     },
     {
       "class_name": "webContent",
       "training_entropy": null,
-      "prediction_entropy": 0.875196,
+      "prediction_entropy": 0.0,
       "bias_flag": false,
       "bias_region": null,
       "n_train": null,
-      "n_pred": 61
+      "n_pred": 0
     }
   ]
 }

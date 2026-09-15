@@ -1,10 +1,10 @@
 {
-  "model": "phase6a_r008",
-  "evalDate": "2026-09-02T10:49:30Z",
+  "model": "phase6a_r009",
+  "evalDate": "2026-09-15T18:51:18Z",
   "split": "test (family holdout)",
   "n_images": 2000,
-  "mAP50": 0.490919,
-  "mAP50_95": 0.348007,
+  "mAP50": 0.585669,
+  "mAP50_95": 0.379763,
   "dsG8_map_pass": false,
   "dsG8_class_floor_pass": true,
   "classes_below_0_65": [],
@@ -106,18 +106,18 @@
     },
     {
       "class": "imageView",
-      "ap50": 0.151192,
-      "ap50_95": 0.087263,
-      "precision": 0.383371,
-      "recall": 0.149868,
+      "ap50": 0.143672,
+      "ap50_95": 0.129876,
+      "precision": 0.400065,
+      "recall": 0.158947,
       "n": 0
     },
     {
       "class": "label",
-      "ap50": 0.616861,
-      "ap50_95": 0.480663,
-      "precision": 0.582158,
-      "recall": 0.655892,
+      "ap50": 0.629067,
+      "ap50_95": 0.475393,
+      "precision": 0.622866,
+      "recall": 0.585255,
       "n": 0
     },
     {
@@ -130,8 +130,8 @@
     },
     {
       "class": "listRow",
-      "ap50": 4e-06,
-      "ap50_95": 1e-06,
+      "ap50": 5.6e-05,
+      "ap50_95": 2.5e-05,
       "precision": 0.0,
       "recall": 0.0,
       "n": 0
@@ -155,8 +155,8 @@
     {
       "class": "navigationBar",
       "ap50": 0.995,
-      "ap50_95": 0.939346,
-      "precision": 0.998811,
+      "ap50_95": 0.973593,
+      "precision": 0.950841,
       "recall": 1.0,
       "n": 0
     },
@@ -170,10 +170,10 @@
     },
     {
       "class": "picker",
-      "ap50": 0.211247,
-      "ap50_95": 0.021125,
-      "precision": 0.280297,
-      "recall": 0.365,
+      "ap50": 0.985,
+      "ap50_95": 0.139584,
+      "precision": 0.849114,
+      "recall": 0.99,
       "n": 0
     },
     {
@@ -186,18 +186,18 @@
     },
     {
       "class": "primaryButton",
-      "ap50": 0.994985,
-      "ap50_95": 0.980466,
-      "precision": 0.927889,
+      "ap50": 0.995,
+      "ap50_95": 0.967,
+      "precision": 0.874349,
       "recall": 1.0,
       "n": 0
     },
     {
       "class": "progressView",
-      "ap50": 0.995,
-      "ap50_95": 0.511656,
-      "precision": 0.776686,
-      "recall": 1.0,
+      "ap50": 0.982832,
+      "ap50_95": 0.503433,
+      "precision": 0.992899,
+      "recall": 0.699086,
       "n": 0
     },
     {
@@ -234,10 +234,10 @@
     },
     {
       "class": "secureField",
-      "ap50": 0.402406,
-      "ap50_95": 0.265941,
-      "precision": 0.498182,
-      "recall": 0.5,
+      "ap50": 0.859512,
+      "ap50_95": 0.508863,
+      "precision": 0.653382,
+      "recall": 1.0,
       "n": 0
     },
     {
@@ -282,9 +282,9 @@
     },
     {
       "class": "stepperControl",
-      "ap50": 0.718321,
-      "ap50_95": 0.266745,
-      "precision": 0.49827,
+      "ap50": 0.4975,
+      "ap50_95": 0.180258,
+      "precision": 0.499314,
       "recall": 1.0,
       "n": 0
     },
@@ -298,18 +298,18 @@
     },
     {
       "class": "textField",
-      "ap50": 0.571182,
-      "ap50_95": 0.343987,
-      "precision": 0.673128,
-      "recall": 0.41598,
+      "ap50": 0.76544,
+      "ap50_95": 0.404474,
+      "precision": 0.915911,
+      "recall": 0.588175,
       "n": 0
     },
     {
       "class": "toggle",
-      "ap50": 0.725753,
-      "ap50_95": 0.626898,
-      "precision": 0.715121,
-      "recall": 0.761669,
+      "ap50": 0.760618,
+      "ap50_95": 0.654421,
+      "precision": 0.754396,
+      "recall": 0.706755,
       "n": 0
     },
     {
@@ -404,12 +404,12 @@
     {
       "class": "imageView",
       "n_gt": 350,
-      "ap50": 0.072904
+      "ap50": 0.000551
     },
     {
       "class": "label",
       "n_gt": 8619,
-      "ap50": 0.567411
+      "ap50": 0.602806
     },
     {
       "class": "link",
@@ -444,7 +444,7 @@
     {
       "class": "picker",
       "n_gt": 200,
-      "ap50": 0.186742
+      "ap50": 0.994875
     },
     {
       "class": "popover",
@@ -454,12 +454,12 @@
     {
       "class": "primaryButton",
       "n_gt": 100,
-      "ap50": 0.075358
+      "ap50": 0.073099
     },
     {
       "class": "progressView",
       "n_gt": 200,
-      "ap50": 0.9999
+      "ap50": 1.0
     },
     {
       "class": "refreshControl",
@@ -484,7 +484,7 @@
     {
       "class": "secureField",
       "n_gt": 200,
-      "ap50": 0.507224
+      "ap50": 0.890622
     },
     {
       "class": "segmentedControl",
@@ -514,7 +514,7 @@
     {
       "class": "stepperControl",
       "n_gt": 200,
-      "ap50": 0.831995
+      "ap50": 0.5
     },
     {
       "class": "tabBar",
@@ -524,12 +524,12 @@
     {
       "class": "textField",
       "n_gt": 452,
-      "ap50": 0.617227
+      "ap50": 0.735559
     },
     {
       "class": "toggle",
       "n_gt": 1821,
-      "ap50": 0.669691
+      "ap50": 0.720607
     },
     {
       "class": "toolbar",
@@ -611,12 +611,12 @@
     {
       "class": "imageView",
       "n_gt": 1900,
-      "ap50": 0.148965
+      "ap50": 0.15115
     },
     {
       "class": "label",
       "n_gt": 9321,
-      "ap50": 0.605541
+      "ap50": 0.642579
     },
     {
       "class": "link",
@@ -626,7 +626,7 @@
     {
       "class": "listRow",
       "n_gt": 700,
-      "ap50": 9e-06
+      "ap50": 7.4e-05
     },
     {
       "class": "mapView",
@@ -641,7 +641,7 @@
     {
       "class": "navigationBar",
       "n_gt": 800,
-      "ap50": 0.999931
+      "ap50": 0.999734
     },
     {
       "class": "pageControl",
@@ -651,7 +651,7 @@
     {
       "class": "picker",
       "n_gt": 200,
-      "ap50": 0.186742
+      "ap50": 0.994875
     },
     {
       "class": "popover",
@@ -661,12 +661,12 @@
     {
       "class": "primaryButton",
       "n_gt": 1366,
-      "ap50": 0.999852
+      "ap50": 0.999988
     },
     {
       "class": "progressView",
       "n_gt": 200,
-      "ap50": 0.9999
+      "ap50": 1.0
     },
     {
       "class": "refreshControl",
@@ -691,7 +691,7 @@
     {
       "class": "secureField",
       "n_gt": 200,
-      "ap50": 0.507224
+      "ap50": 0.890622
     },
     {
       "class": "segmentedControl",
@@ -721,7 +721,7 @@
     {
       "class": "stepperControl",
       "n_gt": 200,
-      "ap50": 0.831995
+      "ap50": 0.5
     },
     {
       "class": "tabBar",
@@ -731,12 +731,12 @@
     {
       "class": "textField",
       "n_gt": 500,
-      "ap50": 0.557973
+      "ap50": 0.664945
     },
     {
       "class": "toggle",
       "n_gt": 1821,
-      "ap50": 0.669691
+      "ap50": 0.720607
     },
     {
       "class": "toolbar",
@@ -763,9 +763,9 @@
     "n_images": 200,
     "non_text_probe": {
       "navigationBar": {
-        "ap50_clear": 1.0,
+        "ap50_clear": 0.999446,
         "ap50_blur": 0.995,
-        "drop_points": 0.5,
+        "drop_points": 0.445,
         "n_gt": 83
       },
       "tabBar": {
@@ -775,9 +775,9 @@
         "n_gt": 0
       },
       "toggle": {
-        "ap50_clear": 0.640659,
-        "ap50_blur": 0.661299,
-        "drop_points": -2.064,
+        "ap50_clear": 0.69862,
+        "ap50_blur": 0.659279,
+        "drop_points": 3.934,
         "n_gt": 203
       },
       "slider": {
@@ -793,8 +793,8 @@
         "n_gt": 0
       }
     },
-    "max_probe_drop_points": 0.5,
-    "nontext_mean_ap_clear": 0.479131,
+    "max_probe_drop_points": 3.934,
+    "nontext_mean_ap_clear": 0.534859,
     "nontext_mean_ap_blur": 0.0,
     "pass": true
   },
@@ -804,42 +804,42 @@
     {
       "templateFamily": "CardDetail",
       "n_images": 200,
-      "mAP50": 0.714284
+      "mAP50": 0.714165
     },
     {
       "templateFamily": "EmptyState",
       "n_images": 400,
-      "mAP50": 0.539269
+      "mAP50": 0.482508
     },
     {
       "templateFamily": "GalleryPage",
       "n_images": 200,
-      "mAP50": 0.769869
+      "mAP50": 0.787775
     },
     {
       "templateFamily": "MultiSectionForm",
       "n_images": 200,
-      "mAP50": 0.703939
+      "mAP50": 0.800645
     },
     {
       "templateFamily": "NotificationCenter",
       "n_images": 200,
-      "mAP50": 0.204158
+      "mAP50": 0.182231
     },
     {
       "templateFamily": "OnboardingPage",
       "n_images": 400,
-      "mAP50": 0.408197
+      "mAP50": 0.354478
     },
     {
       "templateFamily": "SettingsToggleDense",
       "n_images": 200,
-      "mAP50": 0.935058
+      "mAP50": 0.928639
     },
     {
       "templateFamily": "WizardStepFlow",
       "n_images": 200,
-      "mAP50": 0.645945
+      "mAP50": 0.643624
     }
   ],
   "entropy_proxy": {
@@ -849,27 +849,27 @@
       {
         "templateFamily": "MultiSectionForm",
         "n": 200,
-        "mean_entropy": 2.545939
+        "mean_entropy": 2.660619
       },
       {
         "templateFamily": "WizardStepFlow",
         "n": 200,
-        "mean_entropy": 2.320937
-      },
-      {
-        "templateFamily": "OnboardingPage",
-        "n": 400,
-        "mean_entropy": 1.991855
+        "mean_entropy": 2.364757
       },
       {
         "templateFamily": "CardDetail",
         "n": 200,
-        "mean_entropy": 1.787603
+        "mean_entropy": 1.986257
+      },
+      {
+        "templateFamily": "OnboardingPage",
+        "n": 400,
+        "mean_entropy": 1.953467
       },
       {
         "templateFamily": "GalleryPage",
         "n": 200,
-        "mean_entropy": 1.740991
+        "mean_entropy": 1.746425
       }
     ]
   },
@@ -883,12 +883,12 @@
     "platform": "macOS M4 proxy",
     "physical_iphone": false,
     "n": 50,
-    "cold_load_s": 0.0053,
-    "inference_ms_mean": 977.1,
-    "inference_ms_p95": 1198.93,
-    "size_mb": 38.527,
+    "cold_load_s": 0.0294,
+    "inference_ms_mean": 88.18,
+    "inference_ms_p95": 90.0,
+    "size_mb": 38.672,
     "cold_load_pass": true,
-    "inference_pass": false,
+    "inference_pass": true,
     "size_pass": true
   }
 }
