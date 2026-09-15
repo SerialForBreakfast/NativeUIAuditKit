@@ -1810,18 +1810,18 @@ Apply iteration optimizations: `batch=8` (halving epoch steps from 2,876 to 1,43
 
 ---
 
-#### TASK-6b-S-1: tvOS simulator coordinate & focus validation
+#### TASK-6b-S-1: tvOS simulator coordinate & focus validation [DONE]
 
 Before generating at scale, validate that the coordinate pipeline works correctly in tvOS Simulator (1920×1080 landscape) and measures `@FocusState` visual vs. layout frame behavior.
 
 **AC:**
-- tvOS coordinate spike fixture (`tvOSCoordSpikeView`) passes $\le 2\text{pt}$ / $\le 2\text{px}$ alignment on tvOS 1080p simulator
-- Document whether `GeometryReader` reports base layout frame or visual transformed/elevated frame when `@FocusState` is active
-- Focus metadata accurately identifies visual focus (`isFocused: true`)
+- [x] tvOS coordinate spike fixture (`tvOSCoordSpikeView`) passes $\le 2\text{pt}$ / $\le 2\text{px}$ alignment on tvOS 1080p simulator
+- [x] Document whether `GeometryReader` reports base layout frame or visual transformed/elevated frame when `@FocusState` is active (reports base layout frame; visual 1.15× scaling expands symmetrically from element center)
+- [x] Focus metadata accurately identifies visual focus (`isFocused: true` in `CaptureTypes.swift`, `AnnotationWriter.swift`, `ScreenshotCapture.swift`)
 
 ---
 
-#### TASK-6b-S-2: tvOS OS UI generator templates
+#### TASK-6b-S-2: tvOS OS UI generator templates [DONE]
 
 **Files:** `NativeUIDatasetGenerator/Templates/tvOS/` (5 templates)
 
@@ -1834,46 +1834,48 @@ Before generating at scale, validate that the coordinate pipeline works correctl
 | `tvOSHardNegativesTemplate` | Aerial screensavers, ambient dark backgrounds, video frames without controls |
 
 **AC:**
-- `tabBar` annotations appear in the top 15% of image height in tvOS images
-- `state.isFocused: true` is emitted on the single focused element per focusable template
-- Synthetic OS UI generator produces matching sidecars conforming to `annotation.schema.json`
-- Hard negatives include screensavers and UI-free ambient backgrounds
+- [x] `tabBar` annotations appear in the top 15% of image height in tvOS images
+- [x] `state.isFocused: true` is emitted on the single focused element per focusable template
+- [x] Synthetic OS UI generator produces matching sidecars conforming to `annotation.schema.json` (2,000 images generated via headless `ImageRenderer` in `dataset/tvos_dataset/`)
+- [x] Hard negatives include screensavers and UI-free ambient backgrounds
 
 ---
 
-#### TASK-6b-T-1: TVTestRig artifact contract & ingestion pipeline
+#### TASK-6b-T-1: TVTestRig artifact contract & ingestion pipeline [DONE]
 
 Establish the data contract and offline ingestion pipeline between TVTestRig and NativeUIAuditKit.
 
 **AC:**
-- Ingestion script (`scripts/ingest_tvos_capture.py`) accepts TVTestRig capture PNG + metadata JSON
-- Validates 1920×1080 or 3840×2160 resolution and SHA-256
-- Marks captures with `captureSource: tvOSSimulatorTVTestRig` or `captureSource: realAppleTVTVTestRig`
-- Zero runtime binary dependency on TVTestRig
+- [x] Ingestion script (`scripts/ingest_tvos_capture.py`) accepts TVTestRig capture PNG + metadata JSON
+- [x] Validates 1920×1080 or 3840×2160 resolution and SHA-256
+- [x] Marks captures with `captureSource: tvOSSimulatorTVTestRig` or `captureSource: realAppleTVTVTestRig`
+- [x] Zero runtime binary dependency on TVTestRig
 
 ---
 
-#### TASK-6b-T-2: TVTestRig offline detection CLI
+#### TASK-6b-T-2: TVTestRig offline detection CLI [DONE]
 
 Provide an offline CLI tool that TVTestRig calls to detect OS UI elements, labels, and active focus.
 
 **AC:**
-- Standalone CLI `scripts/tvos_detect.swift` accepts `--image <path>` and emits structured `NativeUIObservations` JSON
-- Extracts text via Vision OCR within detected bounding boxes
-- Identifies active focus (`state.isFocused: true`) for the winning focus candidate
-- Provides bounding box pixel rects and normalized rects for TVTestRig d-pad step calculations
+- [x] Standalone CLI `scripts/tvos_detect.swift` accepts `--image <path>` and emits structured `NativeUIObservations` JSON
+- [x] Extracts text via Vision OCR within detected bounding boxes
+- [x] Identifies active focus (`state.isFocused: true`) for the winning focus candidate via pixel luminance evaluation
+- [x] Supports optional `--model <path.mlpackage|mlmodelc>` for CoreML YOLO11 object detection with `.scaleFill` and OCR text fusion
+- [x] Provides bounding box pixel rects and normalized rects for TVTestRig d-pad step calculations
 
 ---
 
-#### TASK-6b-S-3: Train & export `NativeUIModel_tvOS_v0`
+#### TASK-6b-S-3: Train & export `NativeUIModel_tvOS_v0` [DONE]
 
 Train the initial tvOS OS UI model using YOLO11.
 
 **AC:**
-- Dataset export script `scripts/export_tvos_coco.py` generates YOLO format dataset
-- Training script `scripts/train_tvos_model.py` runs YOLO11 training
-- mAP@0.5 $\ge 0.80$ on held-out OS UI test set
-- CoreML export (`NativeUIModel_tvOS.mlpackage`) with FP16 + NMS
+- [x] Dataset export script `scripts/export_tvos_coco.py` generates YOLO format dataset (`NativeUITrainer/yolo_dataset_tvos/`)
+- [x] Training script `scripts/train_tvos_model.py` runs YOLO11 training on Apple Silicon MPS (Run 010 complete: 60/60 epochs, val mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.987)
+- [x] Offline evaluation script `scripts/eval_tvos_model.py` created for test split mAP and visual focus accuracy
+- [x] mAP@0.5 $\ge 0.80$ on held-out OS UI test set (PASS: mAP@0.5 = **0.9950**, mAP@0.5:0.95 = **0.9870**, Focus Accuracy = **100.0%** in `reports/eval_results_tvos_v0.json`)
+- [x] CoreML export (`NativeUIModel_tvOS.mlpackage`) with FP16 + NMS (5.2 MB, verified with `tvos_detect.swift` on Home Screen and Settings screenshots)
 
 ---
 

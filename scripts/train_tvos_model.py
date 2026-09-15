@@ -21,7 +21,14 @@ WEIGHTS_DIR = PROJECT_ROOT / "NativeUITrainer" / "weights"
 
 os_env_defaults = {
     "YOLO_CONFIG_DIR": str(PROJECT_ROOT / "NativeUITrainer" / ".ultralytics"),
+    "MPLCONFIGDIR": str(PROJECT_ROOT / "NativeUITrainer" / ".mplconfig"),
+    "TORCH_HOME": str(PROJECT_ROOT / "NativeUITrainer" / ".torch"),
 }
+
+for _k, _v in os_env_defaults.items():
+    os.environ[_k] = _v
+    Path(_v).mkdir(parents=True, exist_ok=True)
+
 
 
 def parse_args():
@@ -66,34 +73,70 @@ def main():
 
     try:
         from ultralytics import YOLO
+        from ultralytics.utils import SETTINGS
     except ImportError:
-        print("ERROR: ultralytics not installed in current environment.", file=sys.stderr)
+        print("ERROR: ultralytics not installed in current environment.", file=sys.stderr, flush=True)
         sys.exit(1)
 
+    SETTINGS.update(
+        {
+            "datasets_dir": str(PROJECT_ROOT / "NativeUITrainer"),
+            "weights_dir": str(WEIGHTS_DIR),
+            "runs_dir": str(DEFAULT_RUNS),
+        }
+    )
+
     base_weights = resolve_weights(args.model)
-    print(f"Loading base weights: {base_weights}")
+    print(f"Loading base weights: {base_weights}", flush=True)
     model = YOLO(base_weights)
 
+    import shutil
+
+    def _backup_last_pt(trainer) -> None:
+        last = Path(getattr(trainer, "last", "") or "")
+        if last.exists():
+            shutil.copy2(last, last.with_name("last.prev.pt"))
+
+    model.add_callback("on_model_save", _backup_last_pt)
+
     epochs = 2 if args.dry_run else args.epochs
-    batch = 4 if args.dry_run else args.batch
+    batch = 8 if args.dry_run else args.batch
+    fraction = 0.05 if args.dry_run else 1.0
+    rect = False if args.dry_run else True
+    workers = 2 if args.dry_run else args.workers
+    run_name = args.name if not args.dry_run else f"{args.name}_dryrun"
 
-    print(f"Starting tvOS YOLO11 training: {epochs} epochs, batch={batch}, imgsz={args.imgsz}")
+    print(f"Starting tvOS YOLO11 training: {epochs} epochs, batch={batch}, imgsz={args.imgsz}, fraction={fraction}, rect={rect}", flush=True)
 
-    results = model.train(
+    train_kwargs = dict(
         data=str(yaml_path),
         epochs=epochs,
         batch=batch,
         imgsz=args.imgsz,
+        fraction=fraction,
+        rect=rect,
         patience=args.patience,
-        workers=args.workers,
+        workers=workers,
         device="mps",
         project=args.output_dir,
-        name=args.name,
+        name=run_name,
         exist_ok=True,
         verbose=True,
+        optimizer="AdamW",
+        lr0=0.001,
+        lrf=0.01,
+        warmup_epochs=3.0 if not args.dry_run else 0.0,
+        box=7.5,
+        cls=0.5,
+        dfl=1.5,
+        mosaic=0.0 if args.dry_run else 1.0,
+        plots=True,
     )
 
-    print(f"\ntvOS Training Complete! Results saved in {args.output_dir}/{args.name}")
+    results = model.train(**train_kwargs)
+
+    best_pt = Path(args.output_dir) / run_name / "weights" / "best.pt"
+    print(f"\ntvOS Training Complete! Best weights: {best_pt}", flush=True)
     return 0
 
 

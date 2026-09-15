@@ -10,6 +10,7 @@
 
 import Foundation
 import CoreGraphics
+import CoreML
 import ImageIO
 import Vision
 
@@ -17,6 +18,7 @@ import Vision
 
 struct CLIArgs {
     var imagePath: String?
+    var modelPath: String?
     var outputPath: String?
     var minConfidence: Double = 0.40
     var prettyPrint: Bool = true
@@ -31,6 +33,8 @@ func parseArguments() -> CLIArgs {
         switch raw[i] {
         case "--image", "-i":
             if i + 1 < raw.count { args.imagePath = raw[i + 1]; i += 1 }
+        case "--model", "-m":
+            if i + 1 < raw.count { args.modelPath = raw[i + 1]; i += 1 }
         case "--output", "-o":
             if i + 1 < raw.count { args.outputPath = raw[i + 1]; i += 1 }
         case "--min-conf":
@@ -48,6 +52,7 @@ func parseArguments() -> CLIArgs {
 
             Options:
               --image, -i <path>       Path to tvOS screenshot PNG (1920x1080 or 3840x2160)
+              --model, -m <path>       Path to CoreML .mlpackage or .mlmodelc (optional)
               --output, -o <path>      Output JSON file path (defaults to stdout if omitted)
               --min-conf <float>       Minimum detection confidence threshold (default: 0.40)
               --compact                Output minified JSON
@@ -131,7 +136,7 @@ func extractOCRRegions(from cgImage: CGImage) -> [(text: String, rect: CGRect, c
 
 // MARK: - Pixel Luminance / Focus Analyzer
 
-func evaluateElementLuminance(cgImage: CGImage, pixelRect: CGRect) -> Double {
+func evaluateElementFocusScore(cgImage: CGImage, pixelRect: CGRect, elementType: String) -> Double {
     let w = cgImage.width
     let h = cgImage.height
 
@@ -160,33 +165,112 @@ func evaluateElementLuminance(cgImage: CGImage, pixelRect: CGRect) -> Double {
 
     ctx.draw(cropped, in: CGRect(x: 0, y: 0, width: cw, height: ch))
 
-    // Sample pixels across the crop to compute mean luminance
-    var totalLuminance = 0.0
-    var count = 0
+    if elementType == "collectionItem" {
+        // In tvOS Home Screen, focused collectionItem has a radiant white perimeter border outline (.stroke(Color.white, lineWidth: 3)).
+        // Check white pixel ratio along the outer perimeter (thickness t).
+        let t = max(1, min(6, min(cw, ch) / 4))
+        var whiteCount = 0
+        var totalBorderPixels = 0
 
-    // Sample interior (inset 15% to avoid borders)
-    let minX = Int(Double(cw) * 0.15)
-    let maxX = Int(Double(cw) * 0.85)
-    let minY = Int(Double(ch) * 0.15)
-    let maxY = Int(Double(ch) * 0.85)
-
-    let step = max(1, (maxX - minX) / 20)
-
-    for y in stride(from: minY, to: maxY, by: max(1, step)) {
-        for x in stride(from: minX, to: maxX, by: max(1, step)) {
-            let offset = (y * bytesPerRow) + (x * bytesPerPixel)
-            if offset + 3 < rawData.count {
-                let r = Double(rawData[offset]) / 255.0
-                let g = Double(rawData[offset + 1]) / 255.0
-                let b = Double(rawData[offset + 2]) / 255.0
-                let lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                totalLuminance += lum
-                count += 1
+        for y in 0..<ch {
+            let isBorderY = (y < t || y >= ch - t)
+            for x in 0..<cw {
+                let isBorderX = (x < t || x >= cw - t)
+                if isBorderY || isBorderX {
+                    let offset = (y * bytesPerRow) + (x * bytesPerPixel)
+                    if offset + 3 < rawData.count {
+                        let r = rawData[offset]
+                        let g = rawData[offset + 1]
+                        let b = rawData[offset + 2]
+                        if r > 200 && g > 200 && b > 200 {
+                            whiteCount += 1
+                        }
+                        totalBorderPixels += 1
+                    }
+                }
             }
         }
-    }
+        return totalBorderPixels > 0 ? (Double(whiteCount) / Double(totalBorderPixels)) : 0.0
+    } else {
+        // For listRow, primaryButton, tabBar, cancelAction:
+        // When focused, tvOS inverts to solid white high-luminance interior pill.
+        // Sample interior (inset 15% to avoid borders).
+        let minX = Int(Double(cw) * 0.15)
+        let maxX = Int(Double(cw) * 0.85)
+        let minY = Int(Double(ch) * 0.15)
+        let maxY = Int(Double(ch) * 0.85)
 
-    return count > 0 ? (totalLuminance / Double(count)) : 0.0
+        let step = max(1, (maxX - minX) / 20)
+        var totalLuminance = 0.0
+        var count = 0
+
+        for y in stride(from: minY, to: maxY, by: max(1, step)) {
+            for x in stride(from: minX, to: maxX, by: max(1, step)) {
+                let offset = (y * bytesPerRow) + (x * bytesPerPixel)
+                if offset + 3 < rawData.count {
+                    let r = Double(rawData[offset]) / 255.0
+                    let g = Double(rawData[offset + 1]) / 255.0
+                    let b = Double(rawData[offset + 2]) / 255.0
+                    let lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
+                    totalLuminance += lum
+                    count += 1
+                }
+            }
+        }
+        return count > 0 ? (totalLuminance / Double(count)) : 0.0
+    }
+}
+
+// MARK: - CoreML Model Detection
+
+func detectWithModel(
+    cgImage: CGImage,
+    modelURL: URL,
+    minConfidence: Double
+) -> [(id: String, type: String, pixelRect: CGRect, confidence: Double)] {
+    do {
+        let mlModel: MLModel
+        if modelURL.pathExtension == "mlpackage" {
+            let compiledURL = try MLModel.compileModel(at: modelURL)
+            mlModel = try MLModel(contentsOf: compiledURL)
+        } else {
+            mlModel = try MLModel(contentsOf: modelURL)
+        }
+        let vnModel = try VNCoreMLModel(for: mlModel)
+        let request = VNCoreMLRequest(model: vnModel)
+        request.imageCropAndScaleOption = .scaleFill
+
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        try handler.perform([request])
+
+        guard let results = request.results as? [VNRecognizedObjectObservation] else {
+            return []
+        }
+
+        let w = Double(cgImage.width)
+        let h = Double(cgImage.height)
+
+        var detected: [(id: String, type: String, pixelRect: CGRect, confidence: Double)] = []
+        for (i, obs) in results.enumerated() {
+            guard let topLabel = obs.labels.first, Double(topLabel.confidence) >= minConfidence else { continue }
+            let box = obs.boundingBox
+            let pxX = box.minX * w
+            let pxY = (1.0 - box.minY - box.height) * h
+            let pxW = box.width * w
+            let pxH = box.height * h
+            let r = CGRect(x: pxX, y: pxY, width: pxW, height: pxH)
+            detected.append((
+                id: "\(topLabel.identifier)_\(i)",
+                type: topLabel.identifier,
+                pixelRect: r,
+                confidence: Double(topLabel.confidence)
+            ))
+        }
+        return detected
+    } catch {
+        fputs("WARNING: CoreML detection failed: \(error.localizedDescription)\n", stderr)
+        return []
+    }
 }
 
 // MARK: - Main Pipeline
@@ -215,54 +299,84 @@ func run() -> Int32 {
     let ocrResults = extractOCRRegions(from: cgImage)
     fputs("Extracted \(ocrResults.count) OCR text regions\n", stderr)
 
-    // 2. Detect candidate UI elements
-    // Form candidates from OCR regions and layout clusters
+    // 2. Detect candidate UI elements (via CoreML model if provided, or geometry heuristics)
     var candidateElements: [(
         id: String,
         type: String,
         pixelRect: CGRect,
         text: String?,
         confidence: Double,
-        luminance: Double
+        focusScore: Double
     )] = []
 
-    for (i, ocr) in ocrResults.enumerated() {
-        let r = ocr.rect
-        // Infer element type from geometry and position
-        var elemType = "label"
-        if r.minY < Double(height) * 0.15 {
-            elemType = "tabBar"
-        } else if r.width > 400 && r.height < 100 {
-            elemType = "listRow"
-        } else if r.width >= 120 && r.width <= 400 && r.height >= 80 {
-            elemType = "collectionItem"
-        } else if r.height >= 44 && r.height <= 90 {
-            elemType = "primaryButton"
+    if let mPath = args.modelPath {
+        let mURL = URL(fileURLWithPath: mPath)
+        let rawDetections = detectWithModel(cgImage: cgImage, modelURL: mURL, minConfidence: args.minConfidence)
+        fputs("CoreML model detected \(rawDetections.count) elements\n", stderr)
+
+        for det in rawDetections {
+            let matching = ocrResults.filter { ocr in
+                let intersection = det.pixelRect.intersection(ocr.rect)
+                if intersection.isNull || intersection.isEmpty { return false }
+                let overlapArea = intersection.width * intersection.height
+                let ocrArea = ocr.rect.width * ocr.rect.height
+                return overlapArea > 0.25 * ocrArea
+            }
+            let joinedText = matching.isEmpty ? nil : matching.map(\.text).joined(separator: " ")
+            let score = evaluateElementFocusScore(cgImage: cgImage, pixelRect: det.pixelRect, elementType: det.type)
+
+            candidateElements.append((
+                id: det.id,
+                type: det.type,
+                pixelRect: det.pixelRect,
+                text: joinedText,
+                confidence: det.confidence,
+                focusScore: score
+            ))
         }
+    } else {
+        for (i, ocr) in ocrResults.enumerated() {
+            let r = ocr.rect
+            var elemType = "label"
+            if r.minY < Double(height) * 0.15 {
+                elemType = "tabBar"
+            } else if r.width > 400 && r.height < 100 {
+                elemType = "listRow"
+            } else if r.width >= 120 && r.width <= 400 && r.height >= 80 {
+                elemType = "collectionItem"
+            } else if r.height >= 44 && r.height <= 90 {
+                elemType = "primaryButton"
+            }
 
-        // Measure crop luminance
-        let lum = evaluateElementLuminance(cgImage: cgImage, pixelRect: r)
+            let score = evaluateElementFocusScore(cgImage: cgImage, pixelRect: r, elementType: elemType)
 
-        candidateElements.append((
-            id: "\(elemType)_\(i)",
-            type: elemType,
-            pixelRect: r,
-            text: ocr.text,
-            confidence: Double(ocr.conf),
-            luminance: lum
-        ))
+            candidateElements.append((
+                id: "\(elemType)_\(i)",
+                type: elemType,
+                pixelRect: r,
+                text: ocr.text,
+                confidence: Double(ocr.conf),
+                focusScore: score
+            ))
+        }
     }
 
     // 3. Focus Evaluation:
-    // In tvOS, the focused element has a distinctive solid white/high-contrast background (luminance > 0.70).
-    // Find candidate with highest luminance among interactive controls.
-    let interactiveCandidates = candidateElements.filter {
-        $0.type == "listRow" || $0.type == "collectionItem" || $0.type == "primaryButton" || $0.type == "tabBar"
-    }
+    // In tvOS:
+    // - collectionItem: focused items scale and have radiant white perimeter border outline (focusScore > 0.15).
+    // - listRow / primaryButton / tabBar / cancelAction: focused items invert to solid white high-luminance pill (focusScore > 0.60).
+    let focusableTypes: Set<String> = ["collectionItem", "listRow", "primaryButton", "tabBar", "cancelAction"]
+    let interactiveCandidates = candidateElements.filter { focusableTypes.contains($0.type) }
 
     let focusWinner = interactiveCandidates
-        .filter { $0.luminance > 0.60 }
-        .max { $0.luminance < $1.luminance }
+        .filter { cand in
+            if cand.type == "collectionItem" {
+                return cand.focusScore > 0.03
+            } else {
+                return cand.focusScore > 0.45
+            }
+        }
+        .max { $0.focusScore < $1.focusScore }
 
     var observations: [ElementObservation] = []
 
@@ -335,7 +449,7 @@ func run() -> Int32 {
     if let foc = focusWinner {
         fputs(" [FOCUSED] \(foc.type) [\(foc.id)] at \(Int(foc.pixelRect.minX)),\(Int(foc.pixelRect.minY)) (\(Int(foc.pixelRect.width))x\(Int(foc.pixelRect.height))) | Text: \"\(foc.text ?? "")\"\n", stderr)
     } else {
-        fputs(" [FOCUS] No clear focused element detected (all luminance <= 0.60)\n", stderr)
+        fputs(" [FOCUS] No clear focused element detected\n", stderr)
     }
     fputs(" Total elements detected: \(observations.count)\n", stderr)
     fputs("------------------------------\n", stderr)

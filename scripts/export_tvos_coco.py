@@ -78,7 +78,7 @@ def main() -> int:
         print(f"Input directory does not exist: {input_dir}. Creating empty placeholder.", file=sys.stderr)
         input_dir.mkdir(parents=True, exist_ok=True)
 
-    json_files = list(input_dir.glob("*.json"))
+    json_files = [p for p in input_dir.rglob("*.json") if p.name != "manifest.json"]
     print(f"Found {len(json_files)} sidecar JSON files in {input_dir}")
 
     exported_count = 0
@@ -92,12 +92,17 @@ def main() -> int:
         except Exception:
             continue
 
-        # Split: 80% train, 10% val, 10% test
-        split = "train"
-        if i % 10 == 9:
-            split = "test"
-        elif i % 10 == 8:
-            split = "val"
+        # Check if file was already inside a split directory
+        parent_name = jf.parent.name
+        if parent_name in ["train", "validation", "val", "test"]:
+            split = "val" if parent_name == "validation" else parent_name
+        else:
+            # Fallback 80/10/10 split
+            split = "train"
+            if i % 10 == 9:
+                split = "test"
+            elif i % 10 == 8:
+                split = "val"
 
         # Copy image or create relative symlink
         dest_img = images_dir / split / png_path.name

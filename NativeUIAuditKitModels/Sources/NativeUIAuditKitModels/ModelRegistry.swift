@@ -121,4 +121,38 @@ public enum ModelRegistry {
         trainingDatasetVersion: "unknown",
         minimumDeploymentTarget: "iOS 17.0"
     )
+
+    /// tvOS OS UI detector — YOLO11n, Phase 6b (v1.0).
+    ///
+    /// Evaluated on 200 held-out test images: mAP@0.5 = 0.995, Precision = 0.994, Recall = 0.999.
+    /// Visual focus determination accuracy = 100.0% (190/190).
+    /// Tailored for Apple TV automation and navigation with TVTestRig.
+    /// Detects Home Screen app tiles, Settings rows, modal alerts, top tab bars, and active focus.
+    public static let tvOS = ModelDescriptor(
+        modelId: "nativeui-tvos-v1.0",
+        calibrationOsRange: OSVersionRange(min: "tvOS 17.0", max: "tvOS 26.x"),
+        trainedClasses: [
+            "alert", "cancelAction", "collectionItem", "imageView",
+            "label", "listRow", "navigationBar", "primaryButton",
+            "tabBar", "toggle"
+        ],
+        trainingDatasetVersion: "run010-tvos-v0",
+        minimumDeploymentTarget: "tvOS 17.0"
+    )
+
+    /// Tensor-level contract for the tvOS OS UI model (`tvOS`, v1.0).
+    public static let tvOSMetadata = ModelMetadata(
+        modelId: "nativeui-tvos-v1.0",
+        architecture: "YOLO11n",
+        inputWidth: 640,
+        inputHeight: 640,
+        classLabels: [
+            "alert", "cancelAction", "collectionItem", "imageView",
+            "label", "listRow", "navigationBar", "primaryButton",
+            "tabBar", "toggle"
+        ],
+        defaultConfidenceThreshold: 0.30,
+        recommendedNMSIoUThreshold: 0.30,
+        mAP50: 0.9950
+    )
 }

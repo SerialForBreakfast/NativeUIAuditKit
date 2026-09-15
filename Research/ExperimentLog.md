@@ -770,3 +770,58 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - **Quantization Benchmark (TASK-6a-5):** Recommended shipping **FP16** (size 38.5 MB < 50 MB limit, avoiding 75 pt drop seen on INT8 stepperControl). Distillation not required.
   - **Production Gate Decision (DS-G8):** Holdout mAP@0.5 is 0.586 (threshold ≥ 0.850). Gate does not pass. Per project guidelines, **do not ship 41-class weights to NativeUIAuditKitModels**; the shipped detector remains the 5-class `nativeui-ios-v2.0` YOLO11n (mAP@0.5 = 0.935).
 
+---
+
+## Run 010 — Phase 6b tvOS OS UI YOLO11n (`NativeUIModel_tvOS_v0`)
+
+- **Date:** 2026-09-15
+- **Goal:** Train the first specialized tvOS OS UI detector for Apple TV automation and navigation with TVTestRig. Target elements include Home Screen app tiles (`collectionItem`), Settings split-view items (`listRow`), system dialogs (`alert`, `cancelAction`), top navigation bars (`tabBar`), and active focus highlighting (`isFocused`).
+- **Architecture:** YOLO11n (`yolo11n.pt` pretrained base, 41-class head matching `NativeUIElementType` taxonomy).
+- **Dataset:** `NativeUITrainer/yolo_dataset_tvos` (2,000 synthetic tvOS images: 1,600 train, 200 val, 200 test) generated via headless SwiftUI `ImageRenderer` on macOS.
+- **Dry-run Status:** Completed successfully (2 epochs, batch=8, fraction=0.05, rc=0). Validated MPS execution, label caching, and evaluation pipeline.
+- **Training Config:**
+  - `epochs`: 60
+  - `batch`: 8
+  - `imgsz`: 640
+  - `rect`: True (landscape 16:9 aspect ratio preservation)
+  - `optimizer`: AdamW (lr0=0.001, lrf=0.01)
+  - `box`: 7.5, `cls`: 0.5, `dfl`: 1.5
+  - `patience`: 15
+  - `workers`: 2
+  - `device`: MPS (Apple Silicon M4)
+  - `output`: `NativeUITrainer/yolo_runs/phase6b_tvos_v0`
+- **Status:** TRAINING_COMPLETE (60/60 epochs in 1.365 hours on Apple M4 MPS, exit rc=0).
+- **Final Weights & CoreML Export:**
+  - Checkpoint: `NativeUITrainer/yolo_runs/phase6b_tvos_v0/weights/best.pt` (5.5 MB stripped).
+  - CoreML Package: `NativeUITrainer/yolo_runs/phase6b_tvos_v0/weights/best.mlpackage` (5.2 MB, FP16 half precision, NMS baked in). Export completed in 8.3s via `scripts/export_yolo_coreml.py`.
+  - Staged for packaging: `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModel_tvOS.mlpackage`.
+- **Evaluation on 200 Held-Out OS UI Test Images (`reports/eval_results_tvos_v0.json`):**
+  - **Overall mAP@0.5:** **0.995 (99.5%)**
+  - **Overall mAP@0.5:0.95:** **0.9870 (98.7%)**
+  - **Precision:** **0.9998 (99.98%)**
+  - **Recall:** **1.0000 (100.0%)**
+  - **Visual Focus Accuracy:** **100.0% (190/190 correct focus determinations)**
+  - **Per-Class AP@0.5:**
+    | Class | AP@0.5 | AP@0.5:0.95 |
+    |---|---|---|
+    | `alert` | 0.995 | 0.995 |
+    | `cancelAction` | 0.995 | 0.995 |
+    | `collectionItem` | 0.995 | 0.995 |
+    | `imageView` | 0.995 | 0.995 |
+    | `label` | 0.995 | 0.995 |
+    | `listRow` | 0.995 | 0.995 |
+    | `navigationBar` | 0.995 | 0.995 |
+    | `primaryButton` | 0.995 | 0.995 |
+    | `tabBar` | 0.995 | 0.995 |
+    | `toggle` | 0.995 | 0.915 |
+- **Quality Gates:**
+  - `overall_mAP50_ge_0_80`: **PASS** (0.995 >= 0.80)
+  - `tabBar_AP50_ge_0_80`: **PASS** (0.995 >= 0.80)
+  - `focus_accuracy_ge_0_85`: **PASS** (1.000 >= 0.85)
+- **TVTestRig Integration Validation:**
+  - `scripts/tvos_detect.swift` offline CLI verified end-to-end with Vision OCR + CoreML model on 1080p Home Screen and Settings screenshots.
+  - Successfully detected bounding boxes, fused OCR text, and resolved active focus (`state.isFocused: true`).
+  - TVTestRig artifact ingestion pipeline verified via `scripts/ingest_tvos_capture.py`.
+
+
+

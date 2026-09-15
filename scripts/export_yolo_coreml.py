@@ -21,11 +21,21 @@ Notes:
 """
 
 import argparse
+import os
 import shutil
 import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+os_env_defaults = {
+    "YOLO_CONFIG_DIR": str(PROJECT_ROOT / "NativeUITrainer" / ".ultralytics"),
+    "MPLCONFIGDIR": str(PROJECT_ROOT / "NativeUITrainer" / ".mplconfig"),
+    "TORCH_HOME": str(PROJECT_ROOT / "NativeUITrainer" / ".torch"),
+}
+for _k, _v in os_env_defaults.items():
+    os.environ[_k] = _v
+    Path(_v).mkdir(parents=True, exist_ok=True)
 
 
 def _patch_coremltools():

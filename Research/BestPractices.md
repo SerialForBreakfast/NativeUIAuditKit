@@ -738,3 +738,37 @@ A non-zero box count from a packed kitchen-sink or a toolbar *icon* does not tra
 **Correct:** If `cv2.imdecode()` returns `None` (which triggers `libpng error: PNG input buffer is incomplete`), re-read the file bytes using Python's signal-safe `open().read()`, and if `cv2.imdecode()` still fails, fall back to Pillow (`PIL.Image.open()`). Never gate the PIL fallback to just `(.avif, .heic, .heif)` extensions.
 
 **Why:** Under concurrent multiprocessing dataloading (`workers=4`) on macOS APFS, C stdio `fread()` in `np.fromfile()` can occasionally suffer interrupted or short buffer reads. Furthermore, Apple screenshots with 16-bit RGBA depth or `iDOT` chunks can cause OpenCV's bundled libpng to fail decoding. Pillow's decoder seamlessly handles these images and prevents a fatal training crash after dozens of hours of compute.
+
+---
+
+### BP-37: Confine Matplotlib and PyTorch caches to package directory for strict filesystem boundaries
+
+**Wrong:** Import `matplotlib.pyplot` or `torch` without setting cache environment variables. Matplotlib defaults to `~/.matplotlib` or `/var/folders/.../T/matplotlib-*`, and PyTorch defaults to `~/.cache/torch`. In restricted sandboxes or automated pipelines, this triggers `is not a writable directory` warnings or fatal sandbox permission rejections, violating the filesystem boundary rule.
+
+**Correct:** Explicitly configure `MPLCONFIGDIR`, `TORCH_HOME`, and `YOLO_CONFIG_DIR` at the very top of Python scripts before any heavy third-party library imports:
+```python
+os_env_defaults = {
+    "YOLO_CONFIG_DIR": str(PROJECT_ROOT / "NativeUITrainer" / ".ultralytics"),
+    "MPLCONFIGDIR": str(PROJECT_ROOT / "NativeUITrainer" / ".mplconfig"),
+    "TORCH_HOME": str(PROJECT_ROOT / "NativeUITrainer" / ".torch"),
+}
+for k, v in os_env_defaults.items():
+    os.environ[k] = v
+    Path(v).mkdir(parents=True, exist_ok=True)
+```
+
+**Why:** Guarantees 100% self-containment inside the package boundary, ensures zero user-directory pollution, and prevents sandbox access violations during headless runs.
+
+---
+
+### BP-38: Specify in-project module cache when running standalone Swift scripts
+
+**Wrong:** Run standalone Swift scripts with bare `swift scripts/myscript.swift`. The Swift interpreter attempts to write Clang precompiled module caches to `/var/folders/.../C/clang/ModuleCache/`, which errors with `Operation not permitted` under strict sandbox isolation.
+
+**Correct:** Pass `-module-cache-path .build/clang-cache` to the `swift` invocation:
+```bash
+swift -module-cache-path .build/clang-cache scripts/myscript.swift [args]
+```
+
+**Why:** Confines all compiled module caches to `.build/`, eliminating sandbox permission failures and adhering strictly to the filesystem boundary rule.
+
