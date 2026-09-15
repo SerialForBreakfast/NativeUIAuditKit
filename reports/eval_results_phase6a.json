@@ -1,0 +1,894 @@
+{
+  "model": "phase6a_r008",
+  "evalDate": "2026-09-02T10:49:30Z",
+  "split": "test (family holdout)",
+  "n_images": 2000,
+  "mAP50": 0.490919,
+  "mAP50_95": 0.348007,
+  "dsG8_map_pass": false,
+  "dsG8_class_floor_pass": true,
+  "classes_below_0_65": [],
+  "empty_classes": [
+    "statusBar",
+    "toolbar",
+    "scrollIndicator",
+    "tooltip",
+    "unknown"
+  ],
+  "perClass": [
+    {
+      "class": "actionSheet",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "activityIndicator",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "alert",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "cancelAction",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "collectionItem",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "colorWell",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "contextMenu",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "destructiveButton",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "disclosureGroup",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "dynamicIsland",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "homeIndicator",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "imageView",
+      "ap50": 0.151192,
+      "ap50_95": 0.087263,
+      "precision": 0.383371,
+      "recall": 0.149868,
+      "n": 0
+    },
+    {
+      "class": "label",
+      "ap50": 0.616861,
+      "ap50_95": 0.480663,
+      "precision": 0.582158,
+      "recall": 0.655892,
+      "n": 0
+    },
+    {
+      "class": "link",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "listRow",
+      "ap50": 4e-06,
+      "ap50_95": 1e-06,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "mapView",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "menuButton",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "navigationBar",
+      "ap50": 0.995,
+      "ap50_95": 0.939346,
+      "precision": 0.998811,
+      "recall": 1.0,
+      "n": 0
+    },
+    {
+      "class": "pageControl",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "picker",
+      "ap50": 0.211247,
+      "ap50_95": 0.021125,
+      "precision": 0.280297,
+      "recall": 0.365,
+      "n": 0
+    },
+    {
+      "class": "popover",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "primaryButton",
+      "ap50": 0.994985,
+      "ap50_95": 0.980466,
+      "precision": 0.927889,
+      "recall": 1.0,
+      "n": 0
+    },
+    {
+      "class": "progressView",
+      "ap50": 0.995,
+      "ap50_95": 0.511656,
+      "precision": 0.776686,
+      "recall": 1.0,
+      "n": 0
+    },
+    {
+      "class": "refreshControl",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "scrollIndicator",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "searchField",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "secondaryButton",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 1.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "secureField",
+      "ap50": 0.402406,
+      "ap50_95": 0.265941,
+      "precision": 0.498182,
+      "recall": 0.5,
+      "n": 0
+    },
+    {
+      "class": "segmentedControl",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "sheet",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "sidebar",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "slider",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "statusBar",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "stepperControl",
+      "ap50": 0.718321,
+      "ap50_95": 0.266745,
+      "precision": 0.49827,
+      "recall": 1.0,
+      "n": 0
+    },
+    {
+      "class": "tabBar",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "textField",
+      "ap50": 0.571182,
+      "ap50_95": 0.343987,
+      "precision": 0.673128,
+      "recall": 0.41598,
+      "n": 0
+    },
+    {
+      "class": "toggle",
+      "ap50": 0.725753,
+      "ap50_95": 0.626898,
+      "precision": 0.715121,
+      "recall": 0.761669,
+      "n": 0
+    },
+    {
+      "class": "toolbar",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "tooltip",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "unknown",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    },
+    {
+      "class": "webContent",
+      "ap50": 0.0,
+      "ap50_95": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "n": 0
+    }
+  ],
+  "small_element_ap_pt": [
+    {
+      "class": "actionSheet",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "activityIndicator",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "alert",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "cancelAction",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "collectionItem",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "colorWell",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "contextMenu",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "destructiveButton",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "disclosureGroup",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "dynamicIsland",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "homeIndicator",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "imageView",
+      "n_gt": 350,
+      "ap50": 0.072904
+    },
+    {
+      "class": "label",
+      "n_gt": 8619,
+      "ap50": 0.567411
+    },
+    {
+      "class": "link",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "listRow",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "mapView",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "menuButton",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "navigationBar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "pageControl",
+      "n_gt": 600,
+      "ap50": 0.0
+    },
+    {
+      "class": "picker",
+      "n_gt": 200,
+      "ap50": 0.186742
+    },
+    {
+      "class": "popover",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "primaryButton",
+      "n_gt": 100,
+      "ap50": 0.075358
+    },
+    {
+      "class": "progressView",
+      "n_gt": 200,
+      "ap50": 0.9999
+    },
+    {
+      "class": "refreshControl",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "scrollIndicator",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "searchField",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "secondaryButton",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "secureField",
+      "n_gt": 200,
+      "ap50": 0.507224
+    },
+    {
+      "class": "segmentedControl",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "sheet",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "sidebar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "slider",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "statusBar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "stepperControl",
+      "n_gt": 200,
+      "ap50": 0.831995
+    },
+    {
+      "class": "tabBar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "textField",
+      "n_gt": 452,
+      "ap50": 0.617227
+    },
+    {
+      "class": "toggle",
+      "n_gt": 1821,
+      "ap50": 0.669691
+    },
+    {
+      "class": "toolbar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "tooltip",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "unknown",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "webContent",
+      "n_gt": 0,
+      "ap50": 0.0
+    }
+  ],
+  "custom_full_ap_pt": [
+    {
+      "class": "actionSheet",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "activityIndicator",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "alert",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "cancelAction",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "collectionItem",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "colorWell",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "contextMenu",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "destructiveButton",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "disclosureGroup",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "dynamicIsland",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "homeIndicator",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "imageView",
+      "n_gt": 1900,
+      "ap50": 0.148965
+    },
+    {
+      "class": "label",
+      "n_gt": 9321,
+      "ap50": 0.605541
+    },
+    {
+      "class": "link",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "listRow",
+      "n_gt": 700,
+      "ap50": 9e-06
+    },
+    {
+      "class": "mapView",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "menuButton",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "navigationBar",
+      "n_gt": 800,
+      "ap50": 0.999931
+    },
+    {
+      "class": "pageControl",
+      "n_gt": 600,
+      "ap50": 0.0
+    },
+    {
+      "class": "picker",
+      "n_gt": 200,
+      "ap50": 0.186742
+    },
+    {
+      "class": "popover",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "primaryButton",
+      "n_gt": 1366,
+      "ap50": 0.999852
+    },
+    {
+      "class": "progressView",
+      "n_gt": 200,
+      "ap50": 0.9999
+    },
+    {
+      "class": "refreshControl",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "scrollIndicator",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "searchField",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "secondaryButton",
+      "n_gt": 341,
+      "ap50": 0.0
+    },
+    {
+      "class": "secureField",
+      "n_gt": 200,
+      "ap50": 0.507224
+    },
+    {
+      "class": "segmentedControl",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "sheet",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "sidebar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "slider",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "statusBar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "stepperControl",
+      "n_gt": 200,
+      "ap50": 0.831995
+    },
+    {
+      "class": "tabBar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "textField",
+      "n_gt": 500,
+      "ap50": 0.557973
+    },
+    {
+      "class": "toggle",
+      "n_gt": 1821,
+      "ap50": 0.669691
+    },
+    {
+      "class": "toolbar",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "tooltip",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "unknown",
+      "n_gt": 0,
+      "ap50": 0.0
+    },
+    {
+      "class": "webContent",
+      "n_gt": 0,
+      "ap50": 0.0
+    }
+  ],
+  "blur": {
+    "n_images": 200,
+    "non_text_probe": {
+      "navigationBar": {
+        "ap50_clear": 1.0,
+        "ap50_blur": 0.995,
+        "drop_points": 0.5,
+        "n_gt": 83
+      },
+      "tabBar": {
+        "ap50_clear": 0.0,
+        "ap50_blur": 0.0,
+        "drop_points": 0.0,
+        "n_gt": 0
+      },
+      "toggle": {
+        "ap50_clear": 0.640659,
+        "ap50_blur": 0.661299,
+        "drop_points": -2.064,
+        "n_gt": 203
+      },
+      "slider": {
+        "ap50_clear": 0.0,
+        "ap50_blur": 0.0,
+        "drop_points": 0.0,
+        "n_gt": 0
+      },
+      "alert": {
+        "ap50_clear": 0.0,
+        "ap50_blur": 0.0,
+        "drop_points": 0.0,
+        "n_gt": 0
+      }
+    },
+    "max_probe_drop_points": 0.5,
+    "nontext_mean_ap_clear": 0.479131,
+    "nontext_mean_ap_blur": 0.0,
+    "pass": true
+  },
+  "centroid_any_bias": true,
+  "per_template_overfit_flag": false,
+  "per_template": [
+    {
+      "templateFamily": "CardDetail",
+      "n_images": 200,
+      "mAP50": 0.714284
+    },
+    {
+      "templateFamily": "EmptyState",
+      "n_images": 400,
+      "mAP50": 0.539269
+    },
+    {
+      "templateFamily": "GalleryPage",
+      "n_images": 200,
+      "mAP50": 0.769869
+    },
+    {
+      "templateFamily": "MultiSectionForm",
+      "n_images": 200,
+      "mAP50": 0.703939
+    },
+    {
+      "templateFamily": "NotificationCenter",
+      "n_images": 200,
+      "mAP50": 0.204158
+    },
+    {
+      "templateFamily": "OnboardingPage",
+      "n_images": 400,
+      "mAP50": 0.408197
+    },
+    {
+      "templateFamily": "SettingsToggleDense",
+      "n_images": 200,
+      "mAP50": 0.935058
+    },
+    {
+      "templateFamily": "WizardStepFlow",
+      "n_images": 200,
+      "mAP50": 0.645945
+    }
+  ],
+  "entropy_proxy": {
+    "n": 2000,
+    "note": "Holdout-test prediction entropy by templateFamily. No unlabeled generator dump exists; 200 real-world images also missing.",
+    "top5_uncertain_families": [
+      {
+        "templateFamily": "MultiSectionForm",
+        "n": 200,
+        "mean_entropy": 2.545939
+      },
+      {
+        "templateFamily": "WizardStepFlow",
+        "n": 200,
+        "mean_entropy": 2.320937
+      },
+      {
+        "templateFamily": "OnboardingPage",
+        "n": 400,
+        "mean_entropy": 1.991855
+      },
+      {
+        "templateFamily": "CardDetail",
+        "n": 200,
+        "mean_entropy": 1.787603
+      },
+      {
+        "templateFamily": "GalleryPage",
+        "n": 200,
+        "mean_entropy": 1.740991
+      }
+    ]
+  },
+  "real_world": {
+    "n_annotated": 0,
+    "required": 200,
+    "mAP50": null,
+    "gap": "No real-world screenshot set in reports/real_world_screenshots/"
+  },
+  "device": {
+    "platform": "macOS M4 proxy",
+    "physical_iphone": false,
+    "n": 50,
+    "cold_load_s": 0.0053,
+    "inference_ms_mean": 977.1,
+    "inference_ms_p95": 1198.93,
+    "size_mb": 38.527,
+    "cold_load_pass": true,
+    "inference_pass": false,
+    "size_pass": true
+  }
+}

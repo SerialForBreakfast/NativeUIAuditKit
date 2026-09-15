@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-watch_phase6a.py — Keep Run 007 training until Ultralytics exits successfully.
+watch_phase6a.py — Keep Phase 6a training until Ultralytics exits successfully.
 
 After a power cut, last.pt is only valid at epoch boundaries (BP-30). This
 loop resumes from last.pt (or last.prev.pt) whenever train_ios_model.py is
@@ -8,11 +8,12 @@ not running, and exits 0 when training has actually finished (100 epochs,
 early-stop, or the TRAINING_COMPLETE marker).
 
 Usage (from package root, machine-awake):
-  caffeinate -dims .venv-yolo/bin/python -u scripts/watch_phase6a.py
+  caffeinate -dims .venv-yolo/bin/python -u scripts/watch_phase6a.py --name phase6a_r008
 """
 
 from __future__ import annotations
 
+import argparse
 import csv
 import fcntl
 import os
@@ -22,17 +23,28 @@ import time
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-RUN_DIR = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs" / "phase6a_r007"
+
+def parse_args():
+    p = argparse.ArgumentParser(description="Watch and auto-resume Phase 6a training.")
+    p.add_argument("--name", "--run-name", default="phase6a_r008", help="Run name in NativeUITrainer/yolo_runs")
+    p.add_argument("--log", default=None, help="Path to training log")
+    p.add_argument("--batch", type=int, default=4, help="Batch size on resume")
+    p.add_argument("--epochs", type=int, default=100, help="Target epochs")
+    return p.parse_args()
+
+args = parse_args()
+RUN_NAME = args.name
+RUN_DIR = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs" / RUN_NAME
 WEIGHTS = RUN_DIR / "weights"
 RESULTS = RUN_DIR / "results.csv"
 DONE = RUN_DIR / "TRAINING_COMPLETE"
-LOG = PROJECT_ROOT / "NativeUITrainer" / "training_6a.log"
-WATCH_LOG = PROJECT_ROOT / "NativeUITrainer" / "watch_phase6a.log"
+LOG = Path(args.log).resolve() if args.log else (PROJECT_ROOT / "NativeUITrainer" / ("training_6a8.log" if "r008" in RUN_NAME else "training_6a.log"))
+WATCH_LOG = PROJECT_ROOT / "NativeUITrainer" / f"watch_{RUN_NAME}.log"
 PYTHON = PROJECT_ROOT / ".venv-yolo" / "bin" / "python"
 TRAIN = PROJECT_ROOT / "scripts" / "train_ios_model.py"
-PIDFILE = PROJECT_ROOT / "NativeUITrainer" / "phase6a_r007.pid"
-LOCKFILE = PROJECT_ROOT / "NativeUITrainer" / "watch_phase6a.lock"
-EPOCHS_TARGET = 100
+PIDFILE = PROJECT_ROOT / "NativeUITrainer" / f"{RUN_NAME}.pid"
+LOCKFILE = PROJECT_ROOT / "NativeUITrainer" / f"watch_{RUN_NAME}.lock"
+EPOCHS_TARGET = args.epochs
 RETRY_SEC = 30
 POLL_SEC = 60
 
@@ -110,7 +122,7 @@ def ckpt_loadable(path: Path) -> bool:
             env=env,
             cwd=str(PROJECT_ROOT),
             stderr=subprocess.STDOUT,
-            timeout=120,
+            timeout=300,
         )
         return True
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
@@ -146,9 +158,9 @@ def start_train(ckpt: Path) -> subprocess.Popen:
                 "-u",
                 str(TRAIN),
                 "--name",
-                "phase6a_r007",
+                RUN_NAME,
                 "--batch",
-                "4",
+                str(args.batch),
                 "--resume",
                 str(ckpt),
             ],

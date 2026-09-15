@@ -14,9 +14,10 @@
 //   listRow        — document/item rows in the main content area
 //   label          — row labels
 //
-// NOTE on toolbar annotation: UIToolbar is detected by detectChromeFrames via the
-// UIKit hierarchy walk. The `toolbar` class key is inserted alongside `navigationBar`.
-// A `.bottomBar` ToolbarItem causes UIKit to synthesize a UIToolbar below the content.
+// NOTE on toolbar annotation: SwiftUI `.toolbar { ToolbarItemGroup(placement:
+// .bottomBar) }` did **not** produce a walkable `UIToolbar` in Run 007 (0
+// `toolbar` boxes). The bottom bar is a `.safeAreaInset` with an explicit
+// `.captureFrame(id: "toolbar_0")`.
 //
 // Layout rules (Phase 1 mandates):
 //   - Root ZStack carries .ignoresSafeArea(.all)
@@ -122,9 +123,10 @@ public struct ToolbarActionsTemplate: View {
                 }
                 .navigationTitle(config.title)
                 .navigationBarTitleDisplayMode(.inline)
-                // Bottom toolbar items — UIKit synthesizes a UIToolbar
-                .toolbar {
-                    ToolbarItemGroup(placement: .bottomBar) {
+                // Explicit bottom bar — `detectChromeFrames` never found UIToolbar
+                // for `.bottomBar` (0 `toolbar` boxes in 16,440 images).
+                .safeAreaInset(edge: .bottom) {
+                    HStack(spacing: 0) {
                         ForEach(Array(config.actions.enumerated()), id: \.offset) { idx, action in
                             Button {
                             } label: {
@@ -132,10 +134,15 @@ public struct ToolbarActionsTemplate: View {
                             }
                             .captureFrame(id: "secondaryButton_toolbar_\(idx)")
                             if idx < config.actions.count - 1 {
-                                Spacer()
+                                Spacer(minLength: 8)
                             }
                         }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity)
+                    .background(.bar)
+                    .captureFrame(id: "toolbar_0")
                 }
             }
         }

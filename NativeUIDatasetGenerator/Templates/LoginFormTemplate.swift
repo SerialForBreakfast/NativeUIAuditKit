@@ -188,6 +188,18 @@ public struct LoginFormTemplate: View {
                             .padding(.top, 12)
                     }
 
+                    // WizardStepFlow holdout "Back" was classified as cancelAction
+                    // (311/341). Match that filled secondary chrome in train.
+                    Button("Back") {}
+                        .font(.body)
+                        .frame(maxWidth: .infinity, minHeight: 50)
+                        .background(Color.secondary.opacity(0.15))
+                        .foregroundStyle(.primary)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .captureFrame(id: "secondaryButton_back")
+                        .padding(.horizontal, 20)
+                        .padding(.top, 8)
+
                     Spacer()
                 }
             }

@@ -8,7 +8,8 @@
 - [`tvOSTrainingStrategy.md`](tvOSTrainingStrategy.md) — dedicated tvOS model, TVTestRig capture, and later model-combination gates
 - [`../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md`](../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md) — feasibility ADR  
 - [`../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)  
-- [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)
+- [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)  
+- [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) — Apple Silicon training iteration efficiency ADR
 
 ---
 
@@ -537,7 +538,9 @@ h  = vn.height
 
 Same formula as `CreateMLExporter` (BP-10). Source field: `boundsVisionNormalized`.
 
-**Class coverage (known gap, documented 2026-08-23):** the iOS generator dataset has **36 of 41** taxonomy classes. Five taxonomy classes have 0 instances: `statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`. Extra generator label `tabBarItem` is **dropped** (not in the frozen taxonomy; parent `tabBar` is already labeled). Training uses frozen `category_map.json` IDs 0–40 so later generator fills do not reshuffle IDs. The DS-G8 per-class AP ≥ 0.65 gate **cannot** pass for the five empty classes until generator coverage is added.
+**Class coverage (known gap, documented 2026-08-23):** the iOS generator dataset has **36 of 41** taxonomy classes. Five taxonomy classes have 0 instances: `statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`. Extra generator label `tabBarItem` is **dropped**. Training uses frozen `category_map.json` IDs 0–40.
+
+**Holdout outcome (Run 008, 2026-09-04):** in-family val mAP@0.5 = 0.977; withheld-template **test** mAP@0.5 = **0.491** (DS-G8 fail; Run 007 was 0.358). TASK-6a-8 regen helped (+0.133 mAP) but did not recover the gate. Do not copy 41-class weights into `NativeUIAuditKitModels` until DS-G8.
 
 Default withheld families (not unique sources of rare classes): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Do **not** withhold `ColorPicker`, `MenuButton`, `iPadSidebar`, `MapOverlays`, or `HardNegative_2`.
 

@@ -26,6 +26,7 @@
 //   - Every annotated element attaches .captureFrame(id:)
 
 import SwiftUI
+import UIKit
 
 // MARK: - KitchenSinkConfig
 
@@ -278,19 +279,21 @@ public struct KitchenSinkTemplate: View {
                                 ColorPicker("", selection: .constant(.blue))
                                     .labelsHidden()
                                     .captureFrame(id: "colorWell_0")
-
-                                // pageControl approximation — dots row
-                                HStack(spacing: 6) {
-                                    ForEach(0..<3, id: \.self) { i in
-                                        Circle()
-                                            .fill(i == config.segmentIndex % 3 ? Color.primary : Color.secondary.opacity(0.4))
-                                            .frame(width: 7, height: 7)
-                                    }
-                                }
-                                .captureFrame(id: "pageControl_0")
                             }
                             .padding(.horizontal, 16)
                             .padding(.top, 6)
+
+                            // Isolated UIPageControl at onboarding scale — packed 7pt
+                            // circles here were the only SwiftUI pageControl in train,
+                            // and holdout Onboarding/Gallery dots were missed (97.5%).
+                            NativeUIPageControlView(
+                                numberOfPages: 3 + (config.segmentIndex % 3),
+                                currentPage: config.segmentIndex % 3
+                            )
+                            .frame(height: 28)
+                            .frame(maxWidth: .infinity)
+                            .captureFrame(id: "pageControl_0")
+                            .padding(.top, 10)
 
                             divider()
 

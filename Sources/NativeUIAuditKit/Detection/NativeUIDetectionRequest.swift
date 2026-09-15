@@ -18,6 +18,7 @@ import CoreGraphics
 import CoreML
 import Foundation
 import NativeUIAuditKitModels
+import Vision
 
 // MARK: - Configuration
 
@@ -62,9 +63,70 @@ public struct NativeUIDetectionRequest: Sendable {
         let kept = Self.nms(raw, iouThreshold: nmsIoU)
         let w = screenshot.width
         let h = screenshot.height
-        return kept
+        let rawObservations = kept
             .sorted { $0.confidence > $1.confidence }
             .compactMap { Self.toObservation($0, imageWidth: w, imageHeight: h) }
+
+        var observations = rawObservations
+
+        // 1. Vision OCR text fusion (TASK-7-1 & TASK-7-2)
+        if configuration.includesTextRecognition {
+            let ocrRegions = (try? await Self.recognizeText(in: screenshot)) ?? []
+            observations = ObservationMerger.associate(
+                elements: observations,
+                ocrRegions: ocrRegions,
+                sidecar: sidecar
+            )
+        } else if let sidecar = sidecar {
+            observations = ObservationMerger.associate(
+                elements: observations,
+                ocrRegions: [],
+                sidecar: sidecar
+            )
+        }
+
+        // 2. Audit rules evaluation (TASK-7-3)
+        let imageSize = CGSize(width: w, height: h)
+        observations = AuditRules.evaluate(
+            observations: observations,
+            imageSize: imageSize,
+            scale: sidecar?.scale
+        )
+
+        return observations
+    }
+
+    /// Runs Apple Vision OCR (`VNRecognizeTextRequest`) on the screenshot off the MainActor.
+    public static func recognizeText(in screenshot: CGImage) async throws -> [RecognizedTextRegion] {
+        try await Task.detached(priority: .userInitiated) {
+            let request = VNRecognizeTextRequest()
+            request.recognitionLevel = .accurate
+            request.usesLanguageCorrection = true
+            request.recognitionLanguages = ["en-US", "en-GB"]
+
+            let handler = VNImageRequestHandler(cgImage: screenshot, options: [:])
+            try handler.perform([request])
+
+            guard let results = request.results else {
+                return []
+            }
+
+            return results.compactMap { obs in
+                guard let topCandidate = obs.topCandidates(1).first else { return nil }
+                let box = obs.boundingBox // Vision normalized coords (bottom-left origin [0, 1])
+                let rect = NativeUIRect(
+                    x: Double(box.origin.x),
+                    y: Double(box.origin.y),
+                    width: Double(box.size.width),
+                    height: Double(box.size.height)
+                )
+                return RecognizedTextRegion(
+                    text: topCandidate.string,
+                    boundingBox: rect,
+                    confidence: topCandidate.confidence
+                )
+            }
+        }.value
     }
 }
 

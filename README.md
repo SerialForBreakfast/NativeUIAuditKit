@@ -254,6 +254,9 @@ NativeUIAuditKit/
 │       ├── LoginFormTemplate.swift
 │       ├── SettingsListTemplate.swift     ← + SettingsToggleDenseTemplate, SettingsDisclosureTemplate
 │       ├── MultiSectionFormTemplate.swift
+│       ├── AccountProfileFormTemplate.swift  ← train Form-in-List clone (TASK-6a-8)
+│       ├── ChromeCoverageTemplate.swift      ← statusBar, scrollIndicator, tooltip, unknown
+│       ├── NativeUIPageControlView.swift     ← shared UIPageControl + SwiftUI dots
 │       ├── SheetTemplate.swift
 │       ├── SliderPanelTemplate.swift
 │       ├── SegmentedFilterTemplate.swift
@@ -350,8 +353,8 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **9: ScreenAuditKit Integration** | ⬜ | Drop-in protocol; contract fields; CLI flag | All ScreenAuditKit tests pass |
 
 **Immediate next steps:**
-1. Phase 6a is underway (Run 007) — YOLO11m, family-holdout split, native JSON → YOLO export. Five taxonomy classes have 0 iOS instances (`statusBar`, `toolbar`, `scrollIndicator`, `tooltip`, `unknown`); DS-G8 cannot fully pass until those are generated.
-2. After Run 007: CoreML export (TASK-6a-4), quantization bench (TASK-6a-5), then the full 41-class eval (TASK-6a-7).
+1. Phase 6a Run 007 trained (val mAP@0.5 = 0.981) but **family-holdout test mAP@0.5 = 0.358**. DS-G8 fails. Five taxonomy classes still have 0 iOS instances; nine holdout-present classes are below AP 0.65.
+2. NMS FP16 CoreML is 38.5 MB (skip distill). INT8 mlprogram is 19.5 MB. Do not copy 41-class weights into `NativeUIAuditKitModels` until holdout recovers.
 
 ---
 

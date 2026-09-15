@@ -225,6 +225,14 @@ final class GenerateDatasetTests: XCTestCase {
         case "LoginForm":
             let formConfig = LoginFormConfig.make(seed: seed, corpus: &corpus)
             return try await ScreenshotCapture.capture(LoginFormTemplate(config: formConfig), config: config)
+        case "KitchenSink":
+            // Tall canvas so packed controls are on-screen (KitchenSinkValidationTest).
+            let ksConfig = KitchenSinkConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(
+                KitchenSinkTemplate(config: ksConfig),
+                windowSize: CGSize(width: 393, height: 1100),
+                config: config
+            )
         case "SettingsList":
             let listConfig = SettingsListConfig.make(seed: seed, corpus: &corpus, hasHomeIndicator: config.osProfile.hasHomeIndicator)
             return try await ScreenshotCapture.capture(SettingsListTemplate(config: listConfig), config: config)
@@ -333,6 +341,12 @@ final class GenerateDatasetTests: XCTestCase {
         case "SettingsToggleDense":
             let stdConfig = SettingsToggleDenseConfig.make(seed: seed, corpus: &corpus)
             return try await ScreenshotCapture.capture(SettingsToggleDenseTemplate(config: stdConfig), config: config)
+        case "AccountProfileForm":
+            let apfConfig = AccountProfileFormConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(AccountProfileFormTemplate(config: apfConfig), config: config)
+        case "ChromeCoverage":
+            let ccConfig = ChromeCoverageConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ChromeCoverageTemplate(config: ccConfig), config: config)
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
         }
@@ -627,7 +641,7 @@ final class GenerateDatasetTests: XCTestCase {
     }
 
     /// Generates 200 toolbar actions images (seeds 25401–25600).
-    /// Covers bottom UIToolbar auto-detected alongside navigationBar.
+    /// Bottom bar is an explicit `toolbar_0` capture (UIToolbar walk produced 0 boxes).
     func testGenerateToolbarActionsImages() async throws {
         try await generateImages(templateFamily: "ToolbarActions", count: 200, startSeed: 25401)
     }
@@ -666,6 +680,24 @@ final class GenerateDatasetTests: XCTestCase {
     /// 6–12 toggles per screen with disabled variants — maximises toggle class instances.
     func testGenerateSettingsToggleDenseImages() async throws {
         try await generateImages(templateFamily: "SettingsToggleDense", count: 200, startSeed: 26601)
+    }
+
+    /// Generates 200 Form-in-List profile images (seeds 27201–27400).
+    /// Train clone of withheld MultiSectionForm chrome (textField/picker/secureField as Form rows).
+    func testGenerateAccountProfileFormImages() async throws {
+        try await generateImages(templateFamily: "AccountProfileForm", count: 200, startSeed: 27201)
+    }
+
+    /// Generates 200 chrome-coverage images (seeds 27401–27600).
+    /// Fills empty taxonomy classes: statusBar, scrollIndicator, tooltip, unknown.
+    func testGenerateChromeCoverageImages() async throws {
+        try await generateImages(templateFamily: "ChromeCoverage", count: 200, startSeed: 27401)
+    }
+
+    /// Generates 200 KitchenSink images (seeds 27601–27800).
+    /// Isolated `UIPageControl` in train (holdout Onboarding/Gallery dots were 97.5% miss).
+    func testGenerateKitchenSinkImages() async throws {
+        try await generateImages(templateFamily: "KitchenSink", count: 200, startSeed: 27601)
     }
 
     // MARK: - Run 005: Hard-negative templates for textField confusion
@@ -1088,7 +1120,7 @@ enum GenerateDatasetError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .unknownTemplateFamily(let family):
-            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, UIKitToggleForm, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity, ColorPicker, MenuButton, LinkRichText, SliderPanel, SegmentedFilter, CardDetail, MultiSectionForm, ToolbarActions, WizardStepFlow, NotificationCenter, GalleryPage, iPadSidebar, AlertWithTextField, SettingsToggleDense, UIKitToggleForm. A11y variants use the same family names."
+            return "Unknown template family '\(family)'. Expected: LoginForm, SettingsList, Alert, UIKitForm, UIKitList, UIKitControls, UIKitToggleForm, TruncatedLabel, ClippedContent, OverlappingControls, SmallHitTarget, DynamicTypeOverflow, RTLMirroringFailure, OffScreenElement, OccludedElement, HardNegative_1/2/3, TabViewNavigation, Sheet, SearchResults, FormValidation, EmptyState, LoadingSkeleton, MediaCardGrid, OnboardingPage, PickerDateEntry, ActionSheet, Popover, RTLMirror, LiquidGlassNav, LiquidGlassTab, SettingsDisclosure, RefreshControl, ContextMenu, MapOverlays, Stepper, ProgressActivity, ColorPicker, MenuButton, LinkRichText, SliderPanel, SegmentedFilter, CardDetail, MultiSectionForm, ToolbarActions, WizardStepFlow, NotificationCenter, GalleryPage, iPadSidebar, AlertWithTextField, SettingsToggleDense, AccountProfileForm, ChromeCoverage, KitchenSink, UIKitToggleForm. A11y variants use the same family names."
         }
     }
 }

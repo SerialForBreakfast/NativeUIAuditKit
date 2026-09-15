@@ -1,0 +1,12 @@
+{
+  "batch_images": 1800,
+  "toolbar": 200,
+  "statusBar": 200,
+  "scrollIndicator": 200,
+  "tooltip": 200,
+  "unknown": 200,
+  "pageControl_train_est": 1560,
+  "train_txt": 11984,
+  "val_txt": 3056,
+  "test_txt": 2000
+}
