@@ -61,10 +61,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Export tvOS annotations to YOLO dataset")
     parser.add_argument("--input", type=Path, default=DEFAULT_IN, help="Input directory containing PNGs and JSONs")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUT, help="Output YOLO dataset directory")
+    parser.add_argument("--clean", action="store_true", help="Clean destination images and labels before exporting")
     args = parser.parse_args()
 
     name_to_id, names = load_category_map(CATEGORY_MAP)
     out_dir = args.output
+    if args.clean and out_dir.exists():
+        for sub in ["images", "labels"]:
+            sub_path = out_dir / sub
+            if sub_path.exists():
+                shutil.rmtree(sub_path)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     images_dir = out_dir / "images"

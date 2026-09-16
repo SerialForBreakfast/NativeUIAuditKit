@@ -823,5 +823,38 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - Successfully detected bounding boxes, fused OCR text, and resolved active focus (`state.isFocused: true`).
   - TVTestRig artifact ingestion pipeline verified via `scripts/ingest_tvos_capture.py`.
 
+---
+
+## Run 011 — Phase 6b-E: Exhaustive tvOS UI Dataset Generation & Dry-Run (2026-09-15)
+
+- **Date:** 2026-09-15
+- **Goal:** Expand synthetic tvOS training data beyond basic Home and Settings screens to achieve exhaustive coverage across all native tvOS UI surfaces: all menus, Control Center, multi-column settings navigation, AVKit media playback, SharePlay, on-screen keyboards, Siri overlays, and system prompts.
+- **Templates Added:** 10 new parameterised templates in `NativeUIDatasetGenerator/Templates/tvOS/` and integrated into `scripts/generate_tvos_dataset.swift`:
+  1. `tvOSContextMenuTemplate`: Long-press action popups with primary, secondary, and destructive buttons.
+  2. `tvOSSidebarMenuTemplate`: Split navigation sidebars with search fields and content poster grids.
+  3. `tvOSTopShelfMenuTemplate`: Pinned hero banners, trailer autoplay overlay, Watch Now and Trailer buttons.
+  4. `tvOSControlCenterTemplate`: Slide-out Control Center drawer, user profile switcher, volume slider, DND toggle, HomeKit scenes.
+  5. `tvOSSplitSettingsTemplate`: Deep settings hierarchy, breadcrumb navigationBar, segmented controls, steppers, and list rows.
+  6. `tvOSAVKitPlaybackTemplate`: Full video transport chrome, timeline scrubber slider, elapsed/remaining time labels, skip intro button.
+  7. `tvOSAudioSubtitlesTemplate`: Audio and subtitles popover modal with language checkmarks and accessibility dialogue toggles.
+  8. `tvOSSharePlayTemplate`: Floating SharePlay overlay card with participant speaking halos and group controls.
+  9. `tvOSKeyboardTemplate`: On-screen character grid keyboard, searchField, insertion cursor, dictation and space buttons.
+  10. `tvOSSiriOverlayTemplate`: Floating Siri card, transcribed speech, Siri orb glow, and weather forecast result cards.
+- **Dataset Generation:**
+  - Invocation: `swift scripts/generate_tvos_dataset.swift --count 3000 --output dataset/tvos_dataset`
+  - Generation time: 92.5 seconds (32.4 fps) on Apple M4.
+  - Dataset size: 3,000 images at 1920×1080 (200 per family across all 15 families; 2,400 train, 300 val, 300 test).
+  - Sidecar format: Schema v1.0 JSON with exact pixel bounds and Vision normalized bounds.
+- **COCO/YOLO Export:**
+  - Invocation: `.venv-yolo/bin/python scripts/export_tvos_coco.py --input dataset/tvos_dataset --output NativeUITrainer/yolo_dataset_tvos --clean`
+  - Output: 3,000 images exported to `NativeUITrainer/yolo_dataset_tvos/` with `dataset.yaml` (41 classes).
+  - Instance count: 39,520 training instances across 21 active tvOS classes (compared to only 10 classes with instances in Run 010).
+- **Dry-Run Training Pass:**
+  - Invocation: `.venv-yolo/bin/python scripts/train_tvos_model.py --dry-run`
+  - Configuration: YOLO11n, 2 epochs, batch=8, imgsz=640, device=MPS.
+  - Outcome: Completed in 0.010 hours (exit rc=0). Validated MPS training loop, loss computation, weight stripping, and validation pipeline.
+- **Action Taken:** Ready for full production training run (`train_tvos_model.py --epochs 100`) to produce `NativeUIModel_tvOS_v2.0`.
+
+
 
 

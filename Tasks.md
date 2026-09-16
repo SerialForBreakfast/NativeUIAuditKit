@@ -2006,6 +2006,99 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
+## Phase 6b-E: Exhaustive tvOS UI Element Coverage & Retraining
+
+*Goal: Expand tvOS UI detection beyond basic Home Screen and Settings to achieve exhaustive coverage across all native tvOS UI surfaces: all menus, Control Center, multi-column settings navigation, AVKit media playback, SharePlay, on-screen keyboards, Siri overlays, and system prompts.*
+
+**Requires:** Phase 6b-WP1 complete (Trustworthy result contract in place).  
+**Blocks:** Full production qualification in TVTestRig and unconstrained Apple TV automation.
+
+---
+
+#### TASK-6b-E1: All Menus & Contextual Overlays ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/tvOSContextMenuTemplate.swift`, `NativeUIDatasetGenerator/Templates/tvOS/tvOSTopShelfMenuTemplate.swift`, `NativeUIDatasetGenerator/Templates/tvOS/tvOSSidebarMenuTemplate.swift`  
+**Scope:**
+- [x] Contextual Pop-up Menus: Long-press action menus on movie/app tiles (`contextMenu`, `primaryButton`, `secondaryButton`, `destructiveButton`): Play Next, Mark Watched, Remove, Share, Delete.
+- [x] Top Shelf Dynamic Menus: Pinned hero banners, trailer autoplay overlay, and action buttons (`collectionItem`, `label`, `primaryButton`, `secondaryButton`).
+- [x] Split-Screen Navigation Sidebars: Slide-out menu navigation (e.g. TV app / streaming apps) with active selection indicators (`sidebar`, `listRow`, `searchField`, `collectionItem`).
+- [x] Filter Bars & Segmented Chips: Category selectors and sort chips (`segmentedControl`, `picker`).
+- [x] Annotations capture both expanded/collapsed states and focused menu item pills.
+
+---
+
+#### TASK-6b-E2: Control Center & System Panels ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/tvOSControlCenterTemplate.swift`  
+**Scope:**
+- [x] Control Center slide-in panel (`sidebar`, `popover`) docked to right screen edge.
+- [x] User Profile Switcher: Multiple user avatar tiles and active profile indicator (`collectionItem`, `label`).
+- [x] Audio Output & Volume: Audio destination selector, volume slider (`slider`, `listRow`, `primaryButton`).
+- [x] HomeKit Scene Grid: Scene execution pills (`collectionItem`, `imageView`, `label`).
+- [x] Sleep & Power Controls: Sleep Now, Do Not Disturb restriction toggles (`cancelAction`, `toggle`, `secondaryButton`).
+- [x] Connectivity Status: Wi-Fi status and toggle controls (`secondaryButton`, `label`, `imageView`).
+
+---
+
+#### TASK-6b-E3: Advanced Settings Navigation & System Cards ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/tvOSSplitSettingsTemplate.swift`  
+**Scope:**
+- [x] Multi-Column Navigation Split Views: Left master navigation with right detail pane and submenus (`navigationBar`, `secondaryButton`, `listRow`, `toggle`, `label`).
+- [x] Deep Settings Hierarchies: Video and Audio format selectors, Accounts & Profiles, Remotes & Devices, Network setup.
+- [x] Stepper and Segmented Controls: Resolution selection, Match Content toggle, Audio Sync Delay stepper (`stepperControl`, `segmentedControl`, `toggle`, `listRow`).
+- [x] Explanatory footer text and setting descriptions (`label`).
+
+---
+
+#### TASK-6b-E4: AVKit & Media Playback UI Elements ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/tvOSAVKitPlaybackTemplate.swift`, `NativeUIDatasetGenerator/Templates/tvOS/tvOSAudioSubtitlesTemplate.swift`  
+**Scope:**
+- [x] Full Transport Controls & Scrubber: Timeline progress bar, elapsed/remaining time labels, and interactive scrubber thumb (`slider`, `progressView`, `label`).
+- [x] Playback Actions: Play, Pause, 10s Skip Forward, 10s Skip Backward (`primaryButton`, `secondaryButton`).
+- [x] Audio & Subtitles Sheet: Modal sheet for audio language selection, CC/SDH subtitles, Dialogue Boost, and Reduce Loud Sounds (`popover`, `listRow`, `toggle`, `segmentedControl`).
+- [x] Interactive Playback Overlays: "Skip Intro" floating pill button (`secondaryButton`).
+- [x] Title metadata & rating bug overlays (`label`, `imageView`).
+
+---
+
+#### TASK-6b-E5: SharePlay & Collaborative Experiences ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/tvOSSharePlayTemplate.swift`  
+**Scope:**
+- [x] Floating SharePlay overlay sheet card (`sheet`).
+- [x] Participant Video / Avatar Grid: Avatars with speaking ring indicator (`collectionItem`, `label`, `imageView`).
+- [x] Synchronized Playback HUD: Synced playback indicator and call duration (`label`, `imageView`).
+- [x] Controls: "Play Together" (`primaryButton`), "Leave" (`cancelAction`), "End for Everyone" (`destructiveButton`), "Mute" (`secondaryButton`).
+
+---
+
+#### TASK-6b-E6: tvOS OS-Specific Chrome & Interaction Elements ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/tvOSKeyboardTemplate.swift`, `NativeUIDatasetGenerator/Templates/tvOS/tvOSSiriOverlayTemplate.swift`  
+**Scope:**
+- [x] Siri & Dictation Interface: Floating card (`popover`), transcribed speech, Siri orb glow, and result forecast cards (`imageView`, `label`, `collectionItem`, `primaryButton`).
+- [x] On-Screen Keyboards:
+  - Multi-row alphanumeric character key grid (`collectionItem`, `label`).
+  - Search / input field with insertion cursor and clear button (`searchField`, `textField`, `cancelAction`).
+  - Dictation microphone, Space, and Delete keys (`secondaryButton`, `primaryButton`).
+
+---
+
+#### TASK-6b-E7: Synthetic Dataset Generation & 41-Class tvOS Retraining (`NativeUIModel_tvOS_v2.0`) 🟡
+
+**Files:** `scripts/generate_tvos_dataset.swift`, `scripts/export_tvos_coco.py`, `scripts/train_tvos_model.py`  
+**Scope:**
+- [x] Update generator script with all 15 template families and CLI parameters (`--count`, `--output`, `--sample`).
+- [x] Render 3,000 synthetic 1920×1080 screenshots with exact Schema v1.0 JSON sidecars (200 per family).
+- [x] Export to YOLO format with class map validation (39,520 training instances across 21 classes).
+- [x] Verify dry-run training pass on Apple Silicon MPS (2 epochs completed, 0 errors).
+- [ ] Execute full production training run (`train_tvos_model.py --epochs 100`) to produce `NativeUIModel_tvOS_v2.0`.
+- [ ] Export CoreML `.mlmodelc` artifact to `NativeUIAuditKitModels/Resources/NativeUIModel_tvOS.mlmodelc` and update model manifest.
+
+---
+
 ## Phase 6b-R: Real Apple TV Capture and Qualification
 
 *Goal: Qualify OS-navigation and accessibility visual classes using real Apple TV screenshots captured by TVTestRig.*
