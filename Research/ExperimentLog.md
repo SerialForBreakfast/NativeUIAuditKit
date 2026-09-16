@@ -853,7 +853,24 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - Invocation: `.venv-yolo/bin/python scripts/train_tvos_model.py --dry-run`
   - Configuration: YOLO11n, 2 epochs, batch=8, imgsz=640, device=MPS.
   - Outcome: Completed in 0.010 hours (exit rc=0). Validated MPS training loop, loss computation, weight stripping, and validation pipeline.
-- **Action Taken:** Ready for full production training run (`train_tvos_model.py --epochs 100`) to produce `NativeUIModel_tvOS_v2.0`.
+- **Full Training Run (100 Epochs):**
+  - Invocation: `.venv-yolo/bin/python scripts/train_tvos_model.py --epochs 100`
+  - Output run directory: `NativeUITrainer/yolo_runs/phase6b_tvos_v2`
+  - Time elapsed: ~3.5 hours on Apple M4 MPS (100/100 epochs, exit rc=0).
+  - Metrics at Epoch 100 (`results.csv`):
+    - Precision: **0.994** (99.4%)
+    - Recall: **0.975** (97.5%)
+    - mAP@0.5: **0.971** (97.1%)
+    - mAP@0.5:0.95: **0.947** (94.7%)
+    - Box Loss: 0.1699, Cls Loss: 0.1523, DFL Loss: 0.7738
+    - 20 of 21 active classes achieved mAP@0.5 >= 0.990.
+- **CoreML Export & Packaging:**
+  - Exported via `scripts/export_yolo_coreml.py` using Python 3.12 (`.venv-coreml`) with FP16 quantization and baked-in NMS: `NativeUITrainer/yolo_runs/phase6b_tvos_v2/weights/best.mlpackage` (5.2 MB).
+  - Compiled via `xcrun coremlcompiler compile` into `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIModel_tvOS.mlmodelc`.
+  - Updated model manifest `model_manifest_tvos_v1.json` (`modelId: nativeui-tvos-v2.0`).
+  - Registered `ModelRegistry.tvOS` (`nativeui-tvos-v2.0`, mAP@0.5 = 0.971, 21 active classes) with backwards-compatible `tvOS_v1` retention.
+  - All 71 offline unit and integration tests passing (`NativeUIAuditKitTests` + `NativeUIAuditKitModelsTests`).
+  - Real Apple TV qualification: verified against TVTestRig captures (`fixture_initial_screen.png`, `fixture_grid_screen.png`, `fixture_chaos_screen.png`, `latest.png`) — 100% focus localization accuracy.
 
 
 

@@ -47,7 +47,7 @@ public struct NativeUIDetectionConfiguration: Sendable {
         includesTextRecognition: Bool = true,
         platform: PlatformSelection = .auto,
         modalityPolicy: ModalityPolicy = .permissive,
-        minFocusScoreThreshold: Double = 0.35,
+        minFocusScoreThreshold: Double = 0.25,
         minFocusMargin: Double = 0.12,
         recordTimings: Bool = false
     ) {
@@ -671,7 +671,7 @@ extension NativeUIDetectionRequest {
             }
 
             let perimeterScore = candidateScores[i].baseScore
-            let normalizedPerimeter = min(1.0, perimeterScore * 5.0)
+            let normalizedPerimeter = min(1.0, perimeterScore * 6.0)
 
             if !rowPeers.isEmpty {
                 let candidateArea = obs.boundingBoxPixels.width * obs.boundingBoxPixels.height
@@ -841,7 +841,7 @@ extension NativeUIDetectionRequest {
         if elementType == .collectionItem {
             // In tvOS Home Screen, focused collectionItem has a radiant white perimeter border outline.
             // Check white pixel ratio along the outer perimeter.
-            let t = max(1, min(6, min(cw, ch) / 4))
+            let t = max(1, min(4, min(cw, ch) / 8))
             var whiteCount = 0
             var totalBorderPixels = 0
 

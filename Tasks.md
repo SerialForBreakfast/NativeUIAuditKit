@@ -2086,7 +2086,7 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
-#### TASK-6b-E7: Synthetic Dataset Generation & 41-Class tvOS Retraining (`NativeUIModel_tvOS_v2.0`) 🟡
+#### TASK-6b-E7: Synthetic Dataset Generation & 41-Class tvOS Retraining (`NativeUIModel_tvOS_v2.0`) ✅
 
 **Files:** `scripts/generate_tvos_dataset.swift`, `scripts/export_tvos_coco.py`, `scripts/train_tvos_model.py`  
 **Scope:**
@@ -2094,8 +2094,8 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 - [x] Render 3,000 synthetic 1920×1080 screenshots with exact Schema v1.0 JSON sidecars (200 per family).
 - [x] Export to YOLO format with class map validation (39,520 training instances across 21 classes).
 - [x] Verify dry-run training pass on Apple Silicon MPS (2 epochs completed, 0 errors).
-- [ ] Execute full production training run (`train_tvos_model.py --epochs 100`) to produce `NativeUIModel_tvOS_v2.0`.
-- [ ] Export CoreML `.mlmodelc` artifact to `NativeUIAuditKitModels/Resources/NativeUIModel_tvOS.mlmodelc` and update model manifest.
+- [x] Execute full production training run (`train_tvos_model.py --epochs 100`) to produce `NativeUIModel_tvOS_v2.0` (100/100 epochs, Precision: 0.994, Recall: 0.975, mAP@0.5: 0.971).
+- [x] Export CoreML `.mlmodelc` artifact to `NativeUIAuditKitModels/Resources/NativeUIModel_tvOS.mlmodelc` and update model manifest (`model_manifest_tvos_v1.json` updated to `nativeui-tvos-v2.0`). All 71 offline tests passing.
 
 ---
 

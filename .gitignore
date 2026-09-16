@@ -67,6 +67,11 @@ fastlane/test_output
 .venv-yolo/
 .venv-coreml/
 
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
 # YOLO model weights (downloaded on demand)
 scripts/yolo11n.pt
 scripts/yolo11s.pt

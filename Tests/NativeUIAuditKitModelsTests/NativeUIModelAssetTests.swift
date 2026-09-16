@@ -49,15 +49,19 @@ final class NativeUIModelAssetTests: XCTestCase {
         XCTAssertEqual(metadata.classLabels[4], "collectionItem")
         XCTAssertEqual(metadata.classLabels[12], "label")
         XCTAssertEqual(metadata.classLabels[34], "tabBar")
-        XCTAssertEqual(metadata.mAP50, 0.9950)
+        XCTAssertEqual(metadata.mAP50, 0.9712, accuracy: 0.0001)
 
-        // The descriptor lists the 10 classes with actual training instances
-        XCTAssertEqual(ModelRegistry.tvOS.trainedClasses.count, 10)
+        // The descriptor lists the 21 classes with actual training instances
+        XCTAssertEqual(ModelRegistry.tvOS.trainedClasses.count, 21)
+        XCTAssertEqual(ModelRegistry.tvOS_v1.trainedClasses.count, 10)
     }
 
     func testLoadModelWithDescriptor() async throws {
         let tvOSModel = try await NativeUIModelAsset.loadModel(descriptor: ModelRegistry.tvOS)
         XCTAssertNotNil(tvOSModel)
+
+        let tvOSv1Model = try await NativeUIModelAsset.loadModel(descriptor: ModelRegistry.tvOS_v1)
+        XCTAssertNotNil(tvOSv1Model)
 
         let iOSModel = try await NativeUIModelAsset.loadModel(descriptor: ModelRegistry.iOS)
         XCTAssertNotNil(iOSModel)
@@ -65,7 +69,7 @@ final class NativeUIModelAssetTests: XCTestCase {
 
     func testManifestsLoadAndValidate() {
         let tvOS = NativeUIModelAsset.tvOSManifest
-        XCTAssertEqual(tvOS.modelId, "nativeui-tvos-v1.0")
+        XCTAssertEqual(tvOS.modelId, "nativeui-tvos-v2.0")
         XCTAssertEqual(tvOS.inputWidth, 640)
         XCTAssertEqual(tvOS.inputHeight, 640)
         XCTAssertEqual(tvOS.tensorChannelMapping.count, 80)
