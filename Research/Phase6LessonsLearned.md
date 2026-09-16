@@ -405,3 +405,42 @@ If `VNCoreMLRequest` returns 0 detections:
 6. **Simulator state sweep**: run at least 4 separate generation sessions with different clock overrides
 7. **Spot-check**: manually verify 5 annotations per class in the training set before committing to a 10K-iteration run
 8. **Validate manifest**: ensure `manifest.json` has `datasetVersion` key before training so the training_config.json records the real version
+
+---
+
+## 13. tvOS Focus Resolution and Tensor Contracts (NUA-12 Empirical Findings)
+
+Empirical qualification by TVTestRig on physical Apple TV screenshots (2026-09-15) revealed critical insights regarding CoreML tensor decoding and visual focus determination on tvOS.
+
+### 13.1 Observed vs. Declared Tensor Contract (The 80-Channel Problem)
+
+When inspecting the compiled CoreML model (`NativeUIModel_tvOS.mlmodelc`), the output confidence tensor shape is `[N, 80]` with strides `[80, 1]`, despite our taxonomy containing 41 classes:
+- **Channels 0–40**: Explicitly map to the 41 taxonomy classes from `category_map.json` (indices 0=`actionSheet` through 40=`webContent`).
+- **Channels 41–79**: Contain literal numeric padding strings (`"41"` ... `"79"`), an artifact of Ultralytics YOLO11's default 80-class COCO architecture allocation when exported without explicit head pruning.
+- **The Pitfall**: Truncating output channels naively with `min(classLabels.count, nTotal)` or trusting undocumented tensor strides caused silent index corruption (e.g. class 4 decoded as `label` instead of `collectionItem`).
+- **Resolution**: Bundled explicit `ModelManifest` (`model_manifest_tvos_v1.json`) declaring exact channel-to-class assignments and validating models on load via `ModelManifestValidator`.
+
+### 13.2 Confidence Threshold Reconciliation
+
+- Swift `ModelRegistry.tvOSMetadata` originally declared `defaultConfidenceThreshold = 0.30`.
+- The compiled model's `metadata.json` explicitly declared `"Confidence threshold": "0.25"`.
+- **Lesson**: Swift descriptors and compiled model metadata must be kept strictly reconciled to avoid subtle discrepancy between callers using the Swift API vs. callers inspecting the CoreML artifact directly. Reconciled to `0.25`.
+
+### 13.3 Empirical Breakdown of tvOS Focus Failures
+
+TVTestRig box-level evaluation across physical device captures demonstrated two distinct failure classes:
+
+#### Failure Class 1 — Selection Failure on Valid Detection (`home`, `home-settings`)
+- **Phenomenon**: The YOLO11 detector successfully detected the true focused element with high precision and confidence (e.g., Paramount+ tile on `home`: conf = 0.9897, IoU = 0.8989; Settings tile on `home-settings`: area = 53,354, $1.519\times$ area of unexpanded peers). However, the focus resolver picked the wrong element.
+- **Home Root Cause (Cross-Category Hijacking)**: A `listRow` was detected at the extreme bottom bezel `[381, 1009, 1157, 71]` (touching $y=1080$ on a 1080p screen). Because raw brightness scoring compared apples to oranges (listRow interior luminance vs. collectionItem border pixel ratio), the bright bottom row stole focus from the true focused grid tile.
+- **Home Fix**:
+  1. *Safe Area Bezel Exclusion*: In tvOS, the system focus engine automatically scrolls the viewport to position the active focused element comfortably within the safe area. Elements touching the outer $\le 1.5\%$ bezel are background chrome or off-screen, and are penalized.
+  2. *Grid Precedence*: When `collectionItem` elements exhibit confirmed geometric expansion ($scaleRatio \ge 1.15$), the screen's active focus domain is a content grid; secondary chrome (`listRow`, `tabBar`) is suppressed from usurping focus.
+- **Home-Settings Root Cause (Perimeter-Only Heuristic)**: Unexpanded peer tiles with bright poster artwork produced higher white-pixel border scores than dark-themed icons.
+- **Home-Settings Fix**: *Peer-Relative Geometry Heuristic*. Measuring candidate area against the median row peer confirmed that the Settings tile was expanded by $1.20\times$ linear scale ($1.52\times$ area). Factoring physical parallax expansion eliminates false positives from bright unexpanded artwork.
+
+#### Failure Class 2 — Localization Failure on Novel Fixtures (`fixture-record`, `fixture-tone`)
+- **Phenomenon**: The detector failed to generate candidate bounding boxes on custom test fixtures (best IoUs were 0.44 and 0.15 on non-standard card designs).
+- **Root Cause**: Extreme domain shift between synthetic training screens (stock Home Screen and Settings layouts) and TVTestRig's calibration fixture cards.
+- **Mitigation (Focus Abstention Policy)**: Rather than forcing a winning focus prediction when detector candidates are missing or heuristic scores fall below threshold (`minScoreThreshold = 0.35`, `minMargin = 0.12`), the system explicitly leaves `isFocused: nil` and flags `isAmbiguousFocus`. This prevents false confidence from causing misdirected navigation in test rigs.
+

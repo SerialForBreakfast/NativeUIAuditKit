@@ -40,6 +40,7 @@ public struct NativeUIDetectionConfiguration: Sendable {
     public var modalityPolicy: ModalityPolicy
     public var minFocusScoreThreshold: Double
     public var minFocusMargin: Double
+    public var recordTimings: Bool
 
     public init(
         minimumConfidence: Double = 0.5,
@@ -47,7 +48,8 @@ public struct NativeUIDetectionConfiguration: Sendable {
         platform: PlatformSelection = .auto,
         modalityPolicy: ModalityPolicy = .permissive,
         minFocusScoreThreshold: Double = 0.35,
-        minFocusMargin: Double = 0.12
+        minFocusMargin: Double = 0.12,
+        recordTimings: Bool = false
     ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
@@ -55,21 +57,67 @@ public struct NativeUIDetectionConfiguration: Sendable {
         self.modalityPolicy = modalityPolicy
         self.minFocusScoreThreshold = minFocusScoreThreshold
         self.minFocusMargin = minFocusMargin
+        self.recordTimings = recordTimings
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
 }
 
-// MARK: - Detailed Result
+// MARK: - Detailed Result & Timings
 
-/// Detailed outcome of a detection request containing observations and per-modality health status.
+/// Wall-clock milliseconds spent across detection pipeline stages.
+public struct DetectionStageTimings: Sendable, Codable, Equatable {
+    public let modelLoadMs: Double?
+    public let modelInferenceMs: Double
+    public let ocrMs: Double
+    public let focusResolutionMs: Double
+    public let auditRulesMs: Double
+    public let totalMs: Double
+
+    public init(
+        modelLoadMs: Double? = nil,
+        modelInferenceMs: Double = 0.0,
+        ocrMs: Double = 0.0,
+        focusResolutionMs: Double = 0.0,
+        auditRulesMs: Double = 0.0,
+        totalMs: Double = 0.0
+    ) {
+        self.modelLoadMs = modelLoadMs
+        self.modelInferenceMs = modelInferenceMs
+        self.ocrMs = ocrMs
+        self.focusResolutionMs = focusResolutionMs
+        self.auditRulesMs = auditRulesMs
+        self.totalMs = totalMs
+    }
+}
+
+/// An in-memory, thread-safe bundle containing a loaded MLModel and its associated metadata and manifest.
+public struct PreloadedModel: @unchecked Sendable {
+    public let model: MLModel
+    public let metadata: ModelMetadata
+    public let manifest: ModelManifest
+
+    public init(model: MLModel, metadata: ModelMetadata, manifest: ModelManifest) {
+        self.model = model
+        self.metadata = metadata
+        self.manifest = manifest
+    }
+}
+
+/// Detailed outcome of a detection request containing observations, modality health, and optional stage timings.
 public struct NativeUIDetailedDetectionResult: Sendable, Codable {
     public let elements: [NativeUIElementObservation]
     public let modalityHealth: ModalityHealth
+    public let timings: DetectionStageTimings?
 
-    public init(elements: [NativeUIElementObservation], modalityHealth: ModalityHealth) {
+    public init(
+        elements: [NativeUIElementObservation],
+        modalityHealth: ModalityHealth,
+        timings: DetectionStageTimings? = nil
+    ) {
         self.elements = elements
         self.modalityHealth = modalityHealth
+        self.timings = timings
     }
 }
 
@@ -92,12 +140,25 @@ public struct NativeUIDetectionRequest: Sendable {
         self.textRecognitionHandler = textRecognitionHandler
     }
 
+    private static func durationToMs(_ duration: ContinuousClock.Instant.Duration) -> Double {
+        let (seconds, attoseconds) = duration.components
+        return Double(seconds) * 1000.0 + Double(attoseconds) / 1_000_000_000_000_000.0
+    }
+
     /// Performs UI detection and returns observations along with honest subsystem health.
     public func performDetailed(
         on screenshot: CGImage,
         sidecar: NativeUISidecar? = nil
     ) async throws -> NativeUIDetailedDetectionResult {
+        try await performDetailed(on: screenshot, sidecar: sidecar, preloadedModel: nil)
+    }
 
+    internal func performDetailed(
+        on screenshot: CGImage,
+        sidecar: NativeUISidecar? = nil,
+        preloadedModel: PreloadedModel? = nil
+    ) async throws -> NativeUIDetailedDetectionResult {
+        let startTotal = ContinuousClock.now
         var health = ModalityHealth()
 
         let effectivePlatform: NativeUIPlatform
@@ -117,32 +178,39 @@ public struct NativeUIDetectionRequest: Sendable {
             }
         }
 
-        let model: MLModel
-        let metadata: ModelMetadata
-        let manifest: ModelManifest
-        if effectivePlatform == .tvOS {
-            manifest = NativeUIModelAsset.tvOSManifest
-            metadata = NativeUIModelAsset.tvOSMetadata
-            do {
-                model = try await NativeUIModelAsset.loadTVOSModel()
-            } catch let error as ModelContractError {
-                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
-            }
+        let activeModel: PreloadedModel
+        var modelLoadMs: Double? = nil
+
+        if let preloaded = preloadedModel {
+            activeModel = preloaded
+            modelLoadMs = 0.0
         } else {
-            manifest = NativeUIModelAsset.iOSManifest
-            metadata = NativeUIModelAsset.metadata
-            do {
-                model = try await NativeUIModelAsset.loadModel()
-            } catch let error as ModelContractError {
-                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
+            let startLoad = ContinuousClock.now
+            if effectivePlatform == .tvOS {
+                do {
+                    let m = try await NativeUIModelAsset.loadTVOSModel()
+                    activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: NativeUIModelAsset.tvOSManifest)
+                } catch let error as ModelContractError {
+                    throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
+                }
+            } else {
+                do {
+                    let m = try await NativeUIModelAsset.loadModel()
+                    activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: NativeUIModelAsset.iOSManifest)
+                } catch let error as ModelContractError {
+                    throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
+                }
             }
+            modelLoadMs = Self.durationToMs(startLoad.duration(to: .now))
         }
 
         let confThreshold = Float(configuration.minimumConfidence)
-        let nmsIoU = Double(metadata.recommendedNMSIoUThreshold)
+        let nmsIoU = Double(activeModel.metadata.recommendedNMSIoUThreshold)
 
+        let startInfer = ContinuousClock.now
+        let modelRef = activeModel
         let raw: [RawPrediction] = try await Task.detached(priority: .userInitiated) {
-            try Self.runYOLO(screenshot, model: model, manifest: manifest, confFloor: confThreshold)
+            try Self.runYOLO(screenshot, model: modelRef.model, manifest: modelRef.manifest, confFloor: confThreshold)
         }.value
 
         // Greedy same-class NMS as a second pass
@@ -153,25 +221,32 @@ public struct NativeUIDetectionRequest: Sendable {
             .sorted { $0.confidence > $1.confidence }
             .compactMap { Self.toObservation($0, imageWidth: w, imageHeight: h) }
 
+        let inferMs = Self.durationToMs(startInfer.duration(to: .now))
+
         health.detector = rawObservations.isEmpty ? .empty : .available
 
         var observations = rawObservations
 
         // tvOS focus state resolution
+        var focusMs = 0.0
         if effectivePlatform == .tvOS {
+            let startFocus = ContinuousClock.now
             observations = Self.resolveTVOSFocus(
                 in: screenshot,
                 observations: observations,
                 minScoreThreshold: configuration.minFocusScoreThreshold,
                 minMargin: configuration.minFocusMargin
             )
+            focusMs = Self.durationToMs(startFocus.duration(to: .now))
             health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
         } else {
             health.focus = .notRequested
         }
 
         // 1. Vision OCR text fusion (TASK-7-1, TASK-7-2, and TASK-6b-WP1-1)
+        var ocrMs = 0.0
         if configuration.includesTextRecognition {
+            let startOCR = ContinuousClock.now
             do {
                 let ocrRegions: [RecognizedTextRegion]
                 if let customHandler = textRecognitionHandler {
@@ -199,6 +274,7 @@ public struct NativeUIDetectionRequest: Sendable {
                     )
                 }
             }
+            ocrMs = Self.durationToMs(startOCR.duration(to: .now))
         } else {
             health.ocr = .notRequested
             if let sidecar = sidecar {
@@ -211,6 +287,7 @@ public struct NativeUIDetectionRequest: Sendable {
         }
 
         // 2. Audit rules evaluation (TASK-7-3)
+        let startAudit = ContinuousClock.now
         let imageSize = CGSize(width: w, height: h)
         observations = AuditRules.evaluate(
             observations: observations,
@@ -218,9 +295,20 @@ public struct NativeUIDetectionRequest: Sendable {
             scale: sidecar?.scale,
             platform: effectivePlatform
         )
+        let auditMs = Self.durationToMs(startAudit.duration(to: .now))
         health.audit = .available
 
-        return NativeUIDetailedDetectionResult(elements: observations, modalityHealth: health)
+        let totalMs = Self.durationToMs(startTotal.duration(to: .now))
+        let timings = configuration.recordTimings ? DetectionStageTimings(
+            modelLoadMs: modelLoadMs,
+            modelInferenceMs: inferMs,
+            ocrMs: ocrMs,
+            focusResolutionMs: focusMs,
+            auditRulesMs: auditMs,
+            totalMs: totalMs
+        ) : nil
+
+        return NativeUIDetailedDetectionResult(elements: observations, modalityHealth: health, timings: timings)
     }
 
     /// Convenience invocation returning observations directly.
@@ -534,6 +622,8 @@ extension NativeUIDetectionRequest {
         guard !focusableObs.isEmpty else { return observations }
 
         // 1. Calculate raw visual scores
+        let screenHeight = Double(screenshot.height)
+
         struct CandidateScore {
             let id: UUID
             let type: NativeUIElementType
@@ -545,11 +635,19 @@ extension NativeUIDetectionRequest {
         for obs in focusableObs {
             let px = obs.boundingBoxPixels
             let rect = CGRect(x: px.x, y: px.y, width: px.width, height: px.height)
-            let baseScore = evaluateElementFocusScore(
+            var baseScore = evaluateElementFocusScore(
                 cgImage: screenshot,
                 pixelRect: rect,
                 elementType: obs.elementType
             )
+            // tvOS Safe Area & Bezel Rule:
+            // Focused elements are never placed flush against the extreme screen boundary.
+            // When an element touches the top/bottom bezel (e.g. bottom shelf/indicator at y >= 0.98 * H),
+            // it is background chrome or off-screen, not the active focus item.
+            let isExtremeBezel = (px.y + px.height >= screenHeight * 0.98) || (px.y <= screenHeight * 0.015)
+            if isExtremeBezel {
+                baseScore *= 0.10
+            }
             candidateScores.append(CandidateScore(id: obs.id, type: obs.elementType, baseScore: baseScore, finalScore: baseScore))
         }
 
@@ -579,21 +677,38 @@ extension NativeUIDetectionRequest {
                 let candidateArea = obs.boundingBoxPixels.width * obs.boundingBoxPixels.height
                 let peerAreas = rowPeers.map { $0.boundingBoxPixels.width * $0.boundingBoxPixels.height }
                 let medPeerArea = median(peerAreas)
+                let maxPeerArea = peerAreas.max() ?? candidateArea
                 let scaleRatio = medPeerArea > 0 ? (candidateArea / medPeerArea) : 1.0
 
-                if scaleRatio >= 1.15 {
-                    // Confirmed geometric expansion
-                    let geometryScore = min(1.0, max(0.0, (scaleRatio - 1.0) / 0.30))
-                    candidateScores[i].finalScore = (normalizedPerimeter * 0.5) + (geometryScore * 0.5)
-                } else if scaleRatio < 1.08 {
-                    // Tile is unscaled relative to peers; penalize high perimeter contrast (often bright poster artwork)
-                    candidateScores[i].finalScore = normalizedPerimeter * 0.40
+                if scaleRatio >= 1.12 {
+                    // Confirmed geometric expansion (tvOS Parallax focus effect)
+                    let geometryScore = min(1.0, max(0.0, (scaleRatio - 1.0) / 0.25))
+                    candidateScores[i].finalScore = max(geometryScore * 0.85, (normalizedPerimeter * 0.30) + (geometryScore * 0.70))
+                } else if (maxPeerArea / max(1.0, candidateArea)) >= 1.15 {
+                    // Another peer in the same row is clearly expanded; penalize this unexpanded peer
+                    candidateScores[i].finalScore = normalizedPerimeter * 0.25
                 } else {
+                    // No peer is expanded; rely on perimeter contrast
                     candidateScores[i].finalScore = normalizedPerimeter
                 }
             } else {
                 // Isolated or single collectionItem
                 candidateScores[i].finalScore = normalizedPerimeter
+            }
+        }
+
+        // 2b. Dominant Category Priority:
+        // When collection items are present and an item shows confirmed geometric expansion (scaleRatio >= 1.15),
+        // the active focus modality is grid content. Secondary chrome (such as listRow or tabBar) must not
+        // hijack focus from an expanded content tile.
+        let hasExpandedGridItem = candidateScores.contains {
+            $0.type == .collectionItem && $0.finalScore >= 0.65
+        }
+        if hasExpandedGridItem {
+            for i in 0..<candidateScores.count {
+                if candidateScores[i].type != .collectionItem {
+                    candidateScores[i].finalScore *= 0.20
+                }
             }
         }
 

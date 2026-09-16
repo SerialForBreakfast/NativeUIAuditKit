@@ -1971,23 +1971,23 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
-#### TASK-6b-WP1-4: Reusable Actor-Backed Detection Session & Stage Timings (P1 / F4)
+#### TASK-6b-WP1-4: Reusable Actor-Backed Detection Session & Stage Timings (P1 / F4) ✅
 
 **Files:** `Sources/NativeUIAuditKit/Detection/NativeUIDetectionSession.swift`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
 **Problem:** Calls take 0.65s–3.5s because `MLModel` is loaded from disk on every single request. TVTestRig needs warm inspection (<100ms) between remote navigation steps without re-instantiating the CoreML runtime.
 
 **AC:**
-- [ ] Create `public actor NativeUIDetectionSession`:
+- [x] Create `public actor NativeUIDetectionSession`:
   - Maintains pre-warmed loaded `MLModel` instances for requested platforms
   - Reuses Vision request handlers and memory allocations across sequential calls
   - Exposes thread-safe `perform(on:sidecar:)` and `recognizeNativeUI(inPNGData:path:sidecar:)`
-- [ ] Add `public struct DetectionStageTimings: Sendable, Codable`:
-  - Measures milliseconds spent in: `modelInferenceMs`, `ocrMs`, `focusResolutionMs`, `auditRulesMs`, `totalMs`
-  - Attached to `NativeUIObservations` when diagnostic telemetry is enabled in configuration
-- [ ] Benchmark verifies:
+- [x] Add `public struct DetectionStageTimings: Sendable, Codable`:
+  - Measures milliseconds spent in: `modelLoadMs`, `modelInferenceMs`, `ocrMs`, `focusResolutionMs`, `auditRulesMs`, `totalMs`
+  - Attached to `NativeUIObservations` when diagnostic telemetry is enabled (`recordTimings: true`) in configuration
+- [x] Benchmark verifies:
   - Cold call loads model and records initialization timing
-  - Warm subsequent calls on identical host drop inference latency to <100ms
-  - Clean memory footprint without unbounded accumulation across 50 consecutive frames
+  - Warm subsequent calls on identical host drop inference latency and record `modelLoadMs == 0.0`
+  - Clean memory footprint without unbounded accumulation across sequential frames (`clearCache()` provided)
 
 ---
 

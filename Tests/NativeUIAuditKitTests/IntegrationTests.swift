@@ -497,6 +497,151 @@ struct IntegrationTests {
         #expect(winner.state.isAmbiguousFocus == false)
     }
 
+    @Test("tvOS expanded collection item takes focus precedence over bottom-edge list row")
+    func tvosCrossCategoryGridPrecedenceOverBottomChrome() {
+        // Simulates TVTestRig 'home' screen failure mode:
+        // Expanded collectionItem (e.g. Paramount+ tile) vs. a bottom-edge listRow touching the bottom bezel (y = 1009..1080).
+        let img = makeImage(width: 1920, height: 1080) { ctx in
+            // Dark wallpaper
+            ctx.setFillColor(CGColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1.0))
+            ctx.fill(CGRect(x: 0, y: 0, width: 1920, height: 1080))
+
+            // Expanded collection item at [1254, 733, 306, 185]
+            ctx.setStrokeColor(CGColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0))
+            ctx.setLineWidth(4.0)
+            ctx.stroke(CGRect(x: 1254, y: 733, width: 306, height: 185))
+
+            // Unexpanded peer at [800, 750, 240, 145]
+            ctx.setStrokeColor(CGColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0))
+            ctx.setLineWidth(2.0)
+            ctx.stroke(CGRect(x: 800, y: 750, width: 240, height: 145))
+
+            // High-luminance bottom-edge listRow touching the bezel [381, 1009, 1157, 71] (1009 + 71 = 1080)
+            ctx.setFillColor(CGColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0))
+            ctx.fill(CGRect(x: 381, y: 1009, width: 1157, height: 71))
+        }
+
+        let obsExpanded = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 1254.0 / 1920.0, y: 733.0 / 1080.0, width: 306.0 / 1920.0, height: 185.0 / 1080.0),
+            boundingBoxPixels: NativeUIRect(x: 1254, y: 733, width: 306, height: 185),
+            confidence: 0.98,
+            confidenceSource: .pixelModel
+        )
+        let obsPeer = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 800.0 / 1920.0, y: 750.0 / 1080.0, width: 240.0 / 1920.0, height: 145.0 / 1080.0),
+            boundingBoxPixels: NativeUIRect(x: 800, y: 750, width: 240, height: 145),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obsBottomRow = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 381.0 / 1920.0, y: 1009.0 / 1080.0, width: 1157.0 / 1920.0, height: 71.0 / 1080.0),
+            boundingBoxPixels: NativeUIRect(x: 381, y: 1009, width: 1157, height: 71),
+            confidence: 0.97,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obsExpanded, obsPeer, obsBottomRow],
+            minScoreThreshold: 0.35,
+            minMargin: 0.12
+        )
+
+        let winner = resolved.first(where: { $0.id == obsExpanded.id })!
+        let bottomRow = resolved.first(where: { $0.id == obsBottomRow.id })!
+
+        #expect(winner.state.isFocused == true, "Expanded collection item must win focus over bottom edge row")
+        #expect(bottomRow.state.isFocused == false, "Bottom bezel chrome must not hijack focus")
+    }
+
+    @Test("DetectionStageTimings encodes and decodes through Codable")
+    func detectionStageTimingsCodableRoundTrip() throws {
+        let timings = DetectionStageTimings(
+            modelLoadMs: 120.5,
+            modelInferenceMs: 45.2,
+            ocrMs: 32.1,
+            focusResolutionMs: 4.8,
+            auditRulesMs: 1.2,
+            totalMs: 203.8
+        )
+
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        let data = try encoder.encode(timings)
+        let decoded = try decoder.decode(DetectionStageTimings.self, from: data)
+
+        #expect(decoded == timings)
+        #expect(decoded.modelLoadMs == 120.5)
+        #expect(decoded.modelInferenceMs == 45.2)
+        #expect(decoded.totalMs == 203.8)
+    }
+
+    @Test("Detection request populates stage timings when recordTimings is enabled")
+    func detectionRequestRecordsTimingsWhenEnabled() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+
+        // 1. Without recordTimings: timings should be nil
+        let recognizerOff = NativeUIDetectorRecognizer(configuration: .init(minimumConfidence: 0.35, platform: .auto, recordTimings: false))
+        let resultOff = try await recognizerOff.recognizeNativeUI(inPNGData: data, path: fixtureURL.path, sidecar: nil)
+        #expect(resultOff.timings == nil)
+
+        // 2. With recordTimings: timings should be populated with reasonable stage values
+        let recognizerOn = NativeUIDetectorRecognizer(configuration: .init(minimumConfidence: 0.35, platform: .auto, recordTimings: true))
+        let resultOn = try await recognizerOn.recognizeNativeUI(inPNGData: data, path: fixtureURL.path, sidecar: nil)
+        #expect(resultOn.timings != nil)
+        if let t = resultOn.timings {
+            #expect(t.totalMs > 0.0)
+            #expect(t.modelInferenceMs > 0.0)
+            #expect(t.focusResolutionMs >= 0.0)
+            #expect(t.auditRulesMs >= 0.0)
+        }
+    }
+
+    @Test("NativeUIDetectionSession pre-warms models, eliminates load latency on subsequent calls, and manages cache")
+    func detectionSessionWarmingAndReuse() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+
+        let session = NativeUIDetectionSession(
+            configuration: .init(minimumConfidence: 0.35, platform: .tvOS, recordTimings: true)
+        )
+
+        // 1. Initially cold
+        let isWarmedBefore = await session.isWarmed(for: .tvOS)
+        #expect(!isWarmedBefore)
+
+        // 2. Pre-warm
+        try await session.warm(platforms: [.tvOS])
+        let isWarmedAfter = await session.isWarmed(for: .tvOS)
+        #expect(isWarmedAfter)
+
+        // 3. First execution on warm session
+        let result1 = try await session.recognizeNativeUI(inPNGData: data, path: fixtureURL.path, sidecar: nil)
+        #expect(result1.status == .success)
+        #expect(!result1.elements.isEmpty)
+        #expect(result1.timings != nil)
+        #expect(result1.timings?.modelLoadMs == 0.0, "Warm session should record 0ms model load time")
+
+        // 4. Sequential execution on warm session (simulating navigation steps)
+        let result2 = try await session.recognizeNativeUI(inPNGData: data, path: fixtureURL.path, sidecar: nil)
+        #expect(result2.status == .success)
+        #expect(result2.timings != nil)
+        #expect(result2.timings?.modelLoadMs == 0.0)
+        #expect(result2.elements.count == result1.elements.count)
+
+        // 5. Clear cache
+        await session.clearCache()
+        let isWarmedCleared = await session.isWarmed(for: .tvOS)
+        #expect(!isWarmedCleared)
+    }
+
     private func makeImage(width: Int, height: Int, drawing: (CGContext) -> Void) -> CGImage {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let ctx = CGContext(

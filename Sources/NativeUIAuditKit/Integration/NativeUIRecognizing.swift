@@ -112,15 +112,18 @@ public struct NativeUIObservations: Sendable, Codable {
     public let elements: [NativeUIElementObservation]
     public let status: NativeUIRecognitionStatus
     public let modalityHealth: ModalityHealth
+    public let timings: DetectionStageTimings?
 
     public init(
         elements: [NativeUIElementObservation],
         status: NativeUIRecognitionStatus,
-        modalityHealth: ModalityHealth = .default
+        modalityHealth: ModalityHealth = .default,
+        timings: DetectionStageTimings? = nil
     ) {
         self.elements = elements
         self.status = status
         self.modalityHealth = modalityHealth
+        self.timings = timings
     }
 }
 
@@ -239,7 +242,8 @@ public struct NativeUIDetectorRecognizer: NativeUIRecognizing {
             return NativeUIObservations(
                 elements: detailed.elements,
                 status: overallStatus,
-                modalityHealth: detailed.modalityHealth
+                modalityHealth: detailed.modalityHealth,
+                timings: detailed.timings
             )
         } catch NativeUIDetectionError.imagePreprocessingFailed {
             let health = ModalityHealth(detector: .failed(reason: "Image preprocessing failed"), ocr: .notRequested, focus: .notRequested, audit: .notRequested)

@@ -301,7 +301,7 @@ public enum ModelRegistry {
             "statusBar", "stepperControl", "tabBar", "textField", "toggle",
             "toolbar", "tooltip", "unknown", "webContent"
         ],
-        defaultConfidenceThreshold: 0.30,
+        defaultConfidenceThreshold: 0.25,
         recommendedNMSIoUThreshold: 0.30,
         mAP50: 0.9950
     )
