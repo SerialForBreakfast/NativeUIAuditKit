@@ -1951,21 +1951,21 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
-#### TASK-6b-WP1-3: Model Contract, Channel Mapping & Manifest Verification (P0 / F3)
+#### TASK-6b-WP1-3: Model Contract, Channel Mapping & Manifest Verification (P0 / F3) ✅
 
 **Files:** `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift`, `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/model_manifest_tvos_v1.json`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
 **Problem:** Ultralytics YOLO11 exports an 80-channel confidence tensor (from COCO pretraining padding). Truncating via `min(classLabels.count, nTotal)` caused index misalignments (e.g. class 4 decoded as `label` instead of `collectionItem`).
 
 **AC:**
-- [ ] Create structured `ModelManifest` and bundle `model_manifest_tvos_v1.json` in `NativeUIAuditKitModels`:
+- [x] Create structured `ModelManifest` and bundle `model_manifest_tvos_v1.json` in `NativeUIAuditKitModels`:
   - Declares `modelId`, `modelSHA256`, `architecture`, `inputDimensions` (640×640)
   - Explicit `tensorChannelMapping`: mapping tensor channels 0–40 to `category_map.json` taxonomy strings, explicitly tagging channels 41–79 as `.padding`
   - Input/output tensor shapes and expected types (`coordinates: Float32 [N, 4]`, `confidence: Float32 [N, 80]`)
-- [ ] Implement `ModelManifestValidator`:
+- [x] Implement `ModelManifestValidator`:
   - Validates loaded `MLModel` metadata, shapes, and channel count against manifest on load
   - Rejects mismatched models with typed error `NativeUIDetectionError.incompatibleModelContract(reason: String)`
-- [ ] Update decoder in `NativeUIDetectionRequest.swift` to use explicit channel mapping from manifest rather than contiguous truncation
-- [ ] Unit tests verify:
+- [x] Update decoder in `NativeUIDetectionRequest.swift` to use explicit channel mapping from manifest rather than contiguous truncation
+- [x] Unit tests verify:
   1. Shipped tvOS and iOS models pass manifest validation cleanly
   2. Mock/corrupt model with mismatched shapes throws `incompatibleModelContract` before running inference
 

@@ -119,20 +119,30 @@ public struct NativeUIDetectionRequest: Sendable {
 
         let model: MLModel
         let metadata: ModelMetadata
+        let manifest: ModelManifest
         if effectivePlatform == .tvOS {
-            model = try await NativeUIModelAsset.loadTVOSModel()
+            manifest = NativeUIModelAsset.tvOSManifest
             metadata = NativeUIModelAsset.tvOSMetadata
+            do {
+                model = try await NativeUIModelAsset.loadTVOSModel()
+            } catch let error as ModelContractError {
+                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
+            }
         } else {
-            model = try await NativeUIModelAsset.loadModel()
+            manifest = NativeUIModelAsset.iOSManifest
             metadata = NativeUIModelAsset.metadata
+            do {
+                model = try await NativeUIModelAsset.loadModel()
+            } catch let error as ModelContractError {
+                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
+            }
         }
 
         let confThreshold = Float(configuration.minimumConfidence)
-        let classLabels = metadata.classLabels
         let nmsIoU = Double(metadata.recommendedNMSIoUThreshold)
 
         let raw: [RawPrediction] = try await Task.detached(priority: .userInitiated) {
-            try Self.runYOLO(screenshot, model: model, classLabels: classLabels, confFloor: confThreshold)
+            try Self.runYOLO(screenshot, model: model, manifest: manifest, confFloor: confThreshold)
         }.value
 
         // Greedy same-class NMS as a second pass
@@ -275,6 +285,7 @@ public enum NativeUIDetectionError: Error, Sendable, Equatable {
     case imagePreprocessingFailed
     case unexpectedModelOutput(String)
     case modalityFailed(modality: String, reason: String)
+    case incompatibleModelContract(reason: String)
 }
 
 // MARK: - Internal types
@@ -356,7 +367,7 @@ extension NativeUIDetectionRequest {
     private static func runYOLO(
         _ image: CGImage,
         model: MLModel,
-        classLabels: [String],
+        manifest: ModelManifest,
         confFloor: Float
     ) throws -> [RawPrediction] {
         guard let lb = letterbox(image), let pixelBuf = makePixelBuffer(lb.image) else {
@@ -377,7 +388,9 @@ extension NativeUIDetectionRequest {
 
         let n      = confArr.shape[0].intValue
         let nTotal = confArr.shape[1].intValue
-        let nCheck = min(classLabels.count, nTotal)
+
+        // Active taxonomy class channels from manifest (skips padding channels)
+        let activeChannels = manifest.activeClassChannels.filter { $0.channel < nTotal }
 
         let cs0 = confArr.strides[0].intValue
         let cs1 = confArr.strides[1].intValue
@@ -392,12 +405,15 @@ extension NativeUIDetectionRequest {
         var preds: [RawPrediction] = []
         for i in 0..<n {
             var bestConf: Float = 0
-            var bestClass = 0
-            for c in 0..<nCheck {
-                let v = confArr[i * cs0 + c * cs1].floatValue
-                if v > bestConf { bestConf = v; bestClass = c }
+            var bestLabel: String? = nil
+            for (channelIdx, label) in activeChannels {
+                let v = confArr[i * cs0 + channelIdx * cs1].floatValue
+                if v > bestConf {
+                    bestConf = v
+                    bestLabel = label
+                }
             }
-            guard bestConf >= confFloor else { continue }
+            guard let label = bestLabel, bestConf >= confFloor else { continue }
 
             // Raw coords normalized to the 640×640 letterboxed frame; inverse-letterbox
             // back to original-image-normalized, top-left-origin, center-form coords.
@@ -412,9 +428,12 @@ extension NativeUIDetectionRequest {
             let hOrig  = h640 * sz / newHd
 
             preds.append(RawPrediction(
-                label: classLabels[bestClass],
+                label: label,
                 confidence: bestConf,
-                cx: cxOrig, cy: cyOrig, w: wOrig, h: hOrig
+                cx: cxOrig,
+                cy: cyOrig,
+                w: wOrig,
+                h: hOrig
             ))
         }
         return preds

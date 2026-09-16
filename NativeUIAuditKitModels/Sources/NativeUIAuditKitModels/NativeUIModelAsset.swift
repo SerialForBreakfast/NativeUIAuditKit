@@ -34,11 +34,18 @@ public enum NativeUIModelAsset {
         return config
     }
 
-    /// Loads the bundled model with the given configuration (defaults to ANE/GPU).
+    /// Manifest for the default (iOS) model loaded from bundled resources.
+    public static var iOSManifest: ModelManifest {
+        loadManifest(named: "model_manifest_ios_v2")
+    }
+
+    /// Loads the bundled model with the given configuration (defaults to ANE/GPU) and validates against its manifest.
     public static func loadModel(
         configuration: MLModelConfiguration = makeConfiguration()
     ) async throws -> MLModel {
-        try await MLModel.load(contentsOf: defaultModelURL, configuration: configuration)
+        let model = try await MLModel.load(contentsOf: defaultModelURL, configuration: configuration)
+        try ModelManifestValidator.validate(model: model, against: iOSManifest)
+        return model
     }
 
     /// URL of the compiled (.mlmodelc) tvOS model bundled with this package.
@@ -52,11 +59,18 @@ public enum NativeUIModelAsset {
     /// Tensor-level contract (input size, class label order, thresholds) for the bundled tvOS model.
     public static var tvOSMetadata: ModelMetadata { ModelRegistry.tvOSMetadata }
 
-    /// Loads the bundled tvOS model with the given configuration (defaults to ANE/GPU).
+    /// Manifest for the tvOS model loaded from bundled resources.
+    public static var tvOSManifest: ModelManifest {
+        loadManifest(named: "model_manifest_tvos_v1")
+    }
+
+    /// Loads the bundled tvOS model with the given configuration (defaults to ANE/GPU) and validates against its manifest.
     public static func loadTVOSModel(
         configuration: MLModelConfiguration = makeConfiguration()
     ) async throws -> MLModel {
-        try await MLModel.load(contentsOf: tvOSModelURL, configuration: configuration)
+        let model = try await MLModel.load(contentsOf: tvOSModelURL, configuration: configuration)
+        try ModelManifestValidator.validate(model: model, against: tvOSManifest)
+        return model
     }
 
     /// Resolves the bundled model URL for a given descriptor, if bundled.
@@ -71,7 +85,19 @@ public enum NativeUIModelAsset {
         }
     }
 
-    /// Loads a bundled model by its ModelDescriptor.
+    /// Resolves the bundled manifest for a given descriptor, if bundled.
+    public static func manifest(for descriptor: ModelDescriptor) -> ModelManifest? {
+        switch descriptor.modelId {
+        case ModelRegistry.tvOS.modelId:
+            return tvOSManifest
+        case ModelRegistry.iOS.modelId:
+            return iOSManifest
+        default:
+            return nil
+        }
+    }
+
+    /// Loads a bundled model by its ModelDescriptor and validates against its manifest if available.
     public static func loadModel(
         descriptor: ModelDescriptor,
         configuration: MLModelConfiguration = makeConfiguration()
@@ -83,6 +109,22 @@ public enum NativeUIModelAsset {
                 userInfo: [NSLocalizedDescriptionKey: "No bundled model asset found for descriptor '\(descriptor.modelId)'"]
             )
         }
-        return try await MLModel.load(contentsOf: url, configuration: configuration)
+        let model = try await MLModel.load(contentsOf: url, configuration: configuration)
+        if let manifest = manifest(for: descriptor) {
+            try ModelManifestValidator.validate(model: model, against: manifest)
+        }
+        return model
+    }
+
+    private static func loadManifest(named name: String) -> ModelManifest {
+        guard let url = Bundle.module.url(forResource: name, withExtension: "json") else {
+            fatalError("\(name).json missing from NativeUIAuditKitModels bundle resources")
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode(ModelManifest.self, from: data)
+        } catch {
+            fatalError("Failed to decode \(name).json: \(error.localizedDescription)")
+        }
     }
 }

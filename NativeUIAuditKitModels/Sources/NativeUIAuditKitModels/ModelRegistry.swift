@@ -4,7 +4,151 @@
 // Central registry of available CoreML model descriptors.
 // Import NativeUIAuditKitModels to resolve model metadata at runtime.
 
+import CoreML
 import Foundation
+
+// MARK: - Model Manifest & Contract
+
+/// An explicit mapping entry for a single output channel of the model's confidence tensor.
+public enum TensorChannelAssignment: Sendable, Codable, Equatable {
+    case taxonomyClass(String)
+    case padding
+
+    private enum CodingKeys: String, CodingKey {
+        case type, label
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let type = try container.decode(String.self, forKey: .type)
+        switch type {
+        case "class", "taxonomyClass":
+            let label = try container.decode(String.self, forKey: .label)
+            self = .taxonomyClass(label)
+        case "padding":
+            self = .padding
+        default:
+            self = .padding
+        }
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .taxonomyClass(let label):
+            try container.encode("taxonomyClass", forKey: .type)
+            try container.encode(label, forKey: .label)
+        case .padding:
+            try container.encode("padding", forKey: .type)
+        }
+    }
+}
+
+/// Declares expected tensor shape and type for inputs or outputs.
+public struct ModelTensorShapeContract: Sendable, Codable, Equatable {
+    public let name: String
+    /// Expected dimensions. -1 indicates a dynamic or proposal dimension (e.g. N).
+    public let dimensions: [Int]
+    public let dataType: String
+
+    public init(name: String, dimensions: [Int], dataType: String = "Float32") {
+        self.name = name
+        self.dimensions = dimensions
+        self.dataType = dataType
+    }
+}
+
+/// A validated manifest declaring tensor shapes and explicit channel-to-taxonomy assignments.
+public struct ModelManifest: Sendable, Codable, Equatable {
+    public let modelId: String
+    public let modelSHA256: String?
+    public let architecture: String
+    public let inputWidth: Int
+    public let inputHeight: Int
+    public let expectedInputs: [ModelTensorShapeContract]
+    public let expectedOutputs: [ModelTensorShapeContract]
+    public let tensorChannelMapping: [TensorChannelAssignment]
+
+    public init(
+        modelId: String,
+        modelSHA256: String? = nil,
+        architecture: String = "YOLO11n",
+        inputWidth: Int = 640,
+        inputHeight: Int = 640,
+        expectedInputs: [ModelTensorShapeContract] = [],
+        expectedOutputs: [ModelTensorShapeContract] = [],
+        tensorChannelMapping: [TensorChannelAssignment]
+    ) {
+        self.modelId = modelId
+        self.modelSHA256 = modelSHA256
+        self.architecture = architecture
+        self.inputWidth = inputWidth
+        self.inputHeight = inputHeight
+        self.expectedInputs = expectedInputs
+        self.expectedOutputs = expectedOutputs
+        self.tensorChannelMapping = tensorChannelMapping
+    }
+
+    public func label(forChannel channel: Int) -> String? {
+        guard channel >= 0 && channel < tensorChannelMapping.count else { return nil }
+        if case .taxonomyClass(let label) = tensorChannelMapping[channel] {
+            return label
+        }
+        return nil
+    }
+
+    public var activeClassChannels: [(channel: Int, label: String)] {
+        tensorChannelMapping.enumerated().compactMap { idx, assignment in
+            if case .taxonomyClass(let label) = assignment {
+                return (channel: idx, label: label)
+            }
+            return nil
+        }
+    }
+}
+
+/// Error thrown when a loaded MLModel does not conform to its expected manifest.
+public struct ModelContractError: Error, Sendable, Equatable {
+    public let reason: String
+    public init(_ reason: String) { self.reason = reason }
+}
+
+/// Validates loaded MLModel instances against a declared ModelManifest.
+public enum ModelManifestValidator {
+    public static func validate(model: MLModel, against manifest: ModelManifest) throws {
+        let desc = model.modelDescription
+        let outputs = desc.outputDescriptionsByName
+
+        // Verify all expected output tensors are present and have matching shapes
+        for expected in manifest.expectedOutputs {
+            guard let feature = outputs[expected.name] else {
+                throw ModelContractError("Missing expected output tensor '\(expected.name)'")
+            }
+
+            if let constraint = feature.multiArrayConstraint {
+                let shape = constraint.shape.map { $0.intValue }
+                if expected.dimensions.count == shape.count {
+                    for (dimIdx, expectedDim) in expected.dimensions.enumerated() {
+                        if expectedDim != -1 && shape[dimIdx] != -1 && expectedDim != shape[dimIdx] {
+                            throw ModelContractError("Output tensor '\(expected.name)' dimension \(dimIdx) mismatch: expected \(expectedDim), got \(shape[dimIdx])")
+                        }
+                    }
+                }
+            }
+        }
+
+        // Verify channel count matches manifest tensorChannelMapping
+        if let confFeature = outputs["confidence"], let constraint = confFeature.multiArrayConstraint {
+            let shape = constraint.shape.map { $0.intValue }
+            if shape.count >= 2 {
+                let channels = shape[1]
+                if channels != -1 && channels != manifest.tensorChannelMapping.count {
+                    throw ModelContractError("Confidence tensor channels (\(channels)) does not match manifest channel mapping count (\(manifest.tensorChannelMapping.count))")
+                }
+            }
+        }
+    }
+}
 
 /// A descriptor for one trained CoreML model in the NativeUIAuditKit family.
 public struct ModelDescriptor: Sendable, Codable, Equatable {
