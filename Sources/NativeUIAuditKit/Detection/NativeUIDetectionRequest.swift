@@ -38,17 +38,23 @@ public struct NativeUIDetectionConfiguration: Sendable {
     public var includesTextRecognition: Bool
     public var platform: PlatformSelection
     public var modalityPolicy: ModalityPolicy
+    public var minFocusScoreThreshold: Double
+    public var minFocusMargin: Double
 
     public init(
         minimumConfidence: Double = 0.5,
         includesTextRecognition: Bool = true,
         platform: PlatformSelection = .auto,
-        modalityPolicy: ModalityPolicy = .permissive
+        modalityPolicy: ModalityPolicy = .permissive,
+        minFocusScoreThreshold: Double = 0.35,
+        minFocusMargin: Double = 0.12
     ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
         self.platform = platform
         self.modalityPolicy = modalityPolicy
+        self.minFocusScoreThreshold = minFocusScoreThreshold
+        self.minFocusMargin = minFocusMargin
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
@@ -143,7 +149,12 @@ public struct NativeUIDetectionRequest: Sendable {
 
         // tvOS focus state resolution
         if effectivePlatform == .tvOS {
-            observations = Self.resolveTVOSFocus(in: screenshot, observations: observations)
+            observations = Self.resolveTVOSFocus(
+                in: screenshot,
+                observations: observations,
+                minScoreThreshold: configuration.minFocusScoreThreshold,
+                minMargin: configuration.minFocusMargin
+            )
             health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
         } else {
             health.focus = .notRequested
@@ -489,45 +500,151 @@ extension NativeUIDetectionRequest {
 
 extension NativeUIDetectionRequest {
 
-    private static func resolveTVOSFocus(
+    internal static func resolveTVOSFocus(
         in screenshot: CGImage,
-        observations: [NativeUIElementObservation]
+        observations: [NativeUIElementObservation],
+        minScoreThreshold: Double = 0.35,
+        minMargin: Double = 0.12
     ) -> [NativeUIElementObservation] {
         let focusableTypes: Set<NativeUIElementType> = [
             .collectionItem, .listRow, .primaryButton, .secondaryButton,
             .tabBar, .cancelAction, .toggle
         ]
 
-        var candidateScores: [(id: UUID, type: NativeUIElementType, score: Double)] = []
-        for obs in observations where focusableTypes.contains(obs.elementType) {
+        let focusableObs = observations.filter { focusableTypes.contains($0.elementType) }
+        guard !focusableObs.isEmpty else { return observations }
+
+        // 1. Calculate raw visual scores
+        struct CandidateScore {
+            let id: UUID
+            let type: NativeUIElementType
+            let baseScore: Double
+            var finalScore: Double
+        }
+
+        var candidateScores: [CandidateScore] = []
+        for obs in focusableObs {
             let px = obs.boundingBoxPixels
             let rect = CGRect(x: px.x, y: px.y, width: px.width, height: px.height)
-            let score = evaluateElementFocusScore(
+            let baseScore = evaluateElementFocusScore(
                 cgImage: screenshot,
                 pixelRect: rect,
                 elementType: obs.elementType
             )
-            candidateScores.append((id: obs.id, type: obs.elementType, score: score))
+            candidateScores.append(CandidateScore(id: obs.id, type: obs.elementType, baseScore: baseScore, finalScore: baseScore))
         }
 
-        let focusWinnerId: UUID? = candidateScores
-            .filter { item in
-                if item.type == .collectionItem {
-                    return item.score > 0.03
+        // 2. Peer-Relative Geometry Heuristic for collectionItem
+        // Focused tvOS collection items physically expand by ~1.15x in dimensions (~1.32x area).
+        let collectionItems = focusableObs.filter { $0.elementType == .collectionItem }
+        for i in 0..<candidateScores.count {
+            guard candidateScores[i].type == .collectionItem,
+                  let obs = focusableObs.first(where: { $0.id == candidateScores[i].id }) else {
+                continue
+            }
+
+            let ay = obs.boundingBoxPixels.y
+            let ah = obs.boundingBoxPixels.height
+            let rowPeers = collectionItems.filter { peer in
+                guard peer.id != obs.id else { return false }
+                let py = peer.boundingBoxPixels.y
+                let ph = peer.boundingBoxPixels.height
+                let overlapY = max(0.0, min(ay + ah, py + ph) - max(ay, py))
+                return (overlapY / min(ah, ph)) > 0.40
+            }
+
+            let perimeterScore = candidateScores[i].baseScore
+            let normalizedPerimeter = min(1.0, perimeterScore * 5.0)
+
+            if !rowPeers.isEmpty {
+                let candidateArea = obs.boundingBoxPixels.width * obs.boundingBoxPixels.height
+                let peerAreas = rowPeers.map { $0.boundingBoxPixels.width * $0.boundingBoxPixels.height }
+                let medPeerArea = median(peerAreas)
+                let scaleRatio = medPeerArea > 0 ? (candidateArea / medPeerArea) : 1.0
+
+                if scaleRatio >= 1.15 {
+                    // Confirmed geometric expansion
+                    let geometryScore = min(1.0, max(0.0, (scaleRatio - 1.0) / 0.30))
+                    candidateScores[i].finalScore = (normalizedPerimeter * 0.5) + (geometryScore * 0.5)
+                } else if scaleRatio < 1.08 {
+                    // Tile is unscaled relative to peers; penalize high perimeter contrast (often bright poster artwork)
+                    candidateScores[i].finalScore = normalizedPerimeter * 0.40
                 } else {
-                    return item.score > 0.45
+                    candidateScores[i].finalScore = normalizedPerimeter
+                }
+            } else {
+                // Isolated or single collectionItem
+                candidateScores[i].finalScore = normalizedPerimeter
+            }
+        }
+
+        // 3. Margin Analysis & Abstention Policy
+        let sorted = candidateScores.sorted { $0.finalScore > $1.finalScore }
+        guard let winner = sorted.first else { return observations }
+
+        struct FocusResolution {
+            let isFocused: Bool?
+            let confidence: Double?
+            let score: Double?
+            let isAmbiguous: Bool?
+        }
+
+        var resolutionMap: [UUID: FocusResolution] = [:]
+
+        if winner.finalScore < minScoreThreshold {
+            // Case 1: Low overall score — abstain from asserting focus
+            for c in sorted {
+                resolutionMap[c.id] = FocusResolution(
+                    isFocused: nil,
+                    confidence: 0.0,
+                    score: c.finalScore,
+                    isAmbiguous: false
+                )
+            }
+        } else {
+            let runnerUpScore = sorted.count > 1 ? sorted[1].finalScore : 0.0
+            let margin = winner.finalScore - runnerUpScore
+
+            if margin < minMargin {
+                // Case 2: Ambiguous competition — multiple candidates within margin threshold
+                for c in sorted {
+                    let isCompetitor = (c.finalScore >= winner.finalScore - minMargin)
+                    resolutionMap[c.id] = FocusResolution(
+                        isFocused: nil,
+                        confidence: isCompetitor ? max(0.1, min(0.5, c.finalScore * 0.5)) : 0.0,
+                        score: c.finalScore,
+                        isAmbiguous: isCompetitor
+                    )
+                }
+            } else {
+                // Case 3: Confident winner
+                let winnerConfidence = min(1.0, max(0.60, winner.finalScore * (1.0 + margin)))
+                resolutionMap[winner.id] = FocusResolution(
+                    isFocused: true,
+                    confidence: winnerConfidence,
+                    score: winner.finalScore,
+                    isAmbiguous: false
+                )
+                for c in sorted.dropFirst() {
+                    resolutionMap[c.id] = FocusResolution(
+                        isFocused: false,
+                        confidence: 0.0,
+                        score: c.finalScore,
+                        isAmbiguous: false
+                    )
                 }
             }
-            .max(by: { $0.score < $1.score })?
-            .id
+        }
 
         return observations.map { obs in
-            guard focusableTypes.contains(obs.elementType) else {
+            guard let resolution = resolutionMap[obs.id] else {
                 return obs
             }
-            let isFocused = (focusWinnerId != nil && obs.id == focusWinnerId!)
             var updatedState = obs.state
-            updatedState.isFocused = isFocused
+            updatedState.isFocused = resolution.isFocused
+            updatedState.focusConfidence = resolution.confidence
+            updatedState.focusScore = resolution.score
+            updatedState.isAmbiguousFocus = resolution.isAmbiguous
             return NativeUIElementObservation(
                 id: obs.id,
                 elementType: obs.elementType,
@@ -540,6 +657,17 @@ extension NativeUIDetectionRequest {
                 issues: obs.issues,
                 confidenceSource: obs.confidenceSource
             )
+        }
+    }
+
+    private static func median(_ values: [Double]) -> Double {
+        guard !values.isEmpty else { return 0.0 }
+        let sorted = values.sorted()
+        let count = sorted.count
+        if count % 2 == 1 {
+            return sorted[count / 2]
+        } else {
+            return (sorted[count / 2 - 1] + sorted[count / 2]) / 2.0
         }
     }
 

@@ -156,43 +156,62 @@ public struct NativeUIElementState: Sendable, Equatable {
     public var isLoading: Bool?
     /// True when the element is a shimmer/skeleton placeholder. Nil when not applicable.
     public var isSkeleton: Bool?
+    /// Calibrated confidence (0.0 to 1.0) of holding active tvOS focus. Nil when not applicable.
+    public var focusConfidence: Double?
+    /// Raw heuristic score (e.g. perimeter white ratio or luminance) used in focus ranking. Nil when not applicable.
+    public var focusScore: Double?
+    /// True when multiple candidates competed within the margin threshold and focus was ambiguous. Nil when not applicable.
+    public var isAmbiguousFocus: Bool?
 
     public init(
         isEnabled: Bool = true,
         isSelected: Bool = false,
         isFocused: Bool? = nil,
         isLoading: Bool? = nil,
-        isSkeleton: Bool? = nil
+        isSkeleton: Bool? = nil,
+        focusConfidence: Double? = nil,
+        focusScore: Double? = nil,
+        isAmbiguousFocus: Bool? = nil
     ) {
         self.isEnabled = isEnabled
         self.isSelected = isSelected
         self.isFocused = isFocused
         self.isLoading = isLoading
         self.isSkeleton = isSkeleton
+        self.focusConfidence = focusConfidence
+        self.focusScore = focusScore
+        self.isAmbiguousFocus = isAmbiguousFocus
     }
 }
 
 extension NativeUIElementState: Codable {
     private enum CodingKeys: String, CodingKey {
         case isEnabled, isSelected, isFocused, isLoading, isSkeleton
+        case focusConfidence, focusScore, isAmbiguousFocus
     }
 
     public init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        isEnabled  = try c.decode(Bool.self, forKey: .isEnabled)
-        isSelected = try c.decode(Bool.self, forKey: .isSelected)
-        isFocused  = try c.decodeIfPresent(Bool.self, forKey: .isFocused)
-        isLoading  = try c.decodeIfPresent(Bool.self, forKey: .isLoading)
-        isSkeleton = try c.decodeIfPresent(Bool.self, forKey: .isSkeleton)
+        isEnabled        = try c.decode(Bool.self, forKey: .isEnabled)
+        isSelected       = try c.decode(Bool.self, forKey: .isSelected)
+        isFocused        = try c.decodeIfPresent(Bool.self, forKey: .isFocused)
+        isLoading        = try c.decodeIfPresent(Bool.self, forKey: .isLoading)
+        isSkeleton       = try c.decodeIfPresent(Bool.self, forKey: .isSkeleton)
+        focusConfidence  = try c.decodeIfPresent(Double.self, forKey: .focusConfidence)
+        focusScore       = try c.decodeIfPresent(Double.self, forKey: .focusScore)
+        isAmbiguousFocus = try c.decodeIfPresent(Bool.self, forKey: .isAmbiguousFocus)
     }
 
     public func encode(to encoder: any Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
         try c.encode(isEnabled,  forKey: .isEnabled)
         try c.encode(isSelected, forKey: .isSelected)
-        try c.encodeIfPresent(isFocused,  forKey: .isFocused)
-        try c.encodeIfPresent(isLoading,  forKey: .isLoading)
-        try c.encodeIfPresent(isSkeleton, forKey: .isSkeleton)
+        try c.encodeIfPresent(isFocused,        forKey: .isFocused)
+        try c.encodeIfPresent(isLoading,        forKey: .isLoading)
+        try c.encodeIfPresent(isSkeleton,       forKey: .isSkeleton)
+        try c.encodeIfPresent(focusConfidence,  forKey: .focusConfidence)
+        try c.encodeIfPresent(focusScore,       forKey: .focusScore)
+        try c.encodeIfPresent(isAmbiguousFocus, forKey: .isAmbiguousFocus)
     }
 }
 

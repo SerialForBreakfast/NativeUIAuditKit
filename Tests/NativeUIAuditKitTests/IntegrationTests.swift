@@ -123,6 +123,10 @@ struct IntegrationTests {
         // Verify focus state: on tvOS, exactly one element should be identified as focused
         let focusedElements = result.elements.filter { $0.state.isFocused == true }
         #expect(focusedElements.count == 1)
+        #expect(focusedElements[0].state.focusConfidence != nil)
+        #expect(focusedElements[0].state.focusConfidence! >= 0.5)
+        #expect(focusedElements[0].state.focusScore != nil)
+        #expect(focusedElements[0].state.isAmbiguousFocus == false)
 
         // Verify touch target rule was skipped (exempt on tvOS)
         let touchIssues = result.elements.flatMap { $0.issues }.filter { $0.kind == .tappableTargetTooSmall }
@@ -295,6 +299,220 @@ struct IntegrationTests {
         #expect(result.status == .failed("Modality 'ocr' failed: Simulated Vision OCR crash"))
         #expect(result.modalityHealth.ocr.isFailed == true)
         #expect(result.modalityHealth.hasAnyFailure == true)
+    }
+
+    @Test("tvOS focus abstains when multiple candidates compete within score margin")
+    func tvosFocusAbstainsOnAmbiguousCandidates() {
+        // Create an image with two adjacent list rows with almost identical high luminance (0.85 vs 0.82)
+        let img = makeImage(width: 400, height: 200) { ctx in
+            // Row 1
+            ctx.setFillColor(CGColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0))
+            ctx.fill(CGRect(x: 20, y: 20, width: 360, height: 60))
+            // Row 2
+            ctx.setFillColor(CGColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.0))
+            ctx.fill(CGRect(x: 20, y: 100, width: 360, height: 60))
+        }
+
+        let obs1 = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 0.05, y: 0.1, width: 0.9, height: 0.3),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 20, width: 360, height: 60),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obs2 = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 0.05, y: 0.5, width: 0.9, height: 0.3),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 100, width: 360, height: 60),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obs1, obs2],
+            minScoreThreshold: 0.35,
+            minMargin: 0.12
+        )
+
+        // Neither element should claim isFocused == true because margin < 0.12
+        for elem in resolved {
+            #expect(elem.state.isFocused == nil, "Ambiguous focus must abstain and leave isFocused nil")
+            #expect(elem.state.isAmbiguousFocus == true, "Competing candidates within margin must have isAmbiguousFocus == true")
+            #expect(elem.state.focusScore != nil)
+            #expect(elem.state.focusConfidence != nil)
+        }
+    }
+
+    @Test("tvOS focus abstains when all candidates score below threshold")
+    func tvosFocusAbstainsOnLowScore() {
+        // Create an image with dark rows (luminance ~ 0.10 < 0.35)
+        let img = makeImage(width: 400, height: 200) { ctx in
+            ctx.setFillColor(CGColor(red: 0.10, green: 0.10, blue: 0.10, alpha: 1.0))
+            ctx.fill(CGRect(x: 20, y: 20, width: 360, height: 60))
+            ctx.fill(CGRect(x: 20, y: 100, width: 360, height: 60))
+        }
+
+        let obs1 = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 0.05, y: 0.1, width: 0.9, height: 0.3),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 20, width: 360, height: 60),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obs2 = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 0.05, y: 0.5, width: 0.9, height: 0.3),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 100, width: 360, height: 60),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obs1, obs2],
+            minScoreThreshold: 0.35,
+            minMargin: 0.12
+        )
+
+        for elem in resolved {
+            #expect(elem.state.isFocused == nil)
+            #expect(elem.state.isAmbiguousFocus == false)
+            #expect(elem.state.focusConfidence == 0.0)
+        }
+    }
+
+    @Test("tvOS focus asserts confident winner on clear margin")
+    func tvosFocusAssertsConfidentWinnerOnClearMargin() {
+        // Create an image with one solid white focused row (0.95) and one dark unfocused row (0.15)
+        let img = makeImage(width: 400, height: 200) { ctx in
+            // Focused row
+            ctx.setFillColor(CGColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0))
+            ctx.fill(CGRect(x: 20, y: 20, width: 360, height: 60))
+            // Unfocused row
+            ctx.setFillColor(CGColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0))
+            ctx.fill(CGRect(x: 20, y: 100, width: 360, height: 60))
+        }
+
+        let obsWinner = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 0.05, y: 0.1, width: 0.9, height: 0.3),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 20, width: 360, height: 60),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obsRunnerUp = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .listRow,
+            boundingBox: NativeUIRect(x: 0.05, y: 0.5, width: 0.9, height: 0.3),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 100, width: 360, height: 60),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obsWinner, obsRunnerUp],
+            minScoreThreshold: 0.35,
+            minMargin: 0.12
+        )
+
+        let winner = resolved.first(where: { $0.id == obsWinner.id })!
+        let runnerUp = resolved.first(where: { $0.id == obsRunnerUp.id })!
+
+        #expect(winner.state.isFocused == true)
+        #expect(winner.state.focusConfidence != nil && winner.state.focusConfidence! >= 0.80)
+        #expect(winner.state.isAmbiguousFocus == false)
+
+        #expect(runnerUp.state.isFocused == false)
+        #expect(runnerUp.state.focusConfidence == 0.0)
+        #expect(runnerUp.state.isAmbiguousFocus == false)
+    }
+
+    @Test("tvOS peer-relative geometry heuristic rewards expanded collection items")
+    func tvosPeerRelativeGeometryRewardsExpandedItem() {
+        // Three collection items in the same row (y: 50).
+        // Item 1 is expanded (width: 230, height: 230, area: 52900).
+        // Items 2 & 3 are unexpanded (width: 200, height: 200, area: 40000).
+        // Median peer area is 40000; Item 1 scale ratio is 1.32x (~1.15x per dimension).
+        let img = makeImage(width: 800, height: 350) { ctx in
+            // Draw dark background
+            ctx.setFillColor(CGColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 1.0))
+            ctx.fill(CGRect(x: 0, y: 0, width: 800, height: 350))
+
+            // Draw Item 1 with bright white border outline
+            ctx.setStrokeColor(CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+            ctx.setLineWidth(6.0)
+            ctx.stroke(CGRect(x: 20, y: 50, width: 230, height: 230))
+
+            // Draw Item 2 with thin faint border
+            ctx.setStrokeColor(CGColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0))
+            ctx.setLineWidth(2.0)
+            ctx.stroke(CGRect(x: 280, y: 65, width: 200, height: 200))
+
+            // Draw Item 3 with thin faint border
+            ctx.stroke(CGRect(x: 510, y: 65, width: 200, height: 200))
+        }
+
+        let obsExpanded = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 0.025, y: 0.14, width: 0.287, height: 0.657),
+            boundingBoxPixels: NativeUIRect(x: 20, y: 50, width: 230, height: 230),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obsPeer1 = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 0.35, y: 0.185, width: 0.25, height: 0.57),
+            boundingBoxPixels: NativeUIRect(x: 280, y: 65, width: 200, height: 200),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obsPeer2 = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 0.637, y: 0.185, width: 0.25, height: 0.57),
+            boundingBoxPixels: NativeUIRect(x: 510, y: 65, width: 200, height: 200),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obsExpanded, obsPeer1, obsPeer2],
+            minScoreThreshold: 0.35,
+            minMargin: 0.12
+        )
+
+        let winner = resolved.first(where: { $0.id == obsExpanded.id })!
+        #expect(winner.state.isFocused == true)
+        #expect(winner.state.focusConfidence != nil && winner.state.focusConfidence! > 0.6)
+        #expect(winner.state.isAmbiguousFocus == false)
+    }
+
+    private func makeImage(width: Int, height: Int, drawing: (CGContext) -> Void) -> CGImage {
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let ctx = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: width * 4,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        )!
+        // Flip context vertically so drawing (0, 0) is at top-left, matching CGImage pixel coordinates
+        ctx.translateBy(x: 0, y: CGFloat(height))
+        ctx.scaleBy(x: 1.0, y: -1.0)
+        drawing(ctx)
+        return ctx.makeImage()!
     }
 
     private func makeSolidPNGData(width: Int = 100, height: Int = 100) -> Data {

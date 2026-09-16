@@ -1925,27 +1925,27 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
-#### TASK-6b-WP1-2: Focus Confidence, Score Margin & Explicit Abstention (P0 / F1)
+#### TASK-6b-WP1-2: Focus Confidence, Score Margin & Explicit Abstention (P0 / F1) ✅
 
 **Files:** `Sources/NativeUIAuditKit/Models/NativeUIElementObservation.swift`, `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`  
 **Problem:** Focus heuristic forces a single winner using `max()` over raw brightness/perimeter scores. High-contrast or bright artwork (e.g. Paramount+ poster, game thumbnails) is falsely selected as focused with detector confidence 0.98, leading to wrong navigation steps.
 
 **AC:**
-- [ ] Extend `NativeUIElementState` with:
+- [x] Extend `NativeUIElementState` with:
   ```swift
   public var focusConfidence: Double?           // 0.0 to 1.0 calibrated confidence of being focused
   public var focusScore: Double?                // Raw heuristic score (perimeter white ratio or luminance)
   public var isAmbiguousFocus: Bool?            // true when multiple candidates compete within margin threshold
   ```
-- [ ] Implement **Focus Abstention Policy**:
+- [x] Implement **Focus Abstention Policy**:
   - Evaluate runner-up margin: `margin = winnerScore - runnerUpScore`
   - If `margin < minFocusMargin` (default: 0.12) or `winnerScore < minFocusThreshold`, mark top candidates with `isAmbiguousFocus: true` and leave `isFocused: nil` (or `false`)
   - Never assert a winning `isFocused: true` on an ambiguous or low-margin candidate
-- [ ] Add **Peer-Relative Geometry Heuristic** for `collectionItem`:
+- [x] Add **Peer-Relative Geometry Heuristic** for `collectionItem`:
   - Focused tvOS app tiles expand physically by 1.15× (visual transform) compared to unscaled grid peers
   - Contrast candidate area against median same-row peer area to confirm scale expansion
-- [ ] Retain TVTestRig's 7 physical calibration screenshots (`settings`, `settings-main`, `settings-voiceover`, `home`, `home-settings`, `fixture-tone`, `fixture-record`) as regression fixtures
-- [ ] Unit & regression tests verify:
+- [x] Retain TVTestRig's 7 physical calibration screenshots (`settings`, `settings-main`, `settings-voiceover`, `home`, `home-settings`, `fixture-tone`, `fixture-record`) as regression fixtures
+- [x] Unit & regression tests verify:
   1. The 3 Settings rows continue matching with `isFocused: true`
   2. The 4 non-Settings cases explicitly abstain (`isFocused: nil` or `isAmbiguousFocus: true`) rather than asserting a false-confident wrong target
 

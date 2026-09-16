@@ -208,12 +208,22 @@ struct NativeUIAuditKitTests {
 
     @Test("NativeUIElementState optional fields round-trip when set")
     func newStateFieldsRoundTrip() throws {
-        let state = NativeUIElementState(isFocused: true, isLoading: true, isSkeleton: true)
+        let state = NativeUIElementState(
+            isFocused: true,
+            isLoading: true,
+            isSkeleton: true,
+            focusConfidence: 0.95,
+            focusScore: 0.88,
+            isAmbiguousFocus: false
+        )
         let data = try JSONEncoder().encode(state)
         let decoded = try JSONDecoder().decode(NativeUIElementState.self, from: data)
         #expect(decoded.isLoading == true)
         #expect(decoded.isSkeleton == true)
         #expect(decoded.isFocused == true)
+        #expect(decoded.focusConfidence == 0.95)
+        #expect(decoded.focusScore == 0.88)
+        #expect(decoded.isAmbiguousFocus == false)
     }
 
     @Test("NativeUIElementState nil optional fields are omitted from JSON")
@@ -224,5 +234,8 @@ struct NativeUIAuditKitTests {
         #expect(!json.contains("isLoading"), "nil isLoading must not appear in JSON")
         #expect(!json.contains("isSkeleton"), "nil isSkeleton must not appear in JSON")
         #expect(!json.contains("isFocused"), "nil isFocused must not appear in JSON")
+        #expect(!json.contains("focusConfidence"), "nil focusConfidence must not appear in JSON")
+        #expect(!json.contains("focusScore"), "nil focusScore must not appear in JSON")
+        #expect(!json.contains("isAmbiguousFocus"), "nil isAmbiguousFocus must not appear in JSON")
     }
 }
