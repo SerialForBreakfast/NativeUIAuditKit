@@ -133,4 +133,16 @@ final class NativeUIModelAssetTests: XCTestCase {
             XCTAssertTrue(error is ModelContractError)
         }
     }
+
+    func testModelMetadataLicenseDisclosure() async throws {
+        let expectedLicense = "AGPL-3.0 License (https://ultralytics.com/license)"
+
+        let iosModel = try await NativeUIModelAsset.loadModel()
+        let iosLicense = iosModel.modelDescription.metadata[.license] as? String
+        XCTAssertEqual(iosLicense, expectedLicense, "iOS model metadata must declare AGPL-3.0 License with URL")
+
+        let tvOSModel = try await NativeUIModelAsset.loadTVOSModel()
+        let tvOSLicense = tvOSModel.modelDescription.metadata[.license] as? String
+        XCTAssertEqual(tvOSLicense, expectedLicense, "tvOS model metadata must declare AGPL-3.0 License with URL")
+    }
 }

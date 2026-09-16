@@ -1991,18 +1991,18 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
-#### TASK-6b-WP1-5: Model Licensing, Provenance & Distribution Architecture (F5)
+#### TASK-6b-WP1-5: Model Licensing, Provenance & Distribution Architecture (F5) ✅
 
 **Files:** `NativeUIAuditKitModels/README.md`, `LICENSE`, `Research/LicensingArchitecture.md`  
 **Problem:** Package root declares MIT license, but bundled YOLO11 models carry `MLModelLicenseKey: AGPL-3.0 License` in CoreML metadata from Ultralytics export. Downstream consumers require transparent licensing terms.
 
 **AC:**
-- [ ] Create `Research/LicensingArchitecture.md` documenting:
+- [x] Create `Research/LicensingArchitecture.md` documenting:
   - Swift package code license (MIT)
   - YOLO11 trained weights attribution and upstream AGPL-3.0 boundary
   - Options for commercial consumers: Ultralytics enterprise commercial license vs. clean permissive retrain (Apple Create ML / Apache 2.0 TorchVision)
-- [ ] Update `NativeUIAuditKitModels/README.md` and package documentation with explicit provenance and license disclosure for each bundled `.mlmodelc`
-- [ ] Add license validation test in `NativeUIAuditKitModelsTests` asserting metadata license string matches documentation
+- [x] Update `NativeUIAuditKitModels/README.md` and package documentation with explicit provenance and license disclosure for each bundled `.mlmodelc`
+- [x] Add license validation test in `NativeUIAuditKitModelsTests` asserting metadata license string matches documentation
 
 ---
 

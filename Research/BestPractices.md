@@ -772,3 +772,17 @@ swift -module-cache-path .build/clang-cache scripts/myscript.swift [args]
 
 **Why:** Confines all compiled module caches to `.build/`, eliminating sandbox permission failures and adhering strictly to the filesystem boundary rule.
 
+---
+
+### BP-39: macOS Vision OCR and IOSurface Allocation Depend on Host Session Context (Mach Bootstrap / WindowServer)
+
+**What went wrong:** During initial physical Apple TV qualification, `VNRecognizeTextRequest` consistently failed on valid screenshots with `kCVReturnAllocationFailed` (-6662) under `com.apple.Vision` / `Foundation._GenericObjCError`. However, running the identical code on the identical reviewed screenshot and identical OS build (`Build 25F84`) inside an interactive user shell session succeeded 7/7 times (`surfaceAllocationCode: 0`, 13 text regions detected).
+
+**Root Cause:** Apple's Vision framework allocates hardware-accelerated memory buffers via `IOSurface`. `IOSurfaceCreate` requires access to the system WindowServer and graphics daemons via Mach bootstrap service ports (`bootstrap_port`). In certain non-interactive or restricted execution contexts (e.g. headless SSH sessions without GUI login context, LaunchDaemon background processes lacking Aqua session type, or restricted subshells), Mach lookup fails and CoreVideo returns `kCVReturnAllocationFailed` (-6662).
+
+**Correct Approach:**
+1. **Library Level:** Always treat OCR as a fallible modality. Use `ModalityHealth` (WP1-1) to report `.failed(reason: ..., domain: "com.apple.Vision", code: -6662)` without swallowing the error or crashing the detection pipeline.
+2. **CI / Automation Level:** Ensure automated test runners and inspection harnesses (such as TVTestRig) execute inside an active Aqua user session (or with `launchctl asuser <uid>`), rather than a disconnected background launchd daemon.
+3. **Diagnostics:** When diagnosing OCR failures, verify whether `IOSurface` can be allocated in the target shell before assuming image corruption.
+
+
