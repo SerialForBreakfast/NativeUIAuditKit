@@ -2395,13 +2395,14 @@ Add `--native-ui none|coreml` to `screenaudit validate`. Default: `none`. When `
 
 Before moving `NativeUIAuditKit` to its own public repository:
 
-- [ ] No RA11y-specific code, paths, or terminology in `Sources/NativeUIAuditKit/`
-- [ ] `swift build` and `swift test` pass standalone (no workspace)
-- [ ] `README.md` includes integration guide for a non-RA11y project
-- [ ] `LICENSE` file added (license decision made)
-- [ ] `NativeUIAuditKitModels` package structure fully defined
-- [ ] At least one non-RA11y test scenario documented
-- [ ] `AGENTS.md`-compatible
-- [ ] `Research/TrainingDataStrategy.md` current and reviewed
-- [ ] `Research/schemas/annotation.schema.json` tagged v1.0
-- [ ] `Research/schemas/category_map.json` stable (IDs frozen)
+- [x] No RA11y-specific code, paths, or terminology in `Sources/NativeUIAuditKit/`
+- [x] `swift build` and `swift test` pass standalone (no external workspace required, offline tests passing)
+- [x] `README.md` includes integration guide for a non-RA11y project (`NativeUIAuditKit` and `NativeUIAuditKitModels` usage)
+- [x] `LICENSE` file added (MIT license configured)
+- [x] `NativeUIAuditKitModels` package structure fully defined (SPM target + bundled resources + ModelRegistry)
+- [x] At least one non-RA11y test scenario documented (`TVTestRig` physical Apple TV qualification and `ViewLens` integration)
+- [x] `AGENTS.md`-compatible
+- [x] `Research/TrainingDataStrategy.md` current and reviewed
+- [x] `Research/schemas/annotation.schema.json` tagged v1.0
+- [x] `Research/schemas/category_map.json` stable (IDs frozen)
+

@@ -36,33 +36,36 @@ Two products — pick the one that matches what you need:
 ```swift
 import NativeUIAuditKitModels
 
+// iOS Model
 let model = try await NativeUIModelAsset.loadModel()          // ANE/GPU-configured MLModel
 let metadata = NativeUIModelAsset.metadata                    // input size, class order, thresholds
 print(metadata.classLabels)  // ["alert", "navigationBar", "primaryButton", "textField", "toggle"]
+
+// tvOS Model (25 active classes)
+let tvOSDescriptor = ModelRegistry.tvOS                       // nativeui-tvos-v3.0
+let tvOSModel = try await ModelRegistry.loadModel(for: tvOSDescriptor)
 ```
 
 The model expects a 640×640 letterboxed input with NMS already baked into the CoreML graph.
 For the complete, tested letterbox → predict → parse pipeline, see
-[`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) — the exact logic validated
-against the 0.935 mAP@0.5 figure below. Full API docs: `swift package generate-documentation`
+[`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) and [`scripts/eval_tvos_model.py`](scripts/eval_tvos_model.py). Full API docs: `swift package generate-documentation`
 (DocC), or see the module documentation comments in
-[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift).
+[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift) and [`ModelRegistry.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift).
 
 `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level Vision-style
-wrapper) is fully migrated to the YOLO11n model as of `2.0.0` — single-pass letterboxed
-inference, no Vision framework dependency, no strip/SAHI tiling (see Phase 6d in
-[Tasks.md](Tasks.md)). Either product is safe to use:
+wrapper) supports automatic platform routing for iOS and tvOS screenshots with active focus detection:
 
 ```swift
 import NativeUIAuditKit
 
-let request = NativeUIDetectionRequest()   // default minimumConfidence = 0.5
+let request = NativeUIDetectionRequest()   // auto-routes to tvOS when 1080p Apple TV image detected
 let observations = try await request.perform(on: screenshotCGImage)
 
 for obs in observations {
-    print(obs.elementType, obs.confidence, obs.boundingBoxPixels)
+    print(obs.elementType, obs.confidence, obs.boundingBoxPixels, "focused:", obs.state.isFocused ?? false)
 }
 ```
+
 
 ---
 
@@ -80,16 +83,28 @@ NativeUIAuditKit builds a custom Vision-style request backed by CoreML object de
 - **Sidecar mode** — highest accuracy; hierarchy metadata exported at capture time is paired with the PNG
 - **Pixel-only mode** — moderate accuracy; works on orphan PNGs with no metadata
 
-**Three platform-specific models (iOS model trained; tvOS/macOS planned):**
-- `NativeUIModel_iOS` — iOS + iPadOS (shared visual language) — **5-class prototype trained ✓**
-- `NativeUIModel_tvOS` — tvOS (focus state paradigm, tab bar at screen top)
+**Three platform-specific models (iOS and tvOS trained; macOS planned):**
+- `NativeUIModel_iOS` — iOS + iPadOS (shared visual language) — **YOLO11n v2.0 shipped ✓** (mAP@0.5 = 0.935)
+- `NativeUIModel_tvOS` — tvOS (focus state paradigm, top shelf, carousel) — **YOLO11n v3.0 shipped ✓** (mAP@0.5 = **0.9822**, 25 active classes, qualified on Apple TV 4K hardware)
 - `NativeUIModel_macOS` — macOS (window chrome, NSToolbar, AppKit layout)
 
 ---
 
 ## Model Performance
 
-### Current: YOLO11n (trained + evaluated 2026-08-23)
+### tvOS Model: YOLO11n v3.0 (Trained & Hardware-Qualified 2026-09-17)
+
+25-class tvOS detector trained on 5,000 balanced 1080p synthetic screens (25 UI families) using Ultralytics YOLO11n and exported to CoreML (`NativeUIModel_tvOS.mlmodelc`) with FP16 quantization.
+
+- **Validation mAP@0.5:** **0.9822** (Precision: 0.983, Recall: 0.983, mAP@0.5:0.95: 0.944).
+- **Active classes (25):** `activityIndicator`, `alert`, `cancelAction`, `collectionItem`, `contextMenu`, `destructiveButton`, `imageView`, `label`, `link`, `listRow`, `navigationBar`, `popover`, `primaryButton`, `progressView`, `searchField`, `secondaryButton`, `secureField`, `segmentedControl`, `sheet`, `sidebar`, `slider`, `stepperControl`, `tabBar`, `toggle`, `toolbar`.
+- **Dual Focus Engine:** Evaluates active focus via parallax geometric tile expansion (\(301.5 \times 173.2\) pt vs baseline \(247 \times 147\) pt), radiant perimeter glow, inverted high-luminance interior pills (mean brightness 228.9 vs 149.6), and VoiceOver accessibility contrast borders.
+- **Physical Hardware Qualification (Office Lab Apple TV 4K):** 
+  - Ingested 23 live 1080p captures across Home Screen top shelf dock & grid rows, App Switcher multitasking carousel, and third-party app onboarding screens.
+  - 586 native elements detected with zero false positives from AVFoundation video stream artifacts.
+  - Full report at `reports/tvos_hardware_qualification.json`.
+
+### iOS Model: YOLO11n v2.0 (Trained + Evaluated 2026-08-23)
 
 5-class iOS detector trained via Ultralytics YOLO11n (100 epochs), exported to CoreML with NMS baked into the graph (IoU 0.30, confidence floor 0.001). Evaluated on the **same 1,394 held-out validation images** as the Create ML baseline below, so the two are directly comparable.
 
@@ -137,6 +152,7 @@ The original anchor-based Create ML objectPrint model — required strip-tiling 
 **Inference pipeline:** per-class pass routing (alert → full-image only; navBar/textField/toggle → strip pass; primaryButton → both), cross-class conflict suppression (textField suppressed if IoU > 0.30 with toggle or primaryButton), NMS IoU threshold 0.30.
 
 Full experiment history: [`Research/ExperimentLog.md`](Research/ExperimentLog.md)
+
 
 ---
 
