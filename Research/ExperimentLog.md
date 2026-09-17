@@ -927,20 +927,23 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
 **Hardware Device:** Apple TV 4K (`office`, ID: `8D80F616-6C12-49A6-9015-8F594EE5F24E`, Model: `AppleTV5,3`, tvOS `26.6`)  
 **Pipeline:** TVTestRig `aatv` CLI + AVFoundation 1920×1080 capture stream + YOLO11n `NativeUIModel_tvOS_v3.0` (25 classes) + Dual Focus Engine (Parallax Expansion / Glow + Inverted High-Luminance Pill + VoiceOver Contrast Border) + Apple Vision OCR Fusion.
 
-**Outcome:**
-- **23 Real Hardware Screenshots Ingested:**
+- **Outcome:**
+- **28 Real Hardware Screenshots Ingested:**
   - Standardized sidecar provenance JSON (`captureSource: realAppleTVTVTestRig`, SHA-256 integrity hashes, 1920×1080 resolution).
   - Stored in `dataset/tvos_captures/`.
-- **Three Target Navigation Surfaces Qualified:**
+- **Target Navigation & OS Surfaces Qualified:**
   1. **Home Screen & Top Shelf Dock:**
      - Ingested dock focus transitions across standard and featured rows.
      - Detected 16–37 elements per screen (`collectionItem`, `imageView`, `label`, `searchField`).
      - Parallax tile expansion verified: actively focused item expanded from baseline \(247 \times 147\) pt to \(301.5 \times 173.2\) pt (IoU/confidence > 0.96).
   2. **App Switcher Multitasking Carousel:**
      - Navigated via rapid double-press Home remote sequence (`remote press home` × 2).
-     - Detected 36 elements per frame across multitasking cards (`collectionItem` cards with conf=0.83–0.98, app icons `imageView`, app title badges `label`, and dismiss handles `cancelAction`).
-     - Focused card identified at `(1425, 599)` ("• YouTube").
-  3. **App Interactive Surfaces & Focus Transitions (Photos / Pluto / YouTube):**
+     - Traversed horizontally across running card decks (`office_session2_switcher.png` and `office_session2_switcher_card2.png`).
+     - Detected 19–36 elements per frame across multitasking cards (`collectionItem` cards with conf=0.83–0.98, app icons `imageView`, app title badges `label`, and dismiss handles `cancelAction`).
+  3. **TVTestRig Fixture Surface:**
+     - Successfully navigated and launched `TVTestRig Fixture` directly from the Home dock (`office_fixture_main.png`).
+     - Detected 22 elements across seeded defect matrix, interactive probe buttons (`secondaryButton`), accessibility status indicators, and nested sub-deck list rows (`listRow`).
+  4. **App Interactive Surfaces & Focus Transitions (Photos / Pluto / YouTube):**
      - Navigated into application onboarding and guest screens.
      - Detected interactive action buttons (`primaryButton`, `secondaryButton`, `listRow`, `label`, `imageView`).
      - Measured inverted high-luminance interior pill focus score:
@@ -948,6 +951,7 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
        - Navigated `remote press down` -> focus successfully shifted: Button 2 brightness increased to 225.9 while Button 1 dropped to 138.7.
 - **Hardware Qualification Report:**
   - Written to `reports/tvos_hardware_qualification.json`.
-  - 586 native elements detected across 23 live hardware captures (349 `collectionItem`, 115 `label`, 77 `imageView`, 13 `cancelAction`, 10 `searchField`, 10 `secondaryButton`, 9 `listRow`, 2 `primaryButton`, 1 `sidebar`).
+  - 675 native elements detected across 28 live hardware captures (388 `collectionItem`, 140 `label`, 96 `imageView`, 15 `secondaryButton`, 13 `cancelAction`, 10 `listRow`, 10 `searchField`, 2 `primaryButton`, 1 `sidebar`).
   - Zero false positives on screen edges or video stream artifacts.
+
 

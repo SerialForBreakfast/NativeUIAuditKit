@@ -1,5 +1,5 @@
 {
-  "total_captures": 23,
+  "total_captures": 28,
   "captures": [
     {
       "filename": "office_app_switcher.png",
@@ -1737,6 +1737,402 @@
             3.4,
             542.0,
             77.7
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_dock_fixture.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 16,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            687.0,
+            827.0,
+            935.9,
+            973.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            390.6,
+            826.5,
+            637.5,
+            974.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            984.9,
+            826.7,
+            1231.6,
+            974.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            665.1,
+            139.0,
+            1261.2,
+            466.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.963,
+          "box": [
+            1582.4,
+            826.4,
+            1827.2,
+            974.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.956,
+          "box": [
+            1284.3,
+            827.3,
+            1531.1,
+            974.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.93,
+          "box": [
+            707.1,
+            841.7,
+            871.2,
+            967.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.903,
+          "box": [
+            149.9,
+            929.1,
+            281.6,
+            966.5
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.601,
+          "box": [
+            1138.8,
+            556.7,
+            1213.2,
+            647.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.409,
+          "box": [
+            64.1,
+            817.6,
+            365.6,
+            990.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.396,
+          "box": [
+            1029.6,
+            555.9,
+            1212.9,
+            649.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.38,
+          "box": [
+            775.3,
+            554.7,
+            943.0,
+            650.6
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.353,
+          "box": [
+            1582.4,
+            826.8,
+            1827.8,
+            974.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.299,
+          "box": [
+            142.2,
+            837.9,
+            288.8,
+            917.9
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.298,
+          "box": [
+            390.6,
+            826.8,
+            638.3,
+            974.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.297,
+          "box": [
+            1103.8,
+            181.3,
+            1211.4,
+            267.4
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_fixture_main.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 22,
+      "detections": [
+        {
+          "class": "label",
+          "confidence": 0.921,
+          "box": [
+            1000.5,
+            569.3,
+            1466.8,
+            614.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.906,
+          "box": [
+            269.4,
+            651.0,
+            597.4,
+            683.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.895,
+          "box": [
+            1364.3,
+            342.3,
+            1787.5,
+            378.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.891,
+          "box": [
+            126.1,
+            76.1,
+            587.9,
+            147.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.889,
+          "box": [
+            1138.2,
+            648.3,
+            1500.5,
+            680.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.888,
+          "box": [
+            120.3,
+            152.2,
+            282.1,
+            177.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.883,
+          "box": [
+            137.3,
+            471.4,
+            1165.5,
+            533.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.875,
+          "box": [
+            1112.2,
+            688.6,
+            1770.7,
+            740.8
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.869,
+          "box": [
+            773.2,
+            660.5,
+            917.2,
+            706.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.825,
+          "box": [
+            255.2,
+            689.4,
+            697.7,
+            718.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.732,
+          "box": [
+            113.3,
+            972.6,
+            995.9,
+            1031.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.684,
+          "box": [
+            805.4,
+            408.4,
+            1122.4,
+            449.8
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.683,
+          "box": [
+            1569.7,
+            124.3,
+            1803.7,
+            198.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.542,
+          "box": [
+            135.7,
+            337.4,
+            679.3,
+            379.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.541,
+          "box": [
+            234.8,
+            471.3,
+            1441.0,
+            529.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.528,
+          "box": [
+            1008.3,
+            659.8,
+            1065.4,
+            724.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.501,
+          "box": [
+            502.2,
+            408.3,
+            733.6,
+            448.5
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.482,
+          "box": [
+            225.8,
+            638.0,
+            932.1,
+            733.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.466,
+          "box": [
+            1268.0,
+            792.8,
+            1486.2,
+            825.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.417,
+          "box": [
+            111.9,
+            185.7,
+            422.0,
+            215.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.338,
+          "box": [
+            563.7,
+            408.5,
+            794.5,
+            449.0
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.268,
+          "box": [
+            184.8,
+            395.6,
+            1162.9,
+            459.6
           ]
         }
       ]
@@ -5770,6 +6166,540 @@
       ]
     },
     {
+      "filename": "office_session2_home.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 12,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.979,
+          "box": [
+            662.9,
+            809.9,
+            960.4,
+            987.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            985.4,
+            825.7,
+            1230.6,
+            975.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            389.9,
+            825.1,
+            635.1,
+            975.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.967,
+          "box": [
+            727.1,
+            830.7,
+            887.4,
+            972.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.946,
+          "box": [
+            1283.3,
+            826.4,
+            1530.5,
+            975.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.945,
+          "box": [
+            1581.8,
+            825.4,
+            1826.4,
+            975.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.707,
+          "box": [
+            89.6,
+            825.9,
+            337.0,
+            975.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.615,
+          "box": [
+            158.2,
+            842.6,
+            313.9,
+            966.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.565,
+          "box": [
+            1131.0,
+            338.6,
+            1170.4,
+            379.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.538,
+          "box": [
+            936.7,
+            300.6,
+            1078.2,
+            374.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.347,
+          "box": [
+            1132.7,
+            356.0,
+            1171.2,
+            399.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.25,
+          "box": [
+            821.9,
+            542.6,
+            1095.4,
+            605.8
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_session2_switcher.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 20,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.901,
+          "box": [
+            304.7,
+            752.4,
+            496.0,
+            867.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.844,
+          "box": [
+            188.9,
+            852.7,
+            238.2,
+            875.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.825,
+          "box": [
+            756.3,
+            754.3,
+            942.2,
+            867.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.806,
+          "box": [
+            532.1,
+            754.5,
+            719.0,
+            866.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.798,
+          "box": [
+            927.8,
+            546.9,
+            1151.3,
+            621.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.786,
+          "box": [
+            191.7,
+            303.3,
+            238.7,
+            327.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.78,
+          "box": [
+            978.8,
+            754.5,
+            1166.3,
+            866.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.759,
+          "box": [
+            1426.3,
+            754.3,
+            1610.7,
+            867.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.736,
+          "box": [
+            1203.2,
+            754.3,
+            1388.9,
+            866.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.708,
+          "box": [
+            188.4,
+            546.1,
+            238.8,
+            595.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.652,
+          "box": [
+            190.0,
+            211.5,
+            241.2,
+            261.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.651,
+          "box": [
+            191.5,
+            277.2,
+            240.8,
+            311.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.643,
+          "box": [
+            189.6,
+            726.1,
+            239.0,
+            796.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.561,
+          "box": [
+            193.0,
+            602.9,
+            242.0,
+            683.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.548,
+          "box": [
+            220.7,
+            150.3,
+            1680.7,
+            486.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.448,
+          "box": [
+            756.1,
+            755.8,
+            944.0,
+            865.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.346,
+          "box": [
+            309.6,
+            757.1,
+            495.4,
+            864.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.309,
+          "box": [
+            992.4,
+            547.9,
+            1151.0,
+            620.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.295,
+          "box": [
+            189.8,
+            489.0,
+            239.9,
+            525.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.256,
+          "box": [
+            189.6,
+            231.0,
+            241.4,
+            295.0
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_session2_switcher_card2.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 19,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.9,
+          "box": [
+            304.9,
+            752.4,
+            496.1,
+            867.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.848,
+          "box": [
+            189.0,
+            852.7,
+            238.1,
+            875.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.833,
+          "box": [
+            191.9,
+            304.6,
+            238.3,
+            328.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.83,
+          "box": [
+            756.4,
+            754.3,
+            942.3,
+            867.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.809,
+          "box": [
+            532.2,
+            754.4,
+            719.0,
+            866.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.793,
+          "box": [
+            933.6,
+            546.9,
+            1151.2,
+            621.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.78,
+          "box": [
+            978.8,
+            754.6,
+            1166.3,
+            866.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.76,
+          "box": [
+            1426.4,
+            754.2,
+            1610.7,
+            867.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.739,
+          "box": [
+            188.6,
+            545.9,
+            238.7,
+            595.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.736,
+          "box": [
+            1203.1,
+            754.3,
+            1389.0,
+            866.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.726,
+          "box": [
+            191.7,
+            276.4,
+            240.6,
+            310.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.669,
+          "box": [
+            190.0,
+            726.8,
+            238.9,
+            797.2
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.66,
+          "box": [
+            190.1,
+            211.3,
+            241.1,
+            261.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.599,
+          "box": [
+            193.5,
+            604.5,
+            242.0,
+            682.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.506,
+          "box": [
+            269.9,
+            151.5,
+            1680.8,
+            485.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.503,
+          "box": [
+            756.2,
+            755.8,
+            943.9,
+            865.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.344,
+          "box": [
+            309.6,
+            756.9,
+            495.4,
+            864.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.314,
+          "box": [
+            995.9,
+            547.9,
+            1150.9,
+            620.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.305,
+          "box": [
+            190.5,
+            488.9,
+            239.8,
+            525.7
+          ]
+        }
+      ]
+    },
+    {
       "filename": "office_settings_target.png",
       "sha256": "",
       "source": "realAppleTVTVTestRig",
@@ -6047,13 +6977,13 @@
     }
   ],
   "detected_class_totals": {
-    "collectionItem": 349,
-    "label": 115,
+    "collectionItem": 388,
+    "label": 140,
     "cancelAction": 13,
-    "imageView": 77,
+    "imageView": 96,
+    "secondaryButton": 15,
+    "listRow": 10,
     "searchField": 10,
-    "secondaryButton": 10,
-    "listRow": 9,
     "sidebar": 1,
     "primaryButton": 2
   }
