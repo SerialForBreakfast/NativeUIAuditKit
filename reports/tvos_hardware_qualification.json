@@ -1,5 +1,5 @@
 {
-  "total_captures": 28,
+  "total_captures": 29,
   "captures": [
     {
       "filename": "office_app_switcher.png",
@@ -6971,6 +6971,494 @@
             1053.5,
             636.9,
             1080.0
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_tvos_settings_main.png",
+      "sha256": "289ad87640ad59740b59d9c3fa5498783256a5e598255b4d43708747d9beb965",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 48,
+      "detections": [
+        {
+          "class": "label",
+          "confidence": 0.955,
+          "box": [
+            1091.6,
+            925.8,
+            1229.0,
+            959.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.938,
+          "box": [
+            1092.2,
+            203.9,
+            1219.0,
+            240.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.937,
+          "box": [
+            257.4,
+            238.8,
+            792.9,
+            778.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.926,
+          "box": [
+            1092.4,
+            846.6,
+            1178.1,
+            882.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.916,
+          "box": [
+            1087.7,
+            602.6,
+            1499.3,
+            641.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.914,
+          "box": [
+            1086.9,
+            684.2,
+            1440.4,
+            720.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.913,
+          "box": [
+            1091.2,
+            1004.6,
+            1214.7,
+            1042.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.911,
+          "box": [
+            1090.4,
+            764.4,
+            1301.6,
+            800.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.896,
+          "box": [
+            1089.1,
+            524.9,
+            1302.7,
+            559.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.895,
+          "box": [
+            1087.1,
+            445.5,
+            1309.6,
+            479.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.887,
+          "box": [
+            849.5,
+            62.5,
+            1069.4,
+            119.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.876,
+          "box": [
+            1087.7,
+            363.5,
+            1364.0,
+            401.2
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.876,
+          "box": [
+            1071.3,
+            268.3,
+            1834.5,
+            336.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.859,
+          "box": [
+            1230.6,
+            604.3,
+            1490.9,
+            640.4
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.804,
+          "box": [
+            1075.4,
+            666.5,
+            1837.4,
+            736.6
+          ]
+        },
+        {
+          "class": "contextMenu",
+          "confidence": 0.787,
+          "box": [
+            1045.1,
+            185.2,
+            1864.4,
+            1080.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.782,
+          "box": [
+            507.9,
+            454.4,
+            640.8,
+            563.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.756,
+          "box": [
+            340.3,
+            873.3,
+            712.9,
+            906.2
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.729,
+          "box": [
+            1782.2,
+            209.6,
+            1804.4,
+            233.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.686,
+          "box": [
+            1090.8,
+            604.1,
+            1341.2,
+            642.0
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.659,
+          "box": [
+            1067.0,
+            427.5,
+            1836.9,
+            496.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.652,
+          "box": [
+            263.3,
+            239.6,
+            791.6,
+            775.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.641,
+          "box": [
+            1782.2,
+            686.5,
+            1804.1,
+            712.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.619,
+          "box": [
+            1091.0,
+            604.3,
+            1234.1,
+            641.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.612,
+          "box": [
+            1782.0,
+            768.2,
+            1804.2,
+            794.4
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.597,
+          "box": [
+            1063.2,
+            748.2,
+            1837.2,
+            817.2
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.572,
+          "box": [
+            1073.4,
+            427.3,
+            1836.3,
+            497.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.57,
+          "box": [
+            1782.5,
+            531.6,
+            1803.1,
+            554.5
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.557,
+          "box": [
+            1075.9,
+            587.2,
+            1838.6,
+            654.9
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.552,
+          "box": [
+            1067.1,
+            666.9,
+            1837.1,
+            736.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.489,
+          "box": [
+            1089.9,
+            284.4,
+            1454.1,
+            321.6
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.473,
+          "box": [
+            1063.2,
+            827.4,
+            1835.3,
+            895.2
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.466,
+          "box": [
+            1062.6,
+            906.9,
+            1834.9,
+            976.1
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.466,
+          "box": [
+            1075.1,
+            347.4,
+            1835.8,
+            415.2
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.444,
+          "box": [
+            1068.2,
+            509.3,
+            1834.3,
+            576.6
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.443,
+          "box": [
+            1072.7,
+            187.3,
+            1825.4,
+            256.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.441,
+          "box": [
+            448.6,
+            452.3,
+            635.2,
+            564.5
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.412,
+          "box": [
+            1067.3,
+            347.7,
+            1833.0,
+            415.0
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.386,
+          "box": [
+            1076.2,
+            268.8,
+            1834.2,
+            337.1
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.376,
+          "box": [
+            1074.0,
+            508.7,
+            1835.0,
+            577.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.369,
+          "box": [
+            1782.8,
+            449.5,
+            1803.4,
+            471.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.364,
+          "box": [
+            1782.1,
+            927.0,
+            1804.4,
+            952.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.36,
+          "box": [
+            1300.8,
+            686.4,
+            1447.9,
+            718.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.33,
+          "box": [
+            1320.1,
+            604.9,
+            1491.2,
+            639.9
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.319,
+          "box": [
+            1070.0,
+            586.8,
+            1832.4,
+            656.7
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.309,
+          "box": [
+            1064.4,
+            989.2,
+            1840.2,
+            1059.5
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.256,
+          "box": [
+            1068.3,
+            827.2,
+            1838.4,
+            895.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.201,
+          "box": [
+            1782.5,
+            291.2,
+            1802.9,
+            314.9
           ]
         }
       ]
