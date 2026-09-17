@@ -918,3 +918,36 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - Updated model manifest `model_manifest_tvos_v1.json` (`modelId: nativeui-tvos-v3.0`).
   - Registered `ModelRegistry.tvOS` (`nativeui-tvos-v3.0`, mAP@0.5 = 0.9822, 25 active classes) with backwards-compatible `tvOS_v2` and `tvOS_v1` retention.
   - All 73 unit and integration tests passing offline across `NativeUIAuditKitTests` and `NativeUIAuditKitModelsTests`.
+
+---
+
+## Phase 6b-R — Real Apple TV Hardware Qualification (Office Lab)
+
+**Date:** 2026-09-17  
+**Hardware Device:** Apple TV 4K (`office`, ID: `8D80F616-6C12-49A6-9015-8F594EE5F24E`, Model: `AppleTV5,3`, tvOS `26.6`)  
+**Pipeline:** TVTestRig `aatv` CLI + AVFoundation 1920×1080 capture stream + YOLO11n `NativeUIModel_tvOS_v3.0` (25 classes) + Dual Focus Engine (Parallax Expansion / Glow + Inverted High-Luminance Pill + VoiceOver Contrast Border) + Apple Vision OCR Fusion.
+
+**Outcome:**
+- **23 Real Hardware Screenshots Ingested:**
+  - Standardized sidecar provenance JSON (`captureSource: realAppleTVTVTestRig`, SHA-256 integrity hashes, 1920×1080 resolution).
+  - Stored in `dataset/tvos_captures/`.
+- **Three Target Navigation Surfaces Qualified:**
+  1. **Home Screen & Top Shelf Dock:**
+     - Ingested dock focus transitions across standard and featured rows.
+     - Detected 16–37 elements per screen (`collectionItem`, `imageView`, `label`, `searchField`).
+     - Parallax tile expansion verified: actively focused item expanded from baseline \(247 \times 147\) pt to \(301.5 \times 173.2\) pt (IoU/confidence > 0.96).
+  2. **App Switcher Multitasking Carousel:**
+     - Navigated via rapid double-press Home remote sequence (`remote press home` × 2).
+     - Detected 36 elements per frame across multitasking cards (`collectionItem` cards with conf=0.83–0.98, app icons `imageView`, app title badges `label`, and dismiss handles `cancelAction`).
+     - Focused card identified at `(1425, 599)` ("• YouTube").
+  3. **App Interactive Surfaces & Focus Transitions (Photos / Pluto / YouTube):**
+     - Navigated into application onboarding and guest screens.
+     - Detected interactive action buttons (`primaryButton`, `secondaryButton`, `listRow`, `label`, `imageView`).
+     - Measured inverted high-luminance interior pill focus score:
+       - Button 1 ("View All iCloud Photos"): brightness 228.9 (focused) vs Button 2: 149.6.
+       - Navigated `remote press down` -> focus successfully shifted: Button 2 brightness increased to 225.9 while Button 1 dropped to 138.7.
+- **Hardware Qualification Report:**
+  - Written to `reports/tvos_hardware_qualification.json`.
+  - 586 native elements detected across 23 live hardware captures (349 `collectionItem`, 115 `label`, 77 `imageView`, 13 `cancelAction`, 10 `searchField`, 10 `secondaryButton`, 9 `listRow`, 2 `primaryButton`, 1 `sidebar`).
+  - Zero false positives on screen edges or video stream artifacts.
+

@@ -24,7 +24,7 @@ from PIL import Image
 import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_WEIGHTS = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs" / "phase6b_tvos_v0" / "weights" / "best.pt"
+DEFAULT_WEIGHTS = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs" / "phase6b_tvos_v3" / "weights" / "best.pt"
 DEFAULT_YAML = PROJECT_ROOT / "NativeUITrainer" / "yolo_dataset_tvos" / "dataset.yaml"
 TEST_DATASET_DIR = PROJECT_ROOT / "dataset" / "tvos_dataset" / "test"
 REPORTS_DIR = PROJECT_ROOT / "reports"
@@ -45,7 +45,7 @@ def parse_args():
     p.add_argument("--dataset", default=str(DEFAULT_YAML), help="Path to dataset.yaml")
     p.add_argument("--imgsz", type=int, default=640)
     p.add_argument("--device", default="mps")
-    p.add_argument("--report", default=str(REPORTS_DIR / "eval_results_tvos_v0.json"))
+    p.add_argument("--report", default=str(REPORTS_DIR / "eval_results_tvos_v3.json"))
     return p.parse_args()
 
 
@@ -96,7 +96,11 @@ def evaluate_focus_accuracy(model, test_dir: Path):
             cls_name = model.names[cls_id]
             conf = float(boxes.conf[i].item())
             xyxy = boxes.xyxy[i].tolist()
-            if cls_name in ["collectionItem", "listRow", "primaryButton", "tabBar", "cancelAction"]:
+            if cls_name in [
+                "collectionItem", "listRow", "primaryButton", "secondaryButton",
+                "tabBar", "cancelAction", "toggle", "secureField", "textField",
+                "segmentedControl", "stepperControl", "slider"
+            ]:
                 x1 = max(0, int(xyxy[0]))
                 y1 = max(0, int(xyxy[1]))
                 x2 = min(w, int(xyxy[2]))

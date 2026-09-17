@@ -1,0 +1,6060 @@
+{
+  "total_captures": 23,
+  "captures": [
+    {
+      "filename": "office_app_switcher.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 31,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.977,
+          "box": [
+            308.5,
+            405.1,
+            495.2,
+            518.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            530.0,
+            600.8,
+            719.0,
+            711.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.972,
+          "box": [
+            976.5,
+            599.4,
+            1165.6,
+            711.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            756.0,
+            404.8,
+            942.4,
+            517.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            308.4,
+            600.4,
+            495.6,
+            712.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.966,
+          "box": [
+            978.1,
+            405.2,
+            1165.9,
+            516.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.965,
+          "box": [
+            529.6,
+            405.3,
+            719.0,
+            517.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.961,
+          "box": [
+            977.0,
+            210.6,
+            1166.0,
+            323.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.958,
+          "box": [
+            754.7,
+            210.4,
+            943.0,
+            323.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.949,
+          "box": [
+            979.9,
+            795.5,
+            1166.0,
+            907.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.937,
+          "box": [
+            530.9,
+            794.7,
+            718.1,
+            907.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.936,
+          "box": [
+            1424.2,
+            405.6,
+            1612.4,
+            517.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.934,
+          "box": [
+            754.0,
+            601.6,
+            941.9,
+            712.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.923,
+          "box": [
+            1202.2,
+            599.2,
+            1387.9,
+            712.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.92,
+          "box": [
+            756.4,
+            802.9,
+            942.4,
+            911.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.908,
+          "box": [
+            1200.0,
+            795.3,
+            1388.3,
+            908.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.903,
+          "box": [
+            1196.9,
+            404.5,
+            1393.6,
+            515.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.887,
+          "box": [
+            1424.5,
+            600.1,
+            1612.8,
+            711.8
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.883,
+          "box": [
+            1201.6,
+            796.0,
+            1388.9,
+            907.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.873,
+          "box": [
+            1425.3,
+            793.8,
+            1612.9,
+            907.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.87,
+          "box": [
+            756.5,
+            211.6,
+            944.3,
+            322.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.862,
+          "box": [
+            530.3,
+            210.0,
+            718.1,
+            323.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.855,
+          "box": [
+            1201.0,
+            210.6,
+            1389.7,
+            323.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.842,
+          "box": [
+            531.5,
+            408.0,
+            718.8,
+            517.5
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.831,
+          "box": [
+            311.5,
+            213.7,
+            495.0,
+            322.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.762,
+          "box": [
+            1425.3,
+            210.3,
+            1612.2,
+            322.5
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.627,
+          "box": [
+            1425.3,
+            602.7,
+            1610.4,
+            713.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.603,
+          "box": [
+            1209.6,
+            407.8,
+            1387.6,
+            508.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.439,
+          "box": [
+            980.2,
+            406.6,
+            1165.9,
+            518.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.421,
+          "box": [
+            306.2,
+            210.8,
+            496.7,
+            323.2
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.409,
+          "box": [
+            979.8,
+            795.8,
+            1166.3,
+            909.1
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_app_switcher_sweep.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 36,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.977,
+          "box": [
+            307.5,
+            405.3,
+            494.7,
+            515.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            530.3,
+            601.9,
+            719.5,
+            709.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            978.5,
+            602.9,
+            1165.6,
+            710.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            307.7,
+            601.2,
+            494.9,
+            709.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            978.3,
+            406.4,
+            1165.8,
+            517.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            755.8,
+            405.5,
+            942.3,
+            516.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            977.7,
+            212.0,
+            1165.6,
+            323.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.962,
+          "box": [
+            530.7,
+            406.9,
+            719.4,
+            516.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.956,
+          "box": [
+            754.6,
+            211.9,
+            942.4,
+            322.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.952,
+          "box": [
+            980.1,
+            795.2,
+            1166.4,
+            906.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.947,
+          "box": [
+            1424.3,
+            406.2,
+            1612.3,
+            515.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.943,
+          "box": [
+            1200.5,
+            601.7,
+            1388.3,
+            710.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.929,
+          "box": [
+            1198.2,
+            795.4,
+            1388.2,
+            906.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.914,
+          "box": [
+            755.3,
+            795.1,
+            942.7,
+            911.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.914,
+          "box": [
+            755.6,
+            603.8,
+            941.7,
+            711.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.911,
+          "box": [
+            1204.4,
+            209.6,
+            1389.1,
+            322.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.91,
+          "box": [
+            531.4,
+            795.5,
+            718.6,
+            907.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.887,
+          "box": [
+            311.7,
+            214.9,
+            495.0,
+            322.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.872,
+          "box": [
+            533.0,
+            209.2,
+            719.1,
+            322.8
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.859,
+          "box": [
+            1199.8,
+            796.5,
+            1389.3,
+            904.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.833,
+          "box": [
+            1426.3,
+            208.9,
+            1611.1,
+            322.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.801,
+          "box": [
+            1426.5,
+            795.1,
+            1612.1,
+            907.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.784,
+          "box": [
+            1425.4,
+            601.5,
+            1612.0,
+            710.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.7,
+          "box": [
+            821.1,
+            407.7,
+            943.2,
+            515.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.634,
+          "box": [
+            1201.6,
+            408.4,
+            1391.3,
+            514.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.624,
+          "box": [
+            532.5,
+            408.7,
+            719.7,
+            517.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.586,
+          "box": [
+            755.7,
+            212.8,
+            945.0,
+            321.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.504,
+          "box": [
+            596.6,
+            603.5,
+            720.1,
+            707.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.454,
+          "box": [
+            86.0,
+            79.6,
+            223.3,
+            147.9
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.452,
+          "box": [
+            1426.5,
+            603.5,
+            1610.5,
+            711.7
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.429,
+          "box": [
+            981.1,
+            795.9,
+            1167.4,
+            907.2
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.374,
+          "box": [
+            980.2,
+            406.9,
+            1166.1,
+            518.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.358,
+          "box": [
+            756.3,
+            406.8,
+            850.2,
+            514.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.353,
+          "box": [
+            1209.5,
+            412.1,
+            1388.1,
+            509.7
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.343,
+          "box": [
+            311.0,
+            804.3,
+            496.1,
+            903.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.28,
+          "box": [
+            308.8,
+            799.1,
+            497.7,
+            904.5
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_bottom_grid.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 34,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            688.6,
+            493.4,
+            936.1,
+            642.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            91.9,
+            494.8,
+            337.8,
+            642.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            1282.2,
+            232.2,
+            1530.7,
+            376.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            1284.1,
+            493.8,
+            1531.5,
+            642.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            389.2,
+            492.8,
+            637.9,
+            641.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            1582.2,
+            493.5,
+            1827.9,
+            641.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            1581.3,
+            234.2,
+            1827.1,
+            380.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            390.0,
+            233.0,
+            636.5,
+            380.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.96,
+          "box": [
+            90.3,
+            755.3,
+            336.3,
+            902.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.957,
+          "box": [
+            687.0,
+            0.8,
+            934.5,
+            123.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.949,
+          "box": [
+            402.4,
+            0.5,
+            636.1,
+            119.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.946,
+          "box": [
+            984.9,
+            231.9,
+            1232.3,
+            381.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.939,
+          "box": [
+            373.5,
+            793.2,
+            650.3,
+            856.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.931,
+          "box": [
+            1281.3,
+            0.0,
+            1529.6,
+            121.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.924,
+          "box": [
+            716.5,
+            275.3,
+            937.5,
+            368.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.922,
+          "box": [
+            104.8,
+            276.5,
+            329.7,
+            334.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.914,
+          "box": [
+            716.2,
+            276.1,
+            925.7,
+            340.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.912,
+          "box": [
+            984.1,
+            493.7,
+            1231.7,
+            641.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.905,
+          "box": [
+            1304.2,
+            324.9,
+            1528.2,
+            361.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.892,
+          "box": [
+            710.7,
+            309.6,
+            940.8,
+            370.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.843,
+          "box": [
+            1676.6,
+            20.7,
+            1802.1,
+            68.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.834,
+          "box": [
+            988.9,
+            0.0,
+            1223.4,
+            122.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.816,
+          "box": [
+            401.8,
+            932.7,
+            637.3,
+            969.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.784,
+          "box": [
+            1009.2,
+            527.0,
+            1209.6,
+            611.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.77,
+          "box": [
+            1580.8,
+            3.2,
+            1827.1,
+            120.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.758,
+          "box": [
+            1011.1,
+            0.0,
+            1069.7,
+            23.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.638,
+          "box": [
+            86.9,
+            0.0,
+            336.9,
+            119.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.6,
+          "box": [
+            1283.8,
+            312.4,
+            1511.0,
+            364.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.592,
+          "box": [
+            111.1,
+            566.7,
+            332.7,
+            617.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.582,
+          "box": [
+            683.4,
+            223.9,
+            936.0,
+            383.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.495,
+          "box": [
+            164.3,
+            2.6,
+            279.6,
+            122.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.415,
+          "box": [
+            163.8,
+            1.2,
+            341.7,
+            122.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.364,
+          "box": [
+            462.2,
+            3.4,
+            542.0,
+            77.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.348,
+          "box": [
+            1370.8,
+            5.1,
+            1446.0,
+            115.7
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_bottom_next.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 35,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            688.6,
+            493.5,
+            936.1,
+            642.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            91.9,
+            494.7,
+            337.9,
+            641.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            1282.3,
+            232.3,
+            1530.7,
+            376.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            1284.2,
+            493.8,
+            1531.4,
+            642.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            389.2,
+            492.8,
+            637.9,
+            641.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.975,
+          "box": [
+            1582.1,
+            493.5,
+            1827.9,
+            642.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            1581.4,
+            234.2,
+            1827.1,
+            380.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            389.9,
+            233.0,
+            636.5,
+            380.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.96,
+          "box": [
+            90.3,
+            755.3,
+            336.3,
+            902.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.955,
+          "box": [
+            687.1,
+            0.8,
+            934.6,
+            123.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.949,
+          "box": [
+            403.7,
+            0.5,
+            636.1,
+            119.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.945,
+          "box": [
+            985.0,
+            231.8,
+            1232.2,
+            381.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.939,
+          "box": [
+            373.5,
+            793.0,
+            650.2,
+            856.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.927,
+          "box": [
+            1281.4,
+            0.0,
+            1529.6,
+            121.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.924,
+          "box": [
+            716.5,
+            275.3,
+            937.5,
+            368.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.92,
+          "box": [
+            104.7,
+            276.5,
+            329.8,
+            334.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.914,
+          "box": [
+            984.0,
+            493.6,
+            1231.7,
+            641.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.913,
+          "box": [
+            716.4,
+            276.1,
+            925.7,
+            340.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.906,
+          "box": [
+            1304.2,
+            324.9,
+            1528.2,
+            360.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.891,
+          "box": [
+            710.7,
+            309.6,
+            940.9,
+            370.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.853,
+          "box": [
+            1676.4,
+            20.7,
+            1802.2,
+            68.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.826,
+          "box": [
+            988.8,
+            0.0,
+            1223.5,
+            123.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.812,
+          "box": [
+            401.3,
+            932.6,
+            637.4,
+            969.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.785,
+          "box": [
+            1009.1,
+            526.9,
+            1209.9,
+            612.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.78,
+          "box": [
+            1011.0,
+            0.0,
+            1069.6,
+            23.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.773,
+          "box": [
+            1580.8,
+            3.1,
+            1827.3,
+            120.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.634,
+          "box": [
+            86.7,
+            0.0,
+            337.1,
+            119.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.604,
+          "box": [
+            1283.8,
+            311.0,
+            1511.2,
+            363.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.574,
+          "box": [
+            683.3,
+            223.9,
+            936.0,
+            383.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.561,
+          "box": [
+            111.1,
+            564.3,
+            332.9,
+            617.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.508,
+          "box": [
+            164.5,
+            2.5,
+            276.8,
+            122.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.413,
+          "box": [
+            164.1,
+            1.2,
+            342.0,
+            122.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.365,
+          "box": [
+            462.2,
+            3.4,
+            541.8,
+            77.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.334,
+          "box": [
+            1370.6,
+            5.0,
+            1446.3,
+            116.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.253,
+          "box": [
+            979.3,
+            394.5,
+            1219.7,
+            423.2
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_bottom_r3.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 34,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            688.5,
+            493.5,
+            936.0,
+            642.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            92.0,
+            494.7,
+            337.9,
+            641.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            1282.1,
+            232.3,
+            1530.7,
+            375.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            389.2,
+            492.9,
+            637.8,
+            641.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            1284.2,
+            493.8,
+            1531.5,
+            642.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.975,
+          "box": [
+            1582.1,
+            493.4,
+            1827.9,
+            642.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            1581.3,
+            234.2,
+            1827.0,
+            380.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            389.9,
+            233.0,
+            636.3,
+            380.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.96,
+          "box": [
+            90.2,
+            755.2,
+            336.3,
+            902.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.956,
+          "box": [
+            687.0,
+            0.7,
+            934.4,
+            123.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.951,
+          "box": [
+            401.9,
+            0.5,
+            636.0,
+            119.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.945,
+          "box": [
+            985.0,
+            231.8,
+            1232.3,
+            381.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.94,
+          "box": [
+            373.4,
+            793.0,
+            650.0,
+            855.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.927,
+          "box": [
+            1281.3,
+            0.0,
+            1529.7,
+            121.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.924,
+          "box": [
+            716.3,
+            275.2,
+            937.7,
+            369.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.922,
+          "box": [
+            104.8,
+            276.5,
+            330.1,
+            334.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.919,
+          "box": [
+            983.9,
+            493.8,
+            1231.5,
+            641.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.914,
+          "box": [
+            715.9,
+            276.1,
+            925.7,
+            341.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.908,
+          "box": [
+            1304.4,
+            325.0,
+            1528.3,
+            360.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.891,
+          "box": [
+            710.5,
+            309.1,
+            940.9,
+            370.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.859,
+          "box": [
+            1676.1,
+            20.6,
+            1802.2,
+            68.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.819,
+          "box": [
+            402.4,
+            932.6,
+            637.8,
+            969.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.817,
+          "box": [
+            989.2,
+            0.0,
+            1223.6,
+            122.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.778,
+          "box": [
+            1008.8,
+            526.6,
+            1210.0,
+            613.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.774,
+          "box": [
+            1011.1,
+            0.0,
+            1069.5,
+            22.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.771,
+          "box": [
+            1580.9,
+            3.1,
+            1827.6,
+            120.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.649,
+          "box": [
+            86.9,
+            0.0,
+            337.1,
+            119.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.625,
+          "box": [
+            1283.8,
+            311.5,
+            1511.4,
+            363.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.553,
+          "box": [
+            111.2,
+            564.5,
+            332.8,
+            617.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.551,
+          "box": [
+            683.2,
+            224.0,
+            936.1,
+            383.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.507,
+          "box": [
+            164.7,
+            2.4,
+            280.2,
+            122.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.417,
+          "box": [
+            164.4,
+            1.1,
+            341.9,
+            122.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.354,
+          "box": [
+            1370.4,
+            5.0,
+            1446.3,
+            116.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.342,
+          "box": [
+            462.2,
+            3.4,
+            542.0,
+            77.7
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_home_col5.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 36,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            687.1,
+            364.1,
+            934.5,
+            506.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            387.6,
+            622.6,
+            638.0,
+            768.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.981,
+          "box": [
+            687.2,
+            623.3,
+            935.3,
+            769.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            984.6,
+            100.1,
+            1231.1,
+            249.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            1581.3,
+            880.4,
+            1827.2,
+            1030.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.975,
+          "box": [
+            88.5,
+            362.3,
+            338.1,
+            508.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            986.4,
+            623.4,
+            1230.5,
+            770.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            89.7,
+            623.2,
+            337.7,
+            768.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.971,
+          "box": [
+            1554.5,
+            346.1,
+            1857.5,
+            526.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            389.6,
+            100.6,
+            638.0,
+            248.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            389.5,
+            880.2,
+            637.6,
+            1030.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            686.8,
+            101.1,
+            935.7,
+            248.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            389.1,
+            363.3,
+            637.8,
+            507.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.967,
+          "box": [
+            985.5,
+            361.8,
+            1232.8,
+            509.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.966,
+          "box": [
+            1283.8,
+            100.7,
+            1531.3,
+            248.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.962,
+          "box": [
+            1281.2,
+            879.4,
+            1531.4,
+            1028.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.952,
+          "box": [
+            1281.9,
+            622.5,
+            1530.5,
+            768.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.951,
+          "box": [
+            1581.4,
+            621.5,
+            1827.3,
+            771.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.94,
+          "box": [
+            983.8,
+            879.2,
+            1233.8,
+            1031.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.93,
+          "box": [
+            710.6,
+            910.5,
+            934.1,
+            1023.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.926,
+          "box": [
+            1582.3,
+            101.6,
+            1828.5,
+            248.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.921,
+          "box": [
+            1559.3,
+            544.7,
+            1840.7,
+            577.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.881,
+          "box": [
+            709.8,
+            114.0,
+            895.6,
+            242.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.871,
+          "box": [
+            123.2,
+            114.7,
+            328.7,
+            247.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.87,
+          "box": [
+            102.4,
+            924.1,
+            333.8,
+            995.1
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.825,
+          "box": [
+            18.8,
+            0.0,
+            1354.1,
+            65.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.812,
+          "box": [
+            1318.5,
+            372.0,
+            1481.9,
+            499.3
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.744,
+          "box": [
+            554.0,
+            0.0,
+            1920.0,
+            65.4
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.668,
+          "box": [
+            279.2,
+            0.0,
+            1648.2,
+            64.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.666,
+          "box": [
+            1339.4,
+            370.9,
+            1523.3,
+            499.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.466,
+          "box": [
+            1280.9,
+            363.9,
+            1531.1,
+            505.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.407,
+          "box": [
+            684.1,
+            876.0,
+            937.2,
+            1033.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.305,
+          "box": [
+            695.8,
+            637.9,
+            877.5,
+            736.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.292,
+          "box": [
+            161.4,
+            629.3,
+            296.5,
+            768.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.271,
+          "box": [
+            1055.0,
+            386.9,
+            1232.3,
+            511.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.269,
+          "box": [
+            431.4,
+            368.4,
+            627.1,
+            505.0
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_home_initial.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 16,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            687.0,
+            826.9,
+            935.8,
+            973.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            390.3,
+            826.5,
+            637.5,
+            974.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            984.8,
+            826.7,
+            1231.6,
+            974.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            665.1,
+            139.0,
+            1261.2,
+            466.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.962,
+          "box": [
+            1582.3,
+            826.4,
+            1827.2,
+            974.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.957,
+          "box": [
+            1284.2,
+            827.2,
+            1531.1,
+            974.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.929,
+          "box": [
+            707.5,
+            841.5,
+            871.3,
+            967.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.903,
+          "box": [
+            149.9,
+            929.1,
+            281.6,
+            966.5
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.599,
+          "box": [
+            1138.4,
+            556.7,
+            1213.2,
+            647.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.396,
+          "box": [
+            1029.3,
+            555.9,
+            1212.9,
+            649.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.396,
+          "box": [
+            64.1,
+            817.9,
+            365.6,
+            990.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.383,
+          "box": [
+            775.8,
+            554.7,
+            943.3,
+            650.7
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.352,
+          "box": [
+            1582.3,
+            826.7,
+            1827.8,
+            974.3
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.308,
+          "box": [
+            390.2,
+            826.7,
+            638.3,
+            974.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.307,
+          "box": [
+            1103.7,
+            181.7,
+            1209.9,
+            267.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.289,
+          "box": [
+            142.2,
+            837.9,
+            288.8,
+            917.9
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_home_step01.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 9,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.986,
+          "box": [
+            688.4,
+            827.3,
+            935.4,
+            973.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            984.9,
+            826.1,
+            1230.5,
+            974.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            364.1,
+            808.8,
+            663.2,
+            988.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            1582.2,
+            825.5,
+            1826.9,
+            974.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            1283.6,
+            826.7,
+            1530.1,
+            974.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.923,
+          "box": [
+            734.6,
+            844.3,
+            871.1,
+            964.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.915,
+          "box": [
+            1692.0,
+            55.8,
+            1868.0,
+            102.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.899,
+          "box": [
+            88.9,
+            826.7,
+            336.0,
+            975.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.733,
+          "box": [
+            158.1,
+            842.2,
+            302.9,
+            960.9
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_home_step02.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 12,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.979,
+          "box": [
+            662.9,
+            809.9,
+            960.4,
+            987.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            985.3,
+            825.7,
+            1230.6,
+            975.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            389.9,
+            825.1,
+            635.1,
+            975.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.966,
+          "box": [
+            727.1,
+            830.2,
+            887.4,
+            972.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.943,
+          "box": [
+            1283.1,
+            826.4,
+            1530.6,
+            975.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.94,
+          "box": [
+            1581.8,
+            825.5,
+            1826.4,
+            975.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.708,
+          "box": [
+            89.6,
+            825.9,
+            336.9,
+            975.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.623,
+          "box": [
+            1131.0,
+            339.0,
+            1170.5,
+            379.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.608,
+          "box": [
+            158.2,
+            842.7,
+            313.2,
+            966.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.525,
+          "box": [
+            936.0,
+            300.8,
+            1078.1,
+            374.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.353,
+          "box": [
+            1132.5,
+            355.4,
+            1171.3,
+            399.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.286,
+          "box": [
+            1686.4,
+            53.6,
+            1863.6,
+            105.2
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_home_step03.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 39,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.985,
+          "box": [
+            388.1,
+            99.9,
+            638.2,
+            249.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            387.5,
+            621.5,
+            638.1,
+            770.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.983,
+          "box": [
+            984.3,
+            99.8,
+            1232.0,
+            249.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.981,
+          "box": [
+            686.7,
+            100.7,
+            935.9,
+            249.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.979,
+          "box": [
+            89.4,
+            621.4,
+            338.7,
+            769.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            1282.1,
+            99.8,
+            1530.9,
+            249.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.977,
+          "box": [
+            388.7,
+            361.6,
+            636.2,
+            509.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            685.9,
+            622.5,
+            936.9,
+            771.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            983.9,
+            621.1,
+            1232.7,
+            769.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            388.4,
+            878.9,
+            637.0,
+            1030.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.972,
+          "box": [
+            89.5,
+            362.7,
+            338.2,
+            510.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.971,
+          "box": [
+            1580.7,
+            879.1,
+            1828.0,
+            1029.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.971,
+          "box": [
+            1581.3,
+            360.8,
+            1828.3,
+            511.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            1281.9,
+            879.1,
+            1532.1,
+            1030.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.967,
+          "box": [
+            985.2,
+            361.2,
+            1232.7,
+            509.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.966,
+          "box": [
+            1282.2,
+            620.6,
+            1531.8,
+            770.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.958,
+          "box": [
+            984.2,
+            879.1,
+            1232.1,
+            1031.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.951,
+          "box": [
+            1581.2,
+            100.8,
+            1827.4,
+            248.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.949,
+          "box": [
+            1580.4,
+            620.9,
+            1829.3,
+            771.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.94,
+          "box": [
+            693.3,
+            113.0,
+            887.5,
+            242.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.929,
+          "box": [
+            712.6,
+            916.4,
+            934.7,
+            1018.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.925,
+          "box": [
+            104.0,
+            925.2,
+            331.5,
+            985.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.9,
+          "box": [
+            665.6,
+            543.9,
+            953.6,
+            576.2
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.862,
+          "box": [
+            105.3,
+            107.3,
+            327.9,
+            241.5
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.857,
+          "box": [
+            1349.3,
+            373.2,
+            1462.1,
+            494.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.855,
+          "box": [
+            1274.2,
+            359.0,
+            1532.5,
+            505.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.817,
+          "box": [
+            659.2,
+            345.5,
+            961.0,
+            523.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.629,
+          "box": [
+            694.3,
+            782.5,
+            930.0,
+            809.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.591,
+          "box": [
+            1287.3,
+            783.3,
+            1530.3,
+            810.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.468,
+          "box": [
+            683.5,
+            872.2,
+            937.9,
+            1034.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.452,
+          "box": [
+            989.9,
+            783.5,
+            1230.1,
+            811.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.438,
+          "box": [
+            992.9,
+            524.8,
+            1232.5,
+            564.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.385,
+          "box": [
+            91.8,
+            523.0,
+            341.6,
+            550.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.327,
+          "box": [
+            91.6,
+            783.2,
+            340.5,
+            810.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.318,
+          "box": [
+            1057.0,
+            387.7,
+            1228.6,
+            511.5
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.287,
+          "box": [
+            720.1,
+            110.9,
+            937.4,
+            246.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.274,
+          "box": [
+            158.3,
+            626.2,
+            330.5,
+            770.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.271,
+          "box": [
+            88.7,
+            100.7,
+            338.2,
+            249.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.26,
+          "box": [
+            422.1,
+            368.3,
+            624.4,
+            505.6
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_home_top_right.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 31,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            308.7,
+            405.1,
+            495.3,
+            518.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            530.0,
+            600.7,
+            719.0,
+            711.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.972,
+          "box": [
+            976.4,
+            599.4,
+            1165.6,
+            711.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            756.0,
+            404.8,
+            942.4,
+            517.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            308.4,
+            600.4,
+            495.5,
+            712.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.967,
+          "box": [
+            529.8,
+            405.4,
+            719.0,
+            517.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.967,
+          "box": [
+            978.2,
+            405.3,
+            1165.9,
+            516.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.961,
+          "box": [
+            977.0,
+            210.6,
+            1166.0,
+            323.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.959,
+          "box": [
+            754.6,
+            210.4,
+            943.1,
+            323.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.948,
+          "box": [
+            980.0,
+            795.5,
+            1166.0,
+            907.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.938,
+          "box": [
+            530.9,
+            794.7,
+            718.1,
+            907.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.937,
+          "box": [
+            1424.2,
+            405.7,
+            1612.5,
+            517.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.935,
+          "box": [
+            754.7,
+            601.6,
+            942.0,
+            712.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.92,
+          "box": [
+            1202.3,
+            599.2,
+            1387.9,
+            712.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.92,
+          "box": [
+            756.9,
+            803.4,
+            942.4,
+            911.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.908,
+          "box": [
+            1199.9,
+            795.3,
+            1388.3,
+            908.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.905,
+          "box": [
+            1196.7,
+            404.6,
+            1393.6,
+            514.9
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.884,
+          "box": [
+            1201.6,
+            796.1,
+            1388.9,
+            907.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.882,
+          "box": [
+            1424.5,
+            600.2,
+            1612.8,
+            711.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.874,
+          "box": [
+            1425.3,
+            793.7,
+            1612.9,
+            907.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.866,
+          "box": [
+            1201.0,
+            210.7,
+            1389.7,
+            323.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.864,
+          "box": [
+            530.2,
+            210.0,
+            718.2,
+            323.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.858,
+          "box": [
+            756.5,
+            211.6,
+            944.4,
+            322.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.853,
+          "box": [
+            531.6,
+            408.0,
+            718.7,
+            517.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.824,
+          "box": [
+            311.5,
+            213.8,
+            495.0,
+            322.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.751,
+          "box": [
+            1425.3,
+            210.4,
+            1612.2,
+            322.4
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.644,
+          "box": [
+            1425.3,
+            602.9,
+            1610.5,
+            713.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.626,
+          "box": [
+            1210.0,
+            408.0,
+            1387.6,
+            508.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.462,
+          "box": [
+            306.3,
+            210.7,
+            496.9,
+            323.1
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.417,
+          "box": [
+            979.9,
+            795.9,
+            1166.3,
+            909.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.415,
+          "box": [
+            980.3,
+            406.8,
+            1165.9,
+            518.0
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_live_01.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 24,
+      "detections": [
+        {
+          "class": "imageView",
+          "confidence": 0.945,
+          "box": [
+            1500.2,
+            116.0,
+            1678.0,
+            283.5
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.919,
+          "box": [
+            568.2,
+            375.0,
+            791.5,
+            445.2
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.903,
+          "box": [
+            573.0,
+            297.0,
+            798.9,
+            359.7
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.771,
+          "box": [
+            564.5,
+            434.5,
+            804.1,
+            494.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.748,
+          "box": [
+            1574.4,
+            566.3,
+            1914.7,
+            595.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.722,
+          "box": [
+            1256.1,
+            492.4,
+            1366.0,
+            662.5
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.705,
+          "box": [
+            569.1,
+            113.6,
+            838.4,
+            197.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.685,
+          "box": [
+            1416.1,
+            788.1,
+            1730.3,
+            824.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.678,
+          "box": [
+            1715.8,
+            57.5,
+            1919.0,
+            551.0
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.652,
+          "box": [
+            571.0,
+            217.2,
+            826.2,
+            278.9
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.621,
+          "box": [
+            0.0,
+            428.8,
+            324.8,
+            490.0
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.612,
+          "box": [
+            1795.7,
+            756.6,
+            1920.0,
+            872.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.564,
+          "box": [
+            858.9,
+            761.8,
+            1080.9,
+            782.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.558,
+          "box": [
+            2.2,
+            616.4,
+            373.0,
+            1021.1
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.506,
+          "box": [
+            559.4,
+            506.3,
+            822.6,
+            589.1
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.483,
+          "box": [
+            1795.6,
+            752.7,
+            1919.6,
+            873.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.473,
+          "box": [
+            1637.6,
+            708.6,
+            1719.4,
+            783.2
+          ]
+        },
+        {
+          "class": "sidebar",
+          "confidence": 0.436,
+          "box": [
+            0.9,
+            59.5,
+            350.8,
+            1005.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.421,
+          "box": [
+            1491.4,
+            77.2,
+            1707.2,
+            447.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.401,
+          "box": [
+            1755.3,
+            893.2,
+            1920.0,
+            933.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.355,
+          "box": [
+            1406.7,
+            774.7,
+            1732.1,
+            814.8
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.304,
+          "box": [
+            1495.1,
+            338.9,
+            1698.1,
+            445.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.255,
+          "box": [
+            1745.8,
+            890.9,
+            1920.0,
+            965.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.251,
+          "box": [
+            1426.4,
+            745.2,
+            1597.7,
+            785.3
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_photos_focused_shared.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 10,
+      "detections": [
+        {
+          "class": "imageView",
+          "confidence": 0.962,
+          "box": [
+            1198.3,
+            391.0,
+            1692.3,
+            687.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.863,
+          "box": [
+            206.4,
+            470.3,
+            919.7,
+            506.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.834,
+          "box": [
+            1417.8,
+            570.2,
+            1475.2,
+            654.5
+          ]
+        },
+        {
+          "class": "primaryButton",
+          "confidence": 0.591,
+          "box": [
+            315.1,
+            599.9,
+            828.5,
+            666.0
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.46,
+          "box": [
+            126.7,
+            332.4,
+            1511.1,
+            417.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.438,
+          "box": [
+            1355.7,
+            575.7,
+            1410.6,
+            648.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.426,
+          "box": [
+            1476.6,
+            559.3,
+            1535.0,
+            634.6
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.387,
+          "box": [
+            312.9,
+            340.5,
+            1732.3,
+            416.1
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.371,
+          "box": [
+            310.4,
+            681.7,
+            825.3,
+            754.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.315,
+          "box": [
+            255.5,
+            516.4,
+            882.0,
+            554.6
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_pluto_app.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 1,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.251,
+          "box": [
+            881.4,
+            465.1,
+            935.4,
+            546.6
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_pluto_loaded.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 9,
+      "detections": [
+        {
+          "class": "imageView",
+          "confidence": 0.956,
+          "box": [
+            1198.3,
+            391.2,
+            1692.4,
+            687.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.849,
+          "box": [
+            1417.9,
+            570.4,
+            1475.1,
+            654.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.846,
+          "box": [
+            206.4,
+            470.4,
+            920.3,
+            506.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.705,
+          "box": [
+            366.2,
+            611.1,
+            783.8,
+            655.5
+          ]
+        },
+        {
+          "class": "primaryButton",
+          "confidence": 0.579,
+          "box": [
+            313.4,
+            597.3,
+            827.7,
+            669.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.477,
+          "box": [
+            1355.9,
+            575.7,
+            1410.8,
+            648.0
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.476,
+          "box": [
+            264.7,
+            339.6,
+            1698.4,
+            416.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.434,
+          "box": [
+            1477.1,
+            560.9,
+            1535.2,
+            634.8
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.348,
+          "box": [
+            324.3,
+            682.9,
+            822.4,
+            750.1
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_row1.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 37,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            64.1,
+            345.0,
+            367.4,
+            527.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            687.1,
+            364.2,
+            934.5,
+            506.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            387.6,
+            622.8,
+            637.9,
+            768.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            687.3,
+            623.3,
+            935.3,
+            769.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            1580.3,
+            361.8,
+            1828.3,
+            507.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            389.8,
+            100.7,
+            638.0,
+            248.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            984.6,
+            100.1,
+            1231.0,
+            249.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            389.5,
+            880.1,
+            637.6,
+            1030.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.971,
+          "box": [
+            986.2,
+            623.4,
+            1230.6,
+            770.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            390.7,
+            363.5,
+            637.8,
+            507.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            686.9,
+            101.1,
+            935.8,
+            248.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.967,
+          "box": [
+            1581.2,
+            880.4,
+            1827.2,
+            1030.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.967,
+          "box": [
+            985.5,
+            361.8,
+            1232.8,
+            509.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.962,
+          "box": [
+            90.0,
+            622.4,
+            339.2,
+            768.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.962,
+          "box": [
+            1283.8,
+            100.6,
+            1531.2,
+            249.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.956,
+          "box": [
+            1281.2,
+            879.3,
+            1531.6,
+            1028.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.953,
+          "box": [
+            1281.9,
+            622.6,
+            1530.7,
+            768.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.935,
+          "box": [
+            1581.0,
+            621.4,
+            1828.0,
+            771.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.934,
+          "box": [
+            983.9,
+            879.2,
+            1233.8,
+            1031.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.93,
+          "box": [
+            710.7,
+            908.8,
+            934.3,
+            1024.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.906,
+          "box": [
+            69.8,
+            544.2,
+            351.3,
+            575.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.898,
+          "box": [
+            102.5,
+            924.4,
+            333.3,
+            992.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.894,
+          "box": [
+            1582.3,
+            101.6,
+            1828.4,
+            248.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.868,
+          "box": [
+            707.4,
+            113.8,
+            897.8,
+            242.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.856,
+          "box": [
+            120.5,
+            114.5,
+            328.2,
+            247.2
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.852,
+          "box": [
+            19.9,
+            0.0,
+            1356.4,
+            65.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.802,
+          "box": [
+            1310.2,
+            371.9,
+            1491.8,
+            500.1
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.697,
+          "box": [
+            552.5,
+            0.0,
+            1920.0,
+            65.6
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.695,
+          "box": [
+            279.1,
+            0.0,
+            1643.1,
+            64.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.574,
+          "box": [
+            1281.1,
+            364.4,
+            1531.0,
+            505.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.406,
+          "box": [
+            684.3,
+            876.0,
+            937.2,
+            1034.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.377,
+          "box": [
+            696.1,
+            637.9,
+            877.5,
+            736.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.353,
+          "box": [
+            163.9,
+            629.6,
+            285.2,
+            767.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.304,
+          "box": [
+            89.3,
+            99.7,
+            337.5,
+            249.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.258,
+          "box": [
+            1334.5,
+            372.5,
+            1532.0,
+            501.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.255,
+          "box": [
+            730.5,
+            644.8,
+            866.7,
+            733.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.255,
+          "box": [
+            1054.8,
+            386.7,
+            1232.2,
+            510.9
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_row2_col5.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 37,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            687.3,
+            364.0,
+            934.6,
+            506.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            387.6,
+            622.6,
+            637.9,
+            768.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.981,
+          "box": [
+            687.3,
+            623.1,
+            935.3,
+            769.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            1580.3,
+            362.0,
+            1828.8,
+            507.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            88.6,
+            362.3,
+            338.0,
+            508.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            984.6,
+            100.2,
+            1231.1,
+            249.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.973,
+          "box": [
+            986.3,
+            623.2,
+            1230.5,
+            770.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.972,
+          "box": [
+            389.8,
+            100.6,
+            638.0,
+            248.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.972,
+          "box": [
+            89.7,
+            623.4,
+            337.6,
+            768.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            389.7,
+            880.0,
+            637.5,
+            1030.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            686.9,
+            101.0,
+            935.6,
+            248.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            985.5,
+            361.7,
+            1233.2,
+            509.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            389.2,
+            363.5,
+            637.8,
+            507.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.963,
+          "box": [
+            1283.9,
+            100.8,
+            1531.3,
+            249.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.96,
+          "box": [
+            1281.1,
+            879.4,
+            1531.2,
+            1028.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.954,
+          "box": [
+            1581.2,
+            880.7,
+            1828.1,
+            1030.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.945,
+          "box": [
+            1282.0,
+            622.6,
+            1530.5,
+            768.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.938,
+          "box": [
+            983.9,
+            879.3,
+            1233.7,
+            1031.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.931,
+          "box": [
+            711.0,
+            910.0,
+            934.0,
+            1024.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.919,
+          "box": [
+            1562.9,
+            801.8,
+            1839.3,
+            836.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.918,
+          "box": [
+            1600.0,
+            661.9,
+            1842.9,
+            725.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.913,
+          "box": [
+            1582.2,
+            101.5,
+            1828.7,
+            248.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.876,
+          "box": [
+            102.6,
+            924.3,
+            333.6,
+            993.8
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.875,
+          "box": [
+            708.3,
+            114.1,
+            889.9,
+            242.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.868,
+          "box": [
+            117.6,
+            113.3,
+            329.7,
+            247.5
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.851,
+          "box": [
+            19.5,
+            0.0,
+            1354.2,
+            65.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.847,
+          "box": [
+            1554.8,
+            603.5,
+            1853.1,
+            785.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.805,
+          "box": [
+            1310.4,
+            372.1,
+            1483.0,
+            499.8
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.718,
+          "box": [
+            280.9,
+            0.0,
+            1639.3,
+            65.2
+          ]
+        },
+        {
+          "class": "searchField",
+          "confidence": 0.717,
+          "box": [
+            544.1,
+            0.0,
+            1920.0,
+            66.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.672,
+          "box": [
+            1280.9,
+            364.5,
+            1531.2,
+            505.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.669,
+          "box": [
+            1336.8,
+            371.1,
+            1522.3,
+            500.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.471,
+          "box": [
+            684.1,
+            876.3,
+            937.2,
+            1034.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.275,
+          "box": [
+            161.6,
+            629.8,
+            292.4,
+            768.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.267,
+          "box": [
+            696.3,
+            637.9,
+            877.6,
+            736.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.264,
+          "box": [
+            426.8,
+            368.6,
+            627.6,
+            505.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.25,
+          "box": [
+            1054.2,
+            386.3,
+            1232.3,
+            511.1
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_row3_col5.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 37,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.989,
+          "box": [
+            686.3,
+            233.1,
+            935.9,
+            378.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.988,
+          "box": [
+            387.0,
+            491.4,
+            637.5,
+            636.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.987,
+          "box": [
+            88.9,
+            231.8,
+            339.7,
+            380.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            1580.8,
+            230.9,
+            1828.6,
+            378.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.983,
+          "box": [
+            388.5,
+            232.6,
+            638.2,
+            379.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.981,
+          "box": [
+            687.9,
+            490.5,
+            935.7,
+            639.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.979,
+          "box": [
+            1556.2,
+            734.1,
+            1853.9,
+            916.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            986.6,
+            490.4,
+            1229.8,
+            640.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            388.8,
+            751.9,
+            636.4,
+            900.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            1281.9,
+            491.6,
+            1530.1,
+            639.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            1280.9,
+            751.0,
+            1530.8,
+            898.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.966,
+          "box": [
+            686.7,
+            0.0,
+            937.4,
+            120.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.961,
+          "box": [
+            984.5,
+            750.7,
+            1234.2,
+            900.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.959,
+          "box": [
+            90.4,
+            492.4,
+            338.5,
+            637.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.956,
+          "box": [
+            1580.3,
+            490.3,
+            1827.7,
+            639.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.945,
+          "box": [
+            984.0,
+            0.0,
+            1230.8,
+            120.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.93,
+          "box": [
+            1281.4,
+            0.0,
+            1530.3,
+            120.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.926,
+          "box": [
+            106.7,
+            795.9,
+            328.9,
+            853.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.915,
+          "box": [
+            1290.3,
+            846.4,
+            1524.5,
+            880.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.906,
+          "box": [
+            708.6,
+            794.0,
+            935.4,
+            880.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.906,
+          "box": [
+            984.8,
+            232.0,
+            1232.3,
+            379.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.893,
+          "box": [
+            1571.4,
+            933.1,
+            1845.1,
+            965.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.835,
+          "box": [
+            694.0,
+            840.2,
+            935.3,
+            895.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.815,
+          "box": [
+            1052.7,
+            242.5,
+            1231.3,
+            379.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.794,
+          "box": [
+            1580.5,
+            0.0,
+            1828.4,
+            119.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.784,
+          "box": [
+            386.9,
+            0.0,
+            637.2,
+            120.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.749,
+          "box": [
+            94.5,
+            9.9,
+            330.3,
+            114.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.685,
+          "box": [
+            745.4,
+            1.2,
+            867.9,
+            107.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.667,
+          "box": [
+            684.1,
+            746.2,
+            937.2,
+            902.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.663,
+          "box": [
+            1342.8,
+            241.1,
+            1520.6,
+            367.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.637,
+          "box": [
+            1594.8,
+            527.5,
+            1825.0,
+            591.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.622,
+          "box": [
+            993.3,
+            785.6,
+            1227.4,
+            894.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.595,
+          "box": [
+            86.0,
+            0.0,
+            339.4,
+            119.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.511,
+          "box": [
+            688.9,
+            1.0,
+            905.7,
+            114.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.401,
+          "box": [
+            1000.3,
+            1034.9,
+            1232.0,
+            1080.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.264,
+          "box": [
+            980.7,
+            394.7,
+            1227.2,
+            426.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.256,
+          "box": [
+            392.6,
+            239.8,
+            635.4,
+            378.3
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_row4_col5.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 40,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.988,
+          "box": [
+            687.2,
+            751.5,
+            936.8,
+            900.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            388.8,
+            232.5,
+            637.7,
+            378.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.979,
+          "box": [
+            388.3,
+            751.8,
+            637.8,
+            900.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            1581.3,
+            491.0,
+            1827.8,
+            639.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            389.5,
+            490.9,
+            637.6,
+            639.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.974,
+          "box": [
+            1282.9,
+            229.0,
+            1529.6,
+            378.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.972,
+          "box": [
+            1556.6,
+            734.0,
+            1854.7,
+            915.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.969,
+          "box": [
+            91.8,
+            752.3,
+            338.1,
+            899.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            386.9,
+            0.0,
+            638.3,
+            119.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            985.6,
+            231.5,
+            1231.8,
+            379.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            1281.9,
+            492.1,
+            1532.4,
+            637.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.963,
+          "box": [
+            686.9,
+            233.6,
+            935.3,
+            379.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.956,
+          "box": [
+            1580.4,
+            0.0,
+            1830.0,
+            119.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.951,
+          "box": [
+            984.0,
+            490.4,
+            1232.4,
+            641.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.94,
+          "box": [
+            1283.3,
+            752.1,
+            1529.8,
+            900.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.932,
+          "box": [
+            686.4,
+            0.0,
+            889.6,
+            118.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.931,
+          "box": [
+            1009.5,
+            784.0,
+            1216.8,
+            857.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.915,
+          "box": [
+            1304.0,
+            582.2,
+            1527.9,
+            618.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.908,
+          "box": [
+            1579.6,
+            934.1,
+            1835.6,
+            966.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.905,
+          "box": [
+            712.6,
+            533.5,
+            933.1,
+            618.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.901,
+          "box": [
+            89.9,
+            231.5,
+            339.1,
+            378.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.897,
+          "box": [
+            101.0,
+            535.5,
+            332.8,
+            593.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.882,
+          "box": [
+            104.9,
+            821.5,
+            332.1,
+            878.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.827,
+          "box": [
+            1355.0,
+            0.0,
+            1461.7,
+            110.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.81,
+          "box": [
+            384.0,
+            1055.7,
+            638.8,
+            1080.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.803,
+          "box": [
+            77.7,
+            0.0,
+            338.9,
+            119.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.796,
+          "box": [
+            984.4,
+            752.3,
+            1233.1,
+            899.5
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.771,
+          "box": [
+            984.5,
+            0.0,
+            1233.9,
+            119.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.764,
+          "box": [
+            1580.8,
+            232.0,
+            1827.0,
+            380.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.741,
+          "box": [
+            1344.3,
+            0.0,
+            1525.4,
+            113.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.66,
+          "box": [
+            685.0,
+            486.4,
+            936.4,
+            643.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.62,
+          "box": [
+            687.2,
+            0.0,
+            787.2,
+            117.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.577,
+          "box": [
+            692.8,
+            580.8,
+            929.4,
+            630.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.488,
+          "box": [
+            991.4,
+            515.3,
+            1224.2,
+            609.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.45,
+          "box": [
+            388.5,
+            1019.0,
+            635.6,
+            1075.1
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.433,
+          "box": [
+            1059.6,
+            7.0,
+            1227.0,
+            120.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.419,
+          "box": [
+            729.1,
+            255.9,
+            868.0,
+            346.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.372,
+          "box": [
+            89.3,
+            1011.8,
+            345.6,
+            1080.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.334,
+          "box": [
+            1328.8,
+            246.6,
+            1532.6,
+            378.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.285,
+          "box": [
+            852.6,
+            0.5,
+            935.8,
+            118.9
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_row5_col5.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 34,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.985,
+          "box": [
+            688.5,
+            493.5,
+            936.0,
+            642.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            92.0,
+            494.6,
+            337.8,
+            642.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            1282.1,
+            232.1,
+            1530.8,
+            376.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            1284.1,
+            493.9,
+            1531.6,
+            642.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.976,
+          "box": [
+            389.3,
+            492.8,
+            637.9,
+            641.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.975,
+          "box": [
+            1582.0,
+            493.4,
+            1827.9,
+            642.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.971,
+          "box": [
+            1581.2,
+            234.1,
+            1827.0,
+            380.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            390.0,
+            233.1,
+            636.4,
+            380.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.96,
+          "box": [
+            90.1,
+            755.1,
+            336.3,
+            902.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.955,
+          "box": [
+            687.1,
+            0.8,
+            934.4,
+            123.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.95,
+          "box": [
+            402.6,
+            0.5,
+            636.1,
+            119.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.945,
+          "box": [
+            985.1,
+            231.8,
+            1232.3,
+            381.4
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.938,
+          "box": [
+            373.6,
+            792.9,
+            650.5,
+            856.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.93,
+          "box": [
+            1281.3,
+            0.0,
+            1529.7,
+            121.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.923,
+          "box": [
+            716.4,
+            275.3,
+            937.5,
+            369.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.922,
+          "box": [
+            104.7,
+            276.5,
+            329.9,
+            334.6
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.916,
+          "box": [
+            984.1,
+            493.7,
+            1231.6,
+            641.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.914,
+          "box": [
+            716.0,
+            276.1,
+            926.1,
+            341.9
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.907,
+          "box": [
+            1304.3,
+            324.9,
+            1528.3,
+            360.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.892,
+          "box": [
+            710.6,
+            308.8,
+            941.0,
+            370.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.852,
+          "box": [
+            1676.1,
+            20.6,
+            1802.3,
+            68.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.827,
+          "box": [
+            988.4,
+            0.0,
+            1223.4,
+            123.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.809,
+          "box": [
+            402.3,
+            932.6,
+            637.3,
+            969.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.784,
+          "box": [
+            1009.1,
+            526.7,
+            1209.9,
+            613.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.774,
+          "box": [
+            1011.1,
+            0.0,
+            1069.7,
+            23.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.768,
+          "box": [
+            1580.8,
+            3.1,
+            1827.5,
+            120.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.636,
+          "box": [
+            87.0,
+            0.0,
+            337.0,
+            119.7
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.611,
+          "box": [
+            1283.7,
+            308.9,
+            1511.2,
+            363.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.581,
+          "box": [
+            683.4,
+            223.5,
+            936.1,
+            383.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.573,
+          "box": [
+            111.1,
+            564.1,
+            332.7,
+            617.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.513,
+          "box": [
+            164.6,
+            2.4,
+            278.4,
+            122.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.417,
+          "box": [
+            164.3,
+            1.1,
+            341.8,
+            122.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.393,
+          "box": [
+            462.2,
+            3.3,
+            541.9,
+            77.4
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.34,
+          "box": [
+            1370.5,
+            5.0,
+            1446.4,
+            116.2
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_screen_opened.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 18,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            813.3,
+            362.6,
+            1093.1,
+            639.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.982,
+          "box": [
+            1162.7,
+            363.3,
+            1444.1,
+            645.3
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.932,
+          "box": [
+            926.3,
+            139.1,
+            1061.6,
+            192.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.929,
+          "box": [
+            1694.0,
+            847.8,
+            1919.7,
+            1076.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.922,
+          "box": [
+            1289.2,
+            531.8,
+            1418.6,
+            646.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.922,
+          "box": [
+            847.7,
+            679.0,
+            1056.1,
+            715.8
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.917,
+          "box": [
+            1148.1,
+            679.6,
+            1478.7,
+            717.0
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.907,
+          "box": [
+            502.5,
+            679.3,
+            703.0,
+            716.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.892,
+          "box": [
+            1434.3,
+            793.1,
+            1693.3,
+            1075.9
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.892,
+          "box": [
+            843.4,
+            914.0,
+            1076.9,
+            984.1
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.844,
+          "box": [
+            503.5,
+            731.0,
+            695.5,
+            756.0
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.819,
+          "box": [
+            568.8,
+            816.9,
+            633.8,
+            879.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.799,
+          "box": [
+            435.8,
+            309.2,
+            767.2,
+            654.5
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.782,
+          "box": [
+            494.6,
+            768.5,
+            697.0,
+            793.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.711,
+          "box": [
+            1260.2,
+            458.3,
+            1348.8,
+            551.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.622,
+          "box": [
+            861.9,
+            143.7,
+            925.1,
+            190.5
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.415,
+          "box": [
+            910.0,
+            453.8,
+            1000.5,
+            592.3
+          ]
+        },
+        {
+          "class": "cancelAction",
+          "confidence": 0.273,
+          "box": [
+            845.4,
+            913.5,
+            1077.1,
+            984.1
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_settings_target.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 16,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.978,
+          "box": [
+            687.1,
+            826.9,
+            935.8,
+            972.9
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.977,
+          "box": [
+            390.5,
+            826.8,
+            637.5,
+            974.8
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            984.8,
+            826.6,
+            1231.7,
+            974.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.964,
+          "box": [
+            662.5,
+            141.3,
+            1261.8,
+            466.4
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.962,
+          "box": [
+            1582.4,
+            826.4,
+            1827.1,
+            974.1
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.957,
+          "box": [
+            1284.3,
+            827.2,
+            1531.0,
+            974.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.925,
+          "box": [
+            703.2,
+            841.7,
+            871.9,
+            968.2
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.902,
+          "box": [
+            149.9,
+            929.0,
+            281.8,
+            966.6
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.575,
+          "box": [
+            1138.3,
+            556.7,
+            1213.2,
+            647.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.442,
+          "box": [
+            773.1,
+            554.5,
+            942.7,
+            650.7
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.438,
+          "box": [
+            64.1,
+            817.7,
+            365.6,
+            990.9
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.395,
+          "box": [
+            1032.5,
+            555.9,
+            1212.6,
+            649.2
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.368,
+          "box": [
+            1582.4,
+            826.8,
+            1827.7,
+            974.2
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.323,
+          "box": [
+            1103.6,
+            181.6,
+            1211.3,
+            267.4
+          ]
+        },
+        {
+          "class": "secondaryButton",
+          "confidence": 0.312,
+          "box": [
+            390.6,
+            827.0,
+            638.2,
+            974.7
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.254,
+          "box": [
+            142.3,
+            837.9,
+            288.8,
+            917.8
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "office_shelf_up6.png",
+      "sha256": "",
+      "source": "realAppleTVTVTestRig",
+      "element_count": 10,
+      "detections": [
+        {
+          "class": "collectionItem",
+          "confidence": 0.986,
+          "box": [
+            688.1,
+            827.1,
+            935.5,
+            973.0
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.984,
+          "box": [
+            984.9,
+            826.0,
+            1230.6,
+            974.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.98,
+          "box": [
+            364.3,
+            808.8,
+            663.1,
+            988.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.97,
+          "box": [
+            1582.2,
+            825.6,
+            1826.6,
+            974.2
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.968,
+          "box": [
+            1283.5,
+            826.6,
+            1530.1,
+            974.3
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.927,
+          "box": [
+            731.4,
+            844.0,
+            871.9,
+            964.6
+          ]
+        },
+        {
+          "class": "label",
+          "confidence": 0.917,
+          "box": [
+            1694.8,
+            56.3,
+            1863.7,
+            101.3
+          ]
+        },
+        {
+          "class": "collectionItem",
+          "confidence": 0.909,
+          "box": [
+            89.6,
+            826.4,
+            335.9,
+            975.0
+          ]
+        },
+        {
+          "class": "imageView",
+          "confidence": 0.729,
+          "box": [
+            157.9,
+            842.4,
+            302.1,
+            961.0
+          ]
+        },
+        {
+          "class": "listRow",
+          "confidence": 0.261,
+          "box": [
+            389.5,
+            1053.5,
+            636.9,
+            1080.0
+          ]
+        }
+      ]
+    }
+  ],
+  "detected_class_totals": {
+    "collectionItem": 349,
+    "label": 115,
+    "cancelAction": 13,
+    "imageView": 77,
+    "searchField": 10,
+    "secondaryButton": 10,
+    "listRow": 9,
+    "sidebar": 1,
+    "primaryButton": 2
+  }
+}

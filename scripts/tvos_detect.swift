@@ -342,8 +342,27 @@ func run() -> Int32 {
         focusScore: Double
     )] = []
 
+    var resolvedModelURL: URL? = nil
     if let mPath = args.modelPath {
-        let mURL = URL(fileURLWithPath: mPath)
+        resolvedModelURL = URL(fileURLWithPath: mPath)
+    } else {
+        // Auto-discover bundled model in project hierarchy
+        let candidates = [
+            "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIModel_tvOS.mlmodelc",
+            "NativeUITrainer/yolo_runs/phase6b_tvos_v3/weights/best.mlpackage",
+            "NativeUITrainer/yolo_runs/phase6b_tvos_v2/weights/best.mlpackage"
+        ]
+        for candidate in candidates {
+            let u = URL(fileURLWithPath: candidate)
+            if FileManager.default.fileExists(atPath: u.path) {
+                resolvedModelURL = u
+                break
+            }
+        }
+    }
+
+    if let mURL = resolvedModelURL {
+        fputs("Using model: \(mURL.path)\n", stderr)
         let rawDetections = detectWithModel(cgImage: cgImage, modelURL: mURL, minConfidence: args.minConfidence)
         fputs("CoreML model detected \(rawDetections.count) elements\n", stderr)
 
