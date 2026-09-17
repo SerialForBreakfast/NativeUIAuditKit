@@ -165,6 +165,37 @@ func evaluateElementFocusScore(cgImage: CGImage, pixelRect: CGRect, elementType:
 
     ctx.draw(cropped, in: CGRect(x: 0, y: 0, width: cw, height: ch))
 
+    // VoiceOver High-Contrast Border Detection:
+    let tVO = max(2, min(6, min(cw, ch) / 6))
+    var darkBorderCount = 0
+    var brightBorderCount = 0
+    var totalVOEdges = 0
+
+    for y in 0..<ch {
+        let isBorderY = (y < tVO || y >= ch - tVO)
+        for x in 0..<cw {
+            let isBorderX = (x < tVO || x >= cw - tVO)
+            if isBorderY || isBorderX {
+                let offset = (y * bytesPerRow) + (x * bytesPerPixel)
+                if offset + 3 < rawData.count {
+                    let r = rawData[offset]
+                    let g = rawData[offset + 1]
+                    let b = rawData[offset + 2]
+                    if r < 50 && g < 50 && b < 50 {
+                        darkBorderCount += 1
+                    } else if r > 200 && g > 200 && b > 200 {
+                        brightBorderCount += 1
+                    }
+                    totalVOEdges += 1
+                }
+            }
+        }
+    }
+    let voDarkRatio = totalVOEdges > 0 ? (Double(darkBorderCount) / Double(totalVOEdges)) : 0.0
+    let voBrightRatio = totalVOEdges > 0 ? (Double(brightBorderCount) / Double(totalVOEdges)) : 0.0
+    let isVoiceOverBorder = (voDarkRatio >= 0.10 && voBrightRatio >= 0.10)
+    let voScore = isVoiceOverBorder ? min(1.0, (voDarkRatio + voBrightRatio) * 1.5) : 0.0
+
     if elementType == "collectionItem" {
         // In tvOS Home Screen, focused collectionItem has a radiant white perimeter border outline (.stroke(Color.white, lineWidth: 3)).
         // Check white pixel ratio along the outer perimeter (thickness t).
@@ -190,9 +221,10 @@ func evaluateElementFocusScore(cgImage: CGImage, pixelRect: CGRect, elementType:
                 }
             }
         }
-        return totalBorderPixels > 0 ? (Double(whiteCount) / Double(totalBorderPixels)) : 0.0
+        let standardWhiteRatio = totalBorderPixels > 0 ? (Double(whiteCount) / Double(totalBorderPixels)) : 0.0
+        return max(standardWhiteRatio, voScore)
     } else {
-        // For listRow, primaryButton, tabBar, cancelAction:
+        // For listRow, primaryButton, tabBar, cancelAction, secondaryButton, secureField:
         // When focused, tvOS inverts to solid white high-luminance interior pill.
         // Sample interior (inset 15% to avoid borders).
         let minX = Int(Double(cw) * 0.15)
@@ -217,7 +249,8 @@ func evaluateElementFocusScore(cgImage: CGImage, pixelRect: CGRect, elementType:
                 }
             }
         }
-        return count > 0 ? (totalLuminance / Double(count)) : 0.0
+        let interiorLuminance = count > 0 ? (totalLuminance / Double(count)) : 0.0
+        return max(interiorLuminance, voScore)
     }
 }
 
@@ -365,7 +398,12 @@ func run() -> Int32 {
     // In tvOS:
     // - collectionItem: focused items scale and have radiant white perimeter border outline (focusScore > 0.15).
     // - listRow / primaryButton / tabBar / cancelAction: focused items invert to solid white high-luminance pill (focusScore > 0.60).
-    let focusableTypes: Set<String> = ["collectionItem", "listRow", "primaryButton", "tabBar", "cancelAction"]
+    // - VoiceOver: high-contrast double border outline.
+    let focusableTypes: Set<String> = [
+        "collectionItem", "listRow", "primaryButton", "secondaryButton",
+        "tabBar", "cancelAction", "toggle", "secureField", "textField",
+        "segmentedControl", "stepperControl", "slider"
+    ]
     let interactiveCandidates = candidateElements.filter { focusableTypes.contains($0.type) }
 
     let focusWinner = interactiveCandidates
@@ -373,7 +411,7 @@ func run() -> Int32 {
             if cand.type == "collectionItem" {
                 return cand.focusScore > 0.03
             } else {
-                return cand.focusScore > 0.45
+                return cand.focusScore > 0.35
             }
         }
         .max { $0.focusScore < $1.focusScore }

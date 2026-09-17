@@ -76,7 +76,7 @@ public enum NativeUIModelAsset {
     /// Resolves the bundled model URL for a given descriptor, if bundled.
     public static func modelURL(for descriptor: ModelDescriptor) -> URL? {
         switch descriptor.modelId {
-        case ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v1.modelId:
+        case ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v2.modelId, ModelRegistry.tvOS_v1.modelId:
             return tvOSModelURL
         case ModelRegistry.iOS.modelId, ModelRegistry.iOS_v1.modelId:
             return defaultModelURL
@@ -88,7 +88,7 @@ public enum NativeUIModelAsset {
     /// Resolves the bundled manifest for a given descriptor, if bundled.
     public static func manifest(for descriptor: ModelDescriptor) -> ModelManifest? {
         switch descriptor.modelId {
-        case ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v1.modelId:
+        case ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v2.modelId, ModelRegistry.tvOS_v1.modelId:
             return tvOSManifest
         case ModelRegistry.iOS.modelId, ModelRegistry.iOS_v1.modelId:
             return iOSManifest

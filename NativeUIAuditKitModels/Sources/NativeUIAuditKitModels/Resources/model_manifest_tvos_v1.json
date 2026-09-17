@@ -1,5 +1,5 @@
 {
-  "modelId": "nativeui-tvos-v2.0",
+  "modelId": "nativeui-tvos-v3.0",
   "architecture": "YOLO11n",
   "inputWidth": 640,
   "inputHeight": 640,

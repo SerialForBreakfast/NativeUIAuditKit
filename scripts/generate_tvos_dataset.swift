@@ -1362,6 +1362,1139 @@ struct HardNegativeView: View {
     }
 }
 
+// MARK: - Template 16: App Switcher Multitasking Carousel
+
+struct AppSwitcherView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let appData: [(title: String, icon: String)] = [
+            ("TV", "play.tv.fill"),
+            ("Photos", "photo.on.rectangle.angled"),
+            ("Music", "music.note"),
+            ("Fitness", "flame.fill"),
+            ("Settings", "gearshape.fill"),
+            ("Arcade", "gamecontroller.fill")
+        ]
+        let count = 4
+        let startIdx = Int(rng.next() % UInt64(appData.count - count + 1))
+        let foc = Int(rng.next() % UInt64(count))
+        let showCloseHint = (rng.next() % 2 == 0)
+
+        ZStack {
+            Color(red: 0.06, green: 0.06, blue: 0.09).ignoresSafeArea()
+
+            VStack(spacing: 40) {
+                Spacer()
+                HStack(spacing: 50) {
+                    ForEach(0..<count, id: \.self) { idx in
+                        let item = appData[(startIdx + idx) % appData.count]
+                        let isFoc = (idx == foc)
+                        let hue = Double((rng.next() &+ UInt64(idx * 173)) % 1000) / 1000.0
+
+                        VStack(spacing: 20) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(LinearGradient(
+                                        colors: [Color(hue: hue, saturation: 0.6, brightness: 0.35), Color.black.opacity(0.85)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ))
+                                Image(systemName: item.icon)
+                                    .font(.system(size: 80))
+                                    .foregroundColor(.white.opacity(0.85))
+                                    .captureFrame(id: "imageView_app_preview_\(idx)")
+                            }
+                            .frame(width: isFoc ? 520 : 420, height: isFoc ? 330 : 270)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(isFoc ? Color.white : Color.white.opacity(0.15), lineWidth: isFoc ? 5 : 1)
+                            )
+                            .shadow(color: isFoc ? Color.white.opacity(0.35) : Color.black.opacity(0.6), radius: isFoc ? 30 : 12)
+                            .captureFrame(id: isFoc ? "collectionItem_app_card_\(idx)_focused" : "collectionItem_app_card_\(idx)_unfocused")
+
+                            HStack(spacing: 14) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.white.opacity(0.2))
+                                    Image(systemName: item.icon)
+                                        .font(.system(size: 18))
+                                        .foregroundColor(.white)
+                                }
+                                .frame(width: 36, height: 36)
+                                .captureFrame(id: "imageView_app_icon_\(idx)")
+
+                                Text(item.title)
+                                    .font(.system(size: 26, weight: isFoc ? .bold : .medium))
+                                    .foregroundColor(isFoc ? .white : .white.opacity(0.7))
+                                    .captureFrame(id: "label_app_title_\(idx)")
+                            }
+                        }
+                        .scaleEffect(isFoc ? 1.05 : 0.95)
+                    }
+                }
+                Spacer()
+
+                if showCloseHint {
+                    HStack(spacing: 12) {
+                        Image(systemName: "chevron.up")
+                            .font(.system(size: 20, weight: .bold))
+                            .foregroundColor(.white.opacity(0.6))
+                        Text("Swipe up on the clickpad to close")
+                            .font(.system(size: 22, weight: .medium))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                    .padding(.bottom, 40)
+                    .captureFrame(id: "label_close_hint")
+                }
+            }
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 17: PIN & AirPlay Passcode Entry
+
+struct PINEntryView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let prompts = [
+            ("AirPlay Passcode", "Enter the passcode displayed on your Apple TV to connect."),
+            ("Enter Restrictions Passcode", "Enter the 4-digit passcode to access restricted content."),
+            ("Purchase Passcode", "Enter your passcode to authorize this purchase."),
+            ("Conference Room PIN", "Enter the PIN displayed on the conference room display.")
+        ]
+        let p = prompts[Int(rng.next() % UInt64(prompts.count))]
+        let length = (rng.next() % 2 == 0) ? 4 : 6
+        let filled = Int(rng.next() % UInt64(length))
+        let foc = Int(rng.next() % 11) // 0..9 digits, 10 cancel
+
+        ZStack {
+            Color.black.opacity(0.85).ignoresSafeArea()
+
+            VStack(spacing: 36) {
+                VStack(spacing: 12) {
+                    Text(p.0)
+                        .font(.system(size: 40, weight: .bold))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_pin_title")
+
+                    Text(p.1)
+                        .font(.system(size: 24))
+                        .foregroundColor(.white.opacity(0.7))
+                        .captureFrame(id: "label_pin_subtitle")
+                }
+
+                HStack(spacing: 24) {
+                    ForEach(0..<length, id: \.self) { idx in
+                        let isFilled = idx < filled
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.white.opacity(0.12))
+                                .frame(width: 64, height: 74)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.white.opacity(0.3), lineWidth: 2)
+                                )
+
+                            if isFilled {
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 20, height: 20)
+                            }
+                        }
+                        .captureFrame(id: "secureField_pin_slot_\(idx)")
+                    }
+                }
+                .padding(.vertical, 10)
+
+                VStack(spacing: 16) {
+                    ForEach(0..<3) { row in
+                        HStack(spacing: 20) {
+                            ForEach(0..<3) { col in
+                                let digit = row * 3 + col + 1
+                                let isFoc = (foc == digit)
+                                Text("\(digit)")
+                                    .font(.system(size: 32, weight: isFoc ? .bold : .medium))
+                                    .foregroundColor(isFoc ? Color.black : Color.white)
+                                    .frame(width: 100, height: 68)
+                                    .background(isFoc ? Color.white : Color.white.opacity(0.12))
+                                    .cornerRadius(16)
+                                    .shadow(color: isFoc ? Color.white.opacity(0.35) : Color.clear, radius: 12)
+                                    .captureFrame(id: isFoc ? "collectionItem_keypad_\(digit)_focused" : "collectionItem_keypad_\(digit)_unfocused")
+                            }
+                        }
+                    }
+
+                    HStack(spacing: 20) {
+                        let isCancelFoc = (foc == 10)
+                        Text("Cancel")
+                            .font(.system(size: 24, weight: isCancelFoc ? .bold : .medium))
+                            .foregroundColor(isCancelFoc ? Color.black : Color.white)
+                            .frame(width: 100, height: 68)
+                            .background(isCancelFoc ? Color.white : Color.white.opacity(0.12))
+                            .cornerRadius(16)
+                            .shadow(color: isCancelFoc ? Color.white.opacity(0.35) : Color.clear, radius: 12)
+                            .captureFrame(id: isCancelFoc ? "cancelAction_pin_cancel_focused" : "cancelAction_pin_cancel_unfocused")
+
+                        let isZeroFoc = (foc == 0)
+                        Text("0")
+                            .font(.system(size: 32, weight: isZeroFoc ? .bold : .medium))
+                            .foregroundColor(isZeroFoc ? Color.black : Color.white)
+                            .frame(width: 100, height: 68)
+                            .background(isZeroFoc ? Color.white : Color.white.opacity(0.12))
+                            .cornerRadius(16)
+                            .shadow(color: isZeroFoc ? Color.white.opacity(0.35) : Color.clear, radius: 12)
+                            .captureFrame(id: isZeroFoc ? "collectionItem_keypad_0_focused" : "collectionItem_keypad_0_unfocused")
+
+                        Image(systemName: "delete.left")
+                            .font(.system(size: 26))
+                            .foregroundColor(Color.white)
+                            .frame(width: 100, height: 68)
+                            .background(Color.white.opacity(0.12))
+                            .cornerRadius(16)
+                            .captureFrame(id: "collectionItem_keypad_delete_unfocused")
+                    }
+                }
+            }
+            .padding(48)
+            .background(Color(red: 0.12, green: 0.12, blue: 0.16))
+            .cornerRadius(32)
+            .shadow(color: Color.black.opacity(0.7), radius: 40)
+            .captureFrame(id: "sheet_pin_dialog")
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 18: VoiceOver Accessibility Overlay
+
+struct VoiceOverOverlayView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let utterances = [
+            ("Settings, button. Double tap to open.", "Actions available", "Settings"),
+            ("Watch Now, Severance Season 2, Episode 1, button.", "Play episode", "Severance"),
+            ("Photos, button. 1,420 photos.", "Double tap to browse library", "Photos"),
+            ("Search, text field. Double tap to edit.", "Dictation available", "Search")
+        ]
+        let u = utterances[Int(rng.next() % UInt64(utterances.count))]
+        let cx = CGFloat(400 + (rng.next() % 800))
+        let cy = CGFloat(200 + (rng.next() % 400))
+
+        ZStack(alignment: .topLeading) {
+            Color.black.opacity(0.92).ignoresSafeArea()
+
+            VStack(spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(Color(red: 0.2, green: 0.2, blue: 0.28))
+                    Image(systemName: "appletvremote.gen4.fill")
+                        .font(.system(size: 64))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "imageView_vo_item_icon")
+                }
+                .frame(width: 296, height: 156)
+
+                Text(u.2)
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundColor(.white)
+                    .captureFrame(id: "label_vo_item_title")
+            }
+            .frame(width: 320, height: 220)
+            .background(Color.white.opacity(0.08))
+            .cornerRadius(22)
+            .overlay(
+                RoundedRectangle(cornerRadius: 22)
+                    .strokeBorder(Color.black, lineWidth: 6)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 22)
+                            .strokeBorder(Color.white, lineWidth: 3)
+                    )
+            )
+            .position(x: cx, y: cy)
+            .captureFrame(id: "collectionItem_vo_focused_element_focused")
+
+            VStack {
+                Spacer()
+                HStack(spacing: 24) {
+                    Image(systemName: "accessibility")
+                        .font(.system(size: 32, weight: .semibold))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "imageView_vo_badge")
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(u.0)
+                            .font(.system(size: 28, weight: .semibold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_vo_spoken_text")
+
+                        Text(u.1)
+                            .font(.system(size: 20))
+                            .foregroundColor(.white.opacity(0.7))
+                            .captureFrame(id: "label_vo_hint_text")
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal, 36)
+                .frame(width: 1400, height: 96)
+                .background(Color.black.opacity(0.9))
+                .cornerRadius(24)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24)
+                        .stroke(Color.white.opacity(0.35), lineWidth: 1.5)
+                )
+                .padding(.bottom, 48)
+                .captureFrame(id: "sheet_vo_caption_bar")
+            }
+            .frame(width: 1920, height: 1080)
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 19: Now Playing & Synchronized Lyrics
+
+struct NowPlayingLyricsView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let songs = [
+            ("Starboy", "The Weeknd • Starboy"),
+            ("Blinding Lights", "The Weeknd • After Hours"),
+            ("Cruel Summer", "Taylor Swift • Lover"),
+            ("As It Was", "Harry Styles • Harry's House")
+        ]
+        let s = songs[Int(rng.next() % UInt64(songs.count))]
+        let lines = [
+            "Waiting for the right moment",
+            "Running through the city lights",
+            "I look into the mirror and see it all",
+            "Nothing compares to this feeling",
+            "Holding on until tomorrow comes",
+            "Every heartbeat keeps the rhythm"
+        ]
+        let activeIdx = Int(rng.next() % UInt64(lines.count))
+        let prog = Double(20 + (rng.next() % 60)) / 100.0
+        let hue = Double(rng.next() % 1000) / 1000.0
+
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(hue: hue, saturation: 0.7, brightness: 0.25),
+                    Color(hue: (hue + 0.2).truncatingRemainder(dividingBy: 1.0), saturation: 0.6, brightness: 0.15),
+                    Color.black
+                ],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            ).ignoresSafeArea()
+
+            HStack(spacing: 80) {
+                VStack(alignment: .leading, spacing: 28) {
+                    Spacer()
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(LinearGradient(
+                                colors: [Color(hue: hue, saturation: 0.8, brightness: 0.6), Color.black.opacity(0.8)],
+                                startPoint: .topLeading, endPoint: .bottomTrailing
+                            ))
+                        Image(systemName: "music.note")
+                            .font(.system(size: 96))
+                            .foregroundColor(.white.opacity(0.9))
+                    }
+                    .frame(width: 440, height: 440)
+                    .shadow(color: Color.black.opacity(0.6), radius: 30)
+                    .captureFrame(id: "imageView_album_art")
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(s.0)
+                            .font(.system(size: 38, weight: .bold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_song_title")
+
+                        Text(s.1)
+                            .font(.system(size: 24))
+                            .foregroundColor(.white.opacity(0.7))
+                            .captureFrame(id: "label_artist_name")
+                    }
+
+                    VStack(spacing: 12) {
+                        GeometryReader { geo in
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.white.opacity(0.2))
+                                    .frame(height: 8)
+
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.white)
+                                    .frame(width: geo.size.width * CGFloat(prog), height: 8)
+                            }
+                        }
+                        .frame(width: 440, height: 20)
+                        .captureFrame(id: "slider_music_scrubber")
+
+                        HStack {
+                            Text("1:42")
+                                .font(.system(size: 18))
+                                .foregroundColor(.white.opacity(0.6))
+                                .captureFrame(id: "label_elapsed_time")
+                            Spacer()
+                            Text("-2:18")
+                                .font(.system(size: 18))
+                                .foregroundColor(.white.opacity(0.6))
+                                .captureFrame(id: "label_remaining_time")
+                        }
+                        .frame(width: 440)
+                    }
+
+                    HStack(spacing: 32) {
+                        Image(systemName: "quote.bubble.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white)
+                            .frame(width: 56, height: 56)
+                            .background(Color.white.opacity(0.2))
+                            .cornerRadius(14)
+                            .captureFrame(id: "secondaryButton_lyrics_toggle_unfocused")
+
+                        Image(systemName: "airplayaudio")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white)
+                            .frame(width: 56, height: 56)
+                            .background(Color.white.opacity(0.12))
+                            .cornerRadius(14)
+                            .captureFrame(id: "secondaryButton_airplay_toggle_unfocused")
+                    }
+                    Spacer()
+                }
+                .padding(.leading, 100)
+
+                VStack(alignment: .leading, spacing: 32) {
+                    Spacer()
+                    ForEach(Array(lines.enumerated()), id: \.offset) { idx, line in
+                        let isActive = (idx == activeIdx)
+                        Text(line)
+                            .font(.system(size: isActive ? 42 : 32, weight: isActive ? .bold : .medium))
+                            .foregroundColor(isActive ? Color.white : Color.white.opacity(0.35))
+                            .scaleEffect(isActive ? 1.03 : 1.0, anchor: .leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 8)
+                            .captureFrame(id: isActive ? "listRow_lyric_\(idx)_focused" : "listRow_lyric_\(idx)_unfocused")
+                    }
+                    Spacer()
+                }
+                .padding(.trailing, 100)
+            }
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 20: App Store Product Page
+
+struct AppStoreProductView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let apps = [
+            ("Zwift: Ride and Run", "Zwift, Inc.", "Health & Fitness • 4+", "Immersive indoor cycling and running workouts.", "Get"),
+            ("Infuse — Video Player", "FireCore", "Entertainment • 12+", "Ignite your video content on Apple TV with beautiful artwork.", "Open"),
+            ("Asphalt 8: Airborne", "Gameloft", "Games • 12+", "High-octane arcade racing with MFi controller support.", "Get"),
+            ("Streaks Workout", "Crunchy Bagel", "Health • 4+", "Quick personal daily workouts in your living room.", "Install")
+        ]
+        let item = apps[Int(rng.next() % UInt64(apps.count))]
+        let foc = Int(rng.next() % 5)
+        let hue = Double(rng.next() % 1000) / 1000.0
+
+        ZStack {
+            Color(red: 0.08, green: 0.08, blue: 0.12).ignoresSafeArea()
+
+            VStack(alignment: .leading, spacing: 36) {
+                HStack(alignment: .top, spacing: 40) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 32)
+                            .fill(LinearGradient(
+                                colors: [Color(hue: hue, saturation: 0.7, brightness: 0.6), Color.black.opacity(0.8)],
+                                startPoint: .topLeading, endPoint: .bottomTrailing
+                            ))
+                        Image(systemName: "app.gift.fill")
+                            .font(.system(size: 80))
+                            .foregroundColor(.white.opacity(0.9))
+                    }
+                    .frame(width: 220, height: 220)
+                    .shadow(color: Color.black.opacity(0.5), radius: 20)
+                    .captureFrame(id: "imageView_app_store_icon")
+
+                    VStack(alignment: .leading, spacing: 14) {
+                        Text(item.0)
+                            .font(.system(size: 44, weight: .bold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_app_name")
+
+                        Text(item.1)
+                            .font(.system(size: 24, weight: .medium))
+                            .foregroundColor(.white.opacity(0.7))
+                            .captureFrame(id: "label_developer_name")
+
+                        Text(item.2)
+                            .font(.system(size: 20))
+                            .foregroundColor(.white.opacity(0.5))
+                            .captureFrame(id: "label_category_rating")
+
+                        Spacer().frame(height: 10)
+
+                        HStack(spacing: 24) {
+                            let isPrimaryFoc = (foc == 0)
+                            Text(item.4)
+                                .font(.system(size: 26, weight: .bold))
+                                .foregroundColor(isPrimaryFoc ? Color.black : Color.white)
+                                .frame(width: 180, height: 64)
+                                .background(isPrimaryFoc ? Color.white : Color.white.opacity(0.15))
+                                .cornerRadius(16)
+                                .shadow(color: isPrimaryFoc ? Color.white.opacity(0.4) : Color.clear, radius: 14)
+                                .captureFrame(id: isPrimaryFoc ? "primaryButton_get_app_focused" : "primaryButton_get_app_unfocused")
+
+                            let isSecFoc = (foc == 1)
+                            Image(systemName: "ellipsis")
+                                .font(.system(size: 24))
+                                .foregroundColor(isSecFoc ? Color.black : Color.white)
+                                .frame(width: 64, height: 64)
+                                .background(isSecFoc ? Color.white : Color.white.opacity(0.12))
+                                .cornerRadius(16)
+                                .shadow(color: isSecFoc ? Color.white.opacity(0.4) : Color.clear, radius: 14)
+                                .captureFrame(id: isSecFoc ? "secondaryButton_app_more_focused" : "secondaryButton_app_more_unfocused")
+                        }
+                    }
+                    Spacer()
+                }
+                .padding(.top, 60)
+                .padding(.horizontal, 90)
+
+                Text(item.3)
+                    .font(.system(size: 24))
+                    .foregroundColor(.white.opacity(0.8))
+                    .lineLimit(2)
+                    .padding(.horizontal, 90)
+                    .captureFrame(id: "label_app_description")
+
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Screenshots")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 90)
+                        .captureFrame(id: "label_screenshots_heading")
+
+                    HStack(spacing: 36) {
+                        ForEach(0..<3) { idx in
+                            let targetIdx = idx + 2
+                            let isFoc = (foc == targetIdx)
+
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 18)
+                                    .fill(LinearGradient(
+                                        colors: [Color(hue: (hue + Double(idx) * 0.1).truncatingRemainder(dividingBy: 1.0), saturation: 0.5, brightness: 0.4), Color.black.opacity(0.7)],
+                                        startPoint: .topLeading, endPoint: .bottomTrailing
+                                    ))
+                                Image(systemName: "photo.fill")
+                                    .font(.system(size: 48))
+                                    .foregroundColor(.white.opacity(0.6))
+                                    .captureFrame(id: "imageView_screenshot_\(idx)")
+                            }
+                            .frame(width: 530, height: 300)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18)
+                                    .stroke(isFoc ? Color.white : Color.clear, lineWidth: 4)
+                            )
+                            .shadow(color: isFoc ? Color.white.opacity(0.4) : Color.black.opacity(0.4), radius: isFoc ? 20 : 8)
+                            .captureFrame(id: isFoc ? "collectionItem_screenshot_\(idx)_focused" : "collectionItem_screenshot_\(idx)_unfocused")
+                        }
+                    }
+                    .padding(.horizontal, 90)
+                }
+                Spacer()
+            }
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 21: Sign In With Apple / QR Code Modal
+
+struct SignInWithAppleView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let titles = [
+            ("Sign In with iPhone", "Bring your iPhone or iPad near this Apple TV to sign in automatically."),
+            ("Authorize TVTestRig", "Scan the code with your registered developer device to permit automation."),
+            ("Apple Account Setup", "Open Camera on an Apple device running iOS 17 or later and scan.")
+        ]
+        let item = titles[Int(rng.next() % UInt64(titles.count))]
+        let code = String(format: "%03d - %03d", rng.next() % 1000, rng.next() % 1000)
+        let foc = Int(rng.next() % 2)
+
+        ZStack {
+            Color.black.opacity(0.85).ignoresSafeArea()
+
+            HStack(spacing: 64) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color.white)
+                    Image(systemName: "qrcode")
+                        .font(.system(size: 200))
+                        .foregroundColor(.black)
+                }
+                .frame(width: 320, height: 320)
+                .captureFrame(id: "imageView_signin_qrcode")
+
+                VStack(alignment: .leading, spacing: 20) {
+                    HStack(spacing: 14) {
+                        Image(systemName: "applelogo")
+                            .font(.system(size: 32))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "imageView_apple_logo")
+
+                        Text(item.0)
+                            .font(.system(size: 38, weight: .bold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_signin_title")
+                    }
+
+                    Text(item.1)
+                        .font(.system(size: 22))
+                        .foregroundColor(.white.opacity(0.75))
+                        .lineLimit(3)
+                        .frame(maxWidth: 580, alignment: .leading)
+                        .captureFrame(id: "label_signin_subtitle")
+
+                    HStack(spacing: 12) {
+                        Text("Code:")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundColor(.white.opacity(0.5))
+                            .captureFrame(id: "label_code_prefix")
+
+                        Text(code)
+                            .font(.system(size: 30, weight: .bold, design: .monospaced))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_pairing_code")
+                    }
+                    .padding(.vertical, 8)
+
+                    Text("apple.com/appleid")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.blue)
+                        .underline()
+                        .captureFrame(id: "link_appleid_help")
+
+                    Spacer().frame(height: 12)
+
+                    HStack(spacing: 24) {
+                        let isSecFoc = (foc == 0)
+                        Text("Use Remote Instead")
+                            .font(.system(size: 22, weight: isSecFoc ? .bold : .medium))
+                            .foregroundColor(isSecFoc ? Color.black : Color.white)
+                            .padding(.horizontal, 28)
+                            .frame(height: 60)
+                            .background(isSecFoc ? Color.white : Color.white.opacity(0.12))
+                            .cornerRadius(14)
+                            .shadow(color: isSecFoc ? Color.white.opacity(0.35) : Color.clear, radius: 10)
+                            .captureFrame(id: isSecFoc ? "secondaryButton_use_remote_focused" : "secondaryButton_use_remote_unfocused")
+
+                        let isCancelFoc = (foc == 1)
+                        Text("Cancel")
+                            .font(.system(size: 22, weight: isCancelFoc ? .bold : .medium))
+                            .foregroundColor(isCancelFoc ? Color.black : Color.white)
+                            .padding(.horizontal, 28)
+                            .frame(height: 60)
+                            .background(isCancelFoc ? Color.white : Color.white.opacity(0.12))
+                            .cornerRadius(14)
+                            .shadow(color: isCancelFoc ? Color.white.opacity(0.35) : Color.clear, radius: 10)
+                            .captureFrame(id: isCancelFoc ? "cancelAction_signin_cancel_focused" : "cancelAction_signin_cancel_unfocused")
+                    }
+                }
+            }
+            .padding(56)
+            .background(Color(red: 0.12, green: 0.12, blue: 0.16))
+            .cornerRadius(32)
+            .shadow(color: Color.black.opacity(0.7), radius: 40)
+            .captureFrame(id: "sheet_signin_modal")
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 22: Fitness & Workout HUD
+
+struct FitnessHUDView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let workouts = [
+            ("Bakari • HIIT", "High Intensity Interval Training"),
+            ("Jessica • Yoga", "Slow Flow Yoga"),
+            ("Tyrell • Cycling", "Pure Dance Cycling"),
+            ("Sam • Strength", "Upper Body Strength")
+        ]
+        let w = workouts[Int(rng.next() % UInt64(workouts.count))]
+        let cal = Int(150 + (rng.next() % 400))
+        let bpm = Int(110 + (rng.next() % 65))
+        let min = Int(rng.next() % 45)
+        let sec = Int(rng.next() % 60)
+        let prog = Double(40 + (rng.next() % 50)) / 100.0
+
+        ZStack(alignment: .topLeading) {
+            LinearGradient(
+                colors: [Color(red: 0.05, green: 0.05, blue: 0.08), Color(red: 0.1, green: 0.05, blue: 0.12)],
+                startPoint: .top, endPoint: .bottom
+            ).ignoresSafeArea()
+
+            VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(w.0)
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_fitness_coach")
+
+                    Text(w.1)
+                        .font(.system(size: 18))
+                        .foregroundColor(.white.opacity(0.6))
+                        .captureFrame(id: "label_fitness_type")
+                }
+
+                Text(String(format: "%02d:%02d", min, sec))
+                    .font(.system(size: 52, weight: .heavy, design: .rounded))
+                    .foregroundColor(.white)
+                    .captureFrame(id: "label_fitness_timer")
+
+                HStack(spacing: 12) {
+                    Image(systemName: "flame.fill")
+                        .font(.system(size: 26))
+                        .foregroundColor(.red)
+                        .captureFrame(id: "imageView_flame_icon")
+
+                    HStack(alignment: .lastTextBaseline, spacing: 6) {
+                        Text("\(cal)")
+                            .font(.system(size: 38, weight: .bold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_calorie_count")
+
+                        Text("CAL")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.6))
+                            .captureFrame(id: "label_cal_unit")
+                    }
+                }
+
+                HStack(spacing: 12) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 24))
+                        .foregroundColor(.red)
+                        .captureFrame(id: "activityIndicator_heart_pulse")
+
+                    HStack(alignment: .lastTextBaseline, spacing: 6) {
+                        Text("\(bpm)")
+                            .font(.system(size: 38, weight: .bold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_heart_rate_bpm")
+
+                        Text("BPM")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.6))
+                            .captureFrame(id: "label_bpm_unit")
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("BURN BAR")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white.opacity(0.6))
+                        .captureFrame(id: "label_burn_bar_title")
+
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(Color.white.opacity(0.15))
+                            .frame(width: 280, height: 12)
+
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(LinearGradient(colors: [.yellow, .orange, .red], startPoint: .leading, endPoint: .trailing))
+                            .frame(width: 280 * CGFloat(prog), height: 12)
+                    }
+                    .captureFrame(id: "progressView_burn_bar")
+                }
+            }
+            .padding(32)
+            .background(Color.black.opacity(0.65))
+            .cornerRadius(24)
+            .padding(.leading, 80)
+            .padding(.top, 60)
+
+            VStack {
+                HStack {
+                    Spacer()
+                    ZStack {
+                        Circle()
+                            .stroke(Color.red.opacity(0.25), lineWidth: 14)
+                        Circle()
+                            .trim(from: 0, to: CGFloat(prog))
+                            .stroke(Color.red, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                            .rotationEffect(.degrees(-90))
+
+                        Circle()
+                            .stroke(Color.green.opacity(0.25), lineWidth: 14)
+                            .frame(width: 100, height: 100)
+                        Circle()
+                            .trim(from: 0, to: CGFloat(prog * 0.85))
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                            .frame(width: 100, height: 100)
+                            .rotationEffect(.degrees(-90))
+
+                        Circle()
+                            .stroke(Color.blue.opacity(0.25), lineWidth: 14)
+                            .frame(width: 68, height: 68)
+                        Circle()
+                            .trim(from: 0, to: CGFloat(prog * 0.95))
+                            .stroke(Color.blue, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                            .frame(width: 68, height: 68)
+                            .rotationEffect(.degrees(-90))
+                    }
+                    .frame(width: 132, height: 132)
+                    .padding(24)
+                    .background(Color.black.opacity(0.65))
+                    .cornerRadius(24)
+                    .padding(.trailing, 80)
+                    .padding(.top, 60)
+                    .captureFrame(id: "progressView_activity_rings")
+                }
+                Spacer()
+            }
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 23: Loading & Buffering HUD
+
+struct LoadingBuffersView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let messages = [
+            ("Loading...", "Preparing video playback..."),
+            ("Updating Library...", "Syncing with iCloud..."),
+            ("Installing Software Update...", "Apple TV will restart when finished."),
+            ("Buffering Stream...", "Optimizing video quality for your network connection.")
+        ]
+        let item = messages[Int(rng.next() % UInt64(messages.count))]
+        let isDeterminate = (rng.next() % 2 == 0)
+        let prog = Double(10 + (rng.next() % 85)) / 100.0
+
+        ZStack {
+            Color.black.opacity(0.88).ignoresSafeArea()
+
+            VStack(spacing: 32) {
+                ZStack {
+                    ForEach(0..<8) { i in
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color.white.opacity(Double(i + 1) / 8.0))
+                            .frame(width: 8, height: 22)
+                            .offset(y: -30)
+                            .rotationEffect(.degrees(Double(i) * 45.0))
+                    }
+                }
+                .frame(width: 80, height: 80)
+                .captureFrame(id: "activityIndicator_system_spinner")
+
+                VStack(spacing: 12) {
+                    Text(item.0)
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_loading_title")
+
+                    Text(item.1)
+                        .font(.system(size: 22))
+                        .foregroundColor(.white.opacity(0.7))
+                        .captureFrame(id: "label_loading_subtitle")
+                }
+
+                if isDeterminate {
+                    VStack(spacing: 10) {
+                        ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color.white.opacity(0.2))
+                                .frame(width: 440, height: 10)
+
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color.white)
+                                .frame(width: 440 * CGFloat(prog), height: 10)
+                        }
+                        .captureFrame(id: "progressView_download_progress")
+
+                        Text("\(Int(prog * 100))%")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.6))
+                            .captureFrame(id: "label_progress_percent")
+                    }
+                }
+            }
+            .padding(48)
+            .frame(width: 640)
+            .background(Color(red: 0.14, green: 0.14, blue: 0.18))
+            .cornerRadius(28)
+            .shadow(color: Color.black.opacity(0.6), radius: 32)
+            .captureFrame(id: "sheet_loading_modal")
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 24: Live Broadcast & Sports HUD
+
+struct LiveBroadcastHUDView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let matchups = [
+            ("LAD", "NYY", 4, 3, "Top 8th • 1 Out"),
+            ("BOS", "PHI", 2, 5, "Bottom 6th • 2 Outs"),
+            ("GSW", "LAL", 108, 102, "4th Qtr • 2:45"),
+            ("MIA", "BOS", 89, 94, "3rd Qtr • 0:12")
+        ]
+        let m = matchups[Int(rng.next() % UInt64(matchups.count))]
+        let selSeg = Int(rng.next() % 3)
+        let focChan = Int(rng.next() % 4)
+        let hue = Double(rng.next() % 1000) / 1000.0
+
+        ZStack(alignment: .topLeading) {
+            LinearGradient(
+                colors: [Color(hue: hue, saturation: 0.6, brightness: 0.2), Color.black],
+                startPoint: .top, endPoint: .bottom
+            ).ignoresSafeArea()
+
+            HStack(spacing: 20) {
+                HStack(spacing: 6) {
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: 8, height: 8)
+                    Text("LIVE")
+                        .font(.system(size: 16, weight: .black))
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.red)
+                .cornerRadius(8)
+                .captureFrame(id: "label_live_badge")
+
+                HStack(spacing: 16) {
+                    Text("\(m.0) \(m.2)")
+                        .font(.system(size: 26, weight: .heavy))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_home_score")
+
+                    Text("-")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white.opacity(0.6))
+
+                    Text("\(m.3) \(m.1)")
+                        .font(.system(size: 26, weight: .heavy))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_away_score")
+                }
+
+                Text(m.4)
+                    .font(.system(size: 20, weight: .medium))
+                    .foregroundColor(.white.opacity(0.8))
+                    .captureFrame(id: "label_game_clock")
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 14)
+            .background(Color.black.opacity(0.75))
+            .cornerRadius(18)
+            .padding(.leading, 80)
+            .padding(.top, 60)
+
+            VStack {
+                Spacer()
+                HStack(spacing: 0) {
+                    let segments = ["Game Cast", "Box Score", "Multiview"]
+                    ForEach(Array(segments.enumerated()), id: \.offset) { idx, seg in
+                        let isSel = (idx == selSeg)
+                        Text(seg)
+                            .font(.system(size: 20, weight: isSel ? .bold : .medium))
+                            .foregroundColor(isSel ? Color.black : Color.white)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 10)
+                            .background(isSel ? Color.white : Color.clear)
+                            .cornerRadius(12)
+                    }
+                }
+                .padding(6)
+                .background(Color.white.opacity(0.12))
+                .cornerRadius(16)
+                .captureFrame(id: "segmentedControl_sports_modes")
+                .padding(.bottom, 20)
+
+                HStack(spacing: 32) {
+                    ForEach(0..<4) { idx in
+                        let isFoc = (idx == focChan)
+
+                        VStack(alignment: .leading, spacing: 10) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color.white.opacity(0.15))
+                                Image(systemName: "tv.fill")
+                                    .font(.system(size: 40))
+                                    .foregroundColor(.white.opacity(0.7))
+                            }
+                            .frame(width: 320, height: 180)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(isFoc ? Color.white : Color.clear, lineWidth: 4)
+                            )
+                            .shadow(color: isFoc ? Color.white.opacity(0.35) : Color.clear, radius: 16)
+                            .captureFrame(id: isFoc ? "collectionItem_channel_\(idx)_focused" : "collectionItem_channel_\(idx)_unfocused")
+
+                            Text("Channel \(idx + 1)")
+                                .font(.system(size: 20, weight: isFoc ? .bold : .medium))
+                                .foregroundColor(isFoc ? .white : .white.opacity(0.7))
+                                .captureFrame(id: "label_channel_name_\(idx)")
+                        }
+                    }
+                }
+                .padding(.bottom, 48)
+            }
+            .frame(width: 1920)
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 25: Conference Room Display
+
+struct ConferenceRoomView: View {
+    let seed: UInt64
+    var corpus: ContentCorpus
+
+    var body: some View {
+        var rng = SeededRNG(seed: seed)
+        let rooms = [
+            ("Executive Conference Room", "Apple-Guest"),
+            ("Design Studio Apple TV", "Studio-5GHz"),
+            ("Engineering All-Hands", "Corp-WPA3"),
+            ("Briefing Center 4K", "Guest-Wireless")
+        ]
+        let r = rooms[Int(rng.next() % UInt64(rooms.count))]
+        let code = String(format: "%04d", rng.next() % 10000)
+        let hue = Double(rng.next() % 1000) / 1000.0
+
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(hue: hue, saturation: 0.5, brightness: 0.25),
+                    Color(hue: (hue + 0.1).truncatingRemainder(dividingBy: 1.0), saturation: 0.4, brightness: 0.15),
+                    Color.black
+                ],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            ).ignoresSafeArea()
+
+            VStack(spacing: 36) {
+                ZStack {
+                    Circle()
+                        .fill(Color.white.opacity(0.15))
+                    Image(systemName: "airplayvideo")
+                        .font(.system(size: 64))
+                        .foregroundColor(.white)
+                }
+                .frame(width: 120, height: 120)
+                .captureFrame(id: "imageView_conference_airplay_icon")
+
+                VStack(spacing: 8) {
+                    Text("AirPlay to")
+                        .font(.system(size: 26, weight: .medium))
+                        .foregroundColor(.white.opacity(0.7))
+                        .captureFrame(id: "label_airplay_to_prefix")
+
+                    Text(r.0)
+                        .font(.system(size: 44, weight: .bold))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_room_name")
+                }
+
+                VStack(spacing: 16) {
+                    HStack(spacing: 16) {
+                        Image(systemName: "wifi")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white.opacity(0.8))
+                            .captureFrame(id: "imageView_wifi_icon")
+
+                        Text("Wi-Fi: \(r.1)")
+                            .font(.system(size: 26, weight: .semibold))
+                            .foregroundColor(.white)
+                            .captureFrame(id: "label_wifi_network")
+                    }
+
+                    Text("To present, connect your Apple device to Wi-Fi and choose AirPlay.")
+                        .font(.system(size: 22))
+                        .foregroundColor(.white.opacity(0.75))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 600)
+                        .captureFrame(id: "label_instructions")
+                }
+                .padding(28)
+                .background(Color.white.opacity(0.08))
+                .cornerRadius(20)
+
+                VStack(spacing: 8) {
+                    Text("AIRPLAY CODE")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.white.opacity(0.6))
+                        .captureFrame(id: "label_code_heading")
+
+                    Text(code)
+                        .font(.system(size: 48, weight: .heavy, design: .monospaced))
+                        .foregroundColor(.white)
+                        .captureFrame(id: "label_airplay_code")
+                }
+            }
+            .padding(56)
+            .frame(width: 820)
+            .background(Color(red: 0.12, green: 0.12, blue: 0.16))
+            .cornerRadius(32)
+            .shadow(color: Color.black.opacity(0.7), radius: 40)
+            .captureFrame(id: "sheet_conference_card")
+        }
+        .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
 // MARK: - Generator Orchestrator
 
 @MainActor
@@ -1409,11 +2542,21 @@ func generateDataset() async {
             ("tvOSSharePlay", 1),
             ("tvOSKeyboard", 1),
             ("tvOSSiriOverlay", 1),
+            ("tvOSAppSwitcher", 1),
+            ("tvOSPINEntry", 1),
+            ("tvOSVoiceOverOverlay", 1),
+            ("tvOSNowPlayingLyrics", 1),
+            ("tvOSAppStoreProduct", 1),
+            ("tvOSSignInWithApple", 1),
+            ("tvOSFitnessHUD", 1),
+            ("tvOSLoadingBuffers", 1),
+            ("tvOSLiveBroadcastHUD", 1),
+            ("tvOSConferenceRoom", 1),
             ("tvOSHardNegatives", 1)
         ]
     } else {
-        // Distribute proportionally across all 15 template families
-        let baseCount = max(1, targetCount / 15)
+        // Distribute proportionally across all 25 template families
+        let baseCount = max(1, targetCount / 25)
         counts = [
             ("tvOSHomeScreen", baseCount),
             ("tvOSSettings", baseCount),
@@ -1429,12 +2572,22 @@ func generateDataset() async {
             ("tvOSSharePlay", baseCount),
             ("tvOSKeyboard", baseCount),
             ("tvOSSiriOverlay", baseCount),
-            ("tvOSHardNegatives", max(1, targetCount - (baseCount * 14)))
+            ("tvOSAppSwitcher", baseCount),
+            ("tvOSPINEntry", baseCount),
+            ("tvOSVoiceOverOverlay", baseCount),
+            ("tvOSNowPlayingLyrics", baseCount),
+            ("tvOSAppStoreProduct", baseCount),
+            ("tvOSSignInWithApple", baseCount),
+            ("tvOSFitnessHUD", baseCount),
+            ("tvOSLoadingBuffers", baseCount),
+            ("tvOSLiveBroadcastHUD", baseCount),
+            ("tvOSConferenceRoom", baseCount),
+            ("tvOSHardNegatives", max(1, targetCount - (baseCount * 24)))
         ]
     }
 
     let totalTarget = counts.reduce(0) { $0 + $1.count }
-    print("Generating \(totalTarget) tvOS OS UI images across 15 families at 1920x1080 into \(outDir.path)...")
+    print("Generating \(totalTarget) tvOS OS UI images across 25 families at 1920x1080 into \(outDir.path)...")
     let start = Date()
 
     var globalIndex = 0
@@ -1591,6 +2744,26 @@ func generateDataset() async {
                 renderAndSave(view: KeyboardView(seed: s, corpus: corpus), family: family)
             case "tvOSSiriOverlay":
                 renderAndSave(view: SiriOverlayView(seed: s, corpus: corpus), family: family)
+            case "tvOSAppSwitcher":
+                renderAndSave(view: AppSwitcherView(seed: s, corpus: corpus), family: family)
+            case "tvOSPINEntry":
+                renderAndSave(view: PINEntryView(seed: s, corpus: corpus), family: family)
+            case "tvOSVoiceOverOverlay":
+                renderAndSave(view: VoiceOverOverlayView(seed: s, corpus: corpus), family: family)
+            case "tvOSNowPlayingLyrics":
+                renderAndSave(view: NowPlayingLyricsView(seed: s, corpus: corpus), family: family)
+            case "tvOSAppStoreProduct":
+                renderAndSave(view: AppStoreProductView(seed: s, corpus: corpus), family: family)
+            case "tvOSSignInWithApple":
+                renderAndSave(view: SignInWithAppleView(seed: s, corpus: corpus), family: family)
+            case "tvOSFitnessHUD":
+                renderAndSave(view: FitnessHUDView(seed: s, corpus: corpus), family: family)
+            case "tvOSLoadingBuffers":
+                renderAndSave(view: LoadingBuffersView(seed: s, corpus: corpus), family: family)
+            case "tvOSLiveBroadcastHUD":
+                renderAndSave(view: LiveBroadcastHUDView(seed: s, corpus: corpus), family: family)
+            case "tvOSConferenceRoom":
+                renderAndSave(view: ConferenceRoomView(seed: s, corpus: corpus), family: family)
             case "tvOSHardNegatives":
                 renderAndSave(view: HardNegativeView(seed: s), family: family)
             default:

@@ -872,6 +872,49 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - All 71 offline unit and integration tests passing (`NativeUIAuditKitTests` + `NativeUIAuditKitModelsTests`).
   - Real Apple TV qualification: verified against TVTestRig captures (`fixture_initial_screen.png`, `fixture_grid_screen.png`, `fixture_chaos_screen.png`, `latest.png`) — 100% focus localization accuracy.
 
+---
 
+## Run 012 — Phase 6b-E Extended: Comprehensive tvOS UI Coverage & 25-Class Model (`NativeUIModel_tvOS_v3.0`)
 
-
+- **Date:** 2026-09-16
+- **Goal:** Extend tvOS element detection to 10 additional OS-level surfaces and UI features: multitasking App Switcher carousel, PIN / Passcode / AirPlay pairing dialogs, VoiceOver high-contrast outline overlays and speech caption bars, Apple Music synchronized lyrics views, App Store product sheets with screenshot carousels, Sign In with Apple QR code pairing modals, Apple Fitness+ workout metric HUDs, system loading spinners / buffer progress bars, live broadcast sports bugs / channel rails, and Conference Room Display mode.
+- **Templates Added:** 10 new parameterised templates in `NativeUIDatasetGenerator/Templates/tvOS/` and integrated into `scripts/generate_tvos_dataset.swift`:
+  1. `tvOSAppSwitcherTemplate`: Multitasking carousel with app preview cards (`collectionItem`), app icon badge (`imageView`), and app title (`label`).
+  2. `tvOSPINEntryTemplate`: Numeric PIN entry digits / secure dots (`secureField`, `textField`), keypad digits (`collectionItem`, `secondaryButton`), and cancel / back action (`cancelAction`).
+  3. `tvOSVoiceOverOverlayTemplate`: VoiceOver active high-contrast outline border (`collectionItem`) and bottom speech caption bar (`label`, `sheet`).
+  4. `tvOSNowPlayingLyricsTemplate`: Apple Music karaoke / synchronized lyrics sheet (`sheet`), lyric lines (`label`), time scrub progress (`slider`, `progressView`), and audio format badges (`imageView`).
+  5. `tvOSAppStoreProductTemplate`: App Store product detail view, "Get" / "Update" button (`primaryButton`), screenshot preview carousel (`collectionItem`), app description (`label`), and ratings breakdown (`progressView`).
+  6. `tvOSSignInWithAppleTemplate`: Modal auth sheet (`sheet`, `popover`), QR code pairing image (`imageView`), authorization instruction links (`link`), and cancel button (`cancelAction`).
+  7. `tvOSFitnessHUDTemplate`: Apple Fitness+ workout HUD overlay, activity rings (`imageView`, `progressView`), burn bar (`slider`, `progressView`), heart rate / calorie labels (`label`), and pause button (`secondaryButton`).
+  8. `tvOSLoadingBuffersTemplate`: System indeterminate loading indicator (`activityIndicator`), linear buffering bar (`progressView`), status label (`label`), and cancel action (`cancelAction`).
+  9. `tvOSLiveBroadcastHUDTemplate`: Live sports score bug (`label`, `imageView`), channel rail (`collectionItem`, `tabBar`), and multi-view channel switcher (`secondaryButton`).
+  10. `tvOSConferenceRoomTemplate`: Conference Room Display mode, AirPlay connection card (`popover`), Wi-Fi network instructions (`label`, `link`), and device PIN badge (`secureField`).
+- **Dual Focus Engine Enhancements:**
+  - Implemented VoiceOver high-contrast double border outline detection (dark + bright edge contrast scoring) and caption bar contextual boost in `evaluateElementFocusScore` and `resolveTVOSFocus` in `NativeUIDetectionRequest.swift`.
+  - Expanded focusable types to include `secureField`, `textField`, `segmentedControl`, `stepperControl`, `slider`.
+  - Implemented explicit focus abstention (`isFocused: nil`) for full-screen media playback and ambient screensavers.
+- **Dataset Generation:**
+  - Invocation: `swift scripts/generate_tvos_dataset.swift --count 5000 --output dataset/tvos_dataset`
+  - Generation time: 148.5 seconds (33.7 fps) on Apple M4.
+  - Dataset size: 5,000 images at 1920×1080 (200 per family across all 25 families; 4,000 train, 500 val, 500 test).
+  - Sidecar format: Schema v1.0 JSON with exact pixel bounds and Vision normalized bounds.
+- **COCO/YOLO Export:**
+  - Invocation: `.venv-yolo/bin/python scripts/export_tvos_coco.py --input dataset/tvos_dataset --output NativeUITrainer/yolo_dataset_tvos --clean`
+  - Output: 5,000 images exported to `NativeUITrainer/yolo_dataset_tvos/` with `dataset.yaml` (41 classes).
+  - Active classes with instances: 25 classes (`activityIndicator`, `alert`, `cancelAction`, `collectionItem`, `contextMenu`, `destructiveButton`, `imageView`, `label`, `link`, `listRow`, `navigationBar`, `popover`, `primaryButton`, `progressView`, `searchField`, `secondaryButton`, `secureField`, `segmentedControl`, `sheet`, `sidebar`, `slider`, `stepperControl`, `tabBar`, `toggle`, `toolbar`).
+- **Training Run (25 Epochs on Apple Silicon M4 MPS):**
+  - Invocation: `nohup .venv-yolo/bin/python scripts/train_tvos_model.py --epochs 25 --batch 16 --output NativeUITrainer/yolo_runs/phase6b_tvos_v3`
+  - Training time: 1.464 hours (exit rc=0).
+  - Final Validation Metrics at Epoch 25 (`results.csv`):
+    - Precision: **0.983** (98.3%)
+    - Recall: **0.983** (98.3%)
+    - mAP@0.5: **0.9822** (98.2%)
+    - mAP@0.5:0.95: **0.944** (94.4%)
+    - Box Loss: 0.2882, Cls Loss: 0.2185, DFL Loss: 0.8143
+    - 24 of 25 active classes achieved mAP@0.5 = 0.995.
+- **CoreML Export & Packaging:**
+  - Exported via `scripts/export_yolo_coreml.py` using Python 3.12 (`.venv-coreml`) with FP16 quantization and baked-in NMS: `NativeUITrainer/yolo_runs/phase6b_tvos_v3/weights/best.mlpackage` (5.2 MB).
+  - Compiled via `xcrun coremlcompiler compile` directly into `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIModel_tvOS.mlmodelc`.
+  - Updated model manifest `model_manifest_tvos_v1.json` (`modelId: nativeui-tvos-v3.0`).
+  - Registered `ModelRegistry.tvOS` (`nativeui-tvos-v3.0`, mAP@0.5 = 0.9822, 25 active classes) with backwards-compatible `tvOS_v2` and `tvOS_v1` retention.
+  - All 73 unit and integration tests passing offline across `NativeUIAuditKitTests` and `NativeUIAuditKitModelsTests`.

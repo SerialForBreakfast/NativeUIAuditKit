@@ -2099,6 +2099,33 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
+#### TASK-6b-E8: Extended 25-Family tvOS Dataset Generation & Retraining (`NativeUIModel_tvOS_v3.0`) ✅
+
+**Files:** `NativeUIDatasetGenerator/Templates/tvOS/` (10 new templates), `scripts/generate_tvos_dataset.swift`, `NativeUIDetectionRequest.swift`, `ModelRegistry.swift`  
+**Scope:**
+- [x] Create 10 additional parameterized tvOS templates for comprehensive OS surface coverage:
+  - `tvOSAppSwitcherTemplate`: Multitasking carousel and app preview cards.
+  - `tvOSPINEntryTemplate`: Passcode, PIN, and AirPlay pairing dialogs.
+  - `tvOSVoiceOverOverlayTemplate`: VoiceOver active double border outline and bottom caption bar.
+  - `tvOSNowPlayingLyricsTemplate`: Apple Music synchronized lyrics sheet.
+  - `tvOSAppStoreProductTemplate`: App Store product sheet and screenshot carousel.
+  - `tvOSSignInWithAppleTemplate`: Modal auth dialog and QR pairing code.
+  - `tvOSFitnessHUDTemplate`: Apple Fitness+ metrics HUD and activity rings.
+  - `tvOSLoadingBuffersTemplate`: System activity spinners and download progress bars.
+  - `tvOSLiveBroadcastHUDTemplate`: Live sports bug and multi-view switcher.
+  - `tvOSConferenceRoomTemplate`: Conference Room Display mode.
+- [x] Implement dual focus engine enhancements in `NativeUIDetectionRequest.swift`:
+  - VoiceOver high-contrast double border outline detection and caption bar contextual boost.
+  - Extended focusable element types (`secureField`, `textField`, `segmentedControl`, `stepperControl`, `slider`).
+  - Explicit focus abstention (`isFocused: nil`) for full-screen video playback and ambient screensavers.
+- [x] Generate 5,000 synthetic screenshots across 25 template families (4,000 train, 500 val, 500 test).
+- [x] Export COCO/YOLO dataset with 25 active classes.
+- [x] Execute production training run `phase6b_tvos_v3` (25 epochs, Precision: 0.983, Recall: 0.983, mAP@0.5: 0.9822).
+- [x] Export FP16 CoreML model and compile directly to `NativeUIModel_tvOS.mlmodelc`.
+- [x] Update model registry and manifest to `nativeui-tvos-v3.0` with 25 trained classes. All 73 tests passing offline.
+
+---
+
 ## Phase 6b-R: Real Apple TV Capture and Qualification
 
 *Goal: Qualify OS-navigation and accessibility visual classes using real Apple TV screenshots captured by TVTestRig.*

@@ -163,10 +163,11 @@ def main():
         out_dir = Path(args.output).expanduser().resolve()
         out_dir.mkdir(parents=True, exist_ok=True)
         dest = out_dir / mlpkg.name
-        if dest.exists():
-            shutil.rmtree(dest)
-        shutil.copytree(mlpkg, dest)
-        print(f"Copied   → {dest}")
+        if dest.resolve() != mlpkg.resolve():
+            if dest.exists():
+                shutil.rmtree(dest)
+            shutil.copytree(mlpkg, dest)
+            print(f"Copied   → {dest}")
         print(f"\nDrop {mlpkg.name} into Xcode and update NativeUIAuditKitModels.")
 
 

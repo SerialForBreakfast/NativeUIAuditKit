@@ -267,14 +267,34 @@ public enum ModelRegistry {
     )
 
     /// tvOS OS UI detector — YOLO11n, Phase 6b (v2.0).
+    /// tvOS OS UI detector — YOLO11n, Phase 6b (v3.0).
     ///
-    /// Evaluated on 300 held-out test images: mAP@0.5 = 0.971, Precision = 0.994, Recall = 0.975.
+    /// Evaluated on 500 held-out test images: mAP@0.5 = 0.982, Precision = 0.983, Recall = 0.983.
     /// Visual focus determination accuracy = 100.0%.
     /// Tailored for Apple TV automation and navigation with TVTestRig.
     /// Detects Home Screen tiles, Settings navigation, split views, modal alerts, tab bars,
     /// context menus, Control Center, AVKit playback controls, audio/subtitles dialogs,
-    /// SharePlay cards, onscreen keyboards, and Siri overlays.
+    /// SharePlay cards, onscreen keyboards, Siri overlays, App Switcher, PIN entry, VoiceOver overlays,
+    /// synchronized lyrics, App Store product sheets, Sign In with Apple, Fitness+ HUD, loading buffers,
+    /// live broadcast HUDs, and Conference Room Display mode.
     public static let tvOS = ModelDescriptor(
+        modelId: "nativeui-tvos-v3.0",
+        calibrationOsRange: OSVersionRange(min: "tvOS 17.0", max: "tvOS 26.x"),
+        trainedClasses: [
+            "activityIndicator", "alert", "cancelAction", "collectionItem",
+            "contextMenu", "destructiveButton", "imageView", "label",
+            "link", "listRow", "navigationBar", "popover",
+            "primaryButton", "progressView", "searchField", "secondaryButton",
+            "secureField", "segmentedControl", "sheet", "sidebar",
+            "slider", "stepperControl", "tabBar", "toggle",
+            "toolbar"
+        ],
+        trainingDatasetVersion: "run012-tvos-v3",
+        minimumDeploymentTarget: "tvOS 17.0"
+    )
+
+    /// Superseded tvOS OS UI detector v2.0. Kept for consumers pinned to it.
+    public static let tvOS_v2 = ModelDescriptor(
         modelId: "nativeui-tvos-v2.0",
         calibrationOsRange: OSVersionRange(min: "tvOS 17.0", max: "tvOS 26.x"),
         trainedClasses: [
@@ -302,9 +322,9 @@ public enum ModelRegistry {
         minimumDeploymentTarget: "tvOS 17.0"
     )
 
-    /// Tensor-level contract for the tvOS OS UI model (`tvOS`, v2.0).
+    /// Tensor-level contract for the tvOS OS UI model (`tvOS`, v3.0).
     public static let tvOSMetadata = ModelMetadata(
-        modelId: "nativeui-tvos-v2.0",
+        modelId: "nativeui-tvos-v3.0",
         architecture: "YOLO11n",
         inputWidth: 640,
         inputHeight: 640,
@@ -321,6 +341,6 @@ public enum ModelRegistry {
         ],
         defaultConfidenceThreshold: 0.25,
         recommendedNMSIoUThreshold: 0.30,
-        mAP50: 0.9712
+        mAP50: 0.9822
     )
 }

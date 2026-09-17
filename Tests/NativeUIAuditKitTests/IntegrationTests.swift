@@ -642,6 +642,116 @@ struct IntegrationTests {
         #expect(!isWarmedCleared)
     }
 
+    @Test("tvOS focus recognizes VoiceOver high-contrast double border outline")
+    func tvosFocusRecognizesVoiceOverDoubleBorder() {
+        // Create an image with two elements.
+        // Element 1 has VoiceOver high-contrast outline (black outer, white inner border).
+        // Element 2 is an unfocused dark element.
+        let img = makeImage(width: 800, height: 400) { ctx in
+            // Background
+            ctx.setFillColor(CGColor(red: 0.1, green: 0.1, blue: 0.15, alpha: 1.0))
+            ctx.fill(CGRect(x: 0, y: 0, width: 800, height: 400))
+
+            // Element 1: VoiceOver outlined item at (50, 50, 300, 200)
+            let voRect = CGRect(x: 50, y: 50, width: 300, height: 200)
+            ctx.setFillColor(CGColor(red: 0.2, green: 0.2, blue: 0.25, alpha: 1.0))
+            ctx.fill(voRect)
+            // Outer black border
+            ctx.setStrokeColor(CGColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0))
+            ctx.setLineWidth(8.0)
+            ctx.stroke(voRect)
+            // Inner white border
+            ctx.setStrokeColor(CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+            ctx.setLineWidth(4.0)
+            ctx.stroke(voRect.insetBy(dx: 4, dy: 4))
+
+            // Element 2: Unfocused dark item at (450, 50, 300, 200)
+            let normalRect = CGRect(x: 450, y: 50, width: 300, height: 200)
+            ctx.setFillColor(CGColor(red: 0.18, green: 0.18, blue: 0.22, alpha: 1.0))
+            ctx.fill(normalRect)
+
+            // VoiceOver Caption Bar at bottom
+            let captionRect = CGRect(x: 50, y: 320, width: 700, height: 60)
+            ctx.setFillColor(CGColor(red: 0.05, green: 0.05, blue: 0.05, alpha: 0.9))
+            ctx.fill(captionRect)
+        }
+
+        let obsVO = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 0.0625, y: 0.125, width: 0.375, height: 0.5),
+            boundingBoxPixels: NativeUIRect(x: 50, y: 50, width: 300, height: 200),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obsNormal = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .collectionItem,
+            boundingBox: NativeUIRect(x: 0.5625, y: 0.125, width: 0.375, height: 0.5),
+            boundingBoxPixels: NativeUIRect(x: 450, y: 50, width: 300, height: 200),
+            confidence: 0.95,
+            confidenceSource: .pixelModel
+        )
+        let obsCaptionBar = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .sheet,
+            boundingBox: NativeUIRect(x: 0.0625, y: 0.8, width: 0.875, height: 0.15),
+            boundingBoxPixels: NativeUIRect(x: 50, y: 320, width: 700, height: 60),
+            confidence: 0.92,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obsVO, obsNormal, obsCaptionBar],
+            minScoreThreshold: 0.35,
+            minMargin: 0.12
+        )
+
+        let resolvedVO = resolved.first(where: { $0.id == obsVO.id })!
+        let resolvedNormal = resolved.first(where: { $0.id == obsNormal.id })!
+
+        #expect(resolvedVO.state.isFocused == true, "VoiceOver outlined item must be recognized as focused")
+        #expect(resolvedNormal.state.isFocused == false, "Unfocused item must not be focused")
+    }
+
+    @Test("tvOS focus abstains cleanly during video playback and ambient screensavers")
+    func tvosFocusAbstainsOnPlaybackAndScreensaver() {
+        // Video playback screenshot: only video surface or zero interactive focus candidates
+        let img = makeImage(width: 600, height: 340) { ctx in
+            ctx.setFillColor(CGColor(red: 0.02, green: 0.02, blue: 0.04, alpha: 1.0))
+            ctx.fill(CGRect(x: 0, y: 0, width: 600, height: 340))
+        }
+
+        // Only non-focusable content (e.g. video / label)
+        let obsVideo = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .imageView,
+            boundingBox: NativeUIRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0),
+            boundingBoxPixels: NativeUIRect(x: 0, y: 0, width: 600, height: 340),
+            confidence: 0.98,
+            confidenceSource: .pixelModel
+        )
+        let obsSub = NativeUIElementObservation(
+            id: UUID(),
+            elementType: .label,
+            boundingBox: NativeUIRect(x: 0.2, y: 0.8, width: 0.6, height: 0.1),
+            boundingBoxPixels: NativeUIRect(x: 120, y: 270, width: 360, height: 34),
+            confidence: 0.90,
+            confidenceSource: .pixelModel
+        )
+
+        let resolved = NativeUIDetectionRequest.resolveTVOSFocus(
+            in: img,
+            observations: [obsVideo, obsSub]
+        )
+
+        // All elements must cleanly retain isFocused == nil
+        for elem in resolved {
+            #expect(elem.state.isFocused == nil, "Elements during playback/screensaver without controls must have isFocused == nil")
+        }
+    }
+
     private func makeImage(width: Int, height: Int, drawing: (CGContext) -> Void) -> CGImage {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let ctx = CGContext(

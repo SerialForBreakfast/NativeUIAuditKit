@@ -615,7 +615,8 @@ extension NativeUIDetectionRequest {
     ) -> [NativeUIElementObservation] {
         let focusableTypes: Set<NativeUIElementType> = [
             .collectionItem, .listRow, .primaryButton, .secondaryButton,
-            .tabBar, .cancelAction, .toggle
+            .tabBar, .cancelAction, .toggle, .secureField, .textField,
+            .segmentedControl, .stepperControl, .slider
         ]
 
         let focusableObs = observations.filter { focusableTypes.contains($0.elementType) }
@@ -649,6 +650,22 @@ extension NativeUIDetectionRequest {
                 baseScore *= 0.10
             }
             candidateScores.append(CandidateScore(id: obs.id, type: obs.elementType, baseScore: baseScore, finalScore: baseScore))
+        }
+
+        // 1b. Contextual VoiceOver Detection:
+        // When VoiceOver caption bar is present, boost elements showing high VoiceOver border contrast.
+        let hasVoiceOverBar = observations.contains { obs in
+            obs.elementType == .sheet &&
+            obs.boundingBoxPixels.width >= 700 &&
+            obs.boundingBoxPixels.height <= 200 &&
+            obs.boundingBoxPixels.y >= screenHeight * 0.70
+        }
+        if hasVoiceOverBar {
+            for i in 0..<candidateScores.count {
+                if candidateScores[i].baseScore >= 0.35 {
+                    candidateScores[i].finalScore = max(candidateScores[i].finalScore, 0.95)
+                }
+            }
         }
 
         // 2. Peer-Relative Geometry Heuristic for collectionItem
@@ -838,6 +855,38 @@ extension NativeUIDetectionRequest {
 
         ctx.draw(cropped, in: CGRect(x: 0, y: 0, width: cw, height: ch))
 
+        // VoiceOver High-Contrast Border Detection (universal across all focusable tvOS elements):
+        // In VoiceOver accessibility mode, the focused item has a high-contrast double boundary (both dark and light edges).
+        let tVO = max(2, min(6, min(cw, ch) / 6))
+        var darkBorderCount = 0
+        var brightBorderCount = 0
+        var totalVOEdges = 0
+
+        for y in 0..<ch {
+            let isBorderY = (y < tVO || y >= ch - tVO)
+            for x in 0..<cw {
+                let isBorderX = (x < tVO || x >= cw - tVO)
+                if isBorderY || isBorderX {
+                    let offset = (y * bytesPerRow) + (x * bytesPerPixel)
+                    if offset + 3 < rawData.count {
+                        let r = rawData[offset]
+                        let g = rawData[offset + 1]
+                        let b = rawData[offset + 2]
+                        if r < 50 && g < 50 && b < 50 {
+                            darkBorderCount += 1
+                        } else if r > 200 && g > 200 && b > 200 {
+                            brightBorderCount += 1
+                        }
+                        totalVOEdges += 1
+                    }
+                }
+            }
+        }
+        let voDarkRatio = totalVOEdges > 0 ? (Double(darkBorderCount) / Double(totalVOEdges)) : 0.0
+        let voBrightRatio = totalVOEdges > 0 ? (Double(brightBorderCount) / Double(totalVOEdges)) : 0.0
+        let isVoiceOverBorder = (voDarkRatio >= 0.10 && voBrightRatio >= 0.10)
+        let voScore = isVoiceOverBorder ? min(1.0, (voDarkRatio + voBrightRatio) * 1.5) : 0.0
+
         if elementType == .collectionItem {
             // In tvOS Home Screen, focused collectionItem has a radiant white perimeter border outline.
             // Check white pixel ratio along the outer perimeter.
@@ -863,9 +912,10 @@ extension NativeUIDetectionRequest {
                     }
                 }
             }
-            return totalBorderPixels > 0 ? (Double(whiteCount) / Double(totalBorderPixels)) : 0.0
+            let standardWhiteRatio = totalBorderPixels > 0 ? (Double(whiteCount) / Double(totalBorderPixels)) : 0.0
+            return max(standardWhiteRatio, voScore)
         } else {
-            // For listRow, primaryButton, tabBar, cancelAction:
+            // For listRow, primaryButton, tabBar, cancelAction, secureField, segmentedControl:
             // When focused, tvOS inverts to solid white high-luminance interior pill.
             let minX = Int(Double(cw) * 0.15)
             let maxX = Int(Double(cw) * 0.85)
@@ -889,7 +939,8 @@ extension NativeUIDetectionRequest {
                     }
                 }
             }
-            return count > 0 ? (totalLuminance / Double(count)) : 0.0
+            let interiorLuminance = count > 0 ? (totalLuminance / Double(count)) : 0.0
+            return max(interiorLuminance, voScore)
         }
     }
 }
