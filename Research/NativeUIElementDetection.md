@@ -131,6 +131,36 @@ CLI extension for `screenaudit validate`:
 --native-ui none|coreml   # mirrors --ocr none|vision; default: none
 ```
 
+### API surface review (TASK-DIST-02, 2026-09-18)
+
+An external planning doc referenced a simpler-looking surface —
+`NativeUIElementDetector.detect(in: CGImage) async throws -> [NativeUIElementObservation]` and
+`FocusRingDetector.classify(patch: CGImage) async throws -> FocusConfidence` — that does not
+exist verbatim in this package. Decision: **do not add either as a new type.**
+
+- **`NativeUIDetectionRequest.perform(on:sidecar:)` / `.performDetailed(...)` stays the
+  canonical public entry point.** It already ships, is tested (`swift test`), and is the
+  integration surface `ScreenAuditKit`'s `NativeUIRecognizing` protocol and this README's
+  Quick Start are built around. A parallel `NativeUIElementDetector` type would fragment the
+  public surface into two names for the same operation with no real consumer asking for it —
+  the only place the alternate name appeared was a planning document that turned out to be
+  significantly out of sync with this repo's actual state elsewhere too (see `Tasks.md` Track 1
+  reconciliation, 2026-09-18). Per `AGENTS.md`'s taxonomy-stability rule (which applies to API
+  surface, not just enum raw values): the existing name is not renamed without a major version
+  bump, and no speculative alternate name is added without a concrete consumer need.
+- **`FocusRingClassifier.classify(crop:)` stays `internal`, not a public
+  `FocusRingDetector.classify(patch:)`.** Its actual contract is narrower than "classify any
+  patch" — the input must be a YOLO-detected element's box, expanded 16% and resized to 256×256
+  by `FocusRingClassifier.makeCrop` specifically (see `Research/FocusRingDetectorSpec.md`).
+  Making it public with a `CGImage` patch parameter invites exactly the misuse the narrower
+  internal contract prevents: a caller passing an arbitrary, un-expanded crop and getting a
+  meaningless prediction. Stage 2 is reached correctly today only via
+  `NativeUIDetectionRequest`'s tvOS focus resolution (`resolveTVOSFocusML`) — that remains the
+  only supported path.
+- **`NativeUIAuditKitModels` standalone-build guarantee:** already true (`Package.swift`
+  declares zero package `dependencies` for that target — only `.copy` resource declarations).
+  Guarded going forward by `scripts/verify_models_package_standalone.sh`.
+
 ---
 
 ## 5. Element Taxonomy v1

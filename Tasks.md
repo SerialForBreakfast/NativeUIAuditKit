@@ -1852,7 +1852,9 @@ model, or token savings."*
 
 - [x] `scripts/ingest_fixture_batch.py` — rewritten a second time against the current verified format (`<id>_unfocused.png` / `<id>_focused.png` / `<id>_metadata.json`, canonical snake_case `element_id` / `taxonomy_class` / `normalized_bounds` inside `HarvestPairMetadataFile`, TVTestRig's own `manifest.json` train/calibration/held-out split assignment). Converts to `annotation.schema.json` v1.0 sidecars for `export_tvos_coco.py`, validated against `Research/schemas/category_map.json` (BP-28: unknown `taxonomy_class` values dropped and counted, never remapped). Deduplicates the shared baseline frame per-recipe and forces its elements' `isFocused=False` rather than inheriting a spurious focus flag. Full-frame preservation enforced (no ROI cropping); `held-out` split kept as the independent fixture-holdout eval set; refuses to write outside the package.
 - [x] `scripts/test_ingest_fixture_batch.py` — offline self-test against hand-built fixtures matching the current verified format (16/16 checks passing): coordinate conversion, BP-28 class rejection, baseline-frame dedup + forced-unfocused correctness, dry-run no-op, manifest-driven split honored, schema-shape of written sidecars. Proves the script's logic is correct against TVTestRig's real source as of this read — cannot prove a live run won't surface something source-reading missed, and this on-disk layout has already changed twice in one day, so treat this as provisional until a real sample exists.
-- [ ] **Blocked:** run `aatv fixture batch --recipes-dir <dir> --output-dir <dir>` against the real "office" Apple TV (TVTestRig's own words: "a separate authorized run" — physical hardware, another repo, not something to trigger unprompted) and ingest the result. Re-verify every assumption above against that real output before trusting it for training.
+- [x] **Simulator attempt, 2026-09-18 (maintainer-approved, no real hardware involved):** built `TVTestRigFixture` fresh for a tvOS 26.5 Simulator (build 23L470, 1080p) and ran it — confirmed clean port ownership this time (after an earlier mistake reading a pre-existing, unrelated simulator instance instead of one we'd started — see maintainer correction same day). `GET /scene` returned real, non-empty, correctly-shaped elements (`scene_width/height: 1920x1080`, matching this script's assumptions exactly). Built the `aatv` CLI from the `TVTestRig` macOS scheme.
+- [!] **Blocked — different reason than before:** `aatv fixture batch` requires the TVTestRig macOS coordinator app reachable over local IPC, not just the fixture's HTTP endpoint. Launched the coordinator (`open TVTestRig.app --args --project <path>`); process stayed alive with no crash, but every `aatv` command (`status`, `doctor`, `fixture batch`) returned `serviceUnavailable` indefinitely. Did not debug further into TVTestRig internals per our "we consume, we don't modify" agreement — filed as a request instead: [`reports/tvtestrig_feedback_2026-09-18.md`](reports/tvtestrig_feedback_2026-09-18.md). This blocker is orthogonal to the real-"office"-hardware blocker below — it reproduces on the Simulator, no hardware contention involved.
+- [ ] **Also still blocked:** run `aatv fixture batch --recipes-dir <dir> --output-dir <dir>` against the real "office" Apple TV (TVTestRig's own words: "a separate authorized run" — physical hardware, another repo, not something to trigger unprompted) and ingest the result. Re-verify every assumption above against that real output before trusting it for training.
 - [ ] Enforce full-frame context preservation: do not train exclusively on cropped ROIs from the fixture corpus (mirrors US-9 training-data integrity — perception-layer deltas/dedup used for *capture selection* only, never substituted for full annotated frames)
 - [ ] Blend fixture corpus with existing Phase 6a synthetic set; retrain from `best.pt` (Run 009 checkpoint), 150 epochs, cosine annealing + warmup
 - [ ] Evaluate on unseen held-out fixture recipes (TVTestRig's `held-out` split — separate from the synthetic withheld-template holdout — two independent holdout sets, not one)
@@ -1862,18 +1864,18 @@ model, or token savings."*
 
 ---
 
-#### TASK-6a-11: Multi-corpus PyTorch reference evaluation artifact
+#### TASK-6a-11: Multi-corpus PyTorch reference evaluation artifact [~] — baseline run complete 2026-09-18; 3 of 4 corpora still don't exist
 
 **Requires:** TASK-6a-10 checkpoint (or current Run 009 weights, run now against existing corpora as a baseline).
 
 **Context:** `eval_phase6a.py` currently reports one holdout number. Model promotion (US-13) needs independent, comparable corpora so a "did this synthetic data actually fix the real-world failure" question is answerable, not just "did loss go down."
 
-- [ ] Extend `scripts/eval_phase6a.py` (or a new `scripts/eval_reference_metrics.py`) to run against four named corpora in one pass: synthetic fixture test manifest, real-device fixture holdouts, production tvOS system holdout screens (`reports/tvos_settings_complete_tree.json` clean subset), frozen regression suite
-- [ ] Emit standardized `reports/pytorch_reference_metrics.json`: overall mAP@0.5 / mAP@0.5:0.95, per-class precision/recall/AP, per-image predicted boxes+scores+classIDs, and the corpus each result came from
-- [ ] SHA-256 the artifact and commit the hash alongside the release candidate weights in `Research/ExperimentLog.md`
-- [ ] Record per-model deltas against the immediately prior run (not just absolute numbers)
+- [x] `scripts/eval_reference_metrics.py` — new aggregator (does not reimplement YOLO inference; reads `eval_phase6a.py`'s existing output) that runs against the four named corpora and is honest about which ones actually have data: **1 of 4 available.** `synthetic_fixture_test_manifest` (Run 009's existing withheld-template holdout, mAP@0.5 = 0.586) is real. `real_device_fixture_holdouts`, `production_tvos_system_holdout` (`tvos_settings_complete_tree.json` is crawl/OCR text, not paired images+boxes), and `frozen_regression_suite` are marked `available: false` with a stated reason each — not filled with placeholder numbers.
+- [x] Emits `reports/pytorch_reference_metrics.json`: overall mAP@0.5/mAP@0.5:0.95 and per-class precision/recall/AP for the one available corpus. **Per-image predicted boxes/scores/classIDs not yet emitted** — `eval_phase6a.py` has no per-image dump mechanism (unlike `eval_map.swift`'s `WRITE_YOLO_PREDS`); adding one means re-running full inference, deliberately not done blind in this pass. Recorded as an open sub-item, not silently dropped.
+- [x] SHA-256'd (`226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405`) and logged in `Research/ExperimentLog.md` under Run 009.
+- [x] Per-model delta logic implemented (`--previous <path>`) — this is the first artifact of its kind, so `deltas.hasPrevious = false` for now; will activate the moment a second one exists.
 
-**AC:** `pytorch_reference_metrics.json` exists, is hashed, and every promoted checkpoint from here forward has one committed with it.
+**AC:** `pytorch_reference_metrics.json` exists and is hashed (done). "Every promoted checkpoint from here forward has one" — holds going forward once TASK-6a-10 ships a candidate; per-image predictions and the other 3 corpora remain real gaps, tracked here rather than closed prematurely.
 
 ---
 
@@ -2515,18 +2517,18 @@ Before moving `NativeUIAuditKit` to its own public repository:
 
 ---
 
-#### TASK-DIST-02: Public API surface review & pinned release tag
+#### TASK-DIST-02: Public API surface review & pinned release tag [~] — review half complete 2026-09-18; release half still blocked on TASK-6a-10
 
 **Requires:** TASK-6a-10 (41-class weights that actually clear DS-G8) before the *release* half of this task; the API review half can start now.
 
 The `NativeUIElementDetector.detect(in:)` / `FocusRingDetector.classify(patch:)` surface referenced in external planning docs does not exist verbatim — the current public entry points are `NativeUIDetectionRequest.perform(...)` / `.performDetailed(...)` (`Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`) and an *internal* `FocusRingClassifier.classify(crop:)`.
 
-- [ ] Decide: keep `NativeUIDetectionRequest` as the canonical public name, or add a thin `async throws` convenience wrapper matching the simpler signature — do not rename the existing public API without a major version bump (Taxonomy Stability rule in `AGENTS.md` applies to API surface too)
-- [ ] If a `FocusRingDetector` convenience type is added, it wraps the existing internal `FocusRingClassifier`, not a reimplementation
-- [ ] Confirm `NativeUIAuditKitModels` builds as a standalone binary/resource target with zero external Python or host-tool dependencies (already true per `Package.swift`; add a CI-less local check script if none exists)
-- [ ] Tag the next release once TASK-6a-10 41-class weights ship (e.g. `2.1.0` per existing `MAJOR.MINOR.PATCH` tag scheme — `v2.1.0-tvos` from the external doc doesn't match this repo's existing tag format, use the established one)
+- [x] Decided: **keep `NativeUIDetectionRequest` as the canonical public name — no convenience wrapper added.** No real consumer (ScreenAuditKit, ViewLens) asked for the alternate name; it only appeared in the external planning doc that turned out to be significantly out of sync with this repo elsewhere too. Adding a second name for the same operation would fragment the surface for no concrete benefit. Full rationale in `Research/NativeUIElementDetection.md` §4 ("API surface review").
+- [x] Decided: **`FocusRingClassifier.classify(crop:)` stays `internal`, no public `FocusRingDetector` wrapper added.** Its real contract is narrower than "classify any patch" — input must be a YOLO box expanded 16% and resized to 256×256 by `FocusRingClassifier.makeCrop` specifically. A public wrapper taking an arbitrary `CGImage` patch would invite passing an incorrectly-shaped crop and getting a meaningless prediction. Stage 2 remains reachable only via `NativeUIDetectionRequest`'s tvOS focus resolution.
+- [x] Confirmed `NativeUIAuditKitModels` builds as a standalone binary/resource target with zero external Python/host-tool dependencies and zero package `dependencies:` of its own. Guarded by new `scripts/verify_models_package_standalone.sh` (4 checks, all passing) rather than left as a one-time claim.
+- [ ] **Still blocked:** tag the next release once TASK-6a-10 41-class weights ship (e.g. `2.1.0` per existing tag scheme).
 
-**AC:** Public API decision documented in `Research/NativeUIElementDetection.md`; next tag's `CHANGELOG.md` entry references the DS-G8-passing model and the `pytorch_reference_metrics.json` hash from TASK-6a-11.
+**AC:** Public API decision documented in `Research/NativeUIElementDetection.md` (done). Next tag's `CHANGELOG.md` entry references the DS-G8-passing model and the `pytorch_reference_metrics.json` hash from TASK-6a-11 — still pending TASK-6a-10.
 
 ---
 

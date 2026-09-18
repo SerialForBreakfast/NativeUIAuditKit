@@ -770,6 +770,18 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - **Quantization Benchmark (TASK-6a-5):** Recommended shipping **FP16** (size 38.5 MB < 50 MB limit, avoiding 75 pt drop seen on INT8 stepperControl). Distillation not required.
   - **Production Gate Decision (DS-G8):** Holdout mAP@0.5 is 0.586 (threshold ≥ 0.850). Gate does not pass. Per project guidelines, **do not ship 41-class weights to NativeUIAuditKitModels**; the shipped detector remains the 5-class `nativeui-ios-v2.0` YOLO11n (mAP@0.5 = 0.935).
 
+**TASK-6a-11 baseline reference-metrics artifact (2026-09-18):** `scripts/eval_reference_metrics.py`
+wraps this run's existing `reports/eval_results_phase6a.json` into the standardized multi-corpus
+format — `reports/pytorch_reference_metrics.json`, SHA-256
+`226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405`. Only 1 of 4 named corpora is
+actually available (`synthetic_fixture_test_manifest`, i.e. this run's own withheld-template
+holdout, mAP@0.5 = 0.586); the other three (`real_device_fixture_holdouts`,
+`production_tvos_system_holdout`, `frozen_regression_suite`) are marked `available: false` with
+a stated reason each, not filled with placeholder numbers. This is the first artifact of its
+kind — no prior run to diff against (`deltas.hasPrevious = false`). Every promoted checkpoint
+from here forward should get one of these committed alongside it so real per-model deltas
+accumulate.
+
 ---
 
 ## Run 010 — Phase 6b tvOS OS UI YOLO11n (`NativeUIModel_tvOS_v0`)

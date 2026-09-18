@@ -1,0 +1,364 @@
+{
+  "corpora": {
+    "frozen_regression_suite": {
+      "available": false,
+      "reason": "No frozen regression suite has been defined yet."
+    },
+    "production_tvos_system_holdout": {
+      "available": false,
+      "reason": "reports/tvos_settings_complete_tree.json is OCR/hierarchy text from crawl exploration, not paired images with bounding-box ground truth \u2014 nothing to compute mAP against."
+    },
+    "real_device_fixture_holdouts": {
+      "available": false,
+      "reason": "No live hardware/simulator harvest has produced verified ground truth yet (Tasks.md TASK-6a-10 \u2014 every existing capture sidecar has empty 'elements')."
+    },
+    "synthetic_fixture_test_manifest": {
+      "available": true,
+      "mAP50": 0.585669,
+      "mAP50_95": 0.379763,
+      "nImages": 2000,
+      "perClass": [
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "actionSheet",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "activityIndicator",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "alert",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "cancelAction",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "collectionItem",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "colorWell",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "contextMenu",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "destructiveButton",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "disclosureGroup",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "dynamicIsland",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "homeIndicator",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.143672,
+          "ap50_95": 0.129876,
+          "class": "imageView",
+          "n": 0,
+          "precision": 0.400065,
+          "recall": 0.158947
+        },
+        {
+          "ap50": 0.629067,
+          "ap50_95": 0.475393,
+          "class": "label",
+          "n": 0,
+          "precision": 0.622866,
+          "recall": 0.585255
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "link",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 5.6e-05,
+          "ap50_95": 2.5e-05,
+          "class": "listRow",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "mapView",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "menuButton",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.995,
+          "ap50_95": 0.973593,
+          "class": "navigationBar",
+          "n": 0,
+          "precision": 0.950841,
+          "recall": 1.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "pageControl",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.985,
+          "ap50_95": 0.139584,
+          "class": "picker",
+          "n": 0,
+          "precision": 0.849114,
+          "recall": 0.99
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "popover",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.995,
+          "ap50_95": 0.967,
+          "class": "primaryButton",
+          "n": 0,
+          "precision": 0.874349,
+          "recall": 1.0
+        },
+        {
+          "ap50": 0.982832,
+          "ap50_95": 0.503433,
+          "class": "progressView",
+          "n": 0,
+          "precision": 0.992899,
+          "recall": 0.699086
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "refreshControl",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "scrollIndicator",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "searchField",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "secondaryButton",
+          "n": 0,
+          "precision": 1.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.859512,
+          "ap50_95": 0.508863,
+          "class": "secureField",
+          "n": 0,
+          "precision": 0.653382,
+          "recall": 1.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "segmentedControl",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "sheet",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "sidebar",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "slider",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "statusBar",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.4975,
+          "ap50_95": 0.180258,
+          "class": "stepperControl",
+          "n": 0,
+          "precision": 0.499314,
+          "recall": 1.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "tabBar",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.76544,
+          "ap50_95": 0.404474,
+          "class": "textField",
+          "n": 0,
+          "precision": 0.915911,
+          "recall": 0.588175
+        },
+        {
+          "ap50": 0.760618,
+          "ap50_95": 0.654421,
+          "class": "toggle",
+          "n": 0,
+          "precision": 0.754396,
+          "recall": 0.706755
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "toolbar",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "tooltip",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "unknown",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "webContent",
+          "n": 0,
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      ],
+      "perImagePredictions": null,
+      "perImagePredictionsNote": "scripts/eval_phase6a.py does not currently dump per-image boxes/scores/classIDs \u2014 would need a --dump-predictions flag added there (re-running full inference), not fabricated here. See TASK-6a-11 in Tasks.md.",
+      "sourceArtifact": "reports/eval_results_phase6a.json",
+      "sourceEvalDate": "2026-09-15T18:51:18Z",
+      "sourceModel": "phase6a_r009",
+      "split": "test (family holdout)"
+    }
+  },
+  "deltas": {
+    "hasPrevious": false,
+    "note": "First reference-metrics artifact \u2014 no prior run to diff against."
+  },
+  "generatedAt": "2026-09-18T23:07:48Z",
+  "sha256": "226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405"
+}
