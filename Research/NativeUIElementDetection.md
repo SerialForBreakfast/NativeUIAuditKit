@@ -10,6 +10,7 @@
 - [`../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)  
 - [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)  
 - [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) — Apple Silicon training iteration efficiency ADR
+- [`FocusRingDetectorSpec.md`](FocusRingDetectorSpec.md) — Stage 2 tvOS focus classifier (MobileNetV4 crop model, independent of YOLO)
 
 ---
 
@@ -22,6 +23,7 @@ The long-term goal is to integrate this as a drop-in complement to ScreenAuditKi
 **What this package builds:**
 - A `VNCoreMLRequest`-backed object detector trained on synthetic native Apple UIs
 - A two-mode API: sidecar-first (ground truth from hierarchy export) and pixel-only (orphan PNGs)
+- A Stage 2 tvOS focus classifier (`FocusRingDetector`) that scores 256×256 element crops independently of YOLO
 - An audit rule layer: truncation, clipping, overlap, target size, contrast risk
 
 **What this is NOT:**

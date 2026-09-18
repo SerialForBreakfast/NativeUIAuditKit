@@ -17,6 +17,7 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
     internal let textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])?
 
     private var cachedModels: [NativeUIPlatform: PreloadedModel] = [:]
+    private var cachedFocusClassifier: FocusRingClassifier?
 
     public init(
         configuration: NativeUIDetectionConfiguration = .default,
@@ -41,6 +42,18 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
     /// Evicts loaded models from memory to free resources when idle.
     public func clearCache() {
         cachedModels.removeAll()
+        cachedFocusClassifier = nil
+    }
+
+    /// Loads the Stage 2 focus classifier once per session when configured and bundled.
+    private func getFocusClassifier() async -> FocusRingClassifier? {
+        guard configuration.useFocusClassifier else { return nil }
+        if let cachedFocusClassifier {
+            return cachedFocusClassifier
+        }
+        let loaded = await NativeUIDetectionRequest.loadFocusClassifierIfAvailable()
+        cachedFocusClassifier = loaded
+        return loaded
     }
 
     /// Retrieves or loads the model for the requested platform.
@@ -105,7 +118,8 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
         return try await request.performDetailed(
             on: screenshot,
             sidecar: sidecar,
-            preloadedModel: loaded
+            preloadedModel: loaded,
+            preloadedFocusClassifier: await getFocusClassifier()
         )
     }
 

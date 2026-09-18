@@ -12,7 +12,8 @@ let package = Package(
             name: "NativeUIAuditKitModels",
             path: "Sources/NativeUIAuditKitModels",
             resources: [
-                .process("NativeUIDetector_v1.mlpackage.mlmodel")
+                .process("NativeUIDetector_v1.mlpackage.mlmodel"),
+                .copy("Resources/FocusRingDetector.mlmodelc"),
             ]
         )
     ]

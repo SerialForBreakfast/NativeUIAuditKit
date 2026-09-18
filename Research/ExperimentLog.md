@@ -954,4 +954,46 @@ into `NativeUIAuditKitModels`. Do **not** start Phase 6b. DS-G8 still fail.
   - 675 native elements detected across 28 live hardware captures (388 `collectionItem`, 140 `label`, 96 `imageView`, 15 `secondaryButton`, 13 `cancelAction`, 10 `listRow`, 10 `searchField`, 2 `primaryButton`, 1 `sidebar`).
   - Zero false positives on screen edges or video stream artifacts.
 
+---
+
+## Run FDR-001 — FocusRingDetector Stage 2 (Started 2026-09-17)
+
+**Trigger:** tvOS focus is resolved by `resolveTVOSFocus` brightness/geometry heuristics. That path mis-ranks VoiceOver outlines, bottom-bezel chrome, and high-contrast unfocused tiles. A dedicated crop classifier should beat the heuristic without touching YOLO11 weights.
+
+**Status:** PHASE B TRAIN COMPLETE 2026-09-18T05:38Z — fdr001 30/30. Torch held-out eval 270/270 correct. Do not ship `.mlmodelc` (CoreML export blocked; hard-neg n=0).
+
+**Architecture:**
+- Backbone: MobileNetV4-Conv-Small (vendored `scripts/focus_ring_backbone.py`, timm 1.0.29 topology), binary sigmoid, 256×256 RGB ÷255
+- Export: ONNX → coremltools FP16, outputs `is_focused_prob` + `confidence` (both Float32[1])
+- Package budget: ≤5.0 MB. FastViT-T8 deferred (ANE attention risk)
+- Thresholds in metadata / Swift, not weights: focus 0.85, ambiguity 0.70
+- Dataset target v0.1: 1,500–2,500 real fixture pairs (Plan A; FIX-SYNTH-06 RPC does not exist)
+- Dataset target v1.0: 6,000+ pairs
+- Output: `NativeUITrainer/focus_ring_runs/<run_id>/`
+- Log / reports: `focus_ring_detector_*_report.json` under the run `export/` directory
+
+**Gates (held-out):** accuracy ≥99%; FPR ≤0.5%; FNR ≤1.0%; P/R @ 0.85 ≥0.98; hard-negative FPR (`light`+`highContrast`) ≤0.5%.
+
+**YOLO pipeline:** untouched (`train_ios_model.py`, `train_tvos_model.py`, 41-class IDs).
+
+**Fallback:** `resolveTVOSFocus` stays in tree. `useFocusClassifier` defaults true; missing `FocusRingDetector.mlmodelc` uses the heuristic.
+
+**Phase A outcome:** scaffolding only. Harvest `--dry-run` on 15 fixture captures produced **327** focusable crops, all unlabeled (empty sidecar `elements`). Train `--dry-run` exits 0 with no labeled data. `swift build` / `swift test` pass without `.mlmodelc`.
+
+**Phase B notes (IPC):** TVTestRig.app is App Sandboxed. Coordinator socket is `~/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/.tvtr/s`. `aatv --project <checkout>` looks at the repo `.tvtr/s` and reports `serviceUnavailable`. Do not set `TVTESTRIG_PROJECT` for this Debug GUI (sandbox cannot write the checkout). `harvest_focus_pairs.py --live` points aatv `HOME` at `NativeUITrainer/.tmp/aatv_home` with a symlink to the container socket — never set `HOME` to the container Data root (Evidence/Sessions listdir hangs). Office `device connect` succeeded 2026-09-18T03:20:50Z.
+
+**Phase B harvest:** `--live --max-pairs 1500 --output dataset/focus_ring`. Log: `NativeUITrainer/focus_ring_harvest.log`. Closed-loop `navigate --count 1` only; no Home, no Select.
+
+**Phase B pass 1 outcome (2026-09-18T03:30–03:53Z, 23.5 min):** **454** labeled pairs (train 363 / val 54 / test 37). Types: primaryButton 225, secondaryButton 215, collectionItem 9, segmentedControl 5. Last good frame step 1729; `connectionLost` from step 1731 through `--max-steps` 2500 (no reconnect halt — script kept pulsing). Two extra TVTestRig Debug processes (`DerivedData-LEASECOEX`) appeared during the run. Crops: `dataset/focus_ring/crops/` (908 PNGs). Short of the 1,500-pair v0.1 floor.
+
+**Phase B pass 2 outcome (2026-09-18T04:17–04:36Z, 18.6 min):** Hit the **1,500**-pair floor (`harvest_exit=0`). Splits: train 1,201 / val 164 / test 135. Types: collectionItem 1,055, primaryButton 225, secondaryButton 215, segmentedControl 5. 3,000 crop PNGs. Resume kept pass-1 pairs. Still missing toggle/slider/textField/stepper coverage.
+
+**Phase B train (FDR-001):** `pip install timm` hangs in `.venv-yolo`. Unzipping `timm-1.0.29` into site-packages still left `import timm` / `import timm.layers` hung (BP-47). Vendored MobileNetV4-Conv-Small in `scripts/focus_ring_backbone.py` (torch.nn only, `pretrained=False`, 2.49M params).
+
+**TRAINING_COMPLETE 2026-09-18T05:27–05:38Z (11.1 min, MPS):** 30/30 epochs. Final train_loss=0.0016 val_loss=0.0001 (best). Epoch 14 val spiked to 0.8434 then recovered; `best.pt` tracks min val. Log: `NativeUITrainer/focus_ring_train.log`. Weights: `NativeUITrainer/focus_ring_runs/fdr001/weights/{best,last}.pt` (~10.2 MB each).
+
+**Torch eval (FOCUS-DET-04, not CoreML):** test_n=270 (135 pairs). tp=135 fp=0 tn=135 fn=0. accuracy=1.0 FPR=0 FNR=0 P/R@0.85=1.0. Reports: `NativeUITrainer/focus_ring_runs/fdr001/export/focus_ring_detector_{eval,hard_negative_eval}.json`. Hard-negative split is empty (all harvested frames `theme=dark`); the hard-neg FPR gate is vacuously true. Geometric pair labels (area ratio / IoU) likely make this split easy — do not treat 100% as VoiceOver-vs-focus proof.
+
+**CoreML export:** blocked. `.venv-coreml` is not present; `import coremltools` in `.venv-yolo` hangs (same class of issue as BP-47). Do not copy `.mlmodelc`.
+
 

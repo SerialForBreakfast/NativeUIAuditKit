@@ -881,5 +881,25 @@ If the focused element's label or accessibility text matches any term in this pa
 
 **Why:** Eliminates macOS App Sandbox container friction, avoids disk thrashing, eliminates permission prompts, and increases capture throughput from ~0.2 fps to ~5–10 fps.
 
+---
+
+### BP-46: Do not use `CGImage.cropping(to:)` on YOLO top-left pixel boxes
+
+**Wrong:** Crop a Stage 2 focus patch with `image.cropping(to: boundingBoxPixels.cgRect)`. `CGImage` bitmap space has its origin at the **bottom-left**; YOLO / `boundingBoxPixels` use **top-left**. The crop is vertically mirrored relative to the on-screen element.
+
+**Correct:** Draw the screenshot into a `CGContext` that has been flipped to top-left (`translateBy(x:0, y:height); scaleBy(x:1, y:-1)`), offset by the pixel box origin, then scale to 256×256. That is `FocusRingClassifier.makeCrop`.
+
+**Why:** A flipped crop trains and infers on the wrong pixels. Focus glow lives on the *top* of a tvOS tile; a y-flipped patch shows the bottom shadow instead.
+
+---
+
+### BP-47: Do not `import timm` (or `timm.layers`) in the FocusRing train path
+
+**Wrong:** `import timm` then `timm.create_model("mobilenetv4_conv_small", ...)`. In `.venv-yolo` on this Mac, `timm.models.__init__` star-imports 100+ architectures and `timm.layers.__init__` pulls torchvision FX. The process sits at ~0% CPU / ~200 MB RSS for many minutes with no epoch output. `pip install timm` also hangs.
+
+**Correct:** Construct MobileNetV4-Conv-Small from `scripts/focus_ring_backbone.py` (torch.nn only). Train, eval, and CoreML export all use that factory. ImageNet pretrained weights are skipped (`pretrained=False`).
+
+**Why:** Stage 2 training was blocked after harvest completed. The hang is the package graph, not missing data or MPS.
+
 
 

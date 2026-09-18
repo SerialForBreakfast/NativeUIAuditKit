@@ -97,6 +97,7 @@ NativeUITrainer/yolo_dataset_tvos/
 
 # YOLO training runs (checkpoints, metrics — too large to commit)
 NativeUITrainer/yolo_runs/
+NativeUITrainer/focus_ring_runs/
 runs/
 
 # NativeUIAuditKit — unpromoted training-time model artifacts (raw exports, not the

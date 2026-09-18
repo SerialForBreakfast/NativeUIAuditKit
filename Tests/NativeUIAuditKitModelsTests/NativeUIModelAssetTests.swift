@@ -154,4 +154,19 @@ final class NativeUIModelAssetTests: XCTestCase {
         let tvOSLicense = tvOSModel.modelDescription.metadata[.license] as? String
         XCTAssertEqual(tvOSLicense, expectedLicense, "tvOS model metadata must declare AGPL-3.0 License with URL")
     }
+
+    func testFocusRingDetectorURLIsOptionalWhenAbsent() {
+        // Phase A does not ship FocusRingDetector.mlmodelc. Lookup must not fatal.
+        let url = NativeUIModelAsset.focusRingDetectorURL
+        if let url {
+            XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
+        }
+    }
+
+    func testLoadFocusRingDetectorReturnsNilWhenUnbundled() async {
+        if NativeUIModelAsset.focusRingDetectorURL == nil {
+            let loaded = try? await NativeUIModelAsset.loadFocusRingDetector()
+            XCTAssertNil(loaded)
+        }
+    }
 }

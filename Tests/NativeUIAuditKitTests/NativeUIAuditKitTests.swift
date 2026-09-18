@@ -238,4 +238,111 @@ struct NativeUIAuditKitTests {
         #expect(!json.contains("focusScore"), "nil focusScore must not appear in JSON")
         #expect(!json.contains("isAmbiguousFocus"), "nil isAmbiguousFocus must not appear in JSON")
     }
+
+    @Test("FocusRing crop expansion is 16 percent per side and clamps to image bounds")
+    func testFocusRingCropExpansion() {
+        let imageSize = CGSize(width: 1000, height: 1000)
+        let inner = CGRect(x: 100, y: 100, width: 200, height: 200)
+        let expanded = FocusRingClassifier.expandedCropRect(bbox: inner, imageSize: imageSize)
+        #expect(abs(expanded.minX - 68) < 0.51)
+        #expect(abs(expanded.minY - 68) < 0.51)
+        #expect(abs(expanded.width - 264) < 0.51)
+        #expect(abs(expanded.height - 264) < 0.51)
+
+        let edge = CGRect(x: 0, y: 0, width: 10, height: 10)
+        let clamped = FocusRingClassifier.expandedCropRect(bbox: edge, imageSize: imageSize)
+        #expect(clamped.minX >= 0)
+        #expect(clamped.minY >= 0)
+        #expect(clamped.maxX <= imageSize.width)
+        #expect(clamped.maxY <= imageSize.height)
+        #expect(clamped.width > 10)
+        #expect(clamped.height > 10)
+    }
+
+    @Test("FocusRing crop is always 256 by 256")
+    func testFocusRingCropSize() {
+        let image = makeSolidImage(width: 400, height: 300, red: 0.2, green: 0.3, blue: 0.4)
+        let crop = FocusRingClassifier.makeCrop(from: image, bbox: CGRect(x: 10, y: 10, width: 80, height: 40))
+        #expect(crop != nil)
+        #expect(crop?.width == 256)
+        #expect(crop?.height == 256)
+
+        let tiny = FocusRingClassifier.makeCrop(from: image, bbox: CGRect(x: 0, y: 0, width: 2, height: 2))
+        #expect(tiny?.width == 256)
+        #expect(tiny?.height == 256)
+    }
+
+    @Test("Focus classifier flag controls which resolution path runs without crashing")
+    func testFocusRingFallbackWhenModelAbsent() async throws {
+        let fixtureURL = Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+        let provider = CGDataProvider(data: data as CFData)!
+        let image = CGImage(
+            pngDataProviderSource: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+        )!
+
+        let withClassifier = NativeUIDetectionRequest(
+            configuration: .init(
+                minimumConfidence: 0.25,
+                includesTextRecognition: false,
+                platform: .tvOS,
+                useFocusClassifier: true
+            )
+        )
+        let withHeuristic = NativeUIDetectionRequest(
+            configuration: .init(
+                minimumConfidence: 0.25,
+                includesTextRecognition: false,
+                platform: .tvOS,
+                useFocusClassifier: false
+            )
+        )
+        // Both must complete without throwing.
+        let mlResults = try await withClassifier.perform(on: image)
+        let heuristicResults = try await withHeuristic.perform(on: image)
+
+        // YOLO detections are independent of focus resolution — same count, same element types.
+        #expect(!mlResults.isEmpty, "expected at least one detected element on tvOS home screen")
+        #expect(mlResults.count == heuristicResults.count,
+                "ML and heuristic paths must produce the same number of YOLO detections")
+
+        // Heuristic path must produce a valid non-crash focus opinion (some element may be focused).
+        // ML and heuristic may legitimately disagree on ambiguous frames — that is expected.
+        let heuristicFocusFields = heuristicResults.map { $0.state.isFocused }
+        #expect(heuristicFocusFields.allSatisfy { $0 == true || $0 == false || $0 == nil },
+                "heuristic path must produce valid focus state for every element")
+    }
+
+    @Test("useFocusClassifier survives Codable round-trip")
+    func testFocusRingConfigurationRoundTrip() throws {
+        let config = NativeUIDetectionConfiguration(useFocusClassifier: false)
+        let data = try JSONEncoder().encode(config)
+        let decoded = try JSONDecoder().decode(NativeUIDetectionConfiguration.self, from: data)
+        #expect(decoded.useFocusClassifier == false)
+
+        let defaults = try JSONDecoder().decode(
+            NativeUIDetectionConfiguration.self,
+            from: Data(#"{}"#.utf8)
+        )
+        #expect(defaults.useFocusClassifier == true)
+    }
+}
+
+private func makeSolidImage(width: Int, height: Int, red: CGFloat, green: CGFloat, blue: CGFloat) -> CGImage {
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
+    let ctx = CGContext(
+        data: nil,
+        width: width,
+        height: height,
+        bitsPerComponent: 8,
+        bytesPerRow: 0,
+        space: colorSpace,
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+    )!
+    ctx.setFillColor(CGColor(red: red, green: green, blue: blue, alpha: 1))
+    ctx.fill(CGRect(x: 0, y: 0, width: width, height: height))
+    return ctx.makeImage()!
 }

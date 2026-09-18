@@ -41,6 +41,9 @@ public struct NativeUIDetectionConfiguration: Sendable {
     public var minFocusScoreThreshold: Double
     public var minFocusMargin: Double
     public var recordTimings: Bool
+    /// When true, Stage 2 `FocusRingDetector` is used for tvOS focus if the compiled
+    /// model is bundled. Missing weights fall back to `resolveTVOSFocus`.
+    public var useFocusClassifier: Bool
 
     public init(
         minimumConfidence: Double = 0.5,
@@ -49,7 +52,8 @@ public struct NativeUIDetectionConfiguration: Sendable {
         modalityPolicy: ModalityPolicy = .permissive,
         minFocusScoreThreshold: Double = 0.25,
         minFocusMargin: Double = 0.12,
-        recordTimings: Bool = false
+        recordTimings: Bool = false,
+        useFocusClassifier: Bool = true
     ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
@@ -58,9 +62,41 @@ public struct NativeUIDetectionConfiguration: Sendable {
         self.minFocusScoreThreshold = minFocusScoreThreshold
         self.minFocusMargin = minFocusMargin
         self.recordTimings = recordTimings
+        self.useFocusClassifier = useFocusClassifier
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
+}
+
+extension NativeUIDetectionConfiguration: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case minimumConfidence, includesTextRecognition, platform, modalityPolicy
+        case minFocusScoreThreshold, minFocusMargin, recordTimings, useFocusClassifier
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        minimumConfidence = try c.decodeIfPresent(Double.self, forKey: .minimumConfidence) ?? 0.5
+        includesTextRecognition = try c.decodeIfPresent(Bool.self, forKey: .includesTextRecognition) ?? true
+        platform = try c.decodeIfPresent(PlatformSelection.self, forKey: .platform) ?? .auto
+        modalityPolicy = try c.decodeIfPresent(ModalityPolicy.self, forKey: .modalityPolicy) ?? .permissive
+        minFocusScoreThreshold = try c.decodeIfPresent(Double.self, forKey: .minFocusScoreThreshold) ?? 0.25
+        minFocusMargin = try c.decodeIfPresent(Double.self, forKey: .minFocusMargin) ?? 0.12
+        recordTimings = try c.decodeIfPresent(Bool.self, forKey: .recordTimings) ?? false
+        useFocusClassifier = try c.decodeIfPresent(Bool.self, forKey: .useFocusClassifier) ?? true
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(minimumConfidence, forKey: .minimumConfidence)
+        try c.encode(includesTextRecognition, forKey: .includesTextRecognition)
+        try c.encode(platform, forKey: .platform)
+        try c.encode(modalityPolicy, forKey: .modalityPolicy)
+        try c.encode(minFocusScoreThreshold, forKey: .minFocusScoreThreshold)
+        try c.encode(minFocusMargin, forKey: .minFocusMargin)
+        try c.encode(recordTimings, forKey: .recordTimings)
+        try c.encode(useFocusClassifier, forKey: .useFocusClassifier)
+    }
 }
 
 // MARK: - Detailed Result & Timings
@@ -156,7 +192,8 @@ public struct NativeUIDetectionRequest: Sendable {
     internal func performDetailed(
         on screenshot: CGImage,
         sidecar: NativeUISidecar? = nil,
-        preloadedModel: PreloadedModel? = nil
+        preloadedModel: PreloadedModel? = nil,
+        preloadedFocusClassifier: FocusRingClassifier? = nil
     ) async throws -> NativeUIDetailedDetectionResult {
         let startTotal = ContinuousClock.now
         var health = ModalityHealth()
@@ -227,16 +264,34 @@ public struct NativeUIDetectionRequest: Sendable {
 
         var observations = rawObservations
 
-        // tvOS focus state resolution
+        // tvOS focus state resolution — Stage 2 classifier when bundled, else heuristic.
         var focusMs = 0.0
         if effectivePlatform == .tvOS {
             let startFocus = ContinuousClock.now
-            observations = Self.resolveTVOSFocus(
-                in: screenshot,
-                observations: observations,
-                minScoreThreshold: configuration.minFocusScoreThreshold,
-                minMargin: configuration.minFocusMargin
-            )
+            let classifier: FocusRingClassifier?
+            if configuration.useFocusClassifier {
+                if let preloadedFocusClassifier {
+                    classifier = preloadedFocusClassifier
+                } else {
+                    classifier = await Self.loadFocusClassifierIfAvailable()
+                }
+            } else {
+                classifier = nil
+            }
+            if let classifier {
+                observations = Self.resolveTVOSFocusML(
+                    in: screenshot,
+                    observations: observations,
+                    classifier: classifier
+                )
+            } else {
+                observations = Self.resolveTVOSFocus(
+                    in: screenshot,
+                    observations: observations,
+                    minScoreThreshold: configuration.minFocusScoreThreshold,
+                    minMargin: configuration.minFocusMargin
+                )
+            }
             focusMs = Self.durationToMs(startFocus.duration(to: .now))
             health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
         } else {
@@ -607,19 +662,90 @@ extension NativeUIDetectionRequest {
 
 extension NativeUIDetectionRequest {
 
+    /// Loads `FocusRingDetector` when bundled; returns nil so the heuristic can run.
+    internal static func loadFocusClassifierIfAvailable() async -> FocusRingClassifier? {
+        guard let model = try? await NativeUIModelAsset.loadFocusRingDetector() else {
+            return nil
+        }
+        return FocusRingClassifier(model: model)
+    }
+
+    /// Stage 2: classify each focusable crop with the ML model.
+    ///
+    /// Winner-takes-all: if any crop exceeds the focus threshold, the highest-probability
+    /// one is marked `isFocused = true`; all others are `isFocused = false`.
+    /// Elements in the ambiguous band get `isFocused = nil, isAmbiguousFocus = true`.
+    /// Non-focusable elements pass through unchanged.
+    internal static func resolveTVOSFocusML(
+        in screenshot: CGImage,
+        observations: [NativeUIElementObservation],
+        classifier: FocusRingClassifier
+    ) -> [NativeUIElementObservation] {
+        struct Scored {
+            let id: UUID
+            let prob: Float
+            let conf: Float
+            let isAmbiguous: Bool
+        }
+
+        // Classify each focusable element independently.
+        var scores: [Scored] = []
+        for obs in observations where FocusRingClassifier.focusableTypes.contains(obs.elementType) {
+            let bbox = obs.boundingBoxPixels.cgRect
+            guard let crop = FocusRingClassifier.makeCrop(from: screenshot, bbox: bbox),
+                  let result = try? classifier.classify(crop: crop) else { continue }
+            scores.append(Scored(
+                id: obs.id,
+                prob: result.isFocusedProbability,
+                conf: result.confidence,
+                isAmbiguous: result.isAmbiguous
+            ))
+        }
+
+        guard !scores.isEmpty else { return observations }
+
+        // Winner-takes-all: highest-probability candidate wins if it clears the threshold.
+        let winner = scores.max(by: { $0.prob < $1.prob })
+        let hasConfidentWinner = (winner?.prob ?? 0) >= classifier.focusThreshold
+        let scoresByID: [UUID: Scored] = Dictionary(uniqueKeysWithValues: scores.map { ($0.id, $0) })
+
+        return observations.map { obs in
+            guard let scored = scoresByID[obs.id] else { return obs }
+            var st = obs.state
+            st.focusScore = Double(scored.prob)
+            st.focusConfidence = Double(scored.conf)
+            if hasConfidentWinner, let w = winner, w.id == obs.id {
+                st.isFocused = true
+                st.isAmbiguousFocus = false
+            } else if scored.isAmbiguous {
+                st.isFocused = nil
+                st.isAmbiguousFocus = true
+            } else {
+                st.isFocused = false
+                st.isAmbiguousFocus = false
+            }
+            return NativeUIElementObservation(
+                id: obs.id,
+                elementType: obs.elementType,
+                boundingBox: obs.boundingBox,
+                boundingBoxPixels: obs.boundingBoxPixels,
+                confidence: obs.confidence,
+                visibleText: obs.visibleText,
+                inferredTraits: obs.inferredTraits,
+                state: st,
+                issues: obs.issues,
+                confidenceSource: obs.confidenceSource
+            )
+        }
+    }
+
     internal static func resolveTVOSFocus(
         in screenshot: CGImage,
         observations: [NativeUIElementObservation],
         minScoreThreshold: Double = 0.35,
         minMargin: Double = 0.12
     ) -> [NativeUIElementObservation] {
-        let focusableTypes: Set<NativeUIElementType> = [
-            .collectionItem, .listRow, .primaryButton, .secondaryButton,
-            .tabBar, .cancelAction, .toggle, .secureField, .textField,
-            .segmentedControl, .stepperControl, .slider
-        ]
-
-        let focusableObs = observations.filter { focusableTypes.contains($0.elementType) }
+        let focusableObs = observations.filter { FocusRingClassifier.focusableTypes.contains($0.elementType) }
         guard !focusableObs.isEmpty else { return observations }
 
         // 1. Calculate raw visual scores
