@@ -1,0 +1,17 @@
+{
+  "closestCrossSceneDistance" : 0.021656055,
+  "closestCrossScenePair" : [
+    "accessibility_toggle_wifi_focused.png",
+    "audit_defect_matrix_focused.png"
+  ],
+  "crossSceneDistanceMax" : 0.4805637,
+  "crossSceneDistanceMean" : 0.22356847,
+  "crossSceneDistanceMedian" : 0.058249984,
+  "crossSceneDistanceMin" : 0.021656055,
+  "imageCount" : 15,
+  "inputDirectory" : "\/Users\/josephmccraw\/Documents\/GitHub\/NativeUIAuditKit\/dataset\/tvos_fixture_captures",
+  "note" : "Cross-scene stats only — no same-scene\/changed-focus pairs available yet. Do not treat closestCrossSceneDistance as a validated threshold.",
+  "selfDistanceMax" : 0,
+  "selfDistanceMean" : 0,
+  "selfDistanceMin" : 0
+}

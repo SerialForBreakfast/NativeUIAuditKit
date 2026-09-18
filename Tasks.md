@@ -1815,28 +1815,47 @@ Apply iteration optimizations: `batch=8` (halving epoch steps from 2,876 to 1,43
 
 ---
 
-#### TASK-6a-10: Full-frame fixture retraining push (target mAP@0.5 ≥ 0.94 across 41 classes) [!] — blocked upstream on TVTestRig FIX-SYNTH-02
+#### TASK-6a-10: Full-frame fixture retraining push (target mAP@0.5 ≥ 0.94 across 41 classes) [!] — code unblocked, data blocked on a live TVTestRig hardware run
 
 **Requires:** Run 009 diagnosis (holdout mAP@0.5 = 0.586, DS-G8 gate ≥ 0.850 still failing). See BP-32 (family holdout is a style test).
 
-**Context:** Runs 007–009 trained on SwiftUI/UIKit synthetic generator output only. The generalization gap (in-family val 0.991 vs. withheld-template holdout 0.586) indicates the generator's visual style, not model capacity, is the ceiling. TVTestRig's `aatv fixture batch` (`FIX-SYNTH-06`) harvester is meant to emit uncompressed 1920×1080 captures with exact window-geometry annotations from real tvOS Metal chrome (shadows, parallax, glow) — a distinct visual domain from the synthetic generator.
+**Context:** Runs 007–009 trained on SwiftUI/UIKit synthetic generator output only. The generalization gap (in-family val 0.991 vs. withheld-template holdout 0.586) indicates the generator's visual style, not model capacity, is the ceiling. TVTestRig's `aatv fixture batch` (`FIX-SYNTH-06`) harvester emits uncompressed 1920×1080 captures with exact window-geometry annotations from real tvOS Metal chrome (shadows, parallax, glow) — a distinct visual domain from the synthetic generator.
 
-**2026-09-18 finding — the corpus this task depends on does not exist yet.** Checked every JSON
-sidecar under `dataset/` (88 files, including all 45 in `tvos_fixture_captures/`): every one has
-`"elements": []`. TVTestRig's `Tasks.md` confirms why — FIX-SYNTH-02 (the `GET /scene`
-ground-truth telemetry server) is unimplemented, and FIX-SYNTH-06 (the harvester CLI) has only
-been mock-provider-tested; "live `office` harvest remains a separate authorized run" that has
-never happened. FIX-SYNTH-01/04/05 (the procedural scene builder + 41-class component kitchen
-sink that would give real visual diversity) are also unimplemented. The `*_result.json` files
-next to the captures are the *current model's own predictions*, not ground truth — do not use
-them as training labels (circular/self-reinforcing).
+**2026-09-18 finding, part 1 (still true):** checked every JSON sidecar under `dataset/` (88
+files, including all 45 in `tvos_fixture_captures/`) — every one has `"elements": []`. The
+`*_result.json` files next to the captures are the *current model's own predictions*, not
+ground truth — never use them as training labels (circular/self-reinforcing).
 
-- [x] `scripts/ingest_fixture_batch.py` — converts `aatv fixture batch` output into `annotation.schema.json` v1.0 sidecars for `export_tvos_coco.py`, validated against `Research/schemas/category_map.json` (BP-28: unknown `taxonomyRole` values are dropped and counted, never remapped). Written against TVTestRig's *documented* wire schema (FIX-SYNTH-02 spec), not a verified real sample — flagged prominently in the script's docstring for re-verification once one exists. Whole-recipe train/fixture_holdout split (never splits a recipe's frames across both sides), full-frame preservation enforced (no ROI cropping), refuses to write outside the package.
-- [x] `scripts/test_ingest_fixture_batch.py` — offline self-test against hand-built synthetic fixtures matching the documented wire schema (15/15 checks passing): coordinate conversion, BP-28 class rejection, dry-run no-op, split grouping, schema-shape of written sidecars. Proves the script's logic is correct against the documented contract — does not and cannot prove the contract matches TVTestRig's real on-disk output.
-- [ ] **Blocked:** ingest a real `aatv fixture batch` output directory once TVTestRig ships FIX-SYNTH-02 and runs a live harvest. Needed from TVTestRig specifically: (1) FIX-SYNTH-02 implemented, (2) one real harvest output sample to confirm the on-disk pairing convention this script assumes, (3) FIX-SYNTH-01/04 for actual visual diversity beyond the ~15-20 static fixture screens already captured.
+**2026-09-18 finding, part 2 (superseded same day):** TVTestRig shipped all of FIX-SYNTH-01
+through 06 (commit "Epic 3 (AGT-SYNTH-01–05) is in. Offline checks passed. Nothing ran on
+office."). Re-read the real implementation directly
+(`TVTestRig/TVTestRig/SyntheticFactory/FixtureBatchHarvestEngine.swift`) rather than trusting
+the prose spec a second time. Confirmed via `Scripts/native-ui-tvos-decoder-manifest.json` that
+the 41-class taxonomy still matches `category_map.json` index-for-index (NUA-YOLO-01 stays
+resolved).
+
+**2026-09-18 finding, part 3 (the on-disk layout changed again, underneath part 2):** a further
+TVTestRig commit ("Fixture improvement FIX-Synth-02" — explicitly "Unblock NativeUIAuditKit
+harvest") rewrote the harvester a second time same day: `GET /scene` no longer returns empty
+`elements`, the wire JSON gained NUA-alias keys, and the on-disk layout reverted to
+`<id>_unfocused.png` / `<id>_focused.png` / `<id>_metadata.json` (the pairing this script's
+*first* version had originally guessed, then "corrected" away from — that correction is what
+was wrong, not the original guess). Re-read the current source a second time rather than
+trusting either the first correction or the new commit message alone; found and fixed a real
+correctness bug in the process: the shared baseline `_unfocused.png` is reused across every
+focus step of a recipe, but its accompanying `elements` list reflects whichever element is
+focused in that *row's* frame — ingesting it naively would falsely mark an element as focused
+in an image where nothing is glowing. TVTestRig's own doc
+(`Docs/Testing/2026-09-18-nua-harvest-unblock.md`) is explicit that nothing changes the data
+blocker: *"Live office harvest: Not run... Not claimed: Live office batch output, a trained NUA
+model, or token savings."*
+
+- [x] `scripts/ingest_fixture_batch.py` — rewritten a second time against the current verified format (`<id>_unfocused.png` / `<id>_focused.png` / `<id>_metadata.json`, canonical snake_case `element_id` / `taxonomy_class` / `normalized_bounds` inside `HarvestPairMetadataFile`, TVTestRig's own `manifest.json` train/calibration/held-out split assignment). Converts to `annotation.schema.json` v1.0 sidecars for `export_tvos_coco.py`, validated against `Research/schemas/category_map.json` (BP-28: unknown `taxonomy_class` values dropped and counted, never remapped). Deduplicates the shared baseline frame per-recipe and forces its elements' `isFocused=False` rather than inheriting a spurious focus flag. Full-frame preservation enforced (no ROI cropping); `held-out` split kept as the independent fixture-holdout eval set; refuses to write outside the package.
+- [x] `scripts/test_ingest_fixture_batch.py` — offline self-test against hand-built fixtures matching the current verified format (16/16 checks passing): coordinate conversion, BP-28 class rejection, baseline-frame dedup + forced-unfocused correctness, dry-run no-op, manifest-driven split honored, schema-shape of written sidecars. Proves the script's logic is correct against TVTestRig's real source as of this read — cannot prove a live run won't surface something source-reading missed, and this on-disk layout has already changed twice in one day, so treat this as provisional until a real sample exists.
+- [ ] **Blocked:** run `aatv fixture batch --recipes-dir <dir> --output-dir <dir>` against the real "office" Apple TV (TVTestRig's own words: "a separate authorized run" — physical hardware, another repo, not something to trigger unprompted) and ingest the result. Re-verify every assumption above against that real output before trusting it for training.
 - [ ] Enforce full-frame context preservation: do not train exclusively on cropped ROIs from the fixture corpus (mirrors US-9 training-data integrity — perception-layer deltas/dedup used for *capture selection* only, never substituted for full annotated frames)
 - [ ] Blend fixture corpus with existing Phase 6a synthetic set; retrain from `best.pt` (Run 009 checkpoint), 150 epochs, cosine annealing + warmup
-- [ ] Evaluate on unseen held-out fixture recipes (separate from the synthetic withheld-template holdout — two independent holdout sets, not one)
+- [ ] Evaluate on unseen held-out fixture recipes (TVTestRig's `held-out` split — separate from the synthetic withheld-template holdout — two independent holdout sets, not one)
 - [ ] Per-class AP on small controls (toggle switches, steppers, badges) ≥ 0.88
 
 **AC:** mAP@0.5 ≥ 0.94 and mAP@0.5:0.95 ≥ 0.78 on the fixture holdout; DS-G8 gate reassessed against both holdout sets before shipping 41-class weights. **Cannot be met until the blocked item above clears** — no retraining should happen on empty or self-predicted labels.
@@ -2519,15 +2538,15 @@ The `NativeUIElementDetector.detect(in:)` / `FocusRingDetector.classify(patch:)`
 
 **Migration note:** `Scripts/crawl_tvos_settings.py`, `Scripts/deep_crawl_settings.py`, and `Scripts/safe_nav_mapper.py` are the RCA-era crawler scripts that caused the Peacock/Terms-of-Use and Reset-Video-Settings incidents (see the RCA report). They — and the `.agents/skills/tvos-safe-navigation/` skill's DFS/backtracking rules — are navigation *orchestration*, not perception, and per this track's scope boundary belong in TVTestRig going forward. **Do not delete them yet.** They stay as the reference implementation of the 5 Golden Rules until TVTestRig confirms it has an equivalent verified-graph navigation engine (US-1/US-3 in the discussion doc) to receive them. Re-check this note's status before starting PERCEP-01/02/03 below.
 
-#### TASK-PERCEP-01: Vision feature-print similarity API
+#### TASK-PERCEP-01: Vision feature-print similarity API [x] — complete 2026-09-18
 
 **Context:** Cheapest gate in the pipeline (discussion doc US-4). Before OCR or CoreML detection, compare the current frame against the last verified frame; skip further processing on a hit.
 
-- [ ] `Sources/NativeUIAuditKit/Perception/FrameSimilarity.swift` (new): wraps `VNGenerateImageFeaturePrintRequest`, exposes `distance(_:to:) -> Float` and a cache-keyed-by-navigation-state convenience
-- [ ] Empirical threshold derivation script against an evaluation corpus (not an arbitrary constant) — pixel-identical frames must always hit; meaningful focus/state changes must never false-hit
-- [ ] Public, `Sendable`, offline-testable (synthetic fixture PNGs, no live device required)
+- [x] `Sources/NativeUIAuditKit/Perception/FrameSimilarity.swift` — `FrameSimilarity.distance(_:to:)` wraps `VNGenerateImageFeaturePrintRequest`; `FrameSimilarityCache` (actor) provides the cache-keyed-by-navigation-state convenience (`isUnchanged(_:forState:threshold:)`, `invalidate(stateKey:)`). Threshold is always caller-supplied — never a constant baked into the API.
+- [x] `scripts/derive_frame_similarity_threshold.swift` — empirical derivation against the 15 real images in `dataset/tvos_fixture_captures/`. Self-distance (identical image) = exactly `0.0` (n=15). Cross-scene distance (105 pairs of genuinely different screens): min=0.0217, median=0.058, mean=0.224, max=0.481. Report: `reports/frame_similarity_threshold_derivation.json`. **Explicit limitation, not glossed over:** this corpus has zero same-scene/changed-focus pairs, so it only bounds "must stay below ~0.02 to avoid conflating two different screens" — it does not validate what a real focus-only change measures. Re-run once TVTestRig fixture-batch unfocused/focused pairs exist (same data blocker as TASK-6a-10).
+- [x] Public, `Sendable` (`FrameSimilarity`) / actor-isolated (`FrameSimilarityCache`), offline-testable against the two fixture PNGs already bundled in the test target — no live device required.
 
-**AC:** `swift test` covers a same-frame true-positive and a changed-focus true-negative against fixture screenshots already in the package.
+**AC:** `swift test` covers a same-frame true-positive and a changed-focus true-negative — 8 tests in `Tests/NativeUIAuditKitTests/FrameSimilarityTests.swift`, including a same-image-vs-itself case, a synthetically localized change (drawn patch, since no real focus-pair fixture exists yet), and cache independence/invalidation. Full suite: 74/74 passing (was 66 before this task).
 
 ---
 
