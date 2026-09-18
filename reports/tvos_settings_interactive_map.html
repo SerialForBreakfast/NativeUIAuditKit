@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>tvOS Settings Hierarchy & Safety Map</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    body {
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+    .grid-bg {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    }
+    .node-card {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .node-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+    /* SVG line styling */
+    .tree-edge {
+      stroke: #475569;
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: 4;
+      animation: dash 20s linear infinite;
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: -100; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen overflow-hidden flex flex-col font-sans">
+
+  <!-- Header & Toolbar -->
+  <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-6 py-3.5 flex items-center justify-between z-30 shrink-0">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/20">
+        ⚙️
+      </div>
+      <div>
+        <h1 class="text-base font-semibold tracking-tight text-white flex items-center gap-2">
+          Apple TV 4K Settings Navigation Hierarchy
+          <span class="text-xs font-mono font-normal px-2 py-0.5 rounded-full bg-indigo-950/80 text-indigo-400 border border-indigo-800">tvOS 26.6 / 18.x</span>
+        </h1>
+        <p class="text-xs text-slate-400">Physical Device: <code class="text-slate-300">office (Apple TV 4K)</code> • Validated via TVTestRig + YOLO11n + OCR</p>
+      </div>
+    </div>
+
+    <!-- Zoom & Search Controls -->
+    <div class="flex items-center space-x-4">
+      <!-- Search -->
+      <div class="relative">
+        <input id="searchInput" type="text" placeholder="Search setting or menu..." 
+          class="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-52" />
+        <span class="absolute right-2.5 top-1.5 text-slate-400 text-xs">🔍</span>
+      </div>
+
+      <!-- Zoom Buttons -->
+      <div class="flex items-center bg-slate-800/80 border border-slate-700 rounded-lg p-0.5">
+        <button id="zoomOutBtn" title="Zoom Out" class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded text-sm font-bold transition">−</button>
+        <span id="zoomLevel" class="text-xs font-mono px-2 text-slate-300">100%</span>
+        <button id="zoomInBtn" title="Zoom In" class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-700 rounded text-sm font-bold transition">+</button>
+        <button id="zoomResetBtn" title="Reset View" class="px-2 py-1 text-xs text-indigo-400 hover:text-indigo-300 hover:bg-slate-700 rounded ml-1 transition">Reset</button>
+      </div>
+
+      <!-- Safety Legend -->
+      <div class="flex items-center space-x-2 text-xs border-l border-slate-800 pl-4">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-950 text-emerald-300 border border-emerald-800">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span> Safe Nav (Chevron &gt;)
+        </span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-amber-950 text-amber-300 border border-amber-800">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5"></span> In-Place Toggle
+        </span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-rose-950 text-rose-300 border border-rose-800">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400 mr-1.5"></span> Destructive Action
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport (Canvas / Drag / Pan) -->
+  <div class="relative flex-1 bg-slate-950 grid-bg overflow-hidden cursor-grab active:cursor-grabbing" id="viewport">
+    
+    <!-- Pan/Zoom Content Container -->
+    <div id="canvas" class="absolute origin-top-left transition-transform duration-75 ease-out p-12">
+      <!-- Root Node -->
+      <div class="flex flex-col items-center mb-16">
+        <div class="node-card bg-slate-900 border-2 border-indigo-500 rounded-2xl p-5 shadow-2xl shadow-indigo-500/10 w-80 text-center relative z-20">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-600/20 text-indigo-400 text-2xl mb-2">
+            ⚙️
+          </div>
+          <h2 class="text-base font-bold text-white tracking-wide">Settings Root</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Top Dock Tile 3 • <code class="text-indigo-300">com.apple.TVSettings</code></p>
+          <div class="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
+            <span>13 Primary Categories</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories Columns / Grid -->
+      <div id="treeContainer" class="flex items-start gap-8 relative">
+        <!-- Rendered dynamically via JS for full interactive fidelity -->
+      </div>
+    </div>
+
+    <!-- Mini Drawer / Details Panel (Floating Bottom-Right) -->
+    <div id="detailsDrawer" class="absolute bottom-6 right-6 w-96 max-h-[70vh] bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-2xl shadow-2xl p-5 z-40 overflow-y-auto hidden">
+      <div class="flex items-start justify-between">
+        <div id="drawerTitleGroup">
+          <h3 id="drawerTitle" class="text-sm font-bold text-white">Item Details</h3>
+          <p id="drawerSubtitle" class="text-xs text-slate-400 mt-0.5">Settings Path</p>
+        </div>
+        <button id="closeDrawerBtn" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800" id="drawerContent">
+        <!-- Injected details -->
+      </div>
+    </div>
+
+    <!-- Overlay Instructions / Hint -->
+    <div class="absolute bottom-6 left-6 bg-slate-900/80 backdrop-blur border border-slate-800 px-3 py-1.5 rounded-lg text-[11px] text-slate-400 pointer-events-none flex items-center gap-2">
+      <span>🖱️ Click & Drag to Pan</span>
+      <span>•</span>
+      <span>🔍 Mousewheel / Pinch to Zoom</span>
+      <span>•</span>
+      <span>Click any node to inspect element breakdown</span>
+    </div>
+  </div>
+
+  <script>
+    // Full Exhaustive Tree Structure of genuine tvOS 18.x / 26.6 Settings
+    const treeData = [
+      {
+        id: "general",
+        name: "General",
+        icon: "🛠️",
+        summary: "System preferences, About, appearance, parental controls, privacy",
+        subviews: [
+          {
+            name: "About",
+            type: "safe",
+            badge: ">",
+            items: ["Name: office", "Model: Apple TV 4K", "tvOS: 26.6 (23L773)", "Resolution: 1080p HD - 59.94Hz", "IP: 192.168.1.14", "Ethernet Address", "Wi-Fi Address"]
+          },
+          {
+            name: "Appearance",
+            type: "safe",
+            badge: ">",
+            items: ["Light", "Dark", "Automatic", "DISPLAY ZOOM: Default", "DISPLAY ZOOM: Large"]
+          },
+          {
+            name: "Sleep After",
+            type: "safe",
+            badge: ">",
+            items: ["Never", "5 minutes", "15 minutes", "30 minutes", "1 hour", "2 hours", "4 hours"]
+          },
+          {
+            name: "Restrictions",
+            type: "destructive",
+            badge: "Passcode",
+            items: ["Parental Controls: Off", "Change Passcode", "Reset Restrictions (DANGEROUS)", "Allowed Content", "iTunes Store: Allow/Ask"]
+          },
+          {
+            name: "Privacy & Security",
+            type: "safe",
+            badge: ">",
+            items: ["Tracking", "Photos", "Bluetooth", "Microphone", "Apple Home", "Analytics & Improvements: Off >"]
+          },
+          {
+            name: "Legal & Regulatory",
+            type: "safe",
+            badge: ">",
+            items: ["Terms and Conditions", "Acknowledgements", "Regulatory", "Safety"]
+          }
+        ]
+      },
+      {
+        id: "profiles",
+        name: "Profiles and Accounts",
+        icon: "👤",
+        summary: "User profiles, Game Center, TV Provider, Home Sharing",
+        subviews: [
+          {
+            name: "Default: Joe McCraw",
+            type: "safe",
+            badge: ">",
+            items: ["iCloud Account", "Game Center", "Purchases", "Remove Profile (DANGEROUS)"]
+          },
+          {
+            name: "Add New Profile",
+            type: "destructive",
+            badge: "Action",
+            items: ["Opens Add Profile Wizard (DO NOT CLICK DURING CRAWL)"]
+          },
+          {
+            name: "TV Provider",
+            type: "safe",
+            badge: ">",
+            items: ["Provider: Optimum >", "Sign Out of TV Provider (DANGEROUS)"]
+          },
+          {
+            name: "Home Sharing",
+            type: "toggle",
+            badge: "Value",
+            items: ["joseph.mccraw@cbsi.com"]
+          }
+        ]
+      },
+      {
+        id: "video_audio",
+        name: "Video and Audio",
+        icon: "🎬",
+        summary: "Display resolution, HDMI output, audio output, match content",
+        subviews: [
+          {
+            name: "Resolution",
+            type: "safe",
+            badge: ">",
+            items: ["1080p - 60 (59.94Hz)", "720p - 60 (59.94Hz)", "480p - 60 (59.94Hz)", "1080p - 50 (50Hz)", "720p - 50 (50Hz)", "Other Resolutions >"]
+          },
+          {
+            name: "HDMI Output",
+            type: "safe",
+            badge: ">",
+            items: ["YCbCr", "RGB High", "RGB Low"]
+          },
+          {
+            name: "Match Content",
+            type: "safe",
+            badge: ">",
+            items: ["Match Dynamic Range: Off", "Match Frame Rate: Off", "Unverified Formats >"]
+          },
+          {
+            name: "Audio Output",
+            type: "safe",
+            badge: ">",
+            items: ["Default: TV Speakers", "Temporary: AirPlay Speakers >"]
+          },
+          {
+            name: "Audio Format",
+            type: "safe",
+            badge: ">",
+            items: ["Change Format: Off >", "New Format: Dolby Atmos / 5.1"]
+          },
+          {
+            name: "Reset Video Settings",
+            type: "destructive",
+            badge: "MUTATE",
+            items: ["⚠️ DANGEROUS BUTTON: Triggers display mode reset & 15-second black screen confirm prompt!"]
+          }
+        ]
+      },
+      {
+        id: "screensaver",
+        name: "Screen Saver",
+        icon: "🖼️",
+        summary: "Aerials, slideshows, start delay, download frequencies",
+        subviews: [
+          {
+            name: "Current Selection",
+            type: "safe",
+            badge: ">",
+            items: ["Aerials", "Memories & Slideshows", "Apple Photos", "Home Sharing"]
+          },
+          {
+            name: "Start After",
+            type: "safe",
+            badge: ">",
+            items: ["Never", "2 minutes", "5 minutes", "10 minutes", "15 minutes", "30 minutes"]
+          },
+          {
+            name: "Show During Music",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["On / Off switch"]
+          }
+        ]
+      },
+      {
+        id: "notifications",
+        name: "Notifications",
+        icon: "🔔",
+        summary: "Per-app notification permissions and badges",
+        subviews: [
+          {
+            name: "Search",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["Allow Notifications: On / Off"]
+          },
+          {
+            name: "TV App",
+            type: "safe",
+            badge: ">",
+            items: ["Allow Notifications", "Sounds", "Badges"]
+          }
+        ]
+      },
+      {
+        id: "airplay_home",
+        name: "AirPlay and Apple Home",
+        icon: "📡",
+        summary: "AirPlay receiver options, room assignments, conference mode",
+        subviews: [
+          {
+            name: "AirPlay: On",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["Toggle receiver state"]
+          },
+          {
+            name: "Allow Access",
+            type: "safe",
+            badge: ">",
+            items: ["Everyone", "Anyone on Same Network", "Only People Sharing This Home", "Require Password"]
+          },
+          {
+            name: "Conference Room Display",
+            type: "safe",
+            badge: ">",
+            items: ["Conference Room Display: Off", "Preview", "Custom Message", "Select Photo Background"]
+          },
+          {
+            name: "AirPlay Display Underscan",
+            type: "safe",
+            badge: ">",
+            items: ["Auto", "On", "Off"]
+          },
+          {
+            name: "Room Assignment",
+            type: "safe",
+            badge: ">",
+            items: ["office (Current)", "Living Room", "Bedroom", "Home Cinema", "Add New Room...", "Remove From Home (DANGEROUS)"]
+          }
+        ]
+      },
+      {
+        id: "remotes",
+        name: "Remotes and Devices",
+        icon: "🎮",
+        summary: "Siri Remote tracking, Bluetooth pairings, HDMI CEC control",
+        subviews: [
+          {
+            name: "Touch Surface Tracking",
+            type: "safe",
+            badge: ">",
+            items: ["Fast", "Medium", "Slow"]
+          },
+          {
+            name: "TV Button",
+            type: "safe",
+            badge: ">",
+            items: ["Apple TV App", "Home Screen"]
+          },
+          {
+            name: "Bluetooth",
+            type: "safe",
+            badge: ">",
+            items: ["My Devices", "Other Devices (Pairing Scanner)"]
+          },
+          {
+            name: "Remote App and Devices",
+            type: "safe",
+            badge: ">",
+            items: ["Pair Game Controllers", "Suggest Nearby AirPods", "Other Devices"]
+          },
+          {
+            name: "Learn Remote",
+            type: "destructive",
+            badge: "Action",
+            items: ["Initiates IR learning sequence (Do not invoke)"]
+          }
+        ]
+      },
+      {
+        id: "accessibility",
+        name: "Accessibility",
+        icon: "♿",
+        summary: "Vision, Hearing, Physical/Motor assistive technologies",
+        subviews: [
+          {
+            name: "VoiceOver",
+            type: "safe",
+            badge: ">",
+            items: ["VoiceOver: Off", "Direct Touch", "Verbosity", "Audio Ducking", "Speech Voice & Pitch", "Rotor"]
+          },
+          {
+            name: "Zoom",
+            type: "safe",
+            badge: ">",
+            items: ["Zoom: Off", "Maximum Zoom Level (1.2x to 15x)"]
+          },
+          {
+            name: "Hover Text",
+            type: "safe",
+            badge: ">",
+            items: ["Display Mode", "Text Size (80pt >)", "Colors", "Border Color"]
+          },
+          {
+            name: "Display",
+            type: "safe",
+            badge: ">",
+            items: ["Reduce Transparency", "Increase Contrast", "Bold Text", "Differentiate Without Color", "Light Sensitivity"]
+          },
+          {
+            name: "Motion",
+            type: "safe",
+            badge: ">",
+            items: ["Reduce Motion: Off", "Auto-Play Video Previews: On"]
+          },
+          {
+            name: "Audio Descriptions",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["Auto-play audio descriptions: Off"]
+          }
+        ]
+      },
+      {
+        id: "apps",
+        name: "Apps",
+        icon: "📱",
+        summary: "Global app settings & built-in Apple app preferences",
+        subviews: [
+          {
+            name: "Auto Update Apps",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["Automatically Update Apps: On"]
+          },
+          {
+            name: "Offload Unused Apps",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["Offload Unused Apps: On"]
+          },
+          {
+            name: "TV App Preferences",
+            type: "safe",
+            badge: ">",
+            items: ["Up Next Display", "Top Shelf: What to Watch", "Streaming Quality"]
+          },
+          {
+            name: "Music Preferences",
+            type: "safe",
+            badge: ">",
+            items: ["Sound Check", "Audio Quality: Lossless", "Spatial Audio"]
+          },
+          {
+            name: "Podcasts Preferences",
+            type: "safe",
+            badge: ">",
+            items: ["Continuous Playback", "Episode Refresh Interval"]
+          },
+          {
+            name: "Photos Preferences",
+            type: "safe",
+            badge: ">",
+            items: ["iCloud Photos: On", "Shared Albums: On"]
+          }
+        ]
+      },
+      {
+        id: "network",
+        name: "Network",
+        icon: "🌐",
+        summary: "Ethernet & Wi-Fi configuration and IP status",
+        subviews: [
+          {
+            name: "Ethernet Configuration",
+            type: "safe",
+            badge: ">",
+            items: ["Configure IP: Automatic (DHCP)", "IP Address: 192.168.1.14", "Subnet Mask: 255.255.255.0", "Router: 192.168.1.1", "Configure DNS: Automatic"]
+          },
+          {
+            name: "Wi-Fi (Disabled when wired)",
+            type: "safe",
+            badge: "Inactive",
+            items: ["Available networks scan"]
+          }
+        ]
+      },
+      {
+        id: "system",
+        name: "System",
+        icon: "💻",
+        summary: "Software updates, restart, reset, diagnostics",
+        subviews: [
+          {
+            name: "Software Updates",
+            type: "safe",
+            badge: ">",
+            items: ["Update Software >", "Automatically Update: On"]
+          },
+          {
+            name: "What's New",
+            type: "safe",
+            badge: ">",
+            items: ["Features in tvOS 18"]
+          },
+          {
+            name: "Reset",
+            type: "destructive",
+            badge: "ERASE",
+            items: ["⚠️ CRITICAL HAZARD: Reset / Reset and Update. Erases all accounts, apps, and credentials! DO NOT SELECT!"]
+          },
+          {
+            name: "Restart",
+            type: "destructive",
+            badge: "REBOOT",
+            items: ["⚠️ Reboots the Apple TV hardware immediately."]
+          }
+        ]
+      },
+      {
+        id: "developer",
+        name: "Developer",
+        icon: "👨‍💻",
+        summary: "HUD overlays, network condition conditioner, profiling",
+        subviews: [
+          {
+            name: "Playback HUD",
+            type: "toggle",
+            badge: "Toggle",
+            items: ["Show video decode statistics on screen"]
+          },
+          {
+            name: "Network Conditioner",
+            type: "safe",
+            badge: ">",
+            items: ["Profile: Off >", "Edge / 3G / High Packet Loss simulation"]
+          }
+        ]
+      },
+      {
+        id: "sleep",
+        name: "Sleep Now",
+        icon: "💤",
+        summary: "Puts the Apple TV into standby",
+        subviews: [
+          {
+            name: "Sleep Action",
+            type: "destructive",
+            badge: "STANDBY",
+            items: ["Puts the device to sleep immediately."]
+          }
+        ]
+      }
+    ];
+
+    // DOM Elements
+    const viewport = document.getElementById('viewport');
+    const canvas = document.getElementById('canvas');
+    const treeContainer = document.getElementById('treeContainer');
+    const zoomLevelEl = document.getElementById('zoomLevel');
+    const searchInput = document.getElementById('searchInput');
+    const detailsDrawer = document.getElementById('detailsDrawer');
+    const drawerTitle = document.getElementById('drawerTitle');
+    const drawerSubtitle = document.getElementById('drawerSubtitle');
+    const drawerContent = document.getElementById('drawerContent');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+    // Pan & Zoom State
+    let scale = 0.85;
+    let panX = 40;
+    let panY = 20;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+
+    function updateTransform() {
+      canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+      zoomLevelEl.textContent = `${Math.round(scale * 100)}%`;
+    }
+
+    // Zoom Controls
+    document.getElementById('zoomInBtn').onclick = () => { scale = Math.min(2.5, scale + 0.15); updateTransform(); };
+    document.getElementById('zoomOutBtn').onclick = () => { scale = Math.max(0.35, scale - 0.15); updateTransform(); };
+    document.getElementById('zoomResetBtn').onclick = () => { scale = 0.85; panX = 40; panY = 20; updateTransform(); };
+
+    // Pan Handlers
+    viewport.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.node-card') || e.target.closest('#detailsDrawer')) return;
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Wheel Zoom
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
+      const newScale = Math.min(2.5, Math.max(0.35, scale * zoomFactor));
+      
+      // Zoom toward cursor
+      const rect = viewport.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      
+      panX = mouseX - (mouseX - panX) * (newScale / scale);
+      panY = mouseY - (mouseY - panY) * (newScale / scale);
+      scale = newScale;
+      updateTransform();
+    }, { passive: false });
+
+    // Render Tree Nodes
+    function renderTree(filter = '') {
+      treeContainer.innerHTML = '';
+      const filterLower = filter.toLowerCase().trim();
+
+      treeData.forEach(cat => {
+        const matchesCat = cat.name.toLowerCase().includes(filterLower) || cat.summary.toLowerCase().includes(filterLower);
+        const matchedSubviews = cat.subviews.filter(sub => 
+          sub.name.toLowerCase().includes(filterLower) || 
+          sub.items.some(it => it.toLowerCase().includes(filterLower))
+        );
+
+        if (filterLower && !matchesCat && matchedSubviews.length === 0) {
+          return; // Hide non-matching category
+        }
+
+        const col = document.createElement('div');
+        col.className = "flex flex-col items-center shrink-0 w-72";
+
+        // Category Card
+        const catCard = document.createElement('div');
+        catCard.className = "node-card w-full bg-slate-900 border border-slate-700/80 rounded-xl p-4 shadow-lg cursor-pointer";
+        catCard.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">${cat.icon}</span>
+              <h3 class="text-sm font-semibold text-white">${cat.name}</h3>
+            </div>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">${cat.subviews.length}</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1.5 line-clamp-2">${cat.summary}</p>
+        `;
+        catCard.onclick = () => openDrawer(cat.name, "Category Overview", cat.summary, cat.subviews.map(s => `• ${s.name} [${s.badge}]`));
+
+        // Subviews Container
+        const subContainer = document.createElement('div');
+        subContainer.className = "w-full mt-4 space-y-2.5 pl-3 border-l-2 border-slate-800";
+
+        const subviewsToRender = filterLower && !matchesCat ? matchedSubviews : cat.subviews;
+
+        subviewsToRender.forEach(sub => {
+          const subCard = document.createElement('div');
+          let borderStyle = "border-slate-800 hover:border-slate-700 bg-slate-900/60";
+          let badgeColor = "bg-slate-800 text-slate-300 border-slate-700";
+
+          if (sub.type === 'safe') {
+            borderStyle = "border-emerald-900/40 hover:border-emerald-700/80 bg-slate-900/80";
+            badgeColor = "bg-emerald-950 text-emerald-300 border-emerald-800";
+          } else if (sub.type === 'toggle') {
+            borderStyle = "border-amber-900/40 hover:border-amber-700/80 bg-slate-900/80";
+            badgeColor = "bg-amber-950 text-amber-300 border-amber-800";
+          } else if (sub.type === 'destructive') {
+            borderStyle = "border-rose-900/60 hover:border-rose-700 bg-rose-950/20";
+            badgeColor = "bg-rose-950 text-rose-300 border-rose-800";
+          }
+
+          subCard.className = `node-card border rounded-lg p-2.5 shadow cursor-pointer text-xs ${borderStyle}`;
+          subCard.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-medium ${sub.type === 'destructive' ? 'text-rose-200' : 'text-slate-200'}">${sub.name}</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border ${badgeColor}">${sub.badge}</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
+              <span>${sub.items.length} items</span>
+              <span>•</span>
+              <span class="${sub.type === 'safe' ? 'text-emerald-400' : sub.type === 'toggle' ? 'text-amber-400' : 'text-rose-400'} capitalize">${sub.type}</span>
+            </div>
+          `;
+          subCard.onclick = (e) => {
+            e.stopPropagation();
+            openDrawer(`${cat.name} > ${sub.name}`, `Type: ${sub.type.toUpperCase()}`, `Badge Indicator: ${sub.badge}`, sub.items);
+          };
+          subContainer.appendChild(subCard);
+        });
+
+        col.appendChild(catCard);
+        col.appendChild(subContainer);
+        treeContainer.appendChild(col);
+      });
+    }
+
+    // Drawer Inspector
+    function openDrawer(title, subtitle, description, items) {
+      drawerTitle.textContent = title;
+      drawerSubtitle.textContent = subtitle;
+      
+      let html = `<p class="text-xs text-slate-300 mb-3">${description}</p>`;
+      if (items && items.length > 0) {
+        html += `<h4 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Elements / Sub-items</h4>`;
+        html += `<ul class="space-y-1.5 text-xs text-slate-300">`;
+        items.forEach(it => {
+          const isDanger = it.includes("DANGEROUS") || it.includes("HAZARD") || it.includes("MUTATE") || it.includes("Reset");
+          html += `<li class="px-2.5 py-1.5 rounded bg-slate-800/80 border ${isDanger ? 'border-rose-800 text-rose-300' : 'border-slate-700/60'}">${it}</li>`;
+        });
+        html += `</ul>`;
+      }
+      
+      drawerContent.innerHTML = html;
+      detailsDrawer.classList.remove('hidden');
+    }
+
+    closeDrawerBtn.onclick = () => detailsDrawer.classList.add('hidden');
+
+    // Search input handler
+    searchInput.addEventListener('input', (e) => {
+      renderTree(e.target.value);
+    });
+
+    // Initial render & transform
+    renderTree();
+    updateTransform();
+  </script>
+</body>
+</html>

@@ -188,10 +188,24 @@ optional reading. It prevents repeating known errors.
 | Adding a new SPM target or Xcode project | BP-15 (platform boundary rule) |
 | Training or inference with Create ML / Vision | BP-25 (scaleFit bug), BP-26 (anchor assignment) |
 | Writing evaluation scripts | BP-25 — use `.scaleFill`, never `evaluation(on:)` |
+| tvOS remote automation & menu navigation | BP-40 (single-step closed loop), BP-41 (chevron gate), BP-42 (boundary lock), BP-43 (blacklist) |
+| tvOS hardware training data & fixture | BP-44 (fixture synthetic generation), BP-45 (local HTTP/stream pipeline) |
 
 **When you discover a new mistake or a better approach, add it to `Research/BestPractices.md`
 before closing the task.** Each entry must include: what went wrong, the correct approach, and
 why it matters. Do not pad the document with obvious advice.
+
+---
+
+## Workspace Skills
+
+The repository maintains specialized agentic skills in `.agents/skills/` to codify operational procedures and prevent repeating known failures:
+
+| Skill | Path | When to Use |
+|---|---|---|
+| `tvos-safe-navigation` | `.agents/skills/tvos-safe-navigation/` | Automating Apple TV menu traversal, remote control inputs via TVTestRig/aatv, or exploring apps without mutating settings. |
+| `tvos-fixture-training` | `.agents/skills/tvos-fixture-training/` | Capturing tvOS training frames from `TVTestRigFixture`, sweeping tabs, executing $N$-way focus sweeps, or extracting ground truth. |
+| `nativeui-model-workflow` | `.agents/skills/nativeui-model-workflow/` | Training, evaluating, exporting, or debugging YOLO11 and CoreML models within package filesystem boundaries. |
 
 ---
 

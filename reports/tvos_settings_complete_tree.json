@@ -1,0 +1,544 @@
+{
+  "name": "\u2699\ufe0f Apple TV Settings (tvOS 26.6 / 18.x)",
+  "sections": [
+    {
+      "name": "General",
+      "items": [
+        "About",
+        "Appearance",
+        "Sleep After",
+        "Restrictions",
+        "Privacy & Security",
+        "Legal & Regulatory",
+        "LANGUAGE & REGION",
+        "3",
+        "Keyboard Layout",
+        "Off",
+        "United States"
+      ],
+      "subviews": [
+        {
+          "name": "About",
+          "items": [
+            "office >",
+            "Model",
+            "Serial Number",
+            "26.6 (23L773)",
+            "Resolution 1080p HD - 59.94Hz YCbCr 4:4:4",
+            "192.168.1.14",
+            "Ethernet Address"
+          ]
+        },
+        {
+          "name": "Appearance",
+          "items": [
+            "Light",
+            "Dark",
+            "Automatic",
+            "DISPLAY ZOOM",
+            "Default",
+            "Large"
+          ]
+        },
+        {
+          "name": "Sleep After",
+          "items": [
+            "Never",
+            "5 minutes",
+            "15 minutes",
+            "30 minutes",
+            "1 hour",
+            "2 hours",
+            "4 hours"
+          ]
+        },
+        {
+          "name": "Restrictions",
+          "items": [
+            "PARENTAL CONTROLS",
+            "Off",
+            "Change Passcode",
+            "Reset",
+            "BYPASS RESTRICTIONS WITH DEVICE",
+            "Allow",
+            "ITUNES STORE",
+            "Allow",
+            "Allow",
+            "ALLOWED CONTENT",
+            "Ratings For",
+            "Mucin and Darnacte"
+          ]
+        },
+        {
+          "name": "Privacy & Security",
+          "items": [
+            "On",
+            "Tracking",
+            "Photos",
+            "Bluetooth",
+            "Microphone",
+            "Apple Home",
+            "Media & Apple Music",
+            "ANALYTICS AND IMPROVEMENTS",
+            "Share Apple TV Analytics",
+            "Share with App Developers",
+            "Off >"
+          ]
+        },
+        {
+          "name": "Legal & Regulatory",
+          "items": [
+            "Terms and Conditions",
+            "Acknowledgements",
+            "Regulatory",
+            "Safety"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profiles and Accounts",
+      "items": [
+        "DEFAULT",
+        "Joe McCraw",
+        "ADDITIONAL",
+        "Add New Profile",
+        "APPLE TV ACCOUNTS",
+        "Optimum >",
+        "Home Sharing joseph.mccraw@cbsi.co.."
+      ],
+      "subviews": []
+    },
+    {
+      "name": "Video and Audio",
+      "items": [
+        "VIDEO",
+        "1080p >",
+        "YCbCr >",
+        "Off >",
+        "Tap-to-Zoom Video",
+        "Reset Video Settings",
+        "AUDIO",
+        "Audio Output",
+        "Audio Format",
+        "Off",
+        "Navigation Clicks",
+        "Sound Fffects and Music"
+      ],
+      "subviews": [
+        {
+          "name": "Resolution",
+          "items": [
+            "1080p",
+            "60 (59.94Hz)",
+            "720p",
+            "60 (59.94Hz)",
+            "480p",
+            "60(59.94Hz)",
+            "1080p",
+            "50 (50Hz)",
+            "720p",
+            "50 (50Hz)",
+            "Other Resolutions"
+          ]
+        },
+        {
+          "name": "HDMI Output",
+          "items": [
+            "YCbCr",
+            "RGB High",
+            "RGB Low"
+          ]
+        },
+        {
+          "name": "Match Content",
+          "items": [
+            "Off",
+            "UNVERIFIED FORMATS",
+            "1080p",
+            "50(50Hz)"
+          ]
+        },
+        {
+          "name": "Audio Output",
+          "items": [
+            "VIDEO",
+            "1080p>",
+            "YCbCr >",
+            "Off >",
+            "Zoom Video",
+            "'ideo Settings",
+            "Dutput",
+            "Audio Format",
+            "Reduce Loud Sounds",
+            "Navigation Clicks",
+            "Sound Fffecte and Mucic"
+          ]
+        },
+        {
+          "name": "Audio Format",
+          "items": [
+            "DEFAULT AUDIO OUTPUT",
+            "TV Speakers",
+            "AirPlay"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Screen Saver",
+      "items": [
+        "Aerials >",
+        "30 minutes >",
+        "Show During Music and Podcasts",
+        "SCREEN SAVER PREFERENCES",
+        "Aerials",
+        "Memories & Slideshows"
+      ],
+      "subviews": [
+        {
+          "name": "Current Selection",
+          "items": [
+            "Aerials",
+            "Memories & Slideshows"
+          ]
+        },
+        {
+          "name": "Start After",
+          "items": [
+            "Never",
+            "2 minutes",
+            "5 minutes",
+            "10 minutes",
+            "15 minutes",
+            "30 minutes"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "items": [
+        "Search",
+        "TV"
+      ],
+      "subviews": []
+    },
+    {
+      "name": "AirPlay and Apple Home",
+      "items": [
+        "On",
+        "Same Network",
+        "Off >",
+        "AirPlay Display Underscan",
+        "On",
+        "APPLE HOME",
+        "office"
+      ],
+      "subviews": [
+        {
+          "name": "Conference Room Display",
+          "items": [
+            "Conference Room Display",
+            "Require PIN Every Time",
+            "Preview",
+            "Custom Message",
+            "BACKGROUND",
+            "Select Photo"
+          ]
+        },
+        {
+          "name": "AirPlay Display Underscan",
+          "items": [
+            "Auto",
+            "On",
+            "Off"
+          ]
+        },
+        {
+          "name": "Room",
+          "items": [
+            "IN MY HOME",
+            "Entertainment Room",
+            "office",
+            "SUGGESTED ROOMS",
+            "Bedroom",
+            "Home Cinema",
+            "Living Room",
+            "Main Bedroom",
+            "Add New Room...",
+            "Remove From Home"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Remotes and Devices",
+      "items": [
+        "REMOTE",
+        "Clickpad",
+        "Medium >",
+        "TV Button",
+        "Remote",
+        "OTHER DEVICES",
+        "Bluetooth",
+        "Remote App and Devices",
+        "Learn Remote",
+        "HOME CINEMA CONTROL",
+        "Turn On Your TV with Your Remote",
+        "Volume Control"
+      ],
+      "subviews": [
+        {
+          "name": "Touch Surface Tracking",
+          "items": [
+            "Fast",
+            "Medium",
+            "Slow"
+          ]
+        },
+        {
+          "name": "Bluetooth",
+          "items": [
+            "REMOTE",
+            "Click and Touch >",
+            "Medium >",
+            "TV Button",
+            "Remote",
+            "OTHER DEVICES",
+            "Bluetooth",
+            "Remote App and Devices",
+            "Learn Remote",
+            "HOME CINEMA CONTROL",
+            "Turn On Your TV with Your Remote",
+            "Volume Control"
+          ]
+        },
+        {
+          "name": "Remote App and Devices",
+          "items": [
+            "How to Pair Game Controllers",
+            "Suggest Nearby AirPods",
+            "OTHER DEVICES *"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Accessibility",
+      "items": [
+        "VISION",
+        "Off >",
+        "Off >",
+        "Off >",
+        "Display",
+        "Motion",
+        "Audio Descriptions",
+        "PHYSICAL AND MOTOR",
+        "Off >",
+        "Tap to Navigate",
+        "HEARING",
+        "Off"
+      ],
+      "subviews": [
+        {
+          "name": "VoiceOver",
+          "items": [
+            "VoiceOver",
+            "Direct Touch",
+            "Verbosity",
+            "Audio Ducking",
+            "SPEECH",
+            "Voice",
+            "Pronunciations",
+            "50%",
+            "Use Pitch",
+            "Rotor"
+          ]
+        },
+        {
+          "name": "Zoom",
+          "items": [
+            "Off",
+            "Maximum Zoom Level"
+          ]
+        },
+        {
+          "name": "Hover Text",
+          "items": [
+            "Off",
+            "TEXT",
+            "Display Mode",
+            "Default >",
+            "Default >",
+            "80 pt >",
+            "COLOURS",
+            "Default >",
+            "Default >",
+            "85%",
+            "Border Colour l"
+          ]
+        },
+        {
+          "name": "Display",
+          "items": [
+            "TEXT",
+            "Off",
+            "CONTRAST",
+            "Reduce Transparency",
+            "Increase Contrast",
+            "Default >",
+            "DISPLAY ACCOMMODATIONS",
+            "Differentiate Without Colour",
+            "Off >",
+            "Off >",
+            "Off >"
+          ]
+        },
+        {
+          "name": "Motion",
+          "items": [
+            "Reduce Motion",
+            "Auto-Play Video Previews"
+          ]
+        },
+        {
+          "name": "Audio Descriptions",
+          "items": [
+            "VISION",
+            "Off >",
+            "Zoom",
+            "Hover Text",
+            "Display",
+            "Motion",
+            "Audio Descriptions",
+            "PHYSICAL AND MOTOR",
+            "Off >",
+            "Tap to Navigate",
+            "HEARING",
+            "Off"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Apps",
+      "items": [],
+      "subviews": [
+        {
+          "name": "TV",
+          "items": []
+        },
+        {
+          "name": "Music",
+          "items": []
+        },
+        {
+          "name": "Computers",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        },
+        {
+          "name": "Fitness",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        },
+        {
+          "name": "Podcasts",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        },
+        {
+          "name": "Photos",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Network",
+      "items": [
+        "Peacock Picks",
+        "\uf8fftv",
+        "\uf8fftv",
+        "PLURIBUS",
+        "TERMS OF USE"
+      ],
+      "subviews": [
+        {
+          "name": "Status",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "System",
+      "items": [
+        "Peacock Picks",
+        "\uf8fftv",
+        "\uf8fftv",
+        "PLURIBUS",
+        "TERMS OF USE"
+      ],
+      "subviews": [
+        {
+          "name": "Software Updates",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        },
+        {
+          "name": "What's New",
+          "items": [
+            "Peacock Picks",
+            "\uf8fftv",
+            "\uf8fftv",
+            "PLURIBUS",
+            "TERMS OF USE"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Developer",
+      "items": [
+        "Peacock Picks",
+        "\uf8fftv",
+        "\uf8fftv",
+        "PLURIBUS",
+        "TERMS OF USE"
+      ],
+      "subviews": []
+    }
+  ]
+}

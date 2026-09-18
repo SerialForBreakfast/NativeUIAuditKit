@@ -1,0 +1,400 @@
+{
+  "title": "tvOS Settings Root",
+  "children": [
+    {
+      "name": "General",
+      "id": "settings_general",
+      "items": [
+        "About",
+        "Appearance",
+        "Dark",
+        "Sleep After",
+        "2 hours",
+        "Restrictions",
+        "Off >",
+        "Privacy & Security",
+        "Legal & Regulatory",
+        "LANGUAGE & REGION",
+        "Apple TV Languages",
+        "Keyboard Layout",
+        "Auto",
+        "Off",
+        "Dictation",
+        "Region",
+        "United States"
+      ],
+      "subsections": [
+        {
+          "name": "About",
+          "id": "settings_general_about",
+          "items": [
+            "office >",
+            "Name",
+            "Model",
+            "A1625 (32 GB)",
+            "Serial Number",
+            "CO7FP9EGOFNL",
+            "26.6 (23L773)",
+            "tvOS",
+            "Resolution 1080p HD - 59.94Hz YCbCr 4:4:4",
+            "192.168.1.14",
+            "IP Address",
+            "Ethernet Address",
+            "34:fd:6a:02:b8:41"
+          ]
+        },
+        {
+          "name": "Appearance",
+          "id": "settings_general_appearance",
+          "items": [
+            "Light",
+            "Dark",
+            "Automatic",
+            "DISPLAY ZOOM",
+            "Default",
+            "Large"
+          ]
+        },
+        {
+          "name": "Dark",
+          "id": "settings_general_dark",
+          "items": [
+            "Never",
+            "5 minutes",
+            "15 minutes",
+            "30 minutes",
+            "1 hour",
+            "2 hours",
+            "4 hours"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profiles and Accounts",
+      "id": "settings_profiles_and_accounts",
+      "items": [
+        "DEFAULT",
+        "Joe McCraw",
+        "ADDITIONAL",
+        "Add New Profile",
+        "APPLE TV ACCOUNTS",
+        "TV Provider",
+        "Home Sharing joseph.mccraw@cbsi.co..."
+      ],
+      "subsections": []
+    },
+    {
+      "name": "Video and Audio",
+      "id": "settings_video_and_audio",
+      "items": [
+        "VIDEO",
+        "1080p >",
+        "Resolution",
+        "YCbCr >",
+        "HDMI Output",
+        "Off >",
+        "Match Content",
+        "Tap-to-Zoom Video",
+        "Off",
+        "Reset Video Settings",
+        "AUDIO",
+        "Audio Output",
+        "Audio Format",
+        "Auto",
+        "Off",
+        "Reduce Loud Sounds",
+        "Navigation Clicks",
+        "On",
+        "Sound Fffects and Music",
+        "Or"
+      ],
+      "subsections": [
+        {
+          "name": "VIDEO",
+          "id": "settings_video_and_audio_video",
+          "items": [
+            "1080p",
+            "60 (59.94Hz)",
+            "720p",
+            "60 (59.94Hz)",
+            "480p",
+            "60 (59.94Hz)",
+            "1080p",
+            "50 (50Hz)",
+            "720p",
+            "50 (50Hz)",
+            "Other Resolutions"
+          ]
+        },
+        {
+          "name": "1080p >",
+          "id": "settings_video_and_audio_1080p_>",
+          "items": [
+            "YCbCr",
+            "RGB High",
+            "RGB Low"
+          ]
+        },
+        {
+          "name": "Resolution",
+          "id": "settings_video_and_audio_resolution",
+          "items": [
+            "Off",
+            "Match Frame Rate",
+            "UNVERIFIED FORMATS",
+            "1080p",
+            "50 (50Hz)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Screen Saver",
+      "id": "settings_screen_saver",
+      "items": [
+        "Aerials \u203a",
+        "Current Selection",
+        "30 minutes >",
+        "Start After",
+        "Show During Music and Podcasts",
+        "Yes",
+        "SCREEN SAVER PREFERENCES",
+        "Aerials",
+        "Memories & Slideshows"
+      ],
+      "subsections": []
+    },
+    {
+      "name": "Notifications",
+      "id": "settings_notifications",
+      "items": [
+        "Search",
+        "On",
+        "On",
+        "TV"
+      ],
+      "subsections": []
+    },
+    {
+      "name": "AirPlay and Apple Home",
+      "id": "settings_airplay_and_apple_home",
+      "items": [
+        "On",
+        "AirPlay",
+        "Same Network",
+        "Allow Access",
+        "Off >",
+        "Conference Room Display",
+        "AirPlay Display Underscan",
+        "Auto",
+        "On",
+        "Peer-to-Peer Wireless",
+        "APPLE HOME",
+        "office",
+        "Room"
+      ],
+      "subsections": []
+    },
+    {
+      "name": "Remotes and Devices",
+      "id": "settings_remotes_and_devices",
+      "items": [
+        "REMOTE",
+        "Clickpad",
+        "Click and Touch >",
+        "Medium >",
+        "Touch Surface Tracking",
+        "TV Button",
+        "Home Screen",
+        "Remote",
+        "OTHER DEVICES",
+        "Bluetooth",
+        "Remote App and Devices",
+        "Learn Remote",
+        "HOME CINEMA CONTROL",
+        "Turn On Your TV with Your Remote",
+        "On",
+        "Volume Control",
+        "2025 via IR"
+      ],
+      "subsections": []
+    },
+    {
+      "name": "Accessibility",
+      "id": "settings_accessibility",
+      "items": [
+        "VISION",
+        "Off >",
+        "VoiceOver",
+        "Off >",
+        "Zoom",
+        "Hover Text",
+        "Off >",
+        "Display",
+        "Motion",
+        "Audio Descriptions",
+        "Off",
+        "PHYSICAL AND MOTOR",
+        "Off >",
+        "Switch Control",
+        "Tap to Navigate",
+        "Off",
+        "HEARING",
+        "Off",
+        "Mono Audio"
+      ],
+      "subsections": [
+        {
+          "name": "VISION",
+          "id": "settings_accessibility_vision",
+          "items": [
+            "VoiceOver",
+            "Off",
+            "Navigation Style",
+            "Direct Touch",
+            "Verbosity",
+            "Audio Ducking",
+            "SPEECH",
+            "Voice",
+            "Allison",
+            "Pronunciations",
+            "50%",
+            "Speech Rate",
+            "Use Pitch",
+            "On",
+            "Rotor",
+            "Danill^"
+          ]
+        },
+        {
+          "name": "Off >",
+          "id": "settings_accessibility_off_>",
+          "items": [
+            "Zoom",
+            "Off",
+            "5x",
+            "Maximum Zoom Level"
+          ]
+        },
+        {
+          "name": "VoiceOver",
+          "id": "settings_accessibility_voiceover",
+          "items": [
+            "Off",
+            "Hover Text",
+            "TEXT",
+            "Display Mode",
+            "Top",
+            "Scrolling Speed",
+            "Default",
+            "Default >",
+            "Font",
+            "80 pt >",
+            "Text Size",
+            "COLOURS",
+            "Default >",
+            "Text Colour",
+            "Default >",
+            "Background Colour",
+            "Background Opacity",
+            "85%",
+            "Border Colour",
+            "Default >"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Apps",
+      "id": "settings_apps",
+      "items": [
+        "Automatically Update Apps",
+        "On",
+        "Automatically Install Apps",
+        "Off",
+        "Automatically Download In-App Conte... On",
+        "Offload Unused Apps",
+        "On",
+        "APP SETTINGS",
+        "TV",
+        "Music",
+        "Computers",
+        "Fitness",
+        "Podcasts",
+        "Photos"
+      ],
+      "subsections": []
+    },
+    {
+      "name": "Network",
+      "id": "settings_network",
+      "items": [
+        "CONNECTION",
+        "Ethernet",
+        "Connected",
+        "STATUS",
+        "IP Address",
+        "192.168.1.14",
+        "Subnet Mask",
+        "255.255.255.0",
+        "192.168.1.1",
+        "Router",
+        "192.168.1.1",
+        "DNS",
+        "34:fd:6a:02:b8:41",
+        "Ethernet Address"
+      ],
+      "subsections": []
+    },
+    {
+      "name": "System",
+      "id": "settings_system",
+      "items": [
+        "INFO",
+        "Help",
+        "What's New",
+        "MAINTENANCE",
+        "Software Updates",
+        "Reset",
+        "Restart"
+      ],
+      "subsections": [
+        {
+          "name": "INFO",
+          "id": "settings_system_info",
+          "items": []
+        },
+        {
+          "name": "Help",
+          "id": "settings_system_help",
+          "items": []
+        },
+        {
+          "name": "What's New",
+          "id": "settings_system_what's_new",
+          "items": [
+            "Update Software",
+            "Automatically Update",
+            "Off",
+            "Off >",
+            "Beta Updates"
+          ]
+        }
+      ]
+    }
+  ],
+  "root_items": [
+    "General",
+    "Profiles and Accounts",
+    "Video and Audio",
+    "Screen Saver",
+    "Notifications",
+    "AirPlay and Apple Home",
+    "Remotes and Devices",
+    "Accessibility",
+    "Apps",
+    "Network",
+    "System"
+  ]
+}

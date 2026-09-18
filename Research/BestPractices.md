@@ -785,4 +785,101 @@ swift -module-cache-path .build/clang-cache scripts/myscript.swift [args]
 2. **CI / Automation Level:** Ensure automated test runners and inspection harnesses (such as TVTestRig) execute inside an active Aqua user session (or with `launchctl asuser <uid>`), rather than a disconnected background launchd daemon.
 3. **Diagnostics:** When diagnosing OCR failures, verify whether `IOSurface` can be allocated in the target shell before assuming image corruption.
 
+---
+
+## tvOS Automated Navigation & Physical Hardware Testing
+
+### BP-40: Never navigate Apple TV interfaces with open-loop key counting (`navigate down --count N`)
+
+**Wrong:**
+```python
+# Assuming item 4 is "Audio Output"
+navigate("up", 20)
+navigate("down", 4)
+press("select") # DANGER: hits "Reset Video Settings" or "Erase All Content"
+```
+
+**Correct:**
+```python
+# Closed-loop single-stepping with focus confirmation
+while not target_reached:
+    navigate("down", 1)
+    wait_stable()
+    current_focus = get_focused_element_ocr()
+    if current_focus.text == target_label:
+        break
+# Verify focus before select
+assert current_focus.text == target_label
+press("select")
+```
+
+**Why:** tvOS list views contain non-selectable section headers (`VIDEO`, `AUDIO`, `INFO`, `MAINTENANCE`), descriptive footers, and dynamic off-screen paging. Open-loop multi-step counts drift unpredictably, causing blind clicks to land on adjacent destructive actions (`Reset Video Settings`, `Add New Profile`, `Erase All Content`).
+
+---
+
+### BP-41: Mandatory Disclosure Chevron (`>`) Gate Before Sending `select`
+
+**Wrong:** Treating every row or highlighted item as a sub-menu to be clicked with `press select`.
+
+**Correct:** A row may only be clicked for sub-view navigation if OCR or Vision confirms a trailing disclosure chevron (`>`) on the right margin of that row. Rows lacking chevrons must be classified as **in-place value toggles, steppers, or direct action buttons**:
+- Record their labels and values into the hierarchy tree as **read-only leaf nodes**.
+- **Never send `select`** to rows lacking chevrons during navigation sweeps.
+
+**Why:** In Apple's Human Interface Guidelines for tvOS, rows without chevrons either mutate the setting immediately in place (e.g. changing 1080p to 720p, toggling Wi-Fi off) or trigger modal setup wizards.
+
+---
+
+### BP-42: Traversal Boundary Lock ("Settings Jail" / App Context Lock)
+
+**Wrong:** Unconditionally calling `press("back")` or `press("home")` to escape deep menus.
+
+**Correct:** 
+1. Maintain an explicit DFS navigation stack: `[Root, Category, Subview]`.
+2. When backtracking, send a single `press("back")` pulse, then capture and assert that the screen title matches the parent node on the stack.
+3. If the screen does not match, or if an unexpected modal dialog ("Cancel / OK") appears, halt immediately.
+4. **Never send `press("home")` during active menu traversal.** If the app escapes to Springboard, subsequent clicks will enter the app grid, launch random third-party apps (e.g. Peacock), and pop modal Terms of Use dialogs.
+
+**Why:** Prevents automation drift from escaping the target application into Springboard and contaminating dataset captures with third-party app interfaces.
+
+---
+
+### BP-43: Strict Destructive Keyword Blacklist
+
+**Rule:** Traversal scripts must maintain an active keyword blacklist that unconditionally forbids `select` even if a button or chevron is visually present:
+
+```python
+FORBIDDEN_KEYWORDS = re.compile(
+    r"\b(Reset|Erase|Format|Update|Delete|Remove|Sign Out|Add Profile|Add New|"
+    r"Purchase|Restore|Terms|Agree|Offload|Restart|Sleep|Calibrate|Check HDMI)\b",
+    re.IGNORECASE
+)
+```
+
+If the focused element's label or accessibility text matches any term in this pattern:
+- Immediately record the element as `type: "destructive_blacklisted"`.
+- **Do not send `select`**.
+- Advance focus to the next safe row.
+
+---
+
+### BP-44: On-Device Fixture Synthetic Generation over Fragile OS Crawling
+
+**Wrong:** Relying on live system Settings or third-party apps to gather training data for native tvOS controls.
+
+**Correct:** Use `TVTestRigFixture` running on physical hardware to generate and render native UI components inside a safe, dedicated test sandbox:
+1. **Zero Mutation Risk:** Actions inside the fixture cannot wipe credentials, reset video modes, or reboot the Apple TV.
+2. **Authentic Hardware Rendering:** Employs real Apple TV Metal shaders, parallax tilt, specular highlights, and dynamic drop shadows that simulators cannot replicate.
+3. **Exact Ground Truth:** The fixture introspects native window coordinates (`view.convert(bounds, to: window)`), `UIFocusSystem.focusedItem`, and accessibility traits directly in memory, outputting Schema v1.0 JSON sidecars with zero OCR annotation noise.
+
+---
+
+### BP-45: Local HTTP/WebSocket Frame Pipeline over App Sandbox Disk Scraping
+
+**Wrong:** Relying on `aatv observe capture --output <path>`, which fails with `persistenceFailed` outside `TVTestRig.app`'s sandboxed container directory, forcing scripts to crawl internal UUID paths and triggering macOS permission dialogs.
+
+**Correct:** Stream uncompressed frame buffers and Schema v1.0 JSON sidecars directly from `TVTestRigFixture` over a local lightweight HTTP/WebSocket server on port `8080` (or pipe via `--stdout`).
+
+**Why:** Eliminates macOS App Sandbox container friction, avoids disk thrashing, eliminates permission prompts, and increases capture throughput from ~0.2 fps to ~5–10 fps.
+
+
 
