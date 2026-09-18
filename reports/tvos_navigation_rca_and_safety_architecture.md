@@ -1,7 +1,7 @@
 # Comprehensive RCA: tvOS Settings Navigation Failures, TVTestRig Inconsistencies, & Safe Navigation Architecture
 
 **Document Status:** Final Analysis & Engineering Architecture Specification  
-**Target Device:** Apple TV 4K (`office`, ID: `8D80F616-6C12-49A6-9015-8F594EE5F24E`, tvOS 26.6 / 18.x)  
+**Target Device:** Apple TV 4K (`office`, ID: `<REDACTED_DEVICE_UDID>`, tvOS 26.6 / 18.x)  
 **Author:** Antigravity Engineering  
 **Date:** 2026-09-17  
 
@@ -86,7 +86,7 @@ A forensic review of the test scripts (`crawl_tvos_settings.py`, `deep_crawl_set
 ### RCA-5: Unfiltered Crawl Target Definitions
 - **Mechanism:** `deep_crawl_settings.py` hardcoded targets copied from mental models or outdated documentation:
   ```python
-  ("Profiles and Accounts", ["Joe McCraw", "Add New Profile", "TV Provider", "Home Sharing"])
+  ("Profiles and Accounts", ["<REDACTED_NAME>", "Add New Profile", "TV Provider", "Home Sharing"])
   ```
 - **Why it failed:** `"Add New Profile"` is explicitly an interactive account creation flow. Including it in a navigation target array ensured that the script would attempt to click it.
 
@@ -192,7 +192,7 @@ To navigate Apple TV menus with **absolute zero risk of mutating settings**, we 
 Combining our clean pre-incident captures, OCR extraction, and physical hardware verification, the complete primary structure of Apple TV Settings is categorized below:
 
 ### 1. General (`com.apple.TVSettings > General`)
-- 🟢 **About** (`>`): office, Model Apple TV 4K, tvOS 26.6 (23L773), 1080p HD - 59.94Hz, IP 192.168.1.14, MAC
+- 🟢 **About** (`>`): office, Model Apple TV 4K, tvOS 26.6 (23L773), 1080p HD - 59.94Hz, IP <REDACTED_IP>, MAC <REDACTED_MAC>
 - 🟢 **Appearance** (`>`): Light, Dark, Automatic, Display Zoom (Default / Large)
 - 🟢 **Sleep After** (`>`): Never, 5 min, 15 min, 30 min, 1 hr, 2 hr, 4 hr
 - 🔴 **Restrictions** (Passcode / Mutate): Parental Controls, Change Passcode, Reset Restrictions
@@ -200,10 +200,10 @@ Combining our clean pre-incident captures, OCR extraction, and physical hardware
 - 🟢 **Legal & Regulatory** (`>`): Terms and Conditions, Acknowledgements, Regulatory, Safety
 
 ### 2. Profiles and Accounts
-- 🟢 **Default: Joe McCraw** (`>`): iCloud Account, Game Center, Subscriptions, Remove Profile
+- 🟢 **Default: <REDACTED_NAME>** (`>`): iCloud Account, Game Center, Subscriptions, Remove Profile
 - 🔴 **Add New Profile** (Action / Wizard): Opens iCloud sign-in flow (Blacklisted)
 - 🟢 **TV Provider** (`>`): Provider: Optimum >, Sign Out (Blacklisted)
-- 🟡 **Home Sharing** (Value): joseph.mccraw@cbsi.com
+- 🟡 **Home Sharing** (Value): <REDACTED_EMAIL>
 
 ### 3. Video and Audio
 - 🟢 **Resolution** (`>`): 1080p 60Hz, 720p 60Hz, 480p, Other Resolutions >
@@ -255,7 +255,7 @@ Combining our clean pre-incident captures, OCR extraction, and physical hardware
 
 ### 10. Network
 - 🟢 **Ethernet** (`>`): Configure IP (Automatic / DHCP), Manual IP, Subnet Mask, Router, DNS
-- 🟡 **Status Readout** (Read-Only): IP 192.168.1.14, Subnet 255.255.255.0, Router 192.168.1.1, MAC 34:fd:6a:02:b8:41
+- 🟡 **Status Readout** (Read-Only): IP <REDACTED_IP>, Subnet 255.255.255.0, Router <REDACTED_ROUTER_IP>, MAC <REDACTED_MAC>
 
 ### 11. System
 - 🟢 **Software Updates** (`>`): Check for Updates >, Automatically Update On/Off

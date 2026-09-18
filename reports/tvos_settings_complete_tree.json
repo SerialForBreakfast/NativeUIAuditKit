@@ -25,7 +25,7 @@
             "Serial Number",
             "26.6 (23L773)",
             "Resolution 1080p HD - 59.94Hz YCbCr 4:4:4",
-            "192.168.1.14",
+            "<REDACTED_IP>",
             "Ethernet Address"
           ]
         },
@@ -100,12 +100,12 @@
       "name": "Profiles and Accounts",
       "items": [
         "DEFAULT",
-        "Joe McCraw",
+        "<REDACTED_NAME>",
         "ADDITIONAL",
         "Add New Profile",
         "APPLE TV ACCOUNTS",
         "Optimum >",
-        "Home Sharing joseph.mccraw@cbsi.co.."
+        "Home Sharing <REDACTED_EMAIL>"
       ],
       "subviews": []
     },

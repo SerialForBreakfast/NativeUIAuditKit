@@ -33,14 +33,14 @@
             "Model",
             "A1625 (32 GB)",
             "Serial Number",
-            "CO7FP9EGOFNL",
+            "<REDACTED_SERIAL>",
             "26.6 (23L773)",
             "tvOS",
             "Resolution 1080p HD - 59.94Hz YCbCr 4:4:4",
-            "192.168.1.14",
+            "<REDACTED_IP>",
             "IP Address",
             "Ethernet Address",
-            "34:fd:6a:02:b8:41"
+            "<REDACTED_MAC>"
           ]
         },
         {
@@ -75,12 +75,12 @@
       "id": "settings_profiles_and_accounts",
       "items": [
         "DEFAULT",
-        "Joe McCraw",
+        "<REDACTED_NAME>",
         "ADDITIONAL",
         "Add New Profile",
         "APPLE TV ACCOUNTS",
         "TV Provider",
-        "Home Sharing joseph.mccraw@cbsi.co..."
+        "Home Sharing <REDACTED_EMAIL>"
       ],
       "subsections": []
     },
@@ -335,14 +335,14 @@
         "Connected",
         "STATUS",
         "IP Address",
-        "192.168.1.14",
+        "<REDACTED_IP>",
         "Subnet Mask",
         "255.255.255.0",
-        "192.168.1.1",
+        "<REDACTED_ROUTER_IP>",
         "Router",
-        "192.168.1.1",
+        "<REDACTED_ROUTER_IP>",
         "DNS",
-        "34:fd:6a:02:b8:41",
+        "<REDACTED_MAC>",
         "Ethernet Address"
       ],
       "subsections": []

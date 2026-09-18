@@ -404,6 +404,8 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 
 ## Related
 
+- [`PROVENANCE.md`](PROVENANCE.md) — training hardware, hyperparameters, source datasets, and a personal-identifier audit for every shipped model
+- [`Research/LicensingArchitecture.md`](Research/LicensingArchitecture.md) — MIT (code) vs. AGPL-3.0 (bundled YOLO11 weights) license boundary
 - [`../ScreenAuditKit/`](../ScreenAuditKit/) — screenshot validation engine this package integrates with
 - [`../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md`](../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md) — original feasibility ADR
 - [`../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)

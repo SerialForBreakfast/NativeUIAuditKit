@@ -38,7 +38,19 @@ Phase 6a gate unlocks:
   ┌─ STREAM I: tvOS generator + model (Phase 6b-S ✅)
   │    └─ Phase 6b-WP1: Trustworthy result contract (TVTestRig sprint)
   │         └─ Phase 6b-R: Real Apple TV qualification
+  │              └─ Phase 6b-FD: FocusRingDetector (Stage 2 crop classifier) ✅ v0.1 shipped
   └─ STREAM J: macOS coordinate spike + model (Phase 6c)       ← I and J are independent
+
+Phase 6a-9 (Run 009, holdout mAP@0.5 = 0.586) unlocks — current bottleneck:
+  └─ TASK-6a-10: full-frame fixture retraining (target mAP@0.5 ≥ 0.94)
+       ├─ TASK-6a-11: multi-corpus PyTorch reference eval artifact
+       └─ TASK-6a-12: partial-crop robustness fork              ← after 6a-10's baseline holds
+
+Independent of Phase 6a — can start any time:
+  ┌─ Track 3: Packaging, governance, PROVENANCE.md, API surface review
+  └─ Track 4: Perception primitives (feature-print gate, change-ROI, OCR anchors)
+       for TVTestRig to consume — NOT the navigation graph/safety policy itself,
+       which stays out of this repo (see Track 4 scope boundary note)
 ```
 
 ---
@@ -1803,6 +1815,64 @@ Apply iteration optimizations: `batch=8` (halving epoch steps from 2,876 to 1,43
 
 ---
 
+#### TASK-6a-10: Full-frame fixture retraining push (target mAP@0.5 ≥ 0.94 across 41 classes) [!] — blocked upstream on TVTestRig FIX-SYNTH-02
+
+**Requires:** Run 009 diagnosis (holdout mAP@0.5 = 0.586, DS-G8 gate ≥ 0.850 still failing). See BP-32 (family holdout is a style test).
+
+**Context:** Runs 007–009 trained on SwiftUI/UIKit synthetic generator output only. The generalization gap (in-family val 0.991 vs. withheld-template holdout 0.586) indicates the generator's visual style, not model capacity, is the ceiling. TVTestRig's `aatv fixture batch` (`FIX-SYNTH-06`) harvester is meant to emit uncompressed 1920×1080 captures with exact window-geometry annotations from real tvOS Metal chrome (shadows, parallax, glow) — a distinct visual domain from the synthetic generator.
+
+**2026-09-18 finding — the corpus this task depends on does not exist yet.** Checked every JSON
+sidecar under `dataset/` (88 files, including all 45 in `tvos_fixture_captures/`): every one has
+`"elements": []`. TVTestRig's `Tasks.md` confirms why — FIX-SYNTH-02 (the `GET /scene`
+ground-truth telemetry server) is unimplemented, and FIX-SYNTH-06 (the harvester CLI) has only
+been mock-provider-tested; "live `office` harvest remains a separate authorized run" that has
+never happened. FIX-SYNTH-01/04/05 (the procedural scene builder + 41-class component kitchen
+sink that would give real visual diversity) are also unimplemented. The `*_result.json` files
+next to the captures are the *current model's own predictions*, not ground truth — do not use
+them as training labels (circular/self-reinforcing).
+
+- [x] `scripts/ingest_fixture_batch.py` — converts `aatv fixture batch` output into `annotation.schema.json` v1.0 sidecars for `export_tvos_coco.py`, validated against `Research/schemas/category_map.json` (BP-28: unknown `taxonomyRole` values are dropped and counted, never remapped). Written against TVTestRig's *documented* wire schema (FIX-SYNTH-02 spec), not a verified real sample — flagged prominently in the script's docstring for re-verification once one exists. Whole-recipe train/fixture_holdout split (never splits a recipe's frames across both sides), full-frame preservation enforced (no ROI cropping), refuses to write outside the package.
+- [x] `scripts/test_ingest_fixture_batch.py` — offline self-test against hand-built synthetic fixtures matching the documented wire schema (15/15 checks passing): coordinate conversion, BP-28 class rejection, dry-run no-op, split grouping, schema-shape of written sidecars. Proves the script's logic is correct against the documented contract — does not and cannot prove the contract matches TVTestRig's real on-disk output.
+- [ ] **Blocked:** ingest a real `aatv fixture batch` output directory once TVTestRig ships FIX-SYNTH-02 and runs a live harvest. Needed from TVTestRig specifically: (1) FIX-SYNTH-02 implemented, (2) one real harvest output sample to confirm the on-disk pairing convention this script assumes, (3) FIX-SYNTH-01/04 for actual visual diversity beyond the ~15-20 static fixture screens already captured.
+- [ ] Enforce full-frame context preservation: do not train exclusively on cropped ROIs from the fixture corpus (mirrors US-9 training-data integrity — perception-layer deltas/dedup used for *capture selection* only, never substituted for full annotated frames)
+- [ ] Blend fixture corpus with existing Phase 6a synthetic set; retrain from `best.pt` (Run 009 checkpoint), 150 epochs, cosine annealing + warmup
+- [ ] Evaluate on unseen held-out fixture recipes (separate from the synthetic withheld-template holdout — two independent holdout sets, not one)
+- [ ] Per-class AP on small controls (toggle switches, steppers, badges) ≥ 0.88
+
+**AC:** mAP@0.5 ≥ 0.94 and mAP@0.5:0.95 ≥ 0.78 on the fixture holdout; DS-G8 gate reassessed against both holdout sets before shipping 41-class weights. **Cannot be met until the blocked item above clears** — no retraining should happen on empty or self-predicted labels.
+
+---
+
+#### TASK-6a-11: Multi-corpus PyTorch reference evaluation artifact
+
+**Requires:** TASK-6a-10 checkpoint (or current Run 009 weights, run now against existing corpora as a baseline).
+
+**Context:** `eval_phase6a.py` currently reports one holdout number. Model promotion (US-13) needs independent, comparable corpora so a "did this synthetic data actually fix the real-world failure" question is answerable, not just "did loss go down."
+
+- [ ] Extend `scripts/eval_phase6a.py` (or a new `scripts/eval_reference_metrics.py`) to run against four named corpora in one pass: synthetic fixture test manifest, real-device fixture holdouts, production tvOS system holdout screens (`reports/tvos_settings_complete_tree.json` clean subset), frozen regression suite
+- [ ] Emit standardized `reports/pytorch_reference_metrics.json`: overall mAP@0.5 / mAP@0.5:0.95, per-class precision/recall/AP, per-image predicted boxes+scores+classIDs, and the corpus each result came from
+- [ ] SHA-256 the artifact and commit the hash alongside the release candidate weights in `Research/ExperimentLog.md`
+- [ ] Record per-model deltas against the immediately prior run (not just absolute numbers)
+
+**AC:** `pytorch_reference_metrics.json` exists, is hashed, and every promoted checkpoint from here forward has one committed with it.
+
+---
+
+#### TASK-6a-12: Partial-crop robustness fine-tuning fork
+
+**Requires:** TASK-6a-10 complete (full-frame performance must be the stable baseline before this starts).
+
+**Context:** NativeUIAuditKit is meant to be reusable beyond TVTestRig (which only ever produces full 1920×1080 frames). Downstream consumers may hand it arbitrary crops. This is explicitly secondary to full-frame performance (matches your own doc's "US-10" priority note).
+
+- [ ] Fork training config with mosaic + random-crop augmentation (0.6×–1.0× bounding areas) — full-frame (non-cropped) config stays the shipped default
+- [ ] Maintain a separate frozen partial-crop holdout split, never merged into the full-frame holdout
+- [ ] Evaluate drop-off: full-frame mAP must not regress > 1.0 pt versus TASK-6a-10's result while crop-holdout mAP improves ≥ 15%
+- [ ] Document in `Research/TrainingDataStrategy.md` that resizing a crop to 1920×1080 does not reconstruct missing full-frame context — this is a measured capability, not an assumption
+
+**AC:** Crop-augmented candidate is evaluated and reported; it only ships as an alternate config if the full-frame regression gate holds, never replacing the default full-frame model.
+
+---
+
 ## Phase 6b: tvOS Model & OS UI Detection
 
 *Goal: Train `NativeUIModel_tvOS` prioritizing OS UI detection (Home Screen app grid/shelf, Settings split-views/lists, System Alerts/Dialogs, Top Tab Bar, and Focus State) to enable TVTestRig Apple TV navigation and automation.*
@@ -2164,67 +2234,6 @@ Package the compiled tvOS model into `NativeUIAuditKitModels` resources and wire
 
 ---
 
-## Phase 6b-FD: FocusRingDetector (Stage 2 crop classifier)
-
-*Goal: Replace the tvOS brightness/geometry focus heuristic with a MobileNetV4 binary classifier on 256×256 element crops. YOLO stays Stage 1 and is not retrained.*
-
-**Requires:** Phase 6b tvOS detector in tree. Live Apple TV + TVTestRig for Phase B/C data.  
-**Spec:** `Research/FocusRingDetectorSpec.md`
-
-#### FOCUS-DET-01: Research spec and experiment log [x]
-
-- [x] `Research/FocusRingDetectorSpec.md` — input/output contract, gates, Plan A vs B
-- [x] `Research/ExperimentLog.md` Run FDR-001
-- [x] Architecture pointer in `Research/NativeUIElementDetection.md`
-
-#### FOCUS-DET-02: Dataset harvest script [x] — Phase B 1,500 pairs on Office
-
-**File:** `scripts/harvest_focus_pairs.py`
-
-- [x] Phase A: extract 256×256 crops from `dataset/tvos_fixture_captures/` + YOLO sidecars (16% box expansion)
-- [x] Manifest schema with `recipe_seed` splits (pair cannot straddle train/test)
-- [x] Default output `../NativeUIAuditKit-Dataset/focus_ring/` (outside package)
-- [x] `--live` N-way capture path (aatv, Plan A) — not run until hardware is attached
-- [x] Collect 1,500+ labeled pairs (Phase B) — **1500 / 1500** after pass 2 (2026-09-18)
-
-**AC:** `--dry-run` against fixture captures exits 0 and reports crop counts without writing outside the package.
-
-#### FOCUS-DET-03: Train MobileNetV4-Conv-Small [x] — fdr001 complete 2026-09-18
-
-**File:** `scripts/train_focus_ring_detector.py`
-
-- [x] MobileNetV4-Conv-Small (vendored `scripts/focus_ring_backbone.py`; no `import timm`), 256², sigmoid, batch 64, 30 epochs, lr 3e-4
-- [x] Train-only aug: HFlip, ColorJitter, ±5° rotate, blur; no vertical flip
-- [x] Hard-negative eval split: `light`/`highContrast` × `imageView`/`collectionItem`
-- [x] Checkpoints under `NativeUITrainer/focus_ring_runs/<run_id>/weights/`
-- [x] v0.1 train on ≥1,500 pairs (Phase B) — fdr001, 30/30, best val_loss=0.0001
-
-#### FOCUS-DET-04: CoreML export and quality-gate eval [ ] — torch eval passed; CoreML export blocked
-
-**Files:** `scripts/export_focus_ring_coreml.py`, `scripts/eval_focus_ring_detector.py`
-
-- [x] FP16 `.mlpackage` with `is_focused_prob` + `confidence`; metadata keys from the spec
-- [x] Fail export if package > 5.0 MB
-- [x] Eval writes training/eval/hard-negative JSON reports and checks gates
-- [x] Torch held-out test 270 crops: acc=1.0 FPR=0 FNR=0 P/R@0.85=1.0 (fdr001). Hard-negative FPR vacuously 0 (harvest is dark-only, n=0)
-- [ ] FP16 CoreML export — `.venv-coreml` missing; `import coremltools` hangs in `.venv-yolo`
-- [ ] Gates pass on CoreML `.mlpackage` before bundling `.mlmodelc`
-
-#### FOCUS-DET-05: Swift integration and offline tests [x] — model-absent path
-
-**Files:** `FocusRingClassifier.swift`, `NativeUIDetectionRequest.swift`, `NativeUIModelAsset.swift`
-
-- [x] Crop helper expands 16% and always returns 256×256
-- [x] `useFocusClassifier` (default true); heuristic fallback when `.mlmodelc` is missing
-- [x] `loadFocusRingDetector()` returns `nil` (does not fatal) when the resource is absent
-- [x] `resolveTVOSFocus` preserved
-- [x] Offline tests: crop expansion, crop size, fallback, configuration Codable
-- [ ] Integration vs fixture screenshots once v0.1 ships (exactly one `isFocused == true` per screen is a *product* goal of eval, not a YOLO change)
-
-**Phase A gate:** `swift build` and `swift test` pass without `FocusRingDetector.mlmodelc`.
-
----
-
 ## Phase 6b-U: Unified Model Experiment
 
 *Goal: Evaluate whether tvOS should remain separate or be folded into a multi-platform detector.*
@@ -2466,6 +2475,82 @@ Before moving `NativeUIAuditKit` to its own public repository:
 - [x] `Research/TrainingDataStrategy.md` current and reviewed
 - [x] `Research/schemas/annotation.schema.json` tagged v1.0
 - [x] `Research/schemas/category_map.json` stable (IDs frozen)
+
+---
+
+## Track 3: Packaging, Governance & Release
+
+*Goal: close the remaining gaps between what's already shipped (this repo is already standalone at `SerialForBreakfast/NativeUIAuditKit`, tagged through `2.0.2`, with `NativeUIAuditKitModels` as a decoupled resource package — see `Research/LicensingArchitecture.md`) and a fully auditable, pinnable release.*
+
+#### TASK-DIST-01: `PROVENANCE.md` [~] — written + redacted 2026-09-18; history-rewrite decision still open
+
+**Requires:** Nothing — can start immediately; independent of Phase 6a-10/11/12.
+
+- [x] Write `PROVENANCE.md` at repo root: training hardware, exact hyperparameters per shipped model (`nativeui-ios-v2.0` / `nativeui-tvos-v3.0` / `FocusRingDetector` v0.1, each linked to its `Research/ExperimentLog.md` run ID), and source datasets
+- [x] Explicit affirmation for all **training data**: audited `dataset/focus_ring/focus_dataset_manifest.json`, `dataset/tvos_fixture_captures/`, and `dataset/tvos_captures/` for personal identifiers — clean. `dataset/` is fully `.gitignore`d; `git ls-files dataset/` confirms zero tracked files; no training run has ever ingested the real "office" Apple TV's Settings/About/Network/Profile screens.
+- [x] Cross-link from `README.md` and `Research/LicensingArchitecture.md`
+- [x] **Working-tree finding redacted 2026-09-18:** `reports/tvos_navigation_rca_and_safety_architecture.md`, `tvos_settings_complete_tree.json`, `tvos_settings_hierarchy.json`, and `tvos_settings_interactive_map.html` contained the maintainer's real home IP, router IP, MAC address, device serial, device UDID, name, and email. All replaced with `<REDACTED_*>` placeholders; re-verified clean by grep. Not training data — these are RCA/crawl exploration artifacts.
+- [!] **Still open — needs the maintainer's call, not a code task:** the real values remain in prior git commits (already pushed to the public `SerialForBreakfast/NativeUIAuditKit` repo) until/unless git history is separately rewritten and force-pushed. Deferred on purpose per maintainer instruction 2026-09-18 ("redact in place now, keep the history question separate"). Do not perform a history rewrite without an explicit, separate go-ahead.
+
+**AC:** `PROVENANCE.md` exists, is linked from `README.md`, training data is confirmed clean, and the working-tree PII finding is redacted. Full close-out (including the history question) is intentionally deferred, not silently dropped.
+
+---
+
+#### TASK-DIST-02: Public API surface review & pinned release tag
+
+**Requires:** TASK-6a-10 (41-class weights that actually clear DS-G8) before the *release* half of this task; the API review half can start now.
+
+The `NativeUIElementDetector.detect(in:)` / `FocusRingDetector.classify(patch:)` surface referenced in external planning docs does not exist verbatim — the current public entry points are `NativeUIDetectionRequest.perform(...)` / `.performDetailed(...)` (`Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift`) and an *internal* `FocusRingClassifier.classify(crop:)`.
+
+- [ ] Decide: keep `NativeUIDetectionRequest` as the canonical public name, or add a thin `async throws` convenience wrapper matching the simpler signature — do not rename the existing public API without a major version bump (Taxonomy Stability rule in `AGENTS.md` applies to API surface too)
+- [ ] If a `FocusRingDetector` convenience type is added, it wraps the existing internal `FocusRingClassifier`, not a reimplementation
+- [ ] Confirm `NativeUIAuditKitModels` builds as a standalone binary/resource target with zero external Python or host-tool dependencies (already true per `Package.swift`; add a CI-less local check script if none exists)
+- [ ] Tag the next release once TASK-6a-10 41-class weights ship (e.g. `2.1.0` per existing `MAJOR.MINOR.PATCH` tag scheme — `v2.1.0-tvos` from the external doc doesn't match this repo's existing tag format, use the established one)
+
+**AC:** Public API decision documented in `Research/NativeUIElementDetection.md`; next tag's `CHANGELOG.md` entry references the DS-G8-passing model and the `pytorch_reference_metrics.json` hash from TASK-6a-11.
+
+---
+
+## Track 4: Perception Primitives for TVTestRig Consumption
+
+*Goal: NativeUIAuditKit ships the cheap, deterministic Vision-framework primitives that TVTestRig's navigation crawler calls into — it does not own the navigation graph, safety policy, or DFS traversal loop. That orchestration lives in TVTestRig. See `reports/tvos_navigation_rca_and_safety_architecture.md` for the incident that motivates this split and the discussion this track is drawn from.*
+
+**Scope boundary:** This repo already ships an OCR fusion pass (Phase 7, done — `ObservationMerger.swift`, `VNRecognizeTextRequest` integration). The tasks below extend that existing capability into a standalone, TVTestRig-callable contract rather than building OCR/perception logic fresh in TVTestRig.
+
+**Migration note:** `Scripts/crawl_tvos_settings.py`, `Scripts/deep_crawl_settings.py`, and `Scripts/safe_nav_mapper.py` are the RCA-era crawler scripts that caused the Peacock/Terms-of-Use and Reset-Video-Settings incidents (see the RCA report). They — and the `.agents/skills/tvos-safe-navigation/` skill's DFS/backtracking rules — are navigation *orchestration*, not perception, and per this track's scope boundary belong in TVTestRig going forward. **Do not delete them yet.** They stay as the reference implementation of the 5 Golden Rules until TVTestRig confirms it has an equivalent verified-graph navigation engine (US-1/US-3 in the discussion doc) to receive them. Re-check this note's status before starting PERCEP-01/02/03 below.
+
+#### TASK-PERCEP-01: Vision feature-print similarity API
+
+**Context:** Cheapest gate in the pipeline (discussion doc US-4). Before OCR or CoreML detection, compare the current frame against the last verified frame; skip further processing on a hit.
+
+- [ ] `Sources/NativeUIAuditKit/Perception/FrameSimilarity.swift` (new): wraps `VNGenerateImageFeaturePrintRequest`, exposes `distance(_:to:) -> Float` and a cache-keyed-by-navigation-state convenience
+- [ ] Empirical threshold derivation script against an evaluation corpus (not an arbitrary constant) — pixel-identical frames must always hit; meaningful focus/state changes must never false-hit
+- [ ] Public, `Sendable`, offline-testable (synthetic fixture PNGs, no live device required)
+
+**AC:** `swift test` covers a same-frame true-positive and a changed-focus true-negative against fixture screenshots already in the package.
+
+---
+
+#### TASK-PERCEP-02: Change-region localization API
+
+**Context:** Second-cheapest gate (US-5). When frames differ, report *where*, not just *that*, so downstream OCR/CoreML calls can be scoped to a region of interest.
+
+- [ ] `Sources/NativeUIAuditKit/Perception/ChangeRegionLocalizer.swift` (new): Accelerate/vImage luma diff between two registered frames, connected-component merge into ROI rectangles, coarse classification (`none` / `local` / `regional` / `fullFrame`)
+- [ ] Explicitly document (and test) that this is a *capture/inference optimization*, never a training-data transform — full-frame screenshots and full annotations are never replaced by ROI crops in any dataset this repo produces (ties to TASK-6a-10's full-frame-preservation rule and the doc's own US-9)
+
+**AC:** Given two fixture frames differing only in focus position, returns a single small ROI; given two frames from different screens, classifies as `fullFrame`.
+
+---
+
+#### TASK-PERCEP-03: OCR text-anchor verification API
+
+**Context:** US-6. Lets a caller assert "this is the General screen" from required/optional/forbidden text anchors, reusing the OCR pass this repo already has (Phase 7) rather than building a second OCR integration in TVTestRig.
+
+- [ ] `Sources/NativeUIAuditKit/Perception/TextAnchorVerifier.swift` (new): thin wrapper over the existing `VNRecognizeTextRequest` pass in `NativeUIDetectionRequest.swift`, taking a set of required/optional/forbidden strings and returning a verified/unverified/ambiguous result with the matched bounding boxes
+- [ ] Reuses `ObservationMerger`'s existing coordinate convention — no second coordinate system
+- [ ] Supports an ROI-scoped OCR request (consumes TASK-PERCEP-02's output) to avoid full-frame OCR after a localized change
+
+**AC:** Given the kitchen-sink fixture and a required-anchor set matching its known labels, returns verified; given a mismatched anchor set, returns unverified rather than a best guess.
 
 ---
 

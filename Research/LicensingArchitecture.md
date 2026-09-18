@@ -57,3 +57,11 @@ Every bundled CoreML model artifact contains explicit provenance and licensing m
 - `license`: `"AGPL-3.0 License (https://ultralytics.com/license)"`
 - `author`: Ultralytics YOLO11 export
 - `description`: Platform-specific UI element detection model for iOS or tvOS.
+
+---
+
+## 5. Training Data Provenance
+
+See [`PROVENANCE.md`](../PROVENANCE.md) for the training hardware, exact hyperparameters, and
+source datasets behind every shipped model, plus an explicit audit for personal identifiers or
+proprietary third-party assets in training data.
