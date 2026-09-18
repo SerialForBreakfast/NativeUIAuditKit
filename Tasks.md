@@ -2550,26 +2550,27 @@ The `NativeUIElementDetector.detect(in:)` / `FocusRingDetector.classify(patch:)`
 
 ---
 
-#### TASK-PERCEP-02: Change-region localization API
+#### TASK-PERCEP-02: Change-region localization API [x] — complete 2026-09-18
 
 **Context:** Second-cheapest gate (US-5). When frames differ, report *where*, not just *that*, so downstream OCR/CoreML calls can be scoped to a region of interest.
 
-- [ ] `Sources/NativeUIAuditKit/Perception/ChangeRegionLocalizer.swift` (new): Accelerate/vImage luma diff between two registered frames, connected-component merge into ROI rectangles, coarse classification (`none` / `local` / `regional` / `fullFrame`)
-- [ ] Explicitly document (and test) that this is a *capture/inference optimization*, never a training-data transform — full-frame screenshots and full annotations are never replaced by ROI crops in any dataset this repo produces (ties to TASK-6a-10's full-frame-preservation rule and the doc's own US-9)
+- [x] `Sources/NativeUIAuditKit/Perception/ChangeRegionLocalizer.swift` — downscaled 8-bit luma buffer (CoreGraphics render) + Accelerate/vDSP-vectorized absolute difference (`vDSP_vfltu8`/`vDSP_vsub`/`vDSP_vabs` — the originally-planned `vImageAbsoluteDifference_Planar8` does not exist in this SDK, caught by `swift build` and swapped for vDSP, same Accelerate umbrella), flood-fill connected-component merge into `CGRect` ROIs, coarse classification (`none` / `local` / `regional` / `fullFrame`) by changed-pixel fraction with caller-tunable thresholds (defaults: local <15%, regional <60%, else fullFrame).
+- [x] Full-frame-preservation policy documented in the file header as an explicit design constraint (not just a comment): `ChangeLocalizationResult` has no image-producing accessor — it returns geometry and a classification only, so nothing here can be used to substitute a crop for a full annotated training frame (ties to TASK-6a-10 / US-9). A dedicated test (`resultIsGeometryOnly`) anchors this as a regression-visible check.
+- [x] Requires equal-dimension ("registered") input and throws `ChangeRegionLocalizerError.dimensionMismatch` otherwise — no implicit resampling/registration performed by this type.
 
-**AC:** Given two fixture frames differing only in focus position, returns a single small ROI; given two frames from different screens, classifies as `fullFrame`.
+**AC:** `Tests/NativeUIAuditKitTests/ChangeRegionLocalizerTests.swift`, 5 tests: identical frames → `.none`/no regions; a small synthetic localized change → exactly one small `.local` region; two genuinely different screens (resampled to a common size) → `.fullFrame`; mismatched dimensions → throws; result exposes no image data. Found and documented a real `CGContext` bottom-left-origin gotcha in the test's own fixture-generation helper along the way (`Research/BestPractices.md` BP-48) — the localizer's coordinates were correct throughout; the first draft of the test fixture wasn't. Full suite: **79/79 passing** (was 74).
 
 ---
 
-#### TASK-PERCEP-03: OCR text-anchor verification API
+#### TASK-PERCEP-03: OCR text-anchor verification API [x] — complete 2026-09-18
 
 **Context:** US-6. Lets a caller assert "this is the General screen" from required/optional/forbidden text anchors, reusing the OCR pass this repo already has (Phase 7) rather than building a second OCR integration in TVTestRig.
 
-- [ ] `Sources/NativeUIAuditKit/Perception/TextAnchorVerifier.swift` (new): thin wrapper over the existing `VNRecognizeTextRequest` pass in `NativeUIDetectionRequest.swift`, taking a set of required/optional/forbidden strings and returning a verified/unverified/ambiguous result with the matched bounding boxes
-- [ ] Reuses `ObservationMerger`'s existing coordinate convention — no second coordinate system
-- [ ] Supports an ROI-scoped OCR request (consumes TASK-PERCEP-02's output) to avoid full-frame OCR after a localized change
+- [x] `Sources/NativeUIAuditKit/Perception/TextAnchorVerifier.swift` — thin wrapper over the existing `VNRecognizeTextRequest` pass. Added `regionOfInterest` as a new optional (default full-frame) parameter to `NativeUIDetectionRequest.recognizeText(in:regionOfInterest:)` itself, using Vision's own `VNRequest.regionOfInterest` — no second OCR integration, no manual cropping/coordinate remapping. Three-way `TextAnchorVerificationStatus`: `.verified` (all required present, no forbidden present), `.unverified` (a required anchor missing OR a forbidden anchor present — a confident negative, not a guess), `.ambiguous` (no required anchors supplied, or OCR found no text at all — not enough signal to decide either way, deliberately distinct from a false "unverified").
+- [x] Reuses `RecognizedTextRegion`/`NativeUIRect` (Vision-normalized, bottom-left origin) unchanged — no second coordinate system. `pixelRectToVisionNormalized` converts a `ChangeRegionLocalizer`-style top-left pixel ROI into Vision's convention using the same x-unaffected/y-flip formula already used in `NativeUIDetectionRequest.toObservation`.
+- [x] ROI-scoped OCR request supported and tested — `verify(_:in:regionOfInterest:)` accepts an optional top-left pixel rect (`ChangeRegionLocalizer`'s output type) and passes the converted Vision ROI straight to `recognizeText`.
 
-**AC:** Given the kitchen-sink fixture and a required-anchor set matching its known labels, returns verified; given a mismatched anchor set, returns unverified rather than a best guess.
+**AC:** `Tests/NativeUIAuditKitTests/TextAnchorVerifierTests.swift`, 10 tests — pure `evaluate` logic (verified / missing-required / forbidden-forces-unverified / no-anchors-ambiguous / no-text-ambiguous / case-insensitive substring / optional-never-affects-status), the pixel→Vision conversion, and two live-OCR integration tests against the kitchen-sink fixture: required anchors *discovered from the fixture's own real OCR output* verify, a fabricated absent anchor returns unverified (not a best guess), and an ROI padded around one discovered anchor's own region still finds it. Full suite: **89/89 passing** (was 79). Track 4 (PERCEP-01/02/03) is now complete.
 
 ---
 

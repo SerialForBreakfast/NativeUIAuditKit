@@ -389,12 +389,22 @@ public struct NativeUIDetectionRequest: Sendable {
     }
 
     /// Runs Apple Vision OCR (`VNRecognizeTextRequest`) on the screenshot off the MainActor.
-    public static func recognizeText(in screenshot: CGImage) async throws -> [RecognizedTextRegion] {
+    ///
+    /// - Parameter regionOfInterest: Vision-normalized (bottom-left origin, `[0,1]`) rect to
+    ///   restrict the search to — e.g. from `ChangeRegionLocalizer` after converting its
+    ///   top-left pixel-space ROI. Defaults to the full frame. Returned bounding boxes remain
+    ///   in full-image-relative coordinates regardless of this restriction (Vision's own
+    ///   `regionOfInterest` semantics — this is a search-space limit, not a crop).
+    public static func recognizeText(
+        in screenshot: CGImage,
+        regionOfInterest: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1)
+    ) async throws -> [RecognizedTextRegion] {
         try await Task.detached(priority: .userInitiated) {
             let request = VNRecognizeTextRequest()
             request.recognitionLevel = .accurate
             request.usesLanguageCorrection = true
             request.recognitionLanguages = ["en-US", "en-GB"]
+            request.regionOfInterest = regionOfInterest
 
             let handler = VNImageRequestHandler(cgImage: screenshot, options: [:])
             try handler.perform([request])

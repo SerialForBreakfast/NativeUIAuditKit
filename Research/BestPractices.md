@@ -899,6 +899,16 @@ If the focused element's label or accessibility text matches any term in this pa
 
 **Correct:** Construct MobileNetV4-Conv-Small from `scripts/focus_ring_backbone.py` (torch.nn only). Train, eval, and CoreML export all use that factory. ImageNet pretrained weights are skipped (`pretrained=False`).
 
+---
+
+### BP-48: `CGContext.fill(_:)` on a freshly created context is bottom-left origin — even when you're only drawing test fixtures, not production crops
+
+**Wrong:** In a test helper, create a bitmap `CGContext(data: nil, ...)`, draw an existing image into the full canvas with `context.draw(image, in: CGRect(x:0,y:0,width:w,height:h))`, then call `context.fill(CGRect(x:0,y:0,width:patchSide,height:patchSide))` expecting the fill to land at the visual top-left corner.
+
+**Correct:** The full-canvas `draw(image, in:)` call is origin-agnostic (it fills the entire context either way), but a **partial** fill or draw is not — `y` must be `height - patchSide` to land near the visual top, because `CGContext` defaults to bottom-left-origin coordinates. `ChangeRegionLocalizerTests.withLocalizedChange` first drew a "top-left" patch at `y: 0` and got a top-left assertion failure with the region reported near the *bottom* of the image (`minY ≈ 828` of `1080`) — the ChangeRegionLocalizer's own top-left-origin `CGRect` output was correct; the test fixture was wrong.
+
+**Why:** This is the same root cause as BP-46 (`CGImage`/`CGContext` bottom-left origin vs. this project's top-left convention), but it bites in test-fixture construction, not just production cropping — anywhere a test synthesizes a "changed region at position X" fixture via direct `CGContext` fills, verify the assertion against where the fill *actually* lands, not where the call site's `(x, y)` naively suggests.
+
 **Why:** Stage 2 training was blocked after harvest completed. The hang is the package graph, not missing data or MPS.
 
 
