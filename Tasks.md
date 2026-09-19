@@ -22,8 +22,9 @@ Do not put architecture notes, run logs, or IPC war stories in this file. Those 
 **Requires:** Run 009 diagnosis (holdout mAP@0.5 = 0.586, DS-G8 ≥ 0.850). BP-32.
 
 - [x] `scripts/ingest_fixture_batch.py` + `scripts/test_ingest_fixture_batch.py` (16/16)
-- [!] `aatv fixture batch` against Simulator coordinator — `serviceUnavailable` (see ingest doc + `reports/tvtestrig_feedback_2026-09-18.md`)
-- [ ] Authorized Office `aatv fixture batch`; re-verify ingest against that output
+- [x] Coordinator IPC unblocked (2026-09-18): using the running TVTestRig.app's own `aatv` binary (not a stale local build) with `HOME` pointed at `NativeUITrainer/.tmp/aatv_home` (symlinked to the real container socket, per `Research/FixtureBatchIngest.md`), `aatv status`/`device list`/`device connect --device-id 8D80F616-...`/`fixture env` all succeeded against real "office" hardware (tvOS 26.6, `AppleTV5,3`). Sandboxed coordinator can only read/write inside its own container — recipes and output dir must live under `~/Library/Containers/com.showblender.TVTestRig/Data/...`, not the checkout.
+- [!] **New blocker, not the old one:** `aatv fixture batch` itself fails at a later stage — `identity_preflight` / `identityUnavailable`. Per TVTestRig commit `586050e` ("CHR-04–10: version harvest bundles, bind identity, fail closed without attestation"), landed 2026-09-18: production wiring now *requires* the HTTP and IPC adapters to jointly attest a shared `HarvestIdentity` before any capture; neither adapter does that yet, so it fails closed — **"There is no CLI bypass"** (TVTestRig's own words). This is deliberate, not a bug to route around. Real progress (coordinator + sandbox path requirements) written up; this specific gate is now the sole blocker. See `reports/tvtestrig_feedback_2026-09-18.md`.
+- [ ] Authorized Office `aatv fixture batch` — blocked until TVTestRig wires up `HarvestIdentity` attestation for its HTTP/IPC adapters; re-verify ingest against that output once it exists
 - [ ] Blend fixture corpus with Phase 6a synthetic set; retrain from Run 009 `best.pt`, 150 epochs, cosine annealing + warmup
 - [ ] Evaluate on TVTestRig `held-out` split **and** synthetic withheld-template holdout
 - [ ] Per-class AP on small controls (toggle, stepper, badge) ≥ 0.88

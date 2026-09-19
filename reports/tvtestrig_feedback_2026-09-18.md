@@ -10,7 +10,29 @@ than writing a new dated file each time.
 
 ---
 
-## 1. Current hard blocker: `aatv` cannot reach the coordinator app
+## 1. Coordinator reachability — RESOLVED (2026-09-18, later same day)
+
+**Root cause found, not a TVTestRig bug:** we were using a stale local `aatv` build and the wrong
+launch method. Once we (a) used the *currently running* `TVTestRig.app`'s own `aatv` binary
+(matching Xcode-managed DerivedData, not our own ad-hoc `.local-work` build), and (b) pointed
+`HOME` at `NativeUITrainer/.tmp/aatv_home` (symlinked to the real coordinator socket at
+`~/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/.tvtr/s`, per your own
+`FocusRingHarvest`-path convention we hadn't reused here yet) — `aatv status`, `device list`,
+`device connect --device-id 8D80F616-...`, and `fixture env` all succeeded against real "office"
+hardware. No TVTestRig-side change needed for this part; leaving the original repro below for
+the record, since the *lesson* (always use the running app's matching binary + the documented
+HOME technique) is worth keeping even though the cause turned out to be on our end.
+
+**New finding while getting there:** the coordinator is sandboxed and can only read/write inside
+its own container (`~/Library/Containers/com.showblender.TVTestRig/Data/...`). `--project
+<checkout path>` is rejected with "Could not resolve the TVTestRig workspace... must match the
+GUI workspace" — and a `--recipes-dir`/`--output-dir` outside the container fails with
+`recipesDirectoryMissing`/`outputOutsideProject` even though the paths are real and correct. This
+isn't necessarily wrong (reasonable sandbox behavior), but it means any client script driving
+`fixture batch` against a running GUI coordinator needs to stage recipes into, and copy output out
+of, the container — worth a one-line doc note since it cost real time to discover empirically.
+
+## 1b. Original repro (superseded by the above — kept for the lesson learned)
 
 **Severity: blocks everything downstream of it, including Simulator-only work that needs no
 hardware at all.**
@@ -49,6 +71,39 @@ distinction, or something else.** We stopped guessing rather than poke at TVTest
 blind. **Request:** either a documented "how to launch the coordinator so `aatv` can reach it"
 step, or a fix so the coordinator is reachable however it's launched, or a clearer error message
 that distinguishes "not running," "running but not yet ready," and "running but misconfigured."
+
+## 1c. Current hard blocker: `fixture batch` fails closed at `identity_preflight` — deliberate, no bypass
+
+With coordinator reachability solved (§1) and paths staged correctly inside the sandbox
+container, a real `aatv fixture batch` invocation against real "office" hardware (connected,
+verified via `fixture env`) now gets past all path/reachability validation and fails at a later
+stage:
+
+```
+{
+  "command" : "fixture batch",
+  "error" : {
+    "cause" : "identityUnavailable",
+    "code" : "unsupportedCapability",
+    "message" : "Fixture batch harvest failed closed at identity_preflight: identityUnavailable. No automatic retry was attempted.",
+    "stage" : "identity_preflight"
+  }
+}
+```
+
+We traced this to commit `586050e` ("CHR-04–10: version harvest bundles, bind identity, fail
+closed without attestation"), landed 2026-09-18 — same day. Per that commit's own message:
+*"Production wiring sets requiresIdentity. Current HTTP and IPC adapters do not attest a shared
+HarvestIdentity, so production fixture batch fails at identity_preflight with
+identityUnavailable before fixture mutation. **There is no CLI bypass.**"*
+
+This is understood to be intentional — a real integrity gate, not a bug — and we're not asking
+for a bypass. **Request:** simply, whenever `HarvestIdentity` attestation is wired up for the
+HTTP/IPC adapters, a note in this doc or `Research/FixtureBatchIngest.md`'s counterpart in your
+repo would save us re-discovering the exact moment `fixture batch` becomes usable, rather than
+re-attempting it cold each session. Until then, this is the sole remaining blocker on our side —
+everything upstream of it (coordinator, device connection, environment telemetry, sandbox paths)
+is now confirmed working against real hardware.
 
 ## 2. `fixture batch`'s error reporting is misleading when the coordinator is unreachable
 
