@@ -1,6 +1,6 @@
 # Phase 6 — Training Lessons Learned
 
-This document captures every concrete thing we learned while building and debugging the first 5-class Create ML object-detection model for NativeUIAuditKit. It is written so that whoever trains the next model — even with no memory of this session — can avoid every mistake we made and understand why things behaved the way they did.
+This document captures every concrete thing we learned while building and debugging the first 5-class **Create ML** object-detection model (Runs 001–005). Production training is YOLO11 (Run 006+). Snapshot: [`CurrentState.md`](CurrentState.md). Do not follow this file as the current train/eval procedure.
 
 ---
 

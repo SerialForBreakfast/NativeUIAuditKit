@@ -111,7 +111,7 @@ canonical and whether the alias set is a permanent contract or a transitional sh
 
 Not new today, but the standing blocker for anything beyond the Simulator: `Docs/Testing/
 2026-09-18-nua-harvest-unblock.md` in TVTestRig is explicit that no live "office" harvest has
-been executed. Full detail lives in NUIAK's own `Tasks.md` (TASK-6a-10). Listed here only so
+been executed. Full detail: NUIAK [`Tasks.md`](../Tasks.md) TASK-6a-10 and [`Research/FixtureBatchIngest.md`](../Research/FixtureBatchIngest.md). Listed here only so
 this document is a complete picture of every open item, not because it needs restating in depth.
 
 ---

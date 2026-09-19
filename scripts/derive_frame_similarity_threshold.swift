@@ -11,7 +11,8 @@
 // only characterizes the "different screen" distance floor, not the "same screen, something
 // small changed (e.g. focus moved)" distribution TASK-PERCEP-01's cache is actually meant to
 // gate. That second distribution needs paired same-recipe frames (e.g. TVTestRig fixture-batch
-// unfocused/focused pairs) — not available yet as real data (see Tasks.md TASK-6a-10). Treat
+// unfocused/focused pairs) — not available yet as real data (see Tasks.md TASK-6a-10 and
+// Research/FixtureBatchIngest.md). Treat
 // any threshold derived from this script alone as a coarse upper bound, not a validated cutoff.
 //
 // Usage:

@@ -1,9 +1,9 @@
 # NativeUIAuditKit: tvOS Training Strategy
 
-**Status:** Draft / pre-implementation
-**As of:** 2026-09-15
-**Audience:** NativeUIAuditKit maintainers and TVTestRig integrators
-**Depends on:** `Research/NativeUIElementDetection.md`, `Tasks.md`
+**Status:** v3.0 shipped (`nativeui-tvos-v3.0`, mAP@0.5 = 0.9822). FocusRingDetector v0.1 shipped. Remaining: TASK-6b-R-1 scale, FOCUS-DET-05, Phase 6b-U.  
+**As of:** 2026-09-18  
+**Audience:** NativeUIAuditKit maintainers and TVTestRig integrators  
+**Depends on:** [`NativeUIElementDetection.md`](NativeUIElementDetection.md), [`CurrentState.md`](CurrentState.md), [`../Tasks.md`](../Tasks.md)
 
 ---
 

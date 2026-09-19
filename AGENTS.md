@@ -14,25 +14,18 @@ is the sole authority**.
 NativeUIAuditKit is a research-first Swift Package building a `VNCoreMLRequest`-backed native Apple
 UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElementRequest`.
 
-**Current state: Phase 6a — 41-class YOLO11 training (iOS)**
+**Current state:** see [`Research/CurrentState.md`](Research/CurrentState.md). Open work is [`Tasks.md`](Tasks.md) only; finished phases are [`CompletedTasks.md`](CompletedTasks.md).
 
-- Phases 0–5b: **Complete.** Scaffold, coordinate spike, taxonomy (41 classes), schema v1.0, dataset
-  generator (SwiftUI + UIKit templates, 16,440 images), known-bad generator, Phase 5b extended templates.
-- Phase 6 (5-class): **Complete.** Create ML prototype retired; shipped detector is YOLO11n
-  (`nativeui-ios-v2.0`, mAP@0.5 = 0.935 CoreML). Run 006 + generalization holdout (mAP 0.934).
-- Phase 6 gate (Foundation Models eval): **Skipped** 2026-08-23 — no image-input API.
-- Phase 6a: **In progress.** Run 008 TRAINING_COMPLETE (100/100, 2026-09-04).
-  In-family val mAP@0.5 = 0.977 (best). Holdout test mAP@0.5 = **0.491**
-  (DS-G8 fail; Run 007 was 0.358). Do not ship 41-class weights. See
-  `Research/ExperimentLog.md`.
-- Phase 7: Unblocked on the 5-class live detector; 41-class production gate is still Phase 6a.
+- Phases 0–5b, 6 (5-class iOS YOLO11n `nativeui-ios-v2.0`), 6d, 6-gate (skipped), 6b tvOS v3.0, 6b-FD FocusRing v0.1, 7, 8, 9-1: **complete.**
+- Phase 6a: **in progress.** Run 009 holdout mAP@0.5 = **0.586**. Do not ship 41-class weights (DS-G8). Phase 6c waits on that gate.
 
 **Before making any code changes, read in this order:**
-1. `Research/NativeUIElementDetection.md` — architecture authority
-2. `Research/BestPractices.md` — mistakes already made; do not repeat them
-3. `Research/Phase6LessonsLearned.md` — Phase 6 specific: training API bugs, coordinate pitfalls, evaluation workflow
-4. `Research/ExperimentLog.md` — all training runs, outcomes, what changed and why
-5. `Tasks.md` — phase gate status and remaining work
+1. `Research/CurrentState.md` — living snapshot
+2. `Research/NativeUIElementDetection.md` — architecture authority
+3. `Research/BestPractices.md` — mistakes already made; do not repeat them
+4. `Research/Phase6LessonsLearned.md` — Create ML / Vision eval pitfalls (historical; still binding for BP-25)
+5. `Research/ExperimentLog.md` — all training runs, outcomes, what changed and why
+6. `Tasks.md` — remaining work only (`CompletedTasks.md` is the archive)
 
 ---
 
@@ -105,68 +98,39 @@ Detector tests (Phase 6+) will require `.mlpackage` from the separate `NativeUIA
 
 ## Phase 6 — Model Training State
 
-This section documents the current Phase 6 state precisely enough that a new agent can pick up
-without re-reading the full conversation history.
+Living snapshot: [`Research/CurrentState.md`](Research/CurrentState.md). Run history: [`Research/ExperimentLog.md`](Research/ExperimentLog.md). Create ML production training is **retired** (Run 006+ is YOLO11).
 
-### Current training infrastructure
-
-| File | Purpose |
-|---|---|
-| `NativeUITrainer/Sources/main.swift` | CLI entry point (`--dataset`, `--output`) |
-| `NativeUITrainer/Sources/CreateMLExporter.swift` | Converts custom JSON → Create ML format; generates horizontal strips when `stripFraction > 0` |
-| `NativeUITrainer/Sources/TrainingConfig.swift` | `Codable` training configuration; `default` uses 25,000 iterations, 22% strip fraction |
-| `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift` | `ModelDescriptor` and `ModelRegistry.iOS` descriptor |
-| `NativeUIAuditKitModels/Package.swift` | Declares `.mlpackage.mlmodel` as a resource |
-| `Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift` | 3-pass inference: fullImage + SAHI tiles + horizontal strips |
+Shipped: `nativeui-ios-v2.0` (YOLO11n, mAP@0.5 = 0.935), `nativeui-tvos-v3.0` (mAP@0.5 = 0.9822), FocusRingDetector v0.1. Inference is single-pass letterboxed YOLO, not the v1 3-pass SAHI/strip pipeline.
 
 ### Training run command (Phase 6a — YOLO11)
 
 ```bash
 # Always run from the NativeUIAuditKit package root
-# 1) Export native JSON → YOLO + COCO (family holdout)
 .venv-yolo/bin/python scripts/export_coco.py --dataset <path-to-NativeUIAuditKit-Dataset>
-# 2) Class weights
 .venv-yolo/bin/python scripts/compute_class_weights.py
-# 3) Dry-run, then full train
 .venv-yolo/bin/python scripts/train_ios_model.py --dry-run
 nohup .venv-yolo/bin/python scripts/train_ios_model.py \
   >> NativeUITrainer/training_6a.log 2>&1 &
 echo "PID: $!"
 ```
 
-**Log is at `NativeUITrainer/training_6a.log`.** The Create ML `NativeUITrainer` CLI is retired for production training (Run 006+).
+Log: `NativeUITrainer/training_6a.log`. Do not ship 41-class weights until DS-G8 (holdout mAP@0.5 ≥ 0.85). Run 009 is 0.586.
 
-**Log is at `NativeUITrainer/training.log`.** Tail it to check progress:
-```bash
-tail -30 NativeUITrainer/training.log
-```
-
-Check if still running:
-```bash
-ps aux | grep NativeUITrainer | grep -v grep
-```
-
-### After training completes — mandatory evaluation sequence
-
-1. `swift scripts/test_model_predictions.swift` — single-image spot check; confirm alert IoU > 0.9
-2. `swift scripts/eval_map.swift` — full 1,364-image mAP evaluation
-3. **Do NOT use `MLObjectDetector.evaluation(on:)`** — it returns mAP≈0 for portrait images due to a `.scaleFit` bug. Use `scripts/eval_map.swift` (uses `.scaleFill`). See BP-25 and `Research/Phase6LessonsLearned.md` §3.
+FocusRing train: `scripts/train_focus_ring_detector.py` (vendored backbone, BP-47). Export: `scripts/export_focus_ring_coreml.py` (`torch.jit.trace`, not ONNX).
 
 ### Critical inference rules (do not violate)
 
-- **Always use `.scaleFill`** on `VNCoreMLRequest.imageCropAndScaleOption`. `.scaleFit` causes ~2× width blowup on portrait screenshots → IoU drops below 0.5 → everything is a false positive.
-- **Annotation coordinates are normalized [0,1]**, not pixels. The Vision→CreateML conversion is: `cx = vn.x + vn.w/2`, `cy = 1.0 - vn.y - vn.h/2`. See `Research/Phase6LessonsLearned.md` §2.
-- **The model file** written by `MLObjectDetector.write(to:)` is `NativeUIDetector_v1.mlpackage.mlmodel` (flat file, NOT a `.mlpackage` directory). The `Package.swift` resource declaration must use the `.mlmodel` suffix.
+- YOLO letterbox + CoreML NMS for shipped detectors. Historical Create ML `.scaleFit` bug is BP-25 — never use `MLObjectDetector.evaluation(on:)` for portrait eval.
+- Annotation coordinates are normalized `[0,1]`. YOLO/Create ML: `cx = vn.x + vn.w/2`, `cy = 1.0 - vn.y - vn.h/2` (BP-10).
+- FocusRing crops: 16% expansion, 256×256, top-left pixel boxes via `FocusRingClassifier.makeCrop` (BP-46). Never `CGImage.cropping(to:)`.
 
 ### DS-G gate status
 
 | Gate | Condition | Status |
 |---|---|---|
-| DS-G5 | Per-class mAP ≥ 0.50 for all 5 iOS classes | ❌ Failing: navBar=0.00, textField=0.00 |
-| DS-G6 | Withheld-template mAP ≥ 0.70 on iOS model | ❌ Not yet (overall mAP = 0.336 on Run 002) |
-| DS-G7 | All 41 classes meet instance floors | ⏳ After 41-class training (Phase 6a) |
-
-Run 003 (strip-tiled, currently in progress) is expected to fix the navBar/textField AP=0 failure.
+| DS-G5 | Per-class mAP ≥ 0.50 for all 5 iOS classes | ✅ `nativeui-ios-v2.0` |
+| DS-G6 | Withheld-template mAP ≥ 0.70 on iOS 5-class | ✅ 0.934 vs 0.935 in-distribution |
+| DS-G8 | 41-class withheld-template mAP@0.5 ≥ 0.85 | ❌ Run 009 = 0.586 |
 
 ---
 
@@ -190,6 +154,7 @@ optional reading. It prevents repeating known errors.
 | Writing evaluation scripts | BP-25 — use `.scaleFill`, never `evaluation(on:)` |
 | tvOS remote automation & menu navigation | BP-40 (single-step closed loop), BP-41 (chevron gate), BP-42 (boundary lock), BP-43 (blacklist) |
 | tvOS hardware training data & fixture | BP-44 (fixture synthetic generation), BP-45 (local HTTP/stream pipeline) |
+| FocusRing crops / CoreML export | BP-46 (16% expand + `makeCrop`, never `CGImage.cropping(to:)`), BP-47 (vendored backbone, no `import timm`) |
 
 **When you discover a new mistake or a better approach, add it to `Research/BestPractices.md`
 before closing the task.** Each entry must include: what went wrong, the correct approach, and
@@ -238,16 +203,16 @@ This prevents re-running experiments that were already tried and failed.
 
 ## Phase Gate — Do Not Skip Phases
 
-The phases in `Tasks.md` are ordered by dependency. Do not begin Phase N+1 work until Phase N
-is complete and its gate condition is documented:
+The phases in `Tasks.md` / `CompletedTasks.md` are ordered by dependency. Do not begin Phase N+1 work until Phase N is complete and its gate condition is documented. See [`Research/PhaseMap.md`](Research/PhaseMap.md).
 
 | Gate | Required before |
 |---|---|
 | Coordinate spike documented in `Research/CoordinateSpike.md` | Phase 3 (dataset generation) |
 | Taxonomy frozen in `NativeUIElementType` enum | Phase 2 schema |
 | Schema tagged `v1.0` in `annotation.schema.json` | Phase 3 (generation at scale) |
-| 5,000+ annotated images, UIKit generator complete | Phase 6 (model training) |
-| mAP@0.5 ≥ 0.70 on withheld-template test set | Phase 7 (OCR fusion) |
+| 5,000+ annotated images, UIKit generator complete | Phase 6 (model training) — **met** |
+| mAP@0.5 ≥ 0.70 on withheld-template test set | Phase 7 (OCR fusion) — **met** (`nativeui-ios-v2.0`) |
+| DS-G8: 41-class withheld-template mAP@0.5 ≥ 0.85 | Phase 6c (macOS) and shipping 41-class weights |
 
 ---
 
@@ -315,22 +280,19 @@ After that point:
 
 ## Dataset and Training — Location Rules
 
-- The dataset lives **outside** the repository: `NativeUIAuditKit-Dataset/` (path is documented in `Research/NativeUIElementDetection.md` Section 6.2). Do not create dataset directories inside the package.
-- `NativeUITrainer/` is an in-package Swift executable target. Training produces the `.mlpackage.mlmodel` file that goes into `NativeUIAuditKitModels/`.
+- The iOS generator dataset lives **outside** the repository: `NativeUIAuditKit-Dataset/` (path is documented in `Research/NativeUIElementDetection.md` Section 6.2). Do not create that tree inside the package.
+- Exception: `dataset/focus_ring/` and `dataset/tvos_captures/` are in-package, **gitignored** harvest trees. Do not commit them.
+- `NativeUITrainer/` holds YOLO / FocusRing run logs and weights (not committed). Promoted compiled models go into `NativeUIAuditKitModels/` as `.mlmodelc`.
 - The library (`Sources/NativeUIAuditKit/`) must not import CreateML or depend on dataset paths.
-- Scripts in `scripts/` are standalone Swift files runnable via `swift <script>.swift`; they are diagnostic tools, not part of the library.
+- Scripts in `scripts/` are diagnostic tools (Python or `swift <script>.swift`), not library code.
 
 ---
 
 ## Model Packaging — Separate Package
 
-The CoreML model ships as a separate optional package (`NativeUIAuditKitModels`) so the core
-library stays small and model-free. Do not commit `.mlpackage` or `.mlpackage.mlmodel` files to
-this repository.
+Compiled models ship in `NativeUIAuditKitModels` so the core library stays small. Do not commit raw `.mlpackage` training dumps or YOLO `.pt` checkpoints to this repository. Promoted `.mlmodelc` resources are the exception (already in the models package).
 
-When the model is unavailable, `NativeUIDetectionRequest.perform(on:sidecar:)` throws
-`NativeUIDetectionError.modelUnavailable`. This is the correct behavior — never silently
-return empty results or fall back to a degraded mode without surfacing the reason.
+`NativeUIDetectionError.modelUnavailable` was removed: iOS/tvOS YOLO models are bundled. FocusRing is optional — `NativeUIModelAsset.loadFocusRingDetector()` returns `nil` when the resource is absent, and `resolveTVOSFocus` falls back to the geometric heuristic. Never silently return empty YOLO detections.
 
 ---
 
@@ -341,7 +303,8 @@ return empty results or fall back to a degraded mode without surfacing the reaso
 3. No RA11y-specific strings in `Sources/`
 4. No hardcoded absolute paths
 5. `Research/` updated if an architectural decision was made
-6. `Tasks.md` updated with current phase status
-7. `Research/ExperimentLog.md` updated if a training run was started or completed
-8. No dataset artifacts committed to the package repo
-9. No files written outside the project directory
+6. `Tasks.md` updated if remaining work changed; `CompletedTasks.md` if a task was closed
+7. `Research/CurrentState.md` updated if a shipped artifact or bottleneck changed
+8. `Research/ExperimentLog.md` updated if a training run was started or completed
+9. No dataset artifacts committed to the package repo
+10. No files written outside the project directory

@@ -7,7 +7,9 @@ description: >-
 
 # NativeUIAuditKit Model Training & Evaluation Workflow
 
-This skill covers the end-to-end workflow for training, evaluating, exporting, and debugging object detection models in NativeUIAuditKit across iOS and tvOS.
+Current snapshot: [`Research/CurrentState.md`](../../../Research/CurrentState.md). Remaining work: [`Tasks.md`](../../../Tasks.md). Archive: [`CompletedTasks.md`](../../../CompletedTasks.md).
+
+This skill covers the end-to-end workflow for training, evaluating, exporting, and debugging object detection models in NativeUIAuditKit across iOS and tvOS (YOLO11) plus FocusRing (MobileNetV4, not YOLO).
 
 ---
 
@@ -102,9 +104,9 @@ When a training run converges and passes holdout gates:
    .venv-yolo/bin/python scripts/export_yolo_coreml.py --weights NativeUITrainer/yolo_runs/<run_id>/weights/best.pt
    ```
 2. **Model Package Location:**
-   - The compiled model file is `NativeUIDetector_v1.mlpackage.mlmodel` (flat file).
-   - Resources belong in `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/`.
-   - Never commit `.mlpackage` or `.mlmodel` files directly to the core `NativeUIAuditKit` repository.
+   - Promote a compiled `.mlmodelc` into `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/` only after holdout gates pass.
+   - iOS: `NativeUIDetector_v2.mlmodelc`. tvOS: `NativeUIModel_tvOS.mlmodelc`. FocusRing: `FocusRingDetector.mlmodelc`.
+   - Never commit raw YOLO `.pt` checkpoints or unpromoted `.mlpackage` dumps to the core repo.
 
 ---
 

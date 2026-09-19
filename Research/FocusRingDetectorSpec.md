@@ -1,6 +1,6 @@
 # FocusRingDetector — Stage 2 tvOS Focus Classifier
 
-**Status:** Phase B harvest + fdr001 train complete (2026-09-18). Torch test 270/270. No shipped `.mlmodelc`.  
+**Status:** v0.1 shipped 2026-09-18. FDR-001 trained, CoreML 4.80 MB, `FocusRingDetector.mlmodelc` bundled. Hard-neg n=0 (FOCUS-DET-05).  
 **Audience:** NativeUIAuditKit maintainers  
 **Related:** [`NativeUIElementDetection.md`](NativeUIElementDetection.md), [`ExperimentLog.md`](ExperimentLog.md) Run FDR-001, [`tvOSTrainingStrategy.md`](tvOSTrainingStrategy.md)
 
@@ -26,8 +26,8 @@ Screenshot (1920×1080)
 | Backbone | MobileNetV4-Conv-Small (vendored `scripts/focus_ring_backbone.py`) | ≤5 MB FP16 CoreML budget; proven ANE path. Matches timm 1.0.29 `mobilenetv4_conv_small` topology, trained from scratch |
 | Alternative deferred | FastViT-T8 | Attention ANE compatibility less certain |
 | Framework | PyTorch only (no `import timm` — BP-47) | `.venv-yolo` torch; timm package init hangs |
-| Export | ONNX → coremltools FP16 `.mlpackage` | Same chain as YOLO exports; compile to `.mlmodelc` for the models package |
-| Dataset v0.1 | Plan A: harvest real TVTestRigFixture pairs (1,500–2,500) | `POST /v1/scene/render` (FIX-SYNTH-06) does not exist yet |
+| Export | `torch.jit.trace` → coremltools 9.0 FP16 `.mlpackage` | No ONNX package in the train venv. Compile to `.mlmodelc` for `NativeUIAuditKitModels` |
+| Dataset v0.1 | 1,500 Office TVTestRigFixture pairs (harvested 2026-09-17) | `POST /v1/scene/render` (FIX-SYNTH-06) does not exist; Plan A live harvest |
 | Dataset v1.0 | 6,000+ pairs once RPC or Plan A scale completes | Quality gates below |
 
 Do not fold this head into the YOLO detector. Extra heads scramble the frozen 41-class ID map (BP-28).
@@ -79,15 +79,17 @@ Package size gate: FP16 `.mlpackage` **≤ 5.0 MB**.
 
 ## 4. Dataset
 
-Crops and the manifest live **outside** this package (filesystem-boundary + dataset location rules):
+Crops and the manifest are gitignored. v0.1 Office harvest wrote in-tree:
 
 ```
-NativeUIAuditKit-Dataset/focus_ring/
+dataset/focus_ring/
   crops/
   focus_dataset_manifest.json
 ```
 
-Default harvest input is the in-tree fixture cache `dataset/tvos_fixture_captures/` (gitignored). Harvest never lists `dataset/dataset/train`.
+The harvest script default remains `NativeUIAuditKit-Dataset/focus_ring/` (outside this package). Do not commit either tree.
+
+Default harvest *input* is the in-tree fixture cache `dataset/tvos_fixture_captures/` (gitignored). Harvest never lists `dataset/dataset/train`.
 
 ### Manifest entry
 
@@ -113,7 +115,7 @@ Labels come from, in order:
 2. YOLO sidecar `isFocused` when present
 3. Otherwise the crop is unlabeled and excluded from train/val/test unless `--include-unlabeled`
 
-Current `dataset/tvos_fixture_captures/*.json` files have empty `elements` arrays. Phase A extraction therefore reports unlabeled counts; live `--live` capture (Phase B) is required for paired labels.
+Current `dataset/tvos_fixture_captures/*.json` files have empty `elements` arrays, so Phase A extraction reports unlabeled counts. Phase B `--live` harvest (Office, 2026-09-17) produced **1,500** labeled pairs in `dataset/focus_ring/` (train 1,201 / val 164 / test 135; `theme=dark` only).
 
 ---
 
@@ -128,7 +130,7 @@ Current `dataset/tvos_fixture_captures/*.json` files have empty `elements` array
 | Recall @ 0.85 | ≥ 0.98 |
 | Hard-negative FPR (`light` + `highContrast`, `imageView` / `collectionItem`) | ≤ 0.5% independently |
 
-Do not copy `.mlmodelc` into `NativeUIAuditKitModels` resources until these gates pass.
+v0.1 shipped after the five torch held-out gates passed (270/270). The hard-negative gate was **vacuous** (`n=0`, all harvest `theme=dark`). Do not replace the bundled `.mlmodelc` until FOCUS-DET-05 records a non-vacuous hard-neg FPR ≤ 0.5%.
 
 ---
 
@@ -142,7 +144,8 @@ Do not copy `.mlmodelc` into `NativeUIAuditKitModels` resources until these gate
 | Batch | 64 |
 | Epochs | 30 |
 | LR | 3e-4 |
-| Augment (train only) | HFlip 0.5, ColorJitter, ±5° rotation, GaussianBlur p=0.3 |
+| Augment (v0.1 train) | HFlip 0.5 only |
+| Augment (planned, not in FDR-001) | ColorJitter, ±5° rotation, GaussianBlur p=0.3 |
 | Forbidden | Vertical flip (tvOS glow is orientation-sensitive) |
 
 Checkpoints: `NativeUITrainer/focus_ring_runs/<run_id>/weights/best.pt`
@@ -152,8 +155,10 @@ Scripts:
 ```bash
 .venv-yolo/bin/python scripts/harvest_focus_pairs.py --dry-run
 .venv-yolo/bin/python scripts/train_focus_ring_detector.py --dry-run
-.venv-coreml/bin/python scripts/export_focus_ring_coreml.py --weights NativeUITrainer/focus_ring_runs/<run>/weights/best.pt
-.venv-yolo/bin/python scripts/eval_focus_ring_detector.py --mlpackage NativeUITrainer/focus_ring_runs/<run>/export/FocusRingDetector.mlpackage
+python scripts/export_focus_ring_coreml.py \
+    --weights NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt
+.venv-yolo/bin/python scripts/eval_focus_ring_detector.py \
+    --weights NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt
 ```
 
 ---
@@ -161,6 +166,6 @@ Scripts:
 ## 7. Swift integration
 
 - `FocusRingClassifier` — crop + `MLModel` predict
-- `NativeUIDetectionConfiguration.useFocusClassifier` — default `true`; heuristic used when the compiled model is missing
-- `NativeUIModelAsset.focusRingDetectorURL` / `loadFocusRingDetector()` — return `nil` when the resource is absent (never `fatalError`)
-- Compiled `FocusRingDetector.mlmodelc` is **not** committed until gates pass. When an uncompiled `.mlpackage` is dropped next to the other model sources, add it to the NativeUIAuditKitModels target `exclude:` list (same pattern as `NativeUIModel_tvOS.mlpackage`). Do not add `.copy("Resources/FocusRingDetector.mlmodelc")` until the compiled resource exists — SPM fails planning if the path is missing.
+- `NativeUIDetectionConfiguration.useFocusClassifier` — default `true`; heuristic used when the compiled model is missing or the flag is `false`
+- `NativeUIModelAsset.focusRingDetectorURL` / `loadFocusRingDetector()` — return `nil` when the resource is stripped (never `fatalError`)
+- v0.1 compiled `FocusRingDetector.mlmodelc` **is** bundled via `.copy("Resources/FocusRingDetector.mlmodelc")`. Tests require URL, load, metadata thresholds, and a unit-interval `classify` on `tvos_home_screen.png`. Keep uncompiled `.mlpackage` sources in the NativeUIAuditKitModels `exclude:` list (same pattern as `NativeUIModel_tvOS.mlpackage`).

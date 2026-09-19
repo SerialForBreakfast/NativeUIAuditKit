@@ -2,7 +2,7 @@
 
 A portable Swift package for detecting native Apple platform UI elements in screenshot PNGs, designed as a drop-in complement to [ScreenAuditKit](../ScreenAuditKit/).
 
-**Current state:** Phase 6 (5-class iOS model) complete, now on a YOLO11n detector. Trained via Ultralytics, exported to CoreML (`best.mlpackage`), and evaluated on the same 1,394-image held-out validation set: mAP@0.5 = **0.935** (CoreML) / **0.968** (raw PyTorch), all five classes clearing DS-G5 and DS-G6 with wide margin — every class improved over the prior Create ML baseline. Physical-device latency is validated at **~7.5 ms per image**, well under the 200 ms gate. Withheld-template generalization testing is the remaining item before declaring Phase 6 complete. See [Model Performance](#model-performance) below.
+**Current state:** see [`Research/CurrentState.md`](Research/CurrentState.md). Shipped detectors: iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 009 holdout **0.586**), FocusRing v1.0 data, macOS. Open work: [`Tasks.md`](Tasks.md). Archive: [`CompletedTasks.md`](CompletedTasks.md).
 
 ---
 
@@ -75,9 +75,10 @@ NativeUIAuditKit builds a custom Vision-style request backed by CoreML object de
 
 - **Semantic element type** — one of ~41 stable role strings: `primaryButton`, `navigationBar`, `toggle`, `dynamicIsland`, etc.
 - **Accurate bounding boxes** — in Vision-normalized, pixel, and point coordinate systems
-- **Visible text** — from `VNRecognizeTextRequest` OCR fusion (Phase 7, not yet wired)
-- **Audit issues** — truncation, clipping, overlapping controls, insufficient touch target, Dynamic Type overflow
+- **Visible text** — from `VNRecognizeTextRequest` OCR fusion (`ObservationMerger`)
+- **Audit issues** — truncation, clipping, overlapping controls, insufficient touch target
 - **Device / OS inference** — ranked candidates from visual chrome signals (orphan PNG mode)
+- **tvOS focus** — geometric heuristic, plus optional FocusRingDetector Stage 2 on YOLO crops
 
 **Two operating modes:**
 - **Sidecar mode** — highest accuracy; hierarchy metadata exported at capture time is paired with the PNG
@@ -132,11 +133,15 @@ DS-G5 (every class AP@0.5 ≥ 0.50) and DS-G6 (mAP ≥ 0.70) both pass with wide
 
 Every latency gate clears by more than an order of magnitude — fast enough to run inline during agentic UI iteration with no perceptible delay. Full pipeline and benchmark source: [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift), [`GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift`](GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift).
 
-Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIDetector_v2.mlmodelc`, bundled as an SPM resource in the `NativeUIAuditKitModels` product — see [Add as a Dependency](#add-as-a-dependency) below. (Raw training checkpoints remain gitignored in `NativeUITrainer/yolo_runs/`.)
+Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIDetector_v2.mlmodelc`, bundled as an SPM resource in the `NativeUIAuditKitModels` product — see [Add as a Dependency](#add-as-a-dependency). (Raw training checkpoints remain gitignored in `NativeUITrainer/yolo_runs/`.)
+
+### FocusRingDetector v0.1 (shipped 2026-09-18)
+
+Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small, FP16 4.80 MB (`FocusRingDetector.mlmodelc`). FDR-001 held-out 270/270; hard-negative `light`/`highContrast` split is empty until FOCUS-DET-05. Not AGPL — see [`Research/LicensingArchitecture.md`](Research/LicensingArchitecture.md).
 
 ### Superseded: Create ML baseline (NativeUIDetector_v1, trained 2026-05-28)
 
-The original anchor-based Create ML objectPrint model — required strip-tiling and per-class pass routing to handle high-aspect-ratio classes like navigationBar (~16:1). Currently still the model packaged in `NativeUIAuditKitModels/`.
+The original anchor-based Create ML objectPrint model — required strip-tiling and per-class pass routing to handle high-aspect-ratio classes like navigationBar (~16:1). Kept on disk as `ModelRegistry.iOS_v1`; it is **not** the default bundled detector.
 
 | Class | AP@0.5 | GT | TP | Pred | Notes |
 |---|---|---|---|---|---|
@@ -224,15 +229,20 @@ NativeUIAuditKit/
 ├── Package.swift
 ├── README.md
 ├── CHANGELOG.md                           ← version history, semver
-├── Tasks.md                               ← phase-structured task list and roadmap
+├── Tasks.md                               ← remaining work only
+├── CompletedTasks.md                      ← finished phase archive
 ├── AGENTS.md                              ← agent handoff notes
+├── PROVENANCE.md                          ← shipped-model training audit
 ├── Research/
-│   ├── ExperimentLog.md                   ← chronological training run history (Runs 001–006)
+│   ├── CurrentState.md                    ← living snapshot (start here)
+│   ├── PhaseMap.md                        ← phase dependency map
+│   ├── ExperimentLog.md                   ← chronological training run history
 │   ├── NativeUIElementDetection.md        ← architecture, API design, training approach
 │   ├── TrainingDataStrategy.md            ← dataset design, bias prevention, platform coverage
-│   ├── BestPractices.md                   ← lessons learned (BP-01 through BP-26+)
-│   ├── TrainingRunbook.md                 ← step-by-step training procedure and pre-flight checks
-│   ├── LessonsLearned.md                  ← extended write-up of major discoveries
+│   ├── BestPractices.md                   ← lessons learned (BP-01 through BP-47)
+│   ├── TrainingRunbook.md                 ← Create ML historical procedure (YOLO is scripts/)
+│   ├── FocusRingDetectorSpec.md           ← Stage 2 tvOS crop classifier
+│   ├── FixtureBatchIngest.md              ← TVTestRig batch sidecar format + IPC
 │   ├── OCRFusionPolicy.md                 ← OCR fusion rules and truncation detection
 │   └── schemas/
 │       ├── annotation.schema.json         ← versioned annotation schema (v1.0)
@@ -249,7 +259,10 @@ NativeUIAuditKit/
 │   └── Sources/NativeUIAuditKitModels/
 │       ├── NativeUIAuditKitModels.docc/    ← DocC catalog
 │       ├── Resources/
-│       │   └── NativeUIDetector_v2.mlmodelc/  ← precompiled YOLO11n model, shipped as a package resource
+│       │   ├── NativeUIDetector_v2.mlmodelc/     ← iOS YOLO11n v2.0
+│       │   ├── NativeUIModel_tvOS.mlmodelc/      ← tvOS YOLO11n v3.0
+│       │   └── FocusRingDetector.mlmodelc/       ← Stage 2 focus classifier v0.1
+
 │       ├── NativeUIDetector_v1.mlpackage.mlmodel   ← superseded (2026-05-28); on disk, not a bundled resource
 │       ├── training_config_v1.json         ← Create ML config (superseded)
 │       ├── training_config_v2.json         ← YOLO11n config (current)
@@ -288,7 +301,7 @@ NativeUIAuditKit/
 │   └── GeneratorRunnerTests/
 │       ├── KitchenSinkValidationTest.swift
 │       └── GenerateDatasetTests.swift      ← ~20k image generation across all templates
-├── NativeUITrainer/                        ← Swift SPM executable (Create ML training)
+├── NativeUITrainer/                        ← Create ML CLI (retired for production; YOLO logs/weights live here)
 │   └── Sources/
 │       ├── main.swift                      ← CLI: --dataset --output [--skip-export]
 │       ├── CreateMLExporter.swift
@@ -339,13 +352,15 @@ dataset/
 
 **Special:** `webContent` · `unknown`
 
-*Phase 6 prototype trains 5 classes: alert, navigationBar, primaryButton, textField, toggle. Full 41-class expansion in Phase 6a requires anchor-free architecture (YOLO11/RT-DETR) — see Key Design Decisions.*
+*Shipped iOS detector trains 5 classes: alert, navigationBar, primaryButton, textField, toggle. Full 41-class YOLO11m expansion is Phase 6a (not shipped — DS-G8 fail). tvOS ships 25 of these classes as `nativeui-tvos-v3.0`.*
 
 ---
 
 ## Roadmap
 
-Full task breakdown: [`Tasks.md`](Tasks.md)  
+Remaining work: [`Tasks.md`](Tasks.md)  
+Finished phases: [`CompletedTasks.md`](CompletedTasks.md)  
+Snapshot: [`Research/CurrentState.md`](Research/CurrentState.md) · map: [`Research/PhaseMap.md`](Research/PhaseMap.md)  
 Architecture: [`Research/NativeUIElementDetection.md`](Research/NativeUIElementDetection.md)  
 Training history: [`Research/ExperimentLog.md`](Research/ExperimentLog.md)  
 Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
@@ -357,20 +372,20 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **2: Taxonomy + Schema v1** | ✅ Done | Expand to ~41 classes; freeze annotation schema | Schema tagged v1.0 |
 | **3: Dataset Generator** | ✅ Done | SwiftUI templates + first generation run | 50/50 spot-check pass; imageSHA256 = 1.0 |
 | **4: UIKit Generator** | ✅ Done | UIKit-rendered controls (anti-overfitting) | UIKit templates live; ~20k training entries |
-| **5: Hard Negatives** | 🔄 In progress | Hard-negative templates targeting known FP zones | UIKitToggleForm ✓; more templates planned |
-| **6: iOS Model (5-class)** | 🔄 In progress | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.935, YOLO11n); device latency ✓ (~7.5ms) |
-| **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline (see [Tasks.md](Tasks.md#phase-6d-nativeuidetectionrequest-v2-migration)) | TASK-6d-1 through 6d-7 pass |
-| **6→6a: Foundation Models eval** | ✅ Skipped | Confirmed infeasible — `FoundationModels` has no image input API (verified against shipped `.swiftinterface`) | Decision documented without a measurement — proceeding to 6a |
-| **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout; 36/41 classes in iOS data | mAP@0.5 ≥ 0.85 on withheld-template test |
-| **6b: tvOS Model** | ⬜ | Focus state, top tab bar | mAP@0.5 ≥ 0.80 |
-| **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | mAP@0.5 ≥ 0.80 |
-| **7: OCR Fusion** | ⬜ | Visible text + truncation/clipping rules | Unit tests pass on known-bad fixtures |
-| **8: Device/OS Inference** | ⬜ | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked |
-| **9: ScreenAuditKit Integration** | ⬜ | Drop-in protocol; contract fields; CLI flag | All ScreenAuditKit tests pass |
+| **5 / 5a / 5b: Hard Negatives + templates** | ✅ Done | Known-bad + extended SwiftUI/UIKit templates | 16,440 images; UIKitToggleForm live |
+| **6: iOS Model (5-class)** | ✅ Done | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.935, YOLO11n); device latency ✓ (~7.5ms); holdout 0.934 |
+| **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline | TASK-6d-1 through 6d-7 pass |
+| **6→6a: Foundation Models eval** | ✅ Skipped | Confirmed infeasible — `FoundationModels` has no image input API | Decision documented — proceeded to 6a |
+| **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout | DS-G8: mAP@0.5 ≥ 0.85 on withheld-template test (Run 009 = **0.586**) |
+| **6b: tvOS Model** | ✅ Done (v3.0) | OS UI + FocusRing v0.1 | mAP@0.5 = 0.9822; remaining: R-1 scale, FOCUS-DET-05, 6b-U |
+| **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | Requires 6a DS-G8; then mAP@0.5 ≥ 0.80 |
+| **7: OCR Fusion** | ✅ Done | Visible text + truncation/clipping rules | `ObservationMerger` + audit rules |
+| **8: Device/OS Inference** | ✅ Done | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked |
+| **9: ScreenAuditKit Integration** | 🔄 Partial | Drop-in protocol; contract fields; CLI flag | 9-1 done; 9-2/9-3 remain in ScreenAuditKit |
 
-**Immediate next steps:**
-1. Phase 6a Run 007 trained (val mAP@0.5 = 0.981) but **family-holdout test mAP@0.5 = 0.358**. DS-G8 fails. Five taxonomy classes still have 0 iOS instances; nine holdout-present classes are below AP 0.65.
-2. NMS FP16 CoreML is 38.5 MB (skip distill). INT8 mlprogram is 19.5 MB. Do not copy 41-class weights into `NativeUIAuditKitModels` until holdout recovers.
+**Immediate next steps** (also [`Tasks.md`](Tasks.md)):
+1. TASK-6a-10 — authorized Office `aatv fixture batch`, then retrain 41-class from Run 009. Do not ship 41-class weights (DS-G8).
+2. FOCUS-DET-05 — ≥6,000 pairs with `light`/`highContrast` hard-neg before replacing FocusRing v0.1.
 
 ---
 

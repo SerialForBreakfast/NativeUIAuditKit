@@ -14,7 +14,6 @@
   segmentedControl 5. Starting `train_focus_ring_detector.py --name fdr001`.
 - 2026-09-17 22:27: fdr001 **TRAINING_COMPLETE** (11.1 min, MPS, 30/30).
   best val_loss=0.0001. Torch test 270/270 acc=1.0. Hard-neg n=0 (dark only).
-  CoreML export blocked (`import coremltools` hangs). Do not ship `.mlmodelc`.
 - 2026-09-18: Swift integration complete. `FocusRingClassifier.swift`,
   `resolveTVOSFocusML()`, `loadFocusClassifierIfAvailable()`, and
   `useFocusClassifier` config all wired up. `swift build` + 66/66 tests pass.
@@ -26,3 +25,4 @@
 - 2026-09-18: FocusRing tests require the bundled model: URL non-nil, load
   succeeds, metadata `focusThreshold`/`ambiguityThreshold`, classify on
   `tvos_home_screen.png` returns prob in [0, 1].
+- 2026-09-18: Docs split — remaining FOCUS-DET-05 lives in `Tasks.md`; v0.1 write-up in `CompletedTasks.md`. Snapshot: `Research/CurrentState.md`.

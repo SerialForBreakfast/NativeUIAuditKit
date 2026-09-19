@@ -10,7 +10,8 @@ This document defines the licensing architecture, intellectual property boundari
 |---|---|---|---|
 | **NativeUIAuditKit** (Codebase) | `Sources/NativeUIAuditKit/` | **MIT License** | Fully permissive. Free commercial, proprietary, and open-source use with standard disclaimer. |
 | **NativeUIAuditKitModels** (Swift Glue) | `NativeUIAuditKitModels/Sources/` | **MIT License** | Fully permissive Swift bindings and protocol definitions. |
-| **Bundled CoreML Weights** | `NativeUIAuditKitModels/Resources/*.mlmodelc` | **AGPL-3.0** (Ultralytics) | Derived from Ultralytics YOLO11 pre-trained backbones. Subject to AGPL-3.0 copyleft terms upon distribution unless commercially licensed. |
+| **YOLO CoreML weights** | `NativeUIDetector_v2.mlmodelc`, `NativeUIModel_tvOS.mlmodelc` | **AGPL-3.0** (Ultralytics) | Derived from Ultralytics YOLO11 pre-trained backbones. Subject to AGPL-3.0 copyleft terms upon distribution unless commercially licensed. |
+| **FocusRingDetector v0.1 weights** | `FocusRingDetector.mlmodelc` | Trained from scratch (not Ultralytics) | MobileNetV4-Conv-Small via vendored `scripts/focus_ring_backbone.py`, `pretrained=False`. No AGPL license key in CoreML metadata. |
 
 ---
 
@@ -24,8 +25,9 @@ NativeUIAuditKit was intentionally architected as two separate packages:
    - Can be embedded directly into proprietary, commercial, or enterprise closed-source products without any copyleft obligations.
 
 2. **`NativeUIAuditKitModels` (Optional Pre-Trained Weights)**:
-   - Provides out-of-the-box YOLO11n weights (`nativeui-ios-v2.0` and `nativeui-tvos-v1.0`).
-   - The compiled model artifacts embed `MLModelLicenseKey: "AGPL-3.0 License"` in their CoreML metadata (`metadata.json`), reflecting their origin from the Ultralytics YOLO11 framework.
+   - Provides out-of-the-box YOLO11n weights (`nativeui-ios-v2.0` and `nativeui-tvos-v3.0`) and the Stage 2 FocusRingDetector v0.1 classifier.
+   - YOLO compiled artifacts embed `MLModelLicenseKey: "AGPL-3.0 License"` in their CoreML metadata (`metadata.json`), reflecting their origin from the Ultralytics YOLO11 framework.
+   - `FocusRingDetector.mlmodelc` is a from-scratch MobileNetV4 crop classifier (Run FDR-001), not a YOLO11 derivative.
 
 ---
 

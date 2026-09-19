@@ -15,7 +15,7 @@
 // This is NOT a substitute for true family-holdout retraining (deferred to Phase 6a per
 // QG-5's own comment in DatasetQualityAuditTests.swift). It answers a narrower, cheaper
 // question: does the CURRENTLY SHIPPED model's accuracy hold up on a genuinely novel
-// layout, or does it collapse? See Tasks.md Phase 6d-adjacent notes / ExperimentLog.md for
+// layout, or does it collapse? See CompletedTasks.md Phase 6d / ExperimentLog.md for
 // how this result should be read.
 //
 // Run individually:

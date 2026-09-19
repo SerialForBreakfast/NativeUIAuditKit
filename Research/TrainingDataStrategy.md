@@ -1,7 +1,7 @@
 # NativeUIAuditKit: Training Data Strategy
 
 **Status:** Approved — active reference  
-**Decided:** 2026-05-04  
+**As of:** 2026-09-18 (strategy still binding; shipped models are 5-class iOS + 25-class tvOS; 41-class not shipped)  
 **Audience:** NativeUIAuditKit maintainers; anyone building or expanding the dataset  
 **Supersedes:** Sections 6, 7, 8, and 14 of `NativeUIElementDetection.md` for dataset-specific decisions. That document remains authoritative for architecture and API design; this document is authoritative for dataset composition, bias prevention, and training methodology.
 

@@ -1,7 +1,7 @@
 # OCR Fusion Policy
 
 **Version:** 1.0  
-**Governs:** Phase 7 implementation (`VNRecognizeTextRequest` fusion with CoreML element observations)  
+**Governs:** Phase 7 implementation (`VNRecognizeTextRequest` fusion with CoreML element observations) — **shipped** in `ObservationMerger.swift` / `AuditRules.swift`. See [`../CompletedTasks.md`](../CompletedTasks.md) Phase 7.  
 **Authority:** This document defines the rules for associating OCR text to detected elements. The implementation must match these rules exactly.
 
 ---
@@ -77,14 +77,16 @@ The following 9 element classes must not receive `visibleText` even if OCR obser
 
 ---
 
-## Implementation Checklist (Phase 7)
+## Implementation Checklist (Phase 7) — complete
 
-- [ ] `OCRFusion.associate(elements:ocrObservations:layoutDirection:) -> [NativeUIElementObservation]`
-- [ ] IoU ≥ 0.10 filter applied before winner selection
-- [ ] Same-quadrant filter applied
-- [ ] Tie-breaking by centroid distance implemented
-- [ ] Reading-order sort handles both LTR and RTL
-- [ ] Truncation rule: both Condition A and Condition B implemented with correct thresholds
-- [ ] Exempt class list enforced at association entry point
-- [ ] Sidecar conflict resolution: OCR wins at distance > 2; log both values under `_debug`
-- [ ] Unit tests on known-truncated fixtures (Phase 5a produces these)
+Shipped in `Sources/NativeUIAuditKit/Detection/ObservationMerger.swift` and `Audit/AuditRules.swift`.
+
+- [x] `OCRFusion.associate(elements:ocrObservations:layoutDirection:) -> [NativeUIElementObservation]` (`ObservationMerger`)
+- [x] IoU ≥ 0.10 filter applied before winner selection
+- [x] Same-quadrant filter applied
+- [x] Tie-breaking by centroid distance implemented
+- [x] Reading-order sort handles both LTR and RTL
+- [x] Truncation rule: both Condition A and Condition B implemented with correct thresholds
+- [x] Exempt class list enforced at association entry point
+- [x] Sidecar conflict resolution: OCR wins at distance > 2; log both values under `_debug`
+- [x] Unit tests on known-truncated fixtures (Phase 5a produces these)

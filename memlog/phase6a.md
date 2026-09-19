@@ -8,4 +8,5 @@
   Replaced with local dummy PNG. Relative --resume failed after chdir (BP-30).
   Watchdog resume with absolute last.pt. Best in-family mAP@0.5 = 0.977 (ep 58).
 - 2026-09-04: TRAINING_COMPLETE 100/100. Holdout mAP@0.5 = 0.491 (DS-G8 fail).
-  Do not ship. Do not start Phase 6b.
+  Do not ship.
+- 2026-09-18: Run 009 is the later 41-class attempt (holdout mAP@0.5 = 0.586). Still DS-G8 fail. Remaining: TASK-6a-10/11/12 in `Tasks.md`. Snapshot: `Research/CurrentState.md`.

@@ -1,16 +1,20 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
-**Status:** Phase 6 complete (5-class YOLO11n); Phase 6a (41-class YOLO11) in progress  
-**As of:** 2026-08-23  
+**Status:** 5-class iOS YOLO11n shipped (`nativeui-ios-v2.0`); tvOS v3.0 shipped; FocusRingDetector v0.1 shipped; Phase 6a 41-class **not** shipped (Run 009 holdout mAP@0.5 = 0.586)  
+**As of:** 2026-09-18  
 **Audience:** NativeUIAuditKit maintainers and ScreenAuditKit contributors  
 **Related:**  
-- [`../Research/References.md`](References.md) — Apple docs and prior art  
+- [`CurrentState.md`](CurrentState.md) — living snapshot (start here)  
+- [`PhaseMap.md`](PhaseMap.md) — phase dependency map  
+- [`../Tasks.md`](../Tasks.md) — remaining work only  
+- [`../CompletedTasks.md`](../CompletedTasks.md) — finished phases  
+- [`References.md`](References.md) — Apple docs and prior art  
 - [`tvOSTrainingStrategy.md`](tvOSTrainingStrategy.md) — dedicated tvOS model, TVTestRig capture, and later model-combination gates
 - [`../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md`](../../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md) — feasibility ADR  
 - [`../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)  
 - [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)  
 - [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) — Apple Silicon training iteration efficiency ADR
-- [`FocusRingDetectorSpec.md`](FocusRingDetectorSpec.md) — Stage 2 tvOS focus classifier (MobileNetV4 crop model, independent of YOLO)
+- [`FocusRingDetectorSpec.md`](FocusRingDetectorSpec.md) — Stage 2 tvOS focus classifier (MobileNetV4 crop model, independent of YOLO; v0.1 `.mlmodelc` shipped 2026-09-18)
 
 ---
 
@@ -79,8 +83,8 @@ public struct NativeUIDetectionRequest: Sendable {
 
     public init(configuration: NativeUIDetectionConfiguration = .default)
 
-    /// Runs detection. Throws `NativeUIDetectionError.modelUnavailable` until
-    /// the `NativeUIAuditKitModels` package is installed.
+    /// Runs detection. iOS/tvOS YOLO models are bundled in `NativeUIAuditKitModels`.
+    /// FocusRing Stage 2 is optional; missing that resource falls back to the geometric heuristic.
     public func perform(
         on screenshot: CGImage,
         sidecar: NativeUISidecar? = nil
@@ -144,7 +148,7 @@ exist verbatim in this package. Decision: **do not add either as a new type.**
   Quick Start are built around. A parallel `NativeUIElementDetector` type would fragment the
   public surface into two names for the same operation with no real consumer asking for it —
   the only place the alternate name appeared was a planning document that turned out to be
-  significantly out of sync with this repo's actual state elsewhere too (see `Tasks.md` Track 1
+  significantly out of sync with this repo's actual state elsewhere too (see `CompletedTasks.md` Track 1
   reconciliation, 2026-09-18). Per `AGENTS.md`'s taxonomy-stability rule (which applies to API
   surface, not just enum raw values): the existing name is not renamed without a major version
   bump, and no speculative alternate name is added without a concrete consumer need.
@@ -404,15 +408,18 @@ See `Research/CoordinateSpike.md` for the full results tables and detailed test 
 
 ## 7. Native UI Generator Architecture
 
-### 7.1 `NativeUIDatasetGenerator` App Target (future)
+### 7.1 `NativeUIDatasetGenerator` (shipped)
 
-A dedicated app target (separate from the library) that:
+A dedicated generator (separate from the library) that:
+
 - Renders many native UI permutations programmatically
 - Captures screenshots at layout-stable points (after `CATransaction` flush and layout pass)
 - Exports matching `NativeUISidecar` JSON with element bounds and metadata
 - Randomizes controlled variables within bounded ranges
-- Runs in Simulator automation via UI tests
+- Runs in Simulator automation via UI tests (`GeneratorRunner`)
 - Supports deterministic seeds for reproducible generation
+
+Layout rules: [`CoordinateSpike.md`](CoordinateSpike.md), BP-01–BP-04. Do not put generator war stories in `Tasks.md`.
 
 ### 7.2 SwiftUI Generator
 
@@ -504,6 +511,8 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Current production path:** Ultralytics YOLO11 → CoreML NMS export. Create ML `objectPrint` (Option A) is **retired** for production (Run 006+). Living snapshot: [`CurrentState.md`](CurrentState.md). Run history: [`ExperimentLog.md`](ExperimentLog.md).
+
 ### 8.1 Task Formulation
 
 Object detection is the correct task: one-stage or two-stage detector outputs per-class bounding boxes. This fits both Chrome regions (large, visually consistent) and controls (smaller, more variable).
@@ -512,7 +521,7 @@ Segmentation (pixel masks) is not needed — axis-aligned bounding boxes are suf
 
 OCR (text detection and recognition) is handled separately via Vision's `VNRecognizeTextRequest` and fused at the observation-merger layer. Do not add text as a detector class.
 
-### 8.2 Option A: Create ML Object Detector (First Prototype)
+### 8.2 Option A: Create ML Object Detector (Retired — Phase 6 prototype only)
 
 Best for the initial vertical slice. Apple-native workflow exports `.mlpackage` directly; no conversion pipeline required.
 
@@ -691,11 +700,17 @@ NativeUIAuditKitModels/       (separate package, separate repository eventually)
       ModelRegistry.swift         (version manifest, calibrationOsRange)
 ```
 
-`NativeUIAuditKit` declares an optional dependency on `NativeUIAuditKitModels`. When the models package is absent, `NativeUIDetectionRequest.perform(on:sidecar:)` throws `NativeUIDetectionError.modelUnavailable` rather than crashing or silently returning empty results.
+Shipped compiled models live in `NativeUIAuditKitModels` (`NativeUIDetector_v2.mlmodelc`, `NativeUIModel_tvOS.mlmodelc`, `FocusRingDetector.mlmodelc`). `NativeUIDetectionError.modelUnavailable` was removed: YOLO models are bundled. FocusRing is optional (`loadFocusRingDetector()` → `nil` falls back to the geometric heuristic). Never silently return empty YOLO detections.
 
 This mirrors how Apple separates large model assets from lightweight framework interfaces.
 
-### 9.2 CI Latency Budget and Tiling Strategy
+### 9.2 Inference (shipped)
+
+Shipped iOS and tvOS detectors run **single-pass letterboxed 640×640** YOLO with NMS in the CoreML graph. The historical Create ML 3-pass (full-image + SAHI + strips) path is retired. See BP-25 if you touch any leftover `.scaleFit` eval code.
+
+The tiling notes below are Create ML-era rationale only — do not reintroduce SAHI as the default.
+
+### 9.2.1 Historical tiling rationale (Create ML / v1 only)
 
 Target: **< 200ms per image** on the CI machine class (M1 Mac mini or equivalent GitHub Actions runner).
 
@@ -739,15 +754,13 @@ Every `NativeUIElementObservation` JSON report includes `modelId`. This makes re
 
 **Major Apple visual refreshes** (e.g., Liquid Glass in iOS 26) require new training slices. The old model bundle should not be updated in place — create a new versioned bundle and declare a new `calibrationOsRange`.
 
-### 9.5 Fallback When Model Unavailable
+### 9.5 Fallback When a Model Resource Is Missing
 
-When `NativeUIAuditKitModels` is not installed:
-- `NativeUIDetectionRequest.perform(on:sidecar:)` throws `NativeUIDetectionError.modelUnavailable`
-- ScreenAuditKit integration returns `NativeUIObservations(elements: [], status: .notAvailable)`
-- The CLI `--native-ui coreml` flag prints a clear error with installation instructions
-- Existing `--ocr` and pixel-heuristic rules continue to run unaffected
+- iOS/tvOS YOLO `.mlmodelc` files are bundled with `NativeUIAuditKitModels`. There is no `modelUnavailable` error case.
+- `FocusRingDetector.mlmodelc` is optional: `NativeUIModelAsset.loadFocusRingDetector()` returns `nil` and `resolveTVOSFocus` uses the geometric heuristic.
+- ScreenAuditKit TASK-9-3 (other repo): missing models package should print a clear error and exit 1 for `--native-ui coreml`.
 
-Never crash, never silently return empty results, never fall back to a degraded mode without surfacing the reason.
+Never crash, never silently return empty YOLO results.
 
 ---
 

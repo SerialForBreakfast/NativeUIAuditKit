@@ -1,9 +1,10 @@
 # NativeUIAuditKit — Model Training Runbook
 
-Step-by-step procedure for training, evaluating, and diagnosing the 5-class iOS CoreML model.
-Written to be followed by an agent or engineer who has no memory of prior sessions.
+**Current production training is YOLO11, not Create ML.** Use `scripts/train_ios_model.py`, `scripts/train_tvos_model.py`, and `scripts/train_focus_ring_detector.py`. Snapshot: [`CurrentState.md`](CurrentState.md). Skill: `.agents/skills/nativeui-model-workflow/`.
 
-Last updated: 2026-05-25
+This file is the **historical Create ML (Runs 001–005) procedure**. Keep it for BP-25 / disk-full diagnosis. Do not follow it to train a shippable detector.
+
+Last updated: 2026-09-18 (banner); body last written 2026-05-25.
 
 ---
 
@@ -239,7 +240,7 @@ Multiple `.json` files exist in the export images directory. The `directoryWithI
 1. Run `scripts/eval_map.swift` one final time on the withheld test set (not validation)
 2. Run `TASK-6-5` formal evaluation: confusion matrix, content-agnostic blurred text test
 3. Run `TASK-6-6` device benchmark: `XCTest` performance test on physical iPhone
-4. Update `Tasks.md`: mark TASK-6-5 and TASK-6-6 as `[x]` complete
+4. Archive TASK-6-5 and TASK-6-6 into `CompletedTasks.md` (already done for the shipped v2.0 detector)
 5. Update `ModelRegistry.swift`: set `trainingDatasetVersion` from `manifest.json`
 6. Update `Research/ExperimentLog.md`: record final metrics and gate status
 

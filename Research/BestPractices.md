@@ -897,7 +897,7 @@ If the focused element's label or accessibility text matches any term in this pa
 
 **Wrong:** `import timm` then `timm.create_model("mobilenetv4_conv_small", ...)`. In `.venv-yolo` on this Mac, `timm.models.__init__` star-imports 100+ architectures and `timm.layers.__init__` pulls torchvision FX. The process sits at ~0% CPU / ~200 MB RSS for many minutes with no epoch output. `pip install timm` also hangs.
 
-**Correct:** Construct MobileNetV4-Conv-Small from `scripts/focus_ring_backbone.py` (torch.nn only). Train, eval, and CoreML export all use that factory. ImageNet pretrained weights are skipped (`pretrained=False`).
+**Correct:** Construct MobileNetV4-Conv-Small from `scripts/focus_ring_backbone.py` (torch.nn only). Train, eval, and CoreML export all use that factory. ImageNet pretrained weights are skipped (`pretrained=False`). Export is `torch.jit.trace` → coremltools — do not go through ONNX (`onnx` is not installed; that path was a dead end).
 
 ---
 

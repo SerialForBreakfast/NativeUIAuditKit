@@ -972,11 +972,11 @@ accumulate.
 
 **Trigger:** tvOS focus is resolved by `resolveTVOSFocus` brightness/geometry heuristics. That path mis-ranks VoiceOver outlines, bottom-bezel chrome, and high-contrast unfocused tiles. A dedicated crop classifier should beat the heuristic without touching YOLO11 weights.
 
-**Status:** PHASE B TRAIN COMPLETE 2026-09-18T05:38Z — fdr001 30/30. Torch held-out eval 270/270 correct. Do not ship `.mlmodelc` (CoreML export blocked; hard-neg n=0).
+**Status:** v0.1 SHIPPED 2026-09-18. FDR-001 30/30, torch held-out 270/270, CoreML 4.80 MB, `FocusRingDetector.mlmodelc` bundled. Hard-neg n=0 (FOCUS-DET-05).
 
 **Architecture:**
 - Backbone: MobileNetV4-Conv-Small (vendored `scripts/focus_ring_backbone.py`, timm 1.0.29 topology), binary sigmoid, 256×256 RGB ÷255
-- Export: ONNX → coremltools FP16, outputs `is_focused_prob` + `confidence` (both Float32[1])
+- Export: `torch.jit.trace` → coremltools 9.0 FP16 (no ONNX), outputs `is_focused_prob` + `confidence` (both tensors of shape `[1]`)
 - Package budget: ≤5.0 MB. FastViT-T8 deferred (ANE attention risk)
 - Thresholds in metadata / Swift, not weights: focus 0.85, ambiguity 0.70
 - Dataset target v0.1: 1,500–2,500 real fixture pairs (Plan A; FIX-SYNTH-06 RPC does not exist)
@@ -1004,8 +1004,10 @@ accumulate.
 
 **TRAINING_COMPLETE 2026-09-18T05:27–05:38Z (11.1 min, MPS):** 30/30 epochs. Final train_loss=0.0016 val_loss=0.0001 (best). Epoch 14 val spiked to 0.8434 then recovered; `best.pt` tracks min val. Log: `NativeUITrainer/focus_ring_train.log`. Weights: `NativeUITrainer/focus_ring_runs/fdr001/weights/{best,last}.pt` (~10.2 MB each).
 
-**Torch eval (FOCUS-DET-04, not CoreML):** test_n=270 (135 pairs). tp=135 fp=0 tn=135 fn=0. accuracy=1.0 FPR=0 FNR=0 P/R@0.85=1.0. Reports: `NativeUITrainer/focus_ring_runs/fdr001/export/focus_ring_detector_{eval,hard_negative_eval}.json`. Hard-negative split is empty (all harvested frames `theme=dark`); the hard-neg FPR gate is vacuously true. Geometric pair labels (area ratio / IoU) likely make this split easy — do not treat 100% as VoiceOver-vs-focus proof.
+**Torch eval:** test_n=270 (135 pairs). tp=135 fp=0 tn=135 fn=0. accuracy=1.0 FPR=0 FNR=0 P/R@0.85=1.0. Reports: `NativeUITrainer/focus_ring_runs/fdr001/export/focus_ring_detector_{eval,hard_negative_eval}.json`. Hard-negative split is empty (all harvested frames `theme=dark`); the hard-neg FPR gate is vacuously true. Geometric pair labels (area ratio / IoU) likely make this split easy — do not treat 100% as VoiceOver-vs-focus proof.
 
-**CoreML export:** blocked. `.venv-coreml` is not present; `import coremltools` in `.venv-yolo` hangs (same class of issue as BP-47). Do not copy `.mlmodelc`.
+**CoreML export (FOCUS-DET-04, 2026-09-18):** First attempt hung (`import coremltools` in `.venv-yolo`; ONNX path also needs a missing `onnx` package). `export_focus_ring_coreml.py` was rewritten to `torch.jit.trace` → `ct.convert` (coremltools 9.0, TorchScript dialect). `FocusRingDetector.mlpackage` = **4.80 MB** (≤5.0 PASS). Compiled with `xcrun coremlc compile` into `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/FocusRingDetector.mlmodelc`. `Package.swift` copies that resource. Tests require URL, load, `focusThreshold`/`ambiguityThreshold` metadata, and a unit-interval `classify` on bundled `tvos_home_screen.png`.
+
+Do not replace bundled v0.1 until FOCUS-DET-05 records a non-vacuous hard-neg FPR.
 
 
