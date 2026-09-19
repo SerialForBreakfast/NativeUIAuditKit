@@ -924,3 +924,42 @@ Only boot a new simulator after confirming no conflicting instance is already ru
 
 **Why:** In a prior session, two tvOS 26.5 simulators were already Booted when the plan called for booting tvOS 17.2 — the plan was written from an earlier `simctl list` snapshot, not the live state. Always re-check the live state immediately before any `simctl boot` or `simctl install` command. Treating the plan's captured state as current is a class of bug that causes unnecessary simulator restarts and potential data loss in already-running sessions.
 
+---
+
+### BP-50: An evaluation script's default checkpoint is not the current baseline
+
+**Wrong:** Plan a Run 009 baseline evaluation using `eval_phase6a.py` defaults. Inspection on 2026-09-19 found `WEIGHTS_DIR` still points at Run 007.
+
+**Correct:** Resolve the intended checkpoint explicitly, record its hash in the evaluation manifest, and tie metrics and predictions to that identity. Recheck the script before execution; prose titles do not establish provenance.
+
+**Why:** A valid evaluation of older weights can silently become mislabeled baseline evidence, invalidating candidate comparisons. Evidence: `scripts/eval_phase6a.py:WEIGHTS_DIR`; worker packet P1 addresses the interface.
+
+---
+
+### BP-51: Separate configuration preflight from training smoke execution
+
+**Wrong:** The initial offline plan described `train_ios_model.py --dry-run` as preparation without recognizing that it executes training. Source inspection shows two epochs on 5% of data with warmup disabled and other settings changed.
+
+**Correct:** Use a dedicated validation-only mode for configuration readiness. Treat the existing dry-run as a real, separately logged smoke experiment. Verify inactive schedule features through configuration tests rather than claiming the smoke run exercised them.
+
+**Why:** Option names do not establish side effects or test coverage. Conflating these modes can start unplanned compute and create false confidence in the full-run schedule. Evidence: `scripts/train_ios_model.py:parse_args/main`; worker packet P5 specifies the separation.
+
+---
+
+### BP-52: A symlink export and surviving metrics do not preserve an evaluation corpus
+
+**Wrong:** Mark the Run 009 baseline runnable because `test.txt`, all labels, and a historical metric report exist. On 2026-09-19, all 2,000 test image entries were broken symlinks; train/validation were also substantially incomplete. The earlier planning readiness check had not verified the image targets. This finding does not establish who removed or moved the source files.
+
+**Correct:** Resolve and validate image/annotation members from manifests before data-dependent work. Record content hashes and source dependencies; preserve source pixels or a verified recoverable copy independently of disposable exports. Missing inputs trigger a recovery assessment, not a silent reduced holdout or regeneration into old paths. If historical corpus identity cannot be established, version the replacement and evaluate both baseline and candidate on it; retain original metrics as historical, non-comparable evidence.
+
+**Why:** Labels, symlinks, and cached metrics cannot reconstruct pixels. Reusing the old corpus name after regeneration can hide changed geometry/rendering and invalidate comparisons. Evidence: `reports/dataset_availability_2026-09-19.md`; operational recovery contract: `Research/DatasetRecoveryPlan.md`.
+
+---
+
+### BP-53: Separate software acceptance from unavailable-data qualification
+
+**Wrong:** Revision-2 planning grouped serializers/comparators/suite builders with full Run 009 execution, leaving combined packets blocked by missing image pixels even though their software could be tested independently. Downstream work waited on whole upstream outcomes when only an interface was needed.
+
+**Correct:** Assign software slices with deterministic fixture-based acceptance and separate real-data/live qualification slices. Review schemas/examples early, pin producer versions, and test compatibility as each side evolves. Explicitly label evidence as synthetic or real and preserve independent integrity/provenance/model gates.
+
+**Why:** This removes unnecessary planning dependencies without treating mocks as production evidence. It is a workflow correction, not a claim of measured throughput improvement. Evidence: ImplementationPlans revisions 2–3 and IterationRoadmap.md; TVTestRig's documented offline validator supports the immediate compatibility workstream.

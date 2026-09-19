@@ -1,0 +1,167 @@
+{
+  "artifactHashes": {
+    "categoryMap": "8d4241b5ec09c0b64fd293c96471d7e36029502f71c78a1ed56090d55d3516ea",
+    "exportReport": "5be6a91bac7851dfce1b7987102bc32ef0c558d137dbcac46afeae5ea6c77bfa",
+    "historicalEval": "1597ec69b4290a085c1f1e28215379689537b7e0a693e0df67302766bb602058",
+    "run009BestCheckpoint": "5e233fac9e035cae9c1cb6e8e53f43d4f7868b28e1ee6b5db5c9cabbe3c223f8",
+    "testManifest": "6411c14856a526c82963a25ae9f06a844c351a3a5fd7615f01140c82840db9d7",
+    "trainManifest": "d72f210f9e904194d7c4e521fcae8423826c34e2cb651fbe483a53b60bb56006",
+    "valManifest": "e1161811c7fabc0137b931083d6fb6318aa5976c4a467d4d0b80c0d4596b1f18"
+  },
+  "candidates": [
+    {
+      "exists": true,
+      "expectedUniqueSourceFiles": 15239,
+      "is_dir": true,
+      "manifestJson": "dataset/dataset/manifest.json",
+      "manifestJsonExists": false,
+      "name": "export_report.source",
+      "path": "dataset/dataset",
+      "presentExamples": [],
+      "presentUniqueSourceFiles": 0
+    },
+    {
+      "exists": true,
+      "expectedUniqueSourceFiles": 15239,
+      "is_dir": true,
+      "manifestJson": "dataset/manifest.json",
+      "manifestJsonExists": false,
+      "name": "in_repo_dataset_parent",
+      "path": "dataset",
+      "presentExamples": [],
+      "presentUniqueSourceFiles": 0
+    },
+    {
+      "exists": false,
+      "expectedUniqueSourceFiles": 15239,
+      "is_dir": false,
+      "manifestJson": "NativeUITrainer/source_dataset/manifest.json",
+      "manifestJsonExists": false,
+      "name": "trainer_source_dataset",
+      "path": "NativeUITrainer/source_dataset",
+      "presentExamples": [],
+      "presentUniqueSourceFiles": 0
+    },
+    {
+      "exists": false,
+      "expectedUniqueSourceFiles": 15239,
+      "is_dir": false,
+      "manifestJson": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset/manifest.json",
+      "manifestJsonExists": false,
+      "name": "documented_sibling_dataset",
+      "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset",
+      "presentExamples": [],
+      "presentUniqueSourceFiles": 0
+    },
+    {
+      "exists": false,
+      "expectedUniqueSourceFiles": 15239,
+      "is_dir": false,
+      "manifestJson": "/Users/josephmccraw/NativeUIAuditKit-Dataset/manifest.json",
+      "manifestJsonExists": false,
+      "name": "documented_home_dataset",
+      "path": "/Users/josephmccraw/NativeUIAuditKit-Dataset",
+      "presentExamples": [],
+      "presentUniqueSourceFiles": 0
+    }
+  ],
+  "generatedAt": "2026-09-19T18:41:56Z",
+  "gitHead": "325e7cf5882c7070829a6696b0a4d498f1d8ed01",
+  "inventory": {
+    "duplicateTargetPaths": 0,
+    "manifestEntries": 17040,
+    "manifestHashes": {
+      "test": "6411c14856a526c82963a25ae9f06a844c351a3a5fd7615f01140c82840db9d7",
+      "train": "d72f210f9e904194d7c4e521fcae8423826c34e2cb651fbe483a53b60bb56006",
+      "val": "e1161811c7fabc0137b931083d6fb6318aa5976c4a467d4d0b80c0d4596b1f18"
+    },
+    "perFileLabelHashes": false,
+    "splitCounts": {
+      "test": {
+        "broken_symlink": 2000,
+        "label_present": 2000
+      },
+      "train": {
+        "broken_symlink": 10543,
+        "label_present": 11984,
+        "resolvable_image": 1441
+      },
+      "val": {
+        "broken_symlink": 2696,
+        "label_present": 3056,
+        "resolvable_image": 360
+      }
+    },
+    "survivingLabelCacheHashes": {
+      "test": "545bde1a5bedb225e7e196472785cc7b57262f14e78b395ca515aa3587a1c263",
+      "train": "3557bcc228836467e06cfc4636fcd00353953af48c81abe3ea7d974ad7417880",
+      "val": "6d335218cece4391e845b1871790d9248eeff5fdce92116d607b745a7bf83734"
+    },
+    "targetPathCount": 15239,
+    "targetPathSample": [
+      [
+        "test/img_000010.png",
+        1
+      ],
+      [
+        "test/img_000020.png",
+        1
+      ],
+      [
+        "test/img_000030.png",
+        1
+      ],
+      [
+        "test/img_000040.png",
+        1
+      ],
+      [
+        "test/img_000050.png",
+        1
+      ],
+      [
+        "test/img_000060.png",
+        1
+      ],
+      [
+        "test/img_000070.png",
+        1
+      ],
+      [
+        "test/img_000080.png",
+        1
+      ],
+      [
+        "test/img_000090.png",
+        1
+      ],
+      [
+        "test/img_000100.png",
+        1
+      ]
+    ],
+    "uniqueManifestPaths": 17040,
+    "uniqueStems": 17040
+  },
+  "inventoryFile": "reports/work/P0/manifest_inventory.jsonl",
+  "knownArtifacts": {
+    "blurredEvalImages": {
+      "classification": "derived blurred outputs; not original holdout pixels",
+      "count": 200,
+      "dimensionsSample": [
+        1179,
+        2556
+      ],
+      "overlapWithTestManifest": 200,
+      "path": "reports/blurred_eval_images"
+    },
+    "historicalPredictionLabels": {
+      "classification": "historical predictions without source image bytes; not recovery candidates",
+      "count": 2000,
+      "overlapWithTestManifest": 2000,
+      "path": "NativeUITrainer/yolo_runs/phase6a_r009_test_pred/labels"
+    }
+  },
+  "provenanceSearchMatches": 124,
+  "recommendation": "No exact original source was found in the bounded documented locations. Request a specific backup/archive location from the maintainer or conduct a separately reviewed replacement-corpus proposal. Do not relink, regenerate, or run evaluation under the historical corpus identity."
+}

@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-18  
+**As of:** 2026-09-19
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -31,13 +31,26 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 | FocusRing v1.0 | Need ≥6,000 pairs and non-vacuous `light`/`highContrast` hard-neg (FOCUS-DET-05). |
 | macOS detector | Phase 6c not started. |
 | Unified iOS+tvOS model | Phase 6b-U not started. Keep separate models until every gate passes. |
+| Badge/42-class expansion | Approved later milestone; 41-class release remains first. No enum/map/model change has shipped. |
 | ScreenAuditKit contract/CLI | TASK-9-2 / 9-3 live in ScreenAuditKit, not this repo's remaining core path. |
 
 ---
 
 ## Current bottleneck
 
-**TASK-6a-10** — full-frame fixture retraining for 41-class iOS. Ingest scripts are written and unit-tested. Live `aatv fixture batch` is blocked on TVTestRig coordinator IPC (`serviceUnavailable`) and on an authorized Office hardware run. Do not retrain on empty sidecars or the model's own `*_result.json` predictions.
+**TASK-6a-10** — full-frame fixture retraining for 41-class iOS. Ingest scripts are written and unit-tested. Coordinator IPC was resolved on 2026-09-18; the later live batch gate is `identity_preflight` / `identityUnavailable` until TVTestRig's adapters attest a shared HarvestIdentity. Office is occupied as of 2026-09-19; an authorized hardware run is a separate prerequisite. See [the recorded evidence](../reports/tvtestrig_feedback_2026-09-18.md). Do not retrain on empty sidecars or the model's own `*_result.json` predictions.
+
+Office-independent work is defined in [ImplementationPlans.md](ImplementationPlans.md); dispatch state lives only in Tasks.md.
+
+The [iteration roadmap](IterationRoadmap.md) separates software acceptance from data/model qualification. H1 producer-contract work, export/selector/preflight software, and recovery assessment are independently dispatchable. TVTestRig has a documented offline bundle-validator lane at inspected revision `586050e`; consumer compatibility remains to be implemented/verified, and passing offline integrity is not trusted capture evidence.
+
+The accepted full backlog is defined as independent revision-4 [worker packets](ImplementationPlans.md),
+including later models and separately owned consumer work. [DeliveryDecisions.md](DeliveryDecisions.md)
+keeps 41-class first, moves badge to a versioned later model, prioritizes FocusRing then macOS
+after DS-G8, and separates software/data/integration/model outcomes. Publishing these plans
+does not mark any worker implementation, experiment or quality gate complete.
+
+**New independent blocker — TASK-DATA-01 (2026-09-19):** Manifest-based inspection found all 2,000 synthetic test links broken, plus 10,543/11,984 training and 2,696/3,056 validation entries with broken image links; corresponding labels survive. The historical Run 009 mAP50=0.585669 report remains intact, but cannot currently be reproduced from this corpus. Missing files do not establish deletion cause. [Evidence](../reports/dataset_availability_2026-09-19.md); [P0 recovery plan](DatasetRecoveryPlan.md). Baseline inference, frozen-suite acceptance, and full training depend on verified corpus readiness; offline tooling and ingest tests can proceed.
 
 FocusRing v0.1 is independent of that bottleneck and is already bundled.
 

@@ -1,0 +1,622 @@
+[
+  {
+    "file": ".agents/skills/nativeui-model-workflow/SKILL.md",
+    "line": 10,
+    "text": "Current snapshot: [`Research/CurrentState.md`](../../../Research/CurrentState.md). Remaining work: [`Tasks.md`](../../../Tasks.md). Archive: [`CompletedTasks.md`](../../../CompletedTasks.md)."
+  },
+  {
+    "file": ".agents/skills/nativeui-model-workflow/SKILL.md",
+    "line": 50,
+    "text": ".venv-yolo/bin/python scripts/export_coco.py --dataset ../NativeUIAuditKit-Dataset"
+  },
+  {
+    "file": "AGENTS.md",
+    "line": 28,
+    "text": "6. `Tasks.md` \u2014 remaining work only (`CompletedTasks.md` is the archive)"
+  },
+  {
+    "file": "AGENTS.md",
+    "line": 109,
+    "text": ".venv-yolo/bin/python scripts/export_coco.py --dataset <path-to-NativeUIAuditKit-Dataset>"
+  },
+  {
+    "file": "AGENTS.md",
+    "line": 292,
+    "text": "- The iOS generator dataset lives **outside** the repository: `NativeUIAuditKit-Dataset/` (path is documented in `Research/NativeUIElementDetection.md` Section 6.2). Do not create that tree inside the package."
+  },
+  {
+    "file": "AGENTS.md",
+    "line": 304,
+    "text": "`NativeUIDetectionError.modelUnavailable` was removed: iOS/tvOS YOLO models are bundled. FocusRing is optional \u2014 `NativeUIModelAsset.loadFocusRingDetector()` returns `nil` when the resource is absent, and `resolveTVOSFocus` falls back to the geometric heuristic. Never silently return empty YOLO detections."
+  },
+  {
+    "file": "CHANGELOG.md",
+    "line": 49,
+    "text": "### Removed"
+  },
+  {
+    "file": "CHANGELOG.md",
+    "line": 51,
+    "text": "  always resolves a bundled model; the case and the test asserting it were removed together."
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 3,
+    "text": "Archive of finished phase work as of 2026-09-18."
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 154,
+    "text": "- No existing class entries removed or renamed"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 598,
+    "text": "    --gt-dir NativeUIAuditKit-Dataset/test/annotations \\"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 628,
+    "text": "    --manifest NativeUIAuditKit-Dataset/manifest.json \\"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 760,
+    "text": "**Produces:** \u2265500 annotated images in `NativeUIAuditKit-Dataset/train/` and `validation/`"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1154,
+    "text": "    --manifest NativeUIAuditKit-Dataset/manifest.json \\"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1155,
+    "text": "    --dataset-dir NativeUIAuditKit-Dataset \\"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1194,
+    "text": "  --dataset <path-to-NativeUIAuditKit-Dataset> \\"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1418,
+    "text": "#### TASK-6d-3: Reassess the NMS pass \u2705 \u2014 kept, not removed"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1471,
+    "text": "stale raw v1 model. Deleting the fallback (TASK-6d-1) removed the hang entirely."
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1480,
+    "text": "- No test asserts `.modelUnavailable` \u2014 the case was removed from `NativeUIDetectionError`"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1492,
+    "text": "Removed the \"Known Limitation\" callouts added when `NativeUIAuditKitModels` shipped ahead of"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1605,
+    "text": "    data=\"NativeUIAuditKit-Dataset/dataset.yaml\",   # COCO-format via export converter"
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 1618,
+    "text": "Write `scripts/export_coco.py` \u2014 converts our custom JSON annotations to COCO format using `category_map.json`, outputs `NativeUIAuditKit-Dataset/dataset.yaml` + `annotations/instances_train.json` + `annotations/instances_val.json`."
+  },
+  {
+    "file": "CompletedTasks.md",
+    "line": 2380,
+    "text": "Manifest: `NativeUIAuditKit-Dataset/focus_ring/focus_dataset_manifest.json`."
+  },
+  {
+    "file": "CoordSpikeRunner/CoordSpikeRunner.xcodeproj/project.pbxproj",
+    "line": 3,
+    "text": "\tarchiveVersion = 1;"
+  },
+  {
+    "file": "CoordSpikeRunner/CoordSpikeRunner.xcodeproj/xcshareddata/xcschemes/CoordSpikeRunner.xcscheme",
+    "line": 83,
+    "text": "   <ArchiveAction"
+  },
+  {
+    "file": "CoordSpikeRunner/CoordSpikeRunner.xcodeproj/xcshareddata/xcschemes/CoordSpikeRunner.xcscheme",
+    "line": 85,
+    "text": "      revealArchiveInOrganizer = \"YES\">"
+  },
+  {
+    "file": "CoordSpikeRunner/CoordSpikeRunner.xcodeproj/xcshareddata/xcschemes/CoordSpikeRunner.xcscheme",
+    "line": 86,
+    "text": "   </ArchiveAction>"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/project.pbxproj",
+    "line": 3,
+    "text": "\tarchiveVersion = 1;"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/xcshareddata/xcschemes/GeneratorRunner.xcscheme",
+    "line": 74,
+    "text": "   <ArchiveAction"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/xcshareddata/xcschemes/GeneratorRunner.xcscheme",
+    "line": 76,
+    "text": "      revealArchiveInOrganizer = \"YES\">"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/xcshareddata/xcschemes/GeneratorRunner.xcscheme",
+    "line": 77,
+    "text": "   </ArchiveAction>"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/xcshareddata/xcschemes/GeneratorRunnerTests.xcscheme",
+    "line": 83,
+    "text": "   <ArchiveAction"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/xcshareddata/xcschemes/GeneratorRunnerTests.xcscheme",
+    "line": 85,
+    "text": "      revealArchiveInOrganizer = \"YES\">"
+  },
+  {
+    "file": "GeneratorRunner/GeneratorRunner.xcodeproj/xcshareddata/xcschemes/GeneratorRunnerTests.xcscheme",
+    "line": 86,
+    "text": "   </ArchiveAction>"
+  },
+  {
+    "file": "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIDetector_v2.mlmodelc/coremldata.bin",
+    "line": 23,
+    "text": "\ufffd\u0001Ultralytics YOLO11n model trained on /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset/dataset.yaml\u0012\u00078.4.124\u001a"
+  },
+  {
+    "file": "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIDetector_v2.mlmodelc/model0/coremldata.bin",
+    "line": 11,
+    "text": "\ufffd\u0001Ultralytics YOLO11n model trained on /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset/dataset.yaml\u0012\u00078.4.124\u001a"
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Sources/ContentCorpus.swift",
+    "line": 252,
+    "text": "        \"Send Message\", \"Reply\", \"Forward\", \"Archive\", \"Mark Read\","
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Sources/ContentCorpus.swift",
+    "line": 309,
+    "text": "        \"Pending approval\", \"Under review\", \"Completed\", \"Draft\", \"Archived\","
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Sources/ContentCorpus.swift",
+    "line": 317,
+    "text": "        \"512 GB used\", \"2.4 GB remaining\", \"Synced\", \"Backup complete\", \"Uploading...\","
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Sources/main.swift",
+    "line": 21,
+    "text": "//     --output /path/to/NativeUIAuditKit-Dataset \\"
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Sources/main.swift",
+    "line": 345,
+    "text": "        --output /path/to/NativeUIAuditKit-Dataset \\\\"
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Sources/main.swift",
+    "line": 361,
+    "text": "        --output ~/NativeUIAuditKit-Dataset"
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift",
+    "line": 62,
+    "text": "    private static let filterOptions = [\"All\", \"Unread\", \"Flagged\", \"Archived\", \"Deleted\"]"
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Templates/ToolbarActionsTemplate.swift",
+    "line": 63,
+    "text": "        ToolbarAction(label: \"Archive\",   iconName: \"archivebox\"),"
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Templates/UIKitToggleFormViewController.swift",
+    "line": 119,
+    "text": "        \"iCloud Backup\", \"iCloud Drive\", \"iCloud Photos\", \"Find My iPhone\","
+  },
+  {
+    "file": "NativeUIDatasetGenerator/Templates/iPadSidebarTemplate.swift",
+    "line": 64,
+    "text": "        (\"Archive\",     \"archivebox.fill\"),"
+  },
+  {
+    "file": "NativeUITrainer/Sources/main.swift",
+    "line": 27,
+    "text": "    /// deleted from dataset/train/ after a prior run and you have already"
+  },
+  {
+    "file": "NativeUITrainer/export_6a.log",
+    "line": 6,
+    "text": "WARNING \u26a0\ufe0f 'int8' is deprecated and will be removed in the future. Use 'quantize' instead."
+  },
+  {
+    "file": "NativeUITrainer/export_6a.log",
+    "line": 54,
+    "text": "WARNING \u26a0\ufe0f 'int8' is deprecated and will be removed in the future. Use 'quantize' instead."
+  },
+  {
+    "file": "NativeUITrainer/gen_6a8_smoke.log",
+    "line": 929,
+    "text": "    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/Info.plist --temp-dir-path /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Intermediates.noindex/GeneratorR"
+  },
+  {
+    "file": "NativeUITrainer/gen_6a8_smoke.log",
+    "line": 981,
+    "text": "    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Build/Products/Debug-iphonesimulator/GeneratorRunner.app/PlugIns/GeneratorRunnerTests.xctest/Info.plist --temp-dir-path /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/xcode-dd/Bu"
+  },
+  {
+    "file": "NativeUITrainer/training_6a_dryrun.log",
+    "line": 53,
+    "text": "\u001b[34m\u001b[1mval: \u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013580.png: 1 duplicate labels removed"
+  },
+  {
+    "file": "NativeUITrainer/training_6a_dryrun.log",
+    "line": 54,
+    "text": "\u001b[34m\u001b[1mval: \u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013589.png: 1 duplicate labels removed"
+  },
+  {
+    "file": "NativeUITrainer/training_6a_dryrun.log",
+    "line": 55,
+    "text": "\u001b[34m\u001b[1mval: \u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013619.png: 1 duplicate labels removed"
+  },
+  {
+    "file": "NativeUITrainer/training_6a_dryrun.log",
+    "line": 56,
+    "text": "\u001b[34m\u001b[1mval: \u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013669.png: 1 duplicate labels removed"
+  },
+  {
+    "file": "PROVENANCE.md",
+    "line": 67,
+    "text": "| SwiftUI/UIKit synthetic generator output (`NativeUIDatasetGenerator`, `GeneratorRunner`) | Procedurally rendered iOS/iPadOS screens; all text from a seeded fake-content corpus (`ContentCorpus.swift`) | iOS/iPadOS training (all runs through Run 009) | No \u2014 lives in the external `NativeUIAuditKit-Dataset/` store, not this repo |"
+  },
+  {
+    "file": "README.md",
+    "line": 5,
+    "text": "**Current state:** see [`Research/CurrentState.md`](Research/CurrentState.md). Shipped detectors: iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template"
+  },
+  {
+    "file": "README.md",
+    "line": 204,
+    "text": "  [--skip-export]   # use when source train/ PNGs have been deleted after a prior run"
+  },
+  {
+    "file": "README.md",
+    "line": 233,
+    "text": "\u251c\u2500\u2500 CompletedTasks.md                      \u2190 finished phase archive"
+  },
+  {
+    "file": "Research/ADR-0006-Training-Iteration-Efficiency.md",
+    "line": 26,
+    "text": "5. **Filesystem stalls** when tools traverse flat directories containing tens of thousands of images (e.g. `dataset/dataset/train`)."
+  },
+  {
+    "file": "Research/ADR-0006-Training-Iteration-Efficiency.md",
+    "line": 46,
+    "text": "| **Checkpoint I/O** | `save_period=1` (writes ~154MB every epoch, ~15GB/run) | `save_period=5` (snapshot every 5 epochs) | `save_period=-1` (save only `last.pt` & `best.pt`) | **`save_period=-1`** (with `last.prev.pt` backup) |"
+  },
+  {
+    "file": "Research/ADR-0006-Training-Iteration-Efficiency.md",
+    "line": 84,
+    "text": "- **Decision:** Mandate text file manifests (`train.txt`, `val.txt`, `test.txt`) for all dataset ingestion, class-weight calculation, and YOLO training pipelines. Prohibit calls to `os.listdir()`, `Path.glob()`, or `iterdir()` on large flat directories such as `dataset/dataset/train`."
+  },
+  {
+    "file": "Research/BestPractices.md",
+    "line": 708,
+    "text": "**Correct:** For production runs (Run 009+), set `save_period=-1` (or `5`) and `plots=False`. Keep `last.pt`, `best.pt`, and the `last.prev.pt` backup hook. Rely on `results.csv` for real-time loss/mAP tracking, and generate visual evaluation plots only after training finishes."
+  },
+  {
+    "file": "Research/BestPractices.md",
+    "line": 716,
+    "text": "**Wrong:** Call `os.listdir()`, `Path.glob(\"*\")`, or `iterdir()` on `dataset/dataset/train` or other large flat export directories."
+  },
+  {
+    "file": "Research/BestPractices.md",
+    "line": 951,
+    "text": "**Wrong:** Mark the Run 009 baseline runnable because `test.txt`, all labels, and a historical metric report exist. On 2026-09-19, all 2,000 test image entries were broken symlinks; train/validation were also substantially incomplete. The earlier planning readiness check had not verified the image targets. This finding does not establish who removed or moved the source files."
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 11,
+    "text": "**Permitted in the first assignment:** Read-only source/backup discovery, provenance analysis, and additive reports under `reports/work/P0/`. A small diagnostic script under `scripts/` is allowed if needed after mandatory pre-code reading. Do not change dataset links, labels, source images, exporters, or report metrics. No recovery software installation, volume mounting, system snapshots/restores,"
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 18,
+    "text": "2. Identify the original dataset locations from research/export metadata. Check those exact paths and known source manifests, documented archives, and explicitly available backup locations read-only. Use manifest-driven candidate lookup rather than recursively scanning large trees or the user's home. An external source may be read; all agent-created copies/reports must stay in-project."
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 19,
+    "text": "3. Search relevant checked-in docs/logs for relocation or cleanup records. Git cannot recover ignored PNGs merely because labels or export scripts are tracked. Do not assign responsibility from a missing path or timestamps. Request a specific backup/archive location from the maintainer only when bounded evidence-based discovery is exhausted."
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 27,
+    "text": "If suitable sources are found, prepare a concrete copy/relink plan in a new in-project corpus directory. Prefer independent recoverable image copies for the evaluation set over links into a disposable generator tree. Retain existing manifests, labels, and broken links as evidence; no in-place overwrite. External backup/system restore remains a maintainer operation when required."
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 45,
+    "text": "1. Pin generator revision, rendering OS/device/scale, seeds, template families, frozen 41-class taxonomy and split algorithm. Resolve the original dataset-location rule before generation: all agent-created outputs go to an approved in-project reconstruction/export location under NativeUITrainer, never a nested NativeUIAuditKit-Dataset tree or an external original. Any required external producer op"
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 48,
+    "text": "4. Establish retention owner, immutable membership and a verified recovery procedure; an in-checkout copy is not an independent backup. External backup creation needs its own authorized workflow."
+  },
+  {
+    "file": "Research/DatasetRecoveryPlan.md",
+    "line": 64,
+    "text": "Before resuming expensive work, document ownership and retention of source corpora, the dependency from exports to symlink targets, an immutable content manifest, and a tested recovery path. A symlink export is not a backup. Do not delete any source tree until all dependent datasets and evaluation records are accounted for and the maintainer explicitly authorizes the exact deletion. Copying data e"
+  },
+  {
+    "file": "Research/ExperimentLog.md",
+    "line": 241,
+    "text": "| Toggle strip-only + conf\u22650.95 raises AP 0.745\u21920.850 AND improves recall \u2014 cross-pass near-dups eliminated | 379 full-image FPs + 258 near-dups removed with zero cost | Run 004 v3/v4 eval |"
+  },
+  {
+    "file": "Research/ExperimentLog.md",
+    "line": 357,
+    "text": "- `--skip-export` flag: source train/ PNGs deleted after Run 003; used `augment_createml_export.py` instead"
+  },
+  {
+    "file": "Research/ExperimentLog.md",
+    "line": 374,
+    "text": "Source train/ PNGs deleted after Run 003 to reclaim disk space. Full re-export of 18,563 images was not feasible. Instead, `scripts/augment_createml_export.py` was written to:"
+  },
+  {
+    "file": "Research/ExperimentLog.md",
+    "line": 433,
+    "text": "navBar regressed 0.845 \u2192 0.7745 in Run 005. Diagnostic (`diagnose_class_fps.swift`) confirmed 478 false-class FPs at strip y=0.15\u20130.55 (content area \u2014 model predicting navBar in middle of screen). TP conf mean=0.999, FP conf mean=0.899. Applying conf\u22650.95 reduces predictions 1661\u21921508 but AP unchanged at 0.7745 (lost TPs and removed FPs cancel in PR curve). navBar threshold reverted. Root cause is"
+  },
+  {
+    "file": "Research/ExperimentLog.md",
+    "line": 710,
+    "text": "- Checkpoints: `save_period=-1` (ADR-0006 D1, saves only `best.pt` and `last.pt`, with `last.prev.pt` backup; saves ~15 GB disk writes)"
+  },
+  {
+    "file": "Research/FocusRingDetectorSpec.md",
+    "line": 90,
+    "text": "The harvest script default remains `NativeUIAuditKit-Dataset/focus_ring/` (outside this package). Do not commit either tree."
+  },
+  {
+    "file": "Research/FocusRingDetectorSpec.md",
+    "line": 92,
+    "text": "Default harvest *input* is the in-tree fixture cache `dataset/tvos_fixture_captures/` (gitignored). Harvest never lists `dataset/dataset/train`."
+  },
+  {
+    "file": "Research/NativeUIElementDetection.md",
+    "line": 67,
+    "text": "PNG-only mode using `VNCoreMLRequest` targets day-one adopters who have existing screenshot archives but no paired metadata. It is useful but carries a caveat: confidence is moderate, and major OS visual refreshes require model retraining."
+  },
+  {
+    "file": "Research/NativeUIElementDetection.md",
+    "line": 278,
+    "text": "NativeUIAuditKit-Dataset/        (lives outside the package repo \u2014 gitignored or separate store)"
+  },
+  {
+    "file": "Research/NativeUIElementDetection.md",
+    "line": 722,
+    "text": "Shipped compiled models live in `NativeUIAuditKitModels` (`NativeUIDetector_v2.mlmodelc`, `NativeUIModel_tvOS.mlmodelc`, `FocusRingDetector.mlmodelc`). `NativeUIDetectionError.modelUnavailable` was removed: YOLO models are bundled. FocusRing is optional (`loadFocusRingDetector()` \u2192 `nil` falls back to the geometric heuristic). Never silently return empty YOLO detections."
+  },
+  {
+    "file": "Research/NativeUIElementDetection.md",
+    "line": 1019,
+    "text": "### RICO (Removed and Irrelevant for Apple Chrome)"
+  },
+  {
+    "file": "Research/PhaseMap.md",
+    "line": 5,
+    "text": "**Archive:** [`../CompletedTasks.md`](../CompletedTasks.md)"
+  },
+  {
+    "file": "Research/PhaseMap.md",
+    "line": 7,
+    "text": "Production phase gates remain binding. Within Phase 6a, software slices are independently acceptable; missing hardware/data blocks qualification, not all development. [IterationRoadmap.md](IterationRoadmap.md) defines lanes and [ImplementationPlans.md](ImplementationPlans.md) defines slice contracts. Historical task write-ups live in the archive, not in Tasks.md."
+  },
+  {
+    "file": "Research/TrainingDataSetSizeEstimations.md",
+    "line": 346,
+    "text": "### 2. Archive completed phases before generating the next"
+  },
+  {
+    "file": "Research/TrainingDataSetSizeEstimations.md",
+    "line": 351,
+    "text": "# Example: archive Phase 3+4 images into a single .tar.zst"
+  },
+  {
+    "file": "Research/TrainingDataStrategy.md",
+    "line": 524,
+    "text": "- Stored in `NativeUIAuditKit-Dataset/golden_real_world/` \u2014 never committed to any repository"
+  },
+  {
+    "file": "Research/TrainingRunbook.md",
+    "line": 102,
+    "text": "  --dataset <path-to-NativeUIAuditKit-Dataset> \\"
+  },
+  {
+    "file": "Research/TrainingRunbook.md",
+    "line": 243,
+    "text": "4. Archive TASK-6-5 and TASK-6-6 into `CompletedTasks.md` (already done for the shipped v2.0 detector)"
+  },
+  {
+    "file": "Research/WorkerWorkflow.md",
+    "line": 58,
+    "text": "Dataset readiness requires resolving actual image bytes and validating annotations, not just finding manifests, labels, caches, or old metric reports. Before dispatching data-dependent work, verify the needed split is complete. Preserve symlink targets as source dependencies; no cleanup of source trees or broken links without a reviewed dependency/recovery inventory and exact maintainer authorizat"
+  },
+  {
+    "file": "Tasks.md",
+    "line": 84,
+    "text": "- [~] P0-A: inventory source/link/provenance evidence and locate candidate originals/backups read-only; review-ready evidence in [`reports/work/P0/assessment.md`](reports/work/P0/assessment.md)"
+  },
+  {
+    "file": "reports/blurred_eval_images.cache",
+    "line": 3,
+    "text": "_reconstruct\ufffd\ufffd\ufffd\ufffd\u0005numpy\ufffd\ufffd\u0007ndarray\ufffd\ufffd\ufffdK\u0000\ufffd\ufffdC\u0001b\ufffd\ufffd\ufffdR\ufffd(K\u0001)h\u0003\ufffd\u0005dtype\ufffd\ufffd\ufffd\ufffd\u0002O8\ufffd\ufffd\ufffd\ufffd\ufffdR\ufffd(K\u0003\ufffd\u0001|\ufffdNNNJ\ufffd\ufffd\ufffd\ufffdJ\ufffd\ufffd\ufffd\ufffdK?t\ufffdb\ufffd]\ufffd}\ufffd(\ufffd\u0006labels\ufffd]\ufffd(}\ufffd(\ufffd\u0007im_file\ufffd\ufffd`/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/blurred_eval_images/img_001801.png\ufffd\ufffd\u0005shape\ufffdM\ufffd\tM\ufffd\u0004\ufffd\ufffd\ufffd\u0003cls\ufffdh\u0002h\u0005K\u0000\ufffd\ufffdh\u0007\ufffd\ufffdR\ufffd(K\u0001K\u0000K\u0001\ufffd\ufffdh"
+  },
+  {
+    "file": "reports/dataset_availability_2026-09-19.md",
+    "line": 15,
+    "text": "`dataset/dataset/train/` does not exist at inspection time. `dataset/dataset/validation/` exists; its existence alone says nothing about recoverable image content. The representative test link `test/images/img_001801.png` points to the absent `dataset/dataset/train/img_001801.png` under this checkout. Full target inventory and recovery-source search remain future work."
+  },
+  {
+    "file": "reports/dataset_availability_2026-09-19.md",
+    "line": 30,
+    "text": "- Whether source files were deleted, moved, are on an unavailable volume, or exist in a backup/other checkout."
+  },
+  {
+    "file": "reports/dataset_availability_2026-09-19.md",
+    "line": 32,
+    "text": "- Whether original per-image hashes or an immutable corpus archive survive."
+  },
+  {
+    "file": "scripts/__pycache__/centroid_distribution.cpython-313.pyc",
+    "line": 47,
+    "text": "    python scripts/centroid_distribution.py         --manifest NativeUIAuditKit-Dataset/manifest.json         --gt-dir NativeUIAuditKit-Dataset/train/annotations         --pred-dir runs/detect/predict/labels         --category-map Research/schemas/category_map.json         --output reports/centroid_bias_v1.json"
+  },
+  {
+    "file": "scripts/__pycache__/export_coco.cpython-313.pyc",
+    "line": 44,
+    "text": "  .venv-yolo/bin/python scripts/export_coco.py --dataset /path/to/NativeUIAuditKit-Dataset"
+  },
+  {
+    "file": "scripts/__pycache__/export_coco.cpython-313.pyc",
+    "line": 89,
+    "text": "N\ufffd\u0010NATIVEUI_DATASET\ufffd\u0007datasetz\u0018NativeUIAuditKit-Datasetr\u0007\u0000\u0000\u0000\ufffd\u000esource_dataset\ufffd"
+  },
+  {
+    "file": "scripts/augment_createml_export.py",
+    "line": 11,
+    "text": "  After Run 003 training the source train/ PNGs were deleted from the"
+  },
+  {
+    "file": "scripts/centroid_distribution.py",
+    "line": 6,
+    "text": "        --manifest NativeUIAuditKit-Dataset/manifest.json \\"
+  },
+  {
+    "file": "scripts/centroid_distribution.py",
+    "line": 7,
+    "text": "        --gt-dir NativeUIAuditKit-Dataset/train/annotations \\"
+  },
+  {
+    "file": "scripts/confusion_matrix.py",
+    "line": 6,
+    "text": "        --gt-dir NativeUIAuditKit-Dataset/test/annotations \\"
+  },
+  {
+    "file": "scripts/eval_focus_ring_detector.py",
+    "line": 10,
+    "text": "      --dataset ../NativeUIAuditKit-Dataset/focus_ring \\\\"
+  },
+  {
+    "file": "scripts/eval_focus_ring_detector.py",
+    "line": 33,
+    "text": "DEFAULT_DATASET = PROJECT_ROOT.parent / \"NativeUIAuditKit-Dataset\" / \"focus_ring\""
+  },
+  {
+    "file": "scripts/export_coco.py",
+    "line": 21,
+    "text": "  .venv-yolo/bin/python scripts/export_coco.py --dataset /path/to/NativeUIAuditKit-Dataset"
+  },
+  {
+    "file": "scripts/export_coco.py",
+    "line": 72,
+    "text": "            PROJECT_ROOT.parent / \"NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "scripts/export_coco.py",
+    "line": 73,
+    "text": "            Path.home() / \"NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "scripts/generate_balance_report.py",
+    "line": 10,
+    "text": "        --manifest NativeUIAuditKit-Dataset/manifest.json \\\\"
+  },
+  {
+    "file": "scripts/harvest_focus_pairs.py",
+    "line": 14,
+    "text": "Crops and the extract-mode manifest default to `../NativeUIAuditKit-Dataset/focus_ring/`."
+  },
+  {
+    "file": "scripts/harvest_focus_pairs.py",
+    "line": 16,
+    "text": "`--dry-run` never writes. Do not pass `dataset/dataset/train`."
+  },
+  {
+    "file": "scripts/harvest_focus_pairs.py",
+    "line": 41,
+    "text": "DEFAULT_OUTPUT = PROJECT_ROOT.parent / \"NativeUIAuditKit-Dataset\" / \"focus_ring\""
+  },
+  {
+    "file": "scripts/harvest_focus_pairs.py",
+    "line": 101,
+    "text": "        help=\"Manifest/crop root (defaults to sibling NativeUIAuditKit-Dataset/focus_ring)\","
+  },
+  {
+    "file": "scripts/harvest_focus_pairs.py",
+    "line": 339,
+    "text": "    return \"dataset/dataset/train\" in str(output)"
+  },
+  {
+    "file": "scripts/merge_generator_batch.py",
+    "line": 3,
+    "text": "merge_generator_batch.py \u2014 Merge a simulator generation batch into dataset/dataset."
+  },
+  {
+    "file": "scripts/merge_generator_batch.py",
+    "line": 14,
+    "text": "    --source <sim Documents/dataset> --dest dataset/dataset"
+  },
+  {
+    "file": "scripts/run_phase6a8_regen.sh",
+    "line": 3,
+    "text": "# dataset/dataset, then stop. Export + Run 008 are separate so a failed merge"
+  },
+  {
+    "file": "scripts/run_phase6a8_regen.sh",
+    "line": 50,
+    "text": "  --dest \"$PROJECT_ROOT/dataset/dataset\" \\"
+  },
+  {
+    "file": "scripts/train_focus_ring_detector.py",
+    "line": 12,
+    "text": "      --dataset ../NativeUIAuditKit-Dataset/focus_ring --name fdr001"
+  },
+  {
+    "file": "scripts/train_focus_ring_detector.py",
+    "line": 34,
+    "text": "DEFAULT_DATASET = PROJECT_ROOT.parent / \"NativeUIAuditKit-Dataset\" / \"focus_ring\""
+  },
+  {
+    "file": "scripts/train_ios_model.py",
+    "line": 188,
+    "text": "    def _backup_last_pt(trainer) -> None:"
+  },
+  {
+    "file": "scripts/train_ios_model.py",
+    "line": 194,
+    "text": "    model.add_callback(\"on_model_save\", _backup_last_pt)"
+  },
+  {
+    "file": "scripts/train_tvos_model.py",
+    "line": 95,
+    "text": "    def _backup_last_pt(trainer) -> None:"
+  },
+  {
+    "file": "scripts/train_tvos_model.py",
+    "line": 100,
+    "text": "    model.add_callback(\"on_model_save\", _backup_last_pt)"
+  }
+]

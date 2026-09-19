@@ -3,6 +3,65 @@
 Open work only. Finished phases: [`CompletedTasks.md`](CompletedTasks.md).  
 Current snapshot: [`Research/CurrentState.md`](Research/CurrentState.md).  
 Streams: [`Research/PhaseMap.md`](Research/PhaseMap.md).
+Full-backlog contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md). Accepted decisions: [`Research/DeliveryDecisions.md`](Research/DeliveryDecisions.md).
+
+## Worker packet queue
+
+Dispatch contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md).
+Workflow: [`Research/WorkerWorkflow.md`](Research/WorkerWorkflow.md). Owner is unassigned until dispatch.
+These packets refine the parent tasks below; accepting preparation does not close their live-data gates.
+
+Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch preference, not a requirement to finish an earlier row. Accept software slices separately from real-data qualification. All owners below are unassigned.
+
+| Priority | Packet | Parent | State | Prerequisite / next action |
+|---|---|---|---|---|
+| 1 | H1 | INTEGRATION-01 | ready | Pin producer source/version/examples; no hardware |
+| 2 | P1-A | 6a-11 | ready | Export software; publish example contract early |
+| 3 | P0-A | DATA-01 | review | Concurrent worker supplied [handoff](reports/work/P0/handoff.md); evidence acceptance pending; do not redispatch overlapping edits |
+| 4 | P4-A | INTEGRATION-01 / 6a-10 | ready (draft development) | H1 required for final compatibility acceptance |
+| 5 | P5-A | 6a-10 | ready | Validation-only configuration and negative-data tests |
+| 6 | P3-A | 6a-11 | ready | Regression selector on toy corpus |
+| 7 | P2-A | 6a-11 | draft | Reviewed P1-A interface, not full inference |
+| 8 | P4-B | 6a-10 | draft | Reviewed normalized-corpus interface |
+| — | P0-B | DATA-01 | blocked | P0-A recovery evidence and exact authorized staged-copy plan |
+| — | P0-C | DATA-01 | blocked | P0-A originals unrecoverable; reviewed versioned reconstruction configuration |
+| — | P1-B | 6a-11 | blocked | P1-A and eligible original/replacement test pixels |
+| — | P2-B | 6a-11 | blocked | P2-A and accepted P1-B artifacts |
+| — | P3-B | 6a-11 | blocked | P3-A, eligible corpus, compatible P1/P2 software |
+| — | P4-L | INTEGRATION-01 | blocked | P4-A and genuine completed bundle/identity; capture authority if needed |
+| — | P5-B | 6a-10 | blocked | Eligible full corpora and accepted assembly/config interfaces |
+| — | TRAIN-S | 6a-10 | blocked | P5-B and explicit bounded smoke assignment |
+| — | TRAIN-F | 6a-10 | blocked | Accepted smoke and full-run assignment |
+| — | TRAIN-Q | 6a-10 | blocked | Candidate plus eligible dual holdouts |
+| — | FR-A | FOCUS-DET-05 | ready | Offline coverage checks and metadata reconciliation |
+| — | FR-B | FOCUS-DET-05 | blocked | FR-A and authorized available Office capture |
+| — | FR-C | FOCUS-DET-05 | blocked | Eligible quota-complete corpus and run/export assignment |
+| — | R-A | 6b-R-1 | ready | Inventory and reviewed capture matrix |
+| — | R-B | 6b-R-1 | blocked | R-A and authorized device/app window |
+| — | R-C | 6b-R-1 | blocked | Complete qualified capture manifest; mAP additionally requires genuine boxes |
+| — | MAC-A | 6c-1 | blocked | Documented DS-G8 pass |
+| — | MAC-B | 6c-2 | blocked | Accepted coordinate spike |
+| — | MAC-C | 6c-2 | blocked | Eligible macOS corpus and experiment assignment |
+| — | BADGE-A | BADGE-01 | ready (specification) | Append-only mapping/decoder contract; preserve current 41-class outputs |
+| — | BADGE-B | BADGE-01 | blocked | Accepted 41-class milestone, badge contract and new corpus |
+| — | CROP-A | 6a-12 | blocked | Accepted full-frame 6a-10 baseline |
+| — | CROP-B | 6a-12 | blocked | Frozen crop evaluation and experiment assignment |
+| — | UNI-A | 6b-U | draft | Eligible platform corpora, dedicated baselines and deployment budgets |
+| — | UNI-B | 6b-U | blocked | Accepted unified readiness and experiment assignment |
+| — | TV-I1 | INTEGRATION-01 | external proposal | TVTestRig owner assigns identity lifecycle work |
+| — | TV-I2 | INTEGRATION-01 | external proposal | TVTestRig owner assigns offline artifact publication |
+| — | SA-A | 9-2 | external proposal | ScreenAuditKit owner assigns contracts/fake-backed rules |
+| — | SA-B | 9-3 | external proposal | Consumer injection interface and dependency assignment |
+| — | DOC-A | DOC-01 | ready (permitted docs) | Protected skill edits require filesystem authority |
+| — | REL-A | DIST-02 | blocked | Qualified selected-model evidence |
+| — | REL-B | DIST-02 | maintainer-gated | Accepted release evidence and exact promotion/tag authority |
+| — | HIST-A | DIST-01 | ready (assessment only) | No history mutation; maintainer controls decision/execution |
+
+No new owners are assigned by this planning update. A concurrent P0-A handoff arrived during
+the documentation pass; its evidence awaits review and the assessment script was not edited
+or executed by this architect task. Its presence is not proof of acceptance. Each handoff separately
+reports software verified / data eligible / integration qualified / model gate passed. None of
+these outcomes is asserted by publishing this queue.
 
 ## Status
 
@@ -15,19 +74,54 @@ Do not put architecture notes, run logs, or IPC war stories in this file. Those 
 
 ---
 
+## TASK-DATA-01: Phase 6a dataset recovery and preservation [!]
+
+Evidence: [2026-09-19 inspection](reports/dataset_availability_2026-09-19.md).
+Contract: [P0 recovery assessment and staged recovery](Research/DatasetRecoveryPlan.md).
+All 2,000 test image links are broken; 10,543 training and 2,696 validation links are also broken.
+Cause is unknown. Preserve existing manifests, labels, links, and historical metrics.
+
+- [~] P0-A: inventory source/link/provenance evidence and locate candidate originals/backups read-only; review-ready evidence in [`reports/work/P0/assessment.md`](reports/work/P0/assessment.md)
+- [ ] Architect reviews exact recovery plan or replacement-corpus proposal
+- [ ] P0-B (separate assignment): stage and verify recoverable pixels/annotations without overwriting historical artifacts
+- [ ] P0-C (fallback): versioned reconstruction with new annotations/baseline if originals cannot be recovered
+- [ ] Record independent test-corpus and training-corpus readiness; uncertain/regenerated identity uses a new corpus version
+- [ ] Establish content manifest, retention ownership, and recovery verification before expensive evaluation/training
+
+**AC:** Every required corpus member has verified image/annotation evidence, or the unrecoverable original is explicitly documented and a separately reviewed replacement protocol is established. No real-data downstream gate closes on a plan or labels alone.
+
+---
+
+## TASK-INTEGRATION-01: Incremental TVTestRig compatibility [ ]
+
+Contract: [TVTestRigIntegrationContract.md](Research/TVTestRigIntegrationContract.md).
+TVTestRig owns producer implementation and its queue; this task owns NUA consumer compatibility.
+
+- [ ] H1: pin source versions, wire/schema expectations, small offline positive/negative cases
+- [ ] P4-A: consumer validates/normalizes those cases; offline integrity never implies trusted capture
+- [ ] Record supported producer versions and actionable incompatibility reports on each relevant change
+- [ ] P4-L: validate one genuine completed bundle once identity/export prerequisites are met
+
+**AC:** Software compatibility can be accepted independently of hardware/model quality. Live compatibility requires genuine evidence for a named producer revision. No new weights are required for producer/consumer iteration.
+
+---
+
 ## TASK-6a-10: Full-frame fixture retraining (41-class iOS) [!]
 
 **Blocked on live TVTestRig batch output.** Ingest code is ready. Do not train on empty sidecars or `*_result.json` (model self-predictions). Format and IPC notes: [`Research/FixtureBatchIngest.md`](Research/FixtureBatchIngest.md).
 
+**Additional data blocker (2026-09-19):** Phase 6a train/validation/test images are incomplete; TASK-DATA-01 must establish eligible corpora before assembly, training, or holdout evaluation.
+
 **Requires:** Run 009 diagnosis (holdout mAP@0.5 = 0.586, DS-G8 ≥ 0.850). BP-32.
 
 - [x] `scripts/ingest_fixture_batch.py` + `scripts/test_ingest_fixture_batch.py` (16/16)
-- [x] Coordinator IPC unblocked (2026-09-18): using the running TVTestRig.app's own `aatv` binary (not a stale local build) with `HOME` pointed at `NativeUITrainer/.tmp/aatv_home` (symlinked to the real container socket, per `Research/FixtureBatchIngest.md`), `aatv status`/`device list`/`device connect --device-id 8D80F616-...`/`fixture env` all succeeded against real "office" hardware (tvOS 26.6, `AppleTV5,3`). Sandboxed coordinator can only read/write inside its own container — recipes and output dir must live under `~/Library/Containers/com.showblender.TVTestRig/Data/...`, not the checkout.
-- [!] **New blocker, not the old one:** `aatv fixture batch` itself fails at a later stage — `identity_preflight` / `identityUnavailable`. Per TVTestRig commit `586050e` ("CHR-04–10: version harvest bundles, bind identity, fail closed without attestation"), landed 2026-09-18: production wiring now *requires* the HTTP and IPC adapters to jointly attest a shared `HarvestIdentity` before any capture; neither adapter does that yet, so it fails closed — **"There is no CLI bypass"** (TVTestRig's own words). This is deliberate, not a bug to route around. Real progress (coordinator + sandbox path requirements) written up; this specific gate is now the sole blocker. See `reports/tvtestrig_feedback_2026-09-18.md`.
+- [x] Coordinator IPC resolved in the recorded 2026-09-18 investigation; historical procedures are not current operating instructions
+- [!] Live batch identity attestation remains a capture blocker; missing synthetic pixels and Office/export access are independent blockers. Evidence: [TVTestRig feedback](reports/tvtestrig_feedback_2026-09-18.md)
 - [ ] Authorized Office `aatv fixture batch` — blocked until TVTestRig wires up `HarvestIdentity` attestation for its HTTP/IPC adapters; re-verify ingest against that output once it exists
 - [ ] Blend fixture corpus with Phase 6a synthetic set; retrain from Run 009 `best.pt`, 150 epochs, cosine annealing + warmup
 - [ ] Evaluate on TVTestRig `held-out` split **and** synthetic withheld-template holdout
-- [ ] Per-class AP on small controls (toggle, stepper, badge) ≥ 0.88
+- [ ] Per-class AP50 on toggle and stepperControl ≥ 0.88; badge belongs to the later TASK-BADGE-01 milestone
+- [ ] TRAIN-S / TRAIN-F / TRAIN-Q evidence accepted separately; no automatic experiment reruns
 
 **AC:** mAP@0.5 ≥ 0.94 and mAP@0.5:0.95 ≥ 0.78 on the fixture holdout; DS-G8 reassessed on both holdouts before shipping 41-class weights.
 
@@ -36,6 +130,8 @@ Do not put architecture notes, run logs, or IPC war stories in this file. Those 
 ## TASK-6a-11: Multi-corpus PyTorch reference eval [~]
 
 **Requires:** a 6a-10 candidate, or continue using Run 009 weights as the baseline.
+
+**Actual baseline inference blocked:** TASK-DATA-01 must restore/establish usable test pixels. Existing aggregate metrics are historical and must not be reported as current corpus availability. Serializer/comparison tests can continue offline.
 
 - [x] `scripts/eval_reference_metrics.py` + `reports/pytorch_reference_metrics.json` (SHA-256 `226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405`)
 - [x] Honest `available: false` for the three corpora that do not exist yet
@@ -50,7 +146,7 @@ Do not put architecture notes, run logs, or IPC war stories in this file. Those 
 
 - [ ] Mosaic + random-crop aug (0.6×–1.0× bounding areas) as a **fork**, not the default
 - [ ] Frozen partial-crop holdout, never merged into the full-frame holdout
-- [ ] Full-frame mAP must not regress > 1.0 pt vs 6a-10; crop-holdout mAP improves ≥ 15%
+- [ ] Full-frame mAP50 loss ≤1.0 percentage point vs 6a-10; crop mAP50 relative gain ≥15% (zero baseline requires a reviewed gate amendment)
 - [ ] Measure and document in `Research/TrainingDataStrategy.md` that resizing a crop to 1920×1080 does not reconstruct missing full-frame context
 
 ---
@@ -70,11 +166,24 @@ v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingD
 - [ ] ≥6,000 labeled pairs (or Fixture RPC when it exists)
 - [ ] Mix: `gridMatrix` ≥ 2,000, `mediaShelf` ≥ 1,500, `settingsList` ≥ 1,000, `actionDialog` / `heroCarousel` / `focusMaze` ≥ 500 each
 - [ ] ≥ 20% `light` and ≥ 20% `highContrast` in `gridMatrix` + `mediaShelf`
-- [ ] Hard-negative n ≥ 100 (`light`+`highContrast` × `imageView`+`collectionItem`)
+- [ ] Held-out hard-negative n ≥100 across `light`/`highContrast` × `imageView`/`collectionItem`; every combination nonempty with separate counts/results
 - [ ] All six quality gates, including **non-vacuous** hard-neg FPR ≤ 0.5%
 - [ ] Replace bundled `.mlmodelc` only after those gates pass
 
 Office live harvest only. No Home / Select / Settings crawl (BP-40). IPC: [`Research/FixtureBatchIngest.md`](Research/FixtureBatchIngest.md).
+
+---
+
+## TASK-BADGE-01: Versioned badge taxonomy and later model [ ]
+
+Separate next model milestone; the current 41-class release does not wait on it.
+Contracts: BADGE-A / BADGE-B in [model packets](Research/Plans/ModelsAndHardware.md).
+
+- [ ] Define notification/status dot/count badge semantics and append category ID 41 without changing IDs 0–40
+- [ ] Version taxonomy/library/dataset and make decoding use each model's declared category map
+- [ ] Preserve legacy 41-class annotations/models and add producer/consumer compatibility fixtures
+- [ ] After the 41-class milestone, generate paired badge annotations and train a separately identified 42-class candidate
+- [ ] Badge AP50 ≥0.88 on supported holdouts plus applicable full-frame gates; report existing classes separately
 
 ---
 
@@ -124,6 +233,18 @@ Keep separate shipped models unless every gate passes.
 
 - [ ] `screenaudit validate --native-ui none|coreml` (default `none`)
 - [ ] Missing models package → clear error, exit 1
+
+---
+
+## TASK-DOC-01: Documentation and skill consistency [ ]
+
+Contract: DOC-A in [maintenance packets](Research/Plans/ConsumersAndRelease.md).
+
+- [ ] Correct historical inference advice without changing shipped YOLO letterboxing
+- [ ] Clarify prediction diagnostics are not training annotations
+- [ ] Reconcile FocusRing artifact metadata with qualification milestone labels
+- [ ] Correct stale phase/section references and validate changed links/skills
+- [ ] Complete protected skill changes only through the permitted filesystem workflow
 
 ---
 

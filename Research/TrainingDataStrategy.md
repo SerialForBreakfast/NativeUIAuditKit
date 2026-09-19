@@ -9,6 +9,12 @@
 
 ## Summary of Key Decisions
 
+**Delivery amendment, 2026-09-19:** [DeliveryDecisions.md](DeliveryDecisions.md) records accepted
+recovery/reconstruction, 41-class-first, later badge, crop-metric and priority decisions. It
+supersedes conflicting historical planning text on those points; it does not claim new data,
+schemas, weights or measurements. Current phase dispatch follows PhaseMap/Tasks, not the
+historical milestone table below where later phases have already shipped.
+
 | Decision | Choice | Rationale |
 |---|---|---|
 | Taxonomy size | ~41 classes | Original 27 was missing common native elements (see Section 1) |
@@ -251,6 +257,11 @@ Adjacent chrome elements must have non-overlapping, gap-free boundaries:
 
 ## 6. Partial Image Captures
 
+The later TASK-6a-12 fork begins only after the accepted full-frame baseline. Its frozen crop
+holdout uses crop-area fraction 0.6–1.0. Require relative crop mAP50 gain ≥15% and absolute
+full-frame mAP50 loss ≤0.01. A zero baseline leaves the relative gate undefined and requires
+a documented amendment; it is not an automatic pass. See DeliveryDecisions.md for the formula.
+
 ### 6.1 Annotation rules
 
 **P1 — Clip to image boundary:** Box coordinates must not exceed `[0, pixelWidth] × [0, pixelHeight]`.
@@ -441,7 +452,11 @@ Sweep 8 hue families per template: red, orange, yellow, green, teal, blue, purpl
 
 ### 11.3 Tab bar badges
 
-20% of tab bar instances with badge on first item, 10% middle, 10% last. Values: "9", "99+", "100+", red dot (no number). Annotate badge within the enclosing `tabBar` box — not a separate class.
+For the frozen 41-class corpus: 20% of tab bar instances with badge on first item, 10% middle,
+10% last. Values: "9", "99+", "100+", red dot (no number). Badge remains within the enclosing
+tabBar annotation, not a separate class. The approved later BADGE-A/B corpus adds separate
+generator-direct badge boxes while retaining parent annotations, new taxonomy/dataset versions
+and explicit model maps; it must not relabel historical 41-class data in place.
 
 ### 11.4 Status bar content variation
 

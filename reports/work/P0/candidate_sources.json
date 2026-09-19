@@ -1,0 +1,57 @@
+[
+  {
+    "exists": true,
+    "expectedUniqueSourceFiles": 15239,
+    "is_dir": true,
+    "manifestJson": "dataset/dataset/manifest.json",
+    "manifestJsonExists": false,
+    "name": "export_report.source",
+    "path": "dataset/dataset",
+    "presentExamples": [],
+    "presentUniqueSourceFiles": 0
+  },
+  {
+    "exists": true,
+    "expectedUniqueSourceFiles": 15239,
+    "is_dir": true,
+    "manifestJson": "dataset/manifest.json",
+    "manifestJsonExists": false,
+    "name": "in_repo_dataset_parent",
+    "path": "dataset",
+    "presentExamples": [],
+    "presentUniqueSourceFiles": 0
+  },
+  {
+    "exists": false,
+    "expectedUniqueSourceFiles": 15239,
+    "is_dir": false,
+    "manifestJson": "NativeUITrainer/source_dataset/manifest.json",
+    "manifestJsonExists": false,
+    "name": "trainer_source_dataset",
+    "path": "NativeUITrainer/source_dataset",
+    "presentExamples": [],
+    "presentUniqueSourceFiles": 0
+  },
+  {
+    "exists": false,
+    "expectedUniqueSourceFiles": 15239,
+    "is_dir": false,
+    "manifestJson": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset/manifest.json",
+    "manifestJsonExists": false,
+    "name": "documented_sibling_dataset",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset",
+    "presentExamples": [],
+    "presentUniqueSourceFiles": 0
+  },
+  {
+    "exists": false,
+    "expectedUniqueSourceFiles": 15239,
+    "is_dir": false,
+    "manifestJson": "/Users/josephmccraw/NativeUIAuditKit-Dataset/manifest.json",
+    "manifestJsonExists": false,
+    "name": "documented_home_dataset",
+    "path": "/Users/josephmccraw/NativeUIAuditKit-Dataset",
+    "presentExamples": [],
+    "presentUniqueSourceFiles": 0
+  }
+]

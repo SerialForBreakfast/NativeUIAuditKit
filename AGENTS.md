@@ -164,6 +164,14 @@ why it matters. Do not pad the document with obvious advice.
 
 ## Workspace Skills
 
+For assigned implementation packets, use the repository-maintained
+[`nativeui-worker-execution`](Research/WorkerExecution/SKILL.md) skill and
+[`WorkerWorkflow.md`](Research/WorkerWorkflow.md). The architect defines scope and accepts
+evidence; workers implement one assignment and return an evidence-backed handoff. Packet
+state and ownership live in Tasks.md. Plans do not authorize hardware, training, git writes,
+or external mutations beyond their explicit assignment. This workflow does not waive the
+mandatory pre-code reading sequence above.
+
 The repository maintains specialized agentic skills in `.agents/skills/` to codify operational procedures and prevent repeating known failures:
 
 | Skill | Path | When to Use |
@@ -183,7 +191,8 @@ The research documents are the source of truth for architectural decisions. If y
 - Change the sidecar schema → update Section 6 first and bump the schema version
 - Change a training approach → update Section 8 first, and add an entry to `Research/ExperimentLog.md`
 
-If a research section is wrong or outdated, correct it in a separate commit before acting on it.
+If a research section is wrong or outdated, correct it as a separate, reviewable documentation
+change before acting on it. The maintainer commits; agents must not commit to satisfy this rule.
 
 ---
 

@@ -1,10 +1,17 @@
 # NativeUIAuditKit — Phase Map
 
-**As of:** 2026-09-18  
+**As of:** 2026-09-19
 **Open work:** [`../Tasks.md`](../Tasks.md)  
 **Archive:** [`../CompletedTasks.md`](../CompletedTasks.md)
 
-Dependency order is still binding: do not start Phase N+1 until Phase N's gate is documented. Historical task write-ups live in the archive, not in `Tasks.md`.
+Production phase gates remain binding. Within Phase 6a, software slices are independently acceptable; missing hardware/data blocks qualification, not all development. [IterationRoadmap.md](IterationRoadmap.md) defines lanes and [ImplementationPlans.md](ImplementationPlans.md) defines slice contracts. Historical task write-ups live in the archive, not in Tasks.md.
+
+Full-backlog dispatch uses revision-4 packets and the maintainer-approved DeliveryDecisions.
+First: H1, P1-A, P0-A, P4-A, P5-A. Hardware priority: small compatibility batch → FocusRing →
+real tvOS holdout → larger fixture collection. After DS-G8 prioritize macOS; badge specification
+is independent but its 42-class candidate follows the 41-class milestone. Crop/unified work has
+lower priority and keeps its own gates. ScreenAuditKit fake-backed integration is independently
+assignable in its own repository. Release of qualified 41-class weights does not wait for all branches.
 
 ```
 Phases 0–5b ✅
@@ -18,9 +25,13 @@ Phases 0–5b ✅
 
 Phase 6a (41-class iOS) — in progress, 41-class weights not shipped
   Run 009 holdout mAP@0.5 = 0.586 (DS-G8 fail)
-  └─ TASK-6a-10: fixture retraining          [!] data/IPC blocked
-       ├─ TASK-6a-11: multi-corpus eval      [~] 1 of 4 corpora exist
-       └─ TASK-6a-12: partial-crop fork      [ ] after 6a-10 baseline
+  ├─ Evaluation software: P1-A, P2-A, P3-A      independent of missing pixels
+  ├─ Harvest compatibility: H1, P4-A, P4-B     offline producer/consumer cases
+  ├─ Dataset recovery: P0-A → reviewed P0-B    independent recovery lane
+  ├─ Training preparation: P5-A               no-training preflight
+  ├─ Real baseline/suite: P1-B/P2-B/P3-B       needs eligible recovered/rebuilt test corpus
+  └─ TASK-6a-10: full fixture retraining      needs eligible synthetic + fixture corpora
+       └─ TASK-6a-12: partial-crop fork         after 6a-10 baseline
 
 Phase 6b tvOS ✅ v3.0 shipped
   ├─ 6b-S / T / WP1 / E ✅
@@ -31,13 +42,18 @@ Phase 6b tvOS ✅ v3.0 shipped
   └─ 6b-U unified iOS+tvOS model                [ ]
 
 Phase 6c macOS                                      [ ]
+Later badge model: BADGE-A → BADGE-B (after 41-class milestone)
 ```
 
-Independent of 6a (can proceed without shipping 41-class weights):
+Independent of shipping new 41-class weights (each retains its own prerequisites):
 
 - FOCUS-DET-05 (needs Office live harvest, `light`/`highContrast`)
 - TASK-6b-R-1 scale-out (needs hardware)
 - Track 3: PROVENANCE history-rewrite decision; next git tag blocked on 6a-10
-- Phase 6c (spec says it requires the 6a gate; do not start until that is explicit)
+- TVTestRig producer identity/contract tests and application integration with already shipped models (owned in TVTestRig)
+
+Phase 6c is **not independent**: it remains blocked on DS-G8. The partial-crop fork remains blocked on 6a-10. No software-slice completion substitutes for either gate.
+
+The original synthetic test corpus currently has zero resolvable pixels; historical metrics survive but are not a runnable corpus. Live fixture qualification separately awaits identity attestation, available/authorized Office hardware, and a compliant export path. These blockers converge only at real evaluation/training; they do not serialize all software work.
 
 Generator layout rules from Phase 1 live in [`CoordinateSpike.md`](CoordinateSpike.md) and [`BestPractices.md`](BestPractices.md) (BP-01–BP-04), not in `Tasks.md`.

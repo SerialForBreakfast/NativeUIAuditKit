@@ -6,8 +6,21 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 
 | File | What it is |
 |---|---|
+| [`WorkerWorkflow.md`](WorkerWorkflow.md) | Architect/worker roles, safety, context budget, evidence and acceptance |
+| [`IterationRoadmap.md`](IterationRoadmap.md) | Concurrent lanes and separate software/data/model qualification |
+| [`TVTestRigIntegrationContract.md`](TVTestRigIntegrationContract.md) | H1 source-pinned contract loop and P4-L genuine-bundle qualification |
+| [`ImplementationPlans.md`](ImplementationPlans.md) | Full-backlog catalog of individually dispatchable worker packets |
+| [`DeliveryDecisions.md`](DeliveryDecisions.md) | Accepted recovery, taxonomy, metric, priority and release decisions |
+| [`Plans/EvaluationAndTraining.md`](Plans/EvaluationAndTraining.md) | Canonical P1/P2/P3/P4/P5 software and data-readiness packets |
+| [`Plans/ModelsAndHardware.md`](Plans/ModelsAndHardware.md) | Full-frame, FocusRing, real holdout, macOS, badge, crop and unified packets |
+| [`Plans/ConsumersAndRelease.md`](Plans/ConsumersAndRelease.md) | TVTestRig/ScreenAuditKit proposals, maintenance and release packets |
+| [`DatasetRecoveryPlan.md`](DatasetRecoveryPlan.md) | P0 assessment/recovery prerequisite for missing Phase 6a image bytes |
+| [`WorkerExecution/SKILL.md`](WorkerExecution/SKILL.md) | Reusable packet execution/review skill |
+| [`PlanTemplate.md`](PlanTemplate.md) | Template for subsequent implementation packets |
+| [`WorkerKnowledge.md`](WorkerKnowledge.md) | Evidence routing and unresolved guidance conflicts |
 | [`CurrentState.md`](CurrentState.md) | What is shipped, what is not, current bottleneck |
 | [`PhaseMap.md`](PhaseMap.md) | Phase dependency map |
+| [`OfflineTrainingWorkPlan.md`](OfflineTrainingWorkPlan.md) | Office-independent evaluation, regression, ingest, and training preparation plan |
 | [`NativeUIElementDetection.md`](NativeUIElementDetection.md) | Architecture authority |
 | [`BestPractices.md`](BestPractices.md) | Mistakes already made (BP-01–BP-47) |
 | [`ExperimentLog.md`](ExperimentLog.md) | Every training run |

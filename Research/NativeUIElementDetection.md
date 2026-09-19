@@ -169,6 +169,13 @@ exist verbatim in this package. Decision: **do not add either as a new type.**
 
 ## 5. Element Taxonomy v1
 
+**Accepted delivery decision (2026-09-19):** finish the frozen 41-class milestone first.
+The later BADGE-A/B milestone adds a notification/status dot/count badge at category ID 41,
+preserving IDs 0–40, existing raw values and legacy model decoding. It requires versioned
+taxonomy/library/dataset artifacts and model-declared category maps; current runtime artifacts
+are not changed by this decision. See [DeliveryDecisions.md](DeliveryDecisions.md) and
+[BADGE-A](Plans/ModelsAndHardware.md#badge-a--append-only-taxonomy-and-decoder-compatibility).
+
 ### 5.1 Design Principle: Semantic Roles
 
 The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit class names.
@@ -248,6 +255,11 @@ These are derived by audit rules and post-processing, not by the pixel detector:
 ---
 
 ## 6. Dataset Strategy
+
+**Approved preparation work:** P4-A will introduce a separate annotation-schema version for
+tvOS scale 1 while retaining the current version for existing artifacts. P0 uses verified recovery
+or a distinctly versioned reconstruction with new image/annotation pairs and a new baseline.
+No schema file has been migrated by the planning change; see [DeliveryDecisions.md](DeliveryDecisions.md).
 
 ### 6.1 Core Principle: Generate, Don't Annotate
 
@@ -510,6 +522,13 @@ Hard negatives train the model to avoid false positives on visually similar but 
 ---
 
 ## 8. Training
+
+**Current milestone clarification (2026-09-19):** the 41-class full-frame candidate uses Run 009
+best.pt as fresh initialization, a 150-epoch target with cosine/warmup and reviewed effective
+configuration. TASK-6a-10 gates are fixture mAP50 ≥0.94, mAP50:95 ≥0.78, toggle/stepperControl
+AP50 ≥0.88, and synthetic DS-G8 mAP50 ≥0.85. Badge AP belongs to the later 42-class milestone.
+Configuration readiness, smoke training, full training, qualification and promotion are separate
+assignments; this decision launches no experiment. Canonical contracts: [packet catalog](ImplementationPlans.md).
 
 **Current production path:** Ultralytics YOLO11 → CoreML NMS export. Create ML `objectPrint` (Option A) is **retired** for production (Run 006+). Living snapshot: [`CurrentState.md`](CurrentState.md). Run history: [`ExperimentLog.md`](ExperimentLog.md).
 

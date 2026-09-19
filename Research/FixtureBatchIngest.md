@@ -46,7 +46,7 @@ Every JSON sidecar under `dataset/` checked 2026-09-18 (including `tvos_fixture_
 
 ## Current blockers (live batch)
 
-1. **Coordinator IPC.** `aatv fixture batch` needs the TVTestRig macOS coordinator over local IPC, not only the fixture HTTP endpoint. `open TVTestRig.app --args --project <path>` left a live process, but `aatv status` / `doctor` / `fixture batch` returned `serviceUnavailable`. Filed as [`reports/tvtestrig_feedback_2026-09-18.md`](../reports/tvtestrig_feedback_2026-09-18.md). Reproduces on Simulator; not an Office-hardware issue.
+1. **HarvestIdentity attestation.** Coordinator IPC was resolved on 2026-09-18. Batch now fails closed at `identity_preflight` / `identityUnavailable` until the HTTP and IPC adapters attest a shared identity. The older `serviceUnavailable` diagnosis is historical. Evidence: [`reports/tvtestrig_feedback_2026-09-18.md`](../reports/tvtestrig_feedback_2026-09-18.md). No bypass is supported.
 2. **Office hardware.** TVTestRig's own notes: live office harvest is a separate authorized run. Do not trigger it unprompted. Re-verify this ingest format against real batch output before training.
 
 FocusRing live harvest (`scripts/harvest_focus_pairs.py --live`) is a *different* path: N-way navigate inside TVTestRigFixture, container socket via `NativeUITrainer/.tmp/aatv_home`. That path already produced 1,500 pairs. Do not confuse it with `aatv fixture batch`.
@@ -54,6 +54,10 @@ FocusRing live harvest (`scripts/harvest_focus_pairs.py --live`) is a *different
 ---
 
 ## IPC notes (FocusRing / aatv)
+
+These are historical observations, not executable worker instructions. Changing HOME and writing
+into the application container conflict with current operating constraints. Resolve a compliant
+producer/export workflow in a future authorized capture assignment; offline packets do not use this path.
 
 - Coordinator socket lives at `~/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/.tvtr/s`.
 - `aatv --project <checkout>` looks at the repo `.tvtr/s` and reports `serviceUnavailable` for the sandboxed Debug GUI.
