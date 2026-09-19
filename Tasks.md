@@ -97,7 +97,7 @@ Cause is unknown. Preserve existing manifests, labels, links, and historical met
 Contract: [TVTestRigIntegrationContract.md](Research/TVTestRigIntegrationContract.md).
 TVTestRig owns producer implementation and its queue; this task owns NUA consumer compatibility.
 
-- [ ] H1: pin source versions, wire/schema expectations, small offline positive/negative cases
+- [~] H1: source-pinned contract and deterministic offline cases are review-ready in [harvest-compatibility-v1.md](Research/schemas/harvest-compatibility-v1.md); producer bilateral acceptance/live evidence remain pending
 - [ ] P4-A: consumer validates/normalizes those cases; offline integrity never implies trusted capture
 - [ ] Record supported producer versions and actionable incompatibility reports on each relevant change
 - [ ] P4-L: validate one genuine completed bundle once identity/export prerequisites are met

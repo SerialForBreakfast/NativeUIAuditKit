@@ -13,6 +13,8 @@ Read-only inspection of adjacent TVTestRig HEAD `586050e` and `Docs/Testing/harv
 
 Relevant producer sources now live under `TVTestRig/TVTestRig/SyntheticFactory/` relative to that repository: `FixtureBatchHarvestEngine.swift`, `HarvestBundleValidator.swift`, `HarvestIdentity.swift`. Verify the revision/working-tree content when assigned; historical consumer references used a different nesting assumption.
 
+H1's assigned reinspection confirmed that revision `586050e043bddd742c701963650e2fc5815afe36` is clean and that the actual checkout nesting is `TVTestRig/TVTestRig/TVTestRig/SyntheticFactory/`. The source-pinned v1 contract, deterministic case definitions, consumer result envelope, and producer-owner brief are in [harvest-compatibility-v1.md](schemas/harvest-compatibility-v1.md). This remains local NUA agreement only; it does not mark bilateral acceptance or live compatibility.
+
 ## H1 — Pin the current compatibility contract
 
 **Parent:** TASK-INTEGRATION-01. **Scope:** NUA documentation plus tiny offline test-fixture definitions. **Dependencies:** Read access to producer implementation/docs; no Office, original dataset, inference, or completed identity implementation.
