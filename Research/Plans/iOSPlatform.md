@@ -158,4 +158,5 @@ within the dispatched tranche; use commentary for progress, not final promises t
 Preserve existing per-packet handoffs under `reports/work/`; add an integrated summary
 linking them when reviewing a tranche. Report software verified, data eligible,
 integration qualified, and model gate passed separately. Update only actual execution
-state in Tasks.md and publish your owned shared-status entry under AGENTS.md rules.
+state in Tasks.md. Publish shared status only if a specific result affects TVTestRig–NUA
+interaction; ordinary local iOS progress is not applicable and stays in this repository.

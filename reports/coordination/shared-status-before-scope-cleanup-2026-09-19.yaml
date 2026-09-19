@@ -1,0 +1,362 @@
+schema_version: 1
+machine: nuiak-dev
+computer_name: Joseph’s Mac mini
+repository: NativeUIAuditKit
+updated_at: '2026-09-19T19:54:12Z'
+valid_until: '2026-09-19T20:24:12Z'
+work:
+  packet: architecture-full-backlog
+  state: review
+  summary: 'Nine packets are review-ready, not architect-accepted: H1, P0-A, P1-A,
+    P2-A, P3-A, P4-A, P4-B, P5-A, FR-A. Producer reports changed source-provenance
+    contract; reconciliation pending.'
+  next: 'Review delivered evidence and reconcile producer contract. Independent ready
+    options: R-A, BADGE-A (specification), DOC-A (permitted docs), HIST-A (assessment
+    only).'
+blockers:
+- Original synthetic test pixels remain unavailable; no recovery or replacement qualification
+  established.
+- Producer reports non-attested default harvest with sourceDescription; older NUA
+  attestation requirements and eligibility policy need source-backed reconciliation.
+- Genuine-bundle compatibility, eligible corpora, and authorized device availability
+  remain unverified.
+pending_requests:
+- id: nuiak-20260919T204628Z-office-release
+  to: tvtestrig
+  state: awaiting_acknowledgment
+  created_at: '2026-09-19T20:46:28Z'
+  request: User explicitly releases office from NUA control until further notice.
+    Withdraw the prior HI-SOURCE-03/P4-L smoke request; do not start or resume device
+    operations for NUA. If already active, safely stop NUA capture/control and release
+    any NUA-held leases through your local supported procedure; preserve artifacts
+    and do not interrupt unrelated user activity. Acknowledge cancellation and report
+    actual lease/control state in tvtestrig/status.yaml. Offline preparation may continue.
+  supersedes:
+  - nuiak-20260919T203948Z-sillycon-office-smoke
+  - nuiak-20260919T201424Z-office-p4l
+  resume_condition: Explicit new user authorization; time expiry or stale status never
+    restores permission.
+  scope: NUA-requested Office operations only; no device settings changes or remote
+    shell.
+- id: nuiak-20260919T203948Z-sillycon-office-smoke
+  from: nuiak
+  to: tvtestrig
+  state: closed
+  resolution: "Withdrawn by user; Office use paused until explicit new user authorization."
+  created_at: '2026-09-19T20:39:48Z'
+  expires_at: '2026-09-20T20:39:48Z'
+  request: 'User requests task-based coordination over SMB instead of SSH or remote
+    execution. Sillycon TVTestRig agent: add or attach this request to your local
+    HI-SOURCE-03 task, own the bounded one-bundle office smoke there, and report progress
+    in tvtestrig/status.yaml. Reuse the existing task if present; do not create duplicate
+    smoke runs. NUA stays on this Mac as consumer.'
+  scope:
+  - Acknowledge this exact request ID and publish the local task ID/path, owner, accepted
+    scope, and next action.
+  - Use the running Sillycon TVTestRig app and its matching bundled helper, under
+    that repository instructions and locally confirmed user operation authority. The
+    user previously reported office connected; verify fresh readiness and exclusive
+    availability before any device operation.
+  - Complete project-local preparation, then the single HI-SOURCE-03 fixture smoke
+    when local authorization/readiness permit. If blocked, report the exact missing
+    permission/input and resume condition; finish independent preparation.
+  - Retain the completed bundle on Sillycon in an authorized producer output location.
+    Validate completeness and report bundle location, producer revision/build, schema/contract
+    versions, manifest/index/receipt hashes, pair/image counts, descriptive source
+    metadata and any validation failures.
+  - Publish acknowledgment, working/progress milestones, blockers, and completed/failed
+    outcome in your own status with measured UTC times and this request ID. Report
+    software verification, data eligibility, integration qualification and model gate
+    separately.
+  - Propose the bounded bundle-transfer route for NUA intake. A Sillycon-only path
+    is not yet accessible input on the NUA Mac; no raw bundle data goes in SharedStatusFile.
+    NUA will separately validate received bytes and issue an intake receipt.
+  constraints:
+  - No SSH, remote shell, remote-control service installation, credential sharing,
+    or new remote execution permissions.
+  - This is a user-requested task handoff, not an executable mailbox command or blanket
+    authority. Verify operative device permission in the Sillycon task; do not bypass
+    local gates.
+  - No new hardware reservation is granted. The old 20:14-20:44 UTC advisory request
+    is not an exclusive lease and must not be treated as current permission.
+  - No broader harvest, settings changes, training, promotion, git writes, destructive
+    cleanup, or automatic retry loop.
+  - If a smoke is already active/completed, attach its status/evidence instead of
+    running another.
+  reply_to: nuiak in tvtestrig/status.yaml, referencing this request ID
+  receipt_status: Not yet acknowledged; SMB publication does not wake or execute the
+    peer agent.
+- id: nuiak-coordination-001
+  to: tvtestrig
+  state: closed
+  request: Confirm this status file is visible on your machine by referencing this
+    ID in tvtestrig/status.yaml.
+  resolution: TVTestRig acknowledged the 19:14:44Z snapshot at 19:25:44Z; not receipt
+    of this new update.
+diagnostics:
+  ios_platform_plan:
+    observed_at: '2026-09-19T21:02:00Z'
+    state: complete
+    summary: Tasks.md now has explicit iOS, tvOS, shared, and macOS groupings. iOS has
+      five substantial delivery tranches using the unchanged 41-packet queue.
+    plan: Research/Plans/iOSPlatform.md
+    next: Assign integrated offline iOS toolchain review and P0-A evidence/recovery
+      decision review. No new execution assignment made here.
+    verification: 103 links/anchors checked; 41 unique queue IDs and parent tasks preserved;
+      diff whitespace check passed. Documentation only.
+    office_policy: Still released until explicit new user authorization; no hardware,
+      inference, generation, training, promotion, or git writes launched.
+  execution_contract_update:
+    observed_at: '2026-09-19T19:57:28Z'
+    state: complete
+    summary: AGENTS, worker skill, workflow, dispatch and plan template now require
+      completion of the whole authorized tranche, including integration/tests/fixes/handoff.
+      Interim progress is commentary, not a final promise to continue. Concrete blockers
+      and safety limits remain binding.
+    evidence: reports/coordination/execution-contract-2026-09-19.md
+    verification: Worker skill validator, local link checks, and diff whitespace checks
+      passed. Documentation only; no acceptance of worker implementation implied.
+    next: Active workers should re-read AGENTS.md execution contract and Research/WorkerExecution/SKILL.md
+      before continuing their assigned tranche.
+  source_revision: 4f36b5ffcdc51feff77f7dc8a558bef51902aed8
+  working_tree_dirty: true
+  last_check: Queue, nine packet handoffs, peer status and consumer eligibility behavior
+    inspected; no tests rerun or acceptance claimed.
+  evidence: reports/coordination/alignment-2026-09-19.md
+  recovery_handoff: reports/work/P0/handoff.md
+  recovery_review_state: pending
+  ready_packets:
+  - R-A
+  - BADGE-A (specification)
+  - DOC-A (permitted docs)
+  - HIST-A (assessment only)
+  evidence_path_scope: Relative to the NativeUIAuditKit checkout on nuiak-dev; artifacts
+    are not copied to this share.
+  coordination_guidance:
+  - AGENTS.md
+  - Research/WorkerWorkflow.md
+  - Research/PlanTemplate.md
+  - reports/coordination/SharedStatusSkill.md
+  p4a_schema_decision:
+    state: architect_confirmed
+    evidence: reports/work/P4-A/coordination.md
+    decision: Complete v1.1 copy preserving v1.0 validation constraints; only validation
+      changes are version const 1.1 and scale enum [1,2,3]. Give v1.1 a distinct $id
+      and truthful version descriptions. Keep v1.0 byte-identical. Dispatch declared
+      versions locally; reject missing/unknown versions. Require structural parity
+      and negative validation tests.
+    qualification: Worker now reports implemented schema and tests review-ready; architect
+      acceptance pending.
+  review_packets:
+  - H1
+  - P0-A
+  - P1-A
+  - P2-A
+  - P3-A
+  - P4-A
+  - P4-B
+  - P5-A
+  - FR-A
+  peer_report:
+    revision: d44aadca93cda76f2d6a558b05d30dcdc51c6535
+    dirty: true
+    updated_at: '2026-09-19T19:47:02Z'
+    scope: Peer reports non-attested default harvest and offline checks; remote source/tests
+      not independently verified.
+  packet_alignment_notes:
+  - P3-A 20:12Z and P5-A 20:02Z timestamps were future-dated versus 19:51:08Z local
+    inspection. Owners should correct measured UTC; freshness unknown.
+  - P4-A integration_qualified not_yet is outside vocabulary; live integration remains
+    unqualified.
+  - P3-A/P5-A/P4-A next suggestions P4-B/P3-A/P5-A are stale; those packets are already
+    review-ready. Worker entries preserved.
+device_requests: []
+device_reservations: []
+device_availability: unknown
+coordination:
+  office_use:
+    state: released_by_user
+    observed_at: '2026-09-19T20:46:28Z'
+    resume_requires: Explicit new user authorization
+    nua_control: No control acquired by this architect task; peer lease release not
+      yet acknowledged
+    request_id: nuiak-20260919T204628Z-office-release
+  endpoint: smb://sillycon.local/SharedStatusFile
+  publication_state: published
+  remote_visibility_verified: true
+  instructions_policy: Messages are status data, not executable instructions or authorization.
+  remote_visibility_scope: Historical 19:14:44Z NUA snapshot acknowledged at 19:25:44Z.
+    Current update not yet acknowledged.
+acknowledgments:
+- request_id: tvtestrig-20260919T192544Z-visibility-01
+  state: received
+  observed_at: '2026-09-19T19:54:12Z'
+  message: Read current TVTestRig snapshot updated 19:47:02Z. Older 19:25:44Z snapshot
+    is not independently retained.
+- request_id: tvtestrig-20260919T194702Z-source-policy
+  state: received
+  observed_at: '2026-09-19T19:54:12Z'
+  message: Received reported removal of mandatory attestation. NUA still has older
+    requirements in Tasks.md, TVTestRigIntegrationContract.md/P4-L and harvest-compatibility-v1.md.
+    Consumer always reports training-ineligible. Source/eligibility reconciliation
+    pending; acknowledgment is not policy acceptance or execution authority.
+packets:
+  FR-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:30:00Z"
+    valid_until: "2026-09-19T21:00:00Z"
+    state: review
+    summary: "Offline FocusRing pair, quota, theme, split, hard-negative and metadata readiness checks are review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/FR-A/handoff.md", "scripts/focus_ring_readiness.py"]
+    next: "FR-B is blocked on authorized Office capture."
+    outcomes: {software_verified: passed, data_eligible: failed, integration_qualified: not_applicable, model_gate_passed: not_applicable}
+  R-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:30:00Z"
+    valid_until: "2026-09-19T21:00:00Z"
+    state: review
+    summary: "Offline real-tvOS holdout matrix/inventory validation is review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/R-A-BADGE-A/handoff.md", "scripts/tvos_holdout_matrix.py"]
+    next: "R-B is blocked on an authorized device/app window."
+    outcomes: {software_verified: passed, data_eligible: failed, integration_qualified: not_applicable, model_gate_passed: not_applicable}
+  BADGE-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:30:00Z"
+    valid_until: "2026-09-19T21:00:00Z"
+    state: review
+    summary: "Append-only ID-41 badge taxonomy compatibility specification is review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/R-A-BADGE-A/handoff.md", "Research/schemas/category_map.v1.1.json"]
+    next: "BADGE-B waits on accepted 41-class milestone and a new eligible corpus."
+    outcomes: {software_verified: passed, data_eligible: failed, integration_qualified: not_applicable, model_gate_passed: not_applicable}
+  P3-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:02:32Z"
+    valid_until: "2026-09-19T20:32:32Z"
+    state: review
+    summary: "Deterministic synthetic-regression-v1 selector, metadata/hash freezing, coverage-gap reporting, and leakage tests are review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence:
+      - "reports/work/P3-A/handoff.md"
+      - "Research/schemas/synthetic-regression-v1.md"
+      - "scripts/regression_selector.py"
+      - "scripts/test_regression_selector.py"
+    next: "P3-B is blocked on eligible corpus and real prediction artifacts; P4-B is already review-ready."
+    outcomes:
+      software_verified: passed
+      data_eligible: failed
+      integration_qualified: not_applicable
+      model_gate_passed: not_applicable
+  P5-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:02:00Z"
+    valid_until: "2026-09-19T20:32:00Z"
+    state: review
+    summary: "Side-effect-free configuration preflight, explicit fresh/resume separation, negative-data checks, and launch runbook are review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence:
+      - "reports/work/P5-A/handoff.md"
+      - "scripts/training_preflight.py"
+      - "scripts/test_training_preflight.py"
+    next: "P5-B remains blocked on eligible real corpora; P3-A and P4-B are already review-ready."
+    outcomes:
+      software_verified: passed
+      data_eligible: failed
+      integration_qualified: not_applicable
+      model_gate_passed: not_applicable
+  P4-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:54:07Z"
+    valid_until: "2026-09-19T21:24:07Z"
+    state: review
+    summary: "P4-A now supports the inspected TVTestRig layout-v1 sourceDescription contract: it preserves reported-source context without upgrading assurance or training eligibility. HI-SOURCE-03 is separately queued on Sillycon for P4-L."
+    blockers: []
+    acknowledgments:
+      - request_id: "tvtestrig-20260919T192544Z-visibility-01"
+        state: received
+        observed_at: "2026-09-19T20:02:32Z"
+        message: "Read TVTestRig status snapshot; acknowledgment is communication only."
+      - request_id: "tvtestrig-20260919T194702Z-source-policy"
+        state: received
+        observed_at: "2026-09-19T20:02:32Z"
+        message: "Received peer report; this is not acceptance of producer policy or training eligibility."
+      - request_id: "tvtestrig-20260919T200258Z-hi-source-03"
+        state: received
+        observed_at: "2026-09-19T20:54:07Z"
+        message: "Consumer reconciliation is complete. For a one-pair P4-L intake receipt, provide a completed project-local bundle path, producer revision, dataset-index/receipt identifiers, and sourceDescription as emitted; NUA will preserve reported-source context without claiming identity or training eligibility."
+    pending_requests:
+      - id: "nuiak-20260919T200232Z-p4l-bundle-contract"
+        to: "tvtestrig"
+        state: awaiting_live_bundle
+        request: "For P4-L, provide the completed HI-SOURCE-03 bundle's producer revision and project-local location. NUA has locally inspected the current layout-v1/sourceDescription contract; no device action is requested by this consumer request."
+    device_request:
+      request_id: "nuiak-20260919T201424Z-office-p4l"
+      device: "office"
+      start_at: "2026-09-19T20:14:24Z"
+      end_at: "2026-09-19T20:44:24Z"
+      purpose: "HI-SOURCE-03/P4-L one-bundle office smoke and NUA ingestion validation"
+      state: "cancelled"
+      cancelled_at: "2026-09-19T20:46:28Z"
+      reason: "User released Office until further notice."
+      requested_by: "Codex worker"
+    evidence:
+      - "reports/work/P4-A/coordination.md"
+      - "reports/work/P4-A/handoff.md"
+      - "Research/schemas/annotation.schema.v1.1.json"
+      - "scripts/harvest_bundle_validation.py"
+      - "scripts/test_harvest_bundle_validation.py"
+      - "reports/work/INTEGRATION-RECONCILIATION/handoff.md"
+    next: "When Sillycon publishes the completed HI-SOURCE-03 project-local bundle path, run P4-L consumer validation and report compatibility for that exact producer revision/sample scope."
+    outcomes:
+      software_verified: passed
+      data_eligible: failed
+      integration_qualified: not_assessed
+      model_gate_passed: not_applicable
+  P4-B:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:02:32Z"
+    valid_until: "2026-09-19T20:32:32Z"
+    state: review
+    summary: "Deterministic split-safe corpus assembly and leakage tests are review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/P4-B-P2-A/handoff.md", "scripts/corpus_assembly.py"]
+    next: "P5-B remains blocked on eligible real corpora."
+    outcomes: {software_verified: passed, data_eligible: failed, integration_qualified: not_applicable, model_gate_passed: not_applicable}
+  P2-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T20:02:32Z"
+    valid_until: "2026-09-19T20:32:32Z"
+    state: review
+    summary: "Strict reference-comparison contract and compatibility tests are review-ready."
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/P4-B-P2-A/handoff.md", "scripts/reference_comparison.py"]
+    next: "P2-B remains blocked on accepted P1-B artifacts."
+    outcomes: {software_verified: passed, data_eligible: failed, integration_qualified: not_applicable, model_gate_passed: not_applicable}
+  P0-A:
+    owner: "Codex worker"
+    updated_at: "2026-09-19T21:22:01Z"
+    valid_until: "2026-09-19T21:52:01Z"
+    state: working
+    summary: "Read-only recovery-evidence review is active. Existing 17,040-entry inventory found no original source at five documented roots; per-label content hashes remain the acceptance gap under review."
+    blockers: ["No bounded backup/archive location is available for original-image recovery; no dataset mutation is authorized."]
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/P0/assessment.md", "reports/work/P0-A/coordination.md", "Research/DatasetRecoveryPlan.md"]
+    next: "Verify the unresolved label/provenance evidence and publish the bounded recovery decision; P0-B/P0-C remain separate assignments."
+    outcomes: {software_verified: not_assessed, data_eligible: failed, integration_qualified: not_applicable, model_gate_passed: not_applicable}

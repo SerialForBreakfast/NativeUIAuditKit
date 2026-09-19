@@ -1017,3 +1017,22 @@ explicit unavailable state.
 the actual emitted layout and schema catches it without misrepresenting toy data
 as an eligible corpus or starting a model run. Evidence: integrated offline
 toolchain review, 2026-09-19.
+
+---
+
+### BP-57: Make large preservation inventories resumable without rewriting sources
+
+**Wrong:** Treat a split-level cache hash as every label's identity after a
+large-file inventory stalls, or rerun a report generator that overwrites prior
+recovery evidence just to resume an interrupted scan.
+
+**Correct:** Derive rows only from the frozen manifests, keep every source path
+read-only, write uniquely named in-project chunks with no-overwrite behavior,
+and finalize only after exact membership and duplicate-content validation. Report partial
+coverage and measured filesystem limits plainly; do not substitute cache hashes
+or filename claims for missing content hashes.
+
+**Why:** Recovery decisions require durable evidence while preserving the
+historical corpus. Resumable additive chunks allow bounded progress without
+converting an I/O limitation into a false identity claim. Evidence: P0-A label
+identity review, 2026-09-19.

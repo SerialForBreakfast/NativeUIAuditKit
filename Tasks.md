@@ -117,7 +117,7 @@ Contract: [P0 recovery assessment and staged recovery](Research/DatasetRecoveryP
 All 2,000 test image links are broken; 10,543 training and 2,696 validation links are also broken.
 Cause is unknown. Preserve existing manifests, labels, links, and historical metrics.
 
-- [~] P0-A: inventory source/link/provenance evidence and locate candidate originals/backups read-only; review-ready evidence in [`reports/work/P0/assessment.md`](reports/work/P0/assessment.md)
+- [!] P0-A: bounded recovery review found 0/15,239 expected originals at five documented roots; per-label identity evidence is partially verified (11,415/17,040) but local filesystem stalls prevent completion. See [`P0-A handoff`](reports/work/P0-A/handoff.md); do not dispatch P0-B/P0-C without the listed authority.
 - [ ] Architect reviews exact recovery plan or replacement-corpus proposal
 - [ ] P0-B (separate assignment): stage and verify recoverable pixels/annotations without overwriting historical artifacts
 - [ ] P0-C (fallback): versioned reconstruction with new annotations/baseline if originals cannot be recovered

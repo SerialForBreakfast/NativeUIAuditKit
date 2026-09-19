@@ -65,8 +65,8 @@
       "presentUniqueSourceFiles": 0
     }
   ],
-  "generatedAt": "2026-09-19T18:41:56Z",
-  "gitHead": "325e7cf5882c7070829a6696b0a4d498f1d8ed01",
+  "generatedAt": "2026-09-19T21:57:06Z",
+  "gitHead": "f7844b43704288a50866136699195274fc8b4f6a",
   "inventory": {
     "duplicateTargetPaths": 0,
     "manifestEntries": 17040,
@@ -75,7 +75,6 @@
       "train": "d72f210f9e904194d7c4e521fcae8423826c34e2cb651fbe483a53b60bb56006",
       "val": "e1161811c7fabc0137b931083d6fb6318aa5976c4a467d4d0b80c0d4596b1f18"
     },
-    "perFileLabelHashes": false,
     "splitCounts": {
       "test": {
         "broken_symlink": 2000,
@@ -83,19 +82,16 @@
       },
       "train": {
         "broken_symlink": 10543,
-        "label_present": 11984,
+        "label_missing": 1440,
+        "label_present": 10544,
         "resolvable_image": 1441
       },
       "val": {
         "broken_symlink": 2696,
-        "label_present": 3056,
+        "label_missing": 360,
+        "label_present": 2696,
         "resolvable_image": 360
       }
-    },
-    "survivingLabelCacheHashes": {
-      "test": "545bde1a5bedb225e7e196472785cc7b57262f14e78b395ca515aa3587a1c263",
-      "train": "3557bcc228836467e06cfc4636fcd00353953af48c81abe3ea7d974ad7417880",
-      "val": "6d335218cece4391e845b1871790d9248eeff5fdce92116d607b745a7bf83734"
     },
     "targetPathCount": 15239,
     "targetPathSample": [
@@ -162,6 +158,6 @@
       "path": "NativeUITrainer/yolo_runs/phase6a_r009_test_pred/labels"
     }
   },
-  "provenanceSearchMatches": 124,
+  "provenanceSearchMatches": 291,
   "recommendation": "No exact original source was found in the bounded documented locations. Request a specific backup/archive location from the maintainer or conduct a separately reviewed replacement-corpus proposal. Do not relink, regenerate, or run evaluation under the historical corpus identity."
 }

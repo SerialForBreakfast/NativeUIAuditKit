@@ -66,7 +66,9 @@ For shared checkouts, record a single owner for each overlapping implementation 
 
 Follow AGENTS.md's shared-status section and the repository copy of
 [SharedStatusSkill.md](../reports/coordination/SharedStatusSkill.md). Provide an update
-at assignment start, meaningful progress/blocker changes, and handoff. Assigned NUA
+only for TVTestRig–NUA interaction at relevant assignment start, meaningful changes,
+and handoff. Local-only iOS development, recovery, tests, and planning remain in the
+repository; coordination is not applicable and needs no SMB attempt. Assigned NUA
 workers publish directly to their own `packets.<packet-id>` entry in the exact shared
 `nuiak/status.yaml` file. No coordinator relay is required. Preserve all other entries
 and top-level summary fields; use the guide's bounded conflict-handling procedure.
@@ -132,7 +134,7 @@ authorized workspace for evidence and supplies a reference; no cross-repository 
 4. Remaining risks, scope deviations, and exact blocker/resume condition if any.
 5. New learning: evidence and destination in BestPractices.md, or a knowledge issue if still unconfirmed.
 6. A short continuation checkpoint: completed work, next concrete action, running process IDs if any, and files that must not be overwritten.
-7. Coordination entry/draft path and delivery state: unpublished (with reason) or published (with readback evidence). Peer acknowledgment is reported separately; no coordinator approval is needed.
+7. For TVTestRig–NUA interaction only: coordination entry/draft path and delivery state, unpublished (with reason) or published (with readback evidence). Otherwise not applicable; no SMB attempt required. Peer acknowledgment is separate; no coordinator approval is needed.
 8. Whole-assignment completion check: each included packet/criterion is evidenced or has an exact blocker; state why the turn can end with no safe authorized work remaining. For a tranche, retain per-packet evidence and one integrated summary, not a new status queue.
 
 For an incremental slice, also record the contract revision, whether evidence is synthetic/real, accepted capability boundaries, and the next ready slice. Integrity, capture provenance, corpus eligibility, and model quality are separate claims. A contract change includes updated compatibility cases and affected consumers; no worker waits for an entire phase when only a reviewed schema is needed.

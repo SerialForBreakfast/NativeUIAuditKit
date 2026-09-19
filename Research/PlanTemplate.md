@@ -12,7 +12,7 @@ Owning repository: <value>. Canonical catalog link: <ImplementationPlans entry>.
 - In scope / explicit non-goals:
 - Allowed implementation files and additive outputs:
 - Authorized operations (local edits, tests, inference, smoke run):
-- Coordination: direct worker update to shared `nuiak/status.yaml` → `packets.<packet-id>`; local fallback `reports/work/<packet-id>/coordination.md`; relevant peer requests/device needs (not authorization):
+- Coordination: not applicable for local-only work; for TVTestRig–NUA interaction, direct update to shared `nuiak/status.yaml` → `packets.<packet-id>` or owned request/response; local fallback if unavailable; peer requests/device needs (not authorization):
 - Relevant Research sections, skill paths, BP and knowledge IDs:
 - Known current behavior, verified from <source/date>:
 - Required caller/CLI integration and realistic positive/adversarial verification:
@@ -40,7 +40,7 @@ Keep software acceptance separate from real-data/model gates. State what synthet
 
 Use Research/WorkerWorkflow.md's evidence format at `reports/work/<packet-id>/handoff.md`. Record deviations, blockers, learnings, and next action. Worker marks review; architect accepts after evidence review.
 
-Include the coordination update path and truthful publication state. Follow AGENTS.md's
+For TVTestRig–NUA interaction include the coordination update path and truthful publication state; otherwise mark not applicable. Follow AGENTS.md's
 start/change/handoff cadence and targeted packet-entry updates; preserve other workers'
 entries and top-level summary. An unavailable share does not block independent offline work.
 

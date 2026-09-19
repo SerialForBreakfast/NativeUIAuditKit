@@ -1,0 +1,15 @@
+{
+  "canonicalLabelIdentitySHA256": "3ac40143d53400434a9c91797bc3ef97468cf34573ca7651332b91b1e53fed2b",
+  "formatVersion": "p0-label-identity-v1",
+  "manifestHashes": {
+    "test": "6411c14856a526c82963a25ae9f06a844c351a3a5fd7615f01140c82840db9d7",
+    "train": "d72f210f9e904194d7c4e521fcae8423826c34e2cb651fbe483a53b60bb56006",
+    "val": "e1161811c7fabc0137b931083d6fb6318aa5976c4a467d4d0b80c0d4596b1f18"
+  },
+  "splitCounts": {
+    "test": 2000,
+    "train": 11984,
+    "val": 3056
+  },
+  "totalLabels": 17040
+}

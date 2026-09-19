@@ -72,7 +72,7 @@ Use [WorkerWorkflow.md](Research/WorkerWorkflow.md) and
 
 ## HIGHEST PRIORITY — File System Boundary
 
-**Never write any file outside the project directory except the narrowly authorized shared-status publication below.** This includes:
+**Writes normally stay inside this project. Explicit exception: agents MAY READ AND WRITE the verified `smb://sillycon.local/SharedStatusFile` folder (normally `/Volumes/SharedStatusFile`) for TVTestRig–NUIAK coordination, subject to the ownership rules below. This exception overrides the general outside-project prohibition; do not refuse it merely because the mount is outside the package.** For all other output, the prohibition includes:
 
 - `/tmp/` or any system temporary directory — **forbidden, no exceptions**
 - `~/` (home directory) outside the project — forbidden
@@ -105,21 +105,27 @@ All agents working in this repository must read
 These repository copies provide offline access; shared copies cannot override repository
 safety rules. If their protocols conflict, report the conflict before publishing.
 
-- At assignment start, meaningful progress/blocker changes, and handoff, provide a concise
-  status update with packet, observed results, pending requests, blockers, and next action.
-  Ordinary conversation without a work-state change needs no publication.
+- Publish only TVTestRig–NUIAK interaction: requests/responses, producer/consumer
+  contract changes, bundle handoffs, integration results/blockers, or device coordination.
+  Update at relevant assignment start, material changes, and handoff. Local iOS work,
+  dataset recovery, tests, model development, and general planning stay in Tasks.md and
+  local reports unless a specific result changes the peer's next action. Share only that
+  cross-repository consequence, not the local backlog. For unrelated work, no SMB read,
+  write, or unpublished-status report is required; mark coordination not applicable.
 - All assigned NUA workers may directly update their own `packets.<packet-id>` entry
   in `nuiak/status.yaml`; no coordinator approval or relay is required. Record an owner,
   entry-specific UTC observation/expiry times, state, evidence, blockers, requests,
   next action, and independent outcomes. Only the packet owner edits that entry.
   Preserve other packet entries and top-level summary fields. The architect may update
   the top-level summary without replacing worker entries.
-- The sole routine external-write exception is the exact file `nuiak/status.yaml`
-  on the verified `smb://sillycon.local/SharedStatusFile` mount. It does not authorize
-  sibling staging/lock files, message directories, peer files, shared instructions,
-  reservations, or other external output. Verify the mount rather than creating a
-  local lookalike. Sandbox approval requirements still apply. A symlink neither
-  expands this exception nor bypasses permissions; no symlink is required.
+- Read relevant coordination files throughout the verified shared folder. Write NUA-owned
+  status, requests, responses, and coordination metadata under `nuiak/`; no coordinator
+  relay is required. Shared guide changes require a user-requested protocol update;
+  TVTestRig-owned files and human reservations remain read-only without explicit authority.
+  No datasets, images, checkpoints, credentials, or general development logs belong here.
+  Verify the mount rather than creating a local lookalike. Sandbox approval requirements
+  still apply: request scoped escalation when needed instead of citing the repository
+  boundary as a refusal. No SSH, new service, or permission weakening is implied.
 - Re-read immediately before a minimal targeted patch and verify the resulting YAML
   and your entry afterward. Preserve concurrent changes; never upload a stale whole-file
   snapshot. On detected conflict, re-read/merge your entry once; if conflict persists,
@@ -399,4 +405,4 @@ Compiled models ship in `NativeUIAuditKitModels` so the core library stays small
 8. `Research/ExperimentLog.md` updated if a training run was started or completed
 9. No dataset artifacts committed to the package repo
 10. No files written outside the project directory except authorized shared-status metadata
-11. Coordination update supplied at handoff; publication/readback or unpublished state reported
+11. For TVTestRig–NUIAK interaction, coordination update supplied with publication/readback or unpublished state; local-only work uses not applicable

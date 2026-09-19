@@ -16,17 +16,17 @@
   },
   {
     "file": "AGENTS.md",
-    "line": 109,
+    "line": 197,
     "text": ".venv-yolo/bin/python scripts/export_coco.py --dataset <path-to-NativeUIAuditKit-Dataset>"
   },
   {
     "file": "AGENTS.md",
-    "line": 292,
+    "line": 380,
     "text": "- The iOS generator dataset lives **outside** the repository: `NativeUIAuditKit-Dataset/` (path is documented in `Research/NativeUIElementDetection.md` Section 6.2). Do not create that tree inside the package."
   },
   {
     "file": "AGENTS.md",
-    "line": 304,
+    "line": 392,
     "text": "`NativeUIDetectionError.modelUnavailable` was removed: iOS/tvOS YOLO models are bundled. FocusRing is optional \u2014 `NativeUIModelAsset.loadFocusRingDetector()` returns `nil` when the resource is absent, and `resolveTVOSFocus` falls back to the geometric heuristic. Never silently return empty YOLO detections."
   },
   {
@@ -360,6 +360,11 @@
     "text": "Before resuming expensive work, document ownership and retention of source corpora, the dependency from exports to symlink targets, an immutable content manifest, and a tested recovery path. A symlink export is not a backup. Do not delete any source tree until all dependent datasets and evaluation records are accounted for and the maintainer explicitly authorizes the exact deletion. Copying data e"
   },
   {
+    "file": "Research/DeliveryDecisions.md",
+    "line": 7,
+    "text": "3. **41-class first:** retain category IDs 0\u201340 and the original taxonomy for the current milestone. Full-frame gates are fixture mAP50 \u22650.94, mAP50:95 \u22650.78; toggle and stepperControl AP50 \u22650.88; synthetic withheld-template DS-G8 mAP50 \u22650.85. Report both holdouts independently. The nonexistent badge requirement is removed from this milestone and assigned below."
+  },
+  {
     "file": "Research/ExperimentLog.md",
     "line": 241,
     "text": "| Toggle strip-only + conf\u22650.95 raises AP 0.745\u21920.850 AND improves recall \u2014 cross-pass near-dups eliminated | 379 full-image FPs + 258 near-dups removed with zero cost | Run 004 v3/v4 eval |"
@@ -386,12 +391,12 @@
   },
   {
     "file": "Research/FocusRingDetectorSpec.md",
-    "line": 90,
+    "line": 95,
     "text": "The harvest script default remains `NativeUIAuditKit-Dataset/focus_ring/` (outside this package). Do not commit either tree."
   },
   {
     "file": "Research/FocusRingDetectorSpec.md",
-    "line": 92,
+    "line": 97,
     "text": "Default harvest *input* is the in-tree fixture cache `dataset/tvos_fixture_captures/` (gitignored). Harvest never lists `dataset/dataset/train`."
   },
   {
@@ -401,17 +406,17 @@
   },
   {
     "file": "Research/NativeUIElementDetection.md",
-    "line": 278,
+    "line": 299,
     "text": "NativeUIAuditKit-Dataset/        (lives outside the package repo \u2014 gitignored or separate store)"
   },
   {
     "file": "Research/NativeUIElementDetection.md",
-    "line": 722,
+    "line": 765,
     "text": "Shipped compiled models live in `NativeUIAuditKitModels` (`NativeUIDetector_v2.mlmodelc`, `NativeUIModel_tvOS.mlmodelc`, `FocusRingDetector.mlmodelc`). `NativeUIDetectionError.modelUnavailable` was removed: YOLO models are bundled. FocusRing is optional (`loadFocusRingDetector()` \u2192 `nil` falls back to the geometric heuristic). Never silently return empty YOLO detections."
   },
   {
     "file": "Research/NativeUIElementDetection.md",
-    "line": 1019,
+    "line": 1062,
     "text": "### RICO (Removed and Irrelevant for Apple Chrome)"
   },
   {
@@ -425,6 +430,21 @@
     "text": "Production phase gates remain binding. Within Phase 6a, software slices are independently acceptable; missing hardware/data blocks qualification, not all development. [IterationRoadmap.md](IterationRoadmap.md) defines lanes and [ImplementationPlans.md](ImplementationPlans.md) defines slice contracts. Historical task write-ups live in the archive, not in Tasks.md."
   },
   {
+    "file": "Research/Plans/ConsumersAndRelease.md",
+    "line": 73,
+    "text": "Identify affected refs/artifact categories without reproducing sensitive values in reports. Describe contributor/clone impact, verified recovery backup requirements, remote coordination and exact proposed maintainer procedure. Keep history remediation separate from feature/model release work. Record defer/proceed decision only when given by maintainer."
+  },
+  {
+    "file": "Research/Plans/ModelsAndHardware.md",
+    "line": 19,
+    "text": "Revalidate frozen inputs and unique outputs, allocate the experiment ID, log before launch. Use accepted blend, cosine/warmup/patience settings. Preserve last/best/backup checkpoints and record intentional early stop versus crash. Resume only this run from a verified epoch checkpoint when assigned; do not silently restart or change parameters. Failure returns diagnosis and a proposed next experime"
+  },
+  {
+    "file": "Research/Plans/iOSPlatform.md",
+    "line": 32,
+    "text": "new destinations, space requirements, uncertainties, and preservation/backup owner."
+  },
+  {
     "file": "Research/TrainingDataSetSizeEstimations.md",
     "line": 346,
     "text": "### 2. Archive completed phases before generating the next"
@@ -436,33 +456,43 @@
   },
   {
     "file": "Research/TrainingDataStrategy.md",
-    "line": 524,
+    "line": 529,
     "text": "- Stored in `NativeUIAuditKit-Dataset/golden_real_world/` \u2014 never committed to any repository"
   },
   {
     "file": "Research/TrainingRunbook.md",
-    "line": 102,
+    "line": 112,
     "text": "  --dataset <path-to-NativeUIAuditKit-Dataset> \\"
   },
   {
     "file": "Research/TrainingRunbook.md",
-    "line": 243,
+    "line": 253,
     "text": "4. Archive TASK-6-5 and TASK-6-6 into `CompletedTasks.md` (already done for the shipped v2.0 detector)"
   },
   {
     "file": "Research/WorkerWorkflow.md",
-    "line": 58,
+    "line": 117,
     "text": "Dataset readiness requires resolving actual image bytes and validating annotations, not just finding manifests, labels, caches, or old metric reports. Before dispatching data-dependent work, verify the needed split is complete. Preserve symlink targets as source dependencies; no cleanup of source trees or broken links without a reviewed dependency/recovery inventory and exact maintainer authorizat"
-  },
-  {
-    "file": "Tasks.md",
-    "line": 84,
-    "text": "- [~] P0-A: inventory source/link/provenance evidence and locate candidate originals/backups read-only; review-ready evidence in [`reports/work/P0/assessment.md`](reports/work/P0/assessment.md)"
   },
   {
     "file": "reports/blurred_eval_images.cache",
     "line": 3,
     "text": "_reconstruct\ufffd\ufffd\ufffd\ufffd\u0005numpy\ufffd\ufffd\u0007ndarray\ufffd\ufffd\ufffdK\u0000\ufffd\ufffdC\u0001b\ufffd\ufffd\ufffdR\ufffd(K\u0001)h\u0003\ufffd\u0005dtype\ufffd\ufffd\ufffd\ufffd\u0002O8\ufffd\ufffd\ufffd\ufffd\ufffdR\ufffd(K\u0003\ufffd\u0001|\ufffdNNNJ\ufffd\ufffd\ufffd\ufffdJ\ufffd\ufffd\ufffd\ufffdK?t\ufffdb\ufffd]\ufffd}\ufffd(\ufffd\u0006labels\ufffd]\ufffd(}\ufffd(\ufffd\u0007im_file\ufffd\ufffd`/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/blurred_eval_images/img_001801.png\ufffd\ufffd\u0005shape\ufffdM\ufffd\tM\ufffd\u0004\ufffd\ufffd\ufffd\u0003cls\ufffdh\u0002h\u0005K\u0000\ufffd\ufffdh\u0007\ufffd\ufffdR\ufffd(K\u0001K\u0000K\u0001\ufffd\ufffdh"
+  },
+  {
+    "file": "reports/coordination/Instructions.md",
+    "line": 231,
+    "text": "Retain request/response evidence until the maintainer decides to archive it."
+  },
+  {
+    "file": "reports/coordination/alignment-2026-09-19.md",
+    "line": 17,
+    "text": "Removed the stale duplicate P2-A draft row in Tasks.md. Existing worker edits"
+  },
+  {
+    "file": "reports/coordination/execution-contract-2026-09-19.md",
+    "line": 11,
+    "text": "Removed contradictory smallest-slice/one-packet execution guidance. Packets remain"
   },
   {
     "file": "reports/dataset_availability_2026-09-19.md",
@@ -480,6 +510,731 @@
     "text": "- Whether original per-image hashes or an immutable corpus archive survive."
   },
   {
+    "file": "reports/work/HIST-A/assessment.md",
+    "line": 23,
+    "text": "3. From a verified backup, identify affected refs and artifact categories without copying"
+  },
+  {
+    "file": "reports/work/HIST-A/assessment.md",
+    "line": 26,
+    "text": "4. If a rewrite is authorized, create and verify recovery backups first, coordinate remote"
+  },
+  {
+    "file": "reports/work/INTEGRATED-IOS-TOOLCHAIN/handoff.md",
+    "line": 57,
+    "text": "artifacts are removed from `.build/debug-output/` during teardown."
+  },
+  {
+    "file": "reports/work/P0/assessment.md",
+    "line": 11,
+    "text": "safe action is to obtain a specific backup/archive location from the maintainer,"
+  },
+  {
+    "file": "reports/work/P0/assessment.md",
+    "line": 57,
+    "text": "| `export_report.source` | `dataset/dataset` | yes | 0/15239 | no |"
+  },
+  {
+    "file": "reports/work/P0/assessment.md",
+    "line": 60,
+    "text": "| `documented_sibling_dataset` | `/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset` | no | 0/15239 | no |"
+  },
+  {
+    "file": "reports/work/P0/assessment.md",
+    "line": 61,
+    "text": "| `documented_home_dataset` | `/Users/josephmccraw/NativeUIAuditKit-Dataset` | no | 0/15239 | no |"
+  },
+  {
+    "file": "reports/work/P0/assessment.md",
+    "line": 81,
+    "text": "records the synthetic dataset as an external `NativeUIAuditKit-Dataset` store,"
+  },
+  {
+    "file": "reports/work/P0/assessment.md",
+    "line": 94,
+    "text": "| Recommend next action without inventing provenance | PASS | Request specific backup/archive or review a new corpus version |"
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 16,
+    "text": "      \"manifestJson\": \"dataset/dataset/manifest.json\","
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 19,
+    "text": "      \"path\": \"dataset/dataset\","
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 49,
+    "text": "      \"manifestJson\": \"/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset/manifest.json\","
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 52,
+    "text": "      \"path\": \"/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 60,
+    "text": "      \"manifestJson\": \"/Users/josephmccraw/NativeUIAuditKit-Dataset/manifest.json\","
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 63,
+    "text": "      \"path\": \"/Users/josephmccraw/NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "reports/work/P0/assessment_data.json",
+    "line": 166,
+    "text": "  \"recommendation\": \"No exact original source was found in the bounded documented locations. Request a specific backup/archive location from the maintainer or conduct a separately reviewed replacement-corpus proposal. Do not relink, regenerate, or run evaluation under the historical corpus identity.\""
+  },
+  {
+    "file": "reports/work/P0/candidate_sources.json",
+    "line": 6,
+    "text": "    \"manifestJson\": \"dataset/dataset/manifest.json\","
+  },
+  {
+    "file": "reports/work/P0/candidate_sources.json",
+    "line": 9,
+    "text": "    \"path\": \"dataset/dataset\","
+  },
+  {
+    "file": "reports/work/P0/candidate_sources.json",
+    "line": 39,
+    "text": "    \"manifestJson\": \"/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset/manifest.json\","
+  },
+  {
+    "file": "reports/work/P0/candidate_sources.json",
+    "line": 42,
+    "text": "    \"path\": \"/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "reports/work/P0/candidate_sources.json",
+    "line": 50,
+    "text": "    \"manifestJson\": \"/Users/josephmccraw/NativeUIAuditKit-Dataset/manifest.json\","
+  },
+  {
+    "file": "reports/work/P0/candidate_sources.json",
+    "line": 53,
+    "text": "    \"path\": \"/Users/josephmccraw/NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "reports/work/P0/handoff.md",
+    "line": 55,
+    "text": "The resume condition is a maintainer-supplied, bounded backup/archive location or"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 5,
+    "text": "    \"text\": \"Current snapshot: [`Research/CurrentState.md`](../../../Research/CurrentState.md). Remaining work: [`Tasks.md`](../../../Tasks.md). Archive: [`CompletedTasks.md`](../../../CompletedTasks.md).\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 10,
+    "text": "    \"text\": \".venv-yolo/bin/python scripts/export_coco.py --dataset ../NativeUIAuditKit-Dataset\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 15,
+    "text": "    \"text\": \"6. `Tasks.md` \\u2014 remaining work only (`CompletedTasks.md` is the archive)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 20,
+    "text": "    \"text\": \".venv-yolo/bin/python scripts/export_coco.py --dataset <path-to-NativeUIAuditKit-Dataset>\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 25,
+    "text": "    \"text\": \"- The iOS generator dataset lives **outside** the repository: `NativeUIAuditKit-Dataset/` (path is documented in `Research/NativeUIElementDetection.md` Section 6.2). Do not create that tree inside the package.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 30,
+    "text": "    \"text\": \"`NativeUIDetectionError.modelUnavailable` was removed: iOS/tvOS YOLO models are bundled. FocusRing is optional \\u2014 `NativeUIModelAsset.loadFocusRingDetector()` returns `nil` when the resource is absent, and `resolveTVOSFocus` falls back to the geometric heuristic. Never silently return empty YOLO detections.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 35,
+    "text": "    \"text\": \"### Removed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 40,
+    "text": "    \"text\": \"  always resolves a bundled model; the case and the test asserting it were removed together.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 45,
+    "text": "    \"text\": \"Archive of finished phase work as of 2026-09-18.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 50,
+    "text": "    \"text\": \"- No existing class entries removed or renamed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 55,
+    "text": "    \"text\": \"    --gt-dir NativeUIAuditKit-Dataset/test/annotations \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 60,
+    "text": "    \"text\": \"    --manifest NativeUIAuditKit-Dataset/manifest.json \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 65,
+    "text": "    \"text\": \"**Produces:** \\u2265500 annotated images in `NativeUIAuditKit-Dataset/train/` and `validation/`\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 70,
+    "text": "    \"text\": \"    --manifest NativeUIAuditKit-Dataset/manifest.json \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 75,
+    "text": "    \"text\": \"    --dataset-dir NativeUIAuditKit-Dataset \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 80,
+    "text": "    \"text\": \"  --dataset <path-to-NativeUIAuditKit-Dataset> \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 85,
+    "text": "    \"text\": \"#### TASK-6d-3: Reassess the NMS pass \\u2705 \\u2014 kept, not removed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 90,
+    "text": "    \"text\": \"stale raw v1 model. Deleting the fallback (TASK-6d-1) removed the hang entirely.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 95,
+    "text": "    \"text\": \"- No test asserts `.modelUnavailable` \\u2014 the case was removed from `NativeUIDetectionError`\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 100,
+    "text": "    \"text\": \"Removed the \\\"Known Limitation\\\" callouts added when `NativeUIAuditKitModels` shipped ahead of\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 105,
+    "text": "    \"text\": \"    data=\\\"NativeUIAuditKit-Dataset/dataset.yaml\\\",   # COCO-format via export converter\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 110,
+    "text": "    \"text\": \"Write `scripts/export_coco.py` \\u2014 converts our custom JSON annotations to COCO format using `category_map.json`, outputs `NativeUIAuditKit-Dataset/dataset.yaml` + `annotations/instances_train.json` + `annotations/instances_val.json`.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 115,
+    "text": "    \"text\": \"Manifest: `NativeUIAuditKit-Dataset/focus_ring/focus_dataset_manifest.json`.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 120,
+    "text": "    \"text\": \"\\tarchiveVersion = 1;\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 125,
+    "text": "    \"text\": \"   <ArchiveAction\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 130,
+    "text": "    \"text\": \"      revealArchiveInOrganizer = \\\"YES\\\">\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 135,
+    "text": "    \"text\": \"   </ArchiveAction>\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 140,
+    "text": "    \"text\": \"\\tarchiveVersion = 1;\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 145,
+    "text": "    \"text\": \"   <ArchiveAction\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 150,
+    "text": "    \"text\": \"      revealArchiveInOrganizer = \\\"YES\\\">\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 155,
+    "text": "    \"text\": \"   </ArchiveAction>\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 160,
+    "text": "    \"text\": \"   <ArchiveAction\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 165,
+    "text": "    \"text\": \"      revealArchiveInOrganizer = \\\"YES\\\">\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 170,
+    "text": "    \"text\": \"   </ArchiveAction>\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 175,
+    "text": "    \"text\": \"\\ufffd\\u0001Ultralytics YOLO11n model trained on /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset/dataset.yaml\\u0012\\u00078.4.124\\u001a\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 180,
+    "text": "    \"text\": \"\\ufffd\\u0001Ultralytics YOLO11n model trained on /Users/josephmccraw/Dropbox/My Mac (MacBook-Air)/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset/dataset.yaml\\u0012\\u00078.4.124\\u001a\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 185,
+    "text": "    \"text\": \"        \\\"Send Message\\\", \\\"Reply\\\", \\\"Forward\\\", \\\"Archive\\\", \\\"Mark Read\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 190,
+    "text": "    \"text\": \"        \\\"Pending approval\\\", \\\"Under review\\\", \\\"Completed\\\", \\\"Draft\\\", \\\"Archived\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 195,
+    "text": "    \"text\": \"        \\\"512 GB used\\\", \\\"2.4 GB remaining\\\", \\\"Synced\\\", \\\"Backup complete\\\", \\\"Uploading...\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 200,
+    "text": "    \"text\": \"//     --output /path/to/NativeUIAuditKit-Dataset \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 205,
+    "text": "    \"text\": \"        --output /path/to/NativeUIAuditKit-Dataset \\\\\\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 210,
+    "text": "    \"text\": \"        --output ~/NativeUIAuditKit-Dataset\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 215,
+    "text": "    \"text\": \"    private static let filterOptions = [\\\"All\\\", \\\"Unread\\\", \\\"Flagged\\\", \\\"Archived\\\", \\\"Deleted\\\"]\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 220,
+    "text": "    \"text\": \"        ToolbarAction(label: \\\"Archive\\\",   iconName: \\\"archivebox\\\"),\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 225,
+    "text": "    \"text\": \"        \\\"iCloud Backup\\\", \\\"iCloud Drive\\\", \\\"iCloud Photos\\\", \\\"Find My iPhone\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 230,
+    "text": "    \"text\": \"        (\\\"Archive\\\",     \\\"archivebox.fill\\\"),\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 235,
+    "text": "    \"text\": \"    /// deleted from dataset/train/ after a prior run and you have already\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 240,
+    "text": "    \"text\": \"WARNING \\u26a0\\ufe0f 'int8' is deprecated and will be removed in the future. Use 'quantize' instead.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 245,
+    "text": "    \"text\": \"WARNING \\u26a0\\ufe0f 'int8' is deprecated and will be removed in the future. Use 'quantize' instead.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 260,
+    "text": "    \"text\": \"\\u001b[34m\\u001b[1mval: \\u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013580.png: 1 duplicate labels removed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 265,
+    "text": "    \"text\": \"\\u001b[34m\\u001b[1mval: \\u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013589.png: 1 duplicate labels removed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 270,
+    "text": "    \"text\": \"\\u001b[34m\\u001b[1mval: \\u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013619.png: 1 duplicate labels removed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 275,
+    "text": "    \"text\": \"\\u001b[34m\\u001b[1mval: \\u001b[0m/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class/val/images/img_013669.png: 1 duplicate labels removed\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 280,
+    "text": "    \"text\": \"| SwiftUI/UIKit synthetic generator output (`NativeUIDatasetGenerator`, `GeneratorRunner`) | Procedurally rendered iOS/iPadOS screens; all text from a seeded fake-content corpus (`ContentCorpus.swift`) | iOS/iPadOS training (all runs through Run 009) | No \\u2014 lives in the external `NativeUIAuditKit-Dataset/` store, not this repo |\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 290,
+    "text": "    \"text\": \"  [--skip-export]   # use when source train/ PNGs have been deleted after a prior run\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 295,
+    "text": "    \"text\": \"\\u251c\\u2500\\u2500 CompletedTasks.md                      \\u2190 finished phase archive\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 300,
+    "text": "    \"text\": \"5. **Filesystem stalls** when tools traverse flat directories containing tens of thousands of images (e.g. `dataset/dataset/train`).\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 305,
+    "text": "    \"text\": \"| **Checkpoint I/O** | `save_period=1` (writes ~154MB every epoch, ~15GB/run) | `save_period=5` (snapshot every 5 epochs) | `save_period=-1` (save only `last.pt` & `best.pt`) | **`save_period=-1`** (with `last.prev.pt` backup) |\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 310,
+    "text": "    \"text\": \"- **Decision:** Mandate text file manifests (`train.txt`, `val.txt`, `test.txt`) for all dataset ingestion, class-weight calculation, and YOLO training pipelines. Prohibit calls to `os.listdir()`, `Path.glob()`, or `iterdir()` on large flat directories such as `dataset/dataset/train`.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 315,
+    "text": "    \"text\": \"**Correct:** For production runs (Run 009+), set `save_period=-1` (or `5`) and `plots=False`. Keep `last.pt`, `best.pt`, and the `last.prev.pt` backup hook. Rely on `results.csv` for real-time loss/mAP tracking, and generate visual evaluation plots only after training finishes.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 320,
+    "text": "    \"text\": \"**Wrong:** Call `os.listdir()`, `Path.glob(\\\"*\\\")`, or `iterdir()` on `dataset/dataset/train` or other large flat export directories.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 325,
+    "text": "    \"text\": \"**Wrong:** Mark the Run 009 baseline runnable because `test.txt`, all labels, and a historical metric report exist. On 2026-09-19, all 2,000 test image entries were broken symlinks; train/validation were also substantially incomplete. The earlier planning readiness check had not verified the image targets. This finding does not establish who removed or moved the source files.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 330,
+    "text": "    \"text\": \"**Permitted in the first assignment:** Read-only source/backup discovery, provenance analysis, and additive reports under `reports/work/P0/`. A small diagnostic script under `scripts/` is allowed if needed after mandatory pre-code reading. Do not change dataset links, labels, source images, exporters, or report metrics. No recovery software installation, volume mounting, system snapsh"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 335,
+    "text": "    \"text\": \"2. Identify the original dataset locations from research/export metadata. Check those exact paths and known source manifests, documented archives, and explicitly available backup locations read-only. Use manifest-driven candidate lookup rather than recursively scanning large trees or the user's home. An external source may be read; all agent-created copies/reports must stay in-project"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 340,
+    "text": "    \"text\": \"3. Search relevant checked-in docs/logs for relocation or cleanup records. Git cannot recover ignored PNGs merely because labels or export scripts are tracked. Do not assign responsibility from a missing path or timestamps. Request a specific backup/archive location from the maintainer only when bounded evidence-based discovery is exhausted.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 345,
+    "text": "    \"text\": \"If suitable sources are found, prepare a concrete copy/relink plan in a new in-project corpus directory. Prefer independent recoverable image copies for the evaluation set over links into a disposable generator tree. Retain existing manifests, labels, and broken links as evidence; no in-place overwrite. External backup/system restore remains a maintainer operation when required.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 350,
+    "text": "    \"text\": \"1. Pin generator revision, rendering OS/device/scale, seeds, template families, frozen 41-class taxonomy and split algorithm. Resolve the original dataset-location rule before generation: all agent-created outputs go to an approved in-project reconstruction/export location under NativeUITrainer, never a nested NativeUIAuditKit-Dataset tree or an external original. Any required externa"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 355,
+    "text": "    \"text\": \"4. Establish retention owner, immutable membership and a verified recovery procedure; an in-checkout copy is not an independent backup. External backup creation needs its own authorized workflow.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 360,
+    "text": "    \"text\": \"Before resuming expensive work, document ownership and retention of source corpora, the dependency from exports to symlink targets, an immutable content manifest, and a tested recovery path. A symlink export is not a backup. Do not delete any source tree until all dependent datasets and evaluation records are accounted for and the maintainer explicitly authorizes the exact deletion. C"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 365,
+    "text": "    \"text\": \"| Toggle strip-only + conf\\u22650.95 raises AP 0.745\\u21920.850 AND improves recall \\u2014 cross-pass near-dups eliminated | 379 full-image FPs + 258 near-dups removed with zero cost | Run 004 v3/v4 eval |\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 370,
+    "text": "    \"text\": \"- `--skip-export` flag: source train/ PNGs deleted after Run 003; used `augment_createml_export.py` instead\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 375,
+    "text": "    \"text\": \"Source train/ PNGs deleted after Run 003 to reclaim disk space. Full re-export of 18,563 images was not feasible. Instead, `scripts/augment_createml_export.py` was written to:\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 380,
+    "text": "    \"text\": \"navBar regressed 0.845 \\u2192 0.7745 in Run 005. Diagnostic (`diagnose_class_fps.swift`) confirmed 478 false-class FPs at strip y=0.15\\u20130.55 (content area \\u2014 model predicting navBar in middle of screen). TP conf mean=0.999, FP conf mean=0.899. Applying conf\\u22650.95 reduces predictions 1661\\u21921508 but AP unchanged at 0.7745 (lost TPs and removed FPs cancel in PR curve). na"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 385,
+    "text": "    \"text\": \"- Checkpoints: `save_period=-1` (ADR-0006 D1, saves only `best.pt` and `last.pt`, with `last.prev.pt` backup; saves ~15 GB disk writes)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 390,
+    "text": "    \"text\": \"The harvest script default remains `NativeUIAuditKit-Dataset/focus_ring/` (outside this package). Do not commit either tree.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 395,
+    "text": "    \"text\": \"Default harvest *input* is the in-tree fixture cache `dataset/tvos_fixture_captures/` (gitignored). Harvest never lists `dataset/dataset/train`.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 400,
+    "text": "    \"text\": \"PNG-only mode using `VNCoreMLRequest` targets day-one adopters who have existing screenshot archives but no paired metadata. It is useful but carries a caveat: confidence is moderate, and major OS visual refreshes require model retraining.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 405,
+    "text": "    \"text\": \"NativeUIAuditKit-Dataset/        (lives outside the package repo \\u2014 gitignored or separate store)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 410,
+    "text": "    \"text\": \"Shipped compiled models live in `NativeUIAuditKitModels` (`NativeUIDetector_v2.mlmodelc`, `NativeUIModel_tvOS.mlmodelc`, `FocusRingDetector.mlmodelc`). `NativeUIDetectionError.modelUnavailable` was removed: YOLO models are bundled. FocusRing is optional (`loadFocusRingDetector()` \\u2192 `nil` falls back to the geometric heuristic). Never silently return empty YOLO detections.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 415,
+    "text": "    \"text\": \"### RICO (Removed and Irrelevant for Apple Chrome)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 420,
+    "text": "    \"text\": \"**Archive:** [`../CompletedTasks.md`](../CompletedTasks.md)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 425,
+    "text": "    \"text\": \"Production phase gates remain binding. Within Phase 6a, software slices are independently acceptable; missing hardware/data blocks qualification, not all development. [IterationRoadmap.md](IterationRoadmap.md) defines lanes and [ImplementationPlans.md](ImplementationPlans.md) defines slice contracts. Historical task write-ups live in the archive, not in Tasks.md.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 430,
+    "text": "    \"text\": \"### 2. Archive completed phases before generating the next\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 435,
+    "text": "    \"text\": \"# Example: archive Phase 3+4 images into a single .tar.zst\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 440,
+    "text": "    \"text\": \"- Stored in `NativeUIAuditKit-Dataset/golden_real_world/` \\u2014 never committed to any repository\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 445,
+    "text": "    \"text\": \"  --dataset <path-to-NativeUIAuditKit-Dataset> \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 450,
+    "text": "    \"text\": \"4. Archive TASK-6-5 and TASK-6-6 into `CompletedTasks.md` (already done for the shipped v2.0 detector)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 455,
+    "text": "    \"text\": \"Dataset readiness requires resolving actual image bytes and validating annotations, not just finding manifests, labels, caches, or old metric reports. Before dispatching data-dependent work, verify the needed split is complete. Preserve symlink targets as source dependencies; no cleanup of source trees or broken links without a reviewed dependency/recovery inventory and exact maintain"
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 460,
+    "text": "    \"text\": \"- [~] P0-A: inventory source/link/provenance evidence and locate candidate originals/backups read-only; review-ready evidence in [`reports/work/P0/assessment.md`](reports/work/P0/assessment.md)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 465,
+    "text": "    \"text\": \"_reconstruct\\ufffd\\ufffd\\ufffd\\ufffd\\u0005numpy\\ufffd\\ufffd\\u0007ndarray\\ufffd\\ufffd\\ufffdK\\u0000\\ufffd\\ufffdC\\u0001b\\ufffd\\ufffd\\ufffdR\\ufffd(K\\u0001)h\\u0003\\ufffd\\u0005dtype\\ufffd\\ufffd\\ufffd\\ufffd\\u0002O8\\ufffd\\ufffd\\ufffd\\ufffd\\ufffdR\\ufffd(K\\u0003\\ufffd\\u0001|\\ufffdNNNJ\\ufffd\\ufffd\\ufffd\\ufffdJ\\ufffd\\ufffd\\ufffd\\ufffdK?t\\ufffdb\\ufffd]\\ufffd}\\ufffd(\\ufffd\\u0006labels\\ufffd]\\ufffd("
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 470,
+    "text": "    \"text\": \"`dataset/dataset/train/` does not exist at inspection time. `dataset/dataset/validation/` exists; its existence alone says nothing about recoverable image content. The representative test link `test/images/img_001801.png` points to the absent `dataset/dataset/train/img_001801.png` under this checkout. Full target inventory and recovery-source search remain future work.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 475,
+    "text": "    \"text\": \"- Whether source files were deleted, moved, are on an unavailable volume, or exist in a backup/other checkout.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 480,
+    "text": "    \"text\": \"- Whether original per-image hashes or an immutable corpus archive survive.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 485,
+    "text": "    \"text\": \"    python scripts/centroid_distribution.py         --manifest NativeUIAuditKit-Dataset/manifest.json         --gt-dir NativeUIAuditKit-Dataset/train/annotations         --pred-dir runs/detect/predict/labels         --category-map Research/schemas/category_map.json         --output reports/centroid_bias_v1.json\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 490,
+    "text": "    \"text\": \"  .venv-yolo/bin/python scripts/export_coco.py --dataset /path/to/NativeUIAuditKit-Dataset\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 495,
+    "text": "    \"text\": \"N\\ufffd\\u0010NATIVEUI_DATASET\\ufffd\\u0007datasetz\\u0018NativeUIAuditKit-Datasetr\\u0007\\u0000\\u0000\\u0000\\ufffd\\u000esource_dataset\\ufffd\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 500,
+    "text": "    \"text\": \"  After Run 003 training the source train/ PNGs were deleted from the\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 505,
+    "text": "    \"text\": \"        --manifest NativeUIAuditKit-Dataset/manifest.json \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 510,
+    "text": "    \"text\": \"        --gt-dir NativeUIAuditKit-Dataset/train/annotations \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 515,
+    "text": "    \"text\": \"        --gt-dir NativeUIAuditKit-Dataset/test/annotations \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 520,
+    "text": "    \"text\": \"      --dataset ../NativeUIAuditKit-Dataset/focus_ring \\\\\\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 525,
+    "text": "    \"text\": \"DEFAULT_DATASET = PROJECT_ROOT.parent / \\\"NativeUIAuditKit-Dataset\\\" / \\\"focus_ring\\\"\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 530,
+    "text": "    \"text\": \"  .venv-yolo/bin/python scripts/export_coco.py --dataset /path/to/NativeUIAuditKit-Dataset\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 535,
+    "text": "    \"text\": \"            PROJECT_ROOT.parent / \\\"NativeUIAuditKit-Dataset\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 540,
+    "text": "    \"text\": \"            Path.home() / \\\"NativeUIAuditKit-Dataset\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 545,
+    "text": "    \"text\": \"        --manifest NativeUIAuditKit-Dataset/manifest.json \\\\\\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 550,
+    "text": "    \"text\": \"Crops and the extract-mode manifest default to `../NativeUIAuditKit-Dataset/focus_ring/`.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 555,
+    "text": "    \"text\": \"`--dry-run` never writes. Do not pass `dataset/dataset/train`.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 560,
+    "text": "    \"text\": \"DEFAULT_OUTPUT = PROJECT_ROOT.parent / \\\"NativeUIAuditKit-Dataset\\\" / \\\"focus_ring\\\"\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 565,
+    "text": "    \"text\": \"        help=\\\"Manifest/crop root (defaults to sibling NativeUIAuditKit-Dataset/focus_ring)\\\",\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 570,
+    "text": "    \"text\": \"    return \\\"dataset/dataset/train\\\" in str(output)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 575,
+    "text": "    \"text\": \"merge_generator_batch.py \\u2014 Merge a simulator generation batch into dataset/dataset.\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 580,
+    "text": "    \"text\": \"    --source <sim Documents/dataset> --dest dataset/dataset\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 585,
+    "text": "    \"text\": \"# dataset/dataset, then stop. Export + Run 008 are separate so a failed merge\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 590,
+    "text": "    \"text\": \"  --dest \\\"$PROJECT_ROOT/dataset/dataset\\\" \\\\\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 595,
+    "text": "    \"text\": \"      --dataset ../NativeUIAuditKit-Dataset/focus_ring --name fdr001\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 600,
+    "text": "    \"text\": \"DEFAULT_DATASET = PROJECT_ROOT.parent / \\\"NativeUIAuditKit-Dataset\\\" / \\\"focus_ring\\\"\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 605,
+    "text": "    \"text\": \"    def _backup_last_pt(trainer) -> None:\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 610,
+    "text": "    \"text\": \"    model.add_callback(\\\"on_model_save\\\", _backup_last_pt)\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 615,
+    "text": "    \"text\": \"    def _backup_last_pt(trainer) -> None:\""
+  },
+  {
+    "file": "reports/work/P0/provenance_search.json",
+    "line": 620,
+    "text": "    \"text\": \"    model.add_callback(\\\"on_model_save\\\", _backup_last_pt)\""
+  },
+  {
+    "file": "reports/work/P1-A/handoff.md",
+    "line": 58,
+    "text": "An initial combined test invocation overlapped the same test cleanup directory"
+  },
+  {
     "file": "scripts/__pycache__/centroid_distribution.cpython-313.pyc",
     "line": 47,
     "text": "    python scripts/centroid_distribution.py         --manifest NativeUIAuditKit-Dataset/manifest.json         --gt-dir NativeUIAuditKit-Dataset/train/annotations         --pred-dir runs/detect/predict/labels         --category-map Research/schemas/category_map.json         --output reports/centroid_bias_v1.json"
@@ -493,6 +1248,86 @@
     "file": "scripts/__pycache__/export_coco.cpython-313.pyc",
     "line": 89,
     "text": "N\ufffd\u0010NATIVEUI_DATASET\ufffd\u0007datasetz\u0018NativeUIAuditKit-Datasetr\u0007\u0000\u0000\u0000\ufffd\u000esource_dataset\ufffd"
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 57,
+    "text": "    \"NativeUIAuditKit-Dataset\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 58,
+    "text": "    \"dataset/dataset\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 59,
+    "text": "    \"backup\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 60,
+    "text": "    \"archive\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 61,
+    "text": "    \"relocat\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 62,
+    "text": "    \"cleanup\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 63,
+    "text": "    \"deleted\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 64,
+    "text": "    \"removed\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 65,
+    "text": "    \"img_001801\","
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 164,
+    "text": "            (\"documented_sibling_dataset\", PROJECT_ROOT.parent / \"NativeUIAuditKit-Dataset\"),"
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 165,
+    "text": "            (\"documented_home_dataset\", Path.home() / \"NativeUIAuditKit-Dataset\"),"
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 420,
+    "text": "            \"Request a specific backup/archive location from the maintainer or conduct a \""
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 456,
+    "text": "safe action is to obtain a specific backup/archive location from the maintainer,"
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 520,
+    "text": "records the synthetic dataset as an external `NativeUIAuditKit-Dataset` store,"
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 533,
+    "text": "| Recommend next action without inventing provenance | PASS | Request specific backup/archive or review a new corpus version |"
+  },
+  {
+    "file": "scripts/assess_dataset_recovery.py",
+    "line": 601,
+    "text": "The resume condition is a maintainer-supplied, bounded backup/archive location or"
   },
   {
     "file": "scripts/augment_createml_export.py",
@@ -601,12 +1436,12 @@
   },
   {
     "file": "scripts/train_ios_model.py",
-    "line": 188,
+    "line": 216,
     "text": "    def _backup_last_pt(trainer) -> None:"
   },
   {
     "file": "scripts/train_ios_model.py",
-    "line": 194,
+    "line": 222,
     "text": "    model.add_callback(\"on_model_save\", _backup_last_pt)"
   },
   {

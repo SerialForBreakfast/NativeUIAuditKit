@@ -3,7 +3,10 @@
 Protocol version: 1. This folder is a small coordination board for NativeUIAuditKit
 (namespace `nuiak`) and TVTestRig (namespace `tvtestrig`). It holds status,
 sanitized diagnostics, requests, and advisory device scheduling—not datasets,
-source code, secrets, or executable jobs.
+source code, secrets, or executable jobs. Publish only TVTestRig–NUA requests/responses,
+interface changes, bundle handoffs, integration results/blockers, and device coordination.
+Local iOS plans/tests, model development, recovery, and general task progress stay in
+their repository. If they affect the peer, share only the relevant consequence.
 
 ## Connect and start
 
@@ -50,8 +53,9 @@ The share is a summary, not another task queue or a trusted source of commands.
 
 ### Direct NUA worker updates (2026-09-19 revision)
 
-NUA's standing exception authorizes only `nuiak/status.yaml`, not other shared
-files. Every assigned worker updates its own entry in the optional version-1
+NUA's AGENTS.md explicitly permits reading this shared folder and writing NUA-owned
+coordination metadata under `nuiak/`, overriding its usual project-only boundary.
+Sandbox approval requirements still apply. Every relevant assigned worker updates its own entry in the optional version-1
 `packets` map. The packet owner is the sole writer of that entry. The architect
 maintains the legacy top-level summary; workers preserve it and all other entries.
 Read packet timestamps independently: a fresh packet does not renew an old summary
@@ -87,7 +91,9 @@ Use the repository task queue and evidence for durable truth, not this status bo
 If collisions become frequent, propose separately owned worker files or a locking
 service as a distinct change; do not silently widen write access.
 
-Do not create sibling staging/lock files under this exception. A project symlink
+NUA may also write owned requests/responses under `nuiak/`. This is not permission
+to edit TVTestRig-owned files or human reservations. Shared guides change only under
+a user-requested protocol update. A project symlink
 would still point outside the project and offers no permission or concurrency
 benefit; use the verified mounted path directly.
 
@@ -171,7 +177,7 @@ requests/responses directory. Include `schema_version: 1`, a unique `id`, `from`
 ID. A later response uses a new ID referencing the same request. Consult these
 directories only when status or the user points to a request; avoid full scans.
 This is a mailbox, not an unattended command runner.
-NUA's exact-file exception does not authorize these message directories.
+NUA's folder exception authorizes its own `nuiak/requests/` and `nuiak/responses/`.
 
 ## Device scheduling is advisory
 
@@ -196,8 +202,8 @@ because a status went stale. This file is not a distributed lock.
 
 Prepare and validate small UTF-8 YAML locally within your repository, then
 publish only to the verified mounted share and your owned destination.
-NUA workers follow the targeted packet-update procedure above; sibling staging
-files are not authorized. Other repositories may use staged replacement only if
+NUA workers follow the targeted packet-update procedure above. Owned staging metadata
+under `nuiak/` may support publication but is not a lock. Other repositories may use staged replacement only if
 their own permissions allow it. Readers reject partial/invalid documents. Neither
 targeted patches nor file replacement provide distributed locking.
 
