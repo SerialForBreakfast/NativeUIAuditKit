@@ -528,6 +528,13 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**P5-A decision (2026-09-19):** Training readiness is a side-effect-free preflight:
+it validates explicit fresh weights or resume state (never both), corpus paths/hashes,
+split pixels/labels, taxonomy, and a unique output location without importing Ultralytics,
+initializing MPS, downloading, inferring, or training. It reports configuration validity
+separately from launch eligibility. Fresh 41-class candidates target 150 epochs with cosine
+scheduling, seed 42, warmup, and full-frame augmentation; crop experiments remain separate.
+
 **Current milestone clarification (2026-09-19):** the 41-class full-frame candidate uses Run 009
 best.pt as fresh initialization, a 150-epoch target with cosine/warmup and reviewed effective
 configuration. TASK-6a-10 gates are fixture mAP50 ≥0.94, mAP50:95 ≥0.78, toggle/stepperControl

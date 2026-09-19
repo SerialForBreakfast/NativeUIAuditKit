@@ -9,6 +9,11 @@
 
 ## Summary of Key Decisions
 
+**P5-A readiness decision (2026-09-19):** Candidate configuration validation is
+not a training action. It consumes explicit weights, a corpus description and
+taxonomy, reports hashes and split completeness, and cannot make a corpus launch
+eligible. Actual corpus binding and eligibility remain P5-B.
+
 **Delivery amendment, 2026-09-19:** [DeliveryDecisions.md](DeliveryDecisions.md) records accepted
 recovery/reconstruction, 41-class-first, later badge, crop-metric and priority decisions. It
 supersedes conflicting historical planning text on those points; it does not claim new data,

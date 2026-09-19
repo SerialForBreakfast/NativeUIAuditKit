@@ -2,6 +2,16 @@
 
 **Current production training is YOLO11, not Create ML.** Use `scripts/train_ios_model.py`, `scripts/train_tvos_model.py`, and `scripts/train_focus_ring_detector.py`. Snapshot: [`CurrentState.md`](CurrentState.md). Skill: `.agents/skills/nativeui-model-workflow/`.
 
+## P5-A configuration preflight (no training)
+
+Use `--validate-only` before any assigned training run. It requires either explicit
+fresh `--initial-weights <best.pt>` or `--resume <last.pt>`, never both, and checks
+dataset/taxonomy/weights hashes, train/val/test pixels and labels, and output collision.
+It does not import Ultralytics, create caches, initialize MPS, download, infer, or train.
+Its successful report deliberately remains `launchEligible: false`; P5-B binds eligible
+real corpora. A fresh 41-class candidate uses 150 epochs, cosine scheduling, seed 42,
+warmup and full-frame augmentation. Do not use `--dry-run` as preflight: it trains.
+
 This file is the **historical Create ML (Runs 001–005) procedure**. Keep it for BP-25 / disk-full diagnosis. Do not follow it to train a shippable detector.
 
 Last updated: 2026-09-18 (banner); body last written 2026-05-25.

@@ -40,7 +40,7 @@ def parse_args():
         default="yolo11m",
         choices=["yolo11n", "yolo11s", "yolo11m", "yolo11l", "yolo11x"],
     )
-    p.add_argument("--epochs", type=int, default=100)
+    p.add_argument("--epochs", type=int, default=150)
     p.add_argument("--imgsz", type=int, default=640)
     p.add_argument(
         "--batch",
@@ -65,6 +65,8 @@ def parse_args():
     p.add_argument("--name", default=None)
     p.add_argument("--output-dir", default=str(DEFAULT_RUNS))
     p.add_argument("--resume", default=None, help="Path to last.pt")
+    p.add_argument("--initial-weights", default=None, help="Explicit fresh-run best.pt")
+    p.add_argument("--validate-only", action="store_true", help="Validate configuration only; never imports Ultralytics or trains")
     p.add_argument(
         "--dry-run",
         action="store_true",
@@ -90,12 +92,26 @@ def resolve_weights(model_name: str) -> str:
 def main():
     import os
 
+    args = parse_args()
+    dataset_dir = Path(args.dataset).expanduser().resolve()
+    output_dir = Path(args.output_dir).expanduser().resolve()
+    run_name = args.name or f"phase6a_{args.model}_e{args.epochs}"
+    if args.validate_only:
+        from training_preflight import PreflightError, validate
+        initial = Path(args.initial_weights).expanduser().resolve() if args.initial_weights else None
+        resume = Path(args.resume).expanduser().resolve() if args.resume else None
+        try:
+            print(json.dumps(validate(dataset_dir, initial, resume, output_dir / run_name, PROJECT_ROOT / "Research/schemas/category_map.json"), sort_keys=True))
+        except PreflightError as error:
+            print(f"ERROR: {error}")
+            sys.exit(1)
+        return
     for k, v in os_env_defaults.items():
         os.environ.setdefault(k, v)
         Path(v).mkdir(parents=True, exist_ok=True)
-
-    args = parse_args()
-    dataset_dir = Path(args.dataset).expanduser().resolve()
+    if args.initial_weights and args.resume:
+        print("ERROR: initial_weights_and_resume_conflict")
+        sys.exit(1)
     yaml_path = dataset_dir / "dataset.yaml"
     if not yaml_path.exists():
         print(f"ERROR: dataset.yaml not found at {yaml_path}")
@@ -150,7 +166,7 @@ def main():
     # Point Ultralytics weight downloads at NativeUITrainer/weights.
     os.chdir(WEIGHTS_DIR)
 
-    model_arg = args.resume or resolve_weights(args.model)
+    model_arg = args.resume or args.initial_weights or resolve_weights(args.model)
     print(f"\nPhase 6a training")
     print(f"  Model    : {args.model}")
     print(f"  Weights  : {model_arg}")
@@ -207,6 +223,8 @@ def main():
         name=run_name,
         exist_ok=True,
         pretrained=True,
+        seed=42,
+        cos_lr=True,
         optimizer="AdamW",
         lr0=0.001,
         lrf=0.01,
