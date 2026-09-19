@@ -23,3 +23,6 @@
   = 4.80 MB (gate ≤5.0 MB PASS). Compiled to `.mlmodelc`. Installed in
   `NativeUIAuditKitModels/Sources/.../Resources/`. Package.swift updated.
   All 66 tests pass with the model bundled. FOCUS-DET-04 complete.
+- 2026-09-18: FocusRing tests require the bundled model: URL non-nil, load
+  succeeds, metadata `focusThreshold`/`ambiguityThreshold`, classify on
+  `tvos_home_screen.png` returns prob in [0, 1].

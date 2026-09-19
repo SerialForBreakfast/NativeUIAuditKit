@@ -2596,7 +2596,7 @@ Heuristic `resolveTVOSFocus` is preserved as the `useFocusClassifier = false` fa
 - `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift` — `focusRingDetectorURL` / `loadFocusRingDetector()` (nil when absent, never fatal)
 - `NativeUIDetectionConfiguration.useFocusClassifier` — field with `Codable` round-trip support (default `true`)
 - `loadFocusClassifierIfAvailable()` / `resolveTVOSFocusML()` — Stage 2 dispatch in `NativeUIDetectionRequest`
-- Tests: crop expansion (16%), crop size (always 256×256), fallback-without-crash, Codable round-trip
+- Tests: crop expansion (16%), crop size (always 256×256), bundled-model load + metadata thresholds, classify unit-interval on `tvos_home_screen.png`, heuristic-vs-ML no-crash, Codable round-trip
 
 **AC:** `swift build` zero errors. `swift test` all passing.
 

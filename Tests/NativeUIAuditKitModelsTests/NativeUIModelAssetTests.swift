@@ -155,18 +155,44 @@ final class NativeUIModelAssetTests: XCTestCase {
         XCTAssertEqual(tvOSLicense, expectedLicense, "tvOS model metadata must declare AGPL-3.0 License with URL")
     }
 
-    func testFocusRingDetectorURLIsOptionalWhenAbsent() {
-        // Phase A does not ship FocusRingDetector.mlmodelc. Lookup must not fatal.
-        let url = NativeUIModelAsset.focusRingDetectorURL
-        if let url {
-            XCTAssertTrue(FileManager.default.fileExists(atPath: url.path))
-        }
+    /// v0.1 ships `FocusRingDetector.mlmodelc`; the URL must resolve to a real compiled graph.
+    func testFocusRingDetectorURLResolves() throws {
+        let url = try XCTUnwrap(
+            NativeUIModelAsset.focusRingDetectorURL,
+            "FocusRingDetector.mlmodelc must be bundled in NativeUIAuditKitModels"
+        )
+        XCTAssertTrue(
+            FileManager.default.fileExists(atPath: url.path),
+            "Bundled FocusRingDetector resource not found at \(url.path)"
+        )
     }
 
-    func testLoadFocusRingDetectorReturnsNilWhenUnbundled() async {
-        if NativeUIModelAsset.focusRingDetectorURL == nil {
-            let loaded = try? await NativeUIModelAsset.loadFocusRingDetector()
-            XCTAssertNil(loaded)
+    /// `loadFocusRingDetector()` must return a live `MLModel`, not the Phase A nil path.
+    func testFocusRingDetectorLoads() async throws {
+        let model = try await NativeUIModelAsset.loadFocusRingDetector()
+        XCTAssertNotNil(model, "FocusRingDetector.mlmodelc must load")
+    }
+
+    /// Spec §3 stores thresholds in CoreML user-defined metadata, not in weights.
+    func testFocusRingDetectorMetadataHasThresholds() async throws {
+        let loaded = try await NativeUIModelAsset.loadFocusRingDetector()
+        let model = try XCTUnwrap(
+            loaded,
+            "FocusRingDetector.mlmodelc must load before metadata can be checked"
+        )
+        XCTAssertEqual(userDefinedMetadata(model, key: "focusThreshold"), "0.85")
+        XCTAssertEqual(userDefinedMetadata(model, key: "ambiguityThreshold"), "0.70")
+    }
+
+    /// Reads a CoreML user-defined metadata string (`creatorDefinedKey` or raw key).
+    private func userDefinedMetadata(_ model: MLModel, key: String) -> String? {
+        let meta = model.modelDescription.metadata
+        if let raw = meta[MLModelMetadataKey(rawValue: key)] as? String {
+            return raw
         }
+        if let dict = meta[.creatorDefinedKey] as? [String: String] {
+            return dict[key]
+        }
+        return nil
     }
 }

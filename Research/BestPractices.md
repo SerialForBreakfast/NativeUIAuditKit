@@ -909,7 +909,18 @@ If the focused element's label or accessibility text matches any term in this pa
 
 **Why:** This is the same root cause as BP-46 (`CGImage`/`CGContext` bottom-left origin vs. this project's top-left convention), but it bites in test-fixture construction, not just production cropping — anywhere a test synthesizes a "changed region at position X" fixture via direct `CGContext` fills, verify the assertion against where the fill *actually* lands, not where the call site's `(x, y)` naively suggests.
 
-**Why:** Stage 2 training was blocked after harvest completed. The hang is the package graph, not missing data or MPS.
+---
 
+### BP-49: Always check booted simulator state before booting another
 
+**Wrong:** Seeing a simulator is "Shutdown" in a plan and immediately calling `xcrun simctl boot <UDID>` without checking what is currently running.
+
+**Correct:**
+```bash
+# Always run this first — do not assume the state from a plan written earlier
+xcrun simctl list devices | grep Booted
+```
+Only boot a new simulator after confirming no conflicting instance is already running. Booting a second tvOS simulator (especially across major OS versions) while one is already open can cause Simulator.app conflicts, resource contention, or the newly booted device to not reach a usable state.
+
+**Why:** In a prior session, two tvOS 26.5 simulators were already Booted when the plan called for booting tvOS 17.2 — the plan was written from an earlier `simctl list` snapshot, not the live state. Always re-check the live state immediately before any `simctl boot` or `simctl install` command. Treating the plan's captured state as current is a class of bug that causes unnecessary simulator restarts and potential data loss in already-running sessions.
 

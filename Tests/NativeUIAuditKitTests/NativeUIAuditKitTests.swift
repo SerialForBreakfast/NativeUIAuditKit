@@ -272,6 +272,40 @@ struct NativeUIAuditKitTests {
         #expect(tiny?.height == 256)
     }
 
+    @Test("FocusRingClassifier returns a unit-interval probability on a tvOS home crop")
+    func testFocusRingClassifyReturnsProbabilityInUnitInterval() async throws {
+        let classifier = try #require(
+            await NativeUIDetectionRequest.loadFocusClassifierIfAvailable(),
+            "FocusRingDetector.mlmodelc must be bundled"
+        )
+        #expect(classifier.focusThreshold == 0.85)
+        #expect(classifier.ambiguityThreshold == 0.70)
+
+        let fixtureURL = Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png")!
+        let data = try Data(contentsOf: fixtureURL)
+        let provider = CGDataProvider(data: data as CFData)!
+        let image = CGImage(
+            pngDataProviderSource: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+        )!
+
+        let bbox = CGRect(
+            x: CGFloat(image.width) * 0.15,
+            y: CGFloat(image.height) * 0.35,
+            width: CGFloat(image.width) * 0.20,
+            height: CGFloat(image.height) * 0.20
+        )
+        let crop = try #require(FocusRingClassifier.makeCrop(from: image, bbox: bbox))
+        #expect(crop.width == 256)
+        #expect(crop.height == 256)
+
+        let result = try classifier.classify(crop: crop)
+        #expect(result.isFocusedProbability >= 0 && result.isFocusedProbability <= 1)
+        #expect(result.confidence >= 0 && result.confidence <= 1)
+    }
+
     @Test("Focus classifier flag controls which resolution path runs without crashing")
     func testFocusRingFallbackWhenModelAbsent() async throws {
         let fixtureURL = Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png")!
