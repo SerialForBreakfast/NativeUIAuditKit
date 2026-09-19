@@ -256,8 +256,13 @@ These are derived by audit rules and post-processing, not by the pixel detector:
 
 ## 6. Dataset Strategy
 
-**Approved preparation work:** P4-A will introduce a separate annotation-schema version for
-tvOS scale 1 while retaining the current version for existing artifacts. P0 uses verified recovery
+**P4-A schema decision (2026-09-19):** `annotation.schema.v1.1.json` is a
+complete structural copy of `annotation.schema.json` v1.0. Version 1.0 remains
+byte-for-byte unchanged. The only validation changes in v1.1 are the declared
+`schemaVersion: "1.1"` and `image.scale` set `[1, 2, 3]`; its `$id`, title, and
+descriptions identify v1.1 accurately. Consumers select a local schema solely
+by an explicit declared version and reject missing or unsupported versions with
+no fallback. No metadata may be fabricated to make a sidecar validate. P0 uses verified recovery
 or a distinctly versioned reconstruction with new image/annotation pairs and a new baseline.
 No schema file has been migrated by the planning change; see [DeliveryDecisions.md](DeliveryDecisions.md).
 

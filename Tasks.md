@@ -15,10 +15,10 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
-| 1 | H1 | INTEGRATION-01 | ready | Pin producer source/version/examples; no hardware |
-| 2 | P1-A | 6a-11 | ready | Export software; publish example contract early |
+| 1 | H1 | INTEGRATION-01 | review | Source-pinned contract and handoff are ready for architect review |
+| 2 | P1-A | 6a-11 | review | Offline export software, schema, tests, and handoff are ready for architect review |
 | 3 | P0-A | DATA-01 | review | Concurrent worker supplied [handoff](reports/work/P0/handoff.md); evidence acceptance pending; do not redispatch overlapping edits |
-| 4 | P4-A | INTEGRATION-01 / 6a-10 | ready (draft development) | H1 required for final compatibility acceptance |
+| 4 | P4-A | INTEGRATION-01 / 6a-10 | active | Maintainer approved strict v1.1 schema duplication; validator/normalizer implementation in progress |
 | 5 | P5-A | 6a-10 | ready | Validation-only configuration and negative-data tests |
 | 6 | P3-A | 6a-11 | ready | Regression selector on toy corpus |
 | 7 | P2-A | 6a-11 | draft | Reviewed P1-A interface, not full inference |

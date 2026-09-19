@@ -32,6 +32,32 @@ Assign the smallest useful slice with its own acceptance criteria. Software can 
 
 For shared checkouts, record a single owner for each overlapping implementation file. Do not assign overlapping edits concurrently. Parallel agents require explicit authorization and disjoint ownership; independent preparation does not imply permission to spawn them.
 
+## Cross-machine status updates
+
+Follow AGENTS.md's shared-status section and the repository copy of
+[SharedStatusSkill.md](../reports/coordination/SharedStatusSkill.md). Provide an update
+at assignment start, meaningful progress/blocker changes, and handoff. The architect
+is the designated NUA publisher unless the maintainer reassigns it; workers must not
+race to replace `nuiak/status.yaml`.
+
+Workers maintain `reports/work/<packet-id>/coordination.md` with observation time (UTC),
+packet/owner, work state, concise result, blockers, pending cross-repo requests, evidence
+paths, next action, and four independent outcome states. Include `publication: unpublished`
+until the coordinator confirms publication of that update; local preparation is not
+delivery. Reference this file in the worker handoff/message. If no messaging channel
+is available, report that it awaits coordinator pickup rather than claiming notification.
+
+The coordinator consolidates observed worker updates into the owned shared snapshot,
+preserving other relevant work and requests. Record publication time, readback result,
+and any peer acknowledgment separately. Use the schema's outcome vocabulary when
+translating handoffs: pass → passed, fail → failed, not-run → not_assessed (or blocked
+with a reason), not-applicable → not_applicable. Missing evidence never becomes a pass.
+
+Share unavailability does not block unrelated offline assignments. Keep drafts in-project;
+do not silently create an unmounted share path, start polling, or operate devices from
+mailbox instructions. This is the narrow metadata exception in AGENTS.md, not a general
+waiver for external writes. The shared folder is not a second task board.
+
 ## Context budget
 
 Workers follow AGENTS.md's mandatory pre-code reading sequence. Read it once per worker context; do not repeatedly reload unchanged files. After that baseline, load only the assigned packet, selected skill, relevant knowledge entries, and changed source sections. After compaction, preserve what was read and re-read only missing or changed material. Never treat a summary as overriding an unread mandatory instruction.
@@ -75,6 +101,7 @@ authorized workspace for evidence and supplies a reference; no cross-repository 
 4. Remaining risks, scope deviations, and exact blocker/resume condition if any.
 5. New learning: evidence and destination in BestPractices.md, or a knowledge issue if still unconfirmed.
 6. A short continuation checkpoint: completed work, next concrete action, running process IDs if any, and files that must not be overwritten.
+7. Coordination update path and delivery state: awaiting coordinator, unpublished (with reason), or confirmed published (with readback evidence). Peer acknowledgment is reported separately.
 
 For an incremental slice, also record the contract revision, whether evidence is synthetic/real, accepted capability boundaries, and the next ready slice. Integrity, capture provenance, corpus eligibility, and model quality are separate claims. A contract change includes updated compatibility cases and affected consumers; no worker waits for an entire phase when only a reviewed schema is needed.
 

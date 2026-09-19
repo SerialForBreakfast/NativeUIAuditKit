@@ -29,10 +29,20 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 os.environ.setdefault("YOLO_CONFIG_DIR", str(PROJECT_ROOT / "NativeUITrainer" / ".ultralytics"))
 os.environ.setdefault("TMPDIR", str(PROJECT_ROOT / "NativeUITrainer" / ".tmp"))
+os.environ.setdefault("MPLCONFIGDIR", str(PROJECT_ROOT / "NativeUITrainer" / ".mplconfig"))
+os.environ.setdefault("TORCH_HOME", str(PROJECT_ROOT / "NativeUITrainer" / ".torch"))
 (PROJECT_ROOT / "NativeUITrainer" / ".tmp").mkdir(parents=True, exist_ok=True)
 
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from centroid_distribution import detect_bias, load_pred_centroids, spatial_entropy  # noqa: E402
+from prediction_artifact import (  # noqa: E402
+    PredictionArtifactError,
+    build_artifact,
+    ensure_new_output,
+    load_request,
+    make_result,
+    write_artifact,
+)
 
 YOLO_DATA = PROJECT_ROOT / "NativeUITrainer" / "yolo_dataset_41class"
 WEIGHTS_DIR = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs" / "phase6a_r007" / "weights"
@@ -53,6 +63,21 @@ ENTROPY_N = 1000
 BLUR_N = 200
 LATENCY_N = 50
 
+# These settings are shared by PyTorch validation, legacy text-label prediction,
+# and prediction-artifact-v1 export. They are deliberately explicit so a future
+# comparison can establish preprocessing/NMS equivalence without guessing at
+# Ultralytics defaults.
+PREDICTION_SETTINGS = {
+    "engine": "ultralytics-yolo",
+    "imgsz": 640,
+    "confidence": 0.001,
+    "iou": 0.7,
+    "maxDetections": 300,
+    "augment": False,
+    "agnosticNMS": False,
+    "coordinateSpace": "original-image-top-left-pixel-xyxy",
+}
+
 # Classes that TrainingDataStrategy treats as structure-not-text for the blur check.
 NON_TEXT_PROBE = ("navigationBar", "tabBar", "toggle", "slider", "alert")
 
@@ -65,6 +90,14 @@ def load_names() -> list[str]:
     data = json.loads(CATEGORY_MAP.read_text())
     cats = sorted(data["categories"], key=lambda c: c["id"])
     return [c["name"] for c in cats]
+
+
+def category_map_version() -> str:
+    data = json.loads(CATEGORY_MAP.read_text())
+    version = data.get("version")
+    if not isinstance(version, str) or not version:
+        raise RuntimeError("category map has no version")
+    return version
 
 
 def dir_size_mb(path: Path) -> float:
@@ -361,6 +394,11 @@ def run_val(model_path: Path, split: str, name: str, device: str | None):
         name=name,
         exist_ok=True,
         verbose=True,
+        conf=PREDICTION_SETTINGS["confidence"],
+        iou=PREDICTION_SETTINGS["iou"],
+        max_det=PREDICTION_SETTINGS["maxDetections"],
+        augment=PREDICTION_SETTINGS["augment"],
+        agnostic_nms=PREDICTION_SETTINGS["agnosticNMS"],
     )
     if device:
         kwargs["device"] = device
@@ -383,6 +421,10 @@ def run_predict(model_path: Path, source: Path, name: str, device: str | None, c
         name=name,
         exist_ok=True,
         verbose=False,
+        iou=PREDICTION_SETTINGS["iou"],
+        max_det=PREDICTION_SETTINGS["maxDetections"],
+        augment=PREDICTION_SETTINGS["augment"],
+        agnostic_nms=PREDICTION_SETTINGS["agnosticNMS"],
     )
     if device:
         kwargs["device"] = device
@@ -396,6 +438,65 @@ def run_predict(model_path: Path, source: Path, name: str, device: str | None, c
         found = list(alt.rglob("labels"))
         labels = found[0] if found else labels
     return labels
+
+
+def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: str | None) -> None:
+    """Write one prediction-artifact-v1 record per explicit manifest member.
+
+    All corpus validation happens before the model is constructed. Unlike the
+    legacy ``save_txt`` path, this reads Result boxes directly so empty outputs
+    are explicit and cannot be mistaken for absent/stale label files.
+    """
+    names = load_names()
+    request = load_request(manifest, len(names))
+    target = ensure_new_output(output, PROJECT_ROOT)
+    resolved_checkpoint = checkpoint.resolve(strict=False)
+    if not resolved_checkpoint.is_file():
+        raise PredictionArtifactError("explicit prediction checkpoint does not exist")
+
+    from ultralytics import YOLO
+
+    model = YOLO(str(resolved_checkpoint))
+    records = []
+    for image in request.images:
+        try:
+            kwargs = dict(
+                source=str(image.image_path),
+                imgsz=PREDICTION_SETTINGS["imgsz"],
+                conf=PREDICTION_SETTINGS["confidence"],
+                iou=PREDICTION_SETTINGS["iou"],
+                max_det=PREDICTION_SETTINGS["maxDetections"],
+                augment=PREDICTION_SETTINGS["augment"],
+                agnostic_nms=PREDICTION_SETTINGS["agnosticNMS"],
+                save=False,
+                stream=False,
+                verbose=False,
+            )
+            if device:
+                kwargs["device"] = device
+            predicted = model.predict(**kwargs)
+            if len(predicted) != 1:
+                raise RuntimeError(f"expected one result, received {len(predicted)}")
+            boxes = predicted[0].boxes
+            detections = []
+            if boxes is not None:
+                for class_id, score, xyxy in zip(boxes.cls.tolist(), boxes.conf.tolist(), boxes.xyxy.tolist()):
+                    detections.append(
+                        {"classID": int(class_id), "score": float(score), "xyxyPixels": [float(v) for v in xyxy]}
+                    )
+            records.append(make_result(image, len(names), detections=detections))
+        except Exception as exc:
+            records.append(make_result(image, len(names), failure={"code": "inference_failed", "message": str(exc)}))
+    artifact = build_artifact(
+        request=request,
+        checkpoint=resolved_checkpoint,
+        category_map=CATEGORY_MAP,
+        category_map_version=category_map_version(),
+        settings=PREDICTION_SETTINGS,
+        results=records,
+    )
+    write_artifact(target, artifact)
+    print(f"Wrote prediction artifact: {target}")
 
 
 def blur_text_images(stems: list[str], image_dir: Path, out_dir: Path) -> int:
@@ -535,11 +636,29 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--skip-coreml-predict", action="store_true", help="Skip CoreML test predict (6a-7 path)")
     p.add_argument("--blur-n", type=int, default=BLUR_N)
     p.add_argument("--entropy-n", type=int, default=ENTROPY_N)
+    p.add_argument("--prediction-manifest", type=Path, help="Explicit prediction-input-manifest-v1 JSON")
+    p.add_argument("--prediction-checkpoint", type=Path, help="Explicit PyTorch checkpoint for --prediction-manifest")
+    p.add_argument("--prediction-output", type=Path, help="New in-project prediction-artifact-v1 JSON path")
+    p.add_argument("--prediction-device", default="mps", help="Ultralytics device for isolated prediction export")
     return p.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    isolated_args = (args.prediction_manifest, args.prediction_checkpoint, args.prediction_output)
+    if any(value is not None for value in isolated_args):
+        if not all(value is not None for value in isolated_args):
+            raise SystemExit("--prediction-manifest, --prediction-checkpoint, and --prediction-output are required together")
+        try:
+            export_predictions(
+                manifest=args.prediction_manifest,
+                checkpoint=args.prediction_checkpoint,
+                output=args.prediction_output,
+                device=args.prediction_device or None,
+            )
+        except PredictionArtifactError as exc:
+            raise SystemExit(f"prediction export readiness failed: {exc}") from exc
+        return
     REPORTS.mkdir(parents=True, exist_ok=True)
     names = load_names()
     weights = Path(args.weights).resolve()
