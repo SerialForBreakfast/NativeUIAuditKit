@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-import json, shutil, subprocess, sys, tempfile, unittest
+import json, shutil, struct, subprocess, sys, tempfile, unittest, zlib
 from pathlib import Path
 from training_preflight import PreflightError, validate
 ROOT=Path(__file__).resolve().parent.parent
+def png():
+ def chunk(kind,data): return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data)&0xffffffff)
+ return b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',1,1,8,2,0,0,0))+chunk(b'IDAT',zlib.compress(b'\0\x00\x00\x00'))+chunk(b'IEND',b'')
 class Tests(unittest.TestCase):
  def setUp(self):
   (ROOT/'.build/debug-output').mkdir(parents=True,exist_ok=True); self.d=Path(tempfile.mkdtemp(dir=ROOT/'.build/debug-output'))
   self.ds=self.d/'ds'; (self.ds/'images').mkdir(parents=True); (self.ds/'labels').mkdir()
   for s in ('train','val','test'):
-   (self.ds/'images'/s).mkdir(); (self.ds/'labels'/s).mkdir(); (self.ds/'images'/s/'a.png').write_bytes(b'x'); (self.ds/'labels'/s/'a.txt').write_text('')
+   (self.ds/'images'/s).mkdir(); (self.ds/'labels'/s).mkdir(); (self.ds/'images'/s/'a.png').write_bytes(png()); (self.ds/'labels'/s/'a.txt').write_text('')
   (self.ds/'dataset.yaml').write_text('names: []\n'); self.w=self.d/'best.pt'; self.w.write_bytes(b'w'); self.tax=self.d/'map.json'; self.tax.write_text('{}')
  def tearDown(self): shutil.rmtree(self.d)
  def test_valid_is_not_launch_eligible(self):
@@ -19,6 +22,10 @@ class Tests(unittest.TestCase):
   with self.assertRaisesRegex(PreflightError,'ineligible_corpus'): validate(self.ds,self.w,None,self.d/'out',self.tax)
   self.setUp(); (self.d/'out').mkdir()
   with self.assertRaisesRegex(PreflightError,'output_collision'): validate(self.ds,self.w,None,self.d/'out',self.tax)
+  self.setUp(); (self.ds/'images'/'test'/'a.png').write_bytes(b'not png')
+  with self.assertRaisesRegex(PreflightError,'corrupt_pixel'): validate(self.ds,self.w,None,self.d/'out',self.tax)
+  self.setUp(); valid=png(); (self.ds/'images'/'test'/'a.png').write_bytes(valid[:-12])
+  with self.assertRaisesRegex(PreflightError,'corrupt_pixel'): validate(self.ds,self.w,None,self.d/'out',self.tax)
  def test_cli_is_side_effect_free_and_separates_modes(self):
   before={p.relative_to(ROOT) for p in (ROOT/'NativeUITrainer').glob('.ultralytics/**') if p.is_file()} if (ROOT/'NativeUITrainer').exists() else set()
   command=[sys.executable,str(ROOT/'scripts/train_ios_model.py'),'--validate-only','--dataset',str(self.ds),'--initial-weights',str(self.w),'--output-dir',str(self.d/'runs')]

@@ -1,6 +1,6 @@
 # TVTestRig Fixture Batch Ingest
 
-**As of:** 2026-09-18  
+**As of:** 2026-09-19
 **Related:** TASK-6a-10 in [`../Tasks.md`](../Tasks.md), [`tvOSTrainingStrategy.md`](tvOSTrainingStrategy.md), BP-28, BP-40–BP-45  
 **Scripts:** `scripts/ingest_fixture_batch.py`, `scripts/test_ingest_fixture_batch.py`
 
@@ -17,6 +17,8 @@ On-disk layout (TVTestRig FIX-Synth-02, 2026-09-18):
 <id>_focused.png
 <id>_metadata.json
 manifest.json          ← TVTestRig train / calibration / held-out split
+dataset-index.json     ← layout/version/integrity index plus optional sourceDescription
+harvest-receipt.json   ← completed/aborted outcome and accepted-row count
 ```
 
 Metadata uses canonical snake_case: `element_id`, `taxonomy_class`, `normalized_bounds` (`HarvestPairMetadataFile`). `GET /scene` returns non-empty `elements` with `scene_width/height: 1920×1080`.
@@ -29,10 +31,12 @@ The 41-class taxonomy still matches `Research/schemas/category_map.json` index-f
 
 - Validate completed bundles with `harvest_bundle_validation.py` before normalization.
   The legacy-fixture switch is test-only and cannot validate or ingest a real bundle.
-- A successful validator result preserves the producer and producer-build fields when
-  supplied, records absent identity evidence as `null`, marks provenance as
-  `unverified-pixel-telemetry-binding`, and always sets `eligibleForTraining: false`.
-  P4-L must establish genuine identity separately; normalization never invents it.
+- A successful validator result preserves producer/build and a structurally valid
+  `sourceDescription` when supplied, records absent identity evidence as `null`,
+  marks provenance as `unverified-pixel-telemetry-binding`, and always sets
+  `eligibleForTraining: false`. `sourceDescription.assurance` must be
+  `reported-source; not-attested`; it is collection context, not identity or
+  training approval. Normalization never invents metadata.
 - Convert validated tvOS scale-1 captures to `annotation.schema.v1.1.json` sidecars;
   v1.0 remains unchanged for existing scale-2/3 artifacts.
 - Unknown `taxonomy_class` values are dropped and counted, never remapped (BP-28).
@@ -53,8 +57,13 @@ Every JSON sidecar under `dataset/` checked 2026-09-18 (including `tvos_fixture_
 
 ## Current blockers (live batch)
 
-1. **HarvestIdentity attestation.** Coordinator IPC was resolved on 2026-09-18. Batch now fails closed at `identity_preflight` / `identityUnavailable` until the HTTP and IPC adapters attest a shared identity. The older `serviceUnavailable` diagnosis is historical. Evidence: [`reports/tvtestrig_feedback_2026-09-18.md`](../reports/tvtestrig_feedback_2026-09-18.md). No bypass is supported.
-2. **Office hardware.** TVTestRig's own notes: live office harvest is a separate authorized run. Do not trigger it unprompted. Re-verify this ingest format against real batch output before training.
+1. **Completed producer evidence.** The current producer policy does not require
+   the optional identity challenge for production/NUIAK `fixture batch`; it emits
+   descriptive source context instead. NUA still needs one genuine completed
+   bundle before it can qualify that producer revision's compatibility.
+2. **Office hardware.** TVTestRig's own notes: live office harvest is a separate
+   authorized run. Do not trigger it unprompted. Re-verify this ingest format
+   against real batch output before training.
 
 FocusRing live harvest (`scripts/harvest_focus_pairs.py --live`) is a *different* path: N-way navigate inside TVTestRigFixture, container socket via `NativeUITrainer/.tmp/aatv_home`. That path already produced 1,500 pairs. Do not confuse it with `aatv fixture batch`.
 

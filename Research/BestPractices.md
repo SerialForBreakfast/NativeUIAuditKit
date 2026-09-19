@@ -995,3 +995,25 @@ runtime limit; report incomplete work truthfully.
 shift execution management onto the user. Token efficiency means concise context
 and evidence, not omitting integration/tests or ending work prematurely. These
 rules address the observed failure; they do not guarantee future agent compliance.
+
+---
+
+### BP-56: Exercise the producer's actual artifact layout and envelope
+
+**Wrong:** Unit-test export, readiness, corpus assembly, prediction serialization,
+and comparison with hand-written lookalike paths or documents. This hid that the
+exporter emitted `train|val|test/{images,labels}` while readiness expected a
+different directory shape, and that P2 expected obsolete top-level prediction
+hashes rather than P1's nested v1 envelope.
+
+**Correct:** In a project-local synthetic integration test, invoke the exporter
+CLI into a fresh output directory, feed that exact output to validation-only
+training preflight, and pass a real-format prediction artifact through the
+consumer. Corrupt/truncated pixels, cross-split content and family reuse, stale
+output paths, failed prediction rows, and absent metrics must fail or report an
+explicit unavailable state.
+
+**Why:** Interface drift is most likely at producer/consumer boundaries. Testing
+the actual emitted layout and schema catches it without misrepresenting toy data
+as an eligible corpus or starting a model run. Evidence: integrated offline
+toolchain review, 2026-09-19.

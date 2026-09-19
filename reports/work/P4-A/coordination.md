@@ -32,6 +32,12 @@
   conflict, invalid bounds, unknown/empty annotations, and cross-split baseline
   reuse. The validator no longer needs Pillow and explicitly preserves absent
   identity as `null` rather than fabricating it.
+- **Current source reconciliation:** TVTestRig layout-v1 source now reports
+  additive `sourceDescription` with `reported-source; not-attested` assurance
+  for production fixture batches. The validator preserves a well-formed object,
+  rejects malformed/changed assurance, and still keeps every result unverified
+  and training-ineligible. The internal identity challenge is not a NUA
+  production prerequisite.
 - **Verification:** 6 H1 validator tests, 4 schema-version tests, 16 legacy
   ingestion checks, `swift build`, and `swift test` pass offline. Full acceptance
   evidence is in `handoff.md`.

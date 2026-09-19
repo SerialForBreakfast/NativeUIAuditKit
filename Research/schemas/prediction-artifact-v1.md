@@ -112,3 +112,13 @@ class ID, or failed result when a complete numerical comparison is requested.
 Additive fields may be ignored only if the required v1 meanings remain
 unchanged. A new required semantic requires a new format version and matching
 contract tests.
+
+## P2 comparison compatibility
+
+P2-A compares the nested `corpus.contentSHA256`, `categoryMap.sha256`,
+`completeness`, per-image pixel/label identities, and `settingsSHA256` fields
+from this envelope. It rejects failed records before any numerical comparison.
+The per-image artifact does not itself calculate evaluation metrics; a caller may
+attach a separate numeric `metrics` object for a controlled comparison. If either
+artifact lacks that object, the comparison reports `metricAvailability:
+"unavailable"` and no deltas. It must never interpret missing metrics as zero.

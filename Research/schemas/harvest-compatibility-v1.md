@@ -4,9 +4,10 @@
 producer snapshot below and does not constitute producer acceptance, live-device
 qualification, provenance attestation, corpus eligibility, or a model gate.
 
-**Producer snapshot:** TVTestRig commit
-`586050e043bddd742c701963650e2fc5815afe36`, clean working tree, inspected
-2026-09-19. The source paths are
+**Producer snapshots:** historical H1 commit
+`586050e043bddd742c701963650e2fc5815afe36` and current inspected commit
+`3fda3eab1aa7fc944914d0f29cab09a9705655d2`, both observed clean on
+2026-09-19. The current source paths are
 `TVTestRig/TVTestRig/TVTestRig/SyntheticFactory/FixtureBatchHarvestEngine.swift`,
 `HarvestDatasetIndex.swift`, `FixtureHarvestReceipt.swift`,
 `HarvestBundleValidator.swift`, and `HarvestIdentity.swift`. The producer's
@@ -23,7 +24,7 @@ evidence is still required by P4-L before integration is qualified.
 
 | Item | v1 requirement | NUA support / outcome |
 |---|---|---|
-| Producer revision | `586050e043bddd742c701963650e2fc5815afe36` | Source-pinned; other revisions require a new compatibility case. |
+| Producer revision | Historical `586050e...` and current `3fda3ea...`; required layout-v1 identifiers remain unchanged. | Supported within this source-observed set. Any changed required identifier, coordinate convention, split vocabulary, or source-description assurance requires a new compatibility case. |
 | Dataset index | `datasetLayoutVersion == 1`; `telemetryContract == "harvest-canonical-v1; source-version-unverified"`; `provenance == "unverified-pixel-telemetry-binding"` | Supported only with these exact identifiers. Unsupported identifier/version is a consumer `unsupported_version` rejection. |
 | Coordinate identifiers | `normalizedCoordinates == "xyxy-top-left-unit"`; `pixelCoordinates == "xywh-top-left-pixels"` | Supported. Convert the normalized top-left `xyxy` value to NUA/Vision representation only after validation. |
 | Receipt | `schemaVersion == 1`, `outcome == "completed"`, `failure == null`, and `acceptedRowCount > 0` | Required. Partial/aborted output is `incomplete_run`, never manually promoted. |
@@ -33,7 +34,8 @@ evidence is still required by P4-L before integration is qualified.
 | Sample split | Each row uses exactly `training`, `calibration`, or `held-out`; each split file equals its manifest subset | Required. Preserve names; do not fold calibration into training. |
 | Pair metadata | `id`, `unfocused_png`, `focused_png`, `focused_element_id`, `is_settled`, `elements`, and optional `recipe`, `unfocused_provenance`, `focused_provenance` | Required fields are validated as listed below. Optional provenance objects do not create a trusted identity claim. |
 | Taxonomy | `taxonomy_class` is producer text; no producer taxonomy version exists in v1 | Preserve losslessly through validation. P4-A must map only against NUA's frozen category map and reject/report unmapped classes—never silently remap. |
-| Identity | `HarvestIdentity(deviceID, runID, captureGeneration)` is an in-memory adapter gate, not an exported v1 bundle field | Not proven by an offline bundle. Positive fixture remains `unverified` and ineligible; actual shared attestation is P4-L/TV-I1 work. |
+| Source description | Additive `sourceDescription` may record `requestedDeviceID`, `captureMethod`, `collectedAt`, available `environment`/`fixture`, and `assurance: "reported-source; not-attested"`. | If present, validate its shape and literal assurance, then preserve it verbatim. It is descriptive metadata, never identity evidence or a training decision. |
+| Identity | `HarvestIdentity(deviceID, runID, captureGeneration)` remains an optional internal assurance mechanism, not a required production/NUIAK bundle field. | No absent identity field is synthesized. A positive bundle may establish limited compatibility only; it does not by itself establish corpus eligibility. |
 
 The producer validator permits Codable's default unknown-key behavior while it
 requires all decoded non-optional fields. NUA v1 therefore may ignore unknown
@@ -61,8 +63,10 @@ bundle/
 
 `dataset-index.json` contains `datasetLayoutVersion`, `telemetryContract`,
 `producer`, optional `producerBuild`, `provenance`, `normalizedCoordinates`,
-`pixelCoordinates`, and `artifacts`. Each artifact has `path`, `sha256`, and
-`byteCount`.
+`pixelCoordinates`, artifacts, and optional `sourceDescription`. When present,
+source description requires nonempty `captureMethod` and `collectedAt`, literal
+`assurance: "reported-source; not-attested"`, and object-or-null environment
+and fixture values. Each artifact has `path`, `sha256`, and `byteCount`.
 
 `harvest-receipt.json` contains `schemaVersion`, `outcome`,
 `acceptedRowCount`, `rejections`, and optional `failure`. A completed receipt
@@ -120,7 +124,9 @@ recomputed from those exact bytes.
 
 | Case ID | Construction | Expected integrity result | Eligibility |
 |---|---|---|---|
-| `H1-positive-v1` | One completed row and all required indexed files; matching bytes/hashes; a real decodable 1x1 pair; one settled focused element with unit-valid bounds and a known NUA taxonomy. | pass | false: `unverified-pixel-telemetry-binding`, test-only fixture, no live identity attestation |
+| `H1-positive-v1` | One completed row and all required indexed files; matching bytes/hashes; a real decodable 1x1 pair; one settled focused element with unit-valid bounds and a known NUA taxonomy. | pass | false: `unverified-pixel-telemetry-binding`, test-only fixture |
+| `H1-reported-source-v1` | Positive case with well-formed additive `sourceDescription` and literal `reported-source; not-attested` assurance. | pass; preserve source description | false: reported source context is not attestation or corpus qualification |
+| `H1-invalid-source-description` | Source description has missing required context, invalid field shape, or changed assurance literal. | `invalid_metadata` | false |
 | `H1-unknown-version` | Change an index identifier or receipt schema version. | `unsupported_version` | false |
 | `H1-aborted-receipt` | Set receipt outcome to `aborted` or set a failure. | `incomplete_run` | false |
 | `H1-altered-bytes` | Change one indexed file without updating its index digest/count. | `integrity_failed` | false |
@@ -146,13 +152,14 @@ producer bundle:
 ```json
 {
   "caseID": "H1-positive-v1",
-  "producerRevision": "586050e043bddd742c701963650e2fc5815afe36",
+  "producerRevision": "3fda3eab1aa7fc944914d0f29cab09a9705655d2",
   "contractVersion": "harvest-compatibility-v1",
   "consumerRevision": "<NUA revision or dirty-worktree marker>",
   "integrity": { "passed": true, "resultCode": "pass" },
   "provenanceState": "unverified-pixel-telemetry-binding",
+  "sourceDescription": { "assurance": "reported-source; not-attested" },
   "eligibleForTraining": false,
-  "eligibilityReasons": ["offline test fixture", "no shared identity attestation"],
+  "eligibilityReasons": ["offline test fixture", "no qualified corpus review"],
   "evidencePath": "reports/work/P4-A/<case-id>.json"
 }
 ```
@@ -167,8 +174,10 @@ receipt, coordinate, and provenance identifiers when publishing a consumer
 candidate. With a format change, provide the producer revision, a minimal
 offline positive and the affected negative cases, expected validator result,
 and a migration note. A positive offline result must continue to state
-unverified provenance and `approvedForTraining: false`. Identity lifecycle and
-wire evidence remain TV-I1; a genuine-bundle check remains P4-L.
+unverified provenance and `approvedForTraining: false`. If emitted,
+`sourceDescription` must retain its descriptive assurance rather than imply
+attestation. Optional identity lifecycle and wire evidence remain TV-I1; a
+genuine-bundle check remains P4-L.
 
 Open questions that do not block P4-A parser work: the producer has no exported
 taxonomy version, and `HarvestIdentity` is not serialized into v1 artifacts.

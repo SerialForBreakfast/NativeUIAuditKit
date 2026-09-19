@@ -191,6 +191,17 @@ def target_split(original: str, family: str, holdout: set[str]) -> str:
     return "val"
 
 
+def new_in_project_output(raw: str, project_root: Path) -> Path:
+    output = Path(raw).expanduser().resolve(strict=False)
+    try:
+        output.relative_to(project_root.resolve(strict=True))
+    except ValueError as exc:
+        raise ValueError("export output must stay inside the project") from exc
+    if output.exists():
+        raise ValueError("export output already exists; refusing collision or stale reuse")
+    return output
+
+
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--dataset", default=None, help="Native dataset root (PNG+JSON splits)")
@@ -208,7 +219,11 @@ def parse_args():
 def main():
     args = parse_args()
     dataset = discover_dataset(args.dataset)
-    out_dir = Path(args.output).expanduser().resolve()
+    try:
+        out_dir = new_in_project_output(args.output, PROJECT_ROOT)
+    except ValueError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 1
     name_to_id, names = load_category_map(CATEGORY_MAP)
     holdout = set(args.holdout_families)
     manifest_fam = load_manifest_families(dataset)
@@ -368,7 +383,8 @@ def main():
         print("Next:")
         print("  .venv-yolo/bin/python scripts/compute_class_weights.py")
         print("  .venv-yolo/bin/python scripts/train_ios_model.py --dry-run")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

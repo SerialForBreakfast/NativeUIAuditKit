@@ -31,6 +31,14 @@ os_env_defaults = {
     "YOLO_CONFIG_DIR": str(PROJECT_ROOT / "NativeUITrainer" / ".ultralytics"),
 }
 
+def require_in_project(path: Path, purpose: str) -> Path:
+    resolved = path.expanduser().resolve(strict=False)
+    try:
+        resolved.relative_to(PROJECT_ROOT.resolve(strict=True))
+    except ValueError as error:
+        raise ValueError(f"{purpose} must stay inside the project") from error
+    return resolved
+
 
 def parse_args():
     p = argparse.ArgumentParser()
@@ -94,7 +102,11 @@ def main():
 
     args = parse_args()
     dataset_dir = Path(args.dataset).expanduser().resolve()
-    output_dir = Path(args.output_dir).expanduser().resolve()
+    try:
+        output_dir = require_in_project(Path(args.output_dir), "training output")
+    except ValueError as error:
+        print(f"ERROR: {error}")
+        sys.exit(1)
     run_name = args.name or f"phase6a_{args.model}_e{args.epochs}"
     if args.validate_only:
         from training_preflight import PreflightError, validate
@@ -146,7 +158,7 @@ def main():
         run_name = args.name or f"phase6a_{args.model}_dryrun"
         print("DRY-RUN: 2 epochs, batch=4, 5% fraction, OHEM still attached")
 
-    output_dir = Path(args.output_dir).expanduser().resolve()
+    output_dir = require_in_project(Path(args.output_dir), "training output")
     output_dir.mkdir(parents=True, exist_ok=True)
     WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
 

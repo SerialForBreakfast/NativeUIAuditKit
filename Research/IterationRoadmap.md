@@ -4,6 +4,13 @@
 
 ## Delivery model
 
+The [iOS platform plan](Plans/iOSPlatform.md) makes the five-class → 41-class delivery
+path explicit: corpus preservation and offline toolchain work proceed independently;
+eligible iOS pixels then enable Run 009 baseline/regression qualification without Office.
+Only the planned mixed-data candidate needs the separate fixture-corpus prerequisite.
+See [iOS tasks](../Tasks.md#ios-platform-tasks) for the grouped work and the single queue
+for current state. Packet checkpoints are not turn boundaries within an assigned tranche.
+
 Accept small software increments with their own evidence. Keep separate integration, data, and model qualification tasks open. A missing dataset or hardware slot blocks the relevant experiment, not completion of a serializer, validator, regression selector, or configuration preflight.
 
 | Lane | Useful work now | Required later | Independent completion evidence |

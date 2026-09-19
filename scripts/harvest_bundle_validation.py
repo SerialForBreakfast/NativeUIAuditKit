@@ -49,12 +49,31 @@ def _png_size(data: bytes) -> tuple[int, int]:
     if len(decoded) != height*(row_bytes+1) or any(decoded[row*(row_bytes+1)] > 4 for row in range(height)): raise HarvestValidationError("invalid_image")
     return width,height
 
+def _source_description(index: dict[str, Any]) -> dict[str, Any] | None:
+    """Preserve producer collection context without upgrading its assurance."""
+    source = index.get("sourceDescription")
+    if source is None:
+        return None
+    if not isinstance(source, dict):
+        raise HarvestValidationError("invalid_metadata")
+    if (not isinstance(source.get("captureMethod"), str) or not source["captureMethod"]
+            or not isinstance(source.get("collectedAt"), str) or not source["collectedAt"]
+            or source.get("assurance") != "reported-source; not-attested"):
+        raise HarvestValidationError("invalid_metadata")
+    if source.get("requestedDeviceID") is not None and not isinstance(source["requestedDeviceID"], str):
+        raise HarvestValidationError("invalid_metadata")
+    for key in ("environment", "fixture"):
+        if source.get(key) is not None and not isinstance(source[key], dict):
+            raise HarvestValidationError("invalid_metadata")
+    return source
+
 def validate_bundle(directory: Path) -> dict[str, Any]:
     root = directory.resolve(strict=False)
     if not root.is_dir() or ".partial-" in root.name: raise HarvestValidationError("incomplete_run")
     index = _json(root, "dataset-index.json")
     receipt = _json(root, "harvest-receipt.json")
     if not isinstance(index, dict) or index.get("datasetLayoutVersion") != 1 or index.get("telemetryContract") != "harvest-canonical-v1; source-version-unverified" or index.get("provenance") != "unverified-pixel-telemetry-binding" or index.get("normalizedCoordinates") != "xyxy-top-left-unit" or index.get("pixelCoordinates") != "xywh-top-left-pixels": raise HarvestValidationError("unsupported_version")
+    source_description = _source_description(index)
     if not isinstance(receipt, dict) or receipt.get("schemaVersion") != 1: raise HarvestValidationError("unsupported_version")
     if receipt.get("outcome") != "completed" or receipt.get("failure") is not None or not isinstance(receipt.get("acceptedRowCount"), int) or receipt["acceptedRowCount"] <= 0: raise HarvestValidationError("incomplete_run")
     artifacts = index.get("artifacts")
@@ -98,5 +117,5 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
         if digest in seen_baselines and seen_baselines[digest] != row["split"]: raise HarvestValidationError("invalid_metadata")
         seen_baselines[digest]=row["split"]
         if not usable: continue
-        normalized.append({"id":row["id"],"split":row["split"],"platform":"tvOS","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"elements":usable})
-    return {"contractVersion":"harvest-compatibility-v1","integrity":"pass","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"unknownClassCount":unknown,"usableRows":normalized}
+        normalized.append({"id":row["id"],"split":row["split"],"platform":"tvOS","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"sourceDescription":source_description,"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"elements":usable})
+    return {"contractVersion":"harvest-compatibility-v1","integrity":"pass","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"sourceDescription":source_description,"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"unknownClassCount":unknown,"usableRows":normalized}

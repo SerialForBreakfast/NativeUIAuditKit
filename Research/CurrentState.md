@@ -42,6 +42,12 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 
 Office-independent work is defined in [ImplementationPlans.md](ImplementationPlans.md); dispatch state lives only in Tasks.md.
 
+For the explicit iOS five-class → 41-class path, use the
+[iOS platform tasks](../Tasks.md#ios-platform-tasks) and
+[five-tranche delivery plan](Plans/iOSPlatform.md). Corpus recovery, offline toolchain
+acceptance, and eligible synthetic baseline evaluation do not require Office. Live
+fixture qualification is a separate input to the planned mixed-data candidate.
+
 The [iteration roadmap](IterationRoadmap.md) separates software acceptance from data/model qualification. H1 producer-contract work, export/selector/preflight software, and recovery assessment are independently dispatchable. TVTestRig has a documented offline bundle-validator lane at inspected revision `586050e`; consumer compatibility remains to be implemented/verified, and passing offline integrity is not trusted capture evidence.
 
 The accepted full backlog is defined as independent revision-4 [worker packets](ImplementationPlans.md),

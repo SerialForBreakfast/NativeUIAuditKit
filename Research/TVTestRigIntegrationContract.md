@@ -1,19 +1,32 @@
 # TVTestRig / NativeUIAuditKit integration work contract
 
-**Revision:** 4, 2026-09-19. **Status:** NUA coordination proposal and verified source observations; not bilateral acceptance or a claim of live compatibility. H1/P4-L below are canonical independent packets using the ImplementationPlans common contract. TV-I1/TV-I2 are separately specified in [consumer packets](Plans/ConsumersAndRelease.md); their execution belongs to TVTestRig.
+**Revision:** 5, 2026-09-19. **Status:** NUA consumer contract and verified source observations; not bilateral acceptance or a claim of live compatibility. H1/P4-L below are canonical independent packets using the ImplementationPlans common contract. TV-I1/TV-I2 are separately specified in [consumer packets](Plans/ConsumersAndRelease.md); their execution belongs to TVTestRig.
 
 ## Verified starting point
 
-Read-only inspection of adjacent TVTestRig HEAD `586050e` and `Docs/Testing/harvest-bundle-validation.md` documents:
+Read-only inspection of adjacent TVTestRig HEAD
+`3fda3eab1aa7fc944914d0f29cab09a9705655d2` and its current
+`Docs/CLI/contract-v1.md`, `Docs/Testing/harvest-bundle-validation.md`, index,
+receipt, and validator sources found:
 
 - Bundles stage in `.NAME.partial-UUID` and publish by exclusive rename; rejected/cancelled partials are retained and must not be ingested or manually promoted.
 - An offline validator checks receipt/index versions, paths, byte counts/hashes, decoded PNGs, bounds, focus identity, and split consistency. Its passing result still reports `provenance: "unverified"` and `approvedForTraining: false`.
 - Producer-side offline regression cases include malformed PNGs, aborted receipts, unknown versions, changed bytes, traversal, symlinks, stale focus, wrong split, missing pairs, duplicate index, and invalid bounds.
-- Shared HTTP/IPC identity attestation is still a separate production gate. This inspection did not execute the validator or its tests.
+- Production `fixture batch` records descriptive `sourceDescription` metadata
+  (`assurance: reported-source; not-attested`) and does not require shared
+  identity attestation or issue a challenge. The challenge implementation is
+  retained for explicit internal assurance tests only. This changes neither
+  device-use permissions, integrity/focus checks, nor NUA's fail-closed
+  training eligibility policy.
 
 Relevant producer sources now live under `TVTestRig/TVTestRig/SyntheticFactory/` relative to that repository: `FixtureBatchHarvestEngine.swift`, `HarvestBundleValidator.swift`, `HarvestIdentity.swift`. Verify the revision/working-tree content when assigned; historical consumer references used a different nesting assumption.
 
-H1's assigned reinspection confirmed that revision `586050e043bddd742c701963650e2fc5815afe36` is clean and that the actual checkout nesting is `TVTestRig/TVTestRig/TVTestRig/SyntheticFactory/`. The source-pinned v1 contract, deterministic case definitions, consumer result envelope, and producer-owner brief are in [harvest-compatibility-v1.md](schemas/harvest-compatibility-v1.md). This remains local NUA agreement only; it does not mark bilateral acceptance or live compatibility.
+The prior H1 source snapshot (`586050e043bddd742c701963650e2fc5815afe36`)
+remains the historical compatibility case. Current source keeps its required
+layout-v1 identifiers while adding `sourceDescription`. The reconciled contract,
+deterministic cases, consumer result envelope, and producer-owner brief are in
+[harvest-compatibility-v1.md](schemas/harvest-compatibility-v1.md). This does
+not mark a genuine bundle, bilateral acceptance, or live compatibility.
 
 ## H1 — Pin the current compatibility contract
 
@@ -37,16 +50,26 @@ These are requests for the TVTestRig owner to consider, not assigned tasks in th
 
 1. **Identity adapter tests:** shared device/run/generation binding across HTTP/IPC; mismatched, stale, missing, and cancelled flows fail closed before capture/mutation as appropriate. Existing offline test adapters remain explicitly non-production.
 2. **Contract artifacts:** publish a minimal supported bundle example and expected validator outcome with each format change. Retain negative compatibility cases and document limits/publication semantics.
-3. **Hardware qualification:** when identity and Office access permit, obtain one small genuine completed bundle with receipt/index/source revision and attestation evidence through a compliant local export. No scale-up prerequisite for the first consumer check.
+3. **Hardware qualification:** when Office access permits, obtain one small
+   genuine completed bundle with receipt/index/source revision and descriptive
+   source context through a compliant local export. No scale-up prerequisite for
+   the first consumer check; do not manufacture absent diagnostics.
 
 NUA returns consumer validation failures at each increment, independently of training. Producer-side build/test commands remain governed by the TVTestRig repo and are not required commands for NUA's offline tests.
 
 ## P4-L — First genuine-bundle integration
 
-Separately assigned after prerequisites: compatible P4-A consumer, completed real producer bundle, verified identity evidence, explicit hardware/export authority if operations are needed, and outputs confined to NUA. No live operation is implicit in receiving a bundle.
+Separately assigned after prerequisites: compatible P4-A consumer, a completed
+real producer bundle, explicit hardware/export authority if operations are
+needed, and outputs confined to NUA. `sourceDescription` is preserved when
+present but is descriptive, not identity evidence. No live operation is implied
+by receiving a bundle.
 
 Validate the small bundle's integrity, source/coordinate/taxonomy contracts, provenance evidence, scene/focus annotation alignment, and split mapping. Record rejection reasons or verified supported behavior. Passing this check establishes compatibility for that producer revision and sample scope, not sufficient class coverage, an eligible full training corpus, or a model-quality gate.
 
-If a producer contract changes, preserve the last-known-compatible fixture and create a new compatibility case. Report a small reproducer rather than asking either project to stop all development. Never work around a partial publication or missing identity by manually constructing a completed/trusted receipt.
+If a producer contract changes, preserve the last-known-compatible fixture and
+create a new compatibility case. Report a small reproducer rather than asking
+either project to stop all development. Never work around a partial publication
+or missing source metadata by manually constructing a completed/trusted receipt.
 
 **Acceptance/handoff:** source-revision-specific integrity/provenance/annotation-alignment report and explicitly limited compatibility conclusion in reports/work/P4-L/handoff.md. Mark model quality and full-corpus eligibility not established. **Next:** independently assigned larger fixture or FocusRing capture once their own recipes/authority are ready.

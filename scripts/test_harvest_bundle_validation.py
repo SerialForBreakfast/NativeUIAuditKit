@@ -51,7 +51,7 @@ class H1Tests(unittest.TestCase):
         (self.d / "harvest-receipt.json").write_text(json.dumps({"schemaVersion": 1, "outcome": "completed", "acceptedRowCount": 1, "rejections": [], "failure": None}))
         self.reindex()
 
-    def reindex(self) -> None:
+    def reindex(self, source_description: dict | None = None) -> None:
         excluded = {"dataset-index.json", "harvest-receipt.json"}
         artifacts = []
         for path in sorted(self.d.iterdir()):
@@ -59,6 +59,8 @@ class H1Tests(unittest.TestCase):
                 body = path.read_bytes()
                 artifacts.append({"path": path.name, "sha256": sha(body), "byteCount": len(body)})
         index = {"datasetLayoutVersion": 1, "telemetryContract": "harvest-canonical-v1; source-version-unverified", "producer": "TVTestRig", "producerBuild": "fixture-build-unverified", "provenance": "unverified-pixel-telemetry-binding", "normalizedCoordinates": "xyxy-top-left-unit", "pixelCoordinates": "xywh-top-left-pixels", "artifacts": artifacts}
+        if source_description is not None:
+            index["sourceDescription"] = source_description
         (self.d / "dataset-index.json").write_text(json.dumps(index))
 
     def replace_metadata(self, change) -> None:
@@ -77,6 +79,19 @@ class H1Tests(unittest.TestCase):
         self.assertEqual(result["producer"], "TVTestRig")
         self.assertIsNone(result["identityEvidence"])
         self.assertEqual(len(result["usableRows"]), 1)
+
+    def test_reported_source_description_is_preserved_but_not_trusted(self) -> None:
+        source = {"requestedDeviceID": "office-stable-id-redacted", "captureMethod": "fixture-batch", "collectedAt": "2026-09-19T20:34:07Z", "environment": {"os": "tvOS"}, "fixture": {"scene": "actionDialog"}, "assurance": "reported-source; not-attested"}
+        self.reindex(source)
+        result = validate_bundle(self.d)
+        self.assertEqual(result["sourceDescription"], source)
+        self.assertEqual(result["usableRows"][0]["sourceDescription"], source)
+        self.assertIsNone(result["identityEvidence"])
+        self.assertFalse(result["eligibleForTraining"])
+        source["assurance"] = "attested"
+        self.reindex(source)
+        with self.assertRaisesRegex(HarvestValidationError, "invalid_metadata"):
+            validate_bundle(self.d)
 
     def test_versions_receipt_and_altered_artifact_fail_closed(self) -> None:
         index = json.loads((self.d / "dataset-index.json").read_text())

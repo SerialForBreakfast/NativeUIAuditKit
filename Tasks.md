@@ -5,6 +5,12 @@ Current snapshot: [`Research/CurrentState.md`](Research/CurrentState.md).
 Streams: [`Research/PhaseMap.md`](Research/PhaseMap.md).
 Full-backlog contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md). Accepted decisions: [`Research/DeliveryDecisions.md`](Research/DeliveryDecisions.md).
 
+Platform navigation: [iOS](#ios-platform-tasks) · [tvOS](#tvos-platform-tasks) ·
+[shared integration and later models](#shared-integration-and-later-models) ·
+[macOS](#macos-platform-tasks) · [consumer integration](#phase-9-screenauditkit-integration-remaining).
+The packet queue below is the only execution-state/ownership list. Platform sections
+group the same tasks; they do not create additional packet IDs or assignments.
+
 ## Worker packet queue
 
 Dispatch contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md).
@@ -81,7 +87,30 @@ Do not put architecture notes, run logs, or IPC war stories in this file. Those 
 
 ---
 
-## TASK-DATA-01: Phase 6a dataset recovery and preservation [!]
+## iOS platform tasks
+
+**Target:** replace the shipped five-class `nativeui-ios-v2.0` only after the
+41-class candidate passes all applicable gates. Historical Run 009 mAP50 is 0.586;
+DS-G8 requires ≥0.85. Missing pixels prevent a new baseline today.
+
+Detailed dispatch scope: [iOS platform delivery plan](Research/Plans/iOSPlatform.md).
+These are substantial execution tranches over existing packets, not new task IDs:
+
+| iOS deliverable | Existing packets / parent | What finishes the tranche | Office dependency |
+|---|---|---|---|
+| Recoverable, reproducible iOS corpus | P0-A/B/C; DATA-01 | Reviewed recovery decision, then separately authorized complete versioned splits and preservation evidence | None; reconstruction may require separately authorized iOS rendering |
+| Integrated offline evaluation and readiness software | P1-A/P2-A/P3-A/P4-B/P5-A; 6a-10/11 | Review existing implementations, resolve assigned gaps, exercise required interfaces end-to-end, and verify all acceptance criteria | None |
+| Run 009 iOS baseline and frozen diagnostics | P1-B/P2-B/P3-B; 6a-11 | Complete full-holdout predictions, compatible reference report, frozen regression membership/baseline | None; requires eligible iOS pixels and inference assignment |
+| 41-class candidate readiness and execution | P5-B, TRAIN-S/F; 6a-10 | Frozen eligible inputs/configuration, then separately authorized smoke and full candidate | Planned mixed-data experiment needs qualified fixture corpus; Office remains released |
+| Qualification and release evidence | TRAIN-Q, REL-A/B; 6a-10/DIST-02 | Independent holdout gates, package evidence, then maintainer-only promotion/tag | No fresh capture if accepted evaluation corpora exist |
+
+**Next dispatch:** review the existing offline software as one coherent tranche,
+not another tiny helper implementation; separately review P0-A and resolve its
+remaining evidence/recovery decision. Both can proceed while Office is unavailable.
+Workers do not self-accept earlier review-ready packets. This plan does not assign
+workers, start generation/inference/training, or restore Office permission.
+
+### TASK-DATA-01: Phase 6a dataset recovery and preservation [!]
 
 Evidence: [2026-09-19 inspection](reports/dataset_availability_2026-09-19.md).
 Contract: [P0 recovery assessment and staged recovery](Research/DatasetRecoveryPlan.md).
@@ -99,21 +128,7 @@ Cause is unknown. Preserve existing manifests, labels, links, and historical met
 
 ---
 
-## TASK-INTEGRATION-01: Incremental TVTestRig compatibility [ ]
-
-Contract: [TVTestRigIntegrationContract.md](Research/TVTestRigIntegrationContract.md).
-TVTestRig owns producer implementation and its queue; this task owns NUA consumer compatibility.
-
-- [~] H1: source-pinned contract and deterministic offline cases are review-ready in [harvest-compatibility-v1.md](Research/schemas/harvest-compatibility-v1.md); producer bilateral acceptance/live evidence remain pending
-- [~] P4-A: consumer validates/normalizes those cases; offline integrity never implies trusted capture; review evidence in `reports/work/P4-A/handoff.md`
-- [ ] Record supported producer versions and actionable incompatibility reports on each relevant change
-- [ ] P4-L: validate one genuine completed bundle once identity/export prerequisites are met
-
-**AC:** Software compatibility can be accepted independently of hardware/model quality. Live compatibility requires genuine evidence for a named producer revision. No new weights are required for producer/consumer iteration.
-
----
-
-## TASK-6a-10: Full-frame fixture retraining (41-class iOS) [!]
+### TASK-6a-10: Full-frame fixture retraining (41-class iOS) [!]
 
 **Blocked on live TVTestRig batch output.** Ingest code is ready. Do not train on empty sidecars or `*_result.json` (model self-predictions). Format and IPC notes: [`Research/FixtureBatchIngest.md`](Research/FixtureBatchIngest.md).
 
@@ -121,20 +136,23 @@ TVTestRig owns producer implementation and its queue; this task owns NUA consume
 
 **Requires:** Run 009 diagnosis (holdout mAP@0.5 = 0.586, DS-G8 ≥ 0.850). BP-32.
 
+- [~] Review and integrate P4-B/P5-A software; retain separate configuration-valid and launch-eligible results — evidence [handoff](reports/work/INTEGRATED-IOS-TOOLCHAIN/handoff.md), architect acceptance pending
+- [ ] P5-B: freeze eligible manifests and resolved configuration, including the explicit auxiliary role of tvOS examples; retain iOS-only reporting
+
 - [x] `scripts/ingest_fixture_batch.py` + `scripts/test_ingest_fixture_batch.py` (16/16)
 - [x] Coordinator IPC resolved in the recorded 2026-09-18 investigation; historical procedures are not current operating instructions
-- [!] Live batch identity attestation remains a capture blocker; missing synthetic pixels and Office/export access are independent blockers. Evidence: [TVTestRig feedback](reports/tvtestrig_feedback_2026-09-18.md)
-- [ ] Authorized Office `aatv fixture batch` — blocked until TVTestRig wires up `HarvestIdentity` attestation for its HTTP/IPC adapters; re-verify ingest against that output once it exists
+- [!] Live batch output, missing synthetic pixels, and Office/export access are independent blockers. The producer's current source records descriptive source context and does not require optional identity attestation for production/NUIAK fixture batch; re-verify against genuine output before using any data.
+- [ ] Authorized Office `aatv fixture batch` — re-verify ingest against the genuine completed output once it exists
 - [ ] Blend fixture corpus with Phase 6a synthetic set; retrain from Run 009 `best.pt`, 150 epochs, cosine annealing + warmup
 - [ ] Evaluate on TVTestRig `held-out` split **and** synthetic withheld-template holdout
 - [ ] Per-class AP50 on toggle and stepperControl ≥ 0.88; badge belongs to the later TASK-BADGE-01 milestone
 - [ ] TRAIN-S / TRAIN-F / TRAIN-Q evidence accepted separately; no automatic experiment reruns
 
-**AC:** mAP@0.5 ≥ 0.94 and mAP@0.5:0.95 ≥ 0.78 on the fixture holdout; DS-G8 reassessed on both holdouts before shipping 41-class weights.
+**AC:** Fixture mAP@0.5 ≥0.94 and mAP@0.5:0.95 ≥0.78; toggle and stepperControl AP50 ≥0.88 with real support; separately, complete iOS synthetic withheld-template DS-G8 mAP@0.5 ≥0.85. No platform-pooled mean or compact diagnostic suite substitutes for either holdout. Keep the shipped five-class model until release/promotion authority and evidence are complete.
 
 ---
 
-## TASK-6a-11: Multi-corpus PyTorch reference eval [~]
+### TASK-6a-11: Multi-corpus PyTorch reference eval [~]
 
 **Requires:** a 6a-10 candidate, or continue using Run 009 weights as the baseline.
 
@@ -142,12 +160,15 @@ TVTestRig owns producer implementation and its queue; this task owns NUA consume
 
 - [x] `scripts/eval_reference_metrics.py` + `reports/pytorch_reference_metrics.json` (SHA-256 `226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405`)
 - [x] Honest `available: false` for the three corpora that do not exist yet
+- [~] Review P1-A/P2-A/P3-A against their original contracts and verify exporter/comparator/selector integration, not helper tests alone — evidence [handoff](reports/work/INTEGRATED-IOS-TOOLCHAIN/handoff.md), architect acceptance pending
 - [ ] Per-image predicted boxes / scores / class IDs from `eval_phase6a.py` (needs a full inference pass)
+- [ ] P1-B/P2-B: publish complete iOS Run 009 baseline artifacts with corpus/checkpoint/settings hashes; reconstructed pixels establish a new baseline, not reproduction of 0.586
+- [ ] P3-B: freeze 200–300 diagnostic cases where coverage supports it, with explicit gaps; retain the complete holdout for DS-G8
 - [ ] Populate `real_device_fixture_holdouts`, `production_tvos_system_holdout`, `frozen_regression_suite` when those image+box sets exist
 
 ---
 
-## TASK-6a-12: Partial-crop robustness fork [ ]
+### TASK-6a-12: Partial-crop robustness fork [ ]
 
 **Requires:** TASK-6a-10 complete. Full-frame config stays the shipped default.
 
@@ -158,7 +179,13 @@ TVTestRig owns producer implementation and its queue; this task owns NUA consume
 
 ---
 
-## TASK-6b-R-1: Scale real Apple TV hold-out captures [~]
+## tvOS platform tasks
+
+FocusRing and real Apple TV capture are tvOS work, not prerequisites for iOS-only
+software acceptance or synthetic baseline evaluation. Office is released until
+explicit new user authorization; old advisory requests do not authorize capture.
+
+### TASK-6b-R-1: Scale real Apple TV hold-out captures [~]
 
 Pipeline and qualification (R-2, R-3) are done. Remaining:
 
@@ -166,7 +193,7 @@ Pipeline and qualification (R-2, R-3) are done. Remaining:
 
 ---
 
-## FOCUS-DET-05: FocusRing v1.0 data + retrain [ ]
+### FOCUS-DET-05: FocusRing v1.0 data + retrain [ ]
 
 v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingDetectorSpec.md).
 
@@ -181,7 +208,21 @@ Office live harvest only. No Home / Select / Settings crawl (BP-40). IPC: [`Rese
 
 ---
 
-## TASK-BADGE-01: Versioned badge taxonomy and later model [ ]
+## Shared integration and later models
+
+### TASK-INTEGRATION-01: Incremental TVTestRig compatibility [ ]
+
+Contract: [TVTestRigIntegrationContract.md](Research/TVTestRigIntegrationContract.md).
+TVTestRig owns producer implementation and its queue; this task owns NUA consumer compatibility.
+
+- [~] H1: source-pinned contract and deterministic offline cases are review-ready in [harvest-compatibility-v1.md](Research/schemas/harvest-compatibility-v1.md); producer bilateral acceptance/live evidence remain pending
+- [~] P4-A: consumer validates/normalizes those cases; offline integrity never implies trusted capture; review evidence in `reports/work/P4-A/handoff.md`
+- [~] Record supported producer versions and actionable incompatibility reports on each relevant change; the 2026-09-19 layout-v1/sourceDescription reconciliation is review-ready in [`reports/work/INTEGRATION-RECONCILIATION/handoff.md`](reports/work/INTEGRATION-RECONCILIATION/handoff.md)
+- [ ] P4-L: validate one genuine completed bundle once export prerequisites are met; any new Office operation requires renewed user authority
+
+**AC:** Software compatibility can be accepted independently of hardware/model quality. Live compatibility requires genuine evidence for a named producer revision. No new weights are required for producer/consumer iteration.
+
+### TASK-BADGE-01: Versioned badge taxonomy and later model [ ]
 
 Separate next model milestone; the current 41-class release does not wait on it.
 Contracts: BADGE-A / BADGE-B in [model packets](Research/Plans/ModelsAndHardware.md).
@@ -194,7 +235,7 @@ Contracts: BADGE-A / BADGE-B in [model packets](Research/Plans/ModelsAndHardware
 
 ---
 
-## Phase 6b-U: Unified iOS + tvOS model [ ]
+### Phase 6b-U: Unified iOS + tvOS model [ ]
 
 Keep separate shipped models unless every gate passes.
 
@@ -207,17 +248,19 @@ Keep separate shipped models unless every gate passes.
 
 ---
 
-## Phase 6c: macOS model [ ]
+## macOS platform tasks
+
+### Phase 6c: macOS model [ ]
 
 **Requires:** Phase 6a gate (41-class iOS weights that clear DS-G8).
 
-### TASK-6c-1: macOS coordinate spike
+#### TASK-6c-1: macOS coordinate spike
 
 - [ ] AppKit Y-flip: `y_flipped = window.contentView.bounds.height - frame.origin.y - frame.height`
 - [ ] ±2 pt vs `NSBitmapImageRep` PNG
 - [ ] `testMacOSCoordinateFlip` on macOS 15
 
-### TASK-6c-2: Templates + training
+#### TASK-6c-2: Templates + training
 
 - [ ] ≥2,000 macOS images with Y-flipped coordinates
 - [ ] mAP@0.5 ≥ 0.80 on withheld-template test

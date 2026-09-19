@@ -4,6 +4,10 @@
 
 ## Common execution contract
 
+Platform-oriented grouping for the existing iOS packets:
+[iOS platform delivery plan](Plans/iOSPlatform.md). It defines substantial execution
+tranches without duplicating the Tasks.md state/ownership queue or changing model gates.
+
 **Execution amendment (2026-09-19):** Rows are reviewable contracts, not mandatory
 turn boundaries. Dispatch substantial coherent tranches when the user requests broader
 work; finish all assigned packets, integration, verification, and handoff before ending

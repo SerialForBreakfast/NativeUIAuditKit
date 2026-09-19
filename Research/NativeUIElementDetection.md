@@ -271,6 +271,17 @@ no fallback. No metadata may be fabricated to make a sidecar validate. P0 uses v
 or a distinctly versioned reconstruction with new image/annotation pairs and a new baseline.
 No schema file has been migrated by the planning change; see [DeliveryDecisions.md](DeliveryDecisions.md).
 
+**TVTestRig layout-v1 compatibility refresh (2026-09-19):** A TVTestRig
+`fixture batch` bundle retains the layout-v1 index, receipt, coordinate, split,
+hash, PNG, focus, and bounds contract. Current producer builds add
+`dataset-index.json.sourceDescription` with collection context and the literal
+assurance `reported-source; not-attested`. NUA structurally validates and
+preserves that additive object when present; it never derives missing fields,
+upgrades it to identity evidence, or treats it as training approval. The
+consumer reports integrity, descriptive source context, data eligibility, and
+model qualification as separate outcomes. See
+[harvest-compatibility-v1.md](schemas/harvest-compatibility-v1.md).
+
 ### 6.1 Core Principle: Generate, Don't Annotate
 
 Do not rely on manual annotation. Generate UI screens from Swift source and export ground truth at render time — the app that renders the UI also exports the labels, bounds, traits, state, and text metadata.
@@ -546,6 +557,21 @@ configuration. TASK-6a-10 gates are fixture mAP50 ≥0.94, mAP50:95 ≥0.78, tog
 AP50 ≥0.88, and synthetic DS-G8 mAP50 ≥0.85. Badge AP belongs to the later 42-class milestone.
 Configuration readiness, smoke training, full training, qualification and promotion are separate
 assignments; this decision launches no experiment. Canonical contracts: [packet catalog](ImplementationPlans.md).
+
+**Integrated offline toolchain contract (2026-09-19):** The exporter emits the
+Ultralytics-native layout `train|val|test/{images,labels}` plus `dataset.yaml`
+and COCO annotations under one new in-package output directory. Training
+preflight must consume that emitted layout (and may retain a documented legacy
+adapter only where needed), structurally decode each source PNG through its
+compressed scanlines, require its paired label,
+and reject output collisions or paths outside this package. Assembly rejects
+cross-split content reuse and cross-split family reuse independently. Prediction
+comparison consumes the actual `prediction-artifact-v1` envelope, including its
+nested corpus/category-map/completeness fields; failed prediction records are
+not numerically comparable, and absent metrics are explicitly unavailable rather
+than silently treated as zero. These synthetic integration checks establish
+software behavior only—not corpus eligibility, live integration, or a model
+gate.
 
 **Current production path:** Ultralytics YOLO11 → CoreML NMS export. Create ML `objectPrint` (Option A) is **retired** for production (Run 006+). Living snapshot: [`CurrentState.md`](CurrentState.md). Run history: [`ExperimentLog.md`](ExperimentLog.md).
 

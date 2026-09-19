@@ -6,5 +6,7 @@ class T(unittest.TestCase):
   a=assemble(self.rows()); self.assertEqual(a,assemble(list(reversed(self.rows())))); self.assertEqual(a['trainingClassCounts'],{1:1}); self.assertEqual(a['uncoveredClasses'],[2,3])
  def test_leakage_rejected(self):
   rows=self.rows(); rows.append(dict(rows[0],id='x',split='test'))
-  with self.assertRaisesRegex(AssemblyError,'leakage'): assemble(rows)
+  with self.assertRaisesRegex(AssemblyError,'content'): assemble(rows)
+  rows=self.rows(); rows.append(dict(rows[0],id='x',contentSHA256='different',split='test'))
+  with self.assertRaisesRegex(AssemblyError,'family'): assemble(rows)
 if __name__=='__main__': unittest.main()
