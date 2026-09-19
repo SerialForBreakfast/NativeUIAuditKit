@@ -183,7 +183,7 @@ def run_checks() -> int:
 
     dry_run = subprocess.run(
         [sys.executable, str(PROJECT_ROOT / "scripts" / "ingest_fixture_batch.py"),
-         "--input", str(INPUT_DIR), "--output", str(OUTPUT_DIR), "--dry-run"],
+         "--input", str(INPUT_DIR), "--output", str(OUTPUT_DIR), "--dry-run", "--legacy-fixture-mode"],
         capture_output=True, text=True,
     )
     check("CLI --dry-run exits 0", dry_run.returncode == 0)
@@ -194,7 +194,7 @@ def run_checks() -> int:
 
     real_run = subprocess.run(
         [sys.executable, str(PROJECT_ROOT / "scripts" / "ingest_fixture_batch.py"),
-         "--input", str(INPUT_DIR), "--output", str(OUTPUT_DIR)],
+         "--input", str(INPUT_DIR), "--output", str(OUTPUT_DIR), "--legacy-fixture-mode"],
         capture_output=True, text=True,
     )
     check("CLI real run exits 0", real_run.returncode == 0)
@@ -215,7 +215,7 @@ def run_checks() -> int:
         sample = json.loads((OUTPUT_DIR / "train" / f"{train_pngs[0].stem}.json").read_text())
         required_top_level = {"schemaVersion", "imageSHA256", "image", "generatorProfile", "elements"}
         check("Written sidecar has all annotation.schema.json v1.0 required top-level keys", required_top_level.issubset(sample.keys()))
-        check("Written sidecar: schemaVersion is '1.0'", sample.get("schemaVersion") == "1.0")
+        check("Written sidecar: schemaVersion is '1.1' for tvOS scale 1", sample.get("schemaVersion") == "1.1")
 
     focused_sidecars = [p for p in train_pngs if "_focused" in p.name]
     if focused_sidecars:

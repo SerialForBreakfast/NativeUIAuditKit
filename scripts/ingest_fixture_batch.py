@@ -95,6 +95,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from harvest_bundle_validation import HarvestValidationError, validate_bundle
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CATEGORY_MAP = PROJECT_ROOT / "Research" / "schemas" / "category_map.json"
 DEFAULT_OUTPUT = PROJECT_ROOT / "dataset" / "tvos_fixture_batch_ingested"
@@ -203,7 +205,7 @@ def build_element(
 
 def build_sidecar(png_path: Path, elements: List[Dict[str, Any]], recipe: Dict[str, Any]) -> Dict[str, Any]:
     return {
-        "schemaVersion": "1.0",
+        "schemaVersion": "1.1",
         "imageSHA256": sha256_of(png_path),
         "image": {
             "fileName": png_path.name,
@@ -254,6 +256,7 @@ def main() -> int:
     parser.add_argument("--input", type=Path, required=True, help="aatv fixture batch --output-dir directory")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Ingested sidecar+image output directory (must stay inside the repo)")
     parser.add_argument("--dry-run", action="store_true", help="Validate and report counts; write nothing")
+    parser.add_argument("--legacy-fixture-mode", action="store_true", help="TEST ONLY: bypass completed-bundle validation for legacy parser fixtures")
     args = parser.parse_args()
 
     output_dir = args.output.resolve()
@@ -269,6 +272,16 @@ def main() -> int:
               "implemented in TVTestRig but no live 'office' harvest has been run (see module "
               "docstring). This is expected until that changes.", file=sys.stderr)
         return 1
+
+    if not args.legacy_fixture_mode:
+        try:
+            contract = validate_bundle(args.input)
+        except HarvestValidationError as exc:
+            print(f"Harvest bundle validation failed: {exc}", file=sys.stderr)
+            return 1
+        if not contract["usableRows"]:
+            print("Harvest bundle has no usable known-taxonomy annotations; not eligible for ingestion.", file=sys.stderr)
+            return 1
 
     rows = load_manifest_rows(args.input)
     if not rows:

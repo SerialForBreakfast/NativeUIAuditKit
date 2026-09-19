@@ -27,7 +27,14 @@ The 41-class taxonomy still matches `Research/schemas/category_map.json` index-f
 
 ## Ingest rules (`ingest_fixture_batch.py`)
 
-- Convert to `annotation.schema.json` v1.0 sidecars for `export_tvos_coco.py`.
+- Validate completed bundles with `harvest_bundle_validation.py` before normalization.
+  The legacy-fixture switch is test-only and cannot validate or ingest a real bundle.
+- A successful validator result preserves the producer and producer-build fields when
+  supplied, records absent identity evidence as `null`, marks provenance as
+  `unverified-pixel-telemetry-binding`, and always sets `eligibleForTraining: false`.
+  P4-L must establish genuine identity separately; normalization never invents it.
+- Convert validated tvOS scale-1 captures to `annotation.schema.v1.1.json` sidecars;
+  v1.0 remains unchanged for existing scale-2/3 artifacts.
 - Unknown `taxonomy_class` values are dropped and counted, never remapped (BP-28).
 - Deduplicate the shared baseline `_unfocused.png` per recipe. Force those elements' `isFocused=false`. The baseline frame is reused across every focus step; its `elements` list reflects whichever row is focused — ingesting it naively would label glow on a frame where nothing is glowing.
 - Full-frame preservation: no ROI cropping. Perception-layer deltas/dedup are for capture *selection* only.

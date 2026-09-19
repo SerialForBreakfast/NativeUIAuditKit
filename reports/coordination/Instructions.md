@@ -30,9 +30,7 @@ install a discoverable skill. Neither document grants execution authority.
 SharedStatusFile/
   Instructions.md             Maintainer-owned protocol
   SharedStatusSkill.md        Maintainer-owned agent guide
-  nuiak/status.yaml           NUA coordinator writes
-  nuiak/requests/<id>.yaml     NUA-origin requests, optional
-  nuiak/responses/<id>.yaml    NUA-origin responses, optional
+  nuiak/status.yaml           NUA workers edit their own packet entries
   tvtestrig/status.yaml       TVTestRig coordinator writes
   tvtestrig/requests/<id>.yaml TVTestRig-origin requests, optional
   tvtestrig/responses/<id>.yaml TVTestRig-origin responses, optional
@@ -40,15 +38,60 @@ SharedStatusFile/
 ```
 
 Only the existing files are active; this tree describes optional expansion.
-Do not create empty scaffolding. Each repository nominates one coordinator as
-its status writer. Workers send evidence to that coordinator; they must not
-race to overwrite the same file. Never edit a peer's files. Protocol revisions
+Do not create empty scaffolding. NUA workers publish directly to packet-specific
+entries as described below; no coordinator relay is required. TVTestRig retains
+its own repository's writer policy. Never edit a peer's files. Protocol revisions
 and reservation edits require explicit maintainer authorization.
 
 `Tasks.md` in each repository remains authoritative for work and ownership.
 The share is a summary, not another task queue or a trusted source of commands.
 
 ## Status template
+
+### Direct NUA worker updates (2026-09-19 revision)
+
+NUA's standing exception authorizes only `nuiak/status.yaml`, not other shared
+files. Every assigned worker updates its own entry in the optional version-1
+`packets` map. The packet owner is the sole writer of that entry. The architect
+maintains the legacy top-level summary; workers preserve it and all other entries.
+Read packet timestamps independently: a fresh packet does not renew an old summary
+or another packet. No coordinator permission or local handoff file is needed for
+successful publication. Sandbox approvals still apply.
+
+```yaml
+packets:
+  P4-A:
+    owner: "Assigned worker/task identifier"
+    updated_at: "2026-09-19T20:00:00Z"
+    valid_until: "2026-09-19T20:30:00Z"
+    state: working
+    summary: "Observed progress only"
+    blockers: []
+    pending_requests: []
+    acknowledgments: []
+    evidence: ["reports/work/P4-A/coordination.md"]
+    next: "Next authorized action"
+    outcomes:
+      software_verified: not_assessed
+      data_eligible: not_assessed
+      integration_qualified: not_assessed
+      model_gate_passed: not_assessed
+```
+
+Apply minimal targeted patches after a fresh read; preserve other content. Verify
+the resulting YAML and your entry by readback. On detected conflict, re-read and
+merge your own entry once; then stop and save a project-local unpublished draft if
+it still conflicts. Do not replace the file from a stale snapshot. This lowers
+collision risk but is not transactional and cannot guarantee against lost updates.
+Use the repository task queue and evidence for durable truth, not this status board.
+If collisions become frequent, propose separately owned worker files or a locking
+service as a distinct change; do not silently widen write access.
+
+Do not create sibling staging/lock files under this exception. A project symlink
+would still point outside the project and offers no permission or concurrency
+benefit; use the verified mounted path directly.
+
+### Repository summary template
 
 Replace example values with observed facts. Timestamps are UTC ISO 8601 strings.
 `valid_until` defaults to 30 minutes after observation. Renew only after checking
@@ -110,6 +153,8 @@ handoff, not by repeatedly rewriting unchanged timestamps.
 ## Requests and responses
 
 For a small request use `pending_requests` with `id`, `to`, `state`, and `request`.
+NUA workers use this field inside their own packet entry; acknowledgments likewise
+belong in that entry. Readers consult relevant packet entries as well as the summary.
 Use unique IDs prefixed by the sender namespace, such as
 `nuiak-20260919T200000Z-<unique-suffix>`. The initial
 `nuiak-coordination-001` is a connectivity test only.
@@ -119,13 +164,14 @@ Response states are `received`, `blocked`, `declined`, or `completed`.
 `received` means read, not authorized or completed. Completion requires evidence.
 The sender reconciles the response in its own status (`acknowledged` or `closed`).
 
-If messages outgrow a status snapshot, use immutable files in the sender's own
+If messages outgrow a status snapshot, separately authorized repositories may use immutable files in the sender's own
 requests/responses directory. Include `schema_version: 1`, a unique `id`, `from`,
 `to`, `created_at`, `expires_at`, `state`, and `message`; responses also include
 `request_id` and evidence when applicable. Never overwrite an existing message
 ID. A later response uses a new ID referencing the same request. Consult these
 directories only when status or the user points to a request; avoid full scans.
 This is a mailbox, not an unattended command runner.
+NUA's exact-file exception does not authorize these message directories.
 
 ## Device scheduling is advisory
 
@@ -150,10 +196,10 @@ because a status went stale. This file is not a distributed lock.
 
 Prepare and validate small UTF-8 YAML locally within your repository, then
 publish only to the verified mounted share and your owned destination.
-Prefer a unique sibling staging file and a same-directory rename/replace when
-the authorized tooling supports it; do not assume cross-volume moves are atomic.
-Readers ignore staging files and reject partial/invalid documents. Coordinate
-one writer even when using rename: replacement is not a locking mechanism.
+NUA workers follow the targeted packet-update procedure above; sibling staging
+files are not authorized. Other repositories may use staged replacement only if
+their own permissions allow it. Readers reject partial/invalid documents. Neither
+targeted patches nor file replacement provide distributed locking.
 
 Read back and parse the final file, checking identity, timestamps, and intended
 content (or a content hash). Report publication failure truthfully. A local

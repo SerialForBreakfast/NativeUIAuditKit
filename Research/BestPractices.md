@@ -963,3 +963,13 @@ Only boot a new simulator after confirming no conflicting instance is already ru
 **Correct:** Assign software slices with deterministic fixture-based acceptance and separate real-data/live qualification slices. Review schemas/examples early, pin producer versions, and test compatibility as each side evolves. Explicitly label evidence as synthetic or real and preserve independent integrity/provenance/model gates.
 
 **Why:** This removes unnecessary planning dependencies without treating mocks as production evidence. It is a workflow correction, not a claim of measured throughput improvement. Evidence: ImplementationPlans revisions 2–3 and IterationRoadmap.md; TVTestRig's documented offline validator supports the immediate compatibility workstream.
+
+---
+
+### BP-54: Keep offline consumer validation dependency-free and provenance-preserving
+
+**Wrong:** Let an offline compatibility validator depend on an undeclared image library, or fill in missing producer identity while normalizing a structurally valid bundle.
+
+**Correct:** Use a built-in, strict PNG parser for the declared artifact format; preserve producer fields when present, represent missing identity evidence explicitly as `null`, and keep unverified bundles ineligible for training.
+
+**Why:** A host-dependent validator creates a false green path in one environment and an outage in another. Invented identity would turn an integrity check into an unsupported provenance claim. Evidence: P4-A H1 contract suite, 2026-09-19.

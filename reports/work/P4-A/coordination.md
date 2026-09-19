@@ -1,6 +1,6 @@
 # P4-A coordination update
 
-**Observed:** 2026-09-19. **State:** working.
+**Observed:** 2026-09-19. **State:** review-ready.
 
 - **Packet:** P4-A — consumer bundle validation and normalization.
 - **Evidence so far:** H1 pins the offline producer contract to TVTestRig
@@ -12,8 +12,7 @@
 - **Decision received:** Maintainer confirmed complete v1.1 duplication. Keep
   v1.0 byte-for-byte unchanged; only v1.1's declared version and scale set
   differ, with distinct identity/descriptions. Missing/unsupported declared
-  versions have no fallback. Maintainer reports shared-status publication and
-  readback; this worker did not perform the external write.
+  versions have no fallback.
 - **Completed since decision:** Added strict `annotation.schema.v1.1.json`, a
   dependency-free declared-version selector, and parity tests. v1.0 SHA-256 is
   `68f41f4e5988a43d4c3f0582efffbc552c424d15599626a14cf1c6c262aa9e2c`;
@@ -21,9 +20,21 @@
   `5d0b897bd44510bfa5f9e560f170213273a15162c61547ddbae2cfe2ee1f1d34`.
   Four tests pass: structural parity, no fallback, incomplete/v1.0-scale-1
   rejection, and v1.1 scales 1/2/3 acceptance.
-- **Next:** Complete the receipt/index/pair validator and normalizer tests, then
-  publish the P4-A handoff.
-
-This worker update is for the NUA shared-status coordinator. No external
-`nuiak/status.yaml` write was attempted: AGENTS.md assigns that writer role to
-the coordinator, and this update neither claims delivery nor peer acknowledgment.
+- **Completed since last coordination update:** Added the fail-closed offline
+  `harvest_bundle_validation.py` implementation. Its import check passes. It
+  validates H1 receipt/index identifiers, bounded flat files, hashes, split
+  equality, decoded pair dimensions, focused-element/bounds consistency,
+  unknown taxonomy counting, cross-split baseline reuse, and explicitly keeps
+  `eligibleForTraining: false` for unverified provenance.
+- **Completed:** The adversarial suite now covers valid/source-unchanged,
+  unsupported version, incomplete receipt, altered bytes, partial output,
+  missing/duplicate/symlink artifact, malformed PNG, stale focus, split
+  conflict, invalid bounds, unknown/empty annotations, and cross-split baseline
+  reuse. The validator no longer needs Pillow and explicitly preserves absent
+  identity as `null` rather than fabricating it.
+- **Verification:** 6 H1 validator tests, 4 schema-version tests, 16 legacy
+  ingestion checks, `swift build`, and `swift test` pass offline. Full acceptance
+  evidence is in `handoff.md`.
+- **Publication:** The worker published only `packets.P4-A` directly to the
+  permitted SMB status file and verified readback. Peer acknowledgment remains
+  absent; publication does not establish live compatibility.

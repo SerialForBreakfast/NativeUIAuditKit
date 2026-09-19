@@ -36,19 +36,20 @@ For shared checkouts, record a single owner for each overlapping implementation 
 
 Follow AGENTS.md's shared-status section and the repository copy of
 [SharedStatusSkill.md](../reports/coordination/SharedStatusSkill.md). Provide an update
-at assignment start, meaningful progress/blocker changes, and handoff. The architect
-is the designated NUA publisher unless the maintainer reassigns it; workers must not
-race to replace `nuiak/status.yaml`.
+at assignment start, meaningful progress/blocker changes, and handoff. Assigned NUA
+workers publish directly to their own `packets.<packet-id>` entry in the exact shared
+`nuiak/status.yaml` file. No coordinator relay is required. Preserve all other entries
+and top-level summary fields; use the guide's bounded conflict-handling procedure.
 
-Workers maintain `reports/work/<packet-id>/coordination.md` with observation time (UTC),
+The shared packet entry contains observation time (UTC),
 packet/owner, work state, concise result, blockers, pending cross-repo requests, evidence
-paths, next action, and four independent outcome states. Include `publication: unpublished`
-until the coordinator confirms publication of that update; local preparation is not
-delivery. Reference this file in the worker handoff/message. If no messaging channel
-is available, report that it awaits coordinator pickup rather than claiming notification.
+paths, next action, and four independent outcome states. Keep a local draft at
+`reports/work/<packet-id>/coordination.md` if publication is unavailable, with
+`publication: unpublished` and the reason. Local preparation is not delivery.
+Reference the shared entry or unpublished draft in the worker handoff.
 
-The coordinator consolidates observed worker updates into the owned shared snapshot,
-preserving other relevant work and requests. Record publication time, readback result,
+The architect can summarize observed work without replacing packet entries.
+Record publication time, readback result,
 and any peer acknowledgment separately. Use the schema's outcome vocabulary when
 translating handoffs: pass → passed, fail → failed, not-run → not_assessed (or blocked
 with a reason), not-applicable → not_applicable. Missing evidence never becomes a pass.
@@ -101,7 +102,7 @@ authorized workspace for evidence and supplies a reference; no cross-repository 
 4. Remaining risks, scope deviations, and exact blocker/resume condition if any.
 5. New learning: evidence and destination in BestPractices.md, or a knowledge issue if still unconfirmed.
 6. A short continuation checkpoint: completed work, next concrete action, running process IDs if any, and files that must not be overwritten.
-7. Coordination update path and delivery state: awaiting coordinator, unpublished (with reason), or confirmed published (with readback evidence). Peer acknowledgment is reported separately.
+7. Coordination entry/draft path and delivery state: unpublished (with reason) or published (with readback evidence). Peer acknowledgment is reported separately; no coordinator approval is needed.
 
 For an incremental slice, also record the contract revision, whether evidence is synthetic/real, accepted capability boundaries, and the next ready slice. Integrity, capture provenance, corpus eligibility, and model quality are separate claims. A contract change includes updated compatibility cases and affected consumers; no worker waits for an entire phase when only a reviewed schema is needed.
 
