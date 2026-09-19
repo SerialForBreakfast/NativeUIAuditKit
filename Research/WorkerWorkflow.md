@@ -5,7 +5,7 @@
 ## Ownership and sources of truth
 
 - **Architect/project manager:** orders the work, writes executable packets, resolves architecture questions, reviews evidence, and records acceptance. This task holds that role. It does not start workers or recurring monitoring implicitly.
-- **Worker:** implements one assigned packet, makes routine in-scope decisions, verifies it, and hands back evidence. A packet is a specification, not authorization to execute it before assignment.
+- **Worker:** completes the assigned packet or multi-packet tranche through implementation, integration, verification, and evidence-backed handoff. A packet is a specification, not authorization to execute it before assignment.
 - **Maintainer:** controls commits, external writes, hardware access, and explicit exceptions. Architect acceptance is not authorization for those actions.
 
 | Information | Canonical location |
@@ -28,7 +28,37 @@ Do not create a second task board in a skill, plan, or learning log. Plans descr
 
 Before dispatch, verify: the outcome is independently reviewable, inputs exist or the missing-input behavior is defined, dependencies are accepted, file ownership is clear, acceptance criteria are observable, and permitted execution is explicit. A broad phase is not a packet. Split work when a second independently useful deliverable or new external dependency would obscure completion.
 
-Assign the smallest useful slice with its own acceptance criteria. Software can be accepted against deterministic synthetic fixtures while an explicitly separate live-data or model qualification slice stays open. A reviewed interface/example can satisfy a downstream software dependency without acceptance of the upstream implementation. Draft interfaces permit bounded development but not claims of verified cross-project compatibility. Follow IterationRoadmap.md for these boundary decisions; do not convert missing pixels into a global software stop-condition.
+Assign a substantial coherent deliverable with explicit acceptance criteria, not an isolated helper followed by another user prompt. Packets remain independently reviewable and can be grouped into one authorized execution tranche; they are not mandatory stopping points. Software can be accepted against deterministic synthetic fixtures while an explicitly separate live-data or model qualification slice stays open. A reviewed interface/example can satisfy a downstream software dependency without acceptance of the upstream implementation. Draft interfaces permit bounded development but not claims of verified cross-project compatibility. Follow IterationRoadmap.md for these boundary decisions; do not convert missing pixels into a global software stop-condition.
+
+## Tranche completion and stopping
+
+At dispatch, specify included packets, shared interface revisions, owned files, integrated
+outcome, allowed operations, and final verification. For broad authorized continuation,
+choose a coherent set of ready work within the requested scope after checking ownership;
+state that scope in commentary and execute it. Do not silently claim another active
+worker's packet. No fixed line-count, duration, or packet-count quota measures substance.
+
+Keep an acceptance checklist for the whole tranche. Internal milestones may produce
+incremental evidence or status updates without ending the turn. Continue implementation
+→ caller integration → positive/adversarial checks → fixes → required package checks
+→ self-review → docs/queue/status → handoff. A toy fixture is valid test evidence when
+the contract allows it; a toy-only implementation missing required behavior is not.
+
+Before a final response, ask: **Is there safe, authorized work left in this assignment?**
+If yes, continue. If no, state completed-for-review or the exact blocker for each remaining
+criterion. A newly introduced failing test needs diagnosis/repair, not a perfunctory handoff.
+Do not wait for user approval between already authorized steps. Do not claim work is
+continuing in a final response. Use commentary for those updates and actually continue.
+
+Stop for a genuine missing prerequisite/authority only after checking safe in-scope
+alternatives and completing independent work. Honor user interruption and actual runtime
+limits with a checkpoint. Keep real-data qualification, external execution, and model
+promotion separately gated. A larger tranche does not waive any safety boundary.
+
+The architect reviews completeness against the original criteria and required entrypoints,
+not code volume or a worker's green summary. Reject a review-ready claim for a partial
+helper, missing required checks, or documentation that narrows the original acceptance
+criteria after implementation. Preserve useful partial work and return precise gaps.
 
 For shared checkouts, record a single owner for each overlapping implementation file. Do not assign overlapping edits concurrently. Parallel agents require explicit authorization and disjoint ownership; independent preparation does not imply permission to spawn them.
 
@@ -65,7 +95,7 @@ Workers follow AGENTS.md's mandatory pre-code reading sequence. Read it once per
 
 Packets carry paths, symbols, invariants, exact evidence needed, and known traps—not copies of whole research documents. Use targeted searches and bounded output. Avoid dumping datasets, base64, complete checkpoints, or long training logs into the conversation. Prefer manifests over large directory scans (BP-34). Put verbose evidence in project-local files and report counts, paths, and failures.
 
-Keep the packet small enough to hand off in one message plus its linked context. If implementation exposes a material design decision, record a short proposed amendment and continue independent authorized work. Do not silently broaden the contract to make tests pass.
+Keep the handoff concise with linked evidence, without shrinking the implementation to fit a short message. If implementation exposes a material design decision, record a short proposed amendment and continue independent authorized work. Do not silently broaden or weaken the contract to make tests pass.
 
 ## Safety and escalation
 
@@ -103,6 +133,7 @@ authorized workspace for evidence and supplies a reference; no cross-repository 
 5. New learning: evidence and destination in BestPractices.md, or a knowledge issue if still unconfirmed.
 6. A short continuation checkpoint: completed work, next concrete action, running process IDs if any, and files that must not be overwritten.
 7. Coordination entry/draft path and delivery state: unpublished (with reason) or published (with readback evidence). Peer acknowledgment is reported separately; no coordinator approval is needed.
+8. Whole-assignment completion check: each included packet/criterion is evidenced or has an exact blocker; state why the turn can end with no safe authorized work remaining. For a tranche, retain per-packet evidence and one integrated summary, not a new status queue.
 
 For an incremental slice, also record the contract revision, whether evidence is synthetic/real, accepted capability boundaries, and the next ready slice. Integrity, capture provenance, corpus eligibility, and model quality are separate claims. A contract change includes updated compatibility cases and affected consumers; no worker waits for an entire phase when only a reviewed schema is needed.
 

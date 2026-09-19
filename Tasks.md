@@ -11,7 +11,7 @@ Dispatch contracts: [`Research/ImplementationPlans.md`](Research/ImplementationP
 Workflow: [`Research/WorkerWorkflow.md`](Research/WorkerWorkflow.md). Owner is unassigned until dispatch.
 These packets refine the parent tasks below; accepting preparation does not close their live-data gates.
 
-Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch preference, not a requirement to finish an earlier row. Accept software slices separately from real-data qualification. All owners below are unassigned.
+Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch preference, not a requirement to finish an earlier row. Accept software slices separately from real-data qualification. Review rows have delivered worker evidence; do not redispatch them as unassigned work. Owner identities not recorded in this queue remain unspecified, not evidence that no worker exists.
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
@@ -20,9 +20,9 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | 3 | P0-A | DATA-01 | review | Concurrent worker supplied [handoff](reports/work/P0/handoff.md); evidence acceptance pending; do not redispatch overlapping edits |
 | 4 | P4-A | INTEGRATION-01 / 6a-10 | review | Offline schema/version, fail-closed bundle validation, normalization, and adversarial contract suite are review-ready |
 | 5 | P5-A | 6a-10 | review | Side-effect-free configuration preflight and negative-data tests are review-ready |
-| 6 | P3-A | 6a-11 | ready | Regression selector on toy corpus |
-| 7 | P2-A | 6a-11 | draft | Reviewed P1-A interface, not full inference |
-| 8 | P4-B | 6a-10 | draft | Reviewed normalized-corpus interface |
+| 6 | P3-A | 6a-11 | review | Deterministic regression selector and toy-corpus leakage tests are review-ready |
+| 8 | P4-B | 6a-10 | review | Split-safe assembly software and adversarial tests are review-ready |
+| 9 | P2-A | 6a-11 | review | Strict reference-comparison software and compatibility tests are review-ready |
 | — | P0-B | DATA-01 | blocked | P0-A recovery evidence and exact authorized staged-copy plan |
 | — | P0-C | DATA-01 | blocked | P0-A originals unrecoverable; reviewed versioned reconstruction configuration |
 | — | P1-B | 6a-11 | blocked | P1-A and eligible original/replacement test pixels |
@@ -33,16 +33,16 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | TRAIN-S | 6a-10 | blocked | P5-B and explicit bounded smoke assignment |
 | — | TRAIN-F | 6a-10 | blocked | Accepted smoke and full-run assignment |
 | — | TRAIN-Q | 6a-10 | blocked | Candidate plus eligible dual holdouts |
-| — | FR-A | FOCUS-DET-05 | ready | Offline coverage checks and metadata reconciliation |
+| — | FR-A | FOCUS-DET-05 | review | Offline quota/pair/split validator and metadata reconciliation are review-ready |
 | — | FR-B | FOCUS-DET-05 | blocked | FR-A and authorized available Office capture |
 | — | FR-C | FOCUS-DET-05 | blocked | Eligible quota-complete corpus and run/export assignment |
-| — | R-A | 6b-R-1 | ready | Inventory and reviewed capture matrix |
+| — | R-A | 6b-R-1 | review | Offline matrix/inventory validator distinguishes unique screenshots and genuine labeled examples |
 | — | R-B | 6b-R-1 | blocked | R-A and authorized device/app window |
 | — | R-C | 6b-R-1 | blocked | Complete qualified capture manifest; mAP additionally requires genuine boxes |
 | — | MAC-A | 6c-1 | blocked | Documented DS-G8 pass |
 | — | MAC-B | 6c-2 | blocked | Accepted coordinate spike |
 | — | MAC-C | 6c-2 | blocked | Eligible macOS corpus and experiment assignment |
-| — | BADGE-A | BADGE-01 | ready (specification) | Append-only mapping/decoder contract; preserve current 41-class outputs |
+| — | BADGE-A | BADGE-01 | review | Append-only ID-41 badge taxonomy specification preserves current 41-class outputs |
 | — | BADGE-B | BADGE-01 | blocked | Accepted 41-class milestone, badge contract and new corpus |
 | — | CROP-A | 6a-12 | blocked | Accepted full-frame 6a-10 baseline |
 | — | CROP-B | 6a-12 | blocked | Frozen crop evaluation and experiment assignment |
@@ -52,10 +52,17 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | TV-I2 | INTEGRATION-01 | external proposal | TVTestRig owner assigns offline artifact publication |
 | — | SA-A | 9-2 | external proposal | ScreenAuditKit owner assigns contracts/fake-backed rules |
 | — | SA-B | 9-3 | external proposal | Consumer injection interface and dependency assignment |
-| — | DOC-A | DOC-01 | ready (permitted docs) | Protected skill edits require filesystem authority |
+| — | DOC-A | DOC-01 | review | Permitted documentation corrections are ready; exact protected-skill patch awaits its required authority |
 | — | REL-A | DIST-02 | blocked | Qualified selected-model evidence |
 | — | REL-B | DIST-02 | maintainer-gated | Accepted release evidence and exact promotion/tag authority |
-| — | HIST-A | DIST-01 | ready (assessment only) | No history mutation; maintainer controls decision/execution |
+| — | HIST-A | DIST-01 | review | Read-only remediation assessment is ready; missing Git object requires maintainer recovery decision |
+
+Status alignment (2026-09-19): H1, P0-A, P1-A, P2-A, P3-A, P4-A, P4-B, P5-A, and FR-A
+are review-ready, not architect-accepted. See
+[alignment evidence](reports/coordination/alignment-2026-09-19.md). TVTestRig reports a
+new non-attested default harvest contract; NUA's older attestation prerequisites below
+are disputed pending source/contract reconciliation, not confirmed current producer
+blockers. No eligibility policy is changed by this status update.
 
 No new owners are assigned by this planning update. A concurrent P0-A handoff arrived during
 the documentation pass; its evidence awaits review and the assessment script was not edited

@@ -4,6 +4,12 @@
 
 ## Common execution contract
 
+**Execution amendment (2026-09-19):** Rows are reviewable contracts, not mandatory
+turn boundaries. Dispatch substantial coherent tranches when the user requests broader
+work; finish all assigned packets, integration, verification, and handoff before ending
+the turn. AGENTS.md's execution contract overrides any interpretation of "bounded" as
+permission to stop after a helper. Per-packet gates and safety authority remain unchanged.
+
 - Read AGENTS.md's mandatory research sequence before code, [WorkerWorkflow.md](WorkerWorkflow.md), the [worker skill](WorkerExecution/SKILL.md), and only the assigned packet plus its named context. Do not load all packet documents merely to execute one row.
 - Assignment must name the packet/revision, owning repository, allowed operation and current owner. Check pre-existing changes before editing; evidence of a new worker script is not permission to overwrite it. Coordinate shared schemas/queue edits through the architect.
 - File scope includes the packet's named implementation files, tightly related tests and required research changes, plus additive reports. Expansion to another subsystem/repository or a new gate requires an explicit amended assignment.
@@ -71,6 +77,6 @@
 
 ## Dispatch text
 
-“Implement <packet-id>, revision 4, from Research/ImplementationPlans.md and its linked contract. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify the assigned repository, ownership and this packet's prerequisites in Tasks.md. Perform only its authorized operations; preserve unrelated changes and historical evidence. Return the four-outcome handoff with acceptance evidence and the next unblocked action; mark review, not accepted.”
+“Complete <packet-id or explicit tranche of packet IDs>, revision 4 plus the execution amendment, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
 
 For external packets, replace NUA operating paths with the owning repository's approved assignment and instructions. For hardware, training, recovery-copy or promotion packets, name the authorized operation and verified prerequisites explicitly; catalog inclusion alone is not authorization.

@@ -973,3 +973,25 @@ Only boot a new simulator after confirming no conflicting instance is already ru
 **Correct:** Use a built-in, strict PNG parser for the declared artifact format; preserve producer fields when present, represent missing identity evidence explicitly as `null`, and keep unverified bundles ineligible for training.
 
 **Why:** A host-dependent validator creates a false green path in one environment and an outage in another. Invented identity would turn an integrity check into an unsupported provenance claim. Evidence: P4-A H1 contract suite, 2026-09-19.
+
+---
+
+### BP-55: A progress checkpoint is not a completed execution tranche
+
+**Wrong:** After a user explicitly requested a much larger P4-B/P2-A tranche,
+the worker ended consecutive turns after small helper edits, saying it was
+"continuing" and would verify next. That required repeated user prompts for
+already authorized work. Evidence: user-supplied transcript, 2026-09-19,
+12:48–12:49 PM; this observation does not establish the helpers' eventual quality.
+
+**Correct:** Define the integrated completion boundary up front, then implement,
+connect, verify, fix, and hand off the whole authorized tranche in the active turn.
+Use commentary for interim progress and continue execution. Keep packet-specific
+evidence without treating every packet as a stop. Finalize only on completion,
+concrete blockage of all remaining authorized work, user interruption, or a real
+runtime limit; report incomplete work truthfully.
+
+**Why:** Small reviewable contracts aid verification, but artificial turn boundaries
+shift execution management onto the user. Token efficiency means concise context
+and evidence, not omitting integration/tests or ending work prematurely. These
+rules address the observed failure; they do not guarantee future agent compliance.

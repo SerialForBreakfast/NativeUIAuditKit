@@ -29,6 +29,47 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 
 ---
 
+## Execution contract — finish the authorized tranche
+
+For implementation requests, continue working in the current turn until the assigned
+deliverable is implemented, integrated, verified, and handed off, or a concrete blocker
+prevents further authorized progress. A helper, schema stub, passing toy test, packet
+checkpoint, or status update is not by itself a completed assignment.
+
+- Treat packets as review/evidence boundaries, not mandatory turn boundaries. If assigned
+  a larger tranche, complete all included packets and their integration before finalizing.
+  Keep per-packet acceptance evidence; do not inflate completion by combining checkboxes.
+- When the user asks for a "much bigger chunk" or to continue a planned tranche, state
+  the substantial end-to-end scope and work through it. Do not reinterpret that request
+  as permission for only the next helper. Do not ask "shall I continue?" for remaining
+  work already authorized. Explicitly narrow requests remain narrow.
+- Send brief progress in commentary while continuing tools/work. Never end a turn with
+  "I'm continuing" or "I'll do the tests next" when you are actually stopping. No
+  background execution is implied by a promise. Elapsed time, changed-line count, and
+  number of tool calls are not completion criteria; do not pad code or busywork.
+- Before claiming review-ready, map every assigned acceptance criterion to observable
+  evidence: actual caller/CLI integration where required, realistic positive and negative
+  paths, focused tests, repository-required checks, and updated docs/status. Fix in-scope
+  failures found during validation. Unexecuted required checks remain explicitly blocked
+  or incomplete, not passed. Do not reduce the contract to match a minimal implementation.
+- A blocker must name the missing input/authority, failing command or concrete conflict,
+  safe checks already attempted, affected work, and exact resume condition. Routine
+  debugging, unrun tests, unavailable optional status sharing, and waiting for review
+  that is not a declared dependency are not reasons to abandon other authorized work.
+  Complete independent parts of the assigned tranche before returning a blocked handoff.
+- Legitimate stops: assigned scope complete for review; all remaining authorized work
+  concretely blocked; user pause/redirection; or an actual tool/runtime/budget limit.
+  For interruption/limits, save a truthful continuation checkpoint when possible—never
+  call it complete. Do not choose arbitrary time or micro-packet limits yourself.
+- Persistence does not authorize other repositories, new hardware/training runs, unsafe
+  operations, taking another worker's files, bypassing gates, or an endless backlog sweep.
+  For broad assignments, establish a coherent tranche from authorized ready work; beyond
+  that boundary requires a new assignment. Review/diagnosis requests remain read-only
+  unless changes are requested.
+
+Use [WorkerWorkflow.md](Research/WorkerWorkflow.md) and
+[nativeui-worker-execution](Research/WorkerExecution/SKILL.md) for the completion check.
+
 ## HIGHEST PRIORITY — File System Boundary
 
 **Never write any file outside the project directory except the narrowly authorized shared-status publication below.** This includes:
@@ -192,7 +233,7 @@ optional reading. It prevents repeating known errors.
 | Any new generator template | BP-01, BP-02, BP-03, BP-04, BP-10, BP-11, BP-15 |
 | Adding a new SPM target or Xcode project | BP-15 (platform boundary rule) |
 | Training or inference with Create ML / Vision | BP-25 (scaleFit bug), BP-26 (anchor assignment) |
-| Writing evaluation scripts | BP-25 — use `.scaleFill`, never `evaluation(on:)` |
+| Writing historical Create ML / Vision evaluation scripts | BP-25 — use `.scaleFill`, never `evaluation(on:)`; shipped YOLO evaluation retains its letterbox path |
 | tvOS remote automation & menu navigation | BP-40 (single-step closed loop), BP-41 (chevron gate), BP-42 (boundary lock), BP-43 (blacklist) |
 | tvOS hardware training data & fixture | BP-44 (fixture synthetic generation), BP-45 (local HTTP/stream pipeline) |
 | FocusRing crops / CoreML export | BP-46 (16% expand + `makeCrop`, never `CGImage.cropping(to:)`), BP-47 (vendored backbone, no `import timm`) |

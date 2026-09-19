@@ -1,0 +1,1 @@
+{"version":"1.1","extends":"category_map.json","description":"Append-only badge taxonomy map; IDs 0-40 retain v1.0 meanings. ID 41 is badge.","append":[{"id":41,"name":"badge","supercategory":"indicators"}]}

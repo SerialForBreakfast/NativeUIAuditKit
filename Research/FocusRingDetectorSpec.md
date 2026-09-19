@@ -73,6 +73,11 @@ Required metadata:
 | `short_description` | Binary classifier: tvOS UI element focus state |
 | `author` | NativeUIAuditKit |
 
+**FR-A metadata reconciliation (2026-09-19):** the bundled resource metadata
+matches this table exactly: `modelID` is `focus-ring-detector-v1.0` and
+`versionString` is `1.0.0`. FDR-001 is the training-run label, not a model
+version. No model resource or qualification claim changes here.
+
 Package size gate: FP16 `.mlpackage` **≤ 5.0 MB**.
 
 ---

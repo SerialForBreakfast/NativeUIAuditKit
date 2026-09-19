@@ -178,6 +178,11 @@ are not changed by this decision. See [DeliveryDecisions.md](DeliveryDecisions.m
 
 ### 5.1 Design Principle: Semantic Roles
 
+**BADGE-A (2026-09-19):** `badge` means a notification/status dot or count marker,
+not a button or decorative text. It is reserved as append-only category ID 41 in
+`category_map.v1.1.json`; the shipped 0–40 map and all legacy model decoding stay
+unchanged. A future model must explicitly declare v1.1; unknown map/model pairs fail.
+
 The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit class names.
 
 - `primaryButton` survives iOS redesigns; `UIButton.ButtonType.system` does not

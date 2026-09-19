@@ -6,6 +6,7 @@ Owning repository: <value>. Canonical catalog link: <ImplementationPlans entry>.
 ## Assignment contract
 
 - Outcome and why now:
+- Execution tranche: included packet IDs, end-to-end deliverable, and final completion boundary (packet checkpoints do not end the turn):
 - Dependencies and evidence required to start:
 - Slice boundary: software / real-data integration / live qualification; which reviewed interface is sufficient instead of a whole upstream feature:
 - In scope / explicit non-goals:
@@ -14,6 +15,8 @@ Owning repository: <value>. Canonical catalog link: <ImplementationPlans entry>.
 - Coordination: direct worker update to shared `nuiak/status.yaml` → `packets.<packet-id>`; local fallback `reports/work/<packet-id>/coordination.md`; relevant peer requests/device needs (not authorization):
 - Relevant Research sections, skill paths, BP and knowledge IDs:
 - Known current behavior, verified from <source/date>:
+- Required caller/CLI integration and realistic positive/adversarial verification:
+- Concrete stop conditions; independent authorized work to finish if one dependency blocks:
 
 ## Implementation decisions
 
@@ -40,3 +43,8 @@ Use Research/WorkerWorkflow.md's evidence format at `reports/work/<packet-id>/ha
 Include the coordination update path and truthful publication state. Follow AGENTS.md's
 start/change/handoff cadence and targeted packet-entry updates; preserve other workers'
 entries and top-level summary. An unavailable share does not block independent offline work.
+
+Final response only after the entire assigned tranche is completed for review or each
+remaining criterion has a concrete blocker. Progress and promises to continue belong in
+commentary followed by actual work. Include the whole-tranche completion checklist;
+do not equate a helper or one passing toy test with the integrated deliverable.
