@@ -114,6 +114,14 @@ Default harvest *input* is the in-tree fixture cache `dataset/tvos_fixture_captu
 
 `split` is assigned from `recipe_seed` (not from filename) so a focused/unfocused pair cannot straddle train/test.
 
+### Separate simulator visual-data milestone
+
+[SIM-DATA-01–05](Plans/SimulatorDatasets.md) defines an independent local simulator
+dataset lane. Its visual-only pairs do not require the semantic alignment matrix or
+`--require-alignment-matrix` below. Present alignment metadata must still validate.
+Simulator-only eligibility does not close physical FR-B/FR-C, qualify Apple TV shader
+behavior, authorize training, or change model promotion gates.
+
 ### ADR-0007 alignment metadata (FR-A / FR-B)
 
 The visual pair contract remains independent from accessibility semantics. A pair may

@@ -86,6 +86,18 @@ class Tests(unittest.TestCase):
         with self.assertRaisesRegex(ReadinessError, "empty_hard_negative_stratum"):
             validate(data)
 
+    def test_simulator_hard_negative_requires_validated_unfocused_bytes(self):
+        data = rows()
+        for row in data:
+            if row["hardNegative"]:
+                row["sourceKind"] = "simulatorFixture"
+        with self.assertRaisesRegex(ReadinessError, "unvalidated_simulator_hard_negative"):
+            validate(data)
+        for row in data:
+            if row["hardNegative"]:
+                row["validatedUnfocusedEvidence"] = {"path": "crops/unfocused.png", "sha256": "a" * 64}
+        self.assertEqual(validate(data)["pairs"], 6000)
+
     def test_alignment_requires_source_backed_known_target(self):
         data = rows()
         data[1]["alignment"].pop("source")

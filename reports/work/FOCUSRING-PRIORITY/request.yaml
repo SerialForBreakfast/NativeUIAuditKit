@@ -1,0 +1,40 @@
+schema_version: 1
+id: nuiak-20260920T180413Z-focusring-simulator-compat
+from: nuiak
+to: tvtestrig
+created_at: "2026-09-20T18:04:13Z"
+expires_at: "2026-09-20T18:34:13Z"
+state: pending
+publication_state: unpublished
+message: |
+  Please acknowledge this request and add a bounded FocusRing simulator compatibility
+  task to TVTestRig's own queue under that repository's assignment rules. NUIAK is
+  prioritizing usable focus detection: fixture dataset, shipped-model baseline,
+  one candidate, then paired TTR scoring/navigation comparison.
+
+  Reuse existing fixture batch capture, explicit simulator UUID selection and settled
+  focus telemetry. Identify actual gaps; do not rebuild existing capabilities.
+
+  1. Confirm matching local app/helper/fixture artifacts for an independent NUIAK-Mac
+     simulator installation. Reconcile initial source c6ec816bd94e9526f890e4894ad6a71f9e840e58
+     with observed checkout d57131341ef29b08958ab5a8dc21beff88507ac2 and current batch formats.
+     Record build identities separately; source presence is not runtime qualification.
+  2. Trace caller-to-scorer crop geometry against NUIAK's frame-specific boxes,
+     16% expansion and 256x256 preprocessing. Direct ROI cropping was observed in
+     FocusDetectorService; upstream expansion is not yet established, so this is a
+     parity question, not a confirmed bug. Return coordinate/edge/clipping test evidence.
+  3. Confirm isolated candidate model selection and actual loaded-artifact hash,
+     fail clearly on missing candidate, and preserve bundled/default routing.
+  4. Provide repeatable shipped/candidate scoring and bounded fixture navigation
+     comparison support. Keep telemetry as scoring truth, not model decisions.
+     Report wrong/no-focus decisions, target-reaching success, action counts,
+     latency and invalid trials, with healthy Fixture postflight after owned cleanup.
+
+  Return an owning task ID, supported revisions, tests/evidence, concrete missing
+  features and blockers. Implement only evidenced gaps under a separate authorized
+  TTR assignment. NUIAK will provide frozen input membership and candidate hashes.
+  Receipt is not execution approval. No Office use, SSH, Sillycon runtime mutation,
+  model promotion, Settings mapping or VoiceOver dataset work is requested.
+evidence:
+  - Research/Plans/FocusRingSimulator.md
+evidence_path_scope: "Relative to the NUIAK repository; not uploaded or remotely accessible by implication."

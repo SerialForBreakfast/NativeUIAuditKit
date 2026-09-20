@@ -13,6 +13,12 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**Top dispatch priority (2026-09-20): usable FocusRing detection for TTR.**
+Priority F1 supersedes legacy numeric ordering for new assignments; preserve existing
+workers and authorized work. Path: SIM-DATA-01/02 → SIM-DATA-03 → FR-SIM-BASE →
+SIM-DATA-04 → FR-SIM-CAND → FR-SIM-TTR. SIM-DATA-05 is secondary (F2), not a blocker.
+Contracts: [FocusRing delivery](Research/Plans/FocusRingSimulator.md).
+
 Dispatch contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md).
 Workflow: [`Research/WorkerWorkflow.md`](Research/WorkerWorkflow.md). Owner is unassigned until dispatch.
 These packets refine the parent tasks below; accepting preparation does not close their live-data gates.
@@ -42,6 +48,14 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | FR-A | FOCUS-DET-05 | accepted | Offline quota/pair/split and ADR-0007 alignment validator accepted; FR-B remains capture-gated |
 | — | FR-B | FOCUS-DET-05 | blocked | FR-A and authorized available Office capture |
 | — | FR-C | FOCUS-DET-05 | blocked | Eligible quota-complete corpus and run/export assignment |
+| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (runtime) | Read-only inventory found CoreSimulatorService unavailable; no UUID/helper/endpoint may be inferred. Resume after local simulator service and matching TTR helper/Fixture build are available. Evidence: `reports/work/SIM-DATA-01-02/runtime-inventory.md` |
+| F1 | SIM-DATA-02 | TASK-SIM-DATA-01 | review | Simulator manifest/eligibility, grouping and paired frame-correct extraction implemented with offline adversarial coverage. Evidence: `reports/work/SIM-DATA-01-02/handoff.md` |
+| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | blocked | Accepted SIM-DATA-01/02 plus simulator capture authority; 42-recipe genuine pilot |
+| F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | blocked | Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned capture; ≥6,000 visual pairs |
+| F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | blocked | Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
+| F1 | FR-SIM-BASE | FOCUS-DET-05 | blocked | Genuine SIM-DATA-03 pilot and assigned baseline inference; offline tooling independently dispatchable; owner unassigned |
+| F1 | FR-SIM-CAND | FOCUS-DET-05 | blocked | FR-SIM-BASE, qualified SIM-DATA-04 corpus and explicit run/export assignment; owner unassigned |
+| F1 | FR-SIM-TTR | FOCUS-DET-05 | blocked | Candidate, frozen comparisons, producer acknowledgment and simulator authority; fake-backed preparation independent; owner unassigned |
 | — | R-A | 6b-R-1 | review | Offline matrix/inventory validator distinguishes unique screenshots and genuine labeled examples |
 | — | R-B | 6b-R-1 | blocked | R-A and authorized device/app window |
 | — | R-C | 6b-R-1 | blocked | Complete qualified capture manifest; mAP additionally requires genuine boxes |
@@ -185,6 +199,27 @@ FocusRing and real Apple TV capture are tvOS work, not prerequisites for iOS-onl
 software acceptance or synthetic baseline evaluation. Office is released until
 explicit new user authorization; old advisory requests do not authorize capture.
 
+### tvOS Simulator datasets
+
+#### TASK-SIM-DATA-01: Independent local simulator dataset lane [ ]
+
+Canonical contracts: [SimulatorDatasets.md](Research/Plans/SimulatorDatasets.md), revision 1.
+Deliver datasets only; packet state/ownership remains in the queue above.
+
+- [ ] SIM-DATA-01: exact local runtime/build/UUID/endpoint record and authorized minimal capture with healthy cleanup
+- [ ] SIM-DATA-02: integrated simulator manifest, eligibility, split grouping and frame-correct extraction, verified offline
+- [ ] SIM-DATA-03: genuine 42-recipe pilot with complete accounting, overlays, intake and postflight evidence
+- [ ] SIM-DATA-04: freeze ≥6,000 visual FocusRing pairs with scene/theme/hard-negative quotas and recovery evidence
+- [ ] SIM-DATA-05: separate full-frame tvOS augmentation exports with class/style coverage, lineage and frozen splits
+
+SIM-DATA-01 inventory and SIM-DATA-02 software are independent. Both must pass before
+the pilot; FR-SIM-BASE then precedes SIM-DATA-04 scale-up. Secondary SIM-DATA-05
+uses the same shared membership registry without blocking FocusRing.
+Installation, simulator storage and capture require explicit execution authority.
+No training, physical-device qualification, Office operation, Sillycon mutation, iOS
+replacement corpus or DS-G8 credit. This visual-only lane does not require ADR-0007's
+semantic alignment matrix and does not close FR-B/FR-C or real-device holdout work.
+
 ### TASK-6b-R-1: Scale real Apple TV hold-out captures [~]
 
 Pipeline and qualification (R-2, R-3) are done. Remaining:
@@ -194,6 +229,14 @@ Pipeline and qualification (R-2, R-3) are done. Remaining:
 ---
 
 ### FOCUS-DET-05: FocusRing v1.0 data + retrain [ ]
+
+Simulator follow-ons: [FR-SIM-BASE / FR-SIM-CAND / FR-SIM-TTR](Research/Plans/FocusRingSimulator.md).
+
+- [ ] Benchmark shipped model on the development pilot before scale-up; freeze final evaluation protocol
+- [ ] Train/export one explicitly authorized simulator candidate and report six quality gates
+- [ ] Compare focus decisions and bounded navigation in TTR; no simulator-only production promotion
+
+The physical requirements below remain separate and unchanged.
 
 v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingDetectorSpec.md).
 

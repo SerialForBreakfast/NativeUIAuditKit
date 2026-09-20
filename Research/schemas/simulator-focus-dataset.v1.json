@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nativeuiauditkit.local/schemas/simulator-focus-dataset.v1.json",
+  "title": "NativeUIAuditKit simulator FocusRing dataset manifest v1",
+  "description": "Simulator-only fixture intake. Integrity and simulator-use eligibility never establish physical qualification or general training approval.",
+  "type": "object",
+  "required": ["schemaVersion", "corpusID", "sourceKind", "producer", "requestedTarget", "eligibility", "pairs"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "corpusID": {"type": "string", "minLength": 1},
+    "sourceKind": {"const": "simulatorFixture"},
+    "producer": {"type": "object", "required": ["name", "buildReference"]},
+    "requestedTarget": {"type": ["object", "null"]},
+    "observedSource": {"type": ["object", "null"]},
+    "eligibility": {"type": "object", "required": ["inspection", "simulatorUse", "physicalQualification", "generalTrainingApproval"]},
+    "pairs": {"type": "array", "items": {"type": "object", "required": ["pairID", "recipeGroup", "split", "originalFamily", "family", "originalTheme", "theme", "unfocused", "focused"]}}
+  },
+  "additionalProperties": false
+}

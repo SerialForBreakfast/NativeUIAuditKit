@@ -283,6 +283,16 @@ consumer reports integrity, descriptive source context, data eligibility, and
 model qualification as separate outcomes. See
 [harvest-compatibility-v1.md](schemas/harvest-compatibility-v1.md).
 
+**Simulator FocusRing intake (2026-09-20):** completed simulator fixture bundles
+are normalized into the versioned `simulator-focus-dataset-v1` manifest before
+FocusRing crop extraction.  The manifest retains the producer's original
+family/theme text alongside a fail-closed NUA mapping, per-frame source hashes,
+recipe-group split identity, and the distinction between bundle integrity and
+simulator-only eligibility.  It does not manufacture device identity, approve
+general training, qualify physical rendering, or require ADR-0007 VoiceOver
+alignment metadata for a visual-only corpus.  See
+[SimulatorDatasets.md](Plans/SimulatorDatasets.md).
+
 ### 6.1 Core Principle: Generate, Don't Annotate
 
 Do not rely on manual annotation. Generate UI screens from Swift source and export ground truth at render time — the app that renders the UI also exports the labels, bounds, traits, state, and text metadata.

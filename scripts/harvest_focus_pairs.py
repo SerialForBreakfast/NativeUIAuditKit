@@ -36,6 +36,9 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+from harvest_bundle_validation import HarvestValidationError, validate_bundle
+from simulator_focus_manifest import SimulatorManifestError, build as build_simulator_manifest
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT = PROJECT_ROOT / "dataset" / "tvos_fixture_captures"
 DEFAULT_OUTPUT = PROJECT_ROOT.parent / "NativeUIAuditKit-Dataset" / "focus_ring"
@@ -95,6 +98,9 @@ def utc_now() -> str:
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Harvest FocusRingDetector 256×256 crops.")
     p.add_argument("--input", default=str(DEFAULT_INPUT), help="Directory of PNG + JSON captures")
+    p.add_argument("--fixture-bundle", type=Path, help="Completed fixture bundle; validates before paired simulator extraction")
+    p.add_argument("--corpus-id", help="Required with --fixture-bundle")
+    p.add_argument("--producer-reference", help="Required source revision with --fixture-bundle")
     p.add_argument(
         "--output",
         default=str(DEFAULT_OUTPUT),
@@ -321,6 +327,64 @@ def write_records(records: list[dict], output: Path, include_unlabeled: bool) ->
     }
     (output / "focus_dataset_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest
+
+
+def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_reference: str, expansion: float, dry_run: bool) -> dict:
+    """Extract true focused/unfocused crop pairs only from an integrity-checked bundle."""
+    from PIL import Image
+
+    if output.exists() and not dry_run:
+        raise SimulatorManifestError("output_collision")
+    contract = validate_bundle(bundle)
+    manifest = build_simulator_manifest(contract, corpus_id, producer_reference, None)
+    pairs: list[dict] = []
+    seen: set[str] = set()
+    for row in manifest["pairs"]:
+        focused = Image.open(bundle / row["focused"]["path"]).convert("RGB")
+        unfocused = Image.open(bundle / row["unfocused"]["path"]).convert("RGB")
+        if focused.size != unfocused.size:
+            raise SimulatorManifestError("pair_dimension_mismatch")
+        selected = [e for e in row["elements"] if e.get("is_focused") and e.get("taxonomy_class") in FOCUSABLE]
+        if len(selected) != 1:
+            continue
+        element = selected[0]
+        bounds = element.get("pixel_bounds")
+        if not isinstance(bounds, list) or len(bounds) != 4:
+            raise SimulatorManifestError("invalid_frame_geometry")
+        x, y, width, height = (float(v) for v in bounds)
+        crop_box = expanded_clamp(x, y, x + width, y + height, focused.width, focused.height, expansion)
+        pair_id = f"{row['pairID']}:{element['element_id']}"
+        if pair_id in seen:
+            raise SimulatorManifestError("duplicate_pair_id")
+        seen.add(pair_id)
+        entry = {
+            "pair_id": pair_id, "recipe_group": row["recipeGroup"], "recipe_seed": row["recipeGroup"].rsplit(":", 1)[1],
+            "fixture_scene": row["family"], "original_fixture_scene": row["originalFamily"],
+            "theme": row["theme"], "original_theme": row["originalTheme"], "element_type": element["taxonomy_class"],
+            "split": row["split"], "labelSource": "fixtureGroundTruth", "sourceKind": "simulatorFixture",
+            "source": {"unfocused": row["unfocused"], "focused": row["focused"]},
+            "validatedUnfocusedEvidence": row["unfocused"],
+            "bbox_normalized": element["normalized_bounds"], "hardNegative": element["taxonomy_class"] in {"imageView", "collectionItem"},
+        }
+        pairs.append((entry, focused, unfocused, crop_box))
+    if not pairs:
+        raise SimulatorManifestError("no_focusable_pairs")
+    if dry_run:
+        return {"pairs": len(pairs), "corpusID": corpus_id, "dryRun": True}
+    crops = output / "crops"
+    crops.mkdir(parents=True, exist_ok=True)
+    output_pairs = []
+    for entry, focused, unfocused, crop_box in pairs:
+        digest = hashlib.sha256(entry["pair_id"].encode()).hexdigest()[:16]
+        focused_name, unfocused_name = f"{digest}_focused.png", f"{digest}_unfocused.png"
+        crop_rgb(focused, crop_box).save(crops / focused_name)
+        crop_rgb(unfocused, crop_box).save(crops / unfocused_name)
+        entry["focused_crop"] = f"crops/{focused_name}"
+        entry["unfocused_crop"] = f"crops/{unfocused_name}"
+        output_pairs.append(entry)
+    result = {"version": "1.1", "sourceKind": "simulatorFixture", "corpusID": corpus_id, "pairs": output_pairs, "eligibility": manifest["eligibility"]}
+    (output / "focus_dataset_manifest.json").write_text(json.dumps(result, indent=2) + "\n")
+    return {"pairs": len(output_pairs), "corpusID": corpus_id, "output": str(output)}
 
 
 def summarize(records: list[dict]) -> None:
@@ -845,6 +909,28 @@ def live_harvest(args: argparse.Namespace) -> int:
 
 def main() -> int:
     args = parse_args()
+    if args.fixture_bundle:
+        if args.live or not args.corpus_id or not args.producer_reference:
+            print("ERROR: --fixture-bundle requires --corpus-id and --producer-reference and cannot use --live")
+            return 1
+        output = Path(args.output).expanduser()
+        if not output.is_absolute():
+            output = (PROJECT_ROOT / output).resolve()
+        try:
+            output.relative_to(PROJECT_ROOT)
+        except ValueError:
+            print(f"ERROR: refusing to write outside package: {output}")
+            return 1
+        if output.exists() and not args.dry_run:
+            print(f"ERROR: refusing to overwrite existing output: {output}")
+            return 1
+        try:
+            result = extract_fixture_bundle(args.fixture_bundle, output, args.corpus_id, args.producer_reference, args.expansion, args.dry_run)
+        except (HarvestValidationError, SimulatorManifestError, OSError, ValueError) as error:
+            print(f"ERROR: fixture bundle extraction failed: {error}")
+            return 1
+        print(json.dumps(result, sort_keys=True))
+        return 0
     if args.live:
         if args.output == str(DEFAULT_OUTPUT):
             args.output = str(DEFAULT_LIVE_OUTPUT)

@@ -107,6 +107,10 @@ def validate(rows: list[dict[str, Any]], require_alignment_matrix: bool = False)
         scene[scene_name] += 1
         theme[(scene_name, theme_name)] += 1
         if row.get("hardNegative"):
+            if row.get("sourceKind") == "simulatorFixture":
+                evidence = row.get("validatedUnfocusedEvidence")
+                if not isinstance(evidence, dict) or not isinstance(evidence.get("path"), str) or not isinstance(evidence.get("sha256"), str):
+                    raise ReadinessError("unvalidated_simulator_hard_negative")
             hard[(theme_name, element_class)] += 1
         if "alignment" in row:
             matrix[validate_alignment(row["alignment"])] += 1

@@ -1,5 +1,22 @@
 # Accepted full-backlog delivery decisions
 
+**FocusRing priority amendment, 2026-09-20:** usable TTR focus detection is the highest
+new-dispatch priority. [FR-SIM contracts](Plans/FocusRingSimulator.md) extend the
+simulator dataset foundation through a shipped-model baseline before scale-up, one
+separately authorized candidate, and TTR comparison. Preserve existing workers and
+physical gates. SIM-DATA-05 remains secondary/nonblocking. This supersedes the earlier
+dataset-only scope for the overall lane, not for the five SIM-DATA packets themselves.
+
+**Simulator addendum accepted 2026-09-20:** [SIM-DATA-01–05](Plans/SimulatorDatasets.md)
+creates an independent local NUIAK-Mac lane ending at validated simulator datasets.
+Pin initial producer source to `c6ec816bd94e9526f890e4894ad6a71f9e840e58`;
+record actual runtime builds separately. Inventory and offline consumer extensions
+are independently dispatchable; installation/storage/capture require explicit authority.
+No training, remote execution, Sillycon mutation or renewed Office permission follows.
+Defer navigation-defect and VoiceOver datasets. Visual-only simulator examples need
+no semantic alignment matrix, but do not close physical FocusRing gates, replace iOS
+data, satisfy DS-G8, or establish physical-device performance.
+
 **Accepted by the maintainer:** 2026-09-19, Full Backlog Delivery Plan. This records planning decisions, not completed implementation or changed shipped artifacts. Runtime taxonomy, schemas, and model resources remain unchanged until their assigned implementation passes review.
 
 1. **Independent acceptance:** software, data eligibility, integration qualification, and model quality are separate outcomes. Reviewed interfaces unblock consumers before full upstream delivery. Tasks.md is the sole state/ownership queue.

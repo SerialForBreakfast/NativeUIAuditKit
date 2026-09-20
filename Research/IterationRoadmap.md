@@ -4,6 +4,11 @@
 
 ## Delivery model
 
+**Highest dispatch priority: usable FocusRing detection for TTR**, per the 2026-09-20
+maintainer decision. [Follow-on contracts](Plans/FocusRingSimulator.md) connect datasets
+to baseline → one candidate → TTR behavior. Preserve active workers; do not interrupt
+unrelated authorized work. Historical numeric priorities below do not override this lane.
+
 The [iOS platform plan](Plans/iOSPlatform.md) makes the five-class → 41-class delivery
 path explicit: corpus preservation and offline toolchain work proceed independently;
 eligible iOS pixels then enable Run 009 baseline/regression qualification without Office.
@@ -22,6 +27,29 @@ Accept small software increments with their own evidence. Keep separate integrat
 | TVTestRig development (external owner) | Identity adapter implementation/tests, producer fixture exports, existing shipped-model integration | Hardware qualification when Office is available | Producer-side tests and candidate contract artifacts; no dependence on new 41-class weights |
 
 No worker is assigned to another repository by this document. TVTestRig items are coordination proposals until accepted in that project's own queue. Do not send messages, write that repository, or run its build scripts from this task without an explicit assignment.
+
+## Independent simulator dataset lane
+
+The [simulator dataset contracts](Plans/SimulatorDatasets.md) add a local NUIAK-Mac
+lane independent of Sillycon and Office. See [tvOS Simulator tasks](../Tasks.md#tvos-simulator-datasets)
+for ownership/state. This milestone ends at validated datasets, not trained models.
+
+1. SIM-DATA-01 read-only runtime inventory and SIM-DATA-02 offline consumer extensions
+   can proceed independently. Runtime setup/storage and minimal capture need explicit authority.
+2. Accepted runtime and consumer evidence unlock an explicitly authorized SIM-DATA-03
+   42-recipe genuine pilot. Source inspection or mock fixtures cannot substitute for it.
+3. Accepted pilot evidence enables FR-SIM-BASE: benchmark the shipped model and freeze
+   the evaluation protocol before SIM-DATA-04 scale-up. Pilot errors guide training data,
+   never selection or tuning of the final holdout.
+4. Qualified SIM-DATA-04 data enables separately authorized FR-SIM-CAND, then FR-SIM-TTR
+   compares the candidate with shipped behavior. Physical promotion remains separate.
+5. SIM-DATA-05 is secondary and nonblocking; reuse shared frozen membership without
+   delaying FocusRing. Its dataset scope still requires accepted pilot/interfaces.
+
+Keep physical FR-B/FR-C, real-device holdouts and model gates separate. Simulator data
+does not repair iOS data or satisfy DS-G8. Navigation-defect/VoiceOver datasets are deferred;
+optional semantic alignment metadata is not a prerequisite for visual-only data.
+Office remains released; no SSH, Sillycon operation or automatic simulator launch follows.
 
 ## Interfaces instead of phase handoffs
 

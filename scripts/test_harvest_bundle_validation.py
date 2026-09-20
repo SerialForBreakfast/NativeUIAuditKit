@@ -12,6 +12,8 @@ import zlib
 from pathlib import Path
 
 from harvest_bundle_validation import HarvestValidationError, validate_bundle
+from harvest_focus_pairs import extract_fixture_bundle
+from simulator_focus_manifest import SimulatorManifestError, build
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -41,7 +43,7 @@ class H1Tests(unittest.TestCase):
 
     def write_bundle(self) -> None:
         image = png()
-        meta = {"id": "synth-0", "unfocused_png": "u.png", "focused_png": "f.png", "focused_element_id": "e", "is_settled": True, "elements": [{"element_id": "e", "taxonomy_class": "collectionItem", "is_focused": True, "normalized_bounds": [0, 0, 1, 1], "pixel_bounds": [0, 0, 1, 1]}]}
+        meta = {"id": "synth-0", "unfocused_png": "u.png", "focused_png": "f.png", "focused_element_id": "e", "is_settled": True, "recipe": {"recipe_hash": "recipe-a", "seed": 7, "archetype": "grid_matrix", "theme": "high_contrast"}, "elements": [{"element_id": "e", "taxonomy_class": "collectionItem", "is_focused": True, "normalized_bounds": [0, 0, 1, 1], "pixel_bounds": [0, 0, 1, 1]}]}
         for name, body in {"u.png": image, "f.png": image, "m.json": json.dumps(meta).encode()}.items():
             (self.d / name).write_bytes(body)
         row = self.row()
@@ -168,6 +170,32 @@ class H1Tests(unittest.TestCase):
         self.reindex()
         with self.assertRaisesRegex(HarvestValidationError, "invalid_metadata"):
             validate_bundle(self.d)
+
+    def test_simulator_manifest_retains_originals_and_does_not_open_gates(self) -> None:
+        manifest = build(validate_bundle(self.d), "pilot-v1", "c6ec816", {"udid": "recorded-not-trusted"})
+        pair = manifest["pairs"][0]
+        self.assertEqual(pair["originalFamily"], "grid_matrix")
+        self.assertEqual(pair["family"], "gridMatrix")
+        self.assertEqual(pair["originalTheme"], "high_contrast")
+        self.assertEqual(pair["theme"], "highContrast")
+        self.assertFalse(manifest["eligibility"]["generalTrainingApproval"])
+        self.assertEqual(manifest["eligibility"]["physicalQualification"], "not-established")
+        bad = validate_bundle(self.d)
+        bad["usableRows"][0]["recipe"]["archetype"] = "unsupported"
+        with self.assertRaisesRegex(SimulatorManifestError, "unsupported_family"):
+            build(bad, "pilot-v1", "c6ec816", None)
+
+    def test_fixture_extraction_uses_frame_truth_and_writes_paired_crops(self) -> None:
+        output = self.d / "focus-pairs"
+        result = extract_fixture_bundle(self.d, output, "pilot-v1", "c6ec816", 0.16, False)
+        self.assertEqual(result["pairs"], 1)
+        manifest = json.loads((output / "focus_dataset_manifest.json").read_text())
+        pair = manifest["pairs"][0]
+        self.assertEqual(pair["labelSource"], "fixtureGroundTruth")
+        self.assertEqual(pair["fixture_scene"], "gridMatrix")
+        self.assertEqual(pair["theme"], "highContrast")
+        self.assertTrue((output / pair["focused_crop"]).is_file())
+        self.assertTrue((output / pair["unfocused_crop"]).is_file())
 
 
 if __name__ == "__main__":

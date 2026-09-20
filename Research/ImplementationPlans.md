@@ -43,6 +43,31 @@ permission to stop after a helper. Per-packet gates and safety authority remain 
 | P5-A | TASK-6a-10 | [Configuration-only preflight](Plans/EvaluationAndTraining.md#p5-a--validation-only-training-preflight) |
 | P5-B | TASK-6a-10 | [Actual candidate readiness](Plans/EvaluationAndTraining.md#p5-b--actual-candidate-readiness) |
 
+## tvOS Simulator datasets
+
+Additive lane revision 1, 2026-09-20: [canonical contracts](Plans/SimulatorDatasets.md).
+Dispatch using that revision and the common execution contract. Catalog inclusion is
+not installation/capture authority or evidence of data eligibility.
+
+| Packet | Parent | Contract |
+|---|---|---|
+| SIM-DATA-01 | TASK-SIM-DATA-01 | [Independent local runtime](Plans/SimulatorDatasets.md#sim-data-01--independent-local-producer-runtime) |
+| SIM-DATA-02 | TASK-SIM-DATA-01 | [Consumer and dataset contracts](Plans/SimulatorDatasets.md#sim-data-02--simulator-aware-consumer-and-dataset-contracts) |
+| SIM-DATA-03 | TASK-SIM-DATA-01 | [Genuine simulator pilot](Plans/SimulatorDatasets.md#sim-data-03--bounded-genuine-simulator-qualification) |
+| SIM-DATA-04 | TASK-SIM-DATA-01 | [FocusRing dataset freeze](Plans/SimulatorDatasets.md#sim-data-04--scale-and-freeze-focusring-simulator-data) |
+| SIM-DATA-05 | TASK-SIM-DATA-01 | [Detector augmentation corpus](Plans/SimulatorDatasets.md#sim-data-05--tvos-detector-augmentation-corpus) |
+
+## FocusRing simulator delivery — highest dispatch priority
+
+Revision 1: [canonical contracts](Plans/FocusRingSimulator.md). These follow the
+simulator dataset packets; training and TTR operation retain separate authority.
+
+| Packet | Parent | Contract |
+|---|---|---|
+| FR-SIM-BASE | FOCUS-DET-05 | [Shipped baseline and protocol](Plans/FocusRingSimulator.md#fr-sim-base--shipped-model-baseline-and-evaluation-protocol) |
+| FR-SIM-CAND | FOCUS-DET-05 | [One experimental candidate](Plans/FocusRingSimulator.md#fr-sim-cand--one-trained-and-exported-experimental-candidate) |
+| FR-SIM-TTR | FOCUS-DET-05 | [TTR comparison](Plans/FocusRingSimulator.md#fr-sim-ttr--ttr-focus-and-navigation-comparison) |
+
 ## Model and hardware work
 
 | Packet | Parent | Contract |

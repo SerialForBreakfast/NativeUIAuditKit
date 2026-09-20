@@ -35,6 +35,8 @@ def normalize_pair(pair: object) -> dict:
         "theme": pair.get("theme"),
         "class": pair.get("element_type"),
         "hardNegative": pair.get("hardNegative", False),
+        "sourceKind": pair.get("sourceKind"),
+        "validatedUnfocusedEvidence": pair.get("validatedUnfocusedEvidence"),
     }
     if "alignment" in pair:
         result["alignment"] = pair["alignment"]
