@@ -114,6 +114,40 @@ Default harvest *input* is the in-tree fixture cache `dataset/tvos_fixture_captu
 
 `split` is assigned from `recipe_seed` (not from filename) so a focused/unfocused pair cannot straddle train/test.
 
+### ADR-0007 alignment metadata (FR-A / FR-B)
+
+The visual pair contract remains independent from accessibility semantics. A pair may
+omit `alignment` and remain a visual-model example. Every pair deliberately collected
+for VoiceOver/navigation policy evaluation instead includes this additive object, which
+conforms to [`schemas/focus-ring-alignment.v1.json`](schemas/focus-ring-alignment.v1.json):
+
+```json
+"alignment": {
+  "version": "1.0",
+  "source": "fixtureGroundTruth",
+  "interactionMode": "voiceOverExploration",
+  "expectedRelation": "expectedDecoupled",
+  "navigationFocusElementID": "grid-2-1",
+  "voiceOverFocusElementID": "grid-3-1"
+}
+```
+
+`source` is `fixtureGroundTruth` or `trustedLiveMetadata`; captions, model predictions,
+and guessed element IDs are invalid. `notAssessable` uses `interactionMode: "unknown"`,
+no source, and a null VoiceOver target. It abstains rather than reporting a failure.
+FR-B must validate the complete prospective manifest with:
+
+```bash
+.venv-yolo/bin/python scripts/validate_focus_ring_readiness.py \
+  --manifest dataset/focus_ring/focus_dataset_manifest.json \
+  --require-alignment-matrix
+```
+
+That command requires all five [ADR-0007](ADR-0007-VoiceOver-Navigation-Focus-Alignment.md)
+matrix rows: normal directional alignment, VoiceOver exploration, VoiceOver traversal,
+an intentional fixture fault, and missing producer state. It validates capture metadata
+only; it does not train, operate a device, or declare a visual model qualified.
+
 Labels come from, in order:
 
 1. Sidecar `elements[].state.isFocused` or `elements[].isFocused` (Schema v1.0 ground truth)
@@ -169,6 +203,15 @@ python scripts/export_focus_ring_coreml.py \
 ---
 
 ## 7. Swift integration
+
+## VoiceOver/navigation alignment boundary
+
+`FocusRingClassifier` answers only whether a candidate crop has a visible focus
+treatment. It does not infer VoiceOver cursor identity, interaction mode, or whether
+VoiceOver and directional-navigation focus should agree. Those are source-backed policy
+inputs defined by [ADR-0007](ADR-0007-VoiceOver-Navigation-Focus-Alignment.md). Expected
+exploration/traversal decoupling must not become a focus-classifier false positive or an
+accessibility finding.
 
 - `FocusRingClassifier` — crop + `MLModel` predict
 - `NativeUIDetectionConfiguration.useFocusClassifier` — default `true`; heuristic used when the compiled model is missing or the flag is `false`

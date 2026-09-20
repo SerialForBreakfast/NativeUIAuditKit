@@ -18,7 +18,7 @@ import CryptoKit
 // Usage:
 //   swift run NativeUIDatasetGenerator \
 //     --device-udid <UUID> \
-//     --output /path/to/NativeUIAuditKit-Dataset \
+//     --output NativeUITrainer/reconstructed_corpora/<corpus-id> \
 //     [--project /path/to/GeneratorRunner.xcodeproj]
 //
 // Prerequisites:
@@ -34,12 +34,8 @@ import Foundation
 var deviceUDID: String?
 var outputDir: String?
 var projectPath: String = {
-    // Default: look for GeneratorRunner.xcodeproj relative to the package root.
-    let here = URL(fileURLWithPath: #file)
-    let packageRoot = here
-        .deletingLastPathComponent() // Sources/
-        .deletingLastPathComponent() // NativeUIDatasetGenerator/
-        .deletingLastPathComponent() // (package root)
+    // Default: invoke from the package root. `#file` is not stable under SwiftPM.
+    let packageRoot = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
     return packageRoot
         .appending(path: "GeneratorRunner/GeneratorRunner.xcodeproj")
         .path
@@ -71,22 +67,12 @@ guard let udid = deviceUDID, let outDir = outputDir else {
     exit(1)
 }
 
-// Run the pipeline (top-level async context via a DispatchSemaphore).
-let sema = DispatchSemaphore(value: 0)
-var exitCode: Int32 = 0
-
-Task {
-    do {
-        try await runPipeline(deviceUDID: udid, outputDir: outDir, projectPath: projectPath)
-    } catch {
-        fputs("Pipeline failed: \(error)\n", stderr)
-        exitCode = 1
-    }
-    sema.signal()
+do {
+    try runPipeline(deviceUDID: udid, outputDir: outDir, projectPath: projectPath)
+} catch {
+    fputs("Pipeline failed: \(error)\n", stderr)
+    exit(1)
 }
-
-sema.wait()
-exit(exitCode)
 
 // MARK: - Pipeline
 
@@ -94,14 +80,34 @@ exit(exitCode)
 ///
 /// - Parameters:
 ///   - deviceUDID: The simulator device UDID (from `xcrun simctl list devices`).
-///   - outputDir: Destination directory for the dataset (will be created if absent).
+///   - outputDir: New, nonexistent destination directory for the dataset.
 ///   - projectPath: Absolute path to `GeneratorRunner.xcodeproj`.
-func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) async throws {
+func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) throws {
     let fm = FileManager.default
+    let projectURL = URL(fileURLWithPath: projectPath).standardizedFileURL
+    let packageRoot = projectURL
+        .deletingLastPathComponent() // GeneratorRunner/
+        .deletingLastPathComponent() // package root
+    let buildRoot = packageRoot
+        .appending(path: ".build/NativeUIDatasetGenerator", directoryHint: .isDirectory)
+    let derivedDataDir = buildRoot.appending(path: "DerivedData", directoryHint: .isDirectory)
+    let resultBundleID = UUID().uuidString
+    let buildResultBundle = buildRoot.appending(path: "GeneratorRunner-build-\(resultBundleID).xcresult")
+    let testResultBundle = buildRoot.appending(path: "GeneratorRunner-test-\(resultBundleID).xcresult")
+    let destDir = URL(fileURLWithPath: outputDir).standardizedFileURL
+
+    guard !fm.fileExists(atPath: destDir.path) else {
+        throw OrchestratorError.outputDestinationExists(destDir.path)
+    }
+    try fm.createDirectory(at: buildRoot, withIntermediateDirectories: true)
 
     // 1. Boot simulator if needed.
     print("[1/6] Booting simulator \(deviceUDID)…")
-    try shell("xcrun", "simctl", "boot", deviceUDID) // no-op if already booted
+    do {
+        try shell("xcrun", "simctl", "boot", deviceUDID)
+    } catch OrchestratorError.commandFailed(_, let status) where status == 149 {
+        print("  Simulator is already booted.")
+    }
 
     // 2. Build and install.
     print("[2/6] Building and installing GeneratorRunner…")
@@ -111,11 +117,16 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) asy
         "-scheme", "GeneratorRunner",
         "-destination", "platform=iOS Simulator,id=\(deviceUDID)",
         "-configuration", "Debug",
+        "-derivedDataPath", derivedDataDir.path,
+        "-resultBundlePath", buildResultBundle.path,
         "build",
-        "DSTROOT=/tmp/GeneratorRunnerInstall"
+        "CODE_SIGNING_ALLOWED=NO",
+        "CODE_SIGNING_REQUIRED=NO"
     )
-    let derivedDataDir = try derivedDataPath(for: projectPath)
-    let appPath = try findApp(named: "GeneratorRunner.app", in: derivedDataDir)
+
+    let appPath = try findApp(named: "GeneratorRunner.app", in: derivedDataDir.path)
+    // A fresh app container prevents prior manifests or images from contaminating this corpus.
+    _ = try? shell("xcrun", "simctl", "uninstall", deviceUDID, "com.nativeuiauditkit.generatorrunner")
     try shell("xcrun", "simctl", "install", deviceUDID, appPath)
 
     // 3. Apply status bar override (time, battery, signal).
@@ -125,9 +136,10 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) asy
         "--time", "09:41",
         "--batteryLevel", "100",
         "--batteryState", "charging",
-        "--cellularBars", "5",
+        "--cellularBars", "4",
         "--wifiBars", "3"
     )
+    defer { _ = try? shell("xcrun", "simctl", "status_bar", deviceUDID, "clear") }
 
     // 4. Run generation tests.
     print("[4/6] Running GeneratorRunnerTests (this takes several minutes)…")
@@ -137,7 +149,13 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) asy
         "-project", projectPath,
         "-scheme", "GeneratorRunnerTests",
         "-destination", "platform=iOS Simulator,id=\(deviceUDID)",
-        "-configuration", "Debug"
+        "-configuration", "Debug",
+        "-derivedDataPath", derivedDataDir.path,
+        "-resultBundlePath", testResultBundle.path,
+        "-parallel-testing-enabled", "NO",
+        "-maximum-parallel-testing-workers", "1",
+        "CODE_SIGNING_ALLOWED=NO",
+        "CODE_SIGNING_REQUIRED=NO"
     )
 
     // 5. Locate output in simulator container.
@@ -156,12 +174,8 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) asy
 
     // 6. Copy to output directory.
     print("[6/6] Copying dataset to \(outputDir)…")
-    let destDir = URL(fileURLWithPath: outputDir)
     try fm.createDirectory(at: destDir, withIntermediateDirectories: true)
     try copyDataset(from: sourceDatasetDir, to: destDir)
-
-    // Reset status bar.
-    try shell("xcrun", "simctl", "status_bar", deviceUDID, "clear")
 
     // Print summary.
     printSummary(datasetDir: destDir)
@@ -170,7 +184,7 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) asy
 // MARK: - File copy
 
 /// Recursively copies the dataset directory from the simulator container to `destination`.
-/// Overwrites existing files with the same name (atomic write).
+/// Fails rather than overwriting an existing file.
 func copyDataset(from source: URL, to destination: URL) throws {
     let fm = FileManager.default
     let enumerator = fm.enumerator(
@@ -187,8 +201,8 @@ func copyDataset(from source: URL, to destination: URL) throws {
             at: destURL.deletingLastPathComponent(),
             withIntermediateDirectories: true
         )
-        if fm.fileExists(atPath: destURL.path) {
-            try fm.removeItem(at: destURL)
+        guard !fm.fileExists(atPath: destURL.path) else {
+            throw OrchestratorError.outputCollision(destURL.path)
         }
         try fm.copyItem(at: fileURL, to: destURL)
         copied += 1
@@ -279,24 +293,6 @@ func shellOutput(_ args: String...) throws -> String {
     return String(decoding: data, as: UTF8.self)
 }
 
-/// Locates the DerivedData directory for the given project using `xcodebuild -showBuildSettings`.
-func derivedDataPath(for projectPath: String) throws -> String {
-    let output = try shellOutput(
-        "xcodebuild",
-        "-project", projectPath,
-        "-scheme", "GeneratorRunner",
-        "-showBuildSettings"
-    )
-    for line in output.components(separatedBy: "\n") {
-        let trimmed = line.trimmingCharacters(in: .whitespaces)
-        if trimmed.hasPrefix("BUILT_PRODUCTS_DIR") {
-            let parts = trimmed.components(separatedBy: " = ")
-            if parts.count == 2 { return parts[1].trimmingCharacters(in: .whitespaces) }
-        }
-    }
-    throw OrchestratorError.derivedDataNotFound(projectPath)
-}
-
 /// Searches for `appName` in `directory` and returns its path.
 func findApp(named appName: String, in directory: String) throws -> String {
     let fm = FileManager.default
@@ -315,7 +311,8 @@ enum OrchestratorError: Error, CustomStringConvertible {
     case commandFailed([String], Int32)
     case datasetDirectoryNotFound(String)
     case appBundleNotFound(String, String)
-    case derivedDataNotFound(String)
+    case outputDestinationExists(String)
+    case outputCollision(String)
 
     var description: String {
         switch self {
@@ -325,8 +322,10 @@ enum OrchestratorError: Error, CustomStringConvertible {
             return "Dataset directory not found after test run: \(path)"
         case .appBundleNotFound(let name, let dir):
             return "Could not locate \(name) in \(dir)"
-        case .derivedDataNotFound(let project):
-            return "BUILT_PRODUCTS_DIR not found in xcodebuild settings for \(project)"
+        case .outputDestinationExists(let path):
+            return "Refusing to reuse existing output destination: \(path)"
+        case .outputCollision(let path):
+            return "Refusing to overwrite generated output: \(path)"
         }
     }
 }
@@ -342,7 +341,7 @@ func printUsage() {
     USAGE:
       swift run NativeUIDatasetGenerator \\
         --device-udid <UUID> \\
-        --output /path/to/NativeUIAuditKit-Dataset \\
+        --output NativeUITrainer/reconstructed_corpora/<corpus-id> \\
         [--project /path/to/GeneratorRunner.xcodeproj]
 
     OPTIONS:
@@ -358,6 +357,6 @@ func printUsage() {
       # Run on iPhone 17 Pro simulator:
       swift run NativeUIDatasetGenerator \\
         --device-udid AE2A4F09-CCE3-43C4-B96F-4E03CDCB4107 \\
-        --output ~/NativeUIAuditKit-Dataset
+        --output NativeUITrainer/reconstructed_corpora/ios-41class-r1
     """)
 }

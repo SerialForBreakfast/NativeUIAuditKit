@@ -1,17 +1,12 @@
 // HardNegativeValidationTest.swift
 // GeneratorRunnerTests — TASK-5a-9
 //
-// Validates HardNegativeViewController (all 3 types) against the spec:
+// Validates HardNegativeViewController (both active types) against the spec:
 //
 //   Type 1 — Loading overlay:    elements: [] (zero annotations)
-//   Type 2 — WKWebView content:  elements: [webContent] (exactly one, entire WKWebView)
 //   Type 3 — Decorative fill:    elements: [] (zero annotations)
 //
-//   ≥30 images per type (≥90 total) per spec.
-//
-// Note: WKWebView loading is async. captureUIKit's 150ms stabilisation window
-// is usually sufficient for static HTML, but we add a 1s explicit wait for
-// Type 2 captures to ensure the page has rendered.
+//   ≥30 images per active type (≥60 total) per spec.
 
 import XCTest
 import UIKit
@@ -57,16 +52,14 @@ final class HardNegativeValidationTest: XCTestCase {
         let config = makeConfig(seed: seed, type: type, profile: profile,
                                 colorScheme: colorScheme, pixelScale: pixelScale)
         let vc = HardNegativeViewController(type: type, seed: seed, config: config)
-        // For WKWebView (Type 2), add extra wait after captureUIKit's built-in 150ms
-        if type == .webContent {
-            // Present in a window first to trigger WKWebView rendering
-            let result = try await ScreenshotCapture.captureUIKit(vc, config: config)
-            return result
-        }
         return try await ScreenshotCapture.captureUIKit(vc, config: config)
     }
 
     // MARK: - Type 1: Loading overlay → elements: []
+
+    func testOnlyNativeHardNegativeTypesRemainActive() {
+        XCTAssertEqual(HardNegativeType.allCases.map(\.rawValue), [1, 3])
+    }
 
     func testLoadingOverlay_hasNoAnnotations() async throws {
         let result = try await capture(type: .loadingOverlay, seed: 42)
@@ -88,44 +81,6 @@ final class HardNegativeValidationTest: XCTestCase {
             let result = try await capture(type: .loadingOverlay, seed: seed)
             XCTAssertTrue(result.elements.isEmpty, "Seed \(seed): expected no annotations")
             XCTAssertFalse(result.png.isEmpty, "Seed \(seed): empty PNG")
-            count += 1
-        }
-        XCTAssertEqual(count, 30)
-    }
-
-    // MARK: - Type 2: WKWebView → exactly one webContent element
-
-    func testWebContent_hasExactlyOneWebContentAnnotation() async throws {
-        let result = try await capture(type: .webContent, seed: 42)
-
-        XCTAssertEqual(result.elements.count, 1,
-            "WKWebView capture must have exactly 1 annotation, got \(result.elements.count)")
-
-        if let elem = result.elements.first {
-            XCTAssertEqual(elem.elementType, "webContent",
-                "Expected elementType \"webContent\", got \"\(elem.elementType)\"")
-            XCTAssertTrue(elem.knownIssues.isEmpty,
-                "webContent element should have no knownIssues")
-            XCTAssertGreaterThan(elem.frame.width,  0, "webContent: zero width")
-            XCTAssertGreaterThan(elem.frame.height, 0, "webContent: zero height")
-        }
-
-        XCTAssertFalse(result.png.isEmpty, "Empty PNG")
-
-        let attachment = XCTAttachment(data: result.png, uniformTypeIdentifier: "public.png")
-        attachment.name = "hard_negative_webcontent_ios26_seed42.png"
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
-
-    func testWebContent_thirtySeeds() async throws {
-        var count = 0
-        for seed in UInt64(0)..<30 {
-            let result = try await capture(type: .webContent, seed: seed)
-            XCTAssertEqual(result.elements.count, 1, "Seed \(seed): expected 1 webContent element")
-            if let elem = result.elements.first {
-                XCTAssertEqual(elem.elementType, "webContent", "Seed \(seed): wrong elementType")
-            }
             count += 1
         }
         XCTAssertEqual(count, 30)

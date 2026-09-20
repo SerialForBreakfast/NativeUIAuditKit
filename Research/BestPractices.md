@@ -635,7 +635,7 @@ Full images are also included alongside strips (for alert and toggle coverage, w
 
 **Wrong:** Train YOLO11 on the generator's `train/` folder and report mAP on `test/`. Those folders are an 8:1:1 split *within each family* (QG-5). Every layout the model sees at test time was also seen at train time.
 
-**Correct:** Move every image from a chosen set of families into `test/`, regardless of the original split. Train and validate only on the remaining families. Default holdout (Run 007): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Never withhold a family that is the unique source of a rare class (`ColorPicker` / colorWell, `MenuButton` / menuButton, `iPadSidebar` / sidebar, `MapOverlays` / mapView, `HardNegative_2` / webContent).
+**Correct:** Move every image from a chosen set of families into `test/`, regardless of the original split. Train and validate only on the remaining families. Default holdout (Run 007): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Never withhold a family that is the unique source of a rare class (`ColorPicker` / colorWell, `MenuButton` / menuButton, `iPadSidebar` / sidebar, `MapOverlays` / mapView). `HardNegative_2` / WKWebView was retired from P0-C; do not claim `webContent` coverage from it.
 
 **Why:** Phase 6a's gate is mAP on a withheld-template test. Measuring on the generator test split repeats Run 006's in-distribution number and does not answer the gate.
 
@@ -1036,3 +1036,13 @@ or filename claims for missing content hashes.
 historical corpus. Resumable additive chunks allow bounded progress without
 converting an I/O limitation into a false identity claim. Evidence: P0-A label
 identity review, 2026-09-19.
+
+---
+
+### BP-58: Retire nondeterministic renderer-dependent corpus routes
+
+**Wrong:** Keep a `WKWebView` capture route in a deterministic offline corpus after the target simulator repeatedly loses its web process and entitlement checks. A structurally valid PNG/JSON pair cannot prove that the claimed web content rendered.
+
+**Correct:** Remove the failed route from the active capture and validation flow, document any now-uncovered legacy class, and preserve taxonomy/model identifiers unless an explicit compatibility decision changes them. A future replacement requires its own deterministic rendering and architecture approval.
+
+**Why:** Retrying a renderer with unavailable processes wastes capture time and can create semantically false labels. Evidence: P0-C `HardNegative_2` retirement, 2026-09-19.

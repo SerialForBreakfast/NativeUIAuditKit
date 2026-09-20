@@ -42,6 +42,12 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 
 Office-independent work is defined in [ImplementationPlans.md](ImplementationPlans.md); dispatch state lives only in Tasks.md.
 
+**Accepted offline foundation (2026-09-19):** H1 and the NUIAK software scopes of
+P1-A, P2-A, P3-A, P4-A, P4-B, P5-A, and FR-A are accepted. This establishes fail-closed
+consumer, evaluation, assembly, preflight, and FocusRing-alignment interfaces only.
+It does not establish eligible pixels, a genuine producer bundle, live capture behavior,
+or a candidate-model gate; those remain separately blocked in `Tasks.md`.
+
 For the explicit iOS five-class → 41-class path, use the
 [iOS platform tasks](../Tasks.md#ios-platform-tasks) and
 [five-tranche delivery plan](Plans/iOSPlatform.md). Corpus recovery, offline toolchain
@@ -56,7 +62,7 @@ keeps 41-class first, moves badge to a versioned later model, prioritizes FocusR
 after DS-G8, and separates software/data/integration/model outcomes. Publishing these plans
 does not mark any worker implementation, experiment or quality gate complete.
 
-**New independent blocker — TASK-DATA-01 (2026-09-19):** Manifest-based inspection found all 2,000 synthetic test links broken, plus 10,543/11,984 training and 2,696/3,056 validation entries with broken image links; corresponding labels survive. The historical Run 009 mAP50=0.585669 report remains intact, but cannot currently be reproduced from this corpus. Missing files do not establish deletion cause. [Evidence](../reports/dataset_availability_2026-09-19.md); [P0 recovery plan](DatasetRecoveryPlan.md). Baseline inference, frozen-suite acceptance, and full training depend on verified corpus readiness; offline tooling and ingest tests can proceed.
+**New independent blocker — TASK-DATA-01 (2026-09-19):** Manifest-based inspection found all 2,000 synthetic test links broken, plus 10,543/11,984 training and 2,696/3,056 validation entries with broken image links; corresponding labels survive. The historical Run 009 mAP50=0.585669 report remains intact, but cannot currently be reproduced from this corpus. Missing files do not establish deletion cause. The native-only P0-C replacement path retired its failed WKWebView route and passed UIKit validation, but its fresh generator launcher was externally terminated with exit 137 before progress or output; no replacement corpus exists. [Evidence](../reports/dataset_availability_2026-09-19.md); [P0 recovery plan](DatasetRecoveryPlan.md); [P0-C record](../reports/work/P0-C/web-content-blocker.md). Baseline inference, frozen-suite acceptance, and full training depend on verified corpus readiness; offline tooling and ingest tests can proceed.
 
 FocusRing v0.1 is independent of that bottleneck and is already bundled.
 

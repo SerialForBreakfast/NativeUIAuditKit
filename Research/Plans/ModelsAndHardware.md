@@ -36,7 +36,13 @@ Inspect packaged model metadata and FDR-001 history; distinguish actual modelID/
 
 Prepare a recipe manifest meeting gridMatrix ≥2,000, mediaShelf ≥1,500, settingsList ≥1,000, and actionDialog/heroCarousel/focusMaze ≥500 each. Require light and highContrast each ≥20% within gridMatrix and mediaShelf. Hold out ≥100 hard negatives across light/highContrast × imageView/collectionItem with every combination nonempty; report counts and FPR by combination.
 
-**Acceptance:** offline tests for missing pair, wrong crop geometry, split leakage, unlabeled samples, underfilled scene/theme quota and empty hard-negative strata. Recipe and validation reports do not claim collected data. **Next:** FR-B.
+Implement the additive ADR-0007 alignment envelope and a fail-closed manifest validator.
+Its five source-backed matrix rows are normal directional alignment, VoiceOver exploration,
+VoiceOver traversal, intentional fixture fault, and absent producer state. Expected
+exploration/traversal decoupling is a policy-negative control, not a visual-model error.
+Unknown state must remain `notAssessable`; do not reconstruct it from captions or pixels.
+
+**Acceptance:** offline tests for missing pair, wrong crop geometry, split leakage, unlabeled samples, underfilled scene/theme quota, empty hard-negative strata, and every ADR-0007 malformed/missing-matrix case. Recipe and validation reports do not claim collected data. **Next:** FR-B.
 
 ## FR-B — Qualified FocusRing harvest
 

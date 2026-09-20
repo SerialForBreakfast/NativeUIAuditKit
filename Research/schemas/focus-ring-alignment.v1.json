@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nativeuiauditkit.dev/schemas/focus-ring-alignment/1.0",
+  "title": "FocusRing VoiceOver/navigation alignment metadata v1.0",
+  "description": "Source-backed metadata for ADR-0007 policy evaluation. It is not a visual-model label.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "interactionMode", "expectedRelation", "navigationFocusElementID", "voiceOverFocusElementID"],
+  "properties": {
+    "version": {"const": "1.0"},
+    "source": {"enum": ["fixtureGroundTruth", "trustedLiveMetadata"]},
+    "interactionMode": {"enum": ["directionalNavigation", "voiceOverExploration", "voiceOverTraversal", "unknown"]},
+    "expectedRelation": {"enum": ["aligned", "expectedDecoupled", "unexpectedMismatch", "notAssessable"]},
+    "navigationFocusElementID": {"type": ["string", "null"], "minLength": 1},
+    "voiceOverFocusElementID": {"type": ["string", "null"], "minLength": 1}
+  }
+}

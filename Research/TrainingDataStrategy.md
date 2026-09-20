@@ -48,7 +48,7 @@ Use stable semantic role strings, not private UIKit/AppKit class names. `primary
 
 **Containers (9):** `alert`, `actionSheet`, `sheet`, `popover`, `listRow`, `collectionItem`, `disclosureGroup`, `tooltip`, `contextMenu`
 
-**Special (2):** `webContent`, `unknown`
+**Special (2):** `webContent` (legacy compatibility only; no active P0-C source), `unknown`
 
 **Total: 41 classes**
 
@@ -113,7 +113,9 @@ These classes are present in the model for the platform where they are common; t
 | High (controls) | `primaryButton`, `textField`, `toggle`, `listRow`, `label` | 1,500 |
 | Medium | `alert`, `sheet`, `slider`, `segmentedControl`, `searchField`, `picker`, `activityIndicator`, `progressView`, `imageView`, `pageControl` | 800 |
 | Low | `menuButton`, `contextMenu`, `disclosureGroup`, `link`, `refreshControl`, `scrollIndicator` | 500 |
-| Rare | `stepperControl`, `homeIndicator`, `dynamicIsland`, `actionSheet`, `popover`, `collectionItem`, `sidebar`, `secureField`, `webContent`, `colorWell`, `tooltip`, `mapView` | 400 (active oversampling required) |
+| Rare | `stepperControl`, `homeIndicator`, `dynamicIsland`, `actionSheet`, `popover`, `collectionItem`, `sidebar`, `secureField`, `colorWell`, `tooltip`, `mapView` | 400 (active oversampling required) |
+
+`webContent` is excluded from active P0-C coverage requirements. Its taxonomy identifier remains for historical model and sidecar compatibility, but WKWebView generation was retired after unstable renderer behavior made semantic pixel validation unreliable.
 | Absorber | `unknown` | 300 |
 
 **Imbalance ceiling rule:** No class may have more than 5× the instance count of the rarest class in the same training split. Subsample over-represented classes (prefer removing same-template images first, then random sample) if exceeded.

@@ -21,16 +21,16 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
-| 1 | H1 | INTEGRATION-01 | review | Source-pinned contract and handoff are ready for architect review |
-| 2 | P1-A | 6a-11 | review | Offline export software, schema, tests, and handoff are ready for architect review |
-| 3 | P0-A | DATA-01 | review | Concurrent worker supplied [handoff](reports/work/P0/handoff.md); evidence acceptance pending; do not redispatch overlapping edits |
-| 4 | P4-A | INTEGRATION-01 / 6a-10 | review | Offline schema/version, fail-closed bundle validation, normalization, and adversarial contract suite are review-ready |
-| 5 | P5-A | 6a-10 | review | Side-effect-free configuration preflight and negative-data tests are review-ready |
-| 6 | P3-A | 6a-11 | review | Deterministic regression selector and toy-corpus leakage tests are review-ready |
-| 8 | P4-B | 6a-10 | review | Split-safe assembly software and adversarial tests are review-ready |
-| 9 | P2-A | 6a-11 | review | Strict reference-comparison software and compatibility tests are review-ready |
+| 1 | H1 | INTEGRATION-01 | accepted | NUIAK source-pinned offline contract accepted; bilateral producer acceptance and genuine-bundle qualification remain open |
+| 2 | P1-A | 6a-11 | accepted | Offline export software/schema accepted; P1-B still requires eligible pixels and assigned inference |
+| 3 | P0-A | DATA-01 | blocked | Recovery handoff is incomplete: known roots have no originals and remaining label identity work is stalled; requires backup location or separately authorized P0-C |
+| 4 | P4-A | INTEGRATION-01 / 6a-10 | accepted | Offline schema/version, fail-closed validation, normalization, and adversarial contract suite accepted; P4-L remains genuine-bundle blocked |
+| 5 | P5-A | 6a-10 | accepted | Side-effect-free configuration preflight and negative-data tests accepted; P5-B still requires eligible corpora |
+| 6 | P3-A | 6a-11 | accepted | Deterministic regression selector and toy-corpus leakage checks accepted; P3-B still requires eligible corpus/predictions |
+| 8 | P4-B | 6a-10 | accepted | Split-safe assembly software and adversarial tests accepted; actual assembly remains data-gated |
+| 9 | P2-A | 6a-11 | accepted | Strict reference-comparison software and compatibility checks accepted; P2-B remains corpus/prediction-gated |
 | — | P0-B | DATA-01 | blocked | P0-A recovery evidence and exact authorized staged-copy plan |
-| — | P0-C | DATA-01 | blocked | P0-A originals unrecoverable; reviewed versioned reconstruction configuration |
+| — | P0-C | DATA-01 | in progress | WKWebView/`HardNegative_2` route retired and native validation passed. After maintainer freed substantial disk headroom, fresh isolated native-only replacement capture is authorized for retry; `webContent` remains explicitly uncovered |
 | — | P1-B | 6a-11 | blocked | P1-A and eligible original/replacement test pixels |
 | — | P2-B | 6a-11 | blocked | P2-A and accepted P1-B artifacts |
 | — | P3-B | 6a-11 | blocked | P3-A, eligible corpus, compatible P1/P2 software |
@@ -39,7 +39,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | TRAIN-S | 6a-10 | blocked | P5-B and explicit bounded smoke assignment |
 | — | TRAIN-F | 6a-10 | blocked | Accepted smoke and full-run assignment |
 | — | TRAIN-Q | 6a-10 | blocked | Candidate plus eligible dual holdouts |
-| — | FR-A | FOCUS-DET-05 | review | Offline quota/pair/split validator and metadata reconciliation are review-ready |
+| — | FR-A | FOCUS-DET-05 | accepted | Offline quota/pair/split and ADR-0007 alignment validator accepted; FR-B remains capture-gated |
 | — | FR-B | FOCUS-DET-05 | blocked | FR-A and authorized available Office capture |
 | — | FR-C | FOCUS-DET-05 | blocked | Eligible quota-complete corpus and run/export assignment |
 | — | R-A | 6b-R-1 | review | Offline matrix/inventory validator distinguishes unique screenshots and genuine labeled examples |
@@ -63,12 +63,12 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | REL-B | DIST-02 | maintainer-gated | Accepted release evidence and exact promotion/tag authority |
 | — | HIST-A | DIST-01 | review | Read-only remediation assessment is ready; missing Git object requires maintainer recovery decision |
 
-Status alignment (2026-09-19): H1, P0-A, P1-A, P2-A, P3-A, P4-A, P4-B, P5-A, and FR-A
-are review-ready, not architect-accepted. See
-[alignment evidence](reports/coordination/alignment-2026-09-19.md). TVTestRig reports a
-new non-attested default harvest contract; NUA's older attestation prerequisites below
-are disputed pending source/contract reconciliation, not confirmed current producer
-blockers. No eligibility policy is changed by this status update.
+Architect acceptance (2026-09-19): H1 and the offline NUIAK software packets P1-A, P2-A,
+P3-A, P4-A, P4-B, P5-A, and FR-A are accepted for their documented software-only scopes.
+P0-A is blocked/incomplete, not accepted. See the [architect review evidence](reports/work/ARCHITECT-REVIEW-2026-09-19.md).
+TVTestRig reports a non-attested default harvest contract; bilateral producer acceptance,
+genuine-bundle validation, capture provenance, data eligibility, and model gates remain
+independent and open. No eligibility policy is changed by this acceptance update.
 
 No new owners are assigned by this planning update. A concurrent P0-A handoff arrived during
 the documentation pass; its evidence awaits review and the assessment script was not edited
@@ -120,7 +120,7 @@ Cause is unknown. Preserve existing manifests, labels, links, and historical met
 - [!] P0-A: bounded recovery review found 0/15,239 expected originals at five documented roots; per-label identity evidence is partially verified (11,415/17,040) but local filesystem stalls prevent completion. See [`P0-A handoff`](reports/work/P0-A/handoff.md); do not dispatch P0-B/P0-C without the listed authority.
 - [ ] Architect reviews exact recovery plan or replacement-corpus proposal
 - [ ] P0-B (separate assignment): stage and verify recoverable pixels/annotations without overwriting historical artifacts
-- [ ] P0-C (fallback): versioned reconstruction with new annotations/baseline if originals cannot be recovered
+- [ ] P0-C (fallback): versioned reconstruction with new annotations/baseline if originals cannot be recovered; family-level splitting is complete and the failed `HardNegative_2` WKWebView route is retired ([record](reports/work/P0-C/web-content-blocker.md)). Native validation passed; the prior launcher exit 137 happened under 98% disk usage, and the maintainer has now cleared headroom for one fresh retry. The eventual corpus must report legacy `webContent` coverage as zero.
 - [ ] Record independent test-corpus and training-corpus readiness; uncertain/regenerated identity uses a new corpus version
 - [ ] Establish content manifest, retention ownership, and recovery verification before expensive evaluation/training
 
@@ -201,6 +201,7 @@ v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingD
 - [ ] Mix: `gridMatrix` ≥ 2,000, `mediaShelf` ≥ 1,500, `settingsList` ≥ 1,000, `actionDialog` / `heroCarousel` / `focusMaze` ≥ 500 each
 - [ ] ≥ 20% `light` and ≥ 20% `highContrast` in `gridMatrix` + `mediaShelf`
 - [ ] Held-out hard-negative n ≥100 across `light`/`highContrast` × `imageView`/`collectionItem`; every combination nonempty with separate counts/results
+- [ ] Add the ADR-0007 source-backed VoiceOver/navigation alignment matrix before capture; expected exploration/traversal decoupling is not an accessibility failure
 - [ ] All six quality gates, including **non-vacuous** hard-neg FPR ≤ 0.5%
 - [ ] Replace bundled `.mlmodelc` only after those gates pass
 

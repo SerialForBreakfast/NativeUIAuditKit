@@ -14,6 +14,7 @@
 - [`../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)  
 - [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)  
 - [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) — Apple Silicon training iteration efficiency ADR
+- [`ADR-0007-VoiceOver-Navigation-Focus-Alignment.md`](ADR-0007-VoiceOver-Navigation-Focus-Alignment.md) — keeps visual focus detection separate from metadata-backed accessibility alignment policy
 - [`FocusRingDetectorSpec.md`](FocusRingDetectorSpec.md) — Stage 2 tvOS focus classifier (MobileNetV4 crop model, independent of YOLO; v0.1 `.mlmodelc` shipped 2026-09-18)
 
 ---
@@ -45,7 +46,7 @@ Apple's Vision framework exposes pixel-level operations — text recognition, re
 **Why Apple is unlikely to ship a public equivalent:**
 
 1. **Rendering is private and variable.** System controls render differently across OS versions, Liquid Glass material eras, accessibility settings, device form factors, and light/dark mode. No single pixel model can claim to be authoritative across all of these.
-2. **Same semantic control, different hierarchy.** A "button" can be `UIButton`, a SwiftUI `Button`, a custom `UIView` with a tap recognizer, or a `WKWebView` element — all rendering nearly identically.
+2. **Same semantic control, different hierarchy.** A "button" can be `UIButton`, a SwiftUI `Button`, or a custom `UIView` with a tap recognizer — all rendering nearly identically.
 3. **Security and fingerprinting concerns.** An API that returns app structure from pixels at scale, without explicit user intent, creates fingerprinting surface that Apple's platform policy avoids.
 
 **Implication for NativeUIAuditKit:** Treat `VNRecognizeUIElementRequest` as a product concept — a composed pipeline of Vision, CoreML, OCR, and optional hierarchy metadata — not a single framework call. This package is that pipeline.
@@ -240,7 +241,7 @@ The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit cla
 | `tooltip` | `"tooltip"` | Pointer-hover tooltip (iPadOS / macOS) | iPadOS, macOS |
 | `contextMenu` | `"contextMenu"` | UIContextMenuInteraction preview + action list | iOS, iPadOS, macOS |
 | **Special** | | | |
-| `webContent` | `"webContent"` | WKWebView with native-like controls | All |
+| `webContent` | `"webContent"` | Legacy reserved compatibility category; not actively generated for P0-C | All |
 | `unknown` | `"unknown"` | Element that looks native but cannot be confidently classed | All |
 
 ### 5.3 Secondary Labels (Post-Processing, Not Detector Classes)
@@ -323,7 +324,7 @@ NativeUIAuditKit-Dataset/        (lives outside the package repo — gitignored 
     issue_distribution.json
 ```
 
-The `generated_sources/` directory is committed alongside the package. The `images/` and `annotations/` directories are generated artifacts — store them in a separate artifact repository or local disk, not in git.
+The `generated_sources/` directory is committed alongside the package. The `images/` and `annotations/` directories are generated artifacts — store them in a separate artifact repository or local disk, not in git. For P0-C recovery, a newly regenerated, self-contained corpus may be staged under the gitignored `NativeUITrainer/reconstructed_corpora/` tree. It is a new corpus with new paired annotations, never a replacement for unavailable historical pixels or an attempt to reuse their labels.
 
 ### 6.3 Annotation Schema
 
@@ -534,7 +535,7 @@ UI screenshots are not natural images. Standard computer vision augmentation pip
 
 Hard negatives train the model to avoid false positives on visually similar but semantically different content:
 
-- **WKWebView with native-looking controls:** label as `webContent`, not `primaryButton`
+- **Retired route:** do not use WKWebView as a generator hard-negative. It introduced renderer instability without contributing to the native-control auditing goal. `webContent` remains a compatibility identifier only; a P0-C corpus records it as uncovered rather than fabricating samples.
 - **SF Symbol-only buttons:** pixel-ambiguous (could be any label); pair hierarchy labels with pixel ambiguity to teach the model uncertainty
 - **Solid-color full-screen backgrounds:** no elements — prevents false positive button detections on gradients
 - **Large decorative images:** prevent `collectionItem` false positives on image-heavy screens
@@ -645,7 +646,7 @@ Same formula as `CreateMLExporter` (BP-10). Source field: `boundsVisionNormalize
 
 **Holdout outcome (Run 008, 2026-09-04):** in-family val mAP@0.5 = 0.977; withheld-template **test** mAP@0.5 = **0.491** (DS-G8 fail; Run 007 was 0.358). TASK-6a-8 regen helped (+0.133 mAP) but did not recover the gate. Do not copy 41-class weights into `NativeUIAuditKitModels` until DS-G8.
 
-Default withheld families (not unique sources of rare classes): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, `OnboardingPage`. Do **not** withhold `ColorPicker`, `MenuButton`, `iPadSidebar`, `MapOverlays`, or `HardNegative_2`.
+Default withheld families (not unique sources of rare classes): `CardDetail`, `WizardStepFlow`, `NotificationCenter`, `GalleryPage`, `MultiSectionForm`, `SettingsToggleDense`, `EmptyState`, and `OnboardingPage`. Do **not** withhold `ColorPicker`, `MenuButton`, `iPadSidebar`, or `MapOverlays`. `HardNegative_2`/WKWebView is retired and must not be counted as a `webContent` source for new corpora.
 
 Scripts: `scripts/export_coco.py`, `scripts/compute_class_weights.py`, `scripts/ohem_callback.py`, `scripts/train_ios_model.py`.
 

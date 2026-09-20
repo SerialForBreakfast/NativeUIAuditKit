@@ -25,6 +25,7 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 | [`BestPractices.md`](BestPractices.md) | Mistakes already made (BP-01–BP-47) |
 | [`ExperimentLog.md`](ExperimentLog.md) | Every training run |
 | [`FocusRingDetectorSpec.md`](FocusRingDetectorSpec.md) | Stage 2 tvOS crop classifier |
+| [`schemas/focus-ring-alignment.v1.json`](schemas/focus-ring-alignment.v1.json) | ADR-0007 source-backed VoiceOver/navigation alignment envelope |
 | [`FixtureBatchIngest.md`](FixtureBatchIngest.md) | TVTestRig batch sidecar format + IPC |
 | [`tvOSTrainingStrategy.md`](tvOSTrainingStrategy.md) | Why tvOS is a separate model |
 | [`TrainingDataStrategy.md`](TrainingDataStrategy.md) | Dataset design and bias prevention |
@@ -34,4 +35,5 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 | [`LicensingArchitecture.md`](LicensingArchitecture.md) | MIT code vs AGPL YOLO weights vs FocusRing |
 | [`Phase6LessonsLearned.md`](Phase6LessonsLearned.md) | Create ML / Vision eval pitfalls |
 | [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) | Apple Silicon training ADR |
+| [`ADR-0007-VoiceOver-Navigation-Focus-Alignment.md`](ADR-0007-VoiceOver-Navigation-Focus-Alignment.md) | Visual focus detection versus metadata-backed VoiceOver/navigation alignment |
 | [`References.md`](References.md) | External Apple / prior-art links |

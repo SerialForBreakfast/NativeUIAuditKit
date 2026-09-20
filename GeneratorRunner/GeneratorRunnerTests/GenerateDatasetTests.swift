@@ -18,7 +18,7 @@
 //   test/img_NNNNNN.json
 //   manifest.json
 //
-// Split ratios: 80% train / 10% validation / 10% test (by imageIndex % 10).
+// Splits are assigned by complete template family. No family may cross a split.
 //
 // Concurrency: All capture work runs on @MainActor (UIKit requirement).
 // The test methods are async and hop to @MainActor via ScreenshotCapture.
@@ -44,6 +44,33 @@ import UIKit
 /// the main thread. `async throws` test methods yield to the run loop between captures.
 @MainActor
 final class GenerateDatasetTests: XCTestCase {
+
+    /// Frozen P0-C family-level evaluation allocation. New template families must be
+    /// deliberately added to `allTemplateFamilies` rather than silently inheriting an
+    /// image-index split.
+    private static let testFamilies: Set<String> = [
+        "CardDetail", "WizardStepFlow", "NotificationCenter", "GalleryPage",
+        "MultiSectionForm", "SettingsToggleDense", "EmptyState", "OnboardingPage",
+    ]
+
+    private static let validationFamilies: Set<String> = [
+        "TabViewNavigation", "SearchResults", "PickerDateEntry", "SettingsDisclosure",
+    ]
+
+    private static let allTemplateFamilies: Set<String> = [
+        "LoginForm", "KitchenSink", "SettingsList", "Alert", "TabViewNavigation", "Sheet",
+        "SearchResults", "FormValidation", "EmptyState", "LoadingSkeleton", "MediaCardGrid",
+        "OnboardingPage", "PickerDateEntry", "ActionSheet", "Popover", "RTLMirror",
+        "LiquidGlassNav", "LiquidGlassTab", "SettingsDisclosure", "RefreshControl",
+        "ContextMenu", "MapOverlays", "Stepper", "ProgressActivity", "ColorPicker",
+        "MenuButton", "LinkRichText", "SliderPanel", "SegmentedFilter", "CardDetail",
+        "MultiSectionForm", "ToolbarActions", "WizardStepFlow", "NotificationCenter",
+        "GalleryPage", "iPadSidebar", "AlertWithTextField", "SettingsToggleDense",
+        "AccountProfileForm", "ChromeCoverage", "UIKitForm", "UIKitList", "UIKitControls",
+        "UIKitToggleForm", "TruncatedLabel", "ClippedContent", "OverlappingControls",
+        "SmallHitTarget", "DynamicTypeOverflow", "RTLMirroringFailure", "OffScreenElement",
+        "OccludedElement", "HardNegative_1", "HardNegative_3",
+    ]
 
     // MARK: - Fixtures
 
@@ -170,7 +197,7 @@ final class GenerateDatasetTests: XCTestCase {
             let result = try await capture(templateFamily: templateFamily, seed: seed, config: config, corpus: &corpus)
 
             let imageIndex = manifest.imageCount + 1
-            let split = splitFor(imageIndex: imageIndex)
+            let split = splitFor(templateFamily: templateFamily)
             let baseName = String(format: "img_%06d", imageIndex)
             let pngName  = baseName + ".png"
             let jsonName = baseName + ".json"
@@ -405,7 +432,7 @@ final class GenerateDatasetTests: XCTestCase {
             let result = try await captureUIKit(templateFamily: templateFamily, seed: seed, config: config)
 
             let imageIndex = manifest.imageCount + 1
-            let split = splitFor(imageIndex: imageIndex)
+            let split = splitFor(templateFamily: templateFamily)
             let baseName = String(format: "img_%06d", imageIndex)
             let pngName  = baseName + ".png"
             let jsonName = baseName + ".json"
@@ -867,19 +894,7 @@ final class GenerateDatasetTests: XCTestCase {
     /// elements: [] — model should produce no detections.
     func testGenerateHardNegativeLoadingImages() async throws {
         try await generateKnownBadImages(
-            templateFamily: "HardNegative_1", count: 40, startSeed: 7801,
-            hardNegativeSplit: true
-        )
-    }
-
-    /// Generates 40 WKWebView hard-negative images (seeds 7901–7940).
-    /// elements: [webContent] — exactly one webContent annotation.
-    func testGenerateHardNegativeWebContentImages() async throws {
-        // Seeds 7901–7940 (40 images) were generated in the initial Phase 5a run.
-        // TASK-5b-23: generate 360 more (seeds 7941–8300) to reach the 400-instance floor.
-        try await generateKnownBadImages(
-            templateFamily: "HardNegative_2", count: 360, startSeed: 7941,
-            hardNegativeSplit: true
+            templateFamily: "HardNegative_1", count: 40, startSeed: 7801
         )
     }
 
@@ -887,8 +902,7 @@ final class GenerateDatasetTests: XCTestCase {
     /// elements: [] — model should produce no detections.
     func testGenerateHardNegativeDecorativeImages() async throws {
         try await generateKnownBadImages(
-            templateFamily: "HardNegative_3", count: 40, startSeed: 8001,
-            hardNegativeSplit: true
+            templateFamily: "HardNegative_3", count: 40, startSeed: 8001
         )
     }
 
@@ -903,15 +917,13 @@ final class GenerateDatasetTests: XCTestCase {
     ///   - dynamicTypeOverride: If non-nil, use this DT size instead of the standard cycle.
     ///   - layoutDirection: If non-nil, force this layout direction.
     ///   - locale: Locale override (defaults to "en_US").
-    ///   - hardNegativeSplit: If true, use 70% train / 30% validation split (no test split).
     private func generateKnownBadImages(
         templateFamily: String,
         count: Int,
         startSeed: UInt64,
         dynamicTypeOverride: GeneratorDynamicTypeSize? = nil,
         layoutDirection: GeneratorLayoutDirection = .ltr,
-        locale: String = "en_US",
-        hardNegativeSplit: Bool = false
+        locale: String = "en_US"
     ) async throws {
         let manifestURL = datasetDir.appending(path: "manifest.json")
         var manifest = try DatasetManifest.load(from: manifestURL)
@@ -931,9 +943,7 @@ final class GenerateDatasetTests: XCTestCase {
             )
 
             let imageIndex = manifest.imageCount + 1
-            let split = hardNegativeSplit
-                ? hardNegativeSplitFor(imageIndex: imageIndex)
-                : splitFor(imageIndex: imageIndex)
+            let split = splitFor(templateFamily: templateFamily)
             let baseName = String(format: "img_%06d", imageIndex)
             let pngName  = baseName + ".png"
             let jsonName = baseName + ".json"
@@ -1001,12 +1011,6 @@ final class GenerateDatasetTests: XCTestCase {
         case "HardNegative_1":
             let vc = HardNegativeViewController(type: .loadingOverlay, seed: seed, config: config)
             return try await ScreenshotCapture.captureUIKit(vc, config: config)
-        case "HardNegative_2":
-            // WKWebView needs extra stabilisation time beyond the standard 150ms.
-            // Sleep an additional 500ms before capture to allow HTML to render.
-            try await Task.sleep(for: .milliseconds(500))
-            let vc = HardNegativeViewController(type: .webContent, seed: seed, config: config)
-            return try await ScreenshotCapture.captureUIKit(vc, config: config)
         case "HardNegative_3":
             let vc = HardNegativeViewController(type: .decorativeFill, seed: seed, config: config)
             return try await ScreenshotCapture.captureUIKit(vc, config: config)
@@ -1045,22 +1049,35 @@ final class GenerateDatasetTests: XCTestCase {
         )
     }
 
-    /// Hard-negative split: 70% train, 30% validation (no test split).
-    /// Per spec: "Hard negatives are distributed evenly: 30% in validation, 70% in train."
-    private func hardNegativeSplitFor(imageIndex: Int) -> DatasetSplit {
-        // Roughly 3 in 10 go to validation
-        return (imageIndex % 10) < 3 ? .validation : .train
-    }
-
     // MARK: - Helpers
 
-    /// Assigns a `DatasetSplit` based on a 10-bucket rotation: 80% train, 10% validation, 10% test.
-    private func splitFor(imageIndex: Int) -> DatasetSplit {
-        switch imageIndex % 10 {
-        case 0:         return .test
-        case 9:         return .validation
-        default:        return .train
+    /// Assigns one split to each complete template family, including its variants.
+    private func splitFor(templateFamily: String) -> DatasetSplit {
+        precondition(Self.allTemplateFamilies.contains(templateFamily),
+                     "New template family must be explicitly assigned before corpus generation: \(templateFamily)")
+        if Self.testFamilies.contains(templateFamily) { return .test }
+        if Self.validationFamilies.contains(templateFamily) { return .validation }
+        return .train
+    }
+
+    func testFamilySplitPolicyIsDisjointAndComplete() {
+        XCTAssertTrue(Self.testFamilies.isDisjoint(with: Self.validationFamilies))
+        XCTAssertTrue(Self.testFamilies.isSubset(of: Self.allTemplateFamilies))
+        XCTAssertTrue(Self.validationFamilies.isSubset(of: Self.allTemplateFamilies))
+
+        for family in Self.allTemplateFamilies {
+            let memberships = [
+                Self.testFamilies.contains(family),
+                Self.validationFamilies.contains(family),
+                !(Self.testFamilies.contains(family) || Self.validationFamilies.contains(family)),
+            ].filter { $0 }.count
+            XCTAssertEqual(memberships, 1, "\(family) must have exactly one split")
         }
+
+        XCTAssertEqual(splitFor(templateFamily: "CardDetail"), .test)
+        XCTAssertEqual(splitFor(templateFamily: "TabViewNavigation"), .validation)
+        XCTAssertEqual(splitFor(templateFamily: "HardNegative_1"), .train)
+        XCTAssertEqual(splitFor(templateFamily: "HardNegative_3"), .train)
     }
 
     /// Cycles through 6 `GeneratorDynamicTypeSize` values based on the image index.
