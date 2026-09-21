@@ -1,10 +1,8 @@
-# TVTestRig coordination draft — unpublished
+# TVTestRig coordination — published
 
-`publication: unpublished` — verified `/Volumes/SharedStatusFile` was unavailable
-on 2026-09-20; no local mount lookalike was created.
-
-Use `scripts/mount_shared_status.sh` to invoke the native macOS SMB connection flow
-and verify the real mount before publishing this request.
+`publication: published` — `SIM-DATA-01` was updated and read back at
+`/Volumes/SharedStatusFile/nuiak/status.yaml` on 2026-09-21T04:43:20Z. This confirms
+storage publication only; no peer has acknowledged this revised observation.
 
 ## Consumer observation
 
@@ -32,3 +30,16 @@ a stale connected-session snapshot and the fixture HTTP endpoints: Office report
 produce no qualified capture evidence. No device input, capture lease, batch command, output,
 or cleanup action was started. Reopen/restore the TVTestRig coordinator while preserving Office
 and fixture state, then rerun the named read-only preflight before capture.
+
+## Corrected simulator readiness observation, 2026-09-21
+
+The later TVTestRig readiness report changes the immediate stop condition: its coordinator
+is ready and the Fixture reports telemetry ready on port 8080, but
+`SimulatorDiagnosticCompanion` cannot connect because a development-team signing identity
+is unavailable. Consequently storage, Xcode, runner, CoreSimulator, runtime, selected-target,
+and fixture-diagnostic checks were **not checked** in that run. This does not prove or repair
+the prior host CoreSimulator control-plane finding.
+
+Resume condition: configure the companion signing identity, rebuild and reopen TVTestRig, then
+run its read-only readiness gate. The user-paused simulator policy remains in force; a passing
+readiness gate neither authorizes capture nor training.
