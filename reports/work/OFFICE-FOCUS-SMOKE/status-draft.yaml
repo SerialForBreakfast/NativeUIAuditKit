@@ -1,0 +1,51 @@
+schema_version: 1
+packets:
+  OFFICE-FOCUS-SMOKE:
+    owner: "NUIAK architect; execution requested from Sillycon TVTestRig agent"
+    updated_at: "2026-09-20T23:37:13Z"
+    valid_until: "2026-09-21T00:07:13Z"
+    state: blocked
+    summary: "User authorizes one bounded physical Office fixture smoke; producer acknowledgment and fresh preflight pending. Simulator execution remains paused."
+    blockers: ["Awaiting TTR acceptance and verified Office control/capture readiness; pairing alone is insufficient."]
+    pending_requests:
+      - id: "nuiak-20260920T233713Z-office-focus-smoke"
+        to: tvtestrig
+        state: awaiting_acknowledgment
+        created_at: "2026-09-20T23:37:13Z"
+        request: |
+          Sillycon TVTestRig agent: accept and own one bounded Office fixture smoke in your
+          local queue, under your repository instructions. The user explicitly authorized
+          this request after reporting Office free, TTR running/paired and Fixture available.
+          This supersedes nuiak-20260919T204628Z-office-release ONLY for this single smoke;
+          it does not revive any broader harvest request. Simulators remain blocked.
+          Before mutation verify actual Office target, fresh availability, connected control
+          and capture readiness, matching app/helper, and the physical Fixture HTTP endpoint.
+          Resolve the previously reported coordinator serviceUnavailable condition by checks,
+          not by assuming the connected session snapshot proves readiness. Do not repair,
+          restart, install, or take over sessions automatically.
+          Use Scripts/fixture-recipes/live-smoke/action-dialog.json: action_dialog,
+          element_count 2, high_contrast, regular density, seed 7, step_index 0.
+          Capture exactly one completed bundle in a unique new TTR-project-local directory.
+          Bound the whole operation to 10 minutes from preflight start; arrange owned
+          cancellation/cleanup at timeout, retaining evidence if cleanup cannot be confirmed.
+          No automatic retry, broader capture, Home/Settings crawl, training or promotion.
+          Validate every member and completion receipt, check Fixture responsiveness after
+          cleanup, and release only resources acquired for this operation. Do not manually
+          publish partial output. Stop with actionable evidence on any failed preflight.
+          Return task/owner, actual producer/app/helper/fixture builds, recipe hash, bundle
+          path, receipt/index hashes, expected/captured/rejected counts, validation and
+          postflight results. Preserve original bundle and partial/failed trials.
+          Default transfer is separately confirmed maintainer-mediated copy into NUIAK's
+          gitignored dataset/tvos_captures/office/ tree. No images on this status share,
+          no SSH, no remote shell, no Sillycon service changes or model replacement.
+          Acknowledge this exact ID separately and report progress/results in TTR-owned
+          status. Receipt is not proof of capture or training eligibility. If the request
+          is stale or Office has been reclaimed, re-confirm availability/authority first.
+    acknowledgments: []
+    evidence: ["Research/Plans/OfficeFocusRing.md"]
+    next: "TTR acknowledges ownership and runs fresh preflight; NUIAK awaits a completed bundle and confirmed transfer."
+    outcomes:
+      software_verified: not_assessed
+      data_eligible: not_assessed
+      integration_qualified: not_assessed
+      model_gate_passed: not_assessed

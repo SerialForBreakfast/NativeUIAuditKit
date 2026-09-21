@@ -1,84 +1,58 @@
 ---
 name: tvos-fixture-training
-description: >-
-  Use this skill when capturing tvOS training data, benchmarking detectors on Apple TV
-  hardware, sweeping TVTestRigFixture tabs, or generating synthetic UI layouts with ground truth.
+description: Capture and validate fixture-ground-truth tvOS training data for NativeUIAuditKit, including paired FocusRing crops and synthetic layouts. Requires separately authorized target and capture scope.
 ---
 
-# tvOS Fixture Training & Synthetic Harvester Protocol
+# NUIAK fixture training supplement
 
-This skill governs training data collection and evaluation inside `TVTestRigFixture` (`com.showblender.TVTestRigFixture`) on physical Apple TV hardware and tvOS simulators.
+Read [TVTestRig operation](../tvtestrig/SKILL.md) and
+[interface contracts](../tvtestrig/references/interfaces.md) first. Use this supplement
+for NUIAK data constraints, not as an alternative device protocol. Current user
+restrictions—including a simulator pause—override availability of a command.
 
----
+## Before capture
 
-## Why the Fixture is Preferred for Training
+- Verify the actual running local app and its matching helper before assuming a remote
+  host is required. CLI mode may use the same app executable; inspect the installed
+  entrypoint. Never mix binaries or retarget/restart an occupied GUI automatically.
+- Bind the exact authorized device and Fixture endpoint from fresh evidence. Discovery,
+  pairing, connected control, active capture and settled focus are different claims.
+- Inspect controller/capture ownership; acquire only required resources and release only
+  resources this task owns. Shared status is coordination, not a lock or remote executor.
+- Use the existing fixture batch path for a bounded recipe smoke. Historical multi-tab
+  scripts are not substitutes. Pin recipe/source/build identities and expected targets.
+- Keep outputs in approved NUIAK paths unless the user explicitly authorizes another
+  runtime/output location. No screenshots, labels or weights on the status share.
+- Physical rendering can supply real Apple TV focus effects. Simulator pixels do not
+  qualify device shaders/parallax, performance or physical navigation.
 
-1. **Zero System Risk:** The fixture is completely sandboxed. Buttons like `Reset All` only reset in-memory test cards—they cannot reboot hardware, wipe accounts, or disrupt video signals.
-2. **Authentic Metal Shaders:** Employs real Apple TV GPU shaders, parallax tilt, specular highlights, and drop shadows that simulators cannot replicate.
-3. **Multi-Class Component Showcase:** Contains native reference implementations across pickers, sliders, toggles, text fields, rating bars, and segmented controls.
-4. **Seeded Defect Matrix:** Directly provides labeled ground-truth for accessibility auditing (HIG Compliant vs Missing Label vs Wrong Traits).
+## Paired focus capture and labels
 
----
+1. Capture a resting baseline, then one focused state per supported interactive element.
+2. Verify producer-reported settled focus and matching scene/frame evidence. A 150ms
+   delay or visually stable image alone does not prove correct focus.
+3. Preserve each frame's actual boxes, including focused scaling and clipping. Extract
+   FocusRing crops with 16% expansion and 256×256 geometry; retain raw-byte lineage.
+4. Accept labels only from fixture ground truth. Prediction files such as
+   `_result.json` are diagnostics, not annotations or authoritative class counts.
+5. Validate sidecars against their declared supported schema version, not an assumed
+   universal v1.0. Unknown labels remain excluded, not guessed from missing rings.
+6. Visual focus and semantic VoiceOver/navigation alignment are separate. Do not require
+   or fabricate alignment metadata for visual-only examples; validate it when present.
 
-## Fixture Tab Navigation Map
+## Validation and cleanup
 
-The top navigation rail contains 5 distinct tabs:
+Validate complete receipt/index, paths, all hashes, decodable images, annotations,
+split membership and expected/captured/rejected counts. Reject partial publication,
+unknown versions, conflicting telemetry and altered bytes without repairing evidence.
+Integrity alone does not authenticate source or approve training.
 
-| Tab Index | Name | Primary UI Surfaces & Components |
-|:---:|---|---|
-| **0** | **Audit** | Seeded Defect Injection Matrix, Ground Truth Audit Oracle, Interactive Probe (`ACTIVATE`), Nested Sub-Deck trigger. |
-| **1** | **Detection** | Object detection benchmark cards and structured layout cards. |
-| **2** | **Navigation** | Directional navigation grids, focus guides, focus trap diagnostics. |
-| **3** | **Accessibility** | Binary toggle switches (`Wi-Fi`, `Closed Captions`, `Reduce Motion`, `Diagnostics`), Sliders (`Volume`, `Playback Position`), Stepper/Rating bars. |
-| **4** | **Component Showcase** | 3-row segmented pickers (`Featured/Recent/Saved`, `Leading/Center/Trailing`, `Auto/HD/4K`), `Username` text field, `Search components` bar. |
+Keep paired/related recipe seeds and duplicate content in one partition; multiple
+distinct element pairs from one seed within a split are valid. Freeze final evaluation
+groups independently of development failures. Coverage uses ground-truth counts and
+actual scene totals; hard negatives require verified unfocused evidence.
 
----
-
-## The $N$-Way Focus Sweep Protocol
-
-On Apple TV, focused controls scale by 10–15%, cast intense radial drop shadows, and emit bloom glow. A robust detector must learn both the resting state and the focused distortion for every control.
-
-### Procedure for Any Fixture View:
-1. **Frame 0 (Resting Baseline):**  
-   Move focus to an invisible anchor or non-interactive element. Capture all $N$ controls at rest.
-2. **Frames $1 \dots N$ (Individual Focus Passes):**  
-   Step focus to element $i$:
-   - Settle 150ms for Metal glow shaders to finish.
-   - Capture frame and pair with Schema v1.0 JSON sidecar where element $i$ has `isFocused: true` and all other elements have `isFocused: false`.
-
----
-
-## Running the Automated Fixture Sweep
-
-To execute a complete 15-frame multi-tab sweep across all controls:
-
-```bash
-# From package root:
-.venv-yolo/bin/python scratch/sweep_fixture_tabs.py
-```
-
-### Verification Steps:
-1. Confirm all 15 frames are saved in `dataset/tvos_fixture_captures/`.
-2. Verify each PNG has a matching `.json` sidecar and `_result.json` YOLO detection file.
-3. Inspect class distribution to ensure balanced instance counts:
-   ```bash
-   python3 -c '
-   import glob, json
-   from collections import Counter
-   counts = Counter()
-   for f in glob.glob("dataset/tvos_fixture_captures/*_result.json"):
-       for d in json.load(open(f)): counts[d["type"]] += 1
-   for k, v in counts.most_common(): print(f"  {k:20s}: {v}")
-   '
-   ```
-
----
-
-## What Works vs What Doesn't
-
-| What Works | What Fails (Do Not Repeat) |
-|---|---|
-| Sweeping within `TVTestRigFixture` for training data. | Crawling live system Settings or third-party apps for training data. |
-| Using `wait-stable` after each directional pulse. | Firing multiple keypresses without waiting for focus animation settling. |
-| Capturing both resting and focused states ($N$-way sweep). | Capturing only the resting view (model fails to detect focused controls). |
-| Generating sidecars with SHA256 hashes and hardware metadata. | Creating orphan images without corresponding Schema v1.0 JSON sidecars. |
+Preserve partial/invalid trials; no blind retry or manual promotion of staging output.
+Verify Fixture health after owned teardown, not just foreground return or process
+presence. Report capture, cleanup, data eligibility, integration and model quality
+separately. Do not train, promote, change settings, or expand the capture from this skill.

@@ -8,6 +8,15 @@ description: >-
 
 # tvOS Safe Navigation & Traversal Protocol
 
+First read [TVTestRig operation](../tvtestrig/SKILL.md) and its interface reference.
+This NUIAK supplement retains the stricter physical-device navigation boundaries;
+current runtime schemas take precedence over historical syntax examples below.
+Do not run simulator diagnostics or mapping while the user has paused simulators.
+Verify runtime location locally before routing work to another computer.
+Discovery/control/capture/focus readiness and resource ownership are separate checks.
+Native accessibility may omit chevrons: record that as an unresolved boundary, not
+permission to weaken physical Select restrictions or invent a route from pixels.
+
 This skill governs autonomous navigation, remote control automation, and UI hierarchy exploration on physical Apple TV hardware and tvOS simulators. It enforces closed-loop perception, strict safety guardrails, and deterministic backtracking to prevent system mutations or session drift.
 
 ---

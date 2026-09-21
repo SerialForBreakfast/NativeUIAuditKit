@@ -293,6 +293,33 @@ general training, qualify physical rendering, or require ADR-0007 VoiceOver
 alignment metadata for a visual-only corpus.  See
 [SimulatorDatasets.md](Plans/SimulatorDatasets.md).
 
+**FocusRing simulator baseline protocol (2026-09-20):** baseline reports bind the
+compiled shipped artifact by a recursive SHA-256 digest and its declared metadata,
+then score frame-specific fixture pairs at the shipped-model comparison point of 0.85.
+That point is fixed solely so baseline and candidate reports remain comparable; it is not
+the candidate's final operating threshold. For the planned fixed 30-epoch candidate run,
+do not select a threshold mid-run: after the complete curve is available, choose the best
+validation checkpoint and then choose its threshold once from validation membership using
+the predeclared objective. Record the selection evidence and lock that value before the
+untouched test is read. Reports include
+support and error counts by family, theme, and control, plus hard-negative support.
+Missing inference, corrupt membership, or an empty required group is a reported failure,
+never a zero-error pass. The offline report tool may be tested with deterministic scores;
+actual model inference requires an accepted genuine pilot.
+
+**TTR perception benchmark protocol (2026-09-21):** chevron-to-row and dialog
+relations use a separate `perception-benchmark-v1` evaluation manifest.  It records
+reviewed visual truth, original byte hashes, dimensions, coordinates, journey grouping,
+partition, source kind, provenance, and uncertainty without changing the detector taxonomy
+or public API.  Predictions are a separate document and can never become labels.  The
+evaluator reports localization, association, end-to-end behavior, abstentions, missing
+evidence, and safety-relevant destructive-as-benign errors separately.  Duplicate pixels,
+related journey frames, and recipe variants may not cross partitions.  The physical
+FocusRing readiness check separately verifies physical-fixture provenance, callback/frame
+alignment, crop geometry, and hard-negative evidence; no parser result upgrades test-only
+or simulator evidence to physical eligibility.  Any training proposal follows a reviewed
+benchmark gap and predeclared held-out support, latency budget, and numeric gates.
+
 ### 6.1 Core Principle: Generate, Don't Annotate
 
 Do not rely on manual annotation. Generate UI screens from Swift source and export ground truth at render time — the app that renders the UI also exports the labels, bounds, traits, state, and text metadata.

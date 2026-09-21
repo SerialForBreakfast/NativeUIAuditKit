@@ -2,10 +2,38 @@
 
 **Revision:** 2, 2026-09-19. Full-backlog roadmap implementing the maintainer's accepted [DeliveryDecisions.md](DeliveryDecisions.md). Current ownership/state lives only in Tasks.md. This defines dependencies, not a second queue. Dispatch uses revision-4 ImplementationPlans.md; production phase gates remain binding.
 
+## Next offline dispatch: chevrons, dialogs and visual focus
+
+The 2026-09-21 [failure-driven perception contracts](Plans/TTRPerception.md) refine
+the TTR goal. Preserve active assignments. Dispatch PER-01 + PER-02 as one integrated
+offline tranche: inventory/labels/split contract → chevron/dialog benchmark → measured
+gap and training decision. Missing captures block a real baseline, not test-backed
+software and honest evidence inventory. PER-04 physical-source focus readiness can
+proceed independently; do not reopen accepted packets wholesale.
+
+PER-02 evidence → reviewed data/output contract and numeric gates → separately
+authorized PER-03 targeted data/candidate → external TTR-PER comparison → separate
+promotion. A FocusRing candidate reuses FR-B/FR-C, not a second training lane.
+PER-05 benchmarks existing temporal primitives before any sequence model;
+PER-06 evaluates identity after the higher-priority work. Whole journeys/related
+content stay in one split; known failure examples do not become an unbiased test.
+Producer resume/teardown defects remain separate. TTR requests are proposals only,
+not published assignments. Simulator pause and Office storage blockers still apply.
+
+## Physical model delivery: Office FocusRing
+
+[Office delivery contracts](Plans/OfficeFocusRing.md) supersede the simulator-first
+sequence below while simulator execution is user-paused. Highest available path:
+P4-L one-bundle smoke/intake → FR-B physical development pilot and shipped baseline →
+qualified corpus → FR-C one candidate/export → separately authorized TTR comparison.
+Only the smoke request is authorized now. Broader capture, inference/training and model
+promotion retain their assignment gates. Preserve unrelated workers and simulator evidence.
+The semantic VoiceOver alignment matrix is separate from visual readiness.
+
 ## Delivery model
 
-**Highest dispatch priority: usable FocusRing detection for TTR**, per the 2026-09-20
-maintainer decision. [Follow-on contracts](Plans/FocusRingSimulator.md) connect datasets
+**Goal: usable perception, including FocusRing detection, for TTR.** The 2026-09-21
+benchmark-first amendment above orders new offline work. [Follow-on contracts](Plans/FocusRingSimulator.md) connect datasets
 to baseline → one candidate → TTR behavior. Preserve active workers; do not interrupt
 unrelated authorized work. Historical numeric priorities below do not override this lane.
 

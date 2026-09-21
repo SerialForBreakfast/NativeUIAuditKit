@@ -1,5 +1,13 @@
 # Accepted full-backlog delivery decisions
 
+**Office amendment, 2026-09-20:** the [physical visual-focus lane](Plans/OfficeFocusRing.md)
+is the highest available priority. Simulator execution is user-paused until further notice.
+Authorize one ten-minute Office fixture smoke request to the Sillycon agent, not broader
+capture/training. P4-L → FR-B pilot/baseline/corpus → FR-C candidate and later TTR comparison
+retain independent acceptance/authority gates. ADR-0007's semantic matrix remains separate
+from visual training; no visual/model quality gate is lowered. This amendment supersedes
+older simulator-first and blanket Office-release prose only for the expressly named scope.
+
 **FocusRing priority amendment, 2026-09-20:** usable TTR focus detection is the highest
 new-dispatch priority. [FR-SIM contracts](Plans/FocusRingSimulator.md) extend the
 simulator dataset foundation through a shipped-model baseline before scale-up, one

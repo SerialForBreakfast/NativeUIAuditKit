@@ -1039,6 +1039,34 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-60: Shell cwd is not the signed helper's output authority
+
+**Wrong:** Assume launching TVTestRig's signed CLI from NUIAK makes NUIAK its
+harvest workspace, or blame a missing parent directory for an earlier containment error.
+
+**Correct:** Verify the effective root and validation stage. In the observed build,
+the helper saw its container Data directory as cwd even with an explicit launcher cwd.
+Container output passed containment in a guaranteed no-capture negative control.
+Use an explicitly approved staging/export route; never bypass containment or broaden
+permissions merely to finish a harvest.
+
+**Why:** Process/container boundaries can differ from shell expectations. Distinguishing
+containment, parent readiness and actual file access avoids ineffective retries.
+Evidence: reports/work/OFFICE-FOCUS-SMOKE/output-path-rca.md, 2026-09-21.
+
+### BP-59: Verify the running TTR entrypoint before routing execution elsewhere
+
+**Wrong:** Treat a missing standalone aatv binary or an old Sillycon setup as proof
+that local capture must be dispatched to another machine.
+
+**Correct:** Inspect the running app and matching documented CLI entrypoint first.
+This build uses the app executable with --tvtr-stable-cli. Verify session/control,
+capture and Fixture state separately; discovery's disconnected record did not match
+the connected coordinator session. Validate output boundaries without changing hosts.
+
+**Why:** Wrong-host handoffs add needless approval loops and risk duplicate operators.
+Evidence: reports/work/OFFICE-FOCUS-SMOKE/local-attempt.md, 2026-09-20.
+
 ### BP-58: Retire nondeterministic renderer-dependent corpus routes
 
 **Wrong:** Keep a `WKWebView` capture route in a deterministic offline corpus after the target simulator repeatedly loses its web process and entitlement checks. A structurally valid PNG/JSON pair cannot prove that the claimed web content rendered.

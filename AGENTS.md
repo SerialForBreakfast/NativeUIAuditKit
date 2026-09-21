@@ -264,11 +264,19 @@ The repository maintains specialized agentic skills in `.agents/skills/` to codi
 
 | Skill | Path | When to Use |
 |---|---|---|
+| `tvtestrig` | `.agents/skills/tvtestrig/` | Authorized TVTestRig CLI/MCP operations and diagnostics; read first for current runtime discovery, ownership, capture and cleanup contracts. |
 | `tvos-safe-navigation` | `.agents/skills/tvos-safe-navigation/` | Automating Apple TV menu traversal, remote control inputs via TVTestRig/aatv, or exploring apps without mutating settings. |
 | `tvos-fixture-training` | `.agents/skills/tvos-fixture-training/` | Capturing tvOS training frames from `TVTestRigFixture`, sweeping tabs, executing $N$-way focus sweeps, or extracting ground truth. |
 | `nativeui-model-workflow` | `.agents/skills/nativeui-model-workflow/` | Training, evaluating, exporting, or debugging YOLO11 and CoreML models within package filesystem boundaries. |
 
 ---
+
+Read the repository-local `tvtestrig` skill before the NUA fixture/navigation
+supplements. It does not override repository output boundaries, explicit device
+restrictions or the user's simulator pause. Verify runtime location and the matching
+helper rather than assuming another host owns execution. A build may expose CLI mode
+through its app executable instead of a separate `aatv` file; inspect the actual entrypoint.
+Older command examples are not runtime discovery.
 
 ## Research-First Rule
 

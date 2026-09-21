@@ -13,11 +13,18 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
-**Top dispatch priority (2026-09-20): usable FocusRing detection for TTR.**
+**Top dispatch priority (2026-09-21): failure-driven usable perception for TTR.**
+Next new offline tranche: **PER-01 + PER-02**, the chevron-and-dialog benchmark,
+followed by PER-04 visual-focus readiness. This refines, not abandons, the usable
+FocusRing goal. Preserve active workers; no capture/training or peer request is
+authorized by this planning update. [Detailed contracts](Research/Plans/TTRPerception.md).
 Priority F1 supersedes legacy numeric ordering for new assignments; preserve existing
-workers and authorized work. Path: SIM-DATA-01/02 → SIM-DATA-03 → FR-SIM-BASE →
-SIM-DATA-04 → FR-SIM-CAND → FR-SIM-TTR. SIM-DATA-05 is secondary (F2), not a blocker.
-Contracts: [FocusRing delivery](Research/Plans/FocusRingSimulator.md).
+workers and authorized work. **Office visual-focus remains the model-delivery lane:**
+P4-L smoke/intake → FR-B physical pilot + shipped baseline + qualified corpus → FR-C
+candidate/export → separately authorized TTR comparison. Only the single smoke request
+is currently authorized. [Office contracts](Research/Plans/OfficeFocusRing.md).
+Simulator execution is paused by the user until further notice, independently of runtime
+repair; preserve offline review/evidence and [simulator plans](Research/Plans/FocusRingSimulator.md).
 
 Dispatch contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md).
 Workflow: [`Research/WorkerWorkflow.md`](Research/WorkerWorkflow.md). Owner is unassigned until dispatch.
@@ -27,6 +34,13 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
+| P0 | PER-01 | TTR-PERCEPTION | review (Codex worker; offline) | Evidence inventory, labeling/manifest and journey-group validation completed; missing real captures reported, never fabricated. Evidence: `reports/work/PER-01/handoff.md` |
+| P0 | PER-02 | TTR-PERCEPTION | review (Codex worker; offline tranche) | Integrated chevron/dialog scorer, baseline adapter contract, and honest no-training gap report completed; real inference separately assigned. Evidence: `reports/work/PER-02/handoff.md` |
+| P0 | PER-03 | TTR-PERCEPTION | blocked (unassigned) | Accepted benchmark/gap decision, numeric gates, eligible data and separate capture/training authority; reuse FR-B/FR-C for any FocusRing candidate |
+| P1 | PER-04 | FOCUS-DET-05 | review (Codex worker; offline) | Physical-source crop/pair/evaluation readiness validator completed; no capture or duplicate model pipeline. Evidence: `reports/work/PER-04/handoff.md` |
+| P1 | PER-05 | TTR-PERCEPTION | draft (unassigned) | Sequence contract review; existing-primitives transition benchmark before any temporal model |
+| P2 | PER-06 | TTR-PERCEPTION | draft (unassigned) | Journey/identity label contract; screen/row matching evaluation after higher-priority benchmark work |
+| — | TTR-PER | TTR-PERCEPTION | external proposal (unpublished) | Producer evidence and isolated comparison contract; requires separate publication and assignment in TVTestRig |
 | 1 | H1 | INTEGRATION-01 | accepted | NUIAK source-pinned offline contract accepted; bilateral producer acceptance and genuine-bundle qualification remain open |
 | 2 | P1-A | 6a-11 | accepted | Offline export software/schema accepted; P1-B still requires eligible pixels and assigned inference |
 | 3 | P0-A | DATA-01 | blocked | Recovery handoff is incomplete: known roots have no originals and remaining label identity work is stalled; requires backup location or separately authorized P0-C |
@@ -40,22 +54,22 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | P1-B | 6a-11 | blocked | P1-A and eligible original/replacement test pixels |
 | — | P2-B | 6a-11 | blocked | P2-A and accepted P1-B artifacts |
 | — | P3-B | 6a-11 | blocked | P3-A, eligible corpus, compatible P1/P2 software |
-| — | P4-L | INTEGRATION-01 | blocked | P4-A and genuine completed bundle/identity; capture authority if needed |
+| F1 | P4-L | INTEGRATION-01 | blocked (staging access) | Approved container workaround stalled creating its directory; canceled owned processes, no lease/capture began. Maintainer is remote. Establish scoped storage access or producer-supported accessible export, then refresh Office readiness/authority. See reports/work/OFFICE-FOCUS-SMOKE/staging-attempt.md and output-path-rca.md |
 | — | P5-B | 6a-10 | blocked | Eligible full corpora and accepted assembly/config interfaces |
 | — | TRAIN-S | 6a-10 | blocked | P5-B and explicit bounded smoke assignment |
 | — | TRAIN-F | 6a-10 | blocked | Accepted smoke and full-run assignment |
 | — | TRAIN-Q | 6a-10 | blocked | Candidate plus eligible dual holdouts |
 | — | FR-A | FOCUS-DET-05 | accepted | Offline quota/pair/split and ADR-0007 alignment validator accepted; FR-B remains capture-gated |
-| — | FR-B | FOCUS-DET-05 | blocked | FR-A and authorized available Office capture |
-| — | FR-C | FOCUS-DET-05 | blocked | Eligible quota-complete corpus and run/export assignment |
-| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (runtime) | Read-only inventory found CoreSimulatorService unavailable; no UUID/helper/endpoint may be inferred. Resume after local simulator service and matching TTR helper/Fixture build are available. Evidence: `reports/work/SIM-DATA-01-02/runtime-inventory.md` |
+| F1 | FR-B | FOCUS-DET-05 | blocked | P4-L acceptance, physical-source review and separate pilot/scale harvest authority; visual-only corpus needs no semantic alignment matrix |
+| F1 | FR-C | FOCUS-DET-05 | blocked | Accepted physical FR-B corpus and explicit training/export assignment; later TTR comparison separately authorized |
+| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | paused (user; runtime blocked) | Simulator execution prohibited until renewed user authority. Read-only inventory found CoreSimulatorService unavailable; no UUID/helper/endpoint may be inferred. Resume after local simulator service and matching TTR helper/Fixture build are available. Evidence: `reports/work/SIM-DATA-01-02/runtime-inventory.md` |
 | F1 | SIM-DATA-02 | TASK-SIM-DATA-01 | review | Simulator manifest/eligibility, grouping and paired frame-correct extraction implemented with offline adversarial coverage. Evidence: `reports/work/SIM-DATA-01-02/handoff.md` |
-| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | blocked | Accepted SIM-DATA-01/02 plus simulator capture authority; 42-recipe genuine pilot |
-| F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | blocked | Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned capture; ≥6,000 visual pairs |
-| F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | blocked | Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
-| F1 | FR-SIM-BASE | FOCUS-DET-05 | blocked | Genuine SIM-DATA-03 pilot and assigned baseline inference; offline tooling independently dispatchable; owner unassigned |
-| F1 | FR-SIM-CAND | FOCUS-DET-05 | blocked | FR-SIM-BASE, qualified SIM-DATA-04 corpus and explicit run/export assignment; owner unassigned |
-| F1 | FR-SIM-TTR | FOCUS-DET-05 | blocked | Candidate, frozen comparisons, producer acknowledgment and simulator authority; fake-backed preparation independent; owner unassigned |
+| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted SIM-DATA-01/02 plus simulator capture authority; 42-recipe genuine pilot |
+| F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned capture; ≥6,000 visual pairs |
+| F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
+| F1 | FR-SIM-BASE | FOCUS-DET-05 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Genuine SIM-DATA-03 pilot and assigned baseline inference; offline tooling independently dispatchable; owner unassigned |
+| F1 | FR-SIM-CAND | FOCUS-DET-05 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  FR-SIM-BASE, qualified SIM-DATA-04 corpus and explicit run/export assignment; owner unassigned |
+| F1 | FR-SIM-TTR | FOCUS-DET-05 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Candidate, frozen comparisons, producer acknowledgment and simulator authority; fake-backed preparation independent; owner unassigned |
 | — | R-A | 6b-R-1 | review | Offline matrix/inventory validator distinguishes unique screenshots and genuine labeled examples |
 | — | R-B | 6b-R-1 | blocked | R-A and authorized device/app window |
 | — | R-C | 6b-R-1 | blocked | Complete qualified capture manifest; mAP additionally requires genuine boxes |
@@ -197,7 +211,22 @@ Cause is unknown. Preserve existing manifests, labels, links, and historical met
 
 FocusRing and real Apple TV capture are tvOS work, not prerequisites for iOS-only
 software acceptance or synthetic baseline evaluation. Office is released until
-explicit new user authorization; old advisory requests do not authorize capture.
+explicit new user authorization except the single Office smoke now requested in P4-L;
+old advisory requests do not authorize any broader capture. Simulators remain paused.
+
+### TTR-PERCEPTION: Failure-driven traversal perception
+
+Canonical plan: [TTRPerception.md](Research/Plans/TTRPerception.md), revision 1.
+Queue above is the sole status/ownership record. Deliver chevron-to-row association
+and dialog/button/focus benchmarks first, physical visual-focus readiness next,
+then sequence readiness and screen/row identity. Known traversal failures guide
+development; independent journeys remain held out. TTR owns action authorization,
+resume logic and teardown health. No model result grants Select permission.
+
+First dispatch completes PER-01 + PER-02 software integration, adversarial tests,
+coverage/missing-evidence report and a targeted-training recommendation together.
+Real inference/data/model qualification remain separately gated. PER-04 is an
+independent offline option; external requests remain unpublished proposals.
 
 ### tvOS Simulator datasets
 
@@ -236,7 +265,8 @@ Simulator follow-ons: [FR-SIM-BASE / FR-SIM-CAND / FR-SIM-TTR](Research/Plans/Fo
 - [ ] Train/export one explicitly authorized simulator candidate and report six quality gates
 - [ ] Compare focus decisions and bounded navigation in TTR; no simulator-only production promotion
 
-The physical requirements below remain separate and unchanged.
+Physical delivery now follows [OfficeFocusRing.md](Research/Plans/OfficeFocusRing.md).
+Visual quality gates remain unchanged; the separate semantic alignment matrix is not a capture prerequisite.
 
 v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingDetectorSpec.md).
 
@@ -244,7 +274,7 @@ v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingD
 - [ ] Mix: `gridMatrix` ≥ 2,000, `mediaShelf` ≥ 1,500, `settingsList` ≥ 1,000, `actionDialog` / `heroCarousel` / `focusMaze` ≥ 500 each
 - [ ] ≥ 20% `light` and ≥ 20% `highContrast` in `gridMatrix` + `mediaShelf`
 - [ ] Held-out hard-negative n ≥100 across `light`/`highContrast` × `imageView`/`collectionItem`; every combination nonempty with separate counts/results
-- [ ] Add the ADR-0007 source-backed VoiceOver/navigation alignment matrix before capture; expected exploration/traversal decoupling is not an accessibility failure
+- [ ] Separately assigned ADR-0007 semantic alignment dataset/policy matrix remains open; it is not a prerequisite for physical visual-focus capture or training
 - [ ] All six quality gates, including **non-vacuous** hard-neg FPR ≤ 0.5%
 - [ ] Replace bundled `.mlmodelc` only after those gates pass
 

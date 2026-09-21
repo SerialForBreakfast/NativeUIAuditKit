@@ -143,7 +143,9 @@ conforms to [`schemas/focus-ring-alignment.v1.json`](schemas/focus-ring-alignmen
 `source` is `fixtureGroundTruth` or `trustedLiveMetadata`; captions, model predictions,
 and guessed element IDs are invalid. `notAssessable` uses `interactionMode: "unknown"`,
 no source, and a null VoiceOver target. It abstains rather than reporting a failure.
-FR-B must validate the complete prospective manifest with:
+For separately assigned semantic-alignment capture, validate the complete prospective
+manifest with the command below. The physical visual-only FR-B lane uses normal visual
+readiness validation without this flag, per [OfficeFocusRing.md](Plans/OfficeFocusRing.md):
 
 ```bash
 .venv-yolo/bin/python scripts/validate_focus_ring_readiness.py \

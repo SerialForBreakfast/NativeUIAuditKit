@@ -1,5 +1,9 @@
 # Independent tvOS Simulator dataset lane
 
+**Execution paused by user (2026-09-20) until further notice.** Preserve all evidence
+and offline review; repaired runtime alone does not authorize resumption. The current
+available priority is the [physical Office lane](OfficeFocusRing.md).
+
 Revision 1, 2026-09-20. Maintainer-approved planning contract. State/ownership lives
 only in [Tasks.md](../../Tasks.md#tvos-simulator-datasets). Follow the
 [common execution contract](../ImplementationPlans.md#common-execution-contract),

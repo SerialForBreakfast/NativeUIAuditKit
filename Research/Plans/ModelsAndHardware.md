@@ -48,6 +48,11 @@ Unknown state must remain `notAssessable`; do not reconstruct it from captions o
 
 **Parent:** FOCUS-DET-05. **Inputs:** FR-A recipe, available/authorized Office window, verified supported capture path and compliant output boundary. **Scope:** fixture-only closed-loop capture; no Home/Select/Settings crawl or training.
 
+The [Office delivery amendment](OfficeFocusRing.md) is canonical for smoke → physical
+pilot/shipped baseline → scale-up → one candidate sequencing. The ADR-0007 matrix above
+belongs to separately assigned semantic capture/policy work; it is not a visual FR-B
+prerequisite. Present alignment metadata must still validate. Simulator execution is paused.
+
 Collect incrementally; validate each completed batch before accepting counts. Keep paired/related seed samples in one split and preserve source/capture evidence. Exclude unsettled, duplicate, malformed or untrusted-label samples. Check cumulative scene/theme/hard-negative quotas and stop at a complete ≥6,000-pair corpus, retaining rejection reasons.
 
 **Acceptance:** eligible manifest with genuine ground truth, complete quota/split report, held-out hard-negative strata all populated. Unavailable device or failed identity stops dependent capture without disturbing offline work. **Next:** FR-C.
@@ -59,6 +64,9 @@ Collect incrementally; validate each completed batch before accepting counts. Ke
 Log first; use established MobileNetV4 baseline: 30 epochs, batch 64, LR 3e-4, HFlip-only first candidate, no vertical flip, no timm import. Preserve validation/test seed separation. Evaluate accuracy ≥99%, unfocused FPR ≤0.5%, focused FNR ≤1%, precision/recall at 0.85 each ≥0.98, and non-vacuous hard-negative FPR ≤0.5% including required strata reporting.
 
 Export with torch.jit.trace to FP16 CoreML; preserve output/threshold metadata and ≤5 MB package gate. Compare exported decisions and probabilities against PyTorch on held-out crops; report numerical error and whether any decision changes cause a gate failure. Optional-model fallback remains intact.
+
+After qualification, the Office plan specifies separately authorized TTR comparison of
+shipped/candidate focus decisions and navigation. Telemetry scores outcomes only.
 
 **Acceptance:** all six gates supported by sample counts, package size/export parity and traceable artifacts. Threshold tuning uses validation only. Promotion requires a separate qualified release assignment. **Next:** REL-A for the chosen model; failures return diagnosis.
 

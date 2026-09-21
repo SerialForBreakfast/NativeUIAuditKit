@@ -1,5 +1,9 @@
 # Usable FocusRing delivery through the simulator
 
+**Execution paused by user (2026-09-20) until further notice.** Preserve all evidence
+and offline review; repaired runtime alone does not authorize resumption. The current
+available priority is the [physical Office lane](OfficeFocusRing.md).
+
 Revision 1, 2026-09-20. Highest dispatch priority; [Tasks.md](../../Tasks.md)
 is the sole state/ownership queue. Preserve active assignments. Follow the
 [worker contract](../WorkerWorkflow.md) and mandatory pre-code research reading.
@@ -41,10 +45,14 @@ an explicit assignment and the genuine pilot. No capture, training or producer e
    256×256 crops. Compare consumer crops with production preprocessing at edges, clipping,
    non-square frames and focused scaling. Request TTR caller-to-scorer parity evidence;
    direct ROI cropping alone does not prove expansion is absent upstream.
-3. Report accuracy, FPR, FNR, precision/recall at 0.85 and hard-negative FPR, support
-   counts and failures by theme, family and control. Empty groups are not passes.
-4. Freeze evaluator, threshold and split protocol. Record prioritized development errors
-   and the exact training-coverage response before scale-up; final holdout remains untouched.
+3. Report accuracy, FPR, FNR, precision/recall at the shipped-model comparison point of
+   0.85 and hard-negative FPR, support counts and failures by theme, family and control.
+   This is an apples-to-apples baseline checkpoint, not a decision to deploy all future
+   candidates at 0.85. Empty groups are not passes.
+4. Freeze the evaluator and split protocol. Record prioritized development errors and the
+   exact training-coverage response before scale-up; final holdout remains untouched.
+   Candidate threshold selection is intentionally deferred until the complete planned
+   30-epoch curve is available; no intermediate checkpoint may establish it.
 
 **Tests:** known positive/negative scores, missing artifact, failed inference, zero support,
 wrong dimensions, frame-specific geometry, corrupt membership and identical-run determinism.
@@ -67,10 +75,16 @@ run artifacts and experiment records. Never overwrite shipped resources or sourc
    Use the established vendored MobileNetV4 baseline: 256 input, batch 64, 30 epochs,
    LR 3e-4, horizontal flip 0.5 only. Pin initialization/local weights and random seeds;
    no downloads, new augmentation experiment, silent resume or hyperparameter sweep.
-3. Run only the assigned bounded smoke and one candidate. Select the checkpoint using
-   validation data, never test data. Report resource failures without automatic retries.
-4. Evaluate untouched test membership: accuracy ≥99%, unfocused FPR ≤0.5%, focused
-   FNR ≤1%, precision and recall at 0.85 each ≥0.98, hard-negative FPR ≤0.5%.
+3. Run only the assigned bounded smoke and one candidate. Complete the planned 30 epochs
+   before selecting anything; select the best checkpoint using validation data, never test
+   data. Then select one operating threshold from that checkpoint's validation membership
+   against the predeclared objective; record the full curve, objective, selected epoch and
+   value, and validation counts, then lock it before opening the final holdout. Also report
+   the fixed 0.85 comparison point so it remains directly comparable with the shipped
+   baseline. Report resource failures without automatic retries.
+4. Evaluate untouched test membership at the locked candidate threshold: accuracy ≥99%,
+   unfocused FPR ≤0.5%, focused FNR ≤1%, precision and recall each ≥0.98, hard-negative
+   FPR ≤0.5%. Report the same metrics at 0.85 as a non-gating shipped-baseline comparison.
    Report separate hard-negative theme/type counts and rates; never a vacuous pass.
 5. Export via the existing trace-based CoreML path. Verify identical-input PyTorch/CoreML
    scores and threshold decisions, report maximum/mean score differences and all decision

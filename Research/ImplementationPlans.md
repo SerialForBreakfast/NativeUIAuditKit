@@ -2,6 +2,30 @@
 
 **Revision:** 4, 2026-09-19. This replaces combined P1–P5 contracts and revision-3 slice overrides. Each catalog row is one independently dispatchable assignment. Current state/owner lives only in [Tasks.md](../Tasks.md); [IterationRoadmap.md](IterationRoadmap.md) gives scheduling and [DeliveryDecisions.md](DeliveryDecisions.md) records accepted choices. Plans are not evidence that work ran.
 
+## Failure-driven TTR perception priority amendment
+
+[TTRPerception.md](Plans/TTRPerception.md), revision 1 (2026-09-21), defines the next
+new offline tranche: PER-01 + PER-02 chevron/dialog benchmark, followed by visual-focus
+readiness. It preserves active workers and existing model/data gates. Proposed TTR
+requests are not published or assigned. No capture or training follows from this catalog.
+
+| Packet | Contract |
+|---|---|
+| PER-01 | [Evidence and split-safe benchmark](Plans/TTRPerception.md#per-01--evidence-inventory-labels-and-split-safe-benchmark-contract) |
+| PER-02 | [Chevron/dialog benchmark and training decision](Plans/TTRPerception.md#per-02--chevron-and-dialog-benchmark-and-targeted-training-decision) |
+| PER-03 | [Targeted data and one candidate](Plans/TTRPerception.md#per-03--targeted-data-and-one-perception-candidate) |
+| PER-04 | [Visual-focus readiness](Plans/TTRPerception.md#per-04--visual-focus-robustness-and-physical-consumer-readiness) |
+| PER-05 | [Transition-readiness evaluation](Plans/TTRPerception.md#per-05--bounded-transition-readiness-evaluation) |
+| PER-06 | [Screen/row identity](Plans/TTRPerception.md#per-06--screen-and-row-identity-under-change) |
+| TTR-PER | [External evidence/comparison proposal](Plans/TTRPerception.md#ttr-per--producer-evidence-and-isolated-comparison-proposal) |
+
+## Current Office model-delivery amendment
+
+[OfficeFocusRing.md](Plans/OfficeFocusRing.md), revision 1, refines existing P4-L/FR-B/FR-C
+without duplicate packet IDs: one authorized smoke request, intake, separately authorized
+physical visual pilot/baseline/corpus, candidate and TTR comparison. Simulator execution
+is paused by the user; its packet evidence and offline review remain preserved.
+
 ## Common execution contract
 
 Platform-oriented grouping for the existing iOS packets:
@@ -57,7 +81,7 @@ not installation/capture authority or evidence of data eligibility.
 | SIM-DATA-04 | TASK-SIM-DATA-01 | [FocusRing dataset freeze](Plans/SimulatorDatasets.md#sim-data-04--scale-and-freeze-focusring-simulator-data) |
 | SIM-DATA-05 | TASK-SIM-DATA-01 | [Detector augmentation corpus](Plans/SimulatorDatasets.md#sim-data-05--tvos-detector-augmentation-corpus) |
 
-## FocusRing simulator delivery — highest dispatch priority
+## FocusRing simulator delivery — execution remains paused
 
 Revision 1: [canonical contracts](Plans/FocusRingSimulator.md). These follow the
 simulator dataset packets; training and TTR operation retain separate authority.

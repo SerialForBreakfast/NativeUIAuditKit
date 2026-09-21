@@ -15,6 +15,23 @@ The concrete stop condition was `xcrun simctl list devices available` exiting wi
 CoreSimulatorService connection-invalid/connection-refused errors. No repair,
 restart, or fallback was attempted because SIM-DATA-01 excludes those operations.
 
+Follow-up diagnosis, 2026-09-20:
+
+- A live `TVTestRigFixture` process was found under simulator UUID
+  `9026ECA9-77DB-4AE6-8FE6-BB239E9571FA`; its on-disk device record identifies
+  Apple TV 4K (3rd generation), tvOS 26.5, state `3`, and a recent boot time.
+- The fixture owns TCP port 8080 **inside the simulator**. Host requests to
+  `127.0.0.1:8080` and `[::1]:8080` correctly cannot reach that isolated listener;
+  this is not evidence that the fixture server is down.
+- `simctl` still cannot enumerate the running device, and `launchctl` reports no
+  registered per-user `com.apple.CoreSimulator.CoreSimulatorService`. TVTestRig's
+  simulator harvest uses that same `simctl` control plane for explicit-UUID
+  screenshots, so it cannot capture or bridge fixture telemetry in this state.
+
+Therefore the failure is a host CoreSimulator-service/control-plane failure, not a
+fixture rendering failure, incorrect fixture UUID, or a missing HTTP server. Preserve
+the current running fixture until the maintainer decides how to restore the host service.
+
 Resume only after the user has restored the local simulator service and a matching
 TVTestRig helper/Fixture build is available. Re-run the read-only inventory, record
 the actual UUID/runtime/build/endpoint, then obtain separate capture authority before
