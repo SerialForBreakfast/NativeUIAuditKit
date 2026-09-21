@@ -42,7 +42,7 @@ def build(contract: dict[str, Any], corpus_id: str, producer_reference: str, req
         original_theme, theme = _mapped(recipe.get("theme"), THEME_MAP, "theme")
         seed = recipe.get("seed")
         recipe_hash = recipe.get("recipe_hash") or recipe.get("recipeHash")
-        if not isinstance(seed, int) or not isinstance(recipe_hash, str) or not recipe_hash:
+        if type(seed) is not int or seed < 0 or not isinstance(recipe_hash, str) or not recipe_hash:
             raise SimulatorManifestError("missing_recipe_group")
         pair_id = row.get("id")
         if not isinstance(pair_id, str) or not pair_id or pair_id in seen_ids:
@@ -51,7 +51,8 @@ def build(contract: dict[str, Any], corpus_id: str, producer_reference: str, req
         split = SPLIT_MAP.get(row.get("split"))
         if split is None:
             raise SimulatorManifestError("unsupported_split")
-        group = f"{recipe_hash}:{seed}"
+        # Related theme/density/step variants must not become independent groups.
+        group = f"seed:{seed}"
         if group in groups and groups[group] != split:
             raise SimulatorManifestError("group_split_leakage")
         groups[group] = split

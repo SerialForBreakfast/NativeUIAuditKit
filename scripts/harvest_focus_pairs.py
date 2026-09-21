@@ -3,15 +3,15 @@
 harvest_focus_pairs.py — Extract 256×256 focus-ring crops for FocusRingDetector.
 
 Phase A (default): read `dataset/tvos_fixture_captures/*.png` plus YOLO `*_result.json`
-sidecars, expand each focusable box by 16%, crop/scale to 256×256. Labels are taken
-from sidecar/YOLO `isFocused` when present; current fixture captures usually have
-none, so dry-run reports unlabeled counts.
+sidecars for diagnostics only, never trusted training labels. Trusted paired
+extraction requires --fixture-bundle plus --pair-evidence. Legacy output cannot
+pass the v1.2 candidate preflight.
 
 Phase B (`--live`): closed-loop N-way aatv capture on a live Apple TV (BP-40).
 Simulator is not sufficient (Metal glow / parallax). Requires `--device-id` and a
 running TVTestRig coordinator (`--project`). Never presses Home or Select.
 
-Crops and the extract-mode manifest default to `../NativeUIAuditKit-Dataset/focus_ring/`.
+Crops and the extract-mode manifest default to `dataset/focus_ring/`.
 Live harvest should pass `--output dataset/focus_ring` (in-package gitignored cache).
 `--dry-run` never writes. Do not pass `dataset/dataset/train`.
 
@@ -38,10 +38,11 @@ from pathlib import Path
 
 from harvest_bundle_validation import HarvestValidationError, validate_bundle
 from simulator_focus_manifest import SimulatorManifestError, build as build_simulator_manifest
+from focus_dataset_contract import FocusDataError, PREPROCESSING, local, validate_frames, digest, crop_frame
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT = PROJECT_ROOT / "dataset" / "tvos_fixture_captures"
-DEFAULT_OUTPUT = PROJECT_ROOT.parent / "NativeUIAuditKit-Dataset" / "focus_ring"
+DEFAULT_OUTPUT = PROJECT_ROOT / "dataset" / "focus_ring"
 DEFAULT_LIVE_OUTPUT = PROJECT_ROOT / "dataset" / "focus_ring"
 DEFAULT_DEVICE_ID = "8D80F616-6C12-49A6-9015-8F594EE5F24E"
 DEFAULT_PROJECT = PROJECT_ROOT.parent / "TVTestRig"
@@ -88,7 +89,6 @@ os_env_defaults = {
 }
 for _k, _v in os_env_defaults.items():
     os.environ.setdefault(_k, _v)
-    Path(_v).mkdir(parents=True, exist_ok=True)
 
 
 def utc_now() -> str:
@@ -101,6 +101,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--fixture-bundle", type=Path, help="Completed fixture bundle; validates before paired simulator extraction")
     p.add_argument("--corpus-id", help="Required with --fixture-bundle")
     p.add_argument("--producer-reference", help="Required source revision with --fixture-bundle")
+    p.add_argument("--pair-evidence", type=Path, help="Explicit NUIAK focus-pair-evidence-v1 review artifact; never predicted labels")
     p.add_argument(
         "--output",
         default=str(DEFAULT_OUTPUT),
@@ -329,14 +330,31 @@ def write_records(records: list[dict], output: Path, include_unlabeled: bool) ->
     return manifest
 
 
-def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_reference: str, expansion: float, dry_run: bool) -> dict:
+def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_reference: str, expansion: float, dry_run: bool, pair_evidence: dict | None = None) -> dict:
     """Extract true focused/unfocused crop pairs only from an integrity-checked bundle."""
     from PIL import Image
 
-    if output.exists() and not dry_run:
+    output = local(output)
+    bundle = local(bundle)
+    if expansion != EXPANSION:
+        raise SimulatorManifestError("crop_parity_mismatch")
+    if output.exists():
         raise SimulatorManifestError("output_collision")
     contract = validate_bundle(bundle)
     manifest = build_simulator_manifest(contract, corpus_id, producer_reference, None)
+    if not isinstance(pair_evidence, dict) or pair_evidence.get("version") != "focus-pair-evidence-v1":
+        raise SimulatorManifestError("missing_observed_pair_evidence")
+    if pair_evidence.get("evidenceKind") not in {"test-only", "reviewed-fixture"} or pair_evidence.get("sourceKind") != "simulatorFixture" or pair_evidence.get("producerReference") != producer_reference:
+        raise SimulatorManifestError("invalid_evidence_context")
+    purpose = pair_evidence.get("purpose", "partition-preserving")
+    if purpose not in {"partition-preserving", "development-pilot"}:
+        raise SimulatorManifestError("unsupported_evidence_purpose")
+    evidence_rows = pair_evidence.get("pairs")
+    if not isinstance(evidence_rows, list) or any(not isinstance(v, dict) for v in evidence_rows):
+        raise SimulatorManifestError("invalid_pair_evidence")
+    evidence = {v.get("pairID"): v for v in evidence_rows}
+    if len(evidence) != len(evidence_rows) or set(evidence) != {r["pairID"] for r in manifest["pairs"]}:
+        raise SimulatorManifestError("evidence_membership_mismatch")
     pairs: list[dict] = []
     seen: set[str] = set()
     for row in manifest["pairs"]:
@@ -346,43 +364,59 @@ def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_
             raise SimulatorManifestError("pair_dimension_mismatch")
         selected = [e for e in row["elements"] if e.get("is_focused") and e.get("taxonomy_class") in FOCUSABLE]
         if len(selected) != 1:
-            continue
+            raise SimulatorManifestError("unsupported_focus_target")
         element = selected[0]
-        bounds = element.get("pixel_bounds")
-        if not isinstance(bounds, list) or len(bounds) != 4:
-            raise SimulatorManifestError("invalid_frame_geometry")
-        x, y, width, height = (float(v) for v in bounds)
-        crop_box = expanded_clamp(x, y, x + width, y + height, focused.width, focused.height, expansion)
+        proof = evidence[row["pairID"]]
+        if proof.get("elementID") != element["element_id"]:
+            raise SimulatorManifestError("evidence_element_mismatch")
+        crop_boxes = validate_frames(proof, bundle)
+        for role in ("focused", "unfocused"):
+            if any(proof["frames"][role].get(k) != row[role][k] for k in ("path", "sha256")):
+                raise SimulatorManifestError("evidence_frame_mismatch")
         pair_id = f"{row['pairID']}:{element['element_id']}"
         if pair_id in seen:
             raise SimulatorManifestError("duplicate_pair_id")
         seen.add(pair_id)
         entry = {
-            "pair_id": pair_id, "recipe_group": row["recipeGroup"], "recipe_seed": row["recipeGroup"].rsplit(":", 1)[1],
+            "pair_id": pair_id, "recipe_group": row["recipeGroup"], "recipe_seed": int(row["recipeGroup"].rsplit(":", 1)[1]),
             "fixture_scene": row["family"], "original_fixture_scene": row["originalFamily"],
             "theme": row["theme"], "original_theme": row["originalTheme"], "element_type": element["taxonomy_class"],
-            "split": row["split"], "labelSource": "fixtureGroundTruth", "sourceKind": "simulatorFixture",
+            "split": "development" if purpose == "development-pilot" else row["split"],
+            "original_split": row["split"], "labelSource": "fixtureGroundTruth", "sourceKind": "simulatorFixture",
+            "frames": proof["frames"], "elementID": proof["elementID"],
             "source": {"unfocused": row["unfocused"], "focused": row["focused"]},
-            "validatedUnfocusedEvidence": row["unfocused"],
+            "validatedUnfocusedEvidence": proof["frames"]["unfocused"],
             "bbox_normalized": element["normalized_bounds"], "hardNegative": element["taxonomy_class"] in {"imageView", "collectionItem"},
         }
-        pairs.append((entry, focused, unfocused, crop_box))
+        for role in ("focused", "unfocused"):
+            entry[role + "_crop_box"] = crop_boxes[role]
+        pairs.append((entry, focused, unfocused, crop_boxes))
     if not pairs:
         raise SimulatorManifestError("no_focusable_pairs")
     if dry_run:
         return {"pairs": len(pairs), "corpusID": corpus_id, "dryRun": True}
     crops = output / "crops"
-    crops.mkdir(parents=True, exist_ok=True)
+    output.mkdir(parents=True, exist_ok=False)
+    crops.mkdir()
     output_pairs = []
-    for entry, focused, unfocused, crop_box in pairs:
-        digest = hashlib.sha256(entry["pair_id"].encode()).hexdigest()[:16]
-        focused_name, unfocused_name = f"{digest}_focused.png", f"{digest}_unfocused.png"
-        crop_rgb(focused, crop_box).save(crops / focused_name)
-        crop_rgb(unfocused, crop_box).save(crops / unfocused_name)
+    for entry, focused, unfocused, crop_boxes in pairs:
+        crop_id = hashlib.sha256(entry["pair_id"].encode()).hexdigest()
+        focused_name, unfocused_name = f"{crop_id}_focused.png", f"{crop_id}_unfocused.png"
+        crop_frame(focused, crop_boxes["focused"]).save(crops / focused_name)
+        crop_frame(unfocused, crop_boxes["unfocused"]).save(crops / unfocused_name)
         entry["focused_crop"] = f"crops/{focused_name}"
         entry["unfocused_crop"] = f"crops/{unfocused_name}"
+        entry["focused_crop_sha256"] = hashlib.sha256((crops / focused_name).read_bytes()).hexdigest()
+        entry["unfocused_crop_sha256"] = hashlib.sha256((crops / unfocused_name).read_bytes()).hexdigest()
         output_pairs.append(entry)
-    result = {"version": "1.1", "sourceKind": "simulatorFixture", "corpusID": corpus_id, "pairs": output_pairs, "eligibility": manifest["eligibility"]}
+    result = {"version": "1.2", "sourceKind": "simulatorFixture", "corpusID": corpus_id, "pairs": output_pairs,
+              "eligibility": manifest["eligibility"], "sourceRoot": str(bundle.relative_to(PROJECT_ROOT)),
+              "producerReference": producer_reference, "preprocessing": PREPROCESSING,
+              "evidenceKind": pair_evidence["evidenceKind"], "evidenceSHA256": digest(pair_evidence)}
+    from focus_dataset_contract import validate_manifest
+    # Publish membership only after checking the actual derived bytes and isolation.
+    # Failed output is retained for diagnosis, never advertised as a completed corpus.
+    validate_manifest(result, output)
     (output / "focus_dataset_manifest.json").write_text(json.dumps(result, indent=2) + "\n")
     return {"pairs": len(output_pairs), "corpusID": corpus_id, "output": str(output)}
 
@@ -925,7 +959,8 @@ def main() -> int:
             print(f"ERROR: refusing to overwrite existing output: {output}")
             return 1
         try:
-            result = extract_fixture_bundle(args.fixture_bundle, output, args.corpus_id, args.producer_reference, args.expansion, args.dry_run)
+            evidence = json.loads(args.pair_evidence.read_text()) if args.pair_evidence else None
+            result = extract_fixture_bundle(args.fixture_bundle, output, args.corpus_id, args.producer_reference, args.expansion, args.dry_run, evidence)
         except (HarvestValidationError, SimulatorManifestError, OSError, ValueError) as error:
             print(f"ERROR: fixture bundle extraction failed: {error}")
             return 1

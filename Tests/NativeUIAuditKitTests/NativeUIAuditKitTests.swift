@@ -272,6 +272,20 @@ struct NativeUIAuditKitTests {
         #expect(tiny?.height == 256)
     }
 
+    @Test("FocusRing expansion preserves fractional frame-specific geometry")
+    func testFocusRingFractionalGeometry() {
+        let size = CGSize(width: 40, height: 30)
+        let resting = FocusRingClassifier.expandedCropRect(
+            bbox: CGRect(x: 5, y: 6, width: 13, height: 11), imageSize: size)
+        let focused = FocusRingClassifier.expandedCropRect(
+            bbox: CGRect(x: 3, y: 4, width: 17, height: 15), imageSize: size)
+        #expect(abs(resting.minX - 2.92) < 0.000001)
+        #expect(abs(resting.minY - 4.24) < 0.000001)
+        #expect(abs(resting.width - 17.16) < 0.000001)
+        #expect(abs(focused.minX - 0.28) < 0.000001)
+        #expect(focused != resting)
+    }
+
     @Test("FocusRingClassifier returns a unit-interval probability on a tvOS home crop")
     func testFocusRingClassifyReturnsProbabilityInUnitInterval() async throws {
         let classifier = try #require(

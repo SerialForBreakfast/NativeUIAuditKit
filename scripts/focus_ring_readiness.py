@@ -2,6 +2,8 @@
 
 from collections import Counter
 from typing import Any
+from pathlib import Path
+from focus_dataset_contract import FocusDataError, image, SPLITS, ROOT
 
 
 class ReadinessError(ValueError):
@@ -86,19 +88,29 @@ def validate_alignment(alignment: Any) -> str:
     return alignment_case(alignment)
 
 
-def validate(rows: list[dict[str, Any]], require_alignment_matrix: bool = False) -> dict[str, Any]:
+def validate(rows: list[dict[str, Any]], require_alignment_matrix: bool = False, evidence_root: Path = ROOT) -> dict[str, Any]:
     seen: set[str] = set()
+    groups = {}
     scene: Counter[str] = Counter()
     theme: Counter[tuple[str, str]] = Counter()
     hard: Counter[tuple[str, str]] = Counter()
     matrix: Counter[str] = Counter()
     for row in rows:
-        if not row.get("focused") or not row.get("unfocused") or row.get("labelSource") == "modelPrediction":
+        if not row.get("focused") or not row.get("unfocused") or row.get("labelSource") != "fixtureGroundTruth":
             raise ReadinessError("invalid_pair")
         seed = _required_string(row.get("seed"))
-        if not seed or seed in seen:
-            raise ReadinessError("seed_leakage")
-        seen.add(seed)
+        pair_id = _required_string(row.get("pairID"))
+        group = _required_string(row.get("recipeGroup"))
+        split = SPLITS.get(row.get("split"))
+        if not seed or not group or split is None:
+            raise ReadinessError("invalid_split_group")
+        if not pair_id or pair_id in seen:
+            raise ReadinessError("duplicate_pair_id")
+        seen.add(pair_id)
+        for key in (("seed", seed), ("group", group)):
+            if key in groups and groups[key] != split:
+                raise ReadinessError("seed_leakage")
+            groups[key] = split
         scene_name = _required_string(row.get("scene"))
         theme_name = _required_string(row.get("theme"))
         element_class = _required_string(row.get("class"))
@@ -106,17 +118,20 @@ def validate(rows: list[dict[str, Any]], require_alignment_matrix: bool = False)
             raise ReadinessError("invalid_pair_metadata")
         scene[scene_name] += 1
         theme[(scene_name, theme_name)] += 1
-        if row.get("hardNegative"):
-            if row.get("sourceKind") == "simulatorFixture":
-                evidence = row.get("validatedUnfocusedEvidence")
-                if not isinstance(evidence, dict) or not isinstance(evidence.get("path"), str) or not isinstance(evidence.get("sha256"), str):
-                    raise ReadinessError("unvalidated_simulator_hard_negative")
+        if split == "test" and theme_name in {"light", "highContrast"} and element_class in {"imageView", "collectionItem"}:
+            evidence = row.get("validatedUnfocusedEvidence")
+            if not isinstance(evidence, dict) or evidence.get("labelSource") != "fixtureCallback" or "observedFocusID" not in evidence or evidence["observedFocusID"] is not None or not evidence.get("frameID") or evidence.get("focusFrameID") != evidence["frameID"]:
+                raise ReadinessError("unvalidated_hard_negative")
+            try:
+                image(evidence_root, evidence)
+            except FocusDataError as error:
+                raise ReadinessError(str(error)) from error
             hard[(theme_name, element_class)] += 1
         if "alignment" in row:
             matrix[validate_alignment(row["alignment"])] += 1
 
     if any(scene[name] < count for name, count in MIN.items()) or any(
-        theme[(scene_name, theme_name)] < 0.2 * MIN[scene_name]
+        theme[(scene_name, theme_name)] < 0.2 * scene[scene_name]
         for scene_name in ("gridMatrix", "mediaShelf")
         for theme_name in ("light", "highContrast")
     ):

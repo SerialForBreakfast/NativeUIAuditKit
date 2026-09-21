@@ -9,7 +9,10 @@ in the manifest (pairs never straddle train/test).
 Usage:
   .venv-yolo/bin/python scripts/train_focus_ring_detector.py --dry-run
   .venv-yolo/bin/python scripts/train_focus_ring_detector.py \\
-      --dataset ../NativeUIAuditKit-Dataset/focus_ring --name fdr001
+      --dataset dataset/focus_ring/QUALIFIED_CORPUS --name NEW_RUN --preflight
+
+Execution additionally requires --execute --experiment-id LOGGED_ID and separate
+maintainer authorization. Historical v1.0 crops require requalification, not relabeling.
 """
 
 from __future__ import annotations
@@ -29,9 +32,8 @@ os_env_defaults = {
 }
 for _k, _v in os_env_defaults.items():
     os.environ.setdefault(_k, _v)
-    Path(_v).mkdir(parents=True, exist_ok=True)
 
-DEFAULT_DATASET = PROJECT_ROOT.parent / "NativeUIAuditKit-Dataset" / "focus_ring"
+DEFAULT_DATASET = PROJECT_ROOT / "dataset" / "focus_ring"
 RUNS = PROJECT_ROOT / "NativeUITrainer" / "focus_ring_runs"
 MODEL_NAME = "mobilenetv4_conv_small"
 INPUT_SIZE = 256
@@ -54,18 +56,22 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--batch", type=int, default=BATCH_SIZE)
     p.add_argument("--lr", type=float, default=LR)
     p.add_argument("--model", default=MODEL_NAME)
-    p.add_argument("--dry-run", action="store_true", help="1 epoch, tiny batch, skip if no labeled crops")
+    p.add_argument("--dry-run", action="store_true", help="Alias for side-effect-free preflight; never trains")
+    p.add_argument("--preflight", action="store_true", help="Validate only; no model imports or writes")
+    p.add_argument("--execute", action="store_true", help="Launch only after separate maintainer authorization and logged experiment")
+    p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     return p.parse_args()
 
 
 def load_samples(dataset: Path, split: str) -> list[dict]:
     manifest_path = dataset / "focus_dataset_manifest.json"
     if not manifest_path.is_file():
-        return []
+        raise ValueError("missing_manifest")
     data = json.loads(manifest_path.read_text())
     samples: list[dict] = []
     for pair in data.get("pairs") or []:
-        if pair.get("split") != split:
+        from focus_dataset_contract import SPLITS, member
+        if SPLITS.get(pair.get("split")) != SPLITS.get(split):
             continue
         focused = pair.get("focused_crop")
         unfocused = pair.get("unfocused_crop")
@@ -75,10 +81,12 @@ def load_samples(dataset: Path, split: str) -> list[dict]:
             "pair_id": pair.get("pair_id"),
         }
         if focused:
-            samples.append({"path": dataset / focused, "label": 1.0, **meta})
+            samples.append({"path": member(dataset, focused), "label": 1.0, **meta})
         if unfocused:
-            samples.append({"path": dataset / unfocused, "label": 0.0, **meta})
-    return [s for s in samples if Path(s["path"]).is_file()]
+            samples.append({"path": member(dataset, unfocused), "label": 0.0, **meta})
+        if not focused or not unfocused:
+            raise ValueError("incomplete_pair")
+    return samples
 
 
 def is_hard_negative(sample: dict) -> bool:
@@ -109,16 +117,25 @@ def main() -> int:
     if not dataset.is_absolute():
         dataset = (PROJECT_ROOT / dataset).resolve()
 
+    from focus_training_preflight import preflight
+    report = preflight(dataset, args.name, args.epochs, args.batch, args.lr, args.model)
+    print(json.dumps(report, sort_keys=True))
+    if args.dry_run or args.preflight or not args.execute:
+        return 0 if report["launchEligible"] else 2
+    if not report["launchEligible"]:
+        return 2
+    if not args.experiment_id or f"## Run {args.experiment_id} " not in (PROJECT_ROOT / "Research/ExperimentLog.md").read_text():
+        print("ERROR: explicit experiment-log entry required", file=sys.stderr)
+        return 2
+    for key, value in os_env_defaults.items():
+        os.environ[key] = value
+        Path(value).mkdir(parents=True, exist_ok=True)
     train = load_samples(dataset, "train")
-    val = load_samples(dataset, "val")
-    hard = [s for s in val + load_samples(dataset, "test") if is_hard_negative(s)]
+    val = load_samples(dataset, "validation")
     print(f"=== FocusRing train {utc_now()} ===")
     print(f"dataset: {dataset}")
-    print(f"train={len(train)} val={len(val)} hard_neg={len(hard)}")
+    print(f"train={len(train)} val={len(val)}; final test is not loaded for training")
 
-    if args.dry_run and not train:
-        print("dry-run: no labeled train crops (Phase B harvest required). Script OK.")
-        return 0
     if not train:
         print("ERROR: no labeled train crops. Run harvest with sidecar isFocused labels or --live.")
         return 1
@@ -158,12 +175,17 @@ def main() -> int:
             y = torch.tensor([row["label"]], dtype=torch.float32)
             return x, y
 
-    epochs = 1 if args.dry_run else args.epochs
-    batch = min(4, args.batch) if args.dry_run else args.batch
-    run_name = args.name or ("fdr_dryrun" if args.dry_run else datetime.now(timezone.utc).strftime("fdr_%Y%m%dT%H%M%SZ"))
+    epochs = args.epochs
+    batch = args.batch
+    run_name = args.name
     out = RUNS / run_name
     weights_dir = out / "weights"
-    weights_dir.mkdir(parents=True, exist_ok=True)
+    out.mkdir(parents=True, exist_ok=False)
+    weights_dir.mkdir()
+    (out / "preflight.json").write_text(json.dumps(report, indent=2) + "\n")
+    import random
+    random.seed(42)
+    torch.manual_seed(42)
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     print(f"device={device}  creating {args.model} pretrained=False (HF hub skipped)", flush=True)
@@ -174,10 +196,10 @@ def main() -> int:
     loss_fn = nn.BCEWithLogitsLoss()
 
     train_loader = DataLoader(
-        CropDataset(train, True), batch_size=batch, shuffle=True, num_workers=0, drop_last=True
+        CropDataset(train, True), batch_size=batch, shuffle=True, num_workers=0, drop_last=False
     )
     val_loader = DataLoader(
-        CropDataset(val or train[: min(8, len(train))], False),
+        CropDataset(val, False),
         batch_size=max(2, min(batch, 32)),
         shuffle=False,
         num_workers=0,
@@ -222,19 +244,6 @@ def main() -> int:
         if val_loss <= best_val:
             best_val = val_loss
             torch.save(ckpt, best_path)
-
-        if hard:
-            hard_loader = DataLoader(CropDataset(hard, False), batch_size=batch, shuffle=False, num_workers=0)
-            fp = 0
-            total = 0
-            with torch.no_grad():
-                for x, y in hard_loader:
-                    x = x.to(device)
-                    prob = torch.sigmoid(model(x).view(-1))
-                    fp += int((prob >= 0.85).sum().item())
-                    total += x.size(0)
-            fpr = fp / max(1, total)
-            print(f"  hard-negative FPR@0.85={fpr:.4f} ({fp}/{total})")
 
     print(f"best.pt → {best_path}")
     return 0

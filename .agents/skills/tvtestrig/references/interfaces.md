@@ -1,5 +1,201 @@
 # CLI and MCP differences
 
+## Building and launching
+
+**Installed DMG:** use the installed signed app and its own
+`Contents/Helpers/aatv` or `tvtestrig-mcp`. Users do not need a development team,
+certificate, source checkout or Xcode for core functionality. Simulator functions
+add compatible Xcode/runtime prerequisites. Do not ask a DMG user to configure
+LocalSigning, rebuild, or re-sign as a generic recovery step.
+
+**Building from source:** use the requested checkout and its repository instructions.
+From that checkout's root, run:
+
+```sh
+ruby Scripts/configure-signing.rb --list-teams
+ruby Scripts/configure-signing.rb --team SELECTED_TEAM_ID
+ruby Scripts/configure-signing.rb --check
+```
+
+Choose the user's Apple Team ID (ten uppercase letters/digits), not their email.
+Do not guess among multiple teams. `--list-teams` reads valid development identities;
+it does not create certificates. If none is available, the user manages their
+account/development certificate through Xcode Settings → Accounts. No credential
+or Keychain changes are performed by the script. A check in restricted execution
+may lack Keychain visibility; preserve that context instead of claiming the host
+has no certificate or repeatedly rebuilding.
+
+`--team` exclusively creates `TVTestRig/Config/LocalSigning.xcconfig`, already
+ignored by Git. Repeating the same selection leaves it unchanged; a different or
+custom existing file is preserved and requires deliberate editing. Keep tracked
+target settings as `DEVELOPMENT_TEAM = $(TVTR_DEVELOPMENT_TEAM)`. Using Xcode's
+Team dropdown can replace that expression with a literal tracked override. The
+checker identifies this but never repairs project files or changes Git state.
+Commit the template/shared indirection, never local choices or private keys.
+
+The pre-build check validates persisted settings and an available identity, not
+every future command-line override or actual code signatures. Do not override
+DEVELOPMENT_TEAM elsewhere after it passes. Release signing/notarization remains
+the separate explicitly configured release pipeline, not this development setup.
+
+Build in an isolated project-local directory; do not share the user's active
+DerivedData or replace a running app. Reuse a verified, locked project-local
+package cache; if missing, obtain the repository's dependency-resolution approval.
+Example signed Debug build, with the existing cache below verified first:
+
+```sh
+build_root="$PWD/.local-work/signed-development"
+package_root="$PWD/.local-work/packages"
+test -f "$package_root/workspace-state.json" || exit 66
+mkdir -p "$build_root/tmp" "$build_root/module-cache"
+export DEVELOPER_DIR="${DEVELOPER_DIR:-$(/usr/bin/xcode-select -p)}"
+export TMPDIR="$build_root/tmp"
+export LLVM_PROFILE_FILE="$build_root/coverage-%p.profraw"
+xcodebuild build -project TVTestRig/TVTestRig.xcodeproj -scheme TVTestRig \
+  -configuration Debug -destination 'platform=macOS' \
+  -derivedDataPath "$build_root/DerivedData" \
+  -clonedSourcePackagesDirPath "$package_root" -disableAutomaticPackageResolution \
+  CLANG_MODULE_CACHE_PATH="$build_root/module-cache" \
+  SWIFT_MODULE_CACHE_PATH="$build_root/module-cache" \
+  > "$build_root/build.log" 2>&1 || exit $?
+app="$build_root/DerivedData/Build/Products/Debug/TVTestRig.app"
+ruby Scripts/configure-signing.rb --check --app "$app" || exit $?
+```
+
+Choose a fresh owned build/log directory for each independent candidate. This
+command does not disable signing or change the sandbox variant. For Simulator
+qualification require `TVTR_REQUIRE_SIMULATOR_RUNNER=YES` on the build and inspect
+the bundled runner manifest plus `Scripts/check-portable-simulator-gate.sh --app`
+with the absolute app path. A packaged runner is not live-qualified navigation.
+Normal Apple-managed caches/logs are distinct from explicit project-local outputs;
+follow the user's filesystem policy rather than changing HOME or global Xcode.
+
+After the post-build signature check, launch only with user authorization and no
+conflicting running TTR owner. For a project-local development workspace:
+
+```sh
+open "$app" --args --project "$PWD"
+"$app/Contents/Helpers/aatv" --help
+"$app/Contents/Helpers/aatv" --project "$PWD" --json status
+```
+
+Do not use `open -n`, kill another instance, or assume `open` changed an existing
+process's workspace. Retain any folder-consent requirement; a path is not a grant.
+Use this exact app's helper, never one from an older DerivedData folder. Launch,
+coordinator JSON, storage readiness and target readiness are separate checks.
+Do not connect, capture or navigate as an incidental build smoke. For failures,
+use the helper-startup guidance below and copy Setup diagnostics, including a
+not-checked/failed result; empty inventory alone does not establish a host outage.
+
+## Helper startup and workspace preflight
+
+Use the running app's matching bundled helper on the same host. Automation's
+**Copy Helper Launch Check** copies its quoted absolute path plus `--help`;
+copying does not execute it. Keep stdout, stderr, exit status and build identity
+when startup fails. Exit 134/SIGABRT with no structured output can occur before
+TTR starts under an agent execution sandbox; it is not alone proof of that cause,
+an Office connection failure, or a broken package.
+
+Request the agent host's explicit execution approval for one **identical help-only**
+invocation in normal host execution. Never auto-escalate, disable app sandboxing,
+re-sign, change HOME, or replay the failed device/mutation command. If help works
+there, use that approved execution context for separately authorized read-only
+preflight. If it still fails, stop and retain the exact artifact's crash/loader
+evidence; do not prescribe rebuilding or re-pairing without a diagnosed defect.
+If approval is unavailable, report execution blocked; do not seek a workaround.
+MCP process startup can encounter the same boundary, but a CLI help pass does
+not prove MCP transport readiness.
+
+Then check coordinator/target readiness under current authorization. For the
+independent staging gate, discover `fixture prepare` in the installed help:
+`aatv --json fixture prepare --recipe FILE` sends recipe bytes to TTR over IPC.
+No manual container writes or HOME symlinks. Read `storageReady` and the job ID;
+this does not start capture or authorize `run-job`. If the command is unavailable,
+report an older build/capability gap, not permission to stage externally. Follow
+the job workflow below for authorized execution and hash-verified export.
+
+Both clipboard diagnostic actions include cached Fixture telemetry when available,
+with observation time, age, process/source references and stale/unavailable labels.
+Copying never refreshes it. Do not equate a recent snapshot with current connection
+health or the selected target. Share sanitized diagnostics, not credentials or raw
+private crash payloads, with the consumer.
+
+For MCP in a development checkout, set `TVTESTRIG_PROJECT` in the client launch
+environment; `tvtestrig-mcp` accepts no positional launch arguments. Keep stdin
+open between JSON-RPC requests. Do not pass CLI's `--project` to that executable.
+
+## Simulator map resume and teardown (new builds; live qualification pending)
+
+Settings maps activate only Settings, never Fixture, and leave the terminal
+context in place (`return_outcome: notAttempted`). The optional
+`settings_process_observations` array in diagnostic exports contains two
+post-XCTest observations (`observed_at`, `state`, optional `pid`) from the exact
+Simulator. Missing means an older producer. These checks cannot relaunch an app
+or send input. They do not establish UI responsiveness or restore original focus.
+
+- `settings-map checkpoints --simulator-udid UUID` / `settings_map.checkpoints`
+  reads retained local journals without contacting the Simulator. A
+  `resume_candidate` still requires fresh readiness, authorization and context
+  verification. Unknown cleanup or pending input blocks resume.
+- `settings-map resume OPERATION_ID --policy-version VERSION --simulator-udid UUID`
+  / `settings_map.resume` (`operation_id`, `policy_version`, `simulator_udid`)
+  starts a new bounded segment. Use the diagnostic **operation ID** from checkpoint
+  discovery, not the transient map run ID. Exact target, runtime, OS, locale and
+  policy must match; each ancestor is reobserved before Select. Frontier/visited
+  state is retained, not old action authorization. Poll/export the new map run ID.
+- Journals are versioned, capped at 64 KiB and saved inside the selected evidence
+  workspace. Oversized/unwritable journals stop before the next crawl input.
+  Old summary-only maps cannot be resumed. Do not edit journals, stage them in an
+  app container, delete recovery markers or replay an unconfirmed input.
+- `simulator teardown-check --simulator-udid UUID --variant VARIANT` /
+  `simulator.teardown_check` (`simulator_udid`, `variant`) is an authorized test,
+  not inventory. Fixed variants are `session_only` (Fixture activation),
+  `settings` (then Settings, left foreground), and `fixture_return` (then Fixture).
+  No remote buttons or settings changes; app activation still changes context.
+  `post_teardown_health: not_verified` must not be interpreted as healthy.
+  Compare target-correlated logs and a fresh post-session Fixture response before
+  attributing a crash or claiming a fix. Unknown cleanup blocks another run.
+
+Focused explanatory text can veto a disclosure row, not just its label. A
+destructive confirmation is a stop; automatic Cancel dismissal is not implemented
+or authorized by these tools. No physical-device fallback exists.
+
+## App-owned fixture jobs (new builds)
+
+Use `fixture prepare --recipe FILE` when the caller cannot write the app's
+workspace. It transfers one JSON recipe through IPC; TTR creates a unique job
+directory and returns its UUID, resolved paths, recipe SHA-256 and `storageReady`.
+Preparation/status/export never contact Office. Storage readiness is not capture
+readiness. Never stage files manually inside another app's container or change HOME.
+
+After separate explicit authorization, fresh permitting coordination status,
+exclusive use, connected Office and the correct live Fixture origin, use
+`fixture run-job UUID --fixture-url ORIGIN --device-id ID`. It runs the existing
+harvest engine asynchronously with an owned capture lease. Poll
+`fixture job-status UUID`; never repeat start after a lost reply. Cancel using
+`fixture cancel-job UUID`, then inspect terminal state. The ten-minute bound
+requests cancellation, not proof of teardown. Failed attempts remain local;
+interrupted/unconfirmed cleanup blocks another run pending maintainer reconciliation.
+
+For a `completed` job, `fixture export-job UUID --output-dir NEW_DIRECTORY`
+copies bounded IPC chunks and verifies chunk and file SHA-256. The CLI—not the
+sandboxed app—writes the approved destination. Its parent must exist and be writable;
+existing destinations and symlinks are refused. Failed transfers retain
+`.ttr-export-UUID` partial directories beside that destination; never ingest these.
+JSON includes file hashes and `exportedPath`. Source paths are informational, not
+caller write permissions. Integrity does not confer training eligibility.
+
+Limits: one 256 KiB recipe/job; 64 retained jobs; one active job; 256 KiB chunks;
+32 MiB/file, 256 MiB/export, 4,096 files. No automatic deletion. CLI/IPC only—do not
+invent MCP job tools. Job execution is Office-only; the legacy explicit-Simulator
+`fixture batch` lane remains separate. The packaged Simulator batch now delegates
+fixed screenshots to the existing signed companion, never direct developer-tool
+execution from the sandboxed CLI. Explicit `--project` is the output boundary and
+reuses that project's saved grant; a path alone is not a filesystem permission.
+Signed/consumer qualification remains separate.
+
+## Existing harvest interface
+
 **Current policy, user decision 2026-09-19:** normal `fixture batch` uses reported
 source context, not attestation. Neither physical nor Simulator factory issues a
 pixel challenge. The challenge notes below describe retained optional/internal
@@ -84,7 +280,7 @@ capabilities and errors even when a command exists.
 | Focus classification | `observe focus --device-id ID` | `observation.focus` with `device_id: ID` |
 | Wait for stability | `observe wait-stable` | `observation.wait_stable` |
 | Fixture `/scene` probe | `fixture scene [--fixture-url URL]` | No MCP tool (CLI-only). GET `/scene` and print the payload. Office needs the TV HTTP origin, not `127.0.0.1`. |
-| Fixture synthetic harvest | `fixture batch --recipes-dir DIR --output-dir DIR [--fixture-url URL] [--simulator-udid UUID]` | No MCP tool (CLI-only). Writes `<id>_unfocused.png` / `<id>_focused.png` / `<id>_metadata.json`. `--simulator-udid` is public simctl on that UUID only, not `booted`, and does not use the GUI socket. Office still needs the TV HTTP origin and IPC capture. |
+| Fixture synthetic harvest | `fixture batch --recipes-dir DIR --output-dir DIR [--fixture-url URL] [--simulator-udid UUID]` | No MCP tool (CLI-only). Writes paired PNG/metadata. Simulator screenshots use the signed companion and exact UUID, never `booted`; no physical fallback. Verify the Fixture endpoint belongs to that Simulator before scene mutation. Office needs the TV HTTP origin and IPC capture. |
 | Read recipe/plan | `recipe get ID`, `recipe plan ID` | `recipe.get`, `recipe.plan` |
 | Stop session | `session stop` | `session.end` |
 | Audio status | `audio status` | `audio.status` |

@@ -69,6 +69,10 @@ permission to stop after a helper. Per-packet gates and safety authority remain 
 
 ## tvOS Simulator datasets
 
+Offline extension: [FocusRing consumer readiness](Plans/FocusRingConsumerReadiness.md)
+(`FOCUS-CONSUMER`); acceptance evidence in
+[handoff](../reports/work/FOCUS-CONSUMER/handoff.md). Does not close live qualification.
+
 Additive lane revision 1, 2026-09-20: [canonical contracts](Plans/SimulatorDatasets.md).
 Dispatch using that revision and the common execution contract. Catalog inclusion is
 not installation/capture authority or evidence of data eligibility.

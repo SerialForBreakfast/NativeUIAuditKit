@@ -1010,4 +1010,14 @@ accumulate.
 
 Do not replace bundled v0.1 until FOCUS-DET-05 records a non-vacuous hard-neg FPR.
 
+### 2026-09-21 — FocusRing readiness correction (not an experiment)
+
+No run ID allocated and no training/benchmark launched. The candidate trainer now
+uses a genuine configuration/data-only `--dry-run`, requires explicit execution
+and a logged experiment ID, rejects missing pixels/partitions and excludes the
+test split from per-epoch evaluation. Candidate configuration remains 30 epochs,
+batch 64, lr 0.0003, vendored MobileNetV4 with fresh initialization. Byte-backed
+manifest v1.2 and separately reviewed corpus approval are required. Historical
+run reports remain unchanged; no historical metric is requalified by these fixes.
+See `Plans/FocusRingConsumerReadiness.md` and the FOCUS-CONSUMER handoff.
 

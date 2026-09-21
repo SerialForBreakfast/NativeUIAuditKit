@@ -44,6 +44,8 @@ def rows(with_matrix=True):
                     "unfocused": f"u{n}",
                     "labelSource": "fixtureGroundTruth",
                     "seed": f"{scene}-{i}",
+                    "pairID": f"p{n}", "recipeGroup": f"g{n}", "split": "test" if hard else "train",
+                    "validatedUnfocusedEvidence": {"path": f"u{n}", "sha256": "a" * 64, "labelSource": "fixtureCallback", "frameID": f"u{n}", "focusFrameID": f"u{n}", "observedFocusID": None},
                     "scene": scene,
                     "theme": theme,
                     "class": "imageView" if i % 2 else "collectionItem",
@@ -61,6 +63,12 @@ def rows(with_matrix=True):
 
 
 class Tests(unittest.TestCase):
+    def setUp(self):
+        # Quota-only unit tests. Actual byte-backed behavior is integration-tested separately.
+        self.images = patch("focus_ring_readiness.image", return_value=(256, 256))
+        self.images.start()
+        self.addCleanup(self.images.stop)
+
     def test_valid_matrix(self):
         report = validate(rows(), require_alignment_matrix=True)
         self.assertEqual(report["pairs"], 6000)
@@ -72,7 +80,7 @@ class Tests(unittest.TestCase):
         with self.assertRaisesRegex(ReadinessError, "invalid_pair"):
             validate(data)
         data = rows()
-        data[1]["seed"] = data[0]["seed"]
+        data[101]["seed"] = data[0]["seed"]
         with self.assertRaisesRegex(ReadinessError, "seed_leakage"):
             validate(data)
         data = [row for row in rows() if row["scene"] != "focusMaze"]
@@ -82,7 +90,7 @@ class Tests(unittest.TestCase):
     def test_hard_negative_strata_rejection(self):
         data = rows()
         for row in data:
-            row["hardNegative"] = False
+            row["split"] = "train"
         with self.assertRaisesRegex(ReadinessError, "empty_hard_negative_stratum"):
             validate(data)
 
@@ -91,11 +99,12 @@ class Tests(unittest.TestCase):
         for row in data:
             if row["hardNegative"]:
                 row["sourceKind"] = "simulatorFixture"
-        with self.assertRaisesRegex(ReadinessError, "unvalidated_simulator_hard_negative"):
+                row.pop("validatedUnfocusedEvidence")
+        with self.assertRaisesRegex(ReadinessError, "unvalidated_hard_negative"):
             validate(data)
         for row in data:
             if row["hardNegative"]:
-                row["validatedUnfocusedEvidence"] = {"path": "crops/unfocused.png", "sha256": "a" * 64}
+                row["validatedUnfocusedEvidence"] = {"path": "crops/unfocused.png", "sha256": "a" * 64, "frameID": "u", "focusFrameID": "u", "observedFocusID": None, "labelSource": "fixtureCallback"}
         self.assertEqual(validate(data)["pairs"], 6000)
 
     def test_alignment_requires_source_backed_known_target(self):
@@ -138,6 +147,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(normalized["seed"], "123")
 
         manifest = {
+            "sourceRoot": ".",
             "pairs": [
                 {
                     "focused_crop": row["focused"],
@@ -158,12 +168,29 @@ class Tests(unittest.TestCase):
         ), patch(
             "sys.argv",
             ["validate_focus_ring_readiness.py", "--manifest", "prospective.json", "--require-alignment-matrix"],
-        ):
+        ), patch("validate_focus_ring_readiness.validate_manifest", return_value=rows()):
             self.assertEqual(readiness_main(), 0)
         with patch("validate_focus_ring_readiness.Path.is_file", return_value=False), patch(
             "sys.argv", ["validate_focus_ring_readiness.py", "--manifest", "missing.json"]
         ):
             self.assertEqual(readiness_main(), 2)
+
+    def test_multiple_elements_same_seed_allowed_only_within_partition(self):
+        data = rows()
+        data[1]["seed"] = data[0]["seed"]
+        data[1]["recipeGroup"] = data[0]["recipeGroup"]
+        self.assertEqual(validate(data)["pairs"], 6000)
+        data[1]["pairID"] = data[0]["pairID"]
+        with self.assertRaisesRegex(ReadinessError, "duplicate_pair_id"):
+            validate(data)
+
+    def test_theme_denominator_is_actual_count(self):
+        data = rows()
+        # Minimum-count percentages would pass; actual grid total requires more light/high contrast.
+        for i in range(4000):
+            data.append({**data[200], "pairID": f"extra{i}", "seed": f"extra{i}", "recipeGroup": f"extra{i}", "theme": "dark"})
+        with self.assertRaisesRegex(ReadinessError, "underfilled_quota"):
+            validate(data)
 
 
 if __name__ == "__main__":

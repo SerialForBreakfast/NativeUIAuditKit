@@ -50,3 +50,36 @@ failure is resolved.
 
 Software/data/integration/model gates are not passed. The runtime connection works;
 the observed smoke blocker is output-path validation, not Sillycon availability.
+
+## New-build read-only preflight — 2026-09-21
+
+The user requested a fresh check of the locally running TVTestRig build and Office Fixture.
+The packaged helper at the current Debug app path exists and its coordinator socket exists,
+but the helper exited **134** with no structured stdout for each read-only invocation tried:
+`--help`, `device list --json`, and `session status`.
+
+No Office target request completed, so this pass did not establish a connected control,
+capture availability, or Fixture state for the new build. No lease, input, capture,
+output-directory write, staging retry, settings action, restart, or cleanup action occurred.
+The shared `OFFICE-FOCUS-SMOKE` status was published and read back at
+2026-09-21T05:01:19Z with this blocker.
+
+Resume only after TVTestRig supplies a healthy packaged helper/app build. Re-run the same
+read-only device/session/capture/Fixture checks first; do not retry the separate staging
+operation until those checks pass and its scope is explicitly revisited.
+
+## TVTestRig skill refresh — 2026-09-21
+
+TVTestRig portable skill revision 7 was ingested into
+`.agents/skills/tvtestrig/` from the supplied package. Its `SKILL.md`, capture
+protocol, and interfaces reference match the supplied manifest's SHA-256 hashes.
+The package now defines the safe new-build process: use an installed signed app by
+default; for an explicitly requested source build, select a known Apple Team through
+the ignored `LocalSigning.xcconfig` flow, build in fresh project-local DerivedData
+with a locked package cache, and verify the produced app's signature.
+
+For the exit-134 helper incident, the next permitted diagnostic is one identical
+help-only command in approved normal host execution. It is not a reason to rebuild,
+re-pair, re-sign, change sandbox settings, or send Office commands. New builds also
+replace manual app-container staging with `fixture prepare`, followed—only under
+separate capture authority—by the app-owned job and hash-checked export flow.

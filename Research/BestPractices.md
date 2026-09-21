@@ -1039,6 +1039,21 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-61: Validate the real candidate path without consuming its holdout
+
+**Wrong:** Treat a one-epoch training run as a dry run, evaluate held-out hard
+negatives every epoch, or calculate theme quotas from minimum scene sizes.
+
+**Correct:** Preflight the actual trainer without Torch/model loading or writes;
+reject missing membership, preserve validation/test isolation, and calculate
+theme shares against actual counts. Derive hard-negative support from verified
+unfocused test frames. Multiple elements sharing one recipe seed are valid
+within a partition; crossing partitions is not.
+
+**Why:** Repeated test inspection leaks evaluation information, and a corpus can
+pass minimum-denominator checks while becoming less representative as it grows.
+Evidence: `reports/work/FOCUS-CONSUMER/handoff.md`, adversarial tests, 2026-09-21.
+
 ### BP-60: Shell cwd is not the signed helper's output authority
 
 **Wrong:** Assume launching TVTestRig's signed CLI from NUIAK makes NUIAK its

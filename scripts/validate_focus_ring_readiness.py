@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from focus_ring_readiness import ReadinessError, validate
+from focus_dataset_contract import FocusDataError, validate_manifest
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -18,7 +19,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--require-alignment-matrix",
         action="store_true",
-        help="require all ADR-0007 matrix rows; use for FR-B capture acceptance",
+        help="require the separately assigned semantic-alignment matrix (not visual-only training)",
     )
     return parser.parse_args()
 
@@ -29,7 +30,10 @@ def normalize_pair(pair: object) -> dict:
     result = {
         "focused": pair.get("focused_crop"),
         "unfocused": pair.get("unfocused_crop"),
-        "labelSource": pair.get("labelSource", "fixtureGroundTruth"),
+        "labelSource": pair.get("labelSource"),
+        "pairID": pair.get("pair_id"),
+        "recipeGroup": pair.get("recipe_group"),
+        "split": pair.get("split"),
         "seed": str(pair.get("recipe_seed", "")),
         "scene": pair.get("fixture_scene"),
         "theme": pair.get("theme"),
@@ -55,9 +59,10 @@ def main() -> int:
         manifest = json.loads(manifest_path.read_text())
         if not isinstance(manifest, dict):
             raise ReadinessError("invalid_manifest")
-        rows = [normalize_pair(pair) for pair in manifest.get("pairs", [])]
-        report = validate(rows, require_alignment_matrix=args.require_alignment_matrix)
-    except (json.JSONDecodeError, OSError, ReadinessError) as error:
+        rows = validate_manifest(manifest, manifest_path.parent)
+        report = validate(rows, require_alignment_matrix=args.require_alignment_matrix, evidence_root=PROJECT_ROOT / manifest["sourceRoot"])
+        report["trainingApproval"] = False
+    except (json.JSONDecodeError, OSError, ReadinessError, FocusDataError) as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 2
     print(json.dumps(report, sort_keys=True))

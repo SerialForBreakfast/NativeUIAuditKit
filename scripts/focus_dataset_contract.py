@@ -1,0 +1,178 @@
+"""Shared, byte-backed FocusRing v1.2 contract. No model imports or writes."""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SPLITS = {"train": "train", "val": "validation", "validation": "validation", "test": "test", "development": "development"}
+PREPROCESSING = {"expansion": 0.16, "cropSize": [256, 256], "coordinates": "xywh-top-left-pixels", "resize": "Pillow-affine-bilinear-v1"}
+
+
+class FocusDataError(ValueError):
+    pass
+
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+
+
+def text(value):
+    if not isinstance(value, str) or not value.strip():
+        raise FocusDataError("missing_identity")
+    return value
+
+
+def local(path):
+    path = Path(path).resolve()
+    if not path.is_relative_to(ROOT):
+        raise FocusDataError("outside_project")
+    return path
+
+
+def member(root, name):
+    name = text(name)
+    p = Path(name)
+    if p.is_absolute() or ".." in p.parts:
+        raise FocusDataError("unsafe_member")
+    root = local(root)
+    target = root / p
+    if not target.resolve().is_relative_to(root) or any(v.is_symlink() for v in [target, *target.parents] if v != root.parent):
+        raise FocusDataError("unsafe_member")
+    if not target.is_file():
+        raise FocusDataError("missing_pixels")
+    return target
+
+
+def image(root, record, expected_size=None):
+    from PIL import Image
+    p = member(root, record.get("path"))
+    if p.stat().st_size > 32 * 1024 * 1024:
+        raise FocusDataError("image_too_large")
+    if hashlib.sha256(p.read_bytes()).hexdigest() != record.get("sha256"):
+        raise FocusDataError("changed_hash")
+    try:
+        with Image.open(p, formats=["PNG"]) as im:
+            if im.format != "PNG" or im.width * im.height > 40_000_000:
+                raise FocusDataError("invalid_png")
+            im.load()
+            size = im.size
+    except (OSError, ValueError) as e:
+        raise FocusDataError("corrupt_image") from e
+    if expected_size and tuple(expected_size) != size:
+        raise FocusDataError("wrong_crop_dimensions")
+    return size
+
+
+def expanded_box(bounds, size):
+    if not isinstance(bounds, list) or len(bounds) != 4 or any(type(v) not in (float, int) or not math.isfinite(v) for v in bounds):
+        raise FocusDataError("invalid_frame_geometry")
+    x, y, w, h = bounds
+    if x < 0 or y < 0 or w <= 0 or h <= 0 or x + w > size[0] or y + h > size[1]:
+        raise FocusDataError("invalid_frame_geometry")
+    # makeCrop preserves fractional origin and rounds the intermediate canvas size.
+    return [max(0, x - w * .16), max(0, y - h * .16),
+            min(size[0], x + w + w * .16), min(size[1], y + h + h * .16)]
+
+
+def crop_frame(raw, box):
+    from PIL import Image
+    x1, y1, x2, y2 = box
+    size = (max(1, math.floor(x2 - x1 + .5)), max(1, math.floor(y2 - y1 + .5)))
+    return raw.convert("RGB").transform(size, Image.Transform.AFFINE, (1, 0, x1, 0, 1, y1),
+                                        Image.Resampling.BILINEAR).resize((256, 256), Image.Resampling.BILINEAR)
+
+
+def validate_frames(pair, source_root):
+    element = text(pair.get("elementID"))
+    frames = pair.get("frames")
+    if not isinstance(frames, dict) or set(frames) != {"focused", "unfocused"}:
+        raise FocusDataError("missing_frame_evidence")
+    sizes, boxes = {}, {}
+    for role in ("focused", "unfocused"):
+        frame = frames[role]
+        if not isinstance(frame, dict) or frame.get("labelSource") != "fixtureCallback":
+            raise FocusDataError("untrusted_focus_label")
+        frame_id = text(frame.get("frameID"))
+        if frame.get("focusFrameID") != frame_id or "observedFocusID" not in frame or frame["observedFocusID"] != (element if role == "focused" else None):
+            raise FocusDataError("stale_or_mismatched_focus")
+        sizes[role] = image(source_root, frame)
+        boxes[role] = expanded_box(frame.get("bounds"), sizes[role])
+    if sizes["focused"] != sizes["unfocused"] or frames["focused"]["frameID"] == frames["unfocused"]["frameID"]:
+        raise FocusDataError("invalid_pair_frames")
+    return boxes
+
+
+def validate_manifest(document, dataset):
+    """Validate actual crops and their raw-frame evidence; never grant launch approval."""
+    if not isinstance(document, dict) or document.get("version") != "1.2":
+        raise FocusDataError("unsupported_crop_manifest")
+    if document.get("preprocessing") != PREPROCESSING:
+        raise FocusDataError("crop_parity_mismatch")
+    if document.get("evidenceKind") not in {"test-only", "reviewed-fixture"}:
+        raise FocusDataError("missing_evidence_kind")
+    if document.get("sourceKind") not in {"simulatorFixture", "physicalFixture"}:
+        raise FocusDataError("invalid_source_kind")
+    text(document.get("corpusID")); text(document.get("producerReference"))
+    root_name = text(document.get("sourceRoot"))
+    if Path(root_name).is_absolute() or ".." in Path(root_name).parts:
+        raise FocusDataError("unsafe_source_root")
+    source_root = local(ROOT / root_name)
+    pairs = document.get("pairs")
+    if not isinstance(pairs, list) or not pairs:
+        raise FocusDataError("empty_membership")
+    ids, identities, ownership = set(), set(), {}
+    rows = []
+    for pair in pairs:
+        if not isinstance(pair, dict):
+            raise FocusDataError("invalid_pair")
+        pid = text(pair.get("pair_id"))
+        split = SPLITS.get(pair.get("split"))
+        if split is None:
+            raise FocusDataError("invalid_partition")
+        if pid in ids:
+            raise FocusDataError("duplicate_pair_id")
+        ids.add(pid)
+        if pair.get("labelSource") != "fixtureGroundTruth" or pair.get("sourceKind") != document["sourceKind"]:
+            raise FocusDataError("untrusted_pair_source")
+        group = text(pair.get("recipe_group"))
+        seed_value = pair.get("recipe_seed")
+        if type(seed_value) is not int or seed_value < 0:
+            raise FocusDataError("invalid_recipe_seed")
+        seed = str(seed_value)
+        scene = text(pair.get("fixture_scene")); theme = text(pair.get("theme")); control = text(pair.get("element_type"))
+        from simulator_focus_manifest import FAMILY_MAP, THEME_MAP
+        if scene not in FAMILY_MAP.values() or theme not in THEME_MAP.values():
+            raise FocusDataError("unsupported_pair_metadata")
+        boxes = validate_frames(pair, source_root)
+        identity = (pair["frames"]["focused"]["sha256"], pair["frames"]["unfocused"]["sha256"], pair["elementID"])
+        if identity in identities:
+            raise FocusDataError("duplicate_pair_content")
+        identities.add(identity)
+        keys = [("group", group), ("seed", seed)]
+        for role in ("focused", "unfocused"):
+            crop = {"path": pair.get(role + "_crop"), "sha256": pair.get(role + "_crop_sha256")}
+            image(dataset, crop, (256, 256))
+            if pair.get(role + "_crop_box") != boxes[role]:
+                raise FocusDataError("crop_geometry_mismatch")
+            from PIL import Image
+            with Image.open(member(source_root, pair["frames"][role]["path"])) as raw, Image.open(member(dataset, crop["path"])) as actual:
+                expected = crop_frame(raw, boxes[role])
+                if expected.tobytes() != actual.convert("RGB").tobytes():
+                    raise FocusDataError("crop_pixel_mismatch")
+            keys += [("pixels", crop["sha256"]), ("pixels", pair["frames"][role]["sha256"])]
+        for key in keys:
+            if key in ownership and ownership[key] != split:
+                raise FocusDataError("split_leakage")
+            ownership[key] = split
+        rows.append({"pairID": pid, "focused": pair["focused_crop"], "unfocused": pair["unfocused_crop"],
+                     "seed": seed, "recipeGroup": group, "split": split, "scene": scene, "theme": theme,
+                     "class": control, "labelSource": "fixtureGroundTruth", "sourceKind": pair["sourceKind"],
+                     "validatedUnfocusedEvidence": pair["frames"]["unfocused"]})
+        if "alignment" in pair:
+            from focus_ring_readiness import validate_alignment
+            validate_alignment(pair["alignment"])
+            rows[-1]["alignment"] = pair["alignment"]
+    return rows

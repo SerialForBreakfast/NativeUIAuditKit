@@ -5,7 +5,7 @@ description: Operate and diagnose Apple TV navigation, screen observation, and a
 
 # TVTestRig agent operation
 
-Portable candidate revision 3, 2026-09-20. This folder is the complete skill;
+Portable candidate revision 7, 2026-09-21. This folder is the complete skill;
 copy it as a unit. The app bundles this package and exposes Export Agent Skill
 in Automation. Export does not automatically install it in an agent host.
 
@@ -36,9 +36,19 @@ in Automation. Export does not automatically install it in an agent host.
 
 ## Choose the interface
 
+For an installed DMG, no development team or source build is required. For an
+explicit source-build/launch request or signing setup failure, first read
+[building and launching](references/interfaces.md#building-and-launching).
+Use the ignored local team configuration, not Xcode target-dropdown edits or
+re-signing an installed app. A build/launch request does not authorize device tests.
+
 Use MCP when available for typed discovery and bounded actions. Use CLI for
 repeatable local sequences and retained JSON evidence. Both address the same
 coordinator, not independent receivers. Do not switch transport to evade a gate.
+Use Automation → Copy Helper Launch Check to obtain this app's exact helper path.
+For startup aborts or app-owned recipe staging, read the
+[launch and workspace guidance](references/interfaces.md#helper-startup-and-workspace-preflight)
+before retrying. A launch check never authorizes a device operation.
 
 CLI examples (substitute the authorized discovered ID; executable must be verified):
 
@@ -96,6 +106,29 @@ poll. Cached `current` metadata must still be checked against its timestamp.
   otherwise mark health unverified. Never substitute process presence for health.
 
 ### Exhaustive DFS requests
+
+Use one bounded TTR session, not one model/tool turn per remote button. Discover
+the installed policy and command schema once, start the authorized broad policy,
+then read compact status at 15–30-second intervals when progress is needed. Fetch
+the full export at terminal state or a meaningful failure, not every poll. Keep
+run/operation IDs and a small ledger of counts, stop reason and evidence paths;
+filter base64 checkpoint/image lines from log excerpts. Older Simulator status
+may show zero progress until completion—zero is not proof it is stuck.
+
+The local loop is **observe → first eligible row → descend → verify child →
+Back/verify parent → next sibling**. Scan mixed lists to their verified boundary;
+information/editor/no-navigation leaves return without editing or selecting values.
+Skip excluded/disabled rows, but stop on unknown context, dialogs, uncertain input
+or cleanup. Never retry Select blindly or restart a service to hide failure.
+Resume only a compatible non-pending checkpoint with reconciled cleanup and fresh
+context. Do not invent graceful-pause/budget flags absent from the installed schema.
+
+Use OCR/similarity as evidence, not action authority. The current Simulator oracle
+is native AX plus raster checks; host Vision substrate is not automatically its
+live oracle. A similarity hit can miss a small modal/focus shift; fresh full-context
+and policy checks remain required. Exact-image text reuse cannot reuse freshness
+or focus. Inspect an image only when it resolves uncertainty; retain full local
+evidence and report unmetered token savings as unknown.
 
 First check the advertised policy and driver against the requested coverage. A
 complete safe traversal requires deterministic child ordering, scroll-to-end
@@ -203,20 +236,26 @@ Read-only information overlays are leaves; an entered text editor is also a leaf
 record it and Back without typing, selecting a value, saving or accepting anything.
 Retained page captures wait for matching pixels; report settling timeouts explicitly.
 
-After an authorized native-control probe, use the existing `settings-map start
+With an authorized Simulator scope and ready matched companion, use `settings-map start
 --policy-version settings-map-v1 --simulator-udid UUID`, then `settings-map status`,
 `cancel`, and `export` with its run ID. The corresponding MCP `settings_map.*`
 operations use the same coordinator. This is a separate navigation-mutating request;
-`simulator.diagnose` never starts DFS automatically. The fixed runner activates
-Fixture and Settings as labeled setup, runs the shared DFS with native accessibility
-as its oracle, and attempts Fixture return. It does not qualify the Home route or
+`simulator.diagnose` never starts DFS automatically and is not a mandatory
+Fixture-launching prerequisite for a qualified Settings-only map. The map runner activates only
+Settings as labeled setup and runs the shared DFS with native accessibility as
+its oracle. It never launches/returns to Fixture and leaves Settings at the last
+observed context; original app/focus restoration is not attempted. This separation
+does not change the ordinary Fixture diagnostic. It does not qualify the Home route or
 NUIAK vision accuracy. Bounds: 10 minutes, 50 inputs, 20 screens, depth 4.
 
-Two bounded native maps on tvOS 26.5/Xcode 27 reproduced six transitions. One had
-healthy postflight; the later run returned to Fixture but Fixture crashed after
-XCTest teardown. Thus navigation is evidenced, unattended end-to-end health is
-not. Do not repeat this configuration unattended until the failure is reconciled.
-Broader runtime/replay qualification is open.
+Earlier Fixture-return maps on tvOS 26.5/Xcode 27 reproduced transitions but also
+Fixture teardown crashes. Settings-only maps now collect two timestamped,
+exact-Simulator process observations after teardown without launching an app or
+starting another XCTest session. `present` is not responsiveness or crash-free
+proof; `not_observed` is absence from that listing, not a diagnosed crash;
+`unknown` means collection/parsing failed. A changed PID is not uninterrupted
+survival. Preserve these results separately from map/runner success and
+`post_teardown_health`. Broader runtime/replay qualification remains open.
 Native tvOS 26.5 may omit
 disclosure decorations even after a row loses focus. The fixed Simulator adapter
 can also recognize four reviewed label-only submenu entries (General, Accessibility,

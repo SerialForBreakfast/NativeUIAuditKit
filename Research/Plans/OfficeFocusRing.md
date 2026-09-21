@@ -1,10 +1,43 @@
 # Office FocusRing: smoke, qualified data, one candidate
 
-Revision 1, 2026-09-20. Highest available dispatch priority. [Tasks.md](../../Tasks.md)
+Revision 2, 2026-09-21. Highest available dispatch priority. [Tasks.md](../../Tasks.md)
 is the sole ownership/status queue. Preserve active workers and simulator evidence;
 simulator execution is paused until explicit user release of that restriction.
 This plan authorizes publication of one smoke request, not broader capture or training.
 Use the [worker workflow](../WorkerWorkflow.md) and mandatory pre-code reading.
+
+## TVTestRig build, signing, and fixture-job preflight
+
+Use the TVTestRig skill package installed at
+`.agents/skills/tvtestrig/` as the operational authority for the producer
+interface. An installed signed TVTestRig app is the normal path: use its matching
+bundled helper and do not request a development team, source rebuild, or re-signing
+as generic recovery. A source build is only appropriate when explicitly requested
+or when resolving a diagnosed signing setup failure.
+
+For an explicit source build, TVTestRig's checkout must select the maintainer's
+Apple Team with `Scripts/configure-signing.rb`; its ignored
+`TVTestRig/Config/LocalSigning.xcconfig` is the only local signing input. Do not
+edit the tracked Xcode target team setting, guess a Team ID, alter credentials, or
+reuse active DerivedData. Build in a fresh project-local work directory with a
+verified locked package cache, perform TVTestRig's post-build signature check, and
+launch only with separate authorization and no conflicting running owner.
+
+The first helper check is the running app's exact copied help command. If it aborts
+with exit 134 under an agent sandbox, retain stdout, stderr, exit status, and build
+identity, then request one identical help-only invocation in normal host execution.
+Do not treat that abort as evidence of an Office, pairing, or package failure; do
+not rebuild, re-pair, modify sandboxing, or replay a device command. A successful
+help check permits only separately authorized read-only readiness checks.
+
+For the independent staging gate, current TVTestRig builds use
+`fixture prepare --recipe FILE` to transfer a recipe over IPC and return
+`storageReady` plus a job ID. NUIAK must not write into TVTestRig's container or
+change `HOME`. After separate capture authority and fresh coordination, the producer
+may run that prepared job; only a completed job may be exported to a new, writable,
+non-symlink destination and then passed to P4-L validation. Partial export folders
+are never ingested. These mechanics do not grant capture, navigation, or training
+authority.
 
 ## P4-L — Bounded physical smoke and NUIAK intake
 

@@ -13,6 +13,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+from focus_dataset_contract import FocusDataError, PREPROCESSING, digest, validate_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 # This is deliberately a shipped-model comparison point, not the operating threshold for
@@ -26,13 +27,15 @@ class BaselineError(ValueError):
 
 
 def artifact_digest(model: Path) -> str:
-    if not model.is_dir():
+    if model.is_symlink() or not model.is_dir():
         raise BaselineError("missing_compiled_model")
     h = hashlib.sha256()
     files = sorted(path for path in model.rglob("*") if path.is_file())
     if not files:
         raise BaselineError("empty_compiled_model")
     for path in files:
+        if path.is_symlink() or not path.resolve().is_relative_to(model.resolve()):
+            raise BaselineError("unsafe_model_member")
         h.update(str(path.relative_to(model)).encode() + b"\0")
         h.update(path.read_bytes())
     return h.hexdigest()
@@ -58,6 +61,7 @@ def model_contract(model: Path) -> dict[str, Any]:
 
 def rows(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     result = []
+    seen = set()
     for pair in manifest.get("pairs", []):
         if not isinstance(pair, dict):
             raise BaselineError("invalid_membership")
@@ -66,6 +70,9 @@ def rows(manifest: dict[str, Any]) -> list[dict[str, Any]]:
         theme, control = pair.get("theme"), pair.get("element_type")
         if not all(isinstance(value, str) and value for value in (pair_id, family, theme, control)):
             raise BaselineError("invalid_membership")
+        if pair_id in seen or not pair.get("focused_crop") or not pair.get("unfocused_crop"):
+            raise BaselineError("invalid_membership")
+        seen.add(pair_id)
         for label, key in ((1, "focused_crop"), (0, "unfocused_crop")):
             if pair.get(key):
                 result.append({"id": f"{pair_id}:{label}", "label": label, "family": family, "theme": theme, "control": control, "hard": bool(pair.get("hardNegative")) and label == 0})
@@ -75,11 +82,15 @@ def rows(manifest: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str, Any]:
+    if not samples or len({s["id"] for s in samples}) != len(samples):
+        raise BaselineError("empty_or_duplicate_membership")
+    if set(scores) != {s["id"] for s in samples}:
+        raise BaselineError("missing_or_invalid_inference")
     groups: dict[str, Counter[str]] = {}
     required = {"overall"}
     for sample in samples:
         value = scores.get(sample["id"])
-        if not isinstance(value, (int, float)) or not 0 <= value <= 1:
+        if type(value) not in (int, float) or not 0 <= value <= 1:
             raise BaselineError("missing_or_invalid_inference")
         keys = ("overall", f"family:{sample['family']}", f"theme:{sample['theme']}", f"control:{sample['control']}")
         for key in keys:
@@ -101,6 +112,8 @@ def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str,
         report[key]["accuracy"] = (c["tp"] + c["tn"]) / c["n"]
         report[key]["precision"] = c["tp"] / max(1, c["tp"] + c["fp"])
         report[key]["recall"] = c["tp"] / max(1, c["tp"] + c["fn"])
+        report[key]["fpr"] = c["fp"] / (c["fp"] + c["tn"]) if c["fp"] + c["tn"] else None
+        report[key]["fnr"] = c["fn"] / (c["fn"] + c["tp"]) if c["fn"] + c["tp"] else None
     return {
         "threshold": {
             "value": SHIPPED_COMPARISON_THRESHOLD,
@@ -109,14 +122,57 @@ def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str,
         },
         "groups": report,
         "hardNegative": {"n": len(hard), "fp": hard_fp, "fpr": hard_fp / len(hard)},
+        "errors": [{"id": s["id"], "kind": "false_positive" if s["label"] == 0 else "false_negative",
+                    "theme": s["theme"], "control": s["control"], "family": s["family"]}
+                   for s in samples if int(scores[s["id"]] >= SHIPPED_COMPARISON_THRESHOLD) != s["label"]],
     }
+
+
+def prepare_protocol(manifest, dataset, model):
+    validated = validate_manifest(manifest, dataset)
+    # The development baseline cannot inspect final held-out examples by accident.
+    if any(r["split"] != "development" for r in validated):
+        raise BaselineError("development_only_baseline")
+    samples = rows(manifest)
+    hard_ids = {r["pairID"] for r in validated if r["theme"] in {"light", "highContrast"} and r["class"] in {"imageView", "collectionItem"}}
+    for sample in samples:
+        sample["hard"] = sample["label"] == 0 and sample["id"].rsplit(":", 1)[0] in hard_ids
+    value = {"formatVersion": "focus-baseline-protocol-v1", "artifact": model_contract(model),
+             "manifestSHA256": digest(manifest), "preprocessing": PREPROCESSING,
+             "evidenceKind": manifest["evidenceKind"], "partition": "development",
+             "threshold": SHIPPED_COMPARISON_THRESHOLD, "samples": samples,
+             "modelGatePassed": "not_assessed"}
+    value["implementationSHA256"] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in
+        ("scripts/focus_ring_baseline.py", "scripts/focus_dataset_contract.py", "Sources/NativeUIAuditKit/Detection/FocusRingClassifier.swift")}
+    value["cropParity"] = {"geometry": "fractional-origin-rounded-intermediate-canvas", "pixelInterpolation": "not-CoreGraphics-qualified"}
+    return {**value, "protocolSHA256": digest(value)}
+
+
+def score_protocol(protocol, scores):
+    if not isinstance(protocol, dict) or protocol.get("formatVersion") != "focus-baseline-protocol-v1":
+        raise BaselineError("unsupported_protocol")
+    identity = {k: v for k, v in protocol.items() if k != "protocolSHA256"}
+    if digest(identity) != protocol.get("protocolSHA256"):
+        raise BaselineError("changed_protocol")
+    if not isinstance(scores, dict) or scores.get("formatVersion") != "focus-baseline-scores-v1" or scores.get("protocolSHA256") != protocol["protocolSHA256"] or scores.get("artifactSHA256") != protocol["artifact"]["sha256"]:
+        raise BaselineError("incompatible_scores")
+    if scores.get("inferenceKind") not in {"test-only", "coreml"}:
+        raise BaselineError("missing_inference_kind")
+    if not isinstance(scores.get("scores"), dict):
+        raise BaselineError("invalid_scores")
+    return {"protocolSHA256": protocol["protocolSHA256"], "artifact": protocol["artifact"],
+            "evaluation": evaluate(protocol["samples"], scores["scores"]),
+            "inference": scores["inferenceKind"], "modelGatePassed": "not_assessed",
+            "evidenceKind": protocol["evidenceKind"]}
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--model", type=Path, required=True)
-    parser.add_argument("--scores", type=Path, required=True, help="Deterministic inference result map for offline/report validation")
+    parser.add_argument("--prepare", action="store_true", help="Freeze development protocol; does not infer")
+    parser.add_argument("--protocol", type=Path)
+    parser.add_argument("--scores", type=Path, help="Hash-bound score envelope; no inferred or missing results")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     output = args.output.resolve()
@@ -127,14 +183,21 @@ def main() -> int:
         print("ERROR: refusing output collision", file=sys.stderr); return 2
     try:
         manifest = json.loads(args.manifest.read_text())
-        scores = json.loads(args.scores.read_text())
-        if not isinstance(manifest, dict) or not isinstance(scores, dict): raise BaselineError("invalid_input")
-        result = {"artifact": model_contract(args.model), "evaluation": evaluate(rows(manifest), scores), "inference": "externally-supplied-deterministic-scores"}
-    except (OSError, json.JSONDecodeError, BaselineError) as error:
+        current = prepare_protocol(manifest, args.manifest.parent, args.model)
+        if args.prepare:
+            if args.scores or args.protocol: raise BaselineError("conflicting_modes")
+            result = current
+        else:
+            if not args.protocol or not args.scores: raise BaselineError("protocol_and_scores_required")
+            protocol = json.loads(args.protocol.read_text())
+            if current != protocol: raise BaselineError("changed_protocol_or_membership")
+            result = score_protocol(protocol, json.loads(args.scores.read_text()))
+    except (OSError, ValueError, BaselineError, FocusDataError) as error:
         print(f"ERROR: {error}", file=sys.stderr); return 2
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(result, indent=2) + "\n")
-    print(json.dumps({"artifactSHA256": result["artifact"]["sha256"], "samples": result["evaluation"]["groups"]["overall"]["n"]}))
+    with output.open("x") as stream:
+        stream.write(json.dumps(result, indent=2) + "\n")
+    print(json.dumps({"artifactSHA256": result["artifact"]["sha256"], "protocolSHA256": result["protocolSHA256"]}))
     return 0
 
 

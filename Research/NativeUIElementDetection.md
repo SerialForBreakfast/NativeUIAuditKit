@@ -262,6 +262,12 @@ These are derived by audit rules and post-processing, not by the pixel detector:
 
 ## 6. Dataset Strategy
 
+**FocusRing consumer hardening (2026-09-21):** the assigned offline tranche uses
+an explicit NUIAK review artifact (`focus-pair-evidence-v1`) for frame-bound
+callback truth, never inferred producer fields. Crop manifest v1.2 is validated
+by extraction, readiness, preflight and baseline preparation. Legacy crops are
+not silently migrated. See [consumer contract](Plans/FocusRingConsumerReadiness.md).
+
 **P4-A schema decision (2026-09-19):** `annotation.schema.v1.1.json` is a
 complete structural copy of `annotation.schema.json` v1.0. Version 1.0 remains
 byte-for-byte unchanged. The only validation changes in v1.1 are the declared

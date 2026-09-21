@@ -34,6 +34,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
+| F1 | FOCUS-CONSUMER | SIM-DATA-02 / FOCUS-DET-05 | review (architect implementation) | Integrated offline validator/extraction/preflight/baseline tranche verified; [handoff](reports/work/FOCUS-CONSUMER/handoff.md). No genuine data/training qualification. Contract: Research/Plans/FocusRingConsumerReadiness.md. PER-04 preserved. |
 | P0 | PER-01 | TTR-PERCEPTION | review (Codex worker; offline) | Evidence inventory, labeling/manifest and journey-group validation completed; missing real captures reported, never fabricated. Evidence: `reports/work/PER-01/handoff.md` |
 | P0 | PER-02 | TTR-PERCEPTION | review (Codex worker; offline tranche) | Integrated chevron/dialog scorer, baseline adapter contract, and honest no-training gap report completed; real inference separately assigned. Evidence: `reports/work/PER-02/handoff.md` |
 | P0 | PER-03 | TTR-PERCEPTION | blocked (unassigned) | Accepted benchmark/gap decision, numeric gates, eligible data and separate capture/training authority; reuse FR-B/FR-C for any FocusRing candidate |
@@ -62,8 +63,8 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | FR-A | FOCUS-DET-05 | accepted | Offline quota/pair/split and ADR-0007 alignment validator accepted; FR-B remains capture-gated |
 | F1 | FR-B | FOCUS-DET-05 | blocked | P4-L acceptance, physical-source review and separate pilot/scale harvest authority; visual-only corpus needs no semantic alignment matrix |
 | F1 | FR-C | FOCUS-DET-05 | blocked | Accepted physical FR-B corpus and explicit training/export assignment; later TTR comparison separately authorized |
-| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | paused (user; runtime blocked) | Simulator execution prohibited until renewed user authority. Read-only inventory found CoreSimulatorService unavailable; no UUID/helper/endpoint may be inferred. Resume after local simulator service and matching TTR helper/Fixture build are available. Evidence: `reports/work/SIM-DATA-01-02/runtime-inventory.md` |
-| F1 | SIM-DATA-02 | TASK-SIM-DATA-01 | review | Simulator manifest/eligibility, grouping and paired frame-correct extraction implemented with offline adversarial coverage. Evidence: `reports/work/SIM-DATA-01-02/handoff.md` |
+| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (coordinator access) | Updated helper exposes simulator jobs/export; readiness now fails serviceUnavailable despite GUI running, no Unix listener observed. Fixture HTTP responds. Export/intake remain unqualified; no automatic retry. Evidence: reports/work/SIM-DATA-01-02/capabilities-20260921-update.md |
+| F1 | SIM-DATA-02 | TASK-SIM-DATA-01 | review (changes required) | Consumer same-box/split/quota gaps remain; producer source also emits requested focus and omits baseline scene geometry. Coordinate with PER-04 owner; preserve physical-only delivery. Evidence: reports/work/SIM-DATA-01-02/training-readiness-audit.md and ttr-training-contract-review.md |
 | F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted SIM-DATA-01/02 plus simulator capture authority; 42-recipe genuine pilot |
 | F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned capture; ≥6,000 visual pairs |
 | F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
@@ -86,7 +87,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | TV-I2 | INTEGRATION-01 | external proposal | TVTestRig owner assigns offline artifact publication |
 | — | SA-A | 9-2 | external proposal | ScreenAuditKit owner assigns contracts/fake-backed rules |
 | — | SA-B | 9-3 | external proposal | Consumer injection interface and dependency assignment |
-| — | DOC-A | DOC-01 | review | Permitted documentation corrections are ready; exact protected-skill patch awaits its required authority |
+| — | DOC-A | DOC-01 | review | TVTestRig skill revision 7 is ingested with manifest-verified signing, helper-preflight, and app-owned fixture-job guidance; architect review remains required |
 | — | REL-A | DIST-02 | blocked | Qualified selected-model evidence |
 | — | REL-B | DIST-02 | maintainer-gated | Accepted release evidence and exact promotion/tag authority |
 | — | HIST-A | DIST-01 | review | Read-only remediation assessment is ready; missing Git object requires maintainer recovery decision |

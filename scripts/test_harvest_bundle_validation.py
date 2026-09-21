@@ -187,7 +187,12 @@ class H1Tests(unittest.TestCase):
 
     def test_fixture_extraction_uses_frame_truth_and_writes_paired_crops(self) -> None:
         output = self.d / "focus-pairs"
-        result = extract_fixture_bundle(self.d, output, "pilot-v1", "c6ec816", 0.16, False)
+        with self.assertRaisesRegex(SimulatorManifestError, "missing_observed_pair_evidence"):
+            extract_fixture_bundle(self.d, output, "pilot-v1", "c6ec816", 0.16, False)
+        proof = {"version": "focus-pair-evidence-v1", "evidenceKind": "test-only", "sourceKind": "simulatorFixture", "producerReference": "c6ec816", "pairs": [{"pairID": "synth-0", "elementID": "e", "frames": {
+            role: {"path": path, "sha256": sha((self.d / path).read_bytes()), "bounds": [0, 0, 1, 1], "frameID": role, "focusFrameID": role, "labelSource": "fixtureCallback", "observedFocusID": "e" if role == "focused" else None}
+            for role, path in (("focused", "f.png"), ("unfocused", "u.png"))}}]}
+        result = extract_fixture_bundle(self.d, output, "pilot-v1", "c6ec816", 0.16, False, proof)
         self.assertEqual(result["pairs"], 1)
         manifest = json.loads((output / "focus_dataset_manifest.json").read_text())
         pair = manifest["pairs"][0]
