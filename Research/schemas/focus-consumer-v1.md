@@ -48,6 +48,36 @@ use actual family totals, not minimum quotas.
 
 ## Training preflight
 
+### Runtime crops (manifest 1.3)
+
+Version 1.2 remains inspectable, but cannot pass training preflight. Version 1.3
+uses `resize: FocusRingClassifier.makeCrop-v1`, retaining expansion/size/coordinates.
+`runtimeCrop` records `sourceSHA256`, `helperSHA256`, `hostOS`, `architecture`;
+validation requires the current helper identity and exactly regenerated RGB pixels.
+Changing a PNG and updating its hash is insufficient. Rebuild/OS changes require
+revalidation and a new derived version, not rewriting frozen historical identity.
+`derivedFromManifestSHA256` binds the original manifest. Recropping preserves source
+frames/splits but removes `trainingApproval`; newly derived pixels need review.
+
+Build `FocusRingTool` with the repository's offline Swift workflow and explicitly
+create `.build/debug-output/focus-launch/tmp` inside the package. No automatic build
+or download occurs. Then, with fresh in-project output paths:
+
+```sh
+.venv-yolo/bin/python scripts/focus_runtime.py \
+  --manifest dataset/focus_ring/intake/focus_dataset_manifest.json \
+  --output dataset/focus_ring/runtime-crops
+```
+
+The package-only executable calls the actual production crop/classifier; no public
+API is added. Raw inputs are hashed and decoded, bounds checked, and requests bounded
+before CoreML loading. Python streams batches of 16 frames. Output collisions fail;
+partial derived files remain diagnostic evidence, not a completed corpus.
+
+The 2026-09-21 crop-origin correction changes runtime preprocessing, not weights.
+Historical runtime scores require re-baselining; test gradients establish location
+and orientation, not detector quality. See BP-62 and the launch-preparation handoff.
+
 Run `scripts/train_focus_ring_detector.py --dataset <local-dir> --name <unique-name>
 --dry-run` using `.venv-yolo/bin/python`. This imports no training runtime and
 creates no outputs. Missing or ineligible inputs exit 2, not success. Fixed
@@ -75,3 +105,17 @@ or output collisions fail. Reports include per-theme/control/family confusion
 counts, support, FPR/FNR and example errors. Inference kind is supplied evidence,
 not verification that a model was executed. Test-only reports never establish
 model quality. Final evaluation requires its separate untouched protocol.
+
+For explicitly assigned development inference on a v1.3 corpus, replace `--scores`
+with `--infer`. This invokes the actual shipped CoreML artifact, binds model/helper/
+source hashes before and after inference, and reports per-slice binary errors plus
+abstention count, decision coverage and selective accuracy. Fixed ambiguity band is
+[0.70, 0.85); threshold tuning is not performed. All-abstained selective accuracy is
+null, not perfect. CLI output retains `evidenceKind`; generated test images remain
+test-only even when scored by the genuine model.
+
+CPU-only timings describe this Mac/helper, not tvOS deployment. Each process batch
+records model load, crop and per-sample inference milliseconds. Warm p50/p95 exclude
+the first sample of each batch; raw first-sample timing remains visible. No timing
+or model gate is passed by these measurements. Old frozen protocols fail after code
+changes: create new protocols rather than silently comparing incompatible evidence.

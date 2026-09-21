@@ -14,7 +14,7 @@ import Foundation
 ///
 /// `MLModel` is not `Sendable`; predictions are treated as thread-safe the same way
 /// `PreloadedModel` wraps the YOLO graph (`@unchecked Sendable`).
-internal struct FocusRingClassifier: @unchecked Sendable {
+package struct FocusRingClassifier: @unchecked Sendable {
     /// Compiled FocusRingDetector graph.
     let model: MLModel
 
@@ -44,9 +44,9 @@ internal struct FocusRingClassifier: @unchecked Sendable {
     ]
 
     /// One crop classification.
-    internal struct Result: Sendable {
+    package struct Result: Sendable {
         /// Model output `is_focused_prob`.
-        let isFocusedProbability: Float
+        package let isFocusedProbability: Float
         /// Model output `confidence` (distance from 0.5).
         let confidence: Float
         /// True when probability is at or above `focusThreshold`.
@@ -56,7 +56,7 @@ internal struct FocusRingClassifier: @unchecked Sendable {
     }
 
     /// Creates a classifier, reading thresholds from CoreML user-defined metadata when present.
-    internal init(model: MLModel) {
+    package init(model: MLModel) {
         self.model = model
         self.focusThreshold = Self.metadataFloat(model, key: "focusThreshold", fallback: Self.defaultFocusThreshold)
         self.ambiguityThreshold = Self.metadataFloat(model, key: "ambiguityThreshold", fallback: Self.defaultAmbiguityThreshold)
@@ -66,7 +66,7 @@ internal struct FocusRingClassifier: @unchecked Sendable {
     ///
     /// Must not be called on the MainActor with a large batch; callers iterate crops off the
     /// UI thread (same pattern as YOLO `Task.detached` in `performDetailed`).
-    internal func classify(crop: CGImage) throws -> Result {
+    package func classify(crop: CGImage) throws -> Result {
         guard crop.width == Self.cropSize, crop.height == Self.cropSize else {
             throw NativeUIDetectionError.imagePreprocessingFailed
         }
@@ -95,10 +95,10 @@ internal struct FocusRingClassifier: @unchecked Sendable {
 
     /// Expands `bbox` (pixel, top-left origin) by `expansionFactor` on each side, clamps to
     /// the screenshot, and scales the result to 256×256.
-    internal static func makeCrop(
+    package static func makeCrop(
         from image: CGImage,
         bbox: CGRect,
-        expansionFactor: Double = defaultExpansionFactor
+        expansionFactor: Double = 0.16
     ) -> CGImage? {
         let imageSize = CGSize(width: image.width, height: image.height)
         let rect = expandedCropRect(bbox: bbox, imageSize: imageSize, expansionFactor: expansionFactor)
@@ -135,15 +135,15 @@ internal struct FocusRingClassifier: @unchecked Sendable {
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         ) else { return nil }
-        // boundingBoxPixels is top-left origin. Flip the context so +y is down.
-        ctx.translateBy(x: 0, y: CGFloat(height))
-        ctx.scaleBy(x: 1, y: -1)
+        // The image draw uses bottom-left CGContext coordinates. Convert the
+        // top-left box by positioning the image, not by flipping the bitmap.
+        // Flipping here sampled/mirrored the opposite vertical region.
         ctx.interpolationQuality = .high
         ctx.draw(
             image,
             in: CGRect(
                 x: -rect.origin.x,
-                y: -rect.origin.y,
+                y: CGFloat(height - image.height) + rect.origin.y,
                 width: CGFloat(image.width),
                 height: CGFloat(image.height)
             )

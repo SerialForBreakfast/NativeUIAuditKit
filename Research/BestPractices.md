@@ -1039,6 +1039,22 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-62: Test crop contents and orientation, not only tensor dimensions
+
+**Wrong:** A 256×256 crop and correct box arithmetic were treated as evidence that
+CoreGraphics selected the intended source pixels. A flipped draw context actually
+sampled the opposite vertical region and inverted it.
+
+**Correct:** On a known RGB coordinate gradient, assert pixel location/orientation
+for integer, fractional, edge, tiny and expanded focus boxes. The unflipped crop
+canvas draws the source at y = canvasHeight - imageHeight + bbox.minY. Share the
+actual production crop with dataset tooling; record backend hashes and re-baseline
+after changing preprocessing. Pillow interpolation is not exact CoreGraphics parity.
+
+**Why:** A model can run successfully on the wrong pixels. The production regression
+and exact runtime recrop checks now test content, not just shape. Evidence:
+`reports/work/FOCUS-LAUNCH/handoff.md`, 2026-09-21. Model quality remains unassessed.
+
 ### BP-61: Validate the real candidate path without consuming its holdout
 
 **Wrong:** Treat a one-epoch training run as a dry run, evaluate held-out hard

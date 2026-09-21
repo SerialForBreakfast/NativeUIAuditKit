@@ -4,9 +4,50 @@
 
 ## Next offline dispatch: chevrons, dialogs and visual focus
 
+The [FOCUS-LAUNCH preparation tranche](Plans/FocusRingLaunchPreparation.md) provides
+runtime-exact crop tooling, the real CoreML development adapter and frozen capture
+planning without waiting for TTR. Its coordinate correction requires re-baselining,
+not immediate model promotion. [Review corrections](../reports/work/FOCUS-LAUNCH/review.md)
+for PER-01/02/04 are the next independent software work; do not redispatch their
+completed helpers or confuse metadata validation with eligible training pixels.
+
+### FocusRing critical path — 2026-09-21 smoke assignment
+
+The user authorized the single local simulator smoke, superseding the pause for
+that scope only. Runtime/storage readiness now passes. Preflight identified the
+remaining **native focus/geometry settling failure** after the matching Fixture
+was deployed. A user-interfered trial was excluded; the clean retry also failed. See
+[smoke evidence](../reports/work/SIM-DATA-01-02/smoke-20260921/handoff.md).
+Keep all other simulator execution paused until separately assigned.
+
+Meaningful next tranches, with each carried through its integration/handoff:
+
+1. **Matching Fixture + complete smoke:** TTR owns compatible build/deployment;
+   NUA resumes the two-element capture, verifies both frame geometries and observed
+   focus, health/cleanup, byte-verified export, annotations and paired extraction.
+   Exit criterion is an actual intake receipt, not another readiness pass.
+2. **Development pilot + shipped baseline:** separately authorize the planned
+   42 recipes across seven families/three themes/two seeds, reconcile every target,
+   inspect overlays, qualify Swift/CoreML crop parity and benchmark the shipped
+   FocusRing model on development-only groups. Deliver ranked error/coverage
+   evidence and freeze final evaluation groups before scale-up.
+3. **Freeze candidate corpus:** separately authorize bounded resumable collection
+   to the existing 6,000-pair scene/theme/hard-negative quotas, retaining raw
+   lineage and immutable related-seed partitions. Complete validation and real
+   trainer preflight together; no quota reductions or synthetic approvals.
+4. **One candidate and TTR comparison:** after corpus acceptance and explicit
+   training authority, log/run the established 30-epoch candidate, all six gates,
+   export parity/size and separately authorized held-out TTR comparison. Preserve
+   shipped models; failures produce diagnosis, not an automatic retraining loop.
+
+Reuse the completed FOCUS-CONSUMER tranche; do not reopen its accepted software
+wholesale. Only genuine producer-contract deltas get targeted extensions. Detector
+augmentation remains secondary. None of these simulator outcomes qualifies iOS
+DS-G8, physical-device performance or production promotion.
+
 The 2026-09-21 [failure-driven perception contracts](Plans/TTRPerception.md) refine
-the TTR goal. Preserve active assignments. Dispatch PER-01 + PER-02 as one integrated
-offline tranche: inventory/labels/split contract → chevron/dialog benchmark → measured
+the TTR goal. Preserve active assignments. Complete PER-01 + PER-02 review corrections
+as one integrated offline tranche: inventory/labels/split contract → chevron/dialog benchmark → measured
 gap and training decision. Missing captures block a real baseline, not test-backed
 software and honest evidence inventory. PER-04 physical-source focus readiness can
 proceed independently; do not reopen accepted packets wholesale.

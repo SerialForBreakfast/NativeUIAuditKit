@@ -272,6 +272,27 @@ struct NativeUIAuditKitTests {
         #expect(tiny?.height == 256)
     }
 
+    @Test("FocusRing crops top-left content without vertical reflection")
+    func testFocusRingCropContentOrientation() throws {
+        let pixels: [UInt8] = (0..<80).flatMap { y in
+            (0..<100).flatMap { x -> [UInt8] in [UInt8(x * 2), UInt8(y * 3), 0, 255] }
+        }
+        let provider = try #require(CGDataProvider(data: Data(pixels) as CFData))
+        let image = try #require(CGImage(width: 100, height: 80, bitsPerComponent: 8,
+            bitsPerPixel: 32, bytesPerRow: 400, space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue),
+            provider: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent))
+        let crop = try #require(FocusRingClassifier.makeCrop(from: image,
+            bbox: CGRect(x: 10, y: 5, width: 20, height: 10)))
+        let data = try #require(crop.dataProvider?.data)
+        let bytes = try #require(CFDataGetBytePtr(data))
+        let topGreen = bytes[128 * 4 + 1]
+        let bottomGreen = bytes[255 * crop.bytesPerRow + 128 * 4 + 1]
+        #expect(topGreen < 30)
+        #expect(bottomGreen > topGreen)
+        #expect(bottomGreen < 70)
+    }
+
     @Test("FocusRing expansion preserves fractional frame-specific geometry")
     func testFocusRingFractionalGeometry() {
         let size = CGSize(width: 40, height: 30)

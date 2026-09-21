@@ -69,6 +69,10 @@ permission to stop after a helper. Per-packet gates and safety authority remain 
 
 ## tvOS Simulator datasets
 
+Offline launch preparation: [FOCUS-LAUNCH](Plans/FocusRingLaunchPreparation.md),
+with [runtime crop/baseline](schemas/focus-consumer-v1.md) and
+[capture-plan](schemas/focus-capture-plan-v1.md) interfaces. This does not authorize capture/training.
+
 Offline extension: [FocusRing consumer readiness](Plans/FocusRingConsumerReadiness.md)
 (`FOCUS-CONSUMER`); acceptance evidence in
 [handoff](../reports/work/FOCUS-CONSUMER/handoff.md). Does not close live qualification.

@@ -52,6 +52,12 @@ let package = Package(
             dependencies: ["NativeUIAuditKitModels"],
             path: "Sources/NativeUIAuditKit"
         ),
+        // Offline diagnostic adapter sharing production FocusRing preprocessing.
+        .executableTarget(
+            name: "FocusRingTool",
+            dependencies: ["NativeUIAuditKit"],
+            path: "Tools/FocusRingTool"
+        ),
         // macOS orchestrator — drives xcrun commands, writes annotations, manages the manifest.
         // Templates/ is iOS-only; it lives in the separate GeneratorRunner Xcode project
         // and is never compiled into this SPM target. Explicitly excluded to suppress warnings.

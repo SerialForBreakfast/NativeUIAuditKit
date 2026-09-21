@@ -158,7 +158,8 @@ class ConsumerTests(unittest.TestCase):
         self.save()
         with patch("focus_training_preflight.validate", return_value={}) as quotas:
             result = preflight(self.data, self.root.name)
-            self.assertTrue(result["launchEligible"], result)
+            self.assertFalse(result["launchEligible"], result)
+            self.assertIn("runtime_crop_parity_required", result["blockers"])
             quotas.assert_called_once()
             self.doc["evidenceKind"] = "test-only"; self.save()
             self.assertIn("test_only_evidence", preflight(self.data, self.root.name)["blockers"])

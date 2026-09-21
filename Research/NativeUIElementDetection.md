@@ -1,5 +1,9 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-09-21 additive diagnostic design: [FocusRing launch preparation](Plans/FocusRingLaunchPreparation.md)
+shares production cropping through package-only tooling; versioned runtime crops
+replace unqualified Pillow interpolation for new candidates. No public API change.
+
 **Status:** 5-class iOS YOLO11n shipped (`nativeui-ios-v2.0`); tvOS v3.0 shipped; FocusRingDetector v0.1 shipped; Phase 6a 41-class **not** shipped (Run 009 holdout mAP@0.5 = 0.586)  
 **As of:** 2026-09-18  
 **Audience:** NativeUIAuditKit maintainers and ScreenAuditKit contributors  

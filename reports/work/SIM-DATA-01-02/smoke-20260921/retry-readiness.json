@@ -1,0 +1,173 @@
+{
+  "command" : "simulator readiness",
+  "data" : {
+    "simulatorReadiness" : {
+      "_0" : {
+        "artifact_references" : [
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/xcode-path.stdout",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/xcode-path.stderr",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/xcode-version.stdout",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/xcode-version.stderr",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/inventory.stdout",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/inventory.stderr",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/access-check.txt",
+          "SimulatorDiagnostics/readiness-582370b8-e889-4f23-b1db-0eabec59d7ff/report.json"
+        ],
+        "can_restart" : true,
+        "can_run" : true,
+        "checks" : [
+          {
+            "code" : "coordinator_ready",
+            "kind" : "coordinator",
+            "next_action" : "",
+            "observed_at" : 811724896.298526,
+            "state" : "ready"
+          },
+          {
+            "code" : "companion_ready",
+            "kind" : "companion",
+            "next_action" : "",
+            "observed_at" : 811724896.307645,
+            "state" : "ready"
+          },
+          {
+            "code" : "evidence_access_ready",
+            "kind" : "storage",
+            "next_action" : "",
+            "observed_at" : 811724896.799829,
+            "state" : "ready"
+          },
+          {
+            "code" : "xcode_ready",
+            "kind" : "xcode",
+            "next_action" : "",
+            "observed_at" : 811724896.578481,
+            "state" : "ready"
+          },
+          {
+            "code" : "runner_ready",
+            "kind" : "runner",
+            "next_action" : "",
+            "observed_at" : 811724896.578714,
+            "state" : "ready"
+          },
+          {
+            "code" : "core_simulator_ready",
+            "kind" : "core_simulator",
+            "next_action" : "",
+            "observed_at" : 811724896.799293,
+            "state" : "ready"
+          },
+          {
+            "code" : "tvos_runtime_ready",
+            "kind" : "tvos_runtime",
+            "next_action" : "",
+            "observed_at" : 811724896.799294,
+            "state" : "ready"
+          },
+          {
+            "code" : "target_ready",
+            "kind" : "target",
+            "next_action" : "",
+            "observed_at" : 811724896.799849,
+            "state" : "ready"
+          },
+          {
+            "code" : "fixture_not_checked",
+            "kind" : "fixture",
+            "next_action" : "Fixture and navigation are checked only by a separately invoked diagnostic.",
+            "state" : "not_checked"
+          }
+        ],
+        "host_os_version" : "Version 26.4.1 (Build 25E253)",
+        "inventory" : [
+          {
+            "id" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+            "isAvailable" : true,
+            "name" : "Apple TV 4K (3rd generation)",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+            "state" : "Booted"
+          },
+          {
+            "id" : "690AD0A1-021F-4879-B391-4117B8FA7BFD",
+            "isAvailable" : true,
+            "name" : "Apple TV",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "D930B1BE-424B-4071-B9AB-E462EE231F73",
+            "isAvailable" : true,
+            "name" : "Apple TV",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-17-2",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "EB580D8E-EEE1-4612-B905-922288C7CB14",
+            "isAvailable" : true,
+            "name" : "Apple TV",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-2",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "38C9DA91-5F91-4F10-B240-1A622BE07B61",
+            "isAvailable" : true,
+            "name" : "Apple TV 4K (3rd generation)",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-17-2",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "FA623309-F7B9-4E93-A09D-436E2845BC68",
+            "isAvailable" : true,
+            "name" : "Apple TV 4K (3rd generation)",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-2",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "85BD02E5-D34C-493B-9B19-DDC3C0899935",
+            "isAvailable" : true,
+            "name" : "Apple TV 4K (3rd generation) (at 1080p)",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-2",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "C5E29075-D68F-480E-83EC-2B3C4DFEEFCE",
+            "isAvailable" : true,
+            "name" : "Apple TV 4K (3rd generation) (at 1080p)",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+            "state" : "Shutdown"
+          },
+          {
+            "id" : "FFC864F0-EEA5-4260-B393-0A8C915B7F73",
+            "isAvailable" : true,
+            "name" : "Apple TV 4K (3rd generation) (at 1080p)",
+            "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-17-2",
+            "state" : "Shutdown"
+          }
+        ],
+        "next_action" : "Ready for the separately invoked bounded diagnostic.",
+        "observed_at" : 811724896.79986,
+        "outcome" : "ready",
+        "ownership" : [
+          {
+            "observed_at" : 811724896.310698,
+            "source" : "persisted",
+            "state" : "clear"
+          }
+        ],
+        "schema_version" : 2,
+        "selected_xcode" : "/Applications/Xcode.app/Contents/Developer",
+        "target" : {
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+          "simulator_udid" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+          "state" : "Booted"
+        },
+        "xcode_version" : "Xcode 26.6 Build version 17F113"
+      }
+    }
+  },
+  "durationMilliseconds" : 515,
+  "requestID" : "F9507ED7-65E8-4A40-8C0F-484E55E36E61",
+  "schemaVersion" : 1,
+  "success" : true
+}

@@ -38,6 +38,17 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 
 ## Current bottleneck
 
+**2026-09-21 FocusRing update:** local simulator runtime/storage readiness passed,
+but the clean two-element smoke failed `native_focus_or_geometry_unavailable:
+sceneNotSettled`; no eligible pilot exists. Broad simulator collection remains
+paused. [Smoke evidence](../reports/work/SIM-DATA-01-02/smoke-20260921/executed-smoke.md).
+Offline [launch preparation](Plans/FocusRingLaunchPreparation.md) is delivered for
+review: runtime-exact crops, actual CoreML baseline adapter and frozen capture
+planning. A tested crop-origin correction changes inference preprocessing, not
+shipped weights; historical runtime metrics cannot establish its quality. No
+training or promotion occurred. The older operational snapshot below is historical,
+not a fresh Office/producer readiness check.
+
 **TASK-6a-10** — full-frame fixture retraining for 41-class iOS. Ingest scripts are written and unit-tested. Coordinator IPC was resolved on 2026-09-18; the later live batch gate is `identity_preflight` / `identityUnavailable` until TVTestRig's adapters attest a shared HarvestIdentity. Office is occupied as of 2026-09-19; an authorized hardware run is a separate prerequisite. See [the recorded evidence](../reports/tvtestrig_feedback_2026-09-18.md). Do not retrain on empty sidecars or the model's own `*_result.json` predictions.
 
 Office-independent work is defined in [ImplementationPlans.md](ImplementationPlans.md); dispatch state lives only in Tasks.md.

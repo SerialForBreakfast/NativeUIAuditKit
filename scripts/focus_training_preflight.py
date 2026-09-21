@@ -26,6 +26,8 @@ def preflight(dataset, name, epochs=30, batch=64, lr=3e-4, model="mobilenetv4_co
         dataset = local(dataset)
         document = json.loads((dataset / "focus_dataset_manifest.json").read_text())
         rows = validate_manifest(document, dataset)
+        if document.get("version") != "1.3":
+            blockers.append("runtime_crop_parity_required")
         counts = {s: sum(r["split"] == s for r in rows) for s in ("train", "validation", "test")}
         if any(n == 0 for n in counts.values()):
             blockers.append("missing_required_partition")

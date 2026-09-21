@@ -1,0 +1,182 @@
+{
+  "command" : "fixture scene",
+  "data" : {
+    "fixtureScene" : {
+      "_0" : {
+        "elementCount" : 9,
+        "isSettled" : false,
+        "origin" : "http://127.0.0.1:8080",
+        "payload" : {
+          "elements" : [
+            {
+              "element_id" : "header_shelf",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.020833333333333332,
+                0.1111111111111111,
+                0.3333333333333333,
+                0.15555555555555556
+              ],
+              "pixel_bounds" : [
+                40,
+                120,
+                600,
+                48
+              ],
+              "taxonomy_class" : "label"
+            },
+            {
+              "element_id" : "media_card_0",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.020833333333333332,
+                0.17592592592592593,
+                0.1296875,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                40,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_1",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.1421875,
+                0.17592592592592593,
+                0.25104166666666666,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                273,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_2",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.2635416666666667,
+                0.17592592592592593,
+                0.3723958333333333,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                506,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_3",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.3848958333333333,
+                0.17592592592592593,
+                0.49375,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                739,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_4",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.50625,
+                0.17592592592592593,
+                0.6151041666666667,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                972,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_5",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.6276041666666666,
+                0.17592592592592593,
+                0.7364583333333333,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                1205,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_6",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.7489583333333333,
+                0.17592592592592593,
+                0.8578125,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                1438,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            },
+            {
+              "element_id" : "media_card_7",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.8703125,
+                0.17592592592592593,
+                0.9791666666666666,
+                0.4565277777777778
+              ],
+              "pixel_bounds" : [
+                1671,
+                190,
+                209,
+                303.05
+              ],
+              "taxonomy_class" : "collectionItem"
+            }
+          ],
+          "harvest_challenge_active" : false,
+          "is_settled" : false,
+          "recipe" : {
+            "archetype" : "media_shelf",
+            "recipe_hash" : "861f24bb214f83ca3d24dcfb8953285b241eab355b0bb53ad951f054b78e88f0",
+            "seed" : 1042,
+            "step_index" : 0
+          }
+        },
+        "rawJSON" : "{\"app_version\":\"1.0\",\"defects\":[],\"elements\":[{\"accessibility_traits\":[\"isHeader\",\"isStaticText\"],\"element_id\":\"header_shelf\",\"id\":\"header_shelf\",\"is_focused\":false,\"native_pixel_rect\":[40,120,600,48],\"normalized_bounds\":[0.020833333333333332,0.1111111111111111,0.33333333333333331,0.15555555555555556],\"normalized_rect\":[0.020833333333333332,0.1111111111111111,0.33333333333333331,0.15555555555555556],\"pixel_bounds\":[40,120,600,48],\"taxonomy_class\":\"label\",\"taxonomy_role\":\"label\",\"taxonomyRole\":\"label\",\"text_content\":\"Featured Catalog (42)\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_0\",\"id\":\"media_card_0\",\"is_focused\":false,\"native_pixel_rect\":[40,190,209,303.05000000000001],\"normalized_bounds\":[0.020833333333333332,0.17592592592592593,0.12968750000000001,0.45652777777777781],\"normalized_rect\":[0.020833333333333332,0.17592592592592593,0.12968750000000001,0.45652777777777781],\"pixel_bounds\":[40,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Quantum Leap\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_1\",\"id\":\"media_card_1\",\"is_focused\":false,\"native_pixel_rect\":[273,190,209,303.05000000000001],\"normalized_bounds\":[0.14218749999999999,0.17592592592592593,0.25104166666666666,0.45652777777777781],\"normalized_rect\":[0.14218749999999999,0.17592592592592593,0.25104166666666666,0.45652777777777781],\"pixel_bounds\":[273,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Midnight Shadows\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_2\",\"id\":\"media_card_2\",\"is_focused\":false,\"native_pixel_rect\":[506,190,209,303.05000000000001],\"normalized_bounds\":[0.26354166666666667,0.17592592592592593,0.37239583333333331,0.45652777777777781],\"normalized_rect\":[0.26354166666666667,0.17592592592592593,0.37239583333333331,0.45652777777777781],\"pixel_bounds\":[506,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Echoes of Eternity\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_3\",\"id\":\"media_card_3\",\"is_focused\":false,\"native_pixel_rect\":[739,190,209,303.05000000000001],\"normalized_bounds\":[0.38489583333333333,0.17592592592592593,0.49375000000000002,0.45652777777777781],\"normalized_rect\":[0.38489583333333333,0.17592592592592593,0.49375000000000002,0.45652777777777781],\"pixel_bounds\":[739,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Cybernetic Horizon\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_4\",\"id\":\"media_card_4\",\"is_focused\":false,\"native_pixel_rect\":[972,190,209,303.05000000000001],\"normalized_bounds\":[0.50624999999999998,0.17592592592592593,0.61510416666666667,0.45652777777777781],\"normalized_rect\":[0.50624999999999998,0.17592592592592593,0.61510416666666667,0.45652777777777781],\"pixel_bounds\":[972,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"The Last Signal\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_5\",\"id\":\"media_card_5\",\"is_focused\":false,\"native_pixel_rect\":[1205,190,209,303.05000000000001],\"normalized_bounds\":[0.62760416666666663,0.17592592592592593,0.73645833333333333,0.45652777777777781],\"normalized_rect\":[0.62760416666666663,0.17592592592592593,0.73645833333333333,0.45652777777777781],\"pixel_bounds\":[1205,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Starlight Express\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_6\",\"id\":\"media_card_6\",\"is_focused\":false,\"native_pixel_rect\":[1438,190,209,303.05000000000001],\"normalized_bounds\":[0.74895833333333328,0.17592592592592593,0.85781249999999998,0.45652777777777781],\"normalized_rect\":[0.74895833333333328,0.17592592592592593,0.85781249999999998,0.45652777777777781],\"pixel_bounds\":[1438,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Chrono Trigger\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"media_card_7\",\"id\":\"media_card_7\",\"is_focused\":false,\"native_pixel_rect\":[1671,190,209,303.05000000000001],\"normalized_bounds\":[0.87031250000000004,0.17592592592592593,0.97916666666666663,0.45652777777777781],\"normalized_rect\":[0.87031250000000004,0.17592592592592593,0.97916666666666663,0.45652777777777781],\"pixel_bounds\":[1671,190,209,303.05000000000001],\"taxonomy_class\":\"collectionItem\",\"taxonomy_role\":\"collectionItem\",\"taxonomyRole\":\"collectionItem\",\"text_content\":\"Velvet Storm\"}],\"focus_sweep_frame_count\":9,\"focus_sweep_index\":-1,\"harvest_challenge_active\":false,\"is_settled\":false,\"isSettled\":false,\"monotonic_nanoseconds\":108616877244833,\"recipe\":{\"archetype\":\"media_shelf\",\"density\":\"regular\",\"element_count\":8,\"recipe_hash\":\"861f24bb214f83ca3d24dcfb8953285b241eab355b0bb53ad951f054b78e88f0\",\"schema_version\":1,\"seed\":1042,\"step_index\":0,\"theme\":\"dark\"},\"scene_height\":1080,\"scene_width\":1920,\"schema_version\":1,\"settle_wait_ms\":150,\"timestamp\":1790031875.117563}"
+      }
+    }
+  },
+  "durationMilliseconds" : 21,
+  "requestID" : "3FF558EB-CFAA-4595-8ADD-9CB9C3D0AD45",
+  "schemaVersion" : 1,
+  "success" : true
+}

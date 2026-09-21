@@ -1,0 +1,26 @@
+{
+  "command" : "fixture job-status",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "failure" : "native_focus_or_geometry_unavailable:sceneNotSettled; inspect retained evidence",
+        "files" : [
+
+        ],
+        "jobID" : "F3B3C1B4-A6B0-4161-A007-CC2DC5178D87",
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/f3b3c1b4-a6b0-4161-a007-cc2dc5178d87/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/f3b3c1b4-a6b0-4161-a007-cc2dc5178d87/recipes",
+        "schemaVersion" : 1,
+        "simulatorUDID" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "state" : "failed",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/f3b3c1b4-a6b0-4161-a007-cc2dc5178d87"
+      }
+    }
+  },
+  "durationMilliseconds" : 26,
+  "requestID" : "321A63A2-34AD-4FD6-AC47-F9F1AD1AC118",
+  "schemaVersion" : 1,
+  "success" : true
+}

@@ -1,0 +1,80 @@
+{
+  "command" : "fixture scene",
+  "data" : {
+    "fixtureScene" : {
+      "_0" : {
+        "elementCount" : 3,
+        "isSettled" : false,
+        "origin" : "http://127.0.0.1:8080",
+        "payload" : {
+          "elements" : [
+            {
+              "element_id" : "dialog_container",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.265625,
+                0.28703703703703703,
+                0.734375,
+                0.7129629629629629
+              ],
+              "pixel_bounds" : [
+                510,
+                310,
+                900,
+                460
+              ],
+              "taxonomy_class" : "alert"
+            },
+            {
+              "element_id" : "dialog_btn_0",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.37916666666666665,
+                0.6018518518518519,
+                0.49375,
+                0.6666666666666666
+              ],
+              "pixel_bounds" : [
+                728,
+                650,
+                220,
+                70
+              ],
+              "taxonomy_class" : "primaryButton"
+            },
+            {
+              "element_id" : "dialog_btn_1",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.50625,
+                0.6018518518518519,
+                0.6208333333333333,
+                0.6666666666666666
+              ],
+              "pixel_bounds" : [
+                972,
+                650,
+                220,
+                70
+              ],
+              "taxonomy_class" : "cancelAction"
+            }
+          ],
+          "harvest_challenge_active" : false,
+          "is_settled" : false,
+          "recipe" : {
+            "archetype" : "action_dialog",
+            "recipe_hash" : "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+            "seed" : 7,
+            "step_index" : 0
+          }
+        },
+        "rawJSON" : "{\"app_version\":\"1.0\",\"defects\":[],\"elements\":[{\"accessibility_traits\":[\"isModal\"],\"element_id\":\"dialog_container\",\"id\":\"dialog_container\",\"is_focused\":false,\"native_pixel_rect\":[510,310,900,460],\"normalized_bounds\":[0.265625,0.28703703703703703,0.734375,0.71296296296296291],\"normalized_rect\":[0.265625,0.28703703703703703,0.734375,0.71296296296296291],\"pixel_bounds\":[510,310,900,460],\"taxonomy_class\":\"alert\",\"taxonomy_role\":\"alert\",\"taxonomyRole\":\"alert\",\"text_content\":\"Action Confirmation\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"dialog_btn_0\",\"id\":\"dialog_btn_0\",\"is_focused\":false,\"native_pixel_rect\":[728,650,220,70],\"normalized_bounds\":[0.37916666666666665,0.60185185185185186,0.49375000000000002,0.66666666666666663],\"normalized_rect\":[0.37916666666666665,0.60185185185185186,0.49375000000000002,0.66666666666666663],\"pixel_bounds\":[728,650,220,70],\"taxonomy_class\":\"primaryButton\",\"taxonomy_role\":\"primaryButton\",\"taxonomyRole\":\"primaryButton\",\"text_content\":\"Authorize\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"dialog_btn_1\",\"id\":\"dialog_btn_1\",\"is_focused\":false,\"native_pixel_rect\":[972,650,220,70],\"normalized_bounds\":[0.50624999999999998,0.60185185185185186,0.62083333333333335,0.66666666666666663],\"normalized_rect\":[0.50624999999999998,0.60185185185185186,0.62083333333333335,0.66666666666666663],\"pixel_bounds\":[972,650,220,70],\"taxonomy_class\":\"cancelAction\",\"taxonomy_role\":\"cancelAction\",\"taxonomyRole\":\"cancelAction\",\"text_content\":\"Cancel\"}],\"focus_sweep_frame_count\":3,\"focus_sweep_index\":-1,\"harvest_challenge_active\":false,\"is_settled\":false,\"isSettled\":false,\"monotonic_nanoseconds\":108910650732833,\"recipe\":{\"archetype\":\"action_dialog\",\"density\":\"regular\",\"element_count\":2,\"recipe_hash\":\"f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216\",\"schema_version\":1,\"seed\":7,\"step_index\":0,\"theme\":\"high_contrast\"},\"scene_height\":1080,\"scene_width\":1920,\"schema_version\":1,\"settle_wait_ms\":150,\"timestamp\":1790032168.890439}"
+      }
+    }
+  },
+  "durationMilliseconds" : 7,
+  "requestID" : "64D4FF6C-2D8C-4B19-9F75-05CBA3D07DE0",
+  "schemaVersion" : 1,
+  "success" : true
+}

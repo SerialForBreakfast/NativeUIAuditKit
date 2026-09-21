@@ -107,10 +107,14 @@ def validate_frames(pair, source_root):
 
 def validate_manifest(document, dataset):
     """Validate actual crops and their raw-frame evidence; never grant launch approval."""
-    if not isinstance(document, dict) or document.get("version") != "1.2":
+    if not isinstance(document, dict) or document.get("version") not in {"1.2", "1.3"}:
         raise FocusDataError("unsupported_crop_manifest")
-    if document.get("preprocessing") != PREPROCESSING:
+    runtime = document["version"] == "1.3"
+    from focus_runtime import RUNTIME_PREPROCESSING, identity, rendered_items
+    if document.get("preprocessing") != (RUNTIME_PREPROCESSING if runtime else PREPROCESSING):
         raise FocusDataError("crop_parity_mismatch")
+    if runtime and document.get("runtimeCrop") != identity():
+        raise FocusDataError("runtime_crop_implementation_changed")
     if document.get("evidenceKind") not in {"test-only", "reviewed-fixture"}:
         raise FocusDataError("missing_evidence_kind")
     if document.get("sourceKind") not in {"simulatorFixture", "physicalFixture"}:
@@ -125,6 +129,7 @@ def validate_manifest(document, dataset):
         raise FocusDataError("empty_membership")
     ids, identities, ownership = set(), set(), {}
     rows = []
+    runtime_images = None
     for pair in pairs:
         if not isinstance(pair, dict):
             raise FocusDataError("invalid_pair")
@@ -159,7 +164,14 @@ def validate_manifest(document, dataset):
                 raise FocusDataError("crop_geometry_mismatch")
             from PIL import Image
             with Image.open(member(source_root, pair["frames"][role]["path"])) as raw, Image.open(member(dataset, crop["path"])) as actual:
-                expected = crop_frame(raw, boxes[role])
+                if runtime:
+                    if runtime_images is None:
+                        runtime_images = rendered_items(document)
+                    key, _, expected = next(runtime_images)
+                    if key != f"{pid}:{1 if role == 'focused' else 0}":
+                        raise FocusDataError("runtime_membership_mismatch")
+                else:
+                    expected = crop_frame(raw, boxes[role])
                 if expected.tobytes() != actual.convert("RGB").tobytes():
                     raise FocusDataError("crop_pixel_mismatch")
             keys += [("pixels", crop["sha256"]), ("pixels", pair["frames"][role]["sha256"])]

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fail-closed reporting for the shipped FocusRing baseline.
 
-Offline tests supply a deterministic score file. Actual CoreML inference is deliberately
-not hidden here: it is enabled only after a genuine SIM-DATA-03 pilot exists.
+Offline tests may use generated test-only images and the shipped CoreML artifact.
+Genuine development inference requires its separately authorized qualified pilot.
 """
 from __future__ import annotations
 
@@ -99,6 +99,10 @@ def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str,
             actual = sample["label"]
             groups[key]["n"] += 1
             groups[key]["tp" if predicted and actual else "fp" if predicted else "tn" if not actual else "fn"] += 1
+            abstained = .70 <= value < .85
+            groups[key]["abstained"] += int(abstained)
+            groups[key]["decided"] += int(not abstained)
+            groups[key]["correctDecisions"] += int(not abstained and predicted == actual)
     hard = [sample for sample in samples if sample["hard"]]
     if not hard:
         raise BaselineError("empty_hard_negative_support")
@@ -110,6 +114,8 @@ def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str,
             raise BaselineError("empty_group_support")
         report[key] = dict(c)
         report[key]["accuracy"] = (c["tp"] + c["tn"]) / c["n"]
+        report[key]["decisionCoverage"] = c["decided"] / c["n"]
+        report[key]["selectiveAccuracy"] = c["correctDecisions"] / c["decided"] if c["decided"] else None
         report[key]["precision"] = c["tp"] / max(1, c["tp"] + c["fp"])
         report[key]["recall"] = c["tp"] / max(1, c["tp"] + c["fn"])
         report[key]["fpr"] = c["fp"] / (c["fp"] + c["tn"]) if c["fp"] + c["tn"] else None
@@ -138,13 +144,16 @@ def prepare_protocol(manifest, dataset, model):
     for sample in samples:
         sample["hard"] = sample["label"] == 0 and sample["id"].rsplit(":", 1)[0] in hard_ids
     value = {"formatVersion": "focus-baseline-protocol-v1", "artifact": model_contract(model),
-             "manifestSHA256": digest(manifest), "preprocessing": PREPROCESSING,
+             "manifestSHA256": digest(manifest), "preprocessing": manifest["preprocessing"],
              "evidenceKind": manifest["evidenceKind"], "partition": "development",
              "threshold": SHIPPED_COMPARISON_THRESHOLD, "samples": samples,
              "modelGatePassed": "not_assessed"}
     value["implementationSHA256"] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in
         ("scripts/focus_ring_baseline.py", "scripts/focus_dataset_contract.py", "Sources/NativeUIAuditKit/Detection/FocusRingClassifier.swift")}
     value["cropParity"] = {"geometry": "fractional-origin-rounded-intermediate-canvas", "pixelInterpolation": "not-CoreGraphics-qualified"}
+    if manifest["version"] == "1.3":
+        value["cropParity"] = {"backend": "production-makeCrop", "runtime": manifest["runtimeCrop"]}
+    value["implementationSHA256"]["scripts/focus_runtime.py"] = hashlib.sha256((ROOT / "scripts/focus_runtime.py").read_bytes()).hexdigest()
     return {**value, "protocolSHA256": digest(value)}
 
 
@@ -160,10 +169,23 @@ def score_protocol(protocol, scores):
         raise BaselineError("missing_inference_kind")
     if not isinstance(scores.get("scores"), dict):
         raise BaselineError("invalid_scores")
-    return {"protocolSHA256": protocol["protocolSHA256"], "artifact": protocol["artifact"],
+    result = {"protocolSHA256": protocol["protocolSHA256"], "artifact": protocol["artifact"],
             "evaluation": evaluate(protocol["samples"], scores["scores"]),
             "inference": scores["inferenceKind"], "modelGatePassed": "not_assessed",
             "evidenceKind": protocol["evidenceKind"]}
+    values = scores["scores"]
+    result["decisions"] = {"focused": sum(v >= .85 for v in values.values()),
+                           "unfocused": sum(v < .70 for v in values.values()),
+                           "abstained": sum(.70 <= v < .85 for v in values.values()),
+                           "policy": "fixed shipped ambiguity band [0.70,0.85); binary metrics separately at0.85"}
+    if "timingBatches" in scores:
+        result["timingBatches"] = scores["timingBatches"]
+        result["timingScope"] = scores["timingScope"]
+        timings = [s["inferenceMilliseconds"] for b in scores["timingBatches"] for s in b["samples"][1:]]
+        import math
+        timings.sort()
+        result["warmLatencyMs"] = {"n": len(timings), **{key: timings[max(0, math.ceil(p*len(timings))-1)] if timings else None for key,p in (("p50",.5),("p95",.95))}}
+    return result
 
 
 def main() -> int:
@@ -171,6 +193,7 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--prepare", action="store_true", help="Freeze development protocol; does not infer")
+    parser.add_argument("--infer", action="store_true", help="Explicit CoreML development inference; requires runtime crops and frozen protocol")
     parser.add_argument("--protocol", type=Path)
     parser.add_argument("--scores", type=Path, help="Hash-bound score envelope; no inferred or missing results")
     parser.add_argument("--output", type=Path, required=True)
@@ -185,13 +208,18 @@ def main() -> int:
         manifest = json.loads(args.manifest.read_text())
         current = prepare_protocol(manifest, args.manifest.parent, args.model)
         if args.prepare:
-            if args.scores or args.protocol: raise BaselineError("conflicting_modes")
+            if args.scores or args.protocol or args.infer: raise BaselineError("conflicting_modes")
             result = current
         else:
-            if not args.protocol or not args.scores: raise BaselineError("protocol_and_scores_required")
+            if not args.protocol or (not args.scores and not args.infer): raise BaselineError("protocol_and_scores_required")
             protocol = json.loads(args.protocol.read_text())
             if current != protocol: raise BaselineError("changed_protocol_or_membership")
-            result = score_protocol(protocol, json.loads(args.scores.read_text()))
+            if args.infer:
+                if args.scores or manifest["version"] != "1.3": raise BaselineError("runtime_crops_required_no_external_scores")
+                from focus_runtime import infer
+                result = score_protocol(protocol, infer(manifest, args.model, protocol))
+            else:
+                result = score_protocol(protocol, json.loads(args.scores.read_text()))
     except (OSError, ValueError, BaselineError, FocusDataError) as error:
         print(f"ERROR: {error}", file=sys.stderr); return 2
     output.parent.mkdir(parents=True, exist_ok=True)
