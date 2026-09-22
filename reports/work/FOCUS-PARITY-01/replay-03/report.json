@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "purpose": "development-only crop parity, not accuracy or navigation qualification",
+  "peerSourceHashes": {
+    "TVTestRig/TVTestRig/Services/FocusDetectorService.swift": "ba5b05012210d82ab9e7e378a560de5967e32ac3d8d4d5497be24b5289183c8a",
+    "TVTestRig/TVTestRig/Observation/FocusScoring.swift": "5c45c2e812239241c14ce827eb16f271333f4b352234d91f003bd840a53b8928",
+    "TVTestRig/TVTestRig/Observation/LocalVisionOCRService.swift": "c9c0f81ce4b16ec5e0956f82ea3a727cbb711473236669e5ea54eaed9a83da63",
+    "TVTestRig/TVTestRig/Domain/AutomationRecords.swift": "9f26a56d531c18223ee39c0a0583544cf86d30cb627b81e53d0a80b4f627e7ca"
+  },
+  "peerRevision": "0dfb373ad0341e9f36fa9bf32d92afafa1318750",
+  "sampleManifestSHA256": "34ed9d1b2b2e529645ac4bcb24f1e9b5f948ed7d9b51ba95302df79964f4bf74",
+  "modelSHA256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+  "nuiakRuntime": {
+    "sourceSHA256": "c40042b27f231d8d23b05e0025f60552f44f268036dece458f78b97316852a6f",
+    "helperSHA256": "2500a5f1fc947e73d3c844011ec14af199f773930ff7e00dc62253dafe57df0a",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "peerHarnessSHA256": "9ce0cc010d7ad085911225ab1e7d96d385b2fac8e1d8d03405d09a985a53a5a3",
+  "peerBinarySHA256": "5e7320d4c3e78b836d50122023b9e5c416635f5cd895167b05bdfec4f236784e",
+  "generatedDependencySHA256": "e3b12fa3ceec58d5d1f33e2ebd599920dabe69a687f097e8a0e946dd1ab9f0d7",
+  "compute": {
+    "nuiak": "cpuOnly",
+    "ttr": "all"
+  },
+  "scope": "Actual TTR scoring source; extracted exact crop/rectangle dependencies; injected identical boxes/model. No OCR candidate generation, app IPC or live controller.",
+  "buildScope": "Standalone Swift 5 matching producer language mode; not its app target or default MainActor isolation configuration",
+  "trainingEligible": false,
+  "modelGatePassed": false,
+  "comparisons": [
+    {
+      "id": "settings",
+      "pixelsEqual": false,
+      "meanAbsoluteRGBDifference": 87.9535624186198,
+      "nuiakProbability": 0.007091522,
+      "ttrProbability": 8.0108642578125e-05,
+      "ttrConfidence": 1,
+      "ttrRepeatProbability": 8.0108642578125e-05,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 0.007091522,
+      "sameCPUClassifierOnTTRCrop": 7.903576e-05
+    },
+    {
+      "id": "home",
+      "pixelsEqual": false,
+      "meanAbsoluteRGBDifference": 59.112213134765625,
+      "nuiakProbability": 1,
+      "ttrProbability": 0.58056640625,
+      "ttrConfidence": 0.1611328125,
+      "ttrRepeatProbability": 0.58056640625,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 1,
+      "sameCPUClassifierOnTTRCrop": 0.5673828
+    },
+    {
+      "id": "fixture-tone",
+      "pixelsEqual": false,
+      "meanAbsoluteRGBDifference": 93.61367797851562,
+      "nuiakProbability": 0.265625,
+      "ttrProbability": 0.0298004150390625,
+      "ttrConfidence": 0.9404296875,
+      "ttrRepeatProbability": 0.0298004150390625,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 0.265625,
+      "sameCPUClassifierOnTTRCrop": 0.031433105
+    },
+    {
+      "id": "fixture-record",
+      "pixelsEqual": false,
+      "meanAbsoluteRGBDifference": 105.75191752115886,
+      "nuiakProbability": 0.0028896332,
+      "ttrProbability": 0.0006480216979980469,
+      "ttrConfidence": 0.99853515625,
+      "ttrRepeatProbability": 0.0006480216979980469,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 0.0028896332,
+      "sameCPUClassifierOnTTRCrop": 0.00058841705
+    },
+    {
+      "id": "synthetic-upper",
+      "pixelsEqual": false,
+      "meanAbsoluteRGBDifference": 10.75390625,
+      "nuiakProbability": 0.00020194054,
+      "ttrProbability": 0.00032329559326171875,
+      "ttrConfidence": 0.99951171875,
+      "ttrRepeatProbability": 0.00032329559326171875,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 0.00020194054,
+      "sameCPUClassifierOnTTRCrop": 0.00031757355
+    },
+    {
+      "id": "synthetic-edge",
+      "pixelsEqual": true,
+      "meanAbsoluteRGBDifference": 0.0,
+      "nuiakProbability": 3.7908554e-05,
+      "ttrProbability": 0,
+      "ttrConfidence": 1,
+      "ttrRepeatProbability": 0,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 3.7908554e-05,
+      "sameCPUClassifierOnTTRCrop": 3.7908554e-05
+    },
+    {
+      "id": "synthetic-lower",
+      "pixelsEqual": true,
+      "meanAbsoluteRGBDifference": 0.0,
+      "nuiakProbability": 0.1451416,
+      "ttrProbability": 0.1513671875,
+      "ttrConfidence": 0.697265625,
+      "ttrRepeatProbability": 0.1513671875,
+      "ttrZeroScoreMayHideFailure": false,
+      "sameCPUClassifierOnNUACrop": 0.1451416,
+      "sameCPUClassifierOnTTRCrop": 0.1451416
+    }
+  ],
+  "controlledComparison": "Both retained crops scored by NUIAK CPU classifier; wrapper recrop verified decoded-pixel identical",
+  "elapsedSeconds": 2.750959208002314
+}

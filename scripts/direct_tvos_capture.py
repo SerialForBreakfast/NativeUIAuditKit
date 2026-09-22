@@ -15,6 +15,7 @@ from urllib.request import Request, build_opener, ProxyHandler, HTTPRedirectHand
 
 from focus_dataset_contract import ROOT, FocusDataError, digest, expanded_box, image, local, member
 from simulator_focus_manifest import FAMILY_MAP, THEME_MAP
+from direct_tvos_targets import expected_targets, SOURCE_HASHES
 
 BUNDLE = "com.showblender.TVTestRigFixture"
 COUNTS = {"action_dialog": 2, "grid_matrix": 4, "media_shelf": 4,
@@ -131,14 +132,19 @@ class Fixture:
 
     def settle(self, expected, recipe):
         until = time.monotonic() + self.budget(10)
+        previous_deadline = self.deadline
+        self.deadline = until
         last = None
-        while time.monotonic() < until:
-            last = self.snapshot()
-            try:
-                scene_signature(last, expected, recipe)
-                return last
-            except FocusDataError:
-                time.sleep(min(.1, self.budget(.1)))
+        try:
+            while time.monotonic() < until:
+                last = self.snapshot()
+                try:
+                    scene_signature(last, expected, recipe)
+                    return last
+                except FocusDataError:
+                    time.sleep(min(.1, max(0, until - time.monotonic())))
+        finally:
+            self.deadline = previous_deadline
         raise FocusDataError("settle_timeout: " + json.dumps(last, separators=(",", ":"))[-1500:])
 
 
@@ -172,6 +178,7 @@ def scene_signature(snapshot, expected, recipe):
     planned = obs.get("plannedFocusIDs")
     require(isinstance(planned, list) and planned and len(set(planned)) == len(planned)
             and set(planned) <= set(ids), "missing_focus_targets")
+    require(planned == expected_targets(recipe), "incomplete_planned_targets")
     size = (scene.get("scene_width"), scene.get("scene_height"))
     for e in elements:
         expanded_box(e.get("pixel_bounds"), size)
@@ -198,11 +205,18 @@ def validate_interval(record, recipe, root):
 
 
 def capture_frame(fixture, target, output, name, expected, recipe):
+    if hasattr(fixture, "binding"):
+        require(bind_target(target, fixture.endpoint) == fixture.binding, "endpoint_binding_changed")
     before = fixture.settle(expected, recipe)
+    if hasattr(fixture, "initial_device"):
+        require(all(before["device"].get(k) == fixture.initial_device[k]
+                    for k in ("fixture_instance_id", "fixture_run_id")), "instance_changed")
     start = time.time()
     run(["xcrun", "simctl", "io", target, "screenshot", "--type=png", str(output / name)], fixture.budget(15))
     end = time.time()
     after = fixture.snapshot()
+    if hasattr(fixture, "binding"):
+        require(bind_target(target, fixture.endpoint) == fixture.binding, "endpoint_binding_changed")
     record = {"path": name, "sha256": hashlib.sha256((output/name).read_bytes()).hexdigest(),
               "binding": "native-observation-bracket-v1", "observedFocusID": expected,
               "captureStartedAt": start, "captureFinishedAt": end, "before": before, "after": after}
@@ -219,18 +233,37 @@ def validate_capture(doc, root):
     validate_catalog(doc["catalog"])
     require([x["recipe"] for x in doc["recipes"]] == doc["catalog"]["recipes"], "incomplete_recipe_membership")
     total = 0
-    instance = None
+    initial = doc.get("initialDevice", {})
+    instance = (initial.get("fixture_instance_id"), initial.get("fixture_run_id"))
+    require(all(isinstance(x, str) and x for x in instance), "missing_initial_identity")
+    target = doc.get("target", {})
+    require(doc.get("targetPlanSourceHashes") == SOURCE_HASHES, "unknown_target_plan")
+    if doc["evidenceKind"] != "test-only":
+        require(str(uuid.UUID(target.get("simulatorUDID", ""))).upper() == target["simulatorUDID"], "invalid_target")
+        endpoint_parts(target.get("endpoint", ""))
+        require("tvOS" in target.get("runtime", "") and target.get("deviceProfile")
+                and type(target.get("pid")) is int and target["pid"] > 0
+                and target.get("binaries", {}).get("TVTestRigFixture") and target.get("xcode"), "missing_runtime_identity")
+        hashes = [doc.get("runnerSHA256"), *target["binaries"].values()]
+        require(all(isinstance(h, str) and len(h) == 64 and all(c in "0123456789abcdef" for c in h)
+                    for h in hashes), "invalid_build_hash")
+    paths = set()
     for result in doc["recipes"]:
         frames, recipe = result["frames"], result["recipe"]
         require(frames and frames[0].get("observedFocusID") is None, "missing_reference")
         planned = frames[0]["before"]["scene"]["focus_observation"]["plannedFocusIDs"]
+        require(result.get("expectedTargets") == planned == expected_targets(recipe), "changed_expected_targets")
         require([f.get("observedFocusID") for f in frames[1:]] == planned, "incomplete_focus_sweep")
+        reference_classes = {e["element_id"]: e["taxonomy_class"] for e in frames[0]["before"]["scene"]["elements"]}
         for f in frames:
+            require(f["path"] not in paths, "duplicate_capture_path")
+            paths.add(f["path"])
             validate_interval(f, recipe, root)
             signature = scene_signature(f["before"], f["observedFocusID"], recipe)
             current = (signature["instance"], signature["run"])
-            if instance is None: instance = current
             require(current == instance, "instance_changed")
+            require({e["element_id"]: e["taxonomy_class"] for e in signature["elements"]} == reference_classes,
+                    "sweep_taxonomy_changed")
             require(json.loads(member(root, f["path"] + ".json").read_text()) == f, "changed_frame_sidecar")
         total += len(planned)
     require(doc.get("acceptedPairs") == total and doc.get("postflight", {}).get("responsive") is True, "count_or_health_mismatch")
@@ -244,11 +277,16 @@ def execute(plan, target, endpoint, output):
     output = new_output(output)
     binding = bind_target(target, endpoint)  # No mutation before exact endpoint ownership.
     fixture = Fixture(endpoint)
+    fixture.binding = binding
     initial = fixture.request("/device")
+    require(initial.get("schema_version") == 1 and all(isinstance(initial.get(k), str) and initial[k]
+                for k in ("fixture_instance_id", "fixture_run_id")), "invalid_initial_device")
+    fixture.initial_device = initial
     output.mkdir(parents=True)
     doc = {"version": "direct-tvos-capture-v1", "sourceKind": SOURCE, "catalog": plan,
            "target": binding, "initialDevice": initial, "state": "partial", "recipes": [], "acceptedPairs": 0,
            "evidenceKind": "fixture-native-capture",
+           "targetPlanSourceHashes": SOURCE_HASHES,
            "runnerSHA256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
     write_json(output / "started.json", doc)
     try:
@@ -260,7 +298,7 @@ def execute(plan, target, endpoint, output):
             fixture.request("/recipe", recipe)
             fixture.request("/focus/set", {"element_id": None, "settle_time_ms": 150})
             frames = [capture_frame(fixture, target, output, f"{index:03d}-reference.png", None, recipe)]
-            planned = frames[0]["before"]["scene"]["focus_observation"]["plannedFocusIDs"]
+            planned = expected_targets(recipe)
             result = {"recipe": recipe, "expectedTargets": planned, "frames": frames}
             doc["recipes"].append(result)
             for n, element in enumerate(planned):

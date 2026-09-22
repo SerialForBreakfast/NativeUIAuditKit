@@ -1,0 +1,16 @@
+warning: /Users/josephmccraw/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/josephmccraw/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/josephmccraw/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'nativeuiauditkit': failed storing manifest for 'nativeuiauditkit' in cache: attempt to write a readonly database
+warning: 'swift-docc-plugin': failed storing manifest for 'swift-docc-plugin' in cache: attempt to write a readonly database
+warning: 'swift-docc-symbolkit': failed storing manifest for 'swift-docc-symbolkit' in cache: attempt to write a readonly database
+[0/1] Planning build
+[1/1] Compiling plugin Swift-DocC Preview
+[2/2] Compiling plugin Swift-DocC
+Building for debugging...
+[2/15] Write swift-version--58304C5D6DBC2206.txt
+[4/13] Emitting module NativeUIDatasetGenerator
+[5/11] Emitting module NativeUIAuditKit
+[6/11] Emitting module TransitionTool
+[7/11] Emitting module FocusRingTool
+Build complete! (3.44s)

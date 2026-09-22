@@ -123,3 +123,13 @@ reports/confusion_matrix_v*.png
 reports/per_class_metrics_v*.csv
 reports/centroid_bias_v*.json
 /scripts/__pycache__
+
+# FOCUS-EXP-01: retain raw captures/crops locally, never commit training pixels.
+reports/work/FOCUS-EXP-01/**/attachments/
+reports/work/FOCUS-EXP-01/**/*.xcresult/
+reports/work/FOCUS-EXP-01/**/*.png
+reports/work/FOCUS-EXP-01/**/*.mp4
+reports/work/OS-FOCUS-03/**/attachments/
+reports/work/OS-FOCUS-03/**/*.xcresult/
+reports/work/OS-FOCUS-03/**/*.png
+reports/work/OS-FOCUS-03/**/*.mp4

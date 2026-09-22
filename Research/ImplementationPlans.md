@@ -4,6 +4,28 @@
 
 ## Remaining-work amendments and direct acquisition
 
+[FOCUS-EXP-01: bounded focus-learning experiment](Plans/FocusLearningExperiment.md)
+compares checkpoint initialization and crop shape using reviewed, screen-grouped
+native data through an isolated experimental entrypoint in the existing trainer.
+It does not waive production data or model gates.
+
+[FOCUS-PARITY-01: record/replay/compare](Plans/FocusIntegrationReplay.md) isolates
+actual producer/consumer preprocessing before attributing failures to model weights.
+
+[OS-FOCUS-04: incremental native/fixture corpus](Plans/NativeOSFocus.md#os-focus-04--incremental-native-and-fixture-corpus)
+defines immutable additions and existing-trainer integration without waiting for TTR.
+The [native incremental slice](../reports/work/OS-FOCUS-03/handoff.md) now has
+protocol v2, one completed candidate and separate challenge evaluation; broader
+mixed-source integration remains open. See the [next boundary](Plans/NativeOSFocus.md#latest-delivery-and-next-boundary).
+
+[OS-FOCUS-01/02: independent native OS focus](Plans/NativeOSFocus.md) adds a
+third acquisition lane, using native XCTest observations rather than Fixture or
+TTR services. Runtime execution and data admission are separate checkpoints.
+
+[OS-FOCUS-03: deterministic Home coverage](Plans/NativeOSFocus.md#os-focus-03--deterministic-home-screen-coverage)
+extends that lane with observed-graph snakes, conditional spirals and short
+direction-pair coverage; it is not implemented by the initial Settings probe.
+
 [RemainingDelivery.md](Plans/RemainingDelivery.md) supplies missing contracts.
 Existing detailed packets remain canonical. Review-ready work needs evidence review,
 not automatic reimplementation; preserve active owners. Current source-kind policy

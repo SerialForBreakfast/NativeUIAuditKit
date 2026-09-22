@@ -1,0 +1,1 @@
+{"pairs": 12, "trainingEligible": false, "accounting": {"observations": 26, "inputs": 25, "uniqueFrames": 22, "terminal": "inputs=25; boundaries=3; completed=true; settingsForeground=true; originalContextRestored=false"}, "confusion": {"TP": 1, "FN": 11, "FP": 3, "TN": 9}}

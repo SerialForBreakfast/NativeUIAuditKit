@@ -1,0 +1,12 @@
+{
+  "screenID": "settings/remotes",
+  "split": "challenge",
+  "manifest": {
+    "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/manifest.json",
+    "sha256": "ce4bea772a4b7b54b853f86d3a095d47f709f2f855405537f12bc915f7d248f9"
+  },
+  "review": {
+    "path": "reports/work/OS-FOCUS-03/review.md",
+    "sha256": "ed77bdcf312f184ff5d78d7c6d8cd250a5564edb504558407e6b8d8612d2d024"
+  }
+}

@@ -94,6 +94,16 @@ and `--execute --experiment-id <id>`. Test data is never used per epoch.
 
 ### Direct native-generator extension — v1.4 (2026-09-22)
 
+Admission review amendment: expected focus targets come from a pinned source-derived
+plan, not live telemetry. Recipe element_count is not focus-target count: hero has two
+targets, maze expands to a3×3 layout with one disabled cell, and kitchen-sink includes
+noninteractive classes. The raw capture must bind initial/runtime/postflight identity,
+consistent target lists and per-element taxonomy across the sweep, unique PNG paths,
+and fresh endpoint ownership at each capture. A reviewed manifest additionally binds
+an existing project-local review report by SHA256; a nonempty report string is not
+review evidence. New tests exercise successful execute→receipt→consumer as well as
+failure paths. These requirements refine unqualified direct artifacts, not v1.2/v1.3.
+
 `direct-tvos-capture-v1` is a separate completed capture record, not a fabricated
 TTR receipt. It binds the exact simulator/listener/build, frozen catalog, native
 before/after observations, local capture intervals, PNG hashes, dimensions, counts
@@ -111,8 +121,9 @@ Entrypoints: `direct_tvos_capture.py --plan [--smoke] --output <new-catalog>`;
 `--execute --catalog <catalog> --target <exact-UUID> --endpoint <loopback-URL>
 --output <new-directory>`; then `direct_focus_manifest.py --capture <direct-capture.json>
 --visual-review <review.json> --output <new-directory>`. Review JSON contains
-`captureSHA256` (canonical receipt digest), `accepted: true`, and `report` identifying
-the visual evidence. Use the existing `focus_ring_baseline.py` on the derived manifest.
+`captureSHA256` (canonical receipt digest), `accepted: true`, `report` (project-relative
+existing visual-review file) and `reportSHA256` binding that file's bytes. Use the
+existing `focus_ring_baseline.py` on the derived manifest.
 Full assigned scope and authority: [parallel acquisition](../Plans/ParallelTVOSAcquisition.md).
 
 ### Physical-source extension (2026-09-22)

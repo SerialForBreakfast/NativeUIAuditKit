@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "observations": 7,
+  "uniqueFrames": 4,
+  "inputs": 6,
+  "uniqueRows": 4,
+  "sourceKind": "tvos_simulator_os",
+  "membership": "development-only-one-journey",
+  "trainingEligible": false,
+  "modelSHA256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+  "runtime": {
+    "sourceSHA256": "c40042b27f231d8d23b05e0025f60552f44f268036dece458f78b97316852a6f",
+    "helperSHA256": "2500a5f1fc947e73d3c844011ec14af199f773930ff7e00dc62253dafe57df0a",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "peerBinarySHA256": "5e7320d4c3e78b836d50122023b9e5c416635f5cd895167b05bdfec4f236784e",
+  "coordinateScale": 2,
+  "pointViewport": [
+    0,
+    0,
+    1920,
+    1080
+  ],
+  "pixelDimensions": [
+    3840,
+    2160
+  ],
+  "nativeFocusSequence": [
+    "General",
+    "Profiles and Accounts",
+    "Video and Audio",
+    "Screen Saver",
+    "Video and Audio",
+    "Profiles and Accounts",
+    "General"
+  ],
+  "terminal": "inputs=6; settingsForeground=true; originalContextRestored=false",
+  "rows": [
+    {
+      "id": "00-start-row-0",
+      "nativeFocused": true,
+      "nuiakProbability": 0.59228516,
+      "ttrProbability": 0,
+      "ttrConfidence": 1,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "00-start-row-1",
+      "nativeFocused": false,
+      "nuiakProbability": 0.65625,
+      "ttrProbability": 0.9638671875,
+      "ttrConfidence": 0.927734375,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "00-start-row-2",
+      "nativeFocused": false,
+      "nuiakProbability": 0.7792969,
+      "ttrProbability": 0.26123046875,
+      "ttrConfidence": 0.4775390625,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "00-start-row-3",
+      "nativeFocused": false,
+      "nuiakProbability": 0.17810059,
+      "ttrProbability": 0.89892578125,
+      "ttrConfidence": 0.7978515625,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "01-row-0",
+      "nativeFocused": false,
+      "nuiakProbability": 0.9892578,
+      "ttrProbability": 0.52392578125,
+      "ttrConfidence": 0.0478515625,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "01-row-1",
+      "nativeFocused": true,
+      "nuiakProbability": 0.60791016,
+      "ttrProbability": 0.007396697998046875,
+      "ttrConfidence": 0.9853515625,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "01-row-2",
+      "nativeFocused": false,
+      "nuiakProbability": 0.5083008,
+      "ttrProbability": 0.1959228515625,
+      "ttrConfidence": 0.6083984375,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "01-row-3",
+      "nativeFocused": false,
+      "nuiakProbability": 0.17810059,
+      "ttrProbability": 0.89892578125,
+      "ttrConfidence": 0.7978515625,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "02-row-0",
+      "nativeFocused": false,
+      "nuiakProbability": 0.7680664,
+      "ttrProbability": 0.5234375,
+      "ttrConfidence": 0.046875,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "02-row-1",
+      "nativeFocused": false,
+      "nuiakProbability": 0.99316406,
+      "ttrProbability": 0.96044921875,
+      "ttrConfidence": 0.9208984375,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "02-row-2",
+      "nativeFocused": true,
+      "nuiakProbability": 0.53271484,
+      "ttrProbability": 0.00870513916015625,
+      "ttrConfidence": 0.982421875,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "02-row-3",
+      "nativeFocused": false,
+      "nuiakProbability": 0.07330322,
+      "ttrProbability": 0.86474609375,
+      "ttrConfidence": 0.7294921875,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "03-row-0",
+      "nativeFocused": false,
+      "nuiakProbability": 0.7680664,
+      "ttrProbability": 0.5234375,
+      "ttrConfidence": 0.046875,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "03-row-1",
+      "nativeFocused": false,
+      "nuiakProbability": 0.8569336,
+      "ttrProbability": 0.96044921875,
+      "ttrConfidence": 0.9208984375,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "03-row-2",
+      "nativeFocused": false,
+      "nuiakProbability": 0.984375,
+      "ttrProbability": 0.260986328125,
+      "ttrConfidence": 0.47802734375,
+      "ttrFailureSentinel": false
+    },
+    {
+      "id": "03-row-3",
+      "nativeFocused": true,
+      "nuiakProbability": 0.81933594,
+      "ttrProbability": 0.0014410018920898438,
+      "ttrConfidence": 0.9970703125,
+      "ttrFailureSentinel": false
+    }
+  ],
+  "scope": "Injected native row boxes; model makes scores, native focus only scores truth. Not detector candidate extraction or model-driven navigation. NUA CPU versus TTR all backend.",
+  "visualReview": "Four unique full frames inspected; highlights match native focus, standard Settings labels only. Reviewed development evidence, not independent final test annotations."
+}

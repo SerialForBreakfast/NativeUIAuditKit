@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-21 (local; latest handoff 2026-09-22 UTC)
+**As of:** 2026-09-22 (local; latest focus experiment 2026-09-22 UTC)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,31 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+Latest independent tranche: [OS-FOCUS-03/04](../reports/work/OS-FOCUS-03/handoff.md)
+added3 Apps training pairs and6 Remotes challenge pairs. FDR-007 completed8 epochs
+on40 train/9 validation pairs:18/18 validation,12/12 challenge decisions at0.85.
+FDR-006 also scores12/12 challenge versus shipped CoreML5/12: no demonstrated
+incremental gain. Native Settings acquisition/training works without TTR. Home
+remains locally blocked on stable HeadBoard focus observations; zero Home samples
+admitted. Next prioritize different focus appearances and export parity, not more
+same-style training. No shipped replacement or release/physical-device claim.
+
+Latest learning result: [FOCUS-EXP-01](../reports/work/FOCUS-EXP-01/handoff.md)
+completed four native-focus training arms independently of TTR.46 reviewed pairs:
+37 training/9 validation, grouped by Settings screen. Warm+production-stretch
+achieved18/18 validation decisions at0.85 (shipped CoreML7/18); scratch+stretch
+also18/18 but learned later. This is tiny same-app validation, not a final-test or
+release gate. No crop-default/model replacement. Next: independent Home/style
+challenge data and runtime parity investigation; no automatic training loop.
+This supersedes the pre-training bottleneck in the older snapshot below.
+
+Latest native focus development evidence (2026-09-22): independent Settings-root
+sweep produced 12 reviewed focused/unfocused pairs with production crops; shipped
+classifier at0.85 yielded TP1/FN11/FP3/TN9. [Evidence](../reports/work/OS-FOCUS-02/handoff.md).
+Capture is unblocked independently of TTR. Broader independent data partitions,
+not another identical sweep, are needed before candidate training. Shipped weights
+are unchanged; this is development evidence, not a model gate.
 
 | Artifact | ID | Notes |
 |---|---|---|
@@ -24,6 +49,16 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 ---
 
 ## Not shipped
+
+**2026-09-22 16:29Z TTR/Fixture update:** new local app/companion and persistent simulator
+remote interface observed; all eight exact-target infrastructure checks ready,
+ownership clear. Installed Fixture bytes remain identical to the prior failing
+artifact. Following Fixture relaunch, HTTP health is restored; fresh passive
+telemetry (412 samples) still reports native focus non_view/unmapped_item on the
+current media_shelf scene. No new capture or two-element smoke. Producer crop repair source matches its receipt;
+offline corrected-crop replay is ready, exact parity still unqualified. This is
+not a new storage regression or a block on independent native NUA work.
+[Fixture follow-up](../reports/work/TTR-CHECK-20260922-1622/fixture-followup.md).
 
 **2026-09-22 parallel acquisition:** direct HTTP/simctl runner, development-only
 v1.4 consumer and existing runtime-crop/baseline integration delivered;38 Python
@@ -71,6 +106,15 @@ not the previously resolved native-reference focus failure. No new training or p
 ---
 
 ## Current bottleneck
+
+**2026-09-22 native OS lane:** approved independent XCTest Settings recording
+passed: six directional inputs, seven hash-verified states/four distinct frames,
+native focus visually aligned. No TTR/Fixture required. A development replay of
+four native rows across four frames found 0/4 focused positives and 4/12 unfocused
+false positives at 0.85 through shipped NUIAK preprocessing/model. This is a tiny
+single-journey diagnostic, not general accuracy or training readiness. Native OS
+admission/Home coverage can progress independently; Fixture repair remains open.
+[Evidence](../reports/work/OS-FOCUS-01/live-20260922-0712/handoff.md).
 
 **Parallel path approved, 2026-09-22:** [ADR-0009](ADR-0009-Direct-tvOS-Simulator-Generation.md)
 defines direct native tvOS Fixture/OS generation independent of TTR capture/export.

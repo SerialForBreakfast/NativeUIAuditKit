@@ -1034,3 +1034,116 @@ new real-data inference/training occurred. The corrected evaluator rejects missi
 members/leakage and requires explicit isolated output; legacy diagnostics cannot
 pass qualification. Current qualified crops require v1.3 runtime preprocessing,
 superseding v1.2's readiness limitation above. See `../reports/work/EVIDENCE-AUDIT/handoff.md`.
+
+## Run FDR-002 — warm-stretch development experiment (2026-09-22)
+
+Pre-launch authorization: maintainer “ok lets do the experiment.” Status: runtime
+attempt stopped before training. PID72087, 15:56:25–16:06:25 UTC, 600s, exit143
+from owned-process watchdog. Cold torch import consumed the budget; zero epochs,
+no checkpoint. Stack samples show dependency-file reads, not model computation.
+Cache-isolation probe timed out45s; subsequent warmed import passed in0.717s
+(torch2.13.0, MPS available). Original outputs/logs retained; FDR-006 is the
+single evidence-supported replacement attempt with unchanged protocol. Output:
+`NativeUITrainer/focus_ring_runs/fdr002-warm-stretch` (new, isolated).
+Protocol `cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414`.
+Strict FDR-001 checkpoint initialization; fresh optimizer. 74 training crops
+(37 pairs, Root + General); 18 validation crops (9 Accessibility pairs).
+Vendored MobileNetV4-Conv-Small, AdamW lr0.0003, batch8, seed42, 8 epochs,
+RGB/255, no augmentation, 16% expanded production stretch, maximum600 seconds.
+Minimum validation BCE selects checkpoint; fixed thresholds0.5/0.85 reported.
+No final test, export, promotion or release qualification. Related screen journeys
+remain grouped; this same-app pilot is not independent style/platform evidence.
+Plan: `Plans/FocusLearningExperiment.md`; reviewed sources in FOCUS-EXP-01.
+
+## Run FDR-003 — scratch-stretch development experiment (2026-09-22)
+
+Pre-launch status: logged before execution; same authorization/config/data/selection
+as FDR-002, except random initialization. Output `NativeUITrainer/focus_ring_runs/fdr003-scratch-stretch`.
+Protocol `cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414`.
+Arm `scratch-stretch`; 8 epochs, batch8, AdamW0.0003, seed42, 74/18 crops,
+no augmentation, 600s limit. No release claim or automatic retry.
+Outcome: completed8/8, exit0, PID74287,19.995s process /9.772s post-preflight.
+Selected epoch8, validation BCE0.0234107; TP9/FN0/FP0/TN9 at0.5 and0.85.
+First18/18 epoch7. Best SHA256 `55cc89c1c54beeadc689c9c679ab1c73e524a96757781591b0fe905ef8b48a96`.
+
+## Run FDR-006 — warm-stretch after runtime-only startup failure (2026-09-22)
+
+Logged before launch under the same approved four-arm experiment. Replaces only
+FDR-002's zero-epoch runtime attempt after a successful0.717s import-only probe.
+Not a performance-triggered retrain; no hyperparameter, data or threshold changes.
+Output `NativeUITrainer/focus_ring_runs/fdr006-warm-stretch`.
+Protocol `cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414`.
+Arm `warm-stretch`; strict FDR-001 initialization, fresh AdamW0.0003, batch8,
+seed42, 8epochs, 74/18 crops, no augmentation, 600s external process deadline.
+All remaining arms use the same deadline-enforcing serial wrapper.
+Outcome: completed8/8, exit0, PID73427,419.131s process /409.443s post-preflight,
+including cold optimizer dependencies. Selected epoch7, validation BCE0.0000125763;
+TP9/FN0/FP0/TN9 at0.5 and0.85; first18/18 epoch1.
+Best SHA256 `00359cc9bd547f2821b244b45ce64374465f6e5a30e92070dd520af2cafb2fa3`.
+
+## Run FDR-004 — warm-aspect-fit development experiment (2026-09-22)
+
+Pre-launch status: logged before execution; same authorization/config/data/selection
+as FDR-002, except aspect-fit black-padded 256×256 crops after16% expansion.
+Output `NativeUITrainer/focus_ring_runs/fdr004-warm-aspect-fit`.
+Protocol `cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414`.
+Arm `warm-aspect-fit`; strict FDR-001 initialization, 8 epochs, batch8,
+AdamW0.0003, seed42, 74/18 crops, no augmentation, 600s limit.
+No production preprocessing change, release claim or automatic retry.
+Outcome: completed8/8, exit0, PID74342,19.567s process /9.482s post-preflight.
+Selected epoch5, validation BCE0.000692525; TP9/FN0/FP0/TN9 at0.5 and0.85.
+First18/18 epoch1. Best SHA256 `3dacb2958d697e546552521f2d9764ed39a40974e66f3a9ae6f21d5ccf797673`.
+
+## Run FDR-005 — scratch-aspect-fit development experiment (2026-09-22)
+
+Pre-launch status: logged before execution; same authorization/config/data/selection
+as FDR-004, except random initialization.
+Output `NativeUITrainer/focus_ring_runs/fdr005-scratch-aspect-fit`.
+Protocol `cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414`.
+Arm `scratch-aspect-fit`; 8 epochs, batch8, AdamW0.0003, seed42, 74/18 crops,
+no augmentation, 600s limit. No release claim or automatic retry.
+Outcome: completed8/8, exit0, PID74380,19.300s process /9.226s post-preflight.
+Selected epoch8, validation BCE0.825227; TP0/FN9/FP0/TN9 at0.5 and0.85.
+AUROC1.0 despite failed fixed-threshold decisions; no threshold tuning was done.
+Best SHA256 `40fece982d9c8ad9c1d2647a1e7fc1326eebb86bbd8e9c178bf96e0bff8316bc`.
+
+### FOCUS-EXP-01 interpretation (all four completed arms)
+
+All used torch2.13.0/MPS and the same frozen development protocol. Shipped CoreML
+on these18 validation crops gives TP0/FN9/FP2/TN7 at0.85. Initial FDR-001 PyTorch
+gives TP0/FN9/FP1/TN8: mean absolute probability difference0.004849, maximum0.016776
+versus CoreML CPU. Runtime/export parity is not exact and remains follow-up work.
+Warm initialization learned the native row style sooner in this fixed budget;
+aspect-fit provided no demonstrated advantage. Prefer production stretch plus
+warm-start for the next controlled experiment, not as a production promotion.
+Only9 correlated same-app validation pairs; checkpoint selection uses this set.
+No independent final-test, fixture-retention, physical-device or release-gate pass.
+Evidence: `../reports/work/FOCUS-EXP-01/comparison.json` and `handoff.md` in that folder.
+
+## Run FDR-007 — native Apps incremental development (2026-09-22)
+
+Logged before launch under the approved independent native tranche. Initialize strictly
+from FDR-006 with fresh optimizer; production stretch, 16% expansion, 256×256.
+Protocol `a756f182c633ae6ad4b4985a75200ef738a7974bf8520ce8a3c946d8574d4f8c`.
+40 training pairs (Root12/General25/Apps3), 9 Accessibility validation pairs;
+Remotes6 pairs challenge-only, excluded from selection. Home admitted zero pairs.
+8 epochs, batch8, AdamW0.0003, seed42, no augmentation, external600s deadline.
+Output `NativeUITrainer/focus_ring_runs/fdr007-native-incremental`.
+Question: retain prior native-row performance with new Apps training examples;
+not a causal ablation of added data or a production qualification. Before training,
+FDR-006 already scores12/12 on Remotes at0.85 versus shipped5/12. No automatic
+retraining, promotion, claim of independent app/style generalization, or TTR dependency.
+Arm `warm-stretch`. Initial launcher rejected the log before model initialization
+because this literal arm binding was missing (exit2, zero epochs/output). Corrected
+the log; retain the rejected attempt and use a new execution ledger for the same
+not-yet-started candidate. No data/configuration change or performance retry.
+Outcome: completed8/8, exit0, PID80937,18.608s process /7.481s post-preflight,
+torch2.13.0/MPS. Selected epoch8 by validation BCE0.00000733137;
+TP9/FN0/FP0/TN9 at0.5 and0.85. Best SHA256
+`a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0`.
+Frozen Remotes challenge: TP6/FN0/FP0/TN6 at both thresholds, equal to FDR-006.
+Shipped CoreML at0.85: TP0/FN6/FP1/TN5. No observed challenge improvement from
+this increment; do not infer causal equivalence or unseen-style generalization.
+Full-frame/crop pixel and lineage isolation passed against both experiment protocols.
+Evidence: `../reports/work/OS-FOCUS-03/summary.json`, challenge-before/after.json.
+No further run, export or promotion performed.

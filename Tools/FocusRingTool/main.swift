@@ -19,6 +19,7 @@ struct Request: Decodable, Sendable {
     let mode: String
     let model: String?
     let items: [Item]
+    let experimentalAspectFit: Bool?
 }
 struct ItemResult: Encodable, Sendable {
     let id: String
@@ -89,7 +90,7 @@ func run(output: FileHandle) throws {
     for (item, image) in inputs {
         let start = ProcessInfo.processInfo.systemUptime
         let b = item.bounds
-        guard let crop = FocusRingClassifier.makeCrop(from: image, bbox: CGRect(x: b[0], y: b[1], width: b[2], height: b[3])) else { throw ToolError.invalidImage }
+        guard let crop = FocusRingClassifier.makeCrop(from: image, bbox: CGRect(x: b[0], y: b[1], width: b[2], height: b[3]), experimentalAspectFit: r.experimentalAspectFit ?? false) else { throw ToolError.invalidImage }
         let cropTime = milliseconds(start)
         if let classifier {
             let inferenceStart = ProcessInfo.processInfo.systemUptime

@@ -1,0 +1,8 @@
+starting fdr006-warm-stretch
+{"name": "fdr006-warm-stretch", "pid": 73427, "exitCode": 0, "elapsedSeconds": 419.1305616669997}
+starting fdr003-scratch-stretch
+{"name": "fdr003-scratch-stretch", "pid": 74287, "exitCode": 0, "elapsedSeconds": 19.995017541979905}
+starting fdr004-warm-aspect-fit
+{"name": "fdr004-warm-aspect-fit", "pid": 74342, "exitCode": 0, "elapsedSeconds": 19.567229042004328}
+starting fdr005-scratch-aspect-fit
+{"name": "fdr005-scratch-aspect-fit", "pid": 74380, "exitCode": 0, "elapsedSeconds": 19.300024291995214}

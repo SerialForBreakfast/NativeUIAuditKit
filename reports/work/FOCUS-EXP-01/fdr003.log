@@ -1,0 +1,19 @@
+{"arm": "scratch-stretch", "configuration": {"augmentation": "none", "batch": 8, "epochs": 8, "lr": 0.0003, "maxSeconds": 600, "model": "mobilenetv4_conv_small", "seed": 42}, "configurationValid": true, "launchEligible": true, "output": "NativeUITrainer/focus_ring_runs/fdr003-scratch-stretch", "protocolSHA256": "cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414", "releaseEligible": false, "support": {"train": {"0": 37, "1": 37}, "validation": {"0": 9, "1": 9}}, "warmCheckpoint": null}
+=== FocusRing train 2026-09-22T16:14:55Z ===
+dataset: /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/focus_ring
+train=74 val=18; final test is not loaded for training
+importing torch…
+torch ready
+loading MobileNetV4-Conv-Small (vendored, no timm)…
+factory ready
+device=mps  creating mobilenetv4_conv_small pretrained=False (HF hub skipped)
+model ready
+epoch 1/8  train_loss=0.3358  val_loss=0.8551
+epoch 2/8  train_loss=0.0536  val_loss=1.2187
+epoch 3/8  train_loss=0.0179  val_loss=1.5230
+epoch 4/8  train_loss=0.0204  val_loss=1.6769
+epoch 5/8  train_loss=0.0053  val_loss=1.6522
+epoch 6/8  train_loss=0.0401  val_loss=1.1752
+epoch 7/8  train_loss=0.3806  val_loss=0.0335
+epoch 8/8  train_loss=0.0549  val_loss=0.0234
+best.pt → /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr003-scratch-stretch/weights/best.pt

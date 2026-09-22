@@ -1,0 +1,41 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project NativeOSFocus/NativeOSFocus.xcodeproj -scheme NativeOSFocus -destination "platform=tvOS Simulator,id=9026ECA9-77DB-4AE6-8FE6-BB239E9571FA" -derivedDataPath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/native-os-focus/DerivedData -resultBundlePath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/passive-01/result.xcresult -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 60 "-only-testing:NativeOSFocusTests/NativeOSFocusTests/testHomePassiveIdentity" -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/passive-01/result.xcresult
+
+2026-09-22 09:48:42.669254-0700 NativeOSFocusTests-Runner[78822:5280003] [Default] Running tests...
+Test Suite 'Selected tests' started at 2026-09-22 09:48:42.790.
+Test Suite 'NativeOSFocusTests.xctest' started at 2026-09-22 09:48:42.791.
+Test Suite 'NativeOSFocusTests' started at 2026-09-22 09:48:42.791.
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testHomePassiveIdentity]' started.
+    t =     0.00s Start Test at 2026-09-22 09:48:42.791
+    t =     0.02s Set Up
+    t =     0.03s Requesting snapshot of accessibility hierarchy for app with pid 5700
+    t =     0.08s Requesting snapshot of accessibility hierarchy for app with pid 5700
+    t =     0.09s Added attachment named 'com.apple.PineBoard'
+    t =     0.09s Requesting snapshot of accessibility hierarchy for app with pid 5709
+    t =     0.16s Requesting snapshot of accessibility hierarchy for app with pid 5709
+    t =     0.18s Added attachment named 'com.apple.HeadBoard'
+    t =     0.46s Added attachment named 'passive-home.png'
+    t =     0.46s Tear Down
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testHomePassiveIdentity]' passed (0.534 seconds).
+Test Suite 'NativeOSFocusTests' passed at 2026-09-22 09:48:43.325.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.534 (0.534) seconds
+Test Suite 'NativeOSFocusTests.xctest' passed at 2026-09-22 09:48:43.325.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.534 (0.535) seconds
+Test Suite 'Selected tests' passed at 2026-09-22 09:48:43.325.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.534 (0.535) seconds
+2026-09-22 09:48:43.629 xcodebuild[78778:5279835] [MT] IDETestOperationsObserverDebug: 2.048 elapsed -- Testing started completed.
+2026-09-22 09:48:43.629 xcodebuild[78778:5279835] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-09-22 09:48:43.629 xcodebuild[78778:5279835] [MT] IDETestOperationsObserverDebug: 2.048 sec, +2.048 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/passive-01/result.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

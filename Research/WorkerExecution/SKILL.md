@@ -20,6 +20,13 @@ For review assignments, inspect the diff and evidence against the packet; do not
 
 ## Before ending the turn
 
+For permission, sandbox, signing-metadata or simulator-service failures, read
+[SandboxOperations](../SandboxOperations.md) before retrying. Identify the actual
+writer and denying layer. Request the known scoped execution setup rather than
+repeat a known denial; declare unavoidable platform storage with the tranche.
+Do not disable security, spoof HOME, reset services or replay uncertain mutations.
+Export retained successful captures without recapturing them.
+
 During iteration, follow [change-scoped verification](../IterationEfficiency.md):
 test the changed mechanism first; run required full offline checks at the integrated
 code handoff, not after each helper. Preserve evidence for unchanged dependencies.

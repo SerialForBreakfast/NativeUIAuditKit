@@ -1,0 +1,67 @@
+*** Begin Patch
+*** Update File: /Volumes/SharedStatusFile/nuiak/status.yaml
+@@
+-updated_at: '2026-09-22T06:13:02Z'
+-valid_until: '2026-09-22T06:43:02Z'
++updated_at: '2026-09-22T16:25:31Z'
++valid_until: '2026-09-22T16:55:31Z'
+@@
+-  summary: Matching installed Fixture launched; endpoint healthy. Direct simctl captured
+-    a valid reference PNG but first focused target failed native identity. Independent
+-    TTR job failed non_view/unmapped_item too; no qualified pairs or exported bundle.
+-  next: Producer-owned native non-view focus association repair and reference-plus-target
+-    regression evidence. See PARALLEL-TVOS-20260922; do not repeat generic storage repair.
++  summary: Updated local TTR passes all eight infrastructure readiness checks with clear ownership. Persistent simulator remote is advertised but not live-qualified here. Installed Fixture bytes are unchanged; both passive HTTP health requests time out. Genuine Fixture capture remains unqualified.
++  next: Preserve existing native non-view identity repair request. Independently qualify persistent remote under bounded operation authority and compare corrected crops offline; do not repeat unchanged Fixture smoke or generic storage repair.
+@@
+-- Fixture native_focus_or_geometry_unavailable / unresolved_focus with non_view, unmapped_item and no missing geometry. TTR screenshot repair still unqualified; not a new screenshot failure.
+-- No completed qualified pilot or training corpus; no training or promotion is authorized by this update.
++- Installed Fixture matches the historical non_view/unmapped_item failure artifact; no repaired native identity or completed-bundle evidence supplied.
++- Fixture listener exists on the exact simulator, but device/scene GETs each time out after five seconds. Background inactivity is possible, not proven; no fresh crash or storage failure claimed.
++- No genuine Fixture capture/export/intake qualification on this build. Independent NUA lanes are not blocked by this coordination state.
+@@
+ packets:
++  TTR-CHECK-20260922-1622:
++    owner: NUIAK architect
++    updated_at: '2026-09-22T16:25:31Z'
++    valid_until: '2026-09-22T16:55:31Z'
++    state: review
++    summary: Read-only updated-build diagnostics complete. Infrastructure ready; Fixture capture not qualified. No device input, app activation, session creation, reset, capture or training performed.
++    source_revision_observed: 022d53cc8e768056edfed9cb49ae08fd69e181f6
++    working_tree_dirty: false
++    app_sha256: 7b6330d1bcf0e34f477919f0f036f20e4d922c30ad406c78c1b978e49cd4c431
++    app_debug_sha256: 2f8c732b29d128e8a79b0b7287cad35fff39a460a6abe3649a2f0ca8aea6f00c
++    companion_sha256: ce455bb016cd40484d5f7bb817fecbe33e6d4a9cf6d58997be2c2765d873008f
++    readiness_request_id: 5E5E658F-EB50-4C04-9E50-92FAB76742FE
++    readiness: all_eight_infrastructure_checks_ready_ownership_clear_fixture_not_checked
++    fixture_state: exact_target_listener_present_http_device_and_scene_timeout_5s_each
++    fixture_artifacts: unchanged_from_0613_native_identity_failure
++    blockers:
++    - Existing producer-owned non-view focus association repair has no new delivered Fixture evidence; do not substitute requested focus for labels.
++    - Fixture responsiveness not established; no capture attempted and no new native-focus or screenshot failure inferred.
++    pending_requests:
++    - id: nuiak-20260922T061302Z-fixture-nonview-focus
++      to: tvtestrig
++      state: acknowledged
++      request: Follow-up on the existing repair, not a duplicate assignment. Please return repaired Fixture source/build hashes and reference-plus-both-target evidence when available. Current installed Fixture hashes are unchanged. No remote operation, rebuild or permission weakening is authorized by this message.
++    acknowledgments:
++    - request_id: nuiak-20260922T061302Z-fixture-nonview-focus
++      state: received
++      observed_at: '2026-09-22T16:25:31Z'
++      message: Read producer ownership acknowledgment from NUIAK-COORDINATION-20260922 at06:36Z. Historical receipt, not current repair or availability evidence.
++    - request_id: nuiak-20260922T070900Z-focus-crop-parity
++      state: received
++      observed_at: '2026-09-22T16:25:31Z'
++      message: Read producer correction receipt at07:45Z; current scorer source hash matches512ea619. Producer-reported15 tests acknowledged; exact consumer-helper parity not yet reproduced.
++    evidence: [reports/work/TTR-CHECK-20260922-1622/handoff.md]
++    evidence_scope: NUIAK-local report; metadata only on SMB. Source/build inventory is separate from loaded-image authentication and live qualification.
++    next: Bounded persistent-remote qualification can proceed independently with operation authority; offline crop parity needs no live rerun. Reconcile matching repaired Fixture and fresh health before one authorized smoke/export/intake.
++    peer_acknowledgment: pending
++    outcomes:
++      software_verified: not_assessed
++      data_eligible: blocked
++      integration_qualified: not_assessed
++      model_gate_passed: not_assessed
++    infrastructure_ready: true
+   FOCUS-PARITY-01:
+*** End Patch

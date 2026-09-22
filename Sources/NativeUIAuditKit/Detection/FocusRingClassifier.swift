@@ -98,14 +98,15 @@ package struct FocusRingClassifier: @unchecked Sendable {
     package static func makeCrop(
         from image: CGImage,
         bbox: CGRect,
-        expansionFactor: Double = 0.16
+        expansionFactor: Double = 0.16,
+        experimentalAspectFit: Bool = false
     ) -> CGImage? {
         let imageSize = CGSize(width: image.width, height: image.height)
         let rect = expandedCropRect(bbox: bbox, imageSize: imageSize, expansionFactor: expansionFactor)
         guard rect.width > 0, rect.height > 0 else { return nil }
         // Draw via CGContext using top-left pixel boxes (YOLO / boundingBoxPixels).
         // Avoid CGImage.cropping(to:) — its origin is bitmap-bottom-left and flips tvOS crops.
-        return redrawCrop(image, rect: rect)
+        return redrawCrop(image, rect: rect, aspectFit: experimentalAspectFit)
     }
 
     /// Expanded, clamped pixel rectangle used by `makeCrop`. Exposed for unit tests.
@@ -123,7 +124,7 @@ package struct FocusRingClassifier: @unchecked Sendable {
         return CGRect(x: x1, y: y1, width: max(0, x2 - x1), height: max(0, y2 - y1))
     }
 
-    private static func redrawCrop(_ image: CGImage, rect: CGRect) -> CGImage? {
+    private static func redrawCrop(_ image: CGImage, rect: CGRect, aspectFit: Bool) -> CGImage? {
         let width = max(1, Int(rect.width.rounded()))
         let height = max(1, Int(rect.height.rounded()))
         guard let ctx = CGContext(
@@ -149,10 +150,10 @@ package struct FocusRingClassifier: @unchecked Sendable {
             )
         )
         guard let raw = ctx.makeImage() else { return nil }
-        return scale(raw, to: cropSize)
+        return scale(raw, to: cropSize, aspectFit: aspectFit)
     }
 
-    private static func scale(_ image: CGImage, to size: Int) -> CGImage? {
+    private static func scale(_ image: CGImage, to size: Int, aspectFit: Bool) -> CGImage? {
         guard let ctx = CGContext(
             data: nil,
             width: size,
@@ -163,7 +164,17 @@ package struct FocusRingClassifier: @unchecked Sendable {
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         ) else { return nil }
         ctx.interpolationQuality = .high
-        ctx.draw(image, in: CGRect(x: 0, y: 0, width: size, height: size))
+        if aspectFit {
+            ctx.setFillColor(CGColor(gray: 0, alpha: 1))
+            ctx.fill(CGRect(x: 0, y: 0, width: size, height: size))
+            let ratio = min(CGFloat(size) / CGFloat(image.width), CGFloat(size) / CGFloat(image.height))
+            let width = CGFloat(image.width) * ratio
+            let height = CGFloat(image.height) * ratio
+            ctx.draw(image, in: CGRect(x: (CGFloat(size) - width) / 2,
+                                      y: (CGFloat(size) - height) / 2, width: width, height: height))
+        } else {
+            ctx.draw(image, in: CGRect(x: 0, y: 0, width: size, height: size))
+        }
         return ctx.makeImage()
     }
 

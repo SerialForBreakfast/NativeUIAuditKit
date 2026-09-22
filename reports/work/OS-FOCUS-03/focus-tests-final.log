@@ -1,0 +1,7 @@
+.........................................................ERROR: manifest not found: /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/missing.json
+......
+----------------------------------------------------------------------
+Ran 63 tests in 2.283s
+
+OK
+{"alignmentCaseCounts": {"intentionalFixtureFault": 1, "missingProducerState": 1, "normalDirectional": 1, "voiceOverExploration": 1, "voiceOverTraversal": 1}, "alignmentContractVersion": "1.0", "hardNegativeCounts": {"highContrast/collectionItem": 25, "highContrast/imageView": 25, "light/collectionItem": 25, "light/imageView": 25}, "pairs": 6000, "sceneCounts": {"actionDialog": 500, "focusMaze": 500, "gridMatrix": 2000, "heroCarousel": 500, "mediaShelf": 1500, "settingsList": 1000}, "trainingApproval": false}

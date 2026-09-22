@@ -1,0 +1,24 @@
+[0/1] Planning build
+[1/1] Compiling plugin Swift-DocC Preview
+[2/2] Compiling plugin Swift-DocC
+Building for debugging...
+[2/17] Write sources
+[4/17] Write swift-version--58304C5D6DBC2206.txt
+[6/13] Compiling NativeUIAuditKit FocusRingClassifier.swift
+[7/13] Emitting module NativeUIAuditKit
+[8/16] Compiling NativeUIAuditKit NativeUIRecognizing.swift
+[9/16] Compiling NativeUIAuditKit NativeUIDetectionSession.swift
+[10/16] Compiling NativeUIAuditKit NativeUIDetectionRequest.swift
+[10/21] Write Objects.LinkFileList
+[12/21] Emitting module TransitionTool
+[12/21] Write Objects.LinkFileList
+[13/21] Linking AnchorTool
+[14/21] Applying AnchorTool
+[16/21] Compiling FocusRingTool main.swift
+[17/21] Emitting module FocusRingTool
+[17/22] Write Objects.LinkFileList
+[18/22] Linking TransitionTool
+[19/22] Applying TransitionTool
+[20/22] Linking FocusRingTool
+[21/22] Applying FocusRingTool
+Build complete! (2.58s)

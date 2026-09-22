@@ -1,0 +1,120 @@
+{
+  "version": "native-focus-incremental-summary-v1",
+  "releaseEligible": false,
+  "pairCounts": {
+    "train": 40,
+    "validation": 9,
+    "challenge": 6,
+    "homeAdmitted": 0
+  },
+  "protocolSHA256": "a756f182c633ae6ad4b4985a75200ef738a7974bf8520ce8a3c946d8574d4f8c",
+  "candidateSHA256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0",
+  "selectedEpoch": 8,
+  "validationLoss": 7.331369741021061e-06,
+  "validation": {
+    "count": 18,
+    "auroc": 1.0,
+    "0.5": {
+      "tp": 9,
+      "fn": 0,
+      "fp": 0,
+      "tn": 9,
+      "accuracy": 1.0
+    },
+    "0.85": {
+      "tp": 9,
+      "fn": 0,
+      "fp": 0,
+      "tn": 9,
+      "accuracy": 1.0
+    }
+  },
+  "challenge": {
+    "shipped": {
+      "count": 12,
+      "auroc": 0.8055555555555556,
+      "0.5": {
+        "tp": 3,
+        "fn": 3,
+        "fp": 1,
+        "tn": 5,
+        "accuracy": 0.6666666666666666
+      },
+      "0.85": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 1,
+        "tn": 5,
+        "accuracy": 0.4166666666666667
+      }
+    },
+    "previous": {
+      "count": 12,
+      "auroc": 1.0,
+      "0.5": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 6,
+        "accuracy": 1.0
+      },
+      "0.85": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 6,
+        "accuracy": 1.0
+      }
+    },
+    "incremental": {
+      "count": 12,
+      "auroc": 1.0,
+      "0.5": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 6,
+        "accuracy": 1.0
+      },
+      "0.85": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 6,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "training": {
+    "pid": 80937,
+    "exitCode": 0,
+    "elapsedSeconds": 18.608217333006905,
+    "command": [
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/bin/python",
+      "-u",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/train_focus_ring_detector.py",
+      "--experiment-protocol",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/corpus-01/protocol.json",
+      "--experiment-arm",
+      "warm-stretch",
+      "--name",
+      "fdr007-native-incremental",
+      "--execute",
+      "--experiment-id",
+      "FDR-007"
+    ]
+  },
+  "trainingComputeSeconds": 7.48072725001839,
+  "evidence": {
+    "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/experiment-result.json": "cff8097e8171dabe47bd6a8b4bfe21a7f4a3e7e9d11013ff36de87b7bd616cbc",
+    "reports/work/OS-FOCUS-03/challenge-before.json": "468801dfc5df0093ac50b36ec5ec11fadf475914c3aed8c0ab594ac21432b990",
+    "reports/work/OS-FOCUS-03/challenge-after.json": "11ff841cf437e4699aadc8cfdb7053ccf74ffc07f70edbee0966ac135c71a21a",
+    "reports/work/OS-FOCUS-03/corpus-01/protocol.json": "51effcb3b47fc1340bcd09b330490d2024253fbbf332d988fadf46343e6e3f07"
+  },
+  "conclusion": "Native Settings performance retained; no measured challenge gain over FDR-006. No additional training justified by this saturated stratum.",
+  "limitations": [
+    "One runtime/style/app, correlated pairs",
+    "Validation used for checkpoint selection",
+    "No retained fixture test, CoreML export parity, model-driven navigation or physical qualification"
+  ]
+}

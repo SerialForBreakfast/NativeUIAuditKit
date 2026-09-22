@@ -8,6 +8,52 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
+The next independent tranche has [completed its Settings fallback and one candidate](../reports/work/OS-FOCUS-03/handoff.md).
+Apps3 pairs extend training; Remotes6 pairs remain challenge-only. FDR-007 retained
+18/18 validation and12/12 challenge decisions, matching FDR-006 on challenge versus
+shipped5/12. No further same-style run is justified. Prioritize CoreML parity and
+new focus appearances; resolve Home native identity observation independently.
+Home capture remains explicitly unqualified, not waiting for TTR. Broader mixed-source
+integration/fixture-retention and release gates remain open; no automatic promotion.
+This supersedes the older next-run recommendations below.
+
+The authorized [FOCUS-EXP-01 experiment](Plans/FocusLearningExperiment.md) now
+bridges native acquisition to small, controlled learning comparisons. Root and
+General are training-development groups; Accessibility is validation-development.
+These groups can inform the next acquisition plan, never be relabeled as untouched
+final evaluation. [All four arms completed](../reports/work/FOCUS-EXP-01/handoff.md):
+warm+stretch learned the held-out screen earlier, with no demonstrated benefit from
+aspect-fit. Next freeze an independent Home/style challenge set and score shipped
+versus FDR-006 before more training; investigate runtime parity separately. Production
+scale-up and promotion remain separate decisions. This supersedes the earlier
+"no training run has launched" snapshot below, not the release requirements.
+
+Expanded independent [Settings-root tranche](../reports/work/OS-FOCUS-02/handoff.md):
+12 reviewed pairs, 22 unique frames; shipped model TP1/FN11/FP3/TN9 at0.85.
+Next deliver native Home/deeper reviewed Settings diversity and OS-FOCUS-04
+incremental corpus integration. Retain this whole root lineage as development;
+do not inflate it into train/test splits. TTR adds complementary captures later,
+not a blocking prerequisite for native data work. Training has since launched;
+see the latest results above.
+
+Latest independent result: [native Settings recording/replay](../reports/work/OS-FOCUS-01/live-20260922-0712/handoff.md)
+passed capture/label checks for four distinct scenes. Shipped model misses the
+four focused rows at0.85 and has four false positives among twelve unfocused crops.
+Prioritize native OS paired admission and targeted diversity alongside TTR crop
+parity, not an immediate training launch or more readiness-only checks. Home
+traversal remains an implementation assignment, not an already executed capability.
+
+**Parallel native OS path:** [OS-FOCUS-01/02](Plans/NativeOSFocus.md) uses a
+NUA-owned XCTest probe for native tvOS Settings focus. It does not wait on Fixture
+repair or TTR capture. First qualify native focus/geometry against screenshots,
+then admit reviewed pairs and benchmark. It supplements, not silently replaces,
+the existing fixture coverage and model gates. Test-runner installation/execution
+requires its specific scoped approval; preparation can proceed independently.
+The requested OS-FOCUS-03 Home extension adds deterministic snakes, verified-grid
+spirals and directional edge/turn coverage. Prioritize unique focus appearances
+and measured errors over exponentially many redundant button sequences. Native
+runtime qualification, not TTR repair, gates its first live segment.
+
 [Current two-lane evidence](../reports/work/TVGEN/handoff.md): direct reference pixels
 work; actual focused native identity fails. TTR independently fails the same Fixture
 prerequisite. TTR's screenshot repair is not yet qualified, nor newly disproved.

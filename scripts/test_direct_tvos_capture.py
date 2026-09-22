@@ -34,12 +34,12 @@ class DirectTests(unittest.TestCase):
                               "is_settled": True, "focused_element_id": target, "scene_width": 100, "scene_height": 100,
                               "focus_observation": {"verified": True, "source": "uikit_focus_system",
                                                     "geometrySource": "uikit_window_converted_bounds", "observedID": target,
-                                                    "generation": 1, "plannedFocusIDs": ["a", "b"]},
+                                                    "generation": 1, "plannedFocusIDs": ["dialog_btn_0", "dialog_btn_1"]},
                               "observation_diagnostics": {"nativeFocusResolved": True, "reason": "ready", "missingIDs": [],
                                                           "sampleAgeMilliseconds": 1, "stableMilliseconds": 200,
                                                           "generation": 1, "sampledGeneration": 1},
                               "elements": [{"element_id": e, "taxonomy_class": "primaryButton", "is_focused": e == target,
-                                            "pixel_bounds": [10, 10, 20, 20], "normalized_bounds": [.1,.1,.3,.3]} for e in ("a", "b")]}}
+                                            "pixel_bounds": [10, 10, 20, 20], "normalized_bounds": [.1,.1,.3,.3]} for e in ("dialog_btn_0", "dialog_btn_1")]}}
         value = {"path": name, "sha256": hashlib.sha256((self.root/name).read_bytes()).hexdigest(),
                  "binding": "native-observation-bracket-v1", "observedFocusID": target,
                  "captureStartedAt": now+.02, "captureFinishedAt": now+.03,
@@ -50,10 +50,11 @@ class DirectTests(unittest.TestCase):
     def document(self):
         return {"version": "direct-tvos-capture-v1", "sourceKind": d.SOURCE, "state": "completed",
                 "evidenceKind": "test-only", "target": {"source": "test-only"},
-                "catalog": self.plan, "acceptedPairs": 2, "postflight": {"responsive": True,
+                "catalog": self.plan, "acceptedPairs": 2, "targetPlanSourceHashes": d.SOURCE_HASHES,
+                "initialDevice": {"fixture_instance_id": "instance", "fixture_run_id": "run"}, "postflight": {"responsive": True,
                     "device": {"fixture_instance_id": "instance", "fixture_run_id": "run"}},
-                "recipes": [{"recipe": self.recipe, "frames": [self.frame("ref.png", None),
-                                                               self.frame("a.png", "a"), self.frame("b.png", "b")]}]}
+                "recipes": [{"recipe": self.recipe, "expectedTargets": d.expected_targets(self.recipe), "frames": [self.frame("ref.png", None),
+                                                               self.frame("a.png", "dialog_btn_0"), self.frame("b.png", "dialog_btn_1")]}]}
 
     def test_valid_accounting_and_interval(self):
         doc = self.document(); self.assertEqual(d.validate_capture(doc, self.root), 2)
@@ -62,8 +63,8 @@ class DirectTests(unittest.TestCase):
         self.assertNotIn("frameID", pair["frames"]["focused"])
 
     def test_stale_mismatch_geometry_and_prediction_labels(self):
-        frame = self.frame("x.png", "a")
-        changes = [("is_settled", False), ("focused_element_id", "b"), ("timestamp", 0)]
+        frame = self.frame("x.png", "dialog_btn_0")
+        changes = [("is_settled", False), ("focused_element_id", "dialog_btn_1"), ("timestamp", 0)]
         for key, value in changes:
             bad = copy.deepcopy(frame); bad["after"]["scene"][key] = value
             with self.assertRaises(FocusDataError): d.validate_interval(bad, self.recipe, self.root)
@@ -74,7 +75,7 @@ class DirectTests(unittest.TestCase):
         with self.assertRaises(FocusDataError): d.validate_interval(bad, self.recipe, self.root)
 
     def test_bytes_missing_corrupt_hash(self):
-        frame = self.frame("x.png", "a")
+        frame = self.frame("x.png", "dialog_btn_0")
         (self.root/"x.png").write_bytes(b"corrupt")
         with self.assertRaises(FocusDataError): d.validate_interval(frame, self.recipe, self.root)
         frame["sha256"] = hashlib.sha256(b"corrupt").hexdigest()
@@ -138,7 +139,7 @@ class DirectTests(unittest.TestCase):
             def request(self, path, body=None):
                 self.calls.append(path)
                 if path == "/recipe": raise FocusDataError("injected_producer_failure")
-                return {"fixture_instance_id": "instance", "fixture_run_id": "run"}
+                return {"schema_version": 1, "fixture_instance_id": "instance", "fixture_run_id": "run"}
         output = self.root/"failed"
         with patch.object(d, "bind_target", return_value={"testOnly": True}), patch.object(d, "Fixture", FailedFixture):
             with self.assertRaisesRegex(FocusDataError, "injected_producer_failure"):
@@ -147,11 +148,105 @@ class DirectTests(unittest.TestCase):
         self.assertEqual(json.loads((output/"failed.json").read_text())["state"], "failed")
         self.assertFalse((output/"direct-capture.json").exists())
 
+    def test_frozen_target_counts_and_omission(self):
+        counts = {}
+        for recipe in d.catalog()["recipes"]:
+            targets = d.expected_targets(recipe)
+            self.assertEqual(len(targets), len(set(targets)))
+            counts.setdefault(recipe["archetype"], set()).add(len(targets))
+        self.assertEqual(counts["hero_carousel"], {2})
+        self.assertEqual(counts["focus_maze"], {8})
+        self.assertEqual(counts["kitchen_sink"], {18})
+        self.assertEqual(sum(len(d.expected_targets(r)) for r in d.catalog()["recipes"]), 246)
+        frame = self.frame("omitted.png", None)
+        for side in ("before", "after"):
+            frame[side]["scene"]["focus_observation"]["plannedFocusIDs"].pop()
+        with self.assertRaisesRegex(FocusDataError, "incomplete_planned_targets"):
+            d.validate_interval(frame, self.recipe, self.root)
+
+    def test_initial_binding_and_target_plan(self):
+        doc = self.document()
+        for key, value in (("initialDevice", {}), ("targetPlanSourceHashes", {})):
+            bad = copy.deepcopy(doc); bad[key] = value
+            with self.assertRaises(FocusDataError): d.validate_capture(bad, self.root)
+        doc["recipes"][0]["expectedTargets"].pop()
+        with self.assertRaisesRegex(FocusDataError, "changed_expected_targets"):
+            d.validate_capture(doc, self.root)
+
+    def test_sweep_taxonomy_change_rejected(self):
+        doc = self.document()
+        frame = doc["recipes"][0]["frames"][1]
+        for side in ("before", "after"):
+            frame[side]["scene"]["elements"][0]["taxonomy_class"] = "cancelAction"
+        (self.root/(frame["path"]+".json")).write_text(json.dumps(frame))
+        with self.assertRaisesRegex(FocusDataError, "sweep_taxonomy_changed"):
+            d.validate_capture(doc, self.root)
+
+    def test_settle_deadline_restored(self):
+        fixture = d.Fixture("http://127.0.0.1:8080")
+        original_deadline = time.monotonic()+120
+        fixture.deadline = original_deadline
+        snapshot = self.frame("settle.png", None)["before"]
+        def observe():
+            self.assertLessEqual(fixture.deadline-time.monotonic(), 10)
+            return snapshot
+        with patch.object(fixture, "snapshot", side_effect=observe):
+            fixture.settle(None, self.recipe)
+        self.assertEqual(fixture.deadline, original_deadline)
+
+    def test_successful_execute_entrypoint_and_collision(self):
+        owner = self
+        class OfflineFixture:
+            deadline = None
+            last_snapshot = None
+            def __init__(self, endpoint): self.endpoint = endpoint
+            def request(self, path, body=None):
+                return {"schema_version": 1, "fixture_instance_id": "instance", "fixture_run_id": "run"}
+        binding = {"simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA", "endpoint": "http://127.0.0.1:8080",
+                   "runtime": "tvOS-test-only", "deviceProfile": "test-only", "pid": 1,
+                   "binaries": {"TVTestRigFixture": "0"*64}, "xcode": "test-only"}
+        def frame(fixture, target, output, name, expected, recipe):
+            original = owner.root
+            try:
+                owner.root = output
+                return owner.frame(name, expected)
+            finally: owner.root = original
+        plan = self.root/"catalog.json"; d.write_json(plan, self.plan)
+        out = self.root/"completed"
+        args = ["direct_tvos_capture.py", "--execute", "--catalog", str(plan), "--target", binding["simulatorUDID"],
+                "--endpoint", binding["endpoint"], "--output", str(out)]
+        with patch.object(d, "bind_target", return_value=binding), patch.object(d, "Fixture", OfflineFixture), \
+                patch.object(d, "capture_frame", side_effect=frame), patch.object(sys, "argv", args):
+            self.assertEqual(d.main(), 0)
+            self.assertEqual(d.main(), 2)
+        doc = json.loads((out/"direct-capture.json").read_text())
+        self.assertEqual(d.validate_capture(doc, out), 2)
+        self.assertFalse((out/"failed.json").exists())
+        # Test doubles are isolated temporary artifacts, never supplied as real evidence.
+
     def test_visual_review_and_false_trust(self):
         doc = self.document(); d.write_json(self.root/"direct-capture.json", doc)
         manifest = {"sourceKind": d.SOURCE, "purpose": "development-pilot", "evidenceKind": "reviewed-fixture",
                     "captureSHA256": digest(doc), "pairs": pairs_from_capture(doc)}
         with self.assertRaisesRegex(FocusDataError, "false_reviewed_provenance"): validate_direct_manifest(manifest, self.root)
+
+    def test_review_report_bytes_are_required(self):
+        doc = self.document()
+        doc.update(evidenceKind="fixture-native-capture", runnerSHA256="0"*64,
+                   target={"simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA", "endpoint": "http://127.0.0.1:8080",
+                           "runtime": "tvOS-test", "deviceProfile": "test", "pid": 1,
+                           "binaries": {"TVTestRigFixture": "0"*64}, "xcode": "test-only"})
+        d.write_json(self.root/"direct-capture.json", doc)
+        report = self.root/"review.json"; d.write_json(report, {"testOnly": True})
+        review = {"accepted": True, "captureSHA256": digest(doc), "report": str(report.relative_to(ROOT)),
+                  "reportSHA256": hashlib.sha256(report.read_bytes()).hexdigest()}
+        manifest = {"sourceKind": d.SOURCE, "purpose": "development-pilot", "evidenceKind": "reviewed-fixture",
+                    "captureSHA256": digest(doc), "pairs": pairs_from_capture(doc), "visualReview": review}
+        validate_direct_manifest(manifest, self.root)
+        review["reportSHA256"] = "0"*64
+        with self.assertRaisesRegex(FocusDataError, "changed_visual_review"): validate_direct_manifest(manifest, self.root)
+        review["report"] = "../outside.json"
+        with self.assertRaisesRegex(FocusDataError, "unsafe_member"): validate_direct_manifest(manifest, self.root)
 
     def test_plan_cli_and_collisions(self):
         path = self.root/"plan.json"

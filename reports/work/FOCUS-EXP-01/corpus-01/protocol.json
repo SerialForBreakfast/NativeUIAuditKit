@@ -1,0 +1,1997 @@
+{
+  "version": "focus-learning-protocol-v1",
+  "scope": "development-only-same-app-screen-groups",
+  "configuration": {
+    "epochs": 8,
+    "batch": 8,
+    "lr": 0.0003,
+    "seed": 42,
+    "maxSeconds": 600,
+    "augmentation": "none",
+    "model": "mobilenetv4_conv_small"
+  },
+  "sources": [
+    {
+      "screenID": "settings/root",
+      "split": "train",
+      "manifest": {
+        "path": "reports/work/OS-FOCUS-02/root-sweep-02/dataset-02/manifest.json",
+        "sha256": "7b10b6d7b02a9e68a39ef11d609e96771814a821608b7c46c5695217f0982a0f"
+      },
+      "review": {
+        "path": "reports/work/OS-FOCUS-02/handoff.md",
+        "sha256": "54e7c67e3e594805327fae74f7d836efbb0eee99f5548d14ef201eeb83ca66e9"
+      }
+    },
+    {
+      "screenID": "settings/general",
+      "split": "train",
+      "manifest": {
+        "path": "reports/work/FOCUS-EXP-01/general-02/dataset/manifest.json",
+        "sha256": "aac4e31d1e78eb36ddbdf8f75e8f687390d333a2a6409cb2b28a463aa77f4e98"
+      },
+      "review": {
+        "path": "reports/work/FOCUS-EXP-01/review.md",
+        "sha256": "072bf7120ac846c5279719c68b38ad7ada381d8e79fa188eca3a8f97df6cb607"
+      }
+    },
+    {
+      "screenID": "settings/accessibility",
+      "split": "validation",
+      "manifest": {
+        "path": "reports/work/FOCUS-EXP-01/accessibility-02/dataset/manifest.json",
+        "sha256": "8c3ef75a46eff5013146f1b758ba4cfbf26de8130f99a9d676097697b45625e2"
+      },
+      "review": {
+        "path": "reports/work/FOCUS-EXP-01/review.md",
+        "sha256": "072bf7120ac846c5279719c68b38ad7ada381d8e79fa188eca3a8f97df6cb607"
+      }
+    }
+  ],
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "warmCheckpoint": {
+    "path": "NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt",
+    "sha256": "08158ebc78689f0549511b26f744f9e39e0250d56cbae311da3c83cf9c4ce1e5"
+  },
+  "samples": [
+    {
+      "id": "ea70bc7cf20e9b0ef22459d78ec7639c844f6c1f42ca71b01c76ffafa91b4627",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ea70bc7cf20e9b0ef22459d78ec7639c844f6c1f42ca71b01c76ffafa91b4627-stretch.png",
+          "sha256": "bac48ed69a5a8fddf2c817d343d3763c395e757050a1bdc7a55c2f3c984d2f84",
+          "pixelSHA256": "9f8a5e629fe47bf9cc9afa7a3a4b59376b4b5f80c44ced749668ee91f3fcb7a4"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ea70bc7cf20e9b0ef22459d78ec7639c844f6c1f42ca71b01c76ffafa91b4627-aspect-fit.png",
+          "sha256": "83aefda77748deec8b9939d3ba8ceac027b72f91e0e3294f352aa231f1e4d9cf",
+          "pixelSHA256": "b03c1da3f78ee25b0a02aa3c6d3a276028a1a08678e38d33da9d1dfb7807a482"
+        }
+      },
+      "sourcePixelSHA256": "35c750b2b74865a027d8846151cef6f4ec1dfe9b760cc86b08569e224514ae38",
+      "pairID": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e"
+    },
+    {
+      "id": "92025450d1d9f4d5d0b95985e12a73d22a8e83517270083f8e78837d14c09af4",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/92025450d1d9f4d5d0b95985e12a73d22a8e83517270083f8e78837d14c09af4-stretch.png",
+          "sha256": "6adb0ce96f398390c6f5d23c552c23e08995c1575849d380b81e70f639466cba",
+          "pixelSHA256": "b51ae2ef4a9db8848be25908c25cbfbf10ec059f940facd6b302603386960023"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/92025450d1d9f4d5d0b95985e12a73d22a8e83517270083f8e78837d14c09af4-aspect-fit.png",
+          "sha256": "657f4657c44e7cbb8a588473618b8067349d5952962c308866822c9a0a84ce1f",
+          "pixelSHA256": "e5217cf60e4e4aa07cdd38deff2587536553f246c4c77d50515ae7e8f6552450"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e"
+    },
+    {
+      "id": "0614bf2fe0c00bab53d5bb05b794137cf6846dcc870230add65301c2001291e8",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/0614bf2fe0c00bab53d5bb05b794137cf6846dcc870230add65301c2001291e8-stretch.png",
+          "sha256": "c6695ffc7475c07b6a0cee35f77f3752b19ba39a11fe120c89d6104ad3d76128",
+          "pixelSHA256": "3955f30799d69dd062f65c0cfeb7cbea63779f6a6a28eb334e456fe75cfd43ef"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/0614bf2fe0c00bab53d5bb05b794137cf6846dcc870230add65301c2001291e8-aspect-fit.png",
+          "sha256": "9df8cb475798fd668888cf2e1ead9d76975f401e8e93fd63ce11719eefab73ff",
+          "pixelSHA256": "dfdc484d52c57053cd509af663a36e97e408256e0e8a3044c51652db1aadd292"
+        }
+      },
+      "sourcePixelSHA256": "454937556b07b7162678803c8f2e47e34fa45002193a247b795b8d7fa9ac4ae7",
+      "pairID": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221"
+    },
+    {
+      "id": "6aa41703d3a0503081956ea4fa8eb55dc0b8a65eadf8a2ec8d24992360e7592c",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/6aa41703d3a0503081956ea4fa8eb55dc0b8a65eadf8a2ec8d24992360e7592c-stretch.png",
+          "sha256": "0ed612ff279eb7c976bb5f6a988e7f4a21113f0b741d383f3f7d295d60ad6fc9",
+          "pixelSHA256": "bea373073ccdd72e6b2c10bb8f22efb3af0f742cf03ead272ed43affb1b5a4a7"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/6aa41703d3a0503081956ea4fa8eb55dc0b8a65eadf8a2ec8d24992360e7592c-aspect-fit.png",
+          "sha256": "35eeeb3fbb9a8097c16d30aa124b405a7ef3e67b2c4b78a51e76c13a280d497f",
+          "pixelSHA256": "9983bcb339212ef84bea6017ea18ded88d0a1a508aa7a34aa01ee10726e9bbb3"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221"
+    },
+    {
+      "id": "809896d85af77f9779cdd5a461c88b5db985626f32d748b35d498f66658d97b5",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/809896d85af77f9779cdd5a461c88b5db985626f32d748b35d498f66658d97b5-stretch.png",
+          "sha256": "91b45e5c6986c13b5d8b28d42a8e18145054fccd2d09388e1a063ebcdea560f2",
+          "pixelSHA256": "f1987c983f28215fa5e94797602c3457f792008ed28f0815f2e372740bdaae33"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/809896d85af77f9779cdd5a461c88b5db985626f32d748b35d498f66658d97b5-aspect-fit.png",
+          "sha256": "06c6b8480d99ff4324b976e789b7134b10675ef44b266a3b1350b37d7aaebf6b",
+          "pixelSHA256": "c2a97f3d2e311102d651e96245f18e3090164bc031083722dacd0aa4b6c66c1b"
+        }
+      },
+      "sourcePixelSHA256": "6498dc2818a526da7669f07be67bea10827101087927b9573d404778e44a0ee7",
+      "pairID": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876"
+    },
+    {
+      "id": "1362f60111694b08937ebd72e3206b71deafde884520db2930b9bff50213e2e7",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/1362f60111694b08937ebd72e3206b71deafde884520db2930b9bff50213e2e7-stretch.png",
+          "sha256": "bdf3284a62bcf495455cb683466b5ad5a7ffa2c4939be871fd29b85c6834b503",
+          "pixelSHA256": "fff54633096bc26f800cf669eb6ebdd6866ff6e49135ae66791374e0feae07a5"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/1362f60111694b08937ebd72e3206b71deafde884520db2930b9bff50213e2e7-aspect-fit.png",
+          "sha256": "6d296b407525f28e6a4af5432711ddd3be75494b25c5edc6c666cb2344774b24",
+          "pixelSHA256": "2b21d12646bbba556955e182d1a2aed7eb063e737df254c2f11641e5904c4fec"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876"
+    },
+    {
+      "id": "c7a1559f4b8488a3253f5dbdafc47d5ad21dec43951aec7bc8cdc8325e05a0fb",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c7a1559f4b8488a3253f5dbdafc47d5ad21dec43951aec7bc8cdc8325e05a0fb-stretch.png",
+          "sha256": "931666612a6379f43e057d6cf3fa3187a10629e7cda4a26ebc893aa279219522",
+          "pixelSHA256": "cbcf38c905b869f135b6656ef2eb10119c5dc51b98a23fd6508bc185df80cc77"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c7a1559f4b8488a3253f5dbdafc47d5ad21dec43951aec7bc8cdc8325e05a0fb-aspect-fit.png",
+          "sha256": "e5792304c9d3bbf3c2f556fa9db5df91fd31e258944bb06fb5e29f5277ab4c3a",
+          "pixelSHA256": "7a663d5ba491a861319594f66949f60f938942031ddef2859dc230db64498be4"
+        }
+      },
+      "sourcePixelSHA256": "c2c20b1c6be42c00df0c13f0fca2198aff3edee3b7c6f7f5346c8f194085e9ee",
+      "pairID": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0"
+    },
+    {
+      "id": "f65ff30f4cbd34c5825dc8ef1842c7042549b23a7ea8fd3b5ff70f9d0f49ef11",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f65ff30f4cbd34c5825dc8ef1842c7042549b23a7ea8fd3b5ff70f9d0f49ef11-stretch.png",
+          "sha256": "1ccd3e0f74fc3de00ee602fda955abfeec1ba3fa09b039b529ed3598be00bec1",
+          "pixelSHA256": "a4ee51c2b2340df56657b7c4de36ab1b8270bb40a40dceb87cd03af2de53008b"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f65ff30f4cbd34c5825dc8ef1842c7042549b23a7ea8fd3b5ff70f9d0f49ef11-aspect-fit.png",
+          "sha256": "f5f80aec7f1471690756f59c2b83a678140db36876682ef69cf99274faaab392",
+          "pixelSHA256": "5e76505767285464a954f8571d26f9278ba91e16421a0d7dfcb38fa4a9731e68"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0"
+    },
+    {
+      "id": "369cd2608f0523967a9f2355b84e13ec3b8c25cb651cd28bf1bf15a10b7ba955",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/369cd2608f0523967a9f2355b84e13ec3b8c25cb651cd28bf1bf15a10b7ba955-stretch.png",
+          "sha256": "d97d6b587611693b3151a72468b97bbda546170bc9075ccba046b988b4c82a5f",
+          "pixelSHA256": "9903a5737ce7696afd46f8d7afe4e56e6a193fd5696b31030521d25328a4682e"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/369cd2608f0523967a9f2355b84e13ec3b8c25cb651cd28bf1bf15a10b7ba955-aspect-fit.png",
+          "sha256": "d2135fce5074c3bff08c2698955d99948594a644ef063c236c083263e31be8b2",
+          "pixelSHA256": "01a6d53c5b11d99a0e4b6ea4a106b5c8208831773bb2720216c4da91088ffdcb"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3"
+    },
+    {
+      "id": "9a09dc956eeec6d36106e38511b5aff03a1a9e8c7781caa884b1b618f4d51c62",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/9a09dc956eeec6d36106e38511b5aff03a1a9e8c7781caa884b1b618f4d51c62-stretch.png",
+          "sha256": "19e16a1ad0d4bcbbe7f7886fa041bbedb413048eb893da2c81f6240c8b8093b0",
+          "pixelSHA256": "8370506d7e229bd19eb3cf03f1727393214c9610ad0d00e8a578b7540c5697da"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/9a09dc956eeec6d36106e38511b5aff03a1a9e8c7781caa884b1b618f4d51c62-aspect-fit.png",
+          "sha256": "bb14a3ae81520374d5bc2165f70876e9cc23d6b8765d9c91655e9bee17c1074f",
+          "pixelSHA256": "31bf919a99d082806ae016234844bab6eccd470982d1ba1fabefdf92a77d3f8a"
+        }
+      },
+      "sourcePixelSHA256": "a8d8ea3ab6c6d8a3f7a7907a99d83c9781cd50335283f559152e6cd6cde74884",
+      "pairID": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3"
+    },
+    {
+      "id": "9480e0a0a76003c54751c65172cd3b77e9969867330ce512271b01450ec41ae4",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/9480e0a0a76003c54751c65172cd3b77e9969867330ce512271b01450ec41ae4-stretch.png",
+          "sha256": "ca7f17e786c16462141536a1cf67748d51d6b041e151e750536360627aad3e0c",
+          "pixelSHA256": "bfa474fc57c78e21192f8492d5ec54c88238560c481fb78cf743dc9e1474fdc9"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/9480e0a0a76003c54751c65172cd3b77e9969867330ce512271b01450ec41ae4-aspect-fit.png",
+          "sha256": "f0020d3d04dd5940dcfaae3f52725e10c7c9c44dc88491e050b785d038d5c92c",
+          "pixelSHA256": "013bb4cb22adc98fd886f1c96c3f9229daf86eaf229a7350cc9782fc5e958fb6"
+        }
+      },
+      "sourcePixelSHA256": "62e0b130aef7b37150a62cca2067e7d7ac5f99b4981177122ac9ca0a84f7b3a8",
+      "pairID": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69"
+    },
+    {
+      "id": "998008291d0538934b581753c7cf34066ddde593c2df9c0615a14fb64f2a5211",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/998008291d0538934b581753c7cf34066ddde593c2df9c0615a14fb64f2a5211-stretch.png",
+          "sha256": "883ebc077518eaed9475c65068fae940aa22895dfa3ddd5a6887e46413bba85e",
+          "pixelSHA256": "b09f5d8108db7126431f4107da5b490bd01f279754c3e2b12ee088d1867afb3a"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/998008291d0538934b581753c7cf34066ddde593c2df9c0615a14fb64f2a5211-aspect-fit.png",
+          "sha256": "ab439b5233fb4dfbd5c584198aeec5e42e9620697248cdf6fe7601ae38c65b41",
+          "pixelSHA256": "b71f612d2872ee96220cb597edc6f365fdedbb2ac212614947b778ac7dc5e5b0"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69"
+    },
+    {
+      "id": "d6b27c44ea96e8423870a3e83cbe8d4eb614087442e0e1c1643e779b3900dcde",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d6b27c44ea96e8423870a3e83cbe8d4eb614087442e0e1c1643e779b3900dcde-stretch.png",
+          "sha256": "7b7e55a849b490f0fb47efdd9f33e820f810cf70976723f0ef65b6645a006e88",
+          "pixelSHA256": "4f0e23b9e5b55f6191c9ab864db410ff60864cbc7d44a5df819b2ae79ab608f0"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d6b27c44ea96e8423870a3e83cbe8d4eb614087442e0e1c1643e779b3900dcde-aspect-fit.png",
+          "sha256": "070bc714f302a07582c85df2ba0e7a2d587a602409787e49c882f00da61780af",
+          "pixelSHA256": "bf8ba537a177bee499a85a46048fa577ce23678b9f17ac3f7f5243146decc068"
+        }
+      },
+      "sourcePixelSHA256": "58e3c4ddcbb9ee1408ad383422f20fad5f5762557c4341ba31bdd76ccb877954",
+      "pairID": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1"
+    },
+    {
+      "id": "465ea48cf871f2bcbcf2aae392f2aea56bc628530149c8948763fab03953e18d",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/465ea48cf871f2bcbcf2aae392f2aea56bc628530149c8948763fab03953e18d-stretch.png",
+          "sha256": "d24d3f4b2ac43ed8c945d850b056801f26575cb8b1195e19d7f5626fee3ce5ca",
+          "pixelSHA256": "96091d9effcacb22db4ffa63928826d7bbc9454da7370e7dd53b3e1f2f1e3f6d"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/465ea48cf871f2bcbcf2aae392f2aea56bc628530149c8948763fab03953e18d-aspect-fit.png",
+          "sha256": "fd243d87051cc230e93016580bf88f2d4c8fff39207f62b8dcd157425c4cbfaa",
+          "pixelSHA256": "bcb464c8eac726e1272bbeb62f85ab4b1fa3f3b147229e5379ff8f289e6bdf21"
+        }
+      },
+      "sourcePixelSHA256": "b545f8bc3448e6726d3a5ca0ff9e8c174f6251a7ace9f133eb64d70bb0298b0f",
+      "pairID": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1"
+    },
+    {
+      "id": "1e7aa1058a04bd5e2658f86f3ad967ea799d87cdf48159890337bf361ca4d2da",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/1e7aa1058a04bd5e2658f86f3ad967ea799d87cdf48159890337bf361ca4d2da-stretch.png",
+          "sha256": "e9bea7ad5a20a56ad74a919def231e83cdcd97ed813f257bd5fd4b5e8123bc7d",
+          "pixelSHA256": "0f78e81b07d93f0c3cf0728c68fc222cdd5eb17a7eadc9c03dcd07edd76c51da"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/1e7aa1058a04bd5e2658f86f3ad967ea799d87cdf48159890337bf361ca4d2da-aspect-fit.png",
+          "sha256": "255ad2e37746eb5c0dc3f5f61d7390c3852d82ffc1e5054eba60c7b39ade13c4",
+          "pixelSHA256": "910b3bb40ca1c3c9ff5b87a79aea5739722f2c021678848b903632656083b8f7"
+        }
+      },
+      "sourcePixelSHA256": "a8d8ea3ab6c6d8a3f7a7907a99d83c9781cd50335283f559152e6cd6cde74884",
+      "pairID": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa"
+    },
+    {
+      "id": "5e1d76c9b58381ce6560bb7506fc7871e942a329b8351b3d997e9a7964579661",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/5e1d76c9b58381ce6560bb7506fc7871e942a329b8351b3d997e9a7964579661-stretch.png",
+          "sha256": "97c8cf45695a6109a3ac898d88313fcf6ca35120de7094b486e34cdded15b1d8",
+          "pixelSHA256": "8d1830887781f345503350b3239369a6f6c1e72e45cf78305db06a870cd7906d"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/5e1d76c9b58381ce6560bb7506fc7871e942a329b8351b3d997e9a7964579661-aspect-fit.png",
+          "sha256": "a53de44902ebc4193290e4fd15121995fb427e4b120be0ee0ef469bd75566a86",
+          "pixelSHA256": "cb5a557552e3f080f7256021ed897ad1687d821f117d55e5ec29c730d42de990"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa"
+    },
+    {
+      "id": "77c4621f26f423c9073ddbf011f4cd23bc02a13d9564883ccf3d7647399b7dbf",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/77c4621f26f423c9073ddbf011f4cd23bc02a13d9564883ccf3d7647399b7dbf-stretch.png",
+          "sha256": "ba19152f5d78f55fb3589bafd1eda695e4726aa095d771874e78d39cbf3c6c5c",
+          "pixelSHA256": "7a54b35f681e48ace74cdd5b5061ad2a62321b04c66ca6e7a9399648b8db4a79"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/77c4621f26f423c9073ddbf011f4cd23bc02a13d9564883ccf3d7647399b7dbf-aspect-fit.png",
+          "sha256": "c304ed748563837d3a1b80f822c2c371be208745378aaf1c8ce4e52cedd0dd96",
+          "pixelSHA256": "d97b234e90f1244609981343c27f6bb43cadff177970c2921dff98b25423c0b6"
+        }
+      },
+      "sourcePixelSHA256": "074cd6abcb3e6e4e55dd9ff67d5aa4186587a785d7d8d8ed4d725f81614e97c3",
+      "pairID": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43"
+    },
+    {
+      "id": "c6450dc84e6a6519c7ea42cea71faa30ad60881bbc0c19297dd13bb3e89be2c9",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c6450dc84e6a6519c7ea42cea71faa30ad60881bbc0c19297dd13bb3e89be2c9-stretch.png",
+          "sha256": "caaf5fa315d5f1f8e969694ab8134d79b96c747d25c30bd0622476b4b3f71146",
+          "pixelSHA256": "483f275c9361104c4ca580524e0dfa62396f28791aed29af2e15420382873781"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c6450dc84e6a6519c7ea42cea71faa30ad60881bbc0c19297dd13bb3e89be2c9-aspect-fit.png",
+          "sha256": "013266348e4ad7c78f48c6e134a126357ac0538a1e495117dc0fe0162e3fc4b7",
+          "pixelSHA256": "c316b6b2187bdd428721f6c0bd1e9a6628b2f6be39e0e95e3f95683d9bd7cba2"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43"
+    },
+    {
+      "id": "616d7925c4711331e90fc502432f169a7e0ff71878d8247bec12660afe640699",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/616d7925c4711331e90fc502432f169a7e0ff71878d8247bec12660afe640699-stretch.png",
+          "sha256": "394c1d290de7c71518f6903c75ac14998851305cdfc294c3a6c2b6f3600708c7",
+          "pixelSHA256": "b38f52de02c642bb898cf44275d4366e67eff53f3a19f869b52dd2dfbc049282"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/616d7925c4711331e90fc502432f169a7e0ff71878d8247bec12660afe640699-aspect-fit.png",
+          "sha256": "b608198dd0924bbe2b01d73a5ade34bd8529310a9a3684bb02a41c058e087b90",
+          "pixelSHA256": "b2b99a2d67f320da9f83b4db6845979cdfc811fe013a3972c76f27f032ab9c76"
+        }
+      },
+      "sourcePixelSHA256": "4f3c5135a86c7aa439dff6149cc3d428ccb71ac8a08351b27ec7285dfbbcc9e7",
+      "pairID": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b"
+    },
+    {
+      "id": "dac5621a125aad4c7c510726798d7b9334a5390d483ba78a8112e955fefd169c",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/dac5621a125aad4c7c510726798d7b9334a5390d483ba78a8112e955fefd169c-stretch.png",
+          "sha256": "8d628548501bbfc1713428d991c7e94dfcc26999236811839df7d0e466992983",
+          "pixelSHA256": "4b2ca669b25cd71f93b00742674e0232d8658c1fe9251b42e2916182fae385f9"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/dac5621a125aad4c7c510726798d7b9334a5390d483ba78a8112e955fefd169c-aspect-fit.png",
+          "sha256": "47095bf046e229b710974b852abad600f33d19597c66937568b1e50b484499b8",
+          "pixelSHA256": "bef7db5a143bfb9abb190fbc51d54cd427202dbd0846654ea2a26eeb581757ce"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b"
+    },
+    {
+      "id": "7dea51d2915fb5e2c2730b14bae9a7b2d1af1c5c233319a51ec9267332b50567",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/7dea51d2915fb5e2c2730b14bae9a7b2d1af1c5c233319a51ec9267332b50567-stretch.png",
+          "sha256": "a68d089c286fb0e91699e9d806586f89c37779c57706f51f307c5da79350ac9c",
+          "pixelSHA256": "de8122ffbe3c9ca835fbb2c868184bad50cd6a4b4bb9357c5d4baf5fe6787ef8"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/7dea51d2915fb5e2c2730b14bae9a7b2d1af1c5c233319a51ec9267332b50567-aspect-fit.png",
+          "sha256": "39baa851c58a932112b8e8751c43202eddbeae799ba9eb15ba71f04f557fda1f",
+          "pixelSHA256": "4a656fd6cb8c14906fac47bb52f8bd5a57cc27ce58ac0588e7b8288c848e869a"
+        }
+      },
+      "sourcePixelSHA256": "b545f8bc3448e6726d3a5ca0ff9e8c174f6251a7ace9f133eb64d70bb0298b0f",
+      "pairID": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae"
+    },
+    {
+      "id": "09dc81968d3b96ac4cf79b6af3c8179b9737a9330ec5971e093300c524d0fdfb",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/09dc81968d3b96ac4cf79b6af3c8179b9737a9330ec5971e093300c524d0fdfb-stretch.png",
+          "sha256": "7c6dd84bbecd9455bb10e0e6ad9c88999ffbe2e7777760db1ddb7c047130a69f",
+          "pixelSHA256": "cbedeb2f23b19b6b37983e6458ba74da49a671d5f8e81f941a5d35d9fe6feded"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/09dc81968d3b96ac4cf79b6af3c8179b9737a9330ec5971e093300c524d0fdfb-aspect-fit.png",
+          "sha256": "7cd93c20fd1f53921dc45ee1b5c01e54f089d31a9eb859ea61045628337b6ad5",
+          "pixelSHA256": "de12317903363b1e32ce9e730c5562b931d315d72862d3c85718c2d0f6480901"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae"
+    },
+    {
+      "id": "dc8d4df3dd2e796c4b5991f64f061c6d2de09c9444d2661d563cf800ed5ab5b6",
+      "label": 1,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/dc8d4df3dd2e796c4b5991f64f061c6d2de09c9444d2661d563cf800ed5ab5b6-stretch.png",
+          "sha256": "122ca737ebb849532dc198c6e6a3ecbf34dbe6dcbfd5104f31e956ac1537de5f",
+          "pixelSHA256": "65116c0f62d83779dcfb313a355ffcf2e0c59ae86148f6b807f49340bea0ea6c"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/dc8d4df3dd2e796c4b5991f64f061c6d2de09c9444d2661d563cf800ed5ab5b6-aspect-fit.png",
+          "sha256": "edb5e299cd9d2afc11ddfebcaa7e25b06090bcaf69987d10f0ded92627814839",
+          "pixelSHA256": "42f902161238a3aad9142571f5ac91956ab5fe85c72399f8909a4586bf8519d7"
+        }
+      },
+      "sourcePixelSHA256": "4ceb2928f66bb1d6a61d9dcbd9c8d2886f1b16c6c699909b15d9f0f2c368ac42",
+      "pairID": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f"
+    },
+    {
+      "id": "c089942d258969c6699a28675f1efb512158df882579322610c79018187b4ed0",
+      "label": 0,
+      "screenID": "settings/root",
+      "group": "tvos26.5-settings-root-default-layout-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c089942d258969c6699a28675f1efb512158df882579322610c79018187b4ed0-stretch.png",
+          "sha256": "840d1ae0725baf8cb5de292a381d7b67f8357bc252a857f47baae7b66aac4709",
+          "pixelSHA256": "fb1ecc8fbf7aec9caefa5c079f8a9ceedab7ec0f95146add96c80d91ec46653f"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c089942d258969c6699a28675f1efb512158df882579322610c79018187b4ed0-aspect-fit.png",
+          "sha256": "afec8f726e1b259e7c28e7591668d1bf63fb3606d6b50cc2e2d180d8b9fed52e",
+          "pixelSHA256": "0731bcbecd50bf1280a9311d575b62b6edd0de89353c4a6e26af2c7472b9ebb3"
+        }
+      },
+      "sourcePixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+      "pairID": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f"
+    },
+    {
+      "id": "0a7a2d4135d3419349c3e5bf425215f495ea476b6ea21857cf4415a3602b7861",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/0a7a2d4135d3419349c3e5bf425215f495ea476b6ea21857cf4415a3602b7861-stretch.png",
+          "sha256": "ebe4d7e04db8d2248a2e7f5ccbf0b1bd48a55d8a67e5cad92a150bb4e97e5485",
+          "pixelSHA256": "def8af72a2bb3fd0455d5c0ffbd84bd90db0cd8a3299cfbdb5e050c5414bfc03"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/0a7a2d4135d3419349c3e5bf425215f495ea476b6ea21857cf4415a3602b7861-aspect-fit.png",
+          "sha256": "17c3e496db881a742137d975db8da9c48633a755febe5f63b5dca270c3172b24",
+          "pixelSHA256": "ff10c5b06dec28286bcd9a6dcd29c71fd5904b4ccdb6f9466e10d13efbb5a497"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "119ffc48bac3a59dbf0da34c67f4150e9d2e964fd0808296fe142e07101ff78f"
+    },
+    {
+      "id": "8b2fdea7a181019d6ca6714688ee0af2e4832f2fccf1af118c2e8837f0d966c8",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/8b2fdea7a181019d6ca6714688ee0af2e4832f2fccf1af118c2e8837f0d966c8-stretch.png",
+          "sha256": "79b1ef81d5f6aa2e5485df376dc33998a80db8614b4ca502598a7c37a0db649f",
+          "pixelSHA256": "f13d90a83758ca4a522194a3c48a5831f51424ccb2f79a91b2abbc30c1401381"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/8b2fdea7a181019d6ca6714688ee0af2e4832f2fccf1af118c2e8837f0d966c8-aspect-fit.png",
+          "sha256": "15a92dda90d7799519eccd2bc95b1f7836c9b86bd3c71d2dd93af2e00677ccbc",
+          "pixelSHA256": "d60b40840177a3d59bd2455379a147a968055abfb8fc209737da278cd839be3f"
+        }
+      },
+      "sourcePixelSHA256": "cf1bceef697c6818fe449a8b9f9d4669602fbb8d5d6ef04cde70da263ab0e39c",
+      "pairID": "119ffc48bac3a59dbf0da34c67f4150e9d2e964fd0808296fe142e07101ff78f"
+    },
+    {
+      "id": "aef15d53a2bc210ba4bb9f2052ec190d05777958344e2cd737fe38febafba5ba",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/aef15d53a2bc210ba4bb9f2052ec190d05777958344e2cd737fe38febafba5ba-stretch.png",
+          "sha256": "8d326b16fa0dace03fc866e29fb2961dbf9fec8113d92b67cfd22d60e47a3b57",
+          "pixelSHA256": "29e49caea6daadd26599a8daebe8ac1b178083fe0b7a0c33429fdd441205bf17"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/aef15d53a2bc210ba4bb9f2052ec190d05777958344e2cd737fe38febafba5ba-aspect-fit.png",
+          "sha256": "89482a182e5302e5b505aac849260cc1fac99a4f71e3c20da4292cb551b75aa8",
+          "pixelSHA256": "61c8089f7acc8971adfc80d26d26ad7a2c4066232e7c9a95bae9ad96bfbcaeb1"
+        }
+      },
+      "sourcePixelSHA256": "e331267cd3af64efcea79810c86d2f11c668152313686c2519c7c8c2e21c1f5a",
+      "pairID": "289a43714cb8d4cda4e077f6bcf691d5a312e3aa0ea6209f5870ae18ab671946"
+    },
+    {
+      "id": "b7d14f625ff90a13abfd9555ad67c27d63db26c262082b9c2df1895c67e2caf5",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/b7d14f625ff90a13abfd9555ad67c27d63db26c262082b9c2df1895c67e2caf5-stretch.png",
+          "sha256": "73a737cdb640170ea5680ab815d84f910f368f2ac8e472b4e920af53bc286325",
+          "pixelSHA256": "5409ab5c877ab96899d9a5c6bbff00651fbf004ce08cdb878a3321fc5ff374b2"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/b7d14f625ff90a13abfd9555ad67c27d63db26c262082b9c2df1895c67e2caf5-aspect-fit.png",
+          "sha256": "6ab72650fbbfea6a92dac6fd1e87a432b9d5665479170b3e61ff90f755867667",
+          "pixelSHA256": "34c059ab2cc4cf042bef23295f9111b6df6ab1f15791031a6d9473790dc9a0fe"
+        }
+      },
+      "sourcePixelSHA256": "b3fec24b7970301bcc7bc971b2f6ce2416c5ad165187eb9d08ef7a61425db957",
+      "pairID": "289a43714cb8d4cda4e077f6bcf691d5a312e3aa0ea6209f5870ae18ab671946"
+    },
+    {
+      "id": "d545d837c8e01a48e0a6a4f43764a0eeb4bb9eddc404aa436f2509c49af345db",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d545d837c8e01a48e0a6a4f43764a0eeb4bb9eddc404aa436f2509c49af345db-stretch.png",
+          "sha256": "64280bb5932f875fd6a30ce157e03e4cf5065f054264475d23138cda650c1554",
+          "pixelSHA256": "971a267d9ceafbe5433025793e848a5ff6c2a970af2b5214ac745694f39a635d"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d545d837c8e01a48e0a6a4f43764a0eeb4bb9eddc404aa436f2509c49af345db-aspect-fit.png",
+          "sha256": "89737b47b1ef61fc3e3c4cab4a27c816f61d92b194b4e4736dbb6479df84f441",
+          "pixelSHA256": "0cfb3cb2cd07801700c2e7cfc0a4a0fbd476eafbcf92b64b971cf6582760d114"
+        }
+      },
+      "sourcePixelSHA256": "34625f9d270b38c2c57f14db9992e0a50eee6305cd3898485f24cdbe3eba4c2e",
+      "pairID": "1d43fe05f662906902d51d6ee8c4eb7bc7e729cba725db4adea6b09800f5d038"
+    },
+    {
+      "id": "ca8b7c774832d5a45f9774988d7bc836a90be01c9b0fbf889f6408ec2d399da4",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ca8b7c774832d5a45f9774988d7bc836a90be01c9b0fbf889f6408ec2d399da4-stretch.png",
+          "sha256": "266980383ca45bdcd5ef99407def219c7a791f151915ea7a84181a07bd43ea6d",
+          "pixelSHA256": "302de98223b65a706802d238a1a6a7aab0a2b65285ae87e9710e8ac3edaf329e"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ca8b7c774832d5a45f9774988d7bc836a90be01c9b0fbf889f6408ec2d399da4-aspect-fit.png",
+          "sha256": "8acbf7cee6ef8a471bbddf5c4108e78d1570bfb827fbe4e1a2d9289d19748ddc",
+          "pixelSHA256": "2c3ed7c680b943f76026fd310084c8c6ea31647d4dfe8c94bde8093fca17a829"
+        }
+      },
+      "sourcePixelSHA256": "a9a886c6f2329433d222f6e43a054dea5f32d345d30558d1c27e558f919d2ccc",
+      "pairID": "1d43fe05f662906902d51d6ee8c4eb7bc7e729cba725db4adea6b09800f5d038"
+    },
+    {
+      "id": "ed729dac916b031d2698e7fedda6cce004e8f89e32ad2800a3590cf7da777125",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ed729dac916b031d2698e7fedda6cce004e8f89e32ad2800a3590cf7da777125-stretch.png",
+          "sha256": "b6c04a88e53b0cb90ee88a3ef252da370dbb48d3dd76aecb13c990c00c5b2525",
+          "pixelSHA256": "960f7dbae8ea22bc9175c74a59f4c809584a6aba8cda2c0aa23d70da5e452e7a"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ed729dac916b031d2698e7fedda6cce004e8f89e32ad2800a3590cf7da777125-aspect-fit.png",
+          "sha256": "de45c37160a54134eac8e80eee092b917e8dbf72898d0b896d6515776ad905b5",
+          "pixelSHA256": "d2cbe9449f0075d7510f55b4c04dce600749c94a9fbb2b1bf35b8fa3417ac16d"
+        }
+      },
+      "sourcePixelSHA256": "f3c76f49e784522c031070544c49a2d76358361f0003c34ec58f806751c29008",
+      "pairID": "c1516eb0ae9e0b309f0f461668d429119d1040c8acdab53dd5c74ccaca9b8f0b"
+    },
+    {
+      "id": "82d802b7d71fa6a1ac7754012bb41a20a718ae6feaa571f165b51c64aa7bb2c3",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/82d802b7d71fa6a1ac7754012bb41a20a718ae6feaa571f165b51c64aa7bb2c3-stretch.png",
+          "sha256": "45ff38d664e64c4dca835a4d6caaebde4a9cace467272d2adb36e8e786855eb9",
+          "pixelSHA256": "395cd93e0be456b5d84f3de1b46c1a2907478fcd65947e005ff7a636a328528d"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/82d802b7d71fa6a1ac7754012bb41a20a718ae6feaa571f165b51c64aa7bb2c3-aspect-fit.png",
+          "sha256": "14f3f152a28eaf62452ab157ca00ea7d38d698f409449135dbdda283b4cd97e4",
+          "pixelSHA256": "efa50d03fbab1af94d955723f244f2668ece0830abcead20c14b56916298d54a"
+        }
+      },
+      "sourcePixelSHA256": "89e9f2ac1c42f19dc3fe2a3a35957f41997c1260fbe028c536a835ced74877dc",
+      "pairID": "c1516eb0ae9e0b309f0f461668d429119d1040c8acdab53dd5c74ccaca9b8f0b"
+    },
+    {
+      "id": "1008aaf7b998d9015e73364d2ae6d736f857d296318a13f2f266ee381b2f402c",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/1008aaf7b998d9015e73364d2ae6d736f857d296318a13f2f266ee381b2f402c-stretch.png",
+          "sha256": "480775012acd9b31321def65755fce85c05f5e439e09ca786bc94ab5e65c66bb",
+          "pixelSHA256": "57026fcf35ef15413543d67a74b825f2c09e33cbe49e7383bb647df169a8e188"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/1008aaf7b998d9015e73364d2ae6d736f857d296318a13f2f266ee381b2f402c-aspect-fit.png",
+          "sha256": "72dd72672dfc031b0121a332accb6bb377adffcd8e811b43daf55109020af569",
+          "pixelSHA256": "da83694e5aacee7d22f23d1a42154718402f0d04b6131788b3438b14c5366d53"
+        }
+      },
+      "sourcePixelSHA256": "cf1bceef697c6818fe449a8b9f9d4669602fbb8d5d6ef04cde70da263ab0e39c",
+      "pairID": "58eb9dbe1d8336a1254943c7b233265576b7c055541ac63b2447a9c9431d6148"
+    },
+    {
+      "id": "8fc6a61bbeab6a88ca6cf28ef8470e097c1a04c93592979b7d734ee77debbe23",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/8fc6a61bbeab6a88ca6cf28ef8470e097c1a04c93592979b7d734ee77debbe23-stretch.png",
+          "sha256": "733bdec5fd36f170aebdf7d302cd929dcef09bfa99f21f89066ce42037a7756a",
+          "pixelSHA256": "f52ec5a59c98b1c0221add2c493eb4c92198993592a6befe43b2d0145964d3a8"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/8fc6a61bbeab6a88ca6cf28ef8470e097c1a04c93592979b7d734ee77debbe23-aspect-fit.png",
+          "sha256": "bbf65e44b1130b8da502dd8e0f916a236b05bc8759ae7e778bf9aa04ccdafa52",
+          "pixelSHA256": "879929f51bef4d0546a2175c3bb44a730133c81aa5fca81b897732158325bb42"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "58eb9dbe1d8336a1254943c7b233265576b7c055541ac63b2447a9c9431d6148"
+    },
+    {
+      "id": "c0c679b6bcbabd762281ba6b69b23b3d50eae6cbed9231446f81989541131361",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c0c679b6bcbabd762281ba6b69b23b3d50eae6cbed9231446f81989541131361-stretch.png",
+          "sha256": "3d0210343b302d3787440fdab72bcbcadf6de39c4b5bc0bbcab02cce0c02d01d",
+          "pixelSHA256": "11fb81613645b176afa362c695bca57b87419167ac3748b83c1e5ede2ae3d2ff"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c0c679b6bcbabd762281ba6b69b23b3d50eae6cbed9231446f81989541131361-aspect-fit.png",
+          "sha256": "21b1cb8af3675bf738b24074a054721052f3bf41b515834a8a3ed6b47d5790f2",
+          "pixelSHA256": "a058fc266c3bedbc9726ea036c2581375f497e1f72fae1cc543a43396ced52e5"
+        }
+      },
+      "sourcePixelSHA256": "fb7d42d3ccba884dda20270c9efb988241323be0a18e1cf2f5eb0bcf2704736b",
+      "pairID": "8fb8b2e31afaac25667b6f0328a4e023e40086e511c067fb09c5901b44a4da32"
+    },
+    {
+      "id": "4d58df036059f238cde150a2e155a594f36ee8af69d482831c82abc08192ae3e",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/4d58df036059f238cde150a2e155a594f36ee8af69d482831c82abc08192ae3e-stretch.png",
+          "sha256": "172eafc441a9f70b6a608ffd12ff5c1e9d1a6450ea2c40f85d9e5f70467fb80d",
+          "pixelSHA256": "f94f34a7ec79c07cc2a2975c0a884bc4b95c8543cd19987c9867e0603427f0a2"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/4d58df036059f238cde150a2e155a594f36ee8af69d482831c82abc08192ae3e-aspect-fit.png",
+          "sha256": "1f101979a4fc7f41da51903ac9c74d54bfdc9f176e9a7102d8423e958baeb793",
+          "pixelSHA256": "39642d3b26ec38c6fcd1e1f56e0a747e6be594730d65d63099d0ecc7b78adccd"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "8fb8b2e31afaac25667b6f0328a4e023e40086e511c067fb09c5901b44a4da32"
+    },
+    {
+      "id": "90d24c0a6b5c9f325a3241d91f4881b52d0d42efc8f37733bf370c93b99b8ce9",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/90d24c0a6b5c9f325a3241d91f4881b52d0d42efc8f37733bf370c93b99b8ce9-stretch.png",
+          "sha256": "33d9f59782e763e92f3930332858bafb1e59010729a655cd2922830657e3a225",
+          "pixelSHA256": "b7f61e0109d699253f0627d28a33386b2c5082e610172f9c51f2df40bdca4a9e"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/90d24c0a6b5c9f325a3241d91f4881b52d0d42efc8f37733bf370c93b99b8ce9-aspect-fit.png",
+          "sha256": "8a9c118e80b03335b28aa3151b1c8b5f024c19de8c34ca74a8404d3cd4f33305",
+          "pixelSHA256": "c891dfad0cc79620dadeb65294c2d8f35325598c4148ea402fa4aa1fcd00c544"
+        }
+      },
+      "sourcePixelSHA256": "754159a7ce944787d5329d4c55c26ce9da103b2fcab2585edc6aee87629b5988",
+      "pairID": "1e2e15e1327342517767de4f04f3def3e2d3ccfbb28a441bc9cf9440922ef031"
+    },
+    {
+      "id": "0e4a3d183e8a2e4fd0c0889000093ddffe32323cbe09be4b43813fdaebd8d385",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/0e4a3d183e8a2e4fd0c0889000093ddffe32323cbe09be4b43813fdaebd8d385-stretch.png",
+          "sha256": "94ca519dcb3a7f74d9718dc6ebef3d757aa04a84a853aa2e3e8264c741219de6",
+          "pixelSHA256": "ee5afed91c545fca90cf1ca60eb9048164196d5d1c7978e8a8c13e8b7fa704d5"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/0e4a3d183e8a2e4fd0c0889000093ddffe32323cbe09be4b43813fdaebd8d385-aspect-fit.png",
+          "sha256": "8ea26282cec54c3497b89c4e33f0df2d120c4a8b5dd5e749b849917eb5e4bcbb",
+          "pixelSHA256": "26477d0b940048f143391f5b9e6a25e8c719d742eebc7a9632f0de7ebf0dac79"
+        }
+      },
+      "sourcePixelSHA256": "d961d4af939a9170176d304e4ee3dcd674571f07fc5753aeb35d1d0aea02b4e4",
+      "pairID": "1e2e15e1327342517767de4f04f3def3e2d3ccfbb28a441bc9cf9440922ef031"
+    },
+    {
+      "id": "d8790e027b0b4a57f644448f5c5a68e243c0b9004984c6d9d55f91d6ee43108a",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d8790e027b0b4a57f644448f5c5a68e243c0b9004984c6d9d55f91d6ee43108a-stretch.png",
+          "sha256": "79532391cf93e09c1bc5585b73d0212af727da44c4e2bc96bf5ff344ac5bc7b9",
+          "pixelSHA256": "ff0732fc5b499d796e8bb8e4470bad18896ca74e623723cfb17d59de82545eeb"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d8790e027b0b4a57f644448f5c5a68e243c0b9004984c6d9d55f91d6ee43108a-aspect-fit.png",
+          "sha256": "1d0795c02942b11b762a4722fc36b8fa4d17cc1f1be85c2250df4e6958757f76",
+          "pixelSHA256": "38d09fb051806d89b345f9781635e814f75ad357ba3981b1aa389ff28cde4a86"
+        }
+      },
+      "sourcePixelSHA256": "51e704ad37fc73e56b716c7ac0330bb78f723bc4d719e42431a69b424c3c0365",
+      "pairID": "ed97fd127fbbd152a8e5abae51c3179389d532a00c37b202e5f11fecc72dfe17"
+    },
+    {
+      "id": "bc99bbd50e90e3c74410a741176ffb8fc6d2158d208bdb464b8759f745a2db67",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/bc99bbd50e90e3c74410a741176ffb8fc6d2158d208bdb464b8759f745a2db67-stretch.png",
+          "sha256": "e9b4ce1b9749fc489112a942501903a624a3a3d3daf59c5512cf3348a6ef50e0",
+          "pixelSHA256": "e2fbf718ad1115c039e8a68f19466551f8891a39ae6e7050bd45fed83500a6dd"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/bc99bbd50e90e3c74410a741176ffb8fc6d2158d208bdb464b8759f745a2db67-aspect-fit.png",
+          "sha256": "163a0501fad3e5c6d6da4bdaa096b009b147b449918b430c78c5b3d2d04a9a3b",
+          "pixelSHA256": "f0ea83596ffd8b4fe268d4012e6295f4e86c5df9e87e4853bd4aac6483329e50"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "ed97fd127fbbd152a8e5abae51c3179389d532a00c37b202e5f11fecc72dfe17"
+    },
+    {
+      "id": "e28c15b1fdd2615b9bf7f32bd8f8a4c531416b47f7b27a5d96e6439f91a3e1c0",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e28c15b1fdd2615b9bf7f32bd8f8a4c531416b47f7b27a5d96e6439f91a3e1c0-stretch.png",
+          "sha256": "a68b64c9663f780a0fbbc4639bd6a7ebe420d7140b15635d987d3922c78fa43f",
+          "pixelSHA256": "a97c72aa82973972f87efb8a400ddb59e715b2cca8d331db2ab8c158a53c8bb8"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e28c15b1fdd2615b9bf7f32bd8f8a4c531416b47f7b27a5d96e6439f91a3e1c0-aspect-fit.png",
+          "sha256": "d6aa9ba0b2102f97f079abe5ebf40858222be96f66e9f589ae7bb829764c8abc",
+          "pixelSHA256": "be7d2dfa319f6c9e8db22ea5d256580115eb0a74d8931c02bb9be51cc3cefed5"
+        }
+      },
+      "sourcePixelSHA256": "692d6631d4b0e9e7762cee2307aa7f60cb9408138dab6cd69ff1691933a947aa",
+      "pairID": "9291a9d80e2f6902e9f5960c30d4a54dbb5fd82a0810c5d7ca690f805ff1b91c"
+    },
+    {
+      "id": "42743ec4049a0fd981021512324a86f4b25740dd202387458ba798dc238e5012",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/42743ec4049a0fd981021512324a86f4b25740dd202387458ba798dc238e5012-stretch.png",
+          "sha256": "223021ed70c7c40ede6c880db7c0e55abc24f01c3928776cda21d0a47ece8d85",
+          "pixelSHA256": "37d8362b953606db85eb1c6e65f7ad7f4fd8b43fb1e134f50a715cbf6c5db479"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/42743ec4049a0fd981021512324a86f4b25740dd202387458ba798dc238e5012-aspect-fit.png",
+          "sha256": "d1c95195793d3946198dde5dd61f2f0c63834c54b969d8cc80bd63607cd44c37",
+          "pixelSHA256": "12ed87ca06ac83fc63c0cf6ab491c67ca07dc24e9971a0fdbfba3cbddcc16b22"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "9291a9d80e2f6902e9f5960c30d4a54dbb5fd82a0810c5d7ca690f805ff1b91c"
+    },
+    {
+      "id": "e015d675d696f2fe909b1ad6c22d8046681c79e7832df0139525148bea0b31bd",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e015d675d696f2fe909b1ad6c22d8046681c79e7832df0139525148bea0b31bd-stretch.png",
+          "sha256": "dc18f66d6cb526c2651cc1e298fb6ff7c7a196441193460e438ed341e3ed04b6",
+          "pixelSHA256": "d4e13bc781582c5a01c1607938cfabaec765159ccd4669af6cbf6d5bf085c668"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e015d675d696f2fe909b1ad6c22d8046681c79e7832df0139525148bea0b31bd-aspect-fit.png",
+          "sha256": "54284d390b5afbb70385f6cd5a15f2825b087787cfab84bdfab109873fdbdb01",
+          "pixelSHA256": "88a79c4d7b32b53afee9c0cef239bfacedecac6d0cb997b3f7b6dbfc7f6309aa"
+        }
+      },
+      "sourcePixelSHA256": "26c504debc125584315afee71a24f92f6422725ab3ada6e22bbd812bce00cd56",
+      "pairID": "a0d8a9c2b0bac1a3a0509b1afabb1d455686ced6b26e47f8f719b53b788b6bba"
+    },
+    {
+      "id": "693133c0c06356f35a4eb6115ca1de498fc7626bb37e29d0eba058f3fe358e9a",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/693133c0c06356f35a4eb6115ca1de498fc7626bb37e29d0eba058f3fe358e9a-stretch.png",
+          "sha256": "3e09c42760b2b96f89c966cbb983c6c3c76bed3ae977807797f9e28eb2df0eb4",
+          "pixelSHA256": "469e71a300066b3cc5f8a5618ef38b5a8fb3ea5d1ef58bd24d653bfdb1fe00fc"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/693133c0c06356f35a4eb6115ca1de498fc7626bb37e29d0eba058f3fe358e9a-aspect-fit.png",
+          "sha256": "ffa7c48793f2a2184ad05c250c63fa786cd8cf23228b271504bba2a7aad7ed59",
+          "pixelSHA256": "939d9637338d5bfcadbc711a5a9c9d2f92faa311b8712bf2cdc225fc967ef764"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "a0d8a9c2b0bac1a3a0509b1afabb1d455686ced6b26e47f8f719b53b788b6bba"
+    },
+    {
+      "id": "86099f91b12be2db9e5bb07a44a48bbd21d8106a8d83578ef8550a01269879db",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/86099f91b12be2db9e5bb07a44a48bbd21d8106a8d83578ef8550a01269879db-stretch.png",
+          "sha256": "cc92dbeb5ce42c16dc2d644146857031d0735ead8fe897f9c35318c9ade39894",
+          "pixelSHA256": "62ec6a0c7cb0b8c9bd853f43776fe282258a44b57603cfd3d1616c8589d28562"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/86099f91b12be2db9e5bb07a44a48bbd21d8106a8d83578ef8550a01269879db-aspect-fit.png",
+          "sha256": "80f4544ba4a3a86fc2f39edcb5dd3b8519af00d26084f925bb44fca67ea653bf",
+          "pixelSHA256": "6e82de6bf8207a49257d2425cacc75032162d321d48ef056eb36f4c4f5d92019"
+        }
+      },
+      "sourcePixelSHA256": "d961d4af939a9170176d304e4ee3dcd674571f07fc5753aeb35d1d0aea02b4e4",
+      "pairID": "170ce4fa1ded3a4d1fccc934208ace589b7e8e9dda25b6895564d5c11068bc35"
+    },
+    {
+      "id": "d2550291075ebb2c287779b0b0189880e52afb850dc1da3391c305e75a0e869c",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d2550291075ebb2c287779b0b0189880e52afb850dc1da3391c305e75a0e869c-stretch.png",
+          "sha256": "48fc8d770360c408cd9396fa583c4f741ead4a9a66ac2cd1bfe21877be1546bf",
+          "pixelSHA256": "b05216bdc2c553db71da8e6e101b7eaec826833779a985074ed872829aaae71a"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d2550291075ebb2c287779b0b0189880e52afb850dc1da3391c305e75a0e869c-aspect-fit.png",
+          "sha256": "b3b5e70456506be2a94f7f0f69ef4caaa437679cc39d669a7d0ba8bf46be78e1",
+          "pixelSHA256": "f1b469b725280aa2d266daf2c69ca640b07aea91a9d679a039bd2dde03944b0a"
+        }
+      },
+      "sourcePixelSHA256": "e331267cd3af64efcea79810c86d2f11c668152313686c2519c7c8c2e21c1f5a",
+      "pairID": "170ce4fa1ded3a4d1fccc934208ace589b7e8e9dda25b6895564d5c11068bc35"
+    },
+    {
+      "id": "f8b5f8f08f303f7d53acfb0d30d2a3295c54fb3f1998dd291b1261c409b039e6",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f8b5f8f08f303f7d53acfb0d30d2a3295c54fb3f1998dd291b1261c409b039e6-stretch.png",
+          "sha256": "cb7f83478c21c9976df1d07ec77a0063ec6c9f75b61585ff709f981f23b8831a",
+          "pixelSHA256": "520de5e946361e2330a4668bed0922c52c5525575c6e9b4e80eb9f80be17df9b"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f8b5f8f08f303f7d53acfb0d30d2a3295c54fb3f1998dd291b1261c409b039e6-aspect-fit.png",
+          "sha256": "d4987ead4c12cc10b48ac4005a0b01f1f12d22178c403729f082b6db0163ed95",
+          "pixelSHA256": "8bed982016ac5b0fcd9b3dde9c2f70d5e20371bb9e10799e7234e10ef0332a96"
+        }
+      },
+      "sourcePixelSHA256": "b3fec24b7970301bcc7bc971b2f6ce2416c5ad165187eb9d08ef7a61425db957",
+      "pairID": "9dd4483240c6566912b1dfb17ae1e0121f4021cd4df5478a9859046d735775e5"
+    },
+    {
+      "id": "664bf0f78c49fe14af0a44db36d8aca9395262cc48cc589c5822a58a06fff498",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/664bf0f78c49fe14af0a44db36d8aca9395262cc48cc589c5822a58a06fff498-stretch.png",
+          "sha256": "77597158e992e77d9720ecacf88e3a082ee8ff670ea30ee0566b82a61f5b30ca",
+          "pixelSHA256": "127c426b2d589a8e0bf658bd13082a9b11f0df762ccf379d89699dce56ef77f7"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/664bf0f78c49fe14af0a44db36d8aca9395262cc48cc589c5822a58a06fff498-aspect-fit.png",
+          "sha256": "497583af776f10c872bf39c2594d36af16e855a4827041953c7863913067c679",
+          "pixelSHA256": "94a1c356b30927388e6586bd266477233ff50e1261a55df60439c6a15f942b15"
+        }
+      },
+      "sourcePixelSHA256": "9df593ceb65a9832a8ed213464a742d6174680dfc517ae721c3b661529537150",
+      "pairID": "9dd4483240c6566912b1dfb17ae1e0121f4021cd4df5478a9859046d735775e5"
+    },
+    {
+      "id": "c382c2f71233bac2290c7aef45fdd35c167eefdcc8bc3facb5f1431be88e30d2",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c382c2f71233bac2290c7aef45fdd35c167eefdcc8bc3facb5f1431be88e30d2-stretch.png",
+          "sha256": "7073e3012d9941238c9363694e0ebcf29c3287505b042622db2908a33c28ff8f",
+          "pixelSHA256": "6d4b2f10dde09eee0ac19212c879627d2a382e8e5b256530d3ac465a547f9420"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c382c2f71233bac2290c7aef45fdd35c167eefdcc8bc3facb5f1431be88e30d2-aspect-fit.png",
+          "sha256": "a32b952888f339dfd1713a5b7e07b391ccc8db6f5a41ac35c31333ab701e6588",
+          "pixelSHA256": "63867385350c7a33d853daac050f64eeca389ca9b53276f10f3e42c2f71a7608"
+        }
+      },
+      "sourcePixelSHA256": "763a20389e9493a1266964ff131f74f2d8283608489be8534e9e6f876090df9d",
+      "pairID": "f6725a52c12e57644327b80264f1547c18c875dec39edac3a3f6e48c13869a00"
+    },
+    {
+      "id": "ebc44244189b6fe1a9e9e004e45e5ac582423d9b54ad5baa51396124f84ac055",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ebc44244189b6fe1a9e9e004e45e5ac582423d9b54ad5baa51396124f84ac055-stretch.png",
+          "sha256": "bd3f36aadfe1e06771d15214764e51f9cfedcd604a65f830b9d6dcb435039075",
+          "pixelSHA256": "91c06efcbe5513ff5607eb3a21f0b8fd9cbeff47e7586da85a4aad3989e30105"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ebc44244189b6fe1a9e9e004e45e5ac582423d9b54ad5baa51396124f84ac055-aspect-fit.png",
+          "sha256": "8ad7e08da07f4c0fd6228d6d92ae7a9660191926bb9372f6681ea898652d2a77",
+          "pixelSHA256": "f01f5fa0a494e4029d45188e5213eaf8142509978005f9467969cc8560118a45"
+        }
+      },
+      "sourcePixelSHA256": "d961d4af939a9170176d304e4ee3dcd674571f07fc5753aeb35d1d0aea02b4e4",
+      "pairID": "f6725a52c12e57644327b80264f1547c18c875dec39edac3a3f6e48c13869a00"
+    },
+    {
+      "id": "367cf6f3d7ae3d488359258a01801b7b311601500bdcfc374d7af9e0e0121888",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/367cf6f3d7ae3d488359258a01801b7b311601500bdcfc374d7af9e0e0121888-stretch.png",
+          "sha256": "d6dc6bf7090a111bcca400dd6e39c015790ba1bcce03d613ed565e63a4010346",
+          "pixelSHA256": "114454412283be926e5b1beec03fd2aecbde7079f17a71e42d897d32c90f217c"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/367cf6f3d7ae3d488359258a01801b7b311601500bdcfc374d7af9e0e0121888-aspect-fit.png",
+          "sha256": "3476fe246f1e7eca2a4ecb9b3b936377b8ebcbc8cb4174fd20ef52e96e14e339",
+          "pixelSHA256": "8fad742c422c138aa015760823ec9cdcfa6ba60f4dba9bc1a6b62fd623e43146"
+        }
+      },
+      "sourcePixelSHA256": "d92f0829a6c59fb5db7c20f93d6821cd93d2246b27cdfb296c80fbece55f2883",
+      "pairID": "18a019a74a38736853af820a173b31f555a7fcdaf2357cec1517309b7a7228e5"
+    },
+    {
+      "id": "61b12f8d96bb4625604ef1b3a70a790e5003b1c2d19987b58a75d845d4170146",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/61b12f8d96bb4625604ef1b3a70a790e5003b1c2d19987b58a75d845d4170146-stretch.png",
+          "sha256": "6f4c781e82694b3f95ec89a55c5d9dc4f091b21785d038a9af8c8912b5b45e8a",
+          "pixelSHA256": "6069cdeaeff81b98e2fc63a4d99239bbd2992e49c53ea86af67043d00e4c3f04"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/61b12f8d96bb4625604ef1b3a70a790e5003b1c2d19987b58a75d845d4170146-aspect-fit.png",
+          "sha256": "87c6362852d96fbbc2f4ed36edd2d4d2b1996d1b86f1b4e339844c820e6e0b36",
+          "pixelSHA256": "4253bf5184d695e471b5f62cea1715b295999a07065372eaece5a38aa4460f0c"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "18a019a74a38736853af820a173b31f555a7fcdaf2357cec1517309b7a7228e5"
+    },
+    {
+      "id": "d2c34aaf136ad558c3e06cc493e76932c2afa1d6dfb4249b3592351f1d9d1abe",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d2c34aaf136ad558c3e06cc493e76932c2afa1d6dfb4249b3592351f1d9d1abe-stretch.png",
+          "sha256": "3658626dc4e54a9710e0594263bcb590f80329d92b03106917141f99f14d102f",
+          "pixelSHA256": "c5ddb5a33e16585a6d1c1d610e1e890e10c481906690183cad9810b2ca09ada4"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/d2c34aaf136ad558c3e06cc493e76932c2afa1d6dfb4249b3592351f1d9d1abe-aspect-fit.png",
+          "sha256": "525c6d7520280d2fd66ad99c27fa70ea2860685e180ca0367d81a32ef7894c64",
+          "pixelSHA256": "4499364212b6c81311fc3d7e30fbab8c4c982caa811e5477594a318f116cfab3"
+        }
+      },
+      "sourcePixelSHA256": "7eb34bc9927fd074a230e7e0670391ff7ec160d9e0ab59e4baa4c9dcdd4ee6c8",
+      "pairID": "064d4c086df00c996aff838e2c4ab8c78e3efca8210485edffff56ae3c8a0aed"
+    },
+    {
+      "id": "ef835887680e9febde64fa95b93c68082674ae33ed72ab4d1406ef1c18b2bb38",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ef835887680e9febde64fa95b93c68082674ae33ed72ab4d1406ef1c18b2bb38-stretch.png",
+          "sha256": "ed21fe0124ce77f1ede0194d4b1d14cfe9ba748f9bf09c41155db6de4b73049f",
+          "pixelSHA256": "4193363148d9280de35bc0356d83284393f5f438e0cf1088b92deaf93daf3e66"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/ef835887680e9febde64fa95b93c68082674ae33ed72ab4d1406ef1c18b2bb38-aspect-fit.png",
+          "sha256": "12bc3b0413abf4e698299e77380cd39cfb7c3573619ecdc64002c1738c30d345",
+          "pixelSHA256": "f2c1198c56f76cec84e4623a7a48064c8dc52fee7466e295b7d9ec5502cbbeac"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "064d4c086df00c996aff838e2c4ab8c78e3efca8210485edffff56ae3c8a0aed"
+    },
+    {
+      "id": "a8efa2ff47679618b09024c433808ab67c382220db623212934f97fba0b0316d",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/a8efa2ff47679618b09024c433808ab67c382220db623212934f97fba0b0316d-stretch.png",
+          "sha256": "7b92a80b86929a669a31de9e665572874b4c9935d4074af1c501a1e8f92b639f",
+          "pixelSHA256": "3156335f1544ee82ea1e552e3b1482f6be8187f4b8524ab6cdc97eb8b9ce9b0a"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/a8efa2ff47679618b09024c433808ab67c382220db623212934f97fba0b0316d-aspect-fit.png",
+          "sha256": "a68077b9f28af549b7085f7c8b659fe050ba358068b42c0b86eed2f1d733b5fb",
+          "pixelSHA256": "f5b678ab240321e454d0e4da2ab37e5c9aa1dd37929b59cfbee293b26fc90a4c"
+        }
+      },
+      "sourcePixelSHA256": "24a4c839042dfacab8e7d6d937b68489d3a8eab9a5ba551ba7757a080f9457ca",
+      "pairID": "6a96efb26939fb4c6567bcab7ef0e59592bc7c0def66daa1d75dd23cf883e1bd"
+    },
+    {
+      "id": "e25226ab9322f0c4e849cf6e334a7ae82f454d794b6eb9664c6d5683b6e9c583",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e25226ab9322f0c4e849cf6e334a7ae82f454d794b6eb9664c6d5683b6e9c583-stretch.png",
+          "sha256": "1aea5eeba9ffdeaa27b860e5c220823d78cd5ef2de9908f707e313af4f101cae",
+          "pixelSHA256": "49bda2c0722b4f2b7f7dfc5b427d0be0586e9228f279ab29f9bde19ff181f74e"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e25226ab9322f0c4e849cf6e334a7ae82f454d794b6eb9664c6d5683b6e9c583-aspect-fit.png",
+          "sha256": "06dbe1b82ec2c6c8cbdc9fd9d5b17fb9eeb0bb7c9b1c93925a6d0b410533f190",
+          "pixelSHA256": "a928e1821d336ef989dc3d0ac50c5702913111eb4c1ab347d088e1e27bb25a6d"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "6a96efb26939fb4c6567bcab7ef0e59592bc7c0def66daa1d75dd23cf883e1bd"
+    },
+    {
+      "id": "f6c3349e8df4d4c10d06a03bbc96c2db7ea5f6d6fdc21db8067a900c59d19f74",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f6c3349e8df4d4c10d06a03bbc96c2db7ea5f6d6fdc21db8067a900c59d19f74-stretch.png",
+          "sha256": "4fdb863f92a44e86450fbbb72aabfa4b1789be0785b538045712206456480580",
+          "pixelSHA256": "68f9b735914912421db6e495fcdbcf80457cca67a0189e0eef450bf189bcaef4"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f6c3349e8df4d4c10d06a03bbc96c2db7ea5f6d6fdc21db8067a900c59d19f74-aspect-fit.png",
+          "sha256": "e9e566daf6f2dcaf52699c51bda77685c4bbc872f21033d123860ed9fcbe743e",
+          "pixelSHA256": "171f9ef262a6e47a2c26e567ac66b175385fe00cf502953ef30934818aa85b4a"
+        }
+      },
+      "sourcePixelSHA256": "04b1bc964b93b6298f7e4d5dec5ebb3dca07d5907c5f072c2de3e39fd1c7934c",
+      "pairID": "c7a08667ad263ef7c753dcbb678660516981b2ecc3a17296a8a2ff16d7d67658"
+    },
+    {
+      "id": "83761b18dcf321f34ac03b01eb932792640cfae3a88e9a81850e7ee858f36172",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/83761b18dcf321f34ac03b01eb932792640cfae3a88e9a81850e7ee858f36172-stretch.png",
+          "sha256": "fb593e9a314ec93cdf01f7409e7519d43b33e42cf912734e8937185629e97fe8",
+          "pixelSHA256": "8470ed95fadd6ca9d37cc0a01ba4d0cca8434b817f54a69f8826251b4fce27a3"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/83761b18dcf321f34ac03b01eb932792640cfae3a88e9a81850e7ee858f36172-aspect-fit.png",
+          "sha256": "8b26134d40a2b88922db157ac35f547068c74351126752bf25cdf8e45eb2a2e0",
+          "pixelSHA256": "e566f0f64e70b46396cd409e029b8dd1041b824e9df2c54c703defe65af6ec71"
+        }
+      },
+      "sourcePixelSHA256": "763a20389e9493a1266964ff131f74f2d8283608489be8534e9e6f876090df9d",
+      "pairID": "c7a08667ad263ef7c753dcbb678660516981b2ecc3a17296a8a2ff16d7d67658"
+    },
+    {
+      "id": "7183e6127eb250cab8407ac5cfa5ffc5dfa3d79c0099cc3d6b7d2ca3217d4db3",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/7183e6127eb250cab8407ac5cfa5ffc5dfa3d79c0099cc3d6b7d2ca3217d4db3-stretch.png",
+          "sha256": "73c7c33fe14af23d706c1541f67e4e3bbc057c1afd9f3a347044686b35019d04",
+          "pixelSHA256": "9bad63a62892f65b8a8625ee5b9aaeebb26e4e37f0be1703ab1b31e6c2d872de"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/7183e6127eb250cab8407ac5cfa5ffc5dfa3d79c0099cc3d6b7d2ca3217d4db3-aspect-fit.png",
+          "sha256": "2dadc4e04bf6e31b6cf9ec1c2d804d09d37371548d8bc98493720720be44878a",
+          "pixelSHA256": "2a2a4e92912d9593cba26597c93dfb61853f714c820b6ffc61571b11c5abd992"
+        }
+      },
+      "sourcePixelSHA256": "ecd9bb725325bb1f449db246c193178df550ceb9883d388d6e3b131603819e45",
+      "pairID": "c694f079ce149005957db8e9f66d4aa5e018bc79cecf8c6665a46fc4efda639d"
+    },
+    {
+      "id": "7558f758fc3ead4b70dd1aa10eae3898b83907425430cb3569e39e505af22582",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/7558f758fc3ead4b70dd1aa10eae3898b83907425430cb3569e39e505af22582-stretch.png",
+          "sha256": "817184d8567bfc6a8af64b015f3b89c6d7aad4781b8d3a863493038815fd7ac3",
+          "pixelSHA256": "4a5a9216443f9bdea4b9214057d771ab0407fc74b98b2b2461a99f7e7172eeb8"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/7558f758fc3ead4b70dd1aa10eae3898b83907425430cb3569e39e505af22582-aspect-fit.png",
+          "sha256": "af23428156a7bbecf77d535bfd57b685c864c3e851ffc9584c7db800c8020303",
+          "pixelSHA256": "1fbf169d75f4b7b53850c001aae449948a7b6e54e6144b98ce6a8e2fed2b69a7"
+        }
+      },
+      "sourcePixelSHA256": "7eb34bc9927fd074a230e7e0670391ff7ec160d9e0ab59e4baa4c9dcdd4ee6c8",
+      "pairID": "c694f079ce149005957db8e9f66d4aa5e018bc79cecf8c6665a46fc4efda639d"
+    },
+    {
+      "id": "b14e6aaf12cb780a6bec5e981ef11b3eb51d6902e1e5886b620da387deaf56ad",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/b14e6aaf12cb780a6bec5e981ef11b3eb51d6902e1e5886b620da387deaf56ad-stretch.png",
+          "sha256": "5563177426ff7f08d5559ab9c8b108d0b75cf0301a0f96c94c4b9d984705782e",
+          "pixelSHA256": "2ec6b127f25a58348b85e9bb97927bda89d9208116d9114488b4e7a60fb95968"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/b14e6aaf12cb780a6bec5e981ef11b3eb51d6902e1e5886b620da387deaf56ad-aspect-fit.png",
+          "sha256": "619ad99a4cad83b758ba566ac7335ffc86db20e9c55dacba5d767d7df842a164",
+          "pixelSHA256": "c9ca419a7beb5960b3396ffc1d4adf1fe94172feca60ceb6d2d54717ae62e4a8"
+        }
+      },
+      "sourcePixelSHA256": "9df593ceb65a9832a8ed213464a742d6174680dfc517ae721c3b661529537150",
+      "pairID": "d86257a255c4f042ede69b024bf23fa852b74953bdb4c8f28b72983afb47c3ba"
+    },
+    {
+      "id": "c2e9476988906ae887821d17f8fd0b68b06f782a04efa09b231077817b40dce1",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c2e9476988906ae887821d17f8fd0b68b06f782a04efa09b231077817b40dce1-stretch.png",
+          "sha256": "e875f58bb5055f01882184c2ac8461db98ab32885b5411a6587818cc5afc93c3",
+          "pixelSHA256": "506e0dd735a512878d81436b924fddb89ff5334089296003746c53876427f6bf"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c2e9476988906ae887821d17f8fd0b68b06f782a04efa09b231077817b40dce1-aspect-fit.png",
+          "sha256": "09fd1ea51dd96c4f5cdcd3e2418ba016f78e6cda5afaf1cfcaa81fec6f2b01b8",
+          "pixelSHA256": "6b99315c0095714feb82dccd04000f75ab574eeeafa705eed594fed74b1c826b"
+        }
+      },
+      "sourcePixelSHA256": "ecd9bb725325bb1f449db246c193178df550ceb9883d388d6e3b131603819e45",
+      "pairID": "d86257a255c4f042ede69b024bf23fa852b74953bdb4c8f28b72983afb47c3ba"
+    },
+    {
+      "id": "78add8617e3ddfdb053822d5fb447522009cc457f83aef5448933af373039b64",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/78add8617e3ddfdb053822d5fb447522009cc457f83aef5448933af373039b64-stretch.png",
+          "sha256": "24c09ca88632606a714efbef6dfc86323472fe0ad156abd1ab07e04d511a8673",
+          "pixelSHA256": "df6e3486e68e9d33b430d3fa1704299dfcaca7563d0c79387eeabcdeca789693"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/78add8617e3ddfdb053822d5fb447522009cc457f83aef5448933af373039b64-aspect-fit.png",
+          "sha256": "313dd877ae32e5f618ba2ca4a005b08960c999316122d7f3f4df33362162aa19",
+          "pixelSHA256": "e6558d608e94b8620b60b6e6a96c4aa2c00e997848c202130175bdc5843e6f0c"
+        }
+      },
+      "sourcePixelSHA256": "89e9f2ac1c42f19dc3fe2a3a35957f41997c1260fbe028c536a835ced74877dc",
+      "pairID": "22cf8dea1fdfd33e8561f5b108398366882a55b0124118619d893af41eaf26f8"
+    },
+    {
+      "id": "53bccd97ba44c7f86b200f39348ff0a23b22bfe169330650d113cdcec63bbdd7",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/53bccd97ba44c7f86b200f39348ff0a23b22bfe169330650d113cdcec63bbdd7-stretch.png",
+          "sha256": "a42c002cced32d9b31c94e2b4ecd17ed418c124a6a1b505edc4a3e900f9866e6",
+          "pixelSHA256": "fa17dd035ea54ba21a998bd1c191ef3e2eb27046e2ebdc508a4bc3ea1df97673"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/53bccd97ba44c7f86b200f39348ff0a23b22bfe169330650d113cdcec63bbdd7-aspect-fit.png",
+          "sha256": "b2a8140bb53e3f5fe961e06f8beb2c4d50075e50573e72e9ac6feaf92ee5c96c",
+          "pixelSHA256": "5df08b399413e26df58fa9f3dd67d3e1cc385bb1b90ecacb35b324881ff4130f"
+        }
+      },
+      "sourcePixelSHA256": "ecd9bb725325bb1f449db246c193178df550ceb9883d388d6e3b131603819e45",
+      "pairID": "22cf8dea1fdfd33e8561f5b108398366882a55b0124118619d893af41eaf26f8"
+    },
+    {
+      "id": "6bdabcff76e82becc03606987976330f46e47bcfaeff5206f0bd783476905237",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/6bdabcff76e82becc03606987976330f46e47bcfaeff5206f0bd783476905237-stretch.png",
+          "sha256": "50c9b41bd55586d863c7c79c8144e92236ef7b2bf8ad17d5d8f3cd78fc58e349",
+          "pixelSHA256": "cd7808178f60adf044f9bf57e6dfa0aa376df039e8c933be8cd9ee5d07f59285"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/6bdabcff76e82becc03606987976330f46e47bcfaeff5206f0bd783476905237-aspect-fit.png",
+          "sha256": "9e095fa73be8d34a6f5cc054f88d7ce2f42af80ef5f3ae8b0744ebd0fd36c34e",
+          "pixelSHA256": "0da3a5619e173c1818eac0d1e5541b3a058857fe06bf1b607f3ffd7b30167d08"
+        }
+      },
+      "sourcePixelSHA256": "d6e7de789a94ccea63bc1f6ce6d30339959b3b839244fcfe3a212f8dd6e7abca",
+      "pairID": "47f9b18b493ceefbfe1129a99389e95e6b90258645c8afba94c041b8bf4399ad"
+    },
+    {
+      "id": "12c1c47bc1c64d142af31d0e8aa88b68321965341af7733622909afd74e07113",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/12c1c47bc1c64d142af31d0e8aa88b68321965341af7733622909afd74e07113-stretch.png",
+          "sha256": "788b15cd12efc4906d10829ddb855ea3ad8738433d6a319a200e8d91f0d2cf36",
+          "pixelSHA256": "6b88f9794a82e58e05a57f02547361ada2dfd431d3814f1d933fbb2f37bee5eb"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/12c1c47bc1c64d142af31d0e8aa88b68321965341af7733622909afd74e07113-aspect-fit.png",
+          "sha256": "c55bba18868889ee9db68f19e1669d66958717adc53c7cff28ca15d6e24e03d4",
+          "pixelSHA256": "990996c0ff42b042fed8c21cef7db4fe26f168129d3db53b0c8738df57cdfd19"
+        }
+      },
+      "sourcePixelSHA256": "164a56ece0816792e0363e5aa8c0b10d5f504fd3bc74ea330596fef2f21bf273",
+      "pairID": "47f9b18b493ceefbfe1129a99389e95e6b90258645c8afba94c041b8bf4399ad"
+    },
+    {
+      "id": "e0e8ffb56a74a28600dd2196d8106cf1c986d799ecab5d06f729050ab4c8d151",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e0e8ffb56a74a28600dd2196d8106cf1c986d799ecab5d06f729050ab4c8d151-stretch.png",
+          "sha256": "4c01bc54e199529b8155e10b04d3b3025d19c7ceab281b456edacdab4f744192",
+          "pixelSHA256": "c83d98247258aa4da1e60b618be270b1ee2b357f716e0563532f96d64371139b"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e0e8ffb56a74a28600dd2196d8106cf1c986d799ecab5d06f729050ab4c8d151-aspect-fit.png",
+          "sha256": "860b49978d4b2121a4a25eaebae9366393e6baa8b805d8f0e7060a38d7aa5b0e",
+          "pixelSHA256": "ecb522e3b8a33e3cdc461d299d177f1e38c15ad381f8068de622aaa53d685c2f"
+        }
+      },
+      "sourcePixelSHA256": "5bfc20732e3163518828db98185a92a3850b582ffd96105054b740de78d77899",
+      "pairID": "57e575c88959bfd0cddd237c2248892ed365d33fa9c304386ce41e2370d8c912"
+    },
+    {
+      "id": "651b8e3e63c6bdbd803a2a5b297798c505c79e4ef712de57285c48b617f680e6",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/651b8e3e63c6bdbd803a2a5b297798c505c79e4ef712de57285c48b617f680e6-stretch.png",
+          "sha256": "48b1fcf6d521e9d55ff31de8286b19d181a0482d9051612921a571844f55eb27",
+          "pixelSHA256": "2e77fca0ef055875f0f7eae1e004768872c9e0ac19d80cea95e1fbaadfe46e4e"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/651b8e3e63c6bdbd803a2a5b297798c505c79e4ef712de57285c48b617f680e6-aspect-fit.png",
+          "sha256": "e7fedb945f7ec3fca761eafc4ff438178ab0cb0053141c452d99d95b31f80183",
+          "pixelSHA256": "b08bc5560e619968bc532f1a7ae1e055ad1a5072b192a1aa2efaed60ec2eec0c"
+        }
+      },
+      "sourcePixelSHA256": "04b1bc964b93b6298f7e4d5dec5ebb3dca07d5907c5f072c2de3e39fd1c7934c",
+      "pairID": "57e575c88959bfd0cddd237c2248892ed365d33fa9c304386ce41e2370d8c912"
+    },
+    {
+      "id": "cc3abcfb15be5254538b2e339117f607034063176d6e7057b188d8732df55c8e",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/cc3abcfb15be5254538b2e339117f607034063176d6e7057b188d8732df55c8e-stretch.png",
+          "sha256": "7d8c6b11399ee99f755349638a80ed3f73f430fa8c2643854071319e4ff37dfb",
+          "pixelSHA256": "254784ff2a80648cfccccbb41585ed92a382a85bb8c040f34bedc8f26e5b058e"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/cc3abcfb15be5254538b2e339117f607034063176d6e7057b188d8732df55c8e-aspect-fit.png",
+          "sha256": "b549d7b3d60d9c84305bbf0b0bd9ea02dfca9ccfb35be9f7c5cf3e20915eec5d",
+          "pixelSHA256": "f85d0f9e2cfbf72c8113fce312c00cb7228dd03a42923cc4e92c438d3092fcde"
+        }
+      },
+      "sourcePixelSHA256": "c046ad48861e00e49658606e4276d6bd447541c4e9db552350ce36674cb96321",
+      "pairID": "ffbd5d4b4ff9105515e50c13acdccdda7dc575aec60dab86a497895da7347e99"
+    },
+    {
+      "id": "e5e11ce59c8b0759927dd5f96f1366221456de2ba2df0182f297f1d6a280a494",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e5e11ce59c8b0759927dd5f96f1366221456de2ba2df0182f297f1d6a280a494-stretch.png",
+          "sha256": "1a443eb8a6c2dea67202fbcffd0e56ddf295036613f4a3e684cfcf6d8c176149",
+          "pixelSHA256": "f0511af26342eaf421bf2a33ea1af1b10e6e64f7b253cd0cba542c136fa5cec9"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e5e11ce59c8b0759927dd5f96f1366221456de2ba2df0182f297f1d6a280a494-aspect-fit.png",
+          "sha256": "e09a79cf76a0ef5b691c62dbf26b48bdf236dd0b0c4da0e5400c854b3aad2685",
+          "pixelSHA256": "7b85bc84f21968e3c7168b5eac813035e963a05612490e92730acf0a948de564"
+        }
+      },
+      "sourcePixelSHA256": "04b1bc964b93b6298f7e4d5dec5ebb3dca07d5907c5f072c2de3e39fd1c7934c",
+      "pairID": "ffbd5d4b4ff9105515e50c13acdccdda7dc575aec60dab86a497895da7347e99"
+    },
+    {
+      "id": "5563b8a87d7ae9f259c5b8b226555b59b0518656af806eb0f17832d6bb8897d0",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/5563b8a87d7ae9f259c5b8b226555b59b0518656af806eb0f17832d6bb8897d0-stretch.png",
+          "sha256": "745ffc1610ded69e438a0cff27c9e63d7752d320f6bef885a59aafad97c02c75",
+          "pixelSHA256": "b3751e2eb96f533efa63607131895265f04257084cbae9c2423d4819526d85d0"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/5563b8a87d7ae9f259c5b8b226555b59b0518656af806eb0f17832d6bb8897d0-aspect-fit.png",
+          "sha256": "29741d94455ae912d1b4f5ae76eeab5931a98f900688224abc9fe15550443acc",
+          "pixelSHA256": "060477343bcf27e2663d7d07a83f85de90e1530f66d822c095163a9338728249"
+        }
+      },
+      "sourcePixelSHA256": "111165855a5eb82ac5edb37a0d0a457aba16360cf726af921df41b739d7316fd",
+      "pairID": "2bb9d7cc5f9b0e9de52a07a377fae08ccb618be2db7335cad23140ad3706b7c8"
+    },
+    {
+      "id": "f39bb02dd7be7e7f8c0cc0f01a9a4dc507b8a65ccbc3f505f2a051f6aecafba7",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f39bb02dd7be7e7f8c0cc0f01a9a4dc507b8a65ccbc3f505f2a051f6aecafba7-stretch.png",
+          "sha256": "02e463c6a5089425af15d9d6f917563814770aa7a3d923c2682bb2b58d453ee8",
+          "pixelSHA256": "6b7f08a38adf2dc488e132644f29f488d277e60fd2bc36e70545137248986660"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f39bb02dd7be7e7f8c0cc0f01a9a4dc507b8a65ccbc3f505f2a051f6aecafba7-aspect-fit.png",
+          "sha256": "96e5908c9aedb625fc260fbe21571e4bdcbaf66756c9676f6f1b296f8c955785",
+          "pixelSHA256": "db22a7f05856891d9aefce21a34ec336dca4fa78421aca1875f9ba3a4ac38bbf"
+        }
+      },
+      "sourcePixelSHA256": "f3c76f49e784522c031070544c49a2d76358361f0003c34ec58f806751c29008",
+      "pairID": "2bb9d7cc5f9b0e9de52a07a377fae08ccb618be2db7335cad23140ad3706b7c8"
+    },
+    {
+      "id": "6ac8a1ec36c500047b36c98a81c4a582b60c9c9681df71b5e19d998418a67bfe",
+      "label": 1,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/6ac8a1ec36c500047b36c98a81c4a582b60c9c9681df71b5e19d998418a67bfe-stretch.png",
+          "sha256": "e135861b9135fac5183020b2185bd7fee63dd382874e067e6bbe123714d8ef74",
+          "pixelSHA256": "f3de95788ffe66419ebd7593f84885cd950eb2a17a241449489239b580e7a85b"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/6ac8a1ec36c500047b36c98a81c4a582b60c9c9681df71b5e19d998418a67bfe-aspect-fit.png",
+          "sha256": "1276876f3b166c20f57264fcdafa7567a0a1023d061023a46b40cea6c944144d",
+          "pixelSHA256": "60d1f5b479d7f543fbc133359ca7ae162494474188862ee5f19888815f54c99a"
+        }
+      },
+      "sourcePixelSHA256": "a9a886c6f2329433d222f6e43a054dea5f32d345d30558d1c27e558f919d2ccc",
+      "pairID": "fe36efea55703e599d7e92f450e305c3c16f501258baabccb04f60d01e17dded"
+    },
+    {
+      "id": "3fe413dc654527c9a9ec9059716a560a07fc08fa1cb1343cc67dc1df3386de97",
+      "label": 0,
+      "screenID": "settings/general",
+      "group": "tvos26.5-settings-general-development",
+      "split": "train",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/3fe413dc654527c9a9ec9059716a560a07fc08fa1cb1343cc67dc1df3386de97-stretch.png",
+          "sha256": "846c866f92282c598f777715c6464affb5800393355bfd281a6aba3aa549ad2c",
+          "pixelSHA256": "f62d7328b0eecc560c67db89295573c127ed327a6dcc8efec863c802728e1bab"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/3fe413dc654527c9a9ec9059716a560a07fc08fa1cb1343cc67dc1df3386de97-aspect-fit.png",
+          "sha256": "edd4bd1dcec66b1193e7706a38be7bcb464d81a034bbd884056c0519bc84c4f6",
+          "pixelSHA256": "093598832f7f64544d371c6fbbcf0878349198a53950944a055a654abb2f2361"
+        }
+      },
+      "sourcePixelSHA256": "5bfc20732e3163518828db98185a92a3850b582ffd96105054b740de78d77899",
+      "pairID": "fe36efea55703e599d7e92f450e305c3c16f501258baabccb04f60d01e17dded"
+    },
+    {
+      "id": "af7782164dbfabf3c4f50f05bf777df4f9e88931063a673379dfb12b1a328900",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/af7782164dbfabf3c4f50f05bf777df4f9e88931063a673379dfb12b1a328900-stretch.png",
+          "sha256": "d5eef65a989cd5b55a3783af3c966f494c61531c854261053cd65db51dd9dfd4",
+          "pixelSHA256": "281feaa3861068e6766584c2c18cb8dfa21578f01ab029f92b10cddf625a1c54"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/af7782164dbfabf3c4f50f05bf777df4f9e88931063a673379dfb12b1a328900-aspect-fit.png",
+          "sha256": "74761256ea1c8ae4522283261476f04f4fa3d9db11268112e8f45e6e24767f2d",
+          "pixelSHA256": "4b7198ab77c10cd0d81abedab8c40b50aca6b2fc2eea18638c811bb301104448"
+        }
+      },
+      "sourcePixelSHA256": "14bf4202e879e042c1bf0dc0cb7b7b5ea56b312ac8c857e07e7b48a8f839789a",
+      "pairID": "f784b58b50deb76f414b2ceadae77f10b544167e6e46de0e94c2052140a34b29"
+    },
+    {
+      "id": "bfcd5a6c8d672722e0b0f460ea137f2987f129ace15f97eed614b643e061077a",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/bfcd5a6c8d672722e0b0f460ea137f2987f129ace15f97eed614b643e061077a-stretch.png",
+          "sha256": "ce069c9258d74fedc9d58d9e65ed50bdac86883ca264463a0cd5de3221053d9b",
+          "pixelSHA256": "92ddecf7a4c36dc699079c15da3c3faa9d0d0b07236ac662f709af07b8551261"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/bfcd5a6c8d672722e0b0f460ea137f2987f129ace15f97eed614b643e061077a-aspect-fit.png",
+          "sha256": "4834ec40f3907fb2c6762fc3cdb11d20b0b7ac99f850989676d8d4a8db2fbd8e",
+          "pixelSHA256": "66c7b2e269b5c5765a475bb2d3827d8edf0fd3024e18360353af1c650ee40eb1"
+        }
+      },
+      "sourcePixelSHA256": "c8382c3b659eb01b0503c3c1ebca3cea237eab971ca81b23341485ad2ad7fffe",
+      "pairID": "f784b58b50deb76f414b2ceadae77f10b544167e6e46de0e94c2052140a34b29"
+    },
+    {
+      "id": "e8ad39f33c9e10bef34bc3b3ab414668f30f55bd99aec50ad67c83ea577e1fcc",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e8ad39f33c9e10bef34bc3b3ab414668f30f55bd99aec50ad67c83ea577e1fcc-stretch.png",
+          "sha256": "c8d3b1f4535d49b1b30878f58cef98262c244d7d4b384c46e794db40a1368f55",
+          "pixelSHA256": "c355e0137d17b375531b902b34839aabdb289c0d3b12c9f2e38b34702dcb460b"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e8ad39f33c9e10bef34bc3b3ab414668f30f55bd99aec50ad67c83ea577e1fcc-aspect-fit.png",
+          "sha256": "a2c476862c77ddde13b3517c4378690d08c6aceac9505a60d2eddd15b455e901",
+          "pixelSHA256": "f9425203db99db9bdd9a00da43f4d2b10cf1407fb4f53bfdb5c1a6480446ab76"
+        }
+      },
+      "sourcePixelSHA256": "c8382c3b659eb01b0503c3c1ebca3cea237eab971ca81b23341485ad2ad7fffe",
+      "pairID": "190e17510fb962149f6e57e205eb8a3077e267bce35ba3bda7863a240f35471d"
+    },
+    {
+      "id": "eadb5068bfae85907944aed1ad2389234228e938320f76e2210696a7588b16d2",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/eadb5068bfae85907944aed1ad2389234228e938320f76e2210696a7588b16d2-stretch.png",
+          "sha256": "ff7d667dec4857e4aaf55908f502884c641d80010bdac673691aa2d2f40f4084",
+          "pixelSHA256": "83bb31d78f2eaaaf35e9a778e2a336b4df957c6ee05d842830c8111a9c82c930"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/eadb5068bfae85907944aed1ad2389234228e938320f76e2210696a7588b16d2-aspect-fit.png",
+          "sha256": "33d48aef34867822e5cb2771731683358ff139c24afbadb046ae0d68522179a3",
+          "pixelSHA256": "67a3f4f7287bf4f7f3ec099bd327f8e8fecb6409edede4857bd81598bd100c8d"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "190e17510fb962149f6e57e205eb8a3077e267bce35ba3bda7863a240f35471d"
+    },
+    {
+      "id": "117fa17f8f3eeaa2f7cae5154e72ae7f2f90f1db6f6db9d3303e5209260708d3",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/117fa17f8f3eeaa2f7cae5154e72ae7f2f90f1db6f6db9d3303e5209260708d3-stretch.png",
+          "sha256": "5e02f48aad7dabf0f379bb726f284b07f210b5fb1c2a4d11d25cad8afdb92712",
+          "pixelSHA256": "5cd604dc03cb5f2892b2b538e90278d4b5d6780e555062f6325588095dddeb45"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/117fa17f8f3eeaa2f7cae5154e72ae7f2f90f1db6f6db9d3303e5209260708d3-aspect-fit.png",
+          "sha256": "a45ffb9f6f2f6187b88216f8945d953089c8ce522826016d9c9d30108ca35ae5",
+          "pixelSHA256": "4b41de95dc8d777907b78409647bb79ac2f6ae28b5c2ab5d17fb604393795ced"
+        }
+      },
+      "sourcePixelSHA256": "a24ff355dfab22d2d69ec6e9bab86187683dfe9e18f461790768b1e1d15bf56f",
+      "pairID": "637d6b0fa7bcf57d44ae0a1abb8bdee7fcfb263d185db11118da666f2a29ad6d"
+    },
+    {
+      "id": "e8b8ff640aa527d96385cd3e090bb2fd440951b5375da9bc0a10d6a823311455",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e8b8ff640aa527d96385cd3e090bb2fd440951b5375da9bc0a10d6a823311455-stretch.png",
+          "sha256": "4dff05efae1e379370e48867fdc632cc2da914f404c83bed718823cf3281e2cd",
+          "pixelSHA256": "c9de8be60a900b15489cfc54572e2017796e92a2eb434ce6523de06d38366c90"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e8b8ff640aa527d96385cd3e090bb2fd440951b5375da9bc0a10d6a823311455-aspect-fit.png",
+          "sha256": "3bdd6d75727417dce04f183d22d76f7ff6ea62d929ae65b5f6933214b1bf0e2f",
+          "pixelSHA256": "abae14f20da2bbdbde6b1df99399eacbbd147af2ebff220cf55c8d1d7eb9e562"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "637d6b0fa7bcf57d44ae0a1abb8bdee7fcfb263d185db11118da666f2a29ad6d"
+    },
+    {
+      "id": "122b3f8101d1993065e3a833c5a981e30fe16bdc3173c63e9df4b33602eb5d62",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/122b3f8101d1993065e3a833c5a981e30fe16bdc3173c63e9df4b33602eb5d62-stretch.png",
+          "sha256": "6472e0ab95d589c65445d932c9a6c38bc6dacc1b5d7437c455ebcb03ab4b5b80",
+          "pixelSHA256": "68c9942095f43f882f3ab79c22fde130cda3316edbb486627e832fc81a56e99b"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/122b3f8101d1993065e3a833c5a981e30fe16bdc3173c63e9df4b33602eb5d62-aspect-fit.png",
+          "sha256": "95780016219c787061af444e11d0f69e2d3c4bd0140843f59007d4c35ffa8ef2",
+          "pixelSHA256": "f911ee817861ff7913d00fdb9ef3d5e6b3911b34e4c0eb7a4686b2cd46a1e13f"
+        }
+      },
+      "sourcePixelSHA256": "c50d62885d9bed9bc88e015853062800206f01889b12902a3d45ae24f615b142",
+      "pairID": "a802c9f2dc7cf4f2b5edd4dce49e5118cd46e9874349ded74d98d75acb108a4f"
+    },
+    {
+      "id": "907feb692a97f6fc69258d24bcb52ef3a596f95f29ce96c676279c823f7e360f",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/907feb692a97f6fc69258d24bcb52ef3a596f95f29ce96c676279c823f7e360f-stretch.png",
+          "sha256": "ea724a59063b741a8db4ec713262337d3e7e378069c6984275759fcf7f3415ec",
+          "pixelSHA256": "b02b57ecf8181803b98ad3bbe3b462aebf2565b8a25f317240bf6eae18d0f039"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/907feb692a97f6fc69258d24bcb52ef3a596f95f29ce96c676279c823f7e360f-aspect-fit.png",
+          "sha256": "2452b3a9da2ec94c545e8e1df0304c2a6b830c68b5431e29cf6ca86f51436fc1",
+          "pixelSHA256": "063895e228f116c367c211159ca5bfeb3a8278d236b53f1eafe34dca79df8c9a"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "a802c9f2dc7cf4f2b5edd4dce49e5118cd46e9874349ded74d98d75acb108a4f"
+    },
+    {
+      "id": "e870f22d864680c2e9698c97adac8796c7775a5e6a67e0ef02796c60733e5f96",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e870f22d864680c2e9698c97adac8796c7775a5e6a67e0ef02796c60733e5f96-stretch.png",
+          "sha256": "2653caf6b761a538e146c36e3bef63b0a7001a78e6cfb9143c71c806a6f412a9",
+          "pixelSHA256": "b829383a8ee2ec2c6ac4f1652f22b7b60d147fa1c9a5b46cbd000eb20ef34252"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e870f22d864680c2e9698c97adac8796c7775a5e6a67e0ef02796c60733e5f96-aspect-fit.png",
+          "sha256": "57d35c51255c6c35c10f4a5db9d05bfd157fc112c843a7442b8107b519184617",
+          "pixelSHA256": "fe01aa13c95e32002f50c408e176512a6ae5fbc53ff15814231f0b90a3ae3175"
+        }
+      },
+      "sourcePixelSHA256": "ff7eea690ac1b71086af40b11644664e12366ab586534e575f6426d3178f18ec",
+      "pairID": "4a231a50bdaffb08f88ba1b3d9a028f4777d80f4b849047b593f8d2da29b366d"
+    },
+    {
+      "id": "b0322205cdbd62c3e6c680499cc3ab43713e6a00d8f7e35b5044358cf9025870",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/b0322205cdbd62c3e6c680499cc3ab43713e6a00d8f7e35b5044358cf9025870-stretch.png",
+          "sha256": "55f2151cbc699a23d0ac69dc2c422676bff660f99b93d0ef76f7165b498e200d",
+          "pixelSHA256": "8c73c40a0e953c366c18566d725498213475968f13fd1904540218b8a581d7c7"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/b0322205cdbd62c3e6c680499cc3ab43713e6a00d8f7e35b5044358cf9025870-aspect-fit.png",
+          "sha256": "2c826255247da29a5154f13878f9a8f6f3c3424d317b7466ec0855f5707045a0",
+          "pixelSHA256": "209744c14bbeba67a24dd58c801e68b54c4fa251bd0c90d70f6064eef484f4eb"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "4a231a50bdaffb08f88ba1b3d9a028f4777d80f4b849047b593f8d2da29b366d"
+    },
+    {
+      "id": "f0671c7345d8ecf78b016588c8e587e42be75f1da25b67030a7513c19e992b13",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f0671c7345d8ecf78b016588c8e587e42be75f1da25b67030a7513c19e992b13-stretch.png",
+          "sha256": "56b3008d7c4a8b159c4b06efaa5a3c341e322a102b05e04938094155b71fb51a",
+          "pixelSHA256": "ea9fa7a97aa1215dc1622aac75d63147ed690abdfba60584c0808dc41359a417"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/f0671c7345d8ecf78b016588c8e587e42be75f1da25b67030a7513c19e992b13-aspect-fit.png",
+          "sha256": "608d1e04c4bf8e2228888a549a7583cd88692b683834418298558bd204cc0e0c",
+          "pixelSHA256": "a34302cdd14d1afe05650007fbd3eb9699f589d84820c9ba9cc36169a1b3a843"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "10a44f398b1bd33d2af5aaf9b02c55fa66f7298abb86f440299c4f91504136ef"
+    },
+    {
+      "id": "e006a05d2e646a8e905a98c3ce59ea0a253559836d9ac4e5014aacff06b4db37",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e006a05d2e646a8e905a98c3ce59ea0a253559836d9ac4e5014aacff06b4db37-stretch.png",
+          "sha256": "eadcc462360a2d44b60c628ee25693f5ec7a2bebdded820a68347798ad1c51b8",
+          "pixelSHA256": "5dbda3845d87e4fb32f5de50055c1768ae528ec54b7a0ddc82ea262856de2932"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/e006a05d2e646a8e905a98c3ce59ea0a253559836d9ac4e5014aacff06b4db37-aspect-fit.png",
+          "sha256": "784ee64b2d125c8ab420b15ef80c959c3a7fb7214cef9904132e65a1a3279cf0",
+          "pixelSHA256": "15512dd039102209b451de5940455801699562b677adef5998298db5b0c6127d"
+        }
+      },
+      "sourcePixelSHA256": "ff7eea690ac1b71086af40b11644664e12366ab586534e575f6426d3178f18ec",
+      "pairID": "10a44f398b1bd33d2af5aaf9b02c55fa66f7298abb86f440299c4f91504136ef"
+    },
+    {
+      "id": "c1034e7612c074b23c9c7aa54118d485266cfad1949dda16bf376917c1a8c32d",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c1034e7612c074b23c9c7aa54118d485266cfad1949dda16bf376917c1a8c32d-stretch.png",
+          "sha256": "0a51ff4998ea6191c146364ca485ad4b51a2109310d3e7d7cb903a071bfc8cad",
+          "pixelSHA256": "d6bd31afa4361859bce632cb5b45c830e8bf4dd5a90609600383ca67f9e8751d"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/c1034e7612c074b23c9c7aa54118d485266cfad1949dda16bf376917c1a8c32d-aspect-fit.png",
+          "sha256": "349e11431efc32c7d1a2b5e93ec07f174ef5d592f654f24c54ac6d987a882aa0",
+          "pixelSHA256": "0b982df75f65a9b90a99ab5cf33bfe52beb99da45ced838f004162470b4a7927"
+        }
+      },
+      "sourcePixelSHA256": "ea3c84920ccdd45486fbab3c97cd77e76d5d00841ea3a03db4ea93d2946bd8e9",
+      "pairID": "c3bb4245fd88bc2f09c7bb95cc5463e44d7e4467fc66dc8bcbb7d64829e0ca13"
+    },
+    {
+      "id": "2d6bac6ad1ed668303ee00bb00f3aa36b81cfdcbc52eaeef65bb54edf558ae70",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/2d6bac6ad1ed668303ee00bb00f3aa36b81cfdcbc52eaeef65bb54edf558ae70-stretch.png",
+          "sha256": "2cdf99e3f827816cbcd85fb9cb2633ce7b11778f7a46ed5d127fa1bc593c13f6",
+          "pixelSHA256": "d75abcb42bf1c2a74789088a851408dfba6acffb3847b3dc3b27548d919b9fd7"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/2d6bac6ad1ed668303ee00bb00f3aa36b81cfdcbc52eaeef65bb54edf558ae70-aspect-fit.png",
+          "sha256": "f7b27dd683f11e726925fef0ecb924aa43be8ffa32e48e423a04568a4b43a2c4",
+          "pixelSHA256": "530b1ddcc50b3c6ba861b1732ae8c867f12933a6849880a98b3f26f62546f6ee"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "c3bb4245fd88bc2f09c7bb95cc5463e44d7e4467fc66dc8bcbb7d64829e0ca13"
+    },
+    {
+      "id": "56f662211363988dfb65cbfcf7555a5206e35295fc10360c654273df4bde3da3",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/56f662211363988dfb65cbfcf7555a5206e35295fc10360c654273df4bde3da3-stretch.png",
+          "sha256": "fdf76c04a03f059f55732869a21e0a3a25ff4a9544622e73841789363f5707da",
+          "pixelSHA256": "8a537fe73446c392657c3f034e1919ce6d64f2427a035ccc4c17a7a888dffb05"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/56f662211363988dfb65cbfcf7555a5206e35295fc10360c654273df4bde3da3-aspect-fit.png",
+          "sha256": "61ff732102ae40c25aa8517e8f0f1d130f823d2d338b30685e8d17a4db4ab318",
+          "pixelSHA256": "21ec92fd59732d796d50057055f7885afe3ea2e8eb263186ca9afe13f06d5ad7"
+        }
+      },
+      "sourcePixelSHA256": "cfb0369021f00e9527ea99eb4e7d9ab067789d6fa813fd89fcd031e917a82c7a",
+      "pairID": "0675d239e1a9efddadf4d75e9eecbe1d2813d731885dfea14eaac16dc348fdb5"
+    },
+    {
+      "id": "50f0bee012612a92d663585819b72b8d9ebd5dca3714c42b0d364f4ff8560aa3",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/50f0bee012612a92d663585819b72b8d9ebd5dca3714c42b0d364f4ff8560aa3-stretch.png",
+          "sha256": "0448cd07bd42087a4a24148b61c0cc4d59f486161ef60c593f3dd59f166ee768",
+          "pixelSHA256": "32f3dfda98f6ce4438597ee1a25d348fb06185af2126ca2102d1f98e55452e6a"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/50f0bee012612a92d663585819b72b8d9ebd5dca3714c42b0d364f4ff8560aa3-aspect-fit.png",
+          "sha256": "c145e0e4932584a6a62d6b30663d0c9c4265ef224ff598ecb977b82a04f31e80",
+          "pixelSHA256": "36f878357c7dc00abc6f4241a9dce38e74f80c4049e56720ad5bd87375f18e29"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "0675d239e1a9efddadf4d75e9eecbe1d2813d731885dfea14eaac16dc348fdb5"
+    },
+    {
+      "id": "4678bbaafbc7adc5dee17866fff1d7e6359c7a0e9c0b24c480e73d74124f174c",
+      "label": 1,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/4678bbaafbc7adc5dee17866fff1d7e6359c7a0e9c0b24c480e73d74124f174c-stretch.png",
+          "sha256": "c99fa94eaefab6fdcda2dc151066bbb47b474378ccf634e29e210af89044cd9d",
+          "pixelSHA256": "5c08b2c00c67c09568e35476080091b8edd81e09044f06cdebfe971ee6a72c93"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/4678bbaafbc7adc5dee17866fff1d7e6359c7a0e9c0b24c480e73d74124f174c-aspect-fit.png",
+          "sha256": "7d15bcb8ee346e18b248947dd4bc29c178c546c1266439b4184d665315705077",
+          "pixelSHA256": "ea3e4fdac429a2a95617312c9f56995afb33decbbd85aa9677f65538030679d9"
+        }
+      },
+      "sourcePixelSHA256": "7762f6a8e424520f9ca7785a9a5cd92584c9a174d96dd6794f0a84a0ab579cd4",
+      "pairID": "3cab84159faf23a6e99426bab7766c59170e1c5a4558d7e9e97be807f4e9ff71"
+    },
+    {
+      "id": "fa3007b537d5d582cee9db1b6cf62a34b75f61f102396931719ff7cdfd3cab4c",
+      "label": 0,
+      "screenID": "settings/accessibility",
+      "group": "tvos26.5-settings-accessibility-development",
+      "split": "validation",
+      "crops": {
+        "stretch": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/fa3007b537d5d582cee9db1b6cf62a34b75f61f102396931719ff7cdfd3cab4c-stretch.png",
+          "sha256": "b4cff4ebe2be13bc40a16567bc5580592daa3fdec79c8696386a9ab848543ab8",
+          "pixelSHA256": "d4ad9a1d3c1902b9882c569621a832edc1de80ae871941c1625b79a782293abc"
+        },
+        "aspect-fit": {
+          "path": "reports/work/FOCUS-EXP-01/corpus-01/fa3007b537d5d582cee9db1b6cf62a34b75f61f102396931719ff7cdfd3cab4c-aspect-fit.png",
+          "sha256": "90543db00ecb173652c00a233a464508d5fb278e441f45f7229a24a2a8df9ea7",
+          "pixelSHA256": "aba1b707a10370b2b6dd53a0b7aa6dae740f7206498eb17d696b5ac3ba8aa612"
+        }
+      },
+      "sourcePixelSHA256": "6e109cb9354d7c0b45276634fe4debb1cabb96bd000c6ef05e9d81dc321f2169",
+      "pairID": "3cab84159faf23a6e99426bab7766c59170e1c5a4558d7e9e97be807f4e9ff71"
+    }
+  ],
+  "releaseEligible": false,
+  "protocolSHA256": "cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414"
+}

@@ -1,0 +1,14 @@
+files 2285 bytes 51378123
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from pathlib import Path; import concurrent.futures,time; root=Path(".venv-yolo/lib/python3.13/site-packages/torch"); files=list(root.rglob("*.pyc")); size=sum(p.stat().st_size for p in files); print("files",len(files),"bytes",size,flush=True); assert size<256*1024*1024; started=time.monotonic(); pool=concurrent.futures.ThreadPoolExecutor(max_workers=16); counts=list(pool.map(lambda p:len(p.read_bytes()),files,timeout=60)); pool.shutdown(); print("readBytes",sum(counts),"seconds",time.monotonic()-started)
+                                                                                                                                                                                                                                                                                                                                                                                 ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop(), end_time - time.monotonic())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py", line 458, in result
+    raise TimeoutError()
+TimeoutError

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme LastUpgradeVersion="2600" version="1.3">
+ <BuildAction parallelizeBuildables="NO" buildImplicitDependencies="YES"><BuildActionEntries><BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A00000000000000000000006" BuildableName="NativeOSFocusTests.xctest" BlueprintName="NativeOSFocusTests" ReferencedContainer="container:NativeOSFocus.xcodeproj"/></BuildActionEntry></BuildActionEntries></BuildAction>
+ <TestAction buildConfiguration="Debug" shouldUseLaunchSchemeArgsEnv="YES"><Testables><TestableReference skipped="NO"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A00000000000000000000006" BuildableName="NativeOSFocusTests.xctest" BlueprintName="NativeOSFocusTests" ReferencedContainer="container:NativeOSFocus.xcodeproj"/></TestableReference></Testables></TestAction>
+</Scheme>

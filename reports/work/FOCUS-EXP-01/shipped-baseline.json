@@ -1,0 +1,254 @@
+{
+  "version": "focus-learning-report-v1",
+  "scope": "development-only-same-app-screen-groups",
+  "releaseEligible": false,
+  "protocolSHA256": "cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414",
+  "arms": {},
+  "shippedCoreML": {
+    "artifactSHA256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+    "metrics": {
+      "count": 18,
+      "auroc": 0.5802469135802469,
+      "0.5": {
+        "tp": 5,
+        "fn": 4,
+        "fp": 4,
+        "tn": 5,
+        "accuracy": 0.5555555555555556
+      },
+      "0.85": {
+        "tp": 0,
+        "fn": 9,
+        "fp": 2,
+        "tn": 7,
+        "accuracy": 0.3888888888888889
+      }
+    },
+    "predictions": [
+      {
+        "id": "af7782164dbfabf3c4f50f05bf777df4f9e88931063a673379dfb12b1a328900",
+        "label": 1,
+        "probability": 0.69921875
+      },
+      {
+        "id": "bfcd5a6c8d672722e0b0f460ea137f2987f129ace15f97eed614b643e061077a",
+        "label": 0,
+        "probability": 0.28295898
+      },
+      {
+        "id": "e8ad39f33c9e10bef34bc3b3ab414668f30f55bd99aec50ad67c83ea577e1fcc",
+        "label": 1,
+        "probability": 0.17736816
+      },
+      {
+        "id": "eadb5068bfae85907944aed1ad2389234228e938320f76e2210696a7588b16d2",
+        "label": 0,
+        "probability": 0.7441406
+      },
+      {
+        "id": "117fa17f8f3eeaa2f7cae5154e72ae7f2f90f1db6f6db9d3303e5209260708d3",
+        "label": 1,
+        "probability": 0.53466797
+      },
+      {
+        "id": "e8b8ff640aa527d96385cd3e090bb2fd440951b5375da9bc0a10d6a823311455",
+        "label": 0,
+        "probability": 0.8588867
+      },
+      {
+        "id": "122b3f8101d1993065e3a833c5a981e30fe16bdc3173c63e9df4b33602eb5d62",
+        "label": 1,
+        "probability": 0.7734375
+      },
+      {
+        "id": "907feb692a97f6fc69258d24bcb52ef3a596f95f29ce96c676279c823f7e360f",
+        "label": 0,
+        "probability": 0.1385498
+      },
+      {
+        "id": "e870f22d864680c2e9698c97adac8796c7775a5e6a67e0ef02796c60733e5f96",
+        "label": 1,
+        "probability": 0.4555664
+      },
+      {
+        "id": "b0322205cdbd62c3e6c680499cc3ab43713e6a00d8f7e35b5044358cf9025870",
+        "label": 0,
+        "probability": 0.15600586
+      },
+      {
+        "id": "f0671c7345d8ecf78b016588c8e587e42be75f1da25b67030a7513c19e992b13",
+        "label": 1,
+        "probability": 0.6152344
+      },
+      {
+        "id": "e006a05d2e646a8e905a98c3ce59ea0a253559836d9ac4e5014aacff06b4db37",
+        "label": 0,
+        "probability": 0.92333984
+      },
+      {
+        "id": "c1034e7612c074b23c9c7aa54118d485266cfad1949dda16bf376917c1a8c32d",
+        "label": 1,
+        "probability": 0.40893555
+      },
+      {
+        "id": "2d6bac6ad1ed668303ee00bb00f3aa36b81cfdcbc52eaeef65bb54edf558ae70",
+        "label": 0,
+        "probability": 0.035125732
+      },
+      {
+        "id": "56f662211363988dfb65cbfcf7555a5206e35295fc10360c654273df4bde3da3",
+        "label": 1,
+        "probability": 0.14282227
+      },
+      {
+        "id": "50f0bee012612a92d663585819b72b8d9ebd5dca3714c42b0d364f4ff8560aa3",
+        "label": 0,
+        "probability": 0.14428711
+      },
+      {
+        "id": "4678bbaafbc7adc5dee17866fff1d7e6359c7a0e9c0b24c480e73d74124f174c",
+        "label": 1,
+        "probability": 0.6870117
+      },
+      {
+        "id": "fa3007b537d5d582cee9db1b6cf62a34b75f61f102396931719ff7cdfd3cab4c",
+        "label": 0,
+        "probability": 0.50097656
+      }
+    ],
+    "timing": {
+      "batches": [
+        {
+          "modelLoadMilliseconds": 18.555041664512828,
+          "computeUnits": "cpuOnly",
+          "version": 1,
+          "host": "Version 26.4.1 (Build 25E253)"
+        },
+        {
+          "computeUnits": "cpuOnly",
+          "host": "Version 26.4.1 (Build 25E253)",
+          "version": 1,
+          "modelLoadMilliseconds": 15.258833329426125
+        }
+      ]
+    },
+    "samples": [
+      {
+        "id": "af7782164dbfabf3c4f50f05bf777df4f9e88931063a673379dfb12b1a328900",
+        "probability": 0.69921875,
+        "inferenceMilliseconds": 12.584791664266959,
+        "cropMilliseconds": 80.35466665751301
+      },
+      {
+        "id": "bfcd5a6c8d672722e0b0f460ea137f2987f129ace15f97eed614b643e061077a",
+        "probability": 0.28295898,
+        "inferenceMilliseconds": 1.354083331534639,
+        "cropMilliseconds": 68.13120833248831
+      },
+      {
+        "id": "e8ad39f33c9e10bef34bc3b3ab414668f30f55bd99aec50ad67c83ea577e1fcc",
+        "probability": 0.17736816,
+        "inferenceMilliseconds": 1.4668333169538528,
+        "cropMilliseconds": 68.2783333468251
+      },
+      {
+        "id": "eadb5068bfae85907944aed1ad2389234228e938320f76e2210696a7588b16d2",
+        "probability": 0.7441406,
+        "inferenceMilliseconds": 1.5172500279732049,
+        "cropMilliseconds": 68.97804167238064
+      },
+      {
+        "id": "117fa17f8f3eeaa2f7cae5154e72ae7f2f90f1db6f6db9d3303e5209260708d3",
+        "probability": 0.53466797,
+        "inferenceMilliseconds": 1.8944583425763994,
+        "cropMilliseconds": 67.9250416578725
+      },
+      {
+        "id": "e8b8ff640aa527d96385cd3e090bb2fd440951b5375da9bc0a10d6a823311455",
+        "probability": 0.8588867,
+        "inferenceMilliseconds": 1.498208352131769,
+        "cropMilliseconds": 69.37683332944289
+      },
+      {
+        "id": "122b3f8101d1993065e3a833c5a981e30fe16bdc3173c63e9df4b33602eb5d62",
+        "probability": 0.7734375,
+        "inferenceMilliseconds": 1.2957083235960454,
+        "cropMilliseconds": 68.18837497849017
+      },
+      {
+        "id": "907feb692a97f6fc69258d24bcb52ef3a596f95f29ce96c676279c823f7e360f",
+        "probability": 0.1385498,
+        "inferenceMilliseconds": 1.3802916510030627,
+        "cropMilliseconds": 67.94254164560698
+      },
+      {
+        "id": "e870f22d864680c2e9698c97adac8796c7775a5e6a67e0ef02796c60733e5f96",
+        "probability": 0.4555664,
+        "inferenceMilliseconds": 1.3888750108890235,
+        "cropMilliseconds": 69.13316666032188
+      },
+      {
+        "cropMilliseconds": 67.87962501402944,
+        "probability": 0.15600586,
+        "id": "b0322205cdbd62c3e6c680499cc3ab43713e6a00d8f7e35b5044358cf9025870",
+        "inferenceMilliseconds": 4.847458330914378
+      },
+      {
+        "cropMilliseconds": 69.31162500404753,
+        "probability": 0.6152344,
+        "id": "f0671c7345d8ecf78b016588c8e587e42be75f1da25b67030a7513c19e992b13",
+        "inferenceMilliseconds": 1.4842916862107813
+      },
+      {
+        "cropMilliseconds": 69.36612498247996,
+        "probability": 0.92333984,
+        "id": "e006a05d2e646a8e905a98c3ce59ea0a253559836d9ac4e5014aacff06b4db37",
+        "inferenceMilliseconds": 1.3567916466854513
+      },
+      {
+        "cropMilliseconds": 69.06587499543093,
+        "probability": 0.40893555,
+        "id": "c1034e7612c074b23c9c7aa54118d485266cfad1949dda16bf376917c1a8c32d",
+        "inferenceMilliseconds": 1.3242916611488909
+      },
+      {
+        "cropMilliseconds": 81.60666667390615,
+        "probability": 0.035125732,
+        "id": "2d6bac6ad1ed668303ee00bb00f3aa36b81cfdcbc52eaeef65bb54edf558ae70",
+        "inferenceMilliseconds": 1.3157500070519745
+      },
+      {
+        "cropMilliseconds": 68.40675001149066,
+        "probability": 0.14282227,
+        "id": "56f662211363988dfb65cbfcf7555a5206e35295fc10360c654273df4bde3da3",
+        "inferenceMilliseconds": 1.4826249971520156
+      },
+      {
+        "cropMilliseconds": 69.16474999161437,
+        "probability": 0.14428711,
+        "id": "50f0bee012612a92d663585819b72b8d9ebd5dca3714c42b0d364f4ff8560aa3",
+        "inferenceMilliseconds": 1.732791686663404
+      },
+      {
+        "cropMilliseconds": 68.74683333444409,
+        "probability": 0.6870117,
+        "id": "4678bbaafbc7adc5dee17866fff1d7e6359c7a0e9c0b24c480e73d74124f174c",
+        "inferenceMilliseconds": 1.7270416719838977
+      },
+      {
+        "cropMilliseconds": 69.69845833373256,
+        "probability": 0.50097656,
+        "id": "fa3007b537d5d582cee9db1b6cf62a34b75f61f102396931719ff7cdfd3cab4c",
+        "inferenceMilliseconds": 1.3981249940115958
+      }
+    ]
+  },
+  "initialTorchCoreMLDifference": null,
+  "limitations": [
+    "Same-app, same-style screen groups; only 9 validation pairs.",
+    "Validation selects checkpoints; not a final-test result.",
+    "One seed and fixed 8-epoch budget, not convergence or statistical superiority.",
+    "Native boxes supplied; no detector proposal or model-driven navigation qualification.",
+    "No physical-device, fixture replay, catastrophic-forgetting or release-gate evidence."
+  ]
+}

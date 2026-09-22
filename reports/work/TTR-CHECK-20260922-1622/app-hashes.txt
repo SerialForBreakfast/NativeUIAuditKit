@@ -1,0 +1,2 @@
+7b6330d1bcf0e34f477919f0f036f20e4d922c30ad406c78c1b978e49cd4c431  /Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/MacOS/TVTestRig
+2f8c732b29d128e8a79b0b7287cad35fff39a460a6abe3649a2f0ca8aea6f00c  /Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/MacOS/TVTestRig.debug.dylib

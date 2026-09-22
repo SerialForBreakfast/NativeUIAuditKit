@@ -46,9 +46,18 @@ Use MCP when available for typed discovery and bounded actions. Use CLI for
 repeatable local sequences and retained JSON evidence. Both address the same
 coordinator, not independent receivers. Do not switch transport to evade a gate.
 Use Automation → Copy Helper Launch Check to obtain this app's exact helper path.
-For startup aborts or app-owned recipe staging, read the
+For startup aborts, sandbox isolation boundaries, or app-owned recipe staging, read the
 [launch and workspace guidance](references/interfaces.md#helper-startup-and-workspace-preflight)
+and the NUIAK-local [permission diagnosis guide](../../../Research/SandboxOperations.md)
 before retrying. A launch check never authorizes a device operation.
+
+NUIAK-local supplement (not part of the producer's portable skill): identify the
+denying process/layer before proposing repair. Reuse approved execution setup for
+known tool limitations, but never infer continuing permission. A helper launched
+by a restricted parent may inherit restrictions; removing its entitlement is not
+a remedy. Preserve completed captures if only export failed. Do not re-sign,
+disable sandboxing, reset privacy consent or restart services to fix an unclassified
+error. The local guide is repository policy, not a new producer capability.
 
 CLI examples (substitute the authorized discovered ID; executable must be verified):
 

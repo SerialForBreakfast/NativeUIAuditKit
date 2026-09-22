@@ -1,0 +1,1 @@
+{"pairs": 9, "trainingEligible": false, "accounting": {"observations": 11, "inputs": 10, "uniqueFrames": 9, "terminal": "inputs=10; setupDirections=0; boundaries=2; completed=true; settingsForeground=true; returnedRoot=true; screenID=settings/accessibility"}, "confusion": null}

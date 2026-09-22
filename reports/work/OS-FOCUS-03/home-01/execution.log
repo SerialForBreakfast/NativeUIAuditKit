@@ -1,0 +1,133 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project NativeOSFocus/NativeOSFocus.xcodeproj -scheme NativeOSFocus -destination "platform=tvOS Simulator,id=9026ECA9-77DB-4AE6-8FE6-BB239E9571FA" -destination-timeout 20 -derivedDataPath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/native-os-focus/DerivedData -resultBundlePath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/home-01/result.xcresult -parallel-testing-enabled NO -maximum-concurrent-test-simulator-destinations 1 -test-timeouts-enabled YES -default-test-execution-time-allowance 300 -maximum-test-execution-time-allowance 300 "-only-testing:NativeOSFocusTests/NativeOSFocusTests/testHomeChallengeSnake" -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/home-01/result.xcresult
+
+2026-09-22 09:44:29.354868-0700 NativeOSFocusTests-Runner[78142:5265960] [Default] Running tests...
+Test Suite 'Selected tests' started at 2026-09-22 09:44:29.555.
+Test Suite 'NativeOSFocusTests.xctest' started at 2026-09-22 09:44:29.556.
+Test Suite 'NativeOSFocusTests' started at 2026-09-22 09:44:29.556.
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testHomeChallengeSnake]' started.
+    t =     0.00s Start Test at 2026-09-22 09:44:29.556
+    t =     0.06s Set Up
+    t =     0.07s Pressing Home button
+    t =     0.28s Wait for com.apple.PineBoard to become Running Foreground
+    t =     0.29s Get number of matches for: Descendants matching type Alert
+    t =     0.36s Find the Application 'com.apple.PineBoard'
+    t =     0.59s Get number of matches for: Descendants matching type Alert
+    t =     0.63s Find the Application 'com.apple.PineBoard'
+    t =     0.88s Get number of matches for: Descendants matching type Alert
+    t =     0.89s Find the Application 'com.apple.PineBoard'
+    t =     1.11s Get number of matches for: Descendants matching type Alert
+    t =     1.14s Find the Application 'com.apple.PineBoard'
+    t =     1.36s Get number of matches for: Descendants matching type Alert
+    t =     1.38s Find the Application 'com.apple.PineBoard'
+    t =     1.60s Get number of matches for: Descendants matching type Alert
+2026-09-22 09:44:31.170707-0700 NativeOSFocusTests-Runner[78142:5266021] [Common] Snapshot request 0x600000c4d800 complete with error: <NSError: 0x600000c61560; domain: FBSSceneSnapshotErrorDomain; code: 4; "an unrelated condition or state was not satisfied"> {
+    NSLocalizedDescription = an error occurred during a scene snapshotting operation;
+}
+2026-09-22 09:44:31.180498-0700 NativeOSFocusTests-Runner[78142:5266021] [Common] Snapshot request 0x600000c61560 complete with error: <NSError: 0x600000c59830; domain: FBSSceneSnapshotErrorDomain; code: 4; "an unrelated condition or state was not satisfied"> {
+    NSLocalizedDescription = an error occurred during a scene snapshotting operation;
+}
+    t =     1.63s Find the Application 'com.apple.PineBoard'
+    t =     1.86s Get number of matches for: Descendants matching type Alert
+    t =     1.88s Find the Application 'com.apple.PineBoard'
+    t =     2.10s Get number of matches for: Descendants matching type Alert
+    t =     2.12s Find the Application 'com.apple.PineBoard'
+    t =     2.34s Get number of matches for: Descendants matching type Alert
+    t =     2.36s Find the Application 'com.apple.PineBoard'
+    t =     2.59s Get number of matches for: Descendants matching type Alert
+    t =     2.60s Find the Application 'com.apple.PineBoard'
+    t =     2.82s Get number of matches for: Descendants matching type Alert
+    t =     2.83s Find the Application 'com.apple.PineBoard'
+    t =     3.06s Get number of matches for: Descendants matching type Alert
+    t =     3.08s Find the Application 'com.apple.PineBoard'
+    t =     3.30s Get number of matches for: Descendants matching type Alert
+    t =     3.32s Find the Application 'com.apple.PineBoard'
+    t =     3.55s Get number of matches for: Descendants matching type Alert
+    t =     3.57s Find the Application 'com.apple.PineBoard'
+    t =     3.79s Get number of matches for: Descendants matching type Alert
+    t =     3.81s Find the Application 'com.apple.PineBoard'
+    t =     4.03s Get number of matches for: Descendants matching type Alert
+    t =     4.05s Find the Application 'com.apple.PineBoard'
+    t =     4.28s Get number of matches for: Descendants matching type Alert
+    t =     4.30s Find the Application 'com.apple.PineBoard'
+    t =     4.52s Get number of matches for: Descendants matching type Alert
+    t =     4.54s Find the Application 'com.apple.PineBoard'
+    t =     4.76s Get number of matches for: Descendants matching type Alert
+    t =     4.78s Find the Application 'com.apple.PineBoard'
+    t =     5.01s Get number of matches for: Descendants matching type Alert
+    t =     5.03s Find the Application 'com.apple.PineBoard'
+    t =     5.25s Get number of matches for: Descendants matching type Alert
+    t =     5.27s Find the Application 'com.apple.PineBoard'
+    t =     5.49s Get number of matches for: Descendants matching type Alert
+    t =     5.51s Find the Application 'com.apple.PineBoard'
+    t =     5.74s Get number of matches for: Descendants matching type Alert
+    t =     5.76s Find the Application 'com.apple.PineBoard'
+    t =     5.99s Get number of matches for: Descendants matching type Alert
+    t =     6.01s Find the Application 'com.apple.PineBoard'
+    t =     6.23s Get number of matches for: Descendants matching type Alert
+    t =     6.25s Find the Application 'com.apple.PineBoard'
+    t =     6.48s Get number of matches for: Descendants matching type Alert
+    t =     6.50s Find the Application 'com.apple.PineBoard'
+    t =     6.72s Get number of matches for: Descendants matching type Alert
+    t =     6.74s Find the Application 'com.apple.PineBoard'
+    t =     6.97s Get number of matches for: Descendants matching type Alert
+    t =     6.99s Find the Application 'com.apple.PineBoard'
+    t =     7.21s Get number of matches for: Descendants matching type Alert
+    t =     7.23s Find the Application 'com.apple.PineBoard'
+    t =     7.46s Get number of matches for: Descendants matching type Alert
+    t =     7.48s Find the Application 'com.apple.PineBoard'
+    t =     7.71s Get number of matches for: Descendants matching type Alert
+    t =     7.73s Find the Application 'com.apple.PineBoard'
+    t =     7.95s Get number of matches for: Descendants matching type Alert
+    t =     7.97s Find the Application 'com.apple.PineBoard'
+    t =     8.19s Get number of matches for: Descendants matching type Alert
+    t =     8.21s Find the Application 'com.apple.PineBoard'
+    t =     8.44s Get number of matches for: Descendants matching type Alert
+    t =     8.46s Find the Application 'com.apple.PineBoard'
+    t =     8.68s Get number of matches for: Descendants matching type Alert
+    t =     8.70s Find the Application 'com.apple.PineBoard'
+    t =     8.92s Get number of matches for: Descendants matching type Alert
+    t =     8.94s Find the Application 'com.apple.PineBoard'
+    t =     9.16s Get number of matches for: Descendants matching type Alert
+    t =     9.18s Find the Application 'com.apple.PineBoard'
+    t =     9.41s Get number of matches for: Descendants matching type Alert
+    t =     9.43s Find the Application 'com.apple.PineBoard'
+    t =     9.66s Get number of matches for: Descendants matching type Alert
+    t =     9.68s Find the Application 'com.apple.PineBoard'
+    t =     9.90s Get number of matches for: Descendants matching type Alert
+    t =     9.92s Find the Application 'com.apple.PineBoard'
+    t =    10.15s Get number of matches for: Descendants matching type Alert
+    t =    10.17s Find the Application 'com.apple.PineBoard'
+    t =    10.61s Added attachment named 'invalid-unsettled.png'
+    t =    10.61s Requesting snapshot of accessibility hierarchy for app with pid 5700
+    t =    10.68s Requesting snapshot of accessibility hierarchy for app with pid 5700
+    t =    10.69s Added attachment named 'invalid-unsettled-context'
+    t =    10.69s Added attachment named 'terminal-context'
+/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeOSFocus/NativeOSFocusTests.swift:283: error: -[NativeOSFocusTests.NativeOSFocusTests testHomeChallengeSnake] : failed: caught error: "unsettled"
+    t =    10.73s Tear Down
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testHomeChallengeSnake]' failed (10.742 seconds).
+Test Suite 'NativeOSFocusTests' failed at 2026-09-22 09:44:40.299.
+	 Executed 1 test, with 1 failure (1 unexpected) in 10.742 (10.743) seconds
+Test Suite 'NativeOSFocusTests.xctest' failed at 2026-09-22 09:44:40.299.
+	 Executed 1 test, with 1 failure (1 unexpected) in 10.742 (10.744) seconds
+Test Suite 'Selected tests' failed at 2026-09-22 09:44:40.300.
+	 Executed 1 test, with 1 failure (1 unexpected) in 10.742 (10.744) seconds
+2026-09-22 09:44:50.766 xcodebuild[78106:5265302] [MT] IDETestOperationsObserverDebug: 22.798 elapsed -- Testing started completed.
+2026-09-22 09:44:50.766 xcodebuild[78106:5265302] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-09-22 09:44:50.766 xcodebuild[78106:5265302] [MT] IDETestOperationsObserverDebug: 22.798 sec, +22.798 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/home-01/result.xcresult
+
+Failing tests:
+	NativeOSFocusTests.testHomeChallengeSnake()
+
+** TEST EXECUTE FAILED **
+
+Testing started

@@ -26,7 +26,7 @@ def identity():
             "hostOS": platform.mac_ver()[0], "architecture": platform.machine()}
 
 
-def invoke(items, model=None):
+def invoke(items, model=None, *, experimental_aspect_fit=False):
     identity()
     if not items or len(items) > 128:
         raise FocusDataError("invalid_runtime_batch")
@@ -34,7 +34,8 @@ def invoke(items, model=None):
     tmp = ROOT / ".build/debug-output/focus-launch/tmp"
     if not tmp.is_dir(): raise FocusDataError("missing_project_runtime_tmp_setup")
     request = {"version": 1, "root": str(ROOT), "mode": "infer" if model else "crop",
-               "model": str(local(model)) if model else None, "items": items}
+               "model": str(local(model)) if model else None, "items": items,
+               "experimentalAspectFit": experimental_aspect_fit}
     try:
         result = subprocess.run([str(TOOL)], input=json.dumps(request, allow_nan=False),
                                 text=True, capture_output=True, timeout=120,

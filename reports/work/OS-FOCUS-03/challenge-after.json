@@ -1,0 +1,325 @@
+{
+  "version": "native-focus-challenge-v1",
+  "releaseEligible": false,
+  "source": {
+    "screenID": "settings/remotes",
+    "split": "challenge",
+    "manifest": {
+      "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/manifest.json",
+      "sha256": "ce4bea772a4b7b54b853f86d3a095d47f709f2f855405537f12bc915f7d248f9"
+    },
+    "review": {
+      "path": "reports/work/OS-FOCUS-03/review.md",
+      "sha256": "ed77bdcf312f184ff5d78d7c6d8cd250a5564edb504558407e6b8d8612d2d024"
+    }
+  },
+  "lineage": "tvos26.5-settings-remotes-default-layout-challenge",
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "isolationProtocols": [
+    "cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414",
+    "a756f182c633ae6ad4b4985a75200ef738a7974bf8520ce8a3c946d8574d4f8c"
+  ],
+  "shipped": {
+    "sha256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+    "metrics": {
+      "count": 12,
+      "auroc": 0.8055555555555556,
+      "0.5": {
+        "tp": 3,
+        "fn": 3,
+        "fp": 1,
+        "tn": 5,
+        "accuracy": 0.6666666666666666
+      },
+      "0.85": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 1,
+        "tn": 5,
+        "accuracy": 0.4166666666666667
+      }
+    },
+    "predictions": [
+      {
+        "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:focused",
+        "label": 1,
+        "elementID": "75:Bluetooth",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8-focused.png",
+        "cropSHA256": "d7de569795d234e8dad39e53645a7987fc4e35a623a2c6e78bd222bf8a9fc9d3",
+        "pixelSHA256": "78764ec144a87200581839aab5f05c9c17fc7cc9af9a43553394aa968841858f",
+        "probability": 0.72265625
+      },
+      {
+        "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:unfocused",
+        "label": 0,
+        "elementID": "75:Bluetooth",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8-unfocused.png",
+        "cropSHA256": "d7d6275ae7ed8b4aa5318eebcf695b507f355bea6dfa4c9498ed0fecfdcb8a44",
+        "pixelSHA256": "4c47dfad081d7eb82f649decbc8610ec88577d72f10dcb4241065054fd3192bf",
+        "probability": 0.9838867
+      },
+      {
+        "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:focused",
+        "label": 1,
+        "elementID": "75:Learn Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e-focused.png",
+        "cropSHA256": "dcdb1cf81dda1342db6370cff7264b632f3a44fe1d418145ba9854d16b08493d",
+        "pixelSHA256": "923192f8679c41a168ba87db74f74c639c7e1e4ff1ba37a3433e88e3b5170c8a",
+        "probability": 0.73095703
+      },
+      {
+        "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:unfocused",
+        "label": 0,
+        "elementID": "75:Learn Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e-unfocused.png",
+        "cropSHA256": "3de9590ece3d9c7a16494fa7810fbe8a21621d29cf8ecdba556b5771ab04fdcf",
+        "pixelSHA256": "a7394ff976def3472e902200cb4752b3eed9ccfe63656f5f31950b4f9aaa46f4",
+        "probability": 0.09466553
+      },
+      {
+        "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:focused",
+        "label": 1,
+        "elementID": "75:Pair Infrared Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089-focused.png",
+        "cropSHA256": "7ec10a231b6c14627ec3d4661c878f95abc33f30a6d092641c4af2ba974c21ba",
+        "pixelSHA256": "4870023071b2c610fccb9e90d2c9c3e7352a5f90e29390e698fa55062576af33",
+        "probability": 0.48120117
+      },
+      {
+        "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:unfocused",
+        "label": 0,
+        "elementID": "75:Pair Infrared Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089-unfocused.png",
+        "cropSHA256": "abca64ff3bcce64a57838f00bcdc9c160f592ed33f7ca032002b1c5c54f92e99",
+        "pixelSHA256": "eae973b4e349d52c1d629bf57e5a00dfb4a5b93676c9d6115491820d2ef78c94",
+        "probability": 0.0018386841
+      },
+      {
+        "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:focused",
+        "label": 1,
+        "elementID": "75:Remote App and Devices",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f-focused.png",
+        "cropSHA256": "01f87aab34beddb635a4bb3fbe481ac84b9dea4929b1a22b057c288ff872d15b",
+        "pixelSHA256": "608a1011c8890e520b8b6cef39bef1c02a816765b233085bd634e2f8e6b49d87",
+        "probability": 0.671875
+      },
+      {
+        "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:unfocused",
+        "label": 0,
+        "elementID": "75:Remote App and Devices",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f-unfocused.png",
+        "cropSHA256": "56f8deb484a12f93e78e45bbc5cdfdf13c178dc71f5002d2358125a2f9a086e5",
+        "pixelSHA256": "408fceb6015edb395a8dba1602843eb9371ba49d50b94906417840a0830a774e",
+        "probability": 0.27856445
+      },
+      {
+        "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:focused",
+        "label": 1,
+        "elementID": "75:Turn On Your TV with Your Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6-focused.png",
+        "cropSHA256": "d1d095e80163e5c5bad382d7581c76b66debebaf41b92b64ca13dda587c49517",
+        "pixelSHA256": "e8bfd51ff8ebda710feb7459a44ac8b9a8a5d370e557082391f3f26de518987f",
+        "probability": 0.3581543
+      },
+      {
+        "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:unfocused",
+        "label": 0,
+        "elementID": "75:Turn On Your TV with Your Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6-unfocused.png",
+        "cropSHA256": "71ca9614ae4fdf49a655931849bc61fed55a234f70cd58579d8b7f3cde8654e0",
+        "pixelSHA256": "6cb4d6bd4f52eae1df1160215e6523b3b2dc0fed813fbebae875ef5d16c68398",
+        "probability": 0.1328125
+      },
+      {
+        "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:focused",
+        "label": 1,
+        "elementID": "75:Volume Control",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c-focused.png",
+        "cropSHA256": "33ee95a4012544990debc6bc91290788d6e24d359c0e5b8b0573ea88c5452de3",
+        "pixelSHA256": "f8a30ca77a6fc4454ce6b37ab567052d59c4fdbf54082ba0078cd47ec1179520",
+        "probability": 0.2775879
+      },
+      {
+        "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:unfocused",
+        "label": 0,
+        "elementID": "75:Volume Control",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c-unfocused.png",
+        "cropSHA256": "7b47cf6ef2326104951e983c716a34b956e1ac2025d3d4ca667896ee5e1504b3",
+        "pixelSHA256": "5aef342b37f16aea4d35f2f7dfd44c038e633512fd302bb53a4256fbe3051199",
+        "probability": 0.09106445
+      }
+    ],
+    "timing": [
+      {
+        "version": 1,
+        "modelLoadMilliseconds": 14.447125024162233,
+        "host": "Version 26.4.1 (Build 25E253)",
+        "computeUnits": "cpuOnly"
+      },
+      {
+        "version": 1,
+        "modelLoadMilliseconds": 13.574041659012437,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    ]
+  },
+  "candidate": {
+    "sha256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0",
+    "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+    "backend": "torch-cpu",
+    "metrics": {
+      "count": 12,
+      "auroc": 1.0,
+      "0.5": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 6,
+        "accuracy": 1.0
+      },
+      "0.85": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 6,
+        "accuracy": 1.0
+      }
+    },
+    "predictions": [
+      {
+        "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:focused",
+        "label": 1,
+        "elementID": "75:Bluetooth",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8-focused.png",
+        "cropSHA256": "d7de569795d234e8dad39e53645a7987fc4e35a623a2c6e78bd222bf8a9fc9d3",
+        "pixelSHA256": "78764ec144a87200581839aab5f05c9c17fc7cc9af9a43553394aa968841858f",
+        "probability": 0.9999973773956299
+      },
+      {
+        "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:unfocused",
+        "label": 0,
+        "elementID": "75:Bluetooth",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8-unfocused.png",
+        "cropSHA256": "d7d6275ae7ed8b4aa5318eebcf695b507f355bea6dfa4c9498ed0fecfdcb8a44",
+        "pixelSHA256": "4c47dfad081d7eb82f649decbc8610ec88577d72f10dcb4241065054fd3192bf",
+        "probability": 4.721149707620498e-06
+      },
+      {
+        "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:focused",
+        "label": 1,
+        "elementID": "75:Learn Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e-focused.png",
+        "cropSHA256": "dcdb1cf81dda1342db6370cff7264b632f3a44fe1d418145ba9854d16b08493d",
+        "pixelSHA256": "923192f8679c41a168ba87db74f74c639c7e1e4ff1ba37a3433e88e3b5170c8a",
+        "probability": 0.9999964237213135
+      },
+      {
+        "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:unfocused",
+        "label": 0,
+        "elementID": "75:Learn Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e-unfocused.png",
+        "cropSHA256": "3de9590ece3d9c7a16494fa7810fbe8a21621d29cf8ecdba556b5771ab04fdcf",
+        "pixelSHA256": "a7394ff976def3472e902200cb4752b3eed9ccfe63656f5f31950b4f9aaa46f4",
+        "probability": 5.904003046452999e-06
+      },
+      {
+        "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:focused",
+        "label": 1,
+        "elementID": "75:Pair Infrared Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089-focused.png",
+        "cropSHA256": "7ec10a231b6c14627ec3d4661c878f95abc33f30a6d092641c4af2ba974c21ba",
+        "pixelSHA256": "4870023071b2c610fccb9e90d2c9c3e7352a5f90e29390e698fa55062576af33",
+        "probability": 0.9999967813491821
+      },
+      {
+        "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:unfocused",
+        "label": 0,
+        "elementID": "75:Pair Infrared Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089-unfocused.png",
+        "cropSHA256": "abca64ff3bcce64a57838f00bcdc9c160f592ed33f7ca032002b1c5c54f92e99",
+        "pixelSHA256": "eae973b4e349d52c1d629bf57e5a00dfb4a5b93676c9d6115491820d2ef78c94",
+        "probability": 7.735815415799152e-06
+      },
+      {
+        "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:focused",
+        "label": 1,
+        "elementID": "75:Remote App and Devices",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f-focused.png",
+        "cropSHA256": "01f87aab34beddb635a4bb3fbe481ac84b9dea4929b1a22b057c288ff872d15b",
+        "pixelSHA256": "608a1011c8890e520b8b6cef39bef1c02a816765b233085bd634e2f8e6b49d87",
+        "probability": 0.9999982118606567
+      },
+      {
+        "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:unfocused",
+        "label": 0,
+        "elementID": "75:Remote App and Devices",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f-unfocused.png",
+        "cropSHA256": "56f8deb484a12f93e78e45bbc5cdfdf13c178dc71f5002d2358125a2f9a086e5",
+        "pixelSHA256": "408fceb6015edb395a8dba1602843eb9371ba49d50b94906417840a0830a774e",
+        "probability": 7.869072760513518e-06
+      },
+      {
+        "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:focused",
+        "label": 1,
+        "elementID": "75:Turn On Your TV with Your Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6-focused.png",
+        "cropSHA256": "d1d095e80163e5c5bad382d7581c76b66debebaf41b92b64ca13dda587c49517",
+        "pixelSHA256": "e8bfd51ff8ebda710feb7459a44ac8b9a8a5d370e557082391f3f26de518987f",
+        "probability": 0.9999969005584717
+      },
+      {
+        "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:unfocused",
+        "label": 0,
+        "elementID": "75:Turn On Your TV with Your Remote",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6-unfocused.png",
+        "cropSHA256": "71ca9614ae4fdf49a655931849bc61fed55a234f70cd58579d8b7f3cde8654e0",
+        "pixelSHA256": "6cb4d6bd4f52eae1df1160215e6523b3b2dc0fed813fbebae875ef5d16c68398",
+        "probability": 1.243745646206662e-05
+      },
+      {
+        "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:focused",
+        "label": 1,
+        "elementID": "75:Volume Control",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c-focused.png",
+        "cropSHA256": "33ee95a4012544990debc6bc91290788d6e24d359c0e5b8b0573ea88c5452de3",
+        "pixelSHA256": "f8a30ca77a6fc4454ce6b37ab567052d59c4fdbf54082ba0078cd47ec1179520",
+        "probability": 0.9999986886978149
+      },
+      {
+        "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:unfocused",
+        "label": 0,
+        "elementID": "75:Volume Control",
+        "crop": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/remotes-01/dataset/0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c-unfocused.png",
+        "cropSHA256": "7b47cf6ef2326104951e983c716a34b956e1ac2025d3d4ca667896ee5e1504b3",
+        "pixelSHA256": "5aef342b37f16aea4d35f2f7dfd44c038e633512fd302bb53a4256fbe3051199",
+        "probability": 3.428518766668276e-06
+      }
+    ],
+    "loadSeconds": 0.037525333027588204,
+    "inferenceSeconds": [
+      0.037152708013309166,
+      0.03437979199225083,
+      0.03668795898556709,
+      0.03720050002448261,
+      0.03834466601256281,
+      0.03814695801702328,
+      0.03710408299230039,
+      0.03754462499637157,
+      0.036721917014801875,
+      0.036179250018903986,
+      0.038223000010475516,
+      0.037413625017507
+    ]
+  },
+  "limitations": [
+    "Reviewed native boxes, not detector proposals",
+    "One layout/runtime challenge, not release qualification",
+    "Separate CoreML CPU and PyTorch CPU backends; no export-parity claim"
+  ]
+}

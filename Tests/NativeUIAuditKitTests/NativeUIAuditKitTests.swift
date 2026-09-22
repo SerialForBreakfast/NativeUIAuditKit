@@ -293,6 +293,22 @@ struct NativeUIAuditKitTests {
         #expect(bottomGreen < 70)
     }
 
+    @Test("Experimental aspect-fit is opt-in and preserves the production default")
+    func testExperimentalAspectFit() throws {
+        let image = makeSolidImage(width: 400, height: 100, red: 1, green: 0, blue: 0)
+        let box = CGRect(x: 0, y: 0, width: 400, height: 100)
+        let standard = try #require(FocusRingClassifier.makeCrop(from: image, bbox: box))
+        let explicit = try #require(FocusRingClassifier.makeCrop(from: image, bbox: box, experimentalAspectFit: false))
+        #expect(standard.dataProvider?.data == explicit.dataProvider?.data)
+        let fitted = try #require(FocusRingClassifier.makeCrop(from: image, bbox: box, experimentalAspectFit: true))
+        #expect(fitted.width == 256 && fitted.height == 256)
+        let data = try #require(fitted.dataProvider?.data)
+        let pixels = try #require(CFDataGetBytePtr(data))
+        #expect(pixels[128 * 4] == 0)
+        #expect(pixels[128 * fitted.bytesPerRow + 128 * 4] > 240)
+        #expect(pixels[255 * fitted.bytesPerRow + 128 * 4] == 0)
+    }
+
     @Test("FocusRing expansion preserves fractional frame-specific geometry")
     func testFocusRingFractionalGeometry() {
         let size = CGSize(width: 40, height: 30)

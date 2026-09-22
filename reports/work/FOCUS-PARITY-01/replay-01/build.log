@@ -1,0 +1,10 @@
+/Users/josephmccraw/Documents/GitHub/TVTestRig/TVTestRig/TVTestRig/Services/FocusDetectorService.swift:143:42: error: sending 'model' risks causing data races [#SendingRisksDataRace]
+141 |             let buffer = try Self.bgraBuffer(patch)
+142 |             let input = try MLDictionaryFeatureProvider(dictionary: ["image": MLFeatureValue(pixelBuffer: buffer)])
+143 |             let output = try await model.prediction(from: input)
+    |                                          |- error: sending 'model' risks causing data races [#SendingRisksDataRace]
+    |                                          `- note: sending 'self'-isolated 'model' to nonisolated instance method 'prediction(from:options:)' risks causing data races between nonisolated and 'self'-isolated uses
+144 |             let probability = Self.scalar(output.featureValue(for: "is_focused_prob"))
+145 |             let confidence = Self.scalar(output.featureValue(for: "confidence"))
+
+[#SendingRisksDataRace]: <https://docs.swift.org/compiler/documentation/diagnostics/sending-risks-data-race>

@@ -46,6 +46,9 @@ def validate_direct_manifest(document, root):
         review = document.get("visualReview", {})
         require(document.get("evidenceKind") == "reviewed-fixture" and review.get("captureSHA256") == digest(receipt)
                 and review.get("accepted") is True and review.get("report"), "missing_visual_review")
+        report = member(ROOT, review["report"])
+        require(report.stat().st_size > 0 and hashlib.sha256(report.read_bytes()).hexdigest() == review.get("reportSHA256"),
+                "changed_visual_review")
     expected = pairs_from_capture(receipt)
     actual = [{k: p.get(k) for k in e} for e, p in zip(expected, document.get("pairs", []))]
     require(len(document.get("pairs", [])) == len(expected) and actual == expected, "changed_direct_membership")

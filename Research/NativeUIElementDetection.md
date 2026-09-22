@@ -791,6 +791,14 @@ This measures generalization to unseen UI patterns rather than interpolation wit
 
 ### 8.7 Metrics
 
+**2026-09-22 experimental FocusRing lane:** the separately authorized
+[FOCUS-EXP-01 protocol](Plans/FocusLearningExperiment.md) permits a small same-app
+screen-group training comparison before release corpus quotas are met. It uses
+native AX-reviewed labels, grouped development training/validation, fixed bounded
+hyperparameters and isolated outputs. Its diagnostic aspect-fit crop variant does
+not change production preprocessing. No final-test, model-gate or promotion claim
+is permitted; normal full-candidate preflight remains unchanged.
+
 **Model metrics:**
 - `mAP@IoU=0.5` — primary headline metric; target ≥ 0.85 for production
 - `mAP@IoU=0.75` — stricter threshold; measures bounding box precision

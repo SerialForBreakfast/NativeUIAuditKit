@@ -1,0 +1,79 @@
+[
+  {
+    "id": "settings",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/settings-source.png",
+    "sha256": "97a7bb60e96e45ed5e6c96ca812d29508501776ad783cd49839b0931385e6c3a",
+    "bounds": [
+      1056,
+      230,
+      788,
+      75
+    ]
+  },
+  {
+    "id": "home",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/home-source.png",
+    "sha256": "63433e1caf88ff1201b9d45a61837a9b998569ef0403b52b1cb6bdce98125aaf",
+    "bounds": [
+      1254,
+      733,
+      306,
+      185
+    ]
+  },
+  {
+    "id": "fixture-tone",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/fixture-tone-source.png",
+    "sha256": "9a7419db7cff9a37cf480249c73b908d2582209d54adfe3920f07517e974c0d7",
+    "bounds": [
+      92,
+      296,
+      860,
+      220
+    ]
+  },
+  {
+    "id": "fixture-record",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/fixture-record-source.png",
+    "sha256": "a2b851ecab88cb5b9ba6c42305822780d254af7a51a5f81f8d15b82903276108",
+    "bounds": [
+      92,
+      328,
+      373,
+      75
+    ]
+  },
+  {
+    "id": "synthetic-upper",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/synthetic-source.png",
+    "sha256": "b0f5f6d0e9a5d69fca68b588366599d60fb78884c23e507fefdc8aa57c6795ac",
+    "bounds": [
+      190,
+      70,
+      100,
+      60
+    ]
+  },
+  {
+    "id": "synthetic-edge",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/synthetic-source.png",
+    "sha256": "b0f5f6d0e9a5d69fca68b588366599d60fb78884c23e507fefdc8aa57c6795ac",
+    "bounds": [
+      0,
+      0,
+      80,
+      50
+    ]
+  },
+  {
+    "id": "synthetic-lower",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/replay-02/synthetic-source.png",
+    "sha256": "b0f5f6d0e9a5d69fca68b588366599d60fb78884c23e507fefdc8aa57c6795ac",
+    "bounds": [
+      90,
+      350,
+      120,
+      70
+    ]
+  }
+]

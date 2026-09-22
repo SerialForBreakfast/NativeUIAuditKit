@@ -1,0 +1,148 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project NativeOSFocus/NativeOSFocus.xcodeproj -scheme NativeOSFocus -destination "platform=tvOS Simulator,id=9026ECA9-77DB-4AE6-8FE6-BB239E9571FA" -derivedDataPath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/native-os-focus/DerivedData -resultBundlePath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/apps-01/result.xcresult -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 "-only-testing:NativeOSFocusTests/NativeOSFocusTests/testAppsLearningSweep" -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/apps-01/result.xcresult
+
+2026-09-22 09:52:26.571906-0700 NativeOSFocusTests-Runner[79376:5290166] [Default] Running tests...
+Test Suite 'Selected tests' started at 2026-09-22 09:52:26.694.
+Test Suite 'NativeOSFocusTests.xctest' started at 2026-09-22 09:52:26.694.
+Test Suite 'NativeOSFocusTests' started at 2026-09-22 09:52:26.694.
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testAppsLearningSweep]' started.
+    t =     0.00s Start Test at 2026-09-22 09:52:26.694
+    t =     0.02s Set Up
+    t =     0.03s Open com.apple.TVSettings
+    t =     0.03s     Activate com.apple.TVSettings
+    t =     0.50s         Wait for com.apple.TVSettings to idle
+    t =     0.54s Wait for com.apple.TVSettings to become Running Foreground
+    t =     0.54s Get number of matches for: Descendants matching type Alert
+    t =     0.56s Find the Application 'com.apple.TVSettings'
+    t =     0.80s Get number of matches for: Descendants matching type Alert
+    t =     0.81s Find the Application 'com.apple.TVSettings'
+    t =     1.03s Get number of matches for: Descendants matching type Alert
+    t =     1.04s Find the Application 'com.apple.TVSettings'
+    t =     1.26s Get number of matches for: Descendants matching type Alert
+    t =     1.28s Find the Application 'com.apple.TVSettings'
+    t =     1.31s Pressing Down button
+    t =     1.52s Get number of matches for: Descendants matching type Alert
+    t =     1.54s Find the Application 'com.apple.TVSettings'
+    t =     1.76s Get number of matches for: Descendants matching type Alert
+2026-09-22 09:52:28.487635-0700 NativeOSFocusTests-Runner[79376:5290209] [Common] Snapshot request 0x600000c15020 complete with error: <NSError: 0x600000c499e0; domain: FBSSceneSnapshotErrorDomain; code: 4; "an unrelated condition or state was not satisfied"> {
+    NSLocalizedDescription = an error occurred during a scene snapshotting operation;
+}
+2026-09-22 09:52:28.505112-0700 NativeOSFocusTests-Runner[79376:5290209] [Common] Snapshot request 0x600000c5e2b0 complete with error: <NSError: 0x600000c1c720; domain: FBSSceneSnapshotErrorDomain; code: 4; "an unrelated condition or state was not satisfied"> {
+    NSLocalizedDescription = an error occurred during a scene snapshotting operation;
+}
+    t =     1.81s Find the Application 'com.apple.TVSettings'
+    t =     1.84s Get number of matches for: Descendants matching type Alert
+    t =     1.85s Find the Application 'com.apple.TVSettings'
+    t =     2.07s Get number of matches for: Descendants matching type Alert
+    t =     2.09s Find the Application 'com.apple.TVSettings'
+    t =     2.43s Added attachment named 'entry-review.png'
+    t =     2.43s Pressing Select button
+    t =     2.65s Get number of matches for: Descendants matching type Alert
+    t =     2.65s Find the Application 'com.apple.TVSettings'
+    t =     2.87s Get number of matches for: Descendants matching type Alert
+    t =     2.88s Find the Application 'com.apple.TVSettings'
+    t =     3.10s Get number of matches for: Descendants matching type Alert
+    t =     3.11s Find the Application 'com.apple.TVSettings'
+    t =     3.33s Get number of matches for: Descendants matching type Alert
+    t =     3.34s Find the Application 'com.apple.TVSettings'
+    t =     3.56s Get number of matches for: Descendants matching type Alert
+    t =     3.58s Find the Application 'com.apple.TVSettings'
+    t =     3.60s Get number of matches for: Descendants matching type Alert
+    t =     3.60s Find the Application 'com.apple.TVSettings'
+    t =     3.82s Get number of matches for: Descendants matching type Alert
+    t =     3.83s Find the Application 'com.apple.TVSettings'
+    t =     4.16s Added attachment named '000-start.png'
+    t =     4.16s Get number of matches for: Descendants matching type Alert
+    t =     4.17s Find the Application 'com.apple.TVSettings'
+2026-09-22 09:52:30.879595-0700 NativeOSFocusTests-Runner[79376:5290166] [NativeOSFocusTests-Runner] buildPluginList:834: *** ERROR: failed to load 'RawCamera' bundle: 'dlopen(/System/Library/CoreServices/RawCamera.bundle/Contents/MacOS/RawCamera, 0x0101): tried: '/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/native-os-focus/DerivedData/Build/Products/Debug-appletvsimulator/RawCamera' (no such file), '/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/usr/lib/RawCamera' (no such file), '/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/native-os-focus/DerivedData/Build/Products/Debug-appletvsimulator/RawCamera' (no such file), '/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/usr/lib/RawCamera' (no such file), '/Library/Developer/CoreSimulator/Volumes/tvOS_23L470/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/RawCamera.bundle/Contents/MacOS/RawCamera' (no such file), '/System/Library/CoreServices/RawCamera.bundle/Contents/MacOS/RawCamera' (no such file, not in dyld cache)'
+    t =     4.19s Added attachment named '000-start.json'
+    t =     4.19s Get number of matches for: Descendants matching type Alert
+    t =     4.20s Find the Application 'com.apple.TVSettings'
+    t =     4.42s Get number of matches for: Descendants matching type Alert
+    t =     4.43s Find the Application 'com.apple.TVSettings'
+    t =     4.45s Pressing Up button
+    t =     4.66s Get number of matches for: Descendants matching type Alert
+    t =     4.68s Find the Application 'com.apple.TVSettings'
+    t =     4.90s Get number of matches for: Descendants matching type Alert
+    t =     4.91s Find the Application 'com.apple.TVSettings'
+    t =     5.24s Added attachment named '001.png'
+    t =     5.25s Get number of matches for: Descendants matching type Alert
+    t =     5.25s Find the Application 'com.apple.TVSettings'
+    t =     5.27s Added attachment named '001.json'
+    t =     5.27s Get number of matches for: Descendants matching type Alert
+    t =     5.27s Find the Application 'com.apple.TVSettings'
+    t =     5.49s Get number of matches for: Descendants matching type Alert
+    t =     5.50s Find the Application 'com.apple.TVSettings'
+    t =     5.52s Pressing Down button
+    t =     5.74s Get number of matches for: Descendants matching type Alert
+    t =     5.75s Find the Application 'com.apple.TVSettings'
+    t =     5.97s Get number of matches for: Descendants matching type Alert
+    t =     5.98s Find the Application 'com.apple.TVSettings'
+    t =     6.31s Added attachment named '002.png'
+    t =     6.32s Get number of matches for: Descendants matching type Alert
+    t =     6.32s Find the Application 'com.apple.TVSettings'
+    t =     6.33s Added attachment named '002.json'
+    t =     6.33s Get number of matches for: Descendants matching type Alert
+    t =     6.34s Find the Application 'com.apple.TVSettings'
+    t =     6.56s Get number of matches for: Descendants matching type Alert
+    t =     6.57s Find the Application 'com.apple.TVSettings'
+    t =     6.59s Pressing Down button
+    t =     6.80s Get number of matches for: Descendants matching type Alert
+    t =     6.82s Find the Application 'com.apple.TVSettings'
+    t =     7.04s Get number of matches for: Descendants matching type Alert
+    t =     7.05s Find the Application 'com.apple.TVSettings'
+    t =     7.37s Added attachment named '003.png'
+    t =     7.38s Get number of matches for: Descendants matching type Alert
+    t =     7.38s Find the Application 'com.apple.TVSettings'
+    t =     7.39s Added attachment named '003.json'
+    t =     7.39s Get number of matches for: Descendants matching type Alert
+    t =     7.40s Find the Application 'com.apple.TVSettings'
+    t =     7.61s Get number of matches for: Descendants matching type Alert
+    t =     7.63s Find the Application 'com.apple.TVSettings'
+    t =     7.64s Pressing Down button
+    t =     7.86s Get number of matches for: Descendants matching type Alert
+    t =     7.87s Find the Application 'com.apple.TVSettings'
+    t =     8.09s Get number of matches for: Descendants matching type Alert
+    t =     8.10s Find the Application 'com.apple.TVSettings'
+    t =     8.43s Added attachment named '004.png'
+    t =     8.43s Get number of matches for: Descendants matching type Alert
+    t =     8.43s Find the Application 'com.apple.TVSettings'
+    t =     8.45s Added attachment named '004.json'
+    t =     8.45s Get number of matches for: Descendants matching type Alert
+    t =     8.45s Find the Application 'com.apple.TVSettings'
+    t =     8.46s Pressing Menu button
+    t =     8.67s Get number of matches for: Descendants matching type Alert
+    t =     8.68s Find the Application 'com.apple.TVSettings'
+    t =     8.91s Get number of matches for: Descendants matching type Alert
+    t =     8.93s Find the Application 'com.apple.TVSettings'
+    t =     9.16s Get number of matches for: Descendants matching type Alert
+    t =     9.18s Find the Application 'com.apple.TVSettings'
+    t =     9.41s Get number of matches for: Descendants matching type Alert
+    t =     9.43s Find the Application 'com.apple.TVSettings'
+    t =     9.66s Get number of matches for: Descendants matching type Alert
+    t =     9.68s Find the Application 'com.apple.TVSettings'
+    t =     9.70s Added attachment named 'terminal-context'
+    t =     9.70s Tear Down
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testAppsLearningSweep]' passed (9.742 seconds).
+Test Suite 'NativeOSFocusTests' passed at 2026-09-22 09:52:36.437.
+	 Executed 1 test, with 0 failures (0 unexpected) in 9.742 (9.743) seconds
+Test Suite 'NativeOSFocusTests.xctest' passed at 2026-09-22 09:52:36.437.
+	 Executed 1 test, with 0 failures (0 unexpected) in 9.742 (9.743) seconds
+Test Suite 'Selected tests' passed at 2026-09-22 09:52:36.437.
+	 Executed 1 test, with 0 failures (0 unexpected) in 9.742 (9.744) seconds
+2026-09-22 09:52:36.777 xcodebuild[79338:5289947] [MT] IDETestOperationsObserverDebug: 11.215 elapsed -- Testing started completed.
+2026-09-22 09:52:36.777 xcodebuild[79338:5289947] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-09-22 09:52:36.777 xcodebuild[79338:5289947] [MT] IDETestOperationsObserverDebug: 11.215 sec, +11.215 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/apps-01/result.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

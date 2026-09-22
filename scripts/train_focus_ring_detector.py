@@ -21,6 +21,7 @@ import argparse
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -60,6 +61,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--preflight", action="store_true", help="Validate only; no model imports or writes")
     p.add_argument("--execute", action="store_true", help="Launch only after separate maintainer authorization and logged experiment")
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
+    p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit"])
     return p.parse_args()
 
 
@@ -117,8 +120,23 @@ def main() -> int:
     if not dataset.is_absolute():
         dataset = (PROJECT_ROOT / dataset).resolve()
 
-    from focus_training_preflight import preflight
-    report = preflight(dataset, args.name, args.epochs, args.batch, args.lr, args.model)
+    experimental = args.experiment_protocol is not None
+    experiment_rows = None
+    if experimental:
+        from focus_learning_experiment import load_protocol
+        try:
+            report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            print(json.dumps({"launchEligible": False, "blockers": [str(error)]})); return 2
+        args.epochs = report["configuration"]["epochs"]
+        args.batch = report["configuration"]["batch"]
+        args.lr = report["configuration"]["lr"]
+        args.model = report["configuration"]["model"]
+    else:
+        if args.experiment_arm:
+            print("ERROR: experiment arm requires a protocol", file=sys.stderr); return 2
+        from focus_training_preflight import preflight
+        report = preflight(dataset, args.name, args.epochs, args.batch, args.lr, args.model)
     print(json.dumps(report, sort_keys=True))
     if args.dry_run or args.preflight or not args.execute:
         return 0 if report["launchEligible"] else 2
@@ -127,11 +145,17 @@ def main() -> int:
     if not args.experiment_id or f"## Run {args.experiment_id} " not in (PROJECT_ROOT / "Research/ExperimentLog.md").read_text():
         print("ERROR: explicit experiment-log entry required", file=sys.stderr)
         return 2
+    if experimental:
+        entry = (PROJECT_ROOT / "Research/ExperimentLog.md").read_text().split(f"## Run {args.experiment_id} ", 1)[1].split("\n## Run ", 1)[0]
+        if report["protocolSHA256"] not in entry or args.experiment_arm not in entry or args.name not in entry:
+            print("ERROR: experiment log must bind exact protocol, arm and output", file=sys.stderr); return 2
+    started = time.monotonic()
+    deadline = started + report["configuration"]["maxSeconds"] if experimental else float("inf")
     for key, value in os_env_defaults.items():
         os.environ[key] = value
         Path(value).mkdir(parents=True, exist_ok=True)
-    train = load_samples(dataset, "train")
-    val = load_samples(dataset, "validation")
+    train = [r for r in experiment_rows if r["split"] == "train"] if experimental else load_samples(dataset, "train")
+    val = [r for r in experiment_rows if r["split"] == "validation"] if experimental else load_samples(dataset, "validation")
     print(f"=== FocusRing train {utc_now()} ===")
     print(f"dataset: {dataset}")
     print(f"train={len(train)} val={len(val)}; final test is not loaded for training")
@@ -190,13 +214,20 @@ def main() -> int:
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     print(f"device={device}  creating {args.model} pretrained=False (HF hub skipped)", flush=True)
     model = mobilenetv4_conv_small(pretrained=False, num_classes=1)
+    if experimental and report["warmCheckpoint"]:
+        from focus_learning_experiment import checked
+        checkpoint = torch.load(checked(report["warmCheckpoint"]), map_location="cpu", weights_only=True)
+        state = checkpoint["state_dict"]
+        if any(not torch.isfinite(value).all() for value in state.values()):
+            raise ValueError("nonfinite_checkpoint")
+        model.load_state_dict(state, strict=True)
     print("model ready", flush=True)
     model.to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
     loss_fn = nn.BCEWithLogitsLoss()
 
     train_loader = DataLoader(
-        CropDataset(train, True), batch_size=batch, shuffle=True, num_workers=0, drop_last=False
+        CropDataset(train, not experimental), batch_size=batch, shuffle=True, num_workers=0, drop_last=False
     )
     val_loader = DataLoader(
         CropDataset(val, False),
@@ -207,32 +238,45 @@ def main() -> int:
 
     best_val = float("inf")
     best_path = weights_dir / "best.pt"
+    def evaluate():
+        model.eval()
+        predictions = []
+        total_loss = 0.0
+        count = 0
+        with torch.no_grad():
+            for x, y in val_loader:
+                if time.monotonic() >= deadline: raise TimeoutError("experiment_compute_budget")
+                x, y = x.to(device), y.to(device)
+                logits = model(x)
+                loss = loss_fn(logits.view_as(y), y)
+                if not torch.isfinite(loss): raise ValueError("nonfinite_validation_loss")
+                total_loss += float(loss.item()) * x.size(0)
+                for probability, label in zip(torch.sigmoid(logits).view(-1).cpu().tolist(), y.view(-1).cpu().tolist()):
+                    predictions.append({"id": val[count].get("id", str(count)), "label": int(label), "probability": probability})
+                    count += 1
+        return {"loss": total_loss / max(1, count), "predictions": predictions}
+    history = []
+    initial = evaluate() if experimental else None
     for epoch in range(1, epochs + 1):
         model.train()
         running = 0.0
         n = 0
         for x, y in train_loader:
+            if time.monotonic() >= deadline: raise TimeoutError("experiment_compute_budget")
             x, y = x.to(device), y.to(device)
             opt.zero_grad()
             logits = model(x)
             loss = loss_fn(logits.view_as(y), y)
+            if not torch.isfinite(loss): raise ValueError("nonfinite_training_loss")
             loss.backward()
             opt.step()
             running += float(loss.item()) * x.size(0)
             n += x.size(0)
         train_loss = running / max(1, n)
 
-        model.eval()
-        vloss = 0.0
-        vn = 0
-        with torch.no_grad():
-            for x, y in val_loader:
-                x, y = x.to(device), y.to(device)
-                logits = model(x)
-                loss = loss_fn(logits.view_as(y), y)
-                vloss += float(loss.item()) * x.size(0)
-                vn += x.size(0)
-        val_loss = vloss / max(1, vn)
+        validation = evaluate()
+        val_loss = validation["loss"]
+        history.append({"epoch": epoch, "trainLoss": train_loss, "validation": validation})
         print(f"epoch {epoch}/{epochs}  train_loss={train_loss:.4f}  val_loss={val_loss:.4f}")
         ckpt = {
             "epoch": epoch,
@@ -244,6 +288,20 @@ def main() -> int:
         if val_loss <= best_val:
             best_val = val_loss
             torch.save(ckpt, best_path)
+
+    if experimental:
+        import hashlib
+        model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True)["state_dict"], strict=True)
+        selected = evaluate()
+        result = {"status": "completed", "releaseEligible": False, "protocolSHA256": report["protocolSHA256"],
+                  "arm": args.experiment_arm, "experimentID": args.experiment_id, "pid": os.getpid(),
+                  "endedAt": utc_now(), "elapsedSeconds": time.monotonic()-started,
+                  "device": str(device), "torchVersion": str(torch.__version__),
+                  "trainerSHA256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  "backboneSHA256": hashlib.sha256(Path(__file__).with_name("focus_ring_backbone.py").read_bytes()).hexdigest(),
+                  "trainCount": len(train), "validationCount": len(val), "initial": initial,
+                  "selected": selected, "history": history, "bestSHA256": hashlib.sha256(best_path.read_bytes()).hexdigest()}
+        (out/"experiment-result.json").write_text(json.dumps(result, indent=2, allow_nan=False))
 
     print(f"best.pt → {best_path}")
     return 0

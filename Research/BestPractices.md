@@ -764,7 +764,7 @@ for k, v in os_env_defaults.items():
     Path(v).mkdir(parents=True, exist_ok=True)
 ```
 
-**Why:** Guarantees 100% self-containment inside the package boundary, ensures zero user-directory pollution, and prevents sandbox access violations during headless runs.
+**Why:** Confines these configurable caches, not every framework or subprocess write. Declare unavoidable platform storage separately; these variables cannot guarantee full self-containment (BP-67).
 
 ---
 
@@ -777,7 +777,7 @@ for k, v in os_env_defaults.items():
 swift -module-cache-path .build/clang-cache scripts/myscript.swift [args]
 ```
 
-**Why:** Confines all compiled module caches to `.build/`, eliminating sandbox permission failures and adhering strictly to the filesystem boundary rule.
+**Why:** Confines the selected module cache. Other tool caches, service access and execution restrictions remain separate; this option cannot eliminate all permission failures (BP-67).
 
 ---
 
@@ -1257,6 +1257,12 @@ An alternative screenshot transport does not repair a shared Fixture label defec
 despite valid button geometry. Guessing would create false ground truth.
 Evidence: [parallel acquisition smoke](../reports/work/TVGEN/handoff.md).
 
+Admission follow-up: do not let the observed target list define expected coverage.
+The direct-runner review found this could silently admit an omitted control.
+Pin expectations from source separately: recipe element_count can differ from
+focusable count (hero2, maze8, kitchen18 for this catalog). Test omission and full
+execution publication, not only early rejection. [Review](../reports/work/TVGEN-REVIEW/handoff.md).
+
 ### BP-58: Retire nondeterministic renderer-dependent corpus routes
 
 **Wrong:** Keep a `WKWebView` capture route in a deterministic offline corpus after the target simulator repeatedly loses its web process and entitlement checks. A structurally valid PNG/JSON pair cannot prove that the claimed web content rendered.
@@ -1264,3 +1270,105 @@ Evidence: [parallel acquisition smoke](../reports/work/TVGEN/handoff.md).
 **Correct:** Remove the failed route from the active capture and validation flow, document any now-uncovered legacy class, and preserve taxonomy/model identifiers unless an explicit compatibility decision changes them. A future replacement requires its own deterministic rendering and architecture approval.
 
 **Why:** Retrying a renderer with unavailable processes wastes capture time and can create semantically false labels. Evidence: P0-C `HardNegative_2` retirement, 2026-09-19.
+
+---
+
+### BP-68: Separate crop parity from model and backend quality
+
+**Wrong:** Assuming identical weights imply equivalent focus behavior, or attributing
+different scores to training while consumer crops omit the training-time context.
+
+**Correct:** Replay identical image bytes and boxes through the actual source-bound
+crop implementations, inspect the crops, and score both through one unchanged
+classifier/backend. Record separate original-path results; label oracle/manual-box
+replay separately from actual detector proposals and end-to-end navigation.
+
+**Why:** [FOCUS-PARITY-01](../reports/work/FOCUS-PARITY-01/handoff.md) found different
+crops on all four historical images. Holding CPU inference constant, Home scored
+1.0 with production expansion versus 0.567 with the tight producer crop. Three
+other expected-focused examples remained below threshold: parity is necessary,
+not proof of adequate model quality. Uniform synthetic crops can appear equal
+despite incompatible crop geometry, so include asymmetric and real cases.
+
+### BP-67: Decouple Developer / Automation Tools from the Mac App Store Sandbox
+
+**Wrong:** Treating every permission error as a reason to remove App Sandbox,
+re-sign installed apps or reset services. Earlier guidance overstated unsandboxed
+distribution as a universal fix and confused local build and release requirements.
+
+**Correct:**
+Use the sourced [SandboxOperations guide](SandboxOperations.md). Distinguish agent
+execution policy, App Sandbox/bookmarks, privacy protection, ordinary permissions,
+signing metadata and service reachability. Scope platform-storage authority with
+the operation; reuse proven execution context and retained captures. Distribution
+or entitlement changes are separately reviewed producer decisions, never an
+operator workaround. Neither notarization nor an unsandboxed binary grants all
+filesystem or privacy access.
+
+**Why:** OS-FOCUS-01 capture passed but restricted result export failed; approved
+export recovered the evidence without repeating navigation or changing TTR.
+Classifying the actual failure avoids repeated prompts and unrelated rebuilds.
+
+### BP-68: Native focus settling and duplicate observations
+
+**Wrong:** Failing immediately on the first focusless AX snapshot after activation,
+or treating any changed decorative AX subtree as contradictory pixel labels.
+
+**Correct:** Use bounded observation-only settling (no input retries). For exact
+decoded-pixel duplicates require matching native focused identity/geometry and
+viewport; retain the first complete observation and preserve all raw evidence.
+Do not merge contradictory focus labels. AX may omit decorative chevrons after
+return navigation, so whole-tree equality across different visits is not needed
+for deduplication. Within each capture interval unchanged observations remain required.
+
+**Why:** OS-FOCUS-02's first attempt sent zero inputs and failed on a transient
+focusless snapshot. The bounded fix completed 25 inputs. Return frames had identical
+pixels/focus but omitted decorative subtrees. [Evidence](../reports/work/OS-FOCUS-02/handoff.md).
+
+### BP-69: Time the complete training runtime, not just `import torch`
+
+**Wrong:** Treating a quick warmed PyTorch import as proof that a timed training
+arm can initialize promptly. Optimizer creation can lazily import substantial
+additional dependencies, even without using `torch.compile`.
+
+**Correct:** Use a separately bounded runtime-readiness check covering imports,
+the real optimizer and a tiny forward/backward operation before allocating a
+timed model run. Record startup separately from epoch compute. Enforce an external
+process deadline as well as batch-level checks; an import cannot reach those
+checks. Diagnose owned-process stacks/open files before reinstalling dependencies
+or changing devices. Explicitly authorize unavoidable platform-managed caches;
+keep configured caches, evidence and checkpoints inside the project.
+
+**Why:** FOCUS-EXP-01's first cold import consumed600s without an epoch. A subsequent
+import-only probe took0.717s, but AdamW startup still read cold SymPy dependencies.
+FDR-006 completed in419s wall time while the following scratch arm took20s.
+These timings describe runtime overhead, not an architecture-speed comparison.
+The original attempt remains failed evidence; no model-quality-triggered retry.
+
+### BP-70: Bound inference batches by decoded pixels
+
+**Wrong:** Assuming18 valid images fit a helper merely because its item limit is128.
+
+**Correct:** Account for summed decoded pixels against the helper's existing80M
+limit. Preserve membership/order across batches and report cold starts per batch.
+Do not weaken the limit or misclassify the dataset as corrupt.
+
+**Why:** FOCUS-EXP-01's18 4K frames exceeded the pixel budget. Two9-frame batches
+passed with identical source membership. A focused regression test covers this
+real entrypoint batching mechanism.
+
+### BP-71: Native Home process presence is not labeled-frame readiness
+
+**Wrong:** Assuming the tvOS Home shell's anonymous focus identifies a visible
+tile, or treating repeated `AppCell` identifiers as unique elements.
+
+**Correct:** Bind the observed tile-tree host and verify stable foreground,
+viewport, nonempty native tile identity and actual screenshot alignment. Retain
+the native label alongside repeated container identifiers; reject ambiguities.
+Bound transient settling, preserve failed evidence, and do not turn blank images
+or requested navigation into ground truth. Continue unrelated qualified acquisition.
+
+**Why:** OS-FOCUS-03 observed PineBoard's anonymous shell and HeadBoard's actual
+tile tree, but three bounded trials still failed before any directional inputs.
+Home admitted zero pairs while separate Settings journeys delivered nine reviewed
+pairs and one training candidate. This is a local observation gap, not TTR dependence.

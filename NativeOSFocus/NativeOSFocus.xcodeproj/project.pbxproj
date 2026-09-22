@@ -1,0 +1,17 @@
+// !$*UTF8*$!
+{
+ archiveVersion = 1; classes = {}; objectVersion = 56;
+ objects = {
+  A00000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeOSFocusTests.swift; sourceTree = SOURCE_ROOT; };
+  A00000000000000000000002 = {isa = PBXBuildFile; fileRef = A00000000000000000000001; };
+  A00000000000000000000003 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = NativeOSFocusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+  A00000000000000000000004 = {isa = PBXGroup; children = (A00000000000000000000001, A00000000000000000000003); sourceTree = "<group>"; };
+  A00000000000000000000005 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000002); runOnlyForDeploymentPostprocessing = 0; };
+  A00000000000000000000006 = {isa = PBXNativeTarget; buildConfigurationList = A00000000000000000000009; buildPhases = (A00000000000000000000005); buildRules = (); dependencies = (); name = NativeOSFocusTests; productName = NativeOSFocusTests; productReference = A00000000000000000000003; productType = "com.apple.product-type.bundle.ui-testing"; };
+  A00000000000000000000007 = {isa = PBXProject; attributes = {LastUpgradeCheck = 2600; }; buildConfigurationList = A0000000000000000000000A; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; knownRegions = (en, Base); mainGroup = A00000000000000000000004; projectDirPath = ""; projectRoot = ""; targets = (A00000000000000000000006); };
+  A00000000000000000000008 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = org.nativeuiauditkit.NativeOSFocusTests; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = appletvsimulator; SUPPORTED_PLATFORMS = appletvsimulator; SWIFT_VERSION = 6.0; TARGETED_DEVICE_FAMILY = 3; TEST_TARGET_NAME = ""; TVOS_DEPLOYMENT_TARGET = 18.0; }; name = Debug; };
+  A00000000000000000000009 = {isa = XCConfigurationList; buildConfigurations = (A00000000000000000000008); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
+  A0000000000000000000000A = {isa = XCConfigurationList; buildConfigurations = (A0000000000000000000000B); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
+  A0000000000000000000000B = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; SDKROOT = appletvsimulator; SUPPORTED_PLATFORMS = appletvsimulator; }; name = Debug; };
+ }; rootObject = A00000000000000000000007;
+}

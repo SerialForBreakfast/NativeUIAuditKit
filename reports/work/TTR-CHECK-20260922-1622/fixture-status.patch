@@ -1,0 +1,39 @@
+*** Begin Patch
+*** Update File: /Volumes/SharedStatusFile/nuiak/status.yaml
+@@
+-updated_at: '2026-09-22T16:25:31Z'
+-valid_until: '2026-09-22T16:55:31Z'
++updated_at: '2026-09-22T16:29:01Z'
++valid_until: '2026-09-22T16:59:01Z'
+@@
+-  summary: Updated local TTR passes all eight infrastructure readiness checks with clear ownership. Persistent simulator remote is advertised but not live-qualified here. Installed Fixture bytes are unchanged; both passive HTTP health requests time out. Genuine Fixture capture remains unqualified.
++  summary: Updated TTR infrastructure ready and ownership clear. User relaunched Fixture; HTTP now healthy. Fresh shelf telemetry has412 samples but native focus still non_view/unmapped_item. Executable bytes unchanged; genuine Fixture training labels remain blocked. Persistent remote remains independently available for qualification.
+@@
+-- Fixture listener exists on the exact simulator, but device/scene GETs each time out after five seconds. Background inactivity is possible, not proven; no fresh crash or storage failure claimed.
++- Fresh passive scene confirms nativeFocusResolved=false, unresolved_focus, non_view/unmapped_item with412 samples and97ms sample age; six shelf IDs measured and two missing. No recipe/input/capture was sent by NUA. Earlier HTTP timeout is resolved.
+@@
+   TTR-CHECK-20260922-1622:
+     owner: NUIAK architect
+-    updated_at: '2026-09-22T16:25:31Z'
+-    valid_until: '2026-09-22T16:55:31Z'
++    updated_at: '2026-09-22T16:29:01Z'
++    valid_until: '2026-09-22T16:59:01Z'
+@@
+-    fixture_state: exact_target_listener_present_http_device_and_scene_timeout_5s_each
++    fixture_state: http_healthy_new_process_same_artifacts_native_nonview_focus_unresolved
++    fixture_followup:
++      observed_at: '2026-09-22T16:29:01Z'
++      sample_count: 412
++      sample_age_ms: 97.36
++      native_focus_resolved: false
++      focused_item_kind: non_view
++      resolution: unmapped_item
++      scene: media_shelf_dark_regular_seed1042
++      measured_ids_count: 6
++      missing_ids: [media_card_6, media_card_7]
++      evidence: reports/work/TTR-CHECK-20260922-1622/fixture-followup.md
++      scope: Passive current-scene diagnostics only; earlier timeout resolved. Not a new two-element smoke or capture attempt.
+@@
+-    - Fixture responsiveness not established; no capture attempted and no new native-focus or screenshot failure inferred.
++    - Fixture HTTP responsiveness is now verified, but fresh native focus association fails on current shelf; missing two geometry IDs has no diagnosed cause. No screenshot or harvest failure inferred.
+*** End Patch

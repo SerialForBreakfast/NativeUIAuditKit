@@ -1,0 +1,19 @@
+{
+  "pid": 80937,
+  "exitCode": 0,
+  "elapsedSeconds": 18.608217333006905,
+  "command": [
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/bin/python",
+    "-u",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/train_focus_ring_detector.py",
+    "--experiment-protocol",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-03/corpus-01/protocol.json",
+    "--experiment-arm",
+    "warm-stretch",
+    "--name",
+    "fdr007-native-incremental",
+    "--execute",
+    "--experiment-id",
+    "FDR-007"
+  ]
+}

@@ -1,0 +1,45 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project NativeOSFocus/NativeOSFocus.xcodeproj -scheme NativeOSFocus -destination "platform=tvOS Simulator,id=9026ECA9-77DB-4AE6-8FE6-BB239E9571FA" -destination-timeout 20 -derivedDataPath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/native-os-focus/DerivedData -resultBundlePath /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-02/root-sweep-01/result.xcresult -parallel-testing-enabled NO -maximum-concurrent-test-simulator-destinations 1 -test-timeouts-enabled YES -default-test-execution-time-allowance 300 -maximum-test-execution-time-allowance 300 "-only-testing:NativeOSFocusTests/NativeOSFocusTests/testSettingsRootSweep" -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-02/root-sweep-01/result.xcresult
+
+2026-09-22 01:01:10.253198-0700 NativeOSFocusTests-Runner[26126:4334077] [Default] Running tests...
+Test Suite 'Selected tests' started at 2026-09-22 01:01:10.439.
+Test Suite 'NativeOSFocusTests.xctest' started at 2026-09-22 01:01:10.440.
+Test Suite 'NativeOSFocusTests' started at 2026-09-22 01:01:10.440.
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testSettingsRootSweep]' started.
+    t =     0.00s Start Test at 2026-09-22 01:01:10.441
+    t =     0.03s Set Up
+    t =     0.03s Open com.apple.TVSettings
+    t =     0.03s     Activate com.apple.TVSettings
+    t =     0.07s         Wait for com.apple.TVSettings to idle
+    t =     0.20s Wait for com.apple.TVSettings to become Running Foreground
+    t =     0.20s Get number of matches for: Descendants matching type Alert
+    t =     0.21s Find the Application 'com.apple.TVSettings'
+    t =     0.24s Added attachment named 'terminal-context'
+/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeOSFocus/NativeOSFocusTests.swift:129: error: -[NativeOSFocusTests.NativeOSFocusTests testSettingsRootSweep] : failed: caught error: "missingFocus"
+    t =     0.64s Tear Down
+Test Case '-[NativeOSFocusTests.NativeOSFocusTests testSettingsRootSweep]' failed (0.751 seconds).
+Test Suite 'NativeOSFocusTests' failed at 2026-09-22 01:01:11.192.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.751 (0.752) seconds
+Test Suite 'NativeOSFocusTests.xctest' failed at 2026-09-22 01:01:11.192.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.751 (0.752) seconds
+Test Suite 'Selected tests' failed at 2026-09-22 01:01:11.192.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.751 (0.753) seconds
+2026-09-22 01:01:22.285 xcodebuild[26116:4333831] [MT] IDETestOperationsObserverDebug: 13.638 elapsed -- Testing started completed.
+2026-09-22 01:01:22.286 xcodebuild[26116:4333831] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-09-22 01:01:22.286 xcodebuild[26116:4333831] [MT] IDETestOperationsObserverDebug: 13.638 sec, +13.638 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-02/root-sweep-01/result.xcresult
+
+Failing tests:
+	NativeOSFocusTests.testSettingsRootSweep()
+
+** TEST EXECUTE FAILED **
+
+Testing started

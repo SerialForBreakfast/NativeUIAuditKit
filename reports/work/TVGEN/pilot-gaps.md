@@ -5,6 +5,12 @@ Seven archetypes × light/dark/high_contrast × seeds7/19 =42 recipes.
 Regular density, step0; counts2 action_dialog,4 grid_matrix/media_shelf/settings_list/
 hero_carousel/focus_maze,41 kitchen_sink. Do not silently reduce the matrix.
 
+2026-09-22 source-plan review: configured element_count is not sweep count.
+Pinned expected targets yield246 pairs /288 frames across42 recipes: dialog12,
+grid18, media24, settings24, hero12, maze48, kitchen108. Source hashes and explicit
+selection rules are in scripts/direct_tvos_targets.py. These are expectations only,
+not newly captured counts; a changed producer plan requires compatibility review.
+
 - Pilot recipes executed:0; accepted:0; unexecuted due prerequisite failure:42.
 - Separate smoke:1 recipe attempted;3 expected frames (reference+2 targets),
   1 reference captured/verified; first focused target rejected, second not attempted.

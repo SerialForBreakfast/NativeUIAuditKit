@@ -1,0 +1,19 @@
+{"arm": "warm-aspect-fit", "configuration": {"augmentation": "none", "batch": 8, "epochs": 8, "lr": 0.0003, "maxSeconds": 600, "model": "mobilenetv4_conv_small", "seed": 42}, "configurationValid": true, "launchEligible": true, "output": "NativeUITrainer/focus_ring_runs/fdr004-warm-aspect-fit", "protocolSHA256": "cec58e37c4f0a181acf20fc484c5bcce75cf8c059f1d64cdfb44664d6a2fe414", "releaseEligible": false, "support": {"train": {"0": 37, "1": 37}, "validation": {"0": 9, "1": 9}}, "warmCheckpoint": {"path": "NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt", "sha256": "08158ebc78689f0549511b26f744f9e39e0250d56cbae311da3c83cf9c4ce1e5"}}
+=== FocusRing train 2026-09-22T16:15:15Z ===
+dataset: /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/focus_ring
+train=74 val=18; final test is not loaded for training
+importing torch…
+torch ready
+loading MobileNetV4-Conv-Small (vendored, no timm)…
+factory ready
+device=mps  creating mobilenetv4_conv_small pretrained=False (HF hub skipped)
+model ready
+epoch 1/8  train_loss=1.0709  val_loss=0.0080
+epoch 2/8  train_loss=0.0310  val_loss=0.0021
+epoch 3/8  train_loss=0.0022  val_loss=0.0025
+epoch 4/8  train_loss=0.0134  val_loss=0.0008
+epoch 5/8  train_loss=0.0005  val_loss=0.0007
+epoch 6/8  train_loss=0.0926  val_loss=0.0016
+epoch 7/8  train_loss=0.4706  val_loss=0.0024
+epoch 8/8  train_loss=0.0597  val_loss=0.0076
+best.pt → /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr004-warm-aspect-fit/weights/best.pt

@@ -1,0 +1,18 @@
+{
+  "command" : "status",
+  "data" : {
+    "status" : {
+      "_0" : {
+        "commandActive" : false,
+        "connectionStatus" : "disconnected",
+        "controlEpoch" : 0,
+        "observationActive" : false,
+        "queuedCommandCount" : 0
+      }
+    }
+  },
+  "durationMilliseconds" : 477,
+  "requestID" : "D38531AA-275F-4961-A3E3-2A086BFFF824",
+  "schemaVersion" : 1,
+  "success" : true
+}
