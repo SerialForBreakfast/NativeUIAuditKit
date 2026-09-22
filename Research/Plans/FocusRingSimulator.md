@@ -1,8 +1,9 @@
 # Usable FocusRing delivery through the simulator
 
-**Execution paused by user (2026-09-20) until further notice.** Preserve all evidence
-and offline review; repaired runtime alone does not authorize resumption. The current
-available priority is the [physical Office lane](OfficeFocusRing.md).
+**Scoped execution amendment, 2026-09-22:** follow the explicitly authorized
+[parallel acquisition tranche](ParallelTVOSAcquisition.md). Its direct development
+pilot and shipped baseline do not authorize scale collection, candidate training,
+Office use or promotion. Repaired runtime alone does not waive label qualification.
 
 Revision 1, 2026-09-20. Highest dispatch priority; [Tasks.md](../../Tasks.md)
 is the sole state/ownership queue. Preserve active assignments. Follow the
@@ -11,6 +12,13 @@ This plan adds model/application follow-ons to the dataset-only
 [SIM-DATA contracts](SimulatorDatasets.md); it does not authorize their execution.
 
 ## Delivery and shared acceptance contract
+
+**Direct-lane amendment:** TVGEN-03 may provide the qualified pilot/baseline and
+TVGEN-04 the qualified scale corpus under ADR-0009. FR-SIM-BASE accepts that same
+evidence, not duplicate inference. FR-SIM-CAND accepts either source's corpus only
+after scale-schema, quota, split and eligibility review. Development-only v1.4
+cannot be passed directly to training. TTR-specific comparison remains FR-SIM-TTR.
+Detailed direct contracts: [RemainingDelivery.md](RemainingDelivery.md).
 
 SIM-DATA-01 and SIM-DATA-02 proceed independently, then SIM-DATA-03 qualifies
 genuine capture. FR-SIM-BASE benchmarks the shipped model before SIM-DATA-04

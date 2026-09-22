@@ -1,6 +1,43 @@
 # Full backlog implementation packet catalog
 
-**Revision:** 4, 2026-09-19. This replaces combined P1–P5 contracts and revision-3 slice overrides. Each catalog row is one independently dispatchable assignment. Current state/owner lives only in [Tasks.md](../Tasks.md); [IterationRoadmap.md](IterationRoadmap.md) gives scheduling and [DeliveryDecisions.md](DeliveryDecisions.md) records accepted choices. Plans are not evidence that work ran.
+**Revision:** 5, 2026-09-22. Complete remaining-backlog catalog. Linked revision-4 contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
+
+## Remaining-work amendments and direct acquisition
+
+[RemainingDelivery.md](Plans/RemainingDelivery.md) supplies missing contracts.
+Existing detailed packets remain canonical. Review-ready work needs evidence review,
+not automatic reimplementation; preserve active owners. Current source-kind policy
+and explicit scoped assignments supersede retired attestation, Office-first and
+blanket-pause assumptions in historical contracts.
+
+| Packet | Contract |
+|---|---|
+| TV-FIX | [Detailed implementation contract](Plans/RemainingDelivery.md#tv-fix--native-fixture-focus-identity-repair) |
+| TVGEN-01 | [Detailed implementation contract](Plans/RemainingDelivery.md#tvgen-01--reuse-and-runtime-design-review) |
+| TVGEN-02 | [Detailed implementation contract](Plans/RemainingDelivery.md#tvgen-02--complete-direct-runner-admission-and-native-smoke) |
+| TVGEN-03 | [Detailed implementation contract](Plans/RemainingDelivery.md#tvgen-03--full-development-pilot-and-shipped-baseline) |
+| TVGEN-04 | [Detailed implementation contract](Plans/RemainingDelivery.md#tvgen-04--qualified-direct-scale-corpus-and-training-handoff) |
+| DATA-RET | [Detailed implementation contract](Plans/RemainingDelivery.md#data-ret--corpus-retention-and-recovery-verification) |
+| IOS-COV | [Detailed implementation contract](Plans/RemainingDelivery.md#ios-cov--reconstruction-coverage-and-41-class-qualification-decision) |
+| PER-DATA | [Detailed implementation contract](Plans/RemainingDelivery.md#per-data--reviewed-real-perception-benchmark) |
+| PER-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#per-live--real-chevrondialog-baseline-and-training-decision) |
+| TEMP-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#temp-live--genuine-transition-readiness-evaluation) |
+| ID-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#id-live--genuine-screen-and-row-identity-evaluation) |
+| R-LABEL | [Detailed implementation contract](Plans/RemainingDelivery.md#r-label--trustworthy-physical-holdout-annotations) |
+| DATA-VIS | [Detailed implementation contract](Plans/RemainingDelivery.md#data-vis--controlled-visual-state-coverage) |
+| DATA-SIM | [Detailed implementation contract](Plans/RemainingDelivery.md#data-sim--near-duplicate-similarity-feasibility) |
+| ALIGN-A | [Detailed implementation contract](Plans/RemainingDelivery.md#align-a--semantic-alignment-contract-and-offline-policy) |
+| ALIGN-B | [Detailed implementation contract](Plans/RemainingDelivery.md#align-b--semantic-dataset-qualification) |
+| HIST-B | [Detailed implementation contract](Plans/RemainingDelivery.md#hist-b--maintainer-history-disposition) |
+| EVIDENCE-AUDIT | [Accepted audit evidence](../reports/work/EVIDENCE-AUDIT/handoff.md); reuse, do not reopen |
+| FOCUS-LAUNCH | [Launch preparation](Plans/FocusRingLaunchPreparation.md); accepted scope only |
+| FOCUS-CONSUMER | [Consumer readiness](Plans/FocusRingConsumerReadiness.md); accepted scope only |
+
+Residual mapping: iOS recovery→P0-A/B/C+DATA-RET+IOS-COV; actual references→
+P1-B/P2-B/P3-B+P4-L+R-LABEL/R-C; visual focus→TVGEN or SIM-DATA then FR-SIM;
+physical transfer→FR-B/C; real perception→PER-DATA/PER-LIVE/TEMP-LIVE/ID-LIVE;
+semantic work→ALIGN-A/B. Later models, consumers and release retain detailed
+contracts below. Accepted software never silently closes data/integration/model gates.
 
 ## Failure-driven TTR perception priority amendment
 
@@ -39,9 +76,15 @@ simulator first, Office later for transfer validation. Plans do not grant execut
 
 ## Common execution contract
 
+2026-09-22 assigned TVGEN-01/02/03 and independent TTR smoke:
+[ParallelTVOSAcquisition.md](Plans/ParallelTVOSAcquisition.md).
+[Implementation evidence and remaining live blocker](../reports/work/TVGEN/handoff.md).
+The direct lane avoids desktop capture/export but still depends on trustworthy
+Fixture-native labels. A reference screenshot is not a completed focus sweep.
+
 [ADR-0009 TVGEN-01–04](ADR-0009-Direct-tvOS-Simulator-Generation.md#implementation-tranches)
-defines the parallel direct tvOS generator tranches. TVGEN-01 is the next planning
-assignment; runtime implementation/capture are not authorized by the ADR itself.
+defines the parallel direct tvOS generator tranches, now refined in RemainingDelivery.
+Preserve delivered TVGEN-01/02 work; the ADR itself grants no runtime authority.
 
 [IterationEfficiency.md](IterationEfficiency.md) defines change-scoped test cadence,
 producer handoff evidence and prioritized visual-state coverage. Apply it within
@@ -108,7 +151,7 @@ not installation/capture authority or evidence of data eligibility.
 | SIM-DATA-04 | TASK-SIM-DATA-01 | [FocusRing dataset freeze](Plans/SimulatorDatasets.md#sim-data-04--scale-and-freeze-focusring-simulator-data) |
 | SIM-DATA-05 | TASK-SIM-DATA-01 | [Detector augmentation corpus](Plans/SimulatorDatasets.md#sim-data-05--tvos-detector-augmentation-corpus) |
 
-## FocusRing simulator delivery — execution remains paused
+## FocusRing simulator delivery — operation-specific authority
 
 Revision 1: [canonical contracts](Plans/FocusRingSimulator.md). These follow the
 simulator dataset packets; training and TTR operation retain separate authority.
@@ -157,6 +200,6 @@ simulator dataset packets; training and TTR operation retain separate authority.
 
 ## Dispatch text
 
-“Complete <packet-id or explicit tranche of packet IDs>, revision 4 plus the execution amendment, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
+“Complete <packet-id or explicit tranche of packet IDs>, revision 5 catalog and the linked contract's revision/amendments, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
 
 For external packets, replace NUA operating paths with the owning repository's approved assignment and instructions. For hardware, training, recovery-copy or promotion packets, name the authorized operation and verified prerequisites explicitly; catalog inclusion alone is not authorization.

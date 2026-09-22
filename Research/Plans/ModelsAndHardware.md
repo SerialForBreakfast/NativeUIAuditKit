@@ -51,7 +51,8 @@ Unknown state must remain `notAssessable`; do not reconstruct it from captions o
 The [Office delivery amendment](OfficeFocusRing.md) is canonical for smoke → physical
 pilot/shipped baseline → scale-up → one candidate sequencing. The ADR-0007 matrix above
 belongs to separately assigned semantic capture/policy work; it is not a visual FR-B
-prerequisite. Present alignment metadata must still validate. Simulator execution is paused.
+prerequisite. Present alignment metadata must still validate. Physical execution
+needs its own authority; the scoped parallel simulator assignment does not authorize it.
 
 Collect incrementally; validate each completed batch before accepting counts. Keep paired/related seed samples in one split and preserve source/capture evidence. Exclude unsettled, duplicate, malformed or untrusted-label samples. Check cumulative scene/theme/hard-negative quotas and stop at a complete ≥6,000-pair corpus, retaining rejection reasons.
 

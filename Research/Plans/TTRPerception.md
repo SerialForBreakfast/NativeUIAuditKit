@@ -7,6 +7,14 @@ Use [WorkerWorkflow.md](../WorkerWorkflow.md) for execution and handoff.
 
 ## Intended outcome and priority
 
+**Remaining-work amendment, 2026-09-22:** PER-01/02/04/05/06 software/inventory
+scopes are accepted as recorded in Tasks.md. Do not repeat the initial offline
+tranche below. PER-DATA/PER-LIVE, TEMP-LIVE and ID-LIVE now carry real-evidence
+qualification in [RemainingDelivery.md](RemainingDelivery.md); PER-03 remains
+separately gated. Current exact-simulator assignments supersede historical blanket
+pause language only within their explicit scope. FocusRing acquisition stays the
+highest available implementation priority; producer resume/teardown is not model work.
+
 Improve TTR's perception of disclosure rows, interruptions and focus using measured
 traversal failures. First dispatch a substantial **PER-01 + PER-02 offline benchmark
 tranche**. P0 chevrons/dialogs precede new P1 focus and temporal extensions, then P2

@@ -25,6 +25,15 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 
 ## Not shipped
 
+**2026-09-22 parallel acquisition:** direct HTTP/simctl runner, development-only
+v1.4 consumer and existing runtime-crop/baseline integration delivered;38 Python
+and92 Swift tests pass. Matching installed Fixture launched and reference PNG
+captured/visually checked. First focused target fails `non_view/unmapped_item`;
+independent TTR job fails the same native-identity prerequisite. Fixture responsive,
+ownership clear. Zero eligible pairs;42-recipe pilot and genuine baseline not run.
+This supersedes the endpoint-unavailable and screenshot-only bottlenecks below.
+[Handoff and producer request](../reports/work/TVGEN/handoff.md).
+
 **2026-09-22 05:49 UTC diagnostic:** updated local TTR responds; exact-target
 infrastructure readiness passes and ownership is clear. Repaired companion source
 matches the producer receipt, but prior Fixture endpoint8080 refuses connection.
@@ -65,8 +74,10 @@ not the previously resolved native-reference focus failure. No new training or p
 
 **Parallel path approved, 2026-09-22:** [ADR-0009](ADR-0009-Direct-tvOS-Simulator-Generation.md)
 defines direct native tvOS Fixture/OS generation independent of TTR capture/export.
-No runner or corpus is qualified by this decision. TVGEN-01 design/reuse inventory
-is ready to assign; TTR integration and iOS reconstruction remain independent.
+Direct software and runtime inventory are now delivered for review; no corpus is
+qualified. Both acquisition adapters currently share the Fixture native-focus
+identity defect. TTR desktop acquisition remains independent; iOS reconstruction
+is unchanged. See [current evidence](../reports/work/TVGEN/handoff.md).
 
 **Legacy FocusRing reuse warning (2026-09-21):** the 1,500-pair crop corpus is
 byte-decodable but not requalified. An audit found 84 identical-pixel groups crossing

@@ -21,6 +21,13 @@ capture requirement is introduced by reorganizing these tasks.
 
 ## 1. iOS corpus recovery and preservation
 
+**Current dispatch amendment, 2026-09-22:** P0-C is already assigned and underway;
+preserve its owner and r5 configuration. Do not replay original-recovery searches
+or reopen accepted offline toolchain work merely because the historical sequence
+below describes them. DATA-RET prepares retention; IOS-COV resolves absent class
+support and gate implications. Their [contracts](RemainingDelivery.md) do not
+change the16,940-image reconstruction target or authorize generator edits.
+
 **Packets:** P0-A review, then P0-B or P0-C under separate execution authority.
 **Canonical contract:** [DatasetRecoveryPlan.md](../DatasetRecoveryPlan.md).
 **Inputs:** original manifests/labels, existing P0 inventory and handoff, documented

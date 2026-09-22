@@ -1,0 +1,24 @@
+{
+  "command" : "fixture prepare",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "files" : [
+
+        ],
+        "jobID" : "5063F0AF-6120-4619-9E87-F56210E1228F",
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/5063f0af-6120-4619-9e87-f56210e1228f/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/5063f0af-6120-4619-9e87-f56210e1228f/recipes",
+        "schemaVersion" : 1,
+        "state" : "prepared",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/5063f0af-6120-4619-9e87-f56210e1228f"
+      }
+    }
+  },
+  "durationMilliseconds" : 47,
+  "requestID" : "5063F0AF-6120-4619-9E87-F56210E1228F",
+  "schemaVersion" : 1,
+  "success" : true
+}

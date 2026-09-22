@@ -1,0 +1,16 @@
+{
+  "version": "direct-tvos-catalog-v1",
+  "purpose": "development-pilot",
+  "recipes": [
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    }
+  ],
+  "sha256": "fbf608c1967199e33b17e1125267aea128a2bdde0a1e28ba9cc6b0f098420fba"
+}

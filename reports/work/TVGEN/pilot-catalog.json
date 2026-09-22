@@ -1,0 +1,385 @@
+{
+  "version": "direct-tvos-catalog-v1",
+  "purpose": "development-pilot",
+  "recipes": [
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "settings_list",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "settings_list",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "settings_list",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "settings_list",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "settings_list",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "settings_list",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "focus_maze",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "focus_maze",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "focus_maze",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "focus_maze",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "focus_maze",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "focus_maze",
+      "element_count": 4,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "kitchen_sink",
+      "element_count": 41,
+      "theme": "light",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "kitchen_sink",
+      "element_count": 41,
+      "theme": "light",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "kitchen_sink",
+      "element_count": 41,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "kitchen_sink",
+      "element_count": 41,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "kitchen_sink",
+      "element_count": 41,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 7,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "kitchen_sink",
+      "element_count": 41,
+      "theme": "high_contrast",
+      "density": "regular",
+      "seed": 19,
+      "step_index": 0
+    }
+  ],
+  "sha256": "444d03ece053cce32710260edc6da79c044975d9dfdc9178e57e60cb1a7035a7"
+}

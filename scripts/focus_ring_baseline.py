@@ -153,7 +153,7 @@ def prepare_protocol(manifest, dataset, model):
     value["implementationSHA256"] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in
         ("scripts/focus_ring_baseline.py", "scripts/focus_dataset_contract.py", "Sources/NativeUIAuditKit/Detection/FocusRingClassifier.swift")}
     value["cropParity"] = {"geometry": "fractional-origin-rounded-intermediate-canvas", "pixelInterpolation": "not-CoreGraphics-qualified"}
-    if manifest["version"] == "1.3":
+    if manifest["version"] in {"1.3", "1.4"}:
         value["cropParity"] = {"backend": "production-makeCrop", "runtime": manifest["runtimeCrop"]}
     value["implementationSHA256"]["scripts/focus_runtime.py"] = hashlib.sha256((ROOT / "scripts/focus_runtime.py").read_bytes()).hexdigest()
     return {**value, "protocolSHA256": digest(value)}
@@ -221,7 +221,7 @@ def main() -> int:
             protocol = json.loads(args.protocol.read_text())
             if current != protocol: raise BaselineError("changed_protocol_or_membership")
             if args.infer:
-                if args.scores or manifest["version"] != "1.3": raise BaselineError("runtime_crops_required_no_external_scores")
+                if args.scores or manifest["version"] not in {"1.3", "1.4"}: raise BaselineError("runtime_crops_required_no_external_scores")
                 from focus_runtime import infer
                 result = score_protocol(protocol, infer(manifest, args.model, protocol))
                 result["executionEvidence"] = "production-runtime-invoked-by-this-command"

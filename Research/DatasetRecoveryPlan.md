@@ -61,4 +61,10 @@ Revision-4 packet contracts in [ImplementationPlans.md](ImplementationPlans.md) 
 
 ## Preservation deliverable
 
+The [DATA-RET contract](Plans/RemainingDelivery.md#data-ret--corpus-retention-and-recovery-verification)
+provides the independently dispatchable retention/restore preparation shared by
+P0-C and tvOS corpora. Reuse its evidence; do not duplicate backup implementations.
+[IOS-COV](Plans/RemainingDelivery.md#ios-cov--reconstruction-coverage-and-41-class-qualification-decision)
+records class-support gaps without changing current reconstruction ownership/targets.
+
 Before resuming expensive work, document ownership and retention of source corpora, the dependency from exports to symlink targets, an immutable content manifest, and a tested recovery path. A symlink export is not a backup. Do not delete any source tree until all dependent datasets and evaluation records are accounted for and the maintainer explicitly authorizes the exact deletion. Copying data elsewhere in the same checkout improves isolation but is not an independent backup.

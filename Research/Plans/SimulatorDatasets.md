@@ -1,8 +1,9 @@
 # Independent tvOS Simulator dataset lane
 
-**Execution paused by user (2026-09-20) until further notice.** Preserve all evidence
-and offline review; repaired runtime alone does not authorize resumption. The current
-available priority is the [physical Office lane](OfficeFocusRing.md).
+**Scoped execution amendment, 2026-09-22:** the user authorized the
+[parallel direct pilot and TTR smoke](ParallelTVOSAcquisition.md), including launch
+of the matching installed Fixture on the exact named simulator. This supersedes the
+older pause only for that assignment. Office, scale capture and training remain excluded.
 
 Revision 1, 2026-09-20. Maintainer-approved planning contract. State/ownership lives
 only in [Tasks.md](../../Tasks.md#tvos-simulator-datasets). Follow the

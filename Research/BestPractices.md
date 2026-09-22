@@ -1242,6 +1242,21 @@ Evidence: [r4 diagnosis and r5 continuation](../reports/work/P0-C/resumption-202
 `testGenerationFailurePreventsFollowingBatchWrites`, the 200-image MenuButton probe,
 and `stage_reconstruction_prefix.py` regression tests.
 
+### BP-63: Independent capture still requires independent native label evidence
+
+**Wrong:** Treat a successful reference screenshot as proof that a new acquisition
+adapter can produce labeled focused pairs, or replace unmapped native focus with
+the requested element ID.
+
+**Correct:** Exercise an actual focused target before scaling. Keep reference and
+focused-state acceptance separate. If a non-UIView native focus item cannot be
+mapped independently to a fixture element, retain diagnostics and reject the pair.
+An alternative screenshot transport does not repair a shared Fixture label defect.
+
+**Why:** Both direct simctl and TTR paths reached `non_view` / `unmapped_item`
+despite valid button geometry. Guessing would create false ground truth.
+Evidence: [parallel acquisition smoke](../reports/work/TVGEN/handoff.md).
+
 ### BP-58: Retire nondeterministic renderer-dependent corpus routes
 
 **Wrong:** Keep a `WKWebView` capture route in a deterministic offline corpus after the target simulator repeatedly loses its web process and entitlement checks. A structurally valid PNG/JSON pair cannot prove that the claimed web content rendered.

@@ -150,9 +150,10 @@ def validate_frames(pair, source_root, *, require_native=False):
 
 def validate_manifest(document, dataset):
     """Validate actual crops and their raw-frame evidence; never grant launch approval."""
-    if not isinstance(document, dict) or document.get("version") not in {"1.2", "1.3"}:
+    if not isinstance(document, dict) or document.get("version") not in {"1.2", "1.3", "1.4"}:
         raise FocusDataError("unsupported_crop_manifest")
-    runtime = document["version"] == "1.3"
+    runtime = document["version"] in {"1.3", "1.4"}
+    direct = document["version"] == "1.4"
     from focus_runtime import RUNTIME_PREPROCESSING, identity, rendered_items
     if document.get("preprocessing") != (RUNTIME_PREPROCESSING if runtime else PREPROCESSING):
         raise FocusDataError("crop_parity_mismatch")
@@ -160,13 +161,16 @@ def validate_manifest(document, dataset):
         raise FocusDataError("runtime_crop_implementation_changed")
     if document.get("evidenceKind") not in {"test-only", "reviewed-fixture"}:
         raise FocusDataError("missing_evidence_kind")
-    if document.get("sourceKind") not in {"simulatorFixture", "physicalFixture"}:
+    if document.get("sourceKind") not in ({"tvos_native_generator"} if direct else {"simulatorFixture", "physicalFixture"}):
         raise FocusDataError("invalid_source_kind")
     text(document.get("corpusID")); text(document.get("producerReference"))
     root_name = text(document.get("sourceRoot"))
     if Path(root_name).is_absolute() or ".." in Path(root_name).parts:
         raise FocusDataError("unsafe_source_root")
     source_root = local(ROOT / root_name)
+    if direct:
+        from direct_focus_manifest import validate_direct_manifest
+        validate_direct_manifest(document, source_root)
     if document["sourceKind"] == "physicalFixture":
         validate_physical_review(document.get("sourceReview"), source_root)
     pairs = document.get("pairs")
@@ -197,7 +201,11 @@ def validate_manifest(document, dataset):
         from simulator_focus_manifest import FAMILY_MAP, THEME_MAP
         if scene not in FAMILY_MAP.values() or theme not in THEME_MAP.values():
             raise FocusDataError("unsupported_pair_metadata")
-        boxes = validate_frames(pair, source_root, require_native=document["sourceKind"] == "physicalFixture")
+        if direct:
+            from direct_focus_manifest import validate_direct_frames
+            boxes = validate_direct_frames(pair, source_root)
+        else:
+            boxes = validate_frames(pair, source_root, require_native=document["sourceKind"] == "physicalFixture")
         identity = (pair["frames"]["focused"]["sha256"], pair["frames"]["unfocused"]["sha256"], pair["elementID"])
         if identity in identities:
             raise FocusDataError("duplicate_pair_content")

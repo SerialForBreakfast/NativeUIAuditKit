@@ -4,6 +4,16 @@
 
 ## TV-I1 — Authoritative harvest identity coordination
 
+**Current-contract amendment, 2026-09-22:** this historical proposal predates the
+producer's non-attested source-description contract. At dispatch, reconcile the
+current H1/producer interface and retire obsolete requirements before implementing.
+Do not restore retired attestation or require it for simulator eligibility. Preserve
+the distinction between requested target, observed runtime/instance, byte integrity,
+native focus binding and approved data use. Descriptive source strings are not
+authenticated identity. The current concrete focus repair is TV-FIX, not a replay
+of this older lifecycle proposal. Retain TV-I1 only for evidenced remaining lifecycle
+gaps under a separately accepted TTR assignment; closure requires source-backed review.
+
 **Parent:** TASK-INTEGRATION-01 (external coordination). **Owner:** TVTestRig. **Inputs:** H1 source snapshot; HarvestIdentity.swift, FixtureHTTPHarvestLab.swift, IPCObservationHarvestCapture.swift and the coordinator/fixture session lifecycle in the producer repository. Current observed production adapters inherit identity accessors returning nil; verify at assignment.
 **Scope:** producer lifecycle/HTTP/IPC contracts, adapter implementations, engine regression tests and producer docs; no live capture or weakened production gate.
 

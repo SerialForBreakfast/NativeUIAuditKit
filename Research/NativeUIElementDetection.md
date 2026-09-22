@@ -1,5 +1,11 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-09-22 additive dataset contract: [parallel tvOS acquisition](Plans/ParallelTVOSAcquisition.md)
+introduces direct-tvos-capture-v1 and development-only runtime-crop manifest v1.4.
+Native focus/geometry observations bracket simulator screenshots; this is temporal
+correlation, never a fabricated callback frame identity. Existing annotation schemas,
+v1.2/v1.3 crop contracts and public APIs remain unchanged.
+
 2026-09-21 additive diagnostic design: [FocusRing launch preparation](Plans/FocusRingLaunchPreparation.md)
 shares production cropping through package-only tooling; versioned runtime crops
 replace unqualified Pillow interpolation for new candidates. No public API change.

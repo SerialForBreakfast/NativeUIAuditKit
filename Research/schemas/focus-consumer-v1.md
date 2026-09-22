@@ -92,6 +92,29 @@ and `--execute --experiment-id <id>`. Test data is never used per epoch.
 
 ## Frozen development baseline
 
+### Direct native-generator extension — v1.4 (2026-09-22)
+
+`direct-tvos-capture-v1` is a separate completed capture record, not a fabricated
+TTR receipt. It binds the exact simulator/listener/build, frozen catalog, native
+before/after observations, local capture intervals, PNG hashes, dimensions, counts
+and postflight identity. `native-observation-bracket-v1` means temporal correlation,
+not authenticated or atomic callback-to-frame identity. Partial captures are rejected.
+
+The derived `1.4` manifest uses `tvos_native_generator`, development membership only,
+the existing production 16%-expanded 256×256 runtime crop, and frame-specific bounds.
+Visual review must bind the complete receipt hash. Test-only captures retain test-only
+provenance. Existing v1.2/v1.3 behavior is preserved; v1.4 cannot pass full training
+preflight. `focus_corpus_overlap.py` rejects cross-partition seed/group/decoded-pixel
+overlap across source manifests without discarding intentional focus pairs.
+
+Entrypoints: `direct_tvos_capture.py --plan [--smoke] --output <new-catalog>`;
+`--execute --catalog <catalog> --target <exact-UUID> --endpoint <loopback-URL>
+--output <new-directory>`; then `direct_focus_manifest.py --capture <direct-capture.json>
+--visual-review <review.json> --output <new-directory>`. Review JSON contains
+`captureSHA256` (canonical receipt digest), `accepted: true`, and `report` identifying
+the visual evidence. Use the existing `focus_ring_baseline.py` on the derived manifest.
+Full assigned scope and authority: [parallel acquisition](../Plans/ParallelTVOSAcquisition.md).
+
 ### Physical-source extension (2026-09-22)
 
 Physical extraction uses the same `harvest_focus_pairs.py --fixture-bundle` path,

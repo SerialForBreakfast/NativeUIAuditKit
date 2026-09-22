@@ -13,6 +13,14 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**Backlog reconciliation (2026-09-22):** every packet maps to the
+[implementation catalog](Research/ImplementationPlans.md). Missing residual contracts
+are now in [RemainingDelivery.md](Research/Plans/RemainingDelivery.md). Existing
+owners/acceptances are preserved; new rows are unassigned, not execution authority.
+Direct review, retention preparation, coverage decisions and bounded reviewed labeling
+can proceed without the Fixture repair. Do not duplicate accepted software or collect
+another pilot/scale corpus merely to close alternate acquisition-lane IDs.
+
 **Parallel tvOS acquisition (2026-09-22):** [ADR-0009](Research/ADR-0009-Direct-tvOS-Simulator-Generation.md)
 adds direct Fixture/OS generation without waiting for TTR capture/export. Keep TTR
 work and active iOS reconstruction intact. Either qualified simulator lane may
@@ -54,9 +62,22 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
-| F1 | TVGEN-01 | FOCUS-DET-05 | ready (unassigned) | [Direct tvOS design/reuse inventory](Research/ADR-0009-Direct-tvOS-Simulator-Generation.md#implementation-tranches); read-only Fixture source/target inspection, no TTR runtime dependency |
-| F1 | TVGEN-02 | FOCUS-DET-05 | planned (unassigned) | TVGEN-01 reviewed; implement direct runner/adapter and offline tests; exact-target runtime authority separately required for native two-element qualification |
-| F1 | TVGEN-03 | FOCUS-DET-05 | planned (unassigned) | Qualified direct runner/intake; authorized pilot and baseline; no SIM-DATA-01 prerequisite |
+| F1 | TV-FIX | INTEGRATION-01 | external request published; acknowledgment pending | TTR-owned native non-view focus binding; request nuiak-20260922T061302Z-fixture-nonview-focus. No producer edits here. |
+| P1 | DATA-RET | DATA-01 / FOCUS-DET-05 | ready planning (unassigned); copy gated | Inventory/restore verifier; maintainer-selected independent backup destination and authority before copying. Reuse corpus retention evidence. |
+| P1 | IOS-COV | DATA-01 / 6a-10 | ready decision preparation (unassigned) | Resolve uncovered webContent/support gates from P0-C audit; preserve target, map and active owner. |
+| P1 | PER-DATA | TTR-PERCEPTION | ready bounded labeling (unassigned); coverage gated | Privacy-screen and review permitted existing evidence; missing cells require separately assigned acquisition. |
+| P1 | PER-LIVE | TTR-PERCEPTION | blocked (unassigned) | Eligible PER-DATA and inference authority; reuse PER-02, freeze experiment gates before PER-03. |
+| P2 | TEMP-LIVE | TTR-PERCEPTION | blocked (unassigned) | Reviewed real ordered journeys and inference authority; accepted PER-05 is not real qualification. |
+| P2 | ID-LIVE | TTR-PERCEPTION | blocked (unassigned) | Reviewed reference/query journeys and inference authority; reuse PER-06. |
+| P2 | R-LABEL | 6b-R-1 / 6a-11 | blocked (unassigned) | Qualified physical captures and annotation scope; separate from500-screenshot coverage. |
+| P2 | DATA-VIS | DATA-01 / FOCUS-DET-05 | ready inventory (unassigned) | Controllable-state matrix; renderer implementation separately scoped, preserve active captures. |
+| later | DATA-SIM | DATA-01 / FOCUS-DET-05 | deferred research (unassigned) | Optional similarity feasibility; exact pixels/lineage remain policy, no automatic filtering. |
+| later | ALIGN-A | ADR-0007 | deferred (unassigned) | Semantic contract/policy with real producer capability; not a visual-focus prerequisite. |
+| later | ALIGN-B | ADR-0007 | blocked (unassigned) | ALIGN-A, actual cursor/navigation observations and dedicated operation authority. |
+| — | HIST-B | DIST-01 | maintainer-gated | Exact defer/remediation disposition, recoverable objects and migration procedure; no agent git writes. |
+| F1 | TVGEN-01 | FOCUS-DET-05 | review (NUIAK architect; design/runtime inventory delivered) | [Assigned plan](Research/Plans/ParallelTVOSAcquisition.md), matching installed Fixture launched and exact endpoint verified; [handoff](reports/work/TVGEN/handoff.md). No producer edits. |
+| F1 | TVGEN-02 | FOCUS-DET-05 | review software / blocked live (NUIAK architect) | Direct runner, v1.4 production-crop adapter/baseline and cross-source leakage audit delivered; 38 Python and 92 Swift tests pass. One reference PNG verified; focused target fails non_view/unmapped_item. Native label fix required; zero eligible pairs. [Evidence](reports/work/TVGEN/handoff.md). |
+| F1 | TVGEN-03 | FOCUS-DET-05 | blocked native labels (NUIAK architect) | Frozen42 recipes; zero pilot executions. Genuine baseline waits for complete direct smoke. TTR smoke independently hits same Fixture identity defect, not desktop capture. [Accounting/resume](reports/work/TVGEN/pilot-gaps.md). |
 | F1 | TVGEN-04 | FOCUS-DET-05 | planned (unassigned) | Accepted direct pilot/baseline, frozen split plan and scale authority; existing FocusRing quotas, cross-lane leakage audit and training handoff |
 | F1 | EVIDENCE-AUDIT | PER-01 / PER-02 / PER-04 | accepted (original offline scope) | Audit/gate corrections reviewed and 14 tests rerun; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). Legacy cross-split data remains unqualified; broader supplied-evidence review is now recorded under PER-01. |
 | F1 | FOCUS-LAUNCH | FOCUS-DET-05 | accepted (original offline scope) | Runtime crop, CoreML adapter and capture-plan compiler reviewed/tested; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). No capture/training or model-quality pass. |
@@ -89,9 +110,9 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | — | FR-A | FOCUS-DET-05 | accepted | Offline quota/pair/split and ADR-0007 alignment validator accepted; FR-B remains capture-gated |
 | F1 | FR-B | FOCUS-DET-05 | deferred (ADR-0008 simulator-first) | Physical corpus is later transfer validation after the qualified simulator pilot, baseline, candidate, and separate physical authority. |
 | F1 | FR-C | FOCUS-DET-05 | deferred (ADR-0008 simulator-first) | Physical candidate/comparison work follows simulator candidate evidence and a separately authorized transfer-validation lane. |
-| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (Fixture endpoint / live qualification; NUIAK architect) | 05:49Z updated local build passes infrastructure readiness with ownership clear; repaired companion source matches peer receipt. Prior Fixture endpoint8080 refuses connection. Next: authorized matching Fixture launch/endpoint verification and complete smoke/export/intake; no new screenshot failure inferred. [Current evidence](reports/work/SIM-DATA-01-02/readiness-20260922-0548/handoff.md). |
+| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (native focus identity; NUIAK architect) | Endpoint restored by authorized matching Fixture launch. App-managed job5063F0AF fails unresolved native non-view focus; geometry present, no completed bundle. Postflight healthy/ownership clear. Screenshot repair remains unqualified, not newly failed. [Evidence/request](reports/work/TVGEN/handoff.md). |
 | F1 | SIM-DATA-02 | TASK-SIM-DATA-01 | review (offline extensions delivered) | Same-box/split/quota gaps addressed by FOCUS-CONSUMER; runtime parity in FOCUS-LAUNCH. Genuine native observation remains blocked at SIM-DATA-01; do not reuse old requested-focus claims as truth. Physical PER-04 stays separate. |
-| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | blocked (ADR-0008 prerequisite) | First repair SIM-DATA-01 screenshot-output access, then receive explicit bounded simulator capture authority; 42-recipe genuine pilot |
+| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | blocked (native label prerequisite) | Current TTR smoke fails native identity before completed capture/export. Direct42-recipe pilot is assigned under TVGEN-03; do not duplicate capture. No scale or training authority. |
 | F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | blocked | Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned simulator capture; ≥6,000 visual pairs |
 | F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | blocked | Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
 | F1 | FR-SIM-BASE | FOCUS-DET-05 | blocked | Qualified SIM-DATA-03 or TVGEN-03 pilot and assigned baseline inference; reuse existing offline tooling; owner unassigned |
@@ -159,9 +180,10 @@ These are substantial execution tranches over existing packets, not new task IDs
 | 41-class candidate readiness and execution | P5-B, TRAIN-S/F; 6a-10 | Frozen eligible inputs/configuration, then separately authorized smoke and full candidate | Planned mixed-data experiment needs qualified fixture corpus; Office remains released |
 | Qualification and release evidence | TRAIN-Q, REL-A/B; 6a-10/DIST-02 | Independent holdout gates, package evidence, then maintainer-only promotion/tag | No fresh capture if accepted evaluation corpora exist |
 
-**Next dispatch:** review the existing offline software as one coherent tranche,
-not another tiny helper implementation; separately review P0-A and resolve its
-remaining evidence/recovery decision. Both can proceed while Office is unavailable.
+**Next dispatch:** preserve active P0-C reconstruction; complete its audit/retention
+and IOS-COV decision, then P1-B/P2-B/P3-B when test pixels qualify. Offline software
+is already accepted; do not redispatch it wholesale. DATA-RET and IOS-COV preparation
+can proceed independently of capture.
 Workers do not self-accept earlier review-ready packets. This plan does not assign
 workers, start generation/inference/training, or restore Office permission.
 
@@ -303,7 +325,7 @@ v0.1 is shipped. Spec: [`Research/FocusRingDetectorSpec.md`](Research/FocusRingD
 - [ ] Mix: `gridMatrix` ≥ 2,000, `mediaShelf` ≥ 1,500, `settingsList` ≥ 1,000, `actionDialog` / `heroCarousel` / `focusMaze` ≥ 500 each
 - [ ] ≥ 20% `light` and ≥ 20% `highContrast` in `gridMatrix` + `mediaShelf`
 - [ ] Held-out hard-negative n ≥100 across `light`/`highContrast` × `imageView`/`collectionItem`; every combination nonempty with separate counts/results
-- [ ] Separately assigned ADR-0007 semantic alignment dataset/policy matrix remains open; it is not a prerequisite for physical visual-focus capture or training
+- [ ] ALIGN-A/B: separately assigned ADR-0007 semantic alignment dataset/policy remains open; it is not a prerequisite for physical visual-focus capture or training
 - [ ] All six quality gates, including **non-vacuous** hard-neg FPR ≤ 0.5%
 - [ ] Replace bundled `.mlmodelc` only after those gates pass
 
@@ -410,7 +432,7 @@ Working-tree PII is redacted. Real values remain in already-pushed git history. 
 - [x] `PROVENANCE.md` written and linked
 - [x] Training data audited clean
 - [x] Working-tree PII redacted (2026-09-18)
-- [!] History rewrite / force-push — deferred on purpose
+- [!] HIST-B: maintainer disposition/recovery/migration; rewrite and force-push deferred without exact authority
 
 ### TASK-DIST-02: Next release tag [!]
 
