@@ -1,5 +1,9 @@
 # Transition sequences v1 — PER-05
 
+Acceptance clarification (2026-09-22): helper change-region replies are bounded
+to at most 128 rectangles, each contained in the compared frame. Out-of-frame
+measurements fail the sequence; they cannot imply foreground stability.
+
 Offline experimental evaluator, not an action policy or production readiness guarantee.
 No public library API, capture or model changes. Reuse FrameSimilarity and
 ChangeRegionLocalizer through a package-only TransitionTool. Keep complete journeys,

@@ -205,7 +205,7 @@ def report(manifest, predictions, observations, cases, verification):
         category = "no_measured_gap"
         if actual.get("abstentions", 0) > oracle.get("abstentions", 0) or actual.get("dialogLocalizationMiss", 0):
             category = "proposal_geometry"
-        elif actual.get("wrongRowLink", 0) or actual.get("buttonMembershipError", 0): category = "association_geometry"
+        elif actual.get("wrongRowLink", 0) or actual.get("associationAbstentions", 0) or actual.get("buttonMembershipError", 0): category = "association_geometry"
         elif actual.get("destructiveAsBenign", 0) or actual.get("semanticAbstentions", 0): category = "ocr_semantics_or_missing_labels"
         elif actual.get("dialogFocusError", 0): category = "focus_classifier_or_proposal"
         analysis.append({"caseID": case["caseID"], "category": category, "diagnosis": "rule-based triage; requires reviewed evidence"})

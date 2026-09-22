@@ -14,6 +14,11 @@ defines the assigned PER-02/PER-04 integration and existing-deliverable review;
 do not redispatch already implemented foundations. Evidence:
 [integrated handoff](../reports/work/PERCEPTION-INTAKE/handoff.md).
 
+2026-09-22 architect review: [PerceptionAcceptance.md](Plans/PerceptionAcceptance.md)
+defines the evidence/acceptance tranche; [decision and gaps](../reports/work/PERCEPTION-ACCEPTANCE/handoff.md)
+supersede the earlier pending-review guidance. No live controller or dataset qualification
+is implied by offline packet acceptance.
+
 | Packet | Contract |
 |---|---|
 | PER-01 | [Evidence and split-safe benchmark](Plans/TTRPerception.md#per-01--evidence-inventory-labels-and-split-safe-benchmark-contract) |

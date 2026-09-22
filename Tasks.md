@@ -13,12 +13,17 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**Architect acceptance (2026-09-22):** PER-01 supplied-evidence inventory/software and
+PER-02/04/05/06 offline scopes accepted after integrated review and corrections.
+[Acceptance and remaining capture gaps](reports/work/PERCEPTION-ACCEPTANCE/handoff.md).
+Zero real benchmark cases or training pairs are newly qualified. Preserve P0-C ownership.
+
 **Top dispatch priority (2026-09-21): failure-driven usable perception for TTR.**
 Offline FocusRing launch preparation and evidence-audit corrections are accepted for
-their original offline scopes. **PER-02/PER-04 integrated completion is ready for review**;
-PER-01 real label/coverage review remains open. PER-05 sequence readiness and PER-06
-identity benchmarking are also delivered for review. Next: accept/revise the delivered
-tranches, not redispatch helpers; prioritize smoke/intake once the capture fix is ready.
+their original offline scopes. **PER-01/02/04/05/06 offline scopes are accepted**;
+the supplied real-image inventory is reviewed, but gold labels and independent real
+benchmark membership remain absent. Next: qualified data, not duplicate helpers;
+prioritize smoke/intake once the capture fix is ready and execution is authorized.
 [Completion and review](reports/work/PERCEPTION-INTAKE/handoff.md). This preserves the usable
 FocusRing goal. Preserve active workers; no capture/training or peer request is
 authorized by this planning update. [Detailed contracts](Research/Plans/TTRPerception.md).
@@ -38,15 +43,15 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
-| F1 | EVIDENCE-AUDIT | PER-01 / PER-02 / PER-04 | accepted (original offline scope) | Audit/gate corrections reviewed and 14 tests rerun; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). Legacy cross-split data remains unqualified; broader PER-01 review stays open. |
+| F1 | EVIDENCE-AUDIT | PER-01 / PER-02 / PER-04 | accepted (original offline scope) | Audit/gate corrections reviewed and 14 tests rerun; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). Legacy cross-split data remains unqualified; broader supplied-evidence review is now recorded under PER-01. |
 | F1 | FOCUS-LAUNCH | FOCUS-DET-05 | accepted (original offline scope) | Runtime crop, CoreML adapter and capture-plan compiler reviewed/tested; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). No capture/training or model-quality pass. |
 | F1 | FOCUS-CONSUMER | SIM-DATA-02 / FOCUS-DET-05 | accepted (offline scope) | Validator/extraction/preflight foundations accepted; v1.2 remains inspectable only, new runtime-crop parity delivered in FOCUS-LAUNCH. [Review](reports/work/FOCUS-LAUNCH/review.md). No genuine data qualification. |
-| P0 | PER-01 | TTR-PERCEPTION | review (targeted corrections delivered) | Mandatory real-image hash/decode/dimension checks and reproducible supplied-data audit delivered in EVIDENCE-AUDIT; full packet coverage/label review remains. No existing corpus requalified. |
-| P0 | PER-02 | TTR-PERCEPTION | review (architect implementation) | Observation baseline, oracle isolation, slices, provenance, latency and failure accounting integrated/tested. [Handoff](reports/work/PERCEPTION-INTAKE/handoff.md). Real evidence/model gates remain open. |
+| P0 | PER-01 | TTR-PERCEPTION | accepted (inventory/software only) | 44 images visually triaged; 3,000 crops re-audited; explicit quarantine and coverage gaps. No gold labels or real corpus requalification. [Acceptance](reports/work/PERCEPTION-ACCEPTANCE/handoff.md). |
+| P0 | PER-02 | TTR-PERCEPTION | accepted (offline scope) | Integrated baseline/scorer reviewed; missing-payload, association-abstention and dimension validation corrected; 19 tests pass. Real evidence/model gates remain open. [Acceptance](reports/work/PERCEPTION-ACCEPTANCE/handoff.md). |
 | P0 | PER-03 | TTR-PERCEPTION | blocked (unassigned) | Accepted benchmark/gap decision, numeric gates, eligible data and separate capture/training authority; reuse FR-B/FR-C for any FocusRing candidate |
-| P1 | PER-04 | FOCUS-DET-05 | review (architect implementation) | Physical byte/frame-specific intake → runtime crops → baseline/proposal CLI integration verified. [Handoff](reports/work/PERCEPTION-INTAKE/handoff.md). Genuine intake and legacy corpus remain unqualified. |
-| P1 | PER-05 | TTR-PERCEPTION | review (architect implementation) | Complete offline sequence/observation contract, production Swift-primitives evaluator, bounded causal policy and 15 tests; nine generated sequences replayed. [Handoff](reports/work/PER-05/handoff.md). No live integration or training qualification. |
-| P2 | PER-06 | TTR-PERCEPTION | review (architect implementation) | Journey-scoped contract, actual production anchor adapter, conservative row/geometry matcher and 17 tests delivered; 15 synthetic cases replayed. [Handoff](reports/work/PER-06/handoff.md). Real held-out support and TTR integration remain unqualified. |
+| P1 | PER-04 | FOCUS-DET-05 | accepted (offline scope) | Physical byte/frame-specific intake → runtime crops → baseline/proposal CLI verified; 56 focus tests pass. Genuine intake and legacy corpus remain unqualified. [Acceptance](reports/work/PERCEPTION-ACCEPTANCE/handoff.md). |
+| P1 | PER-05 | TTR-PERCEPTION | accepted (offline scope) | Production primitive boundary, causal policy and 16 tests verified; out-of-frame helper replies rejected; nine synthetic sequences replayed. No live qualification. [Acceptance](reports/work/PERCEPTION-ACCEPTANCE/handoff.md). |
+| P2 | PER-06 | TTR-PERCEPTION | accepted (offline scope) | Production anchor adapter, identity abstention/invalidation and 17 tests verified; 15 synthetic cases replayed. Real held-out support/TTR integration unqualified. [Acceptance](reports/work/PERCEPTION-ACCEPTANCE/handoff.md). |
 | — | TTR-PER | TTR-PERCEPTION | external proposal (unpublished) | Producer evidence and isolated comparison contract; requires separate publication and assignment in TVTestRig |
 | 1 | H1 | INTEGRATION-01 | accepted | NUIAK source-pinned offline contract accepted; bilateral producer acceptance and genuine-bundle qualification remain open |
 | 2 | P1-A | 6a-11 | accepted | Offline export software/schema accepted; P1-B still requires eligible pixels and assigned inference |
@@ -230,10 +235,10 @@ then sequence readiness and screen/row identity. Known traversal failures guide
 development; independent journeys remain held out. TTR owns action authorization,
 resume logic and teardown health. No model result grants Select permission.
 
-Review the delivered PER-02/PER-04 integrated tranche before acceptance; PER-01's
-real label/coverage review remains open. PER-05 sequence-contract and offline
-transition benchmarking and PER-06 identity evaluation are delivered for review.
-Review those contracts/evidence while the TTR screenshot repair is addressed.
+PER-01 supplied-evidence review and PER-02/04/05/06 offline scopes are accepted.
+The [coverage matrix](reports/work/PERCEPTION-ACCEPTANCE/evidence-and-gaps.md) records
+remaining gold-label, genuine-bundle and independent-journey gaps; no existing corpus
+was promoted. Do not redispatch these software foundations while TTR is repaired.
 Real inference/data/model qualification remain separately gated; the broader
 TTR-PER proposal is distinct from already published runtime-blocker requests.
 

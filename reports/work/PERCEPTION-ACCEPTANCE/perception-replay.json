@@ -1,0 +1,972 @@
+{
+  "formatVersion": "perception-benchmark-report-v1.1",
+  "bindings": {
+    "manifestSHA256": "8c9b574631e65f66f1fd550a73be7ae8144a68b817e44b6b63437f44f30003b2",
+    "predictionsSHA256": "157ff9dc054e281112461fe9549dc519897254d10ffd1240c8e919835ff812fa",
+    "observationsSHA256": "b445bf43056c8c8c899726a8bcb5fbc7af3da1509c29d33065a2d72cd596b929",
+    "settingsSHA256": "f96d8332978f62507af16ea2513532c14bc95141be78327f516c2b6bcabe330f",
+    "evaluatorSHA256": "410fcb2392321efe9350a6340d07210519141eaf4e61c143dbeb7e44ed7d4ed6"
+  },
+  "settings": {
+    "version": "geometry-ocr-v1",
+    "confidence": 0.75,
+    "focusThreshold": 0.85,
+    "iou": 0.5,
+    "rowVerticalOverlap": 0.5,
+    "semanticLocale": "en",
+    "destructivePhrases": [
+      "delete",
+      "erase",
+      "factory reset"
+    ],
+    "informationalPhrases": [
+      "information",
+      "about this",
+      "version"
+    ],
+    "bootstrapSeed": 41,
+    "bootstrapReplicates": 200
+  },
+  "prediction": {
+    "status": "available",
+    "attemptedCases": 1,
+    "scoredCases": 1,
+    "failures": [],
+    "actualProposals": {
+      "counts": {
+        "localizedTP": 1,
+        "associatedTP": 1,
+        "truthChevron": 1,
+        "abstentions": 0,
+        "truthDialogs": 1,
+        "truthDestructive": 1,
+        "dialogLocalizedTP": 1,
+        "buttonMembershipTP": 1,
+        "dialogFocusTP": 1
+      },
+      "endToEndDisclosureRecall": 1.0
+    },
+    "oracleBoxes": {
+      "counts": {
+        "localizedTP": 1,
+        "associatedTP": 1,
+        "truthChevron": 1,
+        "abstentions": 0,
+        "truthDialogs": 1,
+        "truthDestructive": 1,
+        "dialogLocalizedTP": 1,
+        "buttonMembershipTP": 1,
+        "dialogFocusTP": 1
+      },
+      "endToEndDisclosureRecall": 1.0
+    },
+    "slices": {
+      "sourceKind:testOnly": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      },
+      "partition:development": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      },
+      "theme:unknown": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      },
+      "control:unknown": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      },
+      "locale:unknown": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      },
+      "focusTreatment:unknown": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      },
+      "rowState:unknown": {
+        "n": 1,
+        "journeys": 1,
+        "status": "available",
+        "attemptedCases": 1,
+        "scoredCases": 1,
+        "failures": [],
+        "actualProposals": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        },
+        "oracleBoxes": {
+          "counts": {
+            "localizedTP": 1,
+            "associatedTP": 1,
+            "truthChevron": 1,
+            "abstentions": 0,
+            "truthDialogs": 1,
+            "truthDestructive": 1,
+            "dialogLocalizedTP": 1,
+            "buttonMembershipTP": 1,
+            "dialogFocusTP": 1
+          },
+          "endToEndDisclosureRecall": 1.0
+        }
+      }
+    },
+    "uncertainty": {
+      "method": "split-group-bootstrap-percentile-95",
+      "groups": 1,
+      "disclosureRecallInterval": null,
+      "independentGeneralizationEstablished": false
+    }
+  },
+  "comparisons": {
+    "suppliedPredictions": {
+      "execution": "external-assertion-not-executed-here",
+      "status": "available",
+      "attemptedCases": 1,
+      "scoredCases": 1,
+      "failures": [],
+      "actualProposals": {
+        "counts": {
+          "localizedTP": 1,
+          "associatedTP": 1,
+          "truthChevron": 1,
+          "abstentions": 0,
+          "truthDialogs": 1,
+          "truthDestructive": 1,
+          "dialogLocalizedTP": 1,
+          "buttonMembershipTP": 1,
+          "dialogFocusTP": 1
+        },
+        "endToEndDisclosureRecall": 1.0
+      },
+      "oracleBoxes": {
+        "counts": {
+          "localizedTP": 1,
+          "associatedTP": 1,
+          "truthChevron": 1,
+          "abstentions": 0,
+          "truthDialogs": 1,
+          "truthDestructive": 1,
+          "dialogLocalizedTP": 1,
+          "buttonMembershipTP": 1,
+          "dialogFocusTP": 1
+        },
+        "endToEndDisclosureRecall": 1.0
+      },
+      "slices": {
+        "sourceKind:testOnly": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "partition:development": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "theme:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "control:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "locale:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "focusTreatment:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "rowState:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        }
+      },
+      "uncertainty": {
+        "method": "split-group-bootstrap-percentile-95",
+        "groups": 1,
+        "disclosureRecallInterval": null,
+        "independentGeneralizationEstablished": false
+      }
+    },
+    "ttrRaster": {
+      "status": "unavailable",
+      "reason": "no_independent_ttr_raster_artifact_supplied"
+    },
+    "geometryOCR": {
+      "inputAdapter": {
+        "artifactSHA256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "id": "unit-test",
+        "kind": "test-only",
+        "preprocessingSHA256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "status": "available",
+      "attemptedCases": 1,
+      "scoredCases": 1,
+      "failures": [],
+      "actualProposals": {
+        "counts": {
+          "localizedTP": 1,
+          "associatedTP": 1,
+          "truthChevron": 1,
+          "abstentions": 0,
+          "truthDialogs": 1,
+          "truthDestructive": 1,
+          "dialogLocalizedTP": 1,
+          "buttonMembershipTP": 1,
+          "dialogFocusTP": 1
+        },
+        "endToEndDisclosureRecall": 1.0
+      },
+      "oracleBoxes": {
+        "counts": {
+          "localizedTP": 1,
+          "associatedTP": 1,
+          "truthChevron": 1,
+          "abstentions": 0,
+          "truthDialogs": 1,
+          "truthDestructive": 1,
+          "dialogLocalizedTP": 1,
+          "buttonMembershipTP": 1,
+          "dialogFocusTP": 1
+        },
+        "endToEndDisclosureRecall": 1.0
+      },
+      "slices": {
+        "sourceKind:testOnly": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "partition:development": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "theme:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "control:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "locale:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "focusTreatment:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        },
+        "rowState:unknown": {
+          "n": 1,
+          "journeys": 1,
+          "status": "available",
+          "attemptedCases": 1,
+          "scoredCases": 1,
+          "failures": [],
+          "actualProposals": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          },
+          "oracleBoxes": {
+            "counts": {
+              "localizedTP": 1,
+              "associatedTP": 1,
+              "truthChevron": 1,
+              "abstentions": 0,
+              "truthDialogs": 1,
+              "truthDestructive": 1,
+              "dialogLocalizedTP": 1,
+              "buttonMembershipTP": 1,
+              "dialogFocusTP": 1
+            },
+            "endToEndDisclosureRecall": 1.0
+          }
+        }
+      },
+      "uncertainty": {
+        "method": "split-group-bootstrap-percentile-95",
+        "groups": 1,
+        "disclosureRecallInterval": null,
+        "independentGeneralizationEstablished": false
+      }
+    }
+  },
+  "latency": {
+    "status": "unavailable",
+    "reason": "no_measured_timing"
+  },
+  "byteVerification": {
+    "status": "test_only_not_requested"
+  },
+  "trainingEligible": false,
+  "modelGatePassed": "not_assessed",
+  "developmentErrorAnalysis": [
+    {
+      "caseID": "c1",
+      "category": "no_measured_gap",
+      "diagnosis": "rule-based triage; requires reviewed evidence"
+    }
+  ],
+  "suppliedAdapter": {
+    "status": "unavailable",
+    "reason": "no_model_or_preprocessing_identity_declared"
+  },
+  "recommendation": {
+    "action": "no_training",
+    "reason": "offline_or_imported_evidence_requires_review_and_assigned_real_baseline",
+    "requiredBeforeTraining": [
+      "eligible_held_out_support",
+      "measured_gap",
+      "reviewed_numeric_gates",
+      "latency_budget",
+      "explicit_authorization"
+    ]
+  },
+  "next": "Review development errors by slice; prefer a geometry/OCR correction when oracle components succeed. Missing input/labels and producer runtime failures are not model failures.",
+  "inventory": {
+    "caseCount": 1,
+    "sourceKinds": {
+      "testOnly": 1
+    },
+    "partitions": {
+      "development": 1
+    },
+    "coverage": {
+      "chevron:visible": 1,
+      "dialog:destructive": 1,
+      "dialog:withFocus": 1,
+      "focus:observed": 1
+    }
+  }
+}

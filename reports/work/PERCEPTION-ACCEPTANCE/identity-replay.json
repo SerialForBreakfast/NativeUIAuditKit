@@ -1,0 +1,2076 @@
+{
+  "accounting": {
+    "evaluatedCases": 15,
+    "expectedCases": 15,
+    "failedCases": 0
+  },
+  "corpusSHA256": "d0ea1f165a1ea98c62d2d1d40098b4830d36ed0ad180086b94d72f867d744a46",
+  "failures": [],
+  "helperSHA256": "01ed9d8d6f8854ab20da9083bb33f8378151ad771496426ff3da426439515c91",
+  "latency": {
+    "anchorEvaluationMs": {
+      "n": 16,
+      "p50": 1.6102083318401128,
+      "p95": 2.2003333288012072
+    },
+    "coldProcessMs": {
+      "n": 15,
+      "p50": 6.219417002284899,
+      "p95": 8.786874997895211
+    },
+    "helperHosts": [
+      "Version 26.4.1 (Build 25E253)"
+    ],
+    "host": "Darwin 25.4.0 arm64",
+    "matchingAndAdapterMs": {
+      "n": 15,
+      "p50": 6.29599999228958,
+      "p95": 8.88337500509806
+    },
+    "scope": "offline supplied-observation matching, excludes OCR/capture/navigation"
+  },
+  "outcomes": {
+    "dataEligible": false,
+    "liveIntegrationQualified": false,
+    "modelGatePassed": null
+  },
+  "policy": {
+    "confidenceThreshold": 0.75,
+    "frozenOn": "test-only",
+    "labelFraction": 0.6,
+    "maxAgeMs": 250,
+    "maxWidthRatio": 1.5,
+    "minHorizontalOverlap": 0.6,
+    "minimumMargin": 0.2,
+    "minimumRowMatches": 1,
+    "minimumScreenScore": 0.5,
+    "reference": "synthetic-policy-not-calibrated",
+    "supportedLocales": [
+      "en",
+      "es"
+    ],
+    "toolTimeoutSeconds": 10,
+    "version": "identity-policy-v1"
+  },
+  "policySHA256": "bb65f5f5249ea370765f21ca01129c4f2efdc9f934a0dfa59c532a460c73ee50",
+  "recommendation": "No model training or route execution: review identity/locale support and evaluate independent held-out recorded journeys; candidate scores are not probabilities.",
+  "results": [
+    {
+      "group": "synthetic-journey-v1",
+      "id": "ordinary",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "name",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [],
+        "rows": {
+          "q0": {
+            "candidate": "name",
+            "label": "name",
+            "reason": "unique_label_geometry"
+          },
+          "q1": {
+            "candidate": "version",
+            "label": "version",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "ordinary",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "changed-value",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "name",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [],
+        "rows": {
+          "q0": {
+            "candidate": "name",
+            "label": "name",
+            "reason": "unique_label_geometry"
+          },
+          "q1": {
+            "candidate": "version",
+            "label": "version",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "changed-value",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "scroll",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 1,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 1,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 1
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 1,
+            "rows": {
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [],
+        "rows": {
+          "q1": {
+            "candidate": "version",
+            "label": "version",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "scroll",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "repeated-label",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 0,
+            "rows": {
+              "q0": {
+                "candidate": null,
+                "label": "name",
+                "reason": "ambiguous_label"
+              },
+              "q1": {
+                "candidate": null,
+                "label": "name",
+                "reason": "ambiguous_label"
+              }
+            },
+            "score": 0.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "ambiguous_or_insufficient_rows",
+        "routeInvalidations": [
+          "ambiguous_or_insufficient_rows",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "ambiguous_or_insufficient_rows"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "ambiguous_or_insufficient_rows"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "repeated-label",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "spanish",
+      "locale": "es",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "91b03d237b3dddf1343e474e8f932c4277164c3d64fe9227825dc2c2ebc42bb8",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "nombre",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "versi\u00f3n",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [],
+        "rows": {
+          "q0": {
+            "candidate": "name",
+            "label": "nombre",
+            "reason": "unique_label_geometry"
+          },
+          "q1": {
+            "candidate": "version",
+            "label": "versi\u00f3n",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "localization",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "unsupported-french",
+      "locale": "fr",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {},
+        "anchorOnlyScreenID": null,
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [],
+        "reason": "unsupported_locale",
+        "routeInvalidations": [
+          "unsupported_locale",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "unsupported_locale"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "unsupported_locale"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "localization",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "hidden-row",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 1,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 1,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 1
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 1,
+            "rows": {
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [],
+        "rows": {
+          "q1": {
+            "candidate": "version",
+            "label": "version",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "hidden-row",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "overlay",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {},
+        "anchorOnlyScreenID": null,
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [],
+        "reason": "overlay",
+        "routeInvalidations": [
+          "overlay",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "overlay"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "overlay"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "overlay",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "stale",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {},
+        "anchorOnlyScreenID": null,
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 2000,
+        "rankedScreens": [],
+        "reason": "stale_or_future",
+        "routeInvalidations": [
+          "stale_or_future",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "stale_or_future"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "stale_or_future"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "stale",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "ambiguous-screen",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          },
+          "other-general": {
+            "id": "4b4cf1fe28b8c3d4b3c27d56efdb7af0eea5207087a7bcd9ac884e36ea4b9882",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": null,
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "name",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          },
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "name",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "other-general"
+          }
+        ],
+        "reason": "ambiguous_or_insufficient_rows",
+        "routeInvalidations": [
+          "ambiguous_or_insufficient_rows",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "ambiguous_or_insufficient_rows"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "ambiguous_or_insufficient_rows"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "ambiguous-screen",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "missing-anchor",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [],
+            "missingRequired": [
+              "General"
+            ],
+            "status": "unverified"
+          }
+        },
+        "anchorOnlyScreenID": null,
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [],
+        "reason": "missing_or_inexact_anchors",
+        "routeInvalidations": [
+          "missing_or_inexact_anchors",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "missing_or_inexact_anchors"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "missing_or_inexact_anchors"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "missing-anchor",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "substring-collision",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 1,
+          "matchable": 0,
+          "missedMatches": 0,
+          "openSet": 1
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 1,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 0,
+          "matchableRows": 0,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 1,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [],
+        "reason": "missing_or_inexact_anchors",
+        "routeInvalidations": [
+          "missing_or_inexact_anchors",
+          "unresolved_rows"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": null,
+            "label": "",
+            "reason": "missing_or_inexact_anchors"
+          },
+          "q1": {
+            "candidate": null,
+            "label": "",
+            "reason": "missing_or_inexact_anchors"
+          }
+        },
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "ambiguous-screen",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "failed-recognition",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {},
+        "anchorOnlyScreenID": null,
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [],
+        "reason": "recognition_failed",
+        "routeInvalidations": [
+          "recognition_failed"
+        ],
+        "rows": {},
+        "screenID": null,
+        "state": "unknown"
+      },
+      "scenario": "missing-anchor",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "changed-epoch",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "name",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [
+          "changed_epoch"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": "name",
+            "label": "name",
+            "reason": "unique_label_geometry"
+          },
+          "q1": {
+            "candidate": "version",
+            "label": "version",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "ordinary",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "synthetic-journey-v1",
+      "id": "changed-screen",
+      "locale": "en",
+      "metrics": {
+        "anchor-only": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "conservative": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        }
+      },
+      "partition": "development",
+      "prediction": {
+        "actionAuthorized": false,
+        "anchorEvidence": {
+          "general": {
+            "id": "05d91083161bdd66333fc582c072a999d4dc9ddb26eaa0fe89b918a8455524e1",
+            "matchedForbidden": [],
+            "matchedRequired": [
+              "General"
+            ],
+            "missingRequired": [],
+            "status": "verified"
+          }
+        },
+        "anchorOnlyScreenID": "general",
+        "capturedMs": 100,
+        "contextEpoch": "epoch1",
+        "observationID": "q-observation",
+        "observedMs": 110,
+        "rankedScreens": [
+          {
+            "matchedRows": 2,
+            "rows": {
+              "q0": {
+                "candidate": "name",
+                "label": "name",
+                "reason": "unique_label_geometry"
+              },
+              "q1": {
+                "candidate": "version",
+                "label": "version",
+                "reason": "unique_label_geometry"
+              }
+            },
+            "score": 1.0,
+            "screenID": "general"
+          }
+        ],
+        "reason": "unique_title_rows_geometry",
+        "routeInvalidations": [
+          "changed_screen"
+        ],
+        "rows": {
+          "q0": {
+            "candidate": "name",
+            "label": "name",
+            "reason": "unique_label_geometry"
+          },
+          "q1": {
+            "candidate": "version",
+            "label": "version",
+            "reason": "unique_label_geometry"
+          }
+        },
+        "screenID": "general",
+        "state": "candidate"
+      },
+      "scenario": "ordinary",
+      "sourceKind": "test-only"
+    }
+  ],
+  "sourceHashes": {
+    "Sources/NativeUIAuditKit/Perception/TextAnchorVerifier.swift": "fe4721b28122262818e95fd9b733ba492322e85e4541ea625c0f943a9bbe6493",
+    "Tools/AnchorTool/main.swift": "a8dccc2b7182688711c60c4fd1ad76d19b97b99919507d13b4d4c8b5bdc7e2c4",
+    "scripts/generate_identity_fixture.py": "dbea68b71a643db4ff6911aadd538d1487f166da9dd9d92ce69e382e32ecf0e8",
+    "scripts/identity_benchmark.py": "9b78a72eccbf6d916be6d5686ed1086b3597ee17f409028096b67695776b0c4a",
+    "scripts/transition_benchmark.py": "189a6b2d5832c26181c8227b8cd8b03469e8185f8f020c2ec7f13abe497153fa"
+  },
+  "status": "complete",
+  "summary": {
+    "anchor-only": {
+      "locale:en": {
+        "abstentionRate": 0.38461538461538464,
+        "counts": {
+          "abstentions": 5,
+          "cases": 13,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 7,
+          "falseMatches": 1,
+          "matchable": 12,
+          "missedMatches": 5,
+          "openSet": 1
+        },
+        "falseMatchRate": 0.07692307692307693,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.4166666666666667,
+        "retrievalAccuracy": 0.5833333333333334,
+        "rowRetrievalAccuracy": null
+      },
+      "locale:es": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": null
+      },
+      "locale:fr": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": null
+      },
+      "overall": {
+        "abstentionRate": 0.4,
+        "counts": {
+          "abstentions": 6,
+          "cases": 15,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 8,
+          "falseMatches": 1,
+          "matchable": 14,
+          "missedMatches": 6,
+          "openSet": 1
+        },
+        "falseMatchRate": 0.06666666666666667,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.42857142857142855,
+        "retrievalAccuracy": 0.5714285714285714,
+        "rowRetrievalAccuracy": null
+      },
+      "partition:development": {
+        "abstentionRate": 0.4,
+        "counts": {
+          "abstentions": 6,
+          "cases": 15,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 8,
+          "falseMatches": 1,
+          "matchable": 14,
+          "missedMatches": 6,
+          "openSet": 1
+        },
+        "falseMatchRate": 0.06666666666666667,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.42857142857142855,
+        "retrievalAccuracy": 0.5714285714285714,
+        "rowRetrievalAccuracy": null
+      },
+      "partition:test": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "partition:validation": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:ambiguous-screen": {
+        "abstentionRate": 0.5,
+        "counts": {
+          "abstentions": 1,
+          "cases": 2,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 1,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 1
+        },
+        "falseMatchRate": 0.5,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:changed-value": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:hidden-row": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:localization": {
+        "abstentionRate": 0.5,
+        "counts": {
+          "abstentions": 1,
+          "cases": 2,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 2,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.5,
+        "retrievalAccuracy": 0.5,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:missing-anchor": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 2,
+          "cases": 2,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 2,
+          "missedMatches": 2,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:ordinary": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 3,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 3,
+          "falseMatches": 0,
+          "matchable": 3,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:overlay": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:repeated-label": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:scroll": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 0,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:stale": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "falseMatches": 0,
+          "matchable": 1,
+          "missedMatches": 1,
+          "openSet": 0
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": null
+      },
+      "sourceKind:physical": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "sourceKind:simulator": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "sourceKind:test-only": {
+        "abstentionRate": 0.4,
+        "counts": {
+          "abstentions": 6,
+          "cases": 15,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 8,
+          "falseMatches": 1,
+          "matchable": 14,
+          "missedMatches": 6,
+          "openSet": 1
+        },
+        "falseMatchRate": 0.06666666666666667,
+        "falseRowMatchRate": null,
+        "journeys": 1,
+        "missRate": 0.42857142857142855,
+        "retrievalAccuracy": 0.5714285714285714,
+        "rowRetrievalAccuracy": null
+      }
+    },
+    "conservative": {
+      "locale:en": {
+        "abstentionRate": 0.5384615384615384,
+        "counts": {
+          "abstentions": 7,
+          "cases": 13,
+          "correctOpenSetRejections": 1,
+          "correctRetrievals": 6,
+          "correctRows": 10,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 12,
+          "matchableRows": 20,
+          "missedMatches": 6,
+          "missedRows": 10,
+          "openSet": 1,
+          "rowAbstentions": 12,
+          "rowSupport": 22
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.5,
+        "retrievalAccuracy": 0.5,
+        "rowRetrievalAccuracy": 0.5
+      },
+      "locale:es": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": 1.0
+      },
+      "locale:fr": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": 0.0
+      },
+      "overall": {
+        "abstentionRate": 0.5333333333333333,
+        "counts": {
+          "abstentions": 8,
+          "cases": 15,
+          "correctOpenSetRejections": 1,
+          "correctRetrievals": 7,
+          "correctRows": 12,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 14,
+          "matchableRows": 24,
+          "missedMatches": 7,
+          "missedRows": 12,
+          "openSet": 1,
+          "rowAbstentions": 14,
+          "rowSupport": 26
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.5,
+        "retrievalAccuracy": 0.5,
+        "rowRetrievalAccuracy": 0.5
+      },
+      "partition:development": {
+        "abstentionRate": 0.5333333333333333,
+        "counts": {
+          "abstentions": 8,
+          "cases": 15,
+          "correctOpenSetRejections": 1,
+          "correctRetrievals": 7,
+          "correctRows": 12,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 14,
+          "matchableRows": 24,
+          "missedMatches": 7,
+          "missedRows": 12,
+          "openSet": 1,
+          "rowAbstentions": 14,
+          "rowSupport": 26
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.5,
+        "retrievalAccuracy": 0.5,
+        "rowRetrievalAccuracy": 0.5
+      },
+      "partition:test": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "partition:validation": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "scenario:ambiguous-screen": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 2,
+          "cases": 2,
+          "correctOpenSetRejections": 1,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 1,
+          "rowAbstentions": 4,
+          "rowSupport": 4
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": 0.0
+      },
+      "scenario:changed-value": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": 1.0
+      },
+      "scenario:hidden-row": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 1,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 1,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 1
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": 1.0
+      },
+      "scenario:localization": {
+        "abstentionRate": 0.5,
+        "counts": {
+          "abstentions": 1,
+          "cases": 2,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 2,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 2,
+          "matchableRows": 4,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 4
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.5,
+        "retrievalAccuracy": 0.5,
+        "rowRetrievalAccuracy": 0.5
+      },
+      "scenario:missing-anchor": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 2,
+          "cases": 2,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 2,
+          "matchableRows": 2,
+          "missedMatches": 2,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": 0.0
+      },
+      "scenario:ordinary": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 3,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 3,
+          "correctRows": 6,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 3,
+          "matchableRows": 6,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 6
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": 1.0
+      },
+      "scenario:overlay": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": 0.0
+      },
+      "scenario:repeated-label": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": 0.0
+      },
+      "scenario:scroll": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "abstentions": 0,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 1,
+          "correctRows": 1,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 1,
+          "missedMatches": 0,
+          "missedRows": 0,
+          "openSet": 0,
+          "rowAbstentions": 0,
+          "rowSupport": 1
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.0,
+        "retrievalAccuracy": 1.0,
+        "rowRetrievalAccuracy": 1.0
+      },
+      "scenario:stale": {
+        "abstentionRate": 1.0,
+        "counts": {
+          "abstentions": 1,
+          "cases": 1,
+          "correctOpenSetRejections": 0,
+          "correctRetrievals": 0,
+          "correctRows": 0,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 1,
+          "matchableRows": 2,
+          "missedMatches": 1,
+          "missedRows": 2,
+          "openSet": 0,
+          "rowAbstentions": 2,
+          "rowSupport": 2
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 1.0,
+        "retrievalAccuracy": 0.0,
+        "rowRetrievalAccuracy": 0.0
+      },
+      "sourceKind:physical": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "sourceKind:simulator": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseMatchRate": null,
+        "falseRowMatchRate": null,
+        "journeys": 0,
+        "missRate": null,
+        "retrievalAccuracy": null,
+        "rowRetrievalAccuracy": null
+      },
+      "sourceKind:test-only": {
+        "abstentionRate": 0.5333333333333333,
+        "counts": {
+          "abstentions": 8,
+          "cases": 15,
+          "correctOpenSetRejections": 1,
+          "correctRetrievals": 7,
+          "correctRows": 12,
+          "falseMatches": 0,
+          "falseRowMatches": 0,
+          "matchable": 14,
+          "matchableRows": 24,
+          "missedMatches": 7,
+          "missedRows": 12,
+          "openSet": 1,
+          "rowAbstentions": 14,
+          "rowSupport": 26
+        },
+        "falseMatchRate": 0.0,
+        "falseRowMatchRate": 0.0,
+        "journeys": 1,
+        "missRate": 0.5,
+        "retrievalAccuracy": 0.5,
+        "rowRetrievalAccuracy": 0.5
+      }
+    }
+  },
+  "version": "identity-report-v1"
+}

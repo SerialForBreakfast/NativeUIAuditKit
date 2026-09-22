@@ -39,6 +39,34 @@ class CompletionTests(unittest.TestCase):
         self.assertEqual(changed["cases"][0]["proposals"], original)
         self.assertEqual(changed["cases"][0]["oracle"]["dialog"]["semantic"], "destructive")
 
+    def test_missing_payload_is_not_empty_success(self):
+        for mode in ("proposals", "oracle"):
+            for missing in ("chevrons", "dialog"):
+                pred = predictions(); del pred["cases"][0][mode][missing]
+                with self.assertRaisesRegex(BenchmarkError, "missing_prediction_modality"):
+                    score(pred, self.cases)
+        pred = predictions()
+        for mode in ("proposals", "oracle"):
+            pred["cases"][0][mode] = {"chevrons": [], "dialog": None}
+        self.assertEqual(score(pred, self.cases)["scoredCases"], 1)
+
+    def test_unknown_row_is_not_a_claimed_wrong_row(self):
+        pred = predictions(); proposal = pred["cases"][0]["proposals"]["chevrons"][0]
+        proposal["rowID"] = None
+        counts = score(pred, self.cases)["actualProposals"]["counts"]
+        self.assertEqual(counts["localizedTP"], 1)
+        self.assertEqual(counts["associationAbstentions"], 1)
+        self.assertEqual(counts.get("wrongRowLink", 0), 0)
+        self.assertEqual(report(self.manifest, pred, None, self.cases, {})["developmentErrorAnalysis"][0]["category"], "association_geometry")
+        proposal["rowID"] = "wrong"
+        self.assertEqual(score(pred, self.cases)["actualProposals"]["counts"]["wrongRowLink"], 1)
+
+    def test_boolean_dimensions_rejected(self):
+        for key in ("width", "height"):
+            manifest = copy.deepcopy(self.manifest); manifest["cases"][0][key] = True
+            with self.assertRaisesRegex(BenchmarkError, "invalid_dimensions"):
+                validate_manifest(manifest)
+
     def test_unknown_language_abstains_and_multiple_focus_does_not_guess(self):
         obs = observations(); row = obs["cases"][0]; row["locale"] = "fr"
         row["rows"][2]["focusScore"] = .95

@@ -10,13 +10,12 @@ planning without waiting for TTR. Its coordinate correction requires re-baselini
 not immediate model promotion. [Review corrections](../reports/work/FOCUS-LAUNCH/review.md)
 for PER-02/04 have an [integrated offline completion](Plans/PerceptionIntakeCompletion.md)
 with evidence in [the handoff](../reports/work/PERCEPTION-INTAKE/handoff.md).
-Review that tranche rather than redispatching completed helpers. Next independent
-review item: PER-05's [bounded transition benchmark](../reports/work/PER-05/handoff.md)
-using existing primitives, with its versioned sequence/observation proposal.
-PER-06 [screen/row identity](../reports/work/PER-06/handoff.md) also has an offline
-implementation and candidate/invalidation contract for review. Next: review delivered
-PER-02/04/05/06 evidence rather than adding duplicate helpers; once capture is repaired,
-prioritize authorized smoke/intake and the FocusRing development baseline.
+The [integrated acceptance review](../reports/work/PERCEPTION-ACCEPTANCE/handoff.md)
+covers PER-01 inventory and PER-02/04/05/06 offline scopes. Do not redispatch completed
+helpers. Remaining [coverage gaps](../reports/work/PERCEPTION-ACCEPTANCE/evidence-and-gaps.md)
+require reviewed real evidence; once capture is repaired, prioritize authorized smoke/intake
+and the FocusRing development baseline. Existing P0-C reconstruction work is independent;
+preserve its owner. Producer adapter proposals remain separately assigned work.
 Do not confuse software verification
 with eligible training pixels; real baseline still waits for qualified capture.
 

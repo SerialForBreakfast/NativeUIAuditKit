@@ -70,7 +70,7 @@ def validate_manifest(document: dict[str, Any]) -> list[dict[str, Any]]:
         source = case.get("sourceKind")
         if source not in SOURCE_KINDS: raise BenchmarkError("unsupported_source_kind")
         width, height = case.get("width"), case.get("height")
-        if not isinstance(width, int) or not isinstance(height, int) or width <= 0 or height <= 0:
+        if type(width) is not int or type(height) is not int or width <= 0 or height <= 0:
             raise BenchmarkError("invalid_dimensions")
         digest = _sha256(case.get("imageSHA256"))
         journey = _string(case.get("journeyID"), "invalid_journey")
@@ -191,6 +191,8 @@ def _score_relation(cases: list[dict[str, Any]], entries: dict[str, dict[str, An
         if key not in entries[case["caseID"]]: raise BenchmarkError("missing_oracle_or_proposal_predictions")
         candidate = entries[case["caseID"]][key]
         if not isinstance(candidate, dict): raise BenchmarkError("invalid_prediction_payload")
+        if "chevrons" not in candidate or "dialog" not in candidate:
+            raise BenchmarkError("missing_prediction_modality")
         row_map = None
         if "rows" in candidate:
             if not isinstance(candidate["rows"], list): raise BenchmarkError("invalid_predicted_rows")
@@ -216,7 +218,8 @@ def _score_relation(cases: list[dict[str, Any]], entries: dict[str, dict[str, An
                 counts["decorativeArrowFP"] += 1; continue
             used.add(best); counts["localizedTP"] += 1
             if proposal.get("rowID") is not None and not isinstance(proposal["rowID"], str): raise BenchmarkError("invalid_predicted_row_id")
-            if resolve(proposal.get("rowID")) == truth[best]["rowID"]: counts["associatedTP"] += 1
+            if proposal.get("rowID") is None: counts["associationAbstentions"] += 1
+            elif resolve(proposal.get("rowID")) == truth[best]["rowID"]: counts["associatedTP"] += 1
             else: counts["wrongRowLink"] += 1
         counts["truthChevron"] += len(truth); counts["abstentions"] += max(0, len(truth) - len(used))
         dialog_truth = labels.get("dialog"); dialog = candidate.get("dialog")

@@ -37,12 +37,12 @@ Idle Fixture has no native sample yet. A new bounded smoke is ready to be author
 but capture/intake and training readiness are not established.
 [Evidence](../reports/work/SIM-DATA-01-02/readiness-20260922-0134/handoff.md).
 
-**Offline perception/intake completion:** PER-02 observation-backed benchmarks and
-PER-04 physical bundle → runtime crop → baseline/proposal integration are verified
-and ready for review. Prior FOCUS-LAUNCH/EVIDENCE-AUDIT offline scopes are accepted.
-[Evidence](../reports/work/PERCEPTION-INTAKE/handoff.md). This does not qualify
-genuine captures or legacy training data: unresolved native-focus evidence remains
-the producer-to-consumer blocker. No new training, weights or promotion occurred.
+**Offline perception acceptance (2026-09-22):** PER-01 evidence inventory and
+PER-02/04/05/06 offline scopes are accepted after integrated review/corrections.
+[Acceptance](../reports/work/PERCEPTION-ACCEPTANCE/handoff.md). All 44 supplied
+screenshots were visually triaged; no real gold-label benchmark or training corpus
+was qualified. Screenshot output access remains the last observed producer blocker,
+not the previously resolved native-reference focus failure. No new training or promotion.
 
 | Item | Why |
 |---|---|

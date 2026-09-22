@@ -1039,6 +1039,21 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-66: Filename intent and decodable pixels are not reviewed screen truth
+
+**Wrong:** Infer the visible app or target from a capture filename, or promote decoded
+images with empty sidecars into labeled evidence. During the 44-image review,
+`office_pluto_loaded.png` showed Photos and `office_settings_target.png` showed Home.
+
+**Correct:** Preserve byte hashes, visually review actual content, record uncertain
+source/journey/focus separately and quarantine unannotated inputs from qualification.
+Keep prediction JSONs out of truth; classify an explicit unknown relation as abstention,
+not a claimed wrong association, and reject absent prediction modalities.
+
+**Why:** Intent-derived labels can make benchmark results misleading before training
+begins. The [acceptance review](../reports/work/PERCEPTION-ACCEPTANCE/handoff.md) records
+all 44 dispositions and regression tests without overwriting original evidence.
+
 ### BP-65: Text-anchor verification is not navigation identity verification
 
 **Wrong:** Promote `TextAnchorVerifier`'s verified substring match directly into a

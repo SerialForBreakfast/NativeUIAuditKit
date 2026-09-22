@@ -32,6 +32,12 @@ must account for every benchmark case twice: `proposals` scores the actual propo
 `oracle` scores relation/semantic behavior with reviewed boxes supplied. An unavailable
 adapter reports a reason and produces no synthetic empty predictions.
 
+Acceptance clarification (2026-09-22): both prediction payloads require explicit
+`chevrons` and `dialog` fields; `[]` and `null` mean successful empty results, while
+missing fields are invalid. A localized chevron with `rowID: null` increments
+`associationAbstentions`, not `wrongRowLink`; a claimed incorrect/unmatched row still
+counts as a wrong link. Pixel dimensions must be integers, never booleans.
+
 ## Interpretation
 
 The report separately counts chevron localization, correct row association, wrong-row

@@ -128,6 +128,7 @@ def pair_id(a, b):
 
 def measure(sequence, root, policy, helper):
     pairs = []
+    sizes = {}
     frames = sequence["frames"]
     for i, current in enumerate(frames):
         if current.get("missing"):
@@ -138,6 +139,7 @@ def measure(sequence, root, policy, helper):
             pairs.append({"id": pair_id(previous, current), **{
                 k: {"path": str((root / f["path"]).absolute()), "sha256": f["sha256"]}
                 for k, f in (("previous", previous), ("current", current))}})
+            sizes[pair_id(previous, current)] = (current["width"], current["height"])
     if not pairs:
         return {}, {"host": host_description(), "processMilliseconds": None, "pairMilliseconds": []}
     start = time.perf_counter()
@@ -150,6 +152,8 @@ def measure(sequence, root, policy, helper):
     for r in rows:
         require(number(r.get("distance")) and r["distance"] >= 0 and number(r.get("milliseconds")) and r["milliseconds"] >= 0, "primitive_nonfinite")
         require(isinstance(r.get("regions"), list) and all(isinstance(b, list) and len(b)==4 and all(number(v) for v in b) and min(b[:2]) >= 0 and min(b[2:]) > 0 for b in r["regions"]), "primitive_regions")
+        width, height = sizes[r["id"]]
+        require(len(r["regions"]) <= 128 and all(b[0]+b[2] <= width and b[1]+b[3] <= height for b in r["regions"]), "primitive_regions_outside_or_unbounded")
     return {r["id"]: r for r in rows}, {"host": reply["host"], "processMilliseconds": (time.perf_counter()-start)*1000, "pairMilliseconds": [r["milliseconds"] for r in rows]}
 
 

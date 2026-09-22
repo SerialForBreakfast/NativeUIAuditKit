@@ -217,5 +217,18 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(r["accounting"]["evaluatedSequences"],9)
         self.assertEqual(r["summary"]["foreground-roi"]["overall"]["timedOutSequences"],1)
 
+    def test_corrupt_primitive_regions_cannot_become_foreground_ready(self):
+        rows = [{"id": t.pair_id(a,b), "distance": 0, "milliseconds": 1,
+                 "regions": [[200,200,10,10]]}
+                for i,b in enumerate(self.s["frames"]) for a in self.s["frames"][:i]]
+        for regions in ([[200,200,10,10]], [[127,127,2,2]], [[0,0,1,1]]*129):
+            for row in rows: row["regions"] = regions
+            reply = subprocess.CompletedProcess([], 0, json.dumps({"version":1,"host":"test","results":rows}), "")
+            with patch.object(t.subprocess, "run", return_value=reply):
+                result = t.evaluate(self.doc,self.root,policy(),self.helper)
+            self.assertEqual(result["status"], "partial")
+            self.assertEqual(result["accounting"]["failedSequences"], 1)
+            self.assertEqual(result["results"], [])
+
 
 if __name__=="__main__":unittest.main()
