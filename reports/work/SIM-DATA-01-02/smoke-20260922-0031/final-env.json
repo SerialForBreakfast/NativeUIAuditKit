@@ -1,0 +1,36 @@
+{
+  "command" : "fixture env",
+  "data" : {
+    "fixtureEnvironment" : {
+      "_0" : {
+        "collected_at" : 1790037289.280302,
+        "fixture_version" : "1.0",
+        "is_bold_text_enabled" : false,
+        "is_darker_system_colors_status" : false,
+        "is_reduce_motion_enabled" : false,
+        "is_switch_control_running" : false,
+        "is_voice_over_running" : false,
+        "screen_bounds" : [
+          0,
+          0,
+          1920,
+          1080
+        ],
+        "screen_scale" : 2,
+        "source_evidence" : {
+          "captureBinding" : "unverified",
+          "controlEpoch" : 0,
+          "endpointCorrelation" : "no_selected_device",
+          "fixtureBuild" : "1",
+          "fixtureInstanceID" : "B036AF7E-2183-456E-9C1F-8A7DAFFFAEF1",
+          "fixtureRead" : "reported_not_authenticated",
+          "fixtureRunID" : "99D1BE45-E633-44EE-B013-4398A343E827"
+        }
+      }
+    }
+  },
+  "durationMilliseconds" : 23,
+  "requestID" : "9E0B9873-8AB0-4556-AF1B-78A9B93AAD2A",
+  "schemaVersion" : 1,
+  "success" : true
+}

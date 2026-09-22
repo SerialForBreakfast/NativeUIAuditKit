@@ -1,0 +1,12 @@
+{
+  "command" : "fixture prepare",
+  "durationMilliseconds" : 0,
+  "error" : {
+    "code" : "serviceUnavailable",
+    "message" : "TVTestRig is unavailable. Open the TVTestRig app and keep it running, then retry.",
+    "retryable" : false
+  },
+  "requestID" : "DE3F99B7-1D5A-4D75-AD0B-AB5F53C4E07A",
+  "schemaVersion" : 1,
+  "success" : false
+}

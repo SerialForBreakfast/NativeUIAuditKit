@@ -53,14 +53,57 @@ def validate(document: dict[str, Any]) -> dict[str, Any]:
             "metadataValid": True, "integrityVerified": False,
             "pairCount": len(pairs), "coverage": dict(coverage)}
 
+
+def validate_dataset(document, dataset):
+    from focus_dataset_contract import validate_manifest, digest
+    if document.get("sourceKind") != "physicalFixture":
+        raise PhysicalReadinessError("false_or_missing_physical_source")
+    rows = validate_manifest(document, dataset)
+    coverage = Counter(f"{r['scene']}/{r['theme']}/{r['class']}" for r in rows)
+    negatives = Counter(f"{r['theme']}/{r['class']}" for r in rows
+                        if r["theme"] in {"light", "highContrast"} and r["class"] in {"imageView", "collectionItem"})
+    return {"formatVersion": "physical-focus-intake-report-v2", "integrityVerified": True,
+            "inspectionValid": True, "eligible": False, "trainingEligible": False,
+            "reason": "test_only" if document["evidenceKind"] == "test-only" else "requires_independent_corpus_and_operation_review",
+            "sourceKind": document["sourceKind"], "evidenceKind": document["evidenceKind"],
+            "sourceAssurance": "reported-source; not-attested", "sourceReview": document["sourceReview"],
+            "manifestSHA256": digest(document), "pairCount": len(rows), "coverage": dict(coverage),
+            "verifiedUnfocusedSupport": dict(negatives), "partitions": dict(Counter(r["split"] for r in rows)),
+            "cropParity": "production-runtime" if document["version"] == "1.3" else "legacy-pillow-not-runtime-qualified",
+            "executionAuthorized": False, "modelGatePassed": "not_assessed"}
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__); parser.add_argument("--manifest", type=Path, required=True); parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--model", type=Path, help="Prepare existing development baseline protocol; does not infer")
+    parser.add_argument("--protocol", type=Path, help="Existing protocol required with --scores")
+    parser.add_argument("--scores", type=Path, help="Explicit bound score envelope, not a model launch")
+    parser.add_argument("--proposals", type=Path, help="Independent pair-target box/score envelope; no inference")
     args = parser.parse_args(); output = args.output.resolve()
     try: output.relative_to(ROOT)
     except ValueError: print("ERROR: output must stay inside package", file=sys.stderr); return 2
     if output.exists(): print("ERROR: refusing output collision", file=sys.stderr); return 2
-    try: report = validate(json.loads(args.manifest.read_text()))
-    except (OSError, json.JSONDecodeError, PhysicalReadinessError) as error: print(f"ERROR: {error}", file=sys.stderr); return 2
+    try:
+        document = json.loads(args.manifest.read_text())
+        if document.get("version") in {"1.2", "1.3"}:
+            report = validate_dataset(document, args.manifest.parent)
+            if args.model:
+                from focus_ring_baseline import prepare_protocol, score_protocol
+                protocol = prepare_protocol(document, args.manifest.parent, args.model)
+                report["baselineProtocol"] = protocol
+                if args.scores:
+                    if not args.protocol or json.loads(args.protocol.read_text()) != protocol:
+                        raise PhysicalReadinessError("changed_or_missing_protocol")
+                    report["baseline"] = score_protocol(protocol, json.loads(args.scores.read_text()))
+                elif args.protocol: raise PhysicalReadinessError("scores_required_with_protocol")
+                if args.proposals:
+                    from focus_proposal_evaluation import evaluate_proposals
+                    report["proposedBoxEvaluation"] = evaluate_proposals(document, protocol, json.loads(args.proposals.read_text()))
+                else: report["proposedBoxEvaluation"] = {"status": "unavailable", "reason": "independent_proposals_not_supplied"}
+            elif args.protocol or args.scores or args.proposals: raise PhysicalReadinessError("model_required_for_baseline")
+        else:
+            if args.model or args.protocol or args.scores or args.proposals: raise PhysicalReadinessError("byte_backed_manifest_required")
+            report = validate(document)
+    except (OSError, ValueError) as error: print(f"ERROR: {error}", file=sys.stderr); return 2
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x") as stream: stream.write(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report)); return 0

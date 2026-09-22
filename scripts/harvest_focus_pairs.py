@@ -341,11 +341,17 @@ def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_
     if output.exists():
         raise SimulatorManifestError("output_collision")
     contract = validate_bundle(bundle)
-    manifest = build_simulator_manifest(contract, corpus_id, producer_reference, None)
     if not isinstance(pair_evidence, dict) or pair_evidence.get("version") != "focus-pair-evidence-v1":
         raise SimulatorManifestError("missing_observed_pair_evidence")
-    if pair_evidence.get("evidenceKind") not in {"test-only", "reviewed-fixture"} or pair_evidence.get("sourceKind") != "simulatorFixture" or pair_evidence.get("producerReference") != producer_reference:
+    source_kind = pair_evidence.get("sourceKind")
+    if pair_evidence.get("evidenceKind") not in {"test-only", "reviewed-fixture"} or source_kind not in {"simulatorFixture", "physicalFixture"} or pair_evidence.get("producerReference") != producer_reference:
         raise SimulatorManifestError("invalid_evidence_context")
+    source_review = None
+    if source_kind == "physicalFixture":
+        from focus_dataset_contract import validate_physical_review
+        source_review = pair_evidence.get("sourceReview")
+        validate_physical_review(source_review, bundle)
+    manifest = build_simulator_manifest(contract, corpus_id, producer_reference, None, source_kind)
     purpose = pair_evidence.get("purpose", "partition-preserving")
     if purpose not in {"partition-preserving", "development-pilot"}:
         raise SimulatorManifestError("unsupported_evidence_purpose")
@@ -369,7 +375,14 @@ def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_
         proof = evidence[row["pairID"]]
         if proof.get("elementID") != element["element_id"]:
             raise SimulatorManifestError("evidence_element_mismatch")
-        crop_boxes = validate_frames(proof, bundle)
+        crop_boxes = validate_frames(proof, bundle, require_native=source_kind == "physicalFixture")
+        if proof["frames"]["focused"]["bounds"] != element["pixel_bounds"]:
+            raise SimulatorManifestError("evidence_geometry_mismatch")
+        x, y, width, height = element["pixel_bounds"]
+        normalized = element["normalized_bounds"]
+        expected = [x/focused.width, y/focused.height, (x+width)/focused.width, (y+height)/focused.height]
+        if any(abs(a-b) > 1e-6 for a, b in zip(normalized, expected)):
+            raise SimulatorManifestError("coordinate_representation_mismatch")
         for role in ("focused", "unfocused"):
             if any(proof["frames"][role].get(k) != row[role][k] for k in ("path", "sha256")):
                 raise SimulatorManifestError("evidence_frame_mismatch")
@@ -382,7 +395,7 @@ def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_
             "fixture_scene": row["family"], "original_fixture_scene": row["originalFamily"],
             "theme": row["theme"], "original_theme": row["originalTheme"], "element_type": element["taxonomy_class"],
             "split": "development" if purpose == "development-pilot" else row["split"],
-            "original_split": row["split"], "labelSource": "fixtureGroundTruth", "sourceKind": "simulatorFixture",
+            "original_split": row["split"], "labelSource": "fixtureGroundTruth", "sourceKind": source_kind,
             "frames": proof["frames"], "elementID": proof["elementID"],
             "source": {"unfocused": row["unfocused"], "focused": row["focused"]},
             "validatedUnfocusedEvidence": proof["frames"]["unfocused"],
@@ -409,10 +422,12 @@ def extract_fixture_bundle(bundle: Path, output: Path, corpus_id: str, producer_
         entry["focused_crop_sha256"] = hashlib.sha256((crops / focused_name).read_bytes()).hexdigest()
         entry["unfocused_crop_sha256"] = hashlib.sha256((crops / unfocused_name).read_bytes()).hexdigest()
         output_pairs.append(entry)
-    result = {"version": "1.2", "sourceKind": "simulatorFixture", "corpusID": corpus_id, "pairs": output_pairs,
+    result = {"version": "1.2", "sourceKind": source_kind, "corpusID": corpus_id, "pairs": output_pairs,
               "eligibility": manifest["eligibility"], "sourceRoot": str(bundle.relative_to(PROJECT_ROOT)),
               "producerReference": producer_reference, "preprocessing": PREPROCESSING,
               "evidenceKind": pair_evidence["evidenceKind"], "evidenceSHA256": digest(pair_evidence)}
+    result["observedSource"] = contract.get("sourceDescription")
+    if source_review is not None: result["sourceReview"] = source_review
     from focus_dataset_contract import validate_manifest
     # Publish membership only after checking the actual derived bytes and isolation.
     # Failed output is retained for diagnosis, never advertised as a completed corpus.

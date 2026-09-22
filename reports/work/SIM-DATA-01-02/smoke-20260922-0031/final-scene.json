@@ -1,0 +1,102 @@
+{
+  "command" : "fixture scene",
+  "data" : {
+    "fixtureScene" : {
+      "_0" : {
+        "elementCount" : 3,
+        "isSettled" : false,
+        "origin" : "http://127.0.0.1:8080",
+        "payload" : {
+          "elements" : [
+            {
+              "element_id" : "dialog_container",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.2727272727272727,
+                0.33689627870150435,
+                0.7272727272727273,
+                0.8784639746634996
+              ],
+              "pixel_bounds" : [
+                480,
+                212.75,
+                800,
+                342
+              ],
+              "taxonomy_class" : "alert"
+            },
+            {
+              "element_id" : "dialog_btn_0",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.3693181818181818,
+                0.7011084718923198,
+                0.4943181818181818,
+                0.8151227236737926
+              ],
+              "pixel_bounds" : [
+                650,
+                442.75,
+                220,
+                72
+              ],
+              "taxonomy_class" : "primaryButton"
+            },
+            {
+              "element_id" : "dialog_btn_1",
+              "is_focused" : false,
+              "normalized_bounds" : [
+                0.5056818181818182,
+                0.7011084718923198,
+                0.6306818181818182,
+                0.8151227236737926
+              ],
+              "pixel_bounds" : [
+                890,
+                442.75,
+                220,
+                72
+              ],
+              "taxonomy_class" : "cancelAction"
+            }
+          ],
+          "harvest_challenge_active" : false,
+          "is_settled" : false,
+          "observation_diagnostics" : {
+            "generation" : 2,
+            "measuredIDs" : [
+              "dialog_btn_0",
+              "dialog_btn_1",
+              "dialog_container"
+            ],
+            "missingIDs" : [
+
+            ],
+            "nativeFocusResolved" : false,
+            "reason" : "unresolved_focus",
+            "requiredIDs" : [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requiredMilliseconds" : 150,
+            "sampleAgeMilliseconds" : 12.74379166716244,
+            "sampleCount" : 485,
+            "sampledGeneration" : 2,
+            "stableMilliseconds" : 0
+          },
+          "recipe" : {
+            "archetype" : "action_dialog",
+            "recipe_hash" : "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+            "seed" : 7,
+            "step_index" : 0
+          }
+        },
+        "rawJSON" : "{\"app_version\":\"1.0\",\"defects\":[],\"elements\":[{\"accessibility_traits\":[\"isModal\"],\"element_id\":\"dialog_container\",\"id\":\"dialog_container\",\"is_focused\":false,\"native_pixel_rect\":[480,212.75,800,342],\"normalized_bounds\":[0.27272727272727271,0.33689627870150435,0.72727272727272729,0.87846397466349957],\"normalized_rect\":[0.27272727272727271,0.33689627870150435,0.72727272727272729,0.87846397466349957],\"pixel_bounds\":[480,212.75,800,342],\"taxonomy_class\":\"alert\",\"taxonomy_role\":\"alert\",\"taxonomyRole\":\"alert\",\"text_content\":\"Action Confirmation\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"dialog_btn_0\",\"id\":\"dialog_btn_0\",\"is_focused\":false,\"native_pixel_rect\":[650,442.75,220,72],\"normalized_bounds\":[0.36931818181818182,0.70110847189231984,0.49431818181818182,0.81512272367379257],\"normalized_rect\":[0.36931818181818182,0.70110847189231984,0.49431818181818182,0.81512272367379257],\"pixel_bounds\":[650,442.75,220,72],\"taxonomy_class\":\"primaryButton\",\"taxonomy_role\":\"primaryButton\",\"taxonomyRole\":\"primaryButton\",\"text_content\":\"Authorize\"},{\"accessibility_traits\":[\"isButton\"],\"element_id\":\"dialog_btn_1\",\"id\":\"dialog_btn_1\",\"is_focused\":false,\"native_pixel_rect\":[890,442.75,220,72],\"normalized_bounds\":[0.50568181818181823,0.70110847189231984,0.63068181818181823,0.81512272367379257],\"normalized_rect\":[0.50568181818181823,0.70110847189231984,0.63068181818181823,0.81512272367379257],\"pixel_bounds\":[890,442.75,220,72],\"taxonomy_class\":\"cancelAction\",\"taxonomy_role\":\"cancelAction\",\"taxonomyRole\":\"cancelAction\",\"text_content\":\"Cancel\"}],\"focus_sweep_frame_count\":3,\"focus_sweep_index\":-1,\"harvest_challenge_active\":false,\"is_settled\":false,\"isSettled\":false,\"monotonic_nanoseconds\":114027427243875,\"observation_diagnostics\":{\"generation\":2,\"measuredIDs\":[\"dialog_btn_0\",\"dialog_btn_1\",\"dialog_container\"],\"missingIDs\":[],\"nativeFocusResolved\":false,\"reason\":\"unresolved_focus\",\"requiredIDs\":[\"dialog_btn_0\",\"dialog_btn_1\"],\"requiredMilliseconds\":150,\"sampleAgeMilliseconds\":12.743791667162441,\"sampleCount\":485,\"sampledGeneration\":2,\"stableMilliseconds\":0},\"recipe\":{\"archetype\":\"action_dialog\",\"density\":\"regular\",\"element_count\":2,\"recipe_hash\":\"f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216\",\"schema_version\":1,\"seed\":7,\"step_index\":0,\"theme\":\"high_contrast\"},\"scene_height\":1080,\"scene_width\":1920,\"schema_version\":1,\"settle_wait_ms\":150,\"timestamp\":1790037285.7393651}"
+      }
+    }
+  },
+  "durationMilliseconds" : 9,
+  "requestID" : "6BD21D1C-79DC-4631-BDD9-AB33B394956E",
+  "schemaVersion" : 1,
+  "success" : true
+}

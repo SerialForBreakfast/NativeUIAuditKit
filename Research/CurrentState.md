@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-19
+**As of:** 2026-09-21 (local; latest handoff 2026-09-22 UTC)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -24,6 +24,25 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 ---
 
 ## Not shipped
+
+**2026-09-22 01:39 UTC smoke:** native reference focus now resolves and settles,
+but screenshot output fails Cocoa513/EPERM writing frame.png in TTR's app-managed
+capture directory. Zero accepted rows; no export/intake or training. Postflight
+Fixture responsive and ownership clear. This supersedes readiness-only status below.
+[Failure and producer request](../reports/work/SIM-DATA-01-02/smoke-20260922-0140/handoff.md).
+
+**2026-09-22 01:34 UTC runtime check:** updated TTR/Fixture and repair checkout
+fd50a80 are present; all infrastructure readiness checks pass with ownership clear.
+Idle Fixture has no native sample yet. A new bounded smoke is ready to be authorized,
+but capture/intake and training readiness are not established.
+[Evidence](../reports/work/SIM-DATA-01-02/readiness-20260922-0134/handoff.md).
+
+**Offline perception/intake completion:** PER-02 observation-backed benchmarks and
+PER-04 physical bundle → runtime crop → baseline/proposal integration are verified
+and ready for review. Prior FOCUS-LAUNCH/EVIDENCE-AUDIT offline scopes are accepted.
+[Evidence](../reports/work/PERCEPTION-INTAKE/handoff.md). This does not qualify
+genuine captures or legacy training data: unresolved native-focus evidence remains
+the producer-to-consumer blocker. No new training, weights or promotion occurred.
 
 | Item | Why |
 |---|---|
@@ -49,6 +68,12 @@ qualification evidence. Preserve shipped weights; no automatic replacement follo
 but the clean two-element smoke failed `native_focus_or_geometry_unavailable:
 sceneNotSettled`; no eligible pilot exists. Broad simulator collection remains
 paused. [Smoke evidence](../reports/work/SIM-DATA-01-02/smoke-20260921/executed-smoke.md).
+**2026-09-22 00:35 UTC follow-up:** the newly authorized updated-build smoke also
+failed, now narrowed to `unresolved_focus`: both buttons measured, no missing IDs,
+36 native samples but no resolved focus. Inline recipe import succeeded after
+file import incorrectly surfaced `serviceUnavailable`. Postflight Fixture responds
+and ownership is clear; no completed bundle or training data. TTR diagnosis/fix
+requested; no automatic retry. [Latest evidence](../reports/work/SIM-DATA-01-02/smoke-20260922-0031/handoff.md).
 Offline [launch preparation](Plans/FocusRingLaunchPreparation.md) is delivered for
 review: runtime-exact crops, actual CoreML baseline adapter and frozen capture
 planning. A tested crop-origin correction changes inference preprocessing, not

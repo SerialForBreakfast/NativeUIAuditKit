@@ -1039,7 +1039,29 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-64: Preserve a bounded settling anchor across cadence changes
+
+**Wrong:** Require a fixed-size trailing frame window to span a settling duration,
+or compare only consecutive frames. At high cadence the window never spans the
+duration; gradual per-frame motion can also look stable while accumulating drift.
+
+**Correct:** Retain the stable-run anchor plus bounded recent history, compare
+current pixels against that anchor and recent frames, and reset on change, stale
+observations, missing focus or cadence gaps. Keep observation-time deadlines
+separate from host execution timeouts. Readiness remains a candidate, not action
+permission; an ROI can miss changes outside it.
+
+**Why:** PER-05 deterministic high-cadence and cumulative-drift tests reproduce
+both errors; the anchor-based policy passes them without unbounded frame storage.
+Evidence: `scripts/test_transition_benchmark.py`, PER-05 handoff. Synthetic tests
+do not calibrate real-world thresholds or establish live navigation reliability.
+
 ### BP-63: Seed separation is not pixel or journey independence
+
+**2026-09-22 integration:** enforce decoded-content isolation at both perception
+byte verification and shared FocusRing intake, not only a separate audit script.
+Regression tests re-encode identical pixels with different PNG metadata/hashes;
+cross-partition reuse still fails. See `reports/work/PERCEPTION-INTAKE/handoff.md`.
 
 **Wrong:** The legacy FocusRing audit reported zero shared seeds as clean partition
 leakage, and file existence as complete image verification. The old evaluator also
@@ -1089,6 +1111,15 @@ pass minimum-denominator checks while becoming less representative as it grows.
 Evidence: `reports/work/FOCUS-CONSUMER/handoff.md`, adversarial tests, 2026-09-21.
 
 ### BP-60: Shell cwd is not the signed helper's output authority
+
+**Observed extension (2026-09-22):** `fixture prepare --recipe FILE` returned
+`serviceUnavailable` even while readiness passed before and after. The documented
+`--recipe-json` import of the same recipe succeeded without permission changes.
+Inspect the failure stage before diagnosing a stopped app: this producer maps
+untyped local file-read exceptions to serviceUnavailable. Inline recipe bytes are
+a supported import route, not a reason to manually write the container or relax
+capture admission. Capture subsequently failed independently at native focus.
+Evidence: `reports/work/SIM-DATA-01-02/smoke-20260922-0031/handoff.md`.
 
 **Wrong:** Assume launching TVTestRig's signed CLI from NUIAK makes NUIAK its
 harvest workspace, or blame a missing parent directory for an earlier containment error.

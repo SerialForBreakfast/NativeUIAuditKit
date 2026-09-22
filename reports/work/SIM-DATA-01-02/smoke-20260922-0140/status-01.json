@@ -1,0 +1,26 @@
+{
+  "command" : "fixture job-status",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "failure" : "capture:unclassified; inspect retained evidence",
+        "files" : [
+
+        ],
+        "jobID" : "B699DFCC-2A91-4968-AE8B-387904BB9E4D",
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/b699dfcc-2a91-4968-ae8b-387904bb9e4d/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/b699dfcc-2a91-4968-ae8b-387904bb9e4d/recipes",
+        "schemaVersion" : 1,
+        "simulatorUDID" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "state" : "failed",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/b699dfcc-2a91-4968-ae8b-387904bb9e4d"
+      }
+    }
+  },
+  "durationMilliseconds" : 14,
+  "requestID" : "EEA6ACBE-522C-4DE9-9D9D-CE4800DC5C1B",
+  "schemaVersion" : 1,
+  "success" : true
+}

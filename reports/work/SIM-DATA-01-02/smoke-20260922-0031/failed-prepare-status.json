@@ -1,0 +1,12 @@
+{
+  "command" : "fixture job-status",
+  "durationMilliseconds" : 44,
+  "error" : {
+    "code" : "commandRejected",
+    "message" : "The operation failed with code commandRejected.",
+    "retryable" : false
+  },
+  "requestID" : "7AA337BE-080A-49C9-92B8-0BC5A36605AB",
+  "schemaVersion" : 1,
+  "success" : false
+}

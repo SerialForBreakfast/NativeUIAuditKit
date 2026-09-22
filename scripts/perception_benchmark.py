@@ -104,7 +104,7 @@ def validate_manifest(document: dict[str, Any]) -> list[dict[str, Any]]:
             chevron_ids.add(chevron_id)
             visibility = chevron.get("visibility")
             if visibility not in VISIBILITIES: raise BenchmarkError("invalid_chevron_visibility")
-            if visibility == "visible":
+            if visibility == "visible" or (visibility == "clipped" and chevron.get("box") is not None):
                 _box(chevron.get("box"), width, height)
                 if chevron.get("rowID") not in row_ids: raise BenchmarkError("ambiguous_chevron_relation")
             elif chevron.get("rowID") is not None or chevron.get("box") is not None:
@@ -144,6 +144,7 @@ def inventory(cases: list[dict[str, Any]]) -> dict[str, Any]:
 def verify_evidence(cases: list[dict[str, Any]]) -> dict[str, int]:
     """Verify explicitly listed local evidence bytes without scanning for replacements."""
     verified = 0
+    pixel_partitions = {}
     for case in cases:
         raw_path = _string(case.get("imagePath"), "missing_image_path")
         path = Path(raw_path).resolve()
@@ -152,9 +153,14 @@ def verify_evidence(cases: list[dict[str, Any]]) -> dict[str, int]:
         except ValueError as error:
             raise BenchmarkError("image_path_outside_package") from error
         if not path.is_file(): raise BenchmarkError("missing_image")
-        from focus_dataset_contract import image, FocusDataError
+        from focus_dataset_contract import image, pixel_digest, FocusDataError
         try:
-            image(ROOT, {"path": str(path.relative_to(ROOT)), "sha256":case["imageSHA256"]}, (case["width"],case["height"]))
+            record = {"path": str(path.relative_to(ROOT)), "sha256":case["imageSHA256"]}
+            image(ROOT, record, (case["width"],case["height"]))
+            pixels = pixel_digest(ROOT, record)
+            if pixels in pixel_partitions and pixel_partitions[pixels] != case["partition"]:
+                raise BenchmarkError("decoded_content_split_leakage")
+            pixel_partitions[pixels] = case["partition"]
         except FocusDataError as error:
             raise BenchmarkError("image_hash_mismatch" if str(error)=="changed_hash" else str(error)) from error
         verified += 1
@@ -185,9 +191,21 @@ def _score_relation(cases: list[dict[str, Any]], entries: dict[str, dict[str, An
         if key not in entries[case["caseID"]]: raise BenchmarkError("missing_oracle_or_proposal_predictions")
         candidate = entries[case["caseID"]][key]
         if not isinstance(candidate, dict): raise BenchmarkError("invalid_prediction_payload")
+        row_map = None
+        if "rows" in candidate:
+            if not isinstance(candidate["rows"], list): raise BenchmarkError("invalid_predicted_rows")
+            row_map = {}
+            for row in candidate["rows"]:
+                if not isinstance(row, dict): raise BenchmarkError("invalid_predicted_row")
+                rid = _string(row.get("id"), "invalid_predicted_row_id")
+                if rid in row_map: raise BenchmarkError("duplicate_predicted_row")
+                box = _box(row.get("box"), width, height)
+                matches = [r["id"] for r in labels.get("rows", []) if "box" in r and _iou(box, r["box"]) >= IOU]
+                row_map[rid] = matches[0] if len(matches) == 1 else None
+        resolve = lambda rid: row_map.get(rid) if row_map is not None else rid
         predicted = candidate.get("chevrons", [])
         if not isinstance(predicted, list): raise BenchmarkError("invalid_predicted_chevrons")
-        truth = [item for item in labels.get("chevrons", []) if item["visibility"] == "visible"]
+        truth = [item for item in labels.get("chevrons", []) if item["visibility"] in {"visible", "clipped"} and "box" in item]
         used: set[int] = set()
         for proposal in predicted:
             if not isinstance(proposal, dict): raise BenchmarkError("invalid_predicted_chevron")
@@ -197,25 +215,38 @@ def _score_relation(cases: list[dict[str, Any]], entries: dict[str, dict[str, An
             if best is None or best_iou < IOU:
                 counts["decorativeArrowFP"] += 1; continue
             used.add(best); counts["localizedTP"] += 1
-            if proposal.get("rowID") == truth[best]["rowID"]: counts["associatedTP"] += 1
+            if proposal.get("rowID") is not None and not isinstance(proposal["rowID"], str): raise BenchmarkError("invalid_predicted_row_id")
+            if resolve(proposal.get("rowID")) == truth[best]["rowID"]: counts["associatedTP"] += 1
             else: counts["wrongRowLink"] += 1
         counts["truthChevron"] += len(truth); counts["abstentions"] += max(0, len(truth) - len(used))
         dialog_truth = labels.get("dialog"); dialog = candidate.get("dialog")
+        if dialog is not None:
+            if not isinstance(dialog, dict): raise BenchmarkError("invalid_predicted_dialog")
+            _box(dialog.get("box"), width, height)
+            buttons = dialog.get("buttonIDs")
+            if not isinstance(buttons, list) or any(not isinstance(b, str) for b in buttons) or len(set(buttons)) != len(buttons):
+                raise BenchmarkError("invalid_predicted_buttons")
+            focus = dialog.get("focusedButtonID")
+            if focus is not None and (not isinstance(focus, str) or focus not in buttons): raise BenchmarkError("invalid_predicted_focus")
+            if dialog.get("semantic") not in SEMANTICS: raise BenchmarkError("invalid_predicted_semantic")
         if dialog_truth is not None:
             counts["truthDialogs"] += 1
+            counts["truthDestructive"] += int(dialog_truth["semantic"] == "destructive")
             if dialog is None: counts["dialogAbstentions"] += 1
             elif not isinstance(dialog, dict): raise BenchmarkError("invalid_predicted_dialog")
             elif _iou(_box(dialog.get("box"), width, height), dialog_truth["box"]) < IOU: counts["dialogLocalizationMiss"] += 1
             else:
                 counts["dialogLocalizedTP"] += 1
-                if set(dialog.get("buttonIDs", [])) == set(dialog_truth["buttonIDs"]): counts["buttonMembershipTP"] += 1
+                if {resolve(b) for b in dialog["buttonIDs"]} == set(dialog_truth["buttonIDs"]): counts["buttonMembershipTP"] += 1
                 else: counts["buttonMembershipError"] += 1
                 if dialog_truth.get("focusedButtonID") is not None:
-                    if dialog.get("focusedButtonID") == dialog_truth["focusedButtonID"]: counts["dialogFocusTP"] += 1
+                    if resolve(dialog.get("focusedButtonID")) == dialog_truth["focusedButtonID"]: counts["dialogFocusTP"] += 1
                     else: counts["dialogFocusError"] += 1
+                elif dialog.get("focusedButtonID") is not None: counts["unexpectedDialogFocus"] += 1
                 semantic = dialog.get("semantic")
                 if semantic not in SEMANTICS: raise BenchmarkError("invalid_predicted_semantic")
                 if semantic == "unknown": counts["semanticAbstentions"] += 1
+                if semantic == "unknown" and dialog_truth["semantic"] == "destructive": counts["destructiveAbstentions"] += 1
                 if dialog_truth["semantic"] == "destructive" and semantic == "informational": counts["destructiveAsBenign"] += 1
         elif dialog is not None: counts["dialogFP"] += 1
     recall = counts["associatedTP"] / counts["truthChevron"] if counts["truthChevron"] else None
@@ -226,7 +257,17 @@ def score(document: dict[str, Any], cases: list[dict[str, Any]]) -> dict[str, An
     entries = _predictions(document, cases)
     if entries is None:
         return {"status": "unavailable", "reason": document["reason"], "actualProposals": None, "oracleBoxes": None}
-    return {"status": "available", "actualProposals": _score_relation(cases, entries, "proposals"), "oracleBoxes": _score_relation(cases, entries, "oracle")}
+    usable = []
+    failures = []
+    for case in cases:
+        entry = entries[case["caseID"]]; state = entry.get("status", "success")
+        if state in {"failed", "unavailable"}:
+            failures.append({"caseID": case["caseID"], "status": state, "reason": _string(entry.get("reason"), "missing_prediction_reason")})
+        elif state == "success": usable.append(case)
+        else: raise BenchmarkError("invalid_prediction_status")
+    return {"status": "partial" if failures else "available", "attemptedCases": len(cases), "scoredCases": len(usable),
+            "failures": failures, "actualProposals": _score_relation(usable, entries, "proposals"),
+            "oracleBoxes": _score_relation(usable, entries, "oracle")}
 
 
 def recommendation(cases: list[dict[str, Any]], result: dict[str, Any]) -> dict[str, Any]:
@@ -243,14 +284,20 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, required=True); parser.add_argument("--predictions", type=Path, required=True); parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--verify-bytes", action="store_true", help="Verify explicitly declared in-package image paths and hashes")
+    parser.add_argument("--observations", type=Path, help="Independent detector/OCR observations for deterministic geometry baseline")
     args = parser.parse_args(); output = args.output.resolve()
     try: output.relative_to(ROOT)
     except ValueError: print("ERROR: output must stay inside package", file=sys.stderr); return 2
     if output.exists(): print("ERROR: refusing output collision", file=sys.stderr); return 2
     try:
-        cases = validate_manifest(json.loads(args.manifest.read_text())); result = score(json.loads(args.predictions.read_text()), cases)
+        manifest = json.loads(args.manifest.read_text())
+        predictions = json.loads(args.predictions.read_text())
+        cases = validate_manifest(manifest)
         verification = verify_evidence(cases) if args.verify_bytes or any(c["sourceKind"] != "testOnly" for c in cases) else {"status": "test_only_not_requested"}
-        report = {"formatVersion": "perception-benchmark-report-v1", "inventory": inventory(cases), "byteVerification": verification, "prediction": result, "recommendation": recommendation(cases, result), "trainingEligible": False, "modelGatePassed": "not_assessed"}
+        from perception_adapters import report as make_report
+        observations = json.loads(args.observations.read_text()) if args.observations else None
+        report = make_report(manifest, predictions, observations, cases, verification)
+        report["inventory"] = inventory(cases)
     except (OSError, json.JSONDecodeError, BenchmarkError) as error: print(f"ERROR: {error}", file=sys.stderr); return 2
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x") as stream: stream.write(json.dumps(report, indent=2) + "\n")

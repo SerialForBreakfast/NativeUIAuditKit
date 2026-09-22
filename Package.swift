@@ -54,6 +54,11 @@ let package = Package(
         ),
         // Offline diagnostic adapter sharing production FocusRing preprocessing.
         .executableTarget(
+            name: "TransitionTool",
+            dependencies: ["NativeUIAuditKit"],
+            path: "Tools/TransitionTool"
+        ),
+        .executableTarget(
             name: "FocusRingTool",
             dependencies: ["NativeUIAuditKit"],
             path: "Tools/FocusRingTool"

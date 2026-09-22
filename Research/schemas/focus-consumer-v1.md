@@ -6,7 +6,7 @@ keys, compact separators and UTF-8. PNG hashes cover exact file bytes.
 
 ## Observed pair evidence
 
-`focus-pair-evidence-v1` has `version`, `sourceKind: simulatorFixture`,
+`focus-pair-evidence-v1` has `version`, `sourceKind: simulatorFixture|physicalFixture`,
 `producerReference`, `evidenceKind: test-only|reviewed-fixture`, and `pairs`.
 Each pair has `pairID`, `elementID`, and `frames.focused` / `frames.unfocused`.
 Each frame contains bundle-relative `path`, `sha256`, `bounds` (top-left pixel
@@ -91,6 +91,54 @@ Execution still requires explicit user authorization, a recorded experiment ID,
 and `--execute --experiment-id <id>`. Test data is never used per epoch.
 
 ## Frozen development baseline
+
+### Physical-source extension (2026-09-22)
+
+Physical extraction uses the same `harvest_focus_pairs.py --fixture-bundle` path,
+never a simulator relabeling or legacy metadata eligibility shortcut. Its explicit
+NUA review artifact additionally supplies `sourceReview`: `sourceKind: physicalFixture`,
+`reviewReference`, `deviceReference`, `runID`, `captureID`, `indexSHA256`, and
+`receiptSHA256`. Hashes bind the original completed bundle's index/receipt bytes;
+contradictory explicit simulator source context is rejected. Preserve the producer's
+`observedSource` verbatim; review is reported provenance, not authenticated identity.
+
+Each physical frame requires `nativeObservation` binding `frameID` and
+`imageSHA256`, `nativeFocusResolved: true`, one `observedElementIDs` member
+(the focused element or positively observed `tvtr.reference-focus` baseline),
+`sampleAgeMilliseconds` in0–150 and `stableMilliseconds`≥150. These are strict
+NUA review-admission bounds, not invented producer wire fields or instructions
+to add delays. Missing/unresolved/multiple/stale evidence cannot become truth.
+The reviewer must map actual source observations; never manufacture this envelope.
+Focused pixel boxes must match metadata and normalized boxes under actual PNG
+dimensions. Baseline boxes remain independently frame-specific.
+
+The shared validator rechecks physical source bindings, raw/crop hashes, decoded
+pixels, geometry, callback alignment and split isolation. It rejects identical
+decoded pixels crossing partitions even with different PNG bytes. New physical
+crops use the existing production v1.3 recrop command above. Training approval
+remains separate; test-only physical-shaped fixtures are not physical capture.
+
+`physical_focus_readiness.py --manifest <v1.2-or-v1.3-manifest> --output <new-report>`
+reports byte-backed inspection separately from provenance, runtime crop parity,
+coverage, operation authority and training eligibility. Legacy metadata-only
+manifests remain inspectable/ineligible. Add `--model <compiled-model>` to prepare
+the existing development baseline protocol; this does not infer. Supply
+`--protocol <saved-baselineProtocol-object> --scores <bound-scores>` to score
+through the shared baseline. No second model/evaluation pipeline is created.
+
+Optional `--proposals` consumes `focus-proposals-v1`: `protocolSHA256`,
+`artifactSHA256`, `inferenceKind: test-only|imported`, and `samples` with exact
+`<pair-id>:1|0` membership. Every sample binds `imageSHA256`, has
+`status: success|failed|unavailable`; failure needs `reason`, success needs
+`proposals: [{bounds: [x,y,w,h], score: probability}]`. Scores come from an
+independent proposal/classifier path, not fixture telemetry. Reports count
+localization, wrong/no/multiple focus, abstentions and failures by family/theme/control.
+This is pair-target scoring, not exhaustive screen or navigation accuracy.
+Missing proposals remain unavailable; oracle-box crop metrics stay separate.
+
+Diagnostic baseline reports with no hard-negative support use null FPR and no
+gate pass; training/model qualification still requires all established quotas.
+Complete CLI fixtures: `scripts/test_physical_focus_integration.py`.
 
 `scripts/focus_ring_baseline.py --manifest <manifest> --model <compiled-model>
 --prepare --output <new-protocol>` freezes development-only membership, model,

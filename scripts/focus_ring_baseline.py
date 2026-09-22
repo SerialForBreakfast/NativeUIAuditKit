@@ -81,7 +81,7 @@ def rows(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     return result
 
 
-def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str, Any]:
+def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any], *, require_hard: bool = True) -> dict[str, Any]:
     if not samples or len({s["id"] for s in samples}) != len(samples):
         raise BaselineError("empty_or_duplicate_membership")
     if set(scores) != {s["id"] for s in samples}:
@@ -104,7 +104,7 @@ def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str,
             groups[key]["decided"] += int(not abstained)
             groups[key]["correctDecisions"] += int(not abstained and predicted == actual)
     hard = [sample for sample in samples if sample["hard"]]
-    if not hard:
+    if not hard and require_hard:
         raise BaselineError("empty_hard_negative_support")
     hard_fp = sum(scores[sample["id"]] >= SHIPPED_COMPARISON_THRESHOLD for sample in hard)
     report = {}
@@ -127,7 +127,8 @@ def evaluate(samples: list[dict[str, Any]], scores: dict[str, Any]) -> dict[str,
             "candidatePolicy": "complete_30_epochs_then_select_on_validation_and_lock_before_test",
         },
         "groups": report,
-        "hardNegative": {"n": len(hard), "fp": hard_fp, "fpr": hard_fp / len(hard)},
+        "hardNegative": {"n": len(hard), "fp": hard_fp, "fpr": hard_fp / len(hard) if hard else None,
+                         "status": "available" if hard else "unavailable", "gatePassed": "not_assessed"},
         "errors": [{"id": s["id"], "kind": "false_positive" if s["label"] == 0 else "false_negative",
                     "theme": s["theme"], "control": s["control"], "family": s["family"]}
                    for s in samples if int(scores[s["id"]] >= SHIPPED_COMPARISON_THRESHOLD) != s["label"]],
@@ -146,6 +147,7 @@ def prepare_protocol(manifest, dataset, model):
     value = {"formatVersion": "focus-baseline-protocol-v1", "artifact": model_contract(model),
              "manifestSHA256": digest(manifest), "preprocessing": manifest["preprocessing"],
              "evidenceKind": manifest["evidenceKind"], "partition": "development",
+             "sourceKind": manifest["sourceKind"],
              "threshold": SHIPPED_COMPARISON_THRESHOLD, "samples": samples,
              "modelGatePassed": "not_assessed"}
     value["implementationSHA256"] = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in
@@ -170,9 +172,13 @@ def score_protocol(protocol, scores):
     if not isinstance(scores.get("scores"), dict):
         raise BaselineError("invalid_scores")
     result = {"protocolSHA256": protocol["protocolSHA256"], "artifact": protocol["artifact"],
-            "evaluation": evaluate(protocol["samples"], scores["scores"]),
+            "evaluation": evaluate(protocol["samples"], scores["scores"], require_hard=False),
             "inference": scores["inferenceKind"], "modelGatePassed": "not_assessed",
             "evidenceKind": protocol["evidenceKind"]}
+    result["sourceKind"] = protocol["sourceKind"]
+    result["executionEvidence"] = "supplied-score-envelope; not independently executed by scorer"
+    result["evaluationScope"] = "oracle-frame-box-crops; no detector-proposal evaluation"
+    result["proposedBoxEvaluation"] = {"status": "unavailable", "reason": "independent_proposals_not_supplied"}
     values = scores["scores"]
     result["decisions"] = {"focused": sum(v >= .85 for v in values.values()),
                            "unfocused": sum(v < .70 for v in values.values()),
@@ -218,6 +224,7 @@ def main() -> int:
                 if args.scores or manifest["version"] != "1.3": raise BaselineError("runtime_crops_required_no_external_scores")
                 from focus_runtime import infer
                 result = score_protocol(protocol, infer(manifest, args.model, protocol))
+                result["executionEvidence"] = "production-runtime-invoked-by-this-command"
             else:
                 result = score_protocol(protocol, json.loads(args.scores.read_text()))
     except (OSError, ValueError, BaselineError, FocusDataError) as error:

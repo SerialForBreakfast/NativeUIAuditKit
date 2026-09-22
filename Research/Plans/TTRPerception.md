@@ -177,6 +177,12 @@ of Office export and does not close FR-B/FR-C data/model gates.
 
 ## PER-05 — Bounded transition-readiness evaluation
 
+Versioned implementation contract and TTR observation proposal:
+[transition-sequences-v1](../schemas/transition-sequences-v1.md).
+Entrypoint: `scripts/transition_benchmark.py`, package-only `TransitionTool`.
+Reproducible test-only generator: `scripts/generate_transition_fixture.py`.
+Evidence: [PER-05 handoff](../../reports/work/PER-05/handoff.md).
+
 **Inputs:** reviewed sequence manifest extension, existing `FrameSimilarity` and
 change-ROI primitives; reviewed recorded sequences or deterministic test sequences.
 **Authority/files:** offline evaluator and scoped perception tests; no live navigation.

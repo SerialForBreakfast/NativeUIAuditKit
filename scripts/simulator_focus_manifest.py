@@ -28,7 +28,9 @@ def _mapped(value: Any, mapping: dict[str, str], label: str) -> tuple[str, str]:
     return value, mapping[value]
 
 
-def build(contract: dict[str, Any], corpus_id: str, producer_reference: str, requested_target: dict[str, Any] | None) -> dict[str, Any]:
+def build(contract: dict[str, Any], corpus_id: str, producer_reference: str, requested_target: dict[str, Any] | None, source_kind: str = "simulatorFixture") -> dict[str, Any]:
+    if source_kind not in {"simulatorFixture", "physicalFixture"}:
+        raise SimulatorManifestError("unsupported_source_kind")
     if not isinstance(corpus_id, str) or not corpus_id or not isinstance(producer_reference, str) or not producer_reference:
         raise SimulatorManifestError("missing_manifest_identity")
     pairs = []
@@ -67,10 +69,10 @@ def build(contract: dict[str, Any], corpus_id: str, producer_reference: str, req
     if not pairs:
         raise SimulatorManifestError("no_usable_pairs")
     return {
-        "schemaVersion": "1.0", "corpusID": corpus_id, "sourceKind": "simulatorFixture",
+        "schemaVersion": "1.0", "corpusID": corpus_id, "sourceKind": source_kind,
         "producer": {"name": contract.get("producer"), "buildReference": producer_reference, "producerBuild": contract.get("producerBuild")},
         "requestedTarget": requested_target, "observedSource": contract.get("sourceDescription"),
-        "eligibility": {"inspection": "passed", "simulatorUse": "pending-corpus-review", "physicalQualification": "not-established", "generalTrainingApproval": False},
+        "eligibility": {"inspection": "passed", "simulatorUse": "pending-corpus-review" if source_kind == "simulatorFixture" else "not-applicable", "physicalQualification": "not-established", "generalTrainingApproval": False},
         "pairs": pairs,
     }
 

@@ -1,0 +1,48 @@
+{
+  "command" : "fixture job-status",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "failure" : "native_focus_or_geometry_unavailable:sceneNotSettled; inspect retained evidence",
+        "files" : [
+
+        ],
+        "jobID" : "EE995A3A-AB6F-42A4-9765-1D347BEF8CC7",
+        "observationDiagnostics" : {
+          "generation" : 2,
+          "measuredIDs" : [
+            "dialog_btn_0",
+            "dialog_btn_1",
+            "dialog_container"
+          ],
+          "missingIDs" : [
+
+          ],
+          "nativeFocusResolved" : false,
+          "reason" : "unresolved_focus",
+          "requiredIDs" : [
+            "dialog_btn_0",
+            "dialog_btn_1"
+          ],
+          "requiredMilliseconds" : 150,
+          "sampleAgeMilliseconds" : 100.9290000074543,
+          "sampleCount" : 36,
+          "sampledGeneration" : 2,
+          "stableMilliseconds" : 0
+        },
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/ee995a3a-ab6f-42a4-9765-1d347bef8cc7/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/ee995a3a-ab6f-42a4-9765-1d347bef8cc7/recipes",
+        "schemaVersion" : 1,
+        "simulatorUDID" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "state" : "failed",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/ee995a3a-ab6f-42a4-9765-1d347bef8cc7"
+      }
+    }
+  },
+  "durationMilliseconds" : 13,
+  "requestID" : "9C222545-7B88-44FF-9202-E64011D17E36",
+  "schemaVersion" : 1,
+  "success" : true
+}

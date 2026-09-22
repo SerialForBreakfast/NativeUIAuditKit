@@ -66,6 +66,37 @@ def image(root, record, expected_size=None):
     return size
 
 
+def pixel_digest(root, record):
+    """Decoded content, not PNG compression/container identity, controls isolation."""
+    from PIL import Image
+    with Image.open(member(root, record["path"])) as im:
+        im.load()
+        return hashlib.sha256(str(im.size).encode() + b"\0" + im.convert("RGB").tobytes()).hexdigest()
+
+
+def validate_physical_review(review, source_root):
+    if not isinstance(review, dict) or review.get("sourceKind") != "physicalFixture":
+        raise FocusDataError("missing_physical_source_review")
+    for key in ("reviewReference", "deviceReference", "runID", "captureID"):
+        text(review.get(key))
+    for field, name in (("indexSHA256", "dataset-index.json"), ("receiptSHA256", "harvest-receipt.json")):
+        value = review.get(field)
+        if not isinstance(value, str) or len(value) != 64 or any(c not in "0123456789abcdef" for c in value):
+            raise FocusDataError("invalid_physical_review_hash")
+        if hashlib.sha256(member(source_root, name).read_bytes()).hexdigest() != value:
+            raise FocusDataError("physical_review_binding_mismatch")
+    # A source declaration remains reported, not authenticated. Contradictory
+    # explicit simulator context cannot be relabeled by this review envelope.
+    from harvest_bundle_validation import validate_bundle
+    contract = validate_bundle(source_root)
+    context = contract.get("sourceDescription") or {}
+    method = context.get("captureMethod", "").lower()
+    environment = context.get("environment") or {}
+    if "simulator" in method or any(environment.get(k) for k in ("simulatorUDID", "simulator_udid", "isSimulator")):
+        raise FocusDataError("conflicting_physical_source_context")
+    return contract
+
+
 def expanded_box(bounds, size):
     if not isinstance(bounds, list) or len(bounds) != 4 or any(type(v) not in (float, int) or not math.isfinite(v) for v in bounds):
         raise FocusDataError("invalid_frame_geometry")
@@ -85,7 +116,7 @@ def crop_frame(raw, box):
                                         Image.Resampling.BILINEAR).resize((256, 256), Image.Resampling.BILINEAR)
 
 
-def validate_frames(pair, source_root):
+def validate_frames(pair, source_root, *, require_native=False):
     element = text(pair.get("elementID"))
     frames = pair.get("frames")
     if not isinstance(frames, dict) or set(frames) != {"focused", "unfocused"}:
@@ -98,6 +129,18 @@ def validate_frames(pair, source_root):
         frame_id = text(frame.get("frameID"))
         if frame.get("focusFrameID") != frame_id or "observedFocusID" not in frame or frame["observedFocusID"] != (element if role == "focused" else None):
             raise FocusDataError("stale_or_mismatched_focus")
+        if require_native:
+            callback = frame.get("nativeObservation")
+            expected = element if role == "focused" else "tvtr.reference-focus"
+            if not isinstance(callback, dict) or callback.get("frameID") != frame_id or callback.get("imageSHA256") != frame.get("sha256"):
+                raise FocusDataError("missing_or_unbound_native_observation")
+            if callback.get("nativeFocusResolved") is not True or callback.get("observedElementIDs") != [expected]:
+                raise FocusDataError("unknown_or_multiple_native_focus")
+            age = callback.get("sampleAgeMilliseconds")
+            stable = callback.get("stableMilliseconds")
+            if (type(age) not in (int, float) or not math.isfinite(age) or not 0 <= age <= 150
+                    or type(stable) not in (int, float) or not math.isfinite(stable) or stable < 150):
+                raise FocusDataError("stale_or_unsettled_native_observation")
         sizes[role] = image(source_root, frame)
         boxes[role] = expanded_box(frame.get("bounds"), sizes[role])
     if sizes["focused"] != sizes["unfocused"] or frames["focused"]["frameID"] == frames["unfocused"]["frameID"]:
@@ -124,11 +167,14 @@ def validate_manifest(document, dataset):
     if Path(root_name).is_absolute() or ".." in Path(root_name).parts:
         raise FocusDataError("unsafe_source_root")
     source_root = local(ROOT / root_name)
+    if document["sourceKind"] == "physicalFixture":
+        validate_physical_review(document.get("sourceReview"), source_root)
     pairs = document.get("pairs")
     if not isinstance(pairs, list) or not pairs:
         raise FocusDataError("empty_membership")
     ids, identities, ownership = set(), set(), {}
     rows = []
+    pixel_cache = {}
     runtime_images = None
     for pair in pairs:
         if not isinstance(pair, dict):
@@ -151,7 +197,7 @@ def validate_manifest(document, dataset):
         from simulator_focus_manifest import FAMILY_MAP, THEME_MAP
         if scene not in FAMILY_MAP.values() or theme not in THEME_MAP.values():
             raise FocusDataError("unsupported_pair_metadata")
-        boxes = validate_frames(pair, source_root)
+        boxes = validate_frames(pair, source_root, require_native=document["sourceKind"] == "physicalFixture")
         identity = (pair["frames"]["focused"]["sha256"], pair["frames"]["unfocused"]["sha256"], pair["elementID"])
         if identity in identities:
             raise FocusDataError("duplicate_pair_content")
@@ -175,6 +221,10 @@ def validate_manifest(document, dataset):
                 if expected.tobytes() != actual.convert("RGB").tobytes():
                     raise FocusDataError("crop_pixel_mismatch")
             keys += [("pixels", crop["sha256"]), ("pixels", pair["frames"][role]["sha256"])]
+            for r, record in ((dataset, crop), (source_root, pair["frames"][role])):
+                cache_key = (str(r), record["path"], record["sha256"])
+                if cache_key not in pixel_cache: pixel_cache[cache_key] = pixel_digest(r, record)
+                keys.append(("decoded_pixels", pixel_cache[cache_key]))
         for key in keys:
             if key in ownership and ownership[key] != split:
                 raise FocusDataError("split_leakage")

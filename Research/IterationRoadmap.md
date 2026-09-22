@@ -8,16 +8,23 @@ The [FOCUS-LAUNCH preparation tranche](Plans/FocusRingLaunchPreparation.md) prov
 runtime-exact crop tooling, the real CoreML development adapter and frozen capture
 planning without waiting for TTR. Its coordinate correction requires re-baselining,
 not immediate model promotion. [Review corrections](../reports/work/FOCUS-LAUNCH/review.md)
-for PER-01/02/04 are the next independent software work; do not redispatch their
-completed helpers or confuse metadata validation with eligible training pixels.
+for PER-02/04 have an [integrated offline completion](Plans/PerceptionIntakeCompletion.md)
+with evidence in [the handoff](../reports/work/PERCEPTION-INTAKE/handoff.md).
+Review that tranche rather than redispatching completed helpers. Next independent
+review item: PER-05's [bounded transition benchmark](../reports/work/PER-05/handoff.md)
+using existing primitives, with its versioned sequence/observation proposal.
+Next independent software option is PER-06 screen/row identity after contract review.
+Do not confuse software verification
+with eligible training pixels; real baseline still waits for qualified capture.
 
 ### FocusRing critical path — 2026-09-21 smoke assignment
 
 The user authorized the single local simulator smoke, superseding the pause for
 that scope only. Runtime/storage readiness now passes. Preflight identified the
-remaining **native focus/geometry settling failure** after the matching Fixture
-was deployed. A user-interfered trial was excluded; the clean retry also failed. See
-[smoke evidence](../reports/work/SIM-DATA-01-02/smoke-20260921/handoff.md).
+remaining **screenshot output access failure** after native reference focus was
+repaired. The latest smoke has verified settled reference focus but no captured
+pairs due to Cocoa513/EPERM saving frame.png. See
+[current smoke evidence](../reports/work/SIM-DATA-01-02/smoke-20260922-0140/handoff.md).
 Keep all other simulator execution paused until separately assigned.
 
 Meaningful next tranches, with each carried through its integration/handoff:

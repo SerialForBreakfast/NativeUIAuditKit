@@ -20,7 +20,7 @@ class BaselineTests(unittest.TestCase):
     def test_grouped_metrics_and_hard_support(self):
         value = evaluate(rows(manifest()), {"a:1": .9, "a:0": .1, "b:1": .9, "b:0": .9})
         self.assertEqual(value["groups"]["overall"]["fp"], 1)
-        self.assertEqual(value["hardNegative"], {"n": 2, "fp": 1, "fpr": .5})
+        self.assertEqual(value["hardNegative"], {"n": 2, "fp": 1, "fpr": .5, "status": "available", "gatePassed": "not_assessed"})
         self.assertEqual(value["groups"]["theme:dark"]["n"], 2)
         self.assertEqual(value["threshold"], {
             "value": .85,

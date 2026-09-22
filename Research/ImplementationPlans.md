@@ -9,13 +9,18 @@ new offline tranche: PER-01 + PER-02 chevron/dialog benchmark, followed by visua
 readiness. It preserves active workers and existing model/data gates. Proposed TTR
 requests are not published or assigned. No capture or training follows from this catalog.
 
+2026-09-22 targeted completion: [PerceptionIntakeCompletion.md](Plans/PerceptionIntakeCompletion.md)
+defines the assigned PER-02/PER-04 integration and existing-deliverable review;
+do not redispatch already implemented foundations. Evidence:
+[integrated handoff](../reports/work/PERCEPTION-INTAKE/handoff.md).
+
 | Packet | Contract |
 |---|---|
 | PER-01 | [Evidence and split-safe benchmark](Plans/TTRPerception.md#per-01--evidence-inventory-labels-and-split-safe-benchmark-contract) |
 | PER-02 | [Chevron/dialog benchmark and training decision](Plans/TTRPerception.md#per-02--chevron-and-dialog-benchmark-and-targeted-training-decision) |
 | PER-03 | [Targeted data and one candidate](Plans/TTRPerception.md#per-03--targeted-data-and-one-perception-candidate) |
 | PER-04 | [Visual-focus readiness](Plans/TTRPerception.md#per-04--visual-focus-robustness-and-physical-consumer-readiness) |
-| PER-05 | [Transition-readiness evaluation](Plans/TTRPerception.md#per-05--bounded-transition-readiness-evaluation) |
+| PER-05 | [Transition-readiness evaluation](Plans/TTRPerception.md#per-05--bounded-transition-readiness-evaluation); [v1 sequence/observation contract](schemas/transition-sequences-v1.md); [handoff](../reports/work/PER-05/handoff.md) |
 | PER-06 | [Screen/row identity](Plans/TTRPerception.md#per-06--screen-and-row-identity-under-change) |
 | TTR-PER | [External evidence/comparison proposal](Plans/TTRPerception.md#ttr-per--producer-evidence-and-isolated-comparison-proposal) |
 

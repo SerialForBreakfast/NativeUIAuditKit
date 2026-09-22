@@ -1,0 +1,3084 @@
+{
+  "accounting": {
+    "evaluatedSequences": 9,
+    "expectedSequences": 9,
+    "failedSequences": 0
+  },
+  "corpusSHA256": "8aaf797bd690fe720efdb39484df6e24316ecf7c6a4107036f767c9bacd8bc5a",
+  "failures": [],
+  "helperSHA256": "cd6dee6f82bd394b8cb517a48e5bc5016ea4a216fb92fff5202731194ee97485",
+  "latency": {
+    "firstPairMs": {
+      "n": 9,
+      "p50": 81.82074999785982,
+      "p95": 98.50700000242796
+    },
+    "hosts": [
+      "Version 26.4.1 (Build 25E253)"
+    ],
+    "machineArchitecture": "arm64",
+    "processColdMs": {
+      "n": 9,
+      "p50": 493.64462500670925,
+      "p95": 810.531916009495
+    },
+    "pythonHost": "Darwin 25.4.0 arm64",
+    "scope": "offline process including image decode and primitive measurements; not TTR navigation",
+    "subsequentPairMs": {
+      "n": 121,
+      "p50": 27.61295832169708,
+      "p95": 55.714958332828246
+    }
+  },
+  "outcomes": {
+    "dataEligible": false,
+    "liveIntegrationQualified": false,
+    "modelGatePassed": null
+  },
+  "policy": {
+    "distanceThreshold": 0.001,
+    "frozenOn": "test-only",
+    "maxAgeMs": 100,
+    "maxGapMs": 150,
+    "minimumFrames": 3,
+    "noiseThreshold": 10,
+    "reference": "synthetic-illustration-not-calibrated",
+    "stableMs": 200,
+    "timeoutMs": 1000,
+    "toolTimeoutSeconds": 60,
+    "version": "transition-policy-v1"
+  },
+  "policySHA256": "327b04b89208b4f7fb9a97aef5c7df4c07ccd1f248643ef6a6c7845a4267e7ec",
+  "recommendation": "No temporal training: validate independent held-out complete journeys and reviewed numeric gates first. ROI stability does not establish focus correctness, overlay safety or action authority.",
+  "results": [
+    {
+      "group": "static",
+      "id": "static",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "static-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "static-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "static-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "static-0",
+                "static-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "static-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-1",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-1",
+                "static-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "static-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-2",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-2",
+                "static-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "static-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-3",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-3",
+                "static-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "static-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-4",
+                "static-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 4,
+              "readySupport": 6,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 4,
+              "waitDecisions": 2
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "static-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "static-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "static-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "static-0",
+                "static-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "static-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-1",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-1",
+                "static-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "static-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-2",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-2",
+                "static-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "static-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-3",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-3",
+                "static-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "static-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "static-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "static-0",
+                "static-4",
+                "static-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 4,
+              "readySupport": 6,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 4,
+              "waitDecisions": 2
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "static",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "crossfade",
+      "id": "crossfade",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "crossfade-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "crossfade-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "crossfade-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.12823501,
+                  "previousObservationID": "crossfade-0",
+                  "regions": [
+                    [
+                      16,
+                      16.11851851851852,
+                      80,
+                      80.11851851851853
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "crossfade-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "crossfade-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.13778453,
+                  "previousObservationID": "crossfade-1",
+                  "regions": [
+                    [
+                      16,
+                      16.11851851851852,
+                      80,
+                      80.11851851851853
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "crossfade-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "crossfade-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.21762332,
+                  "previousObservationID": "crossfade-2",
+                  "regions": [
+                    [
+                      16,
+                      16.11851851851852,
+                      80,
+                      80.11851851851853
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "crossfade-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "crossfade-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "crossfade-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "crossfade-3",
+                "crossfade-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "crossfade-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "crossfade-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "crossfade-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "crossfade-3",
+                "crossfade-4",
+                "crossfade-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 3,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 1,
+              "reason:visual_change": 3,
+              "unstableSupport": 3,
+              "waitDecisions": 5
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "crossfade-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "crossfade-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "crossfade-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.12823501,
+                  "previousObservationID": "crossfade-0",
+                  "regions": [
+                    [
+                      16,
+                      16.11851851851852,
+                      80,
+                      80.11851851851853
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "crossfade-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "crossfade-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.13778453,
+                  "previousObservationID": "crossfade-1",
+                  "regions": [
+                    [
+                      16,
+                      16.11851851851852,
+                      80,
+                      80.11851851851853
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "crossfade-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "crossfade-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.21762332,
+                  "previousObservationID": "crossfade-2",
+                  "regions": [
+                    [
+                      16,
+                      16.11851851851852,
+                      80,
+                      80.11851851851853
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "crossfade-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "crossfade-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "crossfade-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "crossfade-3",
+                "crossfade-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "crossfade-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "crossfade-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "crossfade-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "crossfade-3",
+                "crossfade-4",
+                "crossfade-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 3,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 1,
+              "reason:visual_change": 3,
+              "unstableSupport": 3,
+              "waitDecisions": 5
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "crossfade",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "focus-animation",
+      "id": "focus-animation",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "focus-animation-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "focus-animation-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "focus-animation-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.2825379,
+                  "previousObservationID": "focus-animation-0",
+                  "regions": [
+                    [
+                      19.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "focus-animation-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "focus-animation-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.17667578,
+                  "previousObservationID": "focus-animation-1",
+                  "regions": [
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "focus-animation-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "focus-animation-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.11611049,
+                  "previousObservationID": "focus-animation-2",
+                  "regions": [
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      55.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "focus-animation-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "focus-animation-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "focus-animation-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "focus-animation-3",
+                "focus-animation-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "focus-animation-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "focus-animation-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "focus-animation-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "focus-animation-3",
+                "focus-animation-4",
+                "focus-animation-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 3,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 1,
+              "reason:visual_change": 3,
+              "unstableSupport": 3,
+              "waitDecisions": 5
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "focus-animation-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "focus-animation-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "focus-animation-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.2825379,
+                  "previousObservationID": "focus-animation-0",
+                  "regions": [
+                    [
+                      19.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "focus-animation-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "focus-animation-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.17667578,
+                  "previousObservationID": "focus-animation-1",
+                  "regions": [
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "focus-animation-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "focus-animation-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.11611049,
+                  "previousObservationID": "focus-animation-2",
+                  "regions": [
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      55.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "focus-animation-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "focus-animation-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "focus-animation-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "focus-animation-3",
+                "focus-animation-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "focus-animation-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "focus-animation-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "focus-animation-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "focus-animation-3",
+                "focus-animation-4",
+                "focus-animation-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 3,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 1,
+              "reason:visual_change": 3,
+              "unstableSupport": 3,
+              "waitDecisions": 5
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "focus-animation",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "scroll",
+      "id": "scroll",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "scroll-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "scroll-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "scroll-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.2825379,
+                  "previousObservationID": "scroll-0",
+                  "regions": [
+                    [
+                      19.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "scroll-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "scroll-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.17667578,
+                  "previousObservationID": "scroll-1",
+                  "regions": [
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "scroll-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "scroll-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.11611049,
+                  "previousObservationID": "scroll-2",
+                  "regions": [
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      55.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "scroll-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "scroll-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "scroll-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "scroll-3",
+                "scroll-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "scroll-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "scroll-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "scroll-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "scroll-3",
+                "scroll-4",
+                "scroll-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 3,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 1,
+              "reason:visual_change": 3,
+              "unstableSupport": 3,
+              "waitDecisions": 5
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "scroll-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "scroll-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "scroll-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.2825379,
+                  "previousObservationID": "scroll-0",
+                  "regions": [
+                    [
+                      19.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "scroll-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "scroll-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.17667578,
+                  "previousObservationID": "scroll-1",
+                  "regions": [
+                    [
+                      31.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "scroll-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "scroll-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.11611049,
+                  "previousObservationID": "scroll-2",
+                  "regions": [
+                    [
+                      43.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ],
+                    [
+                      55.733333333333334,
+                      24.651851851851852,
+                      9.6,
+                      56.88888888888889
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "scroll-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "scroll-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "scroll-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "scroll-3",
+                "scroll-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "scroll-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "scroll-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "scroll-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "scroll-3",
+                "scroll-4",
+                "scroll-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 3,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 1,
+              "reason:visual_change": 3,
+              "unstableSupport": 3,
+              "waitDecisions": 5
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "scroll",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "background-carousel",
+      "id": "background-carousel",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "background-carousel-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "background-carousel-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "background-carousel-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-0",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "background-carousel-0",
+                "background-carousel-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "background-carousel-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "background-carousel-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-1",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "background-carousel-0",
+                "background-carousel-1",
+                "background-carousel-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "background-carousel-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-0",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                },
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-2",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "background-carousel-0",
+                "background-carousel-2",
+                "background-carousel-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "background-carousel-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "background-carousel-0",
+                  "regions": []
+                },
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-3",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "background-carousel-0",
+                "background-carousel-3",
+                "background-carousel-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "background-carousel-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-0",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                },
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-4",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "background-carousel-0",
+                "background-carousel-4",
+                "background-carousel-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readyDecisions": 4,
+              "readySupport": 6,
+              "reason:insufficient_history": 2,
+              "reason:stable_window": 4,
+              "waitDecisions": 2
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              200
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "background-carousel-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "background-carousel-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "background-carousel-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-0",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "background-carousel-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "background-carousel-2",
+              "observedMs": 200,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-1",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "background-carousel-2"
+              ]
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "background-carousel-3",
+              "observedMs": 300,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-2",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "background-carousel-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "background-carousel-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-3",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "background-carousel-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "background-carousel-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0.08698633,
+                  "previousObservationID": "background-carousel-4",
+                  "regions": [
+                    [
+                      107.46666666666667,
+                      107.61481481481482,
+                      20.53333333333333,
+                      20.385185185185186
+                    ]
+                  ]
+                }
+              ],
+              "reason": "visual_change",
+              "state": "wait",
+              "support": [
+                "background-carousel-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 6,
+              "frames": 6,
+              "readySupport": 6,
+              "reason:insufficient_history": 1,
+              "reason:visual_change": 5,
+              "waitDecisions": 6
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "background-carousel",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "no-focus",
+      "id": "no-focus",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "no-focus-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "no-focus-1",
+              "observedMs": 100,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "no-focus-2",
+              "observedMs": 200,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "no-focus-3",
+              "observedMs": 300,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "no-focus-4",
+              "observedMs": 400,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "no-focus-5",
+              "observedMs": 500,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "frames": 6,
+              "readySupport": 6,
+              "reason:focus_none": 6,
+              "unknownDecisions": 6
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "no-focus-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "no-focus-1",
+              "observedMs": 100,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "no-focus-2",
+              "observedMs": 200,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "no-focus-3",
+              "observedMs": 300,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "no-focus-4",
+              "observedMs": 400,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "no-focus-5",
+              "observedMs": 500,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "frames": 6,
+              "readySupport": 6,
+              "reason:focus_none": 6,
+              "unknownDecisions": 6
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "static",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "missing-frame",
+      "id": "missing-frame",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "missing-frame-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "missing-frame-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-0",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-0",
+                "missing-frame-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "missing-frame-2",
+              "observedMs": 200,
+              "primitiveEvidence": [],
+              "reason": "missing",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "missing-frame-3",
+              "observedMs": 300,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "missing-frame-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-3",
+                "missing-frame-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "missing-frame-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "missing-frame-3",
+                "missing-frame-4",
+                "missing-frame-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 4,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 6,
+              "reason:insufficient_history": 4,
+              "reason:missing": 1,
+              "reason:stable_window": 1,
+              "unknownDecisions": 1,
+              "waitDecisions": 4
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              500
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "missing-frame-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "missing-frame-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-0",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-0",
+                "missing-frame-1"
+              ]
+            },
+            {
+              "capturedMs": 200,
+              "id": "2",
+              "observationID": "missing-frame-2",
+              "observedMs": 200,
+              "primitiveEvidence": [],
+              "reason": "missing",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 300,
+              "id": "3",
+              "observationID": "missing-frame-3",
+              "observedMs": 300,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-3"
+              ]
+            },
+            {
+              "capturedMs": 400,
+              "id": "4",
+              "observationID": "missing-frame-4",
+              "observedMs": 400,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-3",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "missing-frame-3",
+                "missing-frame-4"
+              ]
+            },
+            {
+              "capturedMs": 500,
+              "id": "5",
+              "observationID": "missing-frame-5",
+              "observedMs": 500,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-3",
+                  "regions": []
+                },
+                {
+                  "distance": 0,
+                  "previousObservationID": "missing-frame-4",
+                  "regions": []
+                }
+              ],
+              "reason": "stable_window",
+              "state": "ready",
+              "support": [
+                "missing-frame-3",
+                "missing-frame-4",
+                "missing-frame-5"
+              ]
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 4,
+              "frames": 6,
+              "readyDecisions": 1,
+              "readySupport": 6,
+              "reason:insufficient_history": 4,
+              "reason:missing": 1,
+              "reason:stable_window": 1,
+              "unknownDecisions": 1,
+              "waitDecisions": 4
+            },
+            "noReady": false,
+            "readyIntervalDelayMs": [
+              500
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "static",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "stale-cache",
+      "id": "stale-cache",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "stale-cache-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "stale-cache-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "stale-cache-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "stale-cache-0",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "stale-cache-0",
+                "stale-cache-1"
+              ]
+            },
+            {
+              "capturedMs": 0,
+              "id": "2",
+              "observationID": "stale-cache-0",
+              "observedMs": 200,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 0,
+              "id": "3",
+              "observationID": "stale-cache-0",
+              "observedMs": 300,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 0,
+              "id": "4",
+              "observationID": "stale-cache-0",
+              "observedMs": 400,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 0,
+              "id": "5",
+              "observationID": "stale-cache-0",
+              "observedMs": 500,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readySupport": 6,
+              "reason:insufficient_history": 2,
+              "reason:repeated_observation": 4,
+              "unknownDecisions": 4,
+              "waitDecisions": 2
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": false
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "stale-cache-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "stale-cache-0"
+              ]
+            },
+            {
+              "capturedMs": 100,
+              "id": "1",
+              "observationID": "stale-cache-1",
+              "observedMs": 100,
+              "primitiveEvidence": [
+                {
+                  "distance": 0,
+                  "previousObservationID": "stale-cache-0",
+                  "regions": []
+                }
+              ],
+              "reason": "insufficient_history",
+              "state": "wait",
+              "support": [
+                "stale-cache-0",
+                "stale-cache-1"
+              ]
+            },
+            {
+              "capturedMs": 0,
+              "id": "2",
+              "observationID": "stale-cache-0",
+              "observedMs": 200,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 0,
+              "id": "3",
+              "observationID": "stale-cache-0",
+              "observedMs": 300,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 0,
+              "id": "4",
+              "observationID": "stale-cache-0",
+              "observedMs": 400,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 0,
+              "id": "5",
+              "observationID": "stale-cache-0",
+              "observedMs": 500,
+              "primitiveEvidence": [],
+              "reason": "repeated_observation",
+              "state": "unknown",
+              "support": []
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readySupport": 6,
+              "reason:insufficient_history": 2,
+              "reason:repeated_observation": 4,
+              "unknownDecisions": 4,
+              "waitDecisions": 2
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": false
+          }
+        }
+      },
+      "scenario": "static",
+      "sourceKind": "test-only"
+    },
+    {
+      "group": "timeout",
+      "id": "timeout",
+      "partition": "development",
+      "policies": {
+        "foreground-roi": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "timeout-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 250,
+              "id": "1",
+              "observationID": "timeout-1",
+              "observedMs": 250,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 500,
+              "id": "2",
+              "observationID": "timeout-2",
+              "observedMs": 500,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 750,
+              "id": "3",
+              "observationID": "timeout-3",
+              "observedMs": 750,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 1000,
+              "id": "4",
+              "observationID": "timeout-4",
+              "observedMs": 1000,
+              "primitiveEvidence": [],
+              "reason": "deadline",
+              "state": "timeout",
+              "support": []
+            },
+            {
+              "capturedMs": 1250,
+              "id": "5",
+              "observationID": "timeout-5",
+              "observedMs": 1250,
+              "primitiveEvidence": [],
+              "reason": "deadline",
+              "state": "timeout",
+              "support": []
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readySupport": 6,
+              "reason:deadline": 2,
+              "reason:focus_none": 4,
+              "timeoutDecisions": 2,
+              "unknownDecisions": 4
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": true
+          }
+        },
+        "full-frame": {
+          "decisions": [
+            {
+              "capturedMs": 0,
+              "id": "0",
+              "observationID": "timeout-0",
+              "observedMs": 0,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 250,
+              "id": "1",
+              "observationID": "timeout-1",
+              "observedMs": 250,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 500,
+              "id": "2",
+              "observationID": "timeout-2",
+              "observedMs": 500,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 750,
+              "id": "3",
+              "observationID": "timeout-3",
+              "observedMs": 750,
+              "primitiveEvidence": [],
+              "reason": "focus_none",
+              "state": "unknown",
+              "support": []
+            },
+            {
+              "capturedMs": 1000,
+              "id": "4",
+              "observationID": "timeout-4",
+              "observedMs": 1000,
+              "primitiveEvidence": [],
+              "reason": "deadline",
+              "state": "timeout",
+              "support": []
+            },
+            {
+              "capturedMs": 1250,
+              "id": "5",
+              "observationID": "timeout-5",
+              "observedMs": 1250,
+              "primitiveEvidence": [],
+              "reason": "deadline",
+              "state": "timeout",
+              "support": []
+            }
+          ],
+          "metrics": {
+            "counts": {
+              "falseWaits": 2,
+              "frames": 6,
+              "readySupport": 6,
+              "reason:deadline": 2,
+              "reason:focus_none": 4,
+              "timeoutDecisions": 2,
+              "unknownDecisions": 4
+            },
+            "noReady": true,
+            "readyIntervalDelayMs": [
+              null
+            ],
+            "timedOut": true
+          }
+        }
+      },
+      "scenario": "static",
+      "sourceKind": "test-only"
+    }
+  ],
+  "sourceHashes": {
+    "Sources/NativeUIAuditKit/Perception/ChangeRegionLocalizer.swift": "6645f448eb87ae015ac3dfd7b5feb05917d5eedb82ecb14dc26f22cca51ec2bf",
+    "Sources/NativeUIAuditKit/Perception/FrameSimilarity.swift": "eed7fe8e503a177d961a1572640a2e0d444373887bc6c72128adfbfbc7a6e267",
+    "Tools/TransitionTool/main.swift": "17cea8ba407eb0c44d234f2953fdb5d97242e55a0d81e69004505ce0967003b5",
+    "scripts/generate_transition_fixture.py": "fdd531f8f3de9460f6d8e14e6c101861d27ba2b2788f2b6a72fc4f7ce1033a87",
+    "scripts/transition_benchmark.py": "0de5f2ddb99551590397fd3e17076d1da1baae1114f1091d36df24b3ab19d091"
+  },
+  "status": "complete",
+  "summary": {
+    "foreground-roi": {
+      "overall": {
+        "abstentionRate": 0.2777777777777778,
+        "counts": {
+          "falseWaits": 18,
+          "frames": 54,
+          "readyDecisions": 12,
+          "readySupport": 45,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 16,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 12,
+          "reason:visual_change": 9,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "unstableSupport": 9,
+          "waitDecisions": 25
+        },
+        "falseWaitRate": 0.4,
+        "noReadySequences": 3,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 9,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 3
+      },
+      "partition:development": {
+        "abstentionRate": 0.2777777777777778,
+        "counts": {
+          "falseWaits": 18,
+          "frames": 54,
+          "readyDecisions": 12,
+          "readySupport": 45,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 16,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 12,
+          "reason:visual_change": 9,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "unstableSupport": 9,
+          "waitDecisions": 25
+        },
+        "falseWaitRate": 0.4,
+        "noReadySequences": 3,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 9,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 3
+      },
+      "partition:test": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "partition:validation": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:background-carousel": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 4,
+          "readySupport": 6,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 4,
+          "waitDecisions": 2
+        },
+        "falseWaitRate": 0.3333333333333333,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:crossfade": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 1,
+          "readySupport": 3,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 1,
+          "reason:visual_change": 3,
+          "unstableSupport": 3,
+          "waitDecisions": 5
+        },
+        "falseWaitRate": 0.6666666666666666,
+        "noReadySequences": 0,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:focus-animation": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 1,
+          "readySupport": 3,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 1,
+          "reason:visual_change": 3,
+          "unstableSupport": 3,
+          "waitDecisions": 5
+        },
+        "falseWaitRate": 0.6666666666666666,
+        "noReadySequences": 0,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:scroll": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 1,
+          "readySupport": 3,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 1,
+          "reason:visual_change": 3,
+          "unstableSupport": 3,
+          "waitDecisions": 5
+        },
+        "falseWaitRate": 0.6666666666666666,
+        "noReadySequences": 0,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:static": {
+        "abstentionRate": 0.5,
+        "counts": {
+          "falseWaits": 10,
+          "frames": 30,
+          "readyDecisions": 5,
+          "readySupport": 30,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 8,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 5,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "waitDecisions": 8
+        },
+        "falseWaitRate": 0.3333333333333333,
+        "noReadySequences": 3,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [
+          200,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 5,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 3
+      },
+      "sourceKind:physical": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "sourceKind:simulator": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "sourceKind:test-only": {
+        "abstentionRate": 0.2777777777777778,
+        "counts": {
+          "falseWaits": 18,
+          "frames": 54,
+          "readyDecisions": 12,
+          "readySupport": 45,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 16,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 12,
+          "reason:visual_change": 9,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "unstableSupport": 9,
+          "waitDecisions": 25
+        },
+        "falseWaitRate": 0.4,
+        "noReadySequences": 3,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 9,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 3
+      }
+    },
+    "full-frame": {
+      "overall": {
+        "abstentionRate": 0.2777777777777778,
+        "counts": {
+          "falseWaits": 22,
+          "frames": 54,
+          "readyDecisions": 8,
+          "readySupport": 45,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 15,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 8,
+          "reason:visual_change": 14,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "unstableSupport": 9,
+          "waitDecisions": 29
+        },
+        "falseWaitRate": 0.4888888888888889,
+        "noReadySequences": 4,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200,
+          200,
+          200,
+          200,
+          null,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 9,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 4
+      },
+      "partition:development": {
+        "abstentionRate": 0.2777777777777778,
+        "counts": {
+          "falseWaits": 22,
+          "frames": 54,
+          "readyDecisions": 8,
+          "readySupport": 45,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 15,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 8,
+          "reason:visual_change": 14,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "unstableSupport": 9,
+          "waitDecisions": 29
+        },
+        "falseWaitRate": 0.4888888888888889,
+        "noReadySequences": 4,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200,
+          200,
+          200,
+          200,
+          null,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 9,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 4
+      },
+      "partition:test": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "partition:validation": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:background-carousel": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 6,
+          "frames": 6,
+          "readySupport": 6,
+          "reason:insufficient_history": 1,
+          "reason:visual_change": 5,
+          "waitDecisions": 6
+        },
+        "falseWaitRate": 1.0,
+        "noReadySequences": 1,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [
+          null
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 1
+      },
+      "scenario:crossfade": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 1,
+          "readySupport": 3,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 1,
+          "reason:visual_change": 3,
+          "unstableSupport": 3,
+          "waitDecisions": 5
+        },
+        "falseWaitRate": 0.6666666666666666,
+        "noReadySequences": 0,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:focus-animation": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 1,
+          "readySupport": 3,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 1,
+          "reason:visual_change": 3,
+          "unstableSupport": 3,
+          "waitDecisions": 5
+        },
+        "falseWaitRate": 0.6666666666666666,
+        "noReadySequences": 0,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:scroll": {
+        "abstentionRate": 0.0,
+        "counts": {
+          "falseWaits": 2,
+          "frames": 6,
+          "readyDecisions": 1,
+          "readySupport": 3,
+          "reason:insufficient_history": 2,
+          "reason:stable_window": 1,
+          "reason:visual_change": 3,
+          "unstableSupport": 3,
+          "waitDecisions": 5
+        },
+        "falseWaitRate": 0.6666666666666666,
+        "noReadySequences": 0,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200
+        ],
+        "sequences": 1,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "scenario:static": {
+        "abstentionRate": 0.5,
+        "counts": {
+          "falseWaits": 10,
+          "frames": 30,
+          "readyDecisions": 5,
+          "readySupport": 30,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 8,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 5,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "waitDecisions": 8
+        },
+        "falseWaitRate": 0.3333333333333333,
+        "noReadySequences": 3,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [
+          200,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 5,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 3
+      },
+      "sourceKind:physical": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "sourceKind:simulator": {
+        "abstentionRate": null,
+        "counts": {},
+        "falseWaitRate": null,
+        "noReadySequences": 0,
+        "prematureReadyRate": null,
+        "readyIntervalDelayMs": [],
+        "sequences": 0,
+        "timedOutSequences": 0,
+        "undetectedReadyIntervals": 0
+      },
+      "sourceKind:test-only": {
+        "abstentionRate": 0.2777777777777778,
+        "counts": {
+          "falseWaits": 22,
+          "frames": 54,
+          "readyDecisions": 8,
+          "readySupport": 45,
+          "reason:deadline": 2,
+          "reason:focus_none": 10,
+          "reason:insufficient_history": 15,
+          "reason:missing": 1,
+          "reason:repeated_observation": 4,
+          "reason:stable_window": 8,
+          "reason:visual_change": 14,
+          "timeoutDecisions": 2,
+          "unknownDecisions": 15,
+          "unstableSupport": 9,
+          "waitDecisions": 29
+        },
+        "falseWaitRate": 0.4888888888888889,
+        "noReadySequences": 4,
+        "prematureReadyRate": 0.0,
+        "readyIntervalDelayMs": [
+          200,
+          200,
+          200,
+          200,
+          null,
+          null,
+          500,
+          null,
+          null
+        ],
+        "sequences": 9,
+        "timedOutSequences": 1,
+        "undetectedReadyIntervals": 4
+      }
+    }
+  },
+  "version": "transition-report-v1"
+}
