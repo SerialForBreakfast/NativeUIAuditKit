@@ -1,0 +1,10 @@
+{
+  "exitCode": 124,
+  "elapsedSeconds": 60.014517417002935,
+  "command": [
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/bin/python",
+    "-u",
+    "-c",
+    "import faulthandler; faulthandler.dump_traceback_later(30); import torch; print('torch',torch.__version__,flush=True); import coremltools; print('coremltools',coremltools.__version__,flush=True); faulthandler.cancel_dump_traceback_later()"
+  ]
+}

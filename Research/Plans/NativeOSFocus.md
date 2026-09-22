@@ -2,6 +2,26 @@
 
 ## Latest delivery and next boundary
 
+### Assigned candidate export/parity — 2026-09-22
+
+Maintainer “ok. Continue” assigns FOCUS-EXPORT-01: export FDR-007 using the
+existing vendored-backbone/trace path to a new project-local experimental package,
+compile it in isolation and compare production CoreML CPU inference on the frozen
+12 Remotes challenge crops against retained, hash-bound PyTorch CPU scores.
+Revalidate observations/review, source/crop bytes, runtime, checkpoint and
+training/challenge isolation before inference. No recapture or training.
+Freeze diagnostic tolerance before evaluation: maximum absolute probability error
+≤0.01 and identical decisions at0.5/0.70/0.85; this is an export check on12 samples,
+not a release/model-quality gate. Report all differences, ambiguity decisions,
+model load/first/warm latency and package bytes (existing5MiB gate plus decimal MB).
+Metadata must identify FDR-007 as experimental and bind its checkpoint, not reuse
+the shipped model identity. Reject existing output/symlinks/outside-project paths,
+unsupported checkpoints and changed inputs. Test failures without inference in
+ordinary unit tests; run repository offline checks once integrated. Normal host
+CoreML compilation/cache use needs scoped approval; TMPDIR and all explicit outputs
+remain project-local. No shipped replacement, TTR operation, public API change or
+promotion. Finish with evidence and next action.
+
 [2026-09-22 handoff](../../reports/work/OS-FOCUS-03/handoff.md): Home capture remains
 blocked before directional inputs; independently collected Apps3 training and Remotes6
 challenge pairs. FDR-007 completed the one assigned incremental candidate and matches

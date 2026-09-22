@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -42,6 +43,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--output-dir", default=None,
                    help="Export directory (default: <weights>/../export/)")
     p.add_argument("--model", default="mobilenetv4_conv_small")
+    p.add_argument("--experimental-id", required=True, help="Unique non-production artifact identity, e.g. fdr007-native-incremental")
     return p.parse_args()
 
 
@@ -51,37 +53,55 @@ def dir_size_mb(path: Path) -> float:
     return sum(f.stat().st_size for f in path.rglob("*") if f.is_file()) / (1024 * 1024)
 
 
+def export_paths(weights, output, experimental_id):
+    from focus_dataset_contract import local
+    import re
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{2,63}", experimental_id):
+        raise ValueError("invalid_experimental_id")
+    for value in (weights, output):
+        if value is None: continue
+        path = Path(value).absolute()
+        if any(p.is_symlink() for p in [path, *path.parents]):
+            raise ValueError("symlink_export_path")
+    weights = local(Path(weights))
+    if not weights.is_file(): raise ValueError("missing_checkpoint")
+    destination = local(Path(output)) if output else local(weights.parent.parent/"export")
+    protected = PROJECT_ROOT/"NativeUIAuditKitModels"
+    if destination == protected or protected in destination.parents:
+        raise ValueError("production_export_forbidden")
+    if destination.exists(): raise ValueError("output_collision")
+    return weights, destination
+
+
 def main() -> int:
     args = parse_args()
-    weights = Path(args.weights).expanduser()
-    if not weights.is_absolute():
-        weights = (PROJECT_ROOT / weights).resolve()
-    if not weights.is_file():
-        print(f"ERROR: weights not found: {weights}")
-        return 1
-
-    export_dir = (
-        Path(args.output_dir).expanduser().resolve()
-        if args.output_dir
-        else weights.parent.parent / "export"
-    )
-    export_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        weights, export_dir = export_paths(args.weights, args.output_dir, args.experimental_id)
+    except (ValueError, OSError) as error:
+        print(f"ERROR: {error}"); return 2
+    weights_hash = hashlib.sha256(weights.read_bytes()).hexdigest()
 
     # --- imports ---
+    print("stage=import-torch", flush=True)
     import importlib.util
     import torch
     import torch.nn as nn
 
     try:
+        print("stage=import-coremltools", flush=True)
         import coremltools as ct
     except ImportError as e:
         print(f"ERROR: {e}. Run with .venv-coreml (has coremltools).")
         return 1
 
+    print("stage=load-checkpoint", flush=True)
     # --- load backbone from checkpoint ---
-    ckpt = torch.load(weights, map_location="cpu", weights_only=False)
+    ckpt = torch.load(weights, map_location="cpu", weights_only=True)
     model_name = ckpt.get("model_name", args.model) if isinstance(ckpt, dict) else args.model
     state = ckpt["state_dict"] if isinstance(ckpt, dict) and "state_dict" in ckpt else ckpt
+    if model_name != "mobilenetv4_conv_small": raise ValueError("unsupported_backbone")
+    if not state or any(not torch.isfinite(v).all() for v in state.values()):
+        raise ValueError("nonfinite_or_empty_checkpoint")
 
     bb_path = Path(__file__).with_name("focus_ring_backbone.py")
     spec = importlib.util.spec_from_file_location("focus_ring_backbone", bb_path)
@@ -112,9 +132,11 @@ def main() -> int:
     example = torch.zeros(1, 3, INPUT_SIZE, INPUT_SIZE)
 
     # --- torch.jit.trace → CoreML (no onnx package required) ---
+    print("stage=trace", flush=True)
     traced = torch.jit.trace(wrapped, example)
     traced.eval()
 
+    print("stage=convert", flush=True)
     mlmodel = ct.convert(
         traced,
         inputs=[
@@ -137,20 +159,31 @@ def main() -> int:
     # Required metadata (Research/FocusRingDetectorSpec.md §9)
     mlmodel.short_description = "Binary classifier: tvOS UI element focus state"
     mlmodel.author = "NativeUIAuditKit"
-    mlmodel.user_defined_metadata["modelID"] = "focus-ring-detector-v1.0"
-    mlmodel.user_defined_metadata["versionString"] = "1.0.0"
+    mlmodel.user_defined_metadata["modelID"] = "focus-ring-experimental-" + args.experimental_id
+    mlmodel.user_defined_metadata["versionString"] = "0.0.0-experimental"
+    mlmodel.user_defined_metadata["checkpointSHA256"] = weights_hash
+    mlmodel.user_defined_metadata["releaseEligible"] = "false"
     mlmodel.user_defined_metadata["focusThreshold"] = "0.85"
     mlmodel.user_defined_metadata["ambiguityThreshold"] = "0.70"
     mlmodel.user_defined_metadata["backboneArchitecture"] = model_name
 
     pkg = export_dir / "FocusRingDetector.mlpackage"
+    export_dir.mkdir(parents=True, exist_ok=False)
     mlmodel.save(str(pkg))
+    if hashlib.sha256(weights.read_bytes()).hexdigest() != weights_hash:
+        raise ValueError("checkpoint_changed_during_export")
     size_mb = dir_size_mb(pkg)
     print(f"Exported {pkg} ({size_mb:.2f} MB)")
 
     report = {
         "generatedAt": utc_now(),
         "weights": str(weights),
+        "checkpointSHA256": weights_hash,
+        "experimentalID": args.experimental_id,
+        "releaseEligible": False,
+        "torchVersion": torch.__version__,
+        "coremltoolsVersion": ct.__version__,
+        "method": "torch.jit.trace/FP16/macOS15/RGB255",
         "model_name": model_name,
         "mlpackage": str(pkg),
         "size_mb": size_mb,
@@ -167,10 +200,7 @@ def main() -> int:
         f"\nSize gate: {size_mb:.2f} MB <= {MAX_MB} MB PASS\n"
         "\nNext: compile to .mlmodelc:\n"
         f"  xcrun coremlc compile {pkg} {export_dir}\n"
-        "Then copy FocusRingDetector.mlmodelc into:\n"
-        "  NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/\n"
-        "And add to Package.swift NativeUIAuditKitModels target:\n"
-        '  .copy("Resources/FocusRingDetector.mlmodelc")'
+        "Experimental artifact only. Do not copy into shipped resources.\n"
     )
     return 0
 

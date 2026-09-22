@@ -8,6 +8,11 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
+Candidate export/parity tooling is now ready, but [FOCUS-EXPORT-01](../reports/work/FOCUS-EXPORT-01/handoff.md)
+is blocked in local coremltools→scikit-learn/SciPy imports before conversion.
+Resolve bounded export-runtime readiness, then complete isolated FDR-007 compilation
+and frozen challenge parity. No training rerun or TTR fix is needed for that step.
+
 The next independent tranche has [completed its Settings fallback and one candidate](../reports/work/OS-FOCUS-03/handoff.md).
 Apps3 pairs extend training; Remotes6 pairs remain challenge-only. FDR-007 retained
 18/18 validation and12/12 challenge decisions, matching FDR-006 on challenge versus

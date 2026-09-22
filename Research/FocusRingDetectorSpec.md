@@ -204,11 +204,18 @@ Scripts:
 ```bash
 .venv-yolo/bin/python scripts/harvest_focus_pairs.py --dry-run
 .venv-yolo/bin/python scripts/train_focus_ring_detector.py --dry-run
-python scripts/export_focus_ring_coreml.py \
-    --weights NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt
+.venv-yolo/bin/python scripts/export_focus_ring_coreml.py \
+    --weights NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt \
+    --output-dir NativeUITrainer/focus_ring_runs/fdr001/new-experimental-export \
+    --experimental-id fdr001-replay
 .venv-yolo/bin/python scripts/eval_focus_ring_detector.py \
     --weights NativeUITrainer/focus_ring_runs/fdr001/weights/best.pt
 ```
+
+Export destinations must be new and project-local, outside shipped resources.
+Experimental exports bind checkpoint SHA256 and carry a non-production model ID;
+successful conversion/size checks do not authorize promotion. See the
+[FDR-007 parity contract](Plans/NativeOSFocus.md#assigned-candidate-exportparity--2026-09-22).
 
 ---
 

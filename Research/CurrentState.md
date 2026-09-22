@@ -11,6 +11,12 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+Latest export attempt: [FOCUS-EXPORT-01](../reports/work/FOCUS-EXPORT-01/handoff.md)
+delivered isolated export safeguards and parity tooling, but conversion never started.
+coremltools imports scikit-learn/SciPy; the owned export exceeded its startup budget
+and a60s import-only probe also timed out. No new CoreML artifact, size or parity
+claim. Next fix/qualify the local export runtime; not a TTR or corpus blocker.
+
 Latest independent tranche: [OS-FOCUS-03/04](../reports/work/OS-FOCUS-03/handoff.md)
 added3 Apps training pairs and6 Remotes challenge pairs. FDR-007 completed8 epochs
 on40 train/9 validation pairs:18/18 validation,12/12 challenge decisions at0.85.

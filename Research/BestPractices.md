@@ -1345,6 +1345,12 @@ FDR-006 completed in419s wall time while the following scratch arm took20s.
 These timings describe runtime overhead, not an architecture-speed comparison.
 The original attempt remains failed evidence; no model-quality-triggered retry.
 
+Export extension, FOCUS-EXPORT-01: fast Torch loading does not establish CoreML
+export readiness either. A60s import-only traceback identified coremltools importing
+scikit-learn→SciPy; conversion had not started after the612s stopped attempt.
+Record import/trace/conversion stages separately. This evidence does not establish
+a permission denial, bad weights, deadlock, or a FileProvider root cause.
+
 ### BP-70: Bound inference batches by decoded pixels
 
 **Wrong:** Assuming18 valid images fit a helper merely because its item limit is128.

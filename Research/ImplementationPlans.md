@@ -4,6 +4,10 @@
 
 ## Remaining-work amendments and direct acquisition
 
+[FOCUS-EXPORT-01: isolated candidate CoreML parity](Plans/NativeOSFocus.md#assigned-candidate-exportparity--2026-09-22)
+binds experimental export identity to FDR-007 and compares production CoreML CPU
+against frozen Torch challenge evidence. No capture, training or promotion.
+
 [FOCUS-EXP-01: bounded focus-learning experiment](Plans/FocusLearningExperiment.md)
 compares checkpoint initialization and crop shape using reviewed, screen-grouped
 native data through an isolated experimental entrypoint in the existing trainer.
