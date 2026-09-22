@@ -19,6 +19,7 @@ replace unqualified Pillow interpolation for new candidates. No public API chang
 - [`../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md`](../../memlog/research/ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md)  
 - [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) — Apple Silicon training iteration efficiency ADR
 - [`ADR-0007-VoiceOver-Navigation-Focus-Alignment.md`](ADR-0007-VoiceOver-Navigation-Focus-Alignment.md) — keeps visual focus detection separate from metadata-backed accessibility alignment policy
+- [`ADR-0008-Simulator-First-tvOS-FocusRing-Development.md`](ADR-0008-Simulator-First-tvOS-FocusRing-Development.md) — simulator-first FocusRing development and later hardware transfer validation
 - [`FocusRingDetectorSpec.md`](FocusRingDetectorSpec.md) — Stage 2 tvOS focus classifier (MobileNetV4 crop model, independent of YOLO; v0.1 `.mlmodelc` shipped 2026-09-18)
 
 ---
@@ -431,6 +432,14 @@ Three coordinate systems are stored in every annotation. This is mandatory — A
 | `boundsVisionNormalized` | **Bottom-left** | [0,1] | Vision observations, CoreML output |
 
 Training pipelines select the format required by Create ML (pixel bounding boxes), coremltools (normalized), or custom PyTorch loaders. Storing all three eliminates re-derivation bugs caused by wrong scale assumptions.
+
+**P0-C replacement corpus correction (2026-09-22):** raw point/pixel boxes preserve
+generator geometry, including deliberate overflow. Normalized boxes describe the
+intersection with the visible image; clip both edges before deriving width/height.
+Mark partly clipped elements `imageBoundary` and wholly invisible elements excluded.
+Schema v1.0 safe-area keys remain `top/left/bottom/right`; internal Swift property
+names must not change serialized keys. BP-28's `tabBarItem` exclusion also applies to
+manifest class counts. See [corrected reconstruction configuration](../reports/work/P0-C/reconstruction-configuration-r2.md).
 
 #### Confirmed Export Strategy (Phase 1 Coordinate Spike — 2026-05-04)
 

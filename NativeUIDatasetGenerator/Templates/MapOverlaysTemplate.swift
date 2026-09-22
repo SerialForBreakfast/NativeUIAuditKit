@@ -116,7 +116,8 @@ public struct MapOverlaysTemplate: View {
                                         brightness: brightness
                                     ))
                                     .frame(width: tileSize, height: tileSize)
-                                    .offset(x: CGFloat(col) * tileSize, y: CGFloat(row) * tileSize)
+                                    .padding(.leading, CGFloat(col) * tileSize)
+                                    .padding(.top, CGFloat(row) * tileSize)
                             }
                         }
 
@@ -125,10 +126,12 @@ public struct MapOverlaysTemplate: View {
                             Image(systemName: "mappin.circle.fill")
                                 .font(.system(size: 28))
                                 .foregroundStyle(.red)
-                                .offset(x: pos.0 * w - 14, y: pos.1 * h - 28)
+                                .padding(.leading, pos.0 * w - 14)
+                                .padding(.top, pos.1 * h - 28)
                         }
                     }
-                    .frame(width: w, height: h)
+                    .frame(width: w, height: h, alignment: .topLeading)
+                    .clipped()
                 }
                 .captureFrame(id: "mapView_0")
                 .ignoresSafeArea()

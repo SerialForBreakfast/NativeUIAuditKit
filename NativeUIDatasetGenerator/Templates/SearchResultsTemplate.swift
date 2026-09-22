@@ -133,16 +133,9 @@ public struct SearchResultsTemplate: View {
                 }
                 .listStyle(.insetGrouped)
 
-                // Sentinel view for the search field annotation.
-                // The .searchable modifier places UISearchBar at the top of the
-                // navigation bar. We capture a 44pt-high strip at the nav bar bottom
-                // as a proxy annotation — width is full screen, consistent placement.
-                Color.clear
-                    .frame(height: 44)
-                    .captureFrame(id: "searchField_0")
-                    .padding(.top, 56)  // below large title
+                // Search-field geometry comes from the rendered UISearchTextField.
+                // Its placement varies by runtime; a fixed top strip is not ground truth.
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: .constant(config.searchText), prompt: "Search")

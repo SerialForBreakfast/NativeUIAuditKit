@@ -134,7 +134,6 @@ public struct LiquidGlassTabTemplate: View {
                         .scrollContentBackground(.hidden)
                         .listStyle(.insetGrouped)
                     }
-                    .ignoresSafeArea(.all)
                     .navigationTitle(config.title)
                     .navigationBarTitleDisplayMode(.large)
                     .colorScheme(config.colorScheme)

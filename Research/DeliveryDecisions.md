@@ -1,5 +1,13 @@
 # Accepted full-backlog delivery decisions
 
+**Parallel direct tvOS generation, 2026-09-22:**
+[ADR-0009](ADR-0009-Direct-tvOS-Simulator-Generation.md) adds a NUIAK-owned native
+Fixture/OS simulator lane independent of TTR capture/export. Either qualified
+simulator producer can supply FocusRing development data; TTR continues in parallel
+and contributes later data/integration evidence. Cross-producer split lineage and
+all model/physical gates remain binding. This supersedes TTR-only acquisition
+dependencies, not execution permissions or existing workers.
+
 **Office amendment, 2026-09-20:** the [physical visual-focus lane](Plans/OfficeFocusRing.md)
 is the highest available priority. Simulator execution is user-paused until further notice.
 Authorize one ten-minute Office fixture smoke request to the Sillycon agent, not broader
@@ -24,6 +32,13 @@ No training, remote execution, Sillycon mutation or renewed Office permission fo
 Defer navigation-defect and VoiceOver datasets. Visual-only simulator examples need
 no semantic alignment matrix, but do not close physical FocusRing gates, replace iOS
 data, satisfy DS-G8, or establish physical-device performance.
+
+**Simulator-first amendment, 2026-09-21:** [ADR-0008](ADR-0008-Simulator-First-tvOS-FocusRing-Development.md)
+supersedes the earlier narrow Office-first sequencing. Repair and qualify the local
+simulator fixture/export/intake path before any physical Office capture. Office is
+a separately authorized later transfer comparison after simulator pilot, baseline,
+and candidate gates. This changes priority and sequencing only; it does not grant
+simulator or physical-device operation authority.
 
 **Accepted by the maintainer:** 2026-09-19, Full Backlog Delivery Plan. This records planning decisions, not completed implementation or changed shipped artifacts. Runtime taxonomy, schemas, and model resources remain unchanged until their assigned implementation passes review.
 

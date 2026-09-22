@@ -6,6 +6,7 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 
 | File | What it is |
 |---|---|
+| [`ADR-0009-Direct-tvOS-Simulator-Generation.md`](ADR-0009-Direct-tvOS-Simulator-Generation.md) | Independent native Fixture/OS data generation alongside TTR; TVGEN-01–04 |
 | [`WorkerWorkflow.md`](WorkerWorkflow.md) | Architect/worker roles, safety, context budget, evidence and acceptance |
 | [`IterationRoadmap.md`](IterationRoadmap.md) | Concurrent lanes and separate software/data/model qualification |
 | [`TVTestRigIntegrationContract.md`](TVTestRigIntegrationContract.md) | H1 source-pinned contract loop and P4-L genuine-bundle qualification |
@@ -36,4 +37,5 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 | [`Phase6LessonsLearned.md`](Phase6LessonsLearned.md) | Create ML / Vision eval pitfalls |
 | [`ADR-0006-Training-Iteration-Efficiency.md`](ADR-0006-Training-Iteration-Efficiency.md) | Apple Silicon training ADR |
 | [`ADR-0007-VoiceOver-Navigation-Focus-Alignment.md`](ADR-0007-VoiceOver-Navigation-Focus-Alignment.md) | Visual focus detection versus metadata-backed VoiceOver/navigation alignment |
+| [`ADR-0008-Simulator-First-tvOS-FocusRing-Development.md`](ADR-0008-Simulator-First-tvOS-FocusRing-Development.md) | Simulator-first FocusRing development and later hardware transfer validation |
 | [`References.md`](References.md) | External Apple / prior-art links |

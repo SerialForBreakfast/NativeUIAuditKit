@@ -35,6 +35,8 @@ public struct MenuButtonConfig: Sendable {
     public var showSecondMenu: Bool
     public var secondMenuLabel: String
     public var secondMenuItems: [String]
+    /// Seeded contextual content provides meaningful closed-menu visual variants.
+    public var contextRows: [String]
     public var colorScheme: ColorScheme
 
     public init(
@@ -45,7 +47,8 @@ public struct MenuButtonConfig: Sendable {
         showSecondMenu: Bool,
         secondMenuLabel: String,
         secondMenuItems: [String],
-        colorScheme: ColorScheme
+        colorScheme: ColorScheme,
+        contextRows: [String] = ["Item 1", "Item 2", "Item 3", "Item 4"]
     ) {
         self.title = title
         self.menuItems = menuItems
@@ -55,6 +58,7 @@ public struct MenuButtonConfig: Sendable {
         self.secondMenuLabel = secondMenuLabel
         self.secondMenuItems = secondMenuItems
         self.colorScheme = colorScheme
+        self.contextRows = contextRows
     }
 
     /// Standard SwiftUI sort/filter option pools.
@@ -69,7 +73,7 @@ public struct MenuButtonConfig: Sendable {
         let menuCount  = 2 + Int(rng.next() % 3)   // 2–4 items
         let pool       = sortOptions
         var items: [String] = []
-        for i in 0..<menuCount { items.append(pool[Int(rng.next() % UInt64(pool.count))]) }
+        for _ in 0..<menuCount { items.append(pool[Int(rng.next() % UInt64(pool.count))]) }
         let selectedIdx = Int(rng.next() % UInt64(items.count))
         let secondPool = filterOptions
         var items2: [String] = []
@@ -82,7 +86,8 @@ public struct MenuButtonConfig: Sendable {
             showSecondMenu: showSecond,
             secondMenuLabel: "Filter",
             secondMenuItems: items2,
-            colorScheme: dark ? .dark : .light
+            colorScheme: dark ? .dark : .light,
+            contextRows: (0..<4).map { _ in corpus.listRowTitle() }
         )
     }
 }
@@ -112,7 +117,7 @@ public struct MenuButtonTemplate: View {
                             // SwiftUI Menu renders as a menu button — the tappable
                             // trigger is the `menuButton` annotation target.
                             Menu {
-                                ForEach(config.menuItems, id: \.self) { item in
+                                ForEach(Array(config.menuItems.enumerated()), id: \.offset) { _, item in
                                     Button(item) {}
                                 }
                             } label: {
@@ -138,7 +143,7 @@ public struct MenuButtonTemplate: View {
                                     .captureFrame(id: "label_filter")
                                 Spacer()
                                 Menu {
-                                    ForEach(config.secondMenuItems, id: \.self) { item in
+                                    ForEach(Array(config.secondMenuItems.enumerated()), id: \.offset) { _, item in
                                         Button(item) {}
                                     }
                                 } label: {
@@ -163,12 +168,12 @@ public struct MenuButtonTemplate: View {
 
                     // Filler rows to show the menu in context
                     Section {
-                        ForEach(0..<4, id: \.self) { idx in
+                        ForEach(Array(config.contextRows.enumerated()), id: \.offset) { idx, text in
                             HStack {
                                 Image(systemName: "doc.text")
                                     .foregroundStyle(.secondary)
                                     .frame(width: 24)
-                                Text("Item \(idx + 1)")
+                                Text(text)
                                     .font(.body)
                                 Spacer()
                                 Text("...")

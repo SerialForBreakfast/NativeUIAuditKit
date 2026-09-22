@@ -109,6 +109,7 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
 
     private func setupViews() {
         var corpus = ContentCorpus(seed: seed)
+        var rng = SeededRNG(seed: seed)
 
         // Navigation bar
         let navItem = UINavigationItem(title: corpus.navigationTitle())
@@ -123,10 +124,11 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
         configureSectionLabel(pageLabel,      text: "Page Control")
         configureSectionLabel(toggleLabel,    text: "Toggle")
 
-        // Slider — distribute values so equal representation across range
+        // Independent seeded control values: seed-stride variants must not alias
+        // through shared seed % 2/4/5/8 residues (P0-C reconstruction).
         slider.minimumValue = 0
         slider.maximumValue = 1
-        slider.value = Float(seed % 5) * 0.25  // 0.0, 0.25, 0.50, 0.75, 1.0
+        slider.value = Float(rng.next() % 101) / 100
 
         // Segmented control — 2–4 segments based on seed
         let segmentOptions: [[String]] = [
@@ -135,33 +137,33 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
             ["Light", "Dark"],
             ["S", "M", "L", "XL"],
         ]
-        let segments = segmentOptions[Int(seed % UInt64(segmentOptions.count))]
+        let segments = segmentOptions[Int(rng.next() % UInt64(segmentOptions.count))]
         for (i, title) in segments.enumerated() {
             segmentedControl.insertSegment(withTitle: title, at: i, animated: false)
         }
-        segmentedControl.selectedSegmentIndex = Int(seed % UInt64(segments.count))
+        segmentedControl.selectedSegmentIndex = Int(rng.next() % UInt64(segments.count))
 
         // Activity indicator — always animating so it's visually present
         activityIndicator.startAnimating()
         activityIndicator.color = .systemBlue
 
         // Progress view — value varies by seed
-        progressView.progress = Float(seed % 4 + 1) * 0.25  // 0.25, 0.50, 0.75, 1.0
+        progressView.progress = Float(rng.next() % 101) / 100
         progressView.progressTintColor = .systemBlue
 
         // Page control — 3–7 pages based on seed
-        let pageCount = Int(seed % 5) + 3
+        let pageCount = Int(rng.next() % 5) + 3
         pageControl.numberOfPages = pageCount
-        pageControl.currentPage = Int(seed % UInt64(pageCount))
+        pageControl.currentPage = Int(rng.next() % UInt64(pageCount))
         pageControl.currentPageIndicatorTintColor = .systemBlue
         pageControl.pageIndicatorTintColor = .systemFill
 
         // Toggle — state alternates by seed
-        toggle.isOn = seed % 2 == 0
+        toggle.isOn = rng.next() % 2 == 0
 
         // "Reset" secondary button at the bottom
         let resetLabels = ["Reset to Defaults", "Reset All", "Restore Defaults", "Clear Settings"]
-        let resetLabel = resetLabels[Int(seed % UInt64(resetLabels.count))]
+        let resetLabel = resetLabels[Int(rng.next() % UInt64(resetLabels.count))]
         resetButton.setTitle(resetLabel, for: .normal)
         resetButton.titleLabel?.font = .systemFont(ofSize: 17)
         resetButton.setTitleColor(.systemBlue, for: .normal)
@@ -172,7 +174,7 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
         secureTextField.placeholder = "Password"
         secureTextField.borderStyle = .roundedRect
         secureTextField.font = .systemFont(ofSize: 17)
-        secureTextField.text = String(repeating: "•", count: Int(seed % 8) + 6) // varies by seed
+        secureTextField.text = String(repeating: "•", count: Int(rng.next() % 8) + 6)
 
         // Add section labels to hierarchy
         for label in [sliderLabel, segmentLabel, activityLabel, progressLabel, pageLabel, toggleLabel, secureLabel] {

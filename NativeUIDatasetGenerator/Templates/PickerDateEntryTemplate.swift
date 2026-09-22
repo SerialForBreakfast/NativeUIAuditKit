@@ -173,7 +173,6 @@ public struct PickerDateEntryTemplate: View {
                         .padding(.bottom, 32)
                 }
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

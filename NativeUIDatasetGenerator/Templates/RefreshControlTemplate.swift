@@ -120,7 +120,6 @@ public struct RefreshControlTemplate: View {
                 .frame(height: 56)
                 .padding(.top, 0)
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.inline)
             .colorScheme(config.colorScheme)

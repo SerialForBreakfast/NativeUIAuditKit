@@ -13,6 +13,11 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**Parallel tvOS acquisition (2026-09-22):** [ADR-0009](Research/ADR-0009-Direct-tvOS-Simulator-Generation.md)
+adds direct Fixture/OS generation without waiting for TTR capture/export. Keep TTR
+work and active iOS reconstruction intact. Either qualified simulator lane may
+provide FocusRing development data; TTR integration/physical promotion remain separate.
+
 **Architect acceptance (2026-09-22):** PER-01 supplied-evidence inventory/software and
 PER-02/04/05/06 offline scopes accepted after integrated review and corrections.
 [Acceptance and remaining capture gaps](reports/work/PERCEPTION-ACCEPTANCE/handoff.md).
@@ -28,12 +33,18 @@ prioritize smoke/intake once the capture fix is ready and execution is authorize
 FocusRing goal. Preserve active workers; no capture/training or peer request is
 authorized by this planning update. [Detailed contracts](Research/Plans/TTRPerception.md).
 Priority F1 supersedes legacy numeric ordering for new assignments; preserve existing
-workers and authorized work. **Office visual-focus remains the model-delivery lane:**
-P4-L smoke/intake → FR-B physical pilot + shipped baseline + qualified corpus → FR-C
-candidate/export → separately authorized TTR comparison. Only the single smoke request
-is currently authorized. [Office contracts](Research/Plans/OfficeFocusRing.md).
-Simulator execution is paused by the user until further notice, independently of runtime
-repair; preserve offline review/evidence and [simulator plans](Research/Plans/FocusRingSimulator.md).
+workers and authorized work. **ADR-0008 supersedes the earlier Office-first sequence:**
+simulator smoke/intake → development pilot/baseline → qualified corpus → separately
+authorized candidate/comparison. Office is later physical-transfer validation.
+The prior single-smoke authorization does not authorize another run, broad capture
+or training. Preserve [Office contracts](Research/Plans/OfficeFocusRing.md) and
+[simulator evidence/plans](Research/Plans/FocusRingSimulator.md).
+
+**Iteration review:** [change-scoped verification and visual coverage](Research/IterationEfficiency.md)
+govern feedback cadence. Producer shared status reports screenshot repair evidence
+at 2026-09-22 04:55 UTC; this is not local capture/intake qualification or fresh
+runtime availability. Next integration action is candidate reconciliation and an
+explicitly authorized complete smoke/intake, not another generic readiness-only loop.
 
 Dispatch contracts: [`Research/ImplementationPlans.md`](Research/ImplementationPlans.md).
 Workflow: [`Research/WorkerWorkflow.md`](Research/WorkerWorkflow.md). Owner is unassigned until dispatch.
@@ -43,6 +54,10 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 
 | Priority | Packet | Parent | State | Prerequisite / next action |
 |---|---|---|---|---|
+| F1 | TVGEN-01 | FOCUS-DET-05 | ready (unassigned) | [Direct tvOS design/reuse inventory](Research/ADR-0009-Direct-tvOS-Simulator-Generation.md#implementation-tranches); read-only Fixture source/target inspection, no TTR runtime dependency |
+| F1 | TVGEN-02 | FOCUS-DET-05 | planned (unassigned) | TVGEN-01 reviewed; implement direct runner/adapter and offline tests; exact-target runtime authority separately required for native two-element qualification |
+| F1 | TVGEN-03 | FOCUS-DET-05 | planned (unassigned) | Qualified direct runner/intake; authorized pilot and baseline; no SIM-DATA-01 prerequisite |
+| F1 | TVGEN-04 | FOCUS-DET-05 | planned (unassigned) | Accepted direct pilot/baseline, frozen split plan and scale authority; existing FocusRing quotas, cross-lane leakage audit and training handoff |
 | F1 | EVIDENCE-AUDIT | PER-01 / PER-02 / PER-04 | accepted (original offline scope) | Audit/gate corrections reviewed and 14 tests rerun; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). Legacy cross-split data remains unqualified; broader supplied-evidence review is now recorded under PER-01. |
 | F1 | FOCUS-LAUNCH | FOCUS-DET-05 | accepted (original offline scope) | Runtime crop, CoreML adapter and capture-plan compiler reviewed/tested; [acceptance](reports/work/PERCEPTION-INTAKE/handoff.md). No capture/training or model-quality pass. |
 | F1 | FOCUS-CONSUMER | SIM-DATA-02 / FOCUS-DET-05 | accepted (offline scope) | Validator/extraction/preflight foundations accepted; v1.2 remains inspectable only, new runtime-crop parity delivered in FOCUS-LAUNCH. [Review](reports/work/FOCUS-LAUNCH/review.md). No genuine data qualification. |
@@ -62,26 +77,26 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | 8 | P4-B | 6a-10 | accepted | Split-safe assembly software and adversarial tests accepted; actual assembly remains data-gated |
 | 9 | P2-A | 6a-11 | accepted | Strict reference-comparison software and compatibility checks accepted; P2-B remains corpus/prediction-gated |
 | — | P0-B | DATA-01 | blocked | P0-A recovery evidence and exact authorized staged-copy plan |
-| — | P0-C | DATA-01 | in progress | WKWebView/`HardNegative_2` route retired and native validation passed. After maintainer freed substantial disk headroom, fresh isolated native-only replacement capture is authorized for retry; `webContent` remains explicitly uncovered |
+| — | P0-C | DATA-01 | in progress (NUIAK architect) | Corrected schema/geometry/native chrome and MenuButton diversity; failed attempts preserved. Eight native tests, 346 independent preflight pairs, 14 Python tests and 92 Swift tests pass. [r5 continuation](reports/work/P0-C/reconstruction-configuration-r5.md) preserves 7,500 verified completed captures and collects the remaining 9,440 toward the unchanged 16,940 target. Final corpus eligibility remains open; no training; `webContent` uncovered. |
 | — | P1-B | 6a-11 | blocked | P1-A and eligible original/replacement test pixels |
 | — | P2-B | 6a-11 | blocked | P2-A and accepted P1-B artifacts |
 | — | P3-B | 6a-11 | blocked | P3-A, eligible corpus, compatible P1/P2 software |
-| F1 | P4-L | INTEGRATION-01 | blocked (staging access) | Approved container workaround stalled creating its directory; canceled owned processes, no lease/capture began. Maintainer is remote. Establish scoped storage access or producer-supported accessible export, then refresh Office readiness/authority. See reports/work/OFFICE-FOCUS-SMOKE/staging-attempt.md and output-path-rca.md |
+| F1 | P4-L | INTEGRATION-01 | deferred (ADR-0008 simulator-first) | Physical bundle intake is later transfer validation. First repair and qualify the simulator fixture/export/intake loop; no Office capture is implied. |
 | — | P5-B | 6a-10 | blocked | Eligible full corpora and accepted assembly/config interfaces |
 | — | TRAIN-S | 6a-10 | blocked | P5-B and explicit bounded smoke assignment |
 | — | TRAIN-F | 6a-10 | blocked | Accepted smoke and full-run assignment |
 | — | TRAIN-Q | 6a-10 | blocked | Candidate plus eligible dual holdouts |
 | — | FR-A | FOCUS-DET-05 | accepted | Offline quota/pair/split and ADR-0007 alignment validator accepted; FR-B remains capture-gated |
-| F1 | FR-B | FOCUS-DET-05 | blocked | P4-L acceptance, physical-source review and separate pilot/scale harvest authority; visual-only corpus needs no semantic alignment matrix |
-| F1 | FR-C | FOCUS-DET-05 | blocked | Accepted physical FR-B corpus and explicit training/export assignment; later TTR comparison separately authorized |
-| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (screenshot output access) | Authorized fd50a80 smoke B699DFCC resolves native reference/settling, then screenshot write fails Cocoa513/EPERM; zero accepted rows. Postflight responsive/ownership clear. TTR repair requested; no unchanged retry or training. [Current evidence](reports/work/SIM-DATA-01-02/smoke-20260922-0140/handoff.md). |
+| F1 | FR-B | FOCUS-DET-05 | deferred (ADR-0008 simulator-first) | Physical corpus is later transfer validation after the qualified simulator pilot, baseline, candidate, and separate physical authority. |
+| F1 | FR-C | FOCUS-DET-05 | deferred (ADR-0008 simulator-first) | Physical candidate/comparison work follows simulator candidate evidence and a separately authorized transfer-validation lane. |
+| F1 | SIM-DATA-01 | TASK-SIM-DATA-01 | blocked (Fixture endpoint / live qualification; NUIAK architect) | 05:49Z updated local build passes infrastructure readiness with ownership clear; repaired companion source matches peer receipt. Prior Fixture endpoint8080 refuses connection. Next: authorized matching Fixture launch/endpoint verification and complete smoke/export/intake; no new screenshot failure inferred. [Current evidence](reports/work/SIM-DATA-01-02/readiness-20260922-0548/handoff.md). |
 | F1 | SIM-DATA-02 | TASK-SIM-DATA-01 | review (offline extensions delivered) | Same-box/split/quota gaps addressed by FOCUS-CONSUMER; runtime parity in FOCUS-LAUNCH. Genuine native observation remains blocked at SIM-DATA-01; do not reuse old requested-focus claims as truth. Physical PER-04 stays separate. |
-| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted SIM-DATA-01/02 plus simulator capture authority; 42-recipe genuine pilot |
-| F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned capture; ≥6,000 visual pairs |
-| F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
-| F1 | FR-SIM-BASE | FOCUS-DET-05 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Genuine SIM-DATA-03 pilot and assigned baseline inference; offline tooling independently dispatchable; owner unassigned |
-| F1 | FR-SIM-CAND | FOCUS-DET-05 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  FR-SIM-BASE, qualified SIM-DATA-04 corpus and explicit run/export assignment; owner unassigned |
-| F1 | FR-SIM-TTR | FOCUS-DET-05 | paused (user) | Simulator execution remains prohibited; preserve prerequisites:  Candidate, frozen comparisons, producer acknowledgment and simulator authority; fake-backed preparation independent; owner unassigned |
+| F1 | SIM-DATA-03 | TASK-SIM-DATA-01 | blocked (ADR-0008 prerequisite) | First repair SIM-DATA-01 screenshot-output access, then receive explicit bounded simulator capture authority; 42-recipe genuine pilot |
+| F1 | SIM-DATA-04 | TASK-SIM-DATA-01 | blocked | Accepted FR-SIM-BASE/pilot, frozen shared membership and assigned simulator capture; ≥6,000 visual pairs |
+| F2 | SIM-DATA-05 | TASK-SIM-DATA-01 | blocked | Accepted pilot/interfaces and frozen shared membership; separate full-frame augmentation corpus |
+| F1 | FR-SIM-BASE | FOCUS-DET-05 | blocked | Qualified SIM-DATA-03 or TVGEN-03 pilot and assigned baseline inference; reuse existing offline tooling; owner unassigned |
+| F1 | FR-SIM-CAND | FOCUS-DET-05 | blocked | Accepted baseline, qualified SIM-DATA-04 or TVGEN-04 corpus and explicit run/export assignment; owner unassigned |
+| F1 | FR-SIM-TTR | FOCUS-DET-05 | blocked | Candidate, frozen comparisons, producer acknowledgment and simulator authority; fake-backed preparation independent; owner unassigned |
 | — | R-A | 6b-R-1 | review | Offline matrix/inventory validator distinguishes unique screenshots and genuine labeled examples |
 | — | R-B | 6b-R-1 | blocked | R-A and authorized device/app window |
 | — | R-C | 6b-R-1 | blocked | Complete qualified capture manifest; mAP additionally requires genuine boxes |
@@ -160,7 +175,7 @@ Cause is unknown. Preserve existing manifests, labels, links, and historical met
 - [!] P0-A: bounded recovery review found 0/15,239 expected originals at five documented roots; per-label identity evidence is partially verified (11,415/17,040) but local filesystem stalls prevent completion. See [`P0-A handoff`](reports/work/P0-A/handoff.md); do not dispatch P0-B/P0-C without the listed authority.
 - [ ] Architect reviews exact recovery plan or replacement-corpus proposal
 - [ ] P0-B (separate assignment): stage and verify recoverable pixels/annotations without overwriting historical artifacts
-- [ ] P0-C (fallback): versioned reconstruction with new annotations/baseline if originals cannot be recovered; family-level splitting is complete and the failed `HardNegative_2` WKWebView route is retired ([record](reports/work/P0-C/web-content-blocker.md)). Native validation passed; the prior launcher exit 137 happened under 98% disk usage, and the maintainer has now cleared headroom for one fresh retry. The eventual corpus must report legacy `webContent` coverage as zero.
+- [ ] P0-C (fallback): native-only reconstruction underway with corrected source and an authorized bounded deterministic-variant policy ([r5 continuation](reports/work/P0-C/reconstruction-configuration-r5.md)). r1–r3 remain rejected and unused; only independently verified completed r4 batches enter the new version, with explicit lineage and unfinished output preserved separately. Full 16,940-member integrity/coverage/leakage acceptance remains open; legacy `webContent` coverage remains zero. No model inference/training is included.
 - [ ] Record independent test-corpus and training-corpus readiness; uncertain/regenerated identity uses a new corpus version
 - [ ] Establish content manifest, retention ownership, and recovery verification before expensive evaluation/training
 

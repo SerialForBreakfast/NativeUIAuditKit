@@ -116,7 +116,8 @@ public enum AnnotationWriter {
             )
         )
 
-        let elements = result.elements.map { elem -> AnnotationJSON.Element in
+        // BP-28: auto-detected tab items are diagnostics, not a frozen category.
+        let elements = result.elements.filter { $0.elementType != "tabBarItem" }.map { elem -> AnnotationJSON.Element in
             let f = elem.frame
             let boundsPoints = AnnotationJSON.BoundingRect(
                 x: Double(f.minX),
@@ -133,15 +134,17 @@ public enum AnnotationWriter {
             // Vision coordinate system: x from left, y from bottom, values in [0,1].
             // Clamp to [0,1] per plan rule BP-P1: elements that overflow the screen
             // boundary are clipped to the image boundary (e.g. toolbar items near screen edge).
-            let xNormRaw = Double(f.minX) / widthPt
-            let yNormRaw = 1.0 - (Double(f.minY) + Double(f.height)) / heightPt
-            let wNormRaw = Double(f.width) / widthPt
-            let hNormRaw = Double(f.height) / heightPt
-            let xNorm = max(0.0, min(1.0, xNormRaw))
-            let yNorm = max(0.0, min(1.0, yNormRaw))
-            // After clamping origin, shrink dimension so the far edge stays ≤ 1.
-            let wNorm = max(0.0, min(wNormRaw, 1.0 - xNorm))
-            let hNorm = max(0.0, min(hNormRaw, 1.0 - yNorm))
+            let left = max(0.0, min(widthPt, Double(f.minX)))
+            let right = max(0.0, min(widthPt, Double(f.maxX)))
+            let top = max(0.0, min(heightPt, Double(f.minY)))
+            let bottom = max(0.0, min(heightPt, Double(f.maxY)))
+            let xNorm = left / widthPt
+            let yNorm = 1.0 - bottom / heightPt
+            let wNorm = max(0, right - left) / widthPt
+            let hNorm = max(0, bottom - top) / heightPt
+            let invisible = wNorm == 0 || hNorm == 0
+            let clipped = left != Double(f.minX) || right != Double(f.maxX)
+                || top != Double(f.minY) || bottom != Double(f.maxY)
             let boundsVision = AnnotationJSON.BoundingRect(
                 x: xNorm, y: yNorm, width: wNorm, height: hNorm
             )
@@ -157,10 +160,10 @@ public enum AnnotationWriter {
                 accessibilityLabel: nil,
                 traits: [],
                 state: AnnotationJSON.ElementState(isEnabled: true, isSelected: false, isFocused: elem.isFocused),
-                occluded: false,
-                occlusionType: nil,
-                excluded: false,
-                exclusionReason: nil,
+                occluded: clipped,
+                occlusionType: clipped ? "imageBoundary" : nil,
+                excluded: invisible,
+                exclusionReason: invisible ? "outsideImage" : nil,
                 knownIssues: elem.knownIssues
             )
         }
@@ -232,6 +235,11 @@ struct AnnotationJSON: Codable {
         let leading: Double
         let bottom: Double
         let trailing: Double
+        private enum CodingKeys: String, CodingKey {
+            case top, bottom
+            case leading = "left"
+            case trailing = "right"
+        }
     }
 
     // MARK: Generator profile

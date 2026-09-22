@@ -171,7 +171,7 @@ public struct SettingsListTemplate: View {
                         .frame(maxWidth: .infinity)
                     }
                 }
-                .ignoresSafeArea(.all)
+                // Native list content must respect its navigation/tab chrome.
                 .navigationTitle(config.title)
                 .navigationBarTitleDisplayMode(.large)
                 .colorScheme(config.colorScheme)

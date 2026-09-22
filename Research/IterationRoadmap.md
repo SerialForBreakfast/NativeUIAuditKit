@@ -4,6 +4,19 @@
 
 ## Next offline dispatch: chevrons, dialogs and visual focus
 
+**Parallel acquisition amendment:** [ADR-0009](ADR-0009-Direct-tvOS-Simulator-Generation.md)
+adds TVGEN-01 → direct runner/intake → direct pilot/baseline → qualified corpus.
+This lane does not wait for SIM-DATA-01 or TTR export. Existing TTR work continues;
+either eligible simulator corpus can unlock candidate preparation/training under
+its own authorization. TTR navigation comparison and physical transfer remain
+separate integration gates. Preserve the active iOS reconstruction assignment.
+
+Apply [the iteration-efficiency review](IterationEfficiency.md): focused tests during
+edits, full checks at integrated handoff, one artifact-based producer/consumer loop.
+The 04:55 UTC producer status reports a repaired screenshot adapter; consumer-host
+capture/export/intake remains unverified. Reconcile that candidate before requesting
+the same repair again. This observation does not grant another simulator operation.
+
 The [FOCUS-LAUNCH preparation tranche](Plans/FocusRingLaunchPreparation.md) provides
 runtime-exact crop tooling, the real CoreML development adapter and frozen capture
 planning without waiting for TTR. Its coordinate correction requires re-baselining,

@@ -144,7 +144,7 @@ public struct TabViewNavigationTemplate: View {
                         }
                         .listStyle(.insetGrouped)
                     }
-                    .ignoresSafeArea(.all)
+                    // Keep list rows below the native navigation bar.
                     .navigationTitle(config.title)
                     .navigationBarTitleDisplayMode(
                         config.largeTitleStyle ? .large : .inline

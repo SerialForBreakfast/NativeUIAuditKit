@@ -1,0 +1,1032 @@
+diff --git a/GeneratorRunner/GeneratorRunnerTests/GenerateDatasetTests.swift b/GeneratorRunner/GeneratorRunnerTests/GenerateDatasetTests.swift
+index f097770..fcffbec 100644
+--- a/GeneratorRunner/GeneratorRunnerTests/GenerateDatasetTests.swift
++++ b/GeneratorRunner/GeneratorRunnerTests/GenerateDatasetTests.swift
+@@ -30,6 +30,7 @@
+ // `xcrun simctl status_bar` before each test run (see SimulatorStateManager).
+ 
+ import XCTest
++import CryptoKit
+ import SwiftUI
+ import UIKit
+ 
+@@ -75,12 +76,115 @@ final class GenerateDatasetTests: XCTestCase {
+     // MARK: - Fixtures
+ 
+     /// Root output directory inside the simulator app's Documents container.
+-    private let datasetDir: URL = {
++    private let defaultDatasetDir: URL = {
+         FileManager.default
+             .urls(for: .documentDirectory, in: .userDomainMask)[0]
+             .appending(path: "dataset", directoryHint: .isDirectory)
+     }()
+ 
++    private struct Rejection: Codable, Sendable {
++        let entry: ManifestEntry
++        let pixelSHA256: String
++        let duplicateOf: String
++    }
++    private struct CaptureLedger: Codable, Sendable {
++        var version = 1
++        var accepted: [String: String] = [:]
++        var rejected: [Rejection] = []
++    }
++    private var captureLedger: CaptureLedger?
++    private var captureRootOverride: URL?
++    private var datasetDir: URL { captureRootOverride ?? defaultDatasetDir }
++    private var captureRoot: URL { datasetDir }
++
++    private func requireCaptureReady() throws {
++        let marker = datasetDir.appending(path: "generation-failed.txt")
++        guard !FileManager.default.fileExists(atPath: marker.path) else {
++            throw XCTSkip("Prior generation failed; preserve staging and inspect generation-failed.txt before resuming.")
++        }
++    }
++
++    private func recordCaptureFailure(_ error: Error, family: String) throws {
++        let message = "family=\(family)\nerror=\(String(describing: error))\n"
++        try Data(message.utf8).write(to: datasetDir.appending(path: "generation-failed.txt"), options: .withoutOverwriting)
++        print("P0-C generation stopped: \(message)")
++    }
++
++    private func captureBatch(family: String, operation: () async throws -> Void) async throws {
++        try requireCaptureReady()
++        do { try await operation() }
++        catch {
++            try recordCaptureFailure(error, family: family)
++            throw error
++        }
++    }
++
++    override func tearDown() async throws {
++        if let captureLedger {
++            let encoder = JSONEncoder()
++            encoder.outputFormatting = [.sortedKeys]
++            encoder.dateEncodingStrategy = .iso8601
++            try encoder.encode(captureLedger).write(to: captureRoot.appending(path: "capture-ledger.json"), options: .atomic)
++        }
++    }
++
++    private func pixelDigest(_ png: Data) throws -> String {
++        let image = try XCTUnwrap(UIImage(data: png)?.cgImage)
++        var pixels = [UInt8](repeating: 0, count: image.width * image.height * 4)
++        try pixels.withUnsafeMutableBytes { buffer in
++            let context = try XCTUnwrap(CGContext(data: buffer.baseAddress, width: image.width,
++                height: image.height, bitsPerComponent: 8, bytesPerRow: image.width * 4,
++                space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
++            context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
++        }
++        var data = Data("\(image.width)x\(image.height):".utf8)
++        data.append(contentsOf: pixels)
++        return SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
++    }
++
++    /// Bounded deterministic candidate selection; no session retries or split changes.
++    private func distinctCapture(
++        family: String, originalSeed: UInt64, acceptedPath: String,
++        configuration: (UInt64) -> GeneratorRunConfig,
++        render: (UInt64, GeneratorRunConfig) async throws -> CaptureResult
++    ) async throws -> (GeneratorRunConfig, CaptureResult) {
++        if captureLedger == nil {
++            let url = captureRoot.appending(path: "capture-ledger.json")
++            let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .iso8601
++            captureLedger = FileManager.default.fileExists(atPath: url.path)
++                ? try decoder.decode(CaptureLedger.self, from: Data(contentsOf: url)) : CaptureLedger()
++        }
++        for attempt in 0..<32 {
++            let seed = originalSeed + UInt64(attempt) * 1_000_000
++            let config = configuration(seed)
++            let result = try await render(seed, config)
++            let digest = try pixelDigest(result.png)
++            if let existing = captureLedger!.accepted[digest] {
++                let directory = captureRoot.appending(path: "rejected")
++                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
++                let name = "\(family)-\(originalSeed)-\(attempt).png"
++                let path = directory.appending(path: name)
++                guard !FileManager.default.fileExists(atPath: path.path) else {
++                    throw NSError(domain: "P0C", code: 2, userInfo: [NSLocalizedDescriptionKey: "Rejected-output collision: \(name)"])
++                }
++                try result.png.write(to: path, options: .withoutOverwriting)
++                try AnnotationWriter.write(result: result, config: config, imageFileName: name,
++                    templateFamily: family, generatorVersion: "0.1.0",
++                    to: path.deletingPathExtension().appendingPathExtension("json"))
++                let entry = ManifestEntry(fileName: "rejected/\(name)", split: splitFor(templateFamily: family),
++                    sha256: result.sha256, templateFamily: family, generatorSeed: seed,
++                    simulatorState: config.simulatorOverride, isolationTemplate: config.isolationTemplate,
++                    lowDensity: config.lowDensity, deviceName: config.deviceName, pixelScale: config.pixelScale)
++                captureLedger!.rejected.append(Rejection(entry: entry, pixelSHA256: digest, duplicateOf: existing))
++                continue
++            }
++            captureLedger!.accepted[digest] = acceptedPath
++            return (config, result)
++        }
++        throw NSError(domain: "P0C", code: 1, userInfo: [NSLocalizedDescriptionKey:
++            "Distinct variant space exhausted: \(family), original seed \(originalSeed), 32 attempts; quota unchanged"])
++    }
++
+     /// Five distinct simulator state overrides, rotated across the image sweep.
+     /// Records different time/battery/cellular values in annotation metadata,
+     /// satisfying the TASK-3e-1 AC for ≥5 distinct time values.
+@@ -110,6 +214,7 @@ final class GenerateDatasetTests: XCTestCase {
+     // MARK: - Set-up
+ 
+     override func setUp() async throws {
++        try requireCaptureReady()
+         let fm = FileManager.default
+         for split in ["train", "validation", "test"] {
+             let dir = datasetDir.appending(path: split, directoryHint: .isDirectory)
+@@ -119,6 +224,97 @@ final class GenerateDatasetTests: XCTestCase {
+ 
+     // MARK: - Test methods
+ 
++    func testDistinctCandidatePolicyIsBoundedAndPreservesRejections() async throws {
++        captureRootOverride = datasetDir.deletingLastPathComponent().appending(path: "candidate-policy-" + UUID().uuidString)
++        try FileManager.default.createDirectory(at: captureRoot, withIntermediateDirectories: true)
++        func result(_ color: UIColor) throws -> CaptureResult {
++            let format = UIGraphicsImageRendererFormat(); format.scale = 2
++            let png = try XCTUnwrap(UIGraphicsImageRenderer(size: CGSize(width: 2, height: 2), format: format).image { c in
++                color.setFill(); c.fill(CGRect(x: 0, y: 0, width: 2, height: 2))
++            }.pngData())
++            return CaptureResult(png: png, sha256: SHA256.hash(data: png).map { String(format: "%02x", $0) }.joined(),
++                elements: [], pixelSize: CGSize(width: 4, height: 4), pointSize: CGSize(width: 2, height: 2), scale: 2)
++        }
++        let blue = try result(.blue), red = try result(.red)
++        let configure: (UInt64) -> GeneratorRunConfig = { seed in
++            self.makeConfig(seed: seed, index: 1, templateFamily: "LoginForm", state: self.simulatorStates[0])
++        }
++        _ = try await distinctCapture(family: "LoginForm", originalSeed: 1, acceptedPath: "train/one.png", configuration: configure) { _, _ in blue }
++        let (config, _) = try await distinctCapture(family: "LoginForm", originalSeed: 2, acceptedPath: "train/two.png", configuration: configure) { seed, _ in
++            seed == 2 ? blue : red
++        }
++        XCTAssertEqual(config.seed, 1_000_002)
++        XCTAssertEqual(captureLedger?.rejected.count, 1)
++        XCTAssertTrue(FileManager.default.fileExists(atPath: captureRoot.appending(path: "rejected/LoginForm-2-0.png").path))
++        do {
++            _ = try await distinctCapture(family: "LoginForm", originalSeed: 3, acceptedPath: "train/never.png", configuration: configure) { _, _ in blue }
++            XCTFail("Exhausted variation space must fail")
++        } catch {
++            XCTAssertEqual((error as NSError).domain, "P0C")
++            XCTAssertEqual((error as NSError).code, 1)
++        }
++        XCTAssertEqual(captureLedger?.accepted.count, 2)
++        XCTAssertEqual(captureLedger?.rejected.count, 33)
++    }
++
++    func testGenerationFailurePreventsFollowingBatchWrites() async throws {
++        captureRootOverride = defaultDatasetDir.deletingLastPathComponent().appending(path: "failure-policy-" + UUID().uuidString)
++        try FileManager.default.createDirectory(at: datasetDir, withIntermediateDirectories: true)
++        do {
++            try await captureBatch(family: "MenuButton") {
++                throw NSError(domain: "P0C-test", code: 17)
++            }
++            XCTFail("Failed operation must throw")
++        } catch { XCTAssertEqual((error as NSError).domain, "P0C-test") }
++        let marker = datasetDir.appending(path: "generation-failed.txt")
++        let evidence = try Data(contentsOf: marker)
++        var followingOperationRan = false
++        do {
++            try await captureBatch(family: "MultiSectionForm") { followingOperationRan = true }
++            XCTFail("Following batch must be blocked")
++        } catch { XCTAssertTrue(error is XCTSkip) }
++        XCTAssertFalse(followingOperationRan)
++        XCTAssertEqual(try Data(contentsOf: marker), evidence)
++    }
++
++    func testMenuButtonDistinctBatchProbe() async throws {
++        captureRootOverride = defaultDatasetDir.deletingLastPathComponent().appending(path: "menu-batch-probe-" + UUID().uuidString)
++        for split in ["train", "validation", "test"] {
++            try FileManager.default.createDirectory(at: datasetDir.appending(path: split), withIntermediateDirectories: true)
++        }
++        try await generateImages(templateFamily: "MenuButton", count: 200, startSeed: 24201)
++        let manifest = try DatasetManifest.load(from: datasetDir.appending(path: "manifest.json"))
++        XCTAssertEqual(manifest.imageCount, 200)
++        XCTAssertEqual(captureLedger?.accepted.count, 200)
++    }
++
++    func testPaintedStatusAxesChangePixelsWithFixedClock() async throws {
++        let output = datasetDir.deletingLastPathComponent().appending(path: "status-axes-" + UUID().uuidString)
++        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
++        for axis in ["cellular", "wifi", "battery"] {
++            var hashes = Set<String>()
++            let values = axis == "battery" ? [10, 25, 50, 75, 100] : (axis == "wifi" ? [0, 1, 3] : [0, 1, 3, 5])
++            for value in values {
++                var state = simulatorStates[0]
++                state.time = "09:41"; state.batteryState = "discharging"
++                if axis == "cellular" { state.cellularBars = value }
++                if axis == "wifi" { state.wifiBars = value }
++                if axis == "battery" { state.batteryLevel = value }
++                let config = makeConfig(seed: 1, index: 0, templateFamily: "ChromeCoverage", state: state)
++                var corpus = ContentCorpus(seed: 1)
++                let rendered = try await capture(templateFamily: "ChromeCoverage", seed: 1, config: config, corpus: &corpus)
++                hashes.insert(try pixelDigest(rendered.png))
++                let name = "\(axis)-\(value).png"
++                try rendered.png.write(to: output.appending(path: name))
++                try AnnotationWriter.write(result: rendered, config: config, imageFileName: name,
++                    templateFamily: "ChromeCoverage", generatorVersion: "0.1.0",
++                    to: output.appending(path: "\(axis)-\(value).json"))
++            }
++            XCTAssertEqual(hashes.count, values.count, "\(axis) did not visibly vary with a fixed clock/content")
++        }
++        print("Status axes probe: \(output.path)")
++    }
++
+     /// Generates 200 alert template images (seeds 2001–2200).
+     /// Runs first alphabetically — initialises the manifest.
+     func testGenerateAlertImages() async throws {
+@@ -176,25 +372,30 @@ final class GenerateDatasetTests: XCTestCase {
+         forceProfile: OSVisualProfile? = nil,
+         accessibilityFlags: AccessibilityFlags = .default
+     ) async throws {
++        try await captureBatch(family: templateFamily) {
+         let manifestURL = datasetDir.appending(path: "manifest.json")
+         var manifest = try DatasetManifest.load(from: manifestURL)
+ 
+         for i in 0..<count {
+-            let seed = startSeed + UInt64(i)
++            let originalSeed = startSeed + UInt64(i)
+             let state = simulatorStates[i % simulatorStates.count]
+-            var config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+-            // Apply optional overrides.
+-            if let profile = forceProfile {
+-                config.osProfile = profile
+-                config.deviceName = profile == .ios26 ? "iPhone 17 Pro" : "iPhone SE (3rd generation)"
+-                config.pixelScale = profile == .ios26 ? 3 : 2
++            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
++            let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
++                var config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
++                if let profile = forceProfile {
++                    config.osProfile = profile
++                    config.deviceName = profile == .ios26 ? "iPhone 17 Pro" : "iPhone SE (3rd generation)"
++                    config.pixelScale = profile == .ios26 ? 3 : 2
++                }
++                config.locale = locale
++                config.layoutDirection = layoutDirection
++                config.accessibilityFlags = accessibilityFlags
++                return config
++            } render: { seed, config in
++                var corpus = ContentCorpus(seed: seed)
++                return try await capture(templateFamily: templateFamily, seed: seed, config: config, corpus: &corpus)
+             }
+-            config.locale = locale
+-            config.layoutDirection = layoutDirection
+-            config.accessibilityFlags = accessibilityFlags
+-
+-            var corpus = ContentCorpus(seed: seed)
+-            let result = try await capture(templateFamily: templateFamily, seed: seed, config: config, corpus: &corpus)
++            let seed = config.seed
+ 
+             let imageIndex = manifest.imageCount + 1
+             let split = splitFor(templateFamily: templateFamily)
+@@ -225,10 +426,97 @@ final class GenerateDatasetTests: XCTestCase {
+                 deviceName: config.deviceName,
+                 pixelScale: config.pixelScale
+             )
+-            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
++            manifest.append(entry, elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
+         }
+ 
+         try manifest.save(to: manifestURL)
++        }
++    }
++
++    /// Bounded renderer qualification, separate from dataset membership.
++    func testNativeNavigationGeometryProbe() async throws {
++        let output = datasetDir.deletingLastPathComponent()
++            .appending(path: "native-navigation-probe-" + UUID().uuidString)
++        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
++        for family in ["SettingsList", "SettingsDisclosure", "SearchResults", "Stepper", "TabViewNavigation",
++                       "LiquidGlassNav", "LiquidGlassTab", "RefreshControl", "RTLMirror", "LoginForm",
++                       "FormValidation", "MediaCardGrid", "PickerDateEntry"] {
++            for index in 0..<2 {
++                var seed: UInt64 = 1
++                if family == "TabViewNavigation" {
++                    // Exercise the content tab, not a deliberately empty placeholder.
++                    while seed < 100 {
++                        var candidate = ContentCorpus(seed: seed)
++                        if TabViewNavigationConfig.make(seed: seed, corpus: &candidate, osProfile: .ios26).selectedTab == 0 { break }
++                        seed += 1
++                    }
++                    XCTAssertLessThan(seed, 100)
++                }
++                let config = makeConfig(seed: seed, index: index, templateFamily: family, state: simulatorStates[0])
++                var corpus = ContentCorpus(seed: seed)
++                let result = try await capture(templateFamily: family, seed: seed, config: config, corpus: &corpus)
++                let filename = "\(family)-\(index).png"
++                try result.png.write(to: output.appending(path: filename))
++                try AnnotationWriter.write(result: result, config: config, imageFileName: filename,
++                    templateFamily: family, generatorVersion: "0.1.0", to: output.appending(path: "\(family)-\(index).json"))
++                let nav = try XCTUnwrap(result.elements.first { $0.elementType == "navigationBar" })
++                let content = result.elements.filter {
++                    ["listRow", "stepperControl", "label", "primaryButton", "textField", "imageView"].contains($0.elementType)
++                }
++                XCTAssertFalse(content.isEmpty, family)
++                for element in content {
++                    XCTAssertGreaterThanOrEqual(element.frame.minY, nav.frame.maxY - 1,
++                        "\(family): \(element.id) intersects navigation chrome")
++                }
++                if family == "SearchResults" {
++                    let search = try XCTUnwrap(result.elements.first { $0.elementType == "searchField" })
++                    XCTAssertGreaterThan(search.frame.width, 0)
++                    XCTAssertGreaterThan(search.frame.height, 0)
++                }
++            }
++        }
++        print("Native navigation probe: \(output.path)")
++    }
++
++    /// One sample per profile/family; never appended to the training corpus.
++    func testAllReconstructionFamiliesProbe() async throws {
++        let output = datasetDir.deletingLastPathComponent()
++            .appending(path: "all-families-probe-" + UUID().uuidString)
++        for split in ["train", "validation", "test"] {
++            try FileManager.default.createDirectory(at: output.appending(path: split), withIntermediateDirectories: true)
++        }
++        var manifest = DatasetManifest()
++        let knownBad: Set<String> = ["TruncatedLabel", "ClippedContent", "OverlappingControls", "SmallHitTarget",
++            "DynamicTypeOverflow", "RTLMirroringFailure", "OffScreenElement", "OccludedElement", "HardNegative_1", "HardNegative_3"]
++        for family in Self.allTemplateFamilies.sorted() {
++            for index in 0..<2 {
++                let seed = UInt64(index + 1)
++                let config = makeConfig(seed: seed, index: index, templateFamily: family, state: simulatorStates[0])
++                let result: CaptureResult
++                if family.hasPrefix("UIKit") {
++                    result = try await captureUIKit(templateFamily: family, seed: seed, config: config)
++                } else if knownBad.contains(family) {
++                    result = try await captureKnownBad(templateFamily: family, seed: seed, config: config)
++                } else {
++                    var corpus = ContentCorpus(seed: seed)
++                    result = try await capture(templateFamily: family, seed: seed, config: config, corpus: &corpus)
++                }
++                let split = splitFor(templateFamily: family)
++                let name = "\(family)-\(index).png"
++                let relative = "\(split.rawValue)/\(name)"
++                try result.png.write(to: output.appending(path: relative))
++                try AnnotationWriter.write(result: result, config: config, imageFileName: name,
++                    templateFamily: family, generatorVersion: "0.1.0",
++                    to: output.appending(path: relative).deletingPathExtension().appendingPathExtension("json"))
++                manifest.append(ManifestEntry(fileName: relative, split: split, sha256: result.sha256,
++                    templateFamily: family, generatorSeed: seed, simulatorState: simulatorStates[0],
++                    isolationTemplate: config.isolationTemplate, lowDensity: config.lowDensity,
++                    deviceName: config.deviceName, pixelScale: config.pixelScale),
++                    elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
++            }
++        }
++        try manifest.save(to: output.appending(path: "manifest.json"))
++        print("All-family probe: \(output.path)")
+     }
+ 
+     // MARK: - Capture dispatch
+@@ -372,7 +660,7 @@ final class GenerateDatasetTests: XCTestCase {
+             let apfConfig = AccountProfileFormConfig.make(seed: seed, corpus: &corpus)
+             return try await ScreenshotCapture.capture(AccountProfileFormTemplate(config: apfConfig), config: config)
+         case "ChromeCoverage":
+-            let ccConfig = ChromeCoverageConfig.make(seed: seed, corpus: &corpus)
++            let ccConfig = ChromeCoverageConfig.make(seed: seed, corpus: &corpus, status: config.simulatorOverride)
+             return try await ScreenshotCapture.capture(ChromeCoverageTemplate(config: ccConfig), config: config)
+         default:
+             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
+@@ -421,15 +709,20 @@ final class GenerateDatasetTests: XCTestCase {
+         count: Int,
+         startSeed: UInt64
+     ) async throws {
++        try await captureBatch(family: templateFamily) {
+         let manifestURL = datasetDir.appending(path: "manifest.json")
+         var manifest = try DatasetManifest.load(from: manifestURL)
+ 
+         for i in 0..<count {
+-            let seed = startSeed + UInt64(i)
++            let originalSeed = startSeed + UInt64(i)
+             let state = simulatorStates[i % simulatorStates.count]
+-            let config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+-
+-            let result = try await captureUIKit(templateFamily: templateFamily, seed: seed, config: config)
++            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
++            let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
++                makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
++            } render: { seed, config in
++                try await captureUIKit(templateFamily: templateFamily, seed: seed, config: config)
++            }
++            let seed = config.seed
+ 
+             let imageIndex = manifest.imageCount + 1
+             let split = splitFor(templateFamily: templateFamily)
+@@ -460,10 +753,11 @@ final class GenerateDatasetTests: XCTestCase {
+                 deviceName: config.deviceName,
+                 pixelScale: config.pixelScale
+             )
+-            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
++            manifest.append(entry, elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
+         }
+ 
+         try manifest.save(to: manifestURL)
++        }
+     }
+ 
+     /// Dispatches to the correct UIKit VC factory and calls `captureUIKit`.
+@@ -925,22 +1219,22 @@ final class GenerateDatasetTests: XCTestCase {
+         layoutDirection: GeneratorLayoutDirection = .ltr,
+         locale: String = "en_US"
+     ) async throws {
++        try await captureBatch(family: templateFamily) {
+         let manifestURL = datasetDir.appending(path: "manifest.json")
+         var manifest = try DatasetManifest.load(from: manifestURL)
+ 
+         for i in 0..<count {
+-            let seed = startSeed + UInt64(i)
++            let originalSeed = startSeed + UInt64(i)
+             let state = simulatorStates[i % simulatorStates.count]
+-
+             let dtSize = dynamicTypeOverride ?? dynamicTypeSize(for: i)
+-            let config = makeKnownBadConfig(
+-                seed: seed, index: i, templateFamily: templateFamily, state: state,
+-                dynamicTypeSize: dtSize, layoutDirection: layoutDirection, locale: locale
+-            )
+-
+-            let result = try await captureKnownBad(
+-                templateFamily: templateFamily, seed: seed, config: config
+-            )
++            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
++            let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
++                makeKnownBadConfig(seed: seed, index: i, templateFamily: templateFamily, state: state,
++                    dynamicTypeSize: dtSize, layoutDirection: layoutDirection, locale: locale)
++            } render: { seed, config in
++                try await captureKnownBad(templateFamily: templateFamily, seed: seed, config: config)
++            }
++            let seed = config.seed
+ 
+             let imageIndex = manifest.imageCount + 1
+             let split = splitFor(templateFamily: templateFamily)
+@@ -971,10 +1265,11 @@ final class GenerateDatasetTests: XCTestCase {
+                 deviceName: config.deviceName,
+                 pixelScale: config.pixelScale
+             )
+-            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
++            manifest.append(entry, elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
+         }
+ 
+         try manifest.save(to: manifestURL)
++        }
+     }
+ 
+     /// Dispatches to the correct known-bad VC factory.
+@@ -1080,6 +1375,31 @@ final class GenerateDatasetTests: XCTestCase {
+         XCTAssertEqual(splitFor(templateFamily: "HardNegative_3"), .train)
+     }
+ 
++    func testAnnotationWriterFrozenSchemaAndVisibleIntersection() throws {
++        let result = CaptureResult(png: Data(), sha256: String(repeating: "a", count: 64),
++            elements: [
++                AnnotatedElement(id: "label_clipped", elementType: "label", frame: CGRect(x: -10, y: -20, width: 50, height: 70)),
++                AnnotatedElement(id: "label_outside", elementType: "label", frame: CGRect(x: 110, y: 10, width: 20, height: 20)),
++                AnnotatedElement(id: "tabBarItem_0", elementType: "tabBarItem", frame: CGRect(x: 0, y: 80, width: 50, height: 20))
++            ], pixelSize: CGSize(width: 200, height: 200), pointSize: CGSize(width: 100, height: 100), scale: 2)
++        let config = makeConfig(seed: 1, index: 0, templateFamily: "LoginForm", state: simulatorStates[0])
++        let annotation = AnnotationWriter.buildJSON(result: result, config: config,
++            imageFileName: "test.png", templateFamily: "LoginForm", generatorVersion: "0.1.0")
++        XCTAssertEqual(annotation.elements.count, 2)
++        let clipped = annotation.elements[0]
++        XCTAssertEqual(clipped.boundsVisionNormalized.x, 0)
++        XCTAssertEqual(clipped.boundsVisionNormalized.y, 0.5)
++        XCTAssertEqual(clipped.boundsVisionNormalized.width, 0.4)
++        XCTAssertEqual(clipped.boundsVisionNormalized.height, 0.5)
++        XCTAssertTrue(clipped.occluded)
++        XCTAssertFalse(clipped.excluded)
++        XCTAssertTrue(annotation.elements[1].excluded)
++        let object = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(annotation)) as? [String: Any])
++        let image = try XCTUnwrap(object["image"] as? [String: Any])
++        let insets = try XCTUnwrap(image["safeAreaInsets"] as? [String: Any])
++        XCTAssertEqual(Set(insets.keys), ["top", "left", "bottom", "right"])
++    }
++
+     /// Cycles through 6 `GeneratorDynamicTypeSize` values based on the image index.
+     private func dynamicTypeSize(for index: Int) -> GeneratorDynamicTypeSize {
+         let sizes: [GeneratorDynamicTypeSize] = [
+diff --git a/NativeUIDatasetGenerator/Sources/AnnotationWriter.swift b/NativeUIDatasetGenerator/Sources/AnnotationWriter.swift
+index fdbb63c..05ef002 100644
+--- a/NativeUIDatasetGenerator/Sources/AnnotationWriter.swift
++++ b/NativeUIDatasetGenerator/Sources/AnnotationWriter.swift
+@@ -116,7 +116,8 @@ public enum AnnotationWriter {
+             )
+         )
+ 
+-        let elements = result.elements.map { elem -> AnnotationJSON.Element in
++        // BP-28: auto-detected tab items are diagnostics, not a frozen category.
++        let elements = result.elements.filter { $0.elementType != "tabBarItem" }.map { elem -> AnnotationJSON.Element in
+             let f = elem.frame
+             let boundsPoints = AnnotationJSON.BoundingRect(
+                 x: Double(f.minX),
+@@ -133,15 +134,17 @@ public enum AnnotationWriter {
+             // Vision coordinate system: x from left, y from bottom, values in [0,1].
+             // Clamp to [0,1] per plan rule BP-P1: elements that overflow the screen
+             // boundary are clipped to the image boundary (e.g. toolbar items near screen edge).
+-            let xNormRaw = Double(f.minX) / widthPt
+-            let yNormRaw = 1.0 - (Double(f.minY) + Double(f.height)) / heightPt
+-            let wNormRaw = Double(f.width) / widthPt
+-            let hNormRaw = Double(f.height) / heightPt
+-            let xNorm = max(0.0, min(1.0, xNormRaw))
+-            let yNorm = max(0.0, min(1.0, yNormRaw))
+-            // After clamping origin, shrink dimension so the far edge stays ≤ 1.
+-            let wNorm = max(0.0, min(wNormRaw, 1.0 - xNorm))
+-            let hNorm = max(0.0, min(hNormRaw, 1.0 - yNorm))
++            let left = max(0.0, min(widthPt, Double(f.minX)))
++            let right = max(0.0, min(widthPt, Double(f.maxX)))
++            let top = max(0.0, min(heightPt, Double(f.minY)))
++            let bottom = max(0.0, min(heightPt, Double(f.maxY)))
++            let xNorm = left / widthPt
++            let yNorm = 1.0 - bottom / heightPt
++            let wNorm = max(0, right - left) / widthPt
++            let hNorm = max(0, bottom - top) / heightPt
++            let invisible = wNorm == 0 || hNorm == 0
++            let clipped = left != Double(f.minX) || right != Double(f.maxX)
++                || top != Double(f.minY) || bottom != Double(f.maxY)
+             let boundsVision = AnnotationJSON.BoundingRect(
+                 x: xNorm, y: yNorm, width: wNorm, height: hNorm
+             )
+@@ -157,10 +160,10 @@ public enum AnnotationWriter {
+                 accessibilityLabel: nil,
+                 traits: [],
+                 state: AnnotationJSON.ElementState(isEnabled: true, isSelected: false, isFocused: elem.isFocused),
+-                occluded: false,
+-                occlusionType: nil,
+-                excluded: false,
+-                exclusionReason: nil,
++                occluded: clipped,
++                occlusionType: clipped ? "imageBoundary" : nil,
++                excluded: invisible,
++                exclusionReason: invisible ? "outsideImage" : nil,
+                 knownIssues: elem.knownIssues
+             )
+         }
+@@ -232,6 +235,11 @@ struct AnnotationJSON: Codable {
+         let leading: Double
+         let bottom: Double
+         let trailing: Double
++        private enum CodingKeys: String, CodingKey {
++            case top, bottom
++            case leading = "left"
++            case trailing = "right"
++        }
+     }
+ 
+     // MARK: Generator profile
+diff --git a/NativeUIDatasetGenerator/Sources/main.swift b/NativeUIDatasetGenerator/Sources/main.swift
+index 56867b7..90c95b7 100644
+--- a/NativeUIDatasetGenerator/Sources/main.swift
++++ b/NativeUIDatasetGenerator/Sources/main.swift
+@@ -148,6 +148,7 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) thr
+         "test",
+         "-project", projectPath,
+         "-scheme", "GeneratorRunnerTests",
++        "-only-testing:GeneratorRunnerTests/GenerateDatasetTests",
+         "-destination", "platform=iOS Simulator,id=\(deviceUDID)",
+         "-configuration", "Debug",
+         "-derivedDataPath", derivedDataDir.path,
+diff --git a/NativeUIDatasetGenerator/Templates/ChromeCoverageTemplate.swift b/NativeUIDatasetGenerator/Templates/ChromeCoverageTemplate.swift
+index b468308..48120a6 100644
+--- a/NativeUIDatasetGenerator/Templates/ChromeCoverageTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/ChromeCoverageTemplate.swift
+@@ -28,19 +28,24 @@ public struct ChromeCoverageConfig: Sendable {
+     public var unknownLabel: String
+     public var rows: [String]
+     public var colorScheme: ColorScheme
++    public var status: SimulatorStateOverride
+ 
+     public init(
+         timeText: String,
+         tooltipText: String,
+         unknownLabel: String,
+         rows: [String],
+-        colorScheme: ColorScheme
++        colorScheme: ColorScheme,
++        status: SimulatorStateOverride? = nil
+     ) {
+         self.timeText = timeText
+         self.tooltipText = tooltipText
+         self.unknownLabel = unknownLabel
+         self.rows = rows
+         self.colorScheme = colorScheme
++        self.status = status ?? SimulatorStateOverride(time: timeText, batteryLevel: 75,
++            batteryState: "discharging", cellularBars: 4, wifiBars: 3,
++            cellularMode: "active", operatorName: "")
+     }
+ 
+     private static let times = ["9:41", "12:00", "3:07", "18:22", "7:15"]
+@@ -48,7 +53,7 @@ public struct ChromeCoverageConfig: Sendable {
+     private static let unknownLabels = ["Live Activity", "Focus Filter", "Stage Manager", "StandBy"]
+ 
+     /// Deterministic factory — same `seed` always produces the same config.
+-    public static func make(seed: UInt64, corpus: inout ContentCorpus) -> ChromeCoverageConfig {
++    public static func make(seed: UInt64, corpus: inout ContentCorpus, status: SimulatorStateOverride? = nil) -> ChromeCoverageConfig {
+         var rng = SeededRNG(seed: seed)
+         let dark = rng.next() % 2 == 0
+         let rowCount = 8 + Int(rng.next() % 5)
+@@ -61,7 +66,8 @@ public struct ChromeCoverageConfig: Sendable {
+             tooltipText: tips[Int(rng.next() % UInt64(tips.count))],
+             unknownLabel: unknownLabels[Int(rng.next() % UInt64(unknownLabels.count))],
+             rows: rows,
+-            colorScheme: dark ? .dark : .light
++            colorScheme: dark ? .dark : .light,
++            status: status
+         )
+     }
+ }
+@@ -145,17 +151,36 @@ public struct ChromeCoverageTemplate: View {
+     /// System-status-bar look-alike. Generator windows do not include UIStatusBar.
+     private var statusBar: some View {
+         HStack {
+-            Text(config.timeText)
++            Text(config.status.time)
+                 .font(.system(size: 15, weight: .semibold, design: .rounded))
+                 .captureFrame(id: "label_status_time")
+             Spacer()
+             HStack(spacing: 6) {
+-                Image(systemName: "cellularbars")
+-                    .font(.system(size: 13, weight: .semibold))
+-                Image(systemName: "wifi")
++                HStack(alignment: .bottom, spacing: 1) {
++                    ForEach(0..<4, id: \.self) { bar in
++                        RoundedRectangle(cornerRadius: 1)
++                            .fill(Color.primary.opacity(bar < min(4, config.status.cellularBars) ? 1 : 0.2))
++                            .frame(width: 3, height: CGFloat(4 + bar * 3))
++                    }
++                }
++                Image(systemName: config.status.wifiBars == 0 ? "wifi.slash" : "wifi",
++                      variableValue: Double(config.status.wifiBars) / 3)
+                     .font(.system(size: 13, weight: .semibold))
+-                Image(systemName: "battery.75percent")
+-                    .font(.system(size: 14, weight: .semibold))
++                    .symbolRenderingMode(.hierarchical)
++                HStack(spacing: 1) {
++                    ZStack(alignment: .leading) {
++                        RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
++                        RoundedRectangle(cornerRadius: 1)
++                            .fill(config.status.batteryLevel <= 20 ? Color.red : Color.primary)
++                            .frame(width: 18 * CGFloat(config.status.batteryLevel) / 100, height: 8)
++                            .padding(.leading, 2)
++                        if config.status.batteryState == "charging" {
++                            Image(systemName: "bolt.fill").font(.system(size: 10))
++                                .foregroundStyle(.green).frame(maxWidth: .infinity)
++                        }
++                    }.frame(width: 22, height: 12)
++                    Capsule().fill(Color.primary).frame(width: 2, height: 4)
++                }
+             }
+         }
+         .foregroundStyle(.primary)
+diff --git a/NativeUIDatasetGenerator/Templates/FormValidationTemplate.swift b/NativeUIDatasetGenerator/Templates/FormValidationTemplate.swift
+index 2cc881d..df896e9 100644
+--- a/NativeUIDatasetGenerator/Templates/FormValidationTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/FormValidationTemplate.swift
+@@ -216,7 +216,6 @@ public struct FormValidationTemplate: View {
+                     Spacer()
+                 }
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift b/NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift
+index 3896c60..10ea926 100644
+--- a/NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift
++++ b/NativeUIDatasetGenerator/Templates/KnownBad/HardNegativeViewController.swift
+@@ -100,7 +100,11 @@ public final class HardNegativeViewController: UIViewController, UIKitAnnotatabl
+         let dimColor = UIColor.black.withAlphaComponent(dimAlpha)
+ 
+         // Root background — shows through the dimmed overlay
+-        view.backgroundColor = UIColor.systemGroupedBackground
++        // A dark system background collapsed every dim-alpha variant to black.
++        // Seed meaningful, low-saturation backdrop/contrast variation instead.
++        let hue = CGFloat(rng.next() % 360) / 360
++        let brightness = 0.25 + CGFloat(rng.next() % 51) / 100
++        view.backgroundColor = UIColor(hue: hue, saturation: 0.15, brightness: brightness, alpha: 1)
+ 
+         // Dimmed overlay covering entire screen
+         let overlay = UIView()
+diff --git a/NativeUIDatasetGenerator/Templates/LiquidGlassNavTemplate.swift b/NativeUIDatasetGenerator/Templates/LiquidGlassNavTemplate.swift
+index 8c99c88..aeb2716 100644
+--- a/NativeUIDatasetGenerator/Templates/LiquidGlassNavTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/LiquidGlassNavTemplate.swift
+@@ -128,7 +128,6 @@ public struct LiquidGlassNavTemplate: View {
+                         .padding(.bottom, 40)
+                 }
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/LiquidGlassTabTemplate.swift b/NativeUIDatasetGenerator/Templates/LiquidGlassTabTemplate.swift
+index 04fbf2d..6f6cc96 100644
+--- a/NativeUIDatasetGenerator/Templates/LiquidGlassTabTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/LiquidGlassTabTemplate.swift
+@@ -134,7 +134,6 @@ public struct LiquidGlassTabTemplate: View {
+                         .scrollContentBackground(.hidden)
+                         .listStyle(.insetGrouped)
+                     }
+-                    .ignoresSafeArea(.all)
+                     .navigationTitle(config.title)
+                     .navigationBarTitleDisplayMode(.large)
+                     .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift b/NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift
+index 92334d1..8ac0f73 100644
+--- a/NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift
+@@ -203,7 +203,6 @@ public struct LoginFormTemplate: View {
+                     Spacer()
+                 }
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift b/NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift
+index 74b3c16..f9bb855 100644
+--- a/NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/MapOverlaysTemplate.swift
+@@ -116,7 +116,8 @@ public struct MapOverlaysTemplate: View {
+                                         brightness: brightness
+                                     ))
+                                     .frame(width: tileSize, height: tileSize)
+-                                    .offset(x: CGFloat(col) * tileSize, y: CGFloat(row) * tileSize)
++                                    .padding(.leading, CGFloat(col) * tileSize)
++                                    .padding(.top, CGFloat(row) * tileSize)
+                             }
+                         }
+ 
+@@ -125,10 +126,12 @@ public struct MapOverlaysTemplate: View {
+                             Image(systemName: "mappin.circle.fill")
+                                 .font(.system(size: 28))
+                                 .foregroundStyle(.red)
+-                                .offset(x: pos.0 * w - 14, y: pos.1 * h - 28)
++                                .padding(.leading, pos.0 * w - 14)
++                                .padding(.top, pos.1 * h - 28)
+                         }
+                     }
+-                    .frame(width: w, height: h)
++                    .frame(width: w, height: h, alignment: .topLeading)
++                    .clipped()
+                 }
+                 .captureFrame(id: "mapView_0")
+                 .ignoresSafeArea()
+diff --git a/NativeUIDatasetGenerator/Templates/MediaCardGridTemplate.swift b/NativeUIDatasetGenerator/Templates/MediaCardGridTemplate.swift
+index b7c083a..9d14d12 100644
+--- a/NativeUIDatasetGenerator/Templates/MediaCardGridTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/MediaCardGridTemplate.swift
+@@ -165,7 +165,6 @@ public struct MediaCardGridTemplate: View {
+                     }
+                 }
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift b/NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift
+index 7abda2c..5531370 100644
+--- a/NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/MenuButtonTemplate.swift
+@@ -35,6 +35,8 @@ public struct MenuButtonConfig: Sendable {
+     public var showSecondMenu: Bool
+     public var secondMenuLabel: String
+     public var secondMenuItems: [String]
++    /// Seeded contextual content provides meaningful closed-menu visual variants.
++    public var contextRows: [String]
+     public var colorScheme: ColorScheme
+ 
+     public init(
+@@ -45,7 +47,8 @@ public struct MenuButtonConfig: Sendable {
+         showSecondMenu: Bool,
+         secondMenuLabel: String,
+         secondMenuItems: [String],
+-        colorScheme: ColorScheme
++        colorScheme: ColorScheme,
++        contextRows: [String] = ["Item 1", "Item 2", "Item 3", "Item 4"]
+     ) {
+         self.title = title
+         self.menuItems = menuItems
+@@ -55,6 +58,7 @@ public struct MenuButtonConfig: Sendable {
+         self.secondMenuLabel = secondMenuLabel
+         self.secondMenuItems = secondMenuItems
+         self.colorScheme = colorScheme
++        self.contextRows = contextRows
+     }
+ 
+     /// Standard SwiftUI sort/filter option pools.
+@@ -69,7 +73,7 @@ public struct MenuButtonConfig: Sendable {
+         let menuCount  = 2 + Int(rng.next() % 3)   // 2–4 items
+         let pool       = sortOptions
+         var items: [String] = []
+-        for i in 0..<menuCount { items.append(pool[Int(rng.next() % UInt64(pool.count))]) }
++        for _ in 0..<menuCount { items.append(pool[Int(rng.next() % UInt64(pool.count))]) }
+         let selectedIdx = Int(rng.next() % UInt64(items.count))
+         let secondPool = filterOptions
+         var items2: [String] = []
+@@ -82,7 +86,8 @@ public struct MenuButtonConfig: Sendable {
+             showSecondMenu: showSecond,
+             secondMenuLabel: "Filter",
+             secondMenuItems: items2,
+-            colorScheme: dark ? .dark : .light
++            colorScheme: dark ? .dark : .light,
++            contextRows: (0..<4).map { _ in corpus.listRowTitle() }
+         )
+     }
+ }
+@@ -112,7 +117,7 @@ public struct MenuButtonTemplate: View {
+                             // SwiftUI Menu renders as a menu button — the tappable
+                             // trigger is the `menuButton` annotation target.
+                             Menu {
+-                                ForEach(config.menuItems, id: \.self) { item in
++                                ForEach(Array(config.menuItems.enumerated()), id: \.offset) { _, item in
+                                     Button(item) {}
+                                 }
+                             } label: {
+@@ -138,7 +143,7 @@ public struct MenuButtonTemplate: View {
+                                     .captureFrame(id: "label_filter")
+                                 Spacer()
+                                 Menu {
+-                                    ForEach(config.secondMenuItems, id: \.self) { item in
++                                    ForEach(Array(config.secondMenuItems.enumerated()), id: \.offset) { _, item in
+                                         Button(item) {}
+                                     }
+                                 } label: {
+@@ -163,12 +168,12 @@ public struct MenuButtonTemplate: View {
+ 
+                     // Filler rows to show the menu in context
+                     Section {
+-                        ForEach(0..<4, id: \.self) { idx in
++                        ForEach(Array(config.contextRows.enumerated()), id: \.offset) { idx, text in
+                             HStack {
+                                 Image(systemName: "doc.text")
+                                     .foregroundStyle(.secondary)
+                                     .frame(width: 24)
+-                                Text("Item \(idx + 1)")
++                                Text(text)
+                                     .font(.body)
+                                 Spacer()
+                                 Text("...")
+diff --git a/NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift b/NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift
+index a1a24f8..49f688a 100644
+--- a/NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/NotificationCenterTemplate.swift
+@@ -120,10 +120,10 @@ public struct NotificationCenterTemplate: View {
+                 Text(config.dateLabel)
+                     .font(.footnote.weight(.semibold))
+                     .foregroundStyle(config.colorScheme == .dark ? .white.opacity(0.7) : .black.opacity(0.5))
++                    .captureFrame(id: "label_date_header")
+                     .padding(.horizontal, 20)
+                     .padding(.top, 60)
+                     .padding(.bottom, 10)
+-                    .captureFrame(id: "label_date_header")
+ 
+                 // Notification cards
+                 ScrollView {
+diff --git a/NativeUIDatasetGenerator/Templates/PickerDateEntryTemplate.swift b/NativeUIDatasetGenerator/Templates/PickerDateEntryTemplate.swift
+index cf5f01b..651aabe 100644
+--- a/NativeUIDatasetGenerator/Templates/PickerDateEntryTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/PickerDateEntryTemplate.swift
+@@ -173,7 +173,6 @@ public struct PickerDateEntryTemplate: View {
+                         .padding(.bottom, 32)
+                 }
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.inline)
+             .toolbar {
+diff --git a/NativeUIDatasetGenerator/Templates/RTLMirrorTemplate.swift b/NativeUIDatasetGenerator/Templates/RTLMirrorTemplate.swift
+index 5108512..b150291 100644
+--- a/NativeUIDatasetGenerator/Templates/RTLMirrorTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/RTLMirrorTemplate.swift
+@@ -143,7 +143,6 @@ public struct RTLMirrorTemplate: View {
+                         .padding(.bottom, 32)
+                 }
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/RefreshControlTemplate.swift b/NativeUIDatasetGenerator/Templates/RefreshControlTemplate.swift
+index 1624636..e5fc6c1 100644
+--- a/NativeUIDatasetGenerator/Templates/RefreshControlTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/RefreshControlTemplate.swift
+@@ -120,7 +120,6 @@ public struct RefreshControlTemplate: View {
+                 .frame(height: 56)
+                 .padding(.top, 0)
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.inline)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift b/NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift
+index a7ea5b9..b6600dc 100644
+--- a/NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift
++++ b/NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift
+@@ -22,7 +22,8 @@ import UIKit
+ /// captures a PNG via `UIGraphicsImageRenderer` at the device's native screen scale.
+ ///
+ /// **Layout rules (Phase 1 mandate):**
+-/// - Root `ZStack` of every template must carry `.ignoresSafeArea(.all)`.
++/// - Manually positioned fullscreen canvases use `.ignoresSafeArea(.all)`;
++///   content inside native navigation containers respects their safe area (BP-02).
+ /// - All element positioning uses padding — never `.offset()`.
+ /// - Frame collection uses `GeometryReader` inside a `.captureFrame(id:)` modifier.
+ public enum ScreenshotCapture {
+@@ -42,7 +43,6 @@ public enum ScreenshotCapture {
+         windowSize: CGSize? = nil,
+         config: GeneratorRunConfig
+     ) async throws -> CaptureResult {
+-        let screen = UIScreen.main
+         // Use the canonical device screen size from the OS profile when no explicit
+         // windowSize is provided. UIScreen.main.bounds is unreliable in hosted test
+         // contexts — the simulator may report an unexpected logical resolution that
+@@ -165,11 +165,18 @@ extension ScreenshotCapture {
+     /// Called after layout stabilises so the bars are positioned and sized correctly.
+     /// Internal (not private) so `UIKitCaptureSupport.swift` can call it on the same
+     /// module boundary — all sources compile into a single test bundle.
++    @MainActor
+     static func detectChromeFrames(in hostingView: UIView) -> [String: CGRect] {
+         var result: [String: CGRect] = [:]
+         func walk(_ view: UIView) {
+             guard !view.isHidden, view.alpha > 0.01 else { return }
+             switch view {
++            case let searchField as UISearchTextField:
++                let rect = searchField.convert(searchField.bounds, to: hostingView)
++                if result["searchField_0"] == nil,
++                   !rect.isEmpty, rect.intersects(hostingView.bounds) {
++                    result["searchField_0"] = rect
++                }
+             case let navBar as UINavigationBar:
+                 if result["navigationBar"] == nil {
+                     result["navigationBar"] = navBar.convert(navBar.bounds, to: hostingView)
+diff --git a/NativeUIDatasetGenerator/Templates/SearchResultsTemplate.swift b/NativeUIDatasetGenerator/Templates/SearchResultsTemplate.swift
+index e7fdec9..092dc9d 100644
+--- a/NativeUIDatasetGenerator/Templates/SearchResultsTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/SearchResultsTemplate.swift
+@@ -133,16 +133,9 @@ public struct SearchResultsTemplate: View {
+                 }
+                 .listStyle(.insetGrouped)
+ 
+-                // Sentinel view for the search field annotation.
+-                // The .searchable modifier places UISearchBar at the top of the
+-                // navigation bar. We capture a 44pt-high strip at the nav bar bottom
+-                // as a proxy annotation — width is full screen, consistent placement.
+-                Color.clear
+-                    .frame(height: 44)
+-                    .captureFrame(id: "searchField_0")
+-                    .padding(.top, 56)  // below large title
++                // Search-field geometry comes from the rendered UISearchTextField.
++                // Its placement varies by runtime; a fixed top strip is not ground truth.
+             }
+-            .ignoresSafeArea(.all)
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .searchable(text: .constant(config.searchText), prompt: "Search")
+diff --git a/NativeUIDatasetGenerator/Templates/SettingsDisclosureTemplate.swift b/NativeUIDatasetGenerator/Templates/SettingsDisclosureTemplate.swift
+index fe0eafa..29c5bbf 100644
+--- a/NativeUIDatasetGenerator/Templates/SettingsDisclosureTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/SettingsDisclosureTemplate.swift
+@@ -154,7 +154,7 @@ public struct SettingsDisclosureTemplate: View {
+                 }
+                 .listStyle(.insetGrouped)
+             }
+-            .ignoresSafeArea(.all)
++            // Native list content must respect its enclosing navigation chrome.
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift b/NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift
+index b221f7f..90ffaa2 100644
+--- a/NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift
+@@ -171,7 +171,7 @@ public struct SettingsListTemplate: View {
+                         .frame(maxWidth: .infinity)
+                     }
+                 }
+-                .ignoresSafeArea(.all)
++                // Native list content must respect its navigation/tab chrome.
+                 .navigationTitle(config.title)
+                 .navigationBarTitleDisplayMode(.large)
+                 .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/StepperTemplate.swift b/NativeUIDatasetGenerator/Templates/StepperTemplate.swift
+index d364b9b..1128ba1 100644
+--- a/NativeUIDatasetGenerator/Templates/StepperTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/StepperTemplate.swift
+@@ -137,7 +137,7 @@ public struct StepperTemplate: View {
+                 }
+                 .listStyle(.insetGrouped)
+             }
+-            .ignoresSafeArea(.all)
++            // Native list content must respect its enclosing navigation chrome.
+             .navigationTitle(config.title)
+             .navigationBarTitleDisplayMode(.large)
+             .colorScheme(config.colorScheme)
+diff --git a/NativeUIDatasetGenerator/Templates/TabViewNavigationTemplate.swift b/NativeUIDatasetGenerator/Templates/TabViewNavigationTemplate.swift
+index 22a9c3e..18d39e9 100644
+--- a/NativeUIDatasetGenerator/Templates/TabViewNavigationTemplate.swift
++++ b/NativeUIDatasetGenerator/Templates/TabViewNavigationTemplate.swift
+@@ -144,7 +144,7 @@ public struct TabViewNavigationTemplate: View {
+                         }
+                         .listStyle(.insetGrouped)
+                     }
+-                    .ignoresSafeArea(.all)
++                    // Keep list rows below the native navigation bar.
+                     .navigationTitle(config.title)
+                     .navigationBarTitleDisplayMode(
+                         config.largeTitleStyle ? .large : .inline

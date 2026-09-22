@@ -216,7 +216,6 @@ public struct FormValidationTemplate: View {
                     Spacer()
                 }
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)

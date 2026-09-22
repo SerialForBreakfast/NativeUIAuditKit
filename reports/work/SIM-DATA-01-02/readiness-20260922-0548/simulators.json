@@ -1,0 +1,76 @@
+{
+  "command" : "simulator list",
+  "data" : {
+    "simulatorInventory" : {
+      "_0" : [
+        {
+          "id" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+          "isAvailable" : true,
+          "name" : "Apple TV 4K (3rd generation)",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+          "state" : "Booted"
+        },
+        {
+          "id" : "690AD0A1-021F-4879-B391-4117B8FA7BFD",
+          "isAvailable" : true,
+          "name" : "Apple TV",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "D930B1BE-424B-4071-B9AB-E462EE231F73",
+          "isAvailable" : true,
+          "name" : "Apple TV",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-17-2",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "EB580D8E-EEE1-4612-B905-922288C7CB14",
+          "isAvailable" : true,
+          "name" : "Apple TV",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-2",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "38C9DA91-5F91-4F10-B240-1A622BE07B61",
+          "isAvailable" : true,
+          "name" : "Apple TV 4K (3rd generation)",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-17-2",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "FA623309-F7B9-4E93-A09D-436E2845BC68",
+          "isAvailable" : true,
+          "name" : "Apple TV 4K (3rd generation)",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-2",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "85BD02E5-D34C-493B-9B19-DDC3C0899935",
+          "isAvailable" : true,
+          "name" : "Apple TV 4K (3rd generation) (at 1080p)",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-2",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "C5E29075-D68F-480E-83EC-2B3C4DFEEFCE",
+          "isAvailable" : true,
+          "name" : "Apple TV 4K (3rd generation) (at 1080p)",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+          "state" : "Shutdown"
+        },
+        {
+          "id" : "FFC864F0-EEA5-4260-B393-0A8C915B7F73",
+          "isAvailable" : true,
+          "name" : "Apple TV 4K (3rd generation) (at 1080p)",
+          "runtime" : "com.apple.CoreSimulator.SimRuntime.tvOS-17-2",
+          "state" : "Shutdown"
+        }
+      ]
+    }
+  },
+  "durationMilliseconds" : 301,
+  "requestID" : "8A018A30-A3BD-4D52-BB56-2FF5BFD884E0",
+  "schemaVersion" : 1,
+  "success" : true
+}

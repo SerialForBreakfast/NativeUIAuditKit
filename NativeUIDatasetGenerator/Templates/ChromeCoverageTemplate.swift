@@ -28,19 +28,25 @@ public struct ChromeCoverageConfig: Sendable {
     public var unknownLabel: String
     public var rows: [String]
     public var colorScheme: ColorScheme
+    public var status: SimulatorStateOverride
 
     public init(
         timeText: String,
         tooltipText: String,
         unknownLabel: String,
         rows: [String],
-        colorScheme: ColorScheme
+        colorScheme: ColorScheme,
+        status: SimulatorStateOverride? = nil
     ) {
         self.timeText = timeText
         self.tooltipText = tooltipText
         self.unknownLabel = unknownLabel
         self.rows = rows
         self.colorScheme = colorScheme
+        // Supplied status is authoritative; timeText remains the legacy fallback.
+        self.status = status ?? SimulatorStateOverride(time: timeText.count == 4 ? "0" + timeText : timeText, batteryLevel: 75,
+            batteryState: "discharging", cellularBars: 5, wifiBars: 3,
+            cellularMode: "active", operatorName: "")
     }
 
     private static let times = ["9:41", "12:00", "3:07", "18:22", "7:15"]
@@ -48,7 +54,7 @@ public struct ChromeCoverageConfig: Sendable {
     private static let unknownLabels = ["Live Activity", "Focus Filter", "Stage Manager", "StandBy"]
 
     /// Deterministic factory — same `seed` always produces the same config.
-    public static func make(seed: UInt64, corpus: inout ContentCorpus) -> ChromeCoverageConfig {
+    public static func make(seed: UInt64, corpus: inout ContentCorpus, status: SimulatorStateOverride? = nil) -> ChromeCoverageConfig {
         var rng = SeededRNG(seed: seed)
         let dark = rng.next() % 2 == 0
         let rowCount = 8 + Int(rng.next() % 5)
@@ -61,7 +67,8 @@ public struct ChromeCoverageConfig: Sendable {
             tooltipText: tips[Int(rng.next() % UInt64(tips.count))],
             unknownLabel: unknownLabels[Int(rng.next() % UInt64(unknownLabels.count))],
             rows: rows,
-            colorScheme: dark ? .dark : .light
+            colorScheme: dark ? .dark : .light,
+            status: status
         )
     }
 }
@@ -145,17 +152,36 @@ public struct ChromeCoverageTemplate: View {
     /// System-status-bar look-alike. Generator windows do not include UIStatusBar.
     private var statusBar: some View {
         HStack {
-            Text(config.timeText)
+            Text(config.status.time)
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .captureFrame(id: "label_status_time")
             Spacer()
             HStack(spacing: 6) {
-                Image(systemName: "cellularbars")
+                HStack(alignment: .bottom, spacing: 1) {
+                    ForEach(0..<4, id: \.self) { bar in
+                        RoundedRectangle(cornerRadius: 1)
+                            .fill(Color.primary.opacity(bar < min(4, config.status.cellularBars) ? 1 : 0.2))
+                            .frame(width: 3, height: CGFloat(4 + bar * 3))
+                    }
+                }
+                Image(systemName: config.status.wifiBars == 0 ? "wifi.slash" : "wifi",
+                      variableValue: Double(config.status.wifiBars) / 3)
                     .font(.system(size: 13, weight: .semibold))
-                Image(systemName: "wifi")
-                    .font(.system(size: 13, weight: .semibold))
-                Image(systemName: "battery.75percent")
-                    .font(.system(size: 14, weight: .semibold))
+                    .symbolRenderingMode(.hierarchical)
+                HStack(spacing: 1) {
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 3).stroke(Color.primary, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 1)
+                            .fill(config.status.batteryLevel <= 20 ? Color.red : Color.primary)
+                            .frame(width: 18 * CGFloat(config.status.batteryLevel) / 100, height: 8)
+                            .padding(.leading, 2)
+                        if config.status.batteryState == "charging" {
+                            Image(systemName: "bolt.fill").font(.system(size: 10))
+                                .foregroundStyle(.green).frame(maxWidth: .infinity)
+                        }
+                    }.frame(width: 22, height: 12)
+                    Capsule().fill(Color.primary).frame(width: 2, height: 4)
+                }
             }
         }
         .foregroundStyle(.primary)

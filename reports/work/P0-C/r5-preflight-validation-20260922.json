@@ -1,0 +1,677 @@
+{
+  "all-families-probe-*": {
+    "count": 108,
+    "integrityValid": true,
+    "manifestSHA256": "2f0faadf79198625ed1624d103017107f3de0299dd8fe96920afb4f11f814c67",
+    "membershipSHA256": "82c43a6f57fc8e1317148e00b964eb8061ffc1a62106683c7fd4a47ef9650343",
+    "rejectedDuplicates": 0
+  },
+  "menu-batch-probe-*": {
+    "count": 200,
+    "integrityValid": true,
+    "manifestSHA256": "e89bfc31425f3bbbe0520b92bc7b3076d5cd86890893588ca7f7ab9aa878ae2c",
+    "membershipSHA256": "6f5ddedb7e911e2b9748b8c9e8ddfffd9dbf2feebde87522c503c84c3bb7c12e",
+    "rejectedDuplicates": 0
+  },
+  "native-navigation-probe-*": {
+    "count": 26,
+    "integrityValid": true,
+    "members": [
+      {
+        "annotationSHA256": "a8fedbbc82ea12062fcf3babf605dcd1d79d0e23010166e6c38f1c3162fac3f1",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "3b85884f575ca6f9b9ccffe4da84fbf19d2c7a5562fd3616c3e6c2e51cc9f446",
+        "path": "FormValidation-0.png",
+        "pixelSHA256": "fd7b0c6fc8c263e997ec8354982911dfe6deeadec513877112c7763b86a1701b",
+        "visibleClassCounts": {
+          "label": 3,
+          "navigationBar": 1,
+          "primaryButton": 1,
+          "secureField": 1,
+          "textField": 1,
+          "toggle": 1
+        }
+      },
+      {
+        "annotationSHA256": "9dc46e00bfbc183c147671c324c205cc414c9dde44cc8a15bb21eb1851c1f57c",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "d4d53c33d16176b924bc78bb949cbe6dd11ec93a8467b63a6feb83eb387b5069",
+        "path": "FormValidation-1.png",
+        "pixelSHA256": "d66f04f176f46734fa348880ba2e015d7d5bfca8845c8849713914bfff8013c2",
+        "visibleClassCounts": {
+          "label": 3,
+          "navigationBar": 1,
+          "primaryButton": 1,
+          "secureField": 1,
+          "textField": 1,
+          "toggle": 1
+        }
+      },
+      {
+        "annotationSHA256": "3584603eab6a00573cff0a181f907f7c592d835dbdd50655a3d4b5e7bf5469e6",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "14f64287efe532750ce30f7a9cb22f80ea93d46ee0b4b9a6bb56eac8ae3fe93c",
+        "path": "LiquidGlassNav-0.png",
+        "pixelSHA256": "3ccf253ce7db0e07a6a58150e8b27949b178a7eb78e659ade1195e4039f458b6",
+        "visibleClassCounts": {
+          "label": 4,
+          "navigationBar": 1,
+          "primaryButton": 1
+        }
+      },
+      {
+        "annotationSHA256": "508543578098c22f67224a89a112b4fea5c8e11ec4f4137092eaa8df5eea45f0",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "4594d407de9e2a244e31957ec11365d5a2b71def732a660d861fbfb9cec5de67",
+        "path": "LiquidGlassNav-1.png",
+        "pixelSHA256": "6fa2edca8d48749a36a8290ee3d162a5b83e61f85452311a51e4ba56815f18d5",
+        "visibleClassCounts": {
+          "label": 4,
+          "navigationBar": 1,
+          "primaryButton": 1
+        }
+      },
+      {
+        "annotationSHA256": "1ed9e2582ae724f6d4a9ffe803e565810c6d638f8e0b99faf1468e16954a9141",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "e73e38e767afabd89fb0130568df8894112470eb0e254473f9b4fed661793bfd",
+        "path": "LiquidGlassTab-0.png",
+        "pixelSHA256": "69a063025156bdc3867c8ae5ba29f52e0b6eccb7185c3566d56c0654482bfa94",
+        "visibleClassCounts": {
+          "homeIndicator": 1,
+          "listRow": 4,
+          "navigationBar": 1,
+          "tabBar": 1
+        }
+      },
+      {
+        "annotationSHA256": "86f008ddd456b6eaf2a87cfdda25711e4671975c86d108f9483bbbfc25b93a85",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "7e6a299f5f8fbd22581528489a81d32e1d114ca37e80149648f92a2e47f8620c",
+        "path": "LiquidGlassTab-1.png",
+        "pixelSHA256": "3513853ea2cfaa09c4aa8cc97a0a138aa51b63f4ced1fcded75dc1a21a5bb14e",
+        "visibleClassCounts": {
+          "homeIndicator": 1,
+          "listRow": 4,
+          "navigationBar": 1,
+          "tabBar": 1
+        }
+      },
+      {
+        "annotationSHA256": "f3fa4f197cc7b8ec47eb95cb34217736dccacdaadf3024d93b709028707df174",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "bbe021b8739e376512d7267494ee4f5f8f694892bc3ca3b112b2a02554bcf02c",
+        "path": "LoginForm-0.png",
+        "pixelSHA256": "4fb17887d3f777e59ca3731d7b6439986d43a7f6c53debc1bca30e1cd723ac89",
+        "visibleClassCounts": {
+          "label": 2,
+          "navigationBar": 1,
+          "primaryButton": 1,
+          "secondaryButton": 1,
+          "secureField": 1,
+          "textField": 1
+        }
+      },
+      {
+        "annotationSHA256": "b9b09e85d3195100b718d57b052224f68f926043c4617d904d7bb8715aa91161",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "55c26b9ca280c9ed99b82b6fb1beec24bdb2fbb9164551bf8eaeedccc3ac1a1e",
+        "path": "LoginForm-1.png",
+        "pixelSHA256": "d5545406e7cae2e8c127b8d1696abb91a4e46099def9c3f5ba09fa9cfc5390cf",
+        "visibleClassCounts": {
+          "label": 2,
+          "navigationBar": 1,
+          "primaryButton": 1,
+          "secondaryButton": 1,
+          "secureField": 1,
+          "textField": 1
+        }
+      },
+      {
+        "annotationSHA256": "49dc69ebfa26c9417a37f5530e7dce21ef0b34904056203c038f3ec3d23f3ad7",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "31d4ce235bf81cc447045b3566eb06d21cda9624526e1c4f58ece519da1267d1",
+        "path": "MediaCardGrid-0.png",
+        "pixelSHA256": "91e9444a0f7686d73e8a42d39979731de0be771c59d780eb4169cb02c581bf7b",
+        "visibleClassCounts": {
+          "collectionItem": 7,
+          "imageView": 7,
+          "label": 7,
+          "navigationBar": 1,
+          "pageControl": 1
+        }
+      },
+      {
+        "annotationSHA256": "0ae4212e140e34eca6639233514b84e2af4697460cad44447bf3ebf34fa6f12e",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "23e4497859f2fea37b77a02541419f756fd4f5487cd2f1ba182811fcd4245164",
+        "path": "MediaCardGrid-1.png",
+        "pixelSHA256": "40f016addede40d520c808efa0b7ee0a2c89912b8826c92abe3e1347306c0882",
+        "visibleClassCounts": {
+          "collectionItem": 7,
+          "imageView": 7,
+          "label": 7,
+          "navigationBar": 1,
+          "pageControl": 1
+        }
+      },
+      {
+        "annotationSHA256": "b5e5c34339a593598cb4820781377060ffd879343a92bfe9104bd30e3f0a30ca",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "9938f74db9e2b34fe4667e705271821c009f993081d4c640faaef326431d5510",
+        "path": "PickerDateEntry-0.png",
+        "pixelSHA256": "f4e0687018c8297ff99b8ffc52fb0aca2e09876af582910a1abfd5f45d60b273",
+        "visibleClassCounts": {
+          "cancelAction": 1,
+          "navigationBar": 1,
+          "picker": 1,
+          "primaryButton": 1
+        }
+      },
+      {
+        "annotationSHA256": "b9eafceb04a21a6509a6215bf1a77fbd197206025c6a59e47bd69c8ae4876e1d",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "69d78c8f1fbcfc7ba5b29c1eeddf1e3434d9c42175abd3812c9a8b0ae2c11989",
+        "path": "PickerDateEntry-1.png",
+        "pixelSHA256": "5d9f79dd9e43bc7eb44821fe8812ae98d7f65086fb3005c6e0928957487f748f",
+        "visibleClassCounts": {
+          "cancelAction": 1,
+          "navigationBar": 1,
+          "picker": 1,
+          "primaryButton": 1
+        }
+      },
+      {
+        "annotationSHA256": "510ae64833c693ff88e2c96d1aa26b6c19cbd0c3eb3f3fd30eb557b251185c2d",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "59db4f7ceae916420dee06b618603955e1cc4c01ad8a0d450c66408d78f660a3",
+        "path": "RTLMirror-0.png",
+        "pixelSHA256": "95d1c7016b61c2c14510ee07223879d96d2fbb0244d609a17038be7a472c2b70",
+        "visibleClassCounts": {
+          "label": 7,
+          "listRow": 7,
+          "navigationBar": 1,
+          "primaryButton": 1,
+          "textField": 1,
+          "toggle": 3
+        }
+      },
+      {
+        "annotationSHA256": "6421f429a3521600d336388e95abaa5fabdd7bdebec6b6f7ff7382a73ad6780c",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "f73542f6494675d0cfa7612b577b4ce84dfa50e4c8d5f880a4ca3928a36b7c2c",
+        "path": "RTLMirror-1.png",
+        "pixelSHA256": "ad270c529d6e61448dfb78072c6cd59c4061ba290c34446f33e7d9ce7e4761ee",
+        "visibleClassCounts": {
+          "label": 7,
+          "listRow": 7,
+          "navigationBar": 1,
+          "primaryButton": 1,
+          "textField": 1,
+          "toggle": 3
+        }
+      },
+      {
+        "annotationSHA256": "0b4239bb58ffe564f3407b4743c4defed0b476b5f8dc713d0bcdfcfe8a3202d3",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "77619d005a73adafcb72685877d5f2f244f9d89bb3b1204395c32b213c703823",
+        "path": "RefreshControl-0.png",
+        "pixelSHA256": "35b8ed941521dd257e9f30b4406c86a68be3f48eee5e2be19e3c898b2db90946",
+        "visibleClassCounts": {
+          "listRow": 4,
+          "navigationBar": 1,
+          "refreshControl": 1
+        }
+      },
+      {
+        "annotationSHA256": "6f0b2b28d9279768ba62d4b5f939f11d5ffe2430b71106eda6ab0a7abd0a377f",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "feb15850d3445b5e4344b3d6975e6c0f3efc7a3afd306b2f580ebb0f44a052d9",
+        "path": "RefreshControl-1.png",
+        "pixelSHA256": "21332e987ff13f1e47e226dd500ae892345f93ae350e802af862fbd5fa7dff82",
+        "visibleClassCounts": {
+          "listRow": 4,
+          "navigationBar": 1,
+          "refreshControl": 1
+        }
+      },
+      {
+        "annotationSHA256": "fafbd7fb8f39b6208e4454bfbaa6b29fc79b2fb1961a04ab9c2f3a69b1c966cd",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "42d3e51d459e1b7fb19b61b0516a9d62ab58374a9620718f07099d7eb840598c",
+        "path": "SearchResults-0.png",
+        "pixelSHA256": "53a3c8d63f388a2983ff8d60201d8e20c2445adc7d093b1a9d6a1ae504995e13",
+        "visibleClassCounts": {
+          "label": 4,
+          "listRow": 9,
+          "navigationBar": 1,
+          "searchField": 1
+        }
+      },
+      {
+        "annotationSHA256": "a0d6e6034ada799ca56a05e55dbfddef77e151f481c64d4f983ffc51d7b08526",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "eccb313ae3831b182261ce06955aebbf5a66bf22946e62a6db83e2089500b1c0",
+        "path": "SearchResults-1.png",
+        "pixelSHA256": "0184e006fa0db488f2a85afe1e544c6746ad514561f4cd85e2643db922c8f73e",
+        "visibleClassCounts": {
+          "label": 4,
+          "listRow": 6,
+          "navigationBar": 1,
+          "searchField": 1
+        }
+      },
+      {
+        "annotationSHA256": "ad13d0128bf0f5d13af813c1c5b62e33da051d8d42c44a0bc1efc11897fe7221",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "72388b558b7bd66a4e8a81e0baafae51fce36a3fa400629676644817425cd098",
+        "path": "SettingsDisclosure-0.png",
+        "pixelSHA256": "8bf6d884686eeb5a99b397489257a75dfa497925c60db3c4c17c7c118204597b",
+        "visibleClassCounts": {
+          "disclosureGroup": 4,
+          "label": 5,
+          "listRow": 5,
+          "navigationBar": 1,
+          "toggle": 1
+        }
+      },
+      {
+        "annotationSHA256": "5568f9d4830754e225c454cf8cb7881f381345181c8e78d7cc97270988b3f997",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "7eaea8756d722a2d67b8fb49b157c3b3c4c1c5fdb025ea1a3eef3b4f4a543fd3",
+        "path": "SettingsDisclosure-1.png",
+        "pixelSHA256": "a599844349837fd0bf2ad6aee39453359f29484b88edc54615e441b24b1b8653",
+        "visibleClassCounts": {
+          "disclosureGroup": 4,
+          "label": 5,
+          "listRow": 3,
+          "navigationBar": 1,
+          "toggle": 1
+        }
+      },
+      {
+        "annotationSHA256": "9adf228fb922c08304a8decffdb28ab6c9e200277ae8bfe12039896f476fef9b",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "dada4b55b1a2202ec3c7c04bf8af78014b2a7be5f490187187df24fdfaa3ed99",
+        "path": "SettingsList-0.png",
+        "pixelSHA256": "557ecdcd863d947f93bddc65cebf7054a8fdb9cec311068ff87e03d424c3044b",
+        "visibleClassCounts": {
+          "disclosureGroup": 1,
+          "homeIndicator": 1,
+          "label": 4,
+          "listRow": 10,
+          "navigationBar": 1,
+          "tabBar": 1,
+          "toggle": 3
+        }
+      },
+      {
+        "annotationSHA256": "be0cfc435588c22aaed9ae76f0c49e830e747e40234bdedef6059a3962b84ad7",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "dead421481f3e9beebc273edee2618bfa44037ddf43f8e8c10f498066ad9af0b",
+        "path": "SettingsList-1.png",
+        "pixelSHA256": "10d25aeab0f405e8b6b9b66d1ed831bf90edcea0d35a9f9ac46f252e89d97bfa",
+        "visibleClassCounts": {
+          "disclosureGroup": 1,
+          "homeIndicator": 1,
+          "label": 4,
+          "listRow": 7,
+          "navigationBar": 1,
+          "tabBar": 1,
+          "toggle": 3
+        }
+      },
+      {
+        "annotationSHA256": "e319a67469c3151b3ad101854457b7579a80e9271bad796b4d59c043e84f3ed9",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "e26029b14563af203cffeb2c98a2922425a36a595232e4c30887c501f1343280",
+        "path": "Stepper-0.png",
+        "pixelSHA256": "6fe13849e20c79fc4722ce5e16b7474d6478c652fbff4c302f4ae17e9b81024c",
+        "visibleClassCounts": {
+          "label": 3,
+          "navigationBar": 1,
+          "stepperControl": 3
+        }
+      },
+      {
+        "annotationSHA256": "942fc0b02f582d53a9a8cb3937ab0b700af4ffd41b94e2d8e4db8c130fb8c356",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "10755e665b618bccf4eb7f9f97ade477bae446e4395e2b86a0f9478b542e4fc1",
+        "path": "Stepper-1.png",
+        "pixelSHA256": "0845288b7476e72722a62eead02ace61015e69fa12811e8c7aa9b42385b2e2e8",
+        "visibleClassCounts": {
+          "label": 3,
+          "navigationBar": 1,
+          "stepperControl": 3
+        }
+      },
+      {
+        "annotationSHA256": "8ca24e51d7657b2fa624c56465b3d931202bb1fa0225ffc0a4c0de25f1c5e2e6",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "5a063d6d2dd53d962baad075dba3b6e28b145cc00db1f379854a3eaf053edd87",
+        "path": "TabViewNavigation-0.png",
+        "pixelSHA256": "be9b4feb65bea190cc9142825e38554efbe3d3db625b4e5e6fa943366f3ff3e8",
+        "visibleClassCounts": {
+          "dynamicIsland": 1,
+          "homeIndicator": 1,
+          "listRow": 3,
+          "navigationBar": 1,
+          "tabBar": 1
+        }
+      },
+      {
+        "annotationSHA256": "ce4278c324fe5ab11963eaebb6f7f5984e6e47ed503bc0472f7f835c5c272f40",
+        "dimensions": [
+          750,
+          1334
+        ],
+        "imageSHA256": "11cb3a1b5676efae0b0af77268075725c2e4076f70170d11c54f07dff664237a",
+        "path": "TabViewNavigation-1.png",
+        "pixelSHA256": "16c2bf660af15f14aad17f91644dde26de98b405afd7a6e6a2f49d59838a4fdb",
+        "visibleClassCounts": {
+          "homeIndicator": 1,
+          "listRow": 3,
+          "navigationBar": 1,
+          "tabBar": 1
+        }
+      }
+    ]
+  },
+  "status-axes-*": {
+    "count": 12,
+    "integrityValid": true,
+    "members": [
+      {
+        "annotationSHA256": "e73fe396ffd2006424ecf5b059a08fbf916eaa2f14f5787e1d4bf176d6769161",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "be5c0953bfb87512d86cb504fbe262003e46217051c6fc161996a5d50d10de6a",
+        "path": "battery-10.png",
+        "pixelSHA256": "2e81330a99c6d3932f91945194aab1024ea040fff8646b001858f20f18d4991c",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "d6fbd2f9539e41f225ad7313cb1b07b37d0951e0e2da25ca7539ac8be188c462",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "0951a9ddb7c5c058a9dd1404318d3b8553389dce456e4345ef2831c026e43e66",
+        "path": "battery-100.png",
+        "pixelSHA256": "3849ebc9b4491f10a4b8e2b39205a069eb93cbffd80173c92ba7b4d8dbc085a2",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "4b7d1bd71fdccc6b82df70f66091569b8a047c6e20b15164c1df55a354ffe281",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "041332df8e86507c52b33448dd36f96f0c27b9566636ce873014c8f1d507aa81",
+        "path": "battery-25.png",
+        "pixelSHA256": "9c067354f65c96ba4ce4a3a8fda6d5b7d16021717d17c8269a7b7ea83450eaad",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "1513ac07a507e22121d2591aa3e20c8197d4b562377f96ba99f8effbf1517a21",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "07e41e236f252279a94af54c4325579747abedfa37d26da28c0cc50bfc9901a7",
+        "path": "battery-50.png",
+        "pixelSHA256": "5f836bcb09e27531e68718bd891cbfbb476444ac7238e866b064f7bbb93dbab7",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "5ffa71df7b555ea839497d95f095b566a225c71020a90a6930a19637f444b859",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "920f47993088a34fa2afdff2632739a5340baabe2de49b2872d52ac05b63f58e",
+        "path": "battery-75.png",
+        "pixelSHA256": "9c79069ee4df6cb062e22ff73232e6e13650c78e6ceb11b1479f6050b227bf38",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "8e2708e1564a619b1840db2b434e88239093f8204b9a3ae1f24a7937261e0605",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "c08c1cb9f014612a141ed8e032c86ae2b3c8e646e4b64112fb97a7c4c9efd9ac",
+        "path": "cellular-0.png",
+        "pixelSHA256": "dc11e56f39c0229fcf022bfb2853cab956794871ef6c43ac933156682a3e26cf",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "3e23e8937fdb5c89eb01df10cfdc6ad426dc32cafa476bf3edd0b5bedc4bbc28",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "16b03ed262cdc8139ae1839df0164e662a6ed7c6d2843c2ff4cbb53888b17400",
+        "path": "cellular-1.png",
+        "pixelSHA256": "9e3037cf4a0c37ff4390034ac36490ec3a2f745174386d3ee24ef6e889356a79",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "cb881410ed426ffa6508819470c57e56afd9593c8272d0115bea4ad833515cfa",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "4f8eed37300e06dcfa5de93623e76248f303be68d51e32664707d6d326ba443c",
+        "path": "cellular-3.png",
+        "pixelSHA256": "2fffc63fd68411d61e81967e58287f1d947f462eb0438b1200667dbbf8ef677d",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "6120694eec6eab5b7fd5d14d10e0010e87b6cd02926640bceef194630da5317d",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "0951a9ddb7c5c058a9dd1404318d3b8553389dce456e4345ef2831c026e43e66",
+        "path": "cellular-5.png",
+        "pixelSHA256": "3849ebc9b4491f10a4b8e2b39205a069eb93cbffd80173c92ba7b4d8dbc085a2",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "c9d3be9c45fcfaf849c55a19e5f121adf6dcf871ad573edfba34cc35517111af",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "6e0f2cae6f6617b4ab3889580651bb1255ded148e85eb72bffb406e75d95c629",
+        "path": "wifi-0.png",
+        "pixelSHA256": "aa21c8636b5100d06ad8437714646e86e66803e4fe6efaedde3ce0a5154a8afc",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "d52f2db6488f5d87f9d8abfcd2949fee99fea9ded3624811aab341c89aec3a21",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "cb76da76dc037c401db4023ff79721dedf68f680449ba5847bc736bef588a269",
+        "path": "wifi-1.png",
+        "pixelSHA256": "d297131841ad30912f3403f7e3d49ae7f1ee8bea26c5d0895e56d059bb8a9f9b",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      },
+      {
+        "annotationSHA256": "abd9f3120187b58fff3e88d521377226520158491ff6164d64505507bc7ba7ca",
+        "dimensions": [
+          1179,
+          2556
+        ],
+        "imageSHA256": "0951a9ddb7c5c058a9dd1404318d3b8553389dce456e4345ef2831c026e43e66",
+        "path": "wifi-3.png",
+        "pixelSHA256": "3849ebc9b4491f10a4b8e2b39205a069eb93cbffd80173c92ba7b4d8dbc085a2",
+        "visibleClassCounts": {
+          "label": 1,
+          "listRow": 8,
+          "scrollIndicator": 1,
+          "statusBar": 1,
+          "tooltip": 1,
+          "unknown": 1
+        }
+      }
+    ]
+  }
+}

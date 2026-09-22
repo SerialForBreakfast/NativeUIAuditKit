@@ -25,6 +25,12 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 
 ## Not shipped
 
+**2026-09-22 05:49 UTC diagnostic:** updated local TTR responds; exact-target
+infrastructure readiness passes and ownership is clear. Repaired companion source
+matches the producer receipt, but prior Fixture endpoint8080 refuses connection.
+Capture/export/intake were not run; screenshot repair is locally unqualified, not
+newly failed. [Diagnostic feedback](../reports/work/SIM-DATA-01-02/readiness-20260922-0548/handoff.md).
+
 **2026-09-22 01:39 UTC smoke:** native reference focus now resolves and settles,
 but screenshot output fails Cocoa513/EPERM writing frame.png in TTR's app-managed
 capture directory. Zero accepted rows; no export/intake or training. Postflight
@@ -56,6 +62,11 @@ not the previously resolved native-reference focus failure. No new training or p
 ---
 
 ## Current bottleneck
+
+**Parallel path approved, 2026-09-22:** [ADR-0009](ADR-0009-Direct-tvOS-Simulator-Generation.md)
+defines direct native tvOS Fixture/OS generation independent of TTR capture/export.
+No runner or corpus is qualified by this decision. TVGEN-01 design/reuse inventory
+is ready to assign; TTR integration and iOS reconstruction remain independent.
 
 **Legacy FocusRing reuse warning (2026-09-21):** the 1,500-pair crop corpus is
 byte-decodable but not requalified. An audit found 84 identical-pixel groups crossing
@@ -105,7 +116,7 @@ keeps 41-class first, moves badge to a versioned later model, prioritizes FocusR
 after DS-G8, and separates software/data/integration/model outcomes. Publishing these plans
 does not mark any worker implementation, experiment or quality gate complete.
 
-**New independent blocker — TASK-DATA-01 (2026-09-19):** Manifest-based inspection found all 2,000 synthetic test links broken, plus 10,543/11,984 training and 2,696/3,056 validation entries with broken image links; corresponding labels survive. The historical Run 009 mAP50=0.585669 report remains intact, but cannot currently be reproduced from this corpus. Missing files do not establish deletion cause. The native-only P0-C replacement path retired its failed WKWebView route and passed UIKit validation, but its fresh generator launcher was externally terminated with exit 137 before progress or output; no replacement corpus exists. [Evidence](../reports/dataset_availability_2026-09-19.md); [P0 recovery plan](DatasetRecoveryPlan.md); [P0-C record](../reports/work/P0-C/web-content-blocker.md). Baseline inference, frozen-suite acceptance, and full training depend on verified corpus readiness; offline tooling and ingest tests can proceed.
+**Independent corpus blocker — TASK-DATA-01 (updated 2026-09-22 UTC):** All 2,000 historical synthetic test links remain broken, plus 10,543/11,984 training and 2,696/3,056 validation image links; labels and historical Run 009 mAP50=0.585669 remain intact. Missing files do not establish deletion cause. P0-C is executing a separately authorized native-only replacement, not historical recovery. Failed attempts exposed writer/schema drift, native-navigation geometry defects and repeated pixels; evidence is preserved. Corrected-source preflight passes eight native tests and independent validation of 346 sample pairs. The [r5 continuation](../reports/work/P0-C/reconstruction-configuration-r5.md) retains 7,500 verified completed r4 captures with explicit build lineage and collects 9,440 remaining slots toward the unchanged 16,940 target. Full capture/audit remains in progress, not eligible training data yet. `webContent` remains uncovered. [Historical availability evidence](../reports/dataset_availability_2026-09-19.md); [recovery plan](DatasetRecoveryPlan.md); [resumption evidence](../reports/work/P0-C/resumption-20260922.md). Baseline inference, frozen-suite acceptance and training still depend on completed corpus qualification; offline work is independent.
 
 FocusRing v0.1 is independent of that bottleneck and is already bundled.
 

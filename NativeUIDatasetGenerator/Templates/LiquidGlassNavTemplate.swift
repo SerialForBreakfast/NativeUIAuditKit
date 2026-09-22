@@ -128,7 +128,6 @@ public struct LiquidGlassNavTemplate: View {
                         .padding(.bottom, 40)
                 }
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)

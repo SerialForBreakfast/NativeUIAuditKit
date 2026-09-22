@@ -93,6 +93,14 @@ waiver for external writes. The shared folder is not a second task board.
 
 ## Context budget
 
+Use [IterationEfficiency.md](IterationEfficiency.md) for change-scoped verification:
+focused behavioral checks during edits, required full offline checks at integrated
+code handoff, and full data/model gates only at their qualification boundaries.
+Reuse unchanged evidence with dependency identities; do not rerun entire suites
+for documentation/status changes. Record timing in existing handoffs so optimization
+is measured, not inferred from the number of tests. Fresh operational safety checks
+and final corpus audits are not replaced by cached evidence.
+
 Workers follow AGENTS.md's mandatory pre-code reading sequence. Read it once per worker context; do not repeatedly reload unchanged files. After that baseline, load only the assigned packet, selected skill, relevant knowledge entries, and changed source sections. After compaction, preserve what was read and re-read only missing or changed material. Never treat a summary as overriding an unread mandatory instruction.
 
 Packets carry paths, symbols, invariants, exact evidence needed, and known traps—not copies of whole research documents. Use targeted searches and bounded output. Avoid dumping datasets, base64, complete checkpoints, or long training logs into the conversation. Prefer manifests over large directory scans (BP-34). Put verbose evidence in project-local files and report counts, paths, and failures.

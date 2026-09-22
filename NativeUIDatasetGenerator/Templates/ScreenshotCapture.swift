@@ -22,7 +22,8 @@ import UIKit
 /// captures a PNG via `UIGraphicsImageRenderer` at the device's native screen scale.
 ///
 /// **Layout rules (Phase 1 mandate):**
-/// - Root `ZStack` of every template must carry `.ignoresSafeArea(.all)`.
+/// - Manually positioned fullscreen canvases use `.ignoresSafeArea(.all)`;
+///   content inside native navigation containers respects their safe area (BP-02).
 /// - All element positioning uses padding — never `.offset()`.
 /// - Frame collection uses `GeometryReader` inside a `.captureFrame(id:)` modifier.
 public enum ScreenshotCapture {
@@ -42,7 +43,6 @@ public enum ScreenshotCapture {
         windowSize: CGSize? = nil,
         config: GeneratorRunConfig
     ) async throws -> CaptureResult {
-        let screen = UIScreen.main
         // Use the canonical device screen size from the OS profile when no explicit
         // windowSize is provided. UIScreen.main.bounds is unreliable in hosted test
         // contexts — the simulator may report an unexpected logical resolution that
@@ -165,11 +165,18 @@ extension ScreenshotCapture {
     /// Called after layout stabilises so the bars are positioned and sized correctly.
     /// Internal (not private) so `UIKitCaptureSupport.swift` can call it on the same
     /// module boundary — all sources compile into a single test bundle.
+    @MainActor
     static func detectChromeFrames(in hostingView: UIView) -> [String: CGRect] {
         var result: [String: CGRect] = [:]
         func walk(_ view: UIView) {
             guard !view.isHidden, view.alpha > 0.01 else { return }
             switch view {
+            case let searchField as UISearchTextField:
+                let rect = searchField.convert(searchField.bounds, to: hostingView)
+                if result["searchField_0"] == nil,
+                   !rect.isEmpty, rect.intersects(hostingView.bounds) {
+                    result["searchField_0"] = rect
+                }
             case let navBar as UINavigationBar:
                 if result["navigationBar"] == nil {
                     result["navigationBar"] = navBar.convert(navBar.bounds, to: hostingView)

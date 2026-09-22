@@ -29,14 +29,23 @@ is implied by offline packet acceptance.
 | PER-06 | [Screen/row identity](Plans/TTRPerception.md#per-06--screen-and-row-identity-under-change); [v1 identity contract](schemas/identity-benchmark-v1.md); [handoff](../reports/work/PER-06/handoff.md) |
 | TTR-PER | [External evidence/comparison proposal](Plans/TTRPerception.md#ttr-per--producer-evidence-and-isolated-comparison-proposal) |
 
-## Current Office model-delivery amendment
+## Historical Office model-delivery amendment
 
 [OfficeFocusRing.md](Plans/OfficeFocusRing.md), revision 1, refines existing P4-L/FR-B/FR-C
 without duplicate packet IDs: one authorized smoke request, intake, separately authorized
-physical visual pilot/baseline/corpus, candidate and TTR comparison. Simulator execution
-is paused by the user; its packet evidence and offline review remain preserved.
+physical visual pilot/baseline/corpus, candidate and TTR comparison. Sequencing is now
+superseded by [ADR-0008](ADR-0008-Simulator-First-tvOS-FocusRing-Development.md):
+simulator first, Office later for transfer validation. Plans do not grant execution.
 
 ## Common execution contract
+
+[ADR-0009 TVGEN-01–04](ADR-0009-Direct-tvOS-Simulator-Generation.md#implementation-tranches)
+defines the parallel direct tvOS generator tranches. TVGEN-01 is the next planning
+assignment; runtime implementation/capture are not authorized by the ADR itself.
+
+[IterationEfficiency.md](IterationEfficiency.md) defines change-scoped test cadence,
+producer handoff evidence and prioritized visual-state coverage. Apply it within
+existing packets; do not reopen accepted software or weaken qualification gates.
 
 Platform-oriented grouping for the existing iOS packets:
 [iOS platform delivery plan](Plans/iOSPlatform.md). It defines substantial execution

@@ -148,6 +148,7 @@ func runPipeline(deviceUDID: String, outputDir: String, projectPath: String) thr
         "test",
         "-project", projectPath,
         "-scheme", "GeneratorRunnerTests",
+        "-only-testing:GeneratorRunnerTests/GenerateDatasetTests",
         "-destination", "platform=iOS Simulator,id=\(deviceUDID)",
         "-configuration", "Debug",
         "-derivedDataPath", derivedDataDir.path,

@@ -143,7 +143,6 @@ public struct RTLMirrorTemplate: View {
                         .padding(.bottom, 32)
                 }
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)

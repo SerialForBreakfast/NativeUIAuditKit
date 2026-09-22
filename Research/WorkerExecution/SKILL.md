@@ -20,6 +20,13 @@ For review assignments, inspect the diff and evidence against the packet; do not
 
 ## Before ending the turn
 
+During iteration, follow [change-scoped verification](../IterationEfficiency.md):
+test the changed mechanism first; run required full offline checks at the integrated
+code handoff, not after each helper. Preserve evidence for unchanged dependencies.
+For producer repairs, seek actual failed-boundary and completed-artifact evidence;
+readiness alone is not capture success. This never waives fresh operational safety
+checks, final data/model gates, or separate execution authority.
+
 Apply AGENTS.md's execution contract. Check the entire assigned tranche, not only the last
 file edited. If any safe, authorized implementation, integration, test, failure repair,
 or handoff work remains, do it now. Send commentary for progress and continue working;

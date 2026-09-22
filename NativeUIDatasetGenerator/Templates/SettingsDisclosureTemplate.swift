@@ -154,7 +154,7 @@ public struct SettingsDisclosureTemplate: View {
                 }
                 .listStyle(.insetGrouped)
             }
-            .ignoresSafeArea(.all)
+            // Native list content must respect its enclosing navigation chrome.
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)

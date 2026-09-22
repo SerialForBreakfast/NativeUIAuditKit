@@ -33,6 +33,13 @@ Button("Label") {}
 
 ### BP-02: Apply `.ignoresSafeArea(.all)` to the top-level ZStack, not just the background Color
 
+**Scope correction (P0-C, 2026-09-22):** This applies to manually positioned
+fullscreen canvases. Native navigation content must respect the enclosing
+NavigationStack/TabView safe area. Applying this rule to their inner List/Form
+containers drew ordinary rows under navigation titles on iOS 26.5. Global frame
+measurement still works without ignoring those insets; verify actual rendered
+geometry. The native-navigation probe covers thirteen families at both profiles.
+
 **Wrong:**
 ```swift
 ZStack(alignment: .topLeading) {
@@ -1177,6 +1184,63 @@ the connected coordinator session. Validate output boundaries without changing h
 
 **Why:** Wrong-host handoffs add needless approval loops and risk duplicate operators.
 Evidence: reports/work/OFFICE-FOCUS-SMOKE/local-attempt.md, 2026-09-20.
+
+### BP-60: Validate real generated sidecars before scaling a capture
+
+**Wrong:** Assume a successful rendering test proves schema compatibility. P0-C's
+first replacement run rendered images but serialized `leading/trailing` safe-area
+keys and emitted unsupported `tabBarItem` annotations; all 1,150 manifested sidecars
+failed the frozen schema. Independent clamping also mis-sized top/left-clipped boxes.
+
+**Correct:** Test the actual writer's encoded JSON, taxonomy filtering and visible
+intersection geometry. Audit early real output with full PNG decoding, paired hashes,
+schema and coordinate checks, then repeat across the complete corpus. Preserve failed
+attempts rather than relabeling their pixels after the fact.
+
+**Why:** Rendering success and schema-valid, image-bound labels are different gates.
+Evidence: [P0-C resumption](../reports/work/P0-C/resumption-20260922.md), failed-capture
+validation report, and `testAnnotationWriterFrozenSchemaAndVisibleIntersection`.
+
+### BP-61: Prove rendered variation, not just different seeds or metadata
+
+**Wrong:** Count different generator seeds as different screenshots, or claim
+connectivity/battery coverage because sidecars rotate values while the painted
+status bar still uses fixed icons. P0-C exposed both failures.
+
+**Correct:** Hash decoded pixels, retain duplicate/rejection evidence, and use a
+bounded deterministic variant policy without reducing frozen quotas. For appearance
+axes, hold unrelated content and clock fixed, render each supported value, verify
+pixel differences, and validate emitted sidecars against the frozen schema. Preserve
+the distinction between synthetic painted states and actual simulator/device state.
+
+**Why:** Duplicate samples inflate apparent support; false metadata hides gaps.
+Different-looking images can still have invalid metadata (r3's cellular value 4
+was outside the frozen `[0,1,3,5]` enum). Evidence: P0-C r2/r3 rejection reports,
+`testPaintedStatusAxesChangePixelsWithFixedClock`, and r4 preflight validation.
+
+### BP-62: Fail closed after a generation batch error
+
+Related planning rule: [IterationEfficiency.md](IterationEfficiency.md) keeps a
+prioritized inventory of controllable visible states. Exhaustive variation is a
+long-term goal, not a new gate for every corpus. Independent deterministic schedules
+avoid accidentally tying battery/network appearance to clock values. Verify pixels
+and sidecars together; metadata variation alone is not visual coverage (BP-61).
+
+**Wrong:** Let XCTest continue generating after a family fails while its accepted
+files are not yet in the manifest. P0-C r4 exhausted MenuButton's visual variants;
+the next test reused uncommitted image indices, leaving ledger and files inconsistent.
+
+**Correct:** Persist the original generation failure before throwing and block
+subsequent batches before any writes. Preserve the entire failed attempt. A new
+continuation may reuse only completely manifested, independently verified batches,
+with copied byte hashes, exact source/build lineage and recipe-slot reconciliation.
+Keep uncommitted output out of membership without deleting its evidence. Test the
+actual requested batch size when a family's visual variation space is limited.
+
+**Why:** A green early audit cannot make a later failed corpus atomic or complete.
+Evidence: [r4 diagnosis and r5 continuation](../reports/work/P0-C/resumption-20260922.md),
+`testGenerationFailurePreventsFollowingBatchWrites`, the 200-image MenuButton probe,
+and `stage_reconstruction_prefix.py` regression tests.
 
 ### BP-58: Retire nondeterministic renderer-dependent corpus routes
 

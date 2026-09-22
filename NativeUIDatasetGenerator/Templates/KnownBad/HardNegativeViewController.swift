@@ -100,7 +100,11 @@ public final class HardNegativeViewController: UIViewController, UIKitAnnotatabl
         let dimColor = UIColor.black.withAlphaComponent(dimAlpha)
 
         // Root background — shows through the dimmed overlay
-        view.backgroundColor = UIColor.systemGroupedBackground
+        // A dark system background collapsed every dim-alpha variant to black.
+        // Seed meaningful, low-saturation backdrop/contrast variation instead.
+        let hue = CGFloat(rng.next() % 360) / 360
+        let brightness = 0.25 + CGFloat(rng.next() % 51) / 100
+        view.backgroundColor = UIColor(hue: hue, saturation: 0.15, brightness: brightness, alpha: 1)
 
         // Dimmed overlay covering entire screen
         let overlay = UIView()

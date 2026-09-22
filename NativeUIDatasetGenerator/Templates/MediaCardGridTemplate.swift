@@ -165,7 +165,6 @@ public struct MediaCardGridTemplate: View {
                     }
                 }
             }
-            .ignoresSafeArea(.all)
             .navigationTitle(config.title)
             .navigationBarTitleDisplayMode(.large)
             .colorScheme(config.colorScheme)

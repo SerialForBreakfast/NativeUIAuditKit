@@ -30,6 +30,7 @@
 // `xcrun simctl status_bar` before each test run (see SimulatorStateManager).
 
 import XCTest
+import CryptoKit
 import SwiftUI
 import UIKit
 
@@ -75,11 +76,114 @@ final class GenerateDatasetTests: XCTestCase {
     // MARK: - Fixtures
 
     /// Root output directory inside the simulator app's Documents container.
-    private let datasetDir: URL = {
+    private let defaultDatasetDir: URL = {
         FileManager.default
             .urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appending(path: "dataset", directoryHint: .isDirectory)
     }()
+
+    private struct Rejection: Codable, Sendable {
+        let entry: ManifestEntry
+        let pixelSHA256: String
+        let duplicateOf: String
+    }
+    private struct CaptureLedger: Codable, Sendable {
+        var version = 1
+        var accepted: [String: String] = [:]
+        var rejected: [Rejection] = []
+    }
+    private var captureLedger: CaptureLedger?
+    private var captureRootOverride: URL?
+    private var datasetDir: URL { captureRootOverride ?? defaultDatasetDir }
+    private var captureRoot: URL { datasetDir }
+
+    private func requireCaptureReady() throws {
+        let marker = datasetDir.appending(path: "generation-failed.txt")
+        guard !FileManager.default.fileExists(atPath: marker.path) else {
+            throw XCTSkip("Prior generation failed; preserve staging and inspect generation-failed.txt before resuming.")
+        }
+    }
+
+    private func recordCaptureFailure(_ error: Error, family: String) throws {
+        let message = "family=\(family)\nerror=\(String(describing: error))\n"
+        try Data(message.utf8).write(to: datasetDir.appending(path: "generation-failed.txt"), options: .withoutOverwriting)
+        print("P0-C generation stopped: \(message)")
+    }
+
+    private func captureBatch(family: String, operation: () async throws -> Void) async throws {
+        try requireCaptureReady()
+        do { try await operation() }
+        catch {
+            try recordCaptureFailure(error, family: family)
+            throw error
+        }
+    }
+
+    override func tearDown() async throws {
+        if let captureLedger {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.sortedKeys]
+            encoder.dateEncodingStrategy = .iso8601
+            try encoder.encode(captureLedger).write(to: captureRoot.appending(path: "capture-ledger.json"), options: .atomic)
+        }
+    }
+
+    private func pixelDigest(_ png: Data) throws -> String {
+        let image = try XCTUnwrap(UIImage(data: png)?.cgImage)
+        var pixels = [UInt8](repeating: 0, count: image.width * image.height * 4)
+        try pixels.withUnsafeMutableBytes { buffer in
+            let context = try XCTUnwrap(CGContext(data: buffer.baseAddress, width: image.width,
+                height: image.height, bitsPerComponent: 8, bytesPerRow: image.width * 4,
+                space: CGColorSpace(name: CGColorSpace.sRGB)!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+            context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+        }
+        var data = Data("\(image.width)x\(image.height):".utf8)
+        data.append(contentsOf: pixels)
+        return SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+    }
+
+    /// Bounded deterministic candidate selection; no session retries or split changes.
+    private func distinctCapture(
+        family: String, originalSeed: UInt64, acceptedPath: String,
+        configuration: (UInt64) -> GeneratorRunConfig,
+        render: (UInt64, GeneratorRunConfig) async throws -> CaptureResult
+    ) async throws -> (GeneratorRunConfig, CaptureResult) {
+        if captureLedger == nil {
+            let url = captureRoot.appending(path: "capture-ledger.json")
+            let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .iso8601
+            captureLedger = FileManager.default.fileExists(atPath: url.path)
+                ? try decoder.decode(CaptureLedger.self, from: Data(contentsOf: url)) : CaptureLedger()
+        }
+        for attempt in 0..<32 {
+            let seed = originalSeed + UInt64(attempt) * 1_000_000
+            let config = configuration(seed)
+            let result = try await render(seed, config)
+            let digest = try pixelDigest(result.png)
+            if let existing = captureLedger!.accepted[digest] {
+                let directory = captureRoot.appending(path: "rejected")
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+                let name = "\(family)-\(originalSeed)-\(attempt).png"
+                let path = directory.appending(path: name)
+                guard !FileManager.default.fileExists(atPath: path.path) else {
+                    throw NSError(domain: "P0C", code: 2, userInfo: [NSLocalizedDescriptionKey: "Rejected-output collision: \(name)"])
+                }
+                try result.png.write(to: path, options: .withoutOverwriting)
+                try AnnotationWriter.write(result: result, config: config, imageFileName: name,
+                    templateFamily: family, generatorVersion: "0.1.0",
+                    to: path.deletingPathExtension().appendingPathExtension("json"))
+                let entry = ManifestEntry(fileName: "rejected/\(name)", split: splitFor(templateFamily: family),
+                    sha256: result.sha256, templateFamily: family, generatorSeed: seed,
+                    simulatorState: config.simulatorOverride, isolationTemplate: config.isolationTemplate,
+                    lowDensity: config.lowDensity, deviceName: config.deviceName, pixelScale: config.pixelScale)
+                captureLedger!.rejected.append(Rejection(entry: entry, pixelSHA256: digest, duplicateOf: existing))
+                continue
+            }
+            captureLedger!.accepted[digest] = acceptedPath
+            return (config, result)
+        }
+        throw NSError(domain: "P0C", code: 1, userInfo: [NSLocalizedDescriptionKey:
+            "Distinct variant space exhausted: \(family), original seed \(originalSeed), 32 attempts; quota unchanged"])
+    }
 
     /// Five distinct simulator state overrides, rotated across the image sweep.
     /// Records different time/battery/cellular values in annotation metadata,
@@ -110,6 +214,7 @@ final class GenerateDatasetTests: XCTestCase {
     // MARK: - Set-up
 
     override func setUp() async throws {
+        try requireCaptureReady()
         let fm = FileManager.default
         for split in ["train", "validation", "test"] {
             let dir = datasetDir.appending(path: split, directoryHint: .isDirectory)
@@ -118,6 +223,139 @@ final class GenerateDatasetTests: XCTestCase {
     }
 
     // MARK: - Test methods
+
+    func testDistinctCandidatePolicyIsBoundedAndPreservesRejections() async throws {
+        captureRootOverride = datasetDir.deletingLastPathComponent().appending(path: "candidate-policy-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: captureRoot, withIntermediateDirectories: true)
+        func result(_ color: UIColor) throws -> CaptureResult {
+            let format = UIGraphicsImageRendererFormat(); format.scale = 2
+            let png = try XCTUnwrap(UIGraphicsImageRenderer(size: CGSize(width: 2, height: 2), format: format).image { c in
+                color.setFill(); c.fill(CGRect(x: 0, y: 0, width: 2, height: 2))
+            }.pngData())
+            return CaptureResult(png: png, sha256: SHA256.hash(data: png).map { String(format: "%02x", $0) }.joined(),
+                elements: [], pixelSize: CGSize(width: 4, height: 4), pointSize: CGSize(width: 2, height: 2), scale: 2)
+        }
+        let blue = try result(.blue), red = try result(.red)
+        let configure: (UInt64) -> GeneratorRunConfig = { seed in
+            self.makeConfig(seed: seed, index: 1, templateFamily: "LoginForm", state: self.simulatorStates[0])
+        }
+        _ = try await distinctCapture(family: "LoginForm", originalSeed: 1, acceptedPath: "train/one.png", configuration: configure) { _, _ in blue }
+        let (config, _) = try await distinctCapture(family: "LoginForm", originalSeed: 2, acceptedPath: "train/two.png", configuration: configure) { seed, _ in
+            seed == 2 ? blue : red
+        }
+        XCTAssertEqual(config.seed, 1_000_002)
+        XCTAssertEqual(captureLedger?.rejected.count, 1)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: captureRoot.appending(path: "rejected/LoginForm-2-0.png").path))
+        do {
+            _ = try await distinctCapture(family: "LoginForm", originalSeed: 3, acceptedPath: "train/never.png", configuration: configure) { _, _ in blue }
+            XCTFail("Exhausted variation space must fail")
+        } catch {
+            XCTAssertEqual((error as NSError).domain, "P0C")
+            XCTAssertEqual((error as NSError).code, 1)
+        }
+        XCTAssertEqual(captureLedger?.accepted.count, 2)
+        XCTAssertEqual(captureLedger?.rejected.count, 33)
+    }
+
+    func testGenerationFailurePreventsFollowingBatchWrites() async throws {
+        captureRootOverride = defaultDatasetDir.deletingLastPathComponent().appending(path: "failure-policy-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: datasetDir, withIntermediateDirectories: true)
+        do {
+            try await captureBatch(family: "MenuButton") {
+                throw NSError(domain: "P0C-test", code: 17)
+            }
+            XCTFail("Failed operation must throw")
+        } catch { XCTAssertEqual((error as NSError).domain, "P0C-test") }
+        let marker = datasetDir.appending(path: "generation-failed.txt")
+        let evidence = try Data(contentsOf: marker)
+        var followingOperationRan = false
+        do {
+            try await captureBatch(family: "MultiSectionForm") { followingOperationRan = true }
+            XCTFail("Following batch must be blocked")
+        } catch { XCTAssertTrue(error is XCTSkip) }
+        XCTAssertFalse(followingOperationRan)
+        XCTAssertEqual(try Data(contentsOf: marker), evidence)
+    }
+
+    func testMenuButtonDistinctBatchProbe() async throws {
+        captureRootOverride = defaultDatasetDir.deletingLastPathComponent().appending(path: "menu-batch-probe-" + UUID().uuidString)
+        for split in ["train", "validation", "test"] {
+            try FileManager.default.createDirectory(at: datasetDir.appending(path: split), withIntermediateDirectories: true)
+        }
+        try await generateImages(templateFamily: "MenuButton", count: 200, startSeed: 24201)
+        let manifest = try DatasetManifest.load(from: datasetDir.appending(path: "manifest.json"))
+        XCTAssertEqual(manifest.imageCount, 200)
+        XCTAssertEqual(captureLedger?.accepted.count, 200)
+    }
+
+    func testPaintedStatusAxesChangePixelsWithFixedClock() async throws {
+        let fallback = ChromeCoverageConfig(timeText: "9:41", tooltipText: "", unknownLabel: "",
+            rows: [], colorScheme: .light)
+        XCTAssertEqual(fallback.status.time, "09:41")
+        XCTAssertEqual(fallback.status.cellularBars, 5)
+        let output = datasetDir.deletingLastPathComponent().appending(path: "status-axes-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        for axis in ["cellular", "wifi", "battery"] {
+            var hashes = Set<String>()
+            let values = axis == "battery" ? [10, 25, 50, 75, 100] : (axis == "wifi" ? [0, 1, 3] : [0, 1, 3, 5])
+            for value in values {
+                var state = simulatorStates[0]
+                state.time = "09:41"; state.batteryState = "discharging"
+                if axis == "cellular" { state.cellularBars = value }
+                if axis == "wifi" { state.wifiBars = value }
+                if axis == "battery" { state.batteryLevel = value }
+                let config = makeConfig(seed: 1, index: 0, templateFamily: "ChromeCoverage", state: state)
+                var corpus = ContentCorpus(seed: 1)
+                let rendered = try await capture(templateFamily: "ChromeCoverage", seed: 1, config: config, corpus: &corpus)
+                hashes.insert(try pixelDigest(rendered.png))
+                let name = "\(axis)-\(value).png"
+                try rendered.png.write(to: output.appending(path: name))
+                try AnnotationWriter.write(result: rendered, config: config, imageFileName: name,
+                    templateFamily: "ChromeCoverage", generatorVersion: "0.1.0",
+                    to: output.appending(path: "\(axis)-\(value).json"))
+            }
+            XCTAssertEqual(hashes.count, values.count, "\(axis) did not visibly vary with a fixed clock/content")
+        }
+        print("Status axes probe: \(output.path)")
+    }
+
+    func testUIKitControlSeedStrideVisiblyVaries() async throws {
+        let output = defaultDatasetDir.deletingLastPathComponent().appending(path: "uikit-stride-probe-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        for index in 0..<2 {
+            var hashes = Set<String>()
+            for attempt in 0..<32 {
+                let seed = UInt64(6021 + attempt * 1_000_000)
+                let config = makeConfig(seed: seed, index: index, templateFamily: "UIKitControls", state: simulatorStates[0])
+                let result = try await captureUIKit(templateFamily: "UIKitControls", seed: seed, config: config)
+                hashes.insert(try pixelDigest(result.png))
+                let name = "profile-\(index)-attempt-\(attempt).png"
+                try result.png.write(to: output.appending(path: name))
+                try AnnotationWriter.write(result: result, config: config, imageFileName: name,
+                    templateFamily: "UIKitControls", generatorVersion: "0.1.0",
+                    to: output.appending(path: name).deletingPathExtension().appendingPathExtension("json"))
+            }
+            XCTAssertEqual(hashes.count, 32, "Candidate stride still aliases rendered control states")
+        }
+    }
+
+    /// Explicit P0-C continuation only; skips without its exact prefix count.
+    func testRemainingReconstructionQualification() async throws {
+        let initial = try DatasetManifest.load(from: datasetDir.appending(path: "manifest.json"))
+        guard initial.imageCount == 14_340 else { throw XCTSkip("Requires verified 14,340-member continuation staging") }
+        for (family, count, seed) in [("UIKitControls", 700, UInt64(6001)),
+                                     ("UIKitForm", 700, UInt64(4001)),
+                                     ("UIKitList", 700, UInt64(5001)),
+                                     ("UIKitToggleForm", 300, UInt64(26801))] {
+            try await generateUIKitImages(templateFamily: family, count: count, startSeed: seed)
+            print("P0-C completed remaining batch: \(family) \(count)")
+        }
+        try await generateImages(templateFamily: "WizardStepFlow", count: 200, startSeed: 25601)
+        let completed = try DatasetManifest.load(from: datasetDir.appending(path: "manifest.json"))
+        XCTAssertEqual(completed.imageCount, 16_940)
+        XCTAssertEqual(captureLedger?.accepted.count, 16_940)
+        try BalanceReport.write(from: completed, to: datasetDir.appending(path: "balance_report.md"))
+    }
 
     /// Generates 200 alert template images (seeds 2001–2200).
     /// Runs first alphabetically — initialises the manifest.
@@ -176,25 +414,30 @@ final class GenerateDatasetTests: XCTestCase {
         forceProfile: OSVisualProfile? = nil,
         accessibilityFlags: AccessibilityFlags = .default
     ) async throws {
+        try await captureBatch(family: templateFamily) {
         let manifestURL = datasetDir.appending(path: "manifest.json")
         var manifest = try DatasetManifest.load(from: manifestURL)
 
         for i in 0..<count {
-            let seed = startSeed + UInt64(i)
+            let originalSeed = startSeed + UInt64(i)
             let state = simulatorStates[i % simulatorStates.count]
-            var config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
-            // Apply optional overrides.
-            if let profile = forceProfile {
-                config.osProfile = profile
-                config.deviceName = profile == .ios26 ? "iPhone 17 Pro" : "iPhone SE (3rd generation)"
-                config.pixelScale = profile == .ios26 ? 3 : 2
+            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
+            let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
+                var config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+                if let profile = forceProfile {
+                    config.osProfile = profile
+                    config.deviceName = profile == .ios26 ? "iPhone 17 Pro" : "iPhone SE (3rd generation)"
+                    config.pixelScale = profile == .ios26 ? 3 : 2
+                }
+                config.locale = locale
+                config.layoutDirection = layoutDirection
+                config.accessibilityFlags = accessibilityFlags
+                return config
+            } render: { seed, config in
+                var corpus = ContentCorpus(seed: seed)
+                return try await capture(templateFamily: templateFamily, seed: seed, config: config, corpus: &corpus)
             }
-            config.locale = locale
-            config.layoutDirection = layoutDirection
-            config.accessibilityFlags = accessibilityFlags
-
-            var corpus = ContentCorpus(seed: seed)
-            let result = try await capture(templateFamily: templateFamily, seed: seed, config: config, corpus: &corpus)
+            let seed = config.seed
 
             let imageIndex = manifest.imageCount + 1
             let split = splitFor(templateFamily: templateFamily)
@@ -225,10 +468,97 @@ final class GenerateDatasetTests: XCTestCase {
                 deviceName: config.deviceName,
                 pixelScale: config.pixelScale
             )
-            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
+            manifest.append(entry, elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
         }
 
         try manifest.save(to: manifestURL)
+        }
+    }
+
+    /// Bounded renderer qualification, separate from dataset membership.
+    func testNativeNavigationGeometryProbe() async throws {
+        let output = datasetDir.deletingLastPathComponent()
+            .appending(path: "native-navigation-probe-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        for family in ["SettingsList", "SettingsDisclosure", "SearchResults", "Stepper", "TabViewNavigation",
+                       "LiquidGlassNav", "LiquidGlassTab", "RefreshControl", "RTLMirror", "LoginForm",
+                       "FormValidation", "MediaCardGrid", "PickerDateEntry"] {
+            for index in 0..<2 {
+                var seed: UInt64 = 1
+                if family == "TabViewNavigation" {
+                    // Exercise the content tab, not a deliberately empty placeholder.
+                    while seed < 100 {
+                        var candidate = ContentCorpus(seed: seed)
+                        if TabViewNavigationConfig.make(seed: seed, corpus: &candidate, osProfile: .ios26).selectedTab == 0 { break }
+                        seed += 1
+                    }
+                    XCTAssertLessThan(seed, 100)
+                }
+                let config = makeConfig(seed: seed, index: index, templateFamily: family, state: simulatorStates[0])
+                var corpus = ContentCorpus(seed: seed)
+                let result = try await capture(templateFamily: family, seed: seed, config: config, corpus: &corpus)
+                let filename = "\(family)-\(index).png"
+                try result.png.write(to: output.appending(path: filename))
+                try AnnotationWriter.write(result: result, config: config, imageFileName: filename,
+                    templateFamily: family, generatorVersion: "0.1.0", to: output.appending(path: "\(family)-\(index).json"))
+                let nav = try XCTUnwrap(result.elements.first { $0.elementType == "navigationBar" })
+                let content = result.elements.filter {
+                    ["listRow", "stepperControl", "label", "primaryButton", "textField", "imageView"].contains($0.elementType)
+                }
+                XCTAssertFalse(content.isEmpty, family)
+                for element in content {
+                    XCTAssertGreaterThanOrEqual(element.frame.minY, nav.frame.maxY - 1,
+                        "\(family): \(element.id) intersects navigation chrome")
+                }
+                if family == "SearchResults" {
+                    let search = try XCTUnwrap(result.elements.first { $0.elementType == "searchField" })
+                    XCTAssertGreaterThan(search.frame.width, 0)
+                    XCTAssertGreaterThan(search.frame.height, 0)
+                }
+            }
+        }
+        print("Native navigation probe: \(output.path)")
+    }
+
+    /// One sample per profile/family; never appended to the training corpus.
+    func testAllReconstructionFamiliesProbe() async throws {
+        let output = datasetDir.deletingLastPathComponent()
+            .appending(path: "all-families-probe-" + UUID().uuidString)
+        for split in ["train", "validation", "test"] {
+            try FileManager.default.createDirectory(at: output.appending(path: split), withIntermediateDirectories: true)
+        }
+        var manifest = DatasetManifest()
+        let knownBad: Set<String> = ["TruncatedLabel", "ClippedContent", "OverlappingControls", "SmallHitTarget",
+            "DynamicTypeOverflow", "RTLMirroringFailure", "OffScreenElement", "OccludedElement", "HardNegative_1", "HardNegative_3"]
+        for family in Self.allTemplateFamilies.sorted() {
+            for index in 0..<2 {
+                let seed = UInt64(index + 1)
+                let config = makeConfig(seed: seed, index: index, templateFamily: family, state: simulatorStates[0])
+                let result: CaptureResult
+                if family.hasPrefix("UIKit") {
+                    result = try await captureUIKit(templateFamily: family, seed: seed, config: config)
+                } else if knownBad.contains(family) {
+                    result = try await captureKnownBad(templateFamily: family, seed: seed, config: config)
+                } else {
+                    var corpus = ContentCorpus(seed: seed)
+                    result = try await capture(templateFamily: family, seed: seed, config: config, corpus: &corpus)
+                }
+                let split = splitFor(templateFamily: family)
+                let name = "\(family)-\(index).png"
+                let relative = "\(split.rawValue)/\(name)"
+                try result.png.write(to: output.appending(path: relative))
+                try AnnotationWriter.write(result: result, config: config, imageFileName: name,
+                    templateFamily: family, generatorVersion: "0.1.0",
+                    to: output.appending(path: relative).deletingPathExtension().appendingPathExtension("json"))
+                manifest.append(ManifestEntry(fileName: relative, split: split, sha256: result.sha256,
+                    templateFamily: family, generatorSeed: seed, simulatorState: simulatorStates[0],
+                    isolationTemplate: config.isolationTemplate, lowDensity: config.lowDensity,
+                    deviceName: config.deviceName, pixelScale: config.pixelScale),
+                    elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
+            }
+        }
+        try manifest.save(to: output.appending(path: "manifest.json"))
+        print("All-family probe: \(output.path)")
     }
 
     // MARK: - Capture dispatch
@@ -372,7 +702,7 @@ final class GenerateDatasetTests: XCTestCase {
             let apfConfig = AccountProfileFormConfig.make(seed: seed, corpus: &corpus)
             return try await ScreenshotCapture.capture(AccountProfileFormTemplate(config: apfConfig), config: config)
         case "ChromeCoverage":
-            let ccConfig = ChromeCoverageConfig.make(seed: seed, corpus: &corpus)
+            let ccConfig = ChromeCoverageConfig.make(seed: seed, corpus: &corpus, status: config.simulatorOverride)
             return try await ScreenshotCapture.capture(ChromeCoverageTemplate(config: ccConfig), config: config)
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
@@ -421,15 +751,20 @@ final class GenerateDatasetTests: XCTestCase {
         count: Int,
         startSeed: UInt64
     ) async throws {
+        try await captureBatch(family: templateFamily) {
         let manifestURL = datasetDir.appending(path: "manifest.json")
         var manifest = try DatasetManifest.load(from: manifestURL)
 
         for i in 0..<count {
-            let seed = startSeed + UInt64(i)
+            let originalSeed = startSeed + UInt64(i)
             let state = simulatorStates[i % simulatorStates.count]
-            let config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
-
-            let result = try await captureUIKit(templateFamily: templateFamily, seed: seed, config: config)
+            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
+            let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
+                makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
+            } render: { seed, config in
+                try await captureUIKit(templateFamily: templateFamily, seed: seed, config: config)
+            }
+            let seed = config.seed
 
             let imageIndex = manifest.imageCount + 1
             let split = splitFor(templateFamily: templateFamily)
@@ -460,10 +795,11 @@ final class GenerateDatasetTests: XCTestCase {
                 deviceName: config.deviceName,
                 pixelScale: config.pixelScale
             )
-            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
+            manifest.append(entry, elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
         }
 
         try manifest.save(to: manifestURL)
+        }
     }
 
     /// Dispatches to the correct UIKit VC factory and calls `captureUIKit`.
@@ -925,22 +1261,22 @@ final class GenerateDatasetTests: XCTestCase {
         layoutDirection: GeneratorLayoutDirection = .ltr,
         locale: String = "en_US"
     ) async throws {
+        try await captureBatch(family: templateFamily) {
         let manifestURL = datasetDir.appending(path: "manifest.json")
         var manifest = try DatasetManifest.load(from: manifestURL)
 
         for i in 0..<count {
-            let seed = startSeed + UInt64(i)
+            let originalSeed = startSeed + UInt64(i)
             let state = simulatorStates[i % simulatorStates.count]
-
             let dtSize = dynamicTypeOverride ?? dynamicTypeSize(for: i)
-            let config = makeKnownBadConfig(
-                seed: seed, index: i, templateFamily: templateFamily, state: state,
-                dynamicTypeSize: dtSize, layoutDirection: layoutDirection, locale: locale
-            )
-
-            let result = try await captureKnownBad(
-                templateFamily: templateFamily, seed: seed, config: config
-            )
+            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
+            let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
+                makeKnownBadConfig(seed: seed, index: i, templateFamily: templateFamily, state: state,
+                    dynamicTypeSize: dtSize, layoutDirection: layoutDirection, locale: locale)
+            } render: { seed, config in
+                try await captureKnownBad(templateFamily: templateFamily, seed: seed, config: config)
+            }
+            let seed = config.seed
 
             let imageIndex = manifest.imageCount + 1
             let split = splitFor(templateFamily: templateFamily)
@@ -971,10 +1307,11 @@ final class GenerateDatasetTests: XCTestCase {
                 deviceName: config.deviceName,
                 pixelScale: config.pixelScale
             )
-            manifest.append(entry, elementTypes: result.elements.map(\.elementType))
+            manifest.append(entry, elementTypes: result.elements.filter { $0.elementType != "tabBarItem" }.map(\.elementType))
         }
 
         try manifest.save(to: manifestURL)
+        }
     }
 
     /// Dispatches to the correct known-bad VC factory.
@@ -1078,6 +1415,31 @@ final class GenerateDatasetTests: XCTestCase {
         XCTAssertEqual(splitFor(templateFamily: "TabViewNavigation"), .validation)
         XCTAssertEqual(splitFor(templateFamily: "HardNegative_1"), .train)
         XCTAssertEqual(splitFor(templateFamily: "HardNegative_3"), .train)
+    }
+
+    func testAnnotationWriterFrozenSchemaAndVisibleIntersection() throws {
+        let result = CaptureResult(png: Data(), sha256: String(repeating: "a", count: 64),
+            elements: [
+                AnnotatedElement(id: "label_clipped", elementType: "label", frame: CGRect(x: -10, y: -20, width: 50, height: 70)),
+                AnnotatedElement(id: "label_outside", elementType: "label", frame: CGRect(x: 110, y: 10, width: 20, height: 20)),
+                AnnotatedElement(id: "tabBarItem_0", elementType: "tabBarItem", frame: CGRect(x: 0, y: 80, width: 50, height: 20))
+            ], pixelSize: CGSize(width: 200, height: 200), pointSize: CGSize(width: 100, height: 100), scale: 2)
+        let config = makeConfig(seed: 1, index: 0, templateFamily: "LoginForm", state: simulatorStates[0])
+        let annotation = AnnotationWriter.buildJSON(result: result, config: config,
+            imageFileName: "test.png", templateFamily: "LoginForm", generatorVersion: "0.1.0")
+        XCTAssertEqual(annotation.elements.count, 2)
+        let clipped = annotation.elements[0]
+        XCTAssertEqual(clipped.boundsVisionNormalized.x, 0)
+        XCTAssertEqual(clipped.boundsVisionNormalized.y, 0.5)
+        XCTAssertEqual(clipped.boundsVisionNormalized.width, 0.4)
+        XCTAssertEqual(clipped.boundsVisionNormalized.height, 0.5)
+        XCTAssertTrue(clipped.occluded)
+        XCTAssertFalse(clipped.excluded)
+        XCTAssertTrue(annotation.elements[1].excluded)
+        let object = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(annotation)) as? [String: Any])
+        let image = try XCTUnwrap(object["image"] as? [String: Any])
+        let insets = try XCTUnwrap(image["safeAreaInsets"] as? [String: Any])
+        XCTAssertEqual(Set(insets.keys), ["top", "left", "bottom", "right"])
     }
 
     /// Cycles through 6 `GeneratorDynamicTypeSize` values based on the image index.

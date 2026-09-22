@@ -120,10 +120,10 @@ public struct NotificationCenterTemplate: View {
                 Text(config.dateLabel)
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(config.colorScheme == .dark ? .white.opacity(0.7) : .black.opacity(0.5))
+                    .captureFrame(id: "label_date_header")
                     .padding(.horizontal, 20)
                     .padding(.top, 60)
                     .padding(.bottom, 10)
-                    .captureFrame(id: "label_date_header")
 
                 // Notification cards
                 ScrollView {
