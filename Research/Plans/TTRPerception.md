@@ -204,6 +204,10 @@ temporal training is authorized here. Propose one only if baselines demonstrate 
 
 ## PER-06 — Screen and row identity under change
 
+Implementation contract: [identity-benchmark-v1](../schemas/identity-benchmark-v1.md).
+Actual production anchor adapter: package-only `AnchorTool`; evaluation entrypoint:
+`scripts/identity_benchmark.py`. Evidence: [PER-06 handoff](../../reports/work/PER-06/handoff.md).
+
 **Inputs:** PER-01 journey groups and reviewed identity labels, current
 `TextAnchorVerifier`, OCR/detection observations; P0/P1 evidence has dispatch precedence.
 **Authority/files:** offline matching/evaluation scripts, research contract and tests.

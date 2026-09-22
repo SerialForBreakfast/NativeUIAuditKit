@@ -80,7 +80,9 @@ public struct TextAnchorVerifier: Sendable {
 
     /// Pure evaluation, split out from `verify` so anchor-matching logic is testable without
     /// running live OCR.
-    static func evaluate(
+    // Package access permits the offline AnchorTool to reuse this exact matcher
+    // without introducing a public consumer API or a second implementation.
+    package static func evaluate(
         _ requirements: TextAnchorRequirements,
         against regions: [RecognizedTextRegion]
     ) -> TextAnchorVerificationResult {

@@ -52,7 +52,12 @@ let package = Package(
             dependencies: ["NativeUIAuditKitModels"],
             path: "Sources/NativeUIAuditKit"
         ),
-        // Offline diagnostic adapter sharing production FocusRing preprocessing.
+        // Offline diagnostic adapters sharing the production perception primitives.
+        .executableTarget(
+            name: "AnchorTool",
+            dependencies: ["NativeUIAuditKit"],
+            path: "Tools/AnchorTool"
+        ),
         .executableTarget(
             name: "TransitionTool",
             dependencies: ["NativeUIAuditKit"],

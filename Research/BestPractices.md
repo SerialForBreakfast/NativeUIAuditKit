@@ -1039,6 +1039,22 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-65: Text-anchor verification is not navigation identity verification
+
+**Wrong:** Promote `TextAnchorVerifier`'s verified substring match directly into a
+screen/node identity, or use row y-position to disambiguate repeated labels.
+
+**Correct:** Preserve the primitive's documented substring behavior, but evaluate
+identity through explicit registered locale/title/row evidence. Reject tied screen
+candidates and duplicate row labels; ignore mutable value text and tolerate vertical
+scrolling only when unique label plus horizontal geometry support the match. Keep
+unknown as an explicit result and leave action/route authority with the consumer.
+
+**Why:** PER-06's General/General Information case produces a false screen match
+under the actual anchor-only primitive. The conservative wrapper abstains; duplicate
+rows/tied screens also remain unresolved. This improves the synthetic failure case,
+not proof of general recognition accuracy. Evidence: `reports/work/PER-06/handoff.md`.
+
 ### BP-64: Preserve a bounded settling anchor across cadence changes
 
 **Wrong:** Require a fixed-size trailing frame window to span a settling duration,

@@ -21,7 +21,7 @@ do not redispatch already implemented foundations. Evidence:
 | PER-03 | [Targeted data and one candidate](Plans/TTRPerception.md#per-03--targeted-data-and-one-perception-candidate) |
 | PER-04 | [Visual-focus readiness](Plans/TTRPerception.md#per-04--visual-focus-robustness-and-physical-consumer-readiness) |
 | PER-05 | [Transition-readiness evaluation](Plans/TTRPerception.md#per-05--bounded-transition-readiness-evaluation); [v1 sequence/observation contract](schemas/transition-sequences-v1.md); [handoff](../reports/work/PER-05/handoff.md) |
-| PER-06 | [Screen/row identity](Plans/TTRPerception.md#per-06--screen-and-row-identity-under-change) |
+| PER-06 | [Screen/row identity](Plans/TTRPerception.md#per-06--screen-and-row-identity-under-change); [v1 identity contract](schemas/identity-benchmark-v1.md); [handoff](../reports/work/PER-06/handoff.md) |
 | TTR-PER | [External evidence/comparison proposal](Plans/TTRPerception.md#ttr-per--producer-evidence-and-isolated-comparison-proposal) |
 
 ## Current Office model-delivery amendment

@@ -16,9 +16,9 @@ group the same tasks; they do not create additional packet IDs or assignments.
 **Top dispatch priority (2026-09-21): failure-driven usable perception for TTR.**
 Offline FocusRing launch preparation and evidence-audit corrections are accepted for
 their original offline scopes. **PER-02/PER-04 integrated completion is ready for review**;
-PER-01 real label/coverage review remains open. PER-05 sequence readiness is also
-delivered for review; next independent software option is PER-06 identity benchmarking,
-not redispatch of delivered helpers.
+PER-01 real label/coverage review remains open. PER-05 sequence readiness and PER-06
+identity benchmarking are also delivered for review. Next: accept/revise the delivered
+tranches, not redispatch helpers; prioritize smoke/intake once the capture fix is ready.
 [Completion and review](reports/work/PERCEPTION-INTAKE/handoff.md). This preserves the usable
 FocusRing goal. Preserve active workers; no capture/training or peer request is
 authorized by this planning update. [Detailed contracts](Research/Plans/TTRPerception.md).
@@ -46,7 +46,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | P0 | PER-03 | TTR-PERCEPTION | blocked (unassigned) | Accepted benchmark/gap decision, numeric gates, eligible data and separate capture/training authority; reuse FR-B/FR-C for any FocusRing candidate |
 | P1 | PER-04 | FOCUS-DET-05 | review (architect implementation) | Physical byte/frame-specific intake → runtime crops → baseline/proposal CLI integration verified. [Handoff](reports/work/PERCEPTION-INTAKE/handoff.md). Genuine intake and legacy corpus remain unqualified. |
 | P1 | PER-05 | TTR-PERCEPTION | review (architect implementation) | Complete offline sequence/observation contract, production Swift-primitives evaluator, bounded causal policy and 15 tests; nine generated sequences replayed. [Handoff](reports/work/PER-05/handoff.md). No live integration or training qualification. |
-| P2 | PER-06 | TTR-PERCEPTION | draft (unassigned) | Journey/identity label contract; screen/row matching evaluation after higher-priority benchmark work |
+| P2 | PER-06 | TTR-PERCEPTION | review (architect implementation) | Journey-scoped contract, actual production anchor adapter, conservative row/geometry matcher and 17 tests delivered; 15 synthetic cases replayed. [Handoff](reports/work/PER-06/handoff.md). Real held-out support and TTR integration remain unqualified. |
 | — | TTR-PER | TTR-PERCEPTION | external proposal (unpublished) | Producer evidence and isolated comparison contract; requires separate publication and assignment in TVTestRig |
 | 1 | H1 | INTEGRATION-01 | accepted | NUIAK source-pinned offline contract accepted; bilateral producer acceptance and genuine-bundle qualification remain open |
 | 2 | P1-A | 6a-11 | accepted | Offline export software/schema accepted; P1-B still requires eligible pixels and assigned inference |
@@ -232,8 +232,8 @@ resume logic and teardown health. No model result grants Select permission.
 
 Review the delivered PER-02/PER-04 integrated tranche before acceptance; PER-01's
 real label/coverage review remains open. PER-05 sequence-contract and offline
-transition benchmarking is delivered for review; PER-06 identity evaluation is
-the next independent software option while TTR is repaired.
+transition benchmarking and PER-06 identity evaluation are delivered for review.
+Review those contracts/evidence while the TTR screenshot repair is addressed.
 Real inference/data/model qualification remain separately gated; the broader
 TTR-PER proposal is distinct from already published runtime-blocker requests.
 

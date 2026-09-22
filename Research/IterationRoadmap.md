@@ -13,7 +13,10 @@ with evidence in [the handoff](../reports/work/PERCEPTION-INTAKE/handoff.md).
 Review that tranche rather than redispatching completed helpers. Next independent
 review item: PER-05's [bounded transition benchmark](../reports/work/PER-05/handoff.md)
 using existing primitives, with its versioned sequence/observation proposal.
-Next independent software option is PER-06 screen/row identity after contract review.
+PER-06 [screen/row identity](../reports/work/PER-06/handoff.md) also has an offline
+implementation and candidate/invalidation contract for review. Next: review delivered
+PER-02/04/05/06 evidence rather than adding duplicate helpers; once capture is repaired,
+prioritize authorized smoke/intake and the FocusRing development baseline.
 Do not confuse software verification
 with eligible training pixels; real baseline still waits for qualified capture.
 
