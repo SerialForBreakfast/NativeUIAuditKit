@@ -1039,6 +1039,24 @@ identity review, 2026-09-19.
 
 ---
 
+### BP-63: Seed separation is not pixel or journey independence
+
+**Wrong:** The legacy FocusRing audit reported zero shared seeds as clean partition
+leakage, and file existence as complete image verification. The old evaluator also
+reported a passing hard-negative gate when no hard negatives existed.
+
+**Correct:** Decode and dimension-check every member; hash both bytes and normalized
+pixels, then check content across partitions independently of seeds. Keep related
+journeys/near-duplicates grouped too; exact hash checks alone cannot establish that.
+Report empty support as unavailable/failing, never zero-error evidence. Separate a
+test-only unavailable-adapter report from an actual model baseline.
+
+**Why:** On 2026-09-21 the reproducible audit found 84 cross-partition identical-pixel
+groups (386 crop references) in 1,500 legacy pairs despite zero seed overlap, and
+one duplicate-pixel group with conflicting focused/unfocused labels. Historical
+metrics remain historical, not independent quality evidence. See
+`reports/work/EVIDENCE-AUDIT/handoff.md`; original crops/reports were preserved.
+
 ### BP-62: Test crop contents and orientation, not only tensor dimensions
 
 **Wrong:** A 256×256 crop and correct box arithmetic were treated as evidence that

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import sys
 from collections import Counter
 from pathlib import Path
@@ -39,7 +40,7 @@ def _sha256(value: Any, error: str = "invalid_sha256") -> str:
 
 
 def _box(value: Any, width: int, height: int) -> list[float]:
-    if not isinstance(value, list) or len(value) != 4 or not all(isinstance(item, (int, float)) for item in value):
+    if not isinstance(value, list) or len(value) != 4 or not all(type(item) in (int, float) and math.isfinite(item) for item in value):
         raise BenchmarkError("invalid_box")
     x, y, w, h = map(float, value)
     if x < 0 or y < 0 or w <= 0 or h <= 0 or x + w > width or y + h > height:
@@ -151,8 +152,11 @@ def verify_evidence(cases: list[dict[str, Any]]) -> dict[str, int]:
         except ValueError as error:
             raise BenchmarkError("image_path_outside_package") from error
         if not path.is_file(): raise BenchmarkError("missing_image")
-        if hashlib.sha256(path.read_bytes()).hexdigest() != case["imageSHA256"]:
-            raise BenchmarkError("image_hash_mismatch")
+        from focus_dataset_contract import image, FocusDataError
+        try:
+            image(ROOT, {"path": str(path.relative_to(ROOT)), "sha256":case["imageSHA256"]}, (case["width"],case["height"]))
+        except FocusDataError as error:
+            raise BenchmarkError("image_hash_mismatch" if str(error)=="changed_hash" else str(error)) from error
         verified += 1
     return {"verifiedImageCount": verified}
 
@@ -209,7 +213,10 @@ def _score_relation(cases: list[dict[str, Any]], entries: dict[str, dict[str, An
                 if dialog_truth.get("focusedButtonID") is not None:
                     if dialog.get("focusedButtonID") == dialog_truth["focusedButtonID"]: counts["dialogFocusTP"] += 1
                     else: counts["dialogFocusError"] += 1
-                if dialog_truth["semantic"] == "destructive" and dialog.get("semantic") != "destructive": counts["destructiveAsBenign"] += 1
+                semantic = dialog.get("semantic")
+                if semantic not in SEMANTICS: raise BenchmarkError("invalid_predicted_semantic")
+                if semantic == "unknown": counts["semanticAbstentions"] += 1
+                if dialog_truth["semantic"] == "destructive" and semantic == "informational": counts["destructiveAsBenign"] += 1
         elif dialog is not None: counts["dialogFP"] += 1
     recall = counts["associatedTP"] / counts["truthChevron"] if counts["truthChevron"] else None
     return {"counts": dict(counts), "endToEndDisclosureRecall": recall}
@@ -242,9 +249,11 @@ def main() -> int:
     if output.exists(): print("ERROR: refusing output collision", file=sys.stderr); return 2
     try:
         cases = validate_manifest(json.loads(args.manifest.read_text())); result = score(json.loads(args.predictions.read_text()), cases)
-        report = {"formatVersion": "perception-benchmark-report-v1", "inventory": inventory(cases), "byteVerification": verify_evidence(cases) if args.verify_bytes else {"status": "not_requested"}, "prediction": result, "recommendation": recommendation(cases, result)}
+        verification = verify_evidence(cases) if args.verify_bytes or any(c["sourceKind"] != "testOnly" for c in cases) else {"status": "test_only_not_requested"}
+        report = {"formatVersion": "perception-benchmark-report-v1", "inventory": inventory(cases), "byteVerification": verification, "prediction": result, "recommendation": recommendation(cases, result), "trainingEligible": False, "modelGatePassed": "not_assessed"}
     except (OSError, json.JSONDecodeError, BenchmarkError) as error: print(f"ERROR: {error}", file=sys.stderr); return 2
-    output.parent.mkdir(parents=True, exist_ok=True); output.write_text(json.dumps(report, indent=2) + "\n")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open("x") as stream: stream.write(json.dumps(report, indent=2) + "\n")
     print(json.dumps({"cases": report["inventory"]["caseCount"], "recommendation": report["recommendation"]["action"]})); return 0
 
 

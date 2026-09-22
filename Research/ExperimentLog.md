@@ -1021,3 +1021,16 @@ manifest v1.2 and separately reviewed corpus approval are required. Historical
 run reports remain unchanged; no historical metric is requalified by these fixes.
 See `Plans/FocusRingConsumerReadiness.md` and the FOCUS-CONSUMER handoff.
 
+### 2026-09-21 — FDR-001 evidence audit correction (not a new experiment)
+
+The legacy 1,500-pair manifest's 3,000 PNGs decode at 256×256; all pairs are dark.
+Zero seed overlap does not imply independent held-out data: normalized-pixel hashing
+found 84 groups crossing partitions, including 40 groups shared by train and test
+(25 train/test plus 15 train/test/validation). One duplicate-pixel group has both
+focused and unfocused labels. The recorded 270/270 result is not a clean independent
+model-quality estimate; the historical n=0 hard-negative pass is invalid support.
+No original report, dataset or weight was overwritten, no run ID allocated, and no
+new real-data inference/training occurred. The corrected evaluator rejects missing
+members/leakage and requires explicit isolated output; legacy diagnostics cannot
+pass qualification. Current qualified crops require v1.3 runtime preprocessing,
+superseding v1.2's readiness limitation above. See `../reports/work/EVIDENCE-AUDIT/handoff.md`.

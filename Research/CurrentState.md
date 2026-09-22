@@ -38,6 +38,13 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 
 ## Current bottleneck
 
+**Legacy FocusRing reuse warning (2026-09-21):** the 1,500-pair crop corpus is
+byte-decodable but not requalified. An audit found 84 identical-pixel groups crossing
+partitions despite zero shared seeds; all examples are dark and frame-bound label
+evidence is absent. Historical 270/270 and empty-hard-negative passes are not clean
+qualification evidence. Preserve shipped weights; no automatic replacement follows.
+[Audit and corrections](../reports/work/EVIDENCE-AUDIT/handoff.md).
+
 **2026-09-21 FocusRing update:** local simulator runtime/storage readiness passed,
 but the clean two-element smoke failed `native_focus_or_geometry_unavailable:
 sceneNotSettled`; no eligible pilot exists. Broad simulator collection remains

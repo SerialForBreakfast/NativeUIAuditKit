@@ -7,9 +7,11 @@ annotation-schema revision, a detector taxonomy change, or a training corpus by 
 
 Each case has a stable `caseID`, original `imageSHA256`, pixel width/height, source kind,
 journey ID, split group, and one partition. Keep a complete journey, retries, recipe
-variants, and duplicate pixels in the same partition. `imagePath` is optional until a
-bounded byte-verification run; when used it must be an explicit in-package path, never a
-directory to scan.
+variants, and duplicate pixels in the same partition. `imagePath` may be absent for
+schema-only test fixtures. The CLI requires byte/hash/PNG-decode/dimension validation
+for every non-test-only case even without `--verify-bytes`; the flag additionally
+verifies test-only cases. Paths stay in-package, never a directory to scan. Passing
+integrity does not authenticate the source/reviewer or authorize training.
 
 ## Truth labels
 
@@ -34,3 +36,8 @@ The report separately counts chevron localization, correct row association, wron
 links, decorative-arrow false positives, abstentions, dialog localization, button membership,
 dialog focus, and destructive-as-benign errors. Test-only or unreviewed evidence can verify
 software only. It cannot justify a targeted model, physical-data eligibility, or a model gate.
+
+`semanticAbstentions` counts explicit unknown predictions. `destructiveAsBenign`
+counts destructive truth predicted informational, not unknown. Nonfinite/boolean
+boxes are rejected. Reports explicitly retain `trainingEligible: false` and
+`modelGatePassed: not_assessed`; unavailable predictions are not a measured baseline.

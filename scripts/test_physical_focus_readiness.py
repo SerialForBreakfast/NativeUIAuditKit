@@ -14,16 +14,23 @@ def pair(**changes):
 
 
 class PhysicalReadinessTests(unittest.TestCase):
-    def test_empty_is_honest_and_valid_pair_is_eligible(self):
+    def test_empty_and_metadata_only_never_establish_eligibility(self):
         self.assertEqual(validate({"formatVersion": "focus-ring-physical-readiness-v1", "pairs": []})["reason"], "no_physical_pairs")
         report = validate({"formatVersion": "focus-ring-physical-readiness-v1", "pairs": [pair()]})
-        self.assertTrue(report["eligible"])
+        self.assertFalse(report["eligible"])
+        self.assertTrue(report["metadataValid"])
+        self.assertFalse(report["integrityVerified"])
         self.assertEqual(report["coverage"]["mediaShelf/highContrast/collectionItem"], 1)
 
     def test_rejects_false_source_stale_callback_and_crop_drift(self):
         for changes, error in (({"sourceKind": "simulatorFixture"}, "false_or_missing_physical_source"), ({"focusFrameID": "old"}, "stale_or_untrusted_focus_label"), ({"expansion": .15}, "crop_parity_mismatch")):
             with self.subTest(error=error), self.assertRaisesRegex(PhysicalReadinessError, error):
                 validate({"formatVersion": "focus-ring-physical-readiness-v1", "pairs": [pair(**changes)]})
+
+    def test_rejects_nonhex_hash(self):
+        p=pair(); p["source"]["imageSHA256"]="z"*64
+        with self.assertRaisesRegex(PhysicalReadinessError,"invalid_source_hash"):
+            validate({"formatVersion":"focus-ring-physical-readiness-v1","pairs":[p]})
 
     def test_rejects_recipe_group_leakage_and_unsupported_hard_negative(self):
         conflicting = pair(pairID="p2", partition="test")

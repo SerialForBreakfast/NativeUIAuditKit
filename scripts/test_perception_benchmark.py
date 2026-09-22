@@ -82,7 +82,9 @@ class PerceptionBenchmarkTests(unittest.TestCase):
         work = ROOT / ".build" / "debug-output" / "perception-benchmark-test"
         shutil.rmtree(work, ignore_errors=True); work.mkdir(parents=True)
         try:
-            image = work / "image.bin"; image.write_bytes(b"reviewed pixels")
+            from PIL import Image
+            image = work / "image.png"; Image.new("RGB",(100,100)).save(image)
+            original=image.read_bytes()
             document = {"formatVersion": "perception-benchmark-v1", "cases": [case(image=hashlib.sha256(image.read_bytes()).hexdigest())]}
             document["cases"][0]["imagePath"] = str(image)
             cases = validate_manifest(document)
@@ -90,7 +92,7 @@ class PerceptionBenchmarkTests(unittest.TestCase):
             image.write_bytes(b"altered")
             with self.assertRaisesRegex(BenchmarkError, "image_hash_mismatch"):
                 verify_evidence(cases)
-            image.write_bytes(b"reviewed pixels")
+            image.write_bytes(original)
             manifest, prediction, output = work / "manifest.json", work / "predictions.json", work / "report.json"
             manifest.write_text(json.dumps(document)); prediction.write_text(json.dumps(predictions()))
             with patch("sys.argv", ["perception_benchmark.py", "--manifest", str(manifest), "--predictions", str(prediction), "--output", str(output), "--verify-bytes"]):

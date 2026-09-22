@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed provenance and geometry readiness check for physical FocusRing pairs."""
+"""Metadata inspection only; real physical eligibility requires byte-backed intake."""
 from __future__ import annotations
 import argparse
 import json
@@ -19,7 +19,7 @@ def _text(value: Any, error: str) -> str:
 
 def _sha(value: Any) -> str:
     value = _text(value, "invalid_source_hash")
-    if len(value) != 64: raise PhysicalReadinessError("invalid_source_hash")
+    if len(value) != 64 or any(c not in "0123456789abcdef" for c in value): raise PhysicalReadinessError("invalid_source_hash")
     return value
 
 def validate(document: dict[str, Any]) -> dict[str, Any]:
@@ -49,7 +49,9 @@ def validate(document: dict[str, Any]) -> dict[str, Any]:
             evidence = pair.get("unfocusedEvidence")
             if not isinstance(evidence, dict): raise PhysicalReadinessError("missing_hard_negative_evidence")
             _sha(evidence.get("sha256"))
-    return {"eligible": True, "reason": None, "pairCount": len(pairs), "coverage": dict(coverage)}
+    return {"eligible": False, "reason": "metadata_only_requires_byte_backed_intake",
+            "metadataValid": True, "integrityVerified": False,
+            "pairCount": len(pairs), "coverage": dict(coverage)}
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__); parser.add_argument("--manifest", type=Path, required=True); parser.add_argument("--output", type=Path, required=True)
@@ -59,6 +61,8 @@ def main() -> int:
     if output.exists(): print("ERROR: refusing output collision", file=sys.stderr); return 2
     try: report = validate(json.loads(args.manifest.read_text()))
     except (OSError, json.JSONDecodeError, PhysicalReadinessError) as error: print(f"ERROR: {error}", file=sys.stderr); return 2
-    output.parent.mkdir(parents=True, exist_ok=True); output.write_text(json.dumps(report, indent=2) + "\n"); print(json.dumps(report)); return 0
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open("x") as stream: stream.write(json.dumps(report, indent=2) + "\n")
+    print(json.dumps(report)); return 0
 
 if __name__ == "__main__": raise SystemExit(main())

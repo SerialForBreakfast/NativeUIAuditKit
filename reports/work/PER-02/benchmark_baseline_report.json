@@ -1,0 +1,29 @@
+{
+  "formatVersion": "perception-benchmark-report-v1",
+  "inventory": {
+    "caseCount": 1,
+    "sourceKinds": {
+      "testOnly": 1
+    },
+    "partitions": {
+      "development": 1
+    },
+    "coverage": {
+      "chevron:visible": 1
+    }
+  },
+  "byteVerification": {
+    "status": "not_requested"
+  },
+  "prediction": {
+    "status": "unavailable",
+    "reason": "shipped inference adapter not assigned for unreviewed captures",
+    "actualProposals": null,
+    "oracleBoxes": null
+  },
+  "recommendation": {
+    "action": "no_training",
+    "reason": "no_eligible_held_out_physical_benchmark_with_available_inference",
+    "heldOutSupport": 0
+  }
+}
