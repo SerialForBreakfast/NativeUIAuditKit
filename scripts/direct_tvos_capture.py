@@ -55,6 +55,10 @@ def catalog(smoke=False):
 
 
 def validate_catalog(value):
+    if value.get("version")=="direct-tvos-appearance-catalog-v1":
+        from direct_tvos_appearance import validate
+        validate(value)
+        return
     unsigned = {k: v for k, v in value.items() if k != "sha256"}
     require(value.get("sha256") == digest(unsigned), "changed_catalog")
     require(value in (catalog(), catalog(True)), "unsupported_catalog")
@@ -319,8 +323,32 @@ def resume_plan(receipt):
                 "full original catalog accounting and visual review before admission"]}
 
 
-def execute(plan, target, endpoint, output, *, continuation=None):
+def offline_preflight(plan, target, endpoint, output, producer_source=None):
+    """Filesystem/configuration checks only; never discovers or contacts a target."""
     validate_catalog(plan)
+    require(isinstance(target,str) and str(uuid.UUID(target)).upper()==target, "invalid_target")
+    endpoint_parts(endpoint)
+    output=new_output(output)
+    require(output.parent.is_dir(), "capture_parent_required")
+    pins=None
+    if plan.get("version")=="direct-tvos-appearance-catalog-v1":
+        from direct_tvos_appearance import check_source
+        pins=check_source(producer_source)
+    targets=[expected_targets(r) for r in plan["recipes"]]
+    return {"version":"direct-tvos-offline-preflight-v1","configurationValid":True,
+            "executionAuthorized":False,"runtimeQualified":False,"trainingEligible":False,
+            "catalogSHA256":plan["sha256"],"target":target,"endpoint":endpoint,
+            "captureOutput":str(output.relative_to(ROOT)),"sourceHashes":pins,
+            "recipeCount":len(targets),"expectedPairs":sum(map(len,targets)),
+            "expectedFrames":len(targets)+sum(map(len,targets)),
+            "remainingRequirements":["explicit_capture_authority","fresh_exact_target_endpoint_and_build_binding","postflight_health"]}
+
+
+def execute(plan, target, endpoint, output, *, continuation=None, producer_source=None):
+    validate_catalog(plan)
+    if plan.get("version")=="direct-tvos-appearance-catalog-v1":
+        require(continuation is None, "appearance_continuation_unsupported")
+        offline_preflight(plan,target,endpoint,output,producer_source)
     output = new_output(output)
     binding = bind_target(target, endpoint)  # No mutation before exact endpoint ownership.
     start, stop = 0, len(plan["recipes"])
@@ -387,16 +415,31 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     modes = p.add_mutually_exclusive_group(required=True)
     modes.add_argument("--plan", action="store_true"); modes.add_argument("--execute", action="store_true")
+    modes.add_argument("--preflight", action="store_true", help="Offline source/configuration validation; no target I/O")
     modes.add_argument("--validate", type=Path)
     modes.add_argument("--resume-plan", type=Path, help="Read-only failed-prefix audit; never resumes capture")
     p.add_argument("--smoke", action="store_true"); p.add_argument("--catalog", type=Path)
+    p.add_argument("--appearance", action="store_true", help="Plan the closed24-recipe appearance pilot")
+    p.add_argument("--producer-source", type=Path, help="Fixture source directory for pinned appearance execution/preflight")
+    p.add_argument("--capture-output", type=Path, help="Future capture destination checked by offline preflight")
     p.add_argument("--target"); p.add_argument("--endpoint"); p.add_argument("--output", type=Path)
     args = p.parse_args()
     try:
+        require(not args.appearance or (args.plan and not args.smoke), "appearance_plan_only")
         if args.plan:
             require(args.output is not None, "output_required")
             output = new_output(args.output); output.parent.mkdir(parents=True, exist_ok=True)
-            write_json(output, catalog(args.smoke))
+            if args.appearance:
+                from direct_tvos_appearance import catalog as appearance_catalog
+                write_json(output, appearance_catalog())
+            else: write_json(output, catalog(args.smoke))
+        elif args.preflight:
+            require(all((args.catalog,args.target,args.endpoint,args.capture_output,args.output)), "explicit_preflight_inputs_required")
+            output=new_output(args.output)
+            result=offline_preflight(json.loads(local(args.catalog).read_text()),args.target,args.endpoint,args.capture_output,args.producer_source)
+            output.parent.mkdir(parents=True,exist_ok=True)
+            write_json(output,result)
+            print(json.dumps(result))
         elif args.resume_plan:
             require(args.output is not None, "output_required")
             output = new_output(args.output)
@@ -409,7 +452,7 @@ def main():
             doc = json.loads(args.validate.read_text()); print(json.dumps({"pairs": validate_capture(doc, args.validate.parent)}))
         else:
             require(all((args.catalog, args.target, args.endpoint, args.output)), "explicit_execution_inputs_required")
-            execute(json.loads(args.catalog.read_text()), args.target, args.endpoint, args.output)
+            execute(json.loads(args.catalog.read_text()), args.target, args.endpoint, args.output,producer_source=args.producer_source)
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         print(str(error), file=sys.stderr); return 2

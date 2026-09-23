@@ -1,0 +1,363 @@
+{
+  "version": "appearance-protected-evidence-audit-v1",
+  "proposal": {
+    "path": "reports/work/APPEAR-B/proposal.json",
+    "sha256": "db8f374b8c055f09073e9384c8abb9f6546a0f1a1ff2f0a9bbc795c40fda2739"
+  },
+  "remotesInputs": [
+    {
+      "path": "reports/work/OS-FOCUS-03/challenge.json",
+      "sha256": "215fba09399ca45b47a5e6dc739a3f41ce12db430036e49365fe98e2d0b735e2"
+    },
+    {
+      "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/manifest.json",
+      "sha256": "ce4bea772a4b7b54b853f86d3a095d47f709f2f855405537f12bc915f7d248f9"
+    },
+    {
+      "path": "reports/work/OS-FOCUS-03/review.md",
+      "sha256": "ed77bdcf312f184ff5d78d7c6d8cd250a5564edb504558407e6b8d8612d2d024"
+    }
+  ],
+  "remotesSamples": [
+    {
+      "id": "protected-remotes:8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:focused",
+      "sourceID": "remotes",
+      "pairID": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/6BC6E300-554A-4F3D-977D-229870D330A3.png",
+        "sha256": "d18d1b5105463906be5a456c4c74cda2029dae3c85a710baa2e465eef9804a4d",
+        "pixelSHA256": "bd99bdfd2002591b20f9a8ff982b1f6bac7264c5291154008a2258300f532eba"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8-focused.png",
+        "sha256": "d7de569795d234e8dad39e53645a7987fc4e35a623a2c6e78bd222bf8a9fc9d3",
+        "pixelSHA256": "78764ec144a87200581839aab5f05c9c17fc7cc9af9a43553394aa968841858f"
+      },
+      "label": 1,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:unfocused",
+      "sourceID": "remotes",
+      "pairID": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/E4903423-161A-4DF5-BD62-CEA1DD363B89.png",
+        "sha256": "50765b7ae198fdcbaffef9fa57e1db3cef8ba603e399fa63f284435b7684bdf3",
+        "pixelSHA256": "ec91d43d82722cd53a0be4834c7030a9540845f6b522dfe480d2f7afd9b3ab6e"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8-unfocused.png",
+        "sha256": "d7d6275ae7ed8b4aa5318eebcf695b507f355bea6dfa4c9498ed0fecfdcb8a44",
+        "pixelSHA256": "4c47dfad081d7eb82f649decbc8610ec88577d72f10dcb4241065054fd3192bf"
+      },
+      "label": 0,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:focused",
+      "sourceID": "remotes",
+      "pairID": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/024BAD8A-CC96-4FA7-9AC6-69853C36FE04.png",
+        "sha256": "48247f53aa1d43959d8c43749f00381a6515576286521db9176cb67469a5a484",
+        "pixelSHA256": "f2740d7ddcfd1feeebba644ba64ce1e7baa1e7c3e447f5afe9f8ea7e5119cd76"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e-focused.png",
+        "sha256": "dcdb1cf81dda1342db6370cff7264b632f3a44fe1d418145ba9854d16b08493d",
+        "pixelSHA256": "923192f8679c41a168ba87db74f74c639c7e1e4ff1ba37a3433e88e3b5170c8a"
+      },
+      "label": 1,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:unfocused",
+      "sourceID": "remotes",
+      "pairID": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/6BC6E300-554A-4F3D-977D-229870D330A3.png",
+        "sha256": "d18d1b5105463906be5a456c4c74cda2029dae3c85a710baa2e465eef9804a4d",
+        "pixelSHA256": "bd99bdfd2002591b20f9a8ff982b1f6bac7264c5291154008a2258300f532eba"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e-unfocused.png",
+        "sha256": "3de9590ece3d9c7a16494fa7810fbe8a21621d29cf8ecdba556b5771ab04fdcf",
+        "pixelSHA256": "a7394ff976def3472e902200cb4752b3eed9ccfe63656f5f31950b4f9aaa46f4"
+      },
+      "label": 0,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:focused",
+      "sourceID": "remotes",
+      "pairID": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/E4903423-161A-4DF5-BD62-CEA1DD363B89.png",
+        "sha256": "50765b7ae198fdcbaffef9fa57e1db3cef8ba603e399fa63f284435b7684bdf3",
+        "pixelSHA256": "ec91d43d82722cd53a0be4834c7030a9540845f6b522dfe480d2f7afd9b3ab6e"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089-focused.png",
+        "sha256": "7ec10a231b6c14627ec3d4661c878f95abc33f30a6d092641c4af2ba974c21ba",
+        "pixelSHA256": "4870023071b2c610fccb9e90d2c9c3e7352a5f90e29390e698fa55062576af33"
+      },
+      "label": 1,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:unfocused",
+      "sourceID": "remotes",
+      "pairID": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/6BC6E300-554A-4F3D-977D-229870D330A3.png",
+        "sha256": "d18d1b5105463906be5a456c4c74cda2029dae3c85a710baa2e465eef9804a4d",
+        "pixelSHA256": "bd99bdfd2002591b20f9a8ff982b1f6bac7264c5291154008a2258300f532eba"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089-unfocused.png",
+        "sha256": "abca64ff3bcce64a57838f00bcdc9c160f592ed33f7ca032002b1c5c54f92e99",
+        "pixelSHA256": "eae973b4e349d52c1d629bf57e5a00dfb4a5b93676c9d6115491820d2ef78c94"
+      },
+      "label": 0,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:focused",
+      "sourceID": "remotes",
+      "pairID": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/BC56CB75-1299-4DE5-9374-4EB81C1447D8.png",
+        "sha256": "a8e4c07ded785416f2433bff106b14fac8f66ac2a91cdf23972c253da37bdb6e",
+        "pixelSHA256": "30c1f2c143fbb0dd30edb6f1aae53a8cfcfc9ed020bea39032532bca1405c4a0"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f-focused.png",
+        "sha256": "01f87aab34beddb635a4bb3fbe481ac84b9dea4929b1a22b057c288ff872d15b",
+        "pixelSHA256": "608a1011c8890e520b8b6cef39bef1c02a816765b233085bd634e2f8e6b49d87"
+      },
+      "label": 1,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:unfocused",
+      "sourceID": "remotes",
+      "pairID": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/6BC6E300-554A-4F3D-977D-229870D330A3.png",
+        "sha256": "d18d1b5105463906be5a456c4c74cda2029dae3c85a710baa2e465eef9804a4d",
+        "pixelSHA256": "bd99bdfd2002591b20f9a8ff982b1f6bac7264c5291154008a2258300f532eba"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f-unfocused.png",
+        "sha256": "56f8deb484a12f93e78e45bbc5cdfdf13c178dc71f5002d2358125a2f9a086e5",
+        "pixelSHA256": "408fceb6015edb395a8dba1602843eb9371ba49d50b94906417840a0830a774e"
+      },
+      "label": 0,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:focused",
+      "sourceID": "remotes",
+      "pairID": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/77CB8CAA-1052-4C44-9E28-661EB12DC8F1.png",
+        "sha256": "b310b9c0cf5943f3f088b18109f376fcf2f0ab2bccd0872340b5fe258d9b59e4",
+        "pixelSHA256": "1f28bccd630e9242a572f646b801e6addb2d577c8db54436985721a65ed5cbfc"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6-focused.png",
+        "sha256": "d1d095e80163e5c5bad382d7581c76b66debebaf41b92b64ca13dda587c49517",
+        "pixelSHA256": "e8bfd51ff8ebda710feb7459a44ac8b9a8a5d370e557082391f3f26de518987f"
+      },
+      "label": 1,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:unfocused",
+      "sourceID": "remotes",
+      "pairID": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/6BC6E300-554A-4F3D-977D-229870D330A3.png",
+        "sha256": "d18d1b5105463906be5a456c4c74cda2029dae3c85a710baa2e465eef9804a4d",
+        "pixelSHA256": "bd99bdfd2002591b20f9a8ff982b1f6bac7264c5291154008a2258300f532eba"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6-unfocused.png",
+        "sha256": "71ca9614ae4fdf49a655931849bc61fed55a234f70cd58579d8b7f3cde8654e0",
+        "pixelSHA256": "6cb4d6bd4f52eae1df1160215e6523b3b2dc0fed813fbebae875ef5d16c68398"
+      },
+      "label": 0,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:focused",
+      "sourceID": "remotes",
+      "pairID": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/DE23E944-E3AC-4C68-95FB-90A883095759.png",
+        "sha256": "49cb0ded87165f371a4ba7ed580ffa32d7d6cc2427aa0edc05fb6348d756a49a",
+        "pixelSHA256": "378af7898bce9ba73ba8b8aa61110d45f33b328f20ae9aedcac15d58b5190f31"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c-focused.png",
+        "sha256": "33ee95a4012544990debc6bc91290788d6e24d359c0e5b8b0573ea88c5452de3",
+        "pixelSHA256": "f8a30ca77a6fc4454ce6b37ab567052d59c4fdbf54082ba0078cd47ec1179520"
+      },
+      "label": 1,
+      "proposedRole": "known-retention-challenge"
+    },
+    {
+      "id": "protected-remotes:0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:unfocused",
+      "sourceID": "remotes",
+      "pairID": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c",
+      "sourceKind": "tvos_simulator_os",
+      "split": "challenge",
+      "relatedGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "intrinsicGroup": "tvos26.5-settings-remotes-default-layout-challenge",
+      "recipeSeed": null,
+      "frame": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/attachments/6BC6E300-554A-4F3D-977D-229870D330A3.png",
+        "sha256": "d18d1b5105463906be5a456c4c74cda2029dae3c85a710baa2e465eef9804a4d",
+        "pixelSHA256": "bd99bdfd2002591b20f9a8ff982b1f6bac7264c5291154008a2258300f532eba"
+      },
+      "crop": {
+        "path": "reports/work/OS-FOCUS-03/remotes-01/dataset/0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c-unfocused.png",
+        "sha256": "7b47cf6ef2326104951e983c716a34b956e1ac2025d3d4ca667896ee5e1504b3",
+        "pixelSHA256": "5aef342b37f16aea4d35f2f7dfd44c038e633512fd302bb53a4256fbe3051199"
+      },
+      "label": 0,
+      "proposedRole": "known-retention-challenge"
+    }
+  ],
+  "crossPartitionConflicts": [],
+  "visualDiagnostics": [
+    {
+      "surface": "photos",
+      "protocol": {
+        "path": "reports/work/FOCUS-VISUAL-01/protocol.json",
+        "sha256": "3b3bd7a8c181dbefc3351a6a6a7973a32602f06e52c9952b6d55b3e3c2233518"
+      },
+      "role": "known-visual-development-only",
+      "baseBoxes": 4,
+      "frames": [
+        {
+          "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+          "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+          "pixelSHA256": "70a7313e350705fef8a2fc29b80a59e6e9fb184d61df4b1b8bdaa10a5e9535af"
+        },
+        {
+          "path": "dataset/tvos_captures/office_pluto_loaded.png",
+          "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+          "pixelSHA256": "986147b5e4e769d82f54691d653c13dad886f33bac8b59c55a293cc8937ba325"
+        }
+      ],
+      "pixelOverlaps": 0,
+      "trainingEligible": false,
+      "independence": "unknown-journey; previously inspected/model-scored"
+    },
+    {
+      "surface": "home",
+      "protocol": {
+        "path": "reports/work/FOCUS-VISUAL-02/protocol.json",
+        "sha256": "46371af1a962733bd99a3beeeee055c4640093c32ff893e0b774f19decda308b"
+      },
+      "role": "known-visual-development-only",
+      "baseBoxes": 72,
+      "frames": [
+        {
+          "path": "dataset/tvos_captures/office_home_initial.png",
+          "sha256": "43ab9e9052073e767d1c9191124e3951f3ca9b58be17f29fcc1726a2c74557c2",
+          "pixelSHA256": "4441593c73e60ac9264682d64ec8241bc2268fe2dbe139cec3840d77157edfdb"
+        },
+        {
+          "path": "dataset/tvos_captures/office_home_step01.png",
+          "sha256": "69f6e593775a682faa4cbaf7984506c1fa9c93e143106cf1c323f8adf10d48ef",
+          "pixelSHA256": "c4a13a375a3c9a208e6a4e5d8bbf51bbbb0bafc5cf91eabe8fe531f760579ea6"
+        },
+        {
+          "path": "dataset/tvos_captures/office_home_step02.png",
+          "sha256": "55e9e7cd6fd212aa8303292d5ce8fe49a9fd2a5c0ef86267a753f016f872bfaf",
+          "pixelSHA256": "e6761592027f4a2944a962cdad78f664861fa042d6eb6141c8bda7eeb59a9ab1"
+        },
+        {
+          "path": "dataset/tvos_captures/office_session2_home.png",
+          "sha256": "a44c19692a1147f639acc18803fed36240239b78a0d048a3785a28f47c286aec",
+          "pixelSHA256": "8fff24687da92ade4dadd3d4dde31c3ddb4a2c81b69dc61b14f81efa34f0c647"
+        },
+        {
+          "path": "dataset/tvos_captures/office_home_step03.png",
+          "sha256": "4e35aeea6d9282783c4a365aaa6b9d55110498e1e50ecf0832973bc9a2d9bcf7",
+          "pixelSHA256": "082e23621b2363c5a0e5f7aa28e5af83608eaeb02cf3ea9fecffcaf768ba7a65"
+        },
+        {
+          "path": "dataset/tvos_captures/office_home_col5.png",
+          "sha256": "cc737eee5e05bd8eb63a825815a672e8bb94a29f5f6fc4104a505873453da54c",
+          "pixelSHA256": "fcc50c12714c90933f2114f76285042c9b99ee54e88749358f2b2e457796cdce"
+        }
+      ],
+      "pixelOverlaps": 0,
+      "trainingEligible": false,
+      "independence": "unknown-journey; previously inspected/model-scored"
+    }
+  ],
+  "untouchedAppearanceValidation": [],
+  "untouchedFinalChallenge": [],
+  "trainingEligible": false,
+  "launchEligible": false,
+  "auditSHA256": "9ab8911d33a3fd392e6acbabb569d189318040d30307508d6b095fe17d566530"
+}

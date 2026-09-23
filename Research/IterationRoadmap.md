@@ -8,6 +8,29 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
+[APPEAR-B offline audit/proposal is delivered](../reports/work/APPEAR-B/handoff.md).
+Next local software: APPEAR-B1 versioned development adapter and fail-closed launch
+preflight. Independent appearance validation/challenge remains missing; do not turn
+new seed numbers or known Home/Photos failures into final evaluation evidence.
+
+[APPEAR-A2 live pilot is complete for review](../reports/work/APPEAR-A2/handoff.md):
+76 development pairs, reference comparison and4K intake fix delivered. Next
+APPEAR-B offline lineage/sampling proposal, with independent appearance coverage
+still open. No automatic training or scale harvest; Home/artwork request separate.
+
+[APPEAR-A audit is complete for review](../reports/work/APPEAR-A/handoff.md).
+APPEAR-A1 has [verified catalog/planning/intake software](../reports/work/APPEAR-A1/handoff.md), without TTR runtime
+dependence. Its authorized pilot is reported above. The24-group pilot expands supported layout/context only;
+Home artwork/dock remains a separate source-backed producer request. No capture or
+training permission follows from planning. Keep APPEAR-B independent-data goals open.
+
+[FDR-008 Home/Photos checks completed](../reports/work/FOCUS-VISUAL-03/handoff.md):
+zero correct unique selections on eight base frames and new Home false positives.
+Prioritize [APPEAR-A/B](Plans/FocusAppearanceAcquisition.md): source capability audit,
+authorized appearance-ground-truth pilot and independent evaluation before another
+candidate. Frozen thresholds/crops and shipped fallback stay unchanged. This
+supersedes older pending Home/Photos comparison suggestions below.
+
 [FDR-008 completed](../reports/work/FDR-008/handoff.md): all30 epochs; selected
 epoch3 improves Fixture training fit75%→100% while preserving native validation
 and challenge decisions. No production gate or export. Next evaluate generalization

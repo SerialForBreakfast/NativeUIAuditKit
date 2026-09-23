@@ -1178,3 +1178,11 @@ Fixture scores are training fit, not independent generalization. No export, prom
 CoreML parity or physical-device claim. Next evaluate new appearances/independent
 Fixture groups, not another run on these saturated members. Evidence:
 `../reports/work/FDR-008/comparison.json`, `execution.json`, `handoff.md`.
+
+Post-run appearance diagnostic (no new training): FOCUS-VISUAL-03 compared both
+checkpoints on retained Home/Photos and all seven frozen box variants. FDR-008
+still0/8 correct unique base selections at0.85; Home false positives increase0→5
+versus FDR-007, with one wrong-focus and one multiple-focus base frame. Fixture
+training fit did not establish native appearance transfer. Keep candidate experimental;
+next acquire observed-label appearance diversity and independent evaluation, not
+more epochs on existing members. Evidence `../reports/work/FOCUS-VISUAL-03/handoff.md`.

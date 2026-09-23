@@ -1,0 +1,5189 @@
+{
+  "shipped": {
+    "backend": "CoreML CPU retained reference",
+    "evaluation": {
+      "base": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8207070707070707,
+          "0.5": {
+            "tp": 5,
+            "fn": 1,
+            "fp": 15,
+            "tn": 51,
+            "accuracy": 0.7777777777777778
+          },
+          "0.85": {
+            "tp": 3,
+            "fn": 3,
+            "fp": 12,
+            "tn": 54,
+            "accuracy": 0.7916666666666666
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "correct",
+            "selectedElementID": "tile-0"
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "left4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.73989898989899,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 18,
+            "tn": 48,
+            "accuracy": 0.6944444444444444
+          },
+          "0.85": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 15,
+            "tn": 51,
+            "accuracy": 0.7361111111111112
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-0"
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 2,
+        "nearThresholdCount": 2
+      },
+      "right4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8232323232323232,
+          "0.5": {
+            "tp": 4,
+            "fn": 2,
+            "fp": 13,
+            "tn": 53,
+            "accuracy": 0.7916666666666666
+          },
+          "0.85": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 12,
+            "tn": 54,
+            "accuracy": 0.7777777777777778
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 1
+      },
+      "up4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8118686868686869,
+          "0.5": {
+            "tp": 4,
+            "fn": 2,
+            "fp": 10,
+            "tn": 56,
+            "accuracy": 0.8333333333333334
+          },
+          "0.85": {
+            "tp": 4,
+            "fn": 2,
+            "fp": 8,
+            "tn": 58,
+            "accuracy": 0.8611111111111112
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "correct",
+            "selectedElementID": "tile-2"
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "correct",
+            "selectedElementID": "tile-2"
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "down4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8560606060606061,
+          "0.5": {
+            "tp": 4,
+            "fn": 2,
+            "fp": 9,
+            "tn": 57,
+            "accuracy": 0.8472222222222222
+          },
+          "0.85": {
+            "tp": 4,
+            "fn": 2,
+            "fp": 6,
+            "tn": 60,
+            "accuracy": 0.8888888888888888
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "correct",
+            "selectedElementID": "tile-2"
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "correct",
+            "selectedElementID": "tile-2"
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "pad4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8257575757575758,
+          "0.5": {
+            "tp": 5,
+            "fn": 1,
+            "fp": 14,
+            "tn": 52,
+            "accuracy": 0.7916666666666666
+          },
+          "0.85": {
+            "tp": 3,
+            "fn": 3,
+            "fp": 10,
+            "tn": 56,
+            "accuracy": 0.8194444444444444
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-0"
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 4,
+        "nearThresholdCount": 3
+      },
+      "inset4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8813131313131313,
+          "0.5": {
+            "tp": 5,
+            "fn": 1,
+            "fp": 18,
+            "tn": 48,
+            "accuracy": 0.7361111111111112
+          },
+          "0.85": {
+            "tp": 4,
+            "fn": 2,
+            "fp": 14,
+            "tn": 52,
+            "accuracy": 0.7777777777777778
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 5,
+        "nearThresholdCount": 1
+      }
+    }
+  },
+  "fdr007": {
+    "backend": "Torch CPU",
+    "seconds": 8.944186166016152,
+    "scores": [
+      {
+        "id": "office_home_initial:tile-0:base",
+        "probability": 7.946616824483499e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:base",
+        "probability": 0.00046782547724433243
+      },
+      {
+        "id": "office_home_initial:tile-2:base",
+        "probability": 0.0002806582779157907
+      },
+      {
+        "id": "office_home_initial:tile-3:base",
+        "probability": 0.0007737251580692828
+      },
+      {
+        "id": "office_home_initial:tile-4:base",
+        "probability": 0.0006571139092557132
+      },
+      {
+        "id": "office_home_initial:tile-5:base",
+        "probability": 0.00047824415378272533
+      },
+      {
+        "id": "office_home_initial:tile-0:left4",
+        "probability": 2.735415728238877e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:left4",
+        "probability": 0.0039362297393381596
+      },
+      {
+        "id": "office_home_initial:tile-2:left4",
+        "probability": 0.0029919766820967197
+      },
+      {
+        "id": "office_home_initial:tile-3:left4",
+        "probability": 0.002896941965445876
+      },
+      {
+        "id": "office_home_initial:tile-4:left4",
+        "probability": 0.0028005153872072697
+      },
+      {
+        "id": "office_home_initial:tile-5:left4",
+        "probability": 0.0024369540624320507
+      },
+      {
+        "id": "office_home_initial:tile-0:right4",
+        "probability": 1.8287873899680562e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:right4",
+        "probability": 0.00042823865078389645
+      },
+      {
+        "id": "office_home_initial:tile-2:right4",
+        "probability": 0.0007218695245683193
+      },
+      {
+        "id": "office_home_initial:tile-3:right4",
+        "probability": 0.0005059728282503784
+      },
+      {
+        "id": "office_home_initial:tile-4:right4",
+        "probability": 0.00024451565695926547
+      },
+      {
+        "id": "office_home_initial:tile-5:right4",
+        "probability": 0.00024324978585354984
+      },
+      {
+        "id": "office_home_initial:tile-0:up4",
+        "probability": 2.7683505322784185e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:up4",
+        "probability": 0.0004432887944858521
+      },
+      {
+        "id": "office_home_initial:tile-2:up4",
+        "probability": 0.0009166057570837438
+      },
+      {
+        "id": "office_home_initial:tile-3:up4",
+        "probability": 0.00023803167277947068
+      },
+      {
+        "id": "office_home_initial:tile-4:up4",
+        "probability": 0.00022683867427986115
+      },
+      {
+        "id": "office_home_initial:tile-5:up4",
+        "probability": 0.0003580526099540293
+      },
+      {
+        "id": "office_home_initial:tile-0:down4",
+        "probability": 1.734748548187781e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:down4",
+        "probability": 0.0004525360418483615
+      },
+      {
+        "id": "office_home_initial:tile-2:down4",
+        "probability": 0.0004017245373688638
+      },
+      {
+        "id": "office_home_initial:tile-3:down4",
+        "probability": 0.0002787728444673121
+      },
+      {
+        "id": "office_home_initial:tile-4:down4",
+        "probability": 0.00041980791138485074
+      },
+      {
+        "id": "office_home_initial:tile-5:down4",
+        "probability": 0.00033432256896048784
+      },
+      {
+        "id": "office_home_initial:tile-0:pad4",
+        "probability": 1.2193710063002072e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:pad4",
+        "probability": 0.001220503356307745
+      },
+      {
+        "id": "office_home_initial:tile-2:pad4",
+        "probability": 0.0009286794229410589
+      },
+      {
+        "id": "office_home_initial:tile-3:pad4",
+        "probability": 0.0005019886884838343
+      },
+      {
+        "id": "office_home_initial:tile-4:pad4",
+        "probability": 0.0006455298862420022
+      },
+      {
+        "id": "office_home_initial:tile-5:pad4",
+        "probability": 0.0002160307631129399
+      },
+      {
+        "id": "office_home_initial:tile-0:inset4",
+        "probability": 8.217634604079649e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:inset4",
+        "probability": 0.011132375337183475
+      },
+      {
+        "id": "office_home_initial:tile-2:inset4",
+        "probability": 0.013119097799062729
+      },
+      {
+        "id": "office_home_initial:tile-3:inset4",
+        "probability": 0.00298268417827785
+      },
+      {
+        "id": "office_home_initial:tile-4:inset4",
+        "probability": 0.0033504217863082886
+      },
+      {
+        "id": "office_home_initial:tile-5:inset4",
+        "probability": 0.0037017990835011005
+      },
+      {
+        "id": "office_home_step01:tile-0:base",
+        "probability": 0.0002162143646273762
+      },
+      {
+        "id": "office_home_step01:tile-1:base",
+        "probability": 0.034886784851551056
+      },
+      {
+        "id": "office_home_step01:tile-2:base",
+        "probability": 0.0008757050381973386
+      },
+      {
+        "id": "office_home_step01:tile-3:base",
+        "probability": 0.0008025905699469149
+      },
+      {
+        "id": "office_home_step01:tile-4:base",
+        "probability": 0.0007687279139645398
+      },
+      {
+        "id": "office_home_step01:tile-5:base",
+        "probability": 0.0007220064289867878
+      },
+      {
+        "id": "office_home_step01:tile-0:left4",
+        "probability": 9.745619536261074e-06
+      },
+      {
+        "id": "office_home_step01:tile-1:left4",
+        "probability": 0.049265723675489426
+      },
+      {
+        "id": "office_home_step01:tile-2:left4",
+        "probability": 0.0054154172539711
+      },
+      {
+        "id": "office_home_step01:tile-3:left4",
+        "probability": 0.003880731062963605
+      },
+      {
+        "id": "office_home_step01:tile-4:left4",
+        "probability": 0.003827082458883524
+      },
+      {
+        "id": "office_home_step01:tile-5:left4",
+        "probability": 0.0030706690158694983
+      },
+      {
+        "id": "office_home_step01:tile-0:right4",
+        "probability": 2.877588485716842e-05
+      },
+      {
+        "id": "office_home_step01:tile-1:right4",
+        "probability": 0.07503814250230789
+      },
+      {
+        "id": "office_home_step01:tile-2:right4",
+        "probability": 0.002630086150020361
+      },
+      {
+        "id": "office_home_step01:tile-3:right4",
+        "probability": 0.0016205967403948307
+      },
+      {
+        "id": "office_home_step01:tile-4:right4",
+        "probability": 0.0020179033745080233
+      },
+      {
+        "id": "office_home_step01:tile-5:right4",
+        "probability": 0.0015893930103629827
+      },
+      {
+        "id": "office_home_step01:tile-0:up4",
+        "probability": 9.04405751498416e-05
+      },
+      {
+        "id": "office_home_step01:tile-1:up4",
+        "probability": 0.9981644749641418
+      },
+      {
+        "id": "office_home_step01:tile-2:up4",
+        "probability": 0.003511506598442793
+      },
+      {
+        "id": "office_home_step01:tile-3:up4",
+        "probability": 0.1615154892206192
+      },
+      {
+        "id": "office_home_step01:tile-4:up4",
+        "probability": 0.10637039691209793
+      },
+      {
+        "id": "office_home_step01:tile-5:up4",
+        "probability": 0.1769883930683136
+      },
+      {
+        "id": "office_home_step01:tile-0:down4",
+        "probability": 0.0001542855316074565
+      },
+      {
+        "id": "office_home_step01:tile-1:down4",
+        "probability": 0.01063594501465559
+      },
+      {
+        "id": "office_home_step01:tile-2:down4",
+        "probability": 0.0039898063987493515
+      },
+      {
+        "id": "office_home_step01:tile-3:down4",
+        "probability": 0.001324232667684555
+      },
+      {
+        "id": "office_home_step01:tile-4:down4",
+        "probability": 0.0012160665355622768
+      },
+      {
+        "id": "office_home_step01:tile-5:down4",
+        "probability": 0.0013728216290473938
+      },
+      {
+        "id": "office_home_step01:tile-0:pad4",
+        "probability": 9.454913379158825e-05
+      },
+      {
+        "id": "office_home_step01:tile-1:pad4",
+        "probability": 0.07294865697622299
+      },
+      {
+        "id": "office_home_step01:tile-2:pad4",
+        "probability": 0.010025504045188427
+      },
+      {
+        "id": "office_home_step01:tile-3:pad4",
+        "probability": 0.00857747346162796
+      },
+      {
+        "id": "office_home_step01:tile-4:pad4",
+        "probability": 0.007277865428477526
+      },
+      {
+        "id": "office_home_step01:tile-5:pad4",
+        "probability": 0.010180545970797539
+      },
+      {
+        "id": "office_home_step01:tile-0:inset4",
+        "probability": 0.00016615756612736732
+      },
+      {
+        "id": "office_home_step01:tile-1:inset4",
+        "probability": 0.9958904981613159
+      },
+      {
+        "id": "office_home_step01:tile-2:inset4",
+        "probability": 0.024388354271650314
+      },
+      {
+        "id": "office_home_step01:tile-3:inset4",
+        "probability": 0.8781346678733826
+      },
+      {
+        "id": "office_home_step01:tile-4:inset4",
+        "probability": 0.719042956829071
+      },
+      {
+        "id": "office_home_step01:tile-5:inset4",
+        "probability": 0.8387073278427124
+      },
+      {
+        "id": "office_home_step02:tile-0:base",
+        "probability": 0.00011966086458414793
+      },
+      {
+        "id": "office_home_step02:tile-1:base",
+        "probability": 0.0009049699874594808
+      },
+      {
+        "id": "office_home_step02:tile-2:base",
+        "probability": 0.6498292684555054
+      },
+      {
+        "id": "office_home_step02:tile-3:base",
+        "probability": 0.0009055656264536083
+      },
+      {
+        "id": "office_home_step02:tile-4:base",
+        "probability": 0.0008486361475661397
+      },
+      {
+        "id": "office_home_step02:tile-5:base",
+        "probability": 0.000927938730455935
+      },
+      {
+        "id": "office_home_step02:tile-0:left4",
+        "probability": 3.1163312087301165e-05
+      },
+      {
+        "id": "office_home_step02:tile-1:left4",
+        "probability": 0.000578581471927464
+      },
+      {
+        "id": "office_home_step02:tile-2:left4",
+        "probability": 0.30580899119377136
+      },
+      {
+        "id": "office_home_step02:tile-3:left4",
+        "probability": 0.00757586071267724
+      },
+      {
+        "id": "office_home_step02:tile-4:left4",
+        "probability": 0.003945659846067429
+      },
+      {
+        "id": "office_home_step02:tile-5:left4",
+        "probability": 0.0037411581724882126
+      },
+      {
+        "id": "office_home_step02:tile-0:right4",
+        "probability": 2.660477184690535e-05
+      },
+      {
+        "id": "office_home_step02:tile-1:right4",
+        "probability": 0.007399717811495066
+      },
+      {
+        "id": "office_home_step02:tile-2:right4",
+        "probability": 0.4819553792476654
+      },
+      {
+        "id": "office_home_step02:tile-3:right4",
+        "probability": 0.0038779175374656916
+      },
+      {
+        "id": "office_home_step02:tile-4:right4",
+        "probability": 0.002299690153449774
+      },
+      {
+        "id": "office_home_step02:tile-5:right4",
+        "probability": 0.0025416610296815634
+      },
+      {
+        "id": "office_home_step02:tile-0:up4",
+        "probability": 0.00018775749776978046
+      },
+      {
+        "id": "office_home_step02:tile-1:up4",
+        "probability": 0.8442009687423706
+      },
+      {
+        "id": "office_home_step02:tile-2:up4",
+        "probability": 0.022623427212238312
+      },
+      {
+        "id": "office_home_step02:tile-3:up4",
+        "probability": 0.8961132764816284
+      },
+      {
+        "id": "office_home_step02:tile-4:up4",
+        "probability": 0.825007438659668
+      },
+      {
+        "id": "office_home_step02:tile-5:up4",
+        "probability": 0.8580400347709656
+      },
+      {
+        "id": "office_home_step02:tile-0:down4",
+        "probability": 8.582426380598918e-05
+      },
+      {
+        "id": "office_home_step02:tile-1:down4",
+        "probability": 0.0020660413429141045
+      },
+      {
+        "id": "office_home_step02:tile-2:down4",
+        "probability": 0.5487960577011108
+      },
+      {
+        "id": "office_home_step02:tile-3:down4",
+        "probability": 0.004125792067497969
+      },
+      {
+        "id": "office_home_step02:tile-4:down4",
+        "probability": 0.003376702079549432
+      },
+      {
+        "id": "office_home_step02:tile-5:down4",
+        "probability": 0.0035838119219988585
+      },
+      {
+        "id": "office_home_step02:tile-0:pad4",
+        "probability": 8.048074960242957e-05
+      },
+      {
+        "id": "office_home_step02:tile-1:pad4",
+        "probability": 0.0356052964925766
+      },
+      {
+        "id": "office_home_step02:tile-2:pad4",
+        "probability": 0.1785397231578827
+      },
+      {
+        "id": "office_home_step02:tile-3:pad4",
+        "probability": 0.04312422499060631
+      },
+      {
+        "id": "office_home_step02:tile-4:pad4",
+        "probability": 0.02366810292005539
+      },
+      {
+        "id": "office_home_step02:tile-5:pad4",
+        "probability": 0.03065839596092701
+      },
+      {
+        "id": "office_home_step02:tile-0:inset4",
+        "probability": 0.0002780625072773546
+      },
+      {
+        "id": "office_home_step02:tile-1:inset4",
+        "probability": 0.579948365688324
+      },
+      {
+        "id": "office_home_step02:tile-2:inset4",
+        "probability": 0.05372674763202667
+      },
+      {
+        "id": "office_home_step02:tile-3:inset4",
+        "probability": 0.9877869486808777
+      },
+      {
+        "id": "office_home_step02:tile-4:inset4",
+        "probability": 0.9518045783042908
+      },
+      {
+        "id": "office_home_step02:tile-5:inset4",
+        "probability": 0.954180121421814
+      },
+      {
+        "id": "office_session2_home:tile-0:base",
+        "probability": 0.00013288801710586995
+      },
+      {
+        "id": "office_session2_home:tile-1:base",
+        "probability": 0.0009863817831501365
+      },
+      {
+        "id": "office_session2_home:tile-2:base",
+        "probability": 0.704087495803833
+      },
+      {
+        "id": "office_session2_home:tile-3:base",
+        "probability": 0.0009267714922316372
+      },
+      {
+        "id": "office_session2_home:tile-4:base",
+        "probability": 0.0009492976241745055
+      },
+      {
+        "id": "office_session2_home:tile-5:base",
+        "probability": 0.0008692866540513933
+      },
+      {
+        "id": "office_session2_home:tile-0:left4",
+        "probability": 2.480239527358208e-05
+      },
+      {
+        "id": "office_session2_home:tile-1:left4",
+        "probability": 0.0005411268211901188
+      },
+      {
+        "id": "office_session2_home:tile-2:left4",
+        "probability": 0.2844662666320801
+      },
+      {
+        "id": "office_session2_home:tile-3:left4",
+        "probability": 0.008710198104381561
+      },
+      {
+        "id": "office_session2_home:tile-4:left4",
+        "probability": 0.004091581329703331
+      },
+      {
+        "id": "office_session2_home:tile-5:left4",
+        "probability": 0.003917403519153595
+      },
+      {
+        "id": "office_session2_home:tile-0:right4",
+        "probability": 2.597161801531911e-05
+      },
+      {
+        "id": "office_session2_home:tile-1:right4",
+        "probability": 0.006845112890005112
+      },
+      {
+        "id": "office_session2_home:tile-2:right4",
+        "probability": 0.5218726992607117
+      },
+      {
+        "id": "office_session2_home:tile-3:right4",
+        "probability": 0.0038658289704471827
+      },
+      {
+        "id": "office_session2_home:tile-4:right4",
+        "probability": 0.0023760104086250067
+      },
+      {
+        "id": "office_session2_home:tile-5:right4",
+        "probability": 0.002302638255059719
+      },
+      {
+        "id": "office_session2_home:tile-0:up4",
+        "probability": 0.00011527692549861968
+      },
+      {
+        "id": "office_session2_home:tile-1:up4",
+        "probability": 0.8015639781951904
+      },
+      {
+        "id": "office_session2_home:tile-2:up4",
+        "probability": 0.021445591002702713
+      },
+      {
+        "id": "office_session2_home:tile-3:up4",
+        "probability": 0.9141244888305664
+      },
+      {
+        "id": "office_session2_home:tile-4:up4",
+        "probability": 0.7816791534423828
+      },
+      {
+        "id": "office_session2_home:tile-5:up4",
+        "probability": 0.8411263823509216
+      },
+      {
+        "id": "office_session2_home:tile-0:down4",
+        "probability": 7.900653872638941e-05
+      },
+      {
+        "id": "office_session2_home:tile-1:down4",
+        "probability": 0.0020931491162627935
+      },
+      {
+        "id": "office_session2_home:tile-2:down4",
+        "probability": 0.5476788282394409
+      },
+      {
+        "id": "office_session2_home:tile-3:down4",
+        "probability": 0.0044630104675889015
+      },
+      {
+        "id": "office_session2_home:tile-4:down4",
+        "probability": 0.0033827044535428286
+      },
+      {
+        "id": "office_session2_home:tile-5:down4",
+        "probability": 0.0034240884706377983
+      },
+      {
+        "id": "office_session2_home:tile-0:pad4",
+        "probability": 7.190749602159485e-05
+      },
+      {
+        "id": "office_session2_home:tile-1:pad4",
+        "probability": 0.03272033855319023
+      },
+      {
+        "id": "office_session2_home:tile-2:pad4",
+        "probability": 0.12343279272317886
+      },
+      {
+        "id": "office_session2_home:tile-3:pad4",
+        "probability": 0.061313774436712265
+      },
+      {
+        "id": "office_session2_home:tile-4:pad4",
+        "probability": 0.022371893748641014
+      },
+      {
+        "id": "office_session2_home:tile-5:pad4",
+        "probability": 0.026132861152291298
+      },
+      {
+        "id": "office_session2_home:tile-0:inset4",
+        "probability": 0.0002801319060381502
+      },
+      {
+        "id": "office_session2_home:tile-1:inset4",
+        "probability": 0.3984403908252716
+      },
+      {
+        "id": "office_session2_home:tile-2:inset4",
+        "probability": 0.05099209398031235
+      },
+      {
+        "id": "office_session2_home:tile-3:inset4",
+        "probability": 0.9871231317520142
+      },
+      {
+        "id": "office_session2_home:tile-4:inset4",
+        "probability": 0.9338095188140869
+      },
+      {
+        "id": "office_session2_home:tile-5:inset4",
+        "probability": 0.950349748134613
+      },
+      {
+        "id": "office_home_step03:tile-0:base",
+        "probability": 0.0001276431285077706
+      },
+      {
+        "id": "office_home_step03:tile-1:base",
+        "probability": 0.0006642238004133105
+      },
+      {
+        "id": "office_home_step03:tile-2:base",
+        "probability": 0.0013571945019066334
+      },
+      {
+        "id": "office_home_step03:tile-3:base",
+        "probability": 0.0006282634567469358
+      },
+      {
+        "id": "office_home_step03:tile-4:base",
+        "probability": 0.0007617895607836545
+      },
+      {
+        "id": "office_home_step03:tile-5:base",
+        "probability": 0.0009537002770230174
+      },
+      {
+        "id": "office_home_step03:tile-6:base",
+        "probability": 0.4432382881641388
+      },
+      {
+        "id": "office_home_step03:tile-7:base",
+        "probability": 0.00011381167860236019
+      },
+      {
+        "id": "office_home_step03:tile-8:base",
+        "probability": 0.1299121081829071
+      },
+      {
+        "id": "office_home_step03:tile-9:base",
+        "probability": 0.0002215616696048528
+      },
+      {
+        "id": "office_home_step03:tile-10:base",
+        "probability": 0.00013535781181417406
+      },
+      {
+        "id": "office_home_step03:tile-11:base",
+        "probability": 0.0037629588041454554
+      },
+      {
+        "id": "office_home_step03:tile-12:base",
+        "probability": 0.028127949684858322
+      },
+      {
+        "id": "office_home_step03:tile-13:base",
+        "probability": 0.0030003078281879425
+      },
+      {
+        "id": "office_home_step03:tile-14:base",
+        "probability": 0.0030047157779335976
+      },
+      {
+        "id": "office_home_step03:tile-15:base",
+        "probability": 0.0001560885866638273
+      },
+      {
+        "id": "office_home_step03:tile-16:base",
+        "probability": 0.03172195702791214
+      },
+      {
+        "id": "office_home_step03:tile-17:base",
+        "probability": 0.0026883292011916637
+      },
+      {
+        "id": "office_home_step03:tile-18:base",
+        "probability": 0.1697361320257187
+      },
+      {
+        "id": "office_home_step03:tile-19:base",
+        "probability": 0.0009235699544660747
+      },
+      {
+        "id": "office_home_step03:tile-20:base",
+        "probability": 0.01874806545674801
+      },
+      {
+        "id": "office_home_step03:tile-21:base",
+        "probability": 0.0038752274122089148
+      },
+      {
+        "id": "office_home_step03:tile-22:base",
+        "probability": 0.00682632764801383
+      },
+      {
+        "id": "office_home_step03:tile-23:base",
+        "probability": 0.00090940942754969
+      },
+      {
+        "id": "office_home_step03:tile-0:left4",
+        "probability": 1.0776650015031919e-05
+      },
+      {
+        "id": "office_home_step03:tile-1:left4",
+        "probability": 0.0034753442741930485
+      },
+      {
+        "id": "office_home_step03:tile-2:left4",
+        "probability": 0.00567643903195858
+      },
+      {
+        "id": "office_home_step03:tile-3:left4",
+        "probability": 0.002803137293085456
+      },
+      {
+        "id": "office_home_step03:tile-4:left4",
+        "probability": 0.0035982669796794653
+      },
+      {
+        "id": "office_home_step03:tile-5:left4",
+        "probability": 0.00461924634873867
+      },
+      {
+        "id": "office_home_step03:tile-6:left4",
+        "probability": 0.6817635297775269
+      },
+      {
+        "id": "office_home_step03:tile-7:left4",
+        "probability": 0.0003891347150783986
+      },
+      {
+        "id": "office_home_step03:tile-8:left4",
+        "probability": 0.5514567494392395
+      },
+      {
+        "id": "office_home_step03:tile-9:left4",
+        "probability": 0.0009629765409044921
+      },
+      {
+        "id": "office_home_step03:tile-10:left4",
+        "probability": 0.00018810403707902879
+      },
+      {
+        "id": "office_home_step03:tile-11:left4",
+        "probability": 0.003126150229945779
+      },
+      {
+        "id": "office_home_step03:tile-12:left4",
+        "probability": 0.09110116958618164
+      },
+      {
+        "id": "office_home_step03:tile-13:left4",
+        "probability": 0.014876095578074455
+      },
+      {
+        "id": "office_home_step03:tile-14:left4",
+        "probability": 0.010077587328851223
+      },
+      {
+        "id": "office_home_step03:tile-15:left4",
+        "probability": 0.00017702122568152845
+      },
+      {
+        "id": "office_home_step03:tile-16:left4",
+        "probability": 0.20834912359714508
+      },
+      {
+        "id": "office_home_step03:tile-17:left4",
+        "probability": 0.0024388665333390236
+      },
+      {
+        "id": "office_home_step03:tile-18:left4",
+        "probability": 0.06909352540969849
+      },
+      {
+        "id": "office_home_step03:tile-19:left4",
+        "probability": 0.0032620374113321304
+      },
+      {
+        "id": "office_home_step03:tile-20:left4",
+        "probability": 0.013085143640637398
+      },
+      {
+        "id": "office_home_step03:tile-21:left4",
+        "probability": 0.0049890088848769665
+      },
+      {
+        "id": "office_home_step03:tile-22:left4",
+        "probability": 0.003666895441710949
+      },
+      {
+        "id": "office_home_step03:tile-23:left4",
+        "probability": 0.0035969216842204332
+      },
+      {
+        "id": "office_home_step03:tile-0:right4",
+        "probability": 1.990746022784151e-05
+      },
+      {
+        "id": "office_home_step03:tile-1:right4",
+        "probability": 0.0021249582059681416
+      },
+      {
+        "id": "office_home_step03:tile-2:right4",
+        "probability": 0.008518029935657978
+      },
+      {
+        "id": "office_home_step03:tile-3:right4",
+        "probability": 0.0013072185683995485
+      },
+      {
+        "id": "office_home_step03:tile-4:right4",
+        "probability": 0.0019467088859528303
+      },
+      {
+        "id": "office_home_step03:tile-5:right4",
+        "probability": 0.0023781044874340296
+      },
+      {
+        "id": "office_home_step03:tile-6:right4",
+        "probability": 0.7158927917480469
+      },
+      {
+        "id": "office_home_step03:tile-7:right4",
+        "probability": 0.000566626142244786
+      },
+      {
+        "id": "office_home_step03:tile-8:right4",
+        "probability": 0.25599920749664307
+      },
+      {
+        "id": "office_home_step03:tile-9:right4",
+        "probability": 2.819715882651508e-05
+      },
+      {
+        "id": "office_home_step03:tile-10:right4",
+        "probability": 0.00019771215738728642
+      },
+      {
+        "id": "office_home_step03:tile-11:right4",
+        "probability": 0.004103891085833311
+      },
+      {
+        "id": "office_home_step03:tile-12:right4",
+        "probability": 0.2234240025281906
+      },
+      {
+        "id": "office_home_step03:tile-13:right4",
+        "probability": 0.020089564844965935
+      },
+      {
+        "id": "office_home_step03:tile-14:right4",
+        "probability": 0.005678377114236355
+      },
+      {
+        "id": "office_home_step03:tile-15:right4",
+        "probability": 0.00020540857804007828
+      },
+      {
+        "id": "office_home_step03:tile-16:right4",
+        "probability": 0.48391082882881165
+      },
+      {
+        "id": "office_home_step03:tile-17:right4",
+        "probability": 0.0017693460686132312
+      },
+      {
+        "id": "office_home_step03:tile-18:right4",
+        "probability": 0.10690506547689438
+      },
+      {
+        "id": "office_home_step03:tile-19:right4",
+        "probability": 0.0020001495722681284
+      },
+      {
+        "id": "office_home_step03:tile-20:right4",
+        "probability": 0.009161923080682755
+      },
+      {
+        "id": "office_home_step03:tile-21:right4",
+        "probability": 0.016697382554411888
+      },
+      {
+        "id": "office_home_step03:tile-22:right4",
+        "probability": 0.060698579996824265
+      },
+      {
+        "id": "office_home_step03:tile-23:right4",
+        "probability": 0.0019121351651847363
+      },
+      {
+        "id": "office_home_step03:tile-0:up4",
+        "probability": 5.3894033044343814e-05
+      },
+      {
+        "id": "office_home_step03:tile-1:up4",
+        "probability": 0.08670344203710556
+      },
+      {
+        "id": "office_home_step03:tile-2:up4",
+        "probability": 0.0037389707285910845
+      },
+      {
+        "id": "office_home_step03:tile-3:up4",
+        "probability": 0.032260555773973465
+      },
+      {
+        "id": "office_home_step03:tile-4:up4",
+        "probability": 0.07675029337406158
+      },
+      {
+        "id": "office_home_step03:tile-5:up4",
+        "probability": 0.07379002124071121
+      },
+      {
+        "id": "office_home_step03:tile-6:up4",
+        "probability": 0.8679265379905701
+      },
+      {
+        "id": "office_home_step03:tile-7:up4",
+        "probability": 0.0007416704902425408
+      },
+      {
+        "id": "office_home_step03:tile-8:up4",
+        "probability": 0.15762469172477722
+      },
+      {
+        "id": "office_home_step03:tile-9:up4",
+        "probability": 0.0005307383835315704
+      },
+      {
+        "id": "office_home_step03:tile-10:up4",
+        "probability": 8.154373790603131e-05
+      },
+      {
+        "id": "office_home_step03:tile-11:up4",
+        "probability": 0.0032396195456385612
+      },
+      {
+        "id": "office_home_step03:tile-12:up4",
+        "probability": 0.01230112835764885
+      },
+      {
+        "id": "office_home_step03:tile-13:up4",
+        "probability": 0.009244299493730068
+      },
+      {
+        "id": "office_home_step03:tile-14:up4",
+        "probability": 0.004216460976749659
+      },
+      {
+        "id": "office_home_step03:tile-15:up4",
+        "probability": 7.044593803584576e-05
+      },
+      {
+        "id": "office_home_step03:tile-16:up4",
+        "probability": 0.006956594064831734
+      },
+      {
+        "id": "office_home_step03:tile-17:up4",
+        "probability": 0.10082472115755081
+      },
+      {
+        "id": "office_home_step03:tile-18:up4",
+        "probability": 0.03335730731487274
+      },
+      {
+        "id": "office_home_step03:tile-19:up4",
+        "probability": 0.8449515700340271
+      },
+      {
+        "id": "office_home_step03:tile-20:up4",
+        "probability": 0.01440287847071886
+      },
+      {
+        "id": "office_home_step03:tile-21:up4",
+        "probability": 0.004730097483843565
+      },
+      {
+        "id": "office_home_step03:tile-22:up4",
+        "probability": 0.019606178626418114
+      },
+      {
+        "id": "office_home_step03:tile-23:up4",
+        "probability": 0.8505926728248596
+      },
+      {
+        "id": "office_home_step03:tile-0:down4",
+        "probability": 5.3340958402259275e-05
+      },
+      {
+        "id": "office_home_step03:tile-1:down4",
+        "probability": 0.0010861196788027883
+      },
+      {
+        "id": "office_home_step03:tile-2:down4",
+        "probability": 0.0028932709246873856
+      },
+      {
+        "id": "office_home_step03:tile-3:down4",
+        "probability": 0.0010072331642732024
+      },
+      {
+        "id": "office_home_step03:tile-4:down4",
+        "probability": 0.0012438459089025855
+      },
+      {
+        "id": "office_home_step03:tile-5:down4",
+        "probability": 0.0011261131148785353
+      },
+      {
+        "id": "office_home_step03:tile-6:down4",
+        "probability": 0.8573961853981018
+      },
+      {
+        "id": "office_home_step03:tile-7:down4",
+        "probability": 0.000236021020100452
+      },
+      {
+        "id": "office_home_step03:tile-8:down4",
+        "probability": 0.273468017578125
+      },
+      {
+        "id": "office_home_step03:tile-9:down4",
+        "probability": 5.819978832732886e-05
+      },
+      {
+        "id": "office_home_step03:tile-10:down4",
+        "probability": 4.780959352501668e-05
+      },
+      {
+        "id": "office_home_step03:tile-11:down4",
+        "probability": 0.0005452059558592737
+      },
+      {
+        "id": "office_home_step03:tile-12:down4",
+        "probability": 0.0030640168115496635
+      },
+      {
+        "id": "office_home_step03:tile-13:down4",
+        "probability": 0.01798003725707531
+      },
+      {
+        "id": "office_home_step03:tile-14:down4",
+        "probability": 0.030992185696959496
+      },
+      {
+        "id": "office_home_step03:tile-15:down4",
+        "probability": 0.00039723471854813397
+      },
+      {
+        "id": "office_home_step03:tile-16:down4",
+        "probability": 0.0010304668685421348
+      },
+      {
+        "id": "office_home_step03:tile-17:down4",
+        "probability": 0.0012987847439944744
+      },
+      {
+        "id": "office_home_step03:tile-18:down4",
+        "probability": 0.015429398976266384
+      },
+      {
+        "id": "office_home_step03:tile-19:down4",
+        "probability": 0.003934147767722607
+      },
+      {
+        "id": "office_home_step03:tile-20:down4",
+        "probability": 0.012413082644343376
+      },
+      {
+        "id": "office_home_step03:tile-21:down4",
+        "probability": 0.00030967171187512577
+      },
+      {
+        "id": "office_home_step03:tile-22:down4",
+        "probability": 0.0007227031164802611
+      },
+      {
+        "id": "office_home_step03:tile-23:down4",
+        "probability": 0.0038467294070869684
+      },
+      {
+        "id": "office_home_step03:tile-0:pad4",
+        "probability": 1.971614437934477e-05
+      },
+      {
+        "id": "office_home_step03:tile-1:pad4",
+        "probability": 0.007942482829093933
+      },
+      {
+        "id": "office_home_step03:tile-2:pad4",
+        "probability": 0.011828371323645115
+      },
+      {
+        "id": "office_home_step03:tile-3:pad4",
+        "probability": 0.00543231749907136
+      },
+      {
+        "id": "office_home_step03:tile-4:pad4",
+        "probability": 0.007926800288259983
+      },
+      {
+        "id": "office_home_step03:tile-5:pad4",
+        "probability": 0.006770029664039612
+      },
+      {
+        "id": "office_home_step03:tile-6:pad4",
+        "probability": 0.8681529760360718
+      },
+      {
+        "id": "office_home_step03:tile-7:pad4",
+        "probability": 0.001511079608462751
+      },
+      {
+        "id": "office_home_step03:tile-8:pad4",
+        "probability": 0.22926655411720276
+      },
+      {
+        "id": "office_home_step03:tile-9:pad4",
+        "probability": 0.0008161538862623274
+      },
+      {
+        "id": "office_home_step03:tile-10:pad4",
+        "probability": 0.00026534791686572134
+      },
+      {
+        "id": "office_home_step03:tile-11:pad4",
+        "probability": 0.0006949098315089941
+      },
+      {
+        "id": "office_home_step03:tile-12:pad4",
+        "probability": 0.04252798855304718
+      },
+      {
+        "id": "office_home_step03:tile-13:pad4",
+        "probability": 0.04297848418354988
+      },
+      {
+        "id": "office_home_step03:tile-14:pad4",
+        "probability": 0.10505314916372299
+      },
+      {
+        "id": "office_home_step03:tile-15:pad4",
+        "probability": 0.00025266542797908187
+      },
+      {
+        "id": "office_home_step03:tile-16:pad4",
+        "probability": 0.007752678822726011
+      },
+      {
+        "id": "office_home_step03:tile-17:pad4",
+        "probability": 0.014657978899776936
+      },
+      {
+        "id": "office_home_step03:tile-18:pad4",
+        "probability": 0.08135421574115753
+      },
+      {
+        "id": "office_home_step03:tile-19:pad4",
+        "probability": 0.029122956097126007
+      },
+      {
+        "id": "office_home_step03:tile-20:pad4",
+        "probability": 0.023382430896162987
+      },
+      {
+        "id": "office_home_step03:tile-21:pad4",
+        "probability": 0.0007089528953656554
+      },
+      {
+        "id": "office_home_step03:tile-22:pad4",
+        "probability": 0.0010024092625826597
+      },
+      {
+        "id": "office_home_step03:tile-23:pad4",
+        "probability": 0.027422303333878517
+      },
+      {
+        "id": "office_home_step03:tile-0:inset4",
+        "probability": 0.0004381990584079176
+      },
+      {
+        "id": "office_home_step03:tile-1:inset4",
+        "probability": 0.9086219668388367
+      },
+      {
+        "id": "office_home_step03:tile-2:inset4",
+        "probability": 0.04169178009033203
+      },
+      {
+        "id": "office_home_step03:tile-3:inset4",
+        "probability": 0.7748449444770813
+      },
+      {
+        "id": "office_home_step03:tile-4:inset4",
+        "probability": 0.8876790404319763
+      },
+      {
+        "id": "office_home_step03:tile-5:inset4",
+        "probability": 0.8830024600028992
+      },
+      {
+        "id": "office_home_step03:tile-6:inset4",
+        "probability": 0.7762671113014221
+      },
+      {
+        "id": "office_home_step03:tile-7:inset4",
+        "probability": 0.0028156517073512077
+      },
+      {
+        "id": "office_home_step03:tile-8:inset4",
+        "probability": 0.3584083616733551
+      },
+      {
+        "id": "office_home_step03:tile-9:inset4",
+        "probability": 0.000420804979512468
+      },
+      {
+        "id": "office_home_step03:tile-10:inset4",
+        "probability": 8.145179890561849e-05
+      },
+      {
+        "id": "office_home_step03:tile-11:inset4",
+        "probability": 0.00253103906288743
+      },
+      {
+        "id": "office_home_step03:tile-12:inset4",
+        "probability": 0.0064779468812048435
+      },
+      {
+        "id": "office_home_step03:tile-13:inset4",
+        "probability": 0.03604741394519806
+      },
+      {
+        "id": "office_home_step03:tile-14:inset4",
+        "probability": 0.0884052962064743
+      },
+      {
+        "id": "office_home_step03:tile-15:inset4",
+        "probability": 0.00018811355403158814
+      },
+      {
+        "id": "office_home_step03:tile-16:inset4",
+        "probability": 0.0023578463587909937
+      },
+      {
+        "id": "office_home_step03:tile-17:inset4",
+        "probability": 0.49339237809181213
+      },
+      {
+        "id": "office_home_step03:tile-18:inset4",
+        "probability": 0.10171531140804291
+      },
+      {
+        "id": "office_home_step03:tile-19:inset4",
+        "probability": 0.8988932967185974
+      },
+      {
+        "id": "office_home_step03:tile-20:inset4",
+        "probability": 0.01861533336341381
+      },
+      {
+        "id": "office_home_step03:tile-21:inset4",
+        "probability": 0.004315732978284359
+      },
+      {
+        "id": "office_home_step03:tile-22:inset4",
+        "probability": 0.0054640998132526875
+      },
+      {
+        "id": "office_home_step03:tile-23:inset4",
+        "probability": 0.9195941090583801
+      },
+      {
+        "id": "office_home_col5:tile-0:base",
+        "probability": 0.00010956152982544154
+      },
+      {
+        "id": "office_home_col5:tile-1:base",
+        "probability": 0.09864404797554016
+      },
+      {
+        "id": "office_home_col5:tile-2:base",
+        "probability": 0.012278640642762184
+      },
+      {
+        "id": "office_home_col5:tile-3:base",
+        "probability": 0.005450344644486904
+      },
+      {
+        "id": "office_home_col5:tile-4:base",
+        "probability": 0.012744366191327572
+      },
+      {
+        "id": "office_home_col5:tile-5:base",
+        "probability": 0.022750847041606903
+      },
+      {
+        "id": "office_home_col5:tile-6:base",
+        "probability": 0.6333845257759094
+      },
+      {
+        "id": "office_home_col5:tile-7:base",
+        "probability": 7.64750293456018e-05
+      },
+      {
+        "id": "office_home_col5:tile-8:base",
+        "probability": 0.7771191000938416
+      },
+      {
+        "id": "office_home_col5:tile-9:base",
+        "probability": 0.00014142658619675785
+      },
+      {
+        "id": "office_home_col5:tile-10:base",
+        "probability": 1.4672800716653e-05
+      },
+      {
+        "id": "office_home_col5:tile-11:base",
+        "probability": 0.0007053454173728824
+      },
+      {
+        "id": "office_home_col5:tile-12:base",
+        "probability": 0.0022735935635864735
+      },
+      {
+        "id": "office_home_col5:tile-13:base",
+        "probability": 0.00013099955685902387
+      },
+      {
+        "id": "office_home_col5:tile-14:base",
+        "probability": 0.0023724460043013096
+      },
+      {
+        "id": "office_home_col5:tile-15:base",
+        "probability": 9.83074787654914e-05
+      },
+      {
+        "id": "office_home_col5:tile-16:base",
+        "probability": 0.00040392298251390457
+      },
+      {
+        "id": "office_home_col5:tile-17:base",
+        "probability": 0.0010934111196547747
+      },
+      {
+        "id": "office_home_col5:tile-18:base",
+        "probability": 0.017130371183156967
+      },
+      {
+        "id": "office_home_col5:tile-19:base",
+        "probability": 0.00015793816419318318
+      },
+      {
+        "id": "office_home_col5:tile-20:base",
+        "probability": 0.002721147146075964
+      },
+      {
+        "id": "office_home_col5:tile-21:base",
+        "probability": 0.0004284266906324774
+      },
+      {
+        "id": "office_home_col5:tile-22:base",
+        "probability": 0.0003158001054544002
+      },
+      {
+        "id": "office_home_col5:tile-23:base",
+        "probability": 0.0002000188105739653
+      },
+      {
+        "id": "office_home_col5:tile-0:left4",
+        "probability": 4.2698418837971985e-05
+      },
+      {
+        "id": "office_home_col5:tile-1:left4",
+        "probability": 0.03796146437525749
+      },
+      {
+        "id": "office_home_col5:tile-2:left4",
+        "probability": 0.05461302772164345
+      },
+      {
+        "id": "office_home_col5:tile-3:left4",
+        "probability": 0.004554157145321369
+      },
+      {
+        "id": "office_home_col5:tile-4:left4",
+        "probability": 0.014785942621529102
+      },
+      {
+        "id": "office_home_col5:tile-5:left4",
+        "probability": 0.026933353394269943
+      },
+      {
+        "id": "office_home_col5:tile-6:left4",
+        "probability": 0.5501906871795654
+      },
+      {
+        "id": "office_home_col5:tile-7:left4",
+        "probability": 0.0005392791354097426
+      },
+      {
+        "id": "office_home_col5:tile-8:left4",
+        "probability": 0.9261462092399597
+      },
+      {
+        "id": "office_home_col5:tile-9:left4",
+        "probability": 6.190782005432993e-05
+      },
+      {
+        "id": "office_home_col5:tile-10:left4",
+        "probability": 1.6172274627024308e-05
+      },
+      {
+        "id": "office_home_col5:tile-11:left4",
+        "probability": 0.00022558082127943635
+      },
+      {
+        "id": "office_home_col5:tile-12:left4",
+        "probability": 0.002690049121156335
+      },
+      {
+        "id": "office_home_col5:tile-13:left4",
+        "probability": 0.0006141262128949165
+      },
+      {
+        "id": "office_home_col5:tile-14:left4",
+        "probability": 0.005318424664437771
+      },
+      {
+        "id": "office_home_col5:tile-15:left4",
+        "probability": 3.721359826158732e-05
+      },
+      {
+        "id": "office_home_col5:tile-16:left4",
+        "probability": 0.0011146542383357882
+      },
+      {
+        "id": "office_home_col5:tile-17:left4",
+        "probability": 0.00048606659402139485
+      },
+      {
+        "id": "office_home_col5:tile-18:left4",
+        "probability": 0.004805960692465305
+      },
+      {
+        "id": "office_home_col5:tile-19:left4",
+        "probability": 0.0007202354609034956
+      },
+      {
+        "id": "office_home_col5:tile-20:left4",
+        "probability": 0.0018093729158863425
+      },
+      {
+        "id": "office_home_col5:tile-21:left4",
+        "probability": 5.4151467338670045e-05
+      },
+      {
+        "id": "office_home_col5:tile-22:left4",
+        "probability": 2.0791436327272095e-05
+      },
+      {
+        "id": "office_home_col5:tile-23:left4",
+        "probability": 0.0007198501843959093
+      },
+      {
+        "id": "office_home_col5:tile-0:right4",
+        "probability": 1.1608537533902563e-05
+      },
+      {
+        "id": "office_home_col5:tile-1:right4",
+        "probability": 0.012476209551095963
+      },
+      {
+        "id": "office_home_col5:tile-2:right4",
+        "probability": 0.015608596615493298
+      },
+      {
+        "id": "office_home_col5:tile-3:right4",
+        "probability": 0.0025496995076537132
+      },
+      {
+        "id": "office_home_col5:tile-4:right4",
+        "probability": 0.003254032926633954
+      },
+      {
+        "id": "office_home_col5:tile-5:right4",
+        "probability": 0.0033294837921857834
+      },
+      {
+        "id": "office_home_col5:tile-6:right4",
+        "probability": 0.8104720115661621
+      },
+      {
+        "id": "office_home_col5:tile-7:right4",
+        "probability": 3.4524771763244644e-05
+      },
+      {
+        "id": "office_home_col5:tile-8:right4",
+        "probability": 0.6133443117141724
+      },
+      {
+        "id": "office_home_col5:tile-9:right4",
+        "probability": 8.458876982331276e-05
+      },
+      {
+        "id": "office_home_col5:tile-10:right4",
+        "probability": 8.735118171898648e-05
+      },
+      {
+        "id": "office_home_col5:tile-11:right4",
+        "probability": 0.0011012953473255038
+      },
+      {
+        "id": "office_home_col5:tile-12:right4",
+        "probability": 0.005484315566718578
+      },
+      {
+        "id": "office_home_col5:tile-13:right4",
+        "probability": 0.00040683947736397386
+      },
+      {
+        "id": "office_home_col5:tile-14:right4",
+        "probability": 0.010427333414554596
+      },
+      {
+        "id": "office_home_col5:tile-15:right4",
+        "probability": 0.00024411827325820923
+      },
+      {
+        "id": "office_home_col5:tile-16:right4",
+        "probability": 0.0016251852503046393
+      },
+      {
+        "id": "office_home_col5:tile-17:right4",
+        "probability": 0.000295018166070804
+      },
+      {
+        "id": "office_home_col5:tile-18:right4",
+        "probability": 0.004870529752224684
+      },
+      {
+        "id": "office_home_col5:tile-19:right4",
+        "probability": 0.0001908994308905676
+      },
+      {
+        "id": "office_home_col5:tile-20:right4",
+        "probability": 0.0032660954166203737
+      },
+      {
+        "id": "office_home_col5:tile-21:right4",
+        "probability": 0.00031613415922038257
+      },
+      {
+        "id": "office_home_col5:tile-22:right4",
+        "probability": 0.000512300874106586
+      },
+      {
+        "id": "office_home_col5:tile-23:right4",
+        "probability": 0.0001664223673287779
+      },
+      {
+        "id": "office_home_col5:tile-0:up4",
+        "probability": 6.670780567219481e-05
+      },
+      {
+        "id": "office_home_col5:tile-1:up4",
+        "probability": 0.05630267783999443
+      },
+      {
+        "id": "office_home_col5:tile-2:up4",
+        "probability": 0.018351346254348755
+      },
+      {
+        "id": "office_home_col5:tile-3:up4",
+        "probability": 0.2707460820674896
+      },
+      {
+        "id": "office_home_col5:tile-4:up4",
+        "probability": 0.018525520339608192
+      },
+      {
+        "id": "office_home_col5:tile-5:up4",
+        "probability": 0.01692047156393528
+      },
+      {
+        "id": "office_home_col5:tile-6:up4",
+        "probability": 0.43676531314849854
+      },
+      {
+        "id": "office_home_col5:tile-7:up4",
+        "probability": 3.402449510758743e-05
+      },
+      {
+        "id": "office_home_col5:tile-8:up4",
+        "probability": 0.8890092968940735
+      },
+      {
+        "id": "office_home_col5:tile-9:up4",
+        "probability": 0.0005002047400921583
+      },
+      {
+        "id": "office_home_col5:tile-10:up4",
+        "probability": 9.63215934461914e-05
+      },
+      {
+        "id": "office_home_col5:tile-11:up4",
+        "probability": 0.003457457758486271
+      },
+      {
+        "id": "office_home_col5:tile-12:up4",
+        "probability": 0.0006065692286938429
+      },
+      {
+        "id": "office_home_col5:tile-13:up4",
+        "probability": 0.0007929611019790173
+      },
+      {
+        "id": "office_home_col5:tile-14:up4",
+        "probability": 0.0011366892140358686
+      },
+      {
+        "id": "office_home_col5:tile-15:up4",
+        "probability": 0.0002236866275779903
+      },
+      {
+        "id": "office_home_col5:tile-16:up4",
+        "probability": 0.00015025775064714253
+      },
+      {
+        "id": "office_home_col5:tile-17:up4",
+        "probability": 0.00034478757879696786
+      },
+      {
+        "id": "office_home_col5:tile-18:up4",
+        "probability": 0.042813740670681
+      },
+      {
+        "id": "office_home_col5:tile-19:up4",
+        "probability": 0.00010380430467193946
+      },
+      {
+        "id": "office_home_col5:tile-20:up4",
+        "probability": 0.0027731258887797594
+      },
+      {
+        "id": "office_home_col5:tile-21:up4",
+        "probability": 0.00027340062661096454
+      },
+      {
+        "id": "office_home_col5:tile-22:up4",
+        "probability": 0.0011995427776128054
+      },
+      {
+        "id": "office_home_col5:tile-23:up4",
+        "probability": 0.00016919814515858889
+      },
+      {
+        "id": "office_home_col5:tile-0:down4",
+        "probability": 1.480036553402897e-05
+      },
+      {
+        "id": "office_home_col5:tile-1:down4",
+        "probability": 0.00914242584258318
+      },
+      {
+        "id": "office_home_col5:tile-2:down4",
+        "probability": 0.030472392216324806
+      },
+      {
+        "id": "office_home_col5:tile-3:down4",
+        "probability": 0.006429805886000395
+      },
+      {
+        "id": "office_home_col5:tile-4:down4",
+        "probability": 0.002666014712303877
+      },
+      {
+        "id": "office_home_col5:tile-5:down4",
+        "probability": 0.0032659696880728006
+      },
+      {
+        "id": "office_home_col5:tile-6:down4",
+        "probability": 0.6858597993850708
+      },
+      {
+        "id": "office_home_col5:tile-7:down4",
+        "probability": 0.00011898454249603674
+      },
+      {
+        "id": "office_home_col5:tile-8:down4",
+        "probability": 0.7946522831916809
+      },
+      {
+        "id": "office_home_col5:tile-9:down4",
+        "probability": 2.075494558084756e-05
+      },
+      {
+        "id": "office_home_col5:tile-10:down4",
+        "probability": 9.66063544183271e-06
+      },
+      {
+        "id": "office_home_col5:tile-11:down4",
+        "probability": 0.00038978701923042536
+      },
+      {
+        "id": "office_home_col5:tile-12:down4",
+        "probability": 0.0017588757909834385
+      },
+      {
+        "id": "office_home_col5:tile-13:down4",
+        "probability": 0.00016527160187251866
+      },
+      {
+        "id": "office_home_col5:tile-14:down4",
+        "probability": 0.009226690046489239
+      },
+      {
+        "id": "office_home_col5:tile-15:down4",
+        "probability": 2.187729114666581e-05
+      },
+      {
+        "id": "office_home_col5:tile-16:down4",
+        "probability": 0.000287815899355337
+      },
+      {
+        "id": "office_home_col5:tile-17:down4",
+        "probability": 0.0005746684037148952
+      },
+      {
+        "id": "office_home_col5:tile-18:down4",
+        "probability": 0.028274310752749443
+      },
+      {
+        "id": "office_home_col5:tile-19:down4",
+        "probability": 0.00020173877419438213
+      },
+      {
+        "id": "office_home_col5:tile-20:down4",
+        "probability": 0.0016329888021573424
+      },
+      {
+        "id": "office_home_col5:tile-21:down4",
+        "probability": 0.0006917933351360261
+      },
+      {
+        "id": "office_home_col5:tile-22:down4",
+        "probability": 0.0007420116453431547
+      },
+      {
+        "id": "office_home_col5:tile-23:down4",
+        "probability": 0.0002628180372994393
+      },
+      {
+        "id": "office_home_col5:tile-0:pad4",
+        "probability": 8.404113032156602e-06
+      },
+      {
+        "id": "office_home_col5:tile-1:pad4",
+        "probability": 0.001853720168583095
+      },
+      {
+        "id": "office_home_col5:tile-2:pad4",
+        "probability": 0.0157418604940176
+      },
+      {
+        "id": "office_home_col5:tile-3:pad4",
+        "probability": 0.0019994007889181376
+      },
+      {
+        "id": "office_home_col5:tile-4:pad4",
+        "probability": 0.0010620624525472522
+      },
+      {
+        "id": "office_home_col5:tile-5:pad4",
+        "probability": 0.0006068380898796022
+      },
+      {
+        "id": "office_home_col5:tile-6:pad4",
+        "probability": 0.8210270404815674
+      },
+      {
+        "id": "office_home_col5:tile-7:pad4",
+        "probability": 0.00016860161849763244
+      },
+      {
+        "id": "office_home_col5:tile-8:pad4",
+        "probability": 0.927655816078186
+      },
+      {
+        "id": "office_home_col5:tile-9:pad4",
+        "probability": 2.7574686100706458e-05
+      },
+      {
+        "id": "office_home_col5:tile-10:pad4",
+        "probability": 0.00010998023208230734
+      },
+      {
+        "id": "office_home_col5:tile-11:pad4",
+        "probability": 0.00010447610839037225
+      },
+      {
+        "id": "office_home_col5:tile-12:pad4",
+        "probability": 0.0018327509751543403
+      },
+      {
+        "id": "office_home_col5:tile-13:pad4",
+        "probability": 0.00037249544402584434
+      },
+      {
+        "id": "office_home_col5:tile-14:pad4",
+        "probability": 0.01168858539313078
+      },
+      {
+        "id": "office_home_col5:tile-15:pad4",
+        "probability": 9.974258136935532e-05
+      },
+      {
+        "id": "office_home_col5:tile-16:pad4",
+        "probability": 0.0011398521019145846
+      },
+      {
+        "id": "office_home_col5:tile-17:pad4",
+        "probability": 0.0006571267731487751
+      },
+      {
+        "id": "office_home_col5:tile-18:pad4",
+        "probability": 0.011961734853684902
+      },
+      {
+        "id": "office_home_col5:tile-19:pad4",
+        "probability": 0.00028748216573148966
+      },
+      {
+        "id": "office_home_col5:tile-20:pad4",
+        "probability": 0.003073448082432151
+      },
+      {
+        "id": "office_home_col5:tile-21:pad4",
+        "probability": 1.670707752055023e-05
+      },
+      {
+        "id": "office_home_col5:tile-22:pad4",
+        "probability": 2.1158497474971227e-05
+      },
+      {
+        "id": "office_home_col5:tile-23:pad4",
+        "probability": 0.00035921501694247127
+      },
+      {
+        "id": "office_home_col5:tile-0:inset4",
+        "probability": 0.00011738092871382833
+      },
+      {
+        "id": "office_home_col5:tile-1:inset4",
+        "probability": 0.10295315086841583
+      },
+      {
+        "id": "office_home_col5:tile-2:inset4",
+        "probability": 0.22088117897510529
+      },
+      {
+        "id": "office_home_col5:tile-3:inset4",
+        "probability": 0.6425257921218872
+      },
+      {
+        "id": "office_home_col5:tile-4:inset4",
+        "probability": 0.07622348517179489
+      },
+      {
+        "id": "office_home_col5:tile-5:inset4",
+        "probability": 0.049345385283231735
+      },
+      {
+        "id": "office_home_col5:tile-6:inset4",
+        "probability": 0.24699042737483978
+      },
+      {
+        "id": "office_home_col5:tile-7:inset4",
+        "probability": 0.0004609821189660579
+      },
+      {
+        "id": "office_home_col5:tile-8:inset4",
+        "probability": 0.1657392829656601
+      },
+      {
+        "id": "office_home_col5:tile-9:inset4",
+        "probability": 0.0004214495129417628
+      },
+      {
+        "id": "office_home_col5:tile-10:inset4",
+        "probability": 7.272516086231917e-05
+      },
+      {
+        "id": "office_home_col5:tile-11:inset4",
+        "probability": 0.0019729468040168285
+      },
+      {
+        "id": "office_home_col5:tile-12:inset4",
+        "probability": 0.0011172221275046468
+      },
+      {
+        "id": "office_home_col5:tile-13:inset4",
+        "probability": 0.002533260965719819
+      },
+      {
+        "id": "office_home_col5:tile-14:inset4",
+        "probability": 0.007624030578881502
+      },
+      {
+        "id": "office_home_col5:tile-15:inset4",
+        "probability": 0.0004256645916029811
+      },
+      {
+        "id": "office_home_col5:tile-16:inset4",
+        "probability": 0.00032473047031089664
+      },
+      {
+        "id": "office_home_col5:tile-17:inset4",
+        "probability": 0.003949021454900503
+      },
+      {
+        "id": "office_home_col5:tile-18:inset4",
+        "probability": 0.03702305629849434
+      },
+      {
+        "id": "office_home_col5:tile-19:inset4",
+        "probability": 0.0006157825700938702
+      },
+      {
+        "id": "office_home_col5:tile-20:inset4",
+        "probability": 0.0026838660705834627
+      },
+      {
+        "id": "office_home_col5:tile-21:inset4",
+        "probability": 0.000734215893317014
+      },
+      {
+        "id": "office_home_col5:tile-22:inset4",
+        "probability": 0.0011732990387827158
+      },
+      {
+        "id": "office_home_col5:tile-23:inset4",
+        "probability": 0.0005823072860948741
+      }
+    ],
+    "evaluation": {
+      "base": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.7070707070707071,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 2,
+            "tn": 64,
+            "accuracy": 0.9166666666666666
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 66,
+            "accuracy": 0.9166666666666666
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 2,
+        "nearThresholdCount": 1
+      },
+      "left4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.6717171717171717,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 3,
+            "tn": 63,
+            "accuracy": 0.8888888888888888
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 1,
+            "tn": 65,
+            "accuracy": 0.9027777777777778
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-8"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "right4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.6868686868686869,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 3,
+            "tn": 63,
+            "accuracy": 0.8888888888888888
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 66,
+            "accuracy": 0.9166666666666666
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 2,
+        "nearThresholdCount": 0
+      },
+      "up4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.5732323232323232,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 12,
+            "tn": 54,
+            "accuracy": 0.7638888888888888
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 6,
+            "tn": 60,
+            "accuracy": 0.8472222222222222
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-3"
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-8"
+          }
+        ],
+        "ambiguityBandCount": 6,
+        "nearThresholdCount": 5
+      },
+      "down4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.6742424242424242,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 3,
+            "tn": 63,
+            "accuracy": 0.9027777777777778
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 1,
+            "tn": 65,
+            "accuracy": 0.9027777777777778
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-6"
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 1
+      },
+      "pad4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.6565656565656566,
+          "0.5": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 3,
+            "tn": 63,
+            "accuracy": 0.875
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 2,
+            "tn": 64,
+            "accuracy": 0.8888888888888888
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-6"
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-8"
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "inset4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.5303030303030303,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 18,
+            "tn": 48,
+            "accuracy": 0.6805555555555556
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 12,
+            "tn": 54,
+            "accuracy": 0.7638888888888888
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 4,
+        "nearThresholdCount": 1
+      }
+    }
+  },
+  "fdr008": {
+    "backend": "Torch CPU",
+    "seconds": 9.266896374989301,
+    "scores": [
+      {
+        "id": "office_home_initial:tile-0:base",
+        "probability": 0.00024149075034074485
+      },
+      {
+        "id": "office_home_initial:tile-1:base",
+        "probability": 0.01405581459403038
+      },
+      {
+        "id": "office_home_initial:tile-2:base",
+        "probability": 0.004023139365017414
+      },
+      {
+        "id": "office_home_initial:tile-3:base",
+        "probability": 0.05391121655702591
+      },
+      {
+        "id": "office_home_initial:tile-4:base",
+        "probability": 0.023172032088041306
+      },
+      {
+        "id": "office_home_initial:tile-5:base",
+        "probability": 0.02164790779352188
+      },
+      {
+        "id": "office_home_initial:tile-0:left4",
+        "probability": 0.0003460194857325405
+      },
+      {
+        "id": "office_home_initial:tile-1:left4",
+        "probability": 0.02221282571554184
+      },
+      {
+        "id": "office_home_initial:tile-2:left4",
+        "probability": 0.017742056399583817
+      },
+      {
+        "id": "office_home_initial:tile-3:left4",
+        "probability": 0.05806752294301987
+      },
+      {
+        "id": "office_home_initial:tile-4:left4",
+        "probability": 0.02001890353858471
+      },
+      {
+        "id": "office_home_initial:tile-5:left4",
+        "probability": 0.021298427134752274
+      },
+      {
+        "id": "office_home_initial:tile-0:right4",
+        "probability": 0.00010820123134180903
+      },
+      {
+        "id": "office_home_initial:tile-1:right4",
+        "probability": 0.021263299509882927
+      },
+      {
+        "id": "office_home_initial:tile-2:right4",
+        "probability": 0.0046798475086688995
+      },
+      {
+        "id": "office_home_initial:tile-3:right4",
+        "probability": 0.06771615892648697
+      },
+      {
+        "id": "office_home_initial:tile-4:right4",
+        "probability": 0.03109150007367134
+      },
+      {
+        "id": "office_home_initial:tile-5:right4",
+        "probability": 0.02868534065783024
+      },
+      {
+        "id": "office_home_initial:tile-0:up4",
+        "probability": 2.439639501972124e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:up4",
+        "probability": 0.4069403111934662
+      },
+      {
+        "id": "office_home_initial:tile-2:up4",
+        "probability": 0.009875858202576637
+      },
+      {
+        "id": "office_home_initial:tile-3:up4",
+        "probability": 0.3210289776325226
+      },
+      {
+        "id": "office_home_initial:tile-4:up4",
+        "probability": 0.34580060839653015
+      },
+      {
+        "id": "office_home_initial:tile-5:up4",
+        "probability": 0.5096207857131958
+      },
+      {
+        "id": "office_home_initial:tile-0:down4",
+        "probability": 7.824082422303036e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:down4",
+        "probability": 0.7661183476448059
+      },
+      {
+        "id": "office_home_initial:tile-2:down4",
+        "probability": 0.11746744811534882
+      },
+      {
+        "id": "office_home_initial:tile-3:down4",
+        "probability": 0.9063190221786499
+      },
+      {
+        "id": "office_home_initial:tile-4:down4",
+        "probability": 0.8207507729530334
+      },
+      {
+        "id": "office_home_initial:tile-5:down4",
+        "probability": 0.8921224474906921
+      },
+      {
+        "id": "office_home_initial:tile-0:pad4",
+        "probability": 6.389265763573349e-05
+      },
+      {
+        "id": "office_home_initial:tile-1:pad4",
+        "probability": 0.06615430861711502
+      },
+      {
+        "id": "office_home_initial:tile-2:pad4",
+        "probability": 0.011098909191787243
+      },
+      {
+        "id": "office_home_initial:tile-3:pad4",
+        "probability": 0.02713010646402836
+      },
+      {
+        "id": "office_home_initial:tile-4:pad4",
+        "probability": 0.04114089906215668
+      },
+      {
+        "id": "office_home_initial:tile-5:pad4",
+        "probability": 0.01971958577632904
+      },
+      {
+        "id": "office_home_initial:tile-0:inset4",
+        "probability": 0.0006139919278211892
+      },
+      {
+        "id": "office_home_initial:tile-1:inset4",
+        "probability": 0.895744800567627
+      },
+      {
+        "id": "office_home_initial:tile-2:inset4",
+        "probability": 0.012073641642928123
+      },
+      {
+        "id": "office_home_initial:tile-3:inset4",
+        "probability": 0.9740806221961975
+      },
+      {
+        "id": "office_home_initial:tile-4:inset4",
+        "probability": 0.9282354116439819
+      },
+      {
+        "id": "office_home_initial:tile-5:inset4",
+        "probability": 0.9244903326034546
+      },
+      {
+        "id": "office_home_step01:tile-0:base",
+        "probability": 0.00024284704704768956
+      },
+      {
+        "id": "office_home_step01:tile-1:base",
+        "probability": 0.0006514541455544531
+      },
+      {
+        "id": "office_home_step01:tile-2:base",
+        "probability": 0.0009112334810197353
+      },
+      {
+        "id": "office_home_step01:tile-3:base",
+        "probability": 6.587262032553554e-05
+      },
+      {
+        "id": "office_home_step01:tile-4:base",
+        "probability": 6.70024091959931e-05
+      },
+      {
+        "id": "office_home_step01:tile-5:base",
+        "probability": 7.206847658380866e-05
+      },
+      {
+        "id": "office_home_step01:tile-0:left4",
+        "probability": 0.00017828744603320956
+      },
+      {
+        "id": "office_home_step01:tile-1:left4",
+        "probability": 0.0006746224244125187
+      },
+      {
+        "id": "office_home_step01:tile-2:left4",
+        "probability": 0.003936100751161575
+      },
+      {
+        "id": "office_home_step01:tile-3:left4",
+        "probability": 0.0005252693081274629
+      },
+      {
+        "id": "office_home_step01:tile-4:left4",
+        "probability": 0.0004577712679747492
+      },
+      {
+        "id": "office_home_step01:tile-5:left4",
+        "probability": 0.0005843056133016944
+      },
+      {
+        "id": "office_home_step01:tile-0:right4",
+        "probability": 0.0002449931052979082
+      },
+      {
+        "id": "office_home_step01:tile-1:right4",
+        "probability": 0.000792156730312854
+      },
+      {
+        "id": "office_home_step01:tile-2:right4",
+        "probability": 0.0017738380702212453
+      },
+      {
+        "id": "office_home_step01:tile-3:right4",
+        "probability": 0.00017282695625908673
+      },
+      {
+        "id": "office_home_step01:tile-4:right4",
+        "probability": 0.00020016284543089569
+      },
+      {
+        "id": "office_home_step01:tile-5:right4",
+        "probability": 0.0001785948988981545
+      },
+      {
+        "id": "office_home_step01:tile-0:up4",
+        "probability": 0.001918833702802658
+      },
+      {
+        "id": "office_home_step01:tile-1:up4",
+        "probability": 0.9888533353805542
+      },
+      {
+        "id": "office_home_step01:tile-2:up4",
+        "probability": 0.008859233930706978
+      },
+      {
+        "id": "office_home_step01:tile-3:up4",
+        "probability": 0.9850701093673706
+      },
+      {
+        "id": "office_home_step01:tile-4:up4",
+        "probability": 0.9465100169181824
+      },
+      {
+        "id": "office_home_step01:tile-5:up4",
+        "probability": 0.9891538023948669
+      },
+      {
+        "id": "office_home_step01:tile-0:down4",
+        "probability": 0.0010248852195218205
+      },
+      {
+        "id": "office_home_step01:tile-1:down4",
+        "probability": 0.022951319813728333
+      },
+      {
+        "id": "office_home_step01:tile-2:down4",
+        "probability": 0.0228218175470829
+      },
+      {
+        "id": "office_home_step01:tile-3:down4",
+        "probability": 0.04915868490934372
+      },
+      {
+        "id": "office_home_step01:tile-4:down4",
+        "probability": 0.04028704762458801
+      },
+      {
+        "id": "office_home_step01:tile-5:down4",
+        "probability": 0.06035817414522171
+      },
+      {
+        "id": "office_home_step01:tile-0:pad4",
+        "probability": 0.0034875134006142616
+      },
+      {
+        "id": "office_home_step01:tile-1:pad4",
+        "probability": 0.008420992642641068
+      },
+      {
+        "id": "office_home_step01:tile-2:pad4",
+        "probability": 0.005988399963825941
+      },
+      {
+        "id": "office_home_step01:tile-3:pad4",
+        "probability": 0.007813415490090847
+      },
+      {
+        "id": "office_home_step01:tile-4:pad4",
+        "probability": 0.006622171029448509
+      },
+      {
+        "id": "office_home_step01:tile-5:pad4",
+        "probability": 0.011119470000267029
+      },
+      {
+        "id": "office_home_step01:tile-0:inset4",
+        "probability": 0.0033999746665358543
+      },
+      {
+        "id": "office_home_step01:tile-1:inset4",
+        "probability": 0.9997373223304749
+      },
+      {
+        "id": "office_home_step01:tile-2:inset4",
+        "probability": 0.04675690084695816
+      },
+      {
+        "id": "office_home_step01:tile-3:inset4",
+        "probability": 0.8576005697250366
+      },
+      {
+        "id": "office_home_step01:tile-4:inset4",
+        "probability": 0.8968412280082703
+      },
+      {
+        "id": "office_home_step01:tile-5:inset4",
+        "probability": 0.9191461801528931
+      },
+      {
+        "id": "office_home_step02:tile-0:base",
+        "probability": 0.00027957133715972304
+      },
+      {
+        "id": "office_home_step02:tile-1:base",
+        "probability": 6.240517541300505e-05
+      },
+      {
+        "id": "office_home_step02:tile-2:base",
+        "probability": 0.004133333917707205
+      },
+      {
+        "id": "office_home_step02:tile-3:base",
+        "probability": 0.00024945384939201176
+      },
+      {
+        "id": "office_home_step02:tile-4:base",
+        "probability": 6.412430229829624e-05
+      },
+      {
+        "id": "office_home_step02:tile-5:base",
+        "probability": 7.28304439689964e-05
+      },
+      {
+        "id": "office_home_step02:tile-0:left4",
+        "probability": 0.00038892292650416493
+      },
+      {
+        "id": "office_home_step02:tile-1:left4",
+        "probability": 0.00024473699158988893
+      },
+      {
+        "id": "office_home_step02:tile-2:left4",
+        "probability": 0.002152114175260067
+      },
+      {
+        "id": "office_home_step02:tile-3:left4",
+        "probability": 0.0032962863333523273
+      },
+      {
+        "id": "office_home_step02:tile-4:left4",
+        "probability": 0.0004398062592372298
+      },
+      {
+        "id": "office_home_step02:tile-5:left4",
+        "probability": 0.0005086592864245176
+      },
+      {
+        "id": "office_home_step02:tile-0:right4",
+        "probability": 0.00016019915346987545
+      },
+      {
+        "id": "office_home_step02:tile-1:right4",
+        "probability": 0.00018723635002970695
+      },
+      {
+        "id": "office_home_step02:tile-2:right4",
+        "probability": 0.0015175951411947608
+      },
+      {
+        "id": "office_home_step02:tile-3:right4",
+        "probability": 0.00017617222329135984
+      },
+      {
+        "id": "office_home_step02:tile-4:right4",
+        "probability": 8.066430746112019e-05
+      },
+      {
+        "id": "office_home_step02:tile-5:right4",
+        "probability": 8.692317351233214e-05
+      },
+      {
+        "id": "office_home_step02:tile-0:up4",
+        "probability": 0.002259171102195978
+      },
+      {
+        "id": "office_home_step02:tile-1:up4",
+        "probability": 0.9982194304466248
+      },
+      {
+        "id": "office_home_step02:tile-2:up4",
+        "probability": 0.0037958889733999968
+      },
+      {
+        "id": "office_home_step02:tile-3:up4",
+        "probability": 0.9992864727973938
+      },
+      {
+        "id": "office_home_step02:tile-4:up4",
+        "probability": 0.9988774657249451
+      },
+      {
+        "id": "office_home_step02:tile-5:up4",
+        "probability": 0.9988481998443604
+      },
+      {
+        "id": "office_home_step02:tile-0:down4",
+        "probability": 0.0009840838611125946
+      },
+      {
+        "id": "office_home_step02:tile-1:down4",
+        "probability": 0.048509690910577774
+      },
+      {
+        "id": "office_home_step02:tile-2:down4",
+        "probability": 0.09249871969223022
+      },
+      {
+        "id": "office_home_step02:tile-3:down4",
+        "probability": 0.25765904784202576
+      },
+      {
+        "id": "office_home_step02:tile-4:down4",
+        "probability": 0.07695908844470978
+      },
+      {
+        "id": "office_home_step02:tile-5:down4",
+        "probability": 0.0823117196559906
+      },
+      {
+        "id": "office_home_step02:tile-0:pad4",
+        "probability": 0.006754615344107151
+      },
+      {
+        "id": "office_home_step02:tile-1:pad4",
+        "probability": 0.025097906589508057
+      },
+      {
+        "id": "office_home_step02:tile-2:pad4",
+        "probability": 0.001601962372660637
+      },
+      {
+        "id": "office_home_step02:tile-3:pad4",
+        "probability": 0.08547380566596985
+      },
+      {
+        "id": "office_home_step02:tile-4:pad4",
+        "probability": 0.035656318068504333
+      },
+      {
+        "id": "office_home_step02:tile-5:pad4",
+        "probability": 0.03206401318311691
+      },
+      {
+        "id": "office_home_step02:tile-0:inset4",
+        "probability": 0.009274153970181942
+      },
+      {
+        "id": "office_home_step02:tile-1:inset4",
+        "probability": 0.7172824144363403
+      },
+      {
+        "id": "office_home_step02:tile-2:inset4",
+        "probability": 0.040873296558856964
+      },
+      {
+        "id": "office_home_step02:tile-3:inset4",
+        "probability": 0.8972780704498291
+      },
+      {
+        "id": "office_home_step02:tile-4:inset4",
+        "probability": 0.7488455772399902
+      },
+      {
+        "id": "office_home_step02:tile-5:inset4",
+        "probability": 0.763460099697113
+      },
+      {
+        "id": "office_session2_home:tile-0:base",
+        "probability": 0.0002815424231812358
+      },
+      {
+        "id": "office_session2_home:tile-1:base",
+        "probability": 6.507003854494542e-05
+      },
+      {
+        "id": "office_session2_home:tile-2:base",
+        "probability": 0.0035955000203102827
+      },
+      {
+        "id": "office_session2_home:tile-3:base",
+        "probability": 0.00028776953695341945
+      },
+      {
+        "id": "office_session2_home:tile-4:base",
+        "probability": 6.31235889159143e-05
+      },
+      {
+        "id": "office_session2_home:tile-5:base",
+        "probability": 6.829438643762842e-05
+      },
+      {
+        "id": "office_session2_home:tile-0:left4",
+        "probability": 0.0003428339259698987
+      },
+      {
+        "id": "office_session2_home:tile-1:left4",
+        "probability": 0.00023864679678808898
+      },
+      {
+        "id": "office_session2_home:tile-2:left4",
+        "probability": 0.0018768089357763529
+      },
+      {
+        "id": "office_session2_home:tile-3:left4",
+        "probability": 0.003982171416282654
+      },
+      {
+        "id": "office_session2_home:tile-4:left4",
+        "probability": 0.0005033322377130389
+      },
+      {
+        "id": "office_session2_home:tile-5:left4",
+        "probability": 0.0005009688902646303
+      },
+      {
+        "id": "office_session2_home:tile-0:right4",
+        "probability": 0.000204699274036102
+      },
+      {
+        "id": "office_session2_home:tile-1:right4",
+        "probability": 0.00019149118452332914
+      },
+      {
+        "id": "office_session2_home:tile-2:right4",
+        "probability": 0.0015455590328201652
+      },
+      {
+        "id": "office_session2_home:tile-3:right4",
+        "probability": 0.00018826284212991595
+      },
+      {
+        "id": "office_session2_home:tile-4:right4",
+        "probability": 8.438614167971537e-05
+      },
+      {
+        "id": "office_session2_home:tile-5:right4",
+        "probability": 8.067246380960569e-05
+      },
+      {
+        "id": "office_session2_home:tile-0:up4",
+        "probability": 0.003075400600209832
+      },
+      {
+        "id": "office_session2_home:tile-1:up4",
+        "probability": 0.9985566735267639
+      },
+      {
+        "id": "office_session2_home:tile-2:up4",
+        "probability": 0.0032974553760141134
+      },
+      {
+        "id": "office_session2_home:tile-3:up4",
+        "probability": 0.9996129870414734
+      },
+      {
+        "id": "office_session2_home:tile-4:up4",
+        "probability": 0.9986710548400879
+      },
+      {
+        "id": "office_session2_home:tile-5:up4",
+        "probability": 0.9988957643508911
+      },
+      {
+        "id": "office_session2_home:tile-0:down4",
+        "probability": 0.0010920583736151457
+      },
+      {
+        "id": "office_session2_home:tile-1:down4",
+        "probability": 0.05065905675292015
+      },
+      {
+        "id": "office_session2_home:tile-2:down4",
+        "probability": 0.07929942011833191
+      },
+      {
+        "id": "office_session2_home:tile-3:down4",
+        "probability": 0.3389759957790375
+      },
+      {
+        "id": "office_session2_home:tile-4:down4",
+        "probability": 0.08077947050333023
+      },
+      {
+        "id": "office_session2_home:tile-5:down4",
+        "probability": 0.096776083111763
+      },
+      {
+        "id": "office_session2_home:tile-0:pad4",
+        "probability": 0.006644070148468018
+      },
+      {
+        "id": "office_session2_home:tile-1:pad4",
+        "probability": 0.024780210107564926
+      },
+      {
+        "id": "office_session2_home:tile-2:pad4",
+        "probability": 0.0017864233814179897
+      },
+      {
+        "id": "office_session2_home:tile-3:pad4",
+        "probability": 0.11010352522134781
+      },
+      {
+        "id": "office_session2_home:tile-4:pad4",
+        "probability": 0.03336377814412117
+      },
+      {
+        "id": "office_session2_home:tile-5:pad4",
+        "probability": 0.029485424980521202
+      },
+      {
+        "id": "office_session2_home:tile-0:inset4",
+        "probability": 0.009449451230466366
+      },
+      {
+        "id": "office_session2_home:tile-1:inset4",
+        "probability": 0.7085819244384766
+      },
+      {
+        "id": "office_session2_home:tile-2:inset4",
+        "probability": 0.02737957425415516
+      },
+      {
+        "id": "office_session2_home:tile-3:inset4",
+        "probability": 0.9310150146484375
+      },
+      {
+        "id": "office_session2_home:tile-4:inset4",
+        "probability": 0.7738827466964722
+      },
+      {
+        "id": "office_session2_home:tile-5:inset4",
+        "probability": 0.7520449161529541
+      },
+      {
+        "id": "office_home_step03:tile-0:base",
+        "probability": 0.0003351024352014065
+      },
+      {
+        "id": "office_home_step03:tile-1:base",
+        "probability": 6.483095785370097e-05
+      },
+      {
+        "id": "office_home_step03:tile-2:base",
+        "probability": 0.0008903145208023489
+      },
+      {
+        "id": "office_home_step03:tile-3:base",
+        "probability": 4.595861173584126e-05
+      },
+      {
+        "id": "office_home_step03:tile-4:base",
+        "probability": 4.879743937635794e-05
+      },
+      {
+        "id": "office_home_step03:tile-5:base",
+        "probability": 5.799789141747169e-05
+      },
+      {
+        "id": "office_home_step03:tile-6:base",
+        "probability": 0.9977073669433594
+      },
+      {
+        "id": "office_home_step03:tile-7:base",
+        "probability": 0.0003091392864007503
+      },
+      {
+        "id": "office_home_step03:tile-8:base",
+        "probability": 0.7210785746574402
+      },
+      {
+        "id": "office_home_step03:tile-9:base",
+        "probability": 0.0011683449847623706
+      },
+      {
+        "id": "office_home_step03:tile-10:base",
+        "probability": 0.0027153457049280405
+      },
+      {
+        "id": "office_home_step03:tile-11:base",
+        "probability": 0.07456614077091217
+      },
+      {
+        "id": "office_home_step03:tile-12:base",
+        "probability": 0.13779659569263458
+      },
+      {
+        "id": "office_home_step03:tile-13:base",
+        "probability": 0.0005653513944707811
+      },
+      {
+        "id": "office_home_step03:tile-14:base",
+        "probability": 0.02127567119896412
+      },
+      {
+        "id": "office_home_step03:tile-15:base",
+        "probability": 4.1652594973129453e-07
+      },
+      {
+        "id": "office_home_step03:tile-16:base",
+        "probability": 0.7432920336723328
+      },
+      {
+        "id": "office_home_step03:tile-17:base",
+        "probability": 0.0010205124272033572
+      },
+      {
+        "id": "office_home_step03:tile-18:base",
+        "probability": 0.008028640411794186
+      },
+      {
+        "id": "office_home_step03:tile-19:base",
+        "probability": 5.980870992061682e-05
+      },
+      {
+        "id": "office_home_step03:tile-20:base",
+        "probability": 0.08152247220277786
+      },
+      {
+        "id": "office_home_step03:tile-21:base",
+        "probability": 0.06976335495710373
+      },
+      {
+        "id": "office_home_step03:tile-22:base",
+        "probability": 0.11751583963632584
+      },
+      {
+        "id": "office_home_step03:tile-23:base",
+        "probability": 6.786719313822687e-05
+      },
+      {
+        "id": "office_home_step03:tile-0:left4",
+        "probability": 0.0005446143914014101
+      },
+      {
+        "id": "office_home_step03:tile-1:left4",
+        "probability": 0.00035932223545387387
+      },
+      {
+        "id": "office_home_step03:tile-2:left4",
+        "probability": 0.004910133313387632
+      },
+      {
+        "id": "office_home_step03:tile-3:left4",
+        "probability": 0.00024932497763074934
+      },
+      {
+        "id": "office_home_step03:tile-4:left4",
+        "probability": 0.00034686236176639795
+      },
+      {
+        "id": "office_home_step03:tile-5:left4",
+        "probability": 0.00035341718466952443
+      },
+      {
+        "id": "office_home_step03:tile-6:left4",
+        "probability": 0.993423581123352
+      },
+      {
+        "id": "office_home_step03:tile-7:left4",
+        "probability": 0.0002138290146831423
+      },
+      {
+        "id": "office_home_step03:tile-8:left4",
+        "probability": 0.961869478225708
+      },
+      {
+        "id": "office_home_step03:tile-9:left4",
+        "probability": 0.0017737713642418385
+      },
+      {
+        "id": "office_home_step03:tile-10:left4",
+        "probability": 0.0010158248478546739
+      },
+      {
+        "id": "office_home_step03:tile-11:left4",
+        "probability": 0.147970050573349
+      },
+      {
+        "id": "office_home_step03:tile-12:left4",
+        "probability": 0.1431630551815033
+      },
+      {
+        "id": "office_home_step03:tile-13:left4",
+        "probability": 0.0027830745093524456
+      },
+      {
+        "id": "office_home_step03:tile-14:left4",
+        "probability": 0.06155083701014519
+      },
+      {
+        "id": "office_home_step03:tile-15:left4",
+        "probability": 1.4730078419233905e-06
+      },
+      {
+        "id": "office_home_step03:tile-16:left4",
+        "probability": 0.7901560068130493
+      },
+      {
+        "id": "office_home_step03:tile-17:left4",
+        "probability": 0.002244220580905676
+      },
+      {
+        "id": "office_home_step03:tile-18:left4",
+        "probability": 0.00492228614166379
+      },
+      {
+        "id": "office_home_step03:tile-19:left4",
+        "probability": 0.000485416006995365
+      },
+      {
+        "id": "office_home_step03:tile-20:left4",
+        "probability": 0.005828499794006348
+      },
+      {
+        "id": "office_home_step03:tile-21:left4",
+        "probability": 0.2215954214334488
+      },
+      {
+        "id": "office_home_step03:tile-22:left4",
+        "probability": 0.20056763291358948
+      },
+      {
+        "id": "office_home_step03:tile-23:left4",
+        "probability": 0.0004730327345896512
+      },
+      {
+        "id": "office_home_step03:tile-0:right4",
+        "probability": 0.0002474984503351152
+      },
+      {
+        "id": "office_home_step03:tile-1:right4",
+        "probability": 0.0001854551228461787
+      },
+      {
+        "id": "office_home_step03:tile-2:right4",
+        "probability": 0.001486315974034369
+      },
+      {
+        "id": "office_home_step03:tile-3:right4",
+        "probability": 0.0002265289513161406
+      },
+      {
+        "id": "office_home_step03:tile-4:right4",
+        "probability": 0.00017523387214168906
+      },
+      {
+        "id": "office_home_step03:tile-5:right4",
+        "probability": 0.00016662322741467506
+      },
+      {
+        "id": "office_home_step03:tile-6:right4",
+        "probability": 0.9986950755119324
+      },
+      {
+        "id": "office_home_step03:tile-7:right4",
+        "probability": 0.0005130795761942863
+      },
+      {
+        "id": "office_home_step03:tile-8:right4",
+        "probability": 0.9389897584915161
+      },
+      {
+        "id": "office_home_step03:tile-9:right4",
+        "probability": 0.0016809009248390794
+      },
+      {
+        "id": "office_home_step03:tile-10:right4",
+        "probability": 0.0012330084573477507
+      },
+      {
+        "id": "office_home_step03:tile-11:right4",
+        "probability": 0.24969810247421265
+      },
+      {
+        "id": "office_home_step03:tile-12:right4",
+        "probability": 0.30469149351119995
+      },
+      {
+        "id": "office_home_step03:tile-13:right4",
+        "probability": 0.0019490449922159314
+      },
+      {
+        "id": "office_home_step03:tile-14:right4",
+        "probability": 0.06302030384540558
+      },
+      {
+        "id": "office_home_step03:tile-15:right4",
+        "probability": 8.358691729881684e-07
+      },
+      {
+        "id": "office_home_step03:tile-16:right4",
+        "probability": 0.948763906955719
+      },
+      {
+        "id": "office_home_step03:tile-17:right4",
+        "probability": 0.0028800880536437035
+      },
+      {
+        "id": "office_home_step03:tile-18:right4",
+        "probability": 0.005689302459359169
+      },
+      {
+        "id": "office_home_step03:tile-19:right4",
+        "probability": 6.404345185728744e-05
+      },
+      {
+        "id": "office_home_step03:tile-20:right4",
+        "probability": 0.0030834563076496124
+      },
+      {
+        "id": "office_home_step03:tile-21:right4",
+        "probability": 0.34824973344802856
+      },
+      {
+        "id": "office_home_step03:tile-22:right4",
+        "probability": 0.6242157816886902
+      },
+      {
+        "id": "office_home_step03:tile-23:right4",
+        "probability": 6.509933155030012e-05
+      },
+      {
+        "id": "office_home_step03:tile-0:up4",
+        "probability": 0.0011721171904355288
+      },
+      {
+        "id": "office_home_step03:tile-1:up4",
+        "probability": 0.8006781935691833
+      },
+      {
+        "id": "office_home_step03:tile-2:up4",
+        "probability": 0.007907317951321602
+      },
+      {
+        "id": "office_home_step03:tile-3:up4",
+        "probability": 0.09645054489374161
+      },
+      {
+        "id": "office_home_step03:tile-4:up4",
+        "probability": 0.5958344340324402
+      },
+      {
+        "id": "office_home_step03:tile-5:up4",
+        "probability": 0.7762019634246826
+      },
+      {
+        "id": "office_home_step03:tile-6:up4",
+        "probability": 0.9994379878044128
+      },
+      {
+        "id": "office_home_step03:tile-7:up4",
+        "probability": 0.20413576066493988
+      },
+      {
+        "id": "office_home_step03:tile-8:up4",
+        "probability": 0.6047529578208923
+      },
+      {
+        "id": "office_home_step03:tile-9:up4",
+        "probability": 0.0029706652276217937
+      },
+      {
+        "id": "office_home_step03:tile-10:up4",
+        "probability": 0.002273689955472946
+      },
+      {
+        "id": "office_home_step03:tile-11:up4",
+        "probability": 0.29437699913978577
+      },
+      {
+        "id": "office_home_step03:tile-12:up4",
+        "probability": 0.4340223968029022
+      },
+      {
+        "id": "office_home_step03:tile-13:up4",
+        "probability": 0.008546318858861923
+      },
+      {
+        "id": "office_home_step03:tile-14:up4",
+        "probability": 0.004885152913630009
+      },
+      {
+        "id": "office_home_step03:tile-15:up4",
+        "probability": 5.803635190204659e-07
+      },
+      {
+        "id": "office_home_step03:tile-16:up4",
+        "probability": 0.7430988550186157
+      },
+      {
+        "id": "office_home_step03:tile-17:up4",
+        "probability": 0.9923525452613831
+      },
+      {
+        "id": "office_home_step03:tile-18:up4",
+        "probability": 0.020476825535297394
+      },
+      {
+        "id": "office_home_step03:tile-19:up4",
+        "probability": 0.9988000392913818
+      },
+      {
+        "id": "office_home_step03:tile-20:up4",
+        "probability": 0.029892969876527786
+      },
+      {
+        "id": "office_home_step03:tile-21:up4",
+        "probability": 0.8364955186843872
+      },
+      {
+        "id": "office_home_step03:tile-22:up4",
+        "probability": 0.665710985660553
+      },
+      {
+        "id": "office_home_step03:tile-23:up4",
+        "probability": 0.9985687732696533
+      },
+      {
+        "id": "office_home_step03:tile-0:down4",
+        "probability": 0.0006946591893211007
+      },
+      {
+        "id": "office_home_step03:tile-1:down4",
+        "probability": 0.020279360935091972
+      },
+      {
+        "id": "office_home_step03:tile-2:down4",
+        "probability": 0.013954930007457733
+      },
+      {
+        "id": "office_home_step03:tile-3:down4",
+        "probability": 0.006074483972042799
+      },
+      {
+        "id": "office_home_step03:tile-4:down4",
+        "probability": 0.018499700352549553
+      },
+      {
+        "id": "office_home_step03:tile-5:down4",
+        "probability": 0.021543368697166443
+      },
+      {
+        "id": "office_home_step03:tile-6:down4",
+        "probability": 0.9988855719566345
+      },
+      {
+        "id": "office_home_step03:tile-7:down4",
+        "probability": 0.030229322612285614
+      },
+      {
+        "id": "office_home_step03:tile-8:down4",
+        "probability": 0.8679713606834412
+      },
+      {
+        "id": "office_home_step03:tile-9:down4",
+        "probability": 0.00048103489098139107
+      },
+      {
+        "id": "office_home_step03:tile-10:down4",
+        "probability": 0.0012643840163946152
+      },
+      {
+        "id": "office_home_step03:tile-11:down4",
+        "probability": 0.01415905449539423
+      },
+      {
+        "id": "office_home_step03:tile-12:down4",
+        "probability": 0.6799810528755188
+      },
+      {
+        "id": "office_home_step03:tile-13:down4",
+        "probability": 0.014809376560151577
+      },
+      {
+        "id": "office_home_step03:tile-14:down4",
+        "probability": 0.9635533690452576
+      },
+      {
+        "id": "office_home_step03:tile-15:down4",
+        "probability": 2.2540666577697266e-06
+      },
+      {
+        "id": "office_home_step03:tile-16:down4",
+        "probability": 0.5777236223220825
+      },
+      {
+        "id": "office_home_step03:tile-17:down4",
+        "probability": 0.08752129226922989
+      },
+      {
+        "id": "office_home_step03:tile-18:down4",
+        "probability": 0.0014853496104478836
+      },
+      {
+        "id": "office_home_step03:tile-19:down4",
+        "probability": 0.06368496268987656
+      },
+      {
+        "id": "office_home_step03:tile-20:down4",
+        "probability": 0.050379008054733276
+      },
+      {
+        "id": "office_home_step03:tile-21:down4",
+        "probability": 0.03279740735888481
+      },
+      {
+        "id": "office_home_step03:tile-22:down4",
+        "probability": 0.06977885961532593
+      },
+      {
+        "id": "office_home_step03:tile-23:down4",
+        "probability": 0.07718650251626968
+      },
+      {
+        "id": "office_home_step03:tile-0:pad4",
+        "probability": 0.004788695368915796
+      },
+      {
+        "id": "office_home_step03:tile-1:pad4",
+        "probability": 0.0067039839923381805
+      },
+      {
+        "id": "office_home_step03:tile-2:pad4",
+        "probability": 0.0067008794285357
+      },
+      {
+        "id": "office_home_step03:tile-3:pad4",
+        "probability": 0.0033292672596871853
+      },
+      {
+        "id": "office_home_step03:tile-4:pad4",
+        "probability": 0.005163650959730148
+      },
+      {
+        "id": "office_home_step03:tile-5:pad4",
+        "probability": 0.006132643204182386
+      },
+      {
+        "id": "office_home_step03:tile-6:pad4",
+        "probability": 0.9991505146026611
+      },
+      {
+        "id": "office_home_step03:tile-7:pad4",
+        "probability": 0.018486302345991135
+      },
+      {
+        "id": "office_home_step03:tile-8:pad4",
+        "probability": 0.819453775882721
+      },
+      {
+        "id": "office_home_step03:tile-9:pad4",
+        "probability": 0.0014632687671110034
+      },
+      {
+        "id": "office_home_step03:tile-10:pad4",
+        "probability": 0.0011808762792497873
+      },
+      {
+        "id": "office_home_step03:tile-11:pad4",
+        "probability": 0.022315150126814842
+      },
+      {
+        "id": "office_home_step03:tile-12:pad4",
+        "probability": 0.996986448764801
+      },
+      {
+        "id": "office_home_step03:tile-13:pad4",
+        "probability": 0.023159312084317207
+      },
+      {
+        "id": "office_home_step03:tile-14:pad4",
+        "probability": 0.93936687707901
+      },
+      {
+        "id": "office_home_step03:tile-15:pad4",
+        "probability": 4.182724751444766e-06
+      },
+      {
+        "id": "office_home_step03:tile-16:pad4",
+        "probability": 0.9909706115722656
+      },
+      {
+        "id": "office_home_step03:tile-17:pad4",
+        "probability": 0.22518077492713928
+      },
+      {
+        "id": "office_home_step03:tile-18:pad4",
+        "probability": 0.005289905704557896
+      },
+      {
+        "id": "office_home_step03:tile-19:pad4",
+        "probability": 0.02959991805255413
+      },
+      {
+        "id": "office_home_step03:tile-20:pad4",
+        "probability": 0.09805882722139359
+      },
+      {
+        "id": "office_home_step03:tile-21:pad4",
+        "probability": 0.07113797962665558
+      },
+      {
+        "id": "office_home_step03:tile-22:pad4",
+        "probability": 0.0886426642537117
+      },
+      {
+        "id": "office_home_step03:tile-23:pad4",
+        "probability": 0.02960488386452198
+      },
+      {
+        "id": "office_home_step03:tile-0:inset4",
+        "probability": 0.008430860936641693
+      },
+      {
+        "id": "office_home_step03:tile-1:inset4",
+        "probability": 0.6933674812316895
+      },
+      {
+        "id": "office_home_step03:tile-2:inset4",
+        "probability": 0.049140624701976776
+      },
+      {
+        "id": "office_home_step03:tile-3:inset4",
+        "probability": 0.38320913910865784
+      },
+      {
+        "id": "office_home_step03:tile-4:inset4",
+        "probability": 0.5108290314674377
+      },
+      {
+        "id": "office_home_step03:tile-5:inset4",
+        "probability": 0.6260501146316528
+      },
+      {
+        "id": "office_home_step03:tile-6:inset4",
+        "probability": 0.9983464479446411
+      },
+      {
+        "id": "office_home_step03:tile-7:inset4",
+        "probability": 0.08233305811882019
+      },
+      {
+        "id": "office_home_step03:tile-8:inset4",
+        "probability": 0.8752655386924744
+      },
+      {
+        "id": "office_home_step03:tile-9:inset4",
+        "probability": 0.035326119512319565
+      },
+      {
+        "id": "office_home_step03:tile-10:inset4",
+        "probability": 0.0010702090803533792
+      },
+      {
+        "id": "office_home_step03:tile-11:inset4",
+        "probability": 0.8809273838996887
+      },
+      {
+        "id": "office_home_step03:tile-12:inset4",
+        "probability": 0.04882200434803963
+      },
+      {
+        "id": "office_home_step03:tile-13:inset4",
+        "probability": 0.035092294216156006
+      },
+      {
+        "id": "office_home_step03:tile-14:inset4",
+        "probability": 0.14901956915855408
+      },
+      {
+        "id": "office_home_step03:tile-15:inset4",
+        "probability": 8.502678383592865e-07
+      },
+      {
+        "id": "office_home_step03:tile-16:inset4",
+        "probability": 0.135349303483963
+      },
+      {
+        "id": "office_home_step03:tile-17:inset4",
+        "probability": 0.8165099620819092
+      },
+      {
+        "id": "office_home_step03:tile-18:inset4",
+        "probability": 0.004183747339993715
+      },
+      {
+        "id": "office_home_step03:tile-19:inset4",
+        "probability": 0.7605887055397034
+      },
+      {
+        "id": "office_home_step03:tile-20:inset4",
+        "probability": 0.16355009377002716
+      },
+      {
+        "id": "office_home_step03:tile-21:inset4",
+        "probability": 0.9115504622459412
+      },
+      {
+        "id": "office_home_step03:tile-22:inset4",
+        "probability": 0.9339257478713989
+      },
+      {
+        "id": "office_home_step03:tile-23:inset4",
+        "probability": 0.7736369967460632
+      },
+      {
+        "id": "office_home_col5:tile-0:base",
+        "probability": 0.00020669898367486894
+      },
+      {
+        "id": "office_home_col5:tile-1:base",
+        "probability": 0.010064538568258286
+      },
+      {
+        "id": "office_home_col5:tile-2:base",
+        "probability": 0.005814383737742901
+      },
+      {
+        "id": "office_home_col5:tile-3:base",
+        "probability": 0.0010832151165232062
+      },
+      {
+        "id": "office_home_col5:tile-4:base",
+        "probability": 0.020934313535690308
+      },
+      {
+        "id": "office_home_col5:tile-5:base",
+        "probability": 0.018159858882427216
+      },
+      {
+        "id": "office_home_col5:tile-6:base",
+        "probability": 0.9732781052589417
+      },
+      {
+        "id": "office_home_col5:tile-7:base",
+        "probability": 0.013905243016779423
+      },
+      {
+        "id": "office_home_col5:tile-8:base",
+        "probability": 0.9773551821708679
+      },
+      {
+        "id": "office_home_col5:tile-9:base",
+        "probability": 0.002804151736199856
+      },
+      {
+        "id": "office_home_col5:tile-10:base",
+        "probability": 0.001097914413549006
+      },
+      {
+        "id": "office_home_col5:tile-11:base",
+        "probability": 0.044895194470882416
+      },
+      {
+        "id": "office_home_col5:tile-12:base",
+        "probability": 0.9601214528083801
+      },
+      {
+        "id": "office_home_col5:tile-13:base",
+        "probability": 0.002665138803422451
+      },
+      {
+        "id": "office_home_col5:tile-14:base",
+        "probability": 0.06069045886397362
+      },
+      {
+        "id": "office_home_col5:tile-15:base",
+        "probability": 0.0012166521046310663
+      },
+      {
+        "id": "office_home_col5:tile-16:base",
+        "probability": 0.9797037839889526
+      },
+      {
+        "id": "office_home_col5:tile-17:base",
+        "probability": 0.08785902708768845
+      },
+      {
+        "id": "office_home_col5:tile-18:base",
+        "probability": 0.030352016910910606
+      },
+      {
+        "id": "office_home_col5:tile-19:base",
+        "probability": 0.007165363058447838
+      },
+      {
+        "id": "office_home_col5:tile-20:base",
+        "probability": 0.0662098154425621
+      },
+      {
+        "id": "office_home_col5:tile-21:base",
+        "probability": 0.01164871733635664
+      },
+      {
+        "id": "office_home_col5:tile-22:base",
+        "probability": 0.016055235639214516
+      },
+      {
+        "id": "office_home_col5:tile-23:base",
+        "probability": 0.004887124057859182
+      },
+      {
+        "id": "office_home_col5:tile-0:left4",
+        "probability": 0.0007340029114857316
+      },
+      {
+        "id": "office_home_col5:tile-1:left4",
+        "probability": 0.03358984738588333
+      },
+      {
+        "id": "office_home_col5:tile-2:left4",
+        "probability": 0.010746821761131287
+      },
+      {
+        "id": "office_home_col5:tile-3:left4",
+        "probability": 0.0013913116417825222
+      },
+      {
+        "id": "office_home_col5:tile-4:left4",
+        "probability": 0.05096171051263809
+      },
+      {
+        "id": "office_home_col5:tile-5:left4",
+        "probability": 0.07140430808067322
+      },
+      {
+        "id": "office_home_col5:tile-6:left4",
+        "probability": 0.9542473554611206
+      },
+      {
+        "id": "office_home_col5:tile-7:left4",
+        "probability": 0.003216484561562538
+      },
+      {
+        "id": "office_home_col5:tile-8:left4",
+        "probability": 0.9828201532363892
+      },
+      {
+        "id": "office_home_col5:tile-9:left4",
+        "probability": 0.001573369838297367
+      },
+      {
+        "id": "office_home_col5:tile-10:left4",
+        "probability": 0.001106496900320053
+      },
+      {
+        "id": "office_home_col5:tile-11:left4",
+        "probability": 0.035481132566928864
+      },
+      {
+        "id": "office_home_col5:tile-12:left4",
+        "probability": 0.9920822381973267
+      },
+      {
+        "id": "office_home_col5:tile-13:left4",
+        "probability": 0.010905742645263672
+      },
+      {
+        "id": "office_home_col5:tile-14:left4",
+        "probability": 0.06572350859642029
+      },
+      {
+        "id": "office_home_col5:tile-15:left4",
+        "probability": 0.0007067234255373478
+      },
+      {
+        "id": "office_home_col5:tile-16:left4",
+        "probability": 0.9819862842559814
+      },
+      {
+        "id": "office_home_col5:tile-17:left4",
+        "probability": 0.026117291301488876
+      },
+      {
+        "id": "office_home_col5:tile-18:left4",
+        "probability": 0.008573285304009914
+      },
+      {
+        "id": "office_home_col5:tile-19:left4",
+        "probability": 0.010055553168058395
+      },
+      {
+        "id": "office_home_col5:tile-20:left4",
+        "probability": 0.028318101540207863
+      },
+      {
+        "id": "office_home_col5:tile-21:left4",
+        "probability": 0.006504627410322428
+      },
+      {
+        "id": "office_home_col5:tile-22:left4",
+        "probability": 0.006270051468163729
+      },
+      {
+        "id": "office_home_col5:tile-23:left4",
+        "probability": 0.005448843352496624
+      },
+      {
+        "id": "office_home_col5:tile-0:right4",
+        "probability": 0.00014889781596139073
+      },
+      {
+        "id": "office_home_col5:tile-1:right4",
+        "probability": 0.02435915544629097
+      },
+      {
+        "id": "office_home_col5:tile-2:right4",
+        "probability": 0.004521253984421492
+      },
+      {
+        "id": "office_home_col5:tile-3:right4",
+        "probability": 0.0009499766165390611
+      },
+      {
+        "id": "office_home_col5:tile-4:right4",
+        "probability": 0.041415177285671234
+      },
+      {
+        "id": "office_home_col5:tile-5:right4",
+        "probability": 0.15453806519508362
+      },
+      {
+        "id": "office_home_col5:tile-6:right4",
+        "probability": 0.9721474647521973
+      },
+      {
+        "id": "office_home_col5:tile-7:right4",
+        "probability": 0.003830372355878353
+      },
+      {
+        "id": "office_home_col5:tile-8:right4",
+        "probability": 0.9696750044822693
+      },
+      {
+        "id": "office_home_col5:tile-9:right4",
+        "probability": 0.0018885417375713587
+      },
+      {
+        "id": "office_home_col5:tile-10:right4",
+        "probability": 0.0008775180322118104
+      },
+      {
+        "id": "office_home_col5:tile-11:right4",
+        "probability": 0.2063603550195694
+      },
+      {
+        "id": "office_home_col5:tile-12:right4",
+        "probability": 0.98304682970047
+      },
+      {
+        "id": "office_home_col5:tile-13:right4",
+        "probability": 0.00505949417129159
+      },
+      {
+        "id": "office_home_col5:tile-14:right4",
+        "probability": 0.09850800037384033
+      },
+      {
+        "id": "office_home_col5:tile-15:right4",
+        "probability": 0.0019063097424805164
+      },
+      {
+        "id": "office_home_col5:tile-16:right4",
+        "probability": 0.9937795996665955
+      },
+      {
+        "id": "office_home_col5:tile-17:right4",
+        "probability": 0.04611343517899513
+      },
+      {
+        "id": "office_home_col5:tile-18:right4",
+        "probability": 0.008733698166906834
+      },
+      {
+        "id": "office_home_col5:tile-19:right4",
+        "probability": 0.0070298295468091965
+      },
+      {
+        "id": "office_home_col5:tile-20:right4",
+        "probability": 0.006164871621876955
+      },
+      {
+        "id": "office_home_col5:tile-21:right4",
+        "probability": 0.05550162494182587
+      },
+      {
+        "id": "office_home_col5:tile-22:right4",
+        "probability": 0.058397263288497925
+      },
+      {
+        "id": "office_home_col5:tile-23:right4",
+        "probability": 0.007334066554903984
+      },
+      {
+        "id": "office_home_col5:tile-0:up4",
+        "probability": 0.0004599738458637148
+      },
+      {
+        "id": "office_home_col5:tile-1:up4",
+        "probability": 0.11972251534461975
+      },
+      {
+        "id": "office_home_col5:tile-2:up4",
+        "probability": 0.004546558018773794
+      },
+      {
+        "id": "office_home_col5:tile-3:up4",
+        "probability": 0.2727152407169342
+      },
+      {
+        "id": "office_home_col5:tile-4:up4",
+        "probability": 0.20030319690704346
+      },
+      {
+        "id": "office_home_col5:tile-5:up4",
+        "probability": 0.06831523776054382
+      },
+      {
+        "id": "office_home_col5:tile-6:up4",
+        "probability": 0.5851826667785645
+      },
+      {
+        "id": "office_home_col5:tile-7:up4",
+        "probability": 0.03261525183916092
+      },
+      {
+        "id": "office_home_col5:tile-8:up4",
+        "probability": 0.9514931440353394
+      },
+      {
+        "id": "office_home_col5:tile-9:up4",
+        "probability": 0.007230460178107023
+      },
+      {
+        "id": "office_home_col5:tile-10:up4",
+        "probability": 0.028921028599143028
+      },
+      {
+        "id": "office_home_col5:tile-11:up4",
+        "probability": 0.31227588653564453
+      },
+      {
+        "id": "office_home_col5:tile-12:up4",
+        "probability": 0.37026432156562805
+      },
+      {
+        "id": "office_home_col5:tile-13:up4",
+        "probability": 0.009289724752306938
+      },
+      {
+        "id": "office_home_col5:tile-14:up4",
+        "probability": 0.001060021691955626
+      },
+      {
+        "id": "office_home_col5:tile-15:up4",
+        "probability": 0.0073323859833180904
+      },
+      {
+        "id": "office_home_col5:tile-16:up4",
+        "probability": 0.8569253087043762
+      },
+      {
+        "id": "office_home_col5:tile-17:up4",
+        "probability": 0.7547938227653503
+      },
+      {
+        "id": "office_home_col5:tile-18:up4",
+        "probability": 0.4191281199455261
+      },
+      {
+        "id": "office_home_col5:tile-19:up4",
+        "probability": 0.08721275627613068
+      },
+      {
+        "id": "office_home_col5:tile-20:up4",
+        "probability": 0.14440710842609406
+      },
+      {
+        "id": "office_home_col5:tile-21:up4",
+        "probability": 0.06937745213508606
+      },
+      {
+        "id": "office_home_col5:tile-22:up4",
+        "probability": 0.015487889759242535
+      },
+      {
+        "id": "office_home_col5:tile-23:up4",
+        "probability": 0.13051167130470276
+      },
+      {
+        "id": "office_home_col5:tile-0:down4",
+        "probability": 0.00014262866170611233
+      },
+      {
+        "id": "office_home_col5:tile-1:down4",
+        "probability": 0.5871874094009399
+      },
+      {
+        "id": "office_home_col5:tile-2:down4",
+        "probability": 0.01807786151766777
+      },
+      {
+        "id": "office_home_col5:tile-3:down4",
+        "probability": 0.06121515855193138
+      },
+      {
+        "id": "office_home_col5:tile-4:down4",
+        "probability": 0.4457191824913025
+      },
+      {
+        "id": "office_home_col5:tile-5:down4",
+        "probability": 0.6055922508239746
+      },
+      {
+        "id": "office_home_col5:tile-6:down4",
+        "probability": 0.9329929947853088
+      },
+      {
+        "id": "office_home_col5:tile-7:down4",
+        "probability": 0.1727481633424759
+      },
+      {
+        "id": "office_home_col5:tile-8:down4",
+        "probability": 0.960779070854187
+      },
+      {
+        "id": "office_home_col5:tile-9:down4",
+        "probability": 0.00042263700743205845
+      },
+      {
+        "id": "office_home_col5:tile-10:down4",
+        "probability": 0.0012583313509821892
+      },
+      {
+        "id": "office_home_col5:tile-11:down4",
+        "probability": 0.010355151258409023
+      },
+      {
+        "id": "office_home_col5:tile-12:down4",
+        "probability": 0.9558291435241699
+      },
+      {
+        "id": "office_home_col5:tile-13:down4",
+        "probability": 0.018774401396512985
+      },
+      {
+        "id": "office_home_col5:tile-14:down4",
+        "probability": 0.24777333438396454
+      },
+      {
+        "id": "office_home_col5:tile-15:down4",
+        "probability": 0.0011681069154292345
+      },
+      {
+        "id": "office_home_col5:tile-16:down4",
+        "probability": 0.9021878838539124
+      },
+      {
+        "id": "office_home_col5:tile-17:down4",
+        "probability": 0.3618910312652588
+      },
+      {
+        "id": "office_home_col5:tile-18:down4",
+        "probability": 0.030662082135677338
+      },
+      {
+        "id": "office_home_col5:tile-19:down4",
+        "probability": 0.13344092667102814
+      },
+      {
+        "id": "office_home_col5:tile-20:down4",
+        "probability": 0.036176618188619614
+      },
+      {
+        "id": "office_home_col5:tile-21:down4",
+        "probability": 0.012218539603054523
+      },
+      {
+        "id": "office_home_col5:tile-22:down4",
+        "probability": 0.01073624100536108
+      },
+      {
+        "id": "office_home_col5:tile-23:down4",
+        "probability": 0.11598920077085495
+      },
+      {
+        "id": "office_home_col5:tile-0:pad4",
+        "probability": 0.0008097045938484371
+      },
+      {
+        "id": "office_home_col5:tile-1:pad4",
+        "probability": 0.01819821074604988
+      },
+      {
+        "id": "office_home_col5:tile-2:pad4",
+        "probability": 0.0024728644639253616
+      },
+      {
+        "id": "office_home_col5:tile-3:pad4",
+        "probability": 0.0028373945970088243
+      },
+      {
+        "id": "office_home_col5:tile-4:pad4",
+        "probability": 0.04444720596075058
+      },
+      {
+        "id": "office_home_col5:tile-5:pad4",
+        "probability": 0.02671433426439762
+      },
+      {
+        "id": "office_home_col5:tile-6:pad4",
+        "probability": 0.9763442277908325
+      },
+      {
+        "id": "office_home_col5:tile-7:pad4",
+        "probability": 0.03786660358309746
+      },
+      {
+        "id": "office_home_col5:tile-8:pad4",
+        "probability": 0.9946048855781555
+      },
+      {
+        "id": "office_home_col5:tile-9:pad4",
+        "probability": 0.0003099605964962393
+      },
+      {
+        "id": "office_home_col5:tile-10:pad4",
+        "probability": 0.009576231241226196
+      },
+      {
+        "id": "office_home_col5:tile-11:pad4",
+        "probability": 0.046909041702747345
+      },
+      {
+        "id": "office_home_col5:tile-12:pad4",
+        "probability": 0.9972419738769531
+      },
+      {
+        "id": "office_home_col5:tile-13:pad4",
+        "probability": 0.03910372778773308
+      },
+      {
+        "id": "office_home_col5:tile-14:pad4",
+        "probability": 0.3767591416835785
+      },
+      {
+        "id": "office_home_col5:tile-15:pad4",
+        "probability": 0.008095000870525837
+      },
+      {
+        "id": "office_home_col5:tile-16:pad4",
+        "probability": 0.9811391234397888
+      },
+      {
+        "id": "office_home_col5:tile-17:pad4",
+        "probability": 0.1261608749628067
+      },
+      {
+        "id": "office_home_col5:tile-18:pad4",
+        "probability": 0.04833073914051056
+      },
+      {
+        "id": "office_home_col5:tile-19:pad4",
+        "probability": 0.011181347072124481
+      },
+      {
+        "id": "office_home_col5:tile-20:pad4",
+        "probability": 0.026964901015162468
+      },
+      {
+        "id": "office_home_col5:tile-21:pad4",
+        "probability": 0.0029402156360447407
+      },
+      {
+        "id": "office_home_col5:tile-22:pad4",
+        "probability": 0.00325758452527225
+      },
+      {
+        "id": "office_home_col5:tile-23:pad4",
+        "probability": 0.010280458256602287
+      },
+      {
+        "id": "office_home_col5:tile-0:inset4",
+        "probability": 0.0005056030349805951
+      },
+      {
+        "id": "office_home_col5:tile-1:inset4",
+        "probability": 0.9722126126289368
+      },
+      {
+        "id": "office_home_col5:tile-2:inset4",
+        "probability": 0.0278237983584404
+      },
+      {
+        "id": "office_home_col5:tile-3:inset4",
+        "probability": 0.3379232883453369
+      },
+      {
+        "id": "office_home_col5:tile-4:inset4",
+        "probability": 0.9132899045944214
+      },
+      {
+        "id": "office_home_col5:tile-5:inset4",
+        "probability": 0.9719502329826355
+      },
+      {
+        "id": "office_home_col5:tile-6:inset4",
+        "probability": 0.5029487609863281
+      },
+      {
+        "id": "office_home_col5:tile-7:inset4",
+        "probability": 0.2953660488128662
+      },
+      {
+        "id": "office_home_col5:tile-8:inset4",
+        "probability": 0.11402418464422226
+      },
+      {
+        "id": "office_home_col5:tile-9:inset4",
+        "probability": 0.0028185623232275248
+      },
+      {
+        "id": "office_home_col5:tile-10:inset4",
+        "probability": 0.007436421699821949
+      },
+      {
+        "id": "office_home_col5:tile-11:inset4",
+        "probability": 0.09635140746831894
+      },
+      {
+        "id": "office_home_col5:tile-12:inset4",
+        "probability": 0.07487068325281143
+      },
+      {
+        "id": "office_home_col5:tile-13:inset4",
+        "probability": 0.008448002859950066
+      },
+      {
+        "id": "office_home_col5:tile-14:inset4",
+        "probability": 0.007800708524882793
+      },
+      {
+        "id": "office_home_col5:tile-15:inset4",
+        "probability": 0.003979742061346769
+      },
+      {
+        "id": "office_home_col5:tile-16:inset4",
+        "probability": 0.029925260692834854
+      },
+      {
+        "id": "office_home_col5:tile-17:inset4",
+        "probability": 0.8530793190002441
+      },
+      {
+        "id": "office_home_col5:tile-18:inset4",
+        "probability": 0.20632320642471313
+      },
+      {
+        "id": "office_home_col5:tile-19:inset4",
+        "probability": 0.5277884006500244
+      },
+      {
+        "id": "office_home_col5:tile-20:inset4",
+        "probability": 0.044145338237285614
+      },
+      {
+        "id": "office_home_col5:tile-21:inset4",
+        "probability": 0.00815773755311966
+      },
+      {
+        "id": "office_home_col5:tile-22:inset4",
+        "probability": 0.011888564564287663
+      },
+      {
+        "id": "office_home_col5:tile-23:inset4",
+        "probability": 0.36059248447418213
+      }
+    ],
+    "evaluation": {
+      "base": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.5656565656565656,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 6,
+            "tn": 60,
+            "accuracy": 0.8472222222222222
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 5,
+            "tn": 61,
+            "accuracy": 0.8472222222222222
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-6"
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 2,
+        "nearThresholdCount": 0
+      },
+      "left4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.49747474747474746,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 6,
+            "tn": 60,
+            "accuracy": 0.8472222222222222
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 5,
+            "tn": 61,
+            "accuracy": 0.8611111111111112
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "right4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.5126262626262627,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 7,
+            "tn": 59,
+            "accuracy": 0.8333333333333334
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 6,
+            "tn": 60,
+            "accuracy": 0.8472222222222222
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "up4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.37626262626262624,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 26,
+            "tn": 40,
+            "accuracy": 0.5833333333333334
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 17,
+            "tn": 49,
+            "accuracy": 0.6944444444444444
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 5,
+        "nearThresholdCount": 2
+      },
+      "down4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.44696969696969696,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 14,
+            "tn": 52,
+            "accuracy": 0.7361111111111112
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 8,
+            "tn": 58,
+            "accuracy": 0.8194444444444444
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 2,
+        "nearThresholdCount": 0
+      },
+      "pad4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.35353535353535354,
+          "0.5": {
+            "tp": 1,
+            "fn": 5,
+            "fp": 8,
+            "tn": 58,
+            "accuracy": 0.8194444444444444
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 8,
+            "tn": 58,
+            "accuracy": 0.8055555555555556
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "inset4": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.45707070707070707,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 31,
+            "tn": 35,
+            "accuracy": 0.5138888888888888
+          },
+          "0.85": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 17,
+            "tn": 49,
+            "accuracy": 0.7083333333333334
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-3"
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "wrong-focus",
+            "selectedElementID": "tile-3"
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 9,
+        "nearThresholdCount": 5
+      }
+    }
+  }
+}

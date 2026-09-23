@@ -1,0 +1,237 @@
+{
+  "version": "focus-appearance-pilot-proposal-v1",
+  "executionAllowed": false,
+  "producerRevision": "46dce7b3a79e4f17af49bc0324d4aeba3cc0958d",
+  "partition": "development",
+  "target": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "targetFreshlyVerified": false,
+  "endpoint": null,
+  "maxRecipeSeconds": 120,
+  "maxRequestSeconds": 5,
+  "maxSettlingSeconds": 10,
+  "maxRecipes": 24,
+  "recipes": [
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "light",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "light",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    }
+  ],
+  "limitations": [
+    "Not an executable direct-tvos-catalog-v1: requires reviewed NUIAK catalog extension",
+    "No Home artwork, dock, or custom Photos appearance supplied by this catalog",
+    "No independent evaluation claim from new seed numbers",
+    "No capture authority from this proposal"
+  ]
+}

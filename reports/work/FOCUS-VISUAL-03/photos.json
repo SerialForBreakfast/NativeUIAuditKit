@@ -1,0 +1,961 @@
+{
+  "shipped": {
+    "backend": "CoreML CPU retained reference",
+    "evaluation": {
+      "base": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "left4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "right4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "up4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.75,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "down4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 1.0
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "pad4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.75,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "inset4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "correct",
+            "selectedElementID": "shared"
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      }
+    }
+  },
+  "fdr007": {
+    "backend": "Torch CPU",
+    "seconds": 0.5601198329823092,
+    "scores": [
+      {
+        "id": "office_photos_focused_shared:all:base",
+        "probability": 0.0013159930240362883
+      },
+      {
+        "id": "office_photos_focused_shared:shared:base",
+        "probability": 0.0005533946678042412
+      },
+      {
+        "id": "office_photos_focused_shared:all:left4",
+        "probability": 0.004124949686229229
+      },
+      {
+        "id": "office_photos_focused_shared:shared:left4",
+        "probability": 0.0003041318850591779
+      },
+      {
+        "id": "office_photos_focused_shared:all:right4",
+        "probability": 0.0020151485223323107
+      },
+      {
+        "id": "office_photos_focused_shared:shared:right4",
+        "probability": 0.0003339590912219137
+      },
+      {
+        "id": "office_photos_focused_shared:all:up4",
+        "probability": 0.8128729462623596
+      },
+      {
+        "id": "office_photos_focused_shared:shared:up4",
+        "probability": 0.10036276280879974
+      },
+      {
+        "id": "office_photos_focused_shared:all:down4",
+        "probability": 0.6350578665733337
+      },
+      {
+        "id": "office_photos_focused_shared:shared:down4",
+        "probability": 0.88790363073349
+      },
+      {
+        "id": "office_photos_focused_shared:all:pad4",
+        "probability": 0.566949188709259
+      },
+      {
+        "id": "office_photos_focused_shared:shared:pad4",
+        "probability": 0.21017038822174072
+      },
+      {
+        "id": "office_photos_focused_shared:all:inset4",
+        "probability": 0.9888243079185486
+      },
+      {
+        "id": "office_photos_focused_shared:shared:inset4",
+        "probability": 0.999656081199646
+      },
+      {
+        "id": "office_pluto_loaded:all:base",
+        "probability": 0.005481148138642311
+      },
+      {
+        "id": "office_pluto_loaded:shared:base",
+        "probability": 0.0014924613060429692
+      },
+      {
+        "id": "office_pluto_loaded:all:left4",
+        "probability": 0.015841949731111526
+      },
+      {
+        "id": "office_pluto_loaded:shared:left4",
+        "probability": 0.0026833873707801104
+      },
+      {
+        "id": "office_pluto_loaded:all:right4",
+        "probability": 0.005013929679989815
+      },
+      {
+        "id": "office_pluto_loaded:shared:right4",
+        "probability": 0.0031187080312520266
+      },
+      {
+        "id": "office_pluto_loaded:all:up4",
+        "probability": 0.6145484447479248
+      },
+      {
+        "id": "office_pluto_loaded:shared:up4",
+        "probability": 0.1287299394607544
+      },
+      {
+        "id": "office_pluto_loaded:all:down4",
+        "probability": 0.7490189671516418
+      },
+      {
+        "id": "office_pluto_loaded:shared:down4",
+        "probability": 0.10977441817522049
+      },
+      {
+        "id": "office_pluto_loaded:all:pad4",
+        "probability": 0.0002946839085780084
+      },
+      {
+        "id": "office_pluto_loaded:shared:pad4",
+        "probability": 0.0008679801248945296
+      },
+      {
+        "id": "office_pluto_loaded:all:inset4",
+        "probability": 0.9997759461402893
+      },
+      {
+        "id": "office_pluto_loaded:shared:inset4",
+        "probability": 0.9917224049568176
+      }
+    ],
+    "evaluation": {
+      "base": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "left4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "right4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "up4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.25,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 1,
+            "tn": 1,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "down4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 1,
+            "tn": 1,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "correct",
+            "selectedElementID": "shared"
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "pad4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.25,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 1,
+            "tn": 1,
+            "accuracy": 0.25
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "inset4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 2,
+            "tn": 0,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 2,
+            "tn": 0,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      }
+    }
+  },
+  "fdr008": {
+    "backend": "Torch CPU",
+    "seconds": 0.5809902919863816,
+    "scores": [
+      {
+        "id": "office_photos_focused_shared:all:base",
+        "probability": 0.00021284633839968592
+      },
+      {
+        "id": "office_photos_focused_shared:shared:base",
+        "probability": 0.001415615202859044
+      },
+      {
+        "id": "office_photos_focused_shared:all:left4",
+        "probability": 0.0002484713913872838
+      },
+      {
+        "id": "office_photos_focused_shared:shared:left4",
+        "probability": 0.000577192404307425
+      },
+      {
+        "id": "office_photos_focused_shared:all:right4",
+        "probability": 0.00035558349918574095
+      },
+      {
+        "id": "office_photos_focused_shared:shared:right4",
+        "probability": 0.0008135332609526813
+      },
+      {
+        "id": "office_photos_focused_shared:all:up4",
+        "probability": 0.011767824180424213
+      },
+      {
+        "id": "office_photos_focused_shared:shared:up4",
+        "probability": 0.3114442825317383
+      },
+      {
+        "id": "office_photos_focused_shared:all:down4",
+        "probability": 0.8430747389793396
+      },
+      {
+        "id": "office_photos_focused_shared:shared:down4",
+        "probability": 0.9926854372024536
+      },
+      {
+        "id": "office_photos_focused_shared:all:pad4",
+        "probability": 0.13453981280326843
+      },
+      {
+        "id": "office_photos_focused_shared:shared:pad4",
+        "probability": 0.03310873731970787
+      },
+      {
+        "id": "office_photos_focused_shared:all:inset4",
+        "probability": 0.15783172845840454
+      },
+      {
+        "id": "office_photos_focused_shared:shared:inset4",
+        "probability": 0.9999585151672363
+      },
+      {
+        "id": "office_pluto_loaded:all:base",
+        "probability": 0.0018005300080403686
+      },
+      {
+        "id": "office_pluto_loaded:shared:base",
+        "probability": 0.00034211744787171483
+      },
+      {
+        "id": "office_pluto_loaded:all:left4",
+        "probability": 0.0020585311576724052
+      },
+      {
+        "id": "office_pluto_loaded:shared:left4",
+        "probability": 0.0005967100150883198
+      },
+      {
+        "id": "office_pluto_loaded:all:right4",
+        "probability": 0.0035838321782648563
+      },
+      {
+        "id": "office_pluto_loaded:shared:right4",
+        "probability": 0.00014557661779690534
+      },
+      {
+        "id": "office_pluto_loaded:all:up4",
+        "probability": 0.3454256057739258
+      },
+      {
+        "id": "office_pluto_loaded:shared:up4",
+        "probability": 0.009151358157396317
+      },
+      {
+        "id": "office_pluto_loaded:all:down4",
+        "probability": 0.9987872242927551
+      },
+      {
+        "id": "office_pluto_loaded:shared:down4",
+        "probability": 0.21472862362861633
+      },
+      {
+        "id": "office_pluto_loaded:all:pad4",
+        "probability": 0.026536911725997925
+      },
+      {
+        "id": "office_pluto_loaded:shared:pad4",
+        "probability": 0.0018521961756050587
+      },
+      {
+        "id": "office_pluto_loaded:all:inset4",
+        "probability": 1.0
+      },
+      {
+        "id": "office_pluto_loaded:shared:inset4",
+        "probability": 0.061084866523742676
+      }
+    ],
+    "evaluation": {
+      "base": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "left4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.75,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "right4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "up4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "down4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 1,
+            "tn": 1,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 1.0
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "correct",
+            "selectedElementID": "shared"
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 1
+      },
+      "pad4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "inset4": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 1.0
+          },
+          "0.85": {
+            "tp": 2,
+            "fn": 0,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 1.0
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "correct",
+            "selectedElementID": "shared"
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      }
+    }
+  }
+}

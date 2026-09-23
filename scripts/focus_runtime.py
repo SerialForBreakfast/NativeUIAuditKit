@@ -61,11 +61,29 @@ def items_for(document):
     return items
 
 
+def bounded_batches(items):
+    """Keep existing16-item batching while respecting the helper's decoded budget."""
+    from PIL import Image
+    batch, pixels = [], 0
+    for item in items:
+        with Image.open(item["path"]) as source:
+            area = source.width * source.height
+        if area <= 0 or area > 80_000_000:
+            raise FocusDataError("runtime_pixel_limit")
+        if batch and (len(batch) == 16 or pixels + area > 80_000_000):
+            yield batch
+            batch, pixels = [], 0
+        batch.append(item)
+        pixels += area
+    if batch:
+        yield batch
+
+
 def rendered_items(document):
     from PIL import Image
     items = items_for(document)
-    for offset in range(0, len(items), 16):
-        reply = invoke(items[offset:offset+16])
+    for batch in bounded_batches(items):
+        reply = invoke(batch)
         for row in reply["results"]:
             raw = base64.b64decode(row["png"], validate=True)
             im = Image.open(io.BytesIO(raw)); im.load()
@@ -112,8 +130,8 @@ def infer(document, model, protocol):
     if document.get("runtimeCrop") != runtime_identity: raise FocusDataError("changed_runtime")
     items = items_for(document)
     scores, batches = {}, []
-    for offset in range(0, len(items), 16):
-        reply = invoke(items[offset:offset+16], model)
+    for batch in bounded_batches(items):
+        reply = invoke(batch, model)
         batches.append({k: v for k, v in reply.items() if k != "results"})
         batches[-1]["samples"] = [{k:v for k,v in row.items() if k != "png"} for row in reply["results"]]
         for row in reply["results"]: scores[row["id"]] = row["probability"]

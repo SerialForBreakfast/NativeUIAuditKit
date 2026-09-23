@@ -1,0 +1,25 @@
+{
+  "version": "direct-tvos-offline-preflight-v1",
+  "configurationValid": true,
+  "executionAuthorized": false,
+  "runtimeQualified": false,
+  "trainingEligible": false,
+  "catalogSHA256": "61c0b5c6ddd38582a533410ff3bf526da03d938b98245a58a1e445ad1083dfee",
+  "target": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "endpoint": "http://127.0.0.1:8080",
+  "captureOutput": "dataset/tvos_captures/appearance-a1-pilot",
+  "sourceHashes": {
+    "Models/FixtureRecipe.swift": "6b7eaa81084f27440a2af1ef9b418e8df147a87fadad96d92d9b6e55d7b8ed77",
+    "Models/ProceduralSceneBuilder.swift": "454e42b0e0430ad228cdfbab250f2cd65cd6b424ce40bdf6769b92ecf058992a",
+    "Models/DomainRandomizationPack.swift": "a690642fcee539d669124d6a4090261f66bdd014dc5203896571031de1473a40",
+    "Views/ProceduralSceneView.swift": "292b8f16519f844f5cdeb2b340ce2db46edf55352e9a4a8cb2d5ad369c48393c"
+  },
+  "recipeCount": 24,
+  "expectedPairs": 76,
+  "expectedFrames": 100,
+  "remainingRequirements": [
+    "explicit_capture_authority",
+    "fresh_exact_target_endpoint_and_build_binding",
+    "postflight_health"
+  ]
+}

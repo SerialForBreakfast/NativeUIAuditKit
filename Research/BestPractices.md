@@ -1498,6 +1498,24 @@ recognized at0.85, while the shipped model made two correct unique selections.
 The aggregate number concealed the failure needed by navigation.
 [Evidence](../reports/work/FOCUS-VISUAL-02/handoff.md).
 
+Follow-up: FDR-008 attained100% Fixture training fit and preserved Settings checks,
+yet retained Home/Photos remained0/8 correct unique decisions; Home false positives
+increased0→5. Retention on one familiar style plus training fit must not substitute
+for appearance-transfer evaluation. Prioritize independent visual support before
+another same-data run. [Evidence](../reports/work/FOCUS-VISUAL-03/handoff.md).
+
+### BP-82: Trace appearance axes through the actual renderer
+
+**Wrong:** Counting a randomization pack field or descriptor attribute as visual
+coverage. APPEAR-A found badgeCount/usesGradient/fontWeight copied by the builder
+but not consumed by the procedural view; the native media renderer uses a fixed
+gradient. High-contrast naming likewise does not prove distinct rendered contrast.
+**Correct:** Trace recipe → descriptor → active native renderer → measured pixels;
+record unimplemented axes explicitly and request bounded rendering support. Keep
+valid existing native focus/geometry and metadata-only flags separately labeled.
+**Why:** More seeded metadata cannot resolve an uncovered appearance distribution.
+[Source audit](../reports/work/APPEAR-A/handoff.md).
+
 ### BP-81: Equal strata are not equal source totals
 
 The mixed-appearance development assembly uses equal source/scene/style/control
@@ -1532,3 +1550,13 @@ Keep the original journey/split identity; new crops are not new independent data
 beside current General/Accessibility/Apps data. Offline recropping and24-crop review
 restored a compatible49-pair native assembly without a device recapture.
 [Evidence](../reports/work/OS-FOCUS-04-ASSEMBLY/handoff.md).
+
+### BP-83: Bound production crop batches by decoded pixels, not just item count
+
+**Wrong:** Sending16 full4K frames to a helper capped at80 million decoded pixels;
+small offline fixtures passed while APPEAR-A2 real intake failed `invalidImage`.
+**Correct:** Partition ordered requests by actual width×height and item limits;
+reject a single oversized source. Preserve successful captures and re-run intake
+into a new output, without changing crop geometry or weakening helper limits.
+**Why:** Compressed PNG size and frame count do not bound decoded memory. The
+4K limit is nine such inputs per request, not sixteen. Evidence: APPEAR-A2 intake.log.

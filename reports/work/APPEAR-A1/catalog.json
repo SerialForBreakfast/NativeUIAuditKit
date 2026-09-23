@@ -1,0 +1,361 @@
+{
+  "version": "direct-tvos-appearance-catalog-v1",
+  "purpose": "development-pilot",
+  "recipes": [
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "media_shelf",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "light",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "compact",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "grid_matrix",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "spacious",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "light",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "light",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "action_dialog",
+      "element_count": 2,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "light",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 101,
+      "step_index": 0
+    },
+    {
+      "schema_version": 1,
+      "archetype": "hero_carousel",
+      "element_count": 4,
+      "theme": "dark",
+      "density": "regular",
+      "seed": 211,
+      "step_index": 0
+    }
+  ],
+  "sourceHashes": {
+    "Models/FixtureRecipe.swift": "6b7eaa81084f27440a2af1ef9b418e8df147a87fadad96d92d9b6e55d7b8ed77",
+    "Models/ProceduralSceneBuilder.swift": "454e42b0e0430ad228cdfbab250f2cd65cd6b424ce40bdf6769b92ecf058992a",
+    "Models/DomainRandomizationPack.swift": "a690642fcee539d669124d6a4090261f66bdd014dc5203896571031de1473a40",
+    "Views/ProceduralSceneView.swift": "292b8f16519f844f5cdeb2b340ce2db46edf55352e9a4a8cb2d5ad369c48393c"
+  },
+  "expectedTargets": [
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_0_1",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_0_1",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_0_1",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "grid_cell_0_0",
+      "grid_cell_0_1",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    [
+      "dialog_btn_0",
+      "dialog_btn_1"
+    ],
+    [
+      "dialog_btn_0",
+      "dialog_btn_1"
+    ],
+    [
+      "dialog_btn_0",
+      "dialog_btn_1"
+    ],
+    [
+      "dialog_btn_0",
+      "dialog_btn_1"
+    ],
+    [
+      "hero_btn_watch",
+      "hero_btn_details"
+    ],
+    [
+      "hero_btn_watch",
+      "hero_btn_details"
+    ],
+    [
+      "hero_btn_watch",
+      "hero_btn_details"
+    ],
+    [
+      "hero_btn_watch",
+      "hero_btn_details"
+    ]
+  ],
+  "expectedPairs": 76,
+  "expectedFrames": 100,
+  "partition": "development",
+  "maxRecipeSeconds": 120,
+  "maxRequestSeconds": 5,
+  "maxSettlingSeconds": 10,
+  "sha256": "61c0b5c6ddd38582a533410ff3bf526da03d938b98245a58a1e445ad1083dfee"
+}

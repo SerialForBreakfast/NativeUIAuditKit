@@ -11,6 +11,36 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**2026-09-23 appearance lineage/proposal:** [APPEAR-B](../reports/work/APPEAR-B/handoff.md)
+audited202 proposed training pairs,9 native-validation and6 protected Remotes pairs.
+All162 Fixture pairs share connected training lineage; no new independent appearance
+holdout exists. Proposed source mass50/50 replaces prior11/89 only in a future reviewed
+protocol. Next unblocked APPEAR-B1 adapter/preflight integration; no training launched.
+
+**2026-09-23 authorized appearance pilot:** [APPEAR-A2](../reports/work/APPEAR-A2/handoff.md)
+completed24 recipes/100 frames/76 development pairs independently of TTR desktop.
+At0.85 FDR-008 detects73/76 focused examples with0 false positives; shipped11/76
+with9 false positives. Six individual crops overlap training; this is not an
+independent holdout and does not close Home/Photos failures. Fixed local4K crop
+batching without recapture. Next APPEAR-B lineage/sampling/evaluation proposal;
+no new weights or promotion.
+
+**2026-09-23 appearance capability audit:** [APPEAR-A](../reports/work/APPEAR-A/handoff.md)
+pins current Fixture source and finds fixed-gradient media cards, standard grid
+buttons and unconsumed randomization attributes, not Home artwork/dock diversity.
+A24-group/76-target development catalog now has [verified planning and intake
+software](../reports/work/APPEAR-A1/handoff.md); the subsequently authorized pilot
+is reported above. TTR rendering request published/read back, acknowledgment
+pending. This is source evidence, not current installed-runtime qualification.
+
+**2026-09-23 FDR-008 appearance check (not qualified):**
+[FOCUS-VISUAL-03](../reports/work/FOCUS-VISUAL-03/handoff.md) finds0/8 correct unique
+Home/Photos decisions despite perfect Fixture training fit. Home false positives
+rise0→5 versus FDR-007 at0.85;532 correlated crops/model compared with unchanged
+production preprocessing. No export/promotion. Next APPEAR-A/B: audit supported
+appearance and label sources, acquire separately authorized ground-truth diversity,
+then independent evaluation. Do not repeat same-data training or tune on known failures.
+
 **2026-09-23 FDR-008 completed (experimental, not shipped):**
 [Mixed-appearance run](../reports/work/FDR-008/handoff.md) finished30/30 epochs;
 epoch3 selected by native-validation loss. At0.85, Fixture training fit improved

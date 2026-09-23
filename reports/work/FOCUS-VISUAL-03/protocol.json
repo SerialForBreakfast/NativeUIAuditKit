@@ -1,0 +1,53 @@
+{
+  "version": "focus-visual-checkpoint-comparison-v1",
+  "sources": {
+    "photos": {
+      "protocol": {
+        "path": "reports/work/FOCUS-VISUAL-01/protocol.json",
+        "sha256": "3b3bd7a8c181dbefc3351a6a6a7973a32602f06e52c9952b6d55b3e3c2233518"
+      },
+      "referenceReport": {
+        "path": "reports/work/FOCUS-VISUAL-01/evaluation/report.json",
+        "sha256": "6fd771e9971bbac6303bbbf831981a71c8c5ad9737f07b364c104dac9aa108fd"
+      }
+    },
+    "home": {
+      "protocol": {
+        "path": "reports/work/FOCUS-VISUAL-02/protocol.json",
+        "sha256": "46371af1a962733bd99a3beeeee055c4640093c32ff893e0b774f19decda308b"
+      },
+      "referenceReport": {
+        "path": "reports/work/FOCUS-VISUAL-02/evaluation/report.json",
+        "sha256": "d0220adeb37d43a17721e907bfa5e73043d1f04a5137ad8e7d36e92821d0e7e4"
+      }
+    }
+  },
+  "models": {
+    "fdr007": {
+      "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+      "sha256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0"
+    },
+    "fdr008": {
+      "path": "NativeUITrainer/focus_ring_runs/fdr008-mixed-appearance/weights/best.pt",
+      "sha256": "40f23078e0ca5b5b03ac2bc52b6f1c10e9477687a99b26fac327e8199d75d11c"
+    }
+  },
+  "trainingProtocol": {
+    "path": "reports/work/FOCUS-DEV-01/dataset/focus_dataset_manifest.json",
+    "sha256": "0a953b5245e3c15b8a84f50da0e7afb62267a230f589846a02d2ac607f6496f2"
+  },
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "thresholds": [
+    0.5,
+    0.7,
+    0.85
+  ],
+  "trainingEligible": false,
+  "releaseEligible": false,
+  "protocolSHA256": "459f58aa33acc674b50e7ebc39afe65dc97fd6f505dc03f38a688e9b4d79c109"
+}

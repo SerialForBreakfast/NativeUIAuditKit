@@ -1,0 +1,40 @@
+{
+  "version": "appearance-development-comparison-v1",
+  "manifest": {
+    "path": "dataset/focus_ring/appearance-a2-pilot-intake2/focus_dataset_manifest.json",
+    "sha256": "3e79b7a988b4b90a7ffcbcbe22019c57aaccd4c4806c56825e0eaf96397e1537"
+  },
+  "models": {
+    "fdr007": {
+      "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+      "sha256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0"
+    },
+    "fdr008": {
+      "path": "NativeUITrainer/focus_ring_runs/fdr008-mixed-appearance/weights/best.pt",
+      "sha256": "40f23078e0ca5b5b03ac2bc52b6f1c10e9477687a99b26fac327e8199d75d11c"
+    }
+  },
+  "shipped": {
+    "sha256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+    "metadataSHA256": "cf847ab2dd843c692cd2073530606d74ecd3efd6274544261eb61a76fa6682ab",
+    "outputs": [
+      "confidence",
+      "is_focused_prob"
+    ]
+  },
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "trainingReference": {
+    "path": "reports/work/FOCUS-DEV-01/dataset/focus_dataset_manifest.json",
+    "sha256": "0a953b5245e3c15b8a84f50da0e7afb62267a230f589846a02d2ac607f6496f2"
+  },
+  "threshold": 0.85,
+  "scope": "oracle-box crop classification; not navigation or independent holdout",
+  "trainingEligible": false,
+  "modelGatePassed": "not_assessed",
+  "protocolSHA256": "335b30253093844865ff7659161ab2202dd8934350d3dd8018b3cda5267d3bc2"
+}

@@ -1,0 +1,256 @@
+{
+  "observedAt": 1790137650.640558,
+  "binding": {
+    "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+    "deviceProfile": "Apple TV 4K (3rd generation)",
+    "endpoint": "http://127.0.0.1:8080",
+    "pid": 66851,
+    "binaries": {
+      "TVTestRigFixture": "021420354b9dd2e11572ed032a03adb2b343af5cc77ec739d9b8116da4d7b128",
+      "TVTestRigFixture.debug.dylib": "46011bb0a95cb007325a64baaab643ad913e0bf46c250a7198caab7b9f31a095"
+    },
+    "xcode": "Xcode 26.6\nBuild version 17F113"
+  },
+  "device": {
+    "fixture_instance_id": "C435AFAE-A5B9-4A8F-89DF-668C1CCF0866",
+    "model": "Apple TV",
+    "fixture_run_id": "B11EA9EC-A072-48B6-9179-2FF52594EAFA",
+    "app_version": "1.0",
+    "is_bold_text_enabled": false,
+    "is_reduce_motion_enabled": false,
+    "screen_scale": 2,
+    "monotonic_nanoseconds": 214392420957875,
+    "is_darker_system_colors_status": false,
+    "schema_version": 1,
+    "os_version": "tvOS 26.5",
+    "is_switch_control_running": false,
+    "screen_bounds": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "is_voice_over_running": false,
+    "app_build": "1"
+  },
+  "scene": {
+    "activeFocusId": "hero_btn_details",
+    "app_version": "1.0",
+    "defects": [],
+    "elements": [
+      {
+        "accessibility_traits": [
+          "isHeader"
+        ],
+        "element_id": "hero_backdrop",
+        "id": "hero_backdrop",
+        "is_focused": false,
+        "native_pixel_rect": [
+          160,
+          911,
+          3520,
+          885
+        ],
+        "normalized_bounds": [
+          0.041666666666666664,
+          0.4217592592592593,
+          0.9583333333333334,
+          0.8314814814814815
+        ],
+        "normalized_rect": [
+          0.041666666666666664,
+          0.4217592592592593,
+          0.9583333333333334,
+          0.8314814814814815
+        ],
+        "pixel_bounds": [
+          160,
+          911,
+          3520,
+          885
+        ],
+        "taxonomy_class": "sheet",
+        "taxonomy_role": "sheet",
+        "taxonomyRole": "sheet",
+        "text_content": "Midnight Shadows"
+      },
+      {
+        "accessibility_traits": [
+          "isButton"
+        ],
+        "element_id": "hero_btn_details",
+        "id": "hero_btn_details",
+        "is_focused": true,
+        "native_pixel_rect": [
+          1940,
+          1387,
+          1560,
+          309
+        ],
+        "normalized_bounds": [
+          0.5052083333333334,
+          0.6421296296296296,
+          0.9114583333333334,
+          0.7851851851851852
+        ],
+        "normalized_rect": [
+          0.5052083333333334,
+          0.6421296296296296,
+          0.9114583333333334,
+          0.7851851851851852
+        ],
+        "pixel_bounds": [
+          1940,
+          1387,
+          1560,
+          309
+        ],
+        "taxonomy_class": "secondaryButton",
+        "taxonomy_role": "secondaryButton",
+        "taxonomyRole": "secondaryButton",
+        "text_content": "Details"
+      },
+      {
+        "accessibility_traits": [
+          "isButton"
+        ],
+        "element_id": "hero_btn_watch",
+        "id": "hero_btn_watch",
+        "is_focused": false,
+        "native_pixel_rect": [
+          340,
+          1387,
+          1560,
+          309
+        ],
+        "normalized_bounds": [
+          0.08854166666666667,
+          0.6421296296296296,
+          0.4947916666666667,
+          0.7851851851851852
+        ],
+        "normalized_rect": [
+          0.08854166666666667,
+          0.6421296296296296,
+          0.4947916666666667,
+          0.7851851851851852
+        ],
+        "pixel_bounds": [
+          340,
+          1387,
+          1560,
+          309
+        ],
+        "taxonomy_class": "primaryButton",
+        "taxonomy_role": "primaryButton",
+        "taxonomyRole": "primaryButton",
+        "text_content": "Watch Now"
+      },
+      {
+        "accessibility_traits": [
+          "isStaticText"
+        ],
+        "element_id": "hero_page_control",
+        "id": "hero_page_control",
+        "is_focused": false,
+        "native_pixel_rect": [
+          1798,
+          1828,
+          244,
+          74
+        ],
+        "normalized_bounds": [
+          0.46822916666666664,
+          0.8462962962962963,
+          0.5317708333333333,
+          0.8805555555555555
+        ],
+        "normalized_rect": [
+          0.46822916666666664,
+          0.8462962962962963,
+          0.5317708333333333,
+          0.8805555555555555
+        ],
+        "pixel_bounds": [
+          1798,
+          1828,
+          244,
+          74
+        ],
+        "taxonomy_class": "pageControl",
+        "taxonomy_role": "pageControl",
+        "taxonomyRole": "pageControl",
+        "text_content": "Page 1 of 4"
+      }
+    ],
+    "focus_observation": {
+      "generation": 282,
+      "geometrySource": "uikit_window_converted_bounds",
+      "observedID": "hero_btn_details",
+      "plannedFocusIDs": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ],
+      "requestedID": "hero_btn_details",
+      "source": "uikit_focus_system",
+      "verified": true
+    },
+    "focus_sweep_frame_count": 3,
+    "focus_sweep_index": 1,
+    "focused_element_id": "hero_btn_details",
+    "harvest_challenge_active": false,
+    "is_settled": true,
+    "isSettled": true,
+    "monotonic_nanoseconds": 214392421833500,
+    "observation_diagnostics": {
+      "generation": 282,
+      "measuredIDs": [
+        "hero_backdrop",
+        "hero_btn_details",
+        "hero_btn_watch",
+        "hero_page_control"
+      ],
+      "missingIDs": [],
+      "nativeFocusResolved": true,
+      "nativeProbe": {
+        "focusedItemKind": "view",
+        "focusSystemAvailable": true,
+        "geometryAvailable": true,
+        "geometrySource": "uikit_window_converted_bounds",
+        "referenceAttached": true,
+        "referenceFocusable": false,
+        "referenceFocused": false,
+        "resolution": "identifier"
+      },
+      "observedID": "hero_btn_details",
+      "reason": "ready",
+      "requestedID": "hero_btn_details",
+      "requiredIDs": [
+        "hero_btn_details",
+        "hero_btn_watch"
+      ],
+      "requiredMilliseconds": 150,
+      "sampleAgeMilliseconds": 92.07474999129772,
+      "sampleCount": 3816,
+      "sampledGeneration": 282,
+      "stableMilliseconds": 381499.7448333597
+    },
+    "recipe": {
+      "archetype": "hero_carousel",
+      "density": "regular",
+      "element_count": 4,
+      "recipe_hash": "c2394005aa0916d95637316eea350a3a1da93b0c3513fdd41e3bf48342d3a3da",
+      "schema_version": 1,
+      "seed": 211,
+      "step_index": 0,
+      "theme": "dark"
+    },
+    "scene_height": 2160,
+    "scene_width": 3840,
+    "schema_version": 1,
+    "settle_wait_ms": 150,
+    "timestamp": 1790137650.64013
+  },
+  "kind": "read-only-postflight"
+}

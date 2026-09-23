@@ -2,6 +2,26 @@
 
 ## Latest delivery and next boundary
 
+### Appearance diagnostics delivered — 2026-09-23
+
+[FOCUS-VISUAL-03](../../reports/work/FOCUS-VISUAL-03/handoff.md) completes the assigned
+comparison below. FDR-008 makes0/8 correct unique base decisions; Home false positives
+rise0→5. No promotion. Next execute [APPEAR-A/B](FocusAppearanceAcquisition.md)
+under their separate authority boundaries; no repeated same-data training.
+
+### Assigned FDR-008 appearance-generalization diagnostics — 2026-09-23
+
+Compare frozen FDR-008 and FDR-007 PyTorch checkpoints on the previously reviewed
+Home/Photos protocols, reusing hash-compatible shipped reference scores. Retain all
+seven frozen box variants, production crop preprocessing, fixed thresholds and
+visual-only development provenance. Verify no frame/crop overlap with the mixed
+training protocol. Report frame decisions, errors, abstentions, per-surface support
+and sensitivity; backend differences are not CoreML parity. No new images need
+displaying unless an actual new review ambiguity appears. Deliver a ranked failure
+report and independently dispatchable acquisition/evaluation plan from the results.
+No capture, training, export, TTR operation or promotion. Use existing scoring and
+crop runtime; run targeted verification and offline package checks at handoff.
+
 ### Authorized mixed-appearance run completed — 2026-09-23
 
 [FDR-008 handoff](../../reports/work/FDR-008/handoff.md):30/30 epochs, best native

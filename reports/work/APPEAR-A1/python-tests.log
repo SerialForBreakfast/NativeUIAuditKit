@@ -1,0 +1,70 @@
+test_catalog_and_actual_plan_cli (test_direct_tvos_appearance.AppearanceTests.test_catalog_and_actual_plan_cli) ... ok
+test_complete_receipt_actual_intake_and_no_training_upgrade (test_direct_tvos_appearance.AppearanceTests.test_complete_receipt_actual_intake_and_no_training_upgrade) ... ok
+test_full_execution_adapter_offline (test_direct_tvos_appearance.AppearanceTests.test_full_execution_adapter_offline) ... {"recipe": 1, "of": 24, "pairs": 4}
+{"recipe": 2, "of": 24, "pairs": 4}
+{"recipe": 3, "of": 24, "pairs": 4}
+{"recipe": 4, "of": 24, "pairs": 4}
+{"recipe": 5, "of": 24, "pairs": 4}
+{"recipe": 6, "of": 24, "pairs": 4}
+{"recipe": 7, "of": 24, "pairs": 4}
+{"recipe": 8, "of": 24, "pairs": 4}
+{"recipe": 9, "of": 24, "pairs": 3}
+{"recipe": 10, "of": 24, "pairs": 3}
+{"recipe": 11, "of": 24, "pairs": 4}
+{"recipe": 12, "of": 24, "pairs": 4}
+{"recipe": 13, "of": 24, "pairs": 3}
+{"recipe": 14, "of": 24, "pairs": 3}
+{"recipe": 15, "of": 24, "pairs": 4}
+{"recipe": 16, "of": 24, "pairs": 4}
+{"recipe": 17, "of": 24, "pairs": 2}
+{"recipe": 18, "of": 24, "pairs": 2}
+{"recipe": 19, "of": 24, "pairs": 2}
+{"recipe": 20, "of": 24, "pairs": 2}
+{"recipe": 21, "of": 24, "pairs": 2}
+{"recipe": 22, "of": 24, "pairs": 2}
+{"recipe": 23, "of": 24, "pairs": 2}
+{"recipe": 24, "of": 24, "pairs": 2}
+ok
+test_offline_preflight_and_pre_mutation_guards (test_direct_tvos_appearance.AppearanceTests.test_offline_preflight_and_pre_mutation_guards) ... ok
+test_partial_corrupt_and_false_focus_rejected (test_direct_tvos_appearance.AppearanceTests.test_partial_corrupt_and_false_focus_rejected) ... ok
+test_bytes_missing_corrupt_hash (test_direct_tvos_capture.DirectTests.test_bytes_missing_corrupt_hash) ... ok
+test_frozen_target_counts_and_omission (test_direct_tvos_capture.DirectTests.test_frozen_target_counts_and_omission) ... ok
+test_initial_binding_and_target_plan (test_direct_tvos_capture.DirectTests.test_initial_binding_and_target_plan) ... ok
+test_manifest_split_and_binding (test_direct_tvos_capture.DirectTests.test_manifest_split_and_binding) ... ok
+test_partial_version_membership (test_direct_tvos_capture.DirectTests.test_partial_version_membership) ... ok
+test_plan_cli_and_collisions (test_direct_tvos_capture.DirectTests.test_plan_cli_and_collisions) ... ok
+test_real_execution_failure_is_retained_without_retry (test_direct_tvos_capture.DirectTests.test_real_execution_failure_is_retained_without_retry) ... ok
+test_real_runtime_adapter_and_baseline_entrypoints (test_direct_tvos_capture.DirectTests.test_real_runtime_adapter_and_baseline_entrypoints) ... ok
+test_resume_plan_real_cli_deterministic_read_only (test_direct_tvos_capture.DirectTests.test_resume_plan_real_cli_deterministic_read_only) ... ok
+test_resume_rejects_bad_membership_health_counts_and_partial_recipe (test_direct_tvos_capture.DirectTests.test_resume_rejects_bad_membership_health_counts_and_partial_recipe) ... ok
+test_resume_rejects_changed_pixels_sidecars_and_symlinks (test_direct_tvos_capture.DirectTests.test_resume_rejects_changed_pixels_sidecars_and_symlinks) ... ok
+test_review_report_bytes_are_required (test_direct_tvos_capture.DirectTests.test_review_report_bytes_are_required) ... ok
+test_settle_deadline_restored (test_direct_tvos_capture.DirectTests.test_settle_deadline_restored) ... ok
+test_settle_timeout_names_last_failed_element_without_retrying_mutation (test_direct_tvos_capture.DirectTests.test_settle_timeout_names_last_failed_element_without_retrying_mutation) ... ok
+test_stale_mismatch_geometry_and_prediction_labels (test_direct_tvos_capture.DirectTests.test_stale_mismatch_geometry_and_prediction_labels) ... ok
+test_successful_execute_entrypoint_and_collision (test_direct_tvos_capture.DirectTests.test_successful_execute_entrypoint_and_collision) ... {"recipe": 1, "of": 1, "pairs": 2}
+output_collision
+ok
+test_sweep_taxonomy_change_rejected (test_direct_tvos_capture.DirectTests.test_sweep_taxonomy_change_rejected) ... ok
+test_valid_accounting_and_interval (test_direct_tvos_capture.DirectTests.test_valid_accounting_and_interval) ... ok
+test_visual_review_and_false_trust (test_direct_tvos_capture.DirectTests.test_visual_review_and_false_trust) ... ok
+test_wrong_target_and_endpoint_before_mutation (test_direct_tvos_capture.DirectTests.test_wrong_target_and_endpoint_before_mutation) ... ok
+test_actual_crop_and_baseline_protocol_entrypoints (test_direct_tvos_resume.ResumeTests.test_actual_crop_and_baseline_protocol_entrypoints) ... ok
+test_corrupt_copied_png_and_sidecar_rejected (test_direct_tvos_resume.ResumeTests.test_corrupt_copied_png_and_sidecar_rejected) ... ok
+test_execution_guards_before_mutation (test_direct_tvos_resume.ResumeTests.test_execution_guards_before_mutation) ... ok
+test_gaps_overlaps_wrong_predecessor_target_and_provenance (test_direct_tvos_resume.ResumeTests.test_gaps_overlaps_wrong_predecessor_target_and_provenance) ... ok
+test_multiple_segments_and_failed_prefix (test_direct_tvos_resume.ResumeTests.test_multiple_segments_and_failed_prefix) ... ok
+test_plan_cli_and_no_incomplete_assembly (test_direct_tvos_resume.ResumeTests.test_plan_cli_and_no_incomplete_assembly) ... ok
+test_projection_and_source_bytes_fail_closed (test_direct_tvos_resume.ResumeTests.test_projection_and_source_bytes_fail_closed) ... ok
+test_real_assembly_cli_and_existing_consumer (test_direct_tvos_resume.ResumeTests.test_real_assembly_cli_and_existing_consumer) ... ok
+test_real_resume_execution_calls_only_missing_recipe (test_direct_tvos_resume.ResumeTests.test_real_resume_execution_calls_only_missing_recipe) ... {"recipe": 2, "of": 42, "pairs": 2}
+ok
+test_repair_review_hash_and_changed_binding_rejected (test_direct_tvos_resume.ResumeTests.test_repair_review_hash_and_changed_binding_rejected) ... ok
+test_resume_failure_preserved_without_mutation_retry (test_direct_tvos_resume.ResumeTests.test_resume_failure_preserved_without_mutation_retry) ... ok
+test_unsafe_paths_and_test_evidence_cannot_execute (test_direct_tvos_resume.ResumeTests.test_unsafe_paths_and_test_evidence_cannot_execute) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 17.939s
+
+OK
+{"version": "direct-tvos-segment-v1", "state": "completed", "acceptedPairs": 2}
