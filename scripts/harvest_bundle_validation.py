@@ -116,6 +116,9 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
         meta=_json(root,names[2]); elems=meta.get("elements") if isinstance(meta,dict) else None
         if not isinstance(meta,dict) or not isinstance(elems,list) or any(not isinstance(e,dict) for e in elems): raise HarvestValidationError("invalid_metadata")
         if "schema_version" in meta and (type(meta["schema_version"]) is not int or meta["schema_version"] != 2): raise HarvestValidationError("unsupported_version")
+        if (meta.get("schema_version") != 2 and isinstance(meta.get("recipe"), dict)
+                and meta["recipe"].get("appearance") is not None):
+            raise HarvestValidationError("invalid_metadata: appearance_requires_v2_brackets")
         if meta.get("unfocused_png") != names[0] or meta.get("focused_png") != names[1] or row.get("sha256") != hashlib.sha256(data[names[1]]).hexdigest(): raise HarvestValidationError("invalid_metadata")
         focus=meta.get("focused_element_id") if isinstance(meta,dict) else None
         focused=[e for e in elems or [] if isinstance(e,dict) and e.get("is_focused")]

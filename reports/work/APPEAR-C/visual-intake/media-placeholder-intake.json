@@ -1,0 +1,3995 @@
+{
+  "schemaVersion": "1.0",
+  "corpusID": "appear-c-visual-media-placeholder",
+  "sourceKind": "simulatorFixture",
+  "producer": {
+    "name": "TVTestRig",
+    "buildReference": "fb47e39a084a2ff20cdf34b85458f1e1ebbdca8a-dirty",
+    "producerBuild": "1"
+  },
+  "requestedTarget": null,
+  "observedSource": {
+    "assurance": "reported-source; not-attested",
+    "captureMethod": "simctl-explicit-uuid",
+    "collectedAt": 811834401.854485,
+    "fixture": {
+      "app_build": "1",
+      "app_version": "1.0",
+      "fixture_instance_id": "DA147CEE-297A-4297-B755-3FE8940C8793",
+      "fixture_run_id": "04290340-2689-4C26-9846-83A98406FCAA",
+      "is_bold_text_enabled": false,
+      "is_darker_system_colors_status": false,
+      "is_reduce_motion_enabled": false,
+      "is_switch_control_running": false,
+      "is_voice_over_running": false,
+      "model": "Apple TV",
+      "monotonic_nanoseconds": 22977015444291,
+      "os_version": "tvOS 26.5",
+      "schema_version": 1,
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "screen_scale": 2
+    },
+    "requestedDeviceID": "2BAA6307-6F24-4820-8292-851BCD311417"
+  },
+  "eligibility": {
+    "inspection": "passed",
+    "simulatorUse": "pending-corpus-review",
+    "physicalQualification": "not-established",
+    "generalTrainingApproval": false
+  },
+  "pairs": [
+    {
+      "pairID": "synth-0",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "media_shelf",
+      "family": "mediaShelf",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-0_unfocused.png",
+        "sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa"
+      },
+      "focused": {
+        "path": "synth-0_focused.png",
+        "sha256": "539e31408adeafc145f0f85406fffd542b6dfe9305296f1abab514b44d168ed7"
+      },
+      "elements": [
+        {
+          "element_id": "media_card_0",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.0625,
+            0.4449074074074074,
+            0.20833333333333334,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            240,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.22083333333333333,
+            0.4449074074074074,
+            0.36666666666666664,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            848,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_2",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.4449074074074074,
+            0.525,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            1456,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_3",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.5375,
+            0.4449074074074074,
+            0.6833333333333333,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            2064,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 12,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22983868835000,
+          "observation_diagnostics": {
+            "generation": 12,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 71.12558333392371,
+            "sampleCount": 67,
+            "sampledGeneration": 12,
+            "stableMilliseconds": 6601.251583331759
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141608.706533
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 13,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "media_card_0",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requestedID": "media_card_0",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "media_card_0",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22990650146583,
+          "observation_diagnostics": {
+            "generation": 13,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "media_card_0",
+            "reason": "ready",
+            "requestedID": "media_card_0",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 52.5017083309649,
+            "sampleCount": 67,
+            "sampledGeneration": 13,
+            "stableMilliseconds": 6601.127500001894
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141615.487956
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22983868835000,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 71.12558333392371,
+              "sampleCount": 67,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 6601.251583331759
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141608.706533
+          },
+          "after_scene_received_host_ns": 22983880249458,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22977448067625,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 51.284208333527204,
+              "sampleCount": 3,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 199.97591666469816
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141602.285661
+          },
+          "before_scene_received_host_ns": 22977454648500,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "2A9571E3-C87C-4C79-B0E6-C6622DA71367",
+          "frame_png_sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+          "frame_received_host_ns": 22983862297916,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 13,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_0",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22990650146583,
+            "observation_diagnostics": {
+              "generation": 13,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_0",
+              "reason": "ready",
+              "requestedID": "media_card_0",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 52.5017083309649,
+              "sampleCount": 67,
+              "sampledGeneration": 13,
+              "stableMilliseconds": 6601.127500001894
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141615.487956
+          },
+          "after_scene_received_host_ns": 22990659146833,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 13,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_0",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22984273290958,
+            "observation_diagnostics": {
+              "generation": 13,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_0",
+              "reason": "ready",
+              "requestedID": "media_card_0",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 76.73762500053272,
+              "sampleCount": 3,
+              "sampledGeneration": 13,
+              "stableMilliseconds": 199.77970833497238
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141609.110996
+          },
+          "before_scene_received_host_ns": 22984283445166,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "813F4486-45CC-4083-91FA-D0E72D5DFDE9",
+          "frame_png_sha256": "539e31408adeafc145f0f85406fffd542b6dfe9305296f1abab514b44d168ed7",
+          "frame_received_host_ns": 22990642625791,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {
+          "header_shelf": "not_rendered"
+        },
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-0_metadata.json",
+        "sha256": "b636eda96ab86195e74b20c860b2a567fd935437da95e275cad6198d27f4d74d"
+      }
+    },
+    {
+      "pairID": "synth-1",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "media_shelf",
+      "family": "mediaShelf",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-1_unfocused.png",
+        "sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa"
+      },
+      "focused": {
+        "path": "synth-1_focused.png",
+        "sha256": "a204647320f3649483cf00594051878f7b947ad292166f6b6312298ad0bd5dda"
+      },
+      "elements": [
+        {
+          "element_id": "media_card_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.0625,
+            0.4449074074074074,
+            0.20833333333333334,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            240,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_1",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.22083333333333333,
+            0.4449074074074074,
+            0.36666666666666664,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            848,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_2",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.4449074074074074,
+            0.525,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            1456,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_3",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.5375,
+            0.4449074074074074,
+            0.6833333333333333,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            2064,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 12,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22983868835000,
+          "observation_diagnostics": {
+            "generation": 12,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 71.12558333392371,
+            "sampleCount": 67,
+            "sampledGeneration": 12,
+            "stableMilliseconds": 6601.251583331759
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141608.706533
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 14,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "media_card_1",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requestedID": "media_card_1",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "media_card_1",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22999040508333,
+          "observation_diagnostics": {
+            "generation": 14,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "media_card_1",
+            "reason": "ready",
+            "requestedID": "media_card_1",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 43.31566666587605,
+            "sampleCount": 83,
+            "sampledGeneration": 14,
+            "stableMilliseconds": 8200.439250002091
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141623.878456
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22983868835000,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 71.12558333392371,
+              "sampleCount": 67,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 6601.251583331759
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141608.706533
+          },
+          "after_scene_received_host_ns": 22983880249458,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22977448067625,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 51.284208333527204,
+              "sampleCount": 3,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 199.97591666469816
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141602.285661
+          },
+          "before_scene_received_host_ns": 22977454648500,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "2A9571E3-C87C-4C79-B0E6-C6622DA71367",
+          "frame_png_sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+          "frame_received_host_ns": 22983862297916,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 14,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_1",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_1",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_1",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22999040508333,
+            "observation_diagnostics": {
+              "generation": 14,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_1",
+              "reason": "ready",
+              "requestedID": "media_card_1",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 43.31566666587605,
+              "sampleCount": 83,
+              "sampledGeneration": 14,
+              "stableMilliseconds": 8200.439250002091
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141623.878456
+          },
+          "after_scene_received_host_ns": 22999049772416,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 14,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_1",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_1",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_1",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22991006958291,
+            "observation_diagnostics": {
+              "generation": 14,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_1",
+              "reason": "ready",
+              "requestedID": "media_card_1",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 9.37175000217394,
+              "sampleCount": 3,
+              "sampledGeneration": 14,
+              "stableMilliseconds": 200.81208333431277
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141615.844774
+          },
+          "before_scene_received_host_ns": 22991018533416,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "8BAD7678-2AEB-499E-9A07-2F9099690641",
+          "frame_png_sha256": "a204647320f3649483cf00594051878f7b947ad292166f6b6312298ad0bd5dda",
+          "frame_received_host_ns": 22999036119250,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {
+          "header_shelf": "not_rendered"
+        },
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-1_metadata.json",
+        "sha256": "e3eba53f23d36cb03b7e86f03699584fa4140ac646f7d8d8df03c8b729643937"
+      }
+    },
+    {
+      "pairID": "synth-2",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "media_shelf",
+      "family": "mediaShelf",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-2_unfocused.png",
+        "sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa"
+      },
+      "focused": {
+        "path": "synth-2_focused.png",
+        "sha256": "e30453e3c8ca269550b3cf5d936506d009f11dee4d48a92db0c1e3ccc0611ec7"
+      },
+      "elements": [
+        {
+          "element_id": "media_card_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.0625,
+            0.4449074074074074,
+            0.20833333333333334,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            240,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.22083333333333333,
+            0.4449074074074074,
+            0.36666666666666664,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            848,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_2",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.4449074074074074,
+            0.525,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            1456,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_3",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.5375,
+            0.4449074074074074,
+            0.6833333333333333,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            2064,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 12,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22983868835000,
+          "observation_diagnostics": {
+            "generation": 12,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 71.12558333392371,
+            "sampleCount": 67,
+            "sampledGeneration": 12,
+            "stableMilliseconds": 6601.251583331759
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141608.706533
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 15,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "media_card_2",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requestedID": "media_card_2",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "media_card_2",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 23006021627791,
+          "observation_diagnostics": {
+            "generation": 15,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "media_card_2",
+            "reason": "ready",
+            "requestedID": "media_card_2",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 24.705833333428018,
+            "sampleCount": 69,
+            "sampledGeneration": 15,
+            "stableMilliseconds": 6800.167083332781
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141630.859689
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22983868835000,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 71.12558333392371,
+              "sampleCount": 67,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 6601.251583331759
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141608.706533
+          },
+          "after_scene_received_host_ns": 22983880249458,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22977448067625,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 51.284208333527204,
+              "sampleCount": 3,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 199.97591666469816
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141602.285661
+          },
+          "before_scene_received_host_ns": 22977454648500,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "2A9571E3-C87C-4C79-B0E6-C6622DA71367",
+          "frame_png_sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+          "frame_received_host_ns": 22983862297916,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 15,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_2",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_2",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_2",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 23006021627791,
+            "observation_diagnostics": {
+              "generation": 15,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_2",
+              "reason": "ready",
+              "requestedID": "media_card_2",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 24.705833333428018,
+              "sampleCount": 69,
+              "sampledGeneration": 15,
+              "stableMilliseconds": 6800.167083332781
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141630.859689
+          },
+          "after_scene_received_host_ns": 23006112361875,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 15,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_2",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_2",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_2",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22999464376500,
+            "observation_diagnostics": {
+              "generation": 15,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_2",
+              "reason": "ready",
+              "requestedID": "media_card_2",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 67.53324999954202,
+              "sampleCount": 3,
+              "sampledGeneration": 15,
+              "stableMilliseconds": 199.97770833288087
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141624.302331
+          },
+          "before_scene_received_host_ns": 22999472127708,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "DA492AC6-DB57-478C-BE9A-607C1EAE33A7",
+          "frame_png_sha256": "e30453e3c8ca269550b3cf5d936506d009f11dee4d48a92db0c1e3ccc0611ec7",
+          "frame_received_host_ns": 23005997077916,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {
+          "header_shelf": "not_rendered"
+        },
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-2_metadata.json",
+        "sha256": "b4f3dc5396b80e407d22cb897b4d662b5f94ec635808b9e79f6aa9776f863349"
+      }
+    },
+    {
+      "pairID": "synth-3",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "media_shelf",
+      "family": "mediaShelf",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-3_unfocused.png",
+        "sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa"
+      },
+      "focused": {
+        "path": "synth-3_focused.png",
+        "sha256": "46aa3bd55e9be0b03b7452a7be53cc0330685bf9a9a54d5c1bd63ca41fbc4311"
+      },
+      "elements": [
+        {
+          "element_id": "media_card_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.0625,
+            0.4449074074074074,
+            0.20833333333333334,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            240,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.22083333333333333,
+            0.4449074074074074,
+            0.36666666666666664,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            848,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_2",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.4449074074074074,
+            0.525,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            1456,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "media_card_3",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.5375,
+            0.4449074074074074,
+            0.6833333333333333,
+            0.8208333333333333
+          ],
+          "pixel_bounds": [
+            2064,
+            961,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 12,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22983868835000,
+          "observation_diagnostics": {
+            "generation": 12,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 71.12558333392371,
+            "sampleCount": 67,
+            "sampledGeneration": 12,
+            "stableMilliseconds": 6601.251583331759
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141608.706533
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "media_card_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.0625,
+                0.4449074074074074,
+                0.20833333333333334,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                240,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.22083333333333333,
+                0.4449074074074074,
+                0.36666666666666664,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                848,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_2",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.4449074074074074,
+                0.525,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                1456,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "media_card_3",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.5375,
+                0.4449074074074074,
+                0.6833333333333333,
+                0.8208333333333333
+              ],
+              "pixel_bounds": [
+                2064,
+                961,
+                560,
+                812
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 16,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "media_card_3",
+            "plannedFocusIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requestedID": "media_card_3",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "media_card_3",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 23012433034916,
+          "observation_diagnostics": {
+            "generation": 16,
+            "measuredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "exclusionReasons": {
+                "header_shelf": "not_rendered"
+              },
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "media_card_3",
+            "reason": "ready",
+            "requestedID": "media_card_3",
+            "requiredIDs": [
+              "media_card_0",
+              "media_card_1",
+              "media_card_2",
+              "media_card_3"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 35.87279166458757,
+            "sampleCount": 61,
+            "sampledGeneration": 16,
+            "stableMilliseconds": 6000.313541666401
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "gray_placeholder",
+              "version": 1
+            },
+            "archetype": "media_shelf",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141637.271202
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22983868835000,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 71.12558333392371,
+              "sampleCount": 67,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 6601.251583331759
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141608.706533
+          },
+          "after_scene_received_host_ns": 22983880249458,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 12,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22977448067625,
+            "observation_diagnostics": {
+              "generation": 12,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 51.284208333527204,
+              "sampleCount": 3,
+              "sampledGeneration": 12,
+              "stableMilliseconds": 199.97591666469816
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141602.285661
+          },
+          "before_scene_received_host_ns": 22977454648500,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "2A9571E3-C87C-4C79-B0E6-C6622DA71367",
+          "frame_png_sha256": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+          "frame_received_host_ns": 22983862297916,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 16,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_3",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_3",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_3",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 23012433034916,
+            "observation_diagnostics": {
+              "generation": 16,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_3",
+              "reason": "ready",
+              "requestedID": "media_card_3",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 35.87279166458757,
+              "sampleCount": 61,
+              "sampledGeneration": 16,
+              "stableMilliseconds": 6000.313541666401
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141637.271202
+          },
+          "after_scene_received_host_ns": 23012440203625,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "media_card_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.0625,
+                  0.4449074074074074,
+                  0.20833333333333334,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  240,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.22083333333333333,
+                  0.4449074074074074,
+                  0.36666666666666664,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  848,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_2",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.4449074074074074,
+                  0.525,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  1456,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "media_card_3",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.5375,
+                  0.4449074074074074,
+                  0.6833333333333333,
+                  0.8208333333333333
+                ],
+                "pixel_bounds": [
+                  2064,
+                  961,
+                  560,
+                  812
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 16,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "media_card_3",
+              "plannedFocusIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requestedID": "media_card_3",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "media_card_3",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 23006608021833,
+            "observation_diagnostics": {
+              "generation": 16,
+              "measuredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "exclusionReasons": {
+                  "header_shelf": "not_rendered"
+                },
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "media_card_3",
+              "reason": "ready",
+              "requestedID": "media_card_3",
+              "requiredIDs": [
+                "media_card_0",
+                "media_card_1",
+                "media_card_2",
+                "media_card_3"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 11.107291666121455,
+              "sampleCount": 3,
+              "sampledGeneration": 16,
+              "stableMilliseconds": 200.0455833331216
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "gray_placeholder",
+                "version": 1
+              },
+              "archetype": "media_shelf",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "f5144f02e261d28a6431e147b85bdfda4ba810fe43a931389d53871fa4a6083e",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141631.446093
+          },
+          "before_scene_received_host_ns": 23006619891625,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "48A613B4-1F00-4EAE-AC9F-D7BC62B2489F",
+          "frame_png_sha256": "46aa3bd55e9be0b03b7452a7be53cc0330685bf9a9a54d5c1bd63ca41fbc4311",
+          "frame_received_host_ns": 23012429095708,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {
+          "header_shelf": "not_rendered"
+        },
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-3_metadata.json",
+        "sha256": "b92793b69773185fe990f21601332ee57686d2114199968e5b6daa069c0e609a"
+      }
+    }
+  ]
+}

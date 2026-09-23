@@ -1,0 +1,12 @@
+test_calibration_covers_fractional_edges_and_asymmetric_boundary (test_focus_integration_replay.ReplaySafetyTests.test_calibration_covers_fractional_edges_and_asymmetric_boundary) ... ok
+test_existing_output_rejected_before_peer_access (test_focus_integration_replay.ReplaySafetyTests.test_existing_output_rejected_before_peer_access) ... ok
+test_missing_ambiguous_and_partial_source_rejected (test_focus_integration_replay.ReplaySafetyTests.test_missing_ambiguous_and_partial_source_rejected) ... ok
+test_nested_extraction_preserves_exact_bytes (test_focus_integration_replay.ReplaySafetyTests.test_nested_extraction_preserves_exact_bytes) ... ok
+test_outside_output_rejected_before_any_write (test_focus_integration_replay.ReplaySafetyTests.test_outside_output_rejected_before_any_write) ... ok
+test_area_and_item_limits_order (test_focus_runtime_batching.PixelBatchTests.test_area_and_item_limits_order) ... ok
+test_real_render_and_infer_entrypoints_use_batches (test_focus_runtime_batching.PixelBatchTests.test_real_render_and_infer_entrypoints_use_batches) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.062s
+
+OK

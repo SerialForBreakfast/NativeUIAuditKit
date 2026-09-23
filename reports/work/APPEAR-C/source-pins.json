@@ -1,0 +1,11 @@
+{
+  "sourceRevision": "4acf1dee31034cfd2c3d0195a467ff35965487a4",
+  "sourceRootObserved": "/Users/josephmccraw/Developer/TVTestRig",
+  "sourceFiles": {
+    "TVTestRig/TVTestRigFixture/Views/ProceduralSceneView.swift": "1586c82c803daa09bc0cd977af5dfb099d5def467b759d3221f44e3299b9b42e",
+    "TVTestRig/TVTestRigFixture/Models/KitchenSinkCatalog.swift": "3ff6b5e1e38f25c0a9166a7d34d0d174a53616c9753474208853f99270846b6c"
+  },
+  "installedFixtureDylib": "5b697fb409e64a6187b60bd68d7ea38cf867c6620fdcefd1fd67cad9c7b5332a",
+  "simulator": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "assurance": "Source and installed binary observed separately; not reproducible-build proof"
+}

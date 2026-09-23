@@ -1,0 +1,109 @@
+[
+  {
+    "recipe": "grid-artwork",
+    "pairs": 3,
+    "files": 15,
+    "bundleIdentity": {
+      "dataset-index.json": "4c8f980b9601e205ee6bcc3016b3c3aa69a008cdac1119764849444871ec04f3",
+      "harvest-receipt.json": "f511018bab9ca50fdedac2f431e88de1c8291542331e0b23276d253638a096aa",
+      "synth-0_metadata.json": "c364044191e1c1f77c7bff00291cc243f0d3bda3f47b2c4d1ecf139744eb7a99",
+      "synth-1_metadata.json": "79ad6e4d76d780b9a6de224bb619b2162d33352b0b4ede70feadd661bcc12468",
+      "synth-2_metadata.json": "b5eda575b9b1943a276e972301fbf70b813f96fff44c08d0616b2176b79c9cb8"
+    },
+    "targets": [
+      "grid_cell_0_0",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    "fileHashes": {
+      "synth-2_focused.png": "3a935d5f28e2bd61e8e1cb915c30d7946a431811e169afe2e06cc1469829363b",
+      "held-out.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+      "training.json": "13571dadd3318a05d5b59e63049f81e415b2e1d42cea8d720c17959a04c1dec6",
+      "harvest-receipt.json": "f511018bab9ca50fdedac2f431e88de1c8291542331e0b23276d253638a096aa",
+      "dataset-index.json": "4c8f980b9601e205ee6bcc3016b3c3aa69a008cdac1119764849444871ec04f3",
+      "calibration.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+      "synth-2_metadata.json": "b5eda575b9b1943a276e972301fbf70b813f96fff44c08d0616b2176b79c9cb8",
+      "synth-0_unfocused.png": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9",
+      "synth-1_focused.png": "a399ffe3cb1cac8a7f85c27dc3daa77704b520c4fc712f8dd648d9c14d094967",
+      "synth-1_metadata.json": "79ad6e4d76d780b9a6de224bb619b2162d33352b0b4ede70feadd661bcc12468",
+      "synth-1_unfocused.png": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9",
+      "synth-0_metadata.json": "c364044191e1c1f77c7bff00291cc243f0d3bda3f47b2c4d1ecf139744eb7a99",
+      "manifest.json": "13571dadd3318a05d5b59e63049f81e415b2e1d42cea8d720c17959a04c1dec6",
+      "synth-2_unfocused.png": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9",
+      "synth-0_focused.png": "677d816e21fb60ce097cb4fc6176a13a616931d5016cc23954d2eba877ea193c"
+    }
+  },
+  {
+    "recipe": "dock-bright",
+    "pairs": 3,
+    "files": 15,
+    "bundleIdentity": {
+      "dataset-index.json": "99ee88ff33428a4fcf19222da103e532c90389214c629da0cc4a8be1e4e8fae2",
+      "harvest-receipt.json": "f511018bab9ca50fdedac2f431e88de1c8291542331e0b23276d253638a096aa",
+      "synth-0_metadata.json": "a568523cf38eb9dce58d4d2b14704ccee28cba892fef907bd2e601e594646dec",
+      "synth-1_metadata.json": "74531a232c249b4aa53b15a1e0e71be6b2b8e13daf297db34ff1ff0ad044a261",
+      "synth-2_metadata.json": "a9366bc189e1ab053380acc3808cba3bd380844f3d016ee145343605615ade5d"
+    },
+    "targets": [
+      "grid_cell_0_0",
+      "grid_cell_1_0",
+      "grid_cell_1_1"
+    ],
+    "fileHashes": {
+      "synth-2_focused.png": "95f4c7ab94dcba8e8bc51024bc41f75813ba9866b36b80720265fbc2f89b1634",
+      "held-out.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+      "training.json": "d9c7be4b58c72336ac73e75d21e07b64d63f0b42885588d7c1f458c4002ded85",
+      "harvest-receipt.json": "f511018bab9ca50fdedac2f431e88de1c8291542331e0b23276d253638a096aa",
+      "dataset-index.json": "99ee88ff33428a4fcf19222da103e532c90389214c629da0cc4a8be1e4e8fae2",
+      "calibration.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+      "synth-2_metadata.json": "a9366bc189e1ab053380acc3808cba3bd380844f3d016ee145343605615ade5d",
+      "synth-0_unfocused.png": "c42e6a93402b21e77593e5dc9e44ae5015eab58dfa6111eafd4e540a15c0fac9",
+      "synth-1_focused.png": "3bd2cfcc76e9a6f967d732f156d9758241ca50272ca49951c08b38f4beba737d",
+      "synth-1_metadata.json": "74531a232c249b4aa53b15a1e0e71be6b2b8e13daf297db34ff1ff0ad044a261",
+      "synth-1_unfocused.png": "c42e6a93402b21e77593e5dc9e44ae5015eab58dfa6111eafd4e540a15c0fac9",
+      "synth-0_metadata.json": "a568523cf38eb9dce58d4d2b14704ccee28cba892fef907bd2e601e594646dec",
+      "manifest.json": "d9c7be4b58c72336ac73e75d21e07b64d63f0b42885588d7c1f458c4002ded85",
+      "synth-2_unfocused.png": "c42e6a93402b21e77593e5dc9e44ae5015eab58dfa6111eafd4e540a15c0fac9",
+      "synth-0_focused.png": "8360b3e25adba08853f75fad09b362a53948d97e704b8a1f76f6d69c25edb1fb"
+    }
+  },
+  {
+    "recipe": "media-placeholder",
+    "pairs": 4,
+    "files": 18,
+    "bundleIdentity": {
+      "dataset-index.json": "0f88bf4a59dd4149ff44c9314ff6f257be3537441532bb6fce1e0f683ff39c76",
+      "harvest-receipt.json": "fe4b79c4b17a1c4a09738df0a3ccd4288709e61d53257325eb26cddd55da9787",
+      "synth-0_metadata.json": "b636eda96ab86195e74b20c860b2a567fd935437da95e275cad6198d27f4d74d",
+      "synth-1_metadata.json": "e3eba53f23d36cb03b7e86f03699584fa4140ac646f7d8d8df03c8b729643937",
+      "synth-2_metadata.json": "b4f3dc5396b80e407d22cb897b4d662b5f94ec635808b9e79f6aa9776f863349",
+      "synth-3_metadata.json": "b92793b69773185fe990f21601332ee57686d2114199968e5b6daa069c0e609a"
+    },
+    "targets": [
+      "media_card_0",
+      "media_card_1",
+      "media_card_2",
+      "media_card_3"
+    ],
+    "fileHashes": {
+      "synth-2_focused.png": "e30453e3c8ca269550b3cf5d936506d009f11dee4d48a92db0c1e3ccc0611ec7",
+      "held-out.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+      "training.json": "764f077c11831734045fc1db5c0582af8799933dfe28da98f0b9078fb7d1a628",
+      "harvest-receipt.json": "fe4b79c4b17a1c4a09738df0a3ccd4288709e61d53257325eb26cddd55da9787",
+      "dataset-index.json": "0f88bf4a59dd4149ff44c9314ff6f257be3537441532bb6fce1e0f683ff39c76",
+      "calibration.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+      "synth-2_metadata.json": "b4f3dc5396b80e407d22cb897b4d662b5f94ec635808b9e79f6aa9776f863349",
+      "synth-3_unfocused.png": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+      "synth-0_unfocused.png": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+      "synth-1_focused.png": "a204647320f3649483cf00594051878f7b947ad292166f6b6312298ad0bd5dda",
+      "synth-1_metadata.json": "e3eba53f23d36cb03b7e86f03699584fa4140ac646f7d8d8df03c8b729643937",
+      "synth-1_unfocused.png": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+      "synth-0_metadata.json": "b636eda96ab86195e74b20c860b2a567fd935437da95e275cad6198d27f4d74d",
+      "synth-3_metadata.json": "b92793b69773185fe990f21601332ee57686d2114199968e5b6daa069c0e609a",
+      "manifest.json": "764f077c11831734045fc1db5c0582af8799933dfe28da98f0b9078fb7d1a628",
+      "synth-3_focused.png": "46aa3bd55e9be0b03b7452a7be53cc0330685bf9a9a54d5c1bd63ca41fbc4311",
+      "synth-2_unfocused.png": "9ad2093423159d3aa39a14850b501369b306ee62e4cb46ad3e47680b1221bbfa",
+      "synth-0_focused.png": "539e31408adeafc145f0f85406fffd542b6dfe9305296f1abab514b44d168ed7"
+    }
+  }
+]

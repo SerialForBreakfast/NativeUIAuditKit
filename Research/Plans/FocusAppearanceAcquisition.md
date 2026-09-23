@@ -148,6 +148,56 @@ quotas, six FocusRing gates, CoreML parity/size and physical validation remain o
 
 ## APPEAR-B1 — Development proposal adapter
 
+### B1 admission follow-up, 2026-09-23
+
+Complete a bounded offline evaluation-reservation correction while the producer's
+new family contract is unavailable. Existing reservation-v1 records bind only
+family/role/stratum, so the same declaration could be reused against changed source
+membership. Require `appearance-evaluation-reservation-v2` for new evaluation
+admission: bind the exact source record (manifest/review references and source ID)
+and canonical source-row membership SHA256 before any role reassignment. Version1
+evaluation reservations fail closed; already sealed no-evaluation B1 protocols and
+legacy experiment contracts retain their bytes/behavior. No real evaluation source
+has yet been admitted. Keep lineage/untouched/coverage checks independently binding.
+
+Implement through existing assembly/preflight, with regression cases for changed
+source, changed membership, reused reservations, old versions, and positive complete
+synthetic entrypoints. Preserve all real data and reports. Deliver focused/full offline
+checks and exact remaining producer dependency. No capture, inference or training.
+
+### Assigned implementation contract, 2026-09-23
+
+Introduce `focus-appearance-input-v1` and `focus-appearance-experiment-v1` through
+the existing assembly and experiment-preflight CLI. Reconstruct the sealed APPEAR-B
+proposal from its original sources; do not execute its advisory configuration.
+Optional reviewed v1.4/v1.5 additions remain origin-development and explicit
+train-candidates. The delivered ten APPEAR-C appearance pairs are such additions;
+the separate catalog quarantine stays excluded. Freeze a new protocol, never
+overwrite APPEAR-B or trained-run records.
+
+Sampling combines direct-generator and TTR simulator Fixture rows into one logical
+Fixture source bucket, preserving the original sourceKind in membership. Allocate
+50% native/50% Fixture, then equal strata and labels; recompute exact probabilities
+from training-only rows. Join Fixture seed lineage across both capture adapters.
+Reject complete-pair duplication and contradictory labels; retain partial-pair
+duplicates only within their connected partition with explicit diagnostics.
+
+Independent evaluation entries require hash-bound source reviews, known relationships,
+untouched prior use and explicit family/stratum reservations. Existing v1.4/v1.5
+development manifests cannot be relabeled as independent holdouts. Require two
+unrelated components per declared stratum in each evaluation partition, with both
+labels; include protected Remotes/known visual evidence in leakage checks, never in
+training or checkpoint selection. Missing inputs produce readiness blockers.
+
+Checkpoint selection must be explicit: minimum equal-source validation BCE among
+epochs meeting a fixed native-retention accuracy floor at threshold0.85, earliest
+tie. Bind the floor to frozen reference predictions on exact native retention rows
+and the pinned initialization artifact. With no eligible epoch, fail with a retained
+result and no selected checkpoint; never fall back to last.pt. Final challenge rows
+are validation-only at preflight and excluded from training's data loaders.
+No model is loaded in assembly/preflight. Approval binds protocol/run/arm and
+selection; existing log-before-launch safeguards remain required.
+
 **Inputs:** APPEAR-B proposal/protected-evidence hashes and experiment-proposal.md;
 existing `focus_development_experiment.py`, assembly/preflight/trainer entrypoints;
 unchanged source manifests, reviews, receipts and baseline checkpoints.

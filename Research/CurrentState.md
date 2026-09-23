@@ -11,6 +11,60 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**2026-09-23 APPEAR-B1 software delivered:** [handoff](../reports/work/APPEAR-B1/handoff.md)
+integrates a separate balanced-development contract into assembly/trainer preflight.
+212 candidate training pairs +9 native retention-validation retain their source roles;
+native and both Fixture adapters receive50/50 logical-source mass.91 Python tests,
+offline Swift build and107 Swift tests pass. Actual preflight correctly rejects launch:
+independent appearance validation/challenge, frozen selection reference and explicit
+approval remain absent. No new model run, inference, export or promotion.
+The [reservation follow-up](../reports/work/APPEAR-B1/reservation-binding/handoff.md)
+closes an evaluation-admission gap: v2 reservations bind exact reviewed source and
+membership, not family names alone.59 affected Python tests pass; no new real
+evaluation inputs have been admitted.
+
+**2026-09-23 delivered appearance intake:** [receipt](../reports/work/APPEAR-C/visual-intake/handoff.md)
+qualifies10 delivered pairs/48 files/20 unique production crops for simulator development.
+Archive hash, native labels, geometry and visual review pass; no exact overlap against458
+scoped prior samples. All seed7 siblings remain development, not independent evaluation.
+Delivery blocker resolved; no new weights or training. Producer reports newer family
+source/offline work, with live evidence still pending. APPEAR-B1 integration is next locally.
+
+**2026-09-23 appearance-v1 consumer support:** [continuation](../reports/work/APPEAR-C/appearance-v1/handoff.md)
+passes3/3 producer vectors,43 focused/integration tests and the actual crop CLI;
+all12 retained catalog pairs remain valid. Offline Swift build and14 XCTest/93 Swift
+Testing pass in the approved host context, resolving the earlier test-context blocker.
+New10-pair archive intake awaits local delivery. No new data eligibility, model weights
+or training claim; distinct appearance/final-evaluation coverage remains open.
+
+**2026-09-23 05:54Z replacement build check:** [evidence](../reports/work/APPEAR-C/recheck-0543/report.md)
+confirms changed app/helper/Fixture and eight passing infrastructure checks. TTR reports
+ten appearance-v1 pairs; NUIAK has not received the archive. Our recipe-hash consumer
+matches0/3 new appearance vectors: next fix is local contract support and intake, not
+another producer rebuild. High-contrast/Photos-like and independent evaluation coverage
+remain open. No new capture, scores, weights or qualification claimed.
+
+**2026-09-23 catalog qualification:** [APPEAR-C](../reports/work/APPEAR-C/handoff.md)
+captured/validated12 catalog pairs across3 themes;8 distinct pairs because all
+high_contrast crops equal dark.54 exported files verified,24 production crops
+reviewed. Zero pixel overlap with434 audited prior samples, but only one renderer
+family: independent validation/final challenge still absent. No scores/training.
+Fixed existing destructiveButton extraction omission;23 focused tests/build pass;
+full Swift tests remain blocked by restricted Vision/CoreML runtime/cache access.
+
+**2026-09-23 TTR dialog path qualified:** [genuine smoke](../reports/work/TTR-CATALOG-01/smoke-0514/handoff.md)
+completed2/2 pairs and NUIAK v2 intake/four production crops. Bundled caller-owned
+chunk exporter succeeds; signed CLI export staging still denied. Postflight healthy,
+ownershipclear. Data development-only; no training/model gate passed. Next catalog
+and appearance qualification, not more build/readiness loops for this dialog path.
+
+**2026-09-23 05:11Z TTR replacement-build recheck:** [TTR-CATALOG-01](../reports/work/TTR-CATALOG-01/handoff.md)
+now verifies changed Fixture code and passing Top Shelf HTTP/CLI status; exact-target
+readiness passes. Missing-new-build blocker resolved. Default scene still no_sample;
+no recipe applied, so bounded two-control capture smoke is next, not another rebuild.
+Corrected Sillycon4-pair catalog separately awaits transfer/intake. No training or
+promotion. FDR-008 remains experimental with known Home/Photos failures.
+
 **2026-09-23 appearance lineage/proposal:** [APPEAR-B](../reports/work/APPEAR-B/handoff.md)
 audited202 proposed training pairs,9 native-validation and6 protected Remotes pairs.
 All162 Fixture pairs share connected training lineage; no new independent appearance
@@ -253,7 +307,9 @@ ownership clear. Installed Fixture bytes remain identical to the prior failing
 artifact. Following Fixture relaunch, HTTP health is restored; fresh passive
 telemetry (412 samples) still reports native focus non_view/unmapped_item on the
 current media_shelf scene. No new capture or two-element smoke. Producer crop repair source matches its receipt;
-offline corrected-crop replay is ready, exact parity still unqualified. This is
+offline corrected-crop replay subsequently passed on 2026-09-23: 10/10 exact crops
+and same-CPU scores ([report](../reports/work/FOCUS-PARITY-01/corrected-20260923/handoff.md)).
+This scoped preprocessing result does not establish model accuracy or live navigation. This is
 not a new storage regression or a block on independent native NUA work.
 [Fixture follow-up](../reports/work/TTR-CHECK-20260922-1622/fixture-followup.md).
 

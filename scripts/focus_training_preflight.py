@@ -25,7 +25,7 @@ def preflight(dataset, name, epochs=30, batch=64, lr=3e-4, model="mobilenetv4_co
     try:
         dataset = local(dataset)
         document = json.loads((dataset / "focus_dataset_manifest.json").read_text())
-        if document.get("version")=="focus-development-experiment-v1":
+        if document.get("version") in {"focus-development-experiment-v1", "focus-appearance-experiment-v1"}:
             raise FocusDataError("development_protocol_requires_explicit_experiment_mode")
         if document.get("version") == "focus-mixed-assembly-v1":
             from focus_mixed_assembly import load, readiness

@@ -110,6 +110,30 @@ class V2Tests(unittest.TestCase):
         self.assertEqual(p["observationBinding"]["baselineScene"],self.meta["baseline_scene"])
         self.assertEqual(p["annotation"]["sha256"],sha(self.bundle/"m.json"))
 
+    def test_catalog_destructive_button_real_crop_cli_and_noninteractive_rejection(self):
+        def replace_class(value, name):
+            if isinstance(value, dict):
+                if "taxonomy_class" in value:
+                    value["taxonomy_class"] = name
+                for child in value.values():
+                    replace_class(child, name)
+            elif isinstance(value, list):
+                for child in value:
+                    replace_class(child, name)
+        self.mutate(lambda m: replace_class(m, "destructiveButton"))
+        output = self.root/"destructive-crops"
+        r = self.cli("ttr_focus_manifest.py", "--bundle", self.bundle, "--output", output,
+                     "--corpus-id", "test-only", "--producer-reference", "catalog-test", "--test-only")
+        self.assertEqual(r.returncode, 0, r.stdout+r.stderr)
+        doc = json.loads((output/"focus_dataset_manifest.json").read_text())
+        self.assertEqual(len(validate_manifest(doc, output)), 1)
+        self.assertEqual(doc["pairs"][0]["element_type"], "destructiveButton")
+        self.assertEqual(doc["evidenceKind"], "test-only")
+        self.mutate(lambda m: replace_class(m, "label"))
+        with self.assertRaisesRegex(ValueError, "unsupported_focus_target"):
+            derive(self.bundle, self.root/"rejected", "test-only", "catalog-test",
+                   test_only=True, dry_run=True)
+
     def test_unsupported_versions(self):
         for version in (1,3,None,"2",2.0,True):
             with self.subTest(version=version):

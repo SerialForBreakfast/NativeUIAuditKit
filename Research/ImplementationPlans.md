@@ -4,10 +4,15 @@
 
 ## Remaining-work amendments and direct acquisition
 
+[APPEAR-C catalog/appearance qualification](Plans/CatalogAppearanceQualification.md)
+delivers bounded real catalog intake and independent-evaluation readiness audit.
+Theme aliases and one common renderer family must not become false holdout coverage.
+
 [APPEAR-B1 development adapter](Plans/FocusAppearanceAcquisition.md#appear-b1--development-proposal-adapter)
-is ready after the [APPEAR-B offline proposal](../reports/work/APPEAR-B/handoff.md).
-Integrate membership/source-balanced weights in existing entrypoints while retaining
-missing independent-evaluation/approval blockers. No operation authority implied.
+now has an [integrated handoff](../reports/work/APPEAR-B1/handoff.md) and
+[versioned contract](schemas/focus-appearance-experiment-v1.md). Existing entrypoints
+consume frozen membership/source-balanced weights while retaining missing independent
+evaluation, selection-reference and approval blockers. No operation authority implied.
 
 [APPEAR-A1 bounded catalog extension](../reports/work/APPEAR-A/handoff.md#next-local-implementation-appear-a1)
 now has an [integrated handoff](../reports/work/APPEAR-A1/handoff.md): source-pinned24-group

@@ -63,6 +63,7 @@ FOCUSABLE = frozenset(
         "listRow",
         "primaryButton",
         "secondaryButton",
+        "destructiveButton",
         "tabBar",
         "cancelAction",
         "toggle",

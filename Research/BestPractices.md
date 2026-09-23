@@ -1560,3 +1560,69 @@ reject a single oversized source. Preserve successful captures and re-run intake
 into a new output, without changing crop geometry or weakening helper limits.
 **Why:** Compressed PNG size and frame count do not bound decoded memory. The
 4K limit is nine such inputs per request, not sixteen. Evidence: APPEAR-A2 intake.log.
+
+### BP-84: A theme name is not distinct rendered coverage
+
+**Wrong:** Counting dark and high_contrast recipe metadata as independent visual
+styles without inspecting their rendered members.
+**Correct:** Compare decoded pixels and source consumption of the theme; keep
+related variants together and report aliases explicitly. Preserve paired focus
+states and raw evidence, but do not inflate unique examples or split aliases.
+**Why:** APPEAR-C's three catalog themes yielded12 pairs but only8 distinct pairs:
+all four high_contrast pairs were pixel-identical to dark. Metadata and successful
+capture did not supply the missing contrast treatment or independent holdout.
+Evidence: reports/work/APPEAR-C/reservation.json and handoff.md.
+
+### BP-86: Balance and isolate by data source, not capture adapter
+
+**Wrong:** treat direct-generator and TTR Fixture captures as different sampling
+sources or unrelated seed namespaces. Merely adding a transport could otherwise
+change a50/50 native/Fixture proposal into thirds and let related Fixture seeds
+cross evaluation partitions.
+
+**Correct:** retain original sourceKind/provenance, but use an explicit logical
+Fixture bucket for sampling and seed-component joins across both adapters. Build
+one graph containing pixel, original lineage and reserved-family edges together;
+separate graph checks can miss transitive leakage combining different edge kinds.
+
+**Why:** APPEAR-B1 includes both direct v1.4 and TTR v1.5 samples. Its actual442-row
+assembly retains50% native/50% Fixture mass; regression tests reject cross-adapter
+seed leakage and combined family/original-lineage paths. Independent family names
+are reviewed evidence, not permission to relabel development crops as untouched.
+
+### BP-85: Pin producer hash vectors when additive rendering fields arrive
+
+**Wrong:** Assume unchanged sidecar version means unchanged recipe identity. TTR's
+appearance-v1 recipes all collapsed to the same legacy NUIAK hash, rejecting all
+three valid producer vectors despite healthy runtime readiness.
+**Correct:** Validate the closed rendering extension, mirror its source-backed
+canonical suffix, and pin independent producer vectors plus legacy/null cases.
+Bind it across both capture brackets, aliases and derived lineage; do not bypass
+hash validation or request a producer rebuild for consumer drift.
+**Why:** Metadata parsing and byte integrity can pass while cross-repository
+semantic identity fails. Real intake/crop CLI tests retain development-only gates.
+Evidence: reports/work/APPEAR-C/appearance-v1/compatibility.json and handoff.md.
+
+### BP-87: Replay the current scoring crop, not a retired diagnostic path
+
+**Wrong:** Continue extracting an OCR crop for a parity harness after the producer
+scorer switches to its dedicated expanded focus patch. This tests obsolete behavior.
+**Correct:** Invoke the source-pinned scorer's actual `focusPatch`, record its
+preprocessing version, compare decoded pixels, then isolate same-backend scores
+from deployment-backend differences. Include fractional, clipped and asymmetric cases.
+**Why:** The corrected producer now matches all ten NUIAK crops exactly; an old
+harness would misdiagnose a repaired integration. Matching preprocessing does not
+repair the shipped model's remaining focus misses.
+Evidence: reports/work/FOCUS-PARITY-01/corrected-20260923/replay/report.json.
+
+### BP-88: Bind evaluation reservations to the members actually reviewed
+
+**Wrong:** Accept a hash-verified reservation containing only family/role/stratum:
+the declaration can still be reused against another source or revised membership.
+**Correct:** Bind the exact source manifest/review references and canonical source-row
+digest before assigning an evaluation role. Reordering alone is not a membership change.
+Keep untouched-use, lineage and independent-support checks separate.
+**Why:** A file hash proves unchanged declaration bytes, not which dataset those
+bytes approve. APPEAR-B1 reservation-v2 tests reject reused or stale bindings while
+the complete synthetic assembly/preflight path still passes. No historical corpus
+has been relabeled or re-admitted by this correction.

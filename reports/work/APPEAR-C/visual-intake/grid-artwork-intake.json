@@ -1,0 +1,2912 @@
+{
+  "schemaVersion": "1.0",
+  "corpusID": "appear-c-visual-grid-artwork",
+  "sourceKind": "simulatorFixture",
+  "producer": {
+    "name": "TVTestRig",
+    "buildReference": "fb47e39a084a2ff20cdf34b85458f1e1ebbdca8a-dirty",
+    "producerBuild": "1"
+  },
+  "requestedTarget": null,
+  "observedSource": {
+    "assurance": "reported-source; not-attested",
+    "captureMethod": "simctl-explicit-uuid",
+    "collectedAt": 811834196.255546,
+    "fixture": {
+      "app_build": "1",
+      "app_version": "1.0",
+      "fixture_instance_id": "DA147CEE-297A-4297-B755-3FE8940C8793",
+      "fixture_run_id": "04290340-2689-4C26-9846-83A98406FCAA",
+      "is_bold_text_enabled": false,
+      "is_darker_system_colors_status": false,
+      "is_reduce_motion_enabled": false,
+      "is_switch_control_running": false,
+      "is_voice_over_running": false,
+      "model": "Apple TV",
+      "monotonic_nanoseconds": 22771413997833,
+      "os_version": "tvOS 26.5",
+      "schema_version": 1,
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "screen_scale": 2
+    },
+    "requestedDeviceID": "2BAA6307-6F24-4820-8292-851BCD311417"
+  },
+  "eligibility": {
+    "inspection": "passed",
+    "simulatorUse": "pending-corpus-review",
+    "physicalQualification": "not-established",
+    "generalTrainingApproval": false
+  },
+  "pairs": [
+    {
+      "pairID": "synth-0",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "grid_matrix",
+      "family": "gridMatrix",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-0_unfocused.png",
+        "sha256": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9"
+      },
+      "focused": {
+        "path": "synth-0_focused.png",
+        "sha256": "677d816e21fb60ce097cb4fc6176a13a616931d5016cc23954d2eba877ea193c"
+      },
+      "elements": [
+        {
+          "element_id": "grid_cell_0_0",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.2520833333333333,
+            0.41574074074074074,
+            0.36666666666666664,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            968,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_0_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.41574074074074074,
+            0.49375,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            1456,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_1_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.50625,
+            0.41574074074074074,
+            0.6208333333333333,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            1944,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_1_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.6333333333333333,
+            0.41574074074074074,
+            0.7479166666666667,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            2432,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "grid_cell_0_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2520833333333333,
+                0.41574074074074074,
+                0.36666666666666664,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                968,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_0_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.41574074074074074,
+                0.49375,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1456,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.50625,
+                0.41574074074074074,
+                0.6208333333333333,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1944,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.6333333333333333,
+                0.41574074074074074,
+                0.7479166666666667,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                2432,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22777016951083,
+          "observation_diagnostics": {
+            "generation": 2,
+            "measuredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_0_1",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 19.673166669235798,
+            "sampleCount": 54,
+            "sampledGeneration": 2,
+            "stableMilliseconds": 5249.8842916647845
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "artwork",
+              "version": 1
+            },
+            "archetype": "grid_matrix",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141401.851253
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "grid_cell_0_0",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.2520833333333333,
+                0.41574074074074074,
+                0.36666666666666664,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                968,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_0_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.41574074074074074,
+                0.49375,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1456,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.50625,
+                0.41574074074074074,
+                0.6208333333333333,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1944,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.6333333333333333,
+                0.41574074074074074,
+                0.7479166666666667,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                2432,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 3,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "grid_cell_0_0",
+            "plannedFocusIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requestedID": "grid_cell_0_0",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "grid_cell_0_0",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22781658192833,
+          "observation_diagnostics": {
+            "generation": 3,
+            "measuredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_0_1",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "grid_cell_0_0",
+            "reason": "ready",
+            "requestedID": "grid_cell_0_0",
+            "requiredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 61.01158333331114,
+            "sampleCount": 46,
+            "sampledGeneration": 3,
+            "stableMilliseconds": 4496.0216250001395
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "artwork",
+              "version": 1
+            },
+            "archetype": "grid_matrix",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141406.4925709
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22777016951083,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 19.673166669235798,
+              "sampleCount": 54,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 5249.8842916647845
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141401.851253
+          },
+          "after_scene_received_host_ns": 22777022519250,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22772049632708,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 52.61833333497634,
+              "sampleCount": 4,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 249.5133749980596
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141396.883853
+          },
+          "before_scene_received_host_ns": 22772058948250,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "D0FA9F1B-4EE1-4E77-9641-E0CE20D3A4E7",
+          "frame_png_sha256": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9",
+          "frame_received_host_ns": 22777010724083,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 3,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "grid_cell_0_0",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requestedID": "grid_cell_0_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "grid_cell_0_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22781658192833,
+            "observation_diagnostics": {
+              "generation": 3,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "grid_cell_0_0",
+              "reason": "ready",
+              "requestedID": "grid_cell_0_0",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 61.01158333331114,
+              "sampleCount": 46,
+              "sampledGeneration": 3,
+              "stableMilliseconds": 4496.0216250001395
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141406.4925709
+          },
+          "after_scene_received_host_ns": 22781664242583,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 3,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "grid_cell_0_0",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requestedID": "grid_cell_0_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "grid_cell_0_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22777300921458,
+            "observation_diagnostics": {
+              "generation": 3,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "grid_cell_0_0",
+              "reason": "ready",
+              "requestedID": "grid_cell_0_0",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 4.266333333362127,
+              "sampleCount": 3,
+              "sampledGeneration": 3,
+              "stableMilliseconds": 195.3854166677047
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141402.1352282
+          },
+          "before_scene_received_host_ns": 22777307947666,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "3433BA02-E13C-4BF9-B9EA-984F260B1C1D",
+          "frame_png_sha256": "677d816e21fb60ce097cb4fc6176a13a616931d5016cc23954d2eba877ea193c",
+          "frame_received_host_ns": 22781653852416,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {},
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-0_metadata.json",
+        "sha256": "c364044191e1c1f77c7bff00291cc243f0d3bda3f47b2c4d1ecf139744eb7a99"
+      }
+    },
+    {
+      "pairID": "synth-1",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "grid_matrix",
+      "family": "gridMatrix",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-1_unfocused.png",
+        "sha256": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9"
+      },
+      "focused": {
+        "path": "synth-1_focused.png",
+        "sha256": "a399ffe3cb1cac8a7f85c27dc3daa77704b520c4fc712f8dd648d9c14d094967"
+      },
+      "elements": [
+        {
+          "element_id": "grid_cell_0_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.2520833333333333,
+            0.41574074074074074,
+            0.36666666666666664,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            968,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_0_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.41574074074074074,
+            0.49375,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            1456,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_1_0",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.50625,
+            0.41574074074074074,
+            0.6208333333333333,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            1944,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_1_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.6333333333333333,
+            0.41574074074074074,
+            0.7479166666666667,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            2432,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "grid_cell_0_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2520833333333333,
+                0.41574074074074074,
+                0.36666666666666664,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                968,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_0_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.41574074074074074,
+                0.49375,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1456,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.50625,
+                0.41574074074074074,
+                0.6208333333333333,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1944,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.6333333333333333,
+                0.41574074074074074,
+                0.7479166666666667,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                2432,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22777016951083,
+          "observation_diagnostics": {
+            "generation": 2,
+            "measuredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_0_1",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 19.673166669235798,
+            "sampleCount": 54,
+            "sampledGeneration": 2,
+            "stableMilliseconds": 5249.8842916647845
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "artwork",
+              "version": 1
+            },
+            "archetype": "grid_matrix",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141401.851253
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "grid_cell_0_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2520833333333333,
+                0.41574074074074074,
+                0.36666666666666664,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                968,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_0_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.41574074074074074,
+                0.49375,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1456,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_0",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.50625,
+                0.41574074074074074,
+                0.6208333333333333,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1944,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.6333333333333333,
+                0.41574074074074074,
+                0.7479166666666667,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                2432,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 4,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "grid_cell_1_0",
+            "plannedFocusIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requestedID": "grid_cell_1_0",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "grid_cell_1_0",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22786077816958,
+          "observation_diagnostics": {
+            "generation": 4,
+            "measuredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_0_1",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "grid_cell_1_0",
+            "reason": "ready",
+            "requestedID": "grid_cell_1_0",
+            "requiredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 80.23708333348623,
+            "sampleCount": 43,
+            "sampledGeneration": 4,
+            "stableMilliseconds": 4200.871125001868
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "artwork",
+              "version": 1
+            },
+            "archetype": "grid_matrix",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141410.9122682
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22777016951083,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 19.673166669235798,
+              "sampleCount": 54,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 5249.8842916647845
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141401.851253
+          },
+          "after_scene_received_host_ns": 22777022519250,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22772049632708,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 52.61833333497634,
+              "sampleCount": 4,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 249.5133749980596
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141396.883853
+          },
+          "before_scene_received_host_ns": 22772058948250,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "D0FA9F1B-4EE1-4E77-9641-E0CE20D3A4E7",
+          "frame_png_sha256": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9",
+          "frame_received_host_ns": 22777010724083,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 4,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "grid_cell_1_0",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requestedID": "grid_cell_1_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "grid_cell_1_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22786077816958,
+            "observation_diagnostics": {
+              "generation": 4,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "grid_cell_1_0",
+              "reason": "ready",
+              "requestedID": "grid_cell_1_0",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 80.23708333348623,
+              "sampleCount": 43,
+              "sampledGeneration": 4,
+              "stableMilliseconds": 4200.871125001868
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141410.9122682
+          },
+          "after_scene_received_host_ns": 22786083753833,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 4,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "grid_cell_1_0",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requestedID": "grid_cell_1_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "grid_cell_1_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22782008327541,
+            "observation_diagnostics": {
+              "generation": 4,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "grid_cell_1_0",
+              "reason": "ready",
+              "requestedID": "grid_cell_1_0",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 11.499875003210036,
+              "sampleCount": 3,
+              "sampledGeneration": 4,
+              "stableMilliseconds": 200.24383333293372
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141406.842712
+          },
+          "before_scene_received_host_ns": 22782017487125,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "106245F9-717E-4AFF-BB76-BF4FFE475ED1",
+          "frame_png_sha256": "a399ffe3cb1cac8a7f85c27dc3daa77704b520c4fc712f8dd648d9c14d094967",
+          "frame_received_host_ns": 22786073987875,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {},
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-1_metadata.json",
+        "sha256": "79ad6e4d76d780b9a6de224bb619b2162d33352b0b4ede70feadd661bcc12468"
+      }
+    },
+    {
+      "pairID": "synth-2",
+      "recipeGroup": "seed:7",
+      "split": "train",
+      "originalFamily": "grid_matrix",
+      "family": "gridMatrix",
+      "originalTheme": "dark",
+      "theme": "dark",
+      "unfocused": {
+        "path": "synth-2_unfocused.png",
+        "sha256": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9"
+      },
+      "focused": {
+        "path": "synth-2_focused.png",
+        "sha256": "3a935d5f28e2bd61e8e1cb915c30d7946a431811e169afe2e06cc1469829363b"
+      },
+      "elements": [
+        {
+          "element_id": "grid_cell_0_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.2520833333333333,
+            0.41574074074074074,
+            0.36666666666666664,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            968,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_0_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.41574074074074074,
+            0.49375,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            1456,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_1_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.50625,
+            0.41574074074074074,
+            0.6208333333333333,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            1944,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        },
+        {
+          "element_id": "grid_cell_1_1",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.6333333333333333,
+            0.41574074074074074,
+            0.7479166666666667,
+            0.6101851851851852
+          ],
+          "pixel_bounds": [
+            2432,
+            898,
+            440,
+            420
+          ],
+          "taxonomy_class": "collectionItem"
+        }
+      ],
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "grid_cell_0_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2520833333333333,
+                0.41574074074074074,
+                0.36666666666666664,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                968,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_0_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.41574074074074074,
+                0.49375,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1456,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.50625,
+                0.41574074074074074,
+                0.6208333333333333,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1944,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.6333333333333333,
+                0.41574074074074074,
+                0.7479166666666667,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                2432,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22777016951083,
+          "observation_diagnostics": {
+            "generation": 2,
+            "measuredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_0_1",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 19.673166669235798,
+            "sampleCount": 54,
+            "sampledGeneration": 2,
+            "stableMilliseconds": 5249.8842916647845
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "artwork",
+              "version": 1
+            },
+            "archetype": "grid_matrix",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141401.851253
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "grid_cell_0_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2520833333333333,
+                0.41574074074074074,
+                0.36666666666666664,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                968,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_0_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.37916666666666665,
+                0.41574074074074074,
+                0.49375,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1456,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.50625,
+                0.41574074074074074,
+                0.6208333333333333,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                1944,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            },
+            {
+              "element_id": "grid_cell_1_1",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.6333333333333333,
+                0.41574074074074074,
+                0.7479166666666667,
+                0.6101851851851852
+              ],
+              "pixel_bounds": [
+                2432,
+                898,
+                440,
+                420
+              ],
+              "taxonomy_class": "collectionItem"
+            }
+          ],
+          "focus_observation": {
+            "generation": 5,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "grid_cell_1_1",
+            "plannedFocusIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requestedID": "grid_cell_1_1",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "grid_cell_1_1",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 22790534162791,
+          "observation_diagnostics": {
+            "generation": 5,
+            "measuredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_0_1",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "grid_cell_1_1",
+            "reason": "ready",
+            "requestedID": "grid_cell_1_1",
+            "requiredIDs": [
+              "grid_cell_0_0",
+              "grid_cell_1_0",
+              "grid_cell_1_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 36.91162500035716,
+            "sampleCount": 44,
+            "sampledGeneration": 5,
+            "stableMilliseconds": 4300.490833335061
+          },
+          "recipe": {
+            "appearance": {
+              "layout": "standard",
+              "preset": "artwork",
+              "version": 1
+            },
+            "archetype": "grid_matrix",
+            "density": "regular",
+            "element_count": 4,
+            "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "dark"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790141415.3686872
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22777016951083,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 19.673166669235798,
+              "sampleCount": 54,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 5249.8842916647845
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141401.851253
+          },
+          "after_scene_received_host_ns": 22777022519250,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22772049632708,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 52.61833333497634,
+              "sampleCount": 4,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 249.5133749980596
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141396.883853
+          },
+          "before_scene_received_host_ns": 22772058948250,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "D0FA9F1B-4EE1-4E77-9641-E0CE20D3A4E7",
+          "frame_png_sha256": "962b77ea4aac3ae1fddad902d26d9ff8d9d19868d2f3901f41e46073944751e9",
+          "frame_received_host_ns": 22777010724083,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 5,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "grid_cell_1_1",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requestedID": "grid_cell_1_1",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "grid_cell_1_1",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22790534162791,
+            "observation_diagnostics": {
+              "generation": 5,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "grid_cell_1_1",
+              "reason": "ready",
+              "requestedID": "grid_cell_1_1",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 36.91162500035716,
+              "sampleCount": 44,
+              "sampledGeneration": 5,
+              "stableMilliseconds": 4300.490833335061
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141415.3686872
+          },
+          "after_scene_received_host_ns": 22790542311708,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "grid_cell_0_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2520833333333333,
+                  0.41574074074074074,
+                  0.36666666666666664,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  968,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_0_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.37916666666666665,
+                  0.41574074074074074,
+                  0.49375,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1456,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.50625,
+                  0.41574074074074074,
+                  0.6208333333333333,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  1944,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              },
+              {
+                "element_id": "grid_cell_1_1",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.6333333333333333,
+                  0.41574074074074074,
+                  0.7479166666666667,
+                  0.6101851851851852
+                ],
+                "pixel_bounds": [
+                  2432,
+                  898,
+                  440,
+                  420
+                ],
+                "taxonomy_class": "collectionItem"
+              }
+            ],
+            "focus_observation": {
+              "generation": 5,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "grid_cell_1_1",
+              "plannedFocusIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requestedID": "grid_cell_1_1",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "grid_cell_1_1",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 22786417761041,
+            "observation_diagnostics": {
+              "generation": 5,
+              "measuredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_0_1",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "grid_cell_1_1",
+              "reason": "ready",
+              "requestedID": "grid_cell_1_1",
+              "requiredIDs": [
+                "grid_cell_0_0",
+                "grid_cell_1_0",
+                "grid_cell_1_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 20.915500001137843,
+              "sampleCount": 3,
+              "sampledGeneration": 5,
+              "stableMilliseconds": 199.996083334554
+            },
+            "recipe": {
+              "appearance": {
+                "layout": "standard",
+                "preset": "artwork",
+                "version": 1
+              },
+              "archetype": "grid_matrix",
+              "density": "regular",
+              "element_count": 4,
+              "recipe_hash": "e54a55acf191e4b123451fdcf562f4b38152a9c469dbad2d6d74457403dd9b7a",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "dark"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790141411.252217
+          },
+          "before_scene_received_host_ns": 22786424424875,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "5F51D59E-C684-4767-8AC9-EB91ABE0B598",
+          "frame_png_sha256": "3a935d5f28e2bd61e8e1cb915c30d7946a431811e169afe2e06cc1469829363b",
+          "frame_received_host_ns": 22790528623083,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {},
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "annotation": {
+        "path": "synth-2_metadata.json",
+        "sha256": "b5eda575b9b1943a276e972301fbf70b813f96fff44c08d0616b2176b79c9cb8"
+      }
+    }
+  ]
+}

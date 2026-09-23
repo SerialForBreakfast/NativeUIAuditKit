@@ -1,5 +1,23 @@
 # Harvest bundle compatibility v1
 
+## Appearance-v1 additive recipe compatibility — 2026-09-23
+
+TTR e3d55d1 adds optional recipe `appearance` (integer version1, preset
+artwork/bright_unfocused/gray_placeholder, layout standard/dock). Support is limited
+to media_shelf/standard and grid_matrix/standard-or-dock. Absent/null preserves
+the old canonical hash; present appends `:appearance@1:<preset>:<layout>` after
+randomization before SHA256. All three producer-published vectors are pinned in
+`scripts/test_ttr_appearance.py`. NUIAK additionally rejects extra appearance keys
+because they are not bound by this canonical identity.
+
+Appearance requires sidecar-v2 brackets. Every before/after, baseline/focused and
+flat recipe alias retains the full object and must agree. Existing normalized
+observationBinding and v1.5 derived manifests already preserve it; no new schema
+version or required legacy field is introduced. Source revalidation protects derived
+lineage; seed groups still unite preset/layout variants. Passing these software
+checks does not prove pixels rendered the preset or approve a training corpus.
+See [assignment](../Plans/CatalogAppearanceQualification.md).
+
 ## Assigned sidecar-v2 consumer extension — 2026-09-23
 
 Owner: NUIAK architect, SIM-DATA-02. Local producer source inspected at

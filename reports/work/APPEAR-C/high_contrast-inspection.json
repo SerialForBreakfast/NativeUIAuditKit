@@ -1,0 +1,15 @@
+{
+  "theme": "high_contrast",
+  "pairs": 4,
+  "filesVerified": 18,
+  "annotationsPerFrame": 8,
+  "exclusionsPerFrame": 33,
+  "targets": [
+    "sink_cancelAction",
+    "sink_destructiveButton",
+    "sink_primaryButton",
+    "sink_secondaryButton"
+  ],
+  "integrity": "pass",
+  "trainingApproval": false
+}

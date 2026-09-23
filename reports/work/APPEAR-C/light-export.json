@@ -1,0 +1,116 @@
+{
+  "files": [
+    {
+      "bytes": 3272,
+      "path": "calibration.json",
+      "sha256": "613acbab56a5575cfb6d97b78fa0fee5308f9226f9e601b90905c9de1139c520"
+    },
+    {
+      "bytes": 3829,
+      "path": "dataset-index.json",
+      "sha256": "9afeb95d84210cfba0b1970bc2c09cdad71beb30d461ac49d82d08b46c4b47d0"
+    },
+    {
+      "bytes": 103,
+      "path": "harvest-receipt.json",
+      "sha256": "fe4b79c4b17a1c4a09738df0a3ccd4288709e61d53257325eb26cddd55da9787"
+    },
+    {
+      "bytes": 4,
+      "path": "held-out.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    },
+    {
+      "bytes": 3272,
+      "path": "manifest.json",
+      "sha256": "613acbab56a5575cfb6d97b78fa0fee5308f9226f9e601b90905c9de1139c520"
+    },
+    {
+      "bytes": 7171754,
+      "path": "synth-0_focused.png",
+      "sha256": "43dabb3c432941714b6f4b182139fc31dd6e95b6ed8a852a5bc807fdc2392fca"
+    },
+    {
+      "bytes": 86700,
+      "path": "synth-0_metadata.json",
+      "sha256": "90970f848db48cdbf327843fb4402b82bd8364520a91159678c612eb15965063"
+    },
+    {
+      "bytes": 7196949,
+      "path": "synth-0_unfocused.png",
+      "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de"
+    },
+    {
+      "bytes": 7172030,
+      "path": "synth-1_focused.png",
+      "sha256": "3ae075ac4dbd0f87aa102ffdefd146b2a2be9274f2316194c9fd134229295bd9"
+    },
+    {
+      "bytes": 86826,
+      "path": "synth-1_metadata.json",
+      "sha256": "8560c594f9457547b9ce4bb8142e5af68cdeadba24882962e671d6f928b8b96b"
+    },
+    {
+      "bytes": 7196949,
+      "path": "synth-1_unfocused.png",
+      "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de"
+    },
+    {
+      "bytes": 7172730,
+      "path": "synth-2_focused.png",
+      "sha256": "4940fb9a47f8aceba40ed43854db8d9fadb7fabfaaf3d13b4284c21f0ce80f31"
+    },
+    {
+      "bytes": 86719,
+      "path": "synth-2_metadata.json",
+      "sha256": "5639c9416390abe7a2e812addb46bc99cfbd4f81cd1f736bf488fec7dfaa5062"
+    },
+    {
+      "bytes": 7196949,
+      "path": "synth-2_unfocused.png",
+      "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de"
+    },
+    {
+      "bytes": 7171906,
+      "path": "synth-3_focused.png",
+      "sha256": "a335ff372e616cf5bffff41bd2996367e6bca075c2ba340915319baf473eb21b"
+    },
+    {
+      "bytes": 86790,
+      "path": "synth-3_metadata.json",
+      "sha256": "ee3f4931857c815565be6b173ed5e332d42dccd9fc0261371a6326e5f25e4cfb"
+    },
+    {
+      "bytes": 7196949,
+      "path": "synth-3_unfocused.png",
+      "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de"
+    },
+    {
+      "bytes": 4,
+      "path": "training.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    }
+  ],
+  "jobID": "20FDBC1C-8062-4C51-9C73-3CC7452F0FEE",
+  "outputPath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/20fdbc1c-8062-4c51-9c73-3cc7452f0fee/bundle",
+  "recipeSHA256": "5da6c104daa8d4bfd0f49d0b9d4067b5dbff2592a4f88379001aab275d3b25c9",
+  "recipesPath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/20fdbc1c-8062-4c51-9c73-3cc7452f0fee/recipes",
+  "result": {
+    "acceptedRowCount": 4,
+    "calibrationCount": 4,
+    "heldOutCount": 0,
+    "manifestSHA256": "613acbab56a5575cfb6d97b78fa0fee5308f9226f9e601b90905c9de1139c520",
+    "outputDirectory": "bundle",
+    "rejectedRowCount": 0,
+    "rejectionReasons": [
+
+    ],
+    "trainingCount": 0
+  },
+  "schemaVersion": 1,
+  "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "state": "completed",
+  "storageReady": true,
+  "workspacePath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/20fdbc1c-8062-4c51-9c73-3cc7452f0fee",
+  "exportedPath": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/appear-c-light"
+}

@@ -170,6 +170,9 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get("version")=="focus-appearance-experiment-v1":
+        from focus_appearance_experiment import load_protocol as appearance_protocol
+        return appearance_protocol(path,arm,run_name,approval_path)
     if doc.get("version")=="focus-development-experiment-v1":
         from focus_development_experiment import load_protocol as development_protocol
         return development_protocol(path,arm,run_name,approval_path)

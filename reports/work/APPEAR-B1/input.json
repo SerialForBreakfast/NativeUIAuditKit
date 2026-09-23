@@ -1,0 +1,48 @@
+{
+  "version": "focus-appearance-input-v1",
+  "proposal": {
+    "path": "reports/work/APPEAR-B/proposal.json",
+    "sha256": "db8f374b8c055f09073e9384c8abb9f6546a0f1a1ff2f0a9bbc795c40fda2739"
+  },
+  "protected": {
+    "path": "reports/work/APPEAR-B/protected-evidence.json",
+    "sha256": "491492af5be27002b46dbe575f23b55f2a2cdb69ce111698342c49dd526f8258"
+  },
+  "additions": [
+    {
+      "id": "appear-c-grid-artwork",
+      "manifest": {
+        "path": "dataset/focus_ring/appear-c-visual-grid-artwork/focus_dataset_manifest.json",
+        "sha256": "e79f5dd689c789bd6052d02bd5023d1f7ac9fba35d76abdb6ac4005f07bbb3c0"
+      },
+      "review": {
+        "path": "reports/work/APPEAR-B1/grid-artwork-review.json",
+        "sha256": "6a11aae0eccaa15ec8b0e86ee7635303a7a5856173953436a74a1d5fdbb52abf"
+      }
+    },
+    {
+      "id": "appear-c-dock-bright",
+      "manifest": {
+        "path": "dataset/focus_ring/appear-c-visual-dock-bright/focus_dataset_manifest.json",
+        "sha256": "a94dc1fd6f24d0f6a292cfc37dff8e82962d02a03fb65a068591b6c233db84a1"
+      },
+      "review": {
+        "path": "reports/work/APPEAR-B1/dock-bright-review.json",
+        "sha256": "85b6190a0f3af67aa92034654b9b752e39c5c193de696f650298468af1065534"
+      }
+    },
+    {
+      "id": "appear-c-media-placeholder",
+      "manifest": {
+        "path": "dataset/focus_ring/appear-c-visual-media-placeholder/focus_dataset_manifest.json",
+        "sha256": "2aca6cca1a0fcb75274f6f9624297cc060329a0963d85275b86e0de9df349bca"
+      },
+      "review": {
+        "path": "reports/work/APPEAR-B1/media-placeholder-review.json",
+        "sha256": "6a1df00f31e2bcd31df4f1a6a111593e359be4404a9cc6fc76499c9d2a2dafab"
+      }
+    }
+  ],
+  "evaluation": [],
+  "selection": null
+}

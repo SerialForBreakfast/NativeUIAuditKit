@@ -1,0 +1,86 @@
+{
+  "files": [
+    {
+      "bytes": 1619,
+      "path": "calibration.json",
+      "sha256": "e35c1712d2315661bc9779bfa08b09afd8b121052ed44a7e7bf679432508b85b"
+    },
+    {
+      "bytes": 2842,
+      "path": "dataset-index.json",
+      "sha256": "de6b72985315f3ff067a7bc1d50d6a30d9cae044574ff51f4af33c2c058bc739"
+    },
+    {
+      "bytes": 103,
+      "path": "harvest-receipt.json",
+      "sha256": "3612d1b433e65b784abfb1cb0bbbb28aa32e5234ec68c41b43d237e8a5209f68"
+    },
+    {
+      "bytes": 4,
+      "path": "held-out.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    },
+    {
+      "bytes": 1619,
+      "path": "manifest.json",
+      "sha256": "e35c1712d2315661bc9779bfa08b09afd8b121052ed44a7e7bf679432508b85b"
+    },
+    {
+      "bytes": 5819645,
+      "path": "synth-0_focused.png",
+      "sha256": "df843d60c96482e83ea3b362a23c6b1093d415633dde852eae147b4e042b0e34"
+    },
+    {
+      "bytes": 34535,
+      "path": "synth-0_metadata.json",
+      "sha256": "e20bf84f662171669401c1eb9ee9ae01341d32ec446b52a1a5a25cd7acd0c316"
+    },
+    {
+      "bytes": 5801417,
+      "path": "synth-0_unfocused.png",
+      "sha256": "611ae572611ac179e1f2e22efd8ef3957ffccf8deaa714d5c7b8d58026e2ed57"
+    },
+    {
+      "bytes": 5808342,
+      "path": "synth-1_focused.png",
+      "sha256": "3320ae3f30833d55cb8f88c6eec902bca146bcbd4501d4489e2c8f22a5869f9e"
+    },
+    {
+      "bytes": 34534,
+      "path": "synth-1_metadata.json",
+      "sha256": "e36e19a2a8a777a130879008502b961024c9717df8f2f051485cea47bf3910a1"
+    },
+    {
+      "bytes": 5801417,
+      "path": "synth-1_unfocused.png",
+      "sha256": "611ae572611ac179e1f2e22efd8ef3957ffccf8deaa714d5c7b8d58026e2ed57"
+    },
+    {
+      "bytes": 4,
+      "path": "training.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    }
+  ],
+  "jobID": "48683F4D-B6F7-4EE9-B852-51B4958192BA",
+  "outputPath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/48683f4d-b6f7-4ee9-b852-51b4958192ba/bundle",
+  "recipeSHA256": "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+  "recipesPath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/48683f4d-b6f7-4ee9-b852-51b4958192ba/recipes",
+  "result": {
+    "acceptedRowCount": 2,
+    "calibrationCount": 2,
+    "heldOutCount": 0,
+    "manifestSHA256": "e35c1712d2315661bc9779bfa08b09afd8b121052ed44a7e7bf679432508b85b",
+    "outputDirectory": "bundle",
+    "rejectedRowCount": 0,
+    "rejectionReasons": [
+
+    ],
+    "trainingCount": 0
+  },
+  "schemaVersion": 1,
+  "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "state": "completed",
+  "storageReady": true,
+  "workspacePath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/48683f4d-b6f7-4ee9-b852-51b4958192ba",
+  "exportedPath": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/ttr-dialog-20260923-0514"
+}

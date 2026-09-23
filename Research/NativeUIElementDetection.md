@@ -613,6 +613,14 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Balanced appearance development adapter (2026-09-23):**
+[appearance-experiment-v1](schemas/focus-appearance-experiment-v1.md) is a separate
+explicit experiment contract. It preserves origin roles, uses training-only50/50
+native/Fixture sampling and requires independent appearance validation/challenge
+plus a reference-bound native retention floor. Existing development protocols keep
+their native-only selection behavior. No new run or production eligibility follows
+from assembly; current real inputs remain launch-blocked.
+
 **Mixed FocusRing development protocol (2026-09-23):** the separate
 [development-experiment contract](schemas/focus-development-experiment-v1.md)
 admits only explicitly reviewed experimental roles through the existing trainer.

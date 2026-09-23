@@ -8,9 +8,18 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
+[APPEAR-C](../reports/work/APPEAR-C/handoff.md) qualifies the corrected local catalog
+in three themes, but dark/high_contrast pixels alias and only one catalog family
+exists. Next appearance acquisition depends on distinct source-backed in-app
+families, not more seed variants. APPEAR-B1 now integrates the reviewed development
+pool; see its [software handoff](../reports/work/APPEAR-B1/handoff.md).
+
 [APPEAR-B offline audit/proposal is delivered](../reports/work/APPEAR-B/handoff.md).
-Next local software: APPEAR-B1 versioned development adapter and fail-closed launch
-preflight. Independent appearance validation/challenge remains missing; do not turn
+APPEAR-B1 versioned development adapter and fail-closed launch preflight are delivered.
+Its [reservation-binding correction](../reports/work/APPEAR-B1/reservation-binding/handoff.md)
+requires source/membership-bound v2 evaluation reservations before future intake.
+Next qualify reserved evaluation inputs and freeze reference-based selection before
+seeking one candidate approval. Independent appearance validation/challenge remains missing; do not turn
 new seed numbers or known Home/Photos failures into final evaluation evidence.
 
 [APPEAR-A2 live pilot is complete for review](../reports/work/APPEAR-A2/handoff.md):

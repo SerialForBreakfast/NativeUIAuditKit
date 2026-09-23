@@ -1,0 +1,5 @@
+[TVTR-DEBUG] schema=1 run_id=3a6f220f-746f-4370-9711-542f39f41aa5 pid=55141 event=process_started
+[TVTR-DEBUG] schema=1 run_id=3a6f220f-746f-4370-9711-542f39f41aa5 pid=55141 event=process_mode_stable_cli
+[TVTR-DEBUG] schema=1 run_id=3a6f220f-746f-4370-9711-542f39f41aa5 pid=55141 timestamp=2026-09-23T05:43:46Z category=cli event=operationStarted device_alias=- command_id=- observation_id=- session_id=- duration_ms=- result=cli_invocation_begin error=-
+[TVTR-DEBUG] schema=1 run_id=3a6f220f-746f-4370-9711-542f39f41aa5 pid=55141 [TVTR] stage=diagnostic_file_sink_failed error=persistenceFailed domain=TVTestRig.TVTestRigError code=23; subsequent diagnostics remain on stderr 
+[TVTR-DEBUG] schema=1 run_id=3a6f220f-746f-4370-9711-542f39f41aa5 pid=55141 timestamp=2026-09-23T05:43:46Z category=cli event=operationCompleted device_alias=- command_id=- observation_id=- session_id=- duration_ms=- result=cli_invocation_complete error=-

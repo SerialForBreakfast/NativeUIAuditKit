@@ -1,0 +1,10 @@
+[0/1] Planning build
+[1/1] Compiling plugin Swift-DocC Preview
+[2/2] Compiling plugin Swift-DocC
+Building for debugging...
+[2/15] Write swift-version--58304C5D6DBC2206.txt
+[4/13] Emitting module NativeUIDatasetGenerator
+[5/11] Emitting module NativeUIAuditKit
+[6/11] Emitting module TransitionTool
+[7/11] Emitting module FocusRingTool
+Build complete! (6.51s)

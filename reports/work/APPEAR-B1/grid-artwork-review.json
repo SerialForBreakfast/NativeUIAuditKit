@@ -1,0 +1,27 @@
+{
+  "version": "focus-source-review-v1",
+  "manifestSHA256": "e79f5dd689c789bd6052d02bd5023d1f7ac9fba35d76abdb6ac4005f07bbb3c0",
+  "priorUse": "development",
+  "relationshipsKnown": true,
+  "trainingApproved": false,
+  "reviewer": "NUIAK architect",
+  "reviewReference": "APPEAR-C independent visual intake; B1 development proposal only",
+  "priorReview": {
+    "path": "reports/work/APPEAR-C/visual-intake/visual-review.md",
+    "sha256": "a10c7177bc16f215ac4b6dbdc5298909c7ce8b793f1f95f5492c2f02ebbd7ce9"
+  },
+  "pairs": {
+    "synth-0": {
+      "partition": "development",
+      "relatedGroup": "appearance-seed7-all-presets"
+    },
+    "synth-1": {
+      "partition": "development",
+      "relatedGroup": "appearance-seed7-all-presets"
+    },
+    "synth-2": {
+      "partition": "development",
+      "relatedGroup": "appearance-seed7-all-presets"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "producerVectors": [
+    {
+      "expected": "41be66c4bd4660731eb2139445f93545a95935b0448632eea5af75818d3a0384",
+      "actual": "41be66c4bd4660731eb2139445f93545a95935b0448632eea5af75818d3a0384",
+      "match": true
+    },
+    {
+      "expected": "21ccc1ec640bca298497f3645b9eaaa869741deb1ffd5bf54ff90ddcc96e170b",
+      "actual": "21ccc1ec640bca298497f3645b9eaaa869741deb1ffd5bf54ff90ddcc96e170b",
+      "match": true
+    },
+    {
+      "expected": "a1b289a83b9ad1864af4265c34ab1eaad4117a7ed28a98459b73df66957254e4",
+      "actual": "a1b289a83b9ad1864af4265c34ab1eaad4117a7ed28a98459b73df66957254e4",
+      "match": true
+    }
+  ],
+  "legacyBundles": {
+    "light": 4,
+    "dark": 4,
+    "high_contrast": 4
+  }
+}

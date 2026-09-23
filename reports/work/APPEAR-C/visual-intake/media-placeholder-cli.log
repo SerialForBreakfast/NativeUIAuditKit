@@ -1,0 +1,6 @@
+["scripts/build_simulator_focus_manifest.py", "--bundle", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/appear-c-visual-intake-20260923/media-placeholder-export", "--corpus-id", "appear-c-visual-media-placeholder", "--producer-reference", "fb47e39a084a2ff20cdf34b85458f1e1ebbdca8a-dirty", "--output", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/APPEAR-C/visual-intake/media-placeholder-intake.json"]
+exit=0
+{"corpusID": "appear-c-visual-media-placeholder", "fingerprint": "a0de7eee9f12f2677689c4ba76cd0f4516c91deabad4cd1ae1c8abb5d83bcc5c", "pairs": 4}
+["scripts/harvest_focus_pairs.py", "--fixture-bundle", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/appear-c-visual-intake-20260923/media-placeholder-export", "--output", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/focus_ring/appear-c-visual-media-placeholder", "--corpus-id", "appear-c-visual-media-placeholder", "--producer-reference", "fb47e39a084a2ff20cdf34b85458f1e1ebbdca8a-dirty", "--ttr-sidecar-v2", "--visual-review", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/APPEAR-C/visual-intake/media-placeholder-review.json"]
+exit=0
+{"dryRun": false, "pairs": 4, "trainingApproval": false, "version": "1.5"}

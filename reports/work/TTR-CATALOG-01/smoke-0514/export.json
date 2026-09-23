@@ -1,0 +1,21 @@
+{
+  "command" : "fixture export-job",
+  "durationMilliseconds" : 14,
+  "error" : {
+    "cause" : "access_denied",
+    "code" : "persistenceFailed",
+    "exportFailure" : {
+      "cause" : "access_denied",
+      "stage" : "export_staging_create",
+      "underlyingCode" : 513,
+      "underlyingDomain" : "NSCocoaErrorDomain",
+      "writer" : "cli_caller"
+    },
+    "message" : "Completed-job export failed at export_staging_create (access_denied); writer: cli_caller, underlying: NSCocoaErrorDomain/513. Keep the completed job. Check the existing destination parent and caller write access, or use the operator kit's verified chunk exporter from an authorized caller. No recapture or app restart is needed.",
+    "retryable" : false,
+    "stage" : "export_staging_create"
+  },
+  "requestID" : "B786A051-C828-4E95-AF90-3F24A2ADD5A6",
+  "schemaVersion" : 1,
+  "success" : false
+}

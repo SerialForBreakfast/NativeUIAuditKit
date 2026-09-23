@@ -1,0 +1,1683 @@
+{
+  "contractVersion": "harvest-compatibility-v1",
+  "integrity": "pass",
+  "producer": "TVTestRig",
+  "producerBuild": "1",
+  "sourceDescription": {
+    "assurance": "reported-source; not-attested",
+    "captureMethod": "simctl-explicit-uuid",
+    "collectedAt": 811833326.338702,
+    "fixture": {
+      "app_build": "1",
+      "app_version": "1.0",
+      "fixture_instance_id": "0BF2BA39-6937-4433-8AFB-EA153FB72411",
+      "fixture_run_id": "4B78A74F-AC8C-4CF9-ACE6-93B93854A4BE",
+      "is_bold_text_enabled": false,
+      "is_darker_system_colors_status": false,
+      "is_reduce_motion_enabled": false,
+      "is_switch_control_running": false,
+      "is_voice_over_running": false,
+      "model": "Apple TV",
+      "monotonic_nanoseconds": 217268139247375,
+      "os_version": "tvOS 26.5",
+      "schema_version": 1,
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "screen_scale": 2
+    },
+    "requestedDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+  },
+  "identityEvidence": null,
+  "provenance": "unverified-pixel-telemetry-binding",
+  "eligibleForTraining": false,
+  "unknownClassCount": 0,
+  "acceptedRowCount": 2,
+  "usableRows": [
+    {
+      "id": "synth-0",
+      "split": "calibration",
+      "platform": "tvOS",
+      "producer": "TVTestRig",
+      "producerBuild": "1",
+      "sourceDescription": {
+        "assurance": "reported-source; not-attested",
+        "captureMethod": "simctl-explicit-uuid",
+        "collectedAt": 811833326.338702,
+        "fixture": {
+          "app_build": "1",
+          "app_version": "1.0",
+          "fixture_instance_id": "0BF2BA39-6937-4433-8AFB-EA153FB72411",
+          "fixture_run_id": "4B78A74F-AC8C-4CF9-ACE6-93B93854A4BE",
+          "is_bold_text_enabled": false,
+          "is_darker_system_colors_status": false,
+          "is_reduce_motion_enabled": false,
+          "is_switch_control_running": false,
+          "is_voice_over_running": false,
+          "model": "Apple TV",
+          "monotonic_nanoseconds": 217268139247375,
+          "os_version": "tvOS 26.5",
+          "schema_version": 1,
+          "screen_bounds": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "screen_scale": 2
+        },
+        "requestedDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+      },
+      "identityEvidence": null,
+      "provenance": "unverified-pixel-telemetry-binding",
+      "eligibleForTraining": false,
+      "elements": [
+        {
+          "element_id": "dialog_btn_0",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.3125,
+            0.7060185185185185,
+            0.4947916666666667,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1200,
+            1525,
+            700,
+            144
+          ],
+          "taxonomy_class": "primaryButton"
+        },
+        {
+          "element_id": "dialog_btn_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.5052083333333334,
+            0.7060185185185185,
+            0.6875,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1940,
+            1525,
+            700,
+            144
+          ],
+          "taxonomy_class": "cancelAction"
+        },
+        {
+          "element_id": "dialog_container",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.2916666666666667,
+            0.4930555555555556,
+            0.7083333333333334,
+            0.8097222222222222
+          ],
+          "pixel_bounds": [
+            1120,
+            1065,
+            1600,
+            684
+          ],
+          "taxonomy_class": "alert"
+        }
+      ],
+      "recipe": {
+        "archetype": "action_dialog",
+        "density": "regular",
+        "element_count": 2,
+        "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+        "schema_version": 1,
+        "seed": 7,
+        "step_index": 0,
+        "theme": "high_contrast"
+      },
+      "unfocusedPath": "synth-0_unfocused.png",
+      "focusedPath": "synth-0_focused.png",
+      "metadataPath": "synth-0_metadata.json",
+      "unfocusedSHA256": "611ae572611ac179e1f2e22efd8ef3957ffccf8deaa714d5c7b8d58026e2ed57",
+      "focusedSHA256": "df843d60c96482e83ea3b362a23c6b1093d415633dde852eae147b4e042b0e34",
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "dialog_btn_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.3125,
+                0.7060185185185185,
+                0.4947916666666667,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1200,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "primaryButton"
+            },
+            {
+              "element_id": "dialog_btn_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5052083333333334,
+                0.7060185185185185,
+                0.6875,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1940,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "cancelAction"
+            },
+            {
+              "element_id": "dialog_container",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2916666666666667,
+                0.4930555555555556,
+                0.7083333333333334,
+                0.8097222222222222
+              ],
+              "pixel_bounds": [
+                1120,
+                1065,
+                1600,
+                684
+              ],
+              "taxonomy_class": "alert"
+            }
+          ],
+          "focus_observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 217271863449583,
+          "observation_diagnostics": {
+            "generation": 2,
+            "measuredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1",
+              "dialog_container"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 9.534374985378236,
+            "sampleCount": 37,
+            "sampledGeneration": 2,
+            "stableMilliseconds": 3599.654500023462
+          },
+          "recipe": {
+            "archetype": "action_dialog",
+            "density": "regular",
+            "element_count": 2,
+            "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "high_contrast"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790140530.0582972
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "dialog_btn_0",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.3125,
+                0.7060185185185185,
+                0.4947916666666667,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1200,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "primaryButton"
+            },
+            {
+              "element_id": "dialog_btn_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5052083333333334,
+                0.7060185185185185,
+                0.6875,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1940,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "cancelAction"
+            },
+            {
+              "element_id": "dialog_container",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2916666666666667,
+                0.4930555555555556,
+                0.7083333333333334,
+                0.8097222222222222
+              ],
+              "pixel_bounds": [
+                1120,
+                1065,
+                1600,
+                684
+              ],
+              "taxonomy_class": "alert"
+            }
+          ],
+          "focus_observation": {
+            "generation": 3,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "dialog_btn_0",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requestedID": "dialog_btn_0",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "dialog_btn_0",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 217273694207541,
+          "observation_diagnostics": {
+            "generation": 3,
+            "measuredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1",
+              "dialog_container"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "dialog_btn_0",
+            "reason": "ready",
+            "requestedID": "dialog_btn_0",
+            "requiredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 40.79299999284558,
+            "sampleCount": 18,
+            "sampledGeneration": 3,
+            "stableMilliseconds": 1697.9734583292156
+          },
+          "recipe": {
+            "archetype": "action_dialog",
+            "density": "regular",
+            "element_count": 2,
+            "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "high_contrast"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790140531.8890538
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217271863449583,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 9.534374985378236,
+              "sampleCount": 37,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 3599.654500023462
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140530.0582972
+          },
+          "after_scene_received_host_ns": 217271870731916,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217268457769916,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 3.4837916609831154,
+              "sampleCount": 3,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 199.9996250087861
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140526.6526198
+          },
+          "before_scene_received_host_ns": 217268467532958,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "5E73441E-3FE4-4C25-A1C2-2BA9E41CE41E",
+          "frame_png_sha256": "611ae572611ac179e1f2e22efd8ef3957ffccf8deaa714d5c7b8d58026e2ed57",
+          "frame_received_host_ns": 217271860530250,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 3,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "dialog_btn_0",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requestedID": "dialog_btn_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "dialog_btn_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217273694207541,
+            "observation_diagnostics": {
+              "generation": 3,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "dialog_btn_0",
+              "reason": "ready",
+              "requestedID": "dialog_btn_0",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 40.79299999284558,
+              "sampleCount": 18,
+              "sampledGeneration": 3,
+              "stableMilliseconds": 1697.9734583292156
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140531.8890538
+          },
+          "after_scene_received_host_ns": 217273698410125,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 3,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "dialog_btn_0",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requestedID": "dialog_btn_0",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "dialog_btn_0",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217272160768583,
+            "observation_diagnostics": {
+              "generation": 3,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "dialog_btn_0",
+              "reason": "ready",
+              "requestedID": "dialog_btn_0",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 6.489333318313584,
+              "sampleCount": 3,
+              "sampledGeneration": 3,
+              "stableMilliseconds": 198.84666666621342
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140530.355616
+          },
+          "before_scene_received_host_ns": 217272169232083,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "4CC1005A-69EA-4115-8797-5FC036EC82A6",
+          "frame_png_sha256": "df843d60c96482e83ea3b362a23c6b1093d415633dde852eae147b4e042b0e34",
+          "frame_received_host_ns": 217273692228958,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {},
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "metadataSHA256": "e20bf84f662171669401c1eb9ee9ae01341d32ec446b52a1a5a25cd7acd0c316"
+    },
+    {
+      "id": "synth-1",
+      "split": "calibration",
+      "platform": "tvOS",
+      "producer": "TVTestRig",
+      "producerBuild": "1",
+      "sourceDescription": {
+        "assurance": "reported-source; not-attested",
+        "captureMethod": "simctl-explicit-uuid",
+        "collectedAt": 811833326.338702,
+        "fixture": {
+          "app_build": "1",
+          "app_version": "1.0",
+          "fixture_instance_id": "0BF2BA39-6937-4433-8AFB-EA153FB72411",
+          "fixture_run_id": "4B78A74F-AC8C-4CF9-ACE6-93B93854A4BE",
+          "is_bold_text_enabled": false,
+          "is_darker_system_colors_status": false,
+          "is_reduce_motion_enabled": false,
+          "is_switch_control_running": false,
+          "is_voice_over_running": false,
+          "model": "Apple TV",
+          "monotonic_nanoseconds": 217268139247375,
+          "os_version": "tvOS 26.5",
+          "schema_version": 1,
+          "screen_bounds": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "screen_scale": 2
+        },
+        "requestedDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+      },
+      "identityEvidence": null,
+      "provenance": "unverified-pixel-telemetry-binding",
+      "eligibleForTraining": false,
+      "elements": [
+        {
+          "element_id": "dialog_btn_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.3125,
+            0.7060185185185185,
+            0.4947916666666667,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1200,
+            1525,
+            700,
+            144
+          ],
+          "taxonomy_class": "primaryButton"
+        },
+        {
+          "element_id": "dialog_btn_1",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.5052083333333334,
+            0.7060185185185185,
+            0.6875,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1940,
+            1525,
+            700,
+            144
+          ],
+          "taxonomy_class": "cancelAction"
+        },
+        {
+          "element_id": "dialog_container",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.2916666666666667,
+            0.4930555555555556,
+            0.7083333333333334,
+            0.8097222222222222
+          ],
+          "pixel_bounds": [
+            1120,
+            1065,
+            1600,
+            684
+          ],
+          "taxonomy_class": "alert"
+        }
+      ],
+      "recipe": {
+        "archetype": "action_dialog",
+        "density": "regular",
+        "element_count": 2,
+        "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+        "schema_version": 1,
+        "seed": 7,
+        "step_index": 0,
+        "theme": "high_contrast"
+      },
+      "unfocusedPath": "synth-1_unfocused.png",
+      "focusedPath": "synth-1_focused.png",
+      "metadataPath": "synth-1_metadata.json",
+      "unfocusedSHA256": "611ae572611ac179e1f2e22efd8ef3957ffccf8deaa714d5c7b8d58026e2ed57",
+      "focusedSHA256": "3320ae3f30833d55cb8f88c6eec902bca146bcbd4501d4489e2c8f22a5869f9e",
+      "sidecarVersion": 2,
+      "observationBinding": {
+        "schemaVersion": 2,
+        "correlation": "validated_capture_bracket",
+        "baselineScene": {
+          "elements": [
+            {
+              "element_id": "dialog_btn_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.3125,
+                0.7060185185185185,
+                0.4947916666666667,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1200,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "primaryButton"
+            },
+            {
+              "element_id": "dialog_btn_1",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.5052083333333334,
+                0.7060185185185185,
+                0.6875,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1940,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "cancelAction"
+            },
+            {
+              "element_id": "dialog_container",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2916666666666667,
+                0.4930555555555556,
+                0.7083333333333334,
+                0.8097222222222222
+              ],
+              "pixel_bounds": [
+                1120,
+                1065,
+                1600,
+                684
+              ],
+              "taxonomy_class": "alert"
+            }
+          ],
+          "focus_observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 217271863449583,
+          "observation_diagnostics": {
+            "generation": 2,
+            "measuredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1",
+              "dialog_container"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": true,
+              "referenceFocused": true,
+              "resolution": "identifier"
+            },
+            "reason": "ready",
+            "requiredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 9.534374985378236,
+            "sampleCount": 37,
+            "sampledGeneration": 2,
+            "stableMilliseconds": 3599.654500023462
+          },
+          "recipe": {
+            "archetype": "action_dialog",
+            "density": "regular",
+            "element_count": 2,
+            "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "high_contrast"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790140530.0582972
+        },
+        "focusedScene": {
+          "elements": [
+            {
+              "element_id": "dialog_btn_0",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.3125,
+                0.7060185185185185,
+                0.4947916666666667,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1200,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "primaryButton"
+            },
+            {
+              "element_id": "dialog_btn_1",
+              "is_focused": true,
+              "normalized_bounds": [
+                0.5052083333333334,
+                0.7060185185185185,
+                0.6875,
+                0.7726851851851851
+              ],
+              "pixel_bounds": [
+                1940,
+                1525,
+                700,
+                144
+              ],
+              "taxonomy_class": "cancelAction"
+            },
+            {
+              "element_id": "dialog_container",
+              "is_focused": false,
+              "normalized_bounds": [
+                0.2916666666666667,
+                0.4930555555555556,
+                0.7083333333333334,
+                0.8097222222222222
+              ],
+              "pixel_bounds": [
+                1120,
+                1065,
+                1600,
+                684
+              ],
+              "taxonomy_class": "alert"
+            }
+          ],
+          "focus_observation": {
+            "generation": 4,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "dialog_btn_1",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requestedID": "dialog_btn_1",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "focused_element_id": "dialog_btn_1",
+          "harvest_challenge_active": false,
+          "is_settled": true,
+          "monotonic_nanoseconds": 217275532392125,
+          "observation_diagnostics": {
+            "generation": 4,
+            "measuredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1",
+              "dialog_container"
+            ],
+            "missingIDs": [],
+            "nativeFocusResolved": true,
+            "nativeProbe": {
+              "focusSystemAvailable": true,
+              "focusedItemKind": "view",
+              "geometryAvailable": true,
+              "geometrySource": "uikit_window_converted_bounds",
+              "referenceAttached": true,
+              "referenceFocusable": false,
+              "referenceFocused": false,
+              "resolution": "identifier"
+            },
+            "observedID": "dialog_btn_1",
+            "reason": "ready",
+            "requestedID": "dialog_btn_1",
+            "requiredIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requiredMilliseconds": 150,
+            "sampleAgeMilliseconds": 78.9725833456032,
+            "sampleCount": 18,
+            "sampledGeneration": 4,
+            "stableMilliseconds": 1699.1377916710917
+          },
+          "recipe": {
+            "archetype": "action_dialog",
+            "density": "regular",
+            "element_count": 2,
+            "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+            "schema_version": 1,
+            "seed": 7,
+            "step_index": 0,
+            "theme": "high_contrast"
+          },
+          "scene_height": 2160,
+          "scene_width": 3840,
+          "schema_version": 1,
+          "timestamp": 1790140533.7272382
+        },
+        "referenceCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217271863449583,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 9.534374985378236,
+              "sampleCount": 37,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 3599.654500023462
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140530.0582972
+          },
+          "after_scene_received_host_ns": 217271870731916,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 2,
+              "geometrySource": "uikit_window_converted_bounds",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217268457769916,
+            "observation_diagnostics": {
+              "generation": 2,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": true,
+                "referenceFocused": true,
+                "resolution": "identifier"
+              },
+              "reason": "ready",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 3.4837916609831154,
+              "sampleCount": 3,
+              "sampledGeneration": 2,
+              "stableMilliseconds": 199.9996250087861
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140526.6526198
+          },
+          "before_scene_received_host_ns": 217268467532958,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "5E73441E-3FE4-4C25-A1C2-2BA9E41CE41E",
+          "frame_png_sha256": "611ae572611ac179e1f2e22efd8ef3957ffccf8deaa714d5c7b8d58026e2ed57",
+          "frame_received_host_ns": 217271860530250,
+          "frame_width": 3840
+        },
+        "focusedCapture": {
+          "after_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 4,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "dialog_btn_1",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requestedID": "dialog_btn_1",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "dialog_btn_1",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217275532392125,
+            "observation_diagnostics": {
+              "generation": 4,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "dialog_btn_1",
+              "reason": "ready",
+              "requestedID": "dialog_btn_1",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 78.9725833456032,
+              "sampleCount": 18,
+              "sampledGeneration": 4,
+              "stableMilliseconds": 1699.1377916710917
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140533.7272382
+          },
+          "after_scene_received_host_ns": 217275536398250,
+          "before_scene": {
+            "elements": [
+              {
+                "element_id": "dialog_btn_0",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.3125,
+                  0.7060185185185185,
+                  0.4947916666666667,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1200,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "primaryButton"
+              },
+              {
+                "element_id": "dialog_btn_1",
+                "is_focused": true,
+                "normalized_bounds": [
+                  0.5052083333333334,
+                  0.7060185185185185,
+                  0.6875,
+                  0.7726851851851851
+                ],
+                "pixel_bounds": [
+                  1940,
+                  1525,
+                  700,
+                  144
+                ],
+                "taxonomy_class": "cancelAction"
+              },
+              {
+                "element_id": "dialog_container",
+                "is_focused": false,
+                "normalized_bounds": [
+                  0.2916666666666667,
+                  0.4930555555555556,
+                  0.7083333333333334,
+                  0.8097222222222222
+                ],
+                "pixel_bounds": [
+                  1120,
+                  1065,
+                  1600,
+                  684
+                ],
+                "taxonomy_class": "alert"
+              }
+            ],
+            "focus_observation": {
+              "generation": 4,
+              "geometrySource": "uikit_window_converted_bounds",
+              "observedID": "dialog_btn_1",
+              "plannedFocusIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requestedID": "dialog_btn_1",
+              "source": "uikit_focus_system",
+              "verified": true
+            },
+            "focused_element_id": "dialog_btn_1",
+            "harvest_challenge_active": false,
+            "is_settled": true,
+            "monotonic_nanoseconds": 217273979191083,
+            "observation_diagnostics": {
+              "generation": 4,
+              "measuredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1",
+                "dialog_container"
+              ],
+              "missingIDs": [],
+              "nativeFocusResolved": true,
+              "nativeProbe": {
+                "focusSystemAvailable": true,
+                "focusedItemKind": "view",
+                "geometryAvailable": true,
+                "geometrySource": "uikit_window_converted_bounds",
+                "referenceAttached": true,
+                "referenceFocusable": false,
+                "referenceFocused": false,
+                "resolution": "identifier"
+              },
+              "observedID": "dialog_btn_1",
+              "reason": "ready",
+              "requestedID": "dialog_btn_1",
+              "requiredIDs": [
+                "dialog_btn_0",
+                "dialog_btn_1"
+              ],
+              "requiredMilliseconds": 150,
+              "sampleAgeMilliseconds": 24.733833328355104,
+              "sampleCount": 3,
+              "sampledGeneration": 4,
+              "stableMilliseconds": 200.16745832981542
+            },
+            "recipe": {
+              "archetype": "action_dialog",
+              "density": "regular",
+              "element_count": 2,
+              "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+              "schema_version": 1,
+              "seed": 7,
+              "step_index": 0,
+              "theme": "high_contrast"
+            },
+            "scene_height": 2160,
+            "scene_width": 3840,
+            "schema_version": 1,
+            "timestamp": 1790140532.174038
+          },
+          "before_scene_received_host_ns": 217273986328666,
+          "correlation": "validated_capture_bracket",
+          "frame_height": 2160,
+          "frame_observation_id": "183F01D5-4252-4AA3-ADFE-705C9C533B2C",
+          "frame_png_sha256": "3320ae3f30833d55cb8f88c6eec902bca146bcbd4501d4489e2c8f22a5869f9e",
+          "frame_received_host_ns": 217275529775583,
+          "frame_width": 3840
+        },
+        "layoutExclusions": {},
+        "boundsSemantics": "measured_view_bounds; not_focus_effect_segmentation"
+      },
+      "metadataSHA256": "e36e19a2a8a777a130879008502b961024c9717df8f2f051485cea47bf3910a1"
+    }
+  ]
+}

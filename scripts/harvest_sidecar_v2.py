@@ -25,6 +25,25 @@ def identifiers(value):
             and len(set(value)) == len(value))
 
 
+def appearance_digest_source(recipe):
+    """Closed producer appearance-v1 contract; absent/null preserves legacy hashes."""
+    appearance = recipe.get("appearance")
+    if appearance is None:
+        return ""
+    require(isinstance(appearance, dict) and set(appearance) == {"version", "preset", "layout"},
+            "appearance_fields")
+    require(type(appearance["version"]) is int and appearance["version"] == 1,
+            "appearance_version")
+    require(isinstance(appearance["preset"], str) and appearance["preset"] in
+            {"artwork", "bright_unfocused", "gray_placeholder"}, "appearance_preset")
+    require(isinstance(appearance["layout"], str) and appearance["layout"] in
+            {"standard", "dock"}, "appearance_layout")
+    require(recipe.get("archetype") == "grid_matrix" or
+            (recipe.get("archetype") == "media_shelf" and appearance["layout"] == "standard"),
+            "appearance_archetype_layout")
+    return f":appearance@1:{appearance['preset']}:{appearance['layout']}"
+
+
 def recipe_hash(recipe):
     require(isinstance(recipe, dict), "recipe_missing")
     require(recipe.get("schema_version") == 1 and type(recipe.get("schema_version")) is int,
@@ -48,7 +67,7 @@ def recipe_hash(recipe):
                           + ":".join(str(pack[k]).lower() for k in flags))
     canonical = ":".join(str(recipe[k]) for k in
                          ("schema_version", "archetype", "element_count", "theme", "density", "seed", "step_index"))
-    return hashlib.sha256((canonical + ":" + canonical_pack).encode()).hexdigest()
+    return hashlib.sha256((canonical + ":" + canonical_pack + appearance_digest_source(recipe)).encode()).hexdigest()
 
 
 def scene_check(scene, size, expected):

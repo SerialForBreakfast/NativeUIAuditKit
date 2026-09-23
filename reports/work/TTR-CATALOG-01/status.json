@@ -1,0 +1,12 @@
+{
+  "command" : "status",
+  "durationMilliseconds" : 5008,
+  "error" : {
+    "code" : "serviceUnavailable",
+    "message" : "TVTestRig is unavailable. Open the TVTestRig app and keep it running, then retry.",
+    "retryable" : false
+  },
+  "requestID" : "95AD1281-0D12-4925-A7B5-1E86675069AD",
+  "schemaVersion" : 1,
+  "success" : false
+}

@@ -80,7 +80,7 @@ def run(peer, output):
     draw.rectangle((0, 240, 639, 479), fill='blue')
     draw.rectangle((180, 60, 300, 140), fill='green')
     synthetic = output / 'synthetic-source.png'; im.save(synthetic)
-    for name, box in [('upper', [190, 70, 100, 60]), ('edge', [0, 0, 80, 50]), ('lower', [90, 350, 120, 70])]:
+    for name, box in calibration_boxes():
         items.append(dict(id='synthetic-' + name, path=str(synthetic), sha256=sha(synthetic), bounds=box))
     (output / 'inputs.json').write_text(json.dumps(items, indent=2))
     nua_crops = invoke(items)
@@ -112,7 +112,8 @@ def run(peer, output):
                             'nuiakProbability': ns['probability'],
                             'ttrProbability': tr['probability'], 'ttrConfidence': tr['confidence'],
                             'ttrRepeatProbability': tr['secondProbability'],
-                            'ttrZeroScoreMayHideFailure': tr['zeroScoreMayHideFailure']})
+                            'ttrZeroScoreMayHideFailure': tr['zeroScoreMayHideFailure'],
+                            'ttrPreprocessingVersion': tr['preprocessingVersion']})
     # Full-image bounds clamp expansion to the entire already-generated crop.
     # Verify this wrapper is pixel-preserving before interpreting controlled scores.
     recrops = invoke(controlled_items)
@@ -141,6 +142,13 @@ def run(peer, output):
     (output / 'report.json').write_text(json.dumps(report, indent=2))
     print(json.dumps({'cases': len(items), 'equalCrops': sum(r['pixelsEqual'] for r in comparisons),
                       'report': str(output / 'report.json')}))
+
+
+def calibration_boxes():
+    return [('upper', [190, 70, 100, 60]), ('edge', [0, 0, 80, 50]),
+            ('lower', [90, 350, 120, 70]), ('fractional', [174.5, 58.25, 132.5, 88.75]),
+            ('bottom-right', [597.25, 432.5, 42.75, 47.5]),
+            ('cross-color-boundary', [150.25, 204.75, 170.5, 78.25])]
 
 
 if __name__ == '__main__':

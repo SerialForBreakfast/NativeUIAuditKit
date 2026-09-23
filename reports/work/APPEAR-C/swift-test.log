@@ -1,0 +1,277 @@
+warning: '--skip-update' option is deprecated and will be removed in a future release
+warning: /Users/josephmccraw/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/josephmccraw/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/josephmccraw/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'nativeuiauditkit': failed storing manifest for 'nativeuiauditkit' in cache: attempt to write a readonly database
+warning: 'swift-docc-plugin': failed storing manifest for 'swift-docc-plugin' in cache: attempt to write a readonly database
+warning: 'swift-docc-symbolkit': failed storing manifest for 'swift-docc-symbolkit' in cache: attempt to write a readonly database
+[0/1] Planning build
+[1/1] Compiling plugin Swift-DocC Preview
+[2/2] Compiling plugin Swift-DocC
+Building for debugging...
+[2/16] Write swift-version--58304C5D6DBC2206.txt
+[4/5] Emitting module NativeUIAuditKitTests
+Build complete! (3.67s)
+Test Suite 'All tests' started at 2026-09-22 22:29:18.624.
+Test Suite 'NativeUIAuditKitPackageTests.xctest' started at 2026-09-22 22:29:18.625.
+Test Suite 'NativeUIModelAssetTests' started at 2026-09-22 22:29:18.625.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testDefaultModelURLResolves]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testDefaultModelURLResolves]' passed (0.002 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testFocusRingDetectorLoads]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testFocusRingDetectorLoads]' passed (0.182 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testFocusRingDetectorMetadataHasThresholds]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testFocusRingDetectorMetadataHasThresholds]' passed (0.096 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testFocusRingDetectorURLResolves]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testFocusRingDetectorURLResolves]' passed (0.000 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testLoadModelWithDescriptor]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testLoadModelWithDescriptor]' passed (0.824 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testManifestsLoadAndValidate]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testManifestsLoadAndValidate]' passed (0.001 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testMetadataMatchesModel]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testMetadataMatchesModel]' passed (0.000 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelLoads]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelLoads]' passed (0.202 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelManifestValidationPassesForBundledModels]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelManifestValidationPassesForBundledModels]' passed (0.396 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelManifestValidationRejectsMismatchedContract]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelManifestValidationRejectsMismatchedContract]' passed (0.198 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelMetadataLicenseDisclosure]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testModelMetadataLicenseDisclosure]' passed (0.400 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testTVOSMetadataMatchesModel]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testTVOSMetadataMatchesModel]' passed (0.000 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testTVOSModelLoads]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testTVOSModelLoads]' passed (0.192 seconds).
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testTVOSModelURLResolves]' started.
+Test Case '-[NativeUIAuditKitModelsTests.NativeUIModelAssetTests testTVOSModelURLResolves]' passed (0.000 seconds).
+Test Suite 'NativeUIModelAssetTests' passed at 2026-09-22 22:29:21.120.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 2.493 (2.495) seconds
+Test Suite 'NativeUIAuditKitPackageTests.xctest' passed at 2026-09-22 22:29:21.120.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 2.493 (2.495) seconds
+Test Suite 'All tests' passed at 2026-09-22 22:29:21.120.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 2.493 (2.496) seconds
+E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/7D773E0106BE556F76AE116756C2DED243ACE7C0554E3D24BADED42F1A955E82/39D2B5C961085C8CFD7FCDF257D57AFDA9040936B16A7690CC097E3FDD7FBB0B.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/7D773E0106BE556F76AE116756C2DED243ACE7C0554E3D24BADED42F1A955E82/39D2B5C961085C8CFD7FCDF257D57AFDA9040936B16A7690CC097E3FDD7FBB0B.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/52F733025069BD2529C639B1596D611E37E2029FD0BB1E57245A37DF756284AF/1215E443DBB971E2C4D8C4F395ECDF3ADD803534DC26CC3851E0276BF1BF4B99.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/52F733025069BD2529C639B1596D611E37E2029FD0BB1E57245A37DF756284AF/1215E443DBB971E2C4D8C4F395ECDF3ADD803534DC26CC3851E0276BF1BF4B99.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/52F733025069BD2529C639B1596D611E37E2029FD0BB1E57245A37DF756284AF/1215E443DBB971E2C4D8C4F395ECDF3ADD803534DC26CC3851E0276BF1BF4B99.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/52F733025069BD2529C639B1596D611E37E2029FD0BB1E57245A37DF756284AF/1215E443DBB971E2C4D8C4F395ECDF3ADD803534DC26CC3851E0276BF1BF4B99.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/com.apple.dt.xctest.tool/com.apple.e5rt.e5bundlecache/25E253/0B67C694647B3D74853A7314888FAC17236D3A9F7DE635CF81D9535D9069A3A6/ED8DC093EE320EAFD87362727A7A9FBAD5491C46E02442DB427E70BD2B691070.tmp.48974_38609129024.bundle"].􀟈  Test run started.
+􀄵  Testing Library Version: 1902
+􀄵  Target Platform: arm64e-apple-macos14.0
+􀟈  Suite "NativeUIAuditKit Scaffold" started.
+􀟈  Suite "TextAnchorVerifier" started.
+􀟈  Suite "DeviceDimensionDatabase Lookup" started.
+􀟈  Suite "DeviceInference Engine" started.
+􀟈  Suite "ObservationMerger OCR Fusion Policy" started.
+􀟈  Suite "FrameSimilarity" started.
+􀟈  Test "FocusRingClassifier returns a unit-interval probability on a tvOS home crop" started.
+􀟈  Test "NativeUIElementState nil optional fields are omitted from JSON" started.
+􀟈  Test "Detection request with OCR fuses visible text on kitchen sink fixture" started.
+􀟈  Suite "AuditRules Automated UI Auditing" started.
+􀟈  Test "NativeUIElementType has stable raw values for taxonomy v0 classes" started.
+􀟈  Test "Detection request with OCR disabled leaves visible text nil" started.
+􀟈  Suite "Integration & NativeUIRecognizing" started.
+􀟈  Test "Detection request finds real elements on the kitchen sink fixture" started.
+􀟈  Test "FocusRing expansion preserves fractional frame-specific geometry" started.
+􀟈  Test "NativeUIElementObservation is Sendable and Codable" started.
+􀟈  Test "useFocusClassifier survives Codable round-trip" started.
+􀟈  Test "Package version is non-empty" started.
+􀟈  Suite "ChangeRegionLocalizer" started.
+􀟈  Test "NativeUISidecar rejects unsupported schema versions" started.
+􀟈  Test "NativeUISidecar encodes and decodes correctly" started.
+􀟈  Test "All 41 element type rawValues survive Codable round-trip" started.
+􀟈  Test "ROI-scoped OCR still finds an anchor known to be inside the region" started.
+􀟈  Test "FocusRing crops top-left content without vertical reflection" started.
+􀟈  Test "Experimental aspect-fit is opt-in and preserves the production default" started.
+􀟈  Test "FocusRing crop expansion is 16 percent per side and clamps to image bounds" started.
+􀟈  Test "NativeUIElementState optional fields round-trip when set" started.
+􀟈  Test "No OCR text found at all -> ambiguous, not unverified" started.
+􀟈  Test "A missing required anchor -> unverified, not a best guess" started.
+􀟈  Test "Matching is case-insensitive substring containment" started.
+􀟈  Test "Focus classifier flag controls which resolution path runs without crashing" started.
+􀟈  Test "Real OCR on the kitchen-sink fixture verifies against its own discovered text" started.
+􀟈  Test "FocusRing crop is always 256 by 256" started.
+􀟈  Test "Pixel-only path for iPhone SE resolution" started.
+􀟈  Test "Pixel ROI to Vision-normalized conversion matches the package's existing y-flip convention" started.
+􀟈  Test "No required anchors supplied -> ambiguous, not a silent pass" started.
+􀟈  Test "NativeUIRect round-trips through CGRect" started.
+􀟈  Test "Exempt classes never receive text association even with direct overlap" started.
+􀟈  Test "Optional anchors are reported but never affect status" started.
+􀟈  Test "Sidecar fast-path returns exact device metadata with confidence 1.0" started.
+􀟈  Test "All required anchors present, no forbidden anchors -> verified" started.
+􀟈  Test "Detection request confidence threshold filters output" started.
+􀟈  Test "Quadrant filter rejects candidate in opposite quadrant" started.
+􀟈  Test "MacBook Air 1440x900 resolution maps to macOS" started.
+􀟈  Test "Sidecar conflict resolution: distance <= 2 keeps sidecar, > 2 prefers OCR" started.
+􀟈  Test "Apple TV 1080p resolution maps to tvOS" started.
+􀟈  Test "Assigns multiple OCR text regions to elements based on highest IoU" started.
+􀟈  Test "Reading order aggregates text top-to-bottom and left-to-right" started.
+􀟈  Test "Ambiguous resolutions return multiple candidate models" started.
+􀟈  Test "Landscape screenshot dimensions resolve identically to portrait" started.
+􀟈  Test "Distance is symmetric" started.
+􀟈  Test "Pixel-only path for iPhone 15 Pro with Dynamic Island observation" started.
+􀟈  Test "Fallback path for unlisted resolution returns non-empty candidates" started.
+􀟈  Test "iPhone 15 Pro resolution maps to iPhone 15 Pro candidates" started.
+􀟈  Test "A forbidden anchor present -> unverified even if all required anchors matched" started.
+􀟈  Test "A localized visual change is never reported as identical (changed-focus true-negative)" started.
+􀟈  Test "Cache reports unchanged on first sight only after seeding, then true for a repeat frame" started.
+􀟈  Test "Cache does not false-hit on a localized change under a tight threshold" started.
+􀟈  Test "iPhone SE resolution maps to SE models" started.
+􀟈  Test "Cache states are independent" started.
+􀟈  Test "Two entirely different screens score further apart than the same screen" started.
+􀟈  Test "Invalidate forces the next call to report changed" started.
+􀟈  Test "Same image compared to itself has near-zero distance" started.
+􀟈  Test "Flags undersized interactive control" started.
+􀟈  Test "Passes adequately sized interactive control" started.
+􀟈  Test "Exempt elements never receive truncation issue" started.
+􀟈  Test "Ignores legitimate container-child nesting" started.
+􀟈  Test "Does not flag non-interactive elements for touch target size" started.
+􀟈  Test "Exempts edge-to-edge chrome from clipping rules" started.
+􀟈  Test "Detects truncated text ending with partial token" started.
+􀟈  Test "Does not flag elements properly inset from boundary" started.
+􀟈  Test "Does not flag complete text as truncated" started.
+􀟈  Test "Flags colliding peer elements symmetrically" started.
+􀟈  Test "Detects element clipping against screenshot boundary" started.
+􀟈  Test "Detects truncated text ending with ellipsis" started.
+􀟈  Test "Strict modality policy throws/fails request when OCR fails" started.
+􀟈  Test "NativeUIRecognitionStatus round-trips through Codable" started.
+􀟈  Test "ModalityHealth reports ocr as empty on a legitimately text-free image" started.
+􀟈  Test "NativeUIDetectionSession pre-warms models, eliminates load latency on subsequent calls, and manages cache" started.
+􀟈  Test "tvOS focus recognizes VoiceOver high-contrast double border outline" started.
+􀟈  Test "tvOS peer-relative geometry heuristic rewards expanded collection items" started.
+􀟈  Test "ModalityHealth reports all requested modalities as available on success" started.
+􀟈  Test "Detector recognizer performs detection on valid PNG data" started.
+􀟈  Test "Detector recognizer safely handles corrupt image data" started.
+􀟈  Test "tvOS auto-routing performs detection and resolves active focus" started.
+􀟈  Test "ModalityHealth reports ocr as notRequested when text recognition is disabled" started.
+􀟈  Test "Detection request populates stage timings when recordTimings is enabled" started.
+􀟈  Test "tvOS focus asserts confident winner on clear margin" started.
+􀟈  Test "No-op recognizer returns empty elements with .notRequested" started.
+􀟈  Test "tvOS focus abstains when multiple candidates compete within score margin" started.
+􀟈  Test "DetectionStageTimings encodes and decodes through Codable" started.
+􀟈  Test "tvOS focus abstains cleanly during video playback and ambient screensavers" started.
+􀟈  Test "NativeUIObservations round-trips through Codable" started.
+􀟈  Test "Permissive modality policy preserves detections and records honest OCR failure" started.
+􀟈  Test "tvOS focus abstains when all candidates score below threshold" started.
+􀟈  Test "tvOS expanded collection item takes focus precedence over bottom-edge list row" started.
+􁁛  Test "NativeUIElementType has stable raw values for taxonomy v0 classes" passed after 0.011 seconds.
+􁁛  Test "FocusRing expansion preserves fractional frame-specific geometry" passed after 0.011 seconds.
+􁁛  Test "Package version is non-empty" passed after 0.011 seconds.
+􀟈  Test "A small localized change yields exactly one small ROI, classified local" started.
+􀟈  Test "ModalityHealth and ModalityStatus round-trip through Codable" started.
+􀟈  Test "Identical frames classify as no change with no regions" started.
+􀟈  Test "Result never exposes image data — geometry and classification only" started.
+􀟈  Test "Two entirely different screens classify as fullFrame" started.
+􀟈  Test "Mismatched dimensions throw rather than silently misaligning" started.
+􁁛  Test "NativeUIElementState nil optional fields are omitted from JSON" passed after 0.011 seconds.
+􁁛  Test "All 41 element type rawValues survive Codable round-trip" passed after 0.011 seconds.
+􁁛  Test "NativeUISidecar encodes and decodes correctly" passed after 0.011 seconds.
+􁁛  Test "useFocusClassifier survives Codable round-trip" passed after 0.011 seconds.
+􁁛  Test "NativeUIElementObservation is Sendable and Codable" passed after 0.011 seconds.
+􁁛  Test "FocusRing crop expansion is 16 percent per side and clamps to image bounds" passed after 0.011 seconds.
+􁁛  Test "NativeUIElementState optional fields round-trip when set" passed after 0.011 seconds.
+􁁛  Test "No OCR text found at all -> ambiguous, not unverified" passed after 0.011 seconds.
+􁁛  Test "NativeUISidecar rejects unsupported schema versions" passed after 0.011 seconds.
+􁁛  Test "A missing required anchor -> unverified, not a best guess" passed after 0.011 seconds.
+􁁛  Test "Matching is case-insensitive substring containment" passed after 0.011 seconds.
+􁁛  Test "FocusRing crops top-left content without vertical reflection" passed after 0.011 seconds.
+􁁛  Test "Pixel-only path for iPhone SE resolution" passed after 0.011 seconds.
+􁁛  Test "NativeUIRect round-trips through CGRect" passed after 0.011 seconds.
+􁁛  Test "Pixel ROI to Vision-normalized conversion matches the package's existing y-flip convention" passed after 0.011 seconds.
+􁁛  Test "Exempt classes never receive text association even with direct overlap" passed after 0.011 seconds.
+􁁛  Test "Sidecar fast-path returns exact device metadata with confidence 1.0" passed after 0.011 seconds.
+􁁛  Test "No required anchors supplied -> ambiguous, not a silent pass" passed after 0.011 seconds.
+􁁛  Test "Optional anchors are reported but never affect status" passed after 0.011 seconds.
+􁁛  Test "All required anchors present, no forbidden anchors -> verified" passed after 0.011 seconds.
+􁁛  Test "Quadrant filter rejects candidate in opposite quadrant" passed after 0.011 seconds.
+􁁛  Test "MacBook Air 1440x900 resolution maps to macOS" passed after 0.011 seconds.
+􁁛  Test "Sidecar conflict resolution: distance <= 2 keeps sidecar, > 2 prefers OCR" passed after 0.011 seconds.
+􁁛  Test "Assigns multiple OCR text regions to elements based on highest IoU" passed after 0.011 seconds.
+􁁛  Test "Reading order aggregates text top-to-bottom and left-to-right" passed after 0.011 seconds.
+􁁛  Test "Apple TV 1080p resolution maps to tvOS" passed after 0.011 seconds.
+􁁛  Test "Ambiguous resolutions return multiple candidate models" passed after 0.011 seconds.
+􁁛  Test "Landscape screenshot dimensions resolve identically to portrait" passed after 0.011 seconds.
+􁁛  Test "Pixel-only path for iPhone 15 Pro with Dynamic Island observation" passed after 0.011 seconds.
+􁁛  Test "FocusRing crop is always 256 by 256" passed after 0.012 seconds.
+􁁛  Test "Fallback path for unlisted resolution returns non-empty candidates" passed after 0.012 seconds.
+􁁛  Test "A forbidden anchor present -> unverified even if all required anchors matched" passed after 0.012 seconds.
+􁁛  Test "iPhone 15 Pro resolution maps to iPhone 15 Pro candidates" passed after 0.012 seconds.
+􁁛  Test "Experimental aspect-fit is opt-in and preserves the production default" passed after 0.013 seconds.
+􁁛  Test "iPhone SE resolution maps to SE models" passed after 0.068 seconds.
+􁁛  Test "Flags undersized interactive control" passed after 0.237 seconds.
+􁁛  Test "Passes adequately sized interactive control" passed after 0.237 seconds.
+􁁛  Test "Exempt elements never receive truncation issue" passed after 0.237 seconds.
+􁁛  Test "Does not flag non-interactive elements for touch target size" passed after 0.237 seconds.
+􁁛  Test "Exempts edge-to-edge chrome from clipping rules" passed after 0.237 seconds.
+􁁛  Test "Detects truncated text ending with partial token" passed after 0.237 seconds.
+􁁛  Test "Does not flag elements properly inset from boundary" passed after 0.237 seconds.
+􁁛  Test "Does not flag complete text as truncated" passed after 0.237 seconds.
+􁁛  Test "Ignores legitimate container-child nesting" passed after 0.237 seconds.
+􁁛  Test "Flags colliding peer elements symmetrically" passed after 0.237 seconds.
+􁁛  Test "Detects element clipping against screenshot boundary" passed after 0.237 seconds.
+􁁛  Test "Detects truncated text ending with ellipsis" passed after 0.237 seconds.
+􁁛  Test "NativeUIRecognitionStatus round-trips through Codable" passed after 0.237 seconds.
+􁁛  Test "tvOS focus recognizes VoiceOver high-contrast double border outline" passed after 0.234 seconds.
+􁁛  Test "tvOS peer-relative geometry heuristic rewards expanded collection items" passed after 0.234 seconds.
+􀢄  Test "Real OCR on the kitchen-sink fixture verifies against its own discovered text" recorded an issue at TextAnchorVerifierTests.swift:113:6: Caught error: .nilError
+􁁛  Test "Detector recognizer safely handles corrupt image data" passed after 0.234 seconds.
+􁁛  Test "tvOS focus asserts confident winner on clear margin" passed after 0.234 seconds.
+􁁛  Test "No-op recognizer returns empty elements with .notRequested" passed after 0.234 seconds.
+􁁛  Test "tvOS focus abstains when multiple candidates compete within score margin" passed after 0.234 seconds.
+􁁛  Test "DetectionStageTimings encodes and decodes through Codable" passed after 0.234 seconds.
+􁁛  Test "tvOS focus abstains cleanly during video playback and ambient screensavers" passed after 0.234 seconds.
+􁁛  Test "NativeUIObservations round-trips through Codable" passed after 0.234 seconds.
+􁁛  Test "tvOS focus abstains when all candidates score below threshold" passed after 0.234 seconds.
+􀢄  Test "ROI-scoped OCR still finds an anchor known to be inside the region" recorded an issue at TextAnchorVerifierTests.swift:138:6: Caught error: .nilError
+􁁛  Test "tvOS expanded collection item takes focus precedence over bottom-edge list row" passed after 0.234 seconds.
+􁁛  Test "ModalityHealth and ModalityStatus round-trip through Codable" passed after 0.234 seconds.
+􁁛  Test "Identical frames classify as no change with no regions" passed after 0.234 seconds.
+􁁛  Test "A small localized change yields exactly one small ROI, classified local" passed after 0.234 seconds.
+􁁛  Test "Result never exposes image data — geometry and classification only" passed after 0.234 seconds.
+􁁛  Test "Mismatched dimensions throw rather than silently misaligning" passed after 0.234 seconds.
+􁁛  Suite "DeviceInference Engine" passed after 0.246 seconds.
+􁁛  Suite "ObservationMerger OCR Fusion Policy" passed after 0.246 seconds.
+􁁛  Suite "DeviceDimensionDatabase Lookup" passed after 0.246 seconds.
+􀢄  Test "Real OCR on the kitchen-sink fixture verifies against its own discovered text" failed after 0.245 seconds with 1 issue.
+􀢄  Test "ROI-scoped OCR still finds an anchor known to be inside the region" failed after 0.245 seconds with 1 issue.
+􁁛  Suite "AuditRules Automated UI Auditing" passed after 0.246 seconds.
+􀢄  Suite "TextAnchorVerifier" failed after 0.246 seconds with 2 issues.
+􁁛  Test "Two entirely different screens classify as fullFrame" passed after 0.380 seconds.
+􁁛  Suite "ChangeRegionLocalizer" passed after 0.392 seconds.
+sysctlbyname for kern.hv_vmm_present failed with status -1kIOSurfaceMethodSetCoreVideoBridgedKeys failed: 10000003
+􁁛  Test "FocusRingClassifier returns a unit-interval probability on a tvOS home crop" passed after 0.669 seconds.
+E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/39CA3054EEAA9F33EA17E685C41292BF10E9EDCAA3F517A97E5FD3EB754ABA56/598AB1BCC99F923D75E3E5946074E5EB5059D9BA96F24F0125EE19E58AE5DF65.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/F5020C39E24DEC02B07030EEA70614729349DF1B49AF258AE99BCD009E8CE949/9531A938C57A7D4344BF550DDC52616E4848FE0BAAA132B5BA536F7B554F3AC6.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4􀢄  Test "Cache reports unchanged on first sight only after seeding, then true for a repeat frame" recorded an issue at FrameSimilarityTests.swift:82:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Invalidate forces the next call to report changed" recorded an issue at FrameSimilarityTests.swift:117:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Two entirely different screens score further apart than the same screen" recorded an issue at FrameSimilarityTests.swift:61:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Invalidate forces the next call to report changed" failed after 1.070 seconds with 1 issue.
+􀢄  Test "Cache does not false-hit on a localized change under a tight threshold" recorded an issue at FrameSimilarityTests.swift:94:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Distance is symmetric" recorded an issue at FrameSimilarityTests.swift:51:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Cache states are independent" recorded an issue at FrameSimilarityTests.swift:105:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Distance is symmetric" failed after 1.071 seconds with 1 issue.
+􀢄  Test "Cache states are independent" failed after 1.071 seconds with 1 issue.
+􀢄  Test "Same image compared to itself has near-zero distance" recorded an issue at FrameSimilarityTests.swift:44:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Cache reports unchanged on first sight only after seeding, then true for a repeat frame" failed after 1.071 seconds with 1 issue.
+􀢄  Test "A localized visual change is never reported as identical (changed-focus true-negative)" recorded an issue at FrameSimilarityTests.swift:73:6: Caught error: Error Domain=NSOSStatusErrorDomain Code=-6662 "Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000" UserInfo={NSLocalizedDescription=Failed to create CVPixelBufferPool. Width = 0, Height = 0, Format = 0x00000000}
+􀢄  Test "Same image compared to itself has near-zero distance" failed after 1.071 seconds with 1 issue.
+􀢄  Test "A localized visual change is never reported as identical (changed-focus true-negative)" failed after 1.071 seconds with 1 issue.
+􀢄  Test "Cache does not false-hit on a localized change under a tight threshold" failed after 1.071 seconds with 1 issue.
+􀢄  Test "Two entirely different screens score further apart than the same screen" failed after 1.071 seconds with 1 issue.
+􀢄  Suite "FrameSimilarity" failed after 1.072 seconds with 8 issues.
+AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5D􁁛  Test "Detection request with OCR disabled leaves visible text nil" passed after 1.210 seconds.
+E83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/F5020C39E24DEC02B07030EEA70614729349DF1B49AF258AE99BCD009E8CE949/9531A938C57A7D4344BF550DDC52616E4848FE0BAAA132B5BA536F7B554F3AC6.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/F5020C39E24DEC02B07030EEA70614729349DF1B49AF258AE99BCD009E8CE949/9531A938C57A7D4344BF550DDC52616E4848FE0BAAA132B5BA536F7B554F3AC6.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/F5020C39E24DEC02B07030EEA70614729349DF1B49AF258AE99BCD009E8CE949/9531A938C57A7D4344BF550DDC52616E4848FE0BAAA132B5BA536F7B554F3AC6.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg􁁛  Test "Strict modality policy throws/fails request when OCR fails" passed after 1.596 seconds.
+􁁛  Test "Detection request finds real elements on the kitchen sink fixture" passed after 1.625 seconds.
+􀢄  Test "Detection request with OCR fuses visible text on kitchen sink fixture" recorded an issue at NativeUIAuditKitTests.swift:54:9: Expectation failed: !((withText → []).isEmpty → true → true)
+􀄵  Expected at least one element with visible text on kitchen sink fixture
+􀢄  Test "Detection request with OCR fuses visible text on kitchen sink fixture" failed after 1.686 seconds with 1 issue.
+ = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/39CA3054EEAA9F33EA17E685C41292BF10E9EDCAA3F517A97E5FD3EB754ABA56/598AB1BCC99F923D75E3E5946074E5EB5059D9BA96F24F0125EE19E58AE5DF65.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/39CA3054EEAA9F33EA17E685C41292BF10E9EDCAA3F517A97E5FD3EB754ABA56/598AB1BCC99F923D75E3E5946074E5EB5059D9BA96F24F0125EE19E58AE5DF65.tmp.􀢄  Test "ModalityHealth reports ocr as empty on a legitimately text-free image" recorded an issue at IntegrationTests.swift:230:9: Expectation failed: (result.modalityHealth.ocr → .failed(reason: "The operation couldn’t be completed. (Foundation._GenericObjCError error 0.)", domain: Optional("Foundation._GenericObjCError"), code: Optional(0))) == .empty
+􀢄  Test "ModalityHealth reports ocr as empty on a legitimately text-free image" recorded an issue at IntegrationTests.swift:231:9: Expectation failed: (result.modalityHealth.ocr.isFailed → true) == false
+􀢄  Test "ModalityHealth reports ocr as empty on a legitimately text-free image" failed after 1.933 seconds with 2 issues.
+􁁛  Test "ModalityHealth reports ocr as notRequested when text recognition is disabled" passed after 1.980 seconds.
+􁁛  Test "Detector recognizer performs detection on valid PNG data" passed after 1.987 seconds.
+48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/DD894FAE5242FFD8CCB41101EAEFC5DE83782F047F71B15A6B4FF80D1E4BB45C/C9EDA3DEE74C8DB717ADB798167E7A4AF1DBB8CA31326E279BBD10361563572C.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/39CA3054EEAA9F33EA17E685C41292BF10E9EDCAA3F517A97E5FD3EB754ABA56/598AB1BCC99F923D75E3E5946074E5EB5059D9BA96F24F0125EE19E58AE5DF65.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/39CA3054EEAA9F33EA17E685C41292BF10E9EDCAA3F517A97E5FD3EB754ABA56/598A􀢄  Test "ModalityHealth reports all requested modalities as available on success" recorded an issue at IntegrationTests.swift:192:9: Expectation failed: (result.modalityHealth.ocr → .failed(reason: "The operation couldn’t be completed. (Foundation._GenericObjCError error 0.)", domain: Optional("Foundation._GenericObjCError"), code: Optional(0))) == .available
+􀢄  Test "ModalityHealth reports all requested modalities as available on success" recorded an issue at IntegrationTests.swift:195:9: Expectation failed: (result.modalityHealth.hasAnyFailure → true) == false
+􀢄  Test "ModalityHealth reports all requested modalities as available on success" failed after 2.045 seconds with 2 issues.
+􁁛  Test "Permissive modality policy preserves detections and records honest OCR failure" passed after 2.151 seconds.
+􁁛  Test "tvOS auto-routing performs detection and resolves active focus" passed after 2.269 seconds.
+􁁛  Test "Detection request confidence threshold filters output" passed after 2.362 seconds.
+􁁛  Test "NativeUIDetectionSession pre-warms models, eliminates load latency on subsequent calls, and manages cache" passed after 2.400 seconds.
+􁁛  Test "Focus classifier flag controls which resolution path runs without crashing" passed after 2.648 seconds.
+􀢄  Suite "NativeUIAuditKit Scaffold" failed after 2.649 seconds with 1 issue.
+B1BCC99F923D75E3E5946074E5EB5059D9BA96F24F0125EE19E58AE5DF65.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/F5020C39E24DEC02B07030EEA70614729349DF1B49AF258AE99BCD009E8CE949/9531A938C57A7D4344BF550DDC52616E4848FE0BAAA132B5BA536F7B554F3AC6.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/F5020C39E24DEC02B07030EEA70614729349DF1B49AF258AE99BCD009E8CE949/9531A938C57A7D4344BF550DDC52616E4848FE0BAAA132B5BA536F7B554F3AC6.tmp.48987_45651463360.bundle"].E5RT encountered an STL exception. msg = filesystem error: in create_directories: Operation not permitted ["/Users/josephmccraw/Library/Caches/swiftpm-testing-helper/com.apple.e5rt.e5bundlecache/25E253/39CA􁁛  Test "Detection request populates stage timings when recordTimings is enabled" passed after 2.791 seconds.
+􀢄  Suite "Integration & NativeUIRecognizing" failed after 2.803 seconds with 4 issues.
+􀢄  Test run with 93 tests in 9 suites failed after 2.803 seconds with 15 issues.
+3054EEAA9F33EA17E685C41292BF10E9EDCAA3F517A97E5FD3EB754ABA56/598AB1BCC99F923D75E3E5946074E5EB5059D9BA96F24F0125EE19E58AE5DF65.tmp.48987_45651463360.bundle"].

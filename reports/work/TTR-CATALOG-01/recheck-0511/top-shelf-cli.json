@@ -1,0 +1,15 @@
+{
+  "command" : "fixture top-shelf",
+  "data" : {
+    "fixtureTopShelf" : {
+      "_0" : {
+        "schemaVersion" : 1,
+        "state" : "static_fallback"
+      }
+    }
+  },
+  "durationMilliseconds" : 23,
+  "requestID" : "95E76BC5-FF8E-4B36-A937-BF74EFD087D6",
+  "schemaVersion" : 1,
+  "success" : true
+}

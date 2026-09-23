@@ -1,0 +1,530 @@
+{
+  "version": "catalog-evaluation-reservation-v1",
+  "role": "candidate-evaluation-quarantine",
+  "independentEvaluationEligible": false,
+  "trainingApproval": false,
+  "modelScoresComputed": false,
+  "manifests": [
+    {
+      "path": "dataset/focus_ring/appear-c-light/focus_dataset_manifest.json",
+      "sha256": "dbb4b400a6c30314b9d21266d12d4cbb64109784dc974576b8d4bd4276d4461a"
+    },
+    {
+      "path": "dataset/focus_ring/appear-c-dark/focus_dataset_manifest.json",
+      "sha256": "cd6ae2394b8ffc8d8551afe00cd39f84d48535dd4e14fd3b693f3953a04ef12b"
+    },
+    {
+      "path": "dataset/focus_ring/appear-c-high_contrast/focus_dataset_manifest.json",
+      "sha256": "25516187398c6c9eb3a8064ab1bd87e3552b58cacbcc2681488eea3972caf38e"
+    }
+  ],
+  "samples": [
+    {
+      "id": "light:synth-0:focused",
+      "theme": "light",
+      "label": 1,
+      "elementID": "sink_cancelAction",
+      "control": "cancelAction",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-0_focused.png",
+        "sha256": "43dabb3c432941714b6f4b182139fc31dd6e95b6ed8a852a5bc807fdc2392fca",
+        "pixelSHA256": "82a060b0883cacd4f560d90cc31bb59aaacd28d905692f75172224a00ad45d42"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/b4974381ebb96ab01e15a8d823ef6366630fc4d96c30d79b4667330a9be099fe.png",
+        "sha256": "da7407d3f40ff72da906e86f2baa9b37fef2138fc6e58b921fa9f970b1a8a5c7",
+        "pixelSHA256": "2cb1bb1269db859454b873ef2575f3101150986aea59f22e30d37ba9a39920c6"
+      }
+    },
+    {
+      "id": "light:synth-0:unfocused",
+      "theme": "light",
+      "label": 0,
+      "elementID": "sink_cancelAction",
+      "control": "cancelAction",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-0_unfocused.png",
+        "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de",
+        "pixelSHA256": "40ea8f638a12ac1a235e91ffae61d08c7e0aff9ed4361d975e38c5895c8a82cc"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/1d6cbc09dcf65dbb280f3b9a3841dba78ef43688a389f393592e1c93d1b0df48.png",
+        "sha256": "481cfb4455548ef841126f986d3b06dc375ce49b64db7dec740f0f549a40ce0d",
+        "pixelSHA256": "2868b0e4b835a5ab91b58917f47a968b1d0f7f90205a0b60568c30bcfe8ec4fb"
+      }
+    },
+    {
+      "id": "light:synth-1:focused",
+      "theme": "light",
+      "label": 1,
+      "elementID": "sink_destructiveButton",
+      "control": "destructiveButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-1_focused.png",
+        "sha256": "3ae075ac4dbd0f87aa102ffdefd146b2a2be9274f2316194c9fd134229295bd9",
+        "pixelSHA256": "bc0df9aefd504c92f5970fc834ee8c37d216cf8c601ad53558accc22d36aad30"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/b44f2bc7c34b007dd75cebb60d32cb83a09fc35a205593f5e7a0c3f7a3c814c9.png",
+        "sha256": "5f83bf3751a354beb9c3c8fa7775f166c0794e2c9209220e9b6d237c77e9a53e",
+        "pixelSHA256": "c76d3ada9d0c35cc3df730dc24d7942257679fb6fc917b4d45d795c8741ef013"
+      }
+    },
+    {
+      "id": "light:synth-1:unfocused",
+      "theme": "light",
+      "label": 0,
+      "elementID": "sink_destructiveButton",
+      "control": "destructiveButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-1_unfocused.png",
+        "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de",
+        "pixelSHA256": "40ea8f638a12ac1a235e91ffae61d08c7e0aff9ed4361d975e38c5895c8a82cc"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/5d5e57885a530d08b2986f7dcb0b60e120227d8aeac4038a76e51585c73ff64e.png",
+        "sha256": "3e7f2870d05b51cab57352314d6f0b7a69373e0d69b7eab40d96c5423c766907",
+        "pixelSHA256": "9b2053f1cb4fa2949dad2c31b8c134cdae3b1396a746c87fed90e34963485c73"
+      }
+    },
+    {
+      "id": "light:synth-2:focused",
+      "theme": "light",
+      "label": 1,
+      "elementID": "sink_primaryButton",
+      "control": "primaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-2_focused.png",
+        "sha256": "4940fb9a47f8aceba40ed43854db8d9fadb7fabfaaf3d13b4284c21f0ce80f31",
+        "pixelSHA256": "6e3e9c1661d2feb5f4f931640566c50ab4d61fb3325f5aab83a63d02133ed157"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/6d27c43093be1caace0a7dd4748e847a0932fa8689c591d5dff331eee295ed82.png",
+        "sha256": "2803d193caee8727c693b1139700e9ac324a37fc7879268f085ff6f3c9e87ad9",
+        "pixelSHA256": "09b275b7b469b91d445288821ddf0e5efe920689a3752cb756be566d7acaa70e"
+      }
+    },
+    {
+      "id": "light:synth-2:unfocused",
+      "theme": "light",
+      "label": 0,
+      "elementID": "sink_primaryButton",
+      "control": "primaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-2_unfocused.png",
+        "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de",
+        "pixelSHA256": "40ea8f638a12ac1a235e91ffae61d08c7e0aff9ed4361d975e38c5895c8a82cc"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/6ae56f6266416e358822cf76a7a117d8c8357c443c03e8c03a7ef71a615ed8f9.png",
+        "sha256": "b241bbcc8961389e3d3d24326e74f0384ee263b0fc8410d19d3081bcfa6bde31",
+        "pixelSHA256": "b416e63a153c6503cef2ed858eac23148f4bb7d2d7e4fb7810daa2d8e80ec885"
+      }
+    },
+    {
+      "id": "light:synth-3:focused",
+      "theme": "light",
+      "label": 1,
+      "elementID": "sink_secondaryButton",
+      "control": "secondaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-3_focused.png",
+        "sha256": "a335ff372e616cf5bffff41bd2996367e6bca075c2ba340915319baf473eb21b",
+        "pixelSHA256": "4e1b42bb3adb2354797cdc8d3fb975e6bb02e47e706287f8e01ed5b0d4c47b5c"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/d4f3c0d29d69250259972892e2316cf9e76f45073dce58963e040effcf235338.png",
+        "sha256": "cf48db0d5097fe1a7f3d336a8e3c7281199042d237da343431dcf0bceacfa669",
+        "pixelSHA256": "c159bdecdce2e8f1eaf5baba1e0116aae30a0b0fe078cb65070e8fb11151b862"
+      }
+    },
+    {
+      "id": "light:synth-3:unfocused",
+      "theme": "light",
+      "label": 0,
+      "elementID": "sink_secondaryButton",
+      "control": "secondaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-light/synth-3_unfocused.png",
+        "sha256": "0bf072c715fe70e25aaa7aaa87f4b8cb69b644021cfa892c2e1a1eff1039e8de",
+        "pixelSHA256": "40ea8f638a12ac1a235e91ffae61d08c7e0aff9ed4361d975e38c5895c8a82cc"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-light/64ce8ac93a312f36d81dcd00de44a4c239f965bdf21bce168cba7fb6fb4c95cb.png",
+        "sha256": "5b07bb023e0e43a5ac5a045aeaec93eb3435519717d0acadf58642ef4a814231",
+        "pixelSHA256": "4390a68297da87a6e010c56af5c3ad70506dff9cf7fc3d6e800e64cc0a264d77"
+      }
+    },
+    {
+      "id": "dark:synth-0:focused",
+      "theme": "dark",
+      "label": 1,
+      "elementID": "sink_cancelAction",
+      "control": "cancelAction",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-0_focused.png",
+        "sha256": "3c62cbd1acca1e85dc4d24585e2d07e82928763bc33d479b3e6b7065be7952aa",
+        "pixelSHA256": "5ef21886919fbb87efc28d55fad9af0dcbbfd08dfb5aeef77bbc05ffe3fc391c"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/b4974381ebb96ab01e15a8d823ef6366630fc4d96c30d79b4667330a9be099fe.png",
+        "sha256": "1e15385b785e9c92c83b6cc15e1163b86f10bc7385cc1f42776db842ce3f056e",
+        "pixelSHA256": "7a95878337027dbae1cf0162ccc85f00cfeb10356faa011b1235fd1d16f17de8"
+      }
+    },
+    {
+      "id": "dark:synth-0:unfocused",
+      "theme": "dark",
+      "label": 0,
+      "elementID": "sink_cancelAction",
+      "control": "cancelAction",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-0_unfocused.png",
+        "sha256": "fa96aac9ae2dbe9285219c0bb3005f215e8dca24855fff558fe817e34da7831c",
+        "pixelSHA256": "0a462e72ba75545b326321880196019c9400e5bd63f217ece795ffb0c6e6d606"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/1d6cbc09dcf65dbb280f3b9a3841dba78ef43688a389f393592e1c93d1b0df48.png",
+        "sha256": "2235e66d5258f22a17a0f6f9a4d84cf3f6f071c118526b65bf63faef769063b9",
+        "pixelSHA256": "7079f88673467abe46b77fc71e4892e4c1a6c2f56fee7682a1818ede9bbf83d1"
+      }
+    },
+    {
+      "id": "dark:synth-1:focused",
+      "theme": "dark",
+      "label": 1,
+      "elementID": "sink_destructiveButton",
+      "control": "destructiveButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-1_focused.png",
+        "sha256": "6425b9859a2115ec630756a7f151edc8b629ac0dd0b72cfd1552c2577dd7796c",
+        "pixelSHA256": "77d7e0318ba3bec07093be95668662fdfff8c6959680259e8733688318ee4507"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/b44f2bc7c34b007dd75cebb60d32cb83a09fc35a205593f5e7a0c3f7a3c814c9.png",
+        "sha256": "8bd80e67506fd543dc7198079fc3bda4f38e4628ebafa89a2f45ca764b3d1422",
+        "pixelSHA256": "5838d9935d9a1dbb96a9977d27f852425ad3add7121a6b20ba70ce187a8a4b57"
+      }
+    },
+    {
+      "id": "dark:synth-1:unfocused",
+      "theme": "dark",
+      "label": 0,
+      "elementID": "sink_destructiveButton",
+      "control": "destructiveButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-1_unfocused.png",
+        "sha256": "fa96aac9ae2dbe9285219c0bb3005f215e8dca24855fff558fe817e34da7831c",
+        "pixelSHA256": "0a462e72ba75545b326321880196019c9400e5bd63f217ece795ffb0c6e6d606"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/5d5e57885a530d08b2986f7dcb0b60e120227d8aeac4038a76e51585c73ff64e.png",
+        "sha256": "72bd6e5ce5db341305c79a0dd60341848fe354a6f14fdef0ce1c9cb70c4b024b",
+        "pixelSHA256": "490459acfdcfbc98fcedf9f06ddf21149a276c9f4d2fee5748d5adf1849d66ad"
+      }
+    },
+    {
+      "id": "dark:synth-2:focused",
+      "theme": "dark",
+      "label": 1,
+      "elementID": "sink_primaryButton",
+      "control": "primaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-2_focused.png",
+        "sha256": "0ab18b7d0756814ec617e0d619eb5602d5d03ceeb86ccb6327322ec527ef8c85",
+        "pixelSHA256": "4655fe232289ef5e89a409376a7613f2a15f1a13eb0ef145df9e839a9b314672"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/6d27c43093be1caace0a7dd4748e847a0932fa8689c591d5dff331eee295ed82.png",
+        "sha256": "2242cb0af80fd9f45fa57ddd4af4f85ea68f14434bd23befddcde90978c4b8e0",
+        "pixelSHA256": "e715eca64224e47147b544010f1e6fef8e37f932fc1fd9631f1b0d6ed71f1fcb"
+      }
+    },
+    {
+      "id": "dark:synth-2:unfocused",
+      "theme": "dark",
+      "label": 0,
+      "elementID": "sink_primaryButton",
+      "control": "primaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-2_unfocused.png",
+        "sha256": "fa96aac9ae2dbe9285219c0bb3005f215e8dca24855fff558fe817e34da7831c",
+        "pixelSHA256": "0a462e72ba75545b326321880196019c9400e5bd63f217ece795ffb0c6e6d606"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/6ae56f6266416e358822cf76a7a117d8c8357c443c03e8c03a7ef71a615ed8f9.png",
+        "sha256": "a9efaa1bfa02b41adbf3c338f69ca5e79e92b4287b2d8c81c58dc9abbc51fb50",
+        "pixelSHA256": "e268c8eca5984c98e242223aa7f8e40245892501b3182894317e8521d17bdb47"
+      }
+    },
+    {
+      "id": "dark:synth-3:focused",
+      "theme": "dark",
+      "label": 1,
+      "elementID": "sink_secondaryButton",
+      "control": "secondaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-3_focused.png",
+        "sha256": "07fbd44cfa034d0c7aa36828d93762c51eca670d31675371c4d21978bc8ebc77",
+        "pixelSHA256": "39c8732f40011c93c5d8b954a6ef1b55d2cf326f7329b7474153133381c0399e"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/d4f3c0d29d69250259972892e2316cf9e76f45073dce58963e040effcf235338.png",
+        "sha256": "4f4ca8820d21ef242a4be41cd65c6fb888a13855d03fd4659af5c53ce7157c1b",
+        "pixelSHA256": "4181ef59dd06e4ae3449ac59e2cdb56da1ca94c40d01bf4fe72cd9dae1223dc7"
+      }
+    },
+    {
+      "id": "dark:synth-3:unfocused",
+      "theme": "dark",
+      "label": 0,
+      "elementID": "sink_secondaryButton",
+      "control": "secondaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-dark/synth-3_unfocused.png",
+        "sha256": "fa96aac9ae2dbe9285219c0bb3005f215e8dca24855fff558fe817e34da7831c",
+        "pixelSHA256": "0a462e72ba75545b326321880196019c9400e5bd63f217ece795ffb0c6e6d606"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-dark/64ce8ac93a312f36d81dcd00de44a4c239f965bdf21bce168cba7fb6fb4c95cb.png",
+        "sha256": "5040f23897f14e9473821a0528a3f6948f907d565b81baa61f356de18f6c4ccc",
+        "pixelSHA256": "bec36a9f4497a1b9eef398fcf0ff1efa64c79f3a7e0fff33e4f6ae5becba2382"
+      }
+    },
+    {
+      "id": "high_contrast:synth-0:focused",
+      "theme": "high_contrast",
+      "label": 1,
+      "elementID": "sink_cancelAction",
+      "control": "cancelAction",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-0_focused.png",
+        "sha256": "2c537699a7db8ddf47be28eb68f5c3f1ae811af007a8655db50e7924fb8c29b6",
+        "pixelSHA256": "9b33071520bda5762edbc9f1e93574788ab2166e61178c4bbb06b3619fc08588"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/b4974381ebb96ab01e15a8d823ef6366630fc4d96c30d79b4667330a9be099fe.png",
+        "sha256": "1e15385b785e9c92c83b6cc15e1163b86f10bc7385cc1f42776db842ce3f056e",
+        "pixelSHA256": "7a95878337027dbae1cf0162ccc85f00cfeb10356faa011b1235fd1d16f17de8"
+      }
+    },
+    {
+      "id": "high_contrast:synth-0:unfocused",
+      "theme": "high_contrast",
+      "label": 0,
+      "elementID": "sink_cancelAction",
+      "control": "cancelAction",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-0_unfocused.png",
+        "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d",
+        "pixelSHA256": "2dd5235999fe96682b6ee3014555ff1c925a7857a16c0be1f4ffe383260d36ad"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/1d6cbc09dcf65dbb280f3b9a3841dba78ef43688a389f393592e1c93d1b0df48.png",
+        "sha256": "2235e66d5258f22a17a0f6f9a4d84cf3f6f071c118526b65bf63faef769063b9",
+        "pixelSHA256": "7079f88673467abe46b77fc71e4892e4c1a6c2f56fee7682a1818ede9bbf83d1"
+      }
+    },
+    {
+      "id": "high_contrast:synth-1:focused",
+      "theme": "high_contrast",
+      "label": 1,
+      "elementID": "sink_destructiveButton",
+      "control": "destructiveButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-1_focused.png",
+        "sha256": "14d4d51fc8b2e8db5f40e682d38061f55c4994de7647366b2b4eccf9a7edaece",
+        "pixelSHA256": "997e5447a432396b85c3639fb3ec95b126f9f623db949225fd4ee30303caf7af"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/b44f2bc7c34b007dd75cebb60d32cb83a09fc35a205593f5e7a0c3f7a3c814c9.png",
+        "sha256": "8bd80e67506fd543dc7198079fc3bda4f38e4628ebafa89a2f45ca764b3d1422",
+        "pixelSHA256": "5838d9935d9a1dbb96a9977d27f852425ad3add7121a6b20ba70ce187a8a4b57"
+      }
+    },
+    {
+      "id": "high_contrast:synth-1:unfocused",
+      "theme": "high_contrast",
+      "label": 0,
+      "elementID": "sink_destructiveButton",
+      "control": "destructiveButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-1_unfocused.png",
+        "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d",
+        "pixelSHA256": "2dd5235999fe96682b6ee3014555ff1c925a7857a16c0be1f4ffe383260d36ad"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/5d5e57885a530d08b2986f7dcb0b60e120227d8aeac4038a76e51585c73ff64e.png",
+        "sha256": "72bd6e5ce5db341305c79a0dd60341848fe354a6f14fdef0ce1c9cb70c4b024b",
+        "pixelSHA256": "490459acfdcfbc98fcedf9f06ddf21149a276c9f4d2fee5748d5adf1849d66ad"
+      }
+    },
+    {
+      "id": "high_contrast:synth-2:focused",
+      "theme": "high_contrast",
+      "label": 1,
+      "elementID": "sink_primaryButton",
+      "control": "primaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-2_focused.png",
+        "sha256": "cf0c3434d06c919d49aa9b80a17c2698170c9316f93aeec5e3f690502f54b64f",
+        "pixelSHA256": "cd206ad1067f2969a6b4a3719216d1be58e5bc745391ce64ef9cdc6c0a090a4b"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/6d27c43093be1caace0a7dd4748e847a0932fa8689c591d5dff331eee295ed82.png",
+        "sha256": "2242cb0af80fd9f45fa57ddd4af4f85ea68f14434bd23befddcde90978c4b8e0",
+        "pixelSHA256": "e715eca64224e47147b544010f1e6fef8e37f932fc1fd9631f1b0d6ed71f1fcb"
+      }
+    },
+    {
+      "id": "high_contrast:synth-2:unfocused",
+      "theme": "high_contrast",
+      "label": 0,
+      "elementID": "sink_primaryButton",
+      "control": "primaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-2_unfocused.png",
+        "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d",
+        "pixelSHA256": "2dd5235999fe96682b6ee3014555ff1c925a7857a16c0be1f4ffe383260d36ad"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/6ae56f6266416e358822cf76a7a117d8c8357c443c03e8c03a7ef71a615ed8f9.png",
+        "sha256": "a9efaa1bfa02b41adbf3c338f69ca5e79e92b4287b2d8c81c58dc9abbc51fb50",
+        "pixelSHA256": "e268c8eca5984c98e242223aa7f8e40245892501b3182894317e8521d17bdb47"
+      }
+    },
+    {
+      "id": "high_contrast:synth-3:focused",
+      "theme": "high_contrast",
+      "label": 1,
+      "elementID": "sink_secondaryButton",
+      "control": "secondaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-3_focused.png",
+        "sha256": "3ebe578c83be34d2f06251f4d85a086530288b2544a018f46ee8776b2b20e289",
+        "pixelSHA256": "94932cce55ef793f42321f436aa8d47615aae4cc850824429438c60333d3a632"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/d4f3c0d29d69250259972892e2316cf9e76f45073dce58963e040effcf235338.png",
+        "sha256": "4f4ca8820d21ef242a4be41cd65c6fb888a13855d03fd4659af5c53ce7157c1b",
+        "pixelSHA256": "4181ef59dd06e4ae3449ac59e2cdb56da1ca94c40d01bf4fe72cd9dae1223dc7"
+      }
+    },
+    {
+      "id": "high_contrast:synth-3:unfocused",
+      "theme": "high_contrast",
+      "label": 0,
+      "elementID": "sink_secondaryButton",
+      "control": "secondaryButton",
+      "family": "catalog-native-samples-v1",
+      "group": "catalog-seed307-all-themes",
+      "frame": {
+        "path": "dataset/tvos_captures/appear-c-high_contrast/synth-3_unfocused.png",
+        "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d",
+        "pixelSHA256": "2dd5235999fe96682b6ee3014555ff1c925a7857a16c0be1f4ffe383260d36ad"
+      },
+      "crop": {
+        "path": "dataset/focus_ring/appear-c-high_contrast/64ce8ac93a312f36d81dcd00de44a4c239f965bdf21bce168cba7fb6fb4c95cb.png",
+        "sha256": "5040f23897f14e9473821a0528a3f6948f907d565b81baa61f356de18f6c4ccc",
+        "pixelSHA256": "bec36a9f4497a1b9eef398fcf0ff1efa64c79f3a7e0fff33e4f6ae5becba2382"
+      }
+    }
+  ],
+  "previousSampleCount": 434,
+  "previousPixelOverlap": [],
+  "duplicateCropGroups": [
+    [
+      "dark:synth-0:focused",
+      "high_contrast:synth-0:focused"
+    ],
+    [
+      "dark:synth-0:unfocused",
+      "high_contrast:synth-0:unfocused"
+    ],
+    [
+      "dark:synth-1:focused",
+      "high_contrast:synth-1:focused"
+    ],
+    [
+      "dark:synth-1:unfocused",
+      "high_contrast:synth-1:unfocused"
+    ],
+    [
+      "dark:synth-2:focused",
+      "high_contrast:synth-2:focused"
+    ],
+    [
+      "dark:synth-2:unfocused",
+      "high_contrast:synth-2:unfocused"
+    ],
+    [
+      "dark:synth-3:focused",
+      "high_contrast:synth-3:focused"
+    ],
+    [
+      "dark:synth-3:unfocused",
+      "high_contrast:synth-3:unfocused"
+    ]
+  ],
+  "distinctRecipeFamilies": 1,
+  "validationGroupsApproved": 0,
+  "finalChallengeGroupsApproved": 0,
+  "reason": "One shared catalog/layout/focus-treatment family cannot supply separate independent validation and final challenge across five required strata. Themes/seeds do not establish independence.",
+  "protectedInputs": [
+    {
+      "path": "reports/work/APPEAR-B/proposal.json",
+      "sha256": "db8f374b8c055f09073e9384c8abb9f6546a0f1a1ff2f0a9bbc795c40fda2739"
+    },
+    {
+      "path": "reports/work/APPEAR-B/protected-evidence.json",
+      "sha256": "491492af5be27002b46dbe575f23b55f2a2cdb69ce111698342c49dd526f8258"
+    }
+  ],
+  "reservationSHA256": "6dd34827f17b03a128431ab3a403905afe7631dae81eedfb7a377f3fd97418d3"
+}

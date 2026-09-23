@@ -1,5 +1,22 @@
 # Focus integration replay — FOCUS-PARITY-01
 
+## Corrected-producer continuation, 2026-09-23
+
+Next authorized offline tranche: reconcile local scorer SHA256512ea619 against
+the prior repair handoff and replay retained historical plus asymmetric/fractional/
+edge probes. The old harness manually used the OCR crop; update it to call the
+actual producer `FocusDetectorService.focusPatch` used by `score`, retaining the
+historical report unchanged. Bind its preprocessing version and source hashes.
+No TTR source edits, device session, new capture or training. Model replay uses the
+same shipped artifact on both sides, with normal CoreML cache authority requested
+separately. Report exact crop pixels, same-CPU scores, actual TTR backend results
+and failure sentinels separately. A preprocessing pass is not navigation accuracy.
+
+Deliver integrated harness/tests, actual replay, required offline package checks,
+scoped shared feedback and the exact missing new-family handoff request. The newer
+family contract reported on Sillycon is absent from the local checkout; do not
+invent schema fields or independent evaluation members from that status claim.
+
 Assigned 2026-09-22: test the proposed record/replay/compare workflow. First isolate
 crop/input parity on existing recorded images, then record a bounded native OS
 journey if runtime authority and target availability permit. No training, promotion,

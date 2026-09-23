@@ -197,6 +197,9 @@ def sampling(rows):
 
 
 def assemble(spec):
+    if isinstance(spec,dict) and spec.get("version")=="focus-appearance-input-v1":
+        from focus_appearance_experiment import assemble as appearance_assemble
+        return appearance_assemble(spec)
     if isinstance(spec,dict) and spec.get("version")=="focus-development-input-v1":
         from focus_development_experiment import assemble as development_assemble
         return development_assemble(spec)

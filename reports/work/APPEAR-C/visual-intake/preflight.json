@@ -1,0 +1,95 @@
+{
+  "grid-artwork": {
+    "formatVersion": "focus-training-preflight-v1",
+    "configurationValid": true,
+    "launchEligible": false,
+    "configurationErrors": [],
+    "blockers": [
+      "runtime_crop_parity_required",
+      "missing_required_partition",
+      "underfilled_quota"
+    ],
+    "manifestSHA256": "c7c9ed79831f3142509fee0440c377513e9473a21c9768b5ce1de94c66a2a38b",
+    "output": "NativeUITrainer/focus_ring_runs/appear-c-intake-no-launch",
+    "counts": {
+      "train": 0,
+      "validation": 0,
+      "test": 0,
+      "development": 3
+    },
+    "configuration": {
+      "epochs": 30,
+      "batch": 64,
+      "lr": 0.0003,
+      "model": "mobilenetv4_conv_small",
+      "initialization": "fresh-random",
+      "seed": 42,
+      "inputSize": 256,
+      "augmentation": "horizontal-flip-0.5",
+      "testDuringTraining": false
+    },
+    "executionAuthorized": false
+  },
+  "dock-bright": {
+    "formatVersion": "focus-training-preflight-v1",
+    "configurationValid": true,
+    "launchEligible": false,
+    "configurationErrors": [],
+    "blockers": [
+      "runtime_crop_parity_required",
+      "missing_required_partition",
+      "underfilled_quota"
+    ],
+    "manifestSHA256": "ea469c1330c4d30c615952a86d4b95f2e7d89783e973a04ce88c3e168cc1e7f2",
+    "output": "NativeUITrainer/focus_ring_runs/appear-c-intake-no-launch",
+    "counts": {
+      "train": 0,
+      "validation": 0,
+      "test": 0,
+      "development": 3
+    },
+    "configuration": {
+      "epochs": 30,
+      "batch": 64,
+      "lr": 0.0003,
+      "model": "mobilenetv4_conv_small",
+      "initialization": "fresh-random",
+      "seed": 42,
+      "inputSize": 256,
+      "augmentation": "horizontal-flip-0.5",
+      "testDuringTraining": false
+    },
+    "executionAuthorized": false
+  },
+  "media-placeholder": {
+    "formatVersion": "focus-training-preflight-v1",
+    "configurationValid": true,
+    "launchEligible": false,
+    "configurationErrors": [],
+    "blockers": [
+      "runtime_crop_parity_required",
+      "missing_required_partition",
+      "underfilled_quota"
+    ],
+    "manifestSHA256": "9d60cb4537e761e0c55e0846a0892f3d90fd52b1423b88a25cd64ebaad4a2d43",
+    "output": "NativeUITrainer/focus_ring_runs/appear-c-intake-no-launch",
+    "counts": {
+      "train": 0,
+      "validation": 0,
+      "test": 0,
+      "development": 4
+    },
+    "configuration": {
+      "epochs": 30,
+      "batch": 64,
+      "lr": 0.0003,
+      "model": "mobilenetv4_conv_small",
+      "initialization": "fresh-random",
+      "seed": 42,
+      "inputSize": 256,
+      "augmentation": "horizontal-flip-0.5",
+      "testDuringTraining": false
+    },
+    "executionAuthorized": false
+  }
+}

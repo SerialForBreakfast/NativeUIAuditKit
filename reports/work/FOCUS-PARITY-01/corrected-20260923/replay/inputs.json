@@ -1,0 +1,112 @@
+[
+  {
+    "id": "settings",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/settings-source.png",
+    "sha256": "97a7bb60e96e45ed5e6c96ca812d29508501776ad783cd49839b0931385e6c3a",
+    "bounds": [
+      1056,
+      230,
+      788,
+      75
+    ]
+  },
+  {
+    "id": "home",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/home-source.png",
+    "sha256": "63433e1caf88ff1201b9d45a61837a9b998569ef0403b52b1cb6bdce98125aaf",
+    "bounds": [
+      1254,
+      733,
+      306,
+      185
+    ]
+  },
+  {
+    "id": "fixture-tone",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/fixture-tone-source.png",
+    "sha256": "9a7419db7cff9a37cf480249c73b908d2582209d54adfe3920f07517e974c0d7",
+    "bounds": [
+      92,
+      296,
+      860,
+      220
+    ]
+  },
+  {
+    "id": "fixture-record",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/fixture-record-source.png",
+    "sha256": "a2b851ecab88cb5b9ba6c42305822780d254af7a51a5f81f8d15b82903276108",
+    "bounds": [
+      92,
+      328,
+      373,
+      75
+    ]
+  },
+  {
+    "id": "synthetic-upper",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/synthetic-source.png",
+    "sha256": "66fff8039b42c3dd2a4681b342cce5b5a85c4ac513908e46f87f9dd80da818ea",
+    "bounds": [
+      190,
+      70,
+      100,
+      60
+    ]
+  },
+  {
+    "id": "synthetic-edge",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/synthetic-source.png",
+    "sha256": "66fff8039b42c3dd2a4681b342cce5b5a85c4ac513908e46f87f9dd80da818ea",
+    "bounds": [
+      0,
+      0,
+      80,
+      50
+    ]
+  },
+  {
+    "id": "synthetic-lower",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/synthetic-source.png",
+    "sha256": "66fff8039b42c3dd2a4681b342cce5b5a85c4ac513908e46f87f9dd80da818ea",
+    "bounds": [
+      90,
+      350,
+      120,
+      70
+    ]
+  },
+  {
+    "id": "synthetic-fractional",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/synthetic-source.png",
+    "sha256": "66fff8039b42c3dd2a4681b342cce5b5a85c4ac513908e46f87f9dd80da818ea",
+    "bounds": [
+      174.5,
+      58.25,
+      132.5,
+      88.75
+    ]
+  },
+  {
+    "id": "synthetic-bottom-right",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/synthetic-source.png",
+    "sha256": "66fff8039b42c3dd2a4681b342cce5b5a85c4ac513908e46f87f9dd80da818ea",
+    "bounds": [
+      597.25,
+      432.5,
+      42.75,
+      47.5
+    ]
+  },
+  {
+    "id": "synthetic-cross-color-boundary",
+    "path": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-PARITY-01/corrected-20260923/replay/synthetic-source.png",
+    "sha256": "66fff8039b42c3dd2a4681b342cce5b5a85c4ac513908e46f87f9dd80da818ea",
+    "bounds": [
+      150.25,
+      204.75,
+      170.5,
+      78.25
+    ]
+  }
+]

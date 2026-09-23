@@ -1,0 +1,15 @@
+schema_version: 1
+transaction_id: APPEAR-FAMILY-HANDOFF-20260923
+request_id: tvtestrig-20260923-family-8761fb75-download-receipt
+receiver: NativeUIAuditKit
+received_at: '2026-09-23T16:01:51Z'
+state: received_verified
+shared_relative_path: tvtestrig/nuiak-20260923T053700Z-independent-appearance-families-8761fb75.tar.gz
+local_relative_path: dataset/tvos_captures/appear-family-handoff-20260923/nuiak-20260923T053700Z-independent-appearance-families-8761fb75.tar.gz
+bytes: 108706258
+sha256: 8761fb7538095bbe9b7f4472e20ff574cc60f977630581ad74adc59f20b5b760
+archive_inventory: {members: 49, regular_files: 46, expanded_bytes: 109526873}
+intake: pending
+training_eligibility: not_assessed
+cleanup: sender_may_remove_exact_shared_copy_after_matching_receipt_and_file
+retention: receiver_local_copy_and_producer_original_retained

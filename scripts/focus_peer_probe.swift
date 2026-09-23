@@ -14,6 +14,7 @@ struct ProbeRow: Encodable {
     let confidence: Double
     let secondProbability: Double
     let zeroScoreMayHideFailure: Bool
+    let preprocessingVersion: String
 }
 
 @main struct PeerProbe {
@@ -39,8 +40,7 @@ struct ProbeRow: Encodable {
                 let b = item.bounds
                 let roi = try NormalizedRectangle(x: b[0] / Double(image.width), y: b[1] / Double(image.height),
                                                   width: b[2] / Double(image.width), height: b[3] / Double(image.height))
-                guard let raw = LocalVisionOCRService.crop(image, roi: roi),
-                      let crop = FocusDetectorService.resize(raw, side: 256) else { throw TVTestRigError.invalidArgument }
+                guard let crop = FocusDetectorService.focusPatch(image, roi: roi) else { throw TVTestRigError.invalidArgument }
                 let bytes = NSMutableData()
                 guard let dest = CGImageDestinationCreateWithData(bytes, "public.png" as CFString, 1, nil) else {
                     throw TVTestRigError.invalidArgument
@@ -52,7 +52,8 @@ struct ProbeRow: Encodable {
                 rows.append(ProbeRow(id: item.id, png: (bytes as Data).base64EncodedString(),
                                      probability: first.isFocusedProb, confidence: first.confidence,
                                      secondProbability: second.isFocusedProb,
-                                     zeroScoreMayHideFailure: first == .zero || second == .zero))
+                                     zeroScoreMayHideFailure: first == .zero || second == .zero,
+                                     preprocessingVersion: FocusDetectorService.preprocessingVersion))
             }
             FileHandle(fileDescriptor: fd, closeOnDealloc: true).write(try JSONEncoder().encode(rows))
         } catch {

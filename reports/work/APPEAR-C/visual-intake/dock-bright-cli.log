@@ -1,0 +1,6 @@
+["scripts/build_simulator_focus_manifest.py", "--bundle", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/appear-c-visual-intake-20260923/dock-bright-export", "--corpus-id", "appear-c-visual-dock-bright", "--producer-reference", "fb47e39a084a2ff20cdf34b85458f1e1ebbdca8a-dirty", "--output", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/APPEAR-C/visual-intake/dock-bright-intake.json"]
+exit=0
+{"corpusID": "appear-c-visual-dock-bright", "fingerprint": "56f62b7d82688429a041133143411237daa91b33ea9324b2a32cb7d982f101e9", "pairs": 3}
+["scripts/harvest_focus_pairs.py", "--fixture-bundle", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/appear-c-visual-intake-20260923/dock-bright-export", "--output", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/focus_ring/appear-c-visual-dock-bright", "--corpus-id", "appear-c-visual-dock-bright", "--producer-reference", "fb47e39a084a2ff20cdf34b85458f1e1ebbdca8a-dirty", "--ttr-sidecar-v2", "--visual-review", "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/APPEAR-C/visual-intake/dock-bright-review.json"]
+exit=0
+{"dryRun": false, "pairs": 3, "trainingApproval": false, "version": "1.5"}

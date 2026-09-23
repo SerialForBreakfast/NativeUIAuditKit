@@ -1,0 +1,116 @@
+{
+  "files": [
+    {
+      "bytes": 3272,
+      "path": "calibration.json",
+      "sha256": "45b9ec8e4f5970923997400ea28975f4c732c94f5e5dc3d710a0b9b80747f8cd"
+    },
+    {
+      "bytes": 3830,
+      "path": "dataset-index.json",
+      "sha256": "3f78270252cbd2d06babeaf59fd68e9ae8b9b286d2bbccc4c4f8293f2d2c69f3"
+    },
+    {
+      "bytes": 103,
+      "path": "harvest-receipt.json",
+      "sha256": "fe4b79c4b17a1c4a09738df0a3ccd4288709e61d53257325eb26cddd55da9787"
+    },
+    {
+      "bytes": 4,
+      "path": "held-out.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    },
+    {
+      "bytes": 3272,
+      "path": "manifest.json",
+      "sha256": "45b9ec8e4f5970923997400ea28975f4c732c94f5e5dc3d710a0b9b80747f8cd"
+    },
+    {
+      "bytes": 6583756,
+      "path": "synth-0_focused.png",
+      "sha256": "2c537699a7db8ddf47be28eb68f5c3f1ae811af007a8655db50e7924fb8c29b6"
+    },
+    {
+      "bytes": 86807,
+      "path": "synth-0_metadata.json",
+      "sha256": "f87717b871c47cd6c5ca3d871ee38435166fdb97c8cb61f8ae610a70c46b72d6"
+    },
+    {
+      "bytes": 6583545,
+      "path": "synth-0_unfocused.png",
+      "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d"
+    },
+    {
+      "bytes": 6582417,
+      "path": "synth-1_focused.png",
+      "sha256": "14d4d51fc8b2e8db5f40e682d38061f55c4994de7647366b2b4eccf9a7edaece"
+    },
+    {
+      "bytes": 86942,
+      "path": "synth-1_metadata.json",
+      "sha256": "4acb2d96d456423bcb5d588ba63b3d65cae9e4409cc300d9fe57fe0b5a8fbd1a"
+    },
+    {
+      "bytes": 6583545,
+      "path": "synth-1_unfocused.png",
+      "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d"
+    },
+    {
+      "bytes": 6583613,
+      "path": "synth-2_focused.png",
+      "sha256": "cf0c3434d06c919d49aa9b80a17c2698170c9316f93aeec5e3f690502f54b64f"
+    },
+    {
+      "bytes": 86840,
+      "path": "synth-2_metadata.json",
+      "sha256": "23ce10d67a3cba29a0d97daaa04cb12100fead544b05278da768a36394c10ad1"
+    },
+    {
+      "bytes": 6583545,
+      "path": "synth-2_unfocused.png",
+      "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d"
+    },
+    {
+      "bytes": 6584687,
+      "path": "synth-3_focused.png",
+      "sha256": "3ebe578c83be34d2f06251f4d85a086530288b2544a018f46ee8776b2b20e289"
+    },
+    {
+      "bytes": 86893,
+      "path": "synth-3_metadata.json",
+      "sha256": "4fe97ff948c4982fa06a851f6142d34046718690fd181f2cc29793a2d18b2b05"
+    },
+    {
+      "bytes": 6583545,
+      "path": "synth-3_unfocused.png",
+      "sha256": "402a6fd71142ce35f573ce6110ac0087440760cabbd3eab1aaa15876f778608d"
+    },
+    {
+      "bytes": 4,
+      "path": "training.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    }
+  ],
+  "jobID": "5F7E6524-9F37-4CCA-A35C-AD3A4511F2D3",
+  "outputPath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/5f7e6524-9f37-4cca-a35c-ad3a4511f2d3/bundle",
+  "recipeSHA256": "d0772f63a3e83e30b66de9cdcece87c247e51e7cb3da5dc203bd60dfdeb5a3d5",
+  "recipesPath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/5f7e6524-9f37-4cca-a35c-ad3a4511f2d3/recipes",
+  "result": {
+    "acceptedRowCount": 4,
+    "calibrationCount": 4,
+    "heldOutCount": 0,
+    "manifestSHA256": "45b9ec8e4f5970923997400ea28975f4c732c94f5e5dc3d710a0b9b80747f8cd",
+    "outputDirectory": "bundle",
+    "rejectedRowCount": 0,
+    "rejectionReasons": [
+
+    ],
+    "trainingCount": 0
+  },
+  "schemaVersion": 1,
+  "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "state": "completed",
+  "storageReady": true,
+  "workspacePath": "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/5f7e6524-9f37-4cca-a35c-ad3a4511f2d3",
+  "exportedPath": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/appear-c-high_contrast"
+}

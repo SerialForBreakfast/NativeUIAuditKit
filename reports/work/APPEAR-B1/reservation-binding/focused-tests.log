@@ -1,0 +1,17 @@
+test_complete_real_entrypoints_and_no_model_execution (test_focus_appearance_experiment.AppearanceTests.test_complete_real_entrypoints_and_no_model_execution) ... output_collision
+ok
+test_duplicate_pair_conflict_and_cross_adapter_seed (test_focus_appearance_experiment.AppearanceTests.test_duplicate_pair_conflict_and_cross_adapter_seed) ... ok
+test_evaluation_reuse_pixels_and_transitive_family (test_focus_appearance_experiment.AppearanceTests.test_evaluation_reuse_pixels_and_transitive_family) ... ok
+test_group_count_is_connected_components_not_declared_names (test_focus_appearance_experiment.AppearanceTests.test_group_count_is_connected_components_not_declared_names) ... ok
+test_invalid_version_output_and_changed_checkpoint (test_focus_appearance_experiment.AppearanceTests.test_invalid_version_output_and_changed_checkpoint) ... ok
+test_missing_evaluation_and_selection_not_approval_bypass (test_focus_appearance_experiment.AppearanceTests.test_missing_evaluation_and_selection_not_approval_bypass) ... ok
+test_missing_labels_stale_selection_and_old_selection_policy (test_focus_appearance_experiment.AppearanceTests.test_missing_labels_stale_selection_and_old_selection_policy) ... ok
+test_reconstruction_rejects_resealed_weights_before_protected_admission (test_focus_appearance_experiment.AppearanceTests.test_reconstruction_rejects_resealed_weights_before_protected_admission) ... ok
+test_reservation_binding_rejects_changed_membership_and_source (test_focus_appearance_experiment.AppearanceTests.test_reservation_binding_rejects_changed_membership_and_source) ... ok
+test_selection_floor_reference_and_equal_source_scoring (test_focus_appearance_experiment.AppearanceTests.test_selection_floor_reference_and_equal_source_scoring) ... ok
+test_stale_approval_and_changed_weights (test_focus_appearance_experiment.AppearanceTests.test_stale_approval_and_changed_weights) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.076s
+
+OK

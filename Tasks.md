@@ -13,6 +13,25 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**APPEAR-C — delivered appearance intake review, NUIAK architect:** [latest handoff](reports/work/APPEAR-C/visual-intake/handoff.md).
+Three catalog themes/12 pairs/54 verified files admitted development-only;8 distinct
+pairs because high_contrast equals dark. Existing destructiveButton intake fixed;
+Appearance-v1 consumer support now passes3/3 producer vectors and43 Python checks;
+offline Swift build plus14 XCTest/93 Swift Testing pass in approved host context.
+All12 retained catalog pairs still validate. Delivered10 artwork/bright/placeholder/dock
+pairs now pass independent byte/label/crop intake:48 files,20 unique production crops,
+zero exact overlap against458 scoped prior samples. Seed7 siblings remain development;
+no independent evaluation or training approval. APPEAR-B1 adapter now delivered for review.
+The [reservation-binding follow-up](reports/work/APPEAR-B1/reservation-binding/handoff.md)
+requires exact source/membership-bound v2 evaluation reservations. Producer family
+contract/artifact handoff is still unavailable locally; existing request remains open.
+Distinct high-contrast/Photos-like and independent evaluation families remain open;
+all catalog variants reserved together, no model scores/training. [Contract](Research/Plans/CatalogAppearanceQualification.md).
+
+| Priority | Packet | Scope | State/owner | Evidence and resume condition |
+|---|---|---|---|---|
+| F1 | TTR-CATALOG-01 | New catalog/Top Shelf compatibility | partial review — NUIAK architect; dialog and local catalog paths qualified | [Smoke](reports/work/TTR-CATALOG-01/smoke-0514/handoff.md):2/2 pairs admitted development-only. [APPEAR-C](reports/work/APPEAR-C/handoff.md) now qualifies local corrected catalog; not receipt of Sillycon's separate retained artifact. Supported chunk export works around signed CLI staging denial. Top Shelf visible rendering remains untested; no training qualification. |
+
 **Backlog reconciliation (2026-09-22):** every packet maps to the
 [implementation catalog](Research/ImplementationPlans.md). Missing residual contracts
 are now in [RemainingDelivery.md](Research/Plans/RemainingDelivery.md). Existing
@@ -69,7 +88,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | F1 | FOCUS-VISUAL-02 | FOCUS-DET-05 | review (NUIAK architect) | [Home comparison](reports/work/FOCUS-VISUAL-02/handoff.md): six frames/72 tiles; shipped2/6 correct unique selections, FP16/int8 0/6 at0.85. Box sensitivity and compression threshold failures retained. Nine Python + offline Swift checks pass. Next OS-FOCUS-04 offline mixed-source assembly/preflight, then eligible mixed-appearance acquisition; no capture/training performed. |
 | F1 | FOCUS-VISUAL-01 | FOCUS-DET-05 | review (NUIAK architect) | [Photos appearance regression](reports/work/FOCUS-VISUAL-01/handoff.md): shipped1/2 focused buttons, FP16/int8 0/2; box sensitivity and expanded int8 probability tolerance failure.87 Focus tests pass. Next existing Home-tile visual review/comparison, then eligible mixed-style training proposal; no TTR dependency or promotion. |
 | F1 | FOCUS-EXP-01 | FOCUS-DET-05 | review (NUIAK architect): four arms completed | [Handoff](reports/work/FOCUS-EXP-01/handoff.md): 46 reviewed pairs, 37 train/9 validation; warm+stretch reaches18/18 validation decisions versus shipped7/18 at0.85. Scratch+stretch also18/18; no demonstrated aspect-fit win. Same-app development only, runtime parity differs, no promotion. Next: independent native Home/style challenge set before further training. |
-| F1 | FOCUS-PARITY-01 | FOCUS-DET-05 | review: historical replay delivered; corrected-producer replay ready (NUIAK architect) | [Plan](Research/Plans/FocusIntegrationReplay.md); producer correction acknowledged, current scorer source matches receipt512ea619. Exact corrected NUA/TTR pixel/score comparison remains unrun and needs no device session. [New-build diagnostic](reports/work/TTR-CHECK-20260922-1622/handoff.md). No model-driven navigation qualification. |
+| F1 | FOCUS-PARITY-01 | FOCUS-DET-05 | review: corrected-producer replay passed (NUIAK architect) | [Plan](Research/Plans/FocusIntegrationReplay.md); [corrected replay](reports/work/FOCUS-PARITY-01/corrected-20260923/handoff.md): 10/10 exact crops and same-CPU scores, source512ea619. Backend differences reported separately; no model-driven navigation or quality qualification. Next obtain source-backed independent appearance-family contract/evidence under APPEAR-C. |
 | F1 | TV-FIX | INTEGRATION-01 | external request acknowledged; repair pending | TTR owns native non-view focus binding; request nuiak-20260922T061302Z-fixture-nonview-focus acknowledged06:36Z. Fixture HTTP restored at16:29Z; installed bytes unchanged, fresh412-sample telemetry still non_view/unmapped_item. [Current diagnostic](reports/work/TTR-CHECK-20260922-1622/fixture-followup.md). No producer edits here. |
 | P1 | DATA-RET | DATA-01 / FOCUS-DET-05 | ready planning (unassigned); copy gated | Inventory/restore verifier; maintainer-selected independent backup destination and authority before copying. Reuse corpus retention evidence. |
 | P1 | IOS-COV | DATA-01 / 6a-10 | ready decision preparation (unassigned) | Resolve uncovered webContent/support gates from P0-C audit; preserve target, map and active owner. |
@@ -91,7 +110,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | F1 | APPEAR-A | OS-FOCUS-04 | review — live pilot complete (NUIAK architect) | [APPEAR-A2](reports/work/APPEAR-A2/handoff.md):24 recipes/100 frames/76 pairs admitted development-only; shipped11 vs FDR-00873 focused hits/76, FP9 vs0. Six training-overlap crops; not independent holdout. Home/artwork request remains open. |
 | F1 | APPEAR-A1 | APPEAR-A | review — current worker | [Integrated handoff](reports/work/APPEAR-A1/handoff.md): closed24-recipe/76-pair catalog, offline source readiness, production crop intake;37 Python/93 Swift tests pass. No capture/training; next authorized exact-target pilot. |
 | F1 | APPEAR-B | OS-FOCUS-04 | partial review — offline proposal delivered; independent evaluation open (NUIAK architect) | [Handoff](reports/work/APPEAR-B/handoff.md):202 candidate train/9 retention-validation/6 known-challenge pairs; all162 Fixture pairs connected, no cross-partition conflict.50/50 source-mass proposal frozen. No independent appearance holdout or training approval. |
-| F1 | APPEAR-B1 | APPEAR-B | ready — offline adapter integration | [Implementation contract](Research/Plans/FocusAppearanceAcquisition.md#appear-b1--development-proposal-adapter). Integrate approved development membership/source-balanced weights into existing preflight/trainer interface; preserve missing-evaluation and approval blockers. No capture/training. |
+| F1 | APPEAR-B1 | APPEAR-B | review — NUIAK architect, integrated offline adapter | [Handoff](reports/work/APPEAR-B1/handoff.md):212 candidate training pairs +9 native retention-validation,50/50 native–Fixture sampling, preserved protected evidence;91 Python tests and full offline Swift checks pass. Real trainer preflight blocks on independent evaluation, selection reference and approval. Next qualify reserved evaluation inputs; no capture/training authorized here. [Contract](Research/Plans/FocusAppearanceAcquisition.md#appear-b1--development-proposal-adapter). |
 | F1 | FOCUS-EXPORT-01 | FOCUS-DET-05 | review / parity and byte-gate enforcement delivered (NUIAK architect) | [Follow-up](reports/work/FOCUS-EXPORT-01/size-and-coverage.md): export-01 parity12/12, max error0.00000357628;5,038,123 bytes exceeds5MB. Corrected exporter enforces5,000,000 bytes; fresh export correctly fails.70 Python/93 Swift tests pass. Compression now delivered separately in FOCUS-COMPRESS-01; broader challenge remains required. No promotion or retraining. |
 | F1 | TVGEN-01 | FOCUS-DET-05 | review (NUIAK architect; design/runtime inventory delivered) | [Assigned plan](Research/Plans/ParallelTVOSAcquisition.md), matching installed Fixture launched and exact endpoint verified; [handoff](reports/work/TVGEN/handoff.md). No producer edits. |
 | F1 | TVGEN-02 | FOCUS-DET-05 | direct dialog qualified / broader scope open (NUIAK architect) | [Genuine smoke](reports/work/TTR-SMOKE-20260922-2119/continuation.md): two development pairs, v1.4 runtime crops, visual review and shipped inference pass execution; native labels/health verified. No model-quality pass. Source planning still matches four pinned hashes. |

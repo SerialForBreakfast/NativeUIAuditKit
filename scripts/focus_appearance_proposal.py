@@ -36,6 +36,7 @@ def components(rows):
               ('intrinsic',r['sourceKind'],r['intrinsicGroup']),('pixels',crop),
               ('pixels',r['frame']['pixelSHA256'])]
         if r.get('recipeSeed') is not None: keys.append(('seed',r['sourceKind'],r['recipeSeed']))
+        if r.get('independentFamily'): keys.append(('family',r['independentFamily']))
         for key in keys:
             if key in owners:
                 join(r['id'],owners[key]); edges.append({'a':owners[key],'b':r['id'],'reason':list(key)})
@@ -70,8 +71,9 @@ def balanced_weights(rows):
             'scope':'hypothesis, not proven optimal; no trainer integration or launch approval'}
 
 
-def audit(previous, appearance, protocol_path, output):
-    output=new_output(output); start=time.monotonic(); refs={}
+def audit(previous, appearance, protocol_path, output=None):
+    output=new_output(output) if output is not None else None
+    start=time.monotonic(); refs={}
     previous,appearance,protocol_path=map(local,(previous,appearance,protocol_path))
     def load(path):
         ref=reference(path); refs[ref['path']]=ref
@@ -142,9 +144,10 @@ def audit(previous, appearance, protocol_path, output):
          'modelGatePassed':'not_assessed','seconds':time.monotonic()-start}
     for ref in refs.values(): checked(ref)
     doc['proposalSHA256']=digest(doc)
-    output.parent.mkdir(parents=True,exist_ok=True)
-    with output.open('x') as f: json.dump(doc,f,indent=2,allow_nan=False)
-    print(json.dumps({'counts':doc['counts'],'components':len(lineage['components']),
+    if output is not None:
+        output.parent.mkdir(parents=True,exist_ok=True)
+        with output.open('x') as f: json.dump(doc,f,indent=2,allow_nan=False)
+        print(json.dumps({'counts':doc['counts'],'components':len(lineage['components']),
                       'overlappingCrops':len(overlap),'duplicatePairGroups':len(duplicates),
                       'sourceMass':weights['sourceMass'],'blockers':blockers,'seconds':doc['seconds']}))
     return doc

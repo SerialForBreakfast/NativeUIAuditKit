@@ -101,7 +101,9 @@ def is_hard_negative(sample: dict) -> bool:
 
 
 def checkpoint_improved(loss, best, configuration):
-    return loss < best or (loss == best and configuration.get("selection") != "minimum-native-validation-bce-earliest-tie")
+    earliest = {"minimum-native-validation-bce-earliest-tie",
+                "minimum-equal-source-validation-bce-retention-floor-earliest-tie"}
+    return loss < best or (loss == best and configuration.get("selection") not in earliest)
 
 
 def load_mobilenetv4_conv_small():
@@ -136,6 +138,10 @@ def main() -> int:
             report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name, args.experiment_approval)
         except (OSError, ValueError, KeyError, TypeError) as error:
             print(json.dumps({"launchEligible": False, "blockers": [str(error)]})); return 2
+        if report.get("formatVersion") == "focus-appearance-preflight-v1":
+            for flag, field in (("--epochs","epochs"),("--batch","batch"),("--lr","lr"),("--model","model")):
+                if any(x == flag or x.startswith(flag+"=") for x in sys.argv[1:]) and getattr(args,field) != report["configuration"][field]:
+                    print(json.dumps({"launchEligible":False,"blockers":["protocol_configuration_override"]})); return 2
         args.epochs = report["configuration"]["epochs"]
         args.batch = report["configuration"]["batch"]
         args.lr = report["configuration"]["lr"]
@@ -278,7 +284,11 @@ def main() -> int:
                 for probability, label in zip(torch.sigmoid(logits).view(-1).cpu().tolist(), y.view(-1).cpu().tolist()):
                     predictions.append({"id": val[count].get("id", str(count)), "label": int(label), "probability": probability})
                     count += 1
-        return {"loss": total_loss / max(1, count), "predictions": predictions}
+        result = {"loss": total_loss / max(1, count), "predictions": predictions}
+        if report.get("formatVersion") == "focus-appearance-preflight-v1":
+            from focus_appearance_experiment import selection_metrics
+            result.update(selection_metrics(predictions,val,report["selection"]))
+        return result
     history = []
     initial = evaluate() if experimental else None
     for epoch in range(1, epochs + 1):
@@ -299,7 +309,7 @@ def main() -> int:
         train_loss = running / max(1, n)
 
         validation = evaluate()
-        val_loss = validation["loss"]
+        val_loss = validation.get("selectionLoss", validation["loss"])
         history.append({"epoch": epoch, "trainLoss": train_loss, "validation": validation})
         print(f"epoch {epoch}/{epochs}  train_loss={train_loss:.4f}  val_loss={val_loss:.4f}")
         ckpt = {
@@ -309,12 +319,20 @@ def main() -> int:
             "val_loss": val_loss,
         }
         torch.save(ckpt, weights_dir / "last.pt")
-        if checkpoint_improved(val_loss, best_val, report["configuration"]):
+        if validation.get("checkpointEligible", True) and checkpoint_improved(val_loss, best_val, report["configuration"]):
             best_val = val_loss
             torch.save(ckpt, best_path)
 
     if experimental:
         import hashlib
+        if not best_path.exists():
+            result = {"status":"failed_no_eligible_checkpoint","releaseEligible":False,
+                      "protocolSHA256":report["protocolSHA256"],"selection":report.get("selection"),
+                      "history":history,"initial":initial,"experimentID":args.experiment_id,
+                      "elapsedSeconds":time.monotonic()-started}
+            (out/"experiment-result.json").write_text(json.dumps(result,indent=2,allow_nan=False))
+            print("ERROR: no checkpoint met the frozen retention floor; last.pt is not selected",file=sys.stderr)
+            return 2
         model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True)["state_dict"], strict=True)
         selected = evaluate()
         result = {"status": "completed", "releaseEligible": False, "protocolSHA256": report["protocolSHA256"],

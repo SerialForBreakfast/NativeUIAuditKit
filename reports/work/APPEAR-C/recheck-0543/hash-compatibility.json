@@ -1,0 +1,36 @@
+{
+  "count": 3,
+  "matched": 0,
+  "vectors": [
+    {
+      "appearance": {
+        "version": 1,
+        "preset": "artwork",
+        "layout": "standard"
+      },
+      "expected": "41be66c4bd4660731eb2139445f93545a95935b0448632eea5af75818d3a0384",
+      "consumer": "f472aed392a173003bbd4c653adbe3f65c9b92b1eee4bc37a0302926513af832",
+      "matches": false
+    },
+    {
+      "appearance": {
+        "version": 1,
+        "preset": "bright_unfocused",
+        "layout": "standard"
+      },
+      "expected": "21ccc1ec640bca298497f3645b9eaaa869741deb1ffd5bf54ff90ddcc96e170b",
+      "consumer": "f472aed392a173003bbd4c653adbe3f65c9b92b1eee4bc37a0302926513af832",
+      "matches": false
+    },
+    {
+      "appearance": {
+        "version": 1,
+        "preset": "gray_placeholder",
+        "layout": "standard"
+      },
+      "expected": "a1b289a83b9ad1864af4265c34ab1eaad4117a7ed28a98459b73df66957254e4",
+      "consumer": "f472aed392a173003bbd4c653adbe3f65c9b92b1eee4bc37a0302926513af832",
+      "matches": false
+    }
+  ]
+}
