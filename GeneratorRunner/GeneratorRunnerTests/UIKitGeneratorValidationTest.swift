@@ -15,13 +15,152 @@
 
 import XCTest
 import UIKit
+import CryptoKit
+import SwiftUI
 
 // MARK: - UIKitGeneratorValidationTest
+
+/// Opt-in only: select this test explicitly after runtime/storage authority is granted.
+/// Never uses the legacy dataset tree, orchestrator install path or frozen recipes.
+@MainActor
+final class VisualProbeBatchTest: XCTestCase {
+    func testExplicitVisualProbeBatch() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_PROBE_EXECUTION"] == "approved-development-probe" else {
+            throw XCTSkip("Native probe capture requires separately approved execution scope")
+        }
+        let target = try XCTUnwrap(env["NUA_PROBE_SIMULATOR_UUID"])
+        XCTAssertEqual(env["SIMULATOR_UDID"], target)
+        guard UUID(uuidString: target) != nil, env["SIMULATOR_UDID"] == target else {
+            throw VisualProbeCatalog.ValidationError.invalidSelection
+        }
+        let path = try XCTUnwrap(env["NUA_PROBE_CATALOG"])
+        let input = URL(fileURLWithPath: path)
+        guard input.resolvingSymlinksInPath().standardizedFileURL == input.standardizedFileURL else {
+            throw VisualProbeCatalog.ValidationError.changedCatalog
+        }
+        let attributes = try input.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey, .fileSizeKey])
+        guard attributes.isRegularFile == true, attributes.isSymbolicLink != true,
+              let size = attributes.fileSize, size <= 1_048_576 else {
+            throw VisualProbeCatalog.ValidationError.changedCatalog
+        }
+        let bytes = try Data(contentsOf: input)
+        let digest = SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined()
+        guard digest == env["NUA_PROBE_CATALOG_SHA256"] else {
+            throw VisualProbeCatalog.ValidationError.changedCatalog
+        }
+        let catalog = try VisualProbeCatalog.decodeFrozen(bytes)
+        let selection = try XCTUnwrap(env["NUA_PROBE_CASE_IDS_JSON"]?.data(using: .utf8))
+        let rows = try catalog.validatedBatch(ids: JSONDecoder().decode([String].self, from: selection))
+        let outputName = try XCTUnwrap(env["NUA_PROBE_OUTPUT_NAME"])
+        guard outputName.range(of: "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$", options: .regularExpression) != nil else {
+            throw VisualProbeCatalog.ValidationError.invalidSelection
+        }
+        let fm = FileManager.default
+        let parent = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("visual-probes")
+        let output = parent.appendingPathComponent(outputName)
+        guard !fm.fileExists(atPath: output.path) else {
+            throw CocoaError(.fileWriteFileExists)
+        }
+        try fm.createDirectory(at: parent, withIntermediateDirectories: true)
+        try fm.createDirectory(at: output, withIntermediateDirectories: false)
+        try bytes.write(to: output.appendingPathComponent("catalog.json"), options: .withoutOverwriting)
+        var members: [[String: Any]] = []
+        let started = ProcessInfo.processInfo.systemUptime
+        do {
+            for (index, row) in rows.enumerated() {
+                guard ProcessInfo.processInfo.systemUptime - started < 120 else { throw CocoaError(.userCancelled) }
+                let config = row.config
+                let result: CaptureResult
+                switch config.templateFamily {
+                case "UIKitControls":
+                    result = try await ScreenshotCapture.captureUIKit(UIKitControlsViewController(seed: config.seed, config: config), config: config)
+                case "DynamicTypeOverflow":
+                    result = try await ScreenshotCapture.captureUIKit(DynamicTypeOverflowViewController(seed: config.seed, config: config), config: config)
+                case "ChromeCoverage":
+                    var corpus = ContentCorpus(seed: config.seed)
+                    let chrome = ChromeCoverageConfig.make(seed: config.seed, corpus: &corpus,
+                        status: config.simulatorOverride,
+                        effectiveColorScheme: config.colorScheme == .dark ? .dark : .light)
+                    result = try await ScreenshotCapture.capture(ChromeCoverageTemplate(config: chrome), config: config)
+                default: throw VisualProbeCatalog.ValidationError.changedCatalog
+                }
+                guard ProcessInfo.processInfo.systemUptime - started < 120 else { throw CocoaError(.userCancelled) }
+                let image = try XCTUnwrap(UIImage(data: result.png)?.cgImage)
+                guard image.width == Int(result.pixelSize.width), image.height == Int(result.pixelSize.height),
+                      !result.elements.isEmpty else { throw ScreenshotCaptureError.pngRenderingFailed }
+                let actualHash = SHA256.hash(data: result.png).map { String(format: "%02x", $0) }.joined()
+                guard actualHash == result.sha256 else { throw ScreenshotCaptureError.pngRenderingFailed }
+                let base = String(format: "probe-%03d", index)
+                let imageURL = output.appendingPathComponent(base + ".png")
+                let annotationURL = output.appendingPathComponent(base + ".json")
+                try result.png.write(to: imageURL, options: .withoutOverwriting)
+                try AnnotationWriter.write(result: result, config: config, imageFileName: base + ".png",
+                    templateFamily: config.templateFamily, generatorVersion: "visual-probe-1",
+                    to: annotationURL, schema: .measuredState)
+                let annotation = try Data(contentsOf: annotationURL)
+                guard try Data(contentsOf: imageURL) == result.png else { throw ScreenshotCaptureError.pngRenderingFailed }
+                let sidecar = try JSONDecoder().decode(AnnotationJSON.self, from: annotation)
+                guard sidecar.schemaVersion == "1.2", sidecar.imageSHA256 == actualHash,
+                      sidecar.elements.count == result.elements.count else {
+                    throw VisualProbeCatalog.ValidationError.changedCatalog
+                }
+                members.append(["id": row.id, "group": row.group, "image": base + ".png",
+                    "annotation": base + ".json", "imageSHA256": actualHash,
+                    "annotationSHA256": SHA256.hash(data: annotation).map { String(format: "%02x", $0) }.joined()])
+            }
+            let receipt: [String: Any] = ["version": "visual-probe-capture-v1",
+                "completion": "captured_pending_visual_review", "trainingEligible": false,
+                "partition": "development", "catalogSHA256": digest, "simulatorUUID": target,
+                "runtimeOS": UIDevice.current.systemVersion, "expectedCount": rows.count,
+                "actualCount": members.count, "members": members,
+                "unsupportedIntersections": catalog.unsupportedIntersections]
+            try JSONSerialization.data(withJSONObject: receipt, options: [.sortedKeys, .prettyPrinted])
+                .write(to: output.appendingPathComponent("capture.json"), options: .withoutOverwriting)
+        } catch {
+            let failure: [String: Any] = ["completion": "partial", "expectedCount": rows.count,
+                "actualCount": members.count, "members": members, "error": String(describing: error)]
+            try? JSONSerialization.data(withJSONObject: failure, options: [.sortedKeys, .prettyPrinted])
+                .write(to: output.appendingPathComponent("failure.json"), options: .withoutOverwriting)
+            throw error
+        }
+    }
+}
 
 @MainActor
 final class UIKitGeneratorValidationTest: XCTestCase {
 
     // MARK: - Helpers
+
+    func testMeasuredControlStateDoesNotInventLabelState() async throws {
+        final class StateViewController: UIViewController, UIKitAnnotatable {
+            let button = UIButton(type: .system)
+            let label = UILabel()
+            override func viewDidLoad() {
+                super.viewDidLoad()
+                button.frame = CGRect(x: 20, y: 100, width: 200, height: 60)
+                button.setTitle("Selected disabled", for: .normal)
+                button.isEnabled = false
+                button.isSelected = true
+                label.frame = CGRect(x: 20, y: 180, width: 200, height: 40)
+                label.text = "Unknown state"
+                view.addSubview(button)
+                view.addSubview(label)
+            }
+            var annotatedViews: [UIKitAnnotatedView] {
+                [UIKitAnnotatedView(id: "primaryButton_state", elementType: "primaryButton", view: button),
+                 UIKitAnnotatedView(id: "label_state", elementType: "label", view: label)]
+            }
+        }
+        let config = makeConfig(seed: 1, profile: .ios17, colorScheme: .light, pixelScale: 2)
+        let captured = try await ScreenshotCapture.captureUIKit(StateViewController(), config: config)
+        let button = try XCTUnwrap(captured.elements.first { $0.id == "primaryButton_state" })
+        let label = try XCTUnwrap(captured.elements.first { $0.id == "label_state" })
+        XCTAssertEqual(button.isEnabled, false)
+        XCTAssertEqual(button.isSelected, true)
+        XCTAssertNil(label.isEnabled)
+        XCTAssertNil(label.isSelected)
+    }
 
     private func makeConfig(
         seed: UInt64,

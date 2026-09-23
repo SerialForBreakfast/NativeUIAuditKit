@@ -388,6 +388,26 @@ The `generated_sources/` directory is committed alongside the package. The `imag
 
 ### 6.3 Annotation Schema
 
+**Focus execution evidence (FOCUS-RECEIPT-01, 2026-09-23):** detailed detection and
+recognizer results gain an optional Codable receipt. Old payloads/initializers remain
+valid. Receipt separates backend choice, per-observation scoring outcomes, policy/
+thresholds and load-bound compiled-model digest. Missing identity remains unknown.
+Successful selection behavior is unchanged. Nonfinite/invalid ML output is recorded
+as a failed prediction instead of participating in winner selection. Legacy focus
+modality health is preserved for compatibility; receipt completeness, not health.empty,
+determines whether full ML scoring occurred. Heuristic results never imply ML execution.
+See Plans/FocusExecutionReceipt.md for tests, identity and migration requirements.
+
+**2026-09-23 opt-in generator state contract (DATA-STATE-01):** annotation v1.2
+retains the complete v1.1 schema except required `state.isEnabled` and
+`state.isSelected` permit explicit null (unknown/not measured). False remains an
+observed false, not a missing-value fallback. The writer's existing default stays
+v1.0 and preserves historical enabled=true/selected=false output for frozen captures;
+new state-aware callers must explicitly select v1.2. UIKit controls supply their
+actual native properties; other views and the uninstrumented SwiftUI path remain
+unknown. No historical sidecars are rewritten. This does not claim native-render
+qualification, a new training corpus, or measured focus for iOS templates.
+
 Each annotation file pairs 1:1 with a PNG. The `imageSHA256` checksum links the annotation to its exact PNG bytes — if the PNG is regenerated, the checksum changes and the annotation is invalidated.
 
 ```json

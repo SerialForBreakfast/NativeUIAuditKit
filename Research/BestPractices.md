@@ -1626,3 +1626,96 @@ Keep untouched-use, lineage and independent-support checks separate.
 bytes approve. APPEAR-B1 reservation-v2 tests reject reused or stale bindings while
 the complete synthetic assembly/preflight path still passes. No historical corpus
 has been relabeled or re-admitted by this correction.
+
+### BP-89: Check the pinned local Git object before declaring source unavailable
+
+**Wrong:** Treat an old producer working-tree HEAD as proof that the requested
+revision is unavailable. This unnecessarily made APPEAR family intake wait on TTR.
+**Correct:** Check `git cat-file -t <exact-revision>` and read its files with
+`git show <revision>:<path>`. Pin content hashes; do not fetch, checkout or modify
+the producer just to inspect an already-present immutable object.
+**Why:** cda0a32 was locally available while checkout0e43ab3 remained old. That
+source resolved all three new-preset intake failures without a producer action.
+
+### BP-90: Diagnostic filenames must not shadow Python standard modules
+
+**Wrong:** Put an executable `inspect.py` alongside a model-comparison script.
+NumPy imported that file instead of stdlib inspect and reran diagnostic setup.
+**Correct:** Use a specific name such as inspect_bundles.py, and retain completed
+model-stage evidence before starting the next backend. Preserve failed trials.
+**Why:** The first family comparison failed on a safe output-collision guard;
+renaming the diagnostic resolved the import failure. This was not a model defect.
+
+### BP-91: Reconcile remaining recipes with split totals before resuming generation
+
+**Wrong:** Verify only the grand total and a valid prefix, then assume the frozen
+split counts match the continuation. P0-C's14,340 prefix plus2,600 planned members
+reaches16,940 but yields12,540/2,400/2,000 rather than12,340/2,400/2,200.
+**Correct:** Sum source-defined remaining families by frozen split, join the actual
+prefix counts and compare every declared partition before mutation. Resolve the
+count/allocation decision explicitly; never move retained members to make it pass.
+**Why:** This prevents another expensive capture ending at a predictable admission
+failure. The IOS-COV20260923 audit also exposes class support beyond the grand total.
+
+### BP-92: Separate mutable Finder metadata from immutable corpus content explicitly
+
+**Wrong:** Treat a changing`.DS_Store` as corrupted training pixels or delete it
+while preparing retention evidence. It changed between inventory and recovery check.
+**Correct:** Preserve strict failed evidence; optionally create a new sealed inventory
+with an explicit `.DS_Store`-only auxiliary exclusion. Continue verifying every image,
+annotation, manifest and rejected-trial member; unknown files and symlinks still fail.
+**Why:** A recorded metadata exception avoids repeated copy failures without hiding
+corpus changes or pretending a same-volume recovery drill is an independent backup.
+
+### BP-94: Marginal diversity and default state labels do not prove joint visual coverage
+
+**Observed:** DATA-VIS-20260923 found balanced light/dark totals across14,340 sidecars,
+but no dark/2x-SE combination and theme-coupled ordinary text sizes. Five status
+tuples coupled every clock with one charge level. All136,671 element states were
+enabled=true/selected=false, matching writer defaults rather than measured state.
+
+**Correct:** Audit important axis intersections, not only distinct values; use
+independent deterministic schedules and bounded pairwise probes in versioned additions.
+Separate requested metadata, rendered evidence and measured state. Never train state
+classification from default labels or retroactively invent missing measurements.
+
+**Why:** A balanced marginal can hide systematic shortcuts and absent combinations.
+Coverage improvements must preserve existing membership and cannot establish model
+improvement without evaluation. See reports/work/DATA-VIS-20260923/handoff.md.
+
+### BP-93: Reference-to-focus success does not establish focus-switch recognition
+
+**Wrong:** Generalize successful localization against an unfocused baseline to
+directional navigation. Both the departing and arriving controls change during
+a focus switch, and change rectangles do not identify which gained focus.
+**Correct:** Report reference arrivals, genuine ordered switches, constructed
+switch replays and no-op cases separately. Keep semantic/current-frame boxes,
+native truth and model decisions distinct; abstain on ambiguous changes.
+**Why:** TEMP-FOCUS-DEV localized9/9 reference arrivals but only2/18 constructed
+switches correctly, with2 wrong and14 abstentions. The shipped+diff guardrail
+improved reference arrivals but did not solve focus switches. No live action
+policy should be inferred from this favorable baseline-only result.
+
+### BP-95: Verify execution diagnostics on the wire, not only in Swift
+
+**Wrong:** Assume synthesized Codable includes computed receipt counts because
+Swift callers can read them. FOCUS-RECEIPT-01 review found its initial computed
+counts/completeness absent from JSON, leaving cross-process consumers without the
+promised fields despite an ordinary Swift roundtrip passing.
+**Correct:** Encode derived wire fields explicitly, validate them against candidate
+dispositions when decoding, and assert actual JSON keys plus contradictory payload
+rejection. Keep legacy outer results without the new optional receipt decodable.
+**Why:** Cross-repository consumers see serialized bytes, not computed Swift
+properties. See FocusExecutionReceiptTests.wireCountsAndTamperedEvidence.
+
+### BP-96: Missing class metrics are not zero measurements
+
+**Wrong:** P2 comparison used dict.get(key,0) over the union of metric keys. When
+only one artifact reported a class AP, this fabricated a delta against zero.
+**Correct:** Compare finite numeric values present on both sides only; explicitly
+report missing/null sides and partial availability. Reject booleans/nonfinite
+values and nonfinite subtraction results. Keep unsupported-class AP unavailable.
+**Why:** IOS-COV found only12/41 classes supported in the current test prefix.
+Invented zeroes conceal absent evaluation evidence and misstate improvement or
+regression. Regression coverage: scripts/test_reference_comparison.py and the
+actual exported-corpus offline toolchain integration test.

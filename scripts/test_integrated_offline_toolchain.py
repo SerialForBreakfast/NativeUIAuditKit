@@ -54,6 +54,11 @@ class IntegratedOfflineToolchainTests(unittest.TestCase):
         self.assertEqual(corpus["trainingClassCounts"], {7: 1})
         artifact = {"formatVersion": "prediction-artifact-v1", "corpus": {"contentSHA256": digest}, "categoryMap": {"sha256": "map"}, "settingsSHA256": "settings", "completeness": {"complete": True, "requestedImageIDs": ["holdout"]}, "results": [{"imageID": "holdout", "imageSHA256": digest, "labelSHA256": hashlib.sha256(label.read_bytes()).hexdigest(), "status": "empty"}], "metrics": {"map50": 0.0}}
         self.assertEqual(compare(artifact, artifact)["sampleCount"], 1)
+        incomplete_metrics = dict(artifact, metrics={"toggleAP": None})
+        unavailable = compare(artifact, incomplete_metrics)
+        self.assertEqual(unavailable["metricAvailability"], "unavailable")
+        self.assertEqual(unavailable["deltas"], {})
+        self.assertEqual(unavailable["unavailableMetrics"], {"map50": ["right"], "toggleAP": ["left", "right"]})
         collision = subprocess.run([sys.executable, str(ROOT / "scripts/export_coco.py"), "--dataset", str(self.source), "--output", str(self.exported)], capture_output=True, text=True)
         self.assertNotEqual(collision.returncode, 0)
         self.assertIn("refusing collision", collision.stderr)

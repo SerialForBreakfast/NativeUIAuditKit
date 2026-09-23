@@ -195,6 +195,96 @@ public struct AccessibilityFlags: Codable, Sendable {
 
 // MARK: - Top-level run configuration
 
+/// Bounded development probe inputs. Planning does not authorize or execute capture.
+public struct VisualProbeCatalog: Codable, Sendable {
+    public let version: String
+    public let planningOnly: Bool
+    public let partition: String
+    public let maximumCaptureBatch: Int
+    public let requiredIntersections: [String]
+    public let unsupportedIntersections: [String: String]
+    public let cases: [Case]
+
+    /// Every variant shares its family's content seed and development membership.
+    public struct Case: Codable, Sendable {
+        public let id: String
+        public let group: String
+        public let profile: String
+        public let config: GeneratorRunConfig
+    }
+
+    /// Named, independently stepped schedules cover the declared intersections.
+    /// These are requested offscreen profiles, not measured OS/device identities.
+    public static func make(contentSeed: UInt64) -> Self {
+        let families = ["UIKitControls", "ChromeCoverage", "DynamicTypeOverflow"]
+        let types: [GeneratorDynamicTypeSize] = [.medium, .large, .xLarge,
+            .accessibilityMedium, .xxLarge, .small]
+        let times = ["09:41", "12:30", "18:05", "22:15", "07:00"]
+        let charges = [10, 25, 50, 75, 100]
+        let cellular = [0, 1, 3, 5]
+        let wifi = [0, 1, 3]
+        var rows: [Case] = []
+        for family in families {
+            let group = "\(family):\(contentSeed)"
+            for index in 0..<48 {
+                let modern = (index / 2) % 2 == 0
+                let bars = cellular[(index / 3) % cellular.count]
+                let state = SimulatorStateOverride(time: times[index % times.count],
+                    batteryLevel: charges[(index / 5) % charges.count],
+                    batteryState: (index / 5) % 2 == 0 ? "charging" : "discharging",
+                    cellularBars: bars, wifiBars: wifi[index % wifi.count],
+                    cellularMode: bars == 0 ? "notSupported" : "active", operatorName: "")
+                let config = GeneratorRunConfig(seed: contentSeed, templateFamily: family,
+                    osProfile: modern ? .ios26 : .ios17, simulatorOverride: state,
+                    colorScheme: index % 2 == 0 ? .dark : .light,
+                    dynamicTypeSize: family == "DynamicTypeOverflow" ? .accessibilityExtraExtraExtraLarge : types[(index / 4) % types.count],
+                    deviceName: modern ? "iPhone 17 Pro" : "iPhone SE (3rd generation)",
+                    pixelScale: modern ? 3 : 2, locale: "en_US", layoutDirection: .ltr)
+                rows.append(Case(id: "\(group):probe-\(index)", group: group,
+                    profile: modern ? "ios26" : "ios17", config: config))
+            }
+        }
+        return Self(version: "visual-probe-catalog-v2", planningOnly: true,
+            partition: "development", maximumCaptureBatch: 48,
+            requiredIntersections: ["theme/profile", "theme/type", "clock/charge",
+                "cellular/wifi", "charge/charging-state"],
+            unsupportedIntersections: ["DynamicTypeOverflow/theme/type": "Native font fixed at AXXXL; no multi-size rendering claim"], cases: rows)
+    }
+
+    /// Reject modified configurations and ambiguous/oversized selections before capture.
+    /// A valid selection is still not execution authority or training eligibility.
+    public func validatedBatch(ids: [String]) throws -> [Case] {
+        guard let seed = cases.first?.config.seed, !ids.isEmpty, ids.count <= 48,
+              Set(ids).count == ids.count else { throw ValidationError.invalidSelection }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        guard try encoder.encode(self) == encoder.encode(Self.make(contentSeed: seed)) else {
+            throw ValidationError.changedCatalog
+        }
+        let lookup = Dictionary(uniqueKeysWithValues: cases.map { ($0.id, $0) })
+        return try ids.map { id in
+            guard let row = lookup[id] else { throw ValidationError.invalidSelection }
+            return row
+        }
+    }
+
+    /// Decode without silently discarding unknown fields at the execution boundary.
+    public static func decodeFrozen(_ data: Data) throws -> Self {
+        let decoded = try JSONDecoder().decode(Self.self, from: data)
+        let original = try JSONSerialization.jsonObject(with: data) as? NSDictionary
+        let emitted = try JSONSerialization.jsonObject(with: JSONEncoder().encode(decoded)) as? NSDictionary
+        guard let original, let emitted, original.isEqual(emitted) else {
+            throw ValidationError.changedCatalog
+        }
+        return decoded
+    }
+
+    /// Planning catalog validation failure; no runtime operation should have begun.
+    public enum ValidationError: Error, Sendable {
+        case changedCatalog, invalidSelection
+    }
+}
+
 /// Configuration for a single generator run. Deterministic: same seed → byte-identical PNG + annotation.
 public struct GeneratorRunConfig: Codable, Sendable {
     public var seed: UInt64

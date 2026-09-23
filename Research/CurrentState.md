@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-22 (local; latest focus experiment 2026-09-22 UTC)
+**As of:** 2026-09-23 (latest retained-appearance evaluation; no new training)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,57 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+**2026-09-23 approved reconstruction count correction:** the maintainer approved
+12,540 train /2,400 validation /2,000 test, preserving16,940 total and family
+assignments. This supersedes the pending count-decision wording in older audit
+notes below. Validator defaults now use the approved allocation; original expected
+counts remain available for historical reproduction. No pixels were moved or
+generated; fresh r6 continuation setup and coverage gates remain outstanding.
+
+**2026-09-23 unshipped focus execution diagnostics:**
+[FOCUS-RECEIPT-01](../reports/work/FOCUS-RECEIPT-01/handoff.md) adds optional detailed
+request/session/recognizer receipts, loader-bound identity and recoverable operational
+model-resource errors.123 offline tests pass. TTR's older package pin remains without
+this API until adoption; no accuracy improvement, live qualification or model promotion
+is implied. The shipped artifacts below are unchanged.
+
+**2026-09-23 visual-state inventory (not a model change):**
+[DATA-VIS](../reports/work/DATA-VIS-20260923/handoff.md) rehashed14,340 preserved
+sidecars and revalidated12 retained status-axis probes. Theme/profile/type and
+clock/charge schedules are coupled despite balanced marginals. Enabled/selected
+fields are writer defaults throughout this prefix, not state-training truth.
+[Targeted additions](Plans/VisualStateCoverage.md) prioritize truthful state
+provenance and independent schedules; preserved corpus and training gates unchanged.
+
+**2026-09-23 temporal focus diagnostic:**
+[TEMP-FOCUS-DEV](../reports/work/TEMP-FOCUS-DEV-20260923/handoff.md) completed36
+retained-image replays with production change primitives and cached model scores.
+On9 reference→focus cases, diff localization9/9 and shipped+diff6/9 versus shipped
+single-frame0/9; on18 constructed focus switches diff yields2 correct/2 wrong/14
+abstentions. This supports exploring temporal proposals, not replacing focus
+verification. Native oracle boxes, source-related development images and constructed
+transitions are not live navigation or unseen-interface qualification. No new model.
+
+**2026-09-23 independent-evaluation preparation:**
+[APPEAR-EVAL-RESERVE handoff](../reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
+Actual assembly now binds the native-retention reference:221 candidate pairs and9
+retention pairs, unchanged sampling/membership, zero cross-partition conflicts.
+Twenty required source slots are specified but none is source-bound; ten role/stratum
+coverage gaps remain. Runtime coordinator and Fixture respond; missing untouched
+groups and actual Photos buttons are the dependency. One consolidated TTR request
+published/read back. No capture, frozen evaluation, training or model improvement.
+
+**2026-09-23 integrated appearance evaluation:** [handoff](../reports/work/APPEAR-FAMILY-EVAL-20260923/handoff.md).
+Pinned cda0a32 source resolves consumer drift; all9 new pairs/18 crops qualify for
+simulator development. Combined19-pair diagnostic: shipped TP6/FN13/FP6/TN13;
+FDR-007/008 each TP0/FN19/FP0/TN19 at0.85. All models have0/9 uniquely correct
+base-frame focus decisions; crop sensitivity remains substantial. Not an independent
+holdout or production recommendation. Expanded proposal221 train-candidate pairs
++9 retention pairs preserves50/50 logical-source mass and known seed7 lineage.
+Exact native retention reference is prepared (18 samples, floor1.0), subsequently bound
+in APPEAR-EVAL-RESERVE's incomplete assembly. Untouched evaluation groups/approval remain
+missing. No capture, training, export or promotion.
 
 **2026-09-23 APPEAR-B1 software delivered:** [handoff](../reports/work/APPEAR-B1/handoff.md)
 integrates a separate balanced-development contract into assembly/trainer preflight.
@@ -424,7 +475,7 @@ keeps 41-class first, moves badge to a versioned later model, prioritizes FocusR
 after DS-G8, and separates software/data/integration/model outcomes. Publishing these plans
 does not mark any worker implementation, experiment or quality gate complete.
 
-**Independent corpus blocker — TASK-DATA-01 (updated 2026-09-22 UTC):** All 2,000 historical synthetic test links remain broken, plus 10,543/11,984 training and 2,696/3,056 validation image links; labels and historical Run 009 mAP50=0.585669 remain intact. Missing files do not establish deletion cause. P0-C is executing a separately authorized native-only replacement, not historical recovery. Failed attempts exposed writer/schema drift, native-navigation geometry defects and repeated pixels; evidence is preserved. Corrected-source preflight passes eight native tests and independent validation of 346 sample pairs. The [r5 continuation](../reports/work/P0-C/reconstruction-configuration-r5.md) retains 7,500 verified completed r4 captures with explicit build lineage and collects 9,440 remaining slots toward the unchanged 16,940 target. Full capture/audit remains in progress, not eligible training data yet. `webContent` remains uncovered. [Historical availability evidence](../reports/dataset_availability_2026-09-19.md); [recovery plan](DatasetRecoveryPlan.md); [resumption evidence](../reports/work/P0-C/resumption-20260922.md). Baseline inference, frozen-suite acceptance and training still depend on completed corpus qualification; offline work is independent.
+**Independent corpus blocker — TASK-DATA-01 (updated 2026-09-23 UTC):** Historical pixels remain unavailable; cause is unproven and Run009 remains non-comparable. Fresh [IOS-COV audit](../reports/work/IOS-COV-20260923/coverage-decision.md) verifies14,340 preserved r6-prefix pairs, zero decoded duplicates/leakage. r5 stopped; no generator is live. Remaining2,600 recipes project12,540/2,400/2,000 rather than frozen12,340/2,400/2,200; maintainer count/allocation decision requested before capture. Visible prefix coverage is train39/41,val12/41,test12/41, not merely a webContent gap. New retention tooling inventories32,832 corpus files (8.9GB); independent backup remains unassigned. No capture, inference or training in this audit. [Historical evidence](../reports/dataset_availability_2026-09-19.md), [recovery plan](DatasetRecoveryPlan.md), [preserved failure history](../reports/work/P0-C/resumption-20260922.md).
 
 FocusRing v0.1 is independent of that bottleneck and is already bundled.
 

@@ -25,6 +25,12 @@ import Foundation
 ///   - `h_norm = frame.height / imageHeightPt`
 public enum AnnotationWriter {
 
+    /// Explicit opt-in; the default preserves frozen v1.0 generation behavior.
+    public enum Schema: String, Sendable {
+        case legacy = "1.0"
+        case measuredState = "1.2"
+    }
+
     // MARK: - Public API
 
     /// Write an annotation JSON file for a single captured image.
@@ -43,14 +49,16 @@ public enum AnnotationWriter {
         imageFileName: String,
         templateFamily: String,
         generatorVersion: String,
-        to outputURL: URL
+        to outputURL: URL,
+        schema: Schema = .legacy
     ) throws {
         let json = buildJSON(
             result: result,
             config: config,
             imageFileName: imageFileName,
             templateFamily: templateFamily,
-            generatorVersion: generatorVersion
+            generatorVersion: generatorVersion,
+            schema: schema
         )
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -66,7 +74,8 @@ public enum AnnotationWriter {
         config: GeneratorRunConfig,
         imageFileName: String,
         templateFamily: String,
-        generatorVersion: String
+        generatorVersion: String,
+        schema: Schema = .legacy
     ) -> AnnotationJSON {
         let widthPt  = Double(result.pointSize.width)
         let heightPt = Double(result.pointSize.height)
@@ -159,7 +168,10 @@ public enum AnnotationWriter {
                 visibleText: elem.visibleText,
                 accessibilityLabel: nil,
                 traits: [],
-                state: AnnotationJSON.ElementState(isEnabled: true, isSelected: false, isFocused: elem.isFocused),
+                state: AnnotationJSON.ElementState(
+                    isEnabled: schema == .legacy ? true : elem.isEnabled,
+                    isSelected: schema == .legacy ? false : elem.isSelected,
+                    isFocused: elem.isFocused),
                 occluded: clipped,
                 occlusionType: clipped ? "imageBoundary" : nil,
                 excluded: invisible,
@@ -169,7 +181,7 @@ public enum AnnotationWriter {
         }
 
         return AnnotationJSON(
-            schemaVersion: "1.0",
+            schemaVersion: schema.rawValue,
             imageSHA256: result.sha256,
             image: imageInfo,
             generatorProfile: generatorProfile,
@@ -290,13 +302,14 @@ struct AnnotationJSON: Codable {
     }
 
     struct ElementState: Codable {
-        var isEnabled: Bool = true
-        var isSelected: Bool = false
+        var isEnabled: Bool?
+        var isSelected: Bool?
         var isFocused: Bool? = nil
         var isLoading: Bool? = nil
         var isSkeleton: Bool? = nil
 
-        // Use encodeIfPresent for optionals so nil values are omitted from JSON.
+        // Required enabled/selected fields encode explicit null in v1.2 for unknown.
+        // Other optional state fields remain omitted when unavailable.
         private enum CodingKeys: String, CodingKey {
             case isEnabled, isSelected, isFocused, isLoading, isSkeleton
         }
@@ -312,16 +325,16 @@ struct AnnotationJSON: Codable {
 
         init(from decoder: Decoder) throws {
             let c = try decoder.container(keyedBy: CodingKeys.self)
-            isEnabled  = try c.decode(Bool.self, forKey: .isEnabled)
-            isSelected = try c.decode(Bool.self, forKey: .isSelected)
+            isEnabled  = try c.decode(Bool?.self, forKey: .isEnabled)
+            isSelected = try c.decode(Bool?.self, forKey: .isSelected)
             isFocused  = try c.decodeIfPresent(Bool.self, forKey: .isFocused)
             isLoading  = try c.decodeIfPresent(Bool.self, forKey: .isLoading)
             isSkeleton = try c.decodeIfPresent(Bool.self, forKey: .isSkeleton)
         }
 
         init(
-            isEnabled: Bool = true,
-            isSelected: Bool = false,
+            isEnabled: Bool? = nil,
+            isSelected: Bool? = nil,
             isFocused: Bool? = nil,
             isLoading: Bool? = nil,
             isSkeleton: Bool? = nil

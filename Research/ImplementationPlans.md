@@ -1,5 +1,14 @@
 # Full backlog implementation packet catalog
 
+[TEMP-FOCUS-DEV](Plans/TemporalVisualVerificationSpike.md#assigned-development-precursor-temp-focus-dev-2026-09-23)
+is the retained-image temporal localization precursor; genuine ordered journeys,
+interruptions and end-to-end detector geometry remain separate TEMP-LIVE work.
+
+[APPEAR-EVAL-RESERVE](Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation)
+groups untouched source reservations, missing-coverage acquisition/intake, evaluation
+freeze and one candidate preparation. [Reservation requirements](../reports/work/APPEAR-EVAL-RESERVE-20260923/reservation-plan.md)
+are not admitted evaluation membership. Training requires separate approval.
+
 **Revision:** 5, 2026-09-22. Complete remaining-backlog catalog. Linked revision-4 contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
 
 ## Remaining-work amendments and direct acquisition
@@ -7,6 +16,11 @@
 [APPEAR-C catalog/appearance qualification](Plans/CatalogAppearanceQualification.md)
 delivers bounded real catalog intake and independent-evaluation readiness audit.
 Theme aliases and one common renderer family must not become false holdout coverage.
+The [integrated family tranche](../reports/work/APPEAR-FAMILY-EVAL-20260923/handoff.md)
+now includes new-preset intake,19-pair/neighbor-sensitivity comparisons and expanded
+development membership. [Next grouped assignment](../reports/work/APPEAR-FAMILY-EVAL-20260923/next-tranche.md)
+combines reservation, bounded acquisition/intake, independent evaluation and preparation
+for one separately authorized candidate, rather than separate helper-sized handoffs.
 
 [APPEAR-B1 development adapter](Plans/FocusAppearanceAcquisition.md#appear-b1--development-proposal-adapter)
 now has an [integrated handoff](../reports/work/APPEAR-B1/handoff.md) and
@@ -89,6 +103,11 @@ blanket-pause assumptions in historical contracts.
 | ID-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#id-live--genuine-screen-and-row-identity-evaluation) |
 | R-LABEL | [Detailed implementation contract](Plans/RemainingDelivery.md#r-label--trustworthy-physical-holdout-annotations) |
 | DATA-VIS | [Detailed implementation contract](Plans/RemainingDelivery.md#data-vis--controlled-visual-state-coverage) |
+| DATA-STATE-01 | [Unknown-aware state contract and evidence](../reports/work/DATA-STATE-01/handoff.md); native qualification separate |
+| DATA-SCHEDULE-01 | [Visual coverage plan](Plans/VisualStateCoverage.md); [planning CLI evidence](../reports/work/DATA-SCHEDULE-01/handoff.md) |
+| DATA-PROBE-01 | [Bounded adapter, native qualification requirements](../reports/work/DATA-PROBE-01/handoff.md) |
+| TTR-DIALOG-01 | [Closed dialog-style consumer compatibility](../reports/work/TTR-DIALOG-01/handoff.md) |
+| FOCUS-RECEIPT-01 | [Actual focus execution and consumer migration contract](Plans/FocusExecutionReceipt.md) |
 | DATA-SIM | [Detailed implementation contract](Plans/RemainingDelivery.md#data-sim--near-duplicate-similarity-feasibility) |
 | ALIGN-A | [Detailed implementation contract](Plans/RemainingDelivery.md#align-a--semantic-alignment-contract-and-offline-policy) |
 | ALIGN-B | [Detailed implementation contract](Plans/RemainingDelivery.md#align-b--semantic-dataset-qualification) |

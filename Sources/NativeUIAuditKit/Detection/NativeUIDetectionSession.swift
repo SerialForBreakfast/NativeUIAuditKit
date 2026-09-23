@@ -46,13 +46,13 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
     }
 
     /// Loads the Stage 2 focus classifier once per session when configured and bundled.
-    private func getFocusClassifier() async -> FocusRingClassifier? {
-        guard configuration.useFocusClassifier else { return nil }
+    private func getFocusClassifier() async -> FocusClassifierLoad {
+        guard configuration.useFocusClassifier else { return FocusClassifierLoad(classifier: nil, fallbackReason: "disabled") }
         if let cachedFocusClassifier {
-            return cachedFocusClassifier
+            return FocusClassifierLoad(classifier: cachedFocusClassifier, fallbackReason: nil)
         }
-        let loaded = await NativeUIDetectionRequest.loadFocusClassifierIfAvailable()
-        cachedFocusClassifier = loaded
+        let loaded = await NativeUIDetectionRequest.loadFocusClassifierWithEvidence()
+        cachedFocusClassifier = loaded.classifier
         return loaded
     }
 
@@ -67,14 +67,14 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
         case .tvOS:
             do {
                 let m = try await NativeUIModelAsset.loadTVOSModel()
-                loaded = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: NativeUIModelAsset.tvOSManifest)
+                    loaded = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: true))
             } catch let error as ModelContractError {
                 throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
             }
         case .iOS, .iPadOS, .macOS, .visionOS, .unknown:
             do {
                 let m = try await NativeUIModelAsset.loadModel()
-                loaded = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: NativeUIModelAsset.iOSManifest)
+                loaded = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: false))
             } catch let error as ModelContractError {
                 throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
             }
@@ -119,7 +119,7 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
             on: screenshot,
             sidecar: sidecar,
             preloadedModel: loaded,
-            preloadedFocusClassifier: await getFocusClassifier()
+            preloadedFocusLoad: platform == .tvOS ? await getFocusClassifier() : nil
         )
     }
 
@@ -157,7 +157,8 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
                 elements: detailed.elements,
                 status: overallStatus,
                 modalityHealth: detailed.modalityHealth,
-                timings: detailed.timings
+                timings: detailed.timings,
+                focusExecution: detailed.focusExecution
             )
         } catch NativeUIDetectionError.imagePreprocessingFailed {
             let health = ModalityHealth(detector: .failed(reason: "Image preprocessing failed"), ocr: .notRequested, focus: .notRequested, audit: .notRequested)

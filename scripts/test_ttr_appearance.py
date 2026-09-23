@@ -24,6 +24,14 @@ VECTORS = {
     "gray_placeholder": "a1b289a83b9ad1864af4265c34ab1eaad4117a7ed28a98459b73df66957254e4",
 }
 LEGACY_HASH = "f472aed392a173003bbd4c653adbe3f65c9b92b1eee4bc37a0302926513af832"
+PRESETS = tuple(VECTORS) + ("blank_placeholder", "high_contrast", "photos_like")
+# Producer cda0a32 retained signed bundle recipes (archive8761fb75), not
+# consumer-generated expectations: grid_matrix/4/dark/regular/seed7/step0.
+FAMILY_VECTORS = {
+    ("blank_placeholder", "standard"): "77abbbdd0586e7a20c7c007f8d2a0def3e1e740d79882a15cfd152163d39bea9",
+    ("high_contrast", "standard"): "891cda374ae0e137deb9a814ffb08b234921c4d75414d3f0e051f21fc93fc5ba",
+    ("photos_like", "dock"): "7a0c087b7d0fcc0cbb9597812626803492ed3b8c17ddbf8189f34ac3f29b5b4b",
+}
 
 
 def recipe(preset="artwork", archetype="media_shelf", layout="standard"):
@@ -87,7 +95,7 @@ class AppearanceTests(unittest.TestCase):
 
     def test_all_supported_combinations_and_randomization_suffix(self):
         identities = set()
-        for preset in VECTORS:
+        for preset in PRESETS:
             for archetype, layout in (("media_shelf", "standard"), ("grid_matrix", "standard"),
                                       ("grid_matrix", "dock")):
                 r = recipe(preset, archetype, layout)
@@ -98,7 +106,7 @@ class AppearanceTests(unittest.TestCase):
                 self.publish(meta)
                 normalized = build(validate_bundle(self.bundle), "test-only", "e3d55d1", None)
                 self.assertEqual(normalized["pairs"][0]["observationBinding"]["focusedScene"]["recipe"], r)
-        self.assertEqual(len(identities), 9)
+        self.assertEqual(len(identities), 18)
         r = recipe()
         r["randomization"] = {"pack_id": "test", "version": "1", "palette_name": "warm",
                               "typography_weight": "bold", "badge_count": 2, "gradient_overlay": True,
@@ -134,6 +142,29 @@ class AppearanceTests(unittest.TestCase):
                                   ("kitchen_sink", "standard"), ("unknown", "standard")):
             with self.assertRaisesRegex(SidecarError, "appearance_archetype_layout"):
                 recipe_hash(recipe(archetype=archetype, layout=layout))
+
+    def test_source_derived_family_and_signed_recipe_vectors(self):
+        for (preset,layout), expected in FAMILY_VECTORS.items():
+            r=recipe(preset,"grid_matrix",layout)
+            r.update(element_count=4,theme="dark")
+            for family in (None,f"appearance-v1.{preset}.{layout}"):
+                r["appearance"]["family_id"]=family
+                self.assertEqual(recipe_hash(r),expected)
+                r["recipe_hash"]=expected
+                meta=copy.deepcopy(self.meta);replace_recipes(meta,r);self.publish(meta)
+                self.assertEqual(validate_bundle(self.bundle)["acceptedRowCount"],1)
+            for wrong in (False,[],{},1,"appearance-v1.artwork.standard","",f"appearance-v2.{preset}.{layout}"):
+                r["appearance"]["family_id"]=wrong
+                with self.assertRaisesRegex(SidecarError,"appearance_family"):recipe_hash(r)
+
+    def test_family_alias_change_rejected_even_when_hash_unchanged(self):
+        r=recipe("photos_like","grid_matrix","dock")
+        r["appearance"]["family_id"]="appearance-v1.photos_like.dock"
+        r["recipe_hash"]=recipe_hash(r)
+        meta=copy.deepcopy(self.meta);replace_recipes(meta,r)
+        meta["focused_capture"]["after_scene"]["recipe"]["appearance"].pop("family_id")
+        self.publish(meta)
+        with self.assertRaises(HarvestValidationError):validate_bundle(self.bundle)
 
     def test_changed_dropped_unbound_or_legacy_appearance_rejected(self):
         def changed(r):

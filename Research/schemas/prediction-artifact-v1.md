@@ -122,3 +122,13 @@ The per-image artifact does not itself calculate evaluation metrics; a caller ma
 attach a separate numeric `metrics` object for a controlled comparison. If either
 artifact lacks that object, the comparison reports `metricAvailability:
 "unavailable"` and no deltas. It must never interpret missing metrics as zero.
+
+2026-09-23 targeted P2-METRICS correction: this rule applies to individual keys,
+not just the whole object. Compare only keys with finite numeric values on both
+sides. Explicit null means unavailable (for example a class without ground-truth
+support), not AP0. Report omitted/null sides in unavailableMetrics; a mix of available
+and unavailable keys has metricAvailability partial. Empty objects yield unavailable.
+Reject booleans, NaN, infinity, nonnumeric values and nonfinite differences. These
+are caller-supplied diagnostic metrics, not a new official evaluator or gate pass.
+Ground-truth support and metric implementation compatibility remain caller evidence;
+the comparator does not infer either from a metric name or invent class metrics.

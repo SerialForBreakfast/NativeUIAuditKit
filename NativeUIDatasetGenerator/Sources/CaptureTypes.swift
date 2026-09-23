@@ -35,6 +35,10 @@ public struct AnnotatedElement: Sendable {
     public let knownIssues: [String]
     /// Focus state for tvOS elements. `true` when focused, `false` when unfocused, `nil` when not evaluated.
     public let isFocused: Bool?
+    /// Native enabled state when measured; nil for uninstrumented/non-control views.
+    public let isEnabled: Bool?
+    /// Native selected state when measured; not a synonym for switch value or focus.
+    public let isSelected: Bool?
 
     public init(
         id: String,
@@ -43,7 +47,9 @@ public struct AnnotatedElement: Sendable {
         frame: CGRect,
         visibleText: String? = nil,
         knownIssues: [String] = [],
-        isFocused: Bool? = nil
+        isFocused: Bool? = nil,
+        isEnabled: Bool? = nil,
+        isSelected: Bool? = nil
     ) {
         self.id = id
         self.elementType = elementType
@@ -52,6 +58,8 @@ public struct AnnotatedElement: Sendable {
         self.visibleText = visibleText
         self.knownIssues = knownIssues
         self.isFocused = isFocused
+        self.isEnabled = isEnabled
+        self.isSelected = isSelected
     }
 }
 

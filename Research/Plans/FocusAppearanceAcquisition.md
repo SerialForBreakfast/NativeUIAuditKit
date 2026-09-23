@@ -1,5 +1,32 @@
 # Focus appearance gap: acquisition and independent evaluation
 
+## APPEAR-EVAL-RESERVE — reservation, acquisition and candidate preparation
+
+Assigned 2026-09-23 to the NUIAK architect. Execute the grouped follow-up in
+`reports/work/APPEAR-FAMILY-EVAL-20260923/next-tranche.md`; retain existing workers,
+data and protocols. Evidence: `reports/work/APPEAR-EVAL-RESERVE-20260923/`.
+The assignment includes qualified missing-coverage acquisition and intake, not
+training. No Office, account mutation, producer edits or model promotion.
+
+Before capture, require source-backed, previously unused connected groups for the
+five existing strata, two per validation role and two per final-challenge role.
+Reserve roles before capture; bind exact reviewed membership afterward through
+the existing v2 reservation contract. An unfilled planning slot is not an admitted
+reservation. Shared renderer ancestry must be recorded and reviewed, not hidden
+behind a different seed, preset, adapter or family string.
+
+Actual Photos primary/secondary buttons are a missing native surface; the existing
+`photos_like` collection-item artwork is not a substitute. Existing reviewed
+Photos screenshots stay development evidence. If the current producer cannot
+supply independent groups, publish one consolidated source/coverage request and
+complete candidate configuration preparation without inventing an evaluation
+freeze. No unchanged development recapture merely to make progress counts grow.
+
+Prepare a new immutable assembly with the already validated native-retention
+selection reference. Revalidate with the existing assembly CLI; missing evaluation
+remains a launch blocker. Reserve no experiment ID and create no approval record
+until evaluation is frozen and the maintainer separately approves one run.
+
 Owner: NUIAK architect. Queue/ownership remains in Tasks.md under OS-FOCUS-04.
 Evidence: [FDR-008 appearance diagnosis](../../reports/work/FOCUS-VISUAL-03/handoff.md).
 This plan grants no capture, producer-edit or training authority.

@@ -158,6 +158,22 @@ must pass common membership audit. SIM-DATA-05 full-frame exports stay separate.
 
 ## DATA-RET — Corpus retention and recovery verification
 
+2026-09-23 implementation slice: `scripts/corpus_retention.py` provides a versioned,
+content-sealed full-tree inventory, read-only copy verification, and new-only
+project-local restoration. Inventory/restore includes annotations, manifests and
+rejected-trial evidence, not just PNGs. All members are regular files; symlinks,
+unsafe paths, changed bytes, incomplete copies and output collisions fail closed.
+An inventory is not a backup. A same-volume restore is a procedure drill only;
+independent backup qualification requires a maintainer-selected destination and
+separate copy authority. Initial real scope is the preserved iOS r6 prefix, not
+a claim of final corpus readiness. No source deletion or overwrite operation exists.
+Observed Finder `.DS_Store` churn may be excluded only with the explicit
+`--exclude-finder-metadata` inventory option. Record that exact auxiliary name and
+observed excluded paths in the sealed inventory; never exclude arbitrary unknown
+files, symlinks, corpus manifests, annotations or images. Verification and restore
+then cover all declared corpus content, not Finder metadata. Preserve failed strict
+inventory evidence and original files; this does not alter corpus admission gates.
+
 **Parent:** TASK-DATA-01 and FocusRing corpus qualification. **Inputs:** actual corpus
 manifests, export/source dependency inventory, storage sizes and maintainer-selected
 retention owner/destination. **Scope:** NUA inventory/verifier/runbook and tests;
@@ -300,6 +316,10 @@ declared labeled scope, no leaked training/benchmark overlap. **Next:** R-C mAP
 report; without this, R-C may report capture coverage/latency only.
 
 ## DATA-VIS — Controlled visual-state coverage
+
+The source-backed inventory and bounded follow-on contracts are in
+[VisualStateCoverage.md](VisualStateCoverage.md); measured prefix/probe evidence is
+in [the inventory handoff](../../reports/work/DATA-VIS-20260923/handoff.md).
 
 **Parent:** dataset quality across iOS and tvOS; lower priority than usable focus.
 **Inputs:** IterationEfficiency coverage goal, actual generator controls and corpus

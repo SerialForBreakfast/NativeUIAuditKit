@@ -133,3 +133,33 @@ reports/work/OS-FOCUS-03/**/attachments/
 reports/work/OS-FOCUS-03/**/*.xcresult/
 reports/work/OS-FOCUS-03/**/*.png
 reports/work/OS-FOCUS-03/**/*.mp4
+
+# Worker execution artifacts: keep concise Markdown handoffs, not generated payloads.
+# Existing tracked evidence is unaffected; de-indexing needs a separate reviewed list.
+# Reusable scripts/fixtures belong in scripts/ and Tests/, not this artifact tree.
+/reports/work/**/*.log
+/reports/work/**/*.stderr
+/reports/work/**/*.stdout
+/reports/work/**/*.json
+/reports/work/**/*.jsonl
+/reports/work/**/*.csv
+/reports/work/**/*.tsv
+/reports/work/**/*.png
+/reports/work/**/*.jpg
+/reports/work/**/*.jpeg
+/reports/work/**/*.heic
+/reports/work/**/*.mp4
+/reports/work/**/*.mov
+/reports/work/**/*.tar.gz
+/reports/work/**/*.zip
+/reports/work/**/*.xcresult/
+/reports/work/**/*.py
+
+# Additional local environments/caches and unpromoted raw models.
+/.venv-*/
+/NativeUITrainer/.torch/
+/NativeUITrainer/.coremltools/
+*.pt
+*.pth
+*.mlpackage/
+# Do not blanket-ignore .mlmodelc: promoted model package resources are intentional.

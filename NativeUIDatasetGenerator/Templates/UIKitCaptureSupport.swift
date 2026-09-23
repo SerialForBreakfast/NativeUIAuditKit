@@ -98,6 +98,7 @@ extension ScreenshotCapture {
         let window = UIWindow(frame: bounds)
         window.rootViewController = viewController
         window.isHidden = false
+        defer { window.isHidden = true }
         window.makeKeyAndVisible()
 
         window.setNeedsLayout()
@@ -120,7 +121,9 @@ extension ScreenshotCapture {
                 framework: "UIKit",
                 frame: frame,
                 visibleText: annotated.visibleText,
-                knownIssues: annotated.knownIssues
+                knownIssues: annotated.knownIssues,
+                isEnabled: (v as? UIControl)?.isEnabled,
+                isSelected: (v as? UIControl)?.isSelected
             ))
         }
 

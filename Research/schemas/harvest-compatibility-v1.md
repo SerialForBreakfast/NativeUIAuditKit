@@ -1,5 +1,22 @@
 # Harvest bundle compatibility v1
 
+## Dialog-style-v1 additive recipe compatibility — 2026-09-23
+
+Source contract c25fa8fa (producer12105bc, dirty source explicitly declared) defines
+optional `dialog_style` only for action_dialog. Absent/null preserves prior hashes.
+Present requires integer version1 and closed size(small/medium/large),
+shape(standard/rounded/pill),palette(system/warm/cool/high_contrast),
+content(short_label/long_label/icon/badge). Unknown fields are rejected because
+they are not bound by the canonical recipe identity. Append
+`:dialog-style@1:<size>:<shape>:<palette>:<content>` after appearance suffix.
+
+Requires sidecar-v2 brackets; all aliases and before/after recipe objects must agree.
+Existing normalization preserves the raw style without a new derived schema. Same
+seed/style siblings stay in the same split group. These144 style combinations are
+not independent source families, actual Photos-button coverage or live qualification.
+Newer producer long-label overlap repair remains unqualified until its own bounded
+visual trial; parser acceptance does not rehabilitate quarantined captures.
+
 ## Appearance-v1 additive recipe compatibility — 2026-09-23
 
 TTR e3d55d1 adds optional recipe `appearance` (integer version1, preset
@@ -229,6 +246,14 @@ producer bundle:
 run IDs, secrets, or invented attestation values in fixtures or reports.
 
 ## Producer-owner brief
+
+2026-09-23 additive appearance compatibility pins producer cda0a32. Version1 also
+supports blank_placeholder/high_contrast/photos_like. Optional `family_id` is null,
+absent, or exactly `appearance-v1.<preset>.<layout>`; it does not enter recipe hash
+canonicalization. Unknown fields and contradictory family values reject. Preserve
+the object in every sidecar bracket and alias, including its optional-field presence.
+A valid producer family ID is not an independent evaluation reservation. Original
+three-preset vectors remain unchanged; new signed-bundle vectors are regression pins.
 
 Please preserve the current completed-bundle layout and the exact v1 index,
 receipt, coordinate, and provenance identifiers when publishing a consumer

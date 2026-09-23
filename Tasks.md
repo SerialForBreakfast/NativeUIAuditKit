@@ -13,7 +13,95 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**REPO-CLEANUP-20260923 — review (NUIAK architect):** report-specific ignores,
+generated test catalog instead of report dependency,119 retained artifact hashes
+verified,11 Python tests and123 Swift tests/build pass. [Handoff and maintainer steps](reports/work/REPO-CLEANUP-20260923/commands.md).
+No deletion, staging or de-indexing performed; historical tracked evidence requires
+separate review. Fixed94-path commit list covers the integrated current worktree.
+
+**P2-METRICS — software review (NUIAK architect):** corrected missing-key zero substitution,
+reject invalid/nonfinite values and test actual comparison integration. Targeted
+accepted-P2 correction, not a new evaluator or inference assignment.
+[Handoff](reports/work/P2-METRICS/handoff.md):14 focused/integration tests and required
+offline package checks pass; missing class metrics stay unavailable, never AP0.
+
+**TTR-PROVIDER-01 — source assessment review, NUIAK architect:** peer's pinned public API
+cannot identify actual focus backend/partial scoring. [Source-backed response and
+implementation contract](Research/Plans/FocusExecutionReceipt.md). No model agreement
+may be inferred from shared score fields or packaged-resource presence.
+
+**FOCUS-RECEIPT-01 — software review (NUIAK architect):** additive detailed
+result receipt, actual loader/cache identity, per-candidate dispositions and recoverable
+resource boundary. [Contract](Research/Plans/FocusExecutionReceipt.md). Public API
+extension implemented in the uncommitted worktree. [Handoff](reports/work/FOCUS-RECEIPT-01/handoff.md)
+and [consumer migration](reports/work/FOCUS-RECEIPT-01/migration.md):9 focused tests,
+14 XCTest+109 Swift Testing and offline build pass. Peer adoption/live integration
+remain separate; no model, TTR/runtime or training mutation.
+
+**TTR-DIALOG-01 — software review, NUIAK architect:** source-pinned closed dialog_style hash/
+schema compatibility through real ingest and crop entrypoints; adversarial regressions,
+offline checks and peer status. No capture, runtime repair or training approval.
+[Handoff](reports/work/TTR-DIALOG-01/handoff.md):144styles through ingest/normalization,
+actual test-only crop CLI,28Python tests and113Swift tests pass. Genuine repaired
+producer bundle and independent evaluation groups remain outstanding.
+
+**DATA-PROBE-01 — offline verified, native build/run pending; NUIAK architect:**
+[opt-in adapter and catalog v2](reports/work/DATA-PROBE-01/handoff.md). Canonical batch
+validation, fixed overflow font metadata, explicit Chrome theme path and owned-window
+cleanup implemented. iOS-only syntax passes; not yet built or captured. Requires exact
+iOS target/build/storage scope and first bounded native smoke. No training eligibility.
+
+**DATA-PROBE-INTAKE — software review (NUIAK architect):** bounded read-only iOS probe export
+consumer, byte/schema/config/geometry checks and truthful coverage through the CLI.
+[Contract](Research/Plans/VisualStateCoverage.md#data-probe-intake--offline-export-admission).
+[Handoff](reports/work/DATA-PROBE-INTAKE/handoff.md): actual CLI positive/negative
+tests, strict byte/schema/config/geometry checks, duplicate reporting and offline
+package checks. Genuine native capture/visual review remain unqualified.
+
+**DATA-SCHEDULE-01 — software review, NUIAK architect:** planning-only generator catalog,
+required joint-coverage regression checks and deterministic development groups.
+No capture, existing recipe changes, training eligibility or rendered-theme claim.
+[Handoff](reports/work/DATA-SCHEDULE-01/handoff.md):144 planned rows,48batch limit;
+8Python tests,14XCTest+98SwiftTesting and full build pass. Native capture adapter and
+effective Chrome theme qualification remain open.
+
+**DATA-STATE-01 — offline review, native qualification pending; NUIAK architect:** opt-in v1.2 unknown-aware enabled/selected
+state through capture types, UIKit collection, writer, schema selection and offline
+regressions. Preserve default v1.0 bytes and frozen corpus. Native runtime validation
+and independent rendering schedules remain separate; no capture/training authority.
+[Handoff and verification](reports/work/DATA-STATE-01/handoff.md):6Python tests,
+14XCTest+96SwiftTesting pass;10writer outputs pass full local schema validation.
+
+**APPEAR-EVAL-RESERVE — blocked at source reservation; preparation review, NUIAK architect (2026-09-23):**
+[Contract](Research/Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation).
+Independent evaluation acquisition and candidate preparation assigned together.
+Twenty required role/stratum slots are specified; none yet source-bound. Actual
+Photos buttons are not covered by photos_like artwork. Coordinator/Fixture respond;
+source-backed untouched groups, not another runtime rebuild, are the current dependency.
+Candidate retention-reference binding revalidated through actual assembly:460 rows,
+221 candidate pairs+9 retention pairs, unchanged membership/sampling, zero leakage.
+Ten independent-evaluation role/stratum gaps remain; no capture/freeze/training.
+[Integrated handoff](reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
+Shared request `nuiak-20260923T163800Z-evaluation-source-reservations` published/read back;
+peer acknowledgment remains unverified.
+
+Producer17:42:55Z now reports four representative styles captured:8 pairs/48 files;
+consumer intake remains separate. No untouched allocation or actual Photos-button
+route/labels supplied. [Resume review](reports/work/APPEAR-EVAL-RESERVE-20260923/resume-review.md)
+revalidates candidate/reference hashes and requests concrete source rows or an explicit
+unsupported response; no generic rebuild, recapture or training requested.
+
 **APPEAR-C — delivered appearance intake review, NUIAK architect:** [latest handoff](reports/work/APPEAR-C/visual-intake/handoff.md).
+**New family archive received; independent evaluation blocked:** [admission audit](reports/work/APPEAR-FAMILY-HANDOFF-20260923/evaluation-readiness.md).
+Superseding integrated tranche review (NUIAK architect): [full handoff](reports/work/APPEAR-FAMILY-EVAL-20260923/handoff.md).
+Consumer repaired from local cda0a32 Git objects; all3 bundles/9 pairs admitted for
+development.19-pair/252 neighbor-variant comparisons complete; all models0/9 unique
+base-frame decisions. Expanded proposal221 candidate pairs+9 retention; reference
+floor prepared.48 Python/107 Swift tests pass. No training/capture/promotion.
+Next [grouped evaluation-to-candidate tranche](reports/work/APPEAR-FAMILY-EVAL-20260923/next-tranche.md),
+not another helper: qualify untouched groups and bind retention reference before
+one separately approved candidate. Current seed7 diagnostics remain development.
+
 Three catalog themes/12 pairs/54 verified files admitted development-only;8 distinct
 pairs because high_contrast equals dark. Existing destructiveButton intake fixed;
 Appearance-v1 consumer support now passes3/3 producer vectors and43 Python checks;
@@ -24,8 +112,9 @@ zero exact overlap against458 scoped prior samples. Seed7 siblings remain develo
 no independent evaluation or training approval. APPEAR-B1 adapter now delivered for review.
 The [reservation-binding follow-up](reports/work/APPEAR-B1/reservation-binding/handoff.md)
 requires exact source/membership-bound v2 evaluation reservations. Producer family
-contract/artifact handoff is still unavailable locally; existing request remains open.
-Distinct high-contrast/Photos-like and independent evaluation families remain open;
+contract now resolved through local cda0a32 objects; independent-group coverage remains open.
+Distinct high-contrast/Photos-like/blank rendering is now reviewed; true Photos-button
+coverage and independent evaluation groups remain open;
 all catalog variants reserved together, no model scores/training. [Contract](Research/Plans/CatalogAppearanceQualification.md).
 
 | Priority | Packet | Scope | State/owner | Evidence and resume condition |
@@ -90,15 +179,16 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | F1 | FOCUS-EXP-01 | FOCUS-DET-05 | review (NUIAK architect): four arms completed | [Handoff](reports/work/FOCUS-EXP-01/handoff.md): 46 reviewed pairs, 37 train/9 validation; warm+stretch reaches18/18 validation decisions versus shipped7/18 at0.85. Scratch+stretch also18/18; no demonstrated aspect-fit win. Same-app development only, runtime parity differs, no promotion. Next: independent native Home/style challenge set before further training. |
 | F1 | FOCUS-PARITY-01 | FOCUS-DET-05 | review: corrected-producer replay passed (NUIAK architect) | [Plan](Research/Plans/FocusIntegrationReplay.md); [corrected replay](reports/work/FOCUS-PARITY-01/corrected-20260923/handoff.md): 10/10 exact crops and same-CPU scores, source512ea619. Backend differences reported separately; no model-driven navigation or quality qualification. Next obtain source-backed independent appearance-family contract/evidence under APPEAR-C. |
 | F1 | TV-FIX | INTEGRATION-01 | external request acknowledged; repair pending | TTR owns native non-view focus binding; request nuiak-20260922T061302Z-fixture-nonview-focus acknowledged06:36Z. Fixture HTTP restored at16:29Z; installed bytes unchanged, fresh412-sample telemetry still non_view/unmapped_item. [Current diagnostic](reports/work/TTR-CHECK-20260922-1622/fixture-followup.md). No producer edits here. |
-| P1 | DATA-RET | DATA-01 / FOCUS-DET-05 | ready planning (unassigned); copy gated | Inventory/restore verifier; maintainer-selected independent backup destination and authority before copying. Reuse corpus retention evidence. |
-| P1 | IOS-COV | DATA-01 / 6a-10 | ready decision preparation (unassigned) | Resolve uncovered webContent/support gates from P0-C audit; preserve target, map and active owner. |
+| P1 | DATA-RET | DATA-01 / FOCUS-DET-05 | local scope review (NUIAK architect); external copy gated | [Handoff](reports/work/IOS-COV-20260923/handoff.md): content-sealed inventory/verify/new-only restore CLI;29 focused and107 Swift tests pass. Real32,832-file8.9GB prefix fully restored/hash-verified. Same-volume drill only; independent destination/owner still need maintainer selection. |
+| P1 | IOS-COV | DATA-01 / 6a-10 | decision review (NUIAK architect) | [Coverage decision](reports/work/IOS-COV-20260923/coverage-decision.md):14,340 valid pairs, zero pixel duplicates/leakage; visible support train39/41, val12/41,test12/41. Full count/family reconciliation and broader missing support documented. No gate/taxonomy change. |
 | P1 | PER-DATA | TTR-PERCEPTION | bounded review delivered (NUIAK architect); full benchmark coverage blocked | [44 dispositions/39 development reviews](reports/work/PER-DATA/handoff.md), including4 button boxes/2 appearance-focus labels. Five exclusions, zero admitted positive chevron/dialog cases; source/journey/privacy gaps remain.25 perception tests pass. No training or independent-evaluation eligibility. |
 | F1 | FOCUS-COMPRESS-01 | FOCUS-DET-05 | review (NUIAK architect) | [One int8 candidate](reports/work/FOCUS-COMPRESS-01/handoff.md):2,612,925 bytes,48.14% smaller, zero threshold changes on12 crops; max FP16 drift0.000000715255.78 Focus tests and offline Swift checks pass. Broader challenge required; no retraining/promotion. [Contract](Research/Plans/NativeOSFocus.md#focus-compress-01--assigned-2026-09-22). |
 | P1 | PER-LIVE | TTR-PERCEPTION | blocked (unassigned) | Eligible PER-DATA and inference authority; reuse PER-02, freeze experiment gates before PER-03. |
 | P2 | TEMP-LIVE | TTR-PERCEPTION | proposed offline spike (unassigned); live qualification blocked | [Temporal visual-verification spike](Research/Plans/TemporalVisualVerificationSpike.md) compares native-only, single-frame NUIAK and temporal-diff guardrails on controlled Fixture/replay interruption cases. No real account/call/mirroring events or model training. A separate real ordered-journey/inference assignment is still required for qualification. |
+| F1 | TEMP-FOCUS-DEV | TEMP-LIVE / FOCUS-DET-05 | review (NUIAK architect) | [Handoff](reports/work/TEMP-FOCUS-DEV-20260923/handoff.md):36 retained-image replays; diff finds9/9 reference arrivals, shipped+diff6/9 versus single-frame0/9. Constructed switches reveal ambiguity: diff2 correct/2 wrong/14 abstentions of18; combined shipped0 correct/1 wrong/17 abstentions.51 tests pass. No live route/model qualification; actual ordered journeys next. |
 | P2 | ID-LIVE | TTR-PERCEPTION | blocked (unassigned) | Reviewed reference/query journeys and inference authority; reuse PER-06. |
 | P2 | R-LABEL | 6b-R-1 / 6a-11 | blocked (unassigned) | Qualified physical captures and annotation scope; separate from500-screenshot coverage. |
-| P2 | DATA-VIS | DATA-01 / FOCUS-DET-05 | ready inventory (unassigned) | Controllable-state matrix; renderer implementation separately scoped, preserve active captures. |
+| P2 | DATA-VIS | DATA-01 / FOCUS-DET-05 | inventory review (NUIAK architect) | [14,340-sidecar joint coverage +12 retained render probes](reports/work/DATA-VIS-20260923/handoff.md); [bounded additions](Research/Plans/VisualStateCoverage.md). No corpus mutation/capture. |
 | later | DATA-SIM | DATA-01 / FOCUS-DET-05 | deferred research (unassigned) | Optional similarity feasibility; exact pixels/lineage remain policy, no automatic filtering. |
 | later | ALIGN-A | ADR-0007 | deferred (unassigned) | Semantic contract/policy with real producer capability; not a visual-focus prerequisite. |
 | later | ALIGN-B | ADR-0007 | blocked (unassigned) | ALIGN-A, actual cursor/navigation observations and dedicated operation authority. |
@@ -135,7 +225,7 @@ Roadmap: [concurrent lanes](Research/IterationRoadmap.md). Priority is dispatch 
 | 8 | P4-B | 6a-10 | accepted | Split-safe assembly software and adversarial tests accepted; actual assembly remains data-gated |
 | 9 | P2-A | 6a-11 | accepted | Strict reference-comparison software and compatibility checks accepted; P2-B remains corpus/prediction-gated |
 | — | P0-B | DATA-01 | blocked | P0-A recovery evidence and exact authorized staged-copy plan |
-| — | P0-C | DATA-01 | in progress (NUIAK architect) | Corrected schema/geometry/native chrome and MenuButton diversity; failed attempts preserved. Eight native tests, 346 independent preflight pairs, 14 Python tests and 92 Swift tests pass. [r5 continuation](reports/work/P0-C/reconstruction-configuration-r5.md) preserves 7,500 verified completed captures and collects the remaining 9,440 toward the unchanged 16,940 target. Final corpus eligibility remains open; no training; `webContent` uncovered. |
+| — | P0-C | DATA-01 | count amendment approved; resume setup pending (NUIAK architect) | [Approved decision](reports/work/IOS-COV-20260923/coverage-decision.md):12,540/2,400/2,000, total16,940; existing family assignment unchanged. Preserve14,340 verified prefix pairs and failure evidence. Remaining2,600 recipes require fresh exact-target/source/container preflight, not an automatic r5 retry. No training approval. |
 | — | P1-B | 6a-11 | blocked | P1-A and eligible original/replacement test pixels |
 | — | P2-B | 6a-11 | blocked | P2-A and accepted P1-B artifacts |
 | — | P3-B | 6a-11 | blocked | P3-A, eligible corpus, compatible P1/P2 software |
@@ -217,8 +307,8 @@ These are substantial execution tranches over existing packets, not new task IDs
 | 41-class candidate readiness and execution | P5-B, TRAIN-S/F; 6a-10 | Frozen eligible inputs/configuration, then separately authorized smoke and full candidate | Planned mixed-data experiment needs qualified fixture corpus; Office remains released |
 | Qualification and release evidence | TRAIN-Q, REL-A/B; 6a-10/DIST-02 | Independent holdout gates, package evidence, then maintainer-only promotion/tag | No fresh capture if accepted evaluation corpora exist |
 
-**Next dispatch:** preserve active P0-C reconstruction; complete its audit/retention
-and IOS-COV decision, then P1-B/P2-B/P3-B when test pixels qualify. Offline software
+**Next dispatch:** preserve P0-C prefix and apply the approved IOS-COV count amendment;
+fresh continuation preflight, then P1-B/P2-B/P3-B when test pixels qualify. Offline software
 is already accepted; do not redispatch it wholesale. DATA-RET and IOS-COV preparation
 can proceed independently of capture.
 Workers do not self-accept earlier review-ready packets. This plan does not assign

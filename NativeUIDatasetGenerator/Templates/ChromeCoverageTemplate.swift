@@ -54,7 +54,8 @@ public struct ChromeCoverageConfig: Sendable {
     private static let unknownLabels = ["Live Activity", "Focus Filter", "Stage Manager", "StandBy"]
 
     /// Deterministic factory — same `seed` always produces the same config.
-    public static func make(seed: UInt64, corpus: inout ContentCorpus, status: SimulatorStateOverride? = nil) -> ChromeCoverageConfig {
+    public static func make(seed: UInt64, corpus: inout ContentCorpus, status: SimulatorStateOverride? = nil,
+                            effectiveColorScheme: ColorScheme? = nil) -> ChromeCoverageConfig {
         var rng = SeededRNG(seed: seed)
         let dark = rng.next() % 2 == 0
         let rowCount = 8 + Int(rng.next() % 5)
@@ -67,7 +68,7 @@ public struct ChromeCoverageConfig: Sendable {
             tooltipText: tips[Int(rng.next() % UInt64(tips.count))],
             unknownLabel: unknownLabels[Int(rng.next() % UInt64(unknownLabels.count))],
             rows: rows,
-            colorScheme: dark ? .dark : .light,
+            colorScheme: effectiveColorScheme ?? (dark ? .dark : .light),
             status: status
         )
     }

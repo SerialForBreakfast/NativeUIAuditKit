@@ -1,5 +1,34 @@
 # TEMP-LIVE: Temporal visual-verification spike
 
+## Assigned development precursor: TEMP-FOCUS-DEV (2026-09-23)
+
+Under the continuing unblocked-work assignment, NUIAK owns one offline temporal
+focus diagnostic using retained, reviewed appearance frames and hash-bound cached
+model scores. No capture, training, new model inference or producer edits. Reuse
+TransitionTool production change regions and FrameSimilarity; do not implement
+another image differencer/cropper. Current native element geometry is an explicitly
+oracle-proposal diagnostic, not a YOLO end-to-end result.
+
+Freeze inputs/policy before measurements. Compare single-frame unique focus at0.85,
+diff-only unique changed-control localization, and a conservative model+change
+intersection; no-change falls back to single-frame in the combined arm. Require
+at least1% changed-region bounding-box overlap and a10-percentage-point lead over
+the next candidate for diff selection. These are experimental fixed probes, not
+calibrated thresholds. Regions only rank existing control boxes, never supply labels
+or replace boxes. Truth enters scoring only after decisions.
+
+Include retained reference→focus pairs, explicitly constructed focus-A→focus-B
+replays, and identical-frame no-change controls. Constructed replays are **not**
+recorded button-press journeys; no focus-settling/action-timing claim. All examples
+remain development, correlated by recipe. Report per-kind/model correct/wrong/
+abstained decisions, selected IDs, change coverage and primitive/process timings.
+Keep unknown dimensions, altered bytes, invalid boxes/scores, ambiguity, unrelated
+background change and output collision negative tests. Preserve invalid attempts.
+
+Deliver real entrypoint/software tests, actual retained-image comparison and a
+decision about the next genuine-journey experiment. This does not close TEMP-LIVE's
+interruption matrix, independent held-out evaluation or live TTR qualification.
+
 Parent task: `TEMP-LIVE` in `Tasks.md`. Plan revision: 1, 2026-09-22.
 Execution state and owner: proposed / unassigned in `Tasks.md`.
 Owning repository: NativeUIAuditKit for the replay evaluator and evidence contract;

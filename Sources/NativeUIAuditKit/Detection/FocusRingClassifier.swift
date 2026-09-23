@@ -17,6 +17,8 @@ import Foundation
 package struct FocusRingClassifier: @unchecked Sendable {
     /// Compiled FocusRingDetector graph.
     let model: MLModel
+    /// Identity attached only by the load-bracketed bundled loader, nil for custom models.
+    let artifactDigest: String?
 
     /// Probability at or above which `isFocused` is asserted. Read from model metadata when present.
     let focusThreshold: Float
@@ -56,8 +58,9 @@ package struct FocusRingClassifier: @unchecked Sendable {
     }
 
     /// Creates a classifier, reading thresholds from CoreML user-defined metadata when present.
-    package init(model: MLModel) {
+    package init(model: MLModel, artifactDigest: String? = nil) {
         self.model = model
+        self.artifactDigest = artifactDigest
         self.focusThreshold = Self.metadataFloat(model, key: "focusThreshold", fallback: Self.defaultFocusThreshold)
         self.ambiguityThreshold = Self.metadataFloat(model, key: "ambiguityThreshold", fallback: Self.defaultAmbiguityThreshold)
     }

@@ -53,6 +53,7 @@ public enum ScreenshotCapture {
         // Off-screen window — not part of the visible window hierarchy.
         let window = UIWindow(frame: bounds)
         window.isHidden = false
+        defer { window.isHidden = true }
         window.makeKeyAndVisible()
 
         var capturedFrames: [String: CGRect] = [:]

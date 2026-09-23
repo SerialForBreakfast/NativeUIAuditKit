@@ -21,6 +21,14 @@ capture requirement is introduced by reorganizing these tasks.
 
 ## 1. iOS corpus recovery and preservation
 
+**2026-09-23 correction:** no generation is running. r5 stopped after14,340 completed
+members; preserved r6 prefix passes every image/annotation check in the fresh audit.
+The remaining2,600 source recipes disagree with frozen partition counts while
+preserving16,940 total. [IOS-COV decision](../../reports/work/IOS-COV-20260923/coverage-decision.md)
+must be resolved before continuation. DATA-RET now has actual inventory/recovery
+software and a local drill, not independent external backup qualification. Do not
+infer a still-running process from the older r5 checkpoint or restart generation.
+
 **Current dispatch amendment, 2026-09-22:** P0-C is already assigned and underway;
 preserve its owner and r5 configuration. Do not replay original-recovery searches
 or reopen accepted offline toolchain work merely because the historical sequence
@@ -162,6 +170,12 @@ Current shipped models remain in place on failure or incomplete evidence.
   release of an otherwise qualified 41-class candidate.
 
 ## Dispatch and handoff
+
+2026-09-23 maintainer amendment: reconstruction totals are12,540 train /2,400
+validation /2,000 test (16,940 overall), preserving existing family assignments.
+The older12,340/2,400/2,200 expectation remains historical evidence, not the current
+completion target. No accepted pixels are moved. Fresh continuation setup and all
+integrity/coverage gates still apply; this is not training or native-probe approval.
 
 Dispatch names the selected tranche and included packet IDs, owner, operation authority,
 file ownership, required evidence, and exact stopping conditions. The five headings are

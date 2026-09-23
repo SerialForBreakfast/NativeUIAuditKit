@@ -8,6 +8,26 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
+Independent iOS work progressed through IOS-COV and DATA-RET:
+[current count/coverage decision](../reports/work/IOS-COV-20260923/coverage-decision.md).
+P0-C is stopped with14,340 valid retained members, not a live r5 job; resolve frozen
+split totals before executing remaining2,600. Local retention verification does not
+require TTR, and an independent backup still needs its own destination/authority.
+
+The grouped follow-up is now assigned as
+[APPEAR-EVAL-RESERVE](Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation).
+Resolve source-backed untouched groups and actual Photos-button coverage before
+capture; the existing seed7 siblings are development-only. Source reservation is
+the current dependency, not another app rebuild. Bind the existing native retention
+reference while waiting; do not weaken evaluation admission or launch training.
+
+Latest [integrated family evidence](../reports/work/APPEAR-FAMILY-EVAL-20260923/handoff.md)
+shows0/9 unique base-frame decisions for all three tested models. Consumer compatibility
+and9 new development pairs are qualified; missing independent membership is the next
+data boundary. Execute the [grouped next tranche](../reports/work/APPEAR-FAMILY-EVAL-20260923/next-tranche.md)
+under its separate capture/training approvals; do not schedule another same-data
+training run or request a source pack already available in local Git objects.
+
 [APPEAR-C](../reports/work/APPEAR-C/handoff.md) qualifies the corrected local catalog
 in three themes, but dark/high_contrast pixels alias and only one catalog family
 exists. Next appearance acquisition depends on distinct source-backed in-app

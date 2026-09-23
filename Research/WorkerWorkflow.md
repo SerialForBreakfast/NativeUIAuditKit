@@ -93,6 +93,12 @@ waiver for external writes. The shared folder is not a second task board.
 
 ## Context budget
 
+Follow [ArtifactRetention.md](ArtifactRetention.md): commit concise handoffs and
+reviewed source/fixtures, not raw worker logs, capture media or generated inventories.
+Ignored artifacts are retained locally, never automatically deleted; a hash index
+does not replace an independently verified backup. Tests must not depend on prior
+reports/work output. Keep reusable test inputs generated or under deliberate fixtures.
+
 Use [IterationEfficiency.md](IterationEfficiency.md) for change-scoped verification:
 focused behavioral checks during edits, required full offline checks at integrated
 code handoff, and full data/model gates only at their qualification boundaries.

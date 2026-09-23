@@ -30,18 +30,42 @@ def appearance_digest_source(recipe):
     appearance = recipe.get("appearance")
     if appearance is None:
         return ""
-    require(isinstance(appearance, dict) and set(appearance) == {"version", "preset", "layout"},
+    require(isinstance(appearance, dict) and {"version", "preset", "layout"} <= set(appearance)
+            and set(appearance) <= {"version", "preset", "layout", "family_id"},
             "appearance_fields")
     require(type(appearance["version"]) is int and appearance["version"] == 1,
             "appearance_version")
     require(isinstance(appearance["preset"], str) and appearance["preset"] in
-            {"artwork", "bright_unfocused", "gray_placeholder"}, "appearance_preset")
+            {"artwork", "bright_unfocused", "gray_placeholder", "blank_placeholder",
+             "high_contrast", "photos_like"}, "appearance_preset")
     require(isinstance(appearance["layout"], str) and appearance["layout"] in
             {"standard", "dock"}, "appearance_layout")
     require(recipe.get("archetype") == "grid_matrix" or
             (recipe.get("archetype") == "media_shelf" and appearance["layout"] == "standard"),
             "appearance_archetype_layout")
+    # cda0a32 FixtureAppearance.decodeIfPresent: optional derived identity, not
+    # another hash input or an assertion of independent evaluation membership.
+    family = appearance.get("family_id")
+    require(family is None or (isinstance(family, str) and family ==
+            f"appearance-v1.{appearance['preset']}.{appearance['layout']}"), "appearance_family")
     return f":appearance@1:{appearance['preset']}:{appearance['layout']}"
+
+
+def dialog_style_digest_source(recipe):
+    """Closed producer dialog-style-v1; null/absent leaves historical identity intact."""
+    style = recipe.get("dialog_style")
+    if style is None:
+        return ""
+    require(isinstance(style, dict) and set(style) == {"version", "size", "shape", "palette", "content"},
+            "dialog_style_fields")
+    require(type(style["version"]) is int and style["version"] == 1, "dialog_style_version")
+    require(recipe.get("archetype") == "action_dialog", "dialog_style_archetype")
+    for field, allowed in (("size", {"small", "medium", "large"}),
+                           ("shape", {"standard", "rounded", "pill"}),
+                           ("palette", {"system", "warm", "cool", "high_contrast"}),
+                           ("content", {"short_label", "long_label", "icon", "badge"})):
+        require(isinstance(style[field], str) and style[field] in allowed, "dialog_style_" + field)
+    return ":dialog-style@1:" + ":".join(style[k] for k in ("size", "shape", "palette", "content"))
 
 
 def recipe_hash(recipe):
@@ -67,7 +91,8 @@ def recipe_hash(recipe):
                           + ":".join(str(pack[k]).lower() for k in flags))
     canonical = ":".join(str(recipe[k]) for k in
                          ("schema_version", "archetype", "element_count", "theme", "density", "seed", "step_index"))
-    return hashlib.sha256((canonical + ":" + canonical_pack + appearance_digest_source(recipe)).encode()).hexdigest()
+    return hashlib.sha256((canonical + ":" + canonical_pack + appearance_digest_source(recipe)
+                           + dialog_style_digest_source(recipe)).encode()).hexdigest()
 
 
 def scene_check(scene, size, expected):

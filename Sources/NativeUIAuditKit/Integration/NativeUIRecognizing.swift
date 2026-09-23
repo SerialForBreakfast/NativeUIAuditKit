@@ -113,17 +113,21 @@ public struct NativeUIObservations: Sendable, Codable {
     public let status: NativeUIRecognitionStatus
     public let modalityHealth: ModalityHealth
     public let timings: DetectionStageTimings?
+    /// Actual focus execution evidence when supplied by the recognizer; nil for legacy results.
+    public let focusExecution: FocusExecutionReceipt?
 
     public init(
         elements: [NativeUIElementObservation],
         status: NativeUIRecognitionStatus,
         modalityHealth: ModalityHealth = .default,
-        timings: DetectionStageTimings? = nil
+        timings: DetectionStageTimings? = nil,
+        focusExecution: FocusExecutionReceipt? = nil
     ) {
         self.elements = elements
         self.status = status
         self.modalityHealth = modalityHealth
         self.timings = timings
+        self.focusExecution = focusExecution
     }
 }
 
@@ -243,7 +247,8 @@ public struct NativeUIDetectorRecognizer: NativeUIRecognizing {
                 elements: detailed.elements,
                 status: overallStatus,
                 modalityHealth: detailed.modalityHealth,
-                timings: detailed.timings
+                timings: detailed.timings,
+                focusExecution: detailed.focusExecution
             )
         } catch NativeUIDetectionError.imagePreprocessingFailed {
             let health = ModalityHealth(detector: .failed(reason: "Image preprocessing failed"), ocr: .notRequested, focus: .notRequested, audit: .notRequested)

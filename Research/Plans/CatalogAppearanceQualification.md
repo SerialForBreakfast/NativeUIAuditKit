@@ -1,5 +1,34 @@
 # APPEAR-C — catalog and independent-appearance qualification
 
+## Integrated family evaluation tranche — 2026-09-23
+
+User assigned larger continuation: source-backed family compatibility, all retained
+nine-pair intake, frame/crop review, overlap accounting, fixed-threshold comparison
+of shipped/FDR-007/FDR-008, and grouped next-stage requirements. No training, capture,
+producer edits or promotion. Read local Git object cda0a32 without fetch/checkout;
+the older working tree is not the only locally available producer source.
+
+Appearance-v1 adds blank_placeholder/high_contrast/photos_like. Optional family_id
+is derived as appearance-v1.<preset>.<layout> and excluded from the canonical hash.
+Missing/null matches Swift decodeIfPresent; conflicting/nonstring values reject.
+Unknown fields still reject. Preserve observation brackets and original values;
+aliases must agree. Pin source/doc hashes and externally recorded recipe hashes.
+
+Review all nine pairs and18 production crops, preserving development seed lineage.
+Once native labels/crops validate, run authorized diagnostic scoring even if the
+separate independent-holdout criteria are unmet. Freeze membership/model/runtime and
+threshold0.85 before inference; report backend timing, misses, false positives and
+abstentions separately. No tuning or scoring-derived ground truth. Test actual
+intake/crop entrypoints and legacy/adversarial contracts, then full offline checks
+once. Deliver ranking/coverage and the grouped next-stage proposal, not just a patch.
+
+Include the previously admitted ten appearance pairs in the same fixed comparison;
+keep the separate catalog quarantine untouched. For new focused frames compare all
+annotated controls, including disabled negatives, under existing seven box variants.
+This is classification sensitivity, not action/navigation eligibility. Freeze an
+expanded development-only B1 proposal with the nine newly reviewed pairs, preserving
+the original proposal and missing evaluation/selection/approval blockers.
+
 ## Appearance-v1 consumer continuation — 2026-09-23
 
 Assigned continuation: implement the optional appearance-v1 recipe contract in

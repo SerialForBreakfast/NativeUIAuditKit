@@ -31,6 +31,26 @@ import Foundation
 // MARK: - Entry point
 
 // Parse CLI arguments.
+// This branch exits before runtime argument parsing or any Process/simulator work.
+if CommandLine.arguments.dropFirst().first == "--plan-visual-addon" {
+    let values = Array(CommandLine.arguments.dropFirst())
+    guard values.count == 3, values[1] == "--content-seed",
+          let seed = UInt64(values[2]) else {
+        fputs("Usage: --plan-visual-addon --content-seed <UInt64> (planning only)\n", stderr)
+        exit(1)
+    }
+    do {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        let data = try encoder.encode(VisualProbeCatalog.make(contentSeed: seed))
+        FileHandle.standardOutput.write(data)
+        FileHandle.standardOutput.write(Data([10]))
+        exit(0)
+    } catch {
+        fputs("Planning failed: \(error)\n", stderr)
+        exit(1)
+    }
+}
 var deviceUDID: String?
 var outputDir: String?
 var projectPath: String = {
@@ -346,6 +366,8 @@ func printUsage() {
         [--project /path/to/GeneratorRunner.xcodeproj]
 
     OPTIONS:
+      --plan-visual-addon --content-seed <UInt64>
+                      Print a development-only probe catalog; no simulator operations
       --device-udid   iOS Simulator UDID (from `xcrun simctl list devices available`)
       --output        Destination directory for the dataset
       --project       Path to GeneratorRunner.xcodeproj (default: auto-detected)

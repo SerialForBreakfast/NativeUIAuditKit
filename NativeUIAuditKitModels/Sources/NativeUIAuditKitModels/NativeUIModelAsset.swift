@@ -43,8 +43,9 @@ public enum NativeUIModelAsset {
     public static func loadModel(
         configuration: MLModelConfiguration = makeConfiguration()
     ) async throws -> MLModel {
-        let model = try await MLModel.load(contentsOf: defaultModelURL, configuration: configuration)
-        try ModelManifestValidator.validate(model: model, against: iOSManifest)
+        let manifest = try requiredManifest(forTVOS: false)
+        let model = try await MLModel.load(contentsOf: requiredModelURL(forTVOS: false), configuration: configuration)
+        try ModelManifestValidator.validate(model: model, against: manifest)
         return model
     }
 
@@ -68,8 +69,9 @@ public enum NativeUIModelAsset {
     public static func loadTVOSModel(
         configuration: MLModelConfiguration = makeConfiguration()
     ) async throws -> MLModel {
-        let model = try await MLModel.load(contentsOf: tvOSModelURL, configuration: configuration)
-        try ModelManifestValidator.validate(model: model, against: tvOSManifest)
+        let manifest = try requiredManifest(forTVOS: true)
+        let model = try await MLModel.load(contentsOf: requiredModelURL(forTVOS: true), configuration: configuration)
+        try ModelManifestValidator.validate(model: model, against: manifest)
         return model
     }
 
@@ -97,9 +99,9 @@ public enum NativeUIModelAsset {
     public static func modelURL(for descriptor: ModelDescriptor) -> URL? {
         switch descriptor.modelId {
         case ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v2.modelId, ModelRegistry.tvOS_v1.modelId:
-            return tvOSModelURL
+            return try? requiredModelURL(forTVOS: true)
         case ModelRegistry.iOS.modelId, ModelRegistry.iOS_v1.modelId:
-            return defaultModelURL
+            return try? requiredModelURL(forTVOS: false)
         default:
             return nil
         }
@@ -109,9 +111,9 @@ public enum NativeUIModelAsset {
     public static func manifest(for descriptor: ModelDescriptor) -> ModelManifest? {
         switch descriptor.modelId {
         case ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v2.modelId, ModelRegistry.tvOS_v1.modelId:
-            return tvOSManifest
+            return try? requiredManifest(forTVOS: true)
         case ModelRegistry.iOS.modelId, ModelRegistry.iOS_v1.modelId:
-            return iOSManifest
+            return try? requiredManifest(forTVOS: false)
         default:
             return nil
         }
@@ -130,10 +132,40 @@ public enum NativeUIModelAsset {
             )
         }
         let model = try await MLModel.load(contentsOf: url, configuration: configuration)
-        if let manifest = manifest(for: descriptor) {
-            try ModelManifestValidator.validate(model: model, against: manifest)
-        }
+        let tvOS = [ModelRegistry.tvOS.modelId, ModelRegistry.tvOS_v2.modelId, ModelRegistry.tvOS_v1.modelId].contains(descriptor.modelId)
+        try ModelManifestValidator.validate(model: model, against: requiredManifest(forTVOS: tvOS))
         return model
+    }
+
+    /// Recoverable lookup for mandatory detector resources; never returns empty detections.
+    public static func requiredModelURL(forTVOS: Bool) throws -> URL {
+        let name = forTVOS ? "NativeUIModel_tvOS" : "NativeUIDetector_v2"
+        guard let url = Bundle.module.url(forResource: name, withExtension: "mlmodelc") else {
+            throw NSError(domain: "NativeUIAuditKitModels", code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "Required detector resource is missing"])
+        }
+        return url
+    }
+
+    /// Recoverable manifest access. Legacy nonthrowing properties remain source-compatible.
+    public static func requiredManifest(forTVOS: Bool) throws -> ModelManifest {
+        let name = forTVOS ? "model_manifest_tvos_v1" : "model_manifest_ios_v2"
+        return try readRequiredManifest(at: Bundle.module.url(forResource: name, withExtension: "json"))
+    }
+
+    internal static func readRequiredManifest(at url: URL?) throws -> ModelManifest {
+        guard let url else {
+            throw NSError(domain: "NativeUIAuditKitModels", code: 404,
+                userInfo: [NSLocalizedDescriptionKey: "Required detector manifest is missing"])
+        }
+        do {
+            let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? Int.max
+            guard size <= 65_536 else { throw CocoaError(.fileReadCorruptFile) }
+            return try JSONDecoder().decode(ModelManifest.self, from: Data(contentsOf: url))
+        } catch {
+            throw NSError(domain: "NativeUIAuditKitModels", code: 422,
+                userInfo: [NSLocalizedDescriptionKey: "Required detector manifest is invalid or unreadable"])
+        }
     }
 
     private static func loadManifest(named name: String) -> ModelManifest {

@@ -104,6 +104,11 @@ let package = Package(
             name: "NativeUIAuditKitModelsTests",
             dependencies: ["NativeUIAuditKitModels"],
             path: "Tests/NativeUIAuditKitModelsTests"
+        ),
+        .testTarget(
+            name: "NativeUIDatasetGeneratorTests",
+            dependencies: ["NativeUIDatasetGenerator"],
+            path: "Tests/NativeUIDatasetGeneratorTests"
         )
     ]
 )

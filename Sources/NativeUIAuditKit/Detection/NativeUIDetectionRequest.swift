@@ -145,15 +145,19 @@ public struct NativeUIDetailedDetectionResult: Sendable, Codable {
     public let elements: [NativeUIElementObservation]
     public let modalityHealth: ModalityHealth
     public let timings: DetectionStageTimings?
+    /// Actual focus execution diagnostics; nil for legacy results.
+    public let focusExecution: FocusExecutionReceipt?
 
     public init(
         elements: [NativeUIElementObservation],
         modalityHealth: ModalityHealth,
-        timings: DetectionStageTimings? = nil
+        timings: DetectionStageTimings? = nil,
+        focusExecution: FocusExecutionReceipt? = nil
     ) {
         self.elements = elements
         self.modalityHealth = modalityHealth
         self.timings = timings
+        self.focusExecution = focusExecution
     }
 }
 
@@ -193,7 +197,8 @@ public struct NativeUIDetectionRequest: Sendable {
         on screenshot: CGImage,
         sidecar: NativeUISidecar? = nil,
         preloadedModel: PreloadedModel? = nil,
-        preloadedFocusClassifier: FocusRingClassifier? = nil
+        preloadedFocusClassifier: FocusRingClassifier? = nil,
+        preloadedFocusLoad: FocusClassifierLoad? = nil
     ) async throws -> NativeUIDetailedDetectionResult {
         let startTotal = ContinuousClock.now
         var health = ModalityHealth()
@@ -226,14 +231,14 @@ public struct NativeUIDetectionRequest: Sendable {
             if effectivePlatform == .tvOS {
                 do {
                     let m = try await NativeUIModelAsset.loadTVOSModel()
-                    activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: NativeUIModelAsset.tvOSManifest)
+                    activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: true))
                 } catch let error as ModelContractError {
                     throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
                 }
             } else {
                 do {
                     let m = try await NativeUIModelAsset.loadModel()
-                    activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: NativeUIModelAsset.iOSManifest)
+                activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: false))
                 } catch let error as ModelContractError {
                     throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
                 }
@@ -266,24 +271,30 @@ public struct NativeUIDetectionRequest: Sendable {
 
         // tvOS focus state resolution — Stage 2 classifier when bundled, else heuristic.
         var focusMs = 0.0
+        var focusExecution = FocusExecutionReceipt(backend: .notRequested,
+            policy: "not-requested-v1", candidates: observations.map {
+                .init(observationID: $0.id, disposition: .notRequested, probability: nil, isFocused: $0.state.isFocused)
+            })
         if effectivePlatform == .tvOS {
             let startFocus = ContinuousClock.now
-            let classifier: FocusRingClassifier?
+            let load: FocusClassifierLoad
             if configuration.useFocusClassifier {
-                if let preloadedFocusClassifier {
-                    classifier = preloadedFocusClassifier
+                if let preloadedFocusLoad {
+                    load = preloadedFocusLoad
+                } else if let preloadedFocusClassifier {
+                    load = FocusClassifierLoad(classifier: preloadedFocusClassifier, fallbackReason: nil)
                 } else {
-                    classifier = await Self.loadFocusClassifierIfAvailable()
+                    load = await Self.loadFocusClassifierWithEvidence()
                 }
             } else {
-                classifier = nil
+                load = FocusClassifierLoad(classifier: nil, fallbackReason: "disabled")
             }
-            if let classifier {
-                observations = Self.resolveTVOSFocusML(
-                    in: screenshot,
-                    observations: observations,
-                    classifier: classifier
-                )
+            if let classifier = load.classifier {
+                let resolution = Self.resolveTVOSFocusWithEvidence(in: screenshot, observations: observations,
+                    threshold: classifier.focusThreshold, ambiguityThreshold: classifier.ambiguityThreshold,
+                    modelDigest: classifier.artifactDigest, score: { try classifier.classify(crop: $0) })
+                observations = resolution.0
+                focusExecution = resolution.1
             } else {
                 observations = Self.resolveTVOSFocus(
                     in: screenshot,
@@ -291,6 +302,13 @@ public struct NativeUIDetectionRequest: Sendable {
                     minScoreThreshold: configuration.minFocusScoreThreshold,
                     minMargin: configuration.minFocusMargin
                 )
+                focusExecution = FocusExecutionReceipt(backend: .heuristic, fallbackReason: load.fallbackReason,
+                    policy: "legacy-visual-heuristic-v1", threshold: configuration.minFocusScoreThreshold,
+                    secondaryThreshold: configuration.minFocusMargin, candidates: observations.map {
+                        .init(observationID: $0.id,
+                            disposition: FocusRingClassifier.focusableTypes.contains($0.elementType) ? .heuristicResult : .unsupportedRole,
+                            probability: nil, isFocused: $0.state.isFocused)
+                    })
             }
             focusMs = Self.durationToMs(startFocus.duration(to: .now))
             health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
@@ -363,7 +381,8 @@ public struct NativeUIDetectionRequest: Sendable {
             totalMs: totalMs
         ) : nil
 
-        return NativeUIDetailedDetectionResult(elements: observations, modalityHealth: health, timings: timings)
+        return NativeUIDetailedDetectionResult(elements: observations, modalityHealth: health, timings: timings,
+                                              focusExecution: focusExecution)
     }
 
     /// Convenience invocation returning observations directly.
@@ -674,10 +693,21 @@ extension NativeUIDetectionRequest {
 
     /// Loads `FocusRingDetector` when bundled; returns nil so the heuristic can run.
     internal static func loadFocusClassifierIfAvailable() async -> FocusRingClassifier? {
-        guard let model = try? await NativeUIModelAsset.loadFocusRingDetector() else {
-            return nil
+        await loadFocusClassifierWithEvidence().classifier
+    }
+
+    internal static func loadFocusClassifierWithEvidence(url: URL? = NativeUIModelAsset.focusRingDetectorURL) async -> FocusClassifierLoad {
+        guard let url else {
+            return FocusClassifierLoad(classifier: nil, fallbackReason: "model_missing")
         }
-        return FocusRingClassifier(model: model)
+        do {
+            let before = try FocusModelIdentity.digest(url)
+            let model = try await MLModel.load(contentsOf: url, configuration: NativeUIModelAsset.makeConfiguration())
+            guard try FocusModelIdentity.digest(url) == before else { throw FocusModelIdentity.Failure.changedDuringLoad }
+            return FocusClassifierLoad(classifier: FocusRingClassifier(model: model, artifactDigest: before), fallbackReason: nil)
+        } catch {
+            return FocusClassifierLoad(classifier: nil, fallbackReason: "model_load_failed")
+        }
     }
 
     /// Stage 2: classify each focusable crop with the ML model.
@@ -691,6 +721,24 @@ extension NativeUIDetectionRequest {
         observations: [NativeUIElementObservation],
         classifier: FocusRingClassifier
     ) -> [NativeUIElementObservation] {
+        resolveTVOSFocusWithEvidence(in: screenshot, observations: observations,
+            threshold: classifier.focusThreshold, ambiguityThreshold: classifier.ambiguityThreshold,
+            modelDigest: classifier.artifactDigest, score: { try classifier.classify(crop: $0) }).0
+    }
+
+    internal static func resolveTVOSFocusWithEvidence(
+        in screenshot: CGImage, observations: [NativeUIElementObservation],
+        threshold: Float, ambiguityThreshold: Float, modelDigest: String? = nil,
+        score: (CGImage) throws -> FocusRingClassifier.Result
+    ) -> ([NativeUIElementObservation], FocusExecutionReceipt) {
+        guard threshold.isFinite, ambiguityThreshold.isFinite, (0...1).contains(threshold),
+              (0...threshold).contains(ambiguityThreshold) else {
+            return (observations, FocusExecutionReceipt(backend: .unavailable,
+                fallbackReason: "invalid_thresholds", modelDigest: modelDigest,
+                policy: "focusring-policy-rejected-v1", candidates: observations.map {
+                    .init(observationID: $0.id, disposition: .policyRejected, probability: nil, isFocused: nil)
+                }))
+        }
         struct Scored {
             let id: UUID
             let prob: Float
@@ -700,10 +748,20 @@ extension NativeUIDetectionRequest {
 
         // Classify each focusable element independently.
         var scores: [Scored] = []
+        var dispositions: [UUID: FocusExecutionReceipt.Disposition] = [:]
         for obs in observations where FocusRingClassifier.focusableTypes.contains(obs.elementType) {
             let bbox = obs.boundingBoxPixels.cgRect
-            guard let crop = FocusRingClassifier.makeCrop(from: screenshot, bbox: bbox),
-                  let result = try? classifier.classify(crop: crop) else { continue }
+            guard [bbox.minX, bbox.minY, bbox.width, bbox.height].allSatisfy(\.isFinite),
+                  bbox.width > 0, bbox.height > 0,
+                  let crop = FocusRingClassifier.makeCrop(from: screenshot, bbox: bbox) else {
+                dispositions[obs.id] = .cropRejected; continue
+            }
+            guard let result = try? score(crop), result.isFocusedProbability.isFinite,
+                  (0...1).contains(result.isFocusedProbability), result.confidence.isFinite,
+                  (0...1).contains(result.confidence) else {
+                dispositions[obs.id] = .predictionFailed; continue
+            }
+            dispositions[obs.id] = .scored
             scores.append(Scored(
                 id: obs.id,
                 prob: result.isFocusedProbability,
@@ -712,14 +770,12 @@ extension NativeUIDetectionRequest {
             ))
         }
 
-        guard !scores.isEmpty else { return observations }
-
         // Winner-takes-all: highest-probability candidate wins if it clears the threshold.
         let winner = scores.max(by: { $0.prob < $1.prob })
-        let hasConfidentWinner = (winner?.prob ?? 0) >= classifier.focusThreshold
+        let hasConfidentWinner = (winner?.prob ?? 0) >= threshold
         let scoresByID: [UUID: Scored] = Dictionary(uniqueKeysWithValues: scores.map { ($0.id, $0) })
 
-        return observations.map { obs in
+        let resolved = observations.map { obs in
             guard let scored = scoresByID[obs.id] else { return obs }
             var st = obs.state
             st.focusScore = Double(scored.prob)
@@ -747,6 +803,13 @@ extension NativeUIDetectionRequest {
                 confidenceSource: obs.confidenceSource
             )
         }
+        let receipt = FocusExecutionReceipt(backend: .coreML, modelDigest: modelDigest,
+            policy: "focusring-winner-takes-all-v1", threshold: Double(threshold),
+            secondaryThreshold: Double(ambiguityThreshold), candidates: resolved.map { obs in
+                .init(observationID: obs.id, disposition: dispositions[obs.id] ?? .unsupportedRole,
+                    probability: scoresByID[obs.id].map { Double($0.prob) }, isFocused: obs.state.isFocused)
+            })
+        return (resolved, receipt)
     }
 
     internal static func resolveTVOSFocus(

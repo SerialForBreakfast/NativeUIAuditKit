@@ -10,7 +10,10 @@ import re
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
-EXPECTED={"train":12340,"validation":2400,"test":2200}
+# Original expectation retained for historical audit reproduction. The maintainer
+# approved correcting totals to the unchanged recipe/family allocation on2026-09-23.
+LEGACY_EXPECTED={"train":12340,"validation":2400,"test":2200}
+EXPECTED={"train":12540,"validation":2400,"test":2000}
 TEST={"CardDetail","WizardStepFlow","NotificationCenter","GalleryPage","MultiSectionForm","SettingsToggleDense","EmptyState","OnboardingPage"}
 VALIDATION={"TabViewNavigation","SearchResults","PickerDateEntry","SettingsDisclosure"}
 SCHEMA=ROOT/"Research/schemas/annotation.schema.json"
@@ -193,6 +196,7 @@ def validate(corpus,expected=None):
             "styleEvidence":"Declared generator metadata, not independently verified rendered appearance or separate OS/device runtimes.",
             "warnings":dict(warnings),"errors":errors,
             "integrityValid":not errors,"splitReady":{s:s not in blocked_splits and counts[s]==expected.get(s,0) for s in EXPECTED},
+            "countPolicy":"maintainer-approved-20260923" if expected==EXPECTED else "explicit-override",
             "trainingEligible":False,"modelGatePassed":"not_assessed","identity":"new-reconstruction-not-historical",
             "eligibilityNote":"Independent visual/source/coverage and DS-G8 review required; structural pass is not launch approval."}
 

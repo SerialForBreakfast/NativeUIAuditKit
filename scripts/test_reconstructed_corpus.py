@@ -21,6 +21,11 @@ def example(s,root):
     return s.get("minimum",0)
 
 class ReconstructionTests(unittest.TestCase):
+    def test_approved_count_amendment_preserves_total_and_legacy(self):
+        self.assertEqual(v.EXPECTED, {"train":12540,"validation":2400,"test":2000})
+        self.assertEqual(v.LEGACY_EXPECTED, {"train":12340,"validation":2400,"test":2200})
+        self.assertEqual(sum(v.EXPECTED.values()),16940)
+        self.assertEqual(sum(v.LEGACY_EXPECTED.values()),16940)
     def setUp(self):
         base=v.ROOT/".build/debug-output/p0c-validator-tests";base.mkdir(parents=True,exist_ok=True)
         self.tmp=tempfile.TemporaryDirectory(dir=base);self.root=Path(self.tmp.name)

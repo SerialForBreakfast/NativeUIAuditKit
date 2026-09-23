@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SCHEMAS = {
     "1.0": ROOT / "Research" / "schemas" / "annotation.schema.json",
     "1.1": ROOT / "Research" / "schemas" / "annotation.schema.v1.1.json",
+    "1.2": ROOT / "Research" / "schemas" / "annotation.schema.v1.2.json",
 }
 TOP_LEVEL_REQUIRED = {"schemaVersion", "imageSHA256", "image", "generatorProfile", "elements"}
 IMAGE_REQUIRED = {

@@ -29,6 +29,38 @@ def valid_sidecar(version: str, scale: int) -> dict:
 
 
 class AnnotationSchemaVersionTests(unittest.TestCase):
+    def test_state_null_is_versioned_and_required(self) -> None:
+        from validate_reconstructed_corpus import check_schema
+        for version, name in (("1.0", "annotation.schema.json"),
+                              ("1.1", "annotation.schema.v1.1.json"),
+                              ("1.2", "annotation.schema.v1.2.json")):
+            root = json.loads((ROOT / "Research/schemas" / name).read_text())
+            state = root["properties"]["elements"]["items"]["properties"]["state"]
+            for enabled in (True, False, None):
+                for selected in (True, False, None):
+                    sample = {"isEnabled": enabled, "isSelected": selected}
+                    if version != "1.2" and None in (enabled, selected):
+                        with self.assertRaises(ValueError): check_schema(sample, state, root)
+                    else: check_schema(sample, state, root)
+            for bad in ({}, {"isEnabled": True}, {"isEnabled": 1, "isSelected": False},
+                        {"isEnabled": "false", "isSelected": False},
+                        {"isEnabled": True, "isSelected": False, "invented": True}):
+                with self.assertRaises(ValueError): check_schema(bad, state, root)
+
+    def test_v12_changes_only_unknown_state_and_version(self) -> None:
+        v11 = json.loads((ROOT / "Research/schemas/annotation.schema.v1.1.json").read_text())
+        v12 = json.loads((ROOT / "Research/schemas/annotation.schema.v1.2.json").read_text())
+        for field in ("$id", "title", "description"):
+            v12[field] = v11[field]
+        v12["properties"]["schemaVersion"]["const"] = "1.1"
+        state = v12["properties"]["elements"]["items"]["properties"]["state"]
+        for field in ("isEnabled", "isSelected"):
+            self.assertEqual(state["properties"][field]["type"], ["boolean", "null"])
+            state["properties"][field]["type"] = "boolean"
+        self.assertEqual(v11, v12)
+        self.assertEqual(schema_for_declared_version({"schemaVersion": "1.2"}).name,
+                         "annotation.schema.v1.2.json")
+
     def test_structural_parity_has_only_approved_validation_deltas(self) -> None:
         v10 = json.loads((ROOT / "Research/schemas/annotation.schema.json").read_text())
         v11 = json.loads((ROOT / "Research/schemas/annotation.schema.v1.1.json").read_text())
