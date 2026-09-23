@@ -1,0 +1,14 @@
+[
+  {
+    "path": ".venv-yolo/lib/python3.13/site-packages/scipy/interpolate/_rgi.py",
+    "bytes": 33923,
+    "seconds": 0.00023370800772681832,
+    "sha256": "b953ed3b1e830f2fbfeb62a761ad11a858ba5e0649433087cd1468c4aecdcf44"
+  },
+  {
+    "path": ".venv-yolo/lib/python3.13/site-packages/scipy/interpolate/_rgi_cython.cpython-313-darwin.so",
+    "bytes": 117056,
+    "seconds": 0.00029670799267478287,
+    "sha256": "063f919888f1435369a057bae6b80e12567eeb6995741cc72738a091f57c24bb"
+  }
+]

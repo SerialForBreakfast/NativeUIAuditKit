@@ -8,10 +8,53 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
-Candidate export/parity tooling is now ready, but [FOCUS-EXPORT-01](../reports/work/FOCUS-EXPORT-01/handoff.md)
-is blocked in local coremltools→scikit-learn/SciPy imports before conversion.
-Resolve bounded export-runtime readiness, then complete isolated FDR-007 compilation
-and frozen challenge parity. No training rerun or TTR fix is needed for that step.
+[FDR-008 completed](../reports/work/FDR-008/handoff.md): all30 epochs; selected
+epoch3 improves Fixture training fit75%→100% while preserving native validation
+and challenge decisions. No production gate or export. Next evaluate generalization
+on retained Home/Photos diagnostics and independently qualified Fixture appearances;
+do not repeat training on the same saturated members. This supersedes the pending
+FDR-008 authorization language below; later runs still require separate approval.
+
+[Development-experiment integration is delivered](../reports/work/FOCUS-DEV-01/handoff.md):
+126 training pairs /nine native validation pairs, real dry-run blocked only by
+approval. Next review the [resolved one-run configuration](../reports/work/FOCUS-DEV-01/launch-review.md)
+and authorize execution, or explicitly re-freeze different source sampling first.
+Do not redispatch assembly/preflight software. No TTR dependency; production gates
+and independent Fixture evaluation remain separate. This supersedes dispatch below.
+
+[Retained-data qualification](../reports/work/FOCUS-RETAINED-01/handoff.md) now
+provides 86 distinct reviewed Fixture development pairs without TTR or new capture.
+Next dispatch the [bounded experiment integration contract](../reports/work/FOCUS-RETAINED-01/experiment-proposal.md),
+then one separately authorized mixed-appearance learning experiment. Preserve
+native validation and challenge membership; both Fixture seeds share pixels and
+form one group, so no independent Fixture generalization claim is available.
+This supersedes older assembly/review dispatch suggestions below.
+
+[Mixed-source assembly/preflight](../reports/work/OS-FOCUS-04-ASSEMBLY/handoff.md)
+is now implemented and verified on retained native+Fixture data. Do not redispatch
+that foundation. Next is diverse data admission and one frozen mixed-appearance
+candidate protocol; production quotas remain open and no training launch is implied.
+Qualify separately scoped completed recipe groups without calling the partial pilot
+complete, then acquire missing styles under explicit capture authority.
+
+[Photos comparison](../reports/work/FOCUS-VISUAL-01/handoff.md) now demonstrates
+appearance and box-sensitivity failures despite the Settings challenge pass.
+The [Home follow-up](../reports/work/FOCUS-VISUAL-02/handoff.md) now finds shipped2/6
+correct unique selections and candidates0/6, with box-sensitive wrong-focus and
+expanded compression-parity failures. Next implement OS-FOCUS-04 mixed-source
+assembly/preflight independently of TTR. Eligible mixed-appearance acquisition and
+one training candidate need their own admission/authority; legacy appearance
+reviews remain development-only. Do not repeat same-style training or promote.
+
+The approved isolated runtime resolved export imports. [FOCUS-COMPRESS-01](../reports/work/FOCUS-COMPRESS-01/handoff.md)
+now meets the literal5MB size budget and frozen12-crop parity without changing
+shipped models. Next freeze broader visual-focus challenge coverage and compare
+shipped/FP16/int8 before another training run. [PER-DATA](../reports/work/PER-DATA/handoff.md)
+provides39 local development reviews, including2 Photos visual-focus annotations;
+positive chevron/dialog and independent-evaluation coverage remain missing.
+No TTR fix is needed for a separately assigned development-only comparison on
+these retained examples. New capture, full benchmark qualification and promotion
+retain separate prerequisites.
 
 The next independent tranche has [completed its Settings fallback and one candidate](../reports/work/OS-FOCUS-03/handoff.md).
 Apps3 pairs extend training; Remotes6 pairs remain challenge-only. FDR-007 retained

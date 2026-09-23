@@ -1,0 +1,30 @@
+[
+  {
+    "label": "python",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "-m",
+      "unittest",
+      "test_focus_visual_comparison",
+      "-v"
+    ],
+    "exitCode": 0,
+    "seconds": 0.14231695799389854
+  },
+  {
+    "label": "swift-build",
+    "command": [
+      "swift",
+      "build",
+      "--disable-automatic-resolution",
+      "--cache-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-cache",
+      "--config-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-config",
+      "--security-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-security"
+    ],
+    "exitCode": 1,
+    "seconds": 1.1860204170225188
+  }
+]

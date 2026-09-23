@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "-u",
+    "scripts/export_focus_ring_coreml.py",
+    "--weights",
+    "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+    "--output-dir",
+    "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-02-sizegate",
+    "--experimental-id",
+    "fdr007-sizegate-check"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 4.053183124982752
+}

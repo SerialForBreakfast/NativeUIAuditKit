@@ -1,0 +1,9 @@
+....ERROR: refusing output collision
+.ERROR: refusing output collision
+....................
+----------------------------------------------------------------------
+Ran 25 tests in 0.022s
+
+OK
+{"cases": 1, "recommendation": "no_training"}
+{"cases": 1, "recommendation": "no_training"}

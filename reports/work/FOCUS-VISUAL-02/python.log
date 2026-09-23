@@ -1,0 +1,15 @@
+test_actual_freeze_and_run_with_fake_inference (test_focus_visual_comparison.VisualComparisonTests.test_actual_freeze_and_run_with_fake_inference) ... ok
+test_changed_pixels_rejected (test_focus_visual_comparison.VisualComparisonTests.test_changed_pixels_rejected) ... ok
+test_false_callback_truth_rejected (test_focus_visual_comparison.VisualComparisonTests.test_false_callback_truth_rejected) ... ok
+test_frame_decisions_and_no_forced_argmax (test_focus_visual_comparison.VisualComparisonTests.test_frame_decisions_and_no_forced_argmax) ... ok
+test_invalid_scores_and_order (test_focus_visual_comparison.VisualComparisonTests.test_invalid_scores_and_order) ... ok
+test_membership_and_padding (test_focus_visual_comparison.VisualComparisonTests.test_membership_and_padding) ... ok
+test_missing_competitor_geometry (test_focus_visual_comparison.VisualComparisonTests.test_missing_competitor_geometry) ... ok
+test_model_change_blocks_before_inference (test_focus_visual_comparison.VisualComparisonTests.test_model_change_blocks_before_inference) ... ok
+test_output_safety (test_focus_visual_comparison.VisualComparisonTests.test_output_safety) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.037s
+
+OK
+{"shipped": {"metrics": {"count": 3, "auroc": 1.0, "0.5": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}, "0.85": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}}, "frameDecisions": [{"frameID": "c1", "decision": "correct", "selectedElementID": "cancel"}], "ambiguityBandCount": 0, "nearThresholdCount": 0}, "fp16": {"metrics": {"count": 3, "auroc": 1.0, "0.5": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}, "0.85": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}}, "frameDecisions": [{"frameID": "c1", "decision": "correct", "selectedElementID": "cancel"}], "ambiguityBandCount": 0, "nearThresholdCount": 0}, "int8": {"metrics": {"count": 3, "auroc": 1.0, "0.5": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}, "0.85": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}}, "frameDecisions": [{"frameID": "c1", "decision": "correct", "selectedElementID": "cancel"}], "ambiguityBandCount": 0, "nearThresholdCount": 0}}

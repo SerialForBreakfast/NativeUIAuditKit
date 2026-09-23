@@ -1,0 +1,70 @@
+[
+  {
+    "selected": [
+      {
+        "runtime": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+        "lastBootedAt": "2026-09-20T17:30:59Z",
+        "dataPath": "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data",
+        "dataPathSize": 2274689024,
+        "logPath": "/Users/josephmccraw/Library/Logs/CoreSimulator/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "udid": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "isAvailable": true,
+        "logPathSize": 409600,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K",
+        "state": "Booted",
+        "name": "Apple TV 4K (3rd generation)"
+      }
+    ]
+  },
+  {
+    "args": [
+      "xattr",
+      "-d",
+      "com.apple.FinderInfo",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 0.0019837910076603293
+  },
+  {
+    "args": [
+      "codesign",
+      "--verify",
+      "--deep",
+      "--strict",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 0.015187499986495823
+  },
+  {
+    "args": [
+      "xcrun",
+      "simctl",
+      "install",
+      "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 3.011838083009934
+  },
+  {
+    "args": [
+      "xcrun",
+      "simctl",
+      "launch",
+      "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+      "com.showblender.TVTestRigFixture"
+    ],
+    "exitCode": 0,
+    "stdout": "com.showblender.TVTestRigFixture: 66851\n",
+    "stderr": "",
+    "seconds": 0.2970213340013288
+  }
+]

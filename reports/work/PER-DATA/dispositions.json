@@ -1,0 +1,463 @@
+{
+  "formatVersion": "perception-reviewed-dispositions-v1",
+  "triageSHA256": "e8019ce0b3888243ab6c75eda18648454ed747d6ee5eafb3efa209aeead2f235",
+  "members": [
+    {
+      "path": "dataset/tvos_captures/office_app_switcher.png",
+      "sha256": "81d3058eb3734a06bc359d349d2aaa6f52886a1ae0d769109fafdfa198dd967b",
+      "pixelSHA256": "a37353d110c8ecb972694173f91fcfce6a2bd34a933879644e18c721ef379235",
+      "category": "app-switcher",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_app_switcher_sweep.png",
+      "sha256": "4639e3fabdaea2671fe41f195d0d8d9b3f1016a9c85d42aea5e8f23c0f471b1f",
+      "pixelSHA256": "3936ec3050fb26a19b65374b10a4ce233405b0705f31cbe68af7b39a62a7c3e8",
+      "category": "app-switcher",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_bottom_grid.png",
+      "sha256": "804410933179256b340512764733fdaef4013e4d28881260f00fd21a7db41ffa",
+      "pixelSHA256": "609643b87da4276179afa910c56d8d59ed9dbdc494989087c1933278c100e4df",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_bottom_next.png",
+      "sha256": "ec2671400e5553316cc382ba7abb9b398ee2914cf0f8f3906b7ab628b1dfa0dc",
+      "pixelSHA256": "66f7f8298a692ea76c45bcad53d33ef03db65c9ffeef30c8e3d568b685afb98d",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_bottom_r3.png",
+      "sha256": "7870bfb40c0529de9a0d5ce85c20a901d7c3b6c8be753a5435c408ad6ace9d32",
+      "pixelSHA256": "2d59fcb97b6aba4cde4f5df5e7f609a74cbf47eee47aeadb216ac807ad95d7fe",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_dock_fixture.png",
+      "sha256": "1daf74881ca1e235f84670986ea0caa49c262b4a3174eef6f93ca03101426c24",
+      "pixelSHA256": "c2190b3c21bea59f794e2996742c6ba5b06c57ba36a9bf14185eea146332cfa4",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_fixture_main.png",
+      "sha256": "38bfd35d84db54f63d694721753ea07a3ed30bf68c98e49bd4c42089026b67df",
+      "pixelSHA256": "b16357284f788787212692ee4cb05dc8b287e7225cc8e7b6dbed11aa598f39c1",
+      "category": "fixture-diagnostic-screen",
+      "developmentReviewEligible": false,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "diagnostic UI, unsupported relation/focus truth"
+    },
+    {
+      "path": "dataset/tvos_captures/office_folder_screen.png",
+      "sha256": "4100bbf0945aac1bba2f864d670f7ffb3d7471b0747dbdae07accb285f187a03",
+      "pixelSHA256": "91d007aeba00bc48e27588d8538e404fd22414d139723bf3d78bbdf42e3a026a",
+      "category": "home-folder",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_grid_target.png",
+      "sha256": "e0873008b317df8982d2d39d67698a52374bbdda8f09dbd9996a1d106c817636",
+      "pixelSHA256": "93cd8cbf72db690fafb9215ad926767bc3210679141823c0b43d88602c2eaeec",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_home_col5.png",
+      "sha256": "cc737eee5e05bd8eb63a825815a672e8bb94a29f5f6fc4104a505873453da54c",
+      "pixelSHA256": "afc86f9df5f9a5e1363a92e67fa7688d11e0cab6b33a85734b0925707b2b1aaa",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_home_initial.png",
+      "sha256": "43ab9e9052073e767d1c9191124e3951f3ca9b58be17f29fcc1726a2c74557c2",
+      "pixelSHA256": "6c7e244aaebf368a834fae122b60b12198e85dfba25505b357ab26119e9a6781",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_home_step01.png",
+      "sha256": "69f6e593775a682faa4cbaf7984506c1fa9c93e143106cf1c323f8adf10d48ef",
+      "pixelSHA256": "7d8b593b4f3487fd5551e96dfc91344cc8b97a5b1b38967b4fabf483b5b507c4",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_home_step02.png",
+      "sha256": "55e9e7cd6fd212aa8303292d5ce8fe49a9fd2a5c0ef86267a753f016f872bfaf",
+      "pixelSHA256": "6ea4ba9dd7c540294bd0c047fc0d71812d952a65f4d832b3710728119ee1476f",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_home_step03.png",
+      "sha256": "4e35aeea6d9282783c4a365aaa6b9d55110498e1e50ecf0832973bc9a2d9bcf7",
+      "pixelSHA256": "02d041c93fc230f3fb76187ba6e14596cea7fe637ecb3df59b34e9158155540e",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_home_top_right.png",
+      "sha256": "47698329a53e248daf1308dd5b3390fa06f2eed7ca9de623316117e8ad2f86e6",
+      "pixelSHA256": "8a1726f6bb76fdb72d4b6373bb2ffe96b2866f79b10052c804dc66de7848760c",
+      "category": "app-switcher",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_live_01.png",
+      "sha256": "a825ca3ef26857453b3adb89788664453fd0335944a6b0bec5400fcb26a66328",
+      "pixelSHA256": "4d0c827a96f8b760917ce765ebd346bfcfe978e742a1309d3bbb697bf7fa6ed1",
+      "category": "video-content",
+      "developmentReviewEligible": false,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "video imagery, no scoped UI relation truth"
+    },
+    {
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "pixelSHA256": "cf6a53f3aec35ac401d820112e4636abbfd3e31e88dfce75da61bd3d9dc57b5e",
+      "category": "photos-welcome",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_pluto_app.png",
+      "sha256": "da7d5e0b2f1bc5cd6750197cf4e63e8750146307dea68866bdabc8bc8f66d1e7",
+      "pixelSHA256": "5810c43dfea17ca1c296b80c3f2f62c406338a7520b9bf91c39c029a2c60a384",
+      "category": "loading-spinner",
+      "developmentReviewEligible": false,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "transitional image; not stable perception evidence"
+    },
+    {
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "pixelSHA256": "e9401d783d641e78f4775b579fc50645114fc050159e3141e41c01682070e26e",
+      "category": "photos-welcome",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r1c2.png",
+      "sha256": "d2103e4d1975ea8d0814236dafaf14015ea6b9b3f1edac058465dc7b58c0839b",
+      "pixelSHA256": "f69faa4aa3e49f27afa9639c34c7b6ef49d40c93baf47ba78346b4cce9c03038",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r1c4.png",
+      "sha256": "78b5578afd5a8c5cd218052b25e22c848f7fb382acf795fa6c966c9fec9a9ac8",
+      "pixelSHA256": "fa21a08d8105398b498686bd76f7ca06130720ae419ee82d5cde8215d08b0774",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r1c6.png",
+      "sha256": "df947d1cb99e9fe2b09163a5874692a157bbfc62c20038826f6700129b283b2a",
+      "pixelSHA256": "0bdc8b6a79906564c891d8cbd71f4f6f074eb7ebe99f743ec95c206ded1c97f4",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r2c1.png",
+      "sha256": "b772fd4b7740bca948a003294a34dbaf083b97f75cb3f4711447ff72693ee207",
+      "pixelSHA256": "a7d6f8467672d0f4e3b1752fbeedf41a934d2f936ac36ffe1a1d1092e5ce7d95",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r2c2.png",
+      "sha256": "59c07631f8bee5e1ca242f90e7315e117874518a18833b2c83d0eed8945f4f83",
+      "pixelSHA256": "81b16fd718c419306773b979603a6bc65a9659fee8dcfe255d71df7582bd4ea8",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r2c3.png",
+      "sha256": "8cc5f6cbe2f57ce7df09c7cca53b107ab0a47c538ccdbe2ca171e616e33c45af",
+      "pixelSHA256": "457eab90333bd311585153c4aed559205081211f97191cf11165099f8fedea41",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r2c4.png",
+      "sha256": "61091d8d11ff4301800d04f281ec6b343040e89865874a318d10e0f4975a90f5",
+      "pixelSHA256": "ea99ed3e90a79bfdb04232342fa4edd97b6fe94408d98d751fac175450bb58c0",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r2c5.png",
+      "sha256": "46d194fb3e658821f7dd3e1edaad530eff757d26cbd3ebc1b67f993b5834d1aa",
+      "pixelSHA256": "f968ca6d7e9eedd9e53ff3a0b0f24944a3b5e200d51506f467f725d9ffd1e5f6",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r2c6.png",
+      "sha256": "0a56b13754796ac30528ce849162a596d3d3fe77bbf7d726db7ffb2a25592ded",
+      "pixelSHA256": "f05e0e5619509f26382c09ba1e89c934798272d473319dd333dcbe30d5660240",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r3c5.png",
+      "sha256": "fb859b766b0fa456165ad48d5c0bea03369bd2f41b5f2de046c145746b87a616",
+      "pixelSHA256": "150ba978ee1f13bc7b927359d53c4df56440244cfb507d5c5681dab4c1ff40cc",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r3c6.png",
+      "sha256": "f95f4bf8690141e642a09620fffce1ea1f3dc3328fa37238a91246e896046369",
+      "pixelSHA256": "dfad42614bfe421e570ee396524d3aecf23b9b0a731ee121b7fd29f59a0d49b5",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r4c6.png",
+      "sha256": "2778d0be88c4f1f182e0b6891f7190406c1f589d8461e3471da8e4d6751ae387",
+      "pixelSHA256": "34903d715d87106a9c06c54bc11e9534c3f2653356636153608aca2092c21da1",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_r5c6.png",
+      "sha256": "a96399e87ae42b07abbeeea3125ce7cee199a10b9d52a565659d34a1da4ed72f",
+      "pixelSHA256": "e98cee7a2ab49a582b294523b06d1ecb4f8aaa4b78a6415d4913ec59a1a91750",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_row1.png",
+      "sha256": "9ac8fe7897f951c40da9c9ffc89f477da5a25fc075afff1daeabfb441bfbe3a9",
+      "pixelSHA256": "8aaa86c20bddf17b7f53f583e5b532597753421a790d2a1ec4e94a6af24dd358",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_row2_col5.png",
+      "sha256": "c0f7c28e47fd895d9cd1b8027eebf2c8649d5ee63685c372978bb4e8aa6b3796",
+      "pixelSHA256": "cae227e5621c3f9b3fdadc3bbf057c442ea0bf99386afa9e8c3d998f5a82ff4b",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_row3_col5.png",
+      "sha256": "029edfb1e8ef029ee3ec16baf4da26f9dff1dc679cebe6499c503d8a8b493d48",
+      "pixelSHA256": "5502e37cbd6536e1fa490098c96d62c8848aa1bf16a4fe2797b55a71faec4aef",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_row4_col5.png",
+      "sha256": "c3d89f37b781f4fdb3eab051f7842aa43baffecaa32ca1809591b7016d4b493b",
+      "pixelSHA256": "c66dd410b7a45510d1eb9e194578e9a4e1e20cffda0f736c62b38d3524bd75d3",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_row5_col5.png",
+      "sha256": "08029ce44ce3ab52ee45ee85e8a35668a274f731bb7f5b1ffba1c299eea9ec91",
+      "pixelSHA256": "2e7c2f345884ecb08b264b6fac8254ff01b76a5ee2f8118492030545e8c4c83d",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_screen_opened.png",
+      "sha256": "feab2eef32097cd18eb51239a3a811a26bd3db2a5b71d7caa201ab8b0b15248b",
+      "pixelSHA256": "f667a09b83fa43bc2e04dba696b45cd20d7cd5c265822d0ea703055a5bdd1c6d",
+      "category": "account-picker-sensitive",
+      "developmentReviewEligible": false,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "privacy-review-required; no identity transcription"
+    },
+    {
+      "path": "dataset/tvos_captures/office_session2_home.png",
+      "sha256": "a44c19692a1147f639acc18803fed36240239b78a0d048a3785a28f47c286aec",
+      "pixelSHA256": "4ea5315c57f145da835c406c87695c7c66b99ac0c7dae09cfa699a2b7b2c6421",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_session2_switcher.png",
+      "sha256": "2b95b35e67df4fe41785fe2c34d11b9dcee3a1c82252718b1ca037c70b24eaee",
+      "pixelSHA256": "2ee1d511bde4fab934ccb2804a967c24f56a39f0323603eac1833f0250a502d1",
+      "category": "app-switcher",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_session2_switcher_card2.png",
+      "sha256": "843dada4513c353768825d65ff123a630b257a25e1c671e95b7d4eabcac6848a",
+      "pixelSHA256": "2507e03455e19a8f1b2e5975608ebb230df3eb6c0f7c492c75c87daa9508685a",
+      "category": "app-switcher",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_settings_target.png",
+      "sha256": "e5182cdbc474618e66bea5925da818f1f94057065a8d11e5edc7ab5e0fbd8b86",
+      "pixelSHA256": "0329457d2388f36dfa63cff18626d627e82d7a9a717090cc08c275bc6915f060",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_shelf_up6.png",
+      "sha256": "c44076bab76c2f6ab528e7259495e42c7b34e3a0127b87cfd8202e266f7d350d",
+      "pixelSHA256": "d429b2e0aa3bf8ebcb759b080272b0acf5057ded01c886646b4d355d6cfb2c67",
+      "category": "home-grid-or-shelf",
+      "developmentReviewEligible": true,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "reviewed visual development labels only; historical source unverified"
+    },
+    {
+      "path": "dataset/tvos_captures/office_tvos_settings_main.png",
+      "sha256": "289ad87640ad59740b59d9c3fa5498783256a5e598255b4d43708747d9beb965",
+      "pixelSHA256": "866887e75f7d4ec6395d1087c14cdbe90f65be15fb3c92d2708612c773e26462",
+      "category": "settings-list",
+      "developmentReviewEligible": false,
+      "trainingEligible": false,
+      "independentEvaluationEligible": false,
+      "reason": "privacy-review-required; management text; chevron lead not admitted"
+    }
+  ],
+  "verification": {
+    "verifiedImageCount": 39
+  },
+  "inventory": {
+    "caseCount": 39,
+    "sourceKinds": {
+      "reviewedNativeCapture": 39
+    },
+    "partitions": {
+      "development": 39
+    },
+    "coverage": {
+      "focus:reviewedAppearance": 2
+    }
+  },
+  "modelInference": "not_run",
+  "trainingEligible": false
+}

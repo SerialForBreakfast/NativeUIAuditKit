@@ -1147,3 +1147,34 @@ this increment; do not infer causal equivalence or unseen-style generalization.
 Full-frame/crop pixel and lineage isolation passed against both experiment protocols.
 Evidence: `../reports/work/OS-FOCUS-03/summary.json`, challenge-before/after.json.
 No further run, export or promotion performed.
+
+## Run FDR-008 — mixed-appearance development (2026-09-23)
+
+Logged before launch, 03:35Z. Maintainer instruction: “Do the 30 eppch run”.
+Authorize exactly the frozen proposal, arm `warm-stretch`, output
+`NativeUITrainer/focus_ring_runs/fdr008-mixed-appearance`.
+Protocol `fa1c7cffa8e42aac511353c9ccd99cf091dbf25a05cb3f5deba52e1ac458fca2`.
+Strict FDR-007 warm weights (`a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0`),
+fresh AdamW optimizer, 30 epochs, batch64, lr0.0003, seed42, no augmentation;
+vendored MobileNetV4, production16% expansion/256×256 stretch, RGB/255.
+126 train pairs (40 native +86 Fixture), nine native-validation pairs; no test set
+or independent Fixture validation. Frozen stratum sampling: expected88.89% Fixture,
+11.11% native. Minimum native-validation BCE selects checkpoint, earliest tie.
+Internal1800s budget after preflight; external2100s process limit includes preflight.
+No retry, scale capture, TTR/Office operation, export or promotion. This is a
+learning/retention diagnostic, not a production gate. Approval and execution ledger:
+`../reports/work/FDR-008/`. PID, timings and outcome added after execution.
+
+Outcome: completed30/30, exit0, PID11340, 2026-09-23 03:36:54–03:39:59Z.
+184.453s whole process /38.399s post-preflight, torch2.7.0/MPS in the approved
+isolated environment (prior FDR-007 training used2.13.0; not a controlled data-only
+ablation). Selected epoch3, native-validation BCE0.000002755059. Best SHA256
+`40f23078e0ca5b5b03ac2bc52b6f1c10e9477687a99b26fac327e8199d75d11c`.
+At0.85, same-backend CPU before/after evaluation: Fixture training172 crops improves
+TP43/FN43/FP0/TN86 → TP86/FN0/FP0/TN86 (75% →100%). At0.5:77.33% →100%.
+Native train80/80, native validation18/18 and reused Remotes challenge12/12 remain
+correct at both thresholds. No observed forgetting on those small, correlated sets.
+Fixture scores are training fit, not independent generalization. No export, promotion,
+CoreML parity or physical-device claim. Next evaluate new appearances/independent
+Fixture groups, not another run on these saturated members. Evidence:
+`../reports/work/FDR-008/comparison.json`, `execution.json`, `handoff.md`.

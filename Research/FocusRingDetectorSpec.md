@@ -78,7 +78,12 @@ matches this table exactly: `modelID` is `focus-ring-detector-v1.0` and
 `versionString` is `1.0.0`. FDR-001 is the training-run label, not a model
 version. No model resource or qualification claim changes here.
 
-Package size gate: FP16 `.mlpackage` **≤ 5.0 MB**.
+Package size gate: FP16 `.mlpackage` **≤ 5.0 MB = 5,000,000 bytes**,
+counting all regular files in the package (not compiled-cache size or allocated
+filesystem blocks). Report MiB separately;5MiB is not this gate. Historical export
+reports through FOCUS-EXPORT-01/export-01 divided by1024² while labeling MB and
+must not establish this gate. Oversize output is retained as experimental evidence
+with a failed report and nonzero exit; never delete it or promote automatically.
 
 ---
 

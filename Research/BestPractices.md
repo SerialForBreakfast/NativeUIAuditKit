@@ -1351,6 +1351,31 @@ scikit-learn→SciPy; conversion had not started after the612s stopped attempt.
 Record import/trace/conversion stages separately. This evidence does not establish
 a permission denial, bad weights, deadlock, or a FileProvider root cause.
 
+Follow-up RCA: a later full import exited1/57.119s with OS errno60 in importlib
+file reads; four relevant modules were explicitly `dataless`. Check dependency
+residency before blaming native imports or retrying conversion. Keep the entire
+environment resident through its identified storage provider, or separately
+authorize a reproducible local export environment. Do not delete/reinstall
+dependencies or alter global security settings as an implicit repair. Apple
+documents materialization stalls/ETIMEDOUT in [TN3150](https://developer.apple.com/documentation/technotes/tn3150-getting-ready-for-data-less-files).
+Follow-up identifies iCloud Drive: its download API accepted the request while
+the file remained dataless/errno60. Verify actual bytes, not request acceptance.
+The concurrent account upload-quota error does not prove download causality.
+[Evidence](../reports/work/FOCUS-EXPORT-01/residency-repair.md).
+
+Approved follow-through: a separate pinned non-cloud export environment restored
+imports in8.90s and export in3.47s, followed by successful real CoreML parity.
+Child evaluation commands must use the approved invoking interpreter, not silently
+fall back to the old cloud-managed environment. Dependency-version changes require
+actual frozen-reference comparison; successful import alone is not acceptance.
+[Qualification](../reports/work/FOCUS-EXPORT-01/qualification.md).
+
+Size-gate correction: dividing bytes by1024² while labeling MB accepted a
+5,038,123-byte package against a5MB specification. Enforce an integer5,000,000-byte
+limit across all package files; report MB and MiB separately. Preserve failed
+artifacts with nonzero exit and a failed versioned report. Regression tests cover
+the exact boundary and one extra metadata byte; do not round before comparison.
+
 ### BP-70: Bound inference batches by decoded pixels
 
 **Wrong:** Assuming18 valid images fit a helper merely because its item limit is128.
@@ -1378,3 +1403,132 @@ or requested navigation into ground truth. Continue unrelated qualified acquisit
 tile tree, but three bounded trials still failed before any directional inputs.
 Home admitted zero pairs while separate Settings journeys delivered nine reviewed
 pairs and one training candidate. This is a local observation gap, not TTR dependence.
+
+### BP-72: Compression size wins do not establish speed or broad accuracy wins
+
+**Wrong:** Treating a smaller package and perfect saturated-score parity as proof
+of faster runtime or general model qualification.
+
+**Correct:** Preserve the floating-weight baseline and compare identical membership,
+probabilities, threshold decisions, cold loads, warm inference and preprocessing
+separately. Keep review-only focus labels distinct from native observed callbacks.
+
+**Why:** FOCUS-COMPRESS-01 reduced package bytes48.14% while warm CPU inference
+remained1.36–1.37ms and crop work remained about69ms. All12 scores were far from
+decision thresholds. PER-DATA's two Photos visual labels add a different appearance
+lead but do not create callback-grounded pairs or an independent test partition.
+See the [compression](../reports/work/FOCUS-COMPRESS-01/handoff.md) and
+[review](../reports/work/PER-DATA/handoff.md) evidence before generalizing results.
+
+### BP-74: Test producer serialization, not an invented equivalent fixture
+
+**What went wrong:** genuine TTR job697018C6 used Swift Date's numeric JSON encoding,
+while NUA's positive fixtures used only strings. After correcting that consumer bug,
+intake exposed a second mismatch: resolved recipe theme existed in live telemetry but
+was omitted by the producer's narrowed sidecar type.
+**Correct approach:** preserve source-backed numeric dates (excluding boolean/nonfinite
+values), test actual serialized field shapes, and keep missing theme a fail-closed
+normalization error. Retained capture bytes remain unchanged. Inspect live-to-sidecar
+field loss before requesting another capture or guessing absent metadata.
+**Why:** transport/integrity success is not semantic compatibility, and toy fixtures
+must not conceal producer/consumer disagreement. See
+[real intake evidence](../reports/work/TTR-SMOKE-20260922-2119/continuation.md).
+
+### BP-73: Freeze appearance and box-sensitivity regressions before tuning
+
+**Wrong:** Extrapolating perfect native Settings challenge scores to other focus
+treatments, or repairing misses by selecting the best crop/threshold after scoring.
+
+**Correct:** Evaluate separate reviewed appearances and declared small box variants
+using the production cropper. Count base examples separately from correlated variants;
+report unique, missing and multiple-focus decisions. Preserve failures before planning
+new training-only jitter or appearance expansion; never make them untouched test data.
+
+**Why:** FOCUS-VISUAL-01 candidates missed both Photos focused buttons despite12/12
+Settings challenge decisions. A4px inset made both buttons positive; compression
+drift reached0.04346 despite no threshold disagreement. Correctly rendered crops
+and fixed thresholds made the coverage problem visible instead of hiding it.
+[Evidence](../reports/work/FOCUS-VISUAL-01/handoff.md).
+
+### BP-75: Preserve the predicate behind a settling timeout
+
+**Wrong:** The direct pilot reported only `settle_timeout` and a truncated telemetry
+tail, hiding a stable coordinate mismatch despite healthy native focus.
+**Correct:** Retain the last validation predicate and affected element while keeping
+the same bounded settling window. Audit retained evidence before considering another
+capture. A prefix audit is planning evidence, not permission to mark failed data complete.
+**Why:** The real failure was `coordinate_conflict: header_shelf`; focus resets or
+longer delays cannot fix mismatched coordinate frames. [Evidence](../reports/work/TVGEN-RESUME-01/handoff.md).
+
+### BP-76: Recheck staged bundle metadata immediately before installation
+
+**Wrong:** Treating a successful staging-time signature check as proof the same
+bundle will remain installable in a filesystem that adds metadata asynchronously.
+**Correct:** Preserve the original; with explicit authority, inspect a separate
+copy and remove only signature-prohibited FinderInfo/ResourceFork attributes.
+Verify the existing signature immediately before install. A recurring failure
+requires a new diagnosis, not re-signing or blanket attribute/security removal.
+**Why:** The Fixture copy passed initially, then FinderInfo reappeared and blocked
+the pre-install check. One observed-metadata correction followed immediately by
+verification/install succeeded without changing signed bytes. Attribution to a
+specific filesystem service remains unproven. [Evidence](../reports/work/TVGEN-SETUP-20260923/install-receipt-2.json).
+
+### BP-77: Dispatch declared sidecar versions before accepting flat aliases
+
+**Wrong:** An older consumer checked only flat focused-element fields and ignored
+the new `schema_version`, allowing malformed v2 brackets to look like legacy metadata.
+**Correct:** Absent version retains legacy inspection semantics; declared v2 must
+validate every required bracket, recipe/hash, native observation and compatibility
+alias. Unknown versions fail. Preserve interval correlation rather than inventing
+callback-frame IDs to fit the older crop contract.
+**Why:** V2 adversarial tests now reject missing/stale endpoints, altered frame hashes
+and alias contradictions while valid legacy behavior stays separate.
+[Evidence](../reports/work/SIM-DATA-02-V2/handoff.md).
+
+### BP-78: Report focus decisions beside imbalanced tile accuracy
+
+**Wrong:** Calling a Home focus candidate better because tile accuracy increased
+while it classified every tile as unfocused.
+**Correct:** Report positive recall, negative false positives, and per-frame
+unique-correct/wrong/no-focus/multiple-focus decisions with exact support. Retain
+whole journeys and box variants as correlated development evidence. Keep the
+all-negative baseline visible; do not tune thresholds on this diagnostic set.
+**Why:** FDR-007's Home accuracy was91.7% (66/72) with zero of six focused tiles
+recognized at0.85, while the shipped model made two correct unique selections.
+The aggregate number concealed the failure needed by navigation.
+[Evidence](../reports/work/FOCUS-VISUAL-02/handoff.md).
+
+### BP-81: Equal strata are not equal source totals
+
+The mixed-appearance development assembly uses equal source/scene/style/control
+strata. Interpreting that as a 50/50 source mixture would be wrong: its frozen 252
+training examples imply 88.89% Fixture / 11.11% native sampling probability because
+Fixture contributes more strata. Compute and report aggregate weight mass before
+launch, not just raw counts or a policy name. A different source allocation requires
+an explicit configuration revision; do not silently change approved sampling.
+This matters for native retention and interpretable comparisons, not a claim that
+one ratio is optimal. [Evidence](../reports/work/FOCUS-DEV-01/launch-review.md).
+
+### BP-80: Seed differences do not prove independent visual examples
+
+The retained Fixture pilot's seeds 7 and 19 share exact decoded crop pixels,
+including non-maze scenes. Splitting by seed alone would leak evidence across
+training and validation. Join related recipe groups whenever source/crop pixels
+repeat; preserve paired focus states and deduplicate complete pair repetitions
+without erasing lineage. Distinct crops may still be near-duplicates, so exact
+checks are a minimum, not proof of semantic independence. Report absent independent
+validation rather than relabeling training fit as generalization.
+[Observed evidence](../reports/work/FOCUS-RETAINED-01/handoff.md).
+
+### BP-79: Revalidate retained crop-runtime bindings before assembly
+
+**Wrong:** Assuming all reviewed native datasets use today's preprocessing because
+their source screenshots and pair labels remain valid.
+**Correct:** Check the cropper source/helper identities and actual crop pixels.
+Preserve stale derived data; regenerate through the existing production adapter
+from unchanged sources and review the new crops before issuing a new manifest.
+Keep the original journey/split identity; new crops are not new independent data.
+**Why:** The mixed-source integration found older Settings-root crop identities
+beside current General/Accessibility/Apps data. Offline recropping and24-crop review
+restored a compatible49-pair native assembly without a device recapture.
+[Evidence](../reports/work/OS-FOCUS-04-ASSEMBLY/handoff.md).

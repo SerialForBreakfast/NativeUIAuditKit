@@ -85,7 +85,7 @@ def recrop(manifest, dataset, output):
     if output.exists(): raise FocusDataError("output_collision")
     result = json.loads(json.dumps(manifest))
     images = rendered_items(result)
-    result.update(version="1.4" if manifest["version"] == "1.4" else "1.3", preprocessing=RUNTIME_PREPROCESSING, runtimeCrop=identity())
+    result.update(version=manifest["version"] if manifest["version"] in {"1.4", "1.5"} else "1.3", preprocessing=RUNTIME_PREPROCESSING, runtimeCrop=identity())
     result.pop("trainingApproval", None)  # New pixels require a new corpus review.
     result["corpusID"] += "-runtime-crops"
     result["derivedFromManifestSHA256"] = digest(manifest)

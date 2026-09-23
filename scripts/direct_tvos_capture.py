@@ -135,17 +135,19 @@ class Fixture:
         previous_deadline = self.deadline
         self.deadline = until
         last = None
+        last_reason = "no_observation"
         try:
             while time.monotonic() < until:
                 last = self.snapshot()
                 try:
                     scene_signature(last, expected, recipe)
                     return last
-                except FocusDataError:
+                except FocusDataError as error:
+                    last_reason = str(error)
                     time.sleep(min(.1, max(0, until - time.monotonic())))
         finally:
             self.deadline = previous_deadline
-        raise FocusDataError("settle_timeout: " + json.dumps(last, separators=(",", ":"))[-1500:])
+        raise FocusDataError("settle_timeout: " + last_reason + ": " + json.dumps(last, separators=(",", ":"))[-1500:])
 
 
 def scene_signature(snapshot, expected, recipe):
@@ -185,7 +187,8 @@ def scene_signature(snapshot, expected, recipe):
         x, y, w, h = e["pixel_bounds"]
         normal = [x/size[0], y/size[1], (x+w)/size[0], (y+h)/size[1]]
         require(len(e.get("normalized_bounds", [])) == 4 and
-                all(abs(a-b) < 1e-6 for a, b in zip(normal, e["normalized_bounds"])), "coordinate_conflict")
+                all(abs(a-b) < 1e-6 for a, b in zip(normal, e["normalized_bounds"])),
+                "coordinate_conflict: " + e["element_id"])
     return {"instance": device["fixture_instance_id"], "run": device["fixture_run_id"],
             "recipe": actual_recipe, "generation": obs["generation"], "observed": expected,
             "size": size, "elements": elements, "planned": planned}
@@ -226,12 +229,29 @@ def capture_frame(fixture, target, output, name, expected, recipe):
 
 
 def validate_capture(doc, root):
-    require(doc.get("version") == "direct-tvos-capture-v1" and doc.get("sourceKind") == SOURCE,
+    if doc.get("version") == "direct-tvos-capture-set-v1":
+        from direct_tvos_resume import validate_set
+        return validate_set(doc, root)
+    return _audit_capture(doc, root, failed_prefix=False)
+
+
+def _audit_capture(doc, root, *, failed_prefix, segment=False):
+    """Shared evidence checks; failed-prefix audit cannot admit a dataset."""
+    require(doc.get("version") == ("direct-tvos-segment-v1" if segment else "direct-tvos-capture-v1") and doc.get("sourceKind") == SOURCE,
             "unsupported_direct_capture")
-    require(doc.get("state") == "completed", "incomplete_capture")
+    require(doc.get("state") == ("failed" if failed_prefix else "completed"), "incomplete_capture")
     require(doc.get("evidenceKind") in {"test-only", "fixture-native-capture"}, "missing_capture_evidence_kind")
     validate_catalog(doc["catalog"])
-    require([x["recipe"] for x in doc["recipes"]] == doc["catalog"]["recipes"], "incomplete_recipe_membership")
+    expected_recipes = doc["catalog"]["recipes"]
+    if segment:
+        bounds = doc.get("recipeRange", [])
+        require(len(bounds) == 2 and all(type(i) is int for i in bounds)
+                and 0 <= bounds[0] < bounds[1] <= len(expected_recipes), "invalid_segment_range")
+        expected_recipes = expected_recipes[bounds[0]:bounds[1]]
+    if failed_prefix:
+        require(len(doc["recipes"]) < len(expected_recipes), "no_remaining_recipes")
+        expected_recipes = expected_recipes[:len(doc["recipes"])]
+    require([x["recipe"] for x in doc["recipes"]] == expected_recipes, "incomplete_recipe_membership")
     total = 0
     initial = doc.get("initialDevice", {})
     instance = (initial.get("fixture_instance_id"), initial.get("fixture_run_id"))
@@ -272,10 +292,43 @@ def validate_capture(doc, root):
     return total
 
 
-def execute(plan, target, endpoint, output):
+def resume_plan(receipt):
+    """Inspect only: do not relabel partial data or construct an executable catalog."""
+    receipt = Path(receipt).absolute()
+    require(not any(p.is_symlink() for p in (receipt, *receipt.parents)), "symlink_input")
+    receipt = local(receipt)
+    raw = receipt.read_bytes()
+    doc = json.loads(raw)
+    pairs = _audit_capture(doc, receipt.parent, failed_prefix=True)
+    require(receipt.read_bytes() == raw, "receipt_changed_during_audit")
+    done = len(doc["recipes"])
+    remaining = [{"catalogIndex": i, "recipe": recipe, "expectedTargets": expected_targets(recipe)}
+                 for i, recipe in enumerate(doc["catalog"]["recipes"]) if i >= done]
+    return {"version": "direct-tvos-resume-plan-v1", "purpose": "planning-only",
+            "executionAllowed": False, "trainingEligible": False,
+            "sourceReceipt": str(receipt.relative_to(ROOT)),
+            "sourceReceiptSHA256": hashlib.sha256(raw).hexdigest(),
+            "sourceEvidenceKind": doc["evidenceKind"], "catalogSHA256": doc["catalog"]["sha256"],
+            "sourceTarget": doc["target"], "sourceRunnerSHA256": doc.get("runnerSHA256"),
+            "verifiedPrefixRecipes": done, "verifiedPrefixPairs": pairs,
+            "remainingRecipes": remaining,
+            "remainingPairs": sum(len(r["expectedTargets"]) for r in remaining),
+            "admittedPairs": 0, "postflight": doc["postflight"],
+            "resumeRequirements": ["changed producer evidence for retained failure",
+                "fresh exact-target readiness and authority", "reviewed multi-run lineage/merge contract",
+                "full original catalog accounting and visual review before admission"]}
+
+
+def execute(plan, target, endpoint, output, *, continuation=None):
     validate_catalog(plan)
     output = new_output(output)
     binding = bind_target(target, endpoint)  # No mutation before exact endpoint ownership.
+    start, stop = 0, len(plan["recipes"])
+    if continuation is not None:
+        require(continuation["binding"] == binding, "resume_binding_changed")
+        start, stop = continuation["recipeRange"]
+        require(type(start) is int and type(stop) is int and 0 <= start < stop <= len(plan["recipes"]),
+                "invalid_segment_range")
     fixture = Fixture(endpoint)
     fixture.binding = binding
     initial = fixture.request("/device")
@@ -288,9 +341,16 @@ def execute(plan, target, endpoint, output):
            "evidenceKind": "fixture-native-capture",
            "targetPlanSourceHashes": SOURCE_HASHES,
            "runnerSHA256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    if continuation is not None:
+        doc.update(version="direct-tvos-segment-v1", recipeRange=[start, stop],
+                   predecessorSHA256=continuation["predecessorSHA256"],
+                   continuationRunnerSHA256=continuation["continuationRunnerSHA256"],
+                   repairReview=continuation.get("repairReview"))
     write_json(output / "started.json", doc)
     try:
         for index, recipe in enumerate(plan["recipes"]):
+            if not start <= index < stop:
+                continue
             fixture.deadline = time.monotonic() + 120
             require(bind_target(target, endpoint) == binding, "endpoint_binding_changed")
             device = fixture.request("/device")
@@ -311,8 +371,8 @@ def execute(plan, target, endpoint, output):
         final = fixture.request("/device")
         require(all(final[k] == initial[k] for k in ("fixture_instance_id", "fixture_run_id")), "postflight_instance_changed")
         doc.update(state="completed", postflight={"responsive": True, "device": final, "scene": fixture.request("/scene")})
-        validate_capture(doc, output)
-        write_json(output / "direct-capture.json", doc)
+        _audit_capture(doc, output, failed_prefix=False, segment=continuation is not None)
+        write_json(output / ("segment.json" if continuation is not None else "direct-capture.json"), doc)
     except Exception as error:
         fixture.deadline = None
         doc.update(state="failed", error=str(error), lastObservation=fixture.last_snapshot)
@@ -328,6 +388,7 @@ def main():
     modes = p.add_mutually_exclusive_group(required=True)
     modes.add_argument("--plan", action="store_true"); modes.add_argument("--execute", action="store_true")
     modes.add_argument("--validate", type=Path)
+    modes.add_argument("--resume-plan", type=Path, help="Read-only failed-prefix audit; never resumes capture")
     p.add_argument("--smoke", action="store_true"); p.add_argument("--catalog", type=Path)
     p.add_argument("--target"); p.add_argument("--endpoint"); p.add_argument("--output", type=Path)
     args = p.parse_args()
@@ -336,6 +397,14 @@ def main():
             require(args.output is not None, "output_required")
             output = new_output(args.output); output.parent.mkdir(parents=True, exist_ok=True)
             write_json(output, catalog(args.smoke))
+        elif args.resume_plan:
+            require(args.output is not None, "output_required")
+            output = new_output(args.output)
+            result = resume_plan(args.resume_plan)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            write_json(output, result)
+            print(json.dumps({"verifiedPrefixPairs": result["verifiedPrefixPairs"],
+                              "remainingPairs": result["remainingPairs"], "executionAllowed": False}))
         elif args.validate:
             doc = json.loads(args.validate.read_text()); print(json.dumps({"pairs": validate_capture(doc, args.validate.parent)}))
         else:

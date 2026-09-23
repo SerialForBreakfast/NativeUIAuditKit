@@ -103,7 +103,10 @@ from labels alone. Preserve historical reports and mark incompatible comparisons
 
 **Exit evidence:** full iOS baseline, compatible reference report, immutable diagnostic
 suite and baseline, exact hashes and support counts. The compact suite never replaces
-full withheld-template DS-G8. Missing pixels block this tranche, not tranche 2.
+full withheld-template DS-G8. The report must include the architecture-required
+per-class AP and mean AP table at IoU 0.50, 0.70 and 0.90 on the same frozen cases;
+legacy 0.50-only evidence remains historical context, not a substitute. Missing pixels
+block this tranche, not tranche 2.
 
 ## 4. iOS candidate readiness and controlled execution
 
@@ -136,6 +139,9 @@ Evaluate the candidate and reference on compatible frozen corpora. Report indepe
 - iOS synthetic withheld-template DS-G8 mAP@0.5 ≥0.85.
 - Fixture mAP@0.5 ≥0.94 and mAP@0.5:0.95 ≥0.78.
 - Fixture toggle and stepperControl AP50 ≥0.88 with nonzero applicable support.
+- Per-class AP and mean AP at IoU 0.50, 0.70 and 0.90, with per-threshold support
+  and the exact frozen evaluation membership recorded. These geometry reports add
+  evidence; they do not silently weaken or replace the existing release gates.
 
 Preserve per-class support, platform-specific results, settings hashes, and diagnostic
 regressions. No pooled mean, test-only provenance, or missing-class metric passes a gate.

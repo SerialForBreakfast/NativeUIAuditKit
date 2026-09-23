@@ -1,0 +1,9 @@
+{
+  "process": "20149 /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data/Containers/Bundle/Application/67B1AD5E-E458-4382-85E9-534812B7D153/TVTestRigFixture.app/TVTestRigFixture",
+  "listener": "COMMAND     PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nTVTestRig 20149 josephmccraw    3u  IPv6 0xe59f03821c4887ec      0t0  TCP *:8080 (LISTEN)\n",
+  "hashes": {
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv": "ddf25bba77f423fa340ae06f71be864b5aaa693dce4fb7cee45306fc14d12e82",
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/MacOS/TVTestRig.debug.dylib": "8211f421d47515982c1bd7ac23e8b1e83d04c824bd33b8216d818f5d72a8ae09",
+    "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data/Containers/Bundle/Application/67B1AD5E-E458-4382-85E9-534812B7D153/TVTestRigFixture.app/TVTestRigFixture.debug.dylib": "9bd3859b9f71e6255bba0a3d64cfdd31cad323a67d70416826330c1414fa70f0"
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "contractVersion": "harvest-compatibility-v1",
+  "integrity": "pass",
+  "producer": "TVTestRig",
+  "producerBuild": "1",
+  "sourceDescription": {
+    "assurance": "reported-source; not-attested",
+    "captureMethod": "simctl-explicit-uuid",
+    "collectedAt": 811804819.582654,
+    "fixture": {
+      "app_build": "1",
+      "app_version": "1.0",
+      "fixture_instance_id": "8931FA37-07EB-43E9-9172-81A9D9170349",
+      "fixture_run_id": "66D156BB-050F-4FA7-802E-05EF543CECBE",
+      "is_bold_text_enabled": false,
+      "is_darker_system_colors_status": false,
+      "is_reduce_motion_enabled": false,
+      "is_switch_control_running": false,
+      "is_voice_over_running": false,
+      "model": "Apple TV",
+      "monotonic_nanoseconds": 188761238434458,
+      "os_version": "tvOS 26.5",
+      "schema_version": 1,
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "screen_scale": 2
+    },
+    "requestedDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+  },
+  "identityEvidence": null,
+  "provenance": "unverified-pixel-telemetry-binding",
+  "eligibleForTraining": false,
+  "unknownClassCount": 0,
+  "usableRows": [
+    {
+      "id": "synth-0",
+      "split": "calibration",
+      "platform": "tvOS",
+      "producer": "TVTestRig",
+      "producerBuild": "1",
+      "sourceDescription": {
+        "assurance": "reported-source; not-attested",
+        "captureMethod": "simctl-explicit-uuid",
+        "collectedAt": 811804819.582654,
+        "fixture": {
+          "app_build": "1",
+          "app_version": "1.0",
+          "fixture_instance_id": "8931FA37-07EB-43E9-9172-81A9D9170349",
+          "fixture_run_id": "66D156BB-050F-4FA7-802E-05EF543CECBE",
+          "is_bold_text_enabled": false,
+          "is_darker_system_colors_status": false,
+          "is_reduce_motion_enabled": false,
+          "is_switch_control_running": false,
+          "is_voice_over_running": false,
+          "model": "Apple TV",
+          "monotonic_nanoseconds": 188761238434458,
+          "os_version": "tvOS 26.5",
+          "schema_version": 1,
+          "screen_bounds": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "screen_scale": 2
+        },
+        "requestedDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+      },
+      "identityEvidence": null,
+      "provenance": "unverified-pixel-telemetry-binding",
+      "eligibleForTraining": false,
+      "elements": [
+        {
+          "element_id": "dialog_btn_0",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.3125,
+            0.7060185185185185,
+            0.4947916666666667,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1200,
+            1525,
+            700.0000000000001,
+            143.99999999999997
+          ],
+          "taxonomy_class": "primaryButton"
+        },
+        {
+          "element_id": "dialog_btn_1",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.5052083333333334,
+            0.7060185185185185,
+            0.6875,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1940.0000000000002,
+            1525,
+            699.9999999999999,
+            143.99999999999997
+          ],
+          "taxonomy_class": "cancelAction"
+        },
+        {
+          "element_id": "dialog_container",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.2916666666666667,
+            0.4930555555555556,
+            0.7083333333333334,
+            0.8097222222222222
+          ],
+          "pixel_bounds": [
+            1120,
+            1065,
+            1600,
+            684
+          ],
+          "taxonomy_class": "alert"
+        }
+      ],
+      "recipe": {
+        "archetype": "action_dialog",
+        "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+        "seed": 7,
+        "step_index": 0
+      },
+      "unfocusedPath": "synth-0_unfocused.png",
+      "focusedPath": "synth-0_focused.png",
+      "metadataPath": "synth-0_metadata.json",
+      "unfocusedSHA256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979",
+      "focusedSHA256": "0816bcbba5119f32b1b065970f47b07a90c5415b689b90b143232a521cfaf593"
+    },
+    {
+      "id": "synth-1",
+      "split": "calibration",
+      "platform": "tvOS",
+      "producer": "TVTestRig",
+      "producerBuild": "1",
+      "sourceDescription": {
+        "assurance": "reported-source; not-attested",
+        "captureMethod": "simctl-explicit-uuid",
+        "collectedAt": 811804819.582654,
+        "fixture": {
+          "app_build": "1",
+          "app_version": "1.0",
+          "fixture_instance_id": "8931FA37-07EB-43E9-9172-81A9D9170349",
+          "fixture_run_id": "66D156BB-050F-4FA7-802E-05EF543CECBE",
+          "is_bold_text_enabled": false,
+          "is_darker_system_colors_status": false,
+          "is_reduce_motion_enabled": false,
+          "is_switch_control_running": false,
+          "is_voice_over_running": false,
+          "model": "Apple TV",
+          "monotonic_nanoseconds": 188761238434458,
+          "os_version": "tvOS 26.5",
+          "schema_version": 1,
+          "screen_bounds": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "screen_scale": 2
+        },
+        "requestedDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+      },
+      "identityEvidence": null,
+      "provenance": "unverified-pixel-telemetry-binding",
+      "eligibleForTraining": false,
+      "elements": [
+        {
+          "element_id": "dialog_btn_0",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.3125,
+            0.7060185185185185,
+            0.4947916666666667,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1200,
+            1525,
+            700.0000000000001,
+            143.99999999999997
+          ],
+          "taxonomy_class": "primaryButton"
+        },
+        {
+          "element_id": "dialog_btn_1",
+          "is_focused": true,
+          "normalized_bounds": [
+            0.5052083333333334,
+            0.7060185185185185,
+            0.6875,
+            0.7726851851851851
+          ],
+          "pixel_bounds": [
+            1940.0000000000002,
+            1525,
+            699.9999999999999,
+            143.99999999999997
+          ],
+          "taxonomy_class": "cancelAction"
+        },
+        {
+          "element_id": "dialog_container",
+          "is_focused": false,
+          "normalized_bounds": [
+            0.2916666666666667,
+            0.4930555555555556,
+            0.7083333333333334,
+            0.8097222222222222
+          ],
+          "pixel_bounds": [
+            1120,
+            1065,
+            1600,
+            684
+          ],
+          "taxonomy_class": "alert"
+        }
+      ],
+      "recipe": {
+        "archetype": "action_dialog",
+        "recipe_hash": "f4585d933d70dd313b52c403ffeda620e6eea0896be56d9794bc9c5c5fca1216",
+        "seed": 7,
+        "step_index": 0
+      },
+      "unfocusedPath": "synth-1_unfocused.png",
+      "focusedPath": "synth-1_focused.png",
+      "metadataPath": "synth-1_metadata.json",
+      "unfocusedSHA256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979",
+      "focusedSHA256": "11e4f3fe7d19f63ed4ebbef0c0614bc60525a494de5d9d9189ac72b8d5760911"
+    }
+  ]
+}

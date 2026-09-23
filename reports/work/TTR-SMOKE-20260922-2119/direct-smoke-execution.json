@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "scripts/direct_tvos_capture.py",
+    "--execute",
+    "--catalog",
+    "reports/work/TVGEN/smoke-catalog.json",
+    "--target",
+    "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+    "--endpoint",
+    "http://127.0.0.1:8080",
+    "--output",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/direct-dialog-20260922-2147"
+  ],
+  "exitCode": 0,
+  "seconds": 4.269738292001421
+}

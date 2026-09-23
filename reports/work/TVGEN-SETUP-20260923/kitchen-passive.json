@@ -1,0 +1,116 @@
+{
+  "binding": {
+    "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+    "deviceProfile": "Apple TV 4K (3rd generation)",
+    "endpoint": "http://127.0.0.1:8080",
+    "pid": 66851,
+    "binaries": {
+      "TVTestRigFixture": "021420354b9dd2e11572ed032a03adb2b343af5cc77ec739d9b8116da4d7b128",
+      "TVTestRigFixture.debug.dylib": "46011bb0a95cb007325a64baaab643ad913e0bf46c250a7198caab7b9f31a095"
+    },
+    "xcode": "Xcode 26.6\nBuild version 17F113"
+  },
+  "snapshot": {
+    "startedAt": 1790124471.942677,
+    "finishedAt": 1790124471.948085,
+    "device": {
+      "fixture_instance_id": "C435AFAE-A5B9-4A8F-89DF-668C1CCF0866",
+      "schema_version": 1,
+      "fixture_run_id": "B11EA9EC-A072-48B6-9179-2FF52594EAFA",
+      "model": "Apple TV",
+      "is_bold_text_enabled": false,
+      "os_version": "tvOS 26.5",
+      "is_switch_control_running": false,
+      "is_darker_system_colors_status": false,
+      "app_build": "1",
+      "screen_scale": 2,
+      "is_reduce_motion_enabled": false,
+      "app_version": "1.0",
+      "monotonic_nanoseconds": 201213699259125,
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "is_voice_over_running": false
+    },
+    "scene": {
+      "app_version": "1.0",
+      "defects": [],
+      "elements": [],
+      "focus_sweep_frame_count": 19,
+      "focus_sweep_index": -1,
+      "harvest_challenge_active": false,
+      "is_settled": false,
+      "isSettled": false,
+      "monotonic_nanoseconds": 201213700530375,
+      "observation_diagnostics": {
+        "generation": 158,
+        "measuredIDs": [],
+        "missingIDs": [
+          "sink_cancelAction",
+          "sink_collectionItem",
+          "sink_colorWell",
+          "sink_contextMenu",
+          "sink_destructiveButton",
+          "sink_disclosureGroup",
+          "sink_listRow",
+          "sink_menuButton",
+          "sink_picker",
+          "sink_primaryButton",
+          "sink_refreshControl",
+          "sink_secondaryButton",
+          "sink_segmentedControl",
+          "sink_sidebar",
+          "sink_tabBar",
+          "sink_textField",
+          "sink_toggle",
+          "sink_toolbar"
+        ],
+        "nativeFocusResolved": false,
+        "reason": "no_sample",
+        "requiredIDs": [
+          "sink_cancelAction",
+          "sink_collectionItem",
+          "sink_colorWell",
+          "sink_contextMenu",
+          "sink_destructiveButton",
+          "sink_disclosureGroup",
+          "sink_listRow",
+          "sink_menuButton",
+          "sink_picker",
+          "sink_primaryButton",
+          "sink_refreshControl",
+          "sink_secondaryButton",
+          "sink_segmentedControl",
+          "sink_sidebar",
+          "sink_tabBar",
+          "sink_textField",
+          "sink_toggle",
+          "sink_toolbar"
+        ],
+        "requiredMilliseconds": 150,
+        "sampleCount": 0,
+        "stableMilliseconds": 0
+      },
+      "recipe": {
+        "archetype": "kitchen_sink",
+        "density": "regular",
+        "element_count": 41,
+        "recipe_hash": "073db2c88d49f3603a44640d3c36a39279100b17316d76c7f870a6396eef3d8d",
+        "schema_version": 1,
+        "seed": 7,
+        "step_index": 0,
+        "theme": "light"
+      },
+      "scene_height": 0,
+      "scene_width": 0,
+      "schema_version": 1,
+      "settle_wait_ms": 150,
+      "timestamp": 1790124471.94774
+    }
+  },
+  "diagnosticOnly": true
+}

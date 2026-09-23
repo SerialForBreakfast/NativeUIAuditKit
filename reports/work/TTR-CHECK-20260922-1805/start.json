@@ -1,0 +1,12 @@
+{
+  "command" : "600000 fixture",
+  "durationMilliseconds" : 0,
+  "error" : {
+    "code" : "invalidArgument",
+    "message" : "The command or option is invalid.",
+    "retryable" : false
+  },
+  "requestID" : "EC85C214-60ED-44B4-9F8C-996783B78C73",
+  "schemaVersion" : 1,
+  "success" : false
+}

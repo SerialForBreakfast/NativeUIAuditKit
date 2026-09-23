@@ -1,0 +1,12 @@
+{
+  "stage": "compile",
+  "command": [
+    "xcrun",
+    "coremlc",
+    "compile",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-03-int8/FocusRingDetector.mlpackage",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-03-int8/compiled"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.18315312499180436
+}

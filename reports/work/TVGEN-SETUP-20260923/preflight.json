@@ -1,0 +1,95 @@
+{
+  "binding": {
+    "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+    "deviceProfile": "Apple TV 4K (3rd generation)",
+    "endpoint": "http://127.0.0.1:8080",
+    "pid": 66851,
+    "binaries": {
+      "TVTestRigFixture": "021420354b9dd2e11572ed032a03adb2b343af5cc77ec739d9b8116da4d7b128",
+      "TVTestRigFixture.debug.dylib": "46011bb0a95cb007325a64baaab643ad913e0bf46c250a7198caab7b9f31a095"
+    },
+    "xcode": "Xcode 26.6\nBuild version 17F113"
+  },
+  "snapshot": {
+    "startedAt": 1790124057.991804,
+    "finishedAt": 1790124058.015455,
+    "device": {
+      "is_voice_over_running": false,
+      "is_bold_text_enabled": false,
+      "os_version": "tvOS 26.5",
+      "is_darker_system_colors_status": false,
+      "model": "Apple TV",
+      "app_build": "1",
+      "screen_scale": 2,
+      "app_version": "1.0",
+      "schema_version": 1,
+      "monotonic_nanoseconds": 200799757071958,
+      "is_reduce_motion_enabled": false,
+      "fixture_instance_id": "C435AFAE-A5B9-4A8F-89DF-668C1CCF0866",
+      "fixture_run_id": "B11EA9EC-A072-48B6-9179-2FF52594EAFA",
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "is_switch_control_running": false
+    },
+    "scene": {
+      "app_version": "1.0",
+      "defects": [],
+      "elements": [],
+      "focus_sweep_frame_count": 9,
+      "focus_sweep_index": -1,
+      "harvest_challenge_active": false,
+      "is_settled": false,
+      "isSettled": false,
+      "monotonic_nanoseconds": 200799760428458,
+      "observation_diagnostics": {
+        "generation": 0,
+        "measuredIDs": [],
+        "missingIDs": [
+          "media_card_0",
+          "media_card_1",
+          "media_card_2",
+          "media_card_3",
+          "media_card_4",
+          "media_card_5",
+          "media_card_6",
+          "media_card_7"
+        ],
+        "nativeFocusResolved": false,
+        "reason": "no_sample",
+        "requiredIDs": [
+          "media_card_0",
+          "media_card_1",
+          "media_card_2",
+          "media_card_3",
+          "media_card_4",
+          "media_card_5",
+          "media_card_6",
+          "media_card_7"
+        ],
+        "requiredMilliseconds": 150,
+        "sampleCount": 0,
+        "stableMilliseconds": 0
+      },
+      "recipe": {
+        "archetype": "media_shelf",
+        "density": "regular",
+        "element_count": 8,
+        "recipe_hash": "861f24bb214f83ca3d24dcfb8953285b241eab355b0bb53ad951f054b78e88f0",
+        "schema_version": 1,
+        "seed": 1042,
+        "step_index": 0,
+        "theme": "dark"
+      },
+      "scene_height": 0,
+      "scene_width": 0,
+      "schema_version": 1,
+      "settle_wait_ms": 150,
+      "timestamp": 1790124058.0101562
+    }
+  }
+}

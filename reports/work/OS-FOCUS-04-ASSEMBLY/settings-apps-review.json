@@ -1,0 +1,27 @@
+{
+  "version": "focus-source-review-v1",
+  "manifestSHA256": "3be8be39578cfbc8e6afff4553de0512bbe32b035393f88db90b1360b5b3bd4f",
+  "reviewer": "NUIAK architect \u2014 prior review binding only",
+  "reviewReference": "reports/work/OS-FOCUS-03/review.md",
+  "priorReview": {
+    "path": "reports/work/OS-FOCUS-03/review.md",
+    "sha256": "ed77bdcf312f184ff5d78d7c6d8cd250a5564edb504558407e6b8d8612d2d024"
+  },
+  "priorUse": "development",
+  "relationshipsKnown": true,
+  "trainingApproved": false,
+  "pairs": {
+    "adb3dda15d4a49e180e059dd0985718524395a9ad421c0dda2745ce56fa5251e": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-apps-default-layout-development"
+    },
+    "de94461b78a333bffb4c8afbf4c1f61f7b9d7e966d5ca0930675be46d0524662": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-apps-default-layout-development"
+    },
+    "edccbcfa029372daf0c8beec58ccec5935e6a3354ed776e21bcc209eb9fe42db": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-apps-default-layout-development"
+    }
+  }
+}

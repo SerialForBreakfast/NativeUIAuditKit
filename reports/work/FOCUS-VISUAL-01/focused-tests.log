@@ -1,0 +1,6 @@
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.028s
+
+OK
+{"shipped": {"metrics": {"count": 3, "auroc": 1.0, "0.5": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}, "0.85": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}}, "frameDecisions": [{"frameID": "c1", "decision": "correct", "selectedElementID": "cancel"}], "ambiguityBandCount": 0, "nearThresholdCount": 0}, "fp16": {"metrics": {"count": 3, "auroc": 1.0, "0.5": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}, "0.85": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}}, "frameDecisions": [{"frameID": "c1", "decision": "correct", "selectedElementID": "cancel"}], "ambiguityBandCount": 0, "nearThresholdCount": 0}, "int8": {"metrics": {"count": 3, "auroc": 1.0, "0.5": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}, "0.85": {"tp": 1, "fn": 0, "fp": 0, "tn": 2, "accuracy": 1.0}}, "frameDecisions": [{"frameID": "c1", "decision": "correct", "selectedElementID": "cancel"}], "ambiguityBandCount": 0, "nearThresholdCount": 0}}

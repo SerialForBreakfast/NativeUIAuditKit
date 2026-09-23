@@ -1,5 +1,12 @@
 # Frozen pilot accounting and next-stage proposal
 
+**Superseded execution accounting,2026-09-22 21:46Z:** direct dialog smoke is now
+qualified for development-only intake and shipped baseline. The unchanged pilot
+was attempted:12 recipes completed/30 pairs captured, recipe13 failed at media_shelf
+header coordinate conflict,29 later recipes not attempted. Whole pilot remains
+partial; no manually admitted subset. See [continuation](../TTR-SMOKE-20260922-2119/continuation.md)
+for new evidence/resume. The original zero-execution account below is historical.
+
 Catalog: [pilot-catalog.json](pilot-catalog.json), direct-tvos-catalog-v1.
 Seven archetypes × light/dark/high_contrast × seeds7/19 =42 recipes.
 Regular density, step0; counts2 action_dialog,4 grid_matrix/media_shelf/settings_list/

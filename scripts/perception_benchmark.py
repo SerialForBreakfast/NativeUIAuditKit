@@ -14,7 +14,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = "perception-benchmark-v1"
 PREDICTION_VERSION = "perception-predictions-v1"
-SOURCE_KINDS = {"physicalFixture", "simulatorFixture", "testOnly"}
+SOURCE_KINDS = {"physicalFixture", "simulatorFixture", "testOnly", "reviewedNativeCapture"}
 PARTITIONS = {"development", "validation", "test"}
 LABEL_ORIGINS = {"reviewedVisual", "fixtureGroundTruth"}
 VISIBILITIES = {"visible", "occluded", "clipped", "absent", "unknown"}
@@ -84,6 +84,18 @@ def validate_manifest(document: dict[str, Any]) -> list[dict[str, Any]]:
         labels = case.get("labels")
         if not isinstance(labels, dict) or labels.get("origin") not in LABEL_ORIGINS:
             raise BenchmarkError("unreviewed_or_prediction_labels")
+        if source == "reviewedNativeCapture":
+            if (partition != "development" or case.get("trainingEligible") is not False or
+                case.get("sourceIdentityStatus") != "unverified" or
+                case.get("journeyEvidence") != "unknown-conservatively-grouped" or
+                case.get("privacyReview") != "local-review-cleared" or
+                labels.get("origin") != "reviewedVisual" or
+                not isinstance(case.get("reviewer"), str) or not case["reviewer"]):
+                raise BenchmarkError("native_review_not_development_eligible")
+            if "chevrons" not in labels or "dialog" not in labels:
+                raise BenchmarkError("incomplete_review_modalities")
+            if labels.get("focus") is not None and (not isinstance(labels["focus"], dict) or labels["focus"].get("basis") != "visualAppearanceOnly"):
+                raise BenchmarkError("unsupported_native_focus_claim")
         if labels.get("origin") == "modelPrediction": raise BenchmarkError("prediction_labels_forbidden")
         rows = labels.get("rows", [])
         if not isinstance(rows, list): raise BenchmarkError("invalid_rows")
@@ -137,7 +149,8 @@ def inventory(cases: list[dict[str, Any]]) -> dict[str, Any]:
         if labels.get("dialog"):
             coverage[f"dialog:{labels['dialog']['semantic']}"] += 1
             coverage["dialog:withFocus" if labels["dialog"].get("focusedButtonID") else "dialog:noFocus"] += 1
-        if labels.get("focus"): coverage["focus:observed"] += 1
+        if labels.get("focus"):
+            coverage["focus:reviewedAppearance" if case["sourceKind"] == "reviewedNativeCapture" else "focus:observed"] += 1
     return {"caseCount": len(cases), "sourceKinds": dict(sources), "partitions": dict(partitions), "coverage": dict(coverage)}
 
 

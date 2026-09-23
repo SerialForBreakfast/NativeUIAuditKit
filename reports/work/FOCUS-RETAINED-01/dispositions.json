@@ -1,0 +1,1477 @@
+{
+  "version": "focus-retained-dispositions-v1",
+  "reviewSHA256": "b252570f635379ace8592eaff84231f3ba3137851c0378236b312fadb743b05f",
+  "reviewFileSHA256": "cba881508df9c81e1bd8b19ec0e26dddd8e308ce118f01697d66ff2e77f45691",
+  "trainingEligible": false,
+  "fullPilotComplete": false,
+  "seedComponents": [
+    [
+      7,
+      19
+    ]
+  ],
+  "counts": {
+    "reviewed-development-candidate": 86,
+    "duplicate-pair": 4,
+    "excluded-first-experiment": 48
+  },
+  "pairs": [
+    {
+      "pairID": "aa3807ad749ca25df729d4a6e1ddb82968d734fa4c814379bfb28d0b96e98d40",
+      "catalogIndex": 0,
+      "family": "actionDialog",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "d32b54714ab39c3be52c83e1f47144efe9c620831ba68a952dbb93a3e53b0ea9",
+      "catalogIndex": 0,
+      "family": "actionDialog",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "bb44d514c01c8a7a6210044b50b8aa51d1ffebb3509f4e00af8a20b43a17ff3c",
+      "catalogIndex": 1,
+      "family": "actionDialog",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "6ad83898e456c81a0e4317d28c3e5cce2426d4fc9b3916e625ec11bae4fb92ef",
+      "catalogIndex": 1,
+      "family": "actionDialog",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "79ecd8baf523110815102eca2c9c3fd126b59a130087bb70cb07411b7b5bb56a",
+      "catalogIndex": 2,
+      "family": "actionDialog",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "0f560a6e31db32499cf3e832c2a8b110f0d1ceb570a64c9e590201d2ba6154e5",
+      "catalogIndex": 2,
+      "family": "actionDialog",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "b110e72b0f0112a46d65a7e0bc33d29648d5e4c5185f5c29675919f0a2639eb9",
+      "catalogIndex": 3,
+      "family": "actionDialog",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "6044e347aba4c49d628532ed34c819a18537c5d3ada20a20b168cedb107b7b98",
+      "catalogIndex": 3,
+      "family": "actionDialog",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93",
+      "catalogIndex": 4,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace",
+      "catalogIndex": 4,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "6926135c8e60b2bee600959b86ddc0b964674d8e9596bbd1f0432b538fade6d1",
+      "catalogIndex": 5,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "1a8fc814b30edab6a2f83e7341236ad77ad218d1c9e126b60b2d218b8ab7c253",
+      "catalogIndex": 5,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "7e314347871bb40535438a736dcf928a1a1834704a0e3c2c040b538e44c87227",
+      "catalogIndex": 6,
+      "family": "gridMatrix",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "5ac27466e1995050df5dca33af73a89d7cd4f3d3f67a92435e0c9af6744cf1ff",
+      "catalogIndex": 6,
+      "family": "gridMatrix",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "cc829e6faf82d93d715e414fce52b509507b59ede938c88034179013303b8d67",
+      "catalogIndex": 6,
+      "family": "gridMatrix",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "91f445fde2dbe4c0a5b5288dbf45147f0cda7e4d562fac4f21efebff557f4fe0",
+      "catalogIndex": 7,
+      "family": "gridMatrix",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "dfa6e257f1cd4716b492ff369d8f15b561b3ba809ff3771af530038e553684ae",
+      "catalogIndex": 7,
+      "family": "gridMatrix",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "bdd297fd9a236c92311220d432f45d035888c62a94da9d83fbe44ec1d5ae7d38",
+      "catalogIndex": 7,
+      "family": "gridMatrix",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "9eaa7cc3263d58f653b28367b74e046b43b6eb8eecc7d5a1eb3f6e3eb08e9038",
+      "catalogIndex": 8,
+      "family": "gridMatrix",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "4c4ab05c096c2d4f2c80863dcddf7ead75caafe24c8d5c53fae60ace95eaa11c",
+      "catalogIndex": 8,
+      "family": "gridMatrix",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "923bb85f57413e0e93230938a60b9646b800b8a0cd59e426b97c07f9bc24073a",
+      "catalogIndex": 8,
+      "family": "gridMatrix",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "ff168645b2416f502874821a3e6ec3fb0bf6988d62ee944751e535027d0198ea",
+      "catalogIndex": 9,
+      "family": "gridMatrix",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "ef4aa504a165f09c349ee69d9a38c09f35b1a5f81f2c0ced3ff0b67ce61b7857",
+      "catalogIndex": 9,
+      "family": "gridMatrix",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "f2ea3dc7d7b00a1f581c09e6393de8d5f6bcb6775bf33a749562289c9d5fb9c5",
+      "catalogIndex": 9,
+      "family": "gridMatrix",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "0b49fc2a69b21b0fad2799717c56040520eccbbe3cd8bdd19672d3ba714fa10b",
+      "catalogIndex": 10,
+      "family": "gridMatrix",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "6ef41aa74c2a6db0e25852521aa5f590c69a8ea93c52833ae4fc9b2ac62b4308",
+      "catalogIndex": 10,
+      "family": "gridMatrix",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "68a248292c8c7129689cd73e6cab932a752605a52b2fdda2f95bdea2fb7171b6",
+      "catalogIndex": 10,
+      "family": "gridMatrix",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "9f850bdbed4a044fc05af393cef71692bed1a42a3793691f141a8a0c6ad3de9e",
+      "catalogIndex": 11,
+      "family": "gridMatrix",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "duplicate-pair",
+      "representative": "ff168645b2416f502874821a3e6ec3fb0bf6988d62ee944751e535027d0198ea"
+    },
+    {
+      "pairID": "c4e99d83fdadf947b595ec2237a3ba7f68b86d75e7b3e22827439e31770bf4e6",
+      "catalogIndex": 11,
+      "family": "gridMatrix",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "32e5196375d1e13bf9194a6ab39179efc7f6aaa5c028e8164d057dc055b96284",
+      "catalogIndex": 11,
+      "family": "gridMatrix",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "d1c60a4172c968fd5d705b827e88356c3794131a31acac6ee01479f8adbb6899",
+      "catalogIndex": 12,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "11a028b9c553772697bbd5e0ec23a378b6f53747d6d0b161392331c8ec603119",
+      "catalogIndex": 12,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "c291593361477530205955ee445231c8224297e508954e430ff84f33ede183ea",
+      "catalogIndex": 12,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "e4d599b13f83da61d2a0c604e1595e854333db2f32ae5ffa26f22949c5e348b6",
+      "catalogIndex": 12,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "3a8ce10164ffc62e1d48dc6ba7920681c49e1321a4aca8fec1ec7f320e8221dc",
+      "catalogIndex": 13,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "8a157e9b5d6823f83ae7c5607917ea0b72467eef102ba5ccc6ed691f28ebc8c1",
+      "catalogIndex": 13,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "b8305ccc5ab3c6140a28e248f2efac180e022243438df820d366c7815017ffe0",
+      "catalogIndex": 13,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "98e0f3d9ce8fb3fd1b2a00dd0ce757ed64253c91d044554036f732f230c09248",
+      "catalogIndex": 13,
+      "family": "mediaShelf",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "42f9da8ad084ac6220cd632d733fdb84cde01697c60c3fe122bebd93496abbb5",
+      "catalogIndex": 14,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "77a1197fc4bb6ded0b827daac0bc53625a43319d39feff9d79366707c6dd19cb",
+      "catalogIndex": 14,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "06548cc66664f186c097505914ba06d1ce5ed770703c9b4ebac8a758b7293dc5",
+      "catalogIndex": 14,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "b6b0bda371540c5f387bc46d963756ced75a74a6e48f9ff9f6e5d0ea749520fa",
+      "catalogIndex": 14,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "92c0ca31760cc5cb9c94e76c37b7d75f4fac83152f59cc3df43693ce8aadf96a",
+      "catalogIndex": 15,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "aac6880a3d762e2359a36cf4ae7fb02bb9f2c3d9b7d198df97683cc2a7744e04",
+      "catalogIndex": 15,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "431c4b04ec09d4011552ca8f88eed4805c98e32fdfd589a1e66577a20e44218a",
+      "catalogIndex": 15,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "77a70ee2c8aa0bec4dac72c8e5fa5cf4470d70dd81608434f797a1279eb28633",
+      "catalogIndex": 15,
+      "family": "mediaShelf",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "5133ebadfc2caa8b8feebc0d3d2f1739757212f1aff44d69e8bcf95b1818d559",
+      "catalogIndex": 16,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "3fc3c734daa71207a184a97bc1c8b5a8b27c1d2a8b4413203afb5603a2e6f2af",
+      "catalogIndex": 16,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "df7547c4c3c867a9aaff757b4d45191788b1b4485cb018dc602d46b9dc5e3503",
+      "catalogIndex": 16,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "47d57f31380adeb97e839dc6f6462106f81227092530360d07e5744855c65f1d",
+      "catalogIndex": 16,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "93ac731d17cdba9ba2eb806bf224f45bd9949d3f60d8e34af3ed625ef54ebb96",
+      "catalogIndex": 17,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "duplicate-pair",
+      "representative": "92c0ca31760cc5cb9c94e76c37b7d75f4fac83152f59cc3df43693ce8aadf96a"
+    },
+    {
+      "pairID": "93711b47b5def1e90cb6db8420e80e5d07c58cefaecf8937a83c4ee0139736b2",
+      "catalogIndex": 17,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "944a40e9ac5362978194425cbe50b1ffb10d61dcc2f4e1b9f43e2b9d30708f63",
+      "catalogIndex": 17,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "af00bac29927f49c1899964c9b140441e99e5758fb05a27adfd55ab73a77cbd5",
+      "catalogIndex": 17,
+      "family": "mediaShelf",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "5b195f4d2482b4d6558f78571fed557cc1584bc12e41e650491dc0b8b91f590d",
+      "catalogIndex": 18,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "78d8151119ba4d5330893c724b92f85d150b2732162754b93850d73edb62308b",
+      "catalogIndex": 18,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "f68b2fdada404cadac14d61e237f4700b2710174292e4f52f185c8f551576c55",
+      "catalogIndex": 18,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "f78b3afe9bec02012828c6913e0ac09c67dd97c0a0801ac068524ec170340547",
+      "catalogIndex": 18,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "5f23e8ed8a020b9350fc46a2346861d17fb048354d662a7efc8010f83b692c80",
+      "catalogIndex": 19,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "dd895045da9137dcec2043cb0208753344230355f3fcb8a1943fa6ea371cbef3",
+      "catalogIndex": 19,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "94d0d3969ba69e34a5a56ced1e1a5a72af890d9115ce63acde24cfaf18c3eecf",
+      "catalogIndex": 19,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "c41d8350d50b03a4a592bde65c0f4eab772d9d824a63c226c22b89e99db225b2",
+      "catalogIndex": 19,
+      "family": "settingsList",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "9cc96796071ddeeb2343aaf440a2daebbe0a4a55c7dcdfd8ad0a0a7fea2b316c",
+      "catalogIndex": 20,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "f29fe4278d7d141c7ff31c9908a0b0b5b5e10e7b0f3882931298f95f61dc469c",
+      "catalogIndex": 20,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "37f75509e1c92918a74c74a98c3fff9543f719767dbccea71648e5d26b3fe522",
+      "catalogIndex": 20,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "c4f45c470742a0d21f316437c7b3e5c0a08997df98780dfb3c47952d43d60b91",
+      "catalogIndex": 20,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "e9986a56258a99ffaea43d46f15b8d1eed97e099e9f4faccb53fa26185ce360e",
+      "catalogIndex": 21,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "16699adbaa7373352ef504718cbe46d227c08d1b27e3184c28e4e0f719b175ce",
+      "catalogIndex": 21,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "1a8a5fab0e9250cf9ce2c2bdb5f220ff3dcd1eb0bcf462f392e3c8426fb3218d",
+      "catalogIndex": 21,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "5afef6feb2f6bba33f1b7905e08498d237e90ad752e66e0b0cbf06910a2a5532",
+      "catalogIndex": 21,
+      "family": "settingsList",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "db1ddf80a3c46226d3f575cf4ecd9bfe612e15873c04a317ac88fd3a5ddf941e",
+      "catalogIndex": 22,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "duplicate-pair",
+      "representative": "9cc96796071ddeeb2343aaf440a2daebbe0a4a55c7dcdfd8ad0a0a7fea2b316c"
+    },
+    {
+      "pairID": "6bc36f8bef540ca34111669e30b198f73fb77820f8e736422ec834be18b09920",
+      "catalogIndex": 22,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "6fd9381526d8795a40d9a9f120d2047a9d99ef3cdbfb17651cc5184e050234fe",
+      "catalogIndex": 22,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "dbbf6a0c8f6242412094a3b7cac36287c5903bd0edd43918fa37a761a0f0c63b",
+      "catalogIndex": 22,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "9aac695a46adf80e44ea653821b976b5d469c680a79eaabeb1d7c7a3350cbe98",
+      "catalogIndex": 23,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "duplicate-pair",
+      "representative": "e9986a56258a99ffaea43d46f15b8d1eed97e099e9f4faccb53fa26185ce360e"
+    },
+    {
+      "pairID": "5b5b62004adee81ab1a7dd129f28a5921b75b0315a74ac4e604cf029d45cb96d",
+      "catalogIndex": 23,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "f55c1899f0b0b3f28cf0cc8cfa6225dd96a899f52fe648e0b886bd63d7ce6b8d",
+      "catalogIndex": 23,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "b3df582f9de908f7d70474a6eae0b0ee8f9312a8161ebbaa5a97be9a654dde6d",
+      "catalogIndex": 23,
+      "family": "settingsList",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "919986e601b2856d9d72ae16dfca0081936868383e9c08f93f579c6e820d6866",
+      "catalogIndex": 24,
+      "family": "heroCarousel",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "7e299247f0a2eda1117202fe36ce7c193e2c0ae7306acace47445b083f221448",
+      "catalogIndex": 24,
+      "family": "heroCarousel",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "16dc2da5d4b8ee2edf3fdfba2a433ffc77f690b7f61766486f2877d7dcfa6520",
+      "catalogIndex": 25,
+      "family": "heroCarousel",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "70ac4b28272d8a73dc88fe6d99a54350eccf28f0e6756e3a34eadb1825140656",
+      "catalogIndex": 25,
+      "family": "heroCarousel",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "40e20631b86f520f750b13c6afa826e2023e95d3466052db778c796e07573692",
+      "catalogIndex": 26,
+      "family": "heroCarousel",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "09489ba777b0d3effb5ea3518e22f8728e9937e9308d1b0c2c11fb8c31f6a4ad",
+      "catalogIndex": 26,
+      "family": "heroCarousel",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "3d9530347ab76b9049edeea0232e1d6794bfce9675ba1adc5753d5669fb5ce46",
+      "catalogIndex": 27,
+      "family": "heroCarousel",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "addcf2cd1b1b25f0f3832023ccb304ebd6f7d15c69815e5185da8caf1471c2a7",
+      "catalogIndex": 27,
+      "family": "heroCarousel",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "ab6ef02daa15b386f9e1331326aeaeecb1426c837d89a6e4b98d20442ab7c51d",
+      "catalogIndex": 28,
+      "family": "heroCarousel",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "1da8db87f701f0ede22aa95a8871ec256c4887215f3571487f6079ce517e58c2",
+      "catalogIndex": 28,
+      "family": "heroCarousel",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "ff21ffd230fdf9b4abca5254ec5fd58182dc74d7a39d6c6eb5eed2dafe0ca824",
+      "catalogIndex": 29,
+      "family": "heroCarousel",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "236b1a69c9904193571cef0426d9c26cc558942dfb6c52425cdfb10f9af5a72e",
+      "catalogIndex": 29,
+      "family": "heroCarousel",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "visualReview": "both-production-crops-reviewed",
+      "disposition": "reviewed-development-candidate"
+    },
+    {
+      "pairID": "ed0a9f9e42f95281562acc1e0643f655f29f97996276233083039232c0e5b4d0",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "7d08e4a1f16f79dd275de099cc20f7bbdb65e0443b185191e0741da830ab7b9f",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "99a7baa73bc4dc877815ea246f5a281639f5dfa2f2f94b65e8950606821bb2da",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "eedbdb2daa637a948418352a81d8ff9895d1382370fc4f8e720c252d3584e6ab",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "f08ebd895b3b1ecc9f69df65b066e9afb47abb1bdf617313c258676487514aa1",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "ef17aa092ec9f9a5ba25979ee7883100e517ddde20cbfec4a9d295a03037abc1",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "d87b12a1e644d11fad883524c57267d4f6499c9a788d9e34f6d5da51c9ff94ad",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "8cc93e6bf2a0465f627c77643fd9d0e4d7208953887c778f25a3bbb38aaf71f6",
+      "catalogIndex": 30,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 7,
+      "edgeFlags": [
+        "focused:viewport-edge",
+        "unfocused:viewport-edge"
+      ],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "edge-pair-reviewed"
+    },
+    {
+      "pairID": "a1d61dcac1625d192ec180209fc32fee3ef28e7cbb25af8f472b24a80e4c2e2f",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "6c6d7889f769432034ca22d851d867fb6b179ee0d8e244e6da9f16cb3a6ebff3",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "ea3fb966841b63f680e2f866fd1b44adea08b8508cd8f857caf376baf0505111",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "027541c8d56cc9e8fd104168ceea644f859c54dca95a527e7b926dd47894900d",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "9b02dc9fc103cf9d0620dfd1b2659aeb0a84597a10b508a68cfb587ee23c8859",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "e4dcdfe4fd3cd7d0f7e1a5e8488d75af48a546699669db58fe660caee66ed616",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "031a696676275308796eeca3e8f12038decf059a6ece285fabffea8e24b27270",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "0604fc2dc861f9d7f49080b64ec1da7c230820eba12f1ef26ea2f19cb46117d2",
+      "catalogIndex": 31,
+      "family": "focusMaze",
+      "theme": "light",
+      "seed": 19,
+      "edgeFlags": [
+        "focused:viewport-edge",
+        "unfocused:viewport-edge"
+      ],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "edge-pair-reviewed"
+    },
+    {
+      "pairID": "df0c00a0afe46079bd21431f38a64f8ebec1edaafb06b7fb9f0cf8e9deff1c3d",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "9541158363725e9aee1ffe365d7175fd31941e3fda4156d87abc07879cac8058",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "ab8eb524f47c864a805e2e2c0d45fa24fd15bd5f7a65e6894037a1ba53370989",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "615dd4dc66631e36ba4e614c43d01926b81a0cb77d3d8c89b963d514f64c864e",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "4b8854cedcd33b31881b76329c4a99edc74adf1c285a30c44a2a1d7fe4707e9e",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "b5a1141193cd3e74f1e7e480e8af3cceeba0bae82c8792dd0d23d8e59fbbc378",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "8c6cc4cbaf7a72184e6d5202ed17ec613ade3b2e04353c70c64c2a75f93e1de0",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "142bd4ad75e49732f3c921c5a3989f0e08c11311c8e2a099eb26873f11a60bfd",
+      "catalogIndex": 32,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 7,
+      "edgeFlags": [
+        "focused:viewport-edge",
+        "unfocused:viewport-edge"
+      ],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "edge-pair-reviewed"
+    },
+    {
+      "pairID": "30c7e74c1a933f8d0b5fc9724a0d0429c87045106971bbcde5b1ba4a12d0df2b",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "dc9f487a0ad30ae0fed6437a5c512899036b17000090bd0329ca1b69bd6cda77",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "11125bbf0b7e07d8d2448922c412e940b6e6b1bedc8122a009a65a3d993e124f",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "bb9b4e346eda17f27e4cf6324853f4bd187a957df6ab60628106ee865145e2f9",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "11b7763e2e1724911289ee516338dd3da9421fefc571265d8ef85c40267c1edb",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "e524bbecae45dd83600bc697252979828d2ce28f51fcba5500534b25fd95973e",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "c49af5c9ed18dd7c86719227aac6820b3332bd82168a6beb242b7d421ffeca3e",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "af2d293f22c42bf68f76cedf0e8d5ee935f795da442aae1260218cd1eff379d2",
+      "catalogIndex": 33,
+      "family": "focusMaze",
+      "theme": "dark",
+      "seed": 19,
+      "edgeFlags": [
+        "focused:viewport-edge",
+        "unfocused:viewport-edge"
+      ],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "edge-pair-reviewed"
+    },
+    {
+      "pairID": "61df16ad24bbce2cb7db93bf071111da46c17ead6daaa39245773153aced095f",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "1d31ee4252372524c0214d118e7315d1b2b711b011b6edecc72603ef1a0d43bb",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "b067b7e0e8f2654dbf6057e41317383e707105e4671f86c16d460a719a5186e9",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "e7d6468693aa9eebf543f7d7874e244c891d7fb04561ffc6002ecc5ebec03496",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "546bb83eb4a4dd44e7414f18915d09431ec5f158ac069b93f8283bcffac64d23",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "c31466d031cba2e4c503ca31b2f90c4ba9293fa405be271ff96cfd0ac6afd469",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "251fbad33be1a0064e3deaa8eae33ab2f9b773b34e4fcb50059285b0051fa2eb",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "17fa1171a1b887258c44344b137adbabf824533a7c002f727aac8dbfc930f1f9",
+      "catalogIndex": 34,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 7,
+      "edgeFlags": [
+        "focused:viewport-edge",
+        "unfocused:viewport-edge"
+      ],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "edge-pair-reviewed"
+    },
+    {
+      "pairID": "458f3f5e81e2c0dfe432c292277d0f46aede9cfbbf78a6447c1d6a9a69afe539",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "7b5cd8a8818a3a7657c66d04958f9e8df823f5e2945eedadcaddbf9d7e38fe97",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "63a4040964f34c421d77369eeee9e43449e0b427bd75d349231117aafc521187",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "05036532d7b88c3de3e7998c7f52431fd5533fc0a0a58ed4eaf0917b1c7fc586",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "ce3b087fff733cc51140230fdc2c8f034b0e9d6e6777cf33a5f4826910d2013f",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "87677becb8bf764c35d696aebbcb6a4eb2be180800d1a79b4e9891faa8e8b9e8",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "9874fdd2191c4436d58adece849b3ce6f26c4b413f6028c962cf9cd20eb9e49a",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "not-individually-reviewed"
+    },
+    {
+      "pairID": "90841b2563bc17eacf6ebba97fecf4ad3e18ade9121ddf0a1ba3dc8aa614b0b2",
+      "catalogIndex": 35,
+      "family": "focusMaze",
+      "theme": "highContrast",
+      "seed": 19,
+      "edgeFlags": [
+        "focused:viewport-edge",
+        "unfocused:viewport-edge"
+      ],
+      "disposition": "excluded-first-experiment",
+      "reason": "family viewport-clipping/context review unresolved",
+      "visualReview": "edge-pair-reviewed"
+    }
+  ],
+  "reviewScope": "180 non-maze crops plus 12 maze-edge crops; all 276 crops automatically validated",
+  "limitations": [
+    "No authenticated or atomic frame identity claim",
+    "No independent Fixture validation partition",
+    "Failed source receipts remain failed; no capture completion or data admission is created"
+  ],
+  "dispositionsSHA256": "fbe1009267f38475ede2d95cb9662eabcea445267543fd00cb5965b985c451cc"
+}

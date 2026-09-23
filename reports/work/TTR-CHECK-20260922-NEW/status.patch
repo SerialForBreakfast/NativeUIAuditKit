@@ -1,0 +1,48 @@
+*** Begin Patch
+*** Update File: /Volumes/SharedStatusFile/nuiak/status.yaml
+@@
+-updated_at: '2026-09-22T16:29:01Z'
+-valid_until: '2026-09-22T16:59:01Z'
++updated_at: '2026-09-22T17:26:26Z'
++valid_until: '2026-09-22T17:56:26Z'
+@@
+-  summary: Updated TTR infrastructure ready and ownership clear. User relaunched Fixture; HTTP now healthy. Fresh shelf telemetry has412 samples but native focus still non_view/unmapped_item. Executable bytes unchanged; genuine Fixture training labels remain blocked. Persistent remote remains independently available for qualification.
+-  next: Preserve existing native non-view identity repair request. Independently qualify persistent remote under bounded operation authority and compare corrected crops offline; do not repeat unchanged Fixture smoke or generic storage repair.
++  summary: New local TTR and Fixture binaries observed; dialog source matches published candidate. Eight infrastructure checks ready, ownership clear, HTTP healthy. Passive shelf still has non_view/unmapped_item, outside the dialog-only repair scope. Dialog capture/export/intake remains unqualified; see TTR-CHECK-20260922-NEW.
++  next: Under bounded execution authority qualify the changed two-button dialog through capture/export/intake and postflight. Preserve shelf focus issue separately; no generic storage repair or service restart.
+@@
+-- Installed Fixture matches the historical non_view/unmapped_item failure artifact; no repaired native identity or completed-bundle evidence supplied.
+-- Fresh passive scene confirms nativeFocusResolved=false, unresolved_focus, non_view/unmapped_item with412 samples and97ms sample age; six shelf IDs measured and two missing. No recipe/input/capture was sent by NUA. Earlier HTTP timeout is resolved.
++- Changed dialog candidate is present but reference and both target focus/capture/export/intake have not been tested by NUA on this build.
++- Current passive shelf still reports unresolved non-view focus,294 samples,31ms age,six measured IDs and two missing. This archetype is explicitly outside the dialog repair; no dialog failure is inferred.
+@@
+ packets:
++  TTR-CHECK-20260922-NEW:
++    owner: NUIAK architect
++    updated_at: '2026-09-22T17:26:26Z'
++    valid_until: '2026-09-22T17:56:26Z'
++    state: review
++    summary: Changed Fixture and TTR binaries; dialog source receipt matches. Exact local readiness8/8 and ownership clear. HTTP healthy; shelf native focus unresolved, outside dialog candidate scope. No mutation or capture performed.
++    evidence: [reports/work/TTR-CHECK-20260922-NEW/handoff.md]
++    fixture_launcher_sha256: 5444c9b52a03254ac5afb1a1b7a7731b974b5d3865826e0b9d46a3ebcb8f3a4a
++    fixture_debug_sha256: d2c0af65803bfc86f8b905259e316d3480198392982391115645e0382b8c81d1
++    blockers: [Dialog live capture/export/intake unqualified, Shelf native non-view identity remains unresolved]
++    pending_requests: []
++    acknowledgments:
++    - request_id: tvtestrig-20260922T164925Z-native-dialog-candidate
++      state: received
++      observed_at: '2026-09-22T17:26:26Z'
++      message: Dialog and FocusSweep source hashes match candidate receipt; locally changed installed Fixture observed. Candidate scope understood; passive shelf failure is not a dialog regression. No live smoke run in this diagnostic.
++    - request_id: tvtestrig-20260922T171658Z-offline-benchmark-receipt
++      state: received
++      observed_at: '2026-09-22T17:26:26Z'
++      message: Dataset d16a2043 and archive8cffa213 metadata received; archive transfer and current-helper parity not verified. No implicit benchmark assignment or data receipt claim.
++    next: Bounded authorized dialog smoke; retain independent shelf gap. Producer cleanup guard on its different target does not override current local clear readiness.
++    outcomes:
++      software_verified: not_assessed
++      data_eligible: blocked
++      integration_qualified: not_assessed
++      model_gate_passed: not_assessed
++    integration_scope: Read-only coordinator,8 infrastructure checks and HTTP passed; capture not assessed.
+   TTR-CHECK-20260922-1622:
+*** End Patch

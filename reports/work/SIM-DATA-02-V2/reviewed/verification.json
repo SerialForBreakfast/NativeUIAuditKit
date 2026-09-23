@@ -1,0 +1,52 @@
+[
+  {
+    "label": "swift-build",
+    "command": [
+      "swift",
+      "build",
+      "--disable-automatic-resolution",
+      "--cache-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-cache",
+      "--config-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-config",
+      "--security-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-security"
+    ],
+    "exitCode": 0,
+    "seconds": 0.5978878339810763
+  },
+  {
+    "label": "python",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "-m",
+      "unittest",
+      "test_ttr_sidecar_v2",
+      "test_harvest_bundle_validation",
+      "test_focus_consumer_integration",
+      "test_focus_launch",
+      "test_focus_ring_baseline",
+      "test_direct_tvos_capture",
+      "test_direct_tvos_resume",
+      "-v"
+    ],
+    "exitCode": 0,
+    "seconds": 19.18722700001672
+  },
+  {
+    "label": "swift-test",
+    "command": [
+      "swift",
+      "test",
+      "--disable-automatic-resolution",
+      "--cache-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-cache",
+      "--config-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-config",
+      "--security-path",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/swiftpm-security"
+    ],
+    "exitCode": 0,
+    "seconds": 3.435120749985799
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "version": "focus-development-input-v1",
+  "nativeInput": {
+    "path": "reports/work/OS-FOCUS-04-ASSEMBLY/native-current-input.json",
+    "sha256": "0470918ee91beacc3826ed106feadaf1ae25d23618baf69001f89e18ce3eee43"
+  },
+  "retainedReview": {
+    "path": "reports/work/FOCUS-RETAINED-01/audit/review.json",
+    "sha256": "cba881508df9c81e1bd8b19ec0e26dddd8e308ce118f01697d66ff2e77f45691"
+  },
+  "dispositions": {
+    "path": "reports/work/FOCUS-RETAINED-01/dispositions.json",
+    "sha256": "86846af0ec78f6f0648318f4261bbf96601a4f64f7f4a1729247a3c36304fd6c"
+  },
+  "baseline": {
+    "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+    "sha256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0"
+  },
+  "excludedDialogManifest": {
+    "path": "dataset/focus_ring/direct-dialog-20260922-2147/focus_dataset_manifest.json",
+    "sha256": "82842a477ae99151b2e498258482b1011f723d9cb81764417592e013e8075302"
+  }
+}

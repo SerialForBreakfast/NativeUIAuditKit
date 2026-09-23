@@ -29,7 +29,7 @@ for _k, _v in _os_env_defaults.items():
     os.environ.setdefault(_k, _v)
     Path(_v).mkdir(parents=True, exist_ok=True)
 
-MAX_MB = 5.0
+MAX_BYTES = 5_000_000
 INPUT_SIZE = 256
 
 
@@ -47,10 +47,20 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def dir_size_mb(path: Path) -> float:
-    if path.is_file():
-        return path.stat().st_size / (1024 * 1024)
-    return sum(f.stat().st_size for f in path.rglob("*") if f.is_file()) / (1024 * 1024)
+def package_size_report(path: Path) -> dict:
+    """Count logical bytes without following links; MB is decimal, MiB binary."""
+    if not path.exists() or path.is_symlink():
+        raise ValueError("invalid_package_path")
+    members = [path] if path.is_file() else list(path.rglob("*"))
+    if any(member.is_symlink() for member in members):
+        raise ValueError("symlink_package_member")
+    files = [member for member in members if member.is_file()]
+    if not files:
+        raise ValueError("empty_package")
+    size = sum(member.stat().st_size for member in files)
+    return {"size_bytes": size, "size_mb": size / 1_000_000,
+            "size_mib": size / 1024**2, "size_limit_bytes": MAX_BYTES,
+            "size_gate_version": "decimal-bytes-v1", "size_gate_pass": size <= MAX_BYTES}
 
 
 def export_paths(weights, output, experimental_id):
@@ -172,8 +182,8 @@ def main() -> int:
     mlmodel.save(str(pkg))
     if hashlib.sha256(weights.read_bytes()).hexdigest() != weights_hash:
         raise ValueError("checkpoint_changed_during_export")
-    size_mb = dir_size_mb(pkg)
-    print(f"Exported {pkg} ({size_mb:.2f} MB)")
+    size = package_size_report(pkg)
+    print(f"Exported {pkg} ({size['size_bytes']} bytes, {size['size_mb']:.6f} MB, {size['size_mib']:.6f} MiB)")
 
     report = {
         "generatedAt": utc_now(),
@@ -186,18 +196,17 @@ def main() -> int:
         "method": "torch.jit.trace/FP16/macOS15/RGB255",
         "model_name": model_name,
         "mlpackage": str(pkg),
-        "size_mb": size_mb,
-        "size_gate_pass": size_mb <= MAX_MB,
+        **size,
     }
     report_path = export_dir / "focus_ring_detector_training_report.json"
     report_path.write_text(json.dumps(report, indent=2) + "\n")
 
-    if size_mb > MAX_MB:
-        print(f"ERROR: {pkg.name} is {size_mb:.2f} MB, exceeds {MAX_MB} MB budget")
+    if not size["size_gate_pass"]:
+        print(f"ERROR: {pkg.name} is {size['size_bytes']} bytes, exceeds {MAX_BYTES}-byte budget; experimental output retained")
         return 1
 
     print(
-        f"\nSize gate: {size_mb:.2f} MB <= {MAX_MB} MB PASS\n"
+        f"\nSize gate: {size['size_bytes']} bytes <= {MAX_BYTES} bytes PASS\n"
         "\nNext: compile to .mlmodelc:\n"
         f"  xcrun coremlc compile {pkg} {export_dir}\n"
         "Experimental artifact only. Do not copy into shipped resources.\n"

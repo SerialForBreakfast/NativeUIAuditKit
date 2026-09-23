@@ -1,0 +1,1205 @@
+{
+  "version": "native-os-focus-dataset-v1",
+  "sourceKind": "tvos_simulator_os",
+  "target": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+  "screenID": "settings/root",
+  "lineage": "tvos26.5-settings-root-default-layout-development",
+  "partition": "development",
+  "trainingEligible": false,
+  "visualReview": "pending",
+  "completion": "completed",
+  "sourceRoot": "reports/work/OS-FOCUS-02/root-sweep-02/attachments",
+  "sourceHashes": {
+    "19B643B2-C2CA-4F18-AA78-9543A80DC1A2.json": "f3b7182ad4e72d68ff790822ac73f186cb526d153aabeb2141cf5f415b58aea6",
+    "84042281-67B1-4530-AD96-A4F226181A50.png": "33dd66a0c2460e08d0f51b8eb2677265272592cf1b3d2f6b050c308f915afa4b",
+    "49B7FD3A-335B-415F-A26E-18383CFAF431.png": "856b3bbe4bb7430969bb10228b5f1317cc8b4eea05b76822e1f9abe527b57f54",
+    "8B0E7075-A7DB-427F-A833-9324A2ADCAD1.png": "2c3660a0f672e60b480e0aa32120c18391c4ba1bf99b2998f6b782a6843f3b85",
+    "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json": "6d3eb5de317b869461b0c74c8264e012ecc36b648d181b0a60d2886eb23ef174",
+    "0D9C4967-EF44-4F74-B2C8-63A38745D632.json": "3c2fc1c9e081571439f3e0d3a367d695a8af463b5f365dfb70a673766efff5ce",
+    "A234C7BB-7B9C-42EA-9935-3020924D1592.json": "926269de93dddff24bcc47a52f3834b2c5b4c356bb887d23b674cc1375628a40",
+    "84057F00-0B53-4253-867D-5526E5590B8D.json": "1c77a733916cebc30eaee6c545b12a5595b789eee11f200341bc72a1b9baecba",
+    "1AEDA941-131F-47D5-A349-5DABCB9306E1.json": "96505c5184b0f7a8b764c148c9b876ad74f434fa6a2b16192e0b0ecefd0d15f2",
+    "B8E5C2AE-E866-4FE9-BB2D-A8AB90E23050.json": "f4173a071f82cf70569a5b0544e68e2da962c42ddae352486b7bba169a84ced7",
+    "1F7B940B-ADB3-47DA-A17E-30C7AC0D95A7.json": "ef1cf4e1f2963161c97734c63bfbd98dec9d99b971c3fd757c882c353e02aa83",
+    "6844328E-2E2D-4673-865C-616436260A13.json": "a7d72c22ad0709a5091d20c14bee32b0b7ed7d964142f628e1bb9803b7e95b2a",
+    "DA820993-58B8-42B5-BCA7-F172D66C686D.json": "5a92d1305846c173ed83843123a4c7d9eaa64e2de00745ea3d2e5aff88240cae",
+    "B692FB1C-3B60-4A4D-88B2-B98DFAC2200D.json": "3957a524f284fc12cbd1e4bef7ce9e0650174436d7275a51efb3636aa13d6648",
+    "2441E6DA-2A62-4B7D-8418-CC0D36B3A0A6.png": "e07e35f1eec732ebdc08de9001999d515cbca3eff2b92ced1e377979cf97e279",
+    "EBB24C3B-A125-43B9-8F09-CDE142AEA69E.png": "496d71721a2a47f58f5cc9dae882e1bdc92f26d477e6d0cb5784097552466761",
+    "D6C2E832-9EC7-412D-91FA-2FC86FCF0505.png": "40d2277b081ed2f865bc690e34d5d464f620477ff9a33fa100466e15593e81eb",
+    "99415D42-2924-4C71-BA38-1D698A293353.json": "6348b6d73d28bd22c341ff09d15e7879db3c96f3b76e33fe165d3a07b2d2b7ff",
+    "91A816EC-7D88-49E7-90B1-818CD7E3390F.png": "2767172040af29eca5dc2bc98f6747a598983458fdcd32545786a03342827a8a",
+    "79D82BAA-F1D7-4208-BA39-A8C8FF81C2B0.json": "85c853c999d3353eca620ab935ab7ed58d4438c51e5cfdab2392e474ba612655",
+    "33FD7C46-92A6-44AF-A537-746AEE9A60A5.png": "496d71721a2a47f58f5cc9dae882e1bdc92f26d477e6d0cb5784097552466761",
+    "2D0781A2-C73E-4178-8D4C-EB7AF2DF1924.png": "99f0407d9ebae3c01560eb6531af4724cdd80062e68f0c41653d76f6c610bc89",
+    "544FAF42-EED7-4586-B4F9-1651411DE84C.json": "0fe5da474b4da6da6c96b5329093261486473efa566205cfaa08f4224faa3dde",
+    "EBEBDCBA-F265-477D-8986-3558A3935064.png": "f990b5815014caa119de7da7669d274ca76d5437a8101cb614a8536a0b92e593",
+    "5D2F0B08-F57F-4178-B5B4-30322C8240C6.png": "1832da75ad12480114e78544f2544ef9eff01ace7f06998ea1b1dba211541ed2",
+    "DD6AA62A-13B2-4340-8A01-31CCB5008D05.json": "ca0376e10ea974f33d2e6fd7cdbf2abb2dcab5b97d35766153b5118113159dd5",
+    "EB1E0B59-6BD2-48E4-8A79-8A2A54FF5F6E.json": "001f07f8cabe79b0051013566d3c2347ec458e9023340ba643d7326ce71201ad",
+    "59486556-AD16-4E8B-AF6A-2197FE40528E.json": "794879d3d709acfb98a4746ae0ffa14f49151d24ed6c62b0f0895090c72093f7",
+    "CDCAEAE6-854A-4D2A-AD08-AC03DDE03474.json": "1e1a3bd92573bb2315a58d27621b738e367c363d63649dfccd5045f2acc2adac",
+    "167F6924-15B5-476A-A005-55E2F93AC277.png": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+    "manifest.json": "245755c2c959666931e8ad705a627d8145f8a7a88dddf84603d3ce3a0cfd0a76",
+    "68C38C6A-15C1-431B-9E7C-63B3B8EEC1D0.json": "d57bfa9fa1c00fb5b83053501ef5cf6427c104e91f22d68c50d082c43f26d50c",
+    "FED716B7-6D8F-4C8C-92F0-9D159707D6B6.json": "7615651a5c8fe97e0e189fc911bdeafd0b7d505c697601c7e90cbe82c3ef4995",
+    "CDDB3BAE-9EB9-4341-A5A7-5152480D37CA.png": "cca541ec0330497b9ec089162f124846aa168987bf58bd24b4cb7ff5b0a35fb4",
+    "40BB9ADB-DD70-40C0-B415-CFDC910C53E0.png": "ab5606460b1075e8c365085842da5ef2d8a7a9dd43460a5dac73124c4f0e0e49",
+    "8A63A00A-F9E4-43B0-BB4F-B0FE9936BCCD.png": "e07e35f1eec732ebdc08de9001999d515cbca3eff2b92ced1e377979cf97e279",
+    "FCE5E14A-8A24-4D07-A365-BAB460428176.png": "68573e881bee5e9c4344b4313cf4222545062f2c14d0f3763c9077cba682c508",
+    "03684E28-6E44-44F6-A197-AF246DD4D017.json": "5b4c5353782c3b42361b7cc96909a04e8b9faa9c48d4beda0cc4c2b2acf5d071",
+    "DB453E1E-924A-409F-8DE8-FDFE46703615.json": "91880cc726f5b82358fa53752e361e93ed8058552f3bfa02102c0743c8ee8da2",
+    "F8000647-42BF-44E3-8635-A7B9340FEED8.png": "d8a98a939abf352eef27b2a8138e2f7c8178d7a38abeb9dc1ed1b90c17cd52f1",
+    "37C12C40-88A6-47E6-AA08-AC91D1DC508D.json": "e5e14eac18c516114176767a1ec16597f94938b858646639f879c6fbc89395a5",
+    "6BC7233C-FBF2-4730-BA4D-82FFA8D9A07A.json": "e419db9708139b665dd42c995e7fad7db2e3ebd8b3e39ff03a91f2758e0b0054",
+    "82DA8486-89E8-406E-9D78-2B15F05798D7.png": "dc190989ccce0910b864861a9e3784e9689f6cf9cb26a9e91a69d7f263373c2c",
+    "85E93E59-A372-4D10-BEF1-1EDED86588C7.png": "d66e5db9b36763eb12470c796870125da64a3db57e84e6b29dba5544a0965f83",
+    "F52C6CF1-93E2-4D8D-B456-E4ED7A4CF536.json": "ae71436e9b2f1d5818a592bef7253dd6b96db28ad85868cc70099dd34ce031cf",
+    "E61340F5-55F1-47F3-9E77-BD3BE11DEF73.png": "74ac731d5da0761b70225914ac1a0bb5c59d8691b6d501f69eb1ef6f96b6c887",
+    "5BE40B36-AF64-459C-85B1-8D9623F244BF.png": "e07e35f1eec732ebdc08de9001999d515cbca3eff2b92ced1e377979cf97e279",
+    "6E6C5389-B514-489D-97C8-416F1998F220.png": "f4826b571766476087c0e06f6168ebea75865aba557edeeecc43257d520abe18",
+    "5F7F6D79-9FEF-4C2F-BE1A-E5DFB3AD3CFA.png": "0262d45477bf0205b1a3efc60f9f4c8f14faffe953e3fb3546f488a71ca39ac2",
+    "9E114C4B-2CD1-488B-BA6C-8DB9997AAE23.json": "9c1ab4bf7754e0418c2b5b7c34822265e7a7224d50372dbcc6f08ad316668b58",
+    "32ED544A-E7B9-463B-89F2-F023FCFE3007.txt": "8e44db6953a18db7d7f5524e6ddc29648b5f9f8a755a7d89f6a8efc17e979058",
+    "163C5A17-D03D-4BE6-99FE-411B2DEF5815.png": "2c3660a0f672e60b480e0aa32120c18391c4ba1bf99b2998f6b782a6843f3b85",
+    "9EE91090-FE2E-4897-9917-2241B80AA75D.png": "5130678e577f520ab85d49d095d08ca3e24088c81ebc2487f85ad3d7b917270f",
+    "EE2B48D8-2B49-4070-BC38-9A5D874F4132.png": "2f36a5337760043b758d0e5317f6561bbda1248f7b6046c32a7d4b72273f643d"
+  },
+  "accounting": {
+    "observations": 26,
+    "inputs": 25,
+    "uniqueFrames": 22,
+    "terminal": "inputs=25; boundaries=3; completed=true; settingsForeground=true; originalContextRestored=false",
+    "transitions": [
+      {
+        "source": "75:General",
+        "direction": "up",
+        "destination": "75:General",
+        "observation": "001",
+        "boundary": true,
+        "directionPair": null
+      },
+      {
+        "source": "75:General",
+        "direction": "down",
+        "destination": "75:Profiles and Accounts",
+        "observation": "002",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Profiles and Accounts",
+        "direction": "down",
+        "destination": "75:Video and Audio",
+        "observation": "003",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Video and Audio",
+        "direction": "down",
+        "destination": "75:Screen Saver",
+        "observation": "004",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Screen Saver",
+        "direction": "down",
+        "destination": "75:AirPlay and Apple Home",
+        "observation": "005",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:AirPlay and Apple Home",
+        "direction": "down",
+        "destination": "75:Remotes and Devices",
+        "observation": "006",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Remotes and Devices",
+        "direction": "down",
+        "destination": "75:Accessibility",
+        "observation": "007",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Accessibility",
+        "direction": "down",
+        "destination": "75:Apps",
+        "observation": "008",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Apps",
+        "direction": "down",
+        "destination": "75:Network",
+        "observation": "009",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Network",
+        "direction": "down",
+        "destination": "75:System",
+        "observation": "010",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:System",
+        "direction": "down",
+        "destination": "75:Developer",
+        "observation": "011",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Developer",
+        "direction": "down",
+        "destination": "75:Power Off",
+        "observation": "012",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Power Off",
+        "direction": "down",
+        "destination": "75:Power Off",
+        "observation": "013",
+        "boundary": true,
+        "directionPair": [
+          "down",
+          "down"
+        ]
+      },
+      {
+        "source": "75:Power Off",
+        "direction": "up",
+        "destination": "75:Developer",
+        "observation": "014",
+        "boundary": false,
+        "directionPair": [
+          "down",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Developer",
+        "direction": "up",
+        "destination": "75:System",
+        "observation": "015",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:System",
+        "direction": "up",
+        "destination": "75:Network",
+        "observation": "016",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Network",
+        "direction": "up",
+        "destination": "75:Apps",
+        "observation": "017",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Apps",
+        "direction": "up",
+        "destination": "75:Accessibility",
+        "observation": "018",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Accessibility",
+        "direction": "up",
+        "destination": "75:Remotes and Devices",
+        "observation": "019",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Remotes and Devices",
+        "direction": "up",
+        "destination": "75:AirPlay and Apple Home",
+        "observation": "020",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:AirPlay and Apple Home",
+        "direction": "up",
+        "destination": "75:Screen Saver",
+        "observation": "021",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Screen Saver",
+        "direction": "up",
+        "destination": "75:Video and Audio",
+        "observation": "022",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Video and Audio",
+        "direction": "up",
+        "destination": "75:Profiles and Accounts",
+        "observation": "023",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:Profiles and Accounts",
+        "direction": "up",
+        "destination": "75:General",
+        "observation": "024",
+        "boundary": false,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      },
+      {
+        "source": "75:General",
+        "direction": "up",
+        "destination": "75:General",
+        "observation": "025",
+        "boundary": true,
+        "directionPair": [
+          "up",
+          "up"
+        ]
+      }
+    ],
+    "visitedIdentities": [
+      "75:Accessibility",
+      "75:AirPlay and Apple Home",
+      "75:Apps",
+      "75:Developer",
+      "75:General",
+      "75:Network",
+      "75:Power Off",
+      "75:Profiles and Accounts",
+      "75:Remotes and Devices",
+      "75:Screen Saver",
+      "75:System",
+      "75:Video and Audio"
+    ],
+    "unexploredDirections": [
+      {
+        "source": "75:Accessibility",
+        "direction": "left"
+      },
+      {
+        "source": "75:Accessibility",
+        "direction": "right"
+      },
+      {
+        "source": "75:AirPlay and Apple Home",
+        "direction": "left"
+      },
+      {
+        "source": "75:AirPlay and Apple Home",
+        "direction": "right"
+      },
+      {
+        "source": "75:Apps",
+        "direction": "left"
+      },
+      {
+        "source": "75:Apps",
+        "direction": "right"
+      },
+      {
+        "source": "75:Developer",
+        "direction": "left"
+      },
+      {
+        "source": "75:Developer",
+        "direction": "right"
+      },
+      {
+        "source": "75:General",
+        "direction": "left"
+      },
+      {
+        "source": "75:General",
+        "direction": "right"
+      },
+      {
+        "source": "75:Network",
+        "direction": "left"
+      },
+      {
+        "source": "75:Network",
+        "direction": "right"
+      },
+      {
+        "source": "75:Power Off",
+        "direction": "left"
+      },
+      {
+        "source": "75:Power Off",
+        "direction": "right"
+      },
+      {
+        "source": "75:Profiles and Accounts",
+        "direction": "left"
+      },
+      {
+        "source": "75:Profiles and Accounts",
+        "direction": "right"
+      },
+      {
+        "source": "75:Remotes and Devices",
+        "direction": "left"
+      },
+      {
+        "source": "75:Remotes and Devices",
+        "direction": "right"
+      },
+      {
+        "source": "75:Screen Saver",
+        "direction": "left"
+      },
+      {
+        "source": "75:Screen Saver",
+        "direction": "right"
+      },
+      {
+        "source": "75:System",
+        "direction": "left"
+      },
+      {
+        "source": "75:System",
+        "direction": "right"
+      },
+      {
+        "source": "75:Video and Audio",
+        "direction": "left"
+      },
+      {
+        "source": "75:Video and Audio",
+        "direction": "right"
+      }
+    ],
+    "exhaustiveCoverage": false
+  },
+  "gaps": [],
+  "preprocessing": {
+    "expansion": 0.16,
+    "cropSize": [
+      256,
+      256
+    ],
+    "coordinates": "xywh-top-left-pixels",
+    "resize": "FocusRingClassifier.makeCrop-v1"
+  },
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "modelSHA256": null,
+  "pairs": [
+    {
+      "pair_id": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e",
+      "elementID": "75:Accessibility",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "91A816EC-7D88-49E7-90B1-818CD7E3390F.png",
+          "sha256": "2767172040af29eca5dc2bc98f6747a598983458fdcd32545786a03342827a8a",
+          "bounds": [
+            2120.0,
+            1338.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "F52C6CF1-93E2-4D8D-B456-E4ED7A4CF536.json",
+          "pixelSHA256": "35c750b2b74865a027d8846151cef6f4ec1dfe9b760cc86b08569e224514ae38",
+          "observationName": "007",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e-focused.png",
+          "cropSHA256": "bac48ed69a5a8fddf2c817d343d3763c395e757050a1bdc7a55c2f3c984d2f84"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1338.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e-unfocused.png",
+          "cropSHA256": "6adb0ce96f398390c6f5d23c552c23e08995c1575849d380b81e70f639466cba"
+        }
+      }
+    },
+    {
+      "pair_id": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221",
+      "elementID": "75:AirPlay and Apple Home",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "F8000647-42BF-44E3-8635-A7B9340FEED8.png",
+          "sha256": "d8a98a939abf352eef27b2a8138e2f7c8178d7a38abeb9dc1ed1b90c17cd52f1",
+          "bounds": [
+            2120.0,
+            1018.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "03684E28-6E44-44F6-A197-AF246DD4D017.json",
+          "pixelSHA256": "454937556b07b7162678803c8f2e47e34fa45002193a247b795b8d7fa9ac4ae7",
+          "observationName": "005",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221-focused.png",
+          "cropSHA256": "c6695ffc7475c07b6a0cee35f77f3752b19ba39a11fe120c89d6104ad3d76128"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1018.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221-unfocused.png",
+          "cropSHA256": "0ed612ff279eb7c976bb5f6a988e7f4a21113f0b741d383f3f7d295d60ad6fc9"
+        }
+      }
+    },
+    {
+      "pair_id": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876",
+      "elementID": "75:Apps",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "EE2B48D8-2B49-4070-BC38-9A5D874F4132.png",
+          "sha256": "2f36a5337760043b758d0e5317f6561bbda1248f7b6046c32a7d4b72273f643d",
+          "bounds": [
+            2120.0,
+            1498.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "9E114C4B-2CD1-488B-BA6C-8DB9997AAE23.json",
+          "pixelSHA256": "6498dc2818a526da7669f07be67bea10827101087927b9573d404778e44a0ee7",
+          "observationName": "008",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876-focused.png",
+          "cropSHA256": "91b45e5c6986c13b5d8b28d42a8e18145054fccd2d09388e1a063ebcdea560f2"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1498.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876-unfocused.png",
+          "cropSHA256": "bdf3284a62bcf495455cb683466b5ad5a7ffa2c4939be871fd29b85c6834b503"
+        }
+      }
+    },
+    {
+      "pair_id": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0",
+      "elementID": "75:Developer",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "EBEBDCBA-F265-477D-8986-3558A3935064.png",
+          "sha256": "f990b5815014caa119de7da7669d274ca76d5437a8101cb614a8536a0b92e593",
+          "bounds": [
+            2120.0,
+            1668.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "FED716B7-6D8F-4C8C-92F0-9D159707D6B6.json",
+          "pixelSHA256": "c2c20b1c6be42c00df0c13f0fca2198aff3edee3b7c6f7f5346c8f194085e9ee",
+          "observationName": "011",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0-focused.png",
+          "cropSHA256": "931666612a6379f43e057d6cf3fa3187a10629e7cda4a26ebc893aa279219522"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1978.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0-unfocused.png",
+          "cropSHA256": "1ccd3e0f74fc3de00ee602fda955abfeec1ba3fa09b039b529ed3598be00bec1"
+        }
+      }
+    },
+    {
+      "pair_id": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3",
+      "elementID": "75:General",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            378.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3-focused.png",
+          "cropSHA256": "d97d6b587611693b3151a72468b97bbda546170bc9075ccba046b988b4c82a5f"
+        },
+        "unfocused": {
+          "path": "EBB24C3B-A125-43B9-8F09-CDE142AEA69E.png",
+          "sha256": "496d71721a2a47f58f5cc9dae882e1bdc92f26d477e6d0cb5784097552466761",
+          "bounds": [
+            2120.0,
+            378.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "99415D42-2924-4C71-BA38-1D698A293353.json",
+          "pixelSHA256": "a8d8ea3ab6c6d8a3f7a7907a99d83c9781cd50335283f559152e6cd6cde74884",
+          "observationName": "002",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3-unfocused.png",
+          "cropSHA256": "19e16a1ad0d4bcbbe7f7886fa041bbedb413048eb893da2c81f6240c8b8093b0"
+        }
+      }
+    },
+    {
+      "pair_id": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69",
+      "elementID": "75:Network",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "40BB9ADB-DD70-40C0-B415-CFDC910C53E0.png",
+          "sha256": "ab5606460b1075e8c365085842da5ef2d8a7a9dd43460a5dac73124c4f0e0e49",
+          "bounds": [
+            2120.0,
+            1658.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "544FAF42-EED7-4586-B4F9-1651411DE84C.json",
+          "pixelSHA256": "62e0b130aef7b37150a62cca2067e7d7ac5f99b4981177122ac9ca0a84f7b3a8",
+          "observationName": "009",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69-focused.png",
+          "cropSHA256": "ca7f17e786c16462141536a1cf67748d51d6b041e151e750536360627aad3e0c"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1658.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69-unfocused.png",
+          "cropSHA256": "883ebc077518eaed9475c65068fae940aa22895dfa3ddd5a6887e46413bba85e"
+        }
+      }
+    },
+    {
+      "pair_id": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1",
+      "elementID": "75:Power Off",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "163C5A17-D03D-4BE6-99FE-411B2DEF5815.png",
+          "sha256": "2c3660a0f672e60b480e0aa32120c18391c4ba1bf99b2998f6b782a6843f3b85",
+          "bounds": [
+            2120.0,
+            1826.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "DB453E1E-924A-409F-8DE8-FDFE46703615.json",
+          "pixelSHA256": "58e3c4ddcbb9ee1408ad383422f20fad5f5762557c4341ba31bdd76ccb877954",
+          "observationName": "012",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1-focused.png",
+          "cropSHA256": "7b7e55a849b490f0fb47efdd9f33e820f810cf70976723f0ef65b6645a006e88"
+        },
+        "unfocused": {
+          "path": "49B7FD3A-335B-415F-A26E-18383CFAF431.png",
+          "sha256": "856b3bbe4bb7430969bb10228b5f1317cc8b4eea05b76822e1f9abe527b57f54",
+          "bounds": [
+            2120.0,
+            1988.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "79D82BAA-F1D7-4208-BA39-A8C8FF81C2B0.json",
+          "pixelSHA256": "b545f8bc3448e6726d3a5ca0ff9e8c174f6251a7ace9f133eb64d70bb0298b0f",
+          "observationName": "010",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1-unfocused.png",
+          "cropSHA256": "d24d3f4b2ac43ed8c945d850b056801f26575cb8b1195e19d7f5626fee3ce5ca"
+        }
+      }
+    },
+    {
+      "pair_id": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa",
+      "elementID": "75:Profiles and Accounts",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "EBB24C3B-A125-43B9-8F09-CDE142AEA69E.png",
+          "sha256": "496d71721a2a47f58f5cc9dae882e1bdc92f26d477e6d0cb5784097552466761",
+          "bounds": [
+            2120.0,
+            538.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "99415D42-2924-4C71-BA38-1D698A293353.json",
+          "pixelSHA256": "a8d8ea3ab6c6d8a3f7a7907a99d83c9781cd50335283f559152e6cd6cde74884",
+          "observationName": "002",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa-focused.png",
+          "cropSHA256": "e9bea7ad5a20a56ad74a919def231e83cdcd97ed813f257bd5fd4b5e8123bc7d"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            538.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa-unfocused.png",
+          "cropSHA256": "97c8cf45695a6109a3ac898d88313fcf6ca35120de7094b486e34cdded15b1d8"
+        }
+      }
+    },
+    {
+      "pair_id": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43",
+      "elementID": "75:Remotes and Devices",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "82DA8486-89E8-406E-9D78-2B15F05798D7.png",
+          "sha256": "dc190989ccce0910b864861a9e3784e9689f6cf9cb26a9e91a69d7f263373c2c",
+          "bounds": [
+            2120.0,
+            1178.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "84057F00-0B53-4253-867D-5526E5590B8D.json",
+          "pixelSHA256": "074cd6abcb3e6e4e55dd9ff67d5aa4186587a785d7d8d8ed4d725f81614e97c3",
+          "observationName": "006",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43-focused.png",
+          "cropSHA256": "ba19152f5d78f55fb3589bafd1eda695e4726aa095d771874e78d39cbf3c6c5c"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1178.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43-unfocused.png",
+          "cropSHA256": "caaf5fa315d5f1f8e969694ab8134d79b96c747d25c30bd0622476b4b3f71146"
+        }
+      }
+    },
+    {
+      "pair_id": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b",
+      "elementID": "75:Screen Saver",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "CDDB3BAE-9EB9-4341-A5A7-5152480D37CA.png",
+          "sha256": "cca541ec0330497b9ec089162f124846aa168987bf58bd24b4cb7ff5b0a35fb4",
+          "bounds": [
+            2120.0,
+            858.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "CDCAEAE6-854A-4D2A-AD08-AC03DDE03474.json",
+          "pixelSHA256": "4f3c5135a86c7aa439dff6149cc3d428ccb71ac8a08351b27ec7285dfbbcc9e7",
+          "observationName": "004",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b-focused.png",
+          "cropSHA256": "394c1d290de7c71518f6903c75ac14998851305cdfc294c3a6c2b6f3600708c7"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            858.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b-unfocused.png",
+          "cropSHA256": "8d628548501bbfc1713428d991c7e94dfcc26999236811839df7d0e466992983"
+        }
+      }
+    },
+    {
+      "pair_id": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae",
+      "elementID": "75:System",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "49B7FD3A-335B-415F-A26E-18383CFAF431.png",
+          "sha256": "856b3bbe4bb7430969bb10228b5f1317cc8b4eea05b76822e1f9abe527b57f54",
+          "bounds": [
+            2120.0,
+            1668.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "79D82BAA-F1D7-4208-BA39-A8C8FF81C2B0.json",
+          "pixelSHA256": "b545f8bc3448e6726d3a5ca0ff9e8c174f6251a7ace9f133eb64d70bb0298b0f",
+          "observationName": "010",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae-focused.png",
+          "cropSHA256": "a68d089c286fb0e91699e9d806586f89c37779c57706f51f307c5da79350ac9c"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            1818.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae-unfocused.png",
+          "cropSHA256": "7c6dd84bbecd9455bb10e0e6ad9c88999ffbe2e7777760db1ddb7c047130a69f"
+        }
+      }
+    },
+    {
+      "pair_id": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f",
+      "elementID": "75:Video and Audio",
+      "split": "development",
+      "lineage": "tvos26.5-settings-root-default-layout-development",
+      "frames": {
+        "focused": {
+          "path": "85E93E59-A372-4D10-BEF1-1EDED86588C7.png",
+          "sha256": "d66e5db9b36763eb12470c796870125da64a3db57e84e6b29dba5544a0965f83",
+          "bounds": [
+            2120.0,
+            698.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "1F7B940B-ADB3-47DA-A17E-30C7AC0D95A7.json",
+          "pixelSHA256": "4ceb2928f66bb1d6a61d9dcbd9c8d2886f1b16c6c699909b15d9f0f2c368ac42",
+          "observationName": "003",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f-focused.png",
+          "cropSHA256": "122ca737ebb849532dc198c6e6a3ecbf34dbe6dcbfd5104f31e956ac1537de5f"
+        },
+        "unfocused": {
+          "path": "167F6924-15B5-476A-A005-55E2F93AC277.png",
+          "sha256": "d41689f47f4e3fb4fdf5415a1da937abb8a65392ba51c032bff8848db1b53961",
+          "bounds": [
+            2120.0,
+            698.0,
+            1560.0,
+            132.0
+          ],
+          "sidecar": "90CC53AB-52DB-47C4-BB44-C598D4CE6A23.json",
+          "pixelSHA256": "bd2fdda2343f6ac4146ba7f2ee5e3b6366d76ecde696764cbf0b3232f262c3db",
+          "observationName": "000-start",
+          "labelSource": "nativeAX-capture-interval",
+          "crop": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f-unfocused.png",
+          "cropSHA256": "840d1ae0725baf8cb5de292a381d7b67f8357bc252a857f47baae7b66aac4709"
+        }
+      }
+    }
+  ],
+  "scores": [
+    {
+      "id": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)",
+        "computeUnits": "cpuOnly"
+      }
+    },
+    {
+      "id": "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)",
+        "computeUnits": "cpuOnly"
+      }
+    },
+    {
+      "id": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)",
+        "version": 1
+      }
+    },
+    {
+      "id": "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)",
+        "version": 1
+      }
+    },
+    {
+      "id": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)",
+        "computeUnits": "cpuOnly"
+      }
+    },
+    {
+      "id": "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)",
+        "computeUnits": "cpuOnly"
+      }
+    },
+    {
+      "id": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "host": "Version 26.4.1 (Build 25E253)",
+        "version": 1,
+        "computeUnits": "cpuOnly"
+      }
+    },
+    {
+      "id": "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "host": "Version 26.4.1 (Build 25E253)",
+        "version": 1,
+        "computeUnits": "cpuOnly"
+      }
+    },
+    {
+      "id": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "version": 1,
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)",
+        "version": 1
+      }
+    },
+    {
+      "id": "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "host": "Version 26.4.1 (Build 25E253)",
+        "version": 1
+      }
+    },
+    {
+      "id": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f:focused",
+      "label": 1,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    },
+    {
+      "id": "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f:unfocused",
+      "label": 0,
+      "probability": null,
+      "timing": {
+        "computeUnits": "cpuOnly",
+        "version": 1,
+        "host": "Version 26.4.1 (Build 25E253)"
+      }
+    }
+  ],
+  "binding": "Native AX brackets screenshot interval; not atomic framebuffer attestation",
+  "integration": "Native boxes injected; not detector proposals or model-driven navigation",
+  "manifestSHA256": "4f15a1a77f6341e0139090ee59be7cd5ecf0eb61f6169f0d33a0f33f21148705"
+}

@@ -25,6 +25,21 @@ def preflight(dataset, name, epochs=30, batch=64, lr=3e-4, model="mobilenetv4_co
     try:
         dataset = local(dataset)
         document = json.loads((dataset / "focus_dataset_manifest.json").read_text())
+        if document.get("version")=="focus-development-experiment-v1":
+            raise FocusDataError("development_protocol_requires_explicit_experiment_mode")
+        if document.get("version") == "focus-mixed-assembly-v1":
+            from focus_mixed_assembly import load, readiness
+            document = load(dataset / "focus_dataset_manifest.json")
+            ready = readiness(document, dataset)
+            return {"formatVersion":"focus-training-preflight-v1", "configurationValid":not config_errors,
+                    "launchEligible":not config_errors and not ready["blockers"], "configurationErrors":config_errors,
+                    **ready, "manifestSHA256":digest(document), "assemblySHA256":document["assemblySHA256"],
+                    "output":str(out.relative_to(ROOT)), "sampling":document["sampling"],
+                    "baseline":document["inputs"]["baseline"],
+                    "configuration":{"epochs":epochs,"batch":batch,"lr":lr,"model":model,
+                        "initialization":"fresh-random","seed":42,"inputSize":256,
+                        "augmentation":"horizontal-flip-0.5","testDuringTraining":False},
+                    "executionAuthorized":False,"releaseEligible":False}
         rows = validate_manifest(document, dataset)
         if document.get("version") != "1.3":
             blockers.append("runtime_crop_parity_required")
@@ -38,7 +53,7 @@ def preflight(dataset, name, epochs=30, batch=64, lr=3e-4, model="mobilenetv4_co
         # Explicit maintainer review, bound to immutable membership, not extraction success.
         if not isinstance(approval, dict) or approval.get("membershipSHA256") != digest(document["pairs"]) or not approval.get("reviewReference") or approval.get("approved") is not True:
             blockers.append("missing_corpus_approval")
-    except (OSError, ValueError, FocusDataError, ReadinessError) as error:
+    except (OSError, ValueError, KeyError, TypeError, FocusDataError, ReadinessError) as error:
         blockers.append(str(error))
     return {"formatVersion": "focus-training-preflight-v1", "configurationValid": not config_errors,
             "launchEligible": not config_errors and not blockers, "configurationErrors": config_errors,

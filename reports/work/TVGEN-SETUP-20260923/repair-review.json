@@ -1,0 +1,17 @@
+{
+  "version": "direct-tvos-repair-review-v1",
+  "accepted": true,
+  "failedReceiptSHA256": "7e419d25e299cbdf0e7b3993729c0acf4fd71ee13e0c7896b49bb5cd76f77ff2",
+  "replacementBinaries": {
+    "TVTestRigFixture": "021420354b9dd2e11572ed032a03adb2b343af5cc77ec739d9b8116da4d7b128",
+    "TVTestRigFixture.debug.dylib": "46011bb0a95cb007325a64baaab643ad913e0bf46c250a7198caab7b9f31a095"
+  },
+  "targetPlanSourceHashes": {
+    "FixtureRecipe.swift": "6b7eaa81084f27440a2af1ef9b418e8df147a87fadad96d92d9b6e55d7b8ed77",
+    "ProceduralSceneBuilder.swift": "454e42b0e0430ad228cdfbab250f2cd65cd6b424ce40bdf6769b92ecf058992a",
+    "KitchenSinkCatalog.swift": "79834e00b646132bcdd62b5831165bfb84b45746ad724feefc9140f450e9ac85",
+    "FocusMazeGraph.swift": "be9e2d2455d1a7bd2e3598b0f70a0081b274eb61db7f4d1912ed97a96f34aaca"
+  },
+  "report": "reports/work/TVGEN-SETUP-20260923/repair-review.md",
+  "reportSHA256": "6cd157a1404a6faecc579cc9390a4f3fa8d54cfc2084d3c79770a2d1f431e1b1"
+}

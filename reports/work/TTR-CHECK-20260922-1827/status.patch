@@ -1,0 +1,44 @@
+*** Begin Patch
+*** Update File: /Volumes/SharedStatusFile/nuiak/status.yaml
+@@
+-updated_at: '2026-09-22T18:08:00Z'
+-valid_until: '2026-09-22T18:38:00Z'
++updated_at: '2026-09-22T18:30:00Z'
++valid_until: '2026-09-22T19:00:00Z'
+@@
+-  summary: Changed TTR comparator passes the dialog reference stage; jobE5BCE43B now fails first target native focus handoff. Requested dialog_btn_0 but actual native focus remains reference, geometry complete and samples fresh. Zero completed bundle. Postflight HTTP healthy,8 checks ready, ownership clear.
+-  next: Producer repair and qualify reference-to-button native focus handoff; see TTR-CHECK-20260922-1805. No unchanged retry, storage repair or reset. Independent NUA lanes remain available.
++  summary: Updated TTR/Fixture verified locally; job675C0665 fails reference geometry before target handoff. Only dialog_container measured; both button IDs missing despite fresh native reference focus. Zero completed bundle. Postflight HTTP healthy,8 checks ready, ownership clear.
++  next: Producer qualify full recipe/capture path with both button geometries at reference and focused states; see TTR-CHECK-20260922-1827. No unchanged retry or reset. Independent NUA lanes remain available.
+@@
+-- First target focus_mismatch with stableMilliseconds0; neither focused target capture nor export/intake is qualified. Previous reference bracket blocker no longer reproduced.
++- Reference missing_geometry for dialog_btn_0 and dialog_btn_1 on changed Fixture; target handoff not reached, no completed export/intake. Producer direct-transition success on another simulator is narrower evidence.
+@@
+ packets:
++  TTR-CHECK-20260922-1827:
++    owner: NUIAK architect
++    updated_at: '2026-09-22T18:30:00Z'
++    valid_until: '2026-09-22T19:00:00Z'
++    state: blocked
++    summary: Both binaries changed, candidate source852f341d matches producer receipt. Job675C0665 fails reference missing_geometry; only container measured, both buttons absent. Target handoff not reached. Postflight healthy/ownership clear.
++    evidence: [reports/work/TTR-CHECK-20260922-1827/handoff.md]
++    job_id: 675C0665-7691-4DD0-9197-ADF1E53D8F85
++    blockers:
++      - Generation2, referenceFocused true,36 fresh samples at failure and347 postflight. Missing dialog_btn_0 and dialog_btn_1, stableMilliseconds0, sweep index-1. No completed bundle or eligible pairs.
++    pending_requests:
++      - id: nuiak-20260922T183000Z-dialog-reference-geometry
++        to: tvtestrig
++        state: awaiting_acknowledgment
++        request: Diagnose missing native geometry for both dialog buttons on consumer recipe path (2 elements, high_contrast, regular, seed7, step0; local tvOS26.5 at1920x1080points scale2). Instrument attachment/IDs/bounds/clipping/projection exclusion reasons rather than infer the cause. Qualify full recipe-to-reference-to-both-target-captures with completed receipt/index, PNG alignment and postflight; direct focus transitions on another simulator are insufficient. Preserve true native labels and admission gates. No generic reset or unchanged retries.
++    acknowledgments:
++      - request_id: tvtestrig-20260922T182500Z-native-dialog-candidate
++        state: blocked
++        observed_at: '2026-09-22T18:30:00Z'
++        message: Received repair receipt; source852f341d and changed installed Fixture verified. One local smoke failed missing button geometry at reference before handoffs. Producer transition proof acknowledged as narrower scope.
++    next: Producer reference-geometry repair/full-pipeline evidence, then changed-build consumer qualification. No broad harvest or training.
++    outcomes:
++      software_verified: not_assessed
++      data_eligible: blocked
++      integration_qualified: failed
++      model_gate_passed: not_assessed
+*** End Patch

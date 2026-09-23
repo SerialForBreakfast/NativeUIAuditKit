@@ -200,11 +200,13 @@ class ConsumerTests(unittest.TestCase):
         # Small real-format producer bundle; the evidence artifact is deliberately separate.
         x, y, w, h = f["bounds"]
         meta = {"id": "sample", "focused_element_id": "e", "is_settled": True,
+                "focused_png": f["path"], "unfocused_png": pair["frames"]["unfocused"]["path"],
                 "recipe": {"archetype": "grid_matrix", "theme": "light", "seed": 1, "recipe_hash": "hash"},
                 "elements": [{"element_id": "e", "taxonomy_class": "collectionItem", "is_focused": True,
                               "pixel_bounds": f["bounds"], "normalized_bounds": [x/40, y/30, (x+w)/40, (y+h)/30]}]}
         (self.raw / "meta.json").write_text(json.dumps(meta))
         row = {"id": "sample", "split": "training", "expectedFocus": "e", "box": f["bounds"],
+               "path": f["path"], "sha256": f["sha256"],
                "metadata": {"focusedPath": f["path"], "unfocusedPath": pair["frames"]["unfocused"]["path"], "metadataPath": "meta.json"}}
         for name, value in (("manifest.json", [row]), ("training.json", [row]), ("calibration.json", []), ("held-out.json", [])):
             (self.raw / name).write_text(json.dumps(value))

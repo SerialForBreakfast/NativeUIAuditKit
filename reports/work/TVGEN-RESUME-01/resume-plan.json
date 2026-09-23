@@ -1,0 +1,952 @@
+{
+  "version": "direct-tvos-resume-plan-v1",
+  "purpose": "planning-only",
+  "executionAllowed": false,
+  "trainingEligible": false,
+  "sourceReceipt": "dataset/tvos_captures/direct-pilot-20260922-2152/failed.json",
+  "sourceReceiptSHA256": "7e419d25e299cbdf0e7b3993729c0acf4fd71ee13e0c7896b49bb5cd76f77ff2",
+  "sourceEvidenceKind": "fixture-native-capture",
+  "catalogSHA256": "444d03ece053cce32710260edc6da79c044975d9dfdc9178e57e60cb1a7035a7",
+  "sourceTarget": {
+    "simulatorUDID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+    "deviceProfile": "Apple TV 4K (3rd generation)",
+    "endpoint": "http://127.0.0.1:8080",
+    "pid": 20149,
+    "binaries": {
+      "TVTestRigFixture": "9bbea7ae5e2d413669c547f96d9025947d1747a3189bc21e32a1e037f8ae4bbb",
+      "TVTestRigFixture.debug.dylib": "9bd3859b9f71e6255bba0a3d64cfdd31cad323a67d70416826330c1414fa70f0"
+    },
+    "xcode": "Xcode 26.6\nBuild version 17F113"
+  },
+  "sourceRunnerSHA256": "ece4240b80e520090964eb140d8dc43874953e632c95b8b0663961e550feb59f",
+  "verifiedPrefixRecipes": 12,
+  "verifiedPrefixPairs": 30,
+  "remainingRecipes": [
+    {
+      "catalogIndex": 12,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 13,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 14,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 15,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 16,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 17,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 18,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 19,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 20,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 21,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 22,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 23,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 24,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 25,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 26,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 27,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 28,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 29,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 30,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 31,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 32,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 33,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 34,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 35,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 36,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 37,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 38,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 39,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 40,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 41,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    }
+  ],
+  "remainingPairs": 216,
+  "admittedPairs": 0,
+  "postflight": {
+    "responsive": true,
+    "device": {
+      "is_switch_control_running": false,
+      "is_voice_over_running": false,
+      "app_build": "1",
+      "app_version": "1.0",
+      "monotonic_nanoseconds": 190258441742541,
+      "is_bold_text_enabled": false,
+      "schema_version": 1,
+      "is_reduce_motion_enabled": false,
+      "model": "Apple TV",
+      "screen_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "os_version": "tvOS 26.5",
+      "fixture_instance_id": "8931FA37-07EB-43E9-9172-81A9D9170349",
+      "is_darker_system_colors_status": false,
+      "fixture_run_id": "66D156BB-050F-4FA7-802E-05EF543CECBE",
+      "screen_scale": 2
+    },
+    "scene": {
+      "app_version": "1.0",
+      "defects": [],
+      "elements": [
+        {
+          "accessibility_traits": [
+            "isHeader",
+            "isStaticText"
+          ],
+          "element_id": "header_shelf",
+          "id": "header_shelf",
+          "is_focused": false,
+          "native_pixel_rect": [
+            40,
+            120,
+            600,
+            48
+          ],
+          "normalized_bounds": [
+            0.020833333333333332,
+            0.1111111111111111,
+            0.3333333333333333,
+            0.15555555555555556
+          ],
+          "normalized_rect": [
+            0.020833333333333332,
+            0.1111111111111111,
+            0.3333333333333333,
+            0.15555555555555556
+          ],
+          "pixel_bounds": [
+            40,
+            120,
+            600,
+            48
+          ],
+          "taxonomy_class": "label",
+          "taxonomy_role": "label",
+          "taxonomyRole": "label",
+          "text_content": "Featured Catalog (7)"
+        },
+        {
+          "accessibility_traits": [
+            "isButton"
+          ],
+          "element_id": "media_card_0",
+          "id": "media_card_0",
+          "is_focused": false,
+          "native_pixel_rect": [
+            240,
+            1001,
+            560,
+            812
+          ],
+          "normalized_bounds": [
+            0.0625,
+            0.4634259259259259,
+            0.20833333333333334,
+            0.8393518518518519
+          ],
+          "normalized_rect": [
+            0.0625,
+            0.4634259259259259,
+            0.20833333333333334,
+            0.8393518518518519
+          ],
+          "pixel_bounds": [
+            240,
+            1001,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem",
+          "taxonomy_role": "collectionItem",
+          "taxonomyRole": "collectionItem",
+          "text_content": "Starlight Express"
+        },
+        {
+          "accessibility_traits": [
+            "isButton"
+          ],
+          "element_id": "media_card_1",
+          "id": "media_card_1",
+          "is_focused": false,
+          "native_pixel_rect": [
+            848,
+            1001,
+            560,
+            812
+          ],
+          "normalized_bounds": [
+            0.22083333333333333,
+            0.4634259259259259,
+            0.36666666666666664,
+            0.8393518518518519
+          ],
+          "normalized_rect": [
+            0.22083333333333333,
+            0.4634259259259259,
+            0.36666666666666664,
+            0.8393518518518519
+          ],
+          "pixel_bounds": [
+            848,
+            1001,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem",
+          "taxonomy_role": "collectionItem",
+          "taxonomyRole": "collectionItem",
+          "text_content": "Chrono Trigger"
+        },
+        {
+          "accessibility_traits": [
+            "isButton"
+          ],
+          "element_id": "media_card_2",
+          "id": "media_card_2",
+          "is_focused": false,
+          "native_pixel_rect": [
+            1456,
+            1001,
+            560,
+            812
+          ],
+          "normalized_bounds": [
+            0.37916666666666665,
+            0.4634259259259259,
+            0.525,
+            0.8393518518518519
+          ],
+          "normalized_rect": [
+            0.37916666666666665,
+            0.4634259259259259,
+            0.525,
+            0.8393518518518519
+          ],
+          "pixel_bounds": [
+            1456,
+            1001,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem",
+          "taxonomy_role": "collectionItem",
+          "taxonomyRole": "collectionItem",
+          "text_content": "Velvet Storm"
+        },
+        {
+          "accessibility_traits": [
+            "isButton"
+          ],
+          "element_id": "media_card_3",
+          "id": "media_card_3",
+          "is_focused": false,
+          "native_pixel_rect": [
+            2064,
+            1001,
+            560,
+            812
+          ],
+          "normalized_bounds": [
+            0.5375,
+            0.4634259259259259,
+            0.6833333333333333,
+            0.8393518518518519
+          ],
+          "normalized_rect": [
+            0.5375,
+            0.4634259259259259,
+            0.6833333333333333,
+            0.8393518518518519
+          ],
+          "pixel_bounds": [
+            2064,
+            1001,
+            560,
+            812
+          ],
+          "taxonomy_class": "collectionItem",
+          "taxonomy_role": "collectionItem",
+          "taxonomyRole": "collectionItem",
+          "text_content": "Neon Nights"
+        }
+      ],
+      "focus_observation": {
+        "generation": 64,
+        "geometrySource": "uikit_window_converted_bounds",
+        "plannedFocusIDs": [
+          "media_card_0",
+          "media_card_1",
+          "media_card_2",
+          "media_card_3"
+        ],
+        "source": "uikit_focus_system",
+        "verified": true
+      },
+      "focus_sweep_frame_count": 5,
+      "focus_sweep_index": -1,
+      "harvest_challenge_active": false,
+      "is_settled": true,
+      "isSettled": true,
+      "monotonic_nanoseconds": 190258442673791,
+      "observation_diagnostics": {
+        "generation": 64,
+        "measuredIDs": [
+          "media_card_0",
+          "media_card_1",
+          "media_card_2",
+          "media_card_3"
+        ],
+        "missingIDs": [],
+        "nativeFocusResolved": true,
+        "nativeProbe": {
+          "exclusionReasons": {
+            "header_shelf": "unattached_or_hidden"
+          },
+          "focusedItemKind": "view",
+          "focusSystemAvailable": true,
+          "geometryAvailable": true,
+          "geometrySource": "uikit_window_converted_bounds",
+          "referenceAttached": true,
+          "referenceFocusable": true,
+          "referenceFocused": true,
+          "resolution": "identifier"
+        },
+        "reason": "ready",
+        "requiredIDs": [
+          "media_card_0",
+          "media_card_1",
+          "media_card_2",
+          "media_card_3"
+        ],
+        "requiredMilliseconds": 150,
+        "sampleAgeMilliseconds": 97.32295831781812,
+        "sampleCount": 103,
+        "sampledGeneration": 64,
+        "stableMilliseconds": 10200.450833333889
+      },
+      "recipe": {
+        "archetype": "media_shelf",
+        "density": "regular",
+        "element_count": 4,
+        "recipe_hash": "9711cbbdfd53de280d2cc471f82498c4a54784e35dc63bf1dcf5ff02a29c16cd",
+        "schema_version": 1,
+        "seed": 7,
+        "step_index": 0,
+        "theme": "light"
+      },
+      "scene_height": 2160,
+      "scene_width": 3840,
+      "schema_version": 1,
+      "settle_wait_ms": 150,
+      "timestamp": 1790113516.787257
+    }
+  },
+  "resumeRequirements": [
+    "changed producer evidence for retained failure",
+    "fresh exact-target readiness and authority",
+    "reviewed multi-run lineage/merge contract",
+    "full original catalog accounting and visual review before admission"
+  ]
+}

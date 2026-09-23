@@ -119,6 +119,15 @@ Continue SIM-DATA-02 independently. **Next:** SIM-DATA-03 after both prerequisit
 
 ## SIM-DATA-02 — Simulator-aware consumer and dataset contracts
 
+**Observed compatibility case,2026-09-22:** retained completed job transfer works
+through bounded read-job IPC. Numeric Swift Date metadata is now supported without
+changing its assurance. Resolved theme and capture-interval native observations must
+survive producer sidecar serialization; requested recipe values cannot replace them.
+See [genuine intake and independent pilot](../../reports/work/TTR-SMOKE-20260922-2119/continuation.md).
+Direct v1.4 dialog development intake is qualified independently. Its broader pilot
+stops on media header coordinate inconsistency; do not promote partial output or
+drop noninteractive annotations to bypass the geometry gate.
+
 **Parent:** TASK-SIM-DATA-01. **Inputs:** accepted P4-A/FR-A implementations, current
 producer contracts and deterministic small image/metadata fixtures. No live runtime.
 **Files:** targeted changes to `scripts/harvest_bundle_validation.py`,

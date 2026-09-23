@@ -271,5 +271,74 @@ class DirectTests(unittest.TestCase):
         with patch.object(d, "run", side_effect=[inv, bundle, "1", "/wrong/process"]):
             with self.assertRaisesRegex(FocusDataError, "wrong_endpoint_target"): d.bind_target(target, "http://127.0.0.1:8080")
 
+    def failed_prefix(self):
+        self.plan = d.catalog()
+        self.recipe = self.plan["recipes"][0]
+        doc = self.document()
+        doc["state"] = "failed"
+        doc["error"] = "test-only failure after complete recipe"
+        return doc
+
+    def test_resume_plan_real_cli_deterministic_read_only(self):
+        doc = self.failed_prefix()
+        receipt = self.root/"failed.json"
+        d.write_json(receipt, doc)
+        before = {p.name: p.read_bytes() for p in self.root.iterdir()}
+        a = d.resume_plan(receipt)
+        self.assertEqual(a, d.resume_plan(receipt))
+        self.assertEqual(a["verifiedPrefixPairs"], 2)
+        self.assertEqual(a["remainingPairs"], 244)
+        self.assertEqual(len(a["remainingRecipes"]), 41)
+        self.assertEqual(a["remainingRecipes"][0]["catalogIndex"], 1)
+        self.assertFalse(a["executionAllowed"])
+        self.assertFalse(a["trainingEligible"])
+        self.assertEqual(a["admittedPairs"], 0)
+        self.assertEqual(before, {p.name: p.read_bytes() for p in self.root.iterdir()})
+        with self.assertRaisesRegex(FocusDataError, "incomplete_capture"):
+            d.validate_capture(doc, self.root)
+        out = self.root/"plan.json"
+        args = [sys.executable, str(ROOT/"scripts/direct_tvos_capture.py"), "--resume-plan", str(receipt), "--output", str(out)]
+        result = subprocess.run(args, capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(out.read_text()), a)
+        self.assertEqual(subprocess.run(args, capture_output=True, timeout=30).returncode, 2)
+        with self.assertRaises(FocusDataError): d.validate_catalog(a)
+
+    def test_resume_rejects_bad_membership_health_counts_and_partial_recipe(self):
+        doc = self.failed_prefix()
+        variants = []
+        for key, value in (("postflight", {"responsive": False}), ("acceptedPairs", 99),
+                           ("targetPlanSourceHashes", {}), ("state", "completed")):
+            bad = copy.deepcopy(doc); bad[key] = value; variants.append(bad)
+        bad = copy.deepcopy(doc); bad["recipes"][0]["recipe"]["seed"] = 999; variants.append(bad)
+        bad = copy.deepcopy(doc); bad["recipes"][0]["frames"].pop(); variants.append(bad)
+        bad = copy.deepcopy(doc); bad["recipes"].append(copy.deepcopy(bad["recipes"][0])); variants.append(bad)
+        for index, bad in enumerate(variants):
+            with self.subTest(index=index):
+                receipt = self.root/f"failed-{index}.json"; d.write_json(receipt, bad)
+                with self.assertRaises(FocusDataError): d.resume_plan(receipt)
+
+    def test_resume_rejects_changed_pixels_sidecars_and_symlinks(self):
+        doc = self.failed_prefix(); receipt = self.root/"failed.json"; d.write_json(receipt, doc)
+        link = self.root/"alias.json"; link.symlink_to(receipt)
+        with self.assertRaisesRegex(FocusDataError, "symlink_input"): d.resume_plan(link)
+        sidecar = self.root/"ref.png.json"; original = sidecar.read_bytes()
+        sidecar.write_text("{}")
+        with self.assertRaisesRegex(FocusDataError, "changed_frame_sidecar"): d.resume_plan(receipt)
+        sidecar.write_bytes(original)
+        (self.root/"a.png").write_bytes(b"bad")
+        with self.assertRaises(FocusDataError): d.resume_plan(receipt)
+
+    def test_settle_timeout_names_last_failed_element_without_retrying_mutation(self):
+        fixture = d.Fixture("http://127.0.0.1:8080")
+        snapshot = self.frame("bad-geometry.png", None)["before"]
+        snapshot["scene"]["elements"][0]["normalized_bounds"] = [.2,.2,.6,.6]
+        with patch.object(fixture, "snapshot", return_value=snapshot) as observed, \
+                patch.object(d.time, "monotonic", side_effect=[0, 0, 0, 11]), patch.object(d.time, "sleep"):
+            with self.assertRaisesRegex(FocusDataError, "settle_timeout: coordinate_conflict: dialog_btn_0"):
+                fixture.settle(None, self.recipe)
+        self.assertEqual(observed.call_count, 1)
+        self.assertIsNone(fixture.deadline)
+
 
 if __name__ == "__main__": unittest.main()

@@ -1,0 +1,1 @@
+{"command": ["lsof", "-nP", "-iTCP:8080", "-sTCP:LISTEN"], "exitCode": 0, "seconds": 0.04764649999560788}

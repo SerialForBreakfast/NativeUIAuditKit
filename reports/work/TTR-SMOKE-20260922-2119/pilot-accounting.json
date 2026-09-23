@@ -1,0 +1,11 @@
+{
+  "plannedRecipes": 42,
+  "completeRecipes": 12,
+  "failedRecipeIndex": 13,
+  "unattemptedRecipes": 29,
+  "capturedPairs": 30,
+  "admittedPilotPairs": 0,
+  "specificFailedPredicate": "coordinate_conflict",
+  "postflightResponsive": true,
+  "errorEvidence": "dataset/tvos_captures/direct-pilot-20260922-2152/failed.json"
+}

@@ -1,0 +1,490 @@
+{
+  "version": "focus-visual-protocol-v1",
+  "manifest": "reports/work/PER-DATA/manifest.json",
+  "manifestSHA256": "0b49ca966886ee79956f4b285350b82ed502a58e320a30255cafd6ea5ddb6c94",
+  "models": {
+    "shipped": {
+      "path": "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/FocusRingDetector.mlmodelc",
+      "sha256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+      "metadataSHA256": "cf847ab2dd843c692cd2073530606d74ecd3efd6274544261eb61a76fa6682ab",
+      "outputs": [
+        "confidence",
+        "is_focused_prob"
+      ]
+    },
+    "fp16": {
+      "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/compiled/FocusRingDetector.mlmodelc",
+      "sha256": "a669a4111e145d9c57127e71ad6c6abe7268e16fbc013632094f84ffb44dcde9",
+      "metadataSHA256": "f49738b30076b8ed02787c00e7c613ae570cdbf0c4edd21a157abf83f082c3db",
+      "outputs": [
+        "confidence",
+        "is_focused_prob"
+      ]
+    },
+    "int8": {
+      "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-03-int8/compiled/FocusRingDetector.mlmodelc",
+      "sha256": "a02b3409ba51c5ade491c1bd4301304a640441a9a2296a412514137076baa928",
+      "metadataSHA256": "bb24e4b02ea952b437bb273b830b7ad7a0104e8ae63dc56c14223c2c58f59ee8",
+      "outputs": [
+        "confidence",
+        "is_focused_prob"
+      ]
+    }
+  },
+  "samples": [
+    {
+      "id": "office_photos_focused_shared:all:base",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "base",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        318,
+        601,
+        500,
+        66
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:base",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "base",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        308,
+        679,
+        520,
+        75
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:all:left4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "left4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        314,
+        601,
+        500,
+        66
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:left4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "left4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        304,
+        679,
+        520,
+        75
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:all:right4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "right4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        322,
+        601,
+        500,
+        66
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:right4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "right4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        312,
+        679,
+        520,
+        75
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:all:up4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "up4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        318,
+        597,
+        500,
+        66
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:up4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "up4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        308,
+        675,
+        520,
+        75
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:all:down4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "down4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        318,
+        605,
+        500,
+        66
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:down4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "down4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        308,
+        683,
+        520,
+        75
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:all:pad4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "pad4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        314,
+        597,
+        508,
+        74
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:pad4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "pad4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        304,
+        675,
+        528,
+        83
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:all:inset4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "all",
+      "variant": "inset4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        322,
+        605,
+        492,
+        58
+      ]
+    },
+    {
+      "id": "office_photos_focused_shared:shared:inset4",
+      "frameID": "office_photos_focused_shared",
+      "elementID": "shared",
+      "variant": "inset4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_photos_focused_shared.png",
+      "sha256": "ea3d8bc6afcb59abea163555f44a58f3cf576056dbbc82b478f0238134e34b2c",
+      "bounds": [
+        312,
+        683,
+        512,
+        67
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:base",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "base",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        314,
+        597,
+        508,
+        74
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:base",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "base",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        312,
+        683,
+        512,
+        66
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:left4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "left4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        310,
+        597,
+        508,
+        74
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:left4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "left4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        308,
+        683,
+        512,
+        66
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:right4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "right4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        318,
+        597,
+        508,
+        74
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:right4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "right4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        316,
+        683,
+        512,
+        66
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:up4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "up4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        314,
+        593,
+        508,
+        74
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:up4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "up4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        312,
+        679,
+        512,
+        66
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:down4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "down4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        314,
+        601,
+        508,
+        74
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:down4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "down4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        312,
+        687,
+        512,
+        66
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:pad4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "pad4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        310,
+        593,
+        516,
+        82
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:pad4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "pad4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        308,
+        679,
+        520,
+        74
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:all:inset4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "all",
+      "variant": "inset4",
+      "label": 1,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        318,
+        601,
+        500,
+        66
+      ]
+    },
+    {
+      "id": "office_pluto_loaded:shared:inset4",
+      "frameID": "office_pluto_loaded",
+      "elementID": "shared",
+      "variant": "inset4",
+      "label": 0,
+      "path": "dataset/tvos_captures/office_pluto_loaded.png",
+      "sha256": "1ecf2551091b883d0eb8ea5a4b143b210971d58f952b12752fd20850902b185c",
+      "bounds": [
+        316,
+        687,
+        504,
+        58
+      ]
+    }
+  ],
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "preprocessing": {
+    "expansion": 0.16,
+    "cropSize": [
+      256,
+      256
+    ],
+    "coordinates": "xywh-top-left-pixels",
+    "resize": "FocusRingClassifier.makeCrop-v1"
+  },
+  "thresholds": [
+    0.5,
+    0.7,
+    0.85
+  ],
+  "variants": [
+    "base",
+    "left4",
+    "right4",
+    "up4",
+    "down4",
+    "pad4",
+    "inset4"
+  ],
+  "trainingEligible": false,
+  "releaseEligible": false,
+  "labelBasis": "visualAppearanceOnly",
+  "partition": "development",
+  "protocolSHA256": "abd05caaf2667bf53f875aff4ef531b58e0dc6833c13361d894f789f95b17dbf"
+}

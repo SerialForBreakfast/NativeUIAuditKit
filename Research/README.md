@@ -7,6 +7,7 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 | File | What it is |
 |---|---|
 | [`ADR-0009-Direct-tvOS-Simulator-Generation.md`](ADR-0009-Direct-tvOS-Simulator-Generation.md) | Independent native Fixture/OS data generation alongside TTR; TVGEN-01–04 |
+| [`Plans/TemporalVisualVerificationSpike.md`](Plans/TemporalVisualVerificationSpike.md) | Proposed safe interruption/temporal-guardrail replay spike for TTR adoption evidence |
 | [`WorkerWorkflow.md`](WorkerWorkflow.md) | Architect/worker roles, safety, context budget, evidence and acceptance |
 | [`IterationRoadmap.md`](IterationRoadmap.md) | Concurrent lanes and separate software/data/model qualification |
 | [`TVTestRigIntegrationContract.md`](TVTestRigIntegrationContract.md) | H1 source-pinned contract loop and P4-L genuine-bundle qualification |

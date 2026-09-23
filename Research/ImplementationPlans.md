@@ -4,6 +4,25 @@
 
 ## Remaining-work amendments and direct acquisition
 
+[OS-FOCUS-04 development-experiment integration](schemas/focus-development-experiment-v1.md)
+extends existing assembly and trainer preflight for reviewed retained Fixture/native
+data. The [one-run proposal](../reports/work/FOCUS-RETAINED-01/experiment-proposal.md)
+remains separate from production eligibility and execution approval. No TTR dependency.
+
+[SIM-DATA-02 sidecar-v2 extension](schemas/harvest-compatibility-v1.md#assigned-sidecar-v2-consumer-extension--2026-09-23)
+covers strict producer brackets, simulator-only v1.5 production crops and existing
+baseline integration. Offline compatibility does not qualify a fresh producer build.
+
+[FOCUS-VISUAL-01](Plans/NativeOSFocus.md#focus-visual-01--reviewed-appearance-comparison-assigned-2026-09-22)
+compares reviewed appearances, frame focus decisions and box sensitivity across
+shipped/FP16/int8 without admitting legacy images for training.
+
+[FOCUS-COMPRESS-01](Plans/NativeOSFocus.md#focus-compress-01--assigned-2026-09-22)
+isolates one weight-only int8 candidate and compares it to preserved FP16/Torch.
+[PER-DATA bounded review](Plans/RemainingDelivery.md#per-data--reviewed-real-perception-benchmark)
+admits explicitly reviewed legacy native evidence for development only, with
+unknown-source/privacy/training safeguards. Neither packet changes shipped models.
+
 [FOCUS-EXPORT-01: isolated candidate CoreML parity](Plans/NativeOSFocus.md#assigned-candidate-exportparity--2026-09-22)
 binds experimental export identity to FDR-007 and compares production CoreML CPU
 against frozen Torch challenge evidence. No capture, training or promotion.
@@ -47,7 +66,7 @@ blanket-pause assumptions in historical contracts.
 | IOS-COV | [Detailed implementation contract](Plans/RemainingDelivery.md#ios-cov--reconstruction-coverage-and-41-class-qualification-decision) |
 | PER-DATA | [Detailed implementation contract](Plans/RemainingDelivery.md#per-data--reviewed-real-perception-benchmark) |
 | PER-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#per-live--real-chevrondialog-baseline-and-training-decision) |
-| TEMP-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#temp-live--genuine-transition-readiness-evaluation) |
+| TEMP-LIVE | [Temporal visual-verification spike](Plans/TemporalVisualVerificationSpike.md); [real transition-readiness qualification](Plans/RemainingDelivery.md#temp-live--genuine-transition-readiness-evaluation) |
 | ID-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#id-live--genuine-screen-and-row-identity-evaluation) |
 | R-LABEL | [Detailed implementation contract](Plans/RemainingDelivery.md#r-label--trustworthy-physical-holdout-annotations) |
 | DATA-VIS | [Detailed implementation contract](Plans/RemainingDelivery.md#data-vis--controlled-visual-state-coverage) |
@@ -108,9 +127,11 @@ simulator first, Office later for transfer validation. Plans do not grant execut
 The direct lane avoids desktop capture/export but still depends on trustworthy
 Fixture-native labels. A reference screenshot is not a completed focus sweep.
 
-[ADR-0009 TVGEN-01–04](ADR-0009-Direct-tvOS-Simulator-Generation.md#implementation-tranches)
-defines the parallel direct tvOS generator tranches, now refined in RemainingDelivery.
-Preserve delivered TVGEN-01/02 work; the ADR itself grants no runtime authority.
+[Approved ADR-0009 TVGEN-01–04](ADR-0009-Direct-tvOS-Simulator-Generation.md#implementation-tranches)
+defines the parallel direct tvOS generator tranches, now refined in RemainingDelivery:
+two-control native proof → 42-recipe shipped-model baseline → separately authorized
+scale/training handoff. Preserve delivered TVGEN-01/02 work; the ADR itself grants no
+runtime authority.
 
 [IterationEfficiency.md](IterationEfficiency.md) defines change-scoped test cadence,
 producer handoff evidence and prioritized visual-state coverage. Apply it within

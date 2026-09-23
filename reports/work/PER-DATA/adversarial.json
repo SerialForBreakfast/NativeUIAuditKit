@@ -1,0 +1,27 @@
+[
+  {
+    "case": "changed_bytes",
+    "rejected": true,
+    "reason": "image_hash_mismatch"
+  },
+  {
+    "case": "unknown_chevron_relation",
+    "rejected": true,
+    "reason": "ambiguous_chevron_relation"
+  },
+  {
+    "case": "test_partition_upgrade",
+    "rejected": true,
+    "reason": "native_review_not_development_eligible"
+  },
+  {
+    "case": "privacy_upgrade",
+    "rejected": true,
+    "reason": "native_review_not_development_eligible"
+  },
+  {
+    "case": "prediction_as_truth",
+    "rejected": true,
+    "reason": "unreviewed_or_prediction_labels"
+  }
+]

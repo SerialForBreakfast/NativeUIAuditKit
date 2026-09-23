@@ -1,0 +1,23 @@
+{
+  "pid": 11340,
+  "startedAt": "2026-09-23T03:36:54.717210+00:00",
+  "endedAt": "2026-09-23T03:39:59.170718+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 184.4529642079724,
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "-u",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/train_focus_ring_detector.py",
+    "--experiment-protocol",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-DEV-01/dataset/focus_dataset_manifest.json",
+    "--experiment-approval",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FDR-008/approval.json",
+    "--experiment-arm",
+    "warm-stretch",
+    "--name",
+    "fdr008-mixed-appearance",
+    "--execute",
+    "--experiment-id",
+    "FDR-008"
+  ]
+}

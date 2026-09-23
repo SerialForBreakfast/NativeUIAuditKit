@@ -1,0 +1,17 @@
+{
+  "stage": "isolated-export",
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "-u",
+    "scripts/export_focus_ring_coreml.py",
+    "--weights",
+    "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+    "--output-dir",
+    "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01",
+    "--experimental-id",
+    "fdr007-native-incremental"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 3.4658656250103377,
+  "deadlineSeconds": 600
+}

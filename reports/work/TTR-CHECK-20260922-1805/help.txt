@@ -1,0 +1,171 @@
+[TVTR-DEBUG] schema=1 run_id=70e22857-c26f-429d-8c3b-50bb294d17ec pid=90783 event=process_started
+[TVTR-DEBUG] schema=1 run_id=70e22857-c26f-429d-8c3b-50bb294d17ec pid=90783 event=process_mode_stable_cli
+[TVTR-DEBUG] schema=1 run_id=70e22857-c26f-429d-8c3b-50bb294d17ec pid=90783 timestamp=2026-09-22T18:05:58Z category=cli event=operationStarted device_alias=- command_id=- observation_id=- session_id=- duration_ms=- result=cli_invocation_begin error=-
+[TVTR-DEBUG] schema=1 run_id=70e22857-c26f-429d-8c3b-50bb294d17ec pid=90783 [TVTR] stage=diagnostic_file_sink_failed error=persistenceFailed domain=TVTestRig.TVTestRigError code=23; subsequent diagnostics remain on stderr 
+Usage: aatv --project PATH [--json] [--device-id ID] [--timeout-ms 1...30000] <command>
+
+--project PATH is required (or set TVTESTRIG_PROJECT): the TVTestRig
+repository root the running app owner selected, i.e. the folder containing
+AGENTS.md and TVTestRig/TVTestRig.xcodeproj. The local coordinator endpoint
+is scoped per project, not one fixed path per macOS user.
+
+Operator:
+  status
+  doctor
+  logs path
+  logs export --output NEW_PATH
+  diagnostics collect [--request-id UUID] [--job-id UUID] [--gui-pid PID] [--seconds 1...900] --output NEW_DIRECTORY
+  scenario run SCENARIO.json --device-id ID
+
+Recipes:
+  recipe list
+  recipe get RECIPE_ID
+  recipe plan RECIPE_ID --device-id ID
+
+Device:
+  device list
+  device get --device-id ID
+  device connect --device-id ID
+  device disconnect --device-id ID
+  device capabilities --device-id ID
+
+Remote:
+  remote press BUTTON
+  remote navigate BUTTON --count 1...50
+  remote hold BUTTON --duration-ms 1...2000
+  remote swipe DIRECTION --distance 0...1 --duration-ms 1...2000
+  remote text insert TEXT
+  remote text clear
+  remote power sleep|wake|off
+
+Applications and observation:
+  app list --device-id ID
+  app launch BUNDLE_ID --device-id ID
+  observe provider
+  observe status
+  observe inspect --device-id ID   (active evidence session; candidate only)
+  observe focus --device-id ID     (FocusDetectorService; fail-closed without model)
+  observe capture (--output PATH | --stdout | --base64) [--output PATH]
+  observe latest [--auto-capture] [--output PATH] [--stdout | --base64]
+  observe poll --consumer-id ID [--previous-observation-id UUID] [--force-image]
+  observe wait-changed [--output PATH] [--stdout | --base64]
+  observe wait-stable [--output PATH] [--stdout | --base64]
+  Image exports are written by the sandboxed app. Use its existing Screenshots
+  folder; shell access to a destination does not grant the app write access.
+
+Audio:
+  audio start|start-fresh|start-built-in|status|stop --device-id ID
+    Stream modes require active office video; start-built-in does not.
+    All modes require existing audio permission. Start returns
+    immediately; startup is limited to 10 seconds, then measurement lasts
+    30 seconds from first accepted buffer (40-second overall limit).
+    Normal streaming prepares audio and video together. audio start/stop
+    controls recording only; device disconnect releases both streams.
+    No local microphone or local audio playback is enabled by this stream.
+    Before a stimulus, match operationID and normally wait for readiness=receiving.
+    An idle source may require playback before buffers arrive. The fixture
+    runner offers explicit --prime-verified-source for that controlled test;
+    waitingForBuffers alone is not evidence of silence or a broken connection.
+    Readiness means recent accepted buffers, not audible sound. Abort on
+    stalled/inactive. Three seconds without buffers ends capture. Poll for
+    stopReason and a finalized artifact; partial recordings are inconclusive.
+    permission_denied means existing permission was unavailable;
+    attachment_failed means the input/output could not attach. Neither is
+    a user cancellation (stop_requested) or proof that the source is silent.
+    start-fresh briefly restarts video with audio attached (diagnostic A/B).
+    start-built-in explicitly records the single built-in audio-only input,
+    without video, camera access, or fallback. Existing permission required.
+    start-preview-sink adds a muted audio-preview output for receiver-side
+    negotiation diagnostics. It is removed when the bounded sample stops.
+    start-native leaves audio output settings at their default for a format
+    negotiation comparison. Unsupported live PCM formats are inconclusive.
+    start-audio-only stops video and discovers office, then opens an audio-only
+    capture graph with raw PCM evidence. Requires existing camera/audio permissions.
+    It does not prove audio-only transport on the wire; video is not auto-restored.
+    start-fixed-av uses the same isolated diagnostic session with audio and video
+    attached before startup. No preview is rendered; frame counts are logged.
+    start-fixed-av-hold additionally holds the unchanged graph for 3 seconds
+    after recording ends to measure video continuity, then stops the session.
+    start-retained records raw PCM + AAC from the normal running preview.
+    It intentionally keeps that audio connection after recording stops; later
+    start-retained calls reuse it without changing the graph. No recording
+    occurs between samples. Disconnect releases it; disconnect before changing
+    diagnostic modes. Normal preview now uses the same retained connection.
+    start-raw also preserves incoming float32 PCM before AAC encoding, limited
+    to 32 MiB. The AudioQualification folder contains operation-matched
+    .raw-pcm and         .raw.jsonl files. Require a complete manifest footer; partial
+    or failed raw evidence does not invalidate a separately finalized .m4a.
+
+Capture lease (independent of the 30s command-control lease):
+  capture acquire CLIENT_ID --device-id ID
+  capture status --device-id ID
+  capture events CLIENT_ID --device-id ID
+  capture keepalive CLIENT_ID LEASE_ID [ACK_WARNING_SEQUENCE] --device-id ID
+  capture release CLIENT_ID LEASE_ID --device-id ID
+  capture complete CLIENT_ID [LEASE_ID] --device-id ID
+    Unidentified GUI captures are not auto-enrolled. resourceContended means
+    wait; do not start a colliding session. LEASE-07 hardware handoff is deferred.
+
+Sessions:
+  session start
+  session stop
+  session status
+  session timeline SESSION_UUID
+  session note TEXT
+  session export SESSION_UUID --output NEW_PATH
+
+Settings Map:
+  settings-map start --policy-version VERSION --device-id ID
+  settings-map start --policy-version VERSION --simulator-udid UUID
+  settings-map checkpoints --simulator-udid UUID
+  settings-map resume OPERATION_ID --policy-version VERSION --simulator-udid UUID
+  settings-map status RUN_ID
+  settings-map cancel RUN_ID
+  settings-map export RUN_ID [--markdown | --html]
+  simulator diagnose --simulator-udid UUID
+  simulator remote connect --simulator-udid UUID
+  simulator remote status|disconnect|snapshot --simulator-udid UUID --session UUID
+  simulator remote press --simulator-udid UUID --session UUID --button up|down|left|right|select|back|home|playPause
+    One persistent native runner; connect returns starting. Wait for ready before input.
+    Each press is sent once. Uncertain replies are never safe to replay.
+    Disconnect requests stop; wait for closed before another test on that target.
+  simulator teardown-check --simulator-udid UUID --variant session_only|settings|fixture_return
+  simulator list
+  simulator readiness [--simulator-udid UUID]
+  workspace refresh-access
+    Refresh the existing folder grant; verify companion access without device input.
+  simulator restart --simulator-udid UUID --confirm-exclusive
+    Stops this Simulator's test; requires exclusive use and reconciled ownership.
+    Never erases devices or resumes navigation. Never retry an uncertain reply.
+
+Fixture factory (offline harvest; live office is a separate authorized run):
+  fixture scene [--fixture-url URL]
+  fixture batch --recipes-dir DIR --output-dir DIR [--fixture-url URL] [--simulator-udid UUID]
+  fixture env [--fixture-url URL]
+  fixture prepare --recipe FILE
+  fixture prepare --recipe-json JSON
+  fixture run-job UUID --fixture-url URL --device-id ID
+  fixture run-job UUID --simulator-udid UUID --fixture-url LOOPBACK_URL
+  fixture job-status UUID | fixture cancel-job UUID
+  fixture export-job UUID --output-dir NEW_DIRECTORY
+  fixture job-manifest UUID
+  fixture read-job UUID --path RELATIVE_PATH --offset BYTE_OFFSET
+
+Contract:
+  help | --help
+  --schema-version
+
+Examples:
+  aatv --json device list
+  aatv device connect --device-id STABLE_ID --timeout-ms 10000
+  aatv remote navigate right --count 3 --device-id STABLE_ID
+  aatv observe latest --json
+  aatv scenario run ./smoke.json --device-id STABLE_ID --timeout-ms 30000
+  aatv --json recipe plan voiceover-toggle --device-id STABLE_ID
+
+Pairing is not available as an unattended stable command. Use the explicitly
+interactive diagnostic pairing flow with a human present.
+
+TVTestRig must be open while CLI or MCP commands are running. The app does not
+install a login item or background launch agent.
+[TVTR-DEBUG] schema=1 run_id=70e22857-c26f-429d-8c3b-50bb294d17ec pid=90783 timestamp=2026-09-22T18:05:58Z category=cli event=operationCompleted device_alias=- command_id=- observation_id=- session_id=- duration_ms=- result=cli_invocation_complete error=-

@@ -1,0 +1,420 @@
+{
+  "scores": [
+    {
+      "probability": 5.6922436e-05,
+      "cropMilliseconds": 13.328375003766268,
+      "id": "office_photos_focused_shared:all:base",
+      "inferenceMilliseconds": 17.37395834061317
+    },
+    {
+      "probability": 0.13085938,
+      "cropMilliseconds": 15.924791659926996,
+      "id": "office_photos_focused_shared:shared:base",
+      "inferenceMilliseconds": 1.8179166654590517
+    },
+    {
+      "probability": 7.1525574e-06,
+      "cropMilliseconds": 14.453083334956318,
+      "id": "office_photos_focused_shared:all:left4",
+      "inferenceMilliseconds": 1.4515416405629367
+    },
+    {
+      "probability": 0.13598633,
+      "cropMilliseconds": 13.52291667717509,
+      "id": "office_photos_focused_shared:shared:left4",
+      "inferenceMilliseconds": 2.5213333137799054
+    },
+    {
+      "probability": 0.00021147728,
+      "cropMilliseconds": 13.356541690882295,
+      "id": "office_photos_focused_shared:all:right4",
+      "inferenceMilliseconds": 1.6899166512303054
+    },
+    {
+      "probability": 0.061187744,
+      "cropMilliseconds": 14.698000013595447,
+      "id": "office_photos_focused_shared:shared:right4",
+      "inferenceMilliseconds": 2.0822500227950513
+    },
+    {
+      "probability": 0.01525116,
+      "cropMilliseconds": 14.686500013340265,
+      "id": "office_photos_focused_shared:all:up4",
+      "inferenceMilliseconds": 2.0099999965168536
+    },
+    {
+      "probability": 0.00012934208,
+      "cropMilliseconds": 12.477583339205012,
+      "id": "office_photos_focused_shared:shared:up4",
+      "inferenceMilliseconds": 1.273333327844739
+    },
+    {
+      "probability": 0.026870728,
+      "cropMilliseconds": 11.898541677510366,
+      "id": "office_photos_focused_shared:all:down4",
+      "inferenceMilliseconds": 1.3825416681356728
+    },
+    {
+      "probability": 0.7709961,
+      "cropMilliseconds": 11.86920833424665,
+      "id": "office_photos_focused_shared:shared:down4",
+      "inferenceMilliseconds": 1.3190416502766311
+    },
+    {
+      "probability": 0.03817749,
+      "cropMilliseconds": 14.017749985214323,
+      "id": "office_photos_focused_shared:all:pad4",
+      "inferenceMilliseconds": 1.441000000340864
+    },
+    {
+      "probability": 0.00022006035,
+      "cropMilliseconds": 13.095666683511809,
+      "id": "office_photos_focused_shared:shared:pad4",
+      "inferenceMilliseconds": 1.5483750030398369
+    },
+    {
+      "probability": 0.035583496,
+      "cropMilliseconds": 12.670541676925495,
+      "id": "office_photos_focused_shared:all:inset4",
+      "inferenceMilliseconds": 1.4477916702162474
+    },
+    {
+      "probability": 0.97314453,
+      "cropMilliseconds": 12.067291681887582,
+      "id": "office_photos_focused_shared:shared:inset4",
+      "inferenceMilliseconds": 1.346041652141139
+    },
+    {
+      "probability": 0.96533203,
+      "cropMilliseconds": 11.498708336148411,
+      "id": "office_pluto_loaded:all:base",
+      "inferenceMilliseconds": 1.2981250183656812
+    },
+    {
+      "probability": 0.00010639429,
+      "cropMilliseconds": 11.792333330959082,
+      "id": "office_pluto_loaded:shared:base",
+      "inferenceMilliseconds": 1.3018749887123704
+    },
+    {
+      "probability": 0.9741211,
+      "cropMilliseconds": 11.543000000528991,
+      "id": "office_pluto_loaded:all:left4",
+      "inferenceMilliseconds": 1.3817916915286332
+    },
+    {
+      "probability": 0.00043702126,
+      "cropMilliseconds": 11.869000009028241,
+      "id": "office_pluto_loaded:shared:left4",
+      "inferenceMilliseconds": 1.2992500269319862
+    },
+    {
+      "probability": 0.99609375,
+      "cropMilliseconds": 11.648374987998977,
+      "id": "office_pluto_loaded:all:right4",
+      "inferenceMilliseconds": 1.2502500030677766
+    },
+    {
+      "probability": 5.7399273e-05,
+      "cropMilliseconds": 12.089416646631435,
+      "id": "office_pluto_loaded:shared:right4",
+      "inferenceMilliseconds": 1.411958335665986
+    },
+    {
+      "probability": 0.027755737,
+      "cropMilliseconds": 12.179041659692302,
+      "id": "office_pluto_loaded:all:up4",
+      "inferenceMilliseconds": 1.3842083280906081
+    },
+    {
+      "probability": 2.0861626e-06,
+      "cropMilliseconds": 11.448250006651506,
+      "id": "office_pluto_loaded:shared:up4",
+      "inferenceMilliseconds": 1.2500833254307508
+    },
+    {
+      "probability": 0.94140625,
+      "cropMilliseconds": 11.529875017004088,
+      "id": "office_pluto_loaded:all:down4",
+      "inferenceMilliseconds": 1.3782916648779064
+    },
+    {
+      "probability": 0.019882202,
+      "cropMilliseconds": 11.471708334283903,
+      "id": "office_pluto_loaded:shared:down4",
+      "inferenceMilliseconds": 1.2542500044219196
+    },
+    {
+      "probability": 0.9980469,
+      "cropMilliseconds": 12.206916668219492,
+      "id": "office_pluto_loaded:all:pad4",
+      "inferenceMilliseconds": 1.3003750063944608
+    },
+    {
+      "probability": 2.2053719e-06,
+      "cropMilliseconds": 11.669875006191432,
+      "id": "office_pluto_loaded:shared:pad4",
+      "inferenceMilliseconds": 1.4401666703633964
+    },
+    {
+      "probability": 0.015609741,
+      "cropMilliseconds": 12.73654165561311,
+      "id": "office_pluto_loaded:all:inset4",
+      "inferenceMilliseconds": 1.2983750202693045
+    },
+    {
+      "probability": 0.042510986,
+      "cropMilliseconds": 11.479958338895813,
+      "id": "office_pluto_loaded:shared:inset4",
+      "inferenceMilliseconds": 1.2644166708923876
+    }
+  ],
+  "timing": [
+    {
+      "version": 1,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "modelLoadMilliseconds": 21.775250002974644,
+      "computeUnits": "cpuOnly"
+    }
+  ],
+  "evaluation": {
+    "base": {
+      "metrics": {
+        "count": 4,
+        "auroc": 1.0,
+        "0.5": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "correct",
+          "selectedElementID": "all"
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    },
+    "left4": {
+      "metrics": {
+        "count": 4,
+        "auroc": 1.0,
+        "0.5": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "correct",
+          "selectedElementID": "all"
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    },
+    "right4": {
+      "metrics": {
+        "count": 4,
+        "auroc": 1.0,
+        "0.5": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "correct",
+          "selectedElementID": "all"
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    },
+    "up4": {
+      "metrics": {
+        "count": 4,
+        "auroc": 0.75,
+        "0.5": {
+          "tp": 0,
+          "fn": 2,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.5
+        },
+        "0.85": {
+          "tp": 0,
+          "fn": 2,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.5
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "no-focus",
+          "selectedElementID": null
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    },
+    "down4": {
+      "metrics": {
+        "count": 4,
+        "auroc": 1.0,
+        "0.5": {
+          "tp": 2,
+          "fn": 0,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 1.0
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "correct",
+          "selectedElementID": "all"
+        }
+      ],
+      "ambiguityBandCount": 1,
+      "nearThresholdCount": 0
+    },
+    "pad4": {
+      "metrics": {
+        "count": 4,
+        "auroc": 0.75,
+        "0.5": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "correct",
+          "selectedElementID": "all"
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    },
+    "inset4": {
+      "metrics": {
+        "count": 4,
+        "auroc": 0.5,
+        "0.5": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 1,
+          "fp": 0,
+          "tn": 2,
+          "accuracy": 0.75
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_photos_focused_shared",
+          "decision": "correct",
+          "selectedElementID": "shared"
+        },
+        {
+          "frameID": "office_pluto_loaded",
+          "decision": "no-focus",
+          "selectedElementID": null
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    }
+  }
+}

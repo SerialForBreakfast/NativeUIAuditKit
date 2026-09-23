@@ -1,0 +1,1 @@
+{"maxAbsoluteError": 3.5762786865234375e-06, "meanAbsoluteError": 1.3850704470781065e-06, "tolerance": 0.01, "thresholds": [0.5, 0.7, 0.85], "ambiguityCounts": {"torch": 0, "coreml": 0}, "referenceNearThresholdCount": 0, "passed": true}

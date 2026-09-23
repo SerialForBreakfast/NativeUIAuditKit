@@ -1,0 +1,51 @@
+{
+  "version": "focus-source-review-v1",
+  "manifestSHA256": "8c3ef75a46eff5013146f1b758ba4cfbf26de8130f99a9d676097697b45625e2",
+  "reviewer": "NUIAK architect \u2014 prior review binding only",
+  "reviewReference": "reports/work/FOCUS-EXP-01/review.md",
+  "priorReview": {
+    "path": "reports/work/FOCUS-EXP-01/review.md",
+    "sha256": "072bf7120ac846c5279719c68b38ad7ada381d8e79fa188eca3a8f97df6cb607"
+  },
+  "priorUse": "development",
+  "relationshipsKnown": true,
+  "trainingApproved": false,
+  "pairs": {
+    "f784b58b50deb76f414b2ceadae77f10b544167e6e46de0e94c2052140a34b29": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "190e17510fb962149f6e57e205eb8a3077e267bce35ba3bda7863a240f35471d": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "637d6b0fa7bcf57d44ae0a1abb8bdee7fcfb263d185db11118da666f2a29ad6d": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "a802c9f2dc7cf4f2b5edd4dce49e5118cd46e9874349ded74d98d75acb108a4f": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "4a231a50bdaffb08f88ba1b3d9a028f4777d80f4b849047b593f8d2da29b366d": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "10a44f398b1bd33d2af5aaf9b02c55fa66f7298abb86f440299c4f91504136ef": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "c3bb4245fd88bc2f09c7bb95cc5463e44d7e4467fc66dc8bcbb7d64829e0ca13": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "0675d239e1a9efddadf4d75e9eecbe1d2813d731885dfea14eaac16dc348fdb5": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    },
+    "3cab84159faf23a6e99426bab7766c59170e1c5a4558d7e9e97be807f4e9ff71": {
+      "partition": "validation",
+      "relatedGroup": "tvos26.5-settings-accessibility-development"
+    }
+  }
+}

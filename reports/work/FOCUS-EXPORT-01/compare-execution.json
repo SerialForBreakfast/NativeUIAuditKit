@@ -1,0 +1,21 @@
+{
+  "stage": "compare",
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "scripts/focus_export_parity.py",
+    "--reference",
+    "reports/work/OS-FOCUS-03/challenge-after.json",
+    "--reference-sha256",
+    "11ff841cf437e4699aadc8cfdb7053ccf74ffc07f70edbee0966ac135c71a21a",
+    "--model",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/compiled/FocusRingDetector.mlmodelc",
+    "--export-report",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/focus_ring_detector_training_report.json",
+    "--protocol",
+    "reports/work/OS-FOCUS-03/corpus-01/protocol.json",
+    "--output",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-EXPORT-01/parity.json"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 3.885449624998728
+}

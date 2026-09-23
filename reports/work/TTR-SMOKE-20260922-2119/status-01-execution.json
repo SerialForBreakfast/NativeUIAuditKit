@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv",
+    "--json",
+    "--timeout-ms",
+    "15000",
+    "fixture",
+    "job-status",
+    "697018C6-FAB6-4524-A691-1BE4507C8F7F"
+  ],
+  "exitCode": 0,
+  "seconds": 0.0759674170112703
+}

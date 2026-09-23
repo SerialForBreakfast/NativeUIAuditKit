@@ -1,0 +1,64 @@
+{
+  "commands": [
+    {
+      "name": "status",
+      "command": [
+        "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv",
+        "--json",
+        "--timeout-ms",
+        "15000",
+        "status"
+      ],
+      "exitCode": 0,
+      "seconds": 0.18339375001960434
+    },
+    {
+      "name": "readiness",
+      "command": [
+        "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv",
+        "--json",
+        "--timeout-ms",
+        "15000",
+        "simulator",
+        "readiness",
+        "--simulator-udid",
+        "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA"
+      ],
+      "exitCode": 0,
+      "seconds": 0.9759149999881629
+    },
+    {
+      "name": "device",
+      "command": [
+        "curl",
+        "--fail",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "5",
+        "http://127.0.0.1:8080/device"
+      ],
+      "exitCode": 0,
+      "seconds": 0.043611166009213775
+    },
+    {
+      "name": "scene",
+      "command": [
+        "curl",
+        "--fail",
+        "--silent",
+        "--show-error",
+        "--max-time",
+        "5",
+        "http://127.0.0.1:8080/scene"
+      ],
+      "exitCode": 0,
+      "seconds": 0.020556500006932765
+    }
+  ],
+  "hashes": {
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv": "ddf25bba77f423fa340ae06f71be864b5aaa693dce4fb7cee45306fc14d12e82",
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/MacOS/TVTestRig.debug.dylib": "8211f421d47515982c1bd7ac23e8b1e83d04c824bd33b8216d818f5d72a8ae09",
+    "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data/Containers/Bundle/Application/67B1AD5E-E458-4382-85E9-534812B7D153/TVTestRigFixture.app/TVTestRigFixture.debug.dylib": "9bd3859b9f71e6255bba0a3d64cfdd31cad323a67d70416826330c1414fa70f0"
+  }
+}

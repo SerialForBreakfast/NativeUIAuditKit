@@ -102,6 +102,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--corpus-id", help="Required with --fixture-bundle")
     p.add_argument("--producer-reference", help="Required source revision with --fixture-bundle")
     p.add_argument("--pair-evidence", type=Path, help="Explicit NUIAK focus-pair-evidence-v1 review artifact; never predicted labels")
+    p.add_argument("--ttr-sidecar-v2", action="store_true", help="Use validated producer brackets and runtime crops; development only")
+    p.add_argument("--visual-review", type=Path, help="Hash-bound v2 bundle geometry/source review")
+    p.add_argument("--test-only", action="store_true", help="Mark v2 output as test-only; cannot qualify genuine data")
     p.add_argument(
         "--output",
         default=str(DEFAULT_OUTPUT),
@@ -958,6 +961,9 @@ def live_harvest(args: argparse.Namespace) -> int:
 
 def main() -> int:
     args = parse_args()
+    if (args.ttr_sidecar_v2 or args.visual_review or args.test_only) and not args.fixture_bundle:
+        print("ERROR: v2 options require --fixture-bundle")
+        return 1
     if args.fixture_bundle:
         if args.live or not args.corpus_id or not args.producer_reference:
             print("ERROR: --fixture-bundle requires --corpus-id and --producer-reference and cannot use --live")
@@ -974,8 +980,19 @@ def main() -> int:
             print(f"ERROR: refusing to overwrite existing output: {output}")
             return 1
         try:
-            evidence = json.loads(args.pair_evidence.read_text()) if args.pair_evidence else None
-            result = extract_fixture_bundle(args.fixture_bundle, output, args.corpus_id, args.producer_reference, args.expansion, args.dry_run, evidence)
+            if args.ttr_sidecar_v2:
+                if args.pair_evidence or args.expansion != EXPANSION:
+                    raise SimulatorManifestError("incompatible_v2_options")
+                from ttr_focus_manifest import derive
+                doc = derive(args.fixture_bundle, output, args.corpus_id, args.producer_reference,
+                             review=json.loads(args.visual_review.read_text()) if args.visual_review else None,
+                             test_only=args.test_only, dry_run=args.dry_run)
+                result = {"pairs": len(doc["pairs"]), "version": "1.5", "dryRun": args.dry_run, "trainingApproval": False}
+            else:
+                if args.visual_review or args.test_only:
+                    raise SimulatorManifestError("v2_mode_required")
+                evidence = json.loads(args.pair_evidence.read_text()) if args.pair_evidence else None
+                result = extract_fixture_bundle(args.fixture_bundle, output, args.corpus_id, args.producer_reference, args.expansion, args.dry_run, evidence)
         except (HarvestValidationError, SimulatorManifestError, OSError, ValueError) as error:
             print(f"ERROR: fixture bundle extraction failed: {error}")
             return 1

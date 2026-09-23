@@ -150,10 +150,11 @@ def validate_frames(pair, source_root, *, require_native=False):
 
 def validate_manifest(document, dataset):
     """Validate actual crops and their raw-frame evidence; never grant launch approval."""
-    if not isinstance(document, dict) or document.get("version") not in {"1.2", "1.3", "1.4"}:
+    if not isinstance(document, dict) or document.get("version") not in {"1.2", "1.3", "1.4", "1.5"}:
         raise FocusDataError("unsupported_crop_manifest")
-    runtime = document["version"] in {"1.3", "1.4"}
+    runtime = document["version"] in {"1.3", "1.4", "1.5"}
     direct = document["version"] == "1.4"
+    ttr = document["version"] == "1.5"
     from focus_runtime import RUNTIME_PREPROCESSING, identity, rendered_items
     if document.get("preprocessing") != (RUNTIME_PREPROCESSING if runtime else PREPROCESSING):
         raise FocusDataError("crop_parity_mismatch")
@@ -171,6 +172,9 @@ def validate_manifest(document, dataset):
     if direct:
         from direct_focus_manifest import validate_direct_manifest
         validate_direct_manifest(document, source_root)
+    if ttr:
+        from ttr_focus_manifest import validate_ttr_manifest
+        validate_ttr_manifest(document, source_root)
     if document["sourceKind"] == "physicalFixture":
         validate_physical_review(document.get("sourceReview"), source_root)
     pairs = document.get("pairs")
@@ -204,6 +208,9 @@ def validate_manifest(document, dataset):
         if direct:
             from direct_focus_manifest import validate_direct_frames
             boxes = validate_direct_frames(pair, source_root)
+        elif ttr:
+            from ttr_focus_manifest import frame_boxes
+            boxes = frame_boxes(pair, source_root)
         else:
             boxes = validate_frames(pair, source_root, require_native=document["sourceKind"] == "physicalFixture")
         identity = (pair["frames"]["focused"]["sha256"], pair["frames"]["unfocused"]["sha256"], pair["elementID"])

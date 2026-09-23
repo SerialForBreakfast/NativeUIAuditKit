@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv",
+    "--json",
+    "--timeout-ms",
+    "15000",
+    "fixture",
+    "prepare",
+    "--recipe-json",
+    "{\"schema_version\":1,\"archetype\":\"action_dialog\",\"theme\":\"high_contrast\",\"density\":\"regular\",\"element_count\":2,\"seed\":7,\"step_index\":0}"
+  ],
+  "exitCode": 0,
+  "seconds": 0.07430158299393952
+}

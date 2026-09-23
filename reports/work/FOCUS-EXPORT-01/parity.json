@@ -1,0 +1,282 @@
+{
+  "version": "focus-export-parity-v1",
+  "releaseEligible": false,
+  "referenceSHA256": "11ff841cf437e4699aadc8cfdb7053ccf74ffc07f70edbee0966ac135c71a21a",
+  "checkpointSHA256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0",
+  "model": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/compiled/FocusRingDetector.mlmodelc",
+  "compiledSHA256": "a669a4111e145d9c57127e71ad6c6abe7268e16fbc013632094f84ffb44dcde9",
+  "exportReportSHA256": "23c81895b696808458edba81083234e4582933491dd2d252368144386e2a6b5a",
+  "protocolSHA256": "a756f182c633ae6ad4b4985a75200ef738a7974bf8520ce8a3c946d8574d4f8c",
+  "modelContract": {
+    "sha256": "a669a4111e145d9c57127e71ad6c6abe7268e16fbc013632094f84ffb44dcde9",
+    "metadataSHA256": "f49738b30076b8ed02787c00e7c613ae570cdbf0c4edd21a157abf83f082c3db",
+    "outputs": [
+      "confidence",
+      "is_focused_prob"
+    ]
+  },
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "comparison": {
+    "maxAbsoluteError": 3.5762786865234375e-06,
+    "meanAbsoluteError": 1.3850704470781065e-06,
+    "tolerance": 0.01,
+    "thresholds": [
+      0.5,
+      0.7,
+      0.85
+    ],
+    "ambiguityCounts": {
+      "torch": 0,
+      "coreml": 0
+    },
+    "referenceNearThresholdCount": 0,
+    "passed": true,
+    "differences": [
+      {
+        "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:focused",
+        "label": 1,
+        "torch": 0.9999973773956299,
+        "coreml": 1,
+        "absoluteError": 2.6226043701171875e-06,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:unfocused",
+        "label": 0,
+        "torch": 4.721149707620498e-06,
+        "coreml": 4.887581e-06,
+        "absoluteError": 1.6643129237950233e-07,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:focused",
+        "label": 1,
+        "torch": 0.9999964237213135,
+        "coreml": 1,
+        "absoluteError": 3.5762786865234375e-06,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:unfocused",
+        "label": 0,
+        "torch": 5.904003046452999e-06,
+        "coreml": 5.90086e-06,
+        "absoluteError": 3.1430464529988303e-09,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:focused",
+        "label": 1,
+        "torch": 0.9999967813491821,
+        "coreml": 1,
+        "absoluteError": 3.2186508178710938e-06,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:unfocused",
+        "label": 0,
+        "torch": 7.735815415799152e-06,
+        "coreml": 7.8082085e-06,
+        "absoluteError": 7.239308420084871e-08,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:focused",
+        "label": 1,
+        "torch": 0.9999982118606567,
+        "coreml": 1,
+        "absoluteError": 1.7881393432617188e-06,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:unfocused",
+        "label": 0,
+        "torch": 7.869072760513518e-06,
+        "coreml": 7.987022e-06,
+        "absoluteError": 1.1794923948648211e-07,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:focused",
+        "label": 1,
+        "torch": 0.9999969005584717,
+        "coreml": 1,
+        "absoluteError": 3.0994415283203125e-06,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:unfocused",
+        "label": 0,
+        "torch": 1.243745646206662e-05,
+        "coreml": 1.2993813e-05,
+        "absoluteError": 5.563565379333791e-07,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:focused",
+        "label": 1,
+        "torch": 0.9999986886978149,
+        "coreml": 1,
+        "absoluteError": 1.3113021850585938e-06,
+        "disagreedThresholds": []
+      },
+      {
+        "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:unfocused",
+        "label": 0,
+        "torch": 3.428518766668276e-06,
+        "coreml": 3.516674e-06,
+        "absoluteError": 8.815523333172392e-08,
+        "disagreedThresholds": []
+      }
+    ]
+  },
+  "coremlMetrics": {
+    "count": 12,
+    "auroc": 1.0,
+    "0.5": {
+      "tp": 6,
+      "fn": 0,
+      "fp": 0,
+      "tn": 6,
+      "accuracy": 1.0
+    },
+    "0.85": {
+      "tp": 6,
+      "fn": 0,
+      "fp": 0,
+      "tn": 6,
+      "accuracy": 1.0
+    }
+  },
+  "torchMetrics": {
+    "count": 12,
+    "auroc": 1.0,
+    "0.5": {
+      "tp": 6,
+      "fn": 0,
+      "fp": 0,
+      "tn": 6,
+      "accuracy": 1.0
+    },
+    "0.85": {
+      "tp": 6,
+      "fn": 0,
+      "fp": 0,
+      "tn": 6,
+      "accuracy": 1.0
+    }
+  },
+  "coremlTiming": [
+    {
+      "version": 1,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "modelLoadMilliseconds": 45.911416673334315,
+      "computeUnits": "cpuOnly"
+    },
+    {
+      "version": 1,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly",
+      "modelLoadMilliseconds": 14.826041646301746
+    }
+  ],
+  "coremlSamples": [
+    {
+      "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:focused",
+      "inferenceMilliseconds": 4.959333338774741,
+      "probability": 1,
+      "cropMilliseconds": 69.26537500112318
+    },
+    {
+      "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:unfocused",
+      "inferenceMilliseconds": 1.7183333402499557,
+      "probability": 4.887581e-06,
+      "cropMilliseconds": 69.57399999373592
+    },
+    {
+      "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:focused",
+      "inferenceMilliseconds": 1.276958326343447,
+      "probability": 1,
+      "cropMilliseconds": 68.12679165159352
+    },
+    {
+      "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:unfocused",
+      "inferenceMilliseconds": 1.3227916497271508,
+      "probability": 5.90086e-06,
+      "cropMilliseconds": 68.88104169047438
+    },
+    {
+      "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:focused",
+      "inferenceMilliseconds": 1.6705416492186487,
+      "probability": 1,
+      "cropMilliseconds": 70.14795835129917
+    },
+    {
+      "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:unfocused",
+      "inferenceMilliseconds": 1.4721250045113266,
+      "probability": 7.8082085e-06,
+      "cropMilliseconds": 69.36516668065451
+    },
+    {
+      "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:focused",
+      "inferenceMilliseconds": 1.3062083453405648,
+      "probability": 1,
+      "cropMilliseconds": 68.3112500119023
+    },
+    {
+      "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:unfocused",
+      "inferenceMilliseconds": 1.2776250077877194,
+      "probability": 7.987022e-06,
+      "cropMilliseconds": 67.27995834080502
+    },
+    {
+      "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:focused",
+      "inferenceMilliseconds": 1.274374983040616,
+      "probability": 1,
+      "cropMilliseconds": 66.98579166550189
+    },
+    {
+      "cropMilliseconds": 68.40674998238683,
+      "inferenceMilliseconds": 4.20437499997206,
+      "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:unfocused",
+      "probability": 1.2993813e-05
+    },
+    {
+      "probability": 1,
+      "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:focused",
+      "cropMilliseconds": 68.22341665974818,
+      "inferenceMilliseconds": 1.397458341671154
+    },
+    {
+      "probability": 3.516674e-06,
+      "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:unfocused",
+      "cropMilliseconds": 67.5139999948442,
+      "inferenceMilliseconds": 1.5476666449103504
+    }
+  ],
+  "torchTiming": [
+    0.037152708013309166,
+    0.03437979199225083,
+    0.03668795898556709,
+    0.03720050002448261,
+    0.03834466601256281,
+    0.03814695801702328,
+    0.03710408299230039,
+    0.03754462499637157,
+    0.036721917014801875,
+    0.036179250018903986,
+    0.038223000010475516,
+    0.037413625017507
+  ],
+  "limitations": [
+    "12 correlated same-app development crops; saturated scores do not establish near-threshold parity",
+    "CPU only; not ANE or device latency",
+    "Native boxes supplied, no model-driven navigation",
+    "No full corpus/model gate or promotion"
+  ]
+}

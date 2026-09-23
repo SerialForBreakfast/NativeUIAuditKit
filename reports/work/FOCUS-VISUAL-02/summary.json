@@ -1,0 +1,2633 @@
+{
+  "reportSHA256": "d0220adeb37d43a17721e907bfa5e73043d1f04a5137ad8e7d36e92821d0e7e4",
+  "reviewedFrames": 6,
+  "reviewedBoxes": 72,
+  "correlatedVariantsPerBox": 7,
+  "models": {
+    "shipped": {
+      "base": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.8207070707070707,
+          "0.5": {
+            "tp": 5,
+            "fn": 1,
+            "fp": 15,
+            "tn": 51,
+            "accuracy": 0.7777777777777778
+          },
+          "0.85": {
+            "tp": 3,
+            "fn": 3,
+            "fp": 12,
+            "tn": 54,
+            "accuracy": 0.7916666666666666
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "correct",
+            "selectedElementID": "tile-0"
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "correct",
+            "selectedElementID": "tile-1"
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "multiple-focus-abstention",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "baseProbabilities": [
+        {
+          "inferenceMilliseconds": 11.476083338493481,
+          "id": "office_home_initial:tile-0:base",
+          "cropMilliseconds": 14.472541661234573,
+          "probability": 0.8803711
+        },
+        {
+          "inferenceMilliseconds": 1.4657083374913782,
+          "id": "office_home_initial:tile-1:base",
+          "cropMilliseconds": 13.451250008074567,
+          "probability": 0.0005569458
+        },
+        {
+          "inferenceMilliseconds": 1.4760416524950415,
+          "id": "office_home_initial:tile-2:base",
+          "cropMilliseconds": 13.52645832230337,
+          "probability": 0.02116394
+        },
+        {
+          "inferenceMilliseconds": 1.5076666604727507,
+          "id": "office_home_initial:tile-3:base",
+          "cropMilliseconds": 14.258166687795892,
+          "probability": 0.0014839172
+        },
+        {
+          "inferenceMilliseconds": 1.4870000013615936,
+          "id": "office_home_initial:tile-4:base",
+          "cropMilliseconds": 13.734583335462958,
+          "probability": 0.0008659363
+        },
+        {
+          "inferenceMilliseconds": 1.305583311477676,
+          "id": "office_home_initial:tile-5:base",
+          "cropMilliseconds": 13.859375001629815,
+          "probability": 0.0010404587
+        },
+        {
+          "id": "office_home_step01:tile-0:base",
+          "probability": 0.48999023,
+          "cropMilliseconds": 13.786124996840954,
+          "inferenceMilliseconds": 1.5001250139903277
+        },
+        {
+          "id": "office_home_step01:tile-1:base",
+          "probability": 0.8935547,
+          "cropMilliseconds": 13.939833326730877,
+          "inferenceMilliseconds": 1.8100416637025774
+        },
+        {
+          "id": "office_home_step01:tile-2:base",
+          "probability": 3.5643578e-05,
+          "cropMilliseconds": 14.665958326077089,
+          "inferenceMilliseconds": 1.5910416841506958
+        },
+        {
+          "id": "office_home_step01:tile-3:base",
+          "probability": 1.9967556e-05,
+          "cropMilliseconds": 13.533416669815779,
+          "inferenceMilliseconds": 1.6354166727978736
+        },
+        {
+          "id": "office_home_step01:tile-4:base",
+          "probability": 1.8179417e-05,
+          "cropMilliseconds": 13.571125018643215,
+          "inferenceMilliseconds": 1.5287083515431732
+        },
+        {
+          "id": "office_home_step01:tile-5:base",
+          "probability": 2.9087067e-05,
+          "cropMilliseconds": 13.708083337405697,
+          "inferenceMilliseconds": 1.4591666695196182
+        },
+        {
+          "inferenceMilliseconds": 1.2387500028125942,
+          "id": "office_home_step02:tile-0:base",
+          "cropMilliseconds": 13.765416661044583,
+          "probability": 0.20483398
+        },
+        {
+          "inferenceMilliseconds": 1.2398333346936852,
+          "id": "office_home_step02:tile-1:base",
+          "cropMilliseconds": 13.65599999553524,
+          "probability": 0.00014090538
+        },
+        {
+          "inferenceMilliseconds": 1.2467500055208802,
+          "id": "office_home_step02:tile-2:base",
+          "cropMilliseconds": 14.053458347916603,
+          "probability": 0.59277344
+        },
+        {
+          "inferenceMilliseconds": 1.2041250010952353,
+          "id": "office_home_step02:tile-3:base",
+          "cropMilliseconds": 13.597708340967074,
+          "probability": 0.00035572052
+        },
+        {
+          "inferenceMilliseconds": 1.2265416735317558,
+          "id": "office_home_step02:tile-4:base",
+          "cropMilliseconds": 13.688166654901579,
+          "probability": 3.8802624e-05
+        },
+        {
+          "inferenceMilliseconds": 1.1967083264607936,
+          "id": "office_home_step02:tile-5:base",
+          "cropMilliseconds": 13.600708334706724,
+          "probability": 5.4359436e-05
+        },
+        {
+          "id": "office_session2_home:tile-0:base",
+          "probability": 0.296875,
+          "cropMilliseconds": 13.490333338268101,
+          "inferenceMilliseconds": 1.3804166810587049
+        },
+        {
+          "id": "office_session2_home:tile-1:base",
+          "probability": 0.00013446808,
+          "cropMilliseconds": 13.345208310056478,
+          "inferenceMilliseconds": 1.2495833216235042
+        },
+        {
+          "id": "office_session2_home:tile-2:base",
+          "probability": 0.6503906,
+          "cropMilliseconds": 13.68645834736526,
+          "inferenceMilliseconds": 1.2324166600592434
+        },
+        {
+          "id": "office_session2_home:tile-3:base",
+          "probability": 0.00032019615,
+          "cropMilliseconds": 13.483708346029744,
+          "inferenceMilliseconds": 1.5160416660364717
+        },
+        {
+          "id": "office_session2_home:tile-4:base",
+          "probability": 4.541874e-05,
+          "cropMilliseconds": 13.64216665388085,
+          "inferenceMilliseconds": 1.2302499962970614
+        },
+        {
+          "id": "office_session2_home:tile-5:base",
+          "probability": 5.2273273e-05,
+          "cropMilliseconds": 13.298958336235955,
+          "inferenceMilliseconds": 1.2440833379514515
+        },
+        {
+          "probability": 0.05050659,
+          "cropMilliseconds": 15.742333314847201,
+          "id": "office_home_step03:tile-0:base",
+          "inferenceMilliseconds": 1.579541654791683
+        },
+        {
+          "probability": 2.014637e-05,
+          "cropMilliseconds": 16.234833339694887,
+          "id": "office_home_step03:tile-1:base",
+          "inferenceMilliseconds": 1.5937083517201245
+        },
+        {
+          "probability": 8.416176e-05,
+          "cropMilliseconds": 16.490124980919063,
+          "id": "office_home_step03:tile-2:base",
+          "inferenceMilliseconds": 1.263625017600134
+        },
+        {
+          "probability": 5.26309e-05,
+          "cropMilliseconds": 16.21554166194983,
+          "id": "office_home_step03:tile-3:base",
+          "inferenceMilliseconds": 1.2593750143423676
+        },
+        {
+          "probability": 2.014637e-05,
+          "cropMilliseconds": 16.043375013396144,
+          "id": "office_home_step03:tile-4:base",
+          "inferenceMilliseconds": 1.2960000021848828
+        },
+        {
+          "probability": 1.2993813e-05,
+          "cropMilliseconds": 16.05308335274458,
+          "id": "office_home_step03:tile-5:base",
+          "inferenceMilliseconds": 1.3100416690576822
+        },
+        {
+          "probability": 0.037963867,
+          "cropMilliseconds": 16.337333334377035,
+          "id": "office_home_step03:tile-6:base",
+          "inferenceMilliseconds": 1.3252499920781702
+        },
+        {
+          "probability": 0.00018966198,
+          "cropMilliseconds": 16.2162916676607,
+          "id": "office_home_step03:tile-7:base",
+          "inferenceMilliseconds": 1.225583313498646
+        },
+        {
+          "probability": 0.99902344,
+          "cropMilliseconds": 16.643041657516733,
+          "id": "office_home_step03:tile-8:base",
+          "inferenceMilliseconds": 1.3019166653975844
+        },
+        {
+          "probability": 2.18153e-05,
+          "cropMilliseconds": 16.33245832636021,
+          "id": "office_home_step03:tile-9:base",
+          "inferenceMilliseconds": 1.2271250016056001
+        },
+        {
+          "probability": 0.9838867,
+          "cropMilliseconds": 16.401791654061526,
+          "id": "office_home_step03:tile-10:base",
+          "inferenceMilliseconds": 1.2112916738260537
+        },
+        {
+          "probability": 0.8989258,
+          "cropMilliseconds": 16.272666660370305,
+          "id": "office_home_step03:tile-11:base",
+          "inferenceMilliseconds": 1.2085416819900274
+        },
+        {
+          "probability": 0.64404297,
+          "cropMilliseconds": 16.184750013053417,
+          "id": "office_home_step03:tile-12:base",
+          "inferenceMilliseconds": 1.2127083318773657
+        },
+        {
+          "probability": 0.00036120415,
+          "cropMilliseconds": 16.45158333121799,
+          "id": "office_home_step03:tile-13:base",
+          "inferenceMilliseconds": 1.2122499756515026
+        },
+        {
+          "probability": 0.0004272461,
+          "cropMilliseconds": 16.13429165445268,
+          "id": "office_home_step03:tile-14:base",
+          "inferenceMilliseconds": 1.153208315372467
+        },
+        {
+          "probability": 7.545948e-05,
+          "cropMilliseconds": 16.294125001877546,
+          "id": "office_home_step03:tile-15:base",
+          "inferenceMilliseconds": 1.1812500015366822
+        },
+        {
+          "probability": 0.98535156,
+          "cropMilliseconds": 15.946624975185841,
+          "id": "office_home_step03:tile-16:base",
+          "inferenceMilliseconds": 1.2367916642688215
+        },
+        {
+          "probability": 0.00079488754,
+          "cropMilliseconds": 16.257958341157064,
+          "id": "office_home_step03:tile-17:base",
+          "inferenceMilliseconds": 1.2327916629146785
+        },
+        {
+          "probability": 0.99609375,
+          "cropMilliseconds": 16.117999999551103,
+          "id": "office_home_step03:tile-18:base",
+          "inferenceMilliseconds": 1.2001249997410923
+        },
+        {
+          "probability": 9.691715e-05,
+          "cropMilliseconds": 16.009041661163792,
+          "id": "office_home_step03:tile-19:base",
+          "inferenceMilliseconds": 1.425333321094513
+        },
+        {
+          "probability": 1,
+          "cropMilliseconds": 16.355666652088985,
+          "id": "office_home_step03:tile-20:base",
+          "inferenceMilliseconds": 1.2510416563600302
+        },
+        {
+          "probability": 0.9707031,
+          "cropMilliseconds": 16.129625000758097,
+          "id": "office_home_step03:tile-21:base",
+          "inferenceMilliseconds": 1.2214166636113077
+        },
+        {
+          "cropMilliseconds": 16.544624988455325,
+          "inferenceMilliseconds": 5.152708326932043,
+          "id": "office_home_step03:tile-22:base",
+          "probability": 0.87158203
+        },
+        {
+          "cropMilliseconds": 16.218583332374692,
+          "inferenceMilliseconds": 1.5450000064447522,
+          "id": "office_home_step03:tile-23:base",
+          "probability": 8.612871e-05
+        },
+        {
+          "id": "office_home_col5:tile-0:base",
+          "probability": 0.94970703,
+          "inferenceMilliseconds": 1.284916652366519,
+          "cropMilliseconds": 18.774124997435138
+        },
+        {
+          "id": "office_home_col5:tile-1:base",
+          "probability": 0.007259369,
+          "inferenceMilliseconds": 1.3107916456647217,
+          "cropMilliseconds": 19.411166664212942
+        },
+        {
+          "id": "office_home_col5:tile-2:base",
+          "probability": 0.009742737,
+          "inferenceMilliseconds": 1.3055833405815065,
+          "cropMilliseconds": 18.543291662354022
+        },
+        {
+          "id": "office_home_col5:tile-3:base",
+          "probability": 0.0004339218,
+          "inferenceMilliseconds": 1.2813749781344086,
+          "cropMilliseconds": 18.179875012720004
+        },
+        {
+          "id": "office_home_col5:tile-4:base",
+          "probability": 0.0026741028,
+          "inferenceMilliseconds": 1.2622916838154197,
+          "cropMilliseconds": 18.666874995687976
+        },
+        {
+          "id": "office_home_col5:tile-5:base",
+          "probability": 0.0035514832,
+          "inferenceMilliseconds": 1.2941666645929217,
+          "cropMilliseconds": 18.805166677339002
+        },
+        {
+          "id": "office_home_col5:tile-6:base",
+          "inferenceMilliseconds": 4.510375001700595,
+          "cropMilliseconds": 18.909541657194495,
+          "probability": 0.19067383
+        },
+        {
+          "id": "office_home_col5:tile-7:base",
+          "inferenceMilliseconds": 1.4577500114683062,
+          "cropMilliseconds": 18.886666686739773,
+          "probability": 0.0022525787
+        },
+        {
+          "id": "office_home_col5:tile-8:base",
+          "inferenceMilliseconds": 1.3089999847579747,
+          "cropMilliseconds": 18.86991667561233,
+          "probability": 0.9951172
+        },
+        {
+          "id": "office_home_col5:tile-9:base",
+          "inferenceMilliseconds": 1.3271250063553452,
+          "cropMilliseconds": 18.759541679173708,
+          "probability": 0.0003771782
+        },
+        {
+          "id": "office_home_col5:tile-10:base",
+          "inferenceMilliseconds": 1.6155833436641842,
+          "cropMilliseconds": 18.74175001285039,
+          "probability": 0.99902344
+        },
+        {
+          "id": "office_home_col5:tile-11:base",
+          "inferenceMilliseconds": 1.587916660355404,
+          "cropMilliseconds": 19.179916678695008,
+          "probability": 0.17089844
+        },
+        {
+          "id": "office_home_col5:tile-12:base",
+          "inferenceMilliseconds": 1.2577083252836019,
+          "cropMilliseconds": 18.847416678909212,
+          "probability": 0.0047187805
+        },
+        {
+          "id": "office_home_col5:tile-13:base",
+          "inferenceMilliseconds": 1.33050000295043,
+          "cropMilliseconds": 18.945041665574536,
+          "probability": 0.07397461
+        },
+        {
+          "id": "office_home_col5:tile-14:base",
+          "inferenceMilliseconds": 1.365750009426847,
+          "cropMilliseconds": 18.824583326932043,
+          "probability": 0.001824379
+        },
+        {
+          "id": "office_home_col5:tile-15:base",
+          "inferenceMilliseconds": 1.4550416672136635,
+          "cropMilliseconds": 18.8706666813232,
+          "probability": 2.4318695e-05
+        },
+        {
+          "id": "office_home_col5:tile-16:base",
+          "inferenceMilliseconds": 1.264624996110797,
+          "cropMilliseconds": 18.72987498063594,
+          "probability": 0.7294922
+        },
+        {
+          "id": "office_home_col5:tile-17:base",
+          "inferenceMilliseconds": 1.3029166730120778,
+          "cropMilliseconds": 18.500875012250617,
+          "probability": 0.02368164
+        },
+        {
+          "id": "office_home_col5:tile-18:base",
+          "inferenceMilliseconds": 1.2358333333395422,
+          "cropMilliseconds": 18.45520833740011,
+          "probability": 0.99902344
+        },
+        {
+          "id": "office_home_col5:tile-19:base",
+          "inferenceMilliseconds": 1.2250000145286322,
+          "cropMilliseconds": 17.599708342459053,
+          "probability": 0.0005378723
+        },
+        {
+          "id": "office_home_col5:tile-20:base",
+          "inferenceMilliseconds": 1.205333333928138,
+          "cropMilliseconds": 17.485208343714476,
+          "probability": 0.9951172
+        },
+        {
+          "id": "office_home_col5:tile-21:base",
+          "inferenceMilliseconds": 1.2348750024102628,
+          "cropMilliseconds": 17.543541674967855,
+          "probability": 0.3959961
+        },
+        {
+          "id": "office_home_col5:tile-22:base",
+          "inferenceMilliseconds": 1.2684166722465307,
+          "cropMilliseconds": 17.86929165245965,
+          "probability": 0.55126953
+        },
+        {
+          "id": "office_home_col5:tile-23:base",
+          "inferenceMilliseconds": 1.2472083326429129,
+          "cropMilliseconds": 17.902666673762724,
+          "probability": 0.00070142746
+        }
+      ],
+      "sensitivityFrameDecisions": {
+        "no-focus": 9,
+        "correct": 8,
+        "wrong-focus": 2,
+        "multiple-focus-abstention": 17
+      },
+      "probabilityRanges": {
+        "office_home_initial:tile-0": {
+          "min": 0.00036549568,
+          "max": 0.8803711,
+          "crosses085": true
+        },
+        "office_home_initial:tile-1": {
+          "min": 7.903576e-05,
+          "max": 0.0028457642,
+          "crosses085": false
+        },
+        "office_home_initial:tile-2": {
+          "min": 0.0012836456,
+          "max": 0.24194336,
+          "crosses085": false
+        },
+        "office_home_initial:tile-3": {
+          "min": 0.0013885498,
+          "max": 0.0107803345,
+          "crosses085": false
+        },
+        "office_home_initial:tile-4": {
+          "min": 0.0008659363,
+          "max": 0.008743286,
+          "crosses085": false
+        },
+        "office_home_initial:tile-5": {
+          "min": 0.0010404587,
+          "max": 0.012771606,
+          "crosses085": false
+        },
+        "office_home_step01:tile-0": {
+          "min": 0.0040245056,
+          "max": 0.97265625,
+          "crosses085": true
+        },
+        "office_home_step01:tile-1": {
+          "min": 0.8935547,
+          "max": 1,
+          "crosses085": false
+        },
+        "office_home_step01:tile-2": {
+          "min": 1.0728836e-06,
+          "max": 0.0012397766,
+          "crosses085": false
+        },
+        "office_home_step01:tile-3": {
+          "min": 1.9967556e-05,
+          "max": 0.027954102,
+          "crosses085": false
+        },
+        "office_home_step01:tile-4": {
+          "min": 1.8179417e-05,
+          "max": 0.021743774,
+          "crosses085": false
+        },
+        "office_home_step01:tile-5": {
+          "min": 2.8431416e-05,
+          "max": 0.03753662,
+          "crosses085": false
+        },
+        "office_home_step02:tile-0": {
+          "min": 0.003868103,
+          "max": 0.9980469,
+          "crosses085": true
+        },
+        "office_home_step02:tile-1": {
+          "min": 0.00014090538,
+          "max": 0.10498047,
+          "crosses085": false
+        },
+        "office_home_step02:tile-2": {
+          "min": 0.21508789,
+          "max": 0.99902344,
+          "crosses085": true
+        },
+        "office_home_step02:tile-3": {
+          "min": 0.00035572052,
+          "max": 0.29882812,
+          "crosses085": false
+        },
+        "office_home_step02:tile-4": {
+          "min": 3.8802624e-05,
+          "max": 0.10498047,
+          "crosses085": false
+        },
+        "office_home_step02:tile-5": {
+          "min": 5.4359436e-05,
+          "max": 0.10913086,
+          "crosses085": false
+        },
+        "office_session2_home:tile-0": {
+          "min": 0.0038089752,
+          "max": 0.9980469,
+          "crosses085": true
+        },
+        "office_session2_home:tile-1": {
+          "min": 0.00013446808,
+          "max": 0.12597656,
+          "crosses085": false
+        },
+        "office_session2_home:tile-2": {
+          "min": 0.17529297,
+          "max": 0.99902344,
+          "crosses085": true
+        },
+        "office_session2_home:tile-3": {
+          "min": 0.00032019615,
+          "max": 0.3395996,
+          "crosses085": false
+        },
+        "office_session2_home:tile-4": {
+          "min": 4.541874e-05,
+          "max": 0.10839844,
+          "crosses085": false
+        },
+        "office_session2_home:tile-5": {
+          "min": 5.2273273e-05,
+          "max": 0.09289551,
+          "crosses085": false
+        },
+        "office_home_step03:tile-0": {
+          "min": 0.0004863739,
+          "max": 0.98828125,
+          "crosses085": true
+        },
+        "office_home_step03:tile-1": {
+          "min": 1.9669533e-05,
+          "max": 0.017501831,
+          "crosses085": false
+        },
+        "office_home_step03:tile-2": {
+          "min": 4.9471855e-05,
+          "max": 0.015792847,
+          "crosses085": false
+        },
+        "office_home_step03:tile-3": {
+          "min": 5.26309e-05,
+          "max": 0.0703125,
+          "crosses085": false
+        },
+        "office_home_step03:tile-4": {
+          "min": 1.1384487e-05,
+          "max": 0.02355957,
+          "crosses085": false
+        },
+        "office_home_step03:tile-5": {
+          "min": 1.2993813e-05,
+          "max": 0.021530151,
+          "crosses085": false
+        },
+        "office_home_step03:tile-6": {
+          "min": 0.01902771,
+          "max": 0.99902344,
+          "crosses085": true
+        },
+        "office_home_step03:tile-7": {
+          "min": 0.00018966198,
+          "max": 0.0713501,
+          "crosses085": false
+        },
+        "office_home_step03:tile-8": {
+          "min": 0.9291992,
+          "max": 0.99902344,
+          "crosses085": false
+        },
+        "office_home_step03:tile-9": {
+          "min": 9.536743e-06,
+          "max": 0.0017080307,
+          "crosses085": false
+        },
+        "office_home_step03:tile-10": {
+          "min": 0.47680664,
+          "max": 0.9838867,
+          "crosses085": true
+        },
+        "office_home_step03:tile-11": {
+          "min": 0.005821228,
+          "max": 0.9980469,
+          "crosses085": true
+        },
+        "office_home_step03:tile-12": {
+          "min": 1.7642975e-05,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_home_step03:tile-13": {
+          "min": 0.00036120415,
+          "max": 0.76660156,
+          "crosses085": false
+        },
+        "office_home_step03:tile-14": {
+          "min": 0.0004272461,
+          "max": 0.9873047,
+          "crosses085": true
+        },
+        "office_home_step03:tile-15": {
+          "min": 3.0994415e-05,
+          "max": 0.005466461,
+          "crosses085": false
+        },
+        "office_home_step03:tile-16": {
+          "min": 0.0024814606,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_home_step03:tile-17": {
+          "min": 0.00079488754,
+          "max": 0.3564453,
+          "crosses085": false
+        },
+        "office_home_step03:tile-18": {
+          "min": 0.88427734,
+          "max": 1,
+          "crosses085": false
+        },
+        "office_home_step03:tile-19": {
+          "min": 9.691715e-05,
+          "max": 0.17089844,
+          "crosses085": false
+        },
+        "office_home_step03:tile-20": {
+          "min": 0.9863281,
+          "max": 1,
+          "crosses085": false
+        },
+        "office_home_step03:tile-21": {
+          "min": 0.026397705,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_home_step03:tile-22": {
+          "min": 0.45361328,
+          "max": 0.99902344,
+          "crosses085": true
+        },
+        "office_home_step03:tile-23": {
+          "min": 8.612871e-05,
+          "max": 0.14038086,
+          "crosses085": false
+        },
+        "office_home_col5:tile-0": {
+          "min": 0.0010986328,
+          "max": 0.98095703,
+          "crosses085": true
+        },
+        "office_home_col5:tile-1": {
+          "min": 0.0051002502,
+          "max": 0.0793457,
+          "crosses085": false
+        },
+        "office_home_col5:tile-2": {
+          "min": 0.0047912598,
+          "max": 0.20617676,
+          "crosses085": false
+        },
+        "office_home_col5:tile-3": {
+          "min": 0.00041246414,
+          "max": 0.024887085,
+          "crosses085": false
+        },
+        "office_home_col5:tile-4": {
+          "min": 0.0026741028,
+          "max": 0.07354736,
+          "crosses085": false
+        },
+        "office_home_col5:tile-5": {
+          "min": 0.002149582,
+          "max": 0.07501221,
+          "crosses085": false
+        },
+        "office_home_col5:tile-6": {
+          "min": 0.009155273,
+          "max": 0.72216797,
+          "crosses085": false
+        },
+        "office_home_col5:tile-7": {
+          "min": 0.0017080307,
+          "max": 0.066833496,
+          "crosses085": false
+        },
+        "office_home_col5:tile-8": {
+          "min": 0.9741211,
+          "max": 0.99902344,
+          "crosses085": false
+        },
+        "office_home_col5:tile-9": {
+          "min": 0.0003771782,
+          "max": 0.06817627,
+          "crosses085": false
+        },
+        "office_home_col5:tile-10": {
+          "min": 0.58251953,
+          "max": 0.99902344,
+          "crosses085": true
+        },
+        "office_home_col5:tile-11": {
+          "min": 0.036224365,
+          "max": 0.40307617,
+          "crosses085": false
+        },
+        "office_home_col5:tile-12": {
+          "min": 0.0026931763,
+          "max": 0.07476807,
+          "crosses085": false
+        },
+        "office_home_col5:tile-13": {
+          "min": 0.0003950596,
+          "max": 0.07397461,
+          "crosses085": false
+        },
+        "office_home_col5:tile-14": {
+          "min": 9.536743e-05,
+          "max": 0.12646484,
+          "crosses085": false
+        },
+        "office_home_col5:tile-15": {
+          "min": 6.0796738e-06,
+          "max": 0.00015723705,
+          "crosses085": false
+        },
+        "office_home_col5:tile-16": {
+          "min": 0.01737976,
+          "max": 0.9970703,
+          "crosses085": true
+        },
+        "office_home_col5:tile-17": {
+          "min": 0.009521484,
+          "max": 0.30151367,
+          "crosses085": false
+        },
+        "office_home_col5:tile-18": {
+          "min": 0.8408203,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_home_col5:tile-19": {
+          "min": 0.00020503998,
+          "max": 0.002746582,
+          "crosses085": false
+        },
+        "office_home_col5:tile-20": {
+          "min": 0.9428711,
+          "max": 1,
+          "crosses085": false
+        },
+        "office_home_col5:tile-21": {
+          "min": 0.0038089752,
+          "max": 0.85546875,
+          "crosses085": true
+        },
+        "office_home_col5:tile-22": {
+          "min": 0.014953613,
+          "max": 0.8144531,
+          "crosses085": false
+        },
+        "office_home_col5:tile-23": {
+          "min": 0.0002270937,
+          "max": 0.002653122,
+          "crosses085": false
+        }
+      },
+      "batchCount": 14,
+      "firstPredictionPerBatchMedianMilliseconds": 4.532583334366791,
+      "firstPredictionPerBatchRangeMilliseconds": [
+        4.047750000609085,
+        11.476083338493481
+      ],
+      "warmMedianMilliseconds": 1.3036666641710326,
+      "cropMedianMilliseconds": 16.265312500763685,
+      "latencyScope": "CPU helper, repeated process/model loads; first per batch is not OS-cache-cold; no navigation latency"
+    },
+    "fp16": {
+      "base": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.7070707070707071,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 2,
+            "tn": 64,
+            "accuracy": 0.9166666666666666
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 66,
+            "accuracy": 0.9166666666666666
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 2,
+        "nearThresholdCount": 1
+      },
+      "baseProbabilities": [
+        {
+          "probability": 7.7843666e-05,
+          "cropMilliseconds": 14.415874989936128,
+          "inferenceMilliseconds": 11.77504166844301,
+          "id": "office_home_initial:tile-0:base"
+        },
+        {
+          "probability": 0.00046563148,
+          "cropMilliseconds": 14.234250003937632,
+          "inferenceMilliseconds": 1.4437500212807208,
+          "id": "office_home_initial:tile-1:base"
+        },
+        {
+          "probability": 0.00026130676,
+          "cropMilliseconds": 13.665041682543233,
+          "inferenceMilliseconds": 1.5642500075045973,
+          "id": "office_home_initial:tile-2:base"
+        },
+        {
+          "probability": 0.00076436996,
+          "cropMilliseconds": 14.051999984076247,
+          "inferenceMilliseconds": 1.3858333113603294,
+          "id": "office_home_initial:tile-3:base"
+        },
+        {
+          "probability": 0.00065898895,
+          "cropMilliseconds": 13.966833328595385,
+          "inferenceMilliseconds": 1.3088333362247795,
+          "id": "office_home_initial:tile-4:base"
+        },
+        {
+          "probability": 0.00047802925,
+          "cropMilliseconds": 14.223999984096736,
+          "inferenceMilliseconds": 1.3065000239294022,
+          "id": "office_home_initial:tile-5:base"
+        },
+        {
+          "id": "office_home_step01:tile-0:base",
+          "inferenceMilliseconds": 1.1943333374802023,
+          "probability": 0.00022006035,
+          "cropMilliseconds": 13.304291671374813
+        },
+        {
+          "id": "office_home_step01:tile-1:base",
+          "inferenceMilliseconds": 1.155041652964428,
+          "probability": 0.03668213,
+          "cropMilliseconds": 13.567666668677703
+        },
+        {
+          "id": "office_home_step01:tile-2:base",
+          "inferenceMilliseconds": 1.1395416804589331,
+          "probability": 0.0008459091,
+          "cropMilliseconds": 13.177541666664183
+        },
+        {
+          "id": "office_home_step01:tile-3:base",
+          "inferenceMilliseconds": 1.147083326941356,
+          "probability": 0.0007853508,
+          "cropMilliseconds": 13.138416659785435
+        },
+        {
+          "id": "office_home_step01:tile-4:base",
+          "inferenceMilliseconds": 1.126833347370848,
+          "probability": 0.0007405281,
+          "cropMilliseconds": 13.143416668754071
+        },
+        {
+          "id": "office_home_step01:tile-5:base",
+          "inferenceMilliseconds": 1.2073749967385083,
+          "probability": 0.0007176399,
+          "cropMilliseconds": 12.955458340002224
+        },
+        {
+          "cropMilliseconds": 13.611833332106471,
+          "probability": 0.00012338161,
+          "id": "office_home_step02:tile-0:base",
+          "inferenceMilliseconds": 1.2092916877008975
+        },
+        {
+          "cropMilliseconds": 13.57504166662693,
+          "probability": 0.000872612,
+          "id": "office_home_step02:tile-1:base",
+          "inferenceMilliseconds": 1.201041683088988
+        },
+        {
+          "cropMilliseconds": 13.956874987343326,
+          "probability": 0.6503906,
+          "id": "office_home_step02:tile-2:base",
+          "inferenceMilliseconds": 1.1794999882113189
+        },
+        {
+          "cropMilliseconds": 13.777666667010635,
+          "probability": 0.00090408325,
+          "id": "office_home_step02:tile-3:base",
+          "inferenceMilliseconds": 1.53254164615646
+        },
+        {
+          "cropMilliseconds": 13.585999986389652,
+          "probability": 0.00081682205,
+          "id": "office_home_step02:tile-4:base",
+          "inferenceMilliseconds": 1.288208324695006
+        },
+        {
+          "cropMilliseconds": 13.874750002287328,
+          "probability": 0.0009217262,
+          "id": "office_home_step02:tile-5:base",
+          "inferenceMilliseconds": 1.3138333451934159
+        },
+        {
+          "id": "office_session2_home:tile-0:base",
+          "probability": 0.00013446808,
+          "cropMilliseconds": 14.191458350978792,
+          "inferenceMilliseconds": 1.7992083448916674
+        },
+        {
+          "id": "office_session2_home:tile-1:base",
+          "probability": 0.000992775,
+          "cropMilliseconds": 14.0335833420977,
+          "inferenceMilliseconds": 1.6660416731610894
+        },
+        {
+          "id": "office_session2_home:tile-2:base",
+          "probability": 0.7001953,
+          "cropMilliseconds": 14.73729166900739,
+          "inferenceMilliseconds": 1.5819583495613188
+        },
+        {
+          "id": "office_session2_home:tile-3:base",
+          "probability": 0.0008969307,
+          "cropMilliseconds": 13.989166676765308,
+          "inferenceMilliseconds": 1.5238333435263485
+        },
+        {
+          "id": "office_session2_home:tile-4:base",
+          "probability": 0.00095033646,
+          "cropMilliseconds": 14.10575001500547,
+          "inferenceMilliseconds": 1.2666249822359532
+        },
+        {
+          "id": "office_session2_home:tile-5:base",
+          "probability": 0.00083589554,
+          "cropMilliseconds": 13.793124991934747,
+          "inferenceMilliseconds": 1.2570833205245435
+        },
+        {
+          "probability": 0.00013768673,
+          "id": "office_home_step03:tile-0:base",
+          "cropMilliseconds": 16.361916670575738,
+          "inferenceMilliseconds": 1.3282083382364362
+        },
+        {
+          "probability": 0.00063848495,
+          "id": "office_home_step03:tile-1:base",
+          "cropMilliseconds": 16.254249989287928,
+          "inferenceMilliseconds": 1.3285833119880408
+        },
+        {
+          "probability": 0.0013151169,
+          "id": "office_home_step03:tile-2:base",
+          "cropMilliseconds": 16.457333345897496,
+          "inferenceMilliseconds": 1.3833333214279264
+        },
+        {
+          "probability": 0.0006093979,
+          "id": "office_home_step03:tile-3:base",
+          "cropMilliseconds": 16.198249999433756,
+          "inferenceMilliseconds": 1.7065000138245523
+        },
+        {
+          "probability": 0.0007381439,
+          "id": "office_home_step03:tile-4:base",
+          "cropMilliseconds": 16.61854167468846,
+          "inferenceMilliseconds": 1.3934583403170109
+        },
+        {
+          "probability": 0.0008969307,
+          "id": "office_home_step03:tile-5:base",
+          "cropMilliseconds": 16.441458341432735,
+          "inferenceMilliseconds": 1.292958331760019
+        },
+        {
+          "probability": 0.45141602,
+          "id": "office_home_step03:tile-6:base",
+          "cropMilliseconds": 16.29608334042132,
+          "inferenceMilliseconds": 1.5392499917652458
+        },
+        {
+          "probability": 0.000105559826,
+          "id": "office_home_step03:tile-7:base",
+          "cropMilliseconds": 16.458166675874963,
+          "inferenceMilliseconds": 1.450041658245027
+        },
+        {
+          "probability": 0.13171387,
+          "id": "office_home_step03:tile-8:base",
+          "cropMilliseconds": 17.168541671708226,
+          "inferenceMilliseconds": 1.654083316680044
+        },
+        {
+          "probability": 0.00022339821,
+          "id": "office_home_step03:tile-9:base",
+          "cropMilliseconds": 16.997708356939256,
+          "inferenceMilliseconds": 1.5419583360198885
+        },
+        {
+          "probability": 0.00013554096,
+          "id": "office_home_step03:tile-10:base",
+          "cropMilliseconds": 16.465291671920568,
+          "inferenceMilliseconds": 1.277000003028661
+        },
+        {
+          "probability": 0.0037670135,
+          "id": "office_home_step03:tile-11:base",
+          "cropMilliseconds": 16.57341665122658,
+          "inferenceMilliseconds": 1.3187083532102406
+        },
+        {
+          "probability": 0.028015137,
+          "id": "office_home_step03:tile-12:base",
+          "cropMilliseconds": 16.757083329139277,
+          "inferenceMilliseconds": 1.303083321545273
+        },
+        {
+          "probability": 0.0029354095,
+          "id": "office_home_step03:tile-13:base",
+          "cropMilliseconds": 16.390625009080395,
+          "inferenceMilliseconds": 1.3593333424068987
+        },
+        {
+          "probability": 0.0031719208,
+          "id": "office_home_step03:tile-14:base",
+          "cropMilliseconds": 16.491749993292615,
+          "inferenceMilliseconds": 1.3309166533872485
+        },
+        {
+          "probability": 0.00015246868,
+          "id": "office_home_step03:tile-15:base",
+          "cropMilliseconds": 16.283166682114825,
+          "inferenceMilliseconds": 1.523166662082076
+        },
+        {
+          "probability": 0.03100586,
+          "id": "office_home_step03:tile-16:base",
+          "cropMilliseconds": 16.775166674051434,
+          "inferenceMilliseconds": 1.5099583251867443
+        },
+        {
+          "probability": 0.0026836395,
+          "id": "office_home_step03:tile-17:base",
+          "cropMilliseconds": 17.13029167149216,
+          "inferenceMilliseconds": 1.49629166116938
+        },
+        {
+          "probability": 0.17285156,
+          "id": "office_home_step03:tile-18:base",
+          "cropMilliseconds": 16.425916663138196,
+          "inferenceMilliseconds": 1.6758750134613365
+        },
+        {
+          "probability": 0.0009074211,
+          "id": "office_home_step03:tile-19:base",
+          "cropMilliseconds": 16.261541662970558,
+          "inferenceMilliseconds": 1.3054583105258644
+        },
+        {
+          "probability": 0.018981934,
+          "id": "office_home_step03:tile-20:base",
+          "cropMilliseconds": 16.2889166676905,
+          "inferenceMilliseconds": 1.2623749789781868
+        },
+        {
+          "probability": 0.0040245056,
+          "id": "office_home_step03:tile-21:base",
+          "cropMilliseconds": 15.922458347631618,
+          "inferenceMilliseconds": 1.2564166390802711
+        },
+        {
+          "id": "office_home_step03:tile-22:base",
+          "probability": 0.006668091,
+          "inferenceMilliseconds": 4.212500003632158,
+          "cropMilliseconds": 16.322333336574957
+        },
+        {
+          "id": "office_home_step03:tile-23:base",
+          "probability": 0.00090408325,
+          "inferenceMilliseconds": 1.3745833130087703,
+          "cropMilliseconds": 15.84054168779403
+        },
+        {
+          "inferenceMilliseconds": 1.3795833219774067,
+          "id": "office_home_col5:tile-0:base",
+          "cropMilliseconds": 18.393416685285047,
+          "probability": 0.00011241436
+        },
+        {
+          "inferenceMilliseconds": 1.5898333222139627,
+          "id": "office_home_col5:tile-1:base",
+          "cropMilliseconds": 18.804000021191314,
+          "probability": 0.0960083
+        },
+        {
+          "inferenceMilliseconds": 1.5739999944344163,
+          "id": "office_home_col5:tile-2:base",
+          "cropMilliseconds": 19.001041684532538,
+          "probability": 0.01159668
+        },
+        {
+          "inferenceMilliseconds": 1.327666686847806,
+          "id": "office_home_col5:tile-3:base",
+          "cropMilliseconds": 19.521208334481344,
+          "probability": 0.0053215027
+        },
+        {
+          "inferenceMilliseconds": 1.3427083322312683,
+          "id": "office_home_col5:tile-4:base",
+          "cropMilliseconds": 18.856791662983596,
+          "probability": 0.012580872
+        },
+        {
+          "inferenceMilliseconds": 1.263958343770355,
+          "id": "office_home_col5:tile-5:base",
+          "cropMilliseconds": 18.758833350148052,
+          "probability": 0.021011353
+        },
+        {
+          "inferenceMilliseconds": 4.720124998129904,
+          "cropMilliseconds": 19.01287501095794,
+          "probability": 0.6323242,
+          "id": "office_home_col5:tile-6:base"
+        },
+        {
+          "inferenceMilliseconds": 1.3708333426620811,
+          "cropMilliseconds": 18.571291671833023,
+          "probability": 7.426739e-05,
+          "id": "office_home_col5:tile-7:base"
+        },
+        {
+          "inferenceMilliseconds": 1.630958344321698,
+          "cropMilliseconds": 18.913583335233852,
+          "probability": 0.7895508,
+          "id": "office_home_col5:tile-8:base"
+        },
+        {
+          "inferenceMilliseconds": 1.28674998995848,
+          "cropMilliseconds": 18.403833353659138,
+          "probability": 0.00014090538,
+          "id": "office_home_col5:tile-9:base"
+        },
+        {
+          "inferenceMilliseconds": 1.5352083428297192,
+          "cropMilliseconds": 18.32687499700114,
+          "probability": 1.4722347e-05,
+          "id": "office_home_col5:tile-10:base"
+        },
+        {
+          "inferenceMilliseconds": 1.3284999877214432,
+          "cropMilliseconds": 19.913208350772038,
+          "probability": 0.00070142746,
+          "id": "office_home_col5:tile-11:base"
+        },
+        {
+          "inferenceMilliseconds": 1.36020831996575,
+          "cropMilliseconds": 19.2102916771546,
+          "probability": 0.0021743774,
+          "id": "office_home_col5:tile-12:base"
+        },
+        {
+          "inferenceMilliseconds": 1.5569999814033508,
+          "cropMilliseconds": 18.48599998629652,
+          "probability": 0.0001283884,
+          "id": "office_home_col5:tile-13:base"
+        },
+        {
+          "inferenceMilliseconds": 1.3189583260100335,
+          "cropMilliseconds": 18.6785833502654,
+          "probability": 0.002620697,
+          "id": "office_home_col5:tile-14:base"
+        },
+        {
+          "inferenceMilliseconds": 1.2583333300426602,
+          "cropMilliseconds": 20.222749997628853,
+          "probability": 9.9897385e-05,
+          "id": "office_home_col5:tile-15:base"
+        },
+        {
+          "inferenceMilliseconds": 2.610583323985338,
+          "cropMilliseconds": 20.77425000607036,
+          "probability": 0.0004222393,
+          "id": "office_home_col5:tile-16:base"
+        },
+        {
+          "inferenceMilliseconds": 2.18658332596533,
+          "cropMilliseconds": 23.838958353735507,
+          "probability": 0.0010986328,
+          "id": "office_home_col5:tile-17:base"
+        },
+        {
+          "inferenceMilliseconds": 1.8202500068582594,
+          "cropMilliseconds": 22.758416656870395,
+          "probability": 0.017044067,
+          "id": "office_home_col5:tile-18:base"
+        },
+        {
+          "inferenceMilliseconds": 1.8251666915602982,
+          "cropMilliseconds": 19.030833325814456,
+          "probability": 0.00015723705,
+          "id": "office_home_col5:tile-19:base"
+        },
+        {
+          "inferenceMilliseconds": 1.6691666678525507,
+          "cropMilliseconds": 19.995000009657815,
+          "probability": 0.002822876,
+          "id": "office_home_col5:tile-20:base"
+        },
+        {
+          "inferenceMilliseconds": 1.375458319671452,
+          "cropMilliseconds": 19.791875005466864,
+          "probability": 0.00044560432,
+          "id": "office_home_col5:tile-21:base"
+        },
+        {
+          "inferenceMilliseconds": 1.6398333245888352,
+          "cropMilliseconds": 18.908791680587456,
+          "probability": 0.00031018257,
+          "id": "office_home_col5:tile-22:base"
+        },
+        {
+          "inferenceMilliseconds": 1.5774583152960986,
+          "cropMilliseconds": 18.732041644398123,
+          "probability": 0.00019562244,
+          "id": "office_home_col5:tile-23:base"
+        }
+      ],
+      "sensitivityFrameDecisions": {
+        "no-focus": 23,
+        "wrong-focus": 8,
+        "correct": 1,
+        "multiple-focus-abstention": 4
+      },
+      "probabilityRanges": {
+        "office_home_initial:tile-0": {
+          "min": 1.2397766e-05,
+          "max": 7.7843666e-05,
+          "crosses085": false
+        },
+        "office_home_initial:tile-1": {
+          "min": 0.0004222393,
+          "max": 0.010940552,
+          "crosses085": false
+        },
+        "office_home_initial:tile-2": {
+          "min": 0.00026130676,
+          "max": 0.013320923,
+          "crosses085": false
+        },
+        "office_home_initial:tile-3": {
+          "min": 0.00022339821,
+          "max": 0.0029449463,
+          "crosses085": false
+        },
+        "office_home_initial:tile-4": {
+          "min": 0.00022339821,
+          "max": 0.0033245087,
+          "crosses085": false
+        },
+        "office_home_initial:tile-5": {
+          "min": 0.00020837784,
+          "max": 0.0038986206,
+          "crosses085": false
+        },
+        "office_home_step01:tile-0": {
+          "min": 9.536743e-06,
+          "max": 0.00022006035,
+          "crosses085": false
+        },
+        "office_home_step01:tile-1": {
+          "min": 0.010566711,
+          "max": 0.9980469,
+          "crosses085": true
+        },
+        "office_home_step01:tile-2": {
+          "min": 0.0008459091,
+          "max": 0.024459839,
+          "crosses085": false
+        },
+        "office_home_step01:tile-3": {
+          "min": 0.0007853508,
+          "max": 0.87060547,
+          "crosses085": true
+        },
+        "office_home_step01:tile-4": {
+          "min": 0.0007405281,
+          "max": 0.7036133,
+          "crosses085": false
+        },
+        "office_home_step01:tile-5": {
+          "min": 0.0007176399,
+          "max": 0.83203125,
+          "crosses085": false
+        },
+        "office_home_step02:tile-0": {
+          "min": 2.4855137e-05,
+          "max": 0.00028038025,
+          "crosses085": false
+        },
+        "office_home_step02:tile-1": {
+          "min": 0.0005683899,
+          "max": 0.84228516,
+          "crosses085": false
+        },
+        "office_home_step02:tile-2": {
+          "min": 0.020812988,
+          "max": 0.6503906,
+          "crosses085": false
+        },
+        "office_home_step02:tile-3": {
+          "min": 0.00090408325,
+          "max": 0.9863281,
+          "crosses085": true
+        },
+        "office_home_step02:tile-4": {
+          "min": 0.00081682205,
+          "max": 0.9453125,
+          "crosses085": true
+        },
+        "office_home_step02:tile-5": {
+          "min": 0.0009217262,
+          "max": 0.9506836,
+          "crosses085": true
+        },
+        "office_session2_home:tile-0": {
+          "min": 2.336502e-05,
+          "max": 0.00028657913,
+          "crosses085": false
+        },
+        "office_session2_home:tile-1": {
+          "min": 0.00054836273,
+          "max": 0.7973633,
+          "crosses085": false
+        },
+        "office_session2_home:tile-2": {
+          "min": 0.019805908,
+          "max": 0.7001953,
+          "crosses085": false
+        },
+        "office_session2_home:tile-3": {
+          "min": 0.0008969307,
+          "max": 0.98535156,
+          "crosses085": true
+        },
+        "office_session2_home:tile-4": {
+          "min": 0.00095033646,
+          "max": 0.9291992,
+          "crosses085": true
+        },
+        "office_session2_home:tile-5": {
+          "min": 0.00083589554,
+          "max": 0.9472656,
+          "crosses085": true
+        },
+        "office_home_step03:tile-0": {
+          "min": 9.357929e-06,
+          "max": 0.0004222393,
+          "crosses085": false
+        },
+        "office_home_step03:tile-1": {
+          "min": 0.00063848495,
+          "max": 0.90478516,
+          "crosses085": true
+        },
+        "office_home_step03:tile-2": {
+          "min": 0.0013151169,
+          "max": 0.041168213,
+          "crosses085": false
+        },
+        "office_home_step03:tile-3": {
+          "min": 0.0006093979,
+          "max": 0.77001953,
+          "crosses085": false
+        },
+        "office_home_step03:tile-4": {
+          "min": 0.0007381439,
+          "max": 0.87841797,
+          "crosses085": true
+        },
+        "office_home_step03:tile-5": {
+          "min": 0.0008969307,
+          "max": 0.86572266,
+          "crosses085": true
+        },
+        "office_home_step03:tile-6": {
+          "min": 0.45141602,
+          "max": 0.8691406,
+          "crosses085": true
+        },
+        "office_home_step03:tile-7": {
+          "min": 0.000105559826,
+          "max": 0.002571106,
+          "crosses085": false
+        },
+        "office_home_step03:tile-8": {
+          "min": 0.13171387,
+          "max": 0.5546875,
+          "crosses085": false
+        },
+        "office_home_step03:tile-9": {
+          "min": 2.7954578e-05,
+          "max": 0.0009622574,
+          "crosses085": false
+        },
+        "office_home_step03:tile-10": {
+          "min": 4.8696995e-05,
+          "max": 0.00027179718,
+          "crosses085": false
+        },
+        "office_home_step03:tile-11": {
+          "min": 0.00058841705,
+          "max": 0.004234314,
+          "crosses085": false
+        },
+        "office_home_step03:tile-12": {
+          "min": 0.0030403137,
+          "max": 0.2265625,
+          "crosses085": false
+        },
+        "office_home_step03:tile-13": {
+          "min": 0.0029354095,
+          "max": 0.044189453,
+          "crosses085": false
+        },
+        "office_home_step03:tile-14": {
+          "min": 0.0031719208,
+          "max": 0.10357666,
+          "crosses085": false
+        },
+        "office_home_step03:tile-15": {
+          "min": 7.033348e-05,
+          "max": 0.00039196014,
+          "crosses085": false
+        },
+        "office_home_step03:tile-16": {
+          "min": 0.0009851456,
+          "max": 0.4724121,
+          "crosses085": false
+        },
+        "office_home_step03:tile-17": {
+          "min": 0.0012893677,
+          "max": 0.4885254,
+          "crosses085": false
+        },
+        "office_home_step03:tile-18": {
+          "min": 0.015487671,
+          "max": 0.17285156,
+          "crosses085": false
+        },
+        "office_home_step03:tile-19": {
+          "min": 0.0009074211,
+          "max": 0.89208984,
+          "crosses085": true
+        },
+        "office_home_step03:tile-20": {
+          "min": 0.009017944,
+          "max": 0.022720337,
+          "crosses085": false
+        },
+        "office_home_step03:tile-21": {
+          "min": 0.00031256676,
+          "max": 0.016723633,
+          "crosses085": false
+        },
+        "office_home_step03:tile-22": {
+          "min": 0.00070142746,
+          "max": 0.05908203,
+          "crosses085": false
+        },
+        "office_home_step03:tile-23": {
+          "min": 0.00090408325,
+          "max": 0.91748047,
+          "crosses085": true
+        },
+        "office_home_col5:tile-0": {
+          "min": 8.225441e-06,
+          "max": 0.000116825104,
+          "crosses085": false
+        },
+        "office_home_col5:tile-1": {
+          "min": 0.001748085,
+          "max": 0.10430908,
+          "crosses085": false
+        },
+        "office_home_col5:tile-2": {
+          "min": 0.01159668,
+          "max": 0.21435547,
+          "crosses085": false
+        },
+        "office_home_col5:tile-3": {
+          "min": 0.0019798279,
+          "max": 0.6352539,
+          "crosses085": false
+        },
+        "office_home_col5:tile-4": {
+          "min": 0.00093984604,
+          "max": 0.07312012,
+          "crosses085": false
+        },
+        "office_home_col5:tile-5": {
+          "min": 0.00058603287,
+          "max": 0.049224854,
+          "crosses085": false
+        },
+        "office_home_col5:tile-6": {
+          "min": 0.23840332,
+          "max": 0.81933594,
+          "crosses085": false
+        },
+        "office_home_col5:tile-7": {
+          "min": 3.2424927e-05,
+          "max": 0.00055265427,
+          "crosses085": false
+        },
+        "office_home_col5:tile-8": {
+          "min": 0.16455078,
+          "max": 0.9277344,
+          "crosses085": true
+        },
+        "office_home_col5:tile-9": {
+          "min": 2.1100044e-05,
+          "max": 0.00048828125,
+          "crosses085": false
+        },
+        "office_home_col5:tile-10": {
+          "min": 9.417534e-06,
+          "max": 0.00011241436,
+          "crosses085": false
+        },
+        "office_home_col5:tile-11": {
+          "min": 0.00011241436,
+          "max": 0.00349617,
+          "crosses085": false
+        },
+        "office_home_col5:tile-12": {
+          "min": 0.0006213188,
+          "max": 0.0056419373,
+          "crosses085": false
+        },
+        "office_home_col5:tile-13": {
+          "min": 0.0001283884,
+          "max": 0.0026741028,
+          "crosses085": false
+        },
+        "office_home_col5:tile-14": {
+          "min": 0.001206398,
+          "max": 0.012290955,
+          "crosses085": false
+        },
+        "office_home_col5:tile-15": {
+          "min": 2.3186207e-05,
+          "max": 0.0004339218,
+          "crosses085": false
+        },
+        "office_home_col5:tile-16": {
+          "min": 0.00014090538,
+          "max": 0.0016231537,
+          "crosses085": false
+        },
+        "office_home_col5:tile-17": {
+          "min": 0.00028657913,
+          "max": 0.003944397,
+          "crosses085": false
+        },
+        "office_home_col5:tile-18": {
+          "min": 0.0051002502,
+          "max": 0.042236328,
+          "crosses085": false
+        },
+        "office_home_col5:tile-19": {
+          "min": 9.763241e-05,
+          "max": 0.00074338913,
+          "crosses085": false
+        },
+        "office_home_col5:tile-20": {
+          "min": 0.0015611649,
+          "max": 0.0033111572,
+          "crosses085": false
+        },
+        "office_home_col5:tile-21": {
+          "min": 1.591444e-05,
+          "max": 0.00077056885,
+          "crosses085": false
+        },
+        "office_home_col5:tile-22": {
+          "min": 2.0325184e-05,
+          "max": 0.0012645721,
+          "crosses085": false
+        },
+        "office_home_col5:tile-23": {
+          "min": 0.00015354156,
+          "max": 0.0006990433,
+          "crosses085": false
+        }
+      },
+      "batchCount": 14,
+      "firstPredictionPerBatchMedianMilliseconds": 4.304625006625429,
+      "firstPredictionPerBatchRangeMilliseconds": [
+        3.96887501119636,
+        11.77504166844301
+      ],
+      "warmMedianMilliseconds": 1.3073125155642629,
+      "cropMedianMilliseconds": 16.389791679102927,
+      "latencyScope": "CPU helper, repeated process/model loads; first per batch is not OS-cache-cold; no navigation latency"
+    },
+    "int8": {
+      "base": {
+        "metrics": {
+          "count": 72,
+          "auroc": 0.7070707070707071,
+          "0.5": {
+            "tp": 2,
+            "fn": 4,
+            "fp": 2,
+            "tn": 64,
+            "accuracy": 0.9166666666666666
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 6,
+            "fp": 0,
+            "tn": 66,
+            "accuracy": 0.9166666666666666
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_home_initial",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step01",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step02",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_session2_home",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_step03",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_home_col5",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 1,
+        "nearThresholdCount": 0
+      },
+      "baseProbabilities": [
+        {
+          "inferenceMilliseconds": 11.234208330279216,
+          "probability": 0.000103116035,
+          "cropMilliseconds": 13.799250009469688,
+          "id": "office_home_initial:tile-0:base"
+        },
+        {
+          "inferenceMilliseconds": 1.3178749941289425,
+          "probability": 0.00042366982,
+          "cropMilliseconds": 13.150666665751487,
+          "id": "office_home_initial:tile-1:base"
+        },
+        {
+          "inferenceMilliseconds": 1.2825833400711417,
+          "probability": 0.00027179718,
+          "cropMilliseconds": 13.250375021016225,
+          "id": "office_home_initial:tile-2:base"
+        },
+        {
+          "inferenceMilliseconds": 1.1734583240468055,
+          "probability": 0.0007915497,
+          "cropMilliseconds": 13.559833343606442,
+          "id": "office_home_initial:tile-3:base"
+        },
+        {
+          "inferenceMilliseconds": 1.2400000123307109,
+          "probability": 0.00065135956,
+          "cropMilliseconds": 14.369749987963587,
+          "id": "office_home_initial:tile-4:base"
+        },
+        {
+          "inferenceMilliseconds": 1.2407499889377505,
+          "probability": 0.00046730042,
+          "cropMilliseconds": 14.776291645830497,
+          "id": "office_home_initial:tile-5:base"
+        },
+        {
+          "probability": 0.00021493435,
+          "inferenceMilliseconds": 1.7045833228621632,
+          "id": "office_home_step01:tile-0:base",
+          "cropMilliseconds": 13.672125001903623
+        },
+        {
+          "probability": 0.033813477,
+          "inferenceMilliseconds": 1.560708333272487,
+          "id": "office_home_step01:tile-1:base",
+          "cropMilliseconds": 14.121708343736827
+        },
+        {
+          "probability": 0.0008659363,
+          "inferenceMilliseconds": 1.3089583371765912,
+          "id": "office_home_step01:tile-2:base",
+          "cropMilliseconds": 13.774374994682148
+        },
+        {
+          "probability": 0.00081014633,
+          "inferenceMilliseconds": 1.3310000067576766,
+          "id": "office_home_step01:tile-3:base",
+          "cropMilliseconds": 13.73299999977462
+        },
+        {
+          "probability": 0.0007209778,
+          "inferenceMilliseconds": 1.2960000021848828,
+          "id": "office_home_step01:tile-4:base",
+          "cropMilliseconds": 14.160374994389713
+        },
+        {
+          "probability": 0.000746727,
+          "inferenceMilliseconds": 1.4528750034514815,
+          "id": "office_home_step01:tile-5:base",
+          "cropMilliseconds": 13.640916673466563
+        },
+        {
+          "inferenceMilliseconds": 1.2343749986030161,
+          "id": "office_home_step02:tile-0:base",
+          "probability": 0.00013244152,
+          "cropMilliseconds": 13.734833337366581
+        },
+        {
+          "inferenceMilliseconds": 1.204958331072703,
+          "id": "office_home_step02:tile-1:base",
+          "probability": 0.0009889603,
+          "cropMilliseconds": 13.938749994849786
+        },
+        {
+          "inferenceMilliseconds": 1.2384583242237568,
+          "id": "office_home_step02:tile-2:base",
+          "probability": 0.63916016,
+          "cropMilliseconds": 14.01374998386018
+        },
+        {
+          "inferenceMilliseconds": 1.3830416719429195,
+          "id": "office_home_step02:tile-3:base",
+          "probability": 0.0009851456,
+          "cropMilliseconds": 13.71712499530986
+        },
+        {
+          "inferenceMilliseconds": 1.2594166619237512,
+          "id": "office_home_step02:tile-4:base",
+          "probability": 0.00090026855,
+          "cropMilliseconds": 13.711166684515774
+        },
+        {
+          "inferenceMilliseconds": 1.2110833486076444,
+          "id": "office_home_step02:tile-5:base",
+          "probability": 0.0010604858,
+          "cropMilliseconds": 13.534625002648681
+        },
+        {
+          "probability": 0.00013768673,
+          "inferenceMilliseconds": 1.3055833405815065,
+          "cropMilliseconds": 13.87433332274668,
+          "id": "office_session2_home:tile-0:base"
+        },
+        {
+          "probability": 0.001036644,
+          "inferenceMilliseconds": 1.3019166653975844,
+          "cropMilliseconds": 13.971041684271768,
+          "id": "office_session2_home:tile-1:base"
+        },
+        {
+          "probability": 0.68652344,
+          "inferenceMilliseconds": 1.2956249993294477,
+          "cropMilliseconds": 14.27004166180268,
+          "id": "office_session2_home:tile-2:base"
+        },
+        {
+          "probability": 0.0009965897,
+          "inferenceMilliseconds": 1.330916682491079,
+          "cropMilliseconds": 13.781666668364778,
+          "id": "office_session2_home:tile-3:base"
+        },
+        {
+          "probability": 0.0010404587,
+          "inferenceMilliseconds": 1.3552916643675417,
+          "cropMilliseconds": 14.15037500555627,
+          "id": "office_session2_home:tile-4:base"
+        },
+        {
+          "probability": 0.0009365082,
+          "inferenceMilliseconds": 1.3144583208486438,
+          "cropMilliseconds": 14.10779164871201,
+          "id": "office_session2_home:tile-5:base"
+        },
+        {
+          "inferenceMilliseconds": 1.268958323635161,
+          "id": "office_home_step03:tile-0:base",
+          "cropMilliseconds": 15.869750001002103,
+          "probability": 0.00013446808
+        },
+        {
+          "inferenceMilliseconds": 1.305583311477676,
+          "id": "office_home_step03:tile-1:base",
+          "cropMilliseconds": 15.79787500668317,
+          "probability": 0.00063848495
+        },
+        {
+          "inferenceMilliseconds": 1.2986249930690974,
+          "id": "office_home_step03:tile-2:base",
+          "cropMilliseconds": 15.801250003278255,
+          "probability": 0.0013713837
+        },
+        {
+          "inferenceMilliseconds": 1.283541671000421,
+          "id": "office_home_step03:tile-3:base",
+          "cropMilliseconds": 16.15616667550057,
+          "probability": 0.0006213188
+        },
+        {
+          "inferenceMilliseconds": 1.2235416797921062,
+          "id": "office_home_step03:tile-4:base",
+          "cropMilliseconds": 16.235958348261192,
+          "probability": 0.00074338913
+        },
+        {
+          "inferenceMilliseconds": 1.2746249849442393,
+          "id": "office_home_step03:tile-5:base",
+          "cropMilliseconds": 16.171875002328306,
+          "probability": 0.0008864403
+        },
+        {
+          "inferenceMilliseconds": 1.2562499905470759,
+          "id": "office_home_step03:tile-6:base",
+          "cropMilliseconds": 16.178374993614852,
+          "probability": 0.39941406
+        },
+        {
+          "inferenceMilliseconds": 1.222416671225801,
+          "id": "office_home_step03:tile-7:base",
+          "cropMilliseconds": 16.20570835075341,
+          "probability": 9.9897385e-05
+        },
+        {
+          "inferenceMilliseconds": 1.2246250116731972,
+          "id": "office_home_step03:tile-8:base",
+          "cropMilliseconds": 16.51312501053326,
+          "probability": 0.13671875
+        },
+        {
+          "inferenceMilliseconds": 1.2489583459682763,
+          "id": "office_home_step03:tile-9:base",
+          "cropMilliseconds": 15.829999989364296,
+          "probability": 0.00027179718
+        },
+        {
+          "inferenceMilliseconds": 1.7387499974574894,
+          "id": "office_home_step03:tile-10:base",
+          "cropMilliseconds": 16.286375001072884,
+          "probability": 0.00012540817
+        },
+        {
+          "inferenceMilliseconds": 1.3856666628271341,
+          "id": "office_home_step03:tile-11:base",
+          "cropMilliseconds": 16.129166673636064,
+          "probability": 0.0042152405
+        },
+        {
+          "inferenceMilliseconds": 1.1678750161081553,
+          "id": "office_home_step03:tile-12:base",
+          "cropMilliseconds": 16.133124998304993,
+          "probability": 0.03567505
+        },
+        {
+          "inferenceMilliseconds": 1.1530416668392718,
+          "id": "office_home_step03:tile-13:base",
+          "cropMilliseconds": 16.091124998638406,
+          "probability": 0.0032367706
+        },
+        {
+          "inferenceMilliseconds": 1.3167083379812539,
+          "id": "office_home_step03:tile-14:base",
+          "cropMilliseconds": 16.21908333618194,
+          "probability": 0.0026016235
+        },
+        {
+          "inferenceMilliseconds": 1.280916651012376,
+          "id": "office_home_step03:tile-15:base",
+          "cropMilliseconds": 16.33137499447912,
+          "probability": 0.00016605854
+        },
+        {
+          "inferenceMilliseconds": 1.201291655888781,
+          "id": "office_home_step03:tile-16:base",
+          "cropMilliseconds": 16.254749993095174,
+          "probability": 0.040100098
+        },
+        {
+          "inferenceMilliseconds": 1.609999977517873,
+          "id": "office_home_step03:tile-17:base",
+          "cropMilliseconds": 16.314791690092534,
+          "probability": 0.0030288696
+        },
+        {
+          "inferenceMilliseconds": 1.5102916804607958,
+          "id": "office_home_step03:tile-18:base",
+          "cropMilliseconds": 16.50133333168924,
+          "probability": 0.16088867
+        },
+        {
+          "inferenceMilliseconds": 1.5725833363831043,
+          "id": "office_home_step03:tile-19:base",
+          "cropMilliseconds": 16.39487501233816,
+          "probability": 0.0009150505
+        },
+        {
+          "inferenceMilliseconds": 1.6907500103116035,
+          "id": "office_home_step03:tile-20:base",
+          "cropMilliseconds": 16.866958350874484,
+          "probability": 0.021209717
+        },
+        {
+          "inferenceMilliseconds": 1.6734999953769147,
+          "id": "office_home_step03:tile-21:base",
+          "cropMilliseconds": 16.395999991800636,
+          "probability": 0.003944397
+        },
+        {
+          "id": "office_home_step03:tile-22:base",
+          "inferenceMilliseconds": 5.022333323722705,
+          "cropMilliseconds": 16.956083331024274,
+          "probability": 0.0064888
+        },
+        {
+          "id": "office_home_step03:tile-23:base",
+          "inferenceMilliseconds": 1.5303750114981085,
+          "cropMilliseconds": 16.484916675835848,
+          "probability": 0.0008864403
+        },
+        {
+          "probability": 0.00012636185,
+          "cropMilliseconds": 18.527416657889262,
+          "inferenceMilliseconds": 1.2164166546426713,
+          "id": "office_home_col5:tile-0:base"
+        },
+        {
+          "probability": 0.08081055,
+          "cropMilliseconds": 18.207958346465603,
+          "inferenceMilliseconds": 1.2277500063646585,
+          "id": "office_home_col5:tile-1:base"
+        },
+        {
+          "probability": 0.011871338,
+          "cropMilliseconds": 18.084041686961427,
+          "inferenceMilliseconds": 1.5200000198092312,
+          "id": "office_home_col5:tile-2:base"
+        },
+        {
+          "probability": 0.005241394,
+          "cropMilliseconds": 18.301041680388153,
+          "inferenceMilliseconds": 1.277041679713875,
+          "id": "office_home_col5:tile-3:base"
+        },
+        {
+          "probability": 0.010818481,
+          "cropMilliseconds": 18.347583332797512,
+          "inferenceMilliseconds": 1.3875833246856928,
+          "id": "office_home_col5:tile-4:base"
+        },
+        {
+          "probability": 0.02128601,
+          "cropMilliseconds": 18.453458353178576,
+          "inferenceMilliseconds": 1.3942916702944785,
+          "id": "office_home_col5:tile-5:base"
+        },
+        {
+          "inferenceMilliseconds": 4.612374992575496,
+          "id": "office_home_col5:tile-6:base",
+          "probability": 0.6298828,
+          "cropMilliseconds": 18.894624983659014
+        },
+        {
+          "inferenceMilliseconds": 1.5562083281110972,
+          "id": "office_home_col5:tile-7:base",
+          "probability": 6.353855e-05,
+          "cropMilliseconds": 18.793916649883613
+        },
+        {
+          "inferenceMilliseconds": 1.5940833545755595,
+          "id": "office_home_col5:tile-8:base",
+          "probability": 0.77685547,
+          "cropMilliseconds": 19.09191664890386
+        },
+        {
+          "inferenceMilliseconds": 1.255583338206634,
+          "id": "office_home_col5:tile-9:base",
+          "probability": 0.00015604496,
+          "cropMilliseconds": 18.644583324203268
+        },
+        {
+          "inferenceMilliseconds": 1.280249998671934,
+          "id": "office_home_col5:tile-10:base",
+          "probability": 1.4424324e-05,
+          "cropMilliseconds": 18.457833328284323
+        },
+        {
+          "inferenceMilliseconds": 1.2447916669771075,
+          "id": "office_home_col5:tile-11:base",
+          "probability": 0.00070142746,
+          "cropMilliseconds": 18.883583339629695
+        },
+        {
+          "inferenceMilliseconds": 1.1770833225455135,
+          "id": "office_home_col5:tile-12:base",
+          "probability": 0.0023422241,
+          "cropMilliseconds": 18.34916666848585
+        },
+        {
+          "inferenceMilliseconds": 1.1884583509527147,
+          "id": "office_home_col5:tile-13:base",
+          "probability": 0.00013768673,
+          "cropMilliseconds": 18.417083338135853
+        },
+        {
+          "inferenceMilliseconds": 1.2591250124387443,
+          "id": "office_home_col5:tile-14:base",
+          "probability": 0.0025806427,
+          "cropMilliseconds": 18.152541655581445
+        },
+        {
+          "inferenceMilliseconds": 1.2174166622571647,
+          "id": "office_home_col5:tile-15:base",
+          "probability": 8.893013e-05,
+          "cropMilliseconds": 18.188708345405757
+        },
+        {
+          "inferenceMilliseconds": 1.203916675876826,
+          "id": "office_home_col5:tile-16:base",
+          "probability": 0.00045609474,
+          "cropMilliseconds": 18.407791649224237
+        },
+        {
+          "inferenceMilliseconds": 1.2159166799392551,
+          "id": "office_home_col5:tile-17:base",
+          "probability": 0.0010166168,
+          "cropMilliseconds": 18.308708327822387
+        },
+        {
+          "inferenceMilliseconds": 1.3250833144411445,
+          "id": "office_home_col5:tile-18:base",
+          "probability": 0.017852783,
+          "cropMilliseconds": 18.241791665786877
+        },
+        {
+          "inferenceMilliseconds": 1.272708352189511,
+          "id": "office_home_col5:tile-19:base",
+          "probability": 0.0001500845,
+          "cropMilliseconds": 18.148875009501353
+        },
+        {
+          "inferenceMilliseconds": 1.2595833104569465,
+          "id": "office_home_col5:tile-20:base",
+          "probability": 0.0028324127,
+          "cropMilliseconds": 17.905708344187587
+        },
+        {
+          "inferenceMilliseconds": 1.3052500144112855,
+          "id": "office_home_col5:tile-21:base",
+          "probability": 0.00047802925,
+          "cropMilliseconds": 17.975958326132968
+        },
+        {
+          "inferenceMilliseconds": 1.2359999818727374,
+          "id": "office_home_col5:tile-22:base",
+          "probability": 0.00034332275,
+          "cropMilliseconds": 18.08537502074614
+        },
+        {
+          "inferenceMilliseconds": 1.2632916623260826,
+          "id": "office_home_col5:tile-23:base",
+          "probability": 0.00018107891,
+          "cropMilliseconds": 18.062041664961725
+        }
+      ],
+      "sensitivityFrameDecisions": {
+        "no-focus": 25,
+        "wrong-focus": 5,
+        "correct": 1,
+        "multiple-focus-abstention": 5
+      },
+      "probabilityRanges": {
+        "office_home_initial:tile-0": {
+          "min": 1.4066696e-05,
+          "max": 0.000103116035,
+          "crosses085": false
+        },
+        "office_home_initial:tile-1": {
+          "min": 0.00040006638,
+          "max": 0.009597778,
+          "crosses085": false
+        },
+        "office_home_initial:tile-2": {
+          "min": 0.00027179718,
+          "max": 0.013168335,
+          "crosses085": false
+        },
+        "office_home_initial:tile-3": {
+          "min": 0.00022339821,
+          "max": 0.003124237,
+          "crosses085": false
+        },
+        "office_home_initial:tile-4": {
+          "min": 0.0002323389,
+          "max": 0.0031719208,
+          "crosses085": false
+        },
+        "office_home_initial:tile-5": {
+          "min": 0.00018668175,
+          "max": 0.003824234,
+          "crosses085": false
+        },
+        "office_home_step01:tile-0": {
+          "min": 1.0311604e-05,
+          "max": 0.00021493435,
+          "crosses085": false
+        },
+        "office_home_step01:tile-1": {
+          "min": 0.009864807,
+          "max": 0.9980469,
+          "crosses085": true
+        },
+        "office_home_step01:tile-2": {
+          "min": 0.0008659363,
+          "max": 0.025039673,
+          "crosses085": false
+        },
+        "office_home_step01:tile-3": {
+          "min": 0.00081014633,
+          "max": 0.87353516,
+          "crosses085": true
+        },
+        "office_home_step01:tile-4": {
+          "min": 0.0007209778,
+          "max": 0.69384766,
+          "crosses085": false
+        },
+        "office_home_step01:tile-5": {
+          "min": 0.000746727,
+          "max": 0.8364258,
+          "crosses085": false
+        },
+        "office_home_step02:tile-0": {
+          "min": 2.6285648e-05,
+          "max": 0.00028038025,
+          "crosses085": false
+        },
+        "office_home_step02:tile-1": {
+          "min": 0.0006093979,
+          "max": 0.86621094,
+          "crosses085": true
+        },
+        "office_home_step02:tile-2": {
+          "min": 0.02178955,
+          "max": 0.63916016,
+          "crosses085": false
+        },
+        "office_home_step02:tile-3": {
+          "min": 0.0009851456,
+          "max": 0.9838867,
+          "crosses085": true
+        },
+        "office_home_step02:tile-4": {
+          "min": 0.00090026855,
+          "max": 0.9404297,
+          "crosses085": true
+        },
+        "office_home_step02:tile-5": {
+          "min": 0.0010604858,
+          "max": 0.9482422,
+          "crosses085": true
+        },
+        "office_session2_home:tile-0": {
+          "min": 2.6285648e-05,
+          "max": 0.00028038025,
+          "crosses085": false
+        },
+        "office_session2_home:tile-1": {
+          "min": 0.00054836273,
+          "max": 0.81152344,
+          "crosses085": false
+        },
+        "office_session2_home:tile-2": {
+          "min": 0.019088745,
+          "max": 0.68652344,
+          "crosses085": false
+        },
+        "office_session2_home:tile-3": {
+          "min": 0.0009965897,
+          "max": 0.98291016,
+          "crosses085": true
+        },
+        "office_session2_home:tile-4": {
+          "min": 0.0010404587,
+          "max": 0.9243164,
+          "crosses085": true
+        },
+        "office_session2_home:tile-5": {
+          "min": 0.0009365082,
+          "max": 0.9394531,
+          "crosses085": true
+        },
+        "office_home_step03:tile-0": {
+          "min": 1.013279e-05,
+          "max": 0.00041866302,
+          "crosses085": false
+        },
+        "office_home_step03:tile-1": {
+          "min": 0.00063848495,
+          "max": 0.92089844,
+          "crosses085": true
+        },
+        "office_home_step03:tile-2": {
+          "min": 0.0013713837,
+          "max": 0.043029785,
+          "crosses085": false
+        },
+        "office_home_step03:tile-3": {
+          "min": 0.0006213188,
+          "max": 0.8178711,
+          "crosses085": false
+        },
+        "office_home_step03:tile-4": {
+          "min": 0.00074338913,
+          "max": 0.8833008,
+          "crosses085": true
+        },
+        "office_home_step03:tile-5": {
+          "min": 0.0008864403,
+          "max": 0.86621094,
+          "crosses085": true
+        },
+        "office_home_step03:tile-6": {
+          "min": 0.39941406,
+          "max": 0.8540039,
+          "crosses085": true
+        },
+        "office_home_step03:tile-7": {
+          "min": 9.9897385e-05,
+          "max": 0.0028018951,
+          "crosses085": false
+        },
+        "office_home_step03:tile-8": {
+          "min": 0.13671875,
+          "max": 0.5317383,
+          "crosses085": false
+        },
+        "office_home_step03:tile-9": {
+          "min": 3.170967e-05,
+          "max": 0.0013046265,
+          "crosses085": false
+        },
+        "office_home_step03:tile-10": {
+          "min": 4.9889088e-05,
+          "max": 0.000269413,
+          "crosses085": false
+        },
+        "office_home_step03:tile-11": {
+          "min": 0.0005354881,
+          "max": 0.0042152405,
+          "crosses085": false
+        },
+        "office_home_step03:tile-12": {
+          "min": 0.0032367706,
+          "max": 0.21936035,
+          "crosses085": false
+        },
+        "office_home_step03:tile-13": {
+          "min": 0.0032367706,
+          "max": 0.0385437,
+          "crosses085": false
+        },
+        "office_home_step03:tile-14": {
+          "min": 0.0026016235,
+          "max": 0.08947754,
+          "crosses085": false
+        },
+        "office_home_step03:tile-15": {
+          "min": 7.665157e-05,
+          "max": 0.00038290024,
+          "crosses085": false
+        },
+        "office_home_step03:tile-16": {
+          "min": 0.0010566711,
+          "max": 0.5649414,
+          "crosses085": false
+        },
+        "office_home_step03:tile-17": {
+          "min": 0.0012598038,
+          "max": 0.45141602,
+          "crosses085": false
+        },
+        "office_home_step03:tile-18": {
+          "min": 0.01525116,
+          "max": 0.16088867,
+          "crosses085": false
+        },
+        "office_home_step03:tile-19": {
+          "min": 0.0009150505,
+          "max": 0.8828125,
+          "crosses085": true
+        },
+        "office_home_step03:tile-20": {
+          "min": 0.009788513,
+          "max": 0.023117065,
+          "crosses085": false
+        },
+        "office_home_step03:tile-21": {
+          "min": 0.00030303,
+          "max": 0.017501831,
+          "crosses085": false
+        },
+        "office_home_step03:tile-22": {
+          "min": 0.0006465912,
+          "max": 0.06817627,
+          "crosses085": false
+        },
+        "office_home_step03:tile-23": {
+          "min": 0.0008864403,
+          "max": 0.89990234,
+          "crosses085": true
+        },
+        "office_home_col5:tile-0": {
+          "min": 9.357929e-06,
+          "max": 0.00012636185,
+          "crosses085": false
+        },
+        "office_home_col5:tile-1": {
+          "min": 0.0017547607,
+          "max": 0.096191406,
+          "crosses085": false
+        },
+        "office_home_col5:tile-2": {
+          "min": 0.011871338,
+          "max": 0.21728516,
+          "crosses085": false
+        },
+        "office_home_col5:tile-3": {
+          "min": 0.0018978119,
+          "max": 0.6738281,
+          "crosses085": false
+        },
+        "office_home_col5:tile-4": {
+          "min": 0.0009293556,
+          "max": 0.06347656,
+          "crosses085": false
+        },
+        "office_home_col5:tile-5": {
+          "min": 0.0005636215,
+          "max": 0.043945312,
+          "crosses085": false
+        },
+        "office_home_col5:tile-6": {
+          "min": 0.2368164,
+          "max": 0.82910156,
+          "crosses085": false
+        },
+        "office_home_col5:tile-7": {
+          "min": 2.7120113e-05,
+          "max": 0.00054454803,
+          "crosses085": false
+        },
+        "office_home_col5:tile-8": {
+          "min": 0.17346191,
+          "max": 0.92089844,
+          "crosses085": true
+        },
+        "office_home_col5:tile-9": {
+          "min": 2.7298927e-05,
+          "max": 0.0005617142,
+          "crosses085": false
+        },
+        "office_home_col5:tile-10": {
+          "min": 1.013279e-05,
+          "max": 0.00010806322,
+          "crosses085": false
+        },
+        "office_home_col5:tile-11": {
+          "min": 0.000103890896,
+          "max": 0.0036373138,
+          "crosses085": false
+        },
+        "office_home_col5:tile-12": {
+          "min": 0.00064373016,
+          "max": 0.005935669,
+          "crosses085": false
+        },
+        "office_home_col5:tile-13": {
+          "min": 0.00013768673,
+          "max": 0.002462387,
+          "crosses085": false
+        },
+        "office_home_col5:tile-14": {
+          "min": 0.0012998581,
+          "max": 0.011734009,
+          "crosses085": false
+        },
+        "office_home_col5:tile-15": {
+          "min": 2.3186207e-05,
+          "max": 0.0003876686,
+          "crosses085": false
+        },
+        "office_home_col5:tile-16": {
+          "min": 0.00014317036,
+          "max": 0.0018606186,
+          "crosses085": false
+        },
+        "office_home_col5:tile-17": {
+          "min": 0.00025725365,
+          "max": 0.003944397,
+          "crosses085": false
+        },
+        "office_home_col5:tile-18": {
+          "min": 0.0049057007,
+          "max": 0.037109375,
+          "crosses085": false
+        },
+        "office_home_col5:tile-19": {
+          "min": 9.4652176e-05,
+          "max": 0.000749588,
+          "crosses085": false
+        },
+        "office_home_col5:tile-20": {
+          "min": 0.0017347336,
+          "max": 0.003376007,
+          "crosses085": false
+        },
+        "office_home_col5:tile-21": {
+          "min": 1.6212463e-05,
+          "max": 0.000749588,
+          "crosses085": false
+        },
+        "office_home_col5:tile-22": {
+          "min": 2.0444393e-05,
+          "max": 0.0015068054,
+          "crosses085": false
+        },
+        "office_home_col5:tile-23": {
+          "min": 0.0001398325,
+          "max": 0.0007042885,
+          "crosses085": false
+        }
+      },
+      "batchCount": 14,
+      "firstPredictionPerBatchMedianMilliseconds": 4.267750002327375,
+      "firstPredictionPerBatchRangeMilliseconds": [
+        3.9950833306647837,
+        11.234208330279216
+      ],
+      "warmMedianMilliseconds": 1.3091250002617016,
+      "cropMedianMilliseconds": 16.331937498762272,
+      "latencyScope": "CPU helper, repeated process/model loads; first per batch is not OS-cache-cold; no navigation latency"
+    }
+  },
+  "trainingEligible": false,
+  "releaseEligible": false,
+  "compression-base": {
+    "maxAbsoluteError": 0.05200195999999996,
+    "thresholdDisagreements": 1,
+    "withinPreviouslyFrozen001Tolerance": false,
+    "worst": {
+      "id": "office_home_step03:tile-6:base",
+      "absoluteError": 0.05200195999999996,
+      "disagreedThresholds": []
+    }
+  },
+  "compression-allVariants": {
+    "maxAbsoluteError": 0.09252930000000004,
+    "thresholdDisagreements": 10,
+    "withinPreviouslyFrozen001Tolerance": false,
+    "worst": {
+      "id": "office_home_step03:tile-16:right4",
+      "absoluteError": 0.09252930000000004,
+      "disagreedThresholds": [
+        0.5
+      ]
+    }
+  }
+}

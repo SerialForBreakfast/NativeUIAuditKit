@@ -1,0 +1,415 @@
+{
+  "formatVersion": "perception-benchmark-report-v1.1",
+  "bindings": {
+    "manifestSHA256": "9843fd3bed9718d007ba47e890637a61a4a589875d9274ffb15dc63675bc595b",
+    "predictionsSHA256": "5051933a7ca80bb35a511b05e840c5dd6cdbb31b90b759c4054e71346af813d3",
+    "observationsSHA256": null,
+    "settingsSHA256": "f96d8332978f62507af16ea2513532c14bc95141be78327f516c2b6bcabe330f",
+    "evaluatorSHA256": "34f41869e9b811c72451093b72254f44d036f6fb1d937b6e1a19f83329c935f7"
+  },
+  "settings": {
+    "version": "geometry-ocr-v1",
+    "confidence": 0.75,
+    "focusThreshold": 0.85,
+    "iou": 0.5,
+    "rowVerticalOverlap": 0.5,
+    "semanticLocale": "en",
+    "destructivePhrases": [
+      "delete",
+      "erase",
+      "factory reset"
+    ],
+    "informationalPhrases": [
+      "information",
+      "about this",
+      "version"
+    ],
+    "bootstrapSeed": 41,
+    "bootstrapReplicates": 200
+  },
+  "prediction": {
+    "status": "unavailable",
+    "reason": "inference not assigned; reviewed labels are not predictions",
+    "actualProposals": null,
+    "oracleBoxes": null,
+    "slices": {
+      "sourceKind:reviewedNativeCapture": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      },
+      "partition:development": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      },
+      "theme:unknown": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      },
+      "control:unknown": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      },
+      "locale:unknown": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      },
+      "focusTreatment:unknown": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      },
+      "rowState:unknown": {
+        "n": 39,
+        "journeys": 1,
+        "status": "unavailable",
+        "reason": "inference not assigned; reviewed labels are not predictions",
+        "actualProposals": null,
+        "oracleBoxes": null
+      }
+    },
+    "uncertainty": {
+      "method": "split-group-bootstrap-percentile-95",
+      "groups": 1,
+      "disclosureRecallInterval": null,
+      "independentGeneralizationEstablished": false
+    }
+  },
+  "comparisons": {
+    "suppliedPredictions": {
+      "execution": "external-assertion-not-executed-here",
+      "status": "unavailable",
+      "reason": "inference not assigned; reviewed labels are not predictions",
+      "actualProposals": null,
+      "oracleBoxes": null,
+      "slices": {
+        "sourceKind:reviewedNativeCapture": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        },
+        "partition:development": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        },
+        "theme:unknown": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        },
+        "control:unknown": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        },
+        "locale:unknown": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        },
+        "focusTreatment:unknown": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        },
+        "rowState:unknown": {
+          "n": 39,
+          "journeys": 1,
+          "status": "unavailable",
+          "reason": "inference not assigned; reviewed labels are not predictions",
+          "actualProposals": null,
+          "oracleBoxes": null
+        }
+      },
+      "uncertainty": {
+        "method": "split-group-bootstrap-percentile-95",
+        "groups": 1,
+        "disclosureRecallInterval": null,
+        "independentGeneralizationEstablished": false
+      }
+    },
+    "ttrRaster": {
+      "status": "unavailable",
+      "reason": "no_independent_ttr_raster_artifact_supplied"
+    },
+    "geometryOCR": {
+      "status": "unavailable",
+      "reason": "independent_observations_not_supplied"
+    }
+  },
+  "latency": {
+    "status": "unavailable",
+    "reason": "no_measured_timing"
+  },
+  "byteVerification": {
+    "verifiedImageCount": 39
+  },
+  "trainingEligible": false,
+  "modelGatePassed": "not_assessed",
+  "developmentErrorAnalysis": [
+    {
+      "caseID": "office_app_switcher",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_app_switcher_sweep",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_bottom_grid",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_bottom_next",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_bottom_r3",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_dock_fixture",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_folder_screen",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_grid_target",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_home_col5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_home_initial",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_home_step01",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_home_step02",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_home_step03",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_home_top_right",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_photos_focused_shared",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_pluto_loaded",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r1c2",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r1c4",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r1c6",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r2c1",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r2c2",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r2c3",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r2c4",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r2c5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r2c6",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r3c5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r3c6",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r4c6",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_r5c6",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_row1",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_row2_col5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_row3_col5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_row4_col5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_row5_col5",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_session2_home",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_session2_switcher",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_session2_switcher_card2",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_settings_target",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    },
+    {
+      "caseID": "office_shelf_up6",
+      "category": "missing_adapter_or_execution_failure",
+      "next": "Supply independent observations; do not infer a classifier deficit."
+    }
+  ],
+  "suppliedAdapter": {
+    "status": "unavailable",
+    "reason": "no_model_or_preprocessing_identity_declared"
+  },
+  "recommendation": {
+    "action": "no_training",
+    "reason": "offline_or_imported_evidence_requires_review_and_assigned_real_baseline",
+    "requiredBeforeTraining": [
+      "eligible_held_out_support",
+      "measured_gap",
+      "reviewed_numeric_gates",
+      "latency_budget",
+      "explicit_authorization"
+    ]
+  },
+  "next": "Review development errors by slice; prefer a geometry/OCR correction when oracle components succeed. Missing input/labels and producer runtime failures are not model failures.",
+  "inventory": {
+    "caseCount": 39,
+    "sourceKinds": {
+      "reviewedNativeCapture": 39
+    },
+    "partitions": {
+      "development": 39
+    },
+    "coverage": {
+      "focus:reviewedAppearance": 2
+    }
+  }
+}

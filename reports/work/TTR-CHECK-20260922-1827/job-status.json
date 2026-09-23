@@ -1,0 +1,57 @@
+{
+  "command" : "fixture job-status",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "failure" : "native_focus_or_geometry_unavailable:sceneNotSettled; Resolve the retained harvest prerequisite before separately authorizing another harvest.",
+        "files" : [
+
+        ],
+        "jobID" : "675C0665-7691-4DD0-9197-ADF1E53D8F85",
+        "observationDiagnostics" : {
+          "generation" : 2,
+          "measuredIDs" : [
+            "dialog_container"
+          ],
+          "missingIDs" : [
+            "dialog_btn_0",
+            "dialog_btn_1"
+          ],
+          "nativeFocusResolved" : true,
+          "nativeProbe" : {
+            "focusSystemAvailable" : true,
+            "focusedItemKind" : "view",
+            "geometryAvailable" : true,
+            "geometrySource" : "uikit_window_converted_bounds",
+            "referenceAttached" : true,
+            "referenceFocusable" : true,
+            "referenceFocused" : true,
+            "resolution" : "identifier"
+          },
+          "reason" : "missing_geometry",
+          "requiredIDs" : [
+            "dialog_btn_0",
+            "dialog_btn_1"
+          ],
+          "requiredMilliseconds" : 150,
+          "sampleAgeMilliseconds" : 41.975125001044944,
+          "sampleCount" : 36,
+          "sampledGeneration" : 2,
+          "stableMilliseconds" : 0
+        },
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/675c0665-7691-4dd0-9197-adf1e53d8f85/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/675c0665-7691-4dd0-9197-adf1e53d8f85/recipes",
+        "schemaVersion" : 1,
+        "simulatorUDID" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "state" : "failed",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/675c0665-7691-4dd0-9197-adf1e53d8f85"
+      }
+    }
+  },
+  "durationMilliseconds" : 12,
+  "requestID" : "A9A1E188-96D4-40D2-92BC-CD06FA87FEA3",
+  "schemaVersion" : 1,
+  "success" : true
+}

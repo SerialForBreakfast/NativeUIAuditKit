@@ -2,7 +2,148 @@
 
 ## Latest delivery and next boundary
 
+### Authorized mixed-appearance run completed — 2026-09-23
+
+[FDR-008 handoff](../../reports/work/FDR-008/handoff.md):30/30 epochs, best native
+validation at epoch3. Fixture training accuracy75%→100% at0.85; native validation
+18/18 and Remotes12/12 retained. This closes the one-run execution slice only.
+Next assignment should compare retained Home/Photos diagnostics with FDR-007 and
+shipped references, and plan independent Fixture challenge acquisition. New
+capture, export, further training and promotion remain separately scoped. No
+independent Fixture quality claim follows from training fit.
+
+### Development-experiment integration delivered — 2026-09-23
+
+[FOCUS-DEV-01](../../reports/work/FOCUS-DEV-01/handoff.md) implements the assigned
+contract below through existing entrypoints. Real input reconstruction yields
+126 training pairs /nine native-validation pairs. Trainer configuration is valid;
+missing explicit approval is the only development launch blocker. Production rejects
+the same protocol. 63 Python tests and offline Swift checks passed. Next review
+the [resolved configuration and sampling weights](../../reports/work/FOCUS-DEV-01/launch-review.md),
+then authorize one logged development run or re-freeze a changed sampling policy.
+No training or model gate is included in this completed software tranche.
+
+### Assigned development-experiment integration — 2026-09-23
+
+Implement [focus-development-experiment-v1](../schemas/focus-development-experiment-v1.md)
+through existing assembly and trainer entrypoints. Revalidate retained real inputs,
+freeze the resolved protocol and an unapproved decision template, verify adversarial
+and positive offline integration, then hand off. No model launch or source capture.
+The explicit no-augmentation setting preserves the prior native experiment; this
+is a development comparison, not a change to production training defaults.
+
+### Retained-data tranche delivered for review — 2026-09-23
+
+[Handoff](../../reports/work/FOCUS-RETAINED-01/handoff.md): 138 pairs audited,
+86 distinct non-maze candidates visually reviewed, four duplicate pairs and 48
+maze pairs excluded from the first proposed experiment. All source receipts remain
+unchanged. Seeds 7/19 share crop pixels even outside the maze family and must remain
+one group. All 276 crops automatically checked; 192 crops visually inspected.
+38 Python tests and required offline Swift checks passed. No full pilot or training
+eligibility claimed. The assigned scope below is complete for review, not a model gate.
+
+The [next independently dispatchable implementation contract](../../reports/work/FOCUS-RETAINED-01/experiment-proposal.md)
+specifies inputs, bounded development admission, actual-entrypoint tests, one-run
+configuration, acceptance limitations and next authority boundary. Implement that
+contract without capture/training; seek separate execution approval after acceptance.
+
+### Retained Fixture qualification / mixed-appearance proposal — assigned2026-09-23
+
+Owner NUIAK architect, OS-FOCUS-04 continuation. Audit the three retained direct
+receipts (36 completed recipes/138 pairs) through the existing chain validator.
+Render their pairs through production makeCrop, retain byte/decoded-pixel/crop
+lineage, audit focus/geometry, exact duplicates and contradictory crop labels.
+Report all42 catalog cells, incomplete kitchen-sink and maze clipping separately.
+Inspect compact representative/crop sheets; enlarge only ambiguity. Preserve the
+existing failed receipts and full-pilot requirement: this output is a scoped review
+artifact, not a completed capture receipt, v1.4 admission or training approval.
+
+Freeze clean-candidate/excluded/uncertain dispositions and a mixed-appearance
+experiment proposal using actual leakage components (related seeds plus shared
+decoded frames/crops), not assumed seed-disjoint independence. Retain native49
+pair development membership and all prior diagnostic evaluation exclusions. Bind
+data/model references, proposed one-run configuration, checkpoint/validation policy,
+success/failure reports, missing prerequisites and exact next authorized action.
+No training, inference, capture, simulator operation or public API change. Local
+data review does not require SMB unless a new producer-actionable defect is found.
+
+Acceptance: actual retained-data CLI audit/crops, explicit source-health scope,
+all-pair accounting and cross-role/seed duplicate analysis, geometry review, frozen
+proposal and source hashes; deterministic negative tests plus offline Swift checks.
+Do not manufacture a runnable experiment when the data evidence cannot support it.
+
+[OS-FOCUS-04 offline assembly handoff](../../reports/work/OS-FOCUS-04-ASSEMBLY/handoff.md)
+now completes that software slice. See the [derived contract](../schemas/focus-mixed-assembly-v1.md).
+Next is diverse data admission and a separately authorized mixed-appearance
+experiment, not another assembly implementation or Settings-only training run.
+
+[FOCUS-VISUAL-02 handoff](../../reports/work/FOCUS-VISUAL-02/handoff.md) completes
+the retained-image Home comparison: six frames/72 tiles, shipped2/6 unique correct
+selections and candidates0/6 at0.85. Next dispatch is OS-FOCUS-04's existing offline
+mixed-source assembly/preflight scope (below), not another same-style training run.
+The handoff freezes the targeted mixed-appearance acquisition/candidate proposal;
+visual-only legacy reviews remain training-ineligible.
+
+### FOCUS-VISUAL-02 — existing Home appearance comparison, assigned 2026-09-23
+
+Owner NUIAK architect. Review the seven Home-named frames in the existing PER-DATA
+inventory; exclude non-Home/uncertain contexts rather than infer focus from filenames.
+Freeze reviewed tile bounds/appearance-only focus before inference; include every
+fully visible tile in each selected grid/row, recording clipped exclusions. Preserve
+unknown source identity, shared unknown journey, development-only use and no training
+eligibility. Reuse the three pinned models, production cropper, fixed thresholds and
+seven box variants from FOCUS-VISUAL-01. Correct the comparison report's Photos-only
+limitation text to derive actual support; add a regression. Compare frame-level
+abstentions/errors, crop errors, sensitivity and compression drift, inspect production
+base crops, and propose separate mixed-appearance acquisition/training inputs from
+the observed gaps. No training, new capture, model promotion or callback claims.
+Run focused tests and offline Swift checks at the integrated code handoff. Local-only
+results do not need SMB progress; preserve existing producer artifact request.
+
+### FOCUS-VISUAL-01 — reviewed appearance comparison, assigned 2026-09-22
+
+Compare shipped, preserved FDR-007 FP16 and int8 CoreML on the two PER-DATA
+Photos frames/four reviewed button boxes. Preserve development-only visual labels;
+do not manufacture native callbacks or treat the frames as independent journeys.
+Freeze source/review/model/runtime hashes before scoring. Reuse production 16%
+expansion/256px crop and bounded CPU helper; use the approved isolated interpreter.
+Add a declared box-sensitivity diagnostic: base, ±4px x/y translation and ±4px
+padding/contraction, clipping to the image. Seven variants per box remain correlated
+derivatives, not 28 new examples. Compare base crop classification, ambiguity bands,
+frame-level correct/wrong/no/multiple-focus decisions and FP16/int8 probability drift.
+At0.85 choose only a unique positive; multiple positives abstain. Keep0.5/0.70/0.85
+diagnostics fixed, no tuning. Report preprocessing separately from CPU inference.
+Test missing/changed pixels, review/protocol/hash corruption, invalid output paths,
+malformed scores, ordering and ambiguity with fakes; run actual real entrypoint and
+repository offline checks. Deliver ranked errors and a next acquisition/evaluation
+proposal. No training, new capture, production change or TTR operation. No SMB update
+needed for this local work. Preserve parallel iOS/temporal-planning changes.
+
+### FOCUS-COMPRESS-01 — assigned 2026-09-22
+
+One weight-only int8, per-channel symmetric compression of the preserved FDR-007
+export-01. Reuse the maintainer-approved isolated export interpreter, CoreML
+compilation and production crop/parity path. Preserve FP16 bytes and checkpoint;
+use a fresh experimental identity/output. No training, capture or promotion.
+Record source/package hashes, decimal 5,000,000-byte gate, probability drift versus
+both Torch and FP16, decisions at 0.5/0.70/0.85 and host CPU cold/warm latency.
+Keep the frozen 0.01 probability tolerance and identical-decision requirement;
+the saturated 12-crop challenge is a limited diagnostic, not general quantization
+qualification. Refuse collisions, unsafe destinations and changed inputs; test
+these offline, then compile and exercise the real inference entrypoint once.
+Deliver evidence and a next-stage recommendation, not an automatic compression sweep.
+
 ### Assigned candidate export/parity — 2026-09-22
+
+Runtime repair exception (maintainer approved 2026-09-22): create the isolated
+`focus-export-01` environment under the user's Library/Application Support/
+NativeUIAuditKit/Environments, outside cloud-managed Documents. Use installed
+Python3.12 with coremltools9.0/PyTorch2.7 (Apple's supported conversion version),
+pin direct requirements and retain resolved install versions/hashes. Preserve
+`.venv-yolo` and checkpoints; keep caches, reports and model outputs in-project.
+This interpreter exception applies only to this export/parity assignment. No
+training, global sync changes or promotion. Compare against the unchanged frozen
+Torch reference and disclose the conversion-runtime change.
 
 Maintainer “ok. Continue” assigns FOCUS-EXPORT-01: export FDR-007 using the
 existing vendored-backbone/trace path to a new project-local experimental package,
@@ -27,11 +168,11 @@ blocked before directional inputs; independently collected Apps3 training and Re
 challenge pairs. FDR-007 completed the one assigned incremental candidate and matches
 FDR-006 on challenge. Production crop behavior and shipped weights remain unchanged.
 
-Next bounded software/evaluation assignment: investigate candidate PyTorch/CoreML
-parity on existing immutable native challenge membership, with an isolated trace
-export only when explicitly assigned; report probability/threshold differences,
-loaded artifact hashes, size and latency, retaining shipped fallback. No new capture
-is needed for this comparison. Separate acquisition assignment: qualify stable
+Export/parity and the assigned weight-compression comparison are now evidenced in
+[FOCUS-COMPRESS-01](../../reports/work/FOCUS-COMPRESS-01/handoff.md). Next bounded
+evaluation proposal: expand reviewed development appearances and compare shipped,
+FP16 and int8 on frozen identical membership. Existing PER-DATA Photos labels are
+appearance-only leads, not automatic training admission. Separate acquisition: qualify stable
 HeadBoard native tile identity using observation-only evidence before another
 authorized Home snake; require visible focus/geometry agreement and exact-target
 postflight. Missing focus is a label blocker, not permission to label from intent.
@@ -255,6 +396,54 @@ FocusRing model; prioritize genuine error strata before requesting larger captur
 Keep software, data eligibility, integration and model-gate results separate.
 
 ## OS-FOCUS-04 — Incremental native and fixture corpus
+
+### Assigned offline assembly tranche — 2026-09-23
+
+Implement `focus-mixed-assembly-v1` through a new assembly CLI and the existing
+trainer `--dataset ... --preflight` / sample loader. Reuse validated native journeys
+and existing fixture v1.2–1.5 adapters without changing their admission policies.
+An external hash-bound `focus-source-review-v1` records reviewer/reference,
+previous use, related-group mapping and explicit partition for every pair. Native
+development pairs may enter experimental train/validation after review, never final
+test. Fixture partitions are preserved; v1.4/v1.5 stay development-only. Test-only
+or legacy Pillow crops can be inspected but cannot grant launch eligibility.
+
+Freeze source manifests/reviews, original frames, derived crops, runtime identities,
+baseline artifact, source/style/control support and training-only equal-stratum
+sample weights. Unknown source relationships block launch; cross-partition related
+groups or identical decoded frame/crop content reject assembly. Same crop pixels
+with contradictory labels reject even within one split; repeated pairs reject.
+An additive version references its predecessor, retains all old sources/membership
+unchanged and reports added source/sample IDs; no silent forgetting or split drift.
+
+Preflight reconstructs the assembly from current inputs and compares its content
+hash. Full fixture scene/theme/hard-negative requirements remain unchanged and
+native rows never count toward fixture quotas. Explicit corpus approval binds the
+assembly digest via `training_approval.json`; valid configuration, dataset eligibility
+and execution authority stay separate. Reuse the 30-epoch trainer with frozen
+train-only sampling weights, validation-only checkpoint selection and untouched
+test exclusion. Baseline identity is for comparison, not an implicit warm start.
+No new capture, crop policy, training launch, model replacement or producer action.
+
+Keep diagnostic-only sources out of launch sampling and quota checks; their presence
+must not permanently block an otherwise qualified active corpus. Report their own
+eligibility blockers separately (unknown cross-source relationships still block).
+Allow an explicit review-only revision that hash-binds `supersedesReview`, preserving
+the original source manifest and every sample's bytes, truth, lineage and partition.
+Record changed review IDs in the delta; only admission blockers may change. This
+lets later authorized approval advance readiness without deleting or rewriting data.
+
+Acceptance: deterministic real CLI assembly and additive delta; source-specific
+positive/negative tests, label/byte/lineage/split/approval attacks, train-only weights,
+actual trainer preflight and sample loading; retained real-source inspection with
+truthful gaps; offline Swift checks once. Owner NUIAK architect. Local-only work,
+SMB not applicable. Completion evidence: `reports/work/OS-FOCUS-04-ASSEMBLY/`.
+
+Real integration found retained Settings-root crops bind an older cropper identity.
+Preserve that dataset; regenerate its derived crops with the existing native intake
+CLI from unchanged, hash-verified source attachments, into a new report directory.
+Inspect all new pairs before a new external review. This is offline crop migration,
+not new capture or training. Keep the stale input rejection and old/new identities.
 
 **Outcome:** one reproducible training-input assembly, accepting new native OS
 and later qualified TTR/Fixture batches without rebuilding or relabeling history.

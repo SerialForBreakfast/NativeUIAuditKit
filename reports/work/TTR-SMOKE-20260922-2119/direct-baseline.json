@@ -1,0 +1,174 @@
+{
+  "protocolSHA256": "3428471adfe3c38cfec2716c2e75ba7d05afde6c87ed78263b265db465ac8eb5",
+  "artifact": {
+    "sha256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+    "metadataSHA256": "cf847ab2dd843c692cd2073530606d74ecd3efd6274544261eb61a76fa6682ab",
+    "outputs": [
+      "confidence",
+      "is_focused_prob"
+    ]
+  },
+  "evaluation": {
+    "threshold": {
+      "value": 0.85,
+      "purpose": "shipped_baseline_comparison",
+      "candidatePolicy": "complete_30_epochs_then_select_on_validation_and_lock_before_test"
+    },
+    "groups": {
+      "control:cancelAction": {
+        "n": 2,
+        "tp": 1,
+        "abstained": 0,
+        "decided": 2,
+        "correctDecisions": 1,
+        "fp": 1,
+        "accuracy": 0.5,
+        "decisionCoverage": 1.0,
+        "selectiveAccuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "fpr": 1.0,
+        "fnr": 0.0
+      },
+      "control:primaryButton": {
+        "n": 2,
+        "tp": 1,
+        "abstained": 0,
+        "decided": 2,
+        "correctDecisions": 1,
+        "fp": 1,
+        "accuracy": 0.5,
+        "decisionCoverage": 1.0,
+        "selectiveAccuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "fpr": 1.0,
+        "fnr": 0.0
+      },
+      "family:actionDialog": {
+        "n": 4,
+        "tp": 2,
+        "abstained": 0,
+        "decided": 4,
+        "correctDecisions": 2,
+        "fp": 2,
+        "accuracy": 0.5,
+        "decisionCoverage": 1.0,
+        "selectiveAccuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "fpr": 1.0,
+        "fnr": 0.0
+      },
+      "overall": {
+        "n": 4,
+        "tp": 2,
+        "abstained": 0,
+        "decided": 4,
+        "correctDecisions": 2,
+        "fp": 2,
+        "accuracy": 0.5,
+        "decisionCoverage": 1.0,
+        "selectiveAccuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "fpr": 1.0,
+        "fnr": 0.0
+      },
+      "theme:highContrast": {
+        "n": 4,
+        "tp": 2,
+        "abstained": 0,
+        "decided": 4,
+        "correctDecisions": 2,
+        "fp": 2,
+        "accuracy": 0.5,
+        "decisionCoverage": 1.0,
+        "selectiveAccuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "fpr": 1.0,
+        "fnr": 0.0
+      }
+    },
+    "hardNegative": {
+      "n": 0,
+      "fp": 0,
+      "fpr": null,
+      "status": "unavailable",
+      "gatePassed": "not_assessed"
+    },
+    "errors": [
+      {
+        "id": "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93:0",
+        "kind": "false_positive",
+        "theme": "highContrast",
+        "control": "primaryButton",
+        "family": "actionDialog"
+      },
+      {
+        "id": "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace:0",
+        "kind": "false_positive",
+        "theme": "highContrast",
+        "control": "cancelAction",
+        "family": "actionDialog"
+      }
+    ]
+  },
+  "inference": "coreml",
+  "modelGatePassed": "not_assessed",
+  "evidenceKind": "reviewed-fixture",
+  "sourceKind": "tvos_native_generator",
+  "executionEvidence": "production-runtime-invoked-by-this-command",
+  "evaluationScope": "oracle-frame-box-crops; no detector-proposal evaluation",
+  "proposedBoxEvaluation": {
+    "status": "unavailable",
+    "reason": "independent_proposals_not_supplied"
+  },
+  "decisions": {
+    "focused": 4,
+    "unfocused": 0,
+    "abstained": 0,
+    "policy": "fixed shipped ambiguity band [0.70,0.85); binary metrics separately at0.85"
+  },
+  "timingBatches": [
+    {
+      "host": "Version 26.4.1 (Build 25E253)",
+      "modelLoadMilliseconds": 76.79412502329797,
+      "version": 1,
+      "computeUnits": "cpuOnly",
+      "samples": [
+        {
+          "probability": 0.99609375,
+          "inferenceMilliseconds": 9.678166679805145,
+          "cropMilliseconds": 54.340541653800756,
+          "id": "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93:1"
+        },
+        {
+          "probability": 1,
+          "inferenceMilliseconds": 1.9974583410657942,
+          "cropMilliseconds": 53.43754164641723,
+          "id": "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93:0"
+        },
+        {
+          "probability": 0.9892578,
+          "inferenceMilliseconds": 1.592958316905424,
+          "cropMilliseconds": 54.19508332852274,
+          "id": "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace:1"
+        },
+        {
+          "probability": 1,
+          "inferenceMilliseconds": 1.7204583273269236,
+          "cropMilliseconds": 53.930666676023975,
+          "id": "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace:0"
+        }
+      ]
+    }
+  ],
+  "timingScope": "CPU-only; model-load and first-prediction per process batch; remaining predictions warm; crop separate",
+  "warmLatencyMs": {
+    "n": 3,
+    "p50": 1.7204583273269236,
+    "p95": 1.9974583410657942
+  }
+}

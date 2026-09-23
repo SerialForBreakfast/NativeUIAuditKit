@@ -200,6 +200,18 @@ targeted generator assignment or P5-B with the reviewed coverage decision. P0-C'
 
 ## PER-DATA — Reviewed real perception benchmark
 
+Assigned bounded local review, 2026-09-22: re-use the 44 hash-bound triage members.
+Annotate only visually supported non-sensitive examples; preserve privacy exclusions
+and missing relations. Legacy native screenshots are neither Fixture nor test-only
+images: introduce an explicit `reviewedNativeCapture` source with mandatory
+development partition, unknown historical source/journey evidence, reviewedVisual
+origin and trainingEligible=false. This admission is local development only. All
+legacy members share one conservative unknown-journey group. Do not invent a
+physical identity or native focus callback. Visible focus is appearance-only.
+Settings management text remains privacy-blocked pending maintainer review; do not
+silently redact/modify originals. Report unsupported gold cells explicitly and
+exercise actual byte verification without fabricated model predictions.
+
 **Parent:** TTR-PERCEPTION. **Inputs:** accepted PER-01 software/rubric, supplied44-image
 audit, missing-evidence matrix, permitted source captures. **Files/authority:** NUA
 labels/manifests/review reports and validator tests; no capture unless explicitly added.

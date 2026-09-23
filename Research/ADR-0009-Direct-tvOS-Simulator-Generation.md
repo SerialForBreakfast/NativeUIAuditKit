@@ -1,7 +1,7 @@
 # ADR-0009: Direct tvOS Simulator generation alongside TVTestRig
 
-**Status:** Accepted architectural direction; implementation and runtime execution
-remain separately assigned.  
+**Status:** Approved. Implementation and runtime execution remain separately
+assigned.
 **Date:** 2026-09-22  
 **Decision owner:** NativeUIAuditKit maintainer  
 **Scope:** Visual FocusRing data first, full-frame tvOS detector augmentation second.
@@ -115,7 +115,11 @@ hardware. Preserve shipped models throughout.
 
 ## Implementation tranches
 
-These are future dispatch contracts, not operations authorized by this ADR.
+The approved execution plan is detailed in
+[`Plans/RemainingDelivery.md`](Plans/RemainingDelivery.md#tvgen-01--reuse-and-runtime-design-review)
+and operationally scoped by
+[`Plans/ParallelTVOSAcquisition.md`](Plans/ParallelTVOSAcquisition.md). These are
+future dispatch contracts, not operations authorized by this ADR.
 
 | Packet | Bounded deliverable | Acceptance / next step |
 |---|---|---|

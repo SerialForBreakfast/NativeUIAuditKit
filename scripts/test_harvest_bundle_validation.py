@@ -112,6 +112,34 @@ class H1Tests(unittest.TestCase):
         with self.assertRaisesRegex(HarvestValidationError, "integrity_failed"):
             validate_bundle(self.d)
 
+    def test_swift_date_is_preserved_without_admission(self) -> None:
+        for date in (811804819.582654, 0, -1, "2026-09-22T21:20:19Z"):
+            with self.subTest(date=date):
+                source = {"captureMethod": "simctl-explicit-uuid", "collectedAt": date,
+                          "assurance": "reported-source; not-attested"}
+                self.reindex(source)
+                result = validate_bundle(self.d)
+                self.assertEqual(result["sourceDescription"], source)
+                self.assertFalse(result["eligibleForTraining"])
+                self.assertIsNone(result["identityEvidence"])
+
+    def test_invalid_dates_fail_closed(self) -> None:
+        for date in (None, True, False, [], {}, "", float("nan"), float("inf"), -float("inf")):
+            with self.subTest(date=date):
+                self.reindex({"captureMethod": "simctl-explicit-uuid", "collectedAt": date,
+                              "assurance": "reported-source; not-attested"})
+                with self.assertRaisesRegex(HarvestValidationError, "invalid_metadata"):
+                    validate_bundle(self.d)
+
+    def test_numeric_date_does_not_supply_missing_resolved_theme(self) -> None:
+        self.replace_metadata(lambda meta: meta["recipe"].pop("theme"))
+        self.reindex({"captureMethod": "simctl-explicit-uuid", "collectedAt": 811804819.582654,
+                      "assurance": "reported-source; not-attested"})
+        result = validate_bundle(self.d)
+        self.assertEqual(result["integrity"], "pass")
+        with self.assertRaisesRegex(SimulatorManifestError, "unsupported_theme"):
+            build(result, "inspection-only", "producer-reference", None)
+
     def test_partial_symlink_missing_and_duplicate_artifacts_fail_closed(self) -> None:
         partial = self.d.parent / ".x.partial-1"
         self.d.rename(partial); self.d = partial

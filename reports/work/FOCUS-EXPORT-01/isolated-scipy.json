@@ -1,0 +1,12 @@
+{
+  "exitCode": 0,
+  "elapsedSeconds": 0.5543512500007637,
+  "command": [
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/bin/python",
+    "-X",
+    "importtime",
+    "-u",
+    "-c",
+    "import faulthandler; faulthandler.dump_traceback_later(30,repeat=True); import scipy.interpolate._rgi; print('isolated scipy import passed',flush=True); faulthandler.cancel_dump_traceback_later()"
+  ]
+}

@@ -11,11 +11,139 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
-Latest export attempt: [FOCUS-EXPORT-01](../reports/work/FOCUS-EXPORT-01/handoff.md)
-delivered isolated export safeguards and parity tooling, but conversion never started.
-coremltools imports scikit-learn/SciPy; the owned export exceeded its startup budget
-and a60s import-only probe also timed out. No new CoreML artifact, size or parity
-claim. Next fix/qualify the local export runtime; not a TTR or corpus blocker.
+**2026-09-23 FDR-008 completed (experimental, not shipped):**
+[Mixed-appearance run](../reports/work/FDR-008/handoff.md) finished30/30 epochs;
+epoch3 selected by native-validation loss. At0.85, Fixture training fit improved
+75%→100% on172 crops; native validation18/18 and Remotes challenge12/12 retained.
+This demonstrates learning on reviewed examples, not unseen Fixture generalization.
+The shipped model remains unchanged. Next evaluate retained Home/Photos and new
+independent Fixture appearances before export/promotion or further training.
+
+**2026-09-23 development-experiment integration (no new model):**
+[FOCUS-DEV-01](../reports/work/FOCUS-DEV-01/handoff.md) freezes 126 training pairs
+and nine native-validation pairs through real assembly and trainer dry-run. All
+bytes/crop parity/splits passed; launch is blocked only by missing experiment
+approval. Production mode correctly rejects the protocol. 63 focused Python tests
+and offline Swift checks pass. Next review/authorize the single development run
+or revise its sampling balance first (88.89% expected Fixture /11.11% native).
+No independent Fixture validation, production admission or training is claimed.
+
+**2026-09-23 retained-data review (no new model):**
+[FOCUS-RETAINED-01](../reports/work/FOCUS-RETAINED-01/handoff.md) audited 36 recipes /
+138 pairs and all 276 production crops. Visual review yields 86 distinct non-maze
+development candidates; four exact pair duplicates and 48 maze pairs are excluded
+from the proposed experiment. Seeds 7/19 share pixels and cannot be split between
+training and validation. The six missing kitchen-sink recipes remain missing.
+38 Python tests and offline Swift checks pass. Next implement the bounded
+development-experiment contract, then seek one-run authorization; no new capture,
+training, production data admission or model qualification has occurred.
+
+**2026-09-23 mixed-source software (not a model release):**
+[OS-FOCUS-04 assembly](../reports/work/OS-FOCUS-04-ASSEMBLY/handoff.md) integrates
+49 retained native pairs and2 direct dialog pairs with immutable lineage/splits,
+training-only sampling and actual trainer preflight. Old root crops were preserved
+and refreshed offline through current production preprocessing, with24 new crops
+reviewed.89 focused tests and offline Swift checks pass. Configuration is valid;
+full training remains blocked by source/corpus approval, test membership and quotas.
+Next qualify diverse retained Fixture development groups and freeze one separately
+authorized mixed-appearance experiment. No new capture, training or weights.
+
+**2026-09-23 consumer software:** strict TTR sidecar-v2 intake, development-only
+v1.5 production crops and existing baseline/preflight integration are verified by
+83 focused Python tests plus offline Swift checks. The peer acknowledged the
+kitchen-sink request and reports a repair, but its exact advertised artifact path
+is absent locally. No new capture, genuine v2 bundle qualification, or training.
+Preserve36 recipes/138 pairs; next obtain the exact repaired artifact and qualify
+only the missing boundary/groups. [Handoff](../reports/work/SIM-DATA-02-V2/handoff.md).
+
+**2026-09-23 superseding direct-pilot progress:** authorized separate-copy Fixture
+metadata cleanup, existing-signature verification, and exact-simulator installation
+succeeded (dylib `46011bb0…`). Repaired media capture passed; retained pilot now
+contains 36/42 recipes and 138 pairs. First kitchen-sink recipe stopped with
+`no_sample`: source routes it to Components, not the native-probed procedural scene.
+Six recipes/108 pairs remain. Focus Maze bottom-row clipping needs explicit review.
+No full-pilot admission, baseline, training, or promotion claimed. Preserve partial
+evidence and continue only after reviewed producer repair.
+[Evidence](../reports/work/TVGEN-SETUP-20260923/handoff.md).
+
+**2026-09-23 00:22Z repair available in source, not runtime:** producer6093663
+implements measured-only geometry and sidecar v2. Running Fixture is still the old
+binary. The existing repaired candidate fails local strict signature verification
+(filesystem detritus), so it was not installed. Need a valid candidate and explicit
+Fixture setup authority before the authorized resumed pilot. SMB mount absent;
+feedback retained locally. [Evidence](../reports/work/TTR-CHECK-20260923-0022/handoff.md).
+
+**2026-09-22 23:06Z continuation software:** missing-group execution and full-catalog
+assembly now integrate with the existing production-crop/baseline entrypoints.
+32 Python tests and offline package checks pass; real retained12 recipes/30 pairs
+re-audited unchanged. No data admitted or training launched. The22:57Z Fixture check
+still finds the unchanged media-header defect. Next is corrected-geometry boundary
+qualification, then30 remaining recipes/216 pairs—not more resume scaffolding.
+[Evidence](../reports/work/TVGEN-RESUME-02/handoff.md).
+
+**2026-09-22 22:15Z repair check:** Fixture is now natively settled/ready, superseding
+the initial zero-sample observation; unchanged dylib still reports inconsistent
+media-header geometry. Producer commit3667185 addresses export, not that repair.
+Direct pilot awaits geometry and reviewed multi-run completion; it does not depend
+on the separate exported-sidecar repair needed by TTR intake. No capture retried.
+[Evidence](../reports/work/TTR-CHECK-20260922-2215/handoff.md).
+
+**2026-09-22 21:46Z superseding progress:** retained TTR bundle transferred through
+documented read-job IPC (12 files verified); NUA numeric-date compatibility fixed,
+but strict normalization rejects producer's omitted resolved theme. Independent
+direct dialog capture/crops/inference now works: two development pairs, shipped
+model TP2/FP2 on four crops. The42-recipe direct pilot completed12 recipes/30 pairs
+before media_shelf header coordinate conflict (1920-based bounds in3840 scene).
+Partial run preserved, zero pilot pairs admitted; native reference/postflight healthy.
+No training/promotion. [Evidence and exact resume](../reports/work/TTR-SMOKE-20260922-2119/continuation.md).
+
+**2026-09-22 21:25Z integration update:** the local two-element dialog smoke now
+completes: two accepted calibration pairs/four PNGs, zero rejections, healthy
+postflight and clear ownership. Export fails with `serviceUnavailable` despite
+working manifest/receipt IPC; pixel intake and crop qualification remain unperformed.
+Reuse completed job697018C6 for export diagnosis, not recapture. Prior dialog
+geometry failure is superseded; other families and full training-corpus gates are
+not qualified by this smoke. [Evidence](../reports/work/TTR-SMOKE-20260922-2119/handoff.md).
+
+Latest Home evidence: [FOCUS-VISUAL-02](../reports/work/FOCUS-VISUAL-02/handoff.md)
+compares six reviewed frames/72 tiles: at0.85 shipped makes2/6 correct unique
+selections; FDR-007 FP16/int8 make0/6. Candidates'91.7% tile accuracy is the
+all-negative baseline. Box variants expose wrong-focus decisions and int8 drift
+up to0.09253 with threshold disagreements. No candidate promotion. Next implement
+OS-FOCUS-04 mixed-source assembly/preflight offline, then separately authorized
+eligible mixed-appearance acquisition/training. These legacy reviews remain
+development-only and cannot train the model.
+
+Earlier regression evidence: [FOCUS-VISUAL-01](../reports/work/FOCUS-VISUAL-01/handoff.md)
+compares three models on two reviewed Photos frames without TTR. Shipped recognizes
+1/2 visibly focused buttons; FDR-007 FP16/int8 recognize0/2. Four-pixel box variants
+expose multiple-focus false positives and int8 probability drift0.04346 (>0.01),
+despite unchanged threshold decisions. Preserve old Settings results as scoped;
+neither candidate is ready for replacement. The Home follow-up above extends this
+finding; do not repeat same-style Settings epochs.
+
+Latest local tranche: [FOCUS-COMPRESS-01](../reports/work/FOCUS-COMPRESS-01/handoff.md)
+produced one experimental int8-weight candidate:2,612,925 bytes (48.14% smaller),
+zero decision differences from preserved FP16 on12 frozen crops; max drift
+0.000000715255. Size gate now passes for this candidate, not the preserved FP16.
+Warm CPU inference is essentially unchanged; no broad model gate/promotion claim.
+[PER-DATA](../reports/work/PER-DATA/handoff.md) accounts for44 existing screenshots:
+39 development-only negative-scene reviews, including2 Photos appearance-focus
+labels/four boxes;5 exclusions. No admitted positive chevron/dialog examples or
+independent benchmark. Next broaden visual challenge coverage, not same-style
+retraining. All shipped artifacts remain unchanged.
+
+Latest export: [FOCUS-EXPORT-01](../reports/work/FOCUS-EXPORT-01/qualification.md)
+completed in an approved isolated non-cloud environment (Python3.12/Torch2.7/
+coremltools9). Import8.90s, export3.47s, compile1.14s; genuine CPU parity passes
+all12 frozen native challenge crops, maximum probability error0.00000357628.
+This bypasses old iCloud dataless dependencies without repairing/changing them.
+Experimental package5,038,123 bytes passes the legacy5MiB calculation but fails
+literal5MB. Exporter now enforces5,000,000 bytes; fresh sizegate export correctly
+exits1,70 Python/93 Swift tests pass. Existing challenge has zero near-threshold
+cases and only one Settings screen. The assigned compression above supersedes
+the proposed export follow-up; broader visual capture remains separate. No production replacement or
+automatic retraining. [Follow-up](../reports/work/FOCUS-EXPORT-01/size-and-coverage.md).
 
 Latest independent tranche: [OS-FOCUS-03/04](../reports/work/OS-FOCUS-03/handoff.md)
 added3 Apps training pairs and6 Remotes challenge pairs. FDR-007 completed8 epochs
@@ -55,6 +183,39 @@ Phases **0–5b**, **6** (5-class), **6d**, **6-gate (skipped)**, **6b-S / WP1 /
 ---
 
 ## Not shipped
+
+**2026-09-22 18:30Z updated Fixture:** both binaries changed, source852f341d
+matches producer focus-handoff receipt. Local job675C0665 fails earlier reference
+geometry: only container measured, both dialog buttons missing, fresh native
+reference focus. Neither target transition reached; no completed bundle/intake.
+Producer's other-simulator transition proof does not qualify this full capture
+path. Postflight healthy/ownershipclear; geometry diagnostic request published
+and read back, acknowledgment pending.
+[Evidence](../reports/work/TTR-CHECK-20260922-1827/handoff.md).
+
+**2026-09-22 18:08Z TTR smoke:** changed TTR comparator passes reference stage.
+Fresh Fixture process has the same dialog-capable code hash. JobE5BCE43B fails
+first target handoff: requested dialog_btn_0, actual native reference still focused,
+fresh observations and complete geometry, stableMilliseconds0. Neither target
+capture nor completed export/intake qualified. Postflight HTTP healthy,8 readiness
+checks ready, ownership clear. Producer request published/read back, acknowledgment
+pending. [Evidence](../reports/work/TTR-CHECK-20260922-1805/handoff.md).
+
+**2026-09-22 dialog smoke:** native reference focus now verified and settled,
+but job661FFE7C fails `telemetry_bracket:identityMismatch` before target capture.
+Producer full-scene equality includes changing diagnostic counters/timers; passive
+snapshots preserve focus/recipe/geometry while these change. Exact failed bracket
+samples were not returned. Zero completed bundle; export/intake blocked. Fresh
+postflight HTTP healthy,8 infrastructure checks ready, ownership clear. No retry
+or reset. [Evidence/request](../reports/work/TTR-SMOKE-20260922-DIALOG/handoff.md).
+
+**2026-09-22 17:26Z TTR/Fixture:** changed local binaries and matching dialog-repair
+source receipt now observed. Eight infrastructure checks ready, local ownership
+clear, HTTP healthy. Passive shelf still non_view/unmapped_item (294 samples),
+but shelf is explicitly outside the dialog-only candidate scope. Next qualify the
+changed two-button dialog through a bounded authorized smoke/export/intake; no
+new capture occurred in this read-only check. Do not carry the producer's other-host
+cleanup guard onto the locally clear target. [Evidence/status](../reports/work/TTR-CHECK-20260922-NEW/handoff.md).
 
 **2026-09-22 16:29Z TTR/Fixture update:** new local app/companion and persistent simulator
 remote interface observed; all eight exact-target infrastructure checks ready,

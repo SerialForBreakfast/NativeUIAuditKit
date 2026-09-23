@@ -4,7 +4,7 @@ import tempfile
 import unittest
 
 from focus_dataset_contract import ROOT, FocusDataError
-from export_focus_ring_coreml import export_paths
+from export_focus_ring_coreml import export_paths, package_size_report
 from focus_export_parity import compare, run, validate_model_identity
 
 
@@ -18,6 +18,27 @@ class ExportParityTests(unittest.TestCase):
 
     def test_new_isolated_paths(self):
         self.assertEqual(export_paths(self.weights, self.root/"export", "fdr-test"), (self.weights, self.root/"export"))
+
+    def test_decimal_size_boundary_and_complete_membership(self):
+        package = self.root/"package"; package.mkdir()
+        weights = package/"weights.bin"
+        with weights.open("wb") as stream: stream.truncate(4_999_999)
+        self.assertTrue(package_size_report(package)["size_gate_pass"])
+        (package/"metadata").write_bytes(b"x")
+        report = package_size_report(package)
+        self.assertEqual(report["size_bytes"], 5_000_000)
+        self.assertEqual(report["size_mb"], 5.0)
+        self.assertLess(report["size_mib"], 5.0)
+        self.assertTrue(report["size_gate_pass"])
+        (package/"extra").write_bytes(b"x")
+        self.assertFalse(package_size_report(package)["size_gate_pass"])
+
+    def test_size_rejects_missing_empty_and_symlinks(self):
+        empty = self.root/"empty"; empty.mkdir()
+        for path in (self.root/"absent", empty):
+            with self.assertRaises(ValueError): package_size_report(path)
+        (empty/"linked").symlink_to(self.weights)
+        with self.assertRaisesRegex(ValueError, "symlink"): package_size_report(empty)
 
     def test_collision_outside_missing_production_and_symlink(self):
         for weights, output, identifier in [

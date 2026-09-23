@@ -1,0 +1,45 @@
+[
+  {
+    "label": "native-assembly",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/focus_mixed_assembly.py",
+      "--input",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-04-ASSEMBLY/native-current-input.json",
+      "--output",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-04-ASSEMBLY/native-v1"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "seconds": 32.79309099999955
+  },
+  {
+    "label": "mixed-assembly",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/focus_mixed_assembly.py",
+      "--input",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-04-ASSEMBLY/mixed-current-input.json",
+      "--output",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-04-ASSEMBLY/mixed-v2"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "seconds": 34.77934962499421
+  },
+  {
+    "label": "trainer-preflight",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/scripts/train_focus_ring_detector.py",
+      "--dataset",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/OS-FOCUS-04-ASSEMBLY/mixed-v2",
+      "--name",
+      "mixed-readiness-not-a-run",
+      "--preflight"
+    ],
+    "exitCode": 2,
+    "expectedExitCode": 2,
+    "seconds": 34.57088216597913
+  }
+]

@@ -1,5 +1,11 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-09-23 additive consumer contract: [TTR sidecar-v2 intake](schemas/harvest-compatibility-v1.md#assigned-sidecar-v2-consumer-extension--2026-09-23)
+binds both native capture brackets to completed producer artifacts. Derived crop
+manifest v1.5 is simulator development-only, uses production makeCrop, and retains
+separate unfocused/focused geometry without fabricated callback IDs. Legacy v1.2/1.3
+and direct v1.4 remain separate; full training preflight does not admit v1.5.
+
 2026-09-22 additive dataset contract: [parallel tvOS acquisition](Plans/ParallelTVOSAcquisition.md)
 introduces direct-tvos-capture-v1 and development-only runtime-crop manifest v1.4.
 Native focus/geometry observations bracket simulator screenshots; this is temporal
@@ -607,6 +613,15 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Mixed FocusRing development protocol (2026-09-23):** the separate
+[development-experiment contract](schemas/focus-development-experiment-v1.md)
+admits only explicitly reviewed experimental roles through the existing trainer.
+It does not change production preflight, source v1.4/v1.5 eligibility or failed
+capture receipts. Native validation measures retention; shared-pixel Fixture seeds
+remain one training group without an independent Fixture validation claim. The
+proposed bounded warm-start run requires a hash-bound maintainer decision and logged
+experiment; software preparation is not launch permission. No public API changes.
+
 **P5-A decision (2026-09-19):** Training readiness is a side-effect-free preflight:
 it validates explicit fresh weights or resume state (never both), corpus paths/hashes,
 split pixels/labels, taxonomy, and a unique output location without importing Ultralytics,
@@ -800,8 +815,17 @@ not change production preprocessing. No final-test, model-gate or promotion clai
 is permitted; normal full-candidate preflight remains unchanged.
 
 **Model metrics:**
-- `mAP@IoU=0.5` — primary headline metric; target ≥ 0.85 for production
-- `mAP@IoU=0.75` — stricter threshold; measures bounding box precision
+- `mAP@IoU=0.5` — primary discovery/headline metric; target ≥ 0.85 for production
+- **Required geometry report:** every new qualifying detector baseline or candidate
+  evaluation reports per-class AP and mean AP at IoU **0.50, 0.70 and 0.90** on
+  the same frozen held-out cases. IoU 0.50 establishes that the right element was
+  found; IoU 0.70 and 0.90 make boundary precision visible. The three values are
+  separate measurements, not confidence probabilities and not interchangeable.
+- `mAP@IoU=0.5:0.95` — retain when available as the broader localization summary;
+  it does not replace the required 0.50/0.70/0.90 table.
+- Historical artifacts that only recorded IoU 0.50 must be labeled incomplete for
+  this geometry report. Do not invent 0.70 or 0.90 values from their 0.50 result;
+  re-evaluate only when the frozen inputs and compatible predictions/models exist.
 - Per-class Average Precision — surface underperforming classes (rare: `dynamicIsland`, `stepperControl`)
 - Small-object recall — track `tabBar`, `homeIndicator`, and icon-only toolbar buttons separately
 - False positive rate on decorative images and hard negatives

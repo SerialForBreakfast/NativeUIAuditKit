@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "sourceImagesUnchanged": 44,
+  "perceptionVerification": {
+    "verifiedImageCount": 39
+  },
+  "fp16AndInt8Unchanged": true,
+  "sourceHashes": {
+    "scripts/compress_focus_ring_coreml.py": "ccd9589cf0f92fe3e02ddd87d904ebbe3fb62febb5232525a263f01a637281e5",
+    "scripts/test_focus_compression.py": "1df147b76db8cdc22eafe09cd3cdcb6968b194954cc945b64008a181a4738181",
+    "scripts/perception_benchmark.py": "aff6f1d407b29b9fd18a7b0109995e8b68c55ee9f3b36ab56c1a2a6797864b0b",
+    "scripts/test_perception_native_review.py": "ab7e45ddde34e900ef1dcc9fe7ae653ea2f0a9c6da19a107031343fdee4f7b18",
+    "reports/work/FOCUS-COMPRESS-01/final_checks.py": "a25f3aad2f263ae98571bdc256d7d1d388163d3915ea4d19e33df232956e4a94",
+    "reports/work/FOCUS-COMPRESS-01/run.py": "716cb603527390e274025440cd5caaec0769407e4d9289fc70081e5a3d594993",
+    "reports/work/FOCUS-COMPRESS-01/summarize.py": "69b3c6a30e5133dc606834542c94ee476b7d946717f567dccfff1ba72b24e184",
+    "reports/work/PER-DATA/review.py": "e6ca81f6fecba69183e425ff17c11ae30c763f98d9ffea070fe9a490827f7918",
+    "reports/work/PER-DATA/verify_admission.py": "2a3afa5cc643e17ce074f63706ef2fe865b09e20fbbf9532d2893c99e49f6aa3"
+  },
+  "coordination": "not_applicable",
+  "modelGate": "not_assessed"
+}

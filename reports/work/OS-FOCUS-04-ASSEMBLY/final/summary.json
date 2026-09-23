@@ -1,0 +1,58 @@
+{
+  "assemblySHA256": "40fd7aac2397145bbe6d9ae53010dea38edc765d38c09a987bef9c46b284138e",
+  "counts": {
+    "development": 2,
+    "test": 0,
+    "train": 40,
+    "validation": 9
+  },
+  "blockers": [
+    "missing_corpus_approval",
+    "missing_required_partition",
+    "source_training_review_required",
+    "underfilled_quota"
+  ],
+  "diagnosticOnlyBlockers": [
+    "development_only_source_contract",
+    "source_training_review_required"
+  ],
+  "retainedSamples": 98,
+  "addedSamples": 4,
+  "trainingSampleCount": 80,
+  "strata": [
+    {
+      "key": [
+        "tvos_simulator_os",
+        "settings/apps",
+        "unknown",
+        "75"
+      ],
+      "samples": 6
+    },
+    {
+      "key": [
+        "tvos_simulator_os",
+        "settings/general",
+        "unknown",
+        "75"
+      ],
+      "samples": 50
+    },
+    {
+      "key": [
+        "tvos_simulator_os",
+        "settings/root",
+        "unknown",
+        "75"
+      ],
+      "samples": 24
+    }
+  ],
+  "configurationValid": true,
+  "launchEligible": false,
+  "baseline": {
+    "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+    "sha256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0"
+  },
+  "executionAuthorized": false
+}

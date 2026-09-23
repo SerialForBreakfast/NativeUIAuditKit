@@ -1,0 +1,12 @@
+{
+  "command" : "fixture export-job",
+  "durationMilliseconds" : 14,
+  "error" : {
+    "code" : "serviceUnavailable",
+    "message" : "TVTestRig is unavailable. Open the TVTestRig app and keep it running, then retry.",
+    "retryable" : false
+  },
+  "requestID" : "3F3FAFFD-704B-4A70-A811-912305CD723C",
+  "schemaVersion" : 1,
+  "success" : false
+}

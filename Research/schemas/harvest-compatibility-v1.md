@@ -1,5 +1,38 @@
 # Harvest bundle compatibility v1
 
+## Assigned sidecar-v2 consumer extension — 2026-09-23
+
+Owner: NUIAK architect, SIM-DATA-02. Local producer source inspected at
+`46dce7b3a79e4f17af49bc0324d4aeba3cc0958d`; this is not the peer's merged runtime
+candidate or a live qualification. Keep layout/index/receipt v1 and legacy sidecars
+inspectable. Dispatch sidecars by declared `schema_version`: absent means legacy;
+only integer2 admits the bracket contract. Never upgrade old metadata in place.
+
+Source authorities: `HarvestPairMetadataFile`, `HarvestCaptureEndpoint`,
+`HarvestRecipeHeader.expectedRecipeHash`, production bracket admission, and
+`HarvestBundleValidator.validateVersion2` in the producer SyntheticFactory sources.
+Require complete resolved recipe/hash, all four native scene endpoints, stable
+focus/generation/geometry per bracket, fresh settled observations, observed reference
+focus, PNG hashes/dimensions, monotonic host receipt ordering, independent focused
+and unfocused geometry, and consistent flat compatibility aliases/exclusions.
+Preserve raw brackets and descriptive provenance. No fabricated callback/frame ID,
+authenticated identity, VoiceOver alignment, or training approval is created.
+
+Integrate validation with existing bundle/manifest CLI. Add derived crop manifest
+v1.5 for **development-only simulator TTR brackets** using existing production
+`FocusRingClassifier.makeCrop` and baseline tooling. Unlike direct v1.4 it binds the
+completed producer index/receipt/sidecar hashes and revalidates their bytes; it must
+not masquerade as a direct capture receipt. A hash-bound visual review is required
+for reviewed-fixture derivation; deterministic fixtures stay test-only. Full training
+preflight remains closed (v1.3 accepted policy unchanged). No producer wire change.
+
+Acceptance: real validation/manifest/extraction entrypoints tested with deterministic
+positive and malformed cases; changed hashes, unsupported versions, recipe drift,
+stale/mismatched observations, aliases, geometry, false provenance, output collisions,
+and membership changes reject. Existing legacy/direct regressions and offline Swift
+build/tests pass. Genuine repaired bundle, native pilot completion, baseline metrics,
+and any new installation remain separate runtime prerequisites.
+
 **Status:** Source-pinned NUA consumer contract. It describes the read-only
 producer snapshot below and does not constitute producer acceptance, live-device
 qualification, provenance attestation, corpus eligibility, or a model gate.
@@ -64,9 +97,19 @@ bundle/
 `dataset-index.json` contains `datasetLayoutVersion`, `telemetryContract`,
 `producer`, optional `producerBuild`, `provenance`, `normalizedCoordinates`,
 `pixelCoordinates`, artifacts, and optional `sourceDescription`. When present,
-source description requires nonempty `captureMethod` and `collectedAt`, literal
+source description requires nonempty `captureMethod` and a supported `collectedAt`, literal
 `assurance: "reported-source; not-attested"`, and object-or-null environment
 and fixture values. Each artifact has `path`, `sha256`, and `byteCount`.
+
+2026-09-22 genuine-job correction (producer source `ec7339918ce2839e4d9458d84f90cf53f064a8a9`):
+`HarvestSourceDescription.collectedAt` is Swift `Date`; `HarvestDatasetIndex.write`
+uses the default JSONEncoder strategy, yielding finite seconds since 2001-01-01.
+Accept and preserve that numeric representation (not booleans or nonfinite numbers),
+alongside the already supported nonempty string representation. Do not reinterpret
+the number as Unix seconds or use it to authenticate source/focus. This is a consumer
+shape correction, not a producer wire change or dataset eligibility approval.
+The genuine dialog sidecars also omit resolved theme; normalization must continue
+to reject missing theme, rather than substitute the requested recipe value.
 
 `harvest-receipt.json` contains `schemaVersion`, `outcome`,
 `acceptedRowCount`, `rejections`, and optional `failure`. A completed receipt

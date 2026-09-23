@@ -1,0 +1,18 @@
+stage=import-torch
+stage=import-coremltools
+stage=load-checkpoint
+stage=trace
+stage=convert
+Tuple detected at graph output. This will be flattened in the converted model.
+Converting PyTorch Frontend ==> MIL Ops:   0%|          | 0/358 [00:00<?, ? ops/s]Converting PyTorch Frontend ==> MIL Ops:  99%|█████████▉| 356/358 [00:00<00:00, 9653.92 ops/s]
+Running MIL frontend_pytorch pipeline:   0%|          | 0/5 [00:00<?, ? passes/s]Running MIL frontend_pytorch pipeline: 100%|██████████| 5/5 [00:00<00:00, 391.08 passes/s]
+Running MIL default pipeline:   0%|          | 0/95 [00:00<?, ? passes/s]Running MIL default pipeline:  39%|███▉      | 37/95 [00:00<00:00, 363.26 passes/s]Running MIL default pipeline:  78%|███████▊  | 74/95 [00:00<00:00, 192.16 passes/s]Running MIL default pipeline: 100%|██████████| 95/95 [00:00<00:00, 232.33 passes/s]
+Running MIL backend_mlprogram pipeline:   0%|          | 0/12 [00:00<?, ? passes/s]Running MIL backend_mlprogram pipeline: 100%|██████████| 12/12 [00:00<00:00, 558.37 passes/s]
+Exported /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/FocusRingDetector.mlpackage (4.80 MB)
+
+Size gate: 4.80 MB <= 5.0 MB PASS
+
+Next: compile to .mlmodelc:
+  xcrun coremlc compile /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/FocusRingDetector.mlpackage /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01
+Experimental artifact only. Do not copy into shipped resources.
+

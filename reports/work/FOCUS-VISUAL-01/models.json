@@ -1,0 +1,5 @@
+{
+  "shipped": "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/FocusRingDetector.mlmodelc",
+  "fp16": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/compiled/FocusRingDetector.mlmodelc",
+  "int8": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-03-int8/compiled/FocusRingDetector.mlmodelc"
+}

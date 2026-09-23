@@ -1,0 +1,329 @@
+{
+  "reportSHA256": "6fd771e9971bbac6303bbbf831981a71c8c5ad9737f07b364c104dac9aa108fd",
+  "reviewedFrames": 2,
+  "reviewedBoxes": 4,
+  "correlatedVariantsPerBox": 7,
+  "models": {
+    "shipped": {
+      "base": {
+        "metrics": {
+          "count": 4,
+          "auroc": 1.0,
+          "0.5": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          },
+          "0.85": {
+            "tp": 1,
+            "fn": 1,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.75
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "correct",
+            "selectedElementID": "all"
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "baseProbabilities": [
+        {
+          "probability": 5.6922436e-05,
+          "cropMilliseconds": 13.328375003766268,
+          "id": "office_photos_focused_shared:all:base",
+          "inferenceMilliseconds": 17.37395834061317
+        },
+        {
+          "probability": 0.13085938,
+          "cropMilliseconds": 15.924791659926996,
+          "id": "office_photos_focused_shared:shared:base",
+          "inferenceMilliseconds": 1.8179166654590517
+        },
+        {
+          "probability": 0.96533203,
+          "cropMilliseconds": 11.498708336148411,
+          "id": "office_pluto_loaded:all:base",
+          "inferenceMilliseconds": 1.2981250183656812
+        },
+        {
+          "probability": 0.00010639429,
+          "cropMilliseconds": 11.792333330959082,
+          "id": "office_pluto_loaded:shared:base",
+          "inferenceMilliseconds": 1.3018749887123704
+        }
+      ],
+      "sensitivityFrameDecisions": {
+        "no-focus": 7,
+        "correct": 5
+      },
+      "probabilityRanges": {
+        "office_photos_focused_shared:all": {
+          "min": 7.1525574e-06,
+          "max": 0.03817749,
+          "crosses085": false
+        },
+        "office_photos_focused_shared:shared": {
+          "min": 0.00012934208,
+          "max": 0.97314453,
+          "crosses085": true
+        },
+        "office_pluto_loaded:all": {
+          "min": 0.015609741,
+          "max": 0.9980469,
+          "crosses085": true
+        },
+        "office_pluto_loaded:shared": {
+          "min": 2.0861626e-06,
+          "max": 0.042510986,
+          "crosses085": false
+        }
+      },
+      "modelLoads": [
+        {
+          "version": 1,
+          "host": "Version 26.4.1 (Build 25E253)",
+          "modelLoadMilliseconds": 21.775250002974644,
+          "computeUnits": "cpuOnly"
+        }
+      ],
+      "firstPredictionMilliseconds": 17.37395834061317,
+      "warmMedianMilliseconds": 1.3817916915286332,
+      "cropMedianMilliseconds": 12.134229153161868
+    },
+    "fp16": {
+      "base": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "baseProbabilities": [
+        {
+          "cropMilliseconds": 11.823541688499972,
+          "id": "office_photos_focused_shared:all:base",
+          "inferenceMilliseconds": 12.114916666178033,
+          "probability": 0.0012893677
+        },
+        {
+          "cropMilliseconds": 11.804041656432673,
+          "id": "office_photos_focused_shared:shared:base",
+          "inferenceMilliseconds": 1.4310833357740194,
+          "probability": 0.0005636215
+        },
+        {
+          "cropMilliseconds": 11.343750025844201,
+          "id": "office_pluto_loaded:all:base",
+          "inferenceMilliseconds": 1.3659166870638728,
+          "probability": 0.005279541
+        },
+        {
+          "cropMilliseconds": 11.874333344167098,
+          "id": "office_pluto_loaded:shared:base",
+          "inferenceMilliseconds": 1.431916665751487,
+          "probability": 0.0015239716
+        }
+      ],
+      "sensitivityFrameDecisions": {
+        "no-focus": 9,
+        "correct": 1,
+        "multiple-focus-abstention": 2
+      },
+      "probabilityRanges": {
+        "office_photos_focused_shared:all": {
+          "min": 0.0012893677,
+          "max": 0.9892578,
+          "crosses085": true
+        },
+        "office_photos_focused_shared:shared": {
+          "min": 0.00032019615,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_pluto_loaded:all": {
+          "min": 0.0003004074,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_pluto_loaded:shared": {
+          "min": 0.00085258484,
+          "max": 0.9921875,
+          "crosses085": true
+        }
+      },
+      "modelLoads": [
+        {
+          "modelLoadMilliseconds": 15.620208316249773,
+          "host": "Version 26.4.1 (Build 25E253)",
+          "computeUnits": "cpuOnly",
+          "version": 1
+        }
+      ],
+      "firstPredictionMilliseconds": 12.114916666178033,
+      "warmMedianMilliseconds": 1.3514166639652103,
+      "cropMedianMilliseconds": 11.789666663389653
+    },
+    "int8": {
+      "base": {
+        "metrics": {
+          "count": 4,
+          "auroc": 0.5,
+          "0.5": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          },
+          "0.85": {
+            "tp": 0,
+            "fn": 2,
+            "fp": 0,
+            "tn": 2,
+            "accuracy": 0.5
+          }
+        },
+        "frameDecisions": [
+          {
+            "frameID": "office_photos_focused_shared",
+            "decision": "no-focus",
+            "selectedElementID": null
+          },
+          {
+            "frameID": "office_pluto_loaded",
+            "decision": "no-focus",
+            "selectedElementID": null
+          }
+        ],
+        "ambiguityBandCount": 0,
+        "nearThresholdCount": 0
+      },
+      "baseProbabilities": [
+        {
+          "cropMilliseconds": 12.21387498662807,
+          "probability": 0.0012598038,
+          "id": "office_photos_focused_shared:all:base",
+          "inferenceMilliseconds": 10.992875002557412
+        },
+        {
+          "cropMilliseconds": 12.130166665883735,
+          "probability": 0.00052785873,
+          "id": "office_photos_focused_shared:shared:base",
+          "inferenceMilliseconds": 1.4568750048056245
+        },
+        {
+          "cropMilliseconds": 11.62512498558499,
+          "probability": 0.0051002502,
+          "id": "office_pluto_loaded:all:base",
+          "inferenceMilliseconds": 1.3000416802242398
+        },
+        {
+          "cropMilliseconds": 11.88808333245106,
+          "probability": 0.0015678406,
+          "id": "office_pluto_loaded:shared:base",
+          "inferenceMilliseconds": 1.6008749953471124
+        }
+      ],
+      "sensitivityFrameDecisions": {
+        "no-focus": 9,
+        "correct": 1,
+        "multiple-focus-abstention": 2
+      },
+      "probabilityRanges": {
+        "office_photos_focused_shared:all": {
+          "min": 0.0012598038,
+          "max": 0.98828125,
+          "crosses085": true
+        },
+        "office_photos_focused_shared:shared": {
+          "min": 0.00032758713,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_pluto_loaded:all": {
+          "min": 0.00028252602,
+          "max": 1,
+          "crosses085": true
+        },
+        "office_pluto_loaded:shared": {
+          "min": 0.00090026855,
+          "max": 0.99316406,
+          "crosses085": true
+        }
+      },
+      "modelLoads": [
+        {
+          "host": "Version 26.4.1 (Build 25E253)",
+          "modelLoadMilliseconds": 20.316250011092052,
+          "computeUnits": "cpuOnly",
+          "version": 1
+        }
+      ],
+      "firstPredictionMilliseconds": 10.992875002557412,
+      "warmMedianMilliseconds": 1.3338333228603005,
+      "cropMedianMilliseconds": 11.895499992533587
+    }
+  },
+  "trainingEligible": false,
+  "releaseEligible": false,
+  "compression-base": {
+    "maxAbsoluteError": 0.00017929079999999976,
+    "thresholdDisagreements": 0,
+    "withinPreviouslyFrozen001Tolerance": true,
+    "worst": {
+      "id": "office_pluto_loaded:all:base",
+      "absoluteError": 0.00017929079999999976,
+      "disagreedThresholds": []
+    }
+  },
+  "compression-allVariants": {
+    "maxAbsoluteError": 0.043457059999999936,
+    "thresholdDisagreements": 0,
+    "withinPreviouslyFrozen001Tolerance": false,
+    "worst": {
+      "id": "office_pluto_loaded:all:up4",
+      "absoluteError": 0.043457059999999936,
+      "disagreedThresholds": []
+    }
+  }
+}

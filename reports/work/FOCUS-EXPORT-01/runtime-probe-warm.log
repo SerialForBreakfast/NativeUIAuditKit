@@ -1,0 +1,110 @@
+torch 2.13.0
+Timeout (0:00:30)!
+Thread 0x00000001ed5798c0 (most recent call first):
+  File "<frozen importlib._bootstrap_external>", line 1218 in get_data
+  File "<frozen importlib._bootstrap_external>", line 1118 in get_code
+  File "<frozen importlib._bootstrap_external>", line 1022 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/scipy/stats/__init__.py", line 607 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/utils/fixes.py", line 16 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 23 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/utils/validation.py", line 24 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 17 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/utils/_chunking.py", line 11 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/utils/__init__.py", line 9 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1310 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/base.py", line 20 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/sklearn/__init__.py", line 70 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/_deps/__init__.py", line 68 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/converters/libsvm/__init__.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1415 in _handle_fromlist
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/converters/__init__.py", line 7 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1415 in _handle_fromlist
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/__init__.py", line 124 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 1026 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<string>", line 1 in <module>
+Torch version 2.13.0 has not been tested with coremltools. You may run into unexpected errors. Torch 2.7.0 is the most recent version that has been tested.
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import faulthandler; faulthandler.dump_traceback_later(30); import torch; print('torch',torch.__version__,flush=True); import coremltools; print('coremltools',coremltools.__version__,flush=True); faulthandler.cancel_dump_traceback_later()
+                                                                                                                           ^^^^^^^^^^^^^^^^^^
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/__init__.py", line 124, in <module>
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/converters/__init__.py", line 7, in <module>
+  File "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.venv-yolo/lib/python3.13/site-packages/coremltools/converters/libsvm/__init__.py", line 8, in <module>
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1022, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1159, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1218, in get_data
+TimeoutError: [Errno 60] Operation timed out

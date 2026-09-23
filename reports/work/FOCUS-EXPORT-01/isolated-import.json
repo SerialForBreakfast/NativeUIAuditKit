@@ -1,0 +1,12 @@
+{
+  "stage": "isolated-import",
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "-u",
+    "-c",
+    "import torch,coremltools; print('torch',torch.__version__,'coremltools',coremltools.__version__)"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 8.90429525001673,
+  "deadlineSeconds": 60
+}

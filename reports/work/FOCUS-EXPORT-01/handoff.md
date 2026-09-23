@@ -1,5 +1,24 @@
 # FOCUS-EXPORT-01 — 2026-09-22
 
+**Size/coverage follow-up:** [gate enforcement and audit](size-and-coverage.md)
+delivered. Exporter now enforces5,000,000 bytes; a fresh real export correctly
+fails and retains its evidence.70 Python/93 Swift tests pass. No broader or
+near-threshold challenge support found in current qualified protocol evidence.
+Compression changes need a separate reviewed precision experiment, not a gate waiver.
+
+**Current outcome:** [isolated export qualification](qualification.md) completes
+the assigned export/compile/parity tranche. New approved non-cloud environment
+imports successfully; CoreML matches all12 frozen-challenge decisions, maximum
+probability error0.00000357628. Package5,038,123 bytes passes5MiB but fails literal
+5MB. Experimental only; no promotion. The blocked account below is historical.
+
+**Follow-up:** [RCA](rca.md) supersedes the unknown-cause diagnosis below. Full
+import exits1/57.119s with OS errno60; four relevant dependencies are `dataless`.
+Restore whole-environment local residency before retrying import/export.
+[In-place repair attempt](residency-repair.md): iCloud identified; supported download
+request accepted but file remains dataless/errno60. A separate export environment
+needs explicit installation/location authority. No export retry or model change.
+
 | Outcome | Result |
 | --- | --- |
 | Software verified | Focused safety/identity/parity tests pass;68 focus Python tests and93 offline Swift tests. Genuine conversion/inference entrypoint integration remains unexecuted. |

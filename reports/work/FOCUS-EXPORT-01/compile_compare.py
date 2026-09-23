@@ -20,7 +20,7 @@ compiled.mkdir()
 environment = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1", "TMPDIR": str(root/".build/debug-output/focus-launch/tmp")}
 commands = [
     ["xcrun", "coremlc", "compile", str(package), str(compiled)],
-    [str(root/".venv-yolo/bin/python"), "scripts/focus_export_parity.py",
+    [sys.executable, "scripts/focus_export_parity.py",
         "--reference", "reports/work/OS-FOCUS-03/challenge-after.json",
         "--reference-sha256", "11ff841cf437e4699aadc8cfdb7053ccf74ffc07f70edbee0966ac135c71a21a",
         "--model", str(compiled/"FocusRingDetector.mlmodelc"),

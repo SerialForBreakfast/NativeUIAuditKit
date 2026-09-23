@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv",
+    "--json",
+    "--timeout-ms",
+    "15000",
+    "fixture",
+    "run-job",
+    "697018C6-FAB6-4524-A691-1BE4507C8F7F",
+    "--simulator-udid",
+    "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+    "--fixture-url",
+    "http://127.0.0.1:8080"
+  ],
+  "exitCode": 0,
+  "seconds": 0.07811604198650457
+}

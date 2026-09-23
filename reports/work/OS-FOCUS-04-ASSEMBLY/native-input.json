@@ -1,0 +1,53 @@
+{
+  "version": "focus-assembly-input-v1",
+  "baseline": {
+    "path": "NativeUITrainer/focus_ring_runs/fdr007-native-incremental/weights/best.pt",
+    "sha256": "a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0"
+  },
+  "sources": [
+    {
+      "id": "settings-root",
+      "manifest": {
+        "path": "reports/work/OS-FOCUS-02/root-sweep-02/dataset-02/manifest.json",
+        "sha256": "7b10b6d7b02a9e68a39ef11d609e96771814a821608b7c46c5695217f0982a0f"
+      },
+      "review": {
+        "path": "reports/work/OS-FOCUS-04-ASSEMBLY/settings-root-review.json",
+        "sha256": "7c856275445e1e6725fa7aafc13bbc5813f4433beb513eb90fd07e70e405a92a"
+      }
+    },
+    {
+      "id": "settings-general",
+      "manifest": {
+        "path": "reports/work/FOCUS-EXP-01/general-02/dataset/manifest.json",
+        "sha256": "aac4e31d1e78eb36ddbdf8f75e8f687390d333a2a6409cb2b28a463aa77f4e98"
+      },
+      "review": {
+        "path": "reports/work/OS-FOCUS-04-ASSEMBLY/settings-general-review.json",
+        "sha256": "3f4e7994e1ec343a0cec2bb56079238d82c2de7bd51fd9fb5c05a07c7efcc201"
+      }
+    },
+    {
+      "id": "settings-accessibility",
+      "manifest": {
+        "path": "reports/work/FOCUS-EXP-01/accessibility-02/dataset/manifest.json",
+        "sha256": "8c3ef75a46eff5013146f1b758ba4cfbf26de8130f99a9d676097697b45625e2"
+      },
+      "review": {
+        "path": "reports/work/OS-FOCUS-04-ASSEMBLY/settings-accessibility-review.json",
+        "sha256": "0b38f2e674f78b6fe967c47ce423669db3dafa9261ada5d4bd7406ff492d5b2e"
+      }
+    },
+    {
+      "id": "settings-apps",
+      "manifest": {
+        "path": "reports/work/OS-FOCUS-03/apps-01/dataset/manifest.json",
+        "sha256": "3be8be39578cfbc8e6afff4553de0512bbe32b035393f88db90b1360b5b3bd4f"
+      },
+      "review": {
+        "path": "reports/work/OS-FOCUS-04-ASSEMBLY/settings-apps-review.json",
+        "sha256": "fa89cf7dbf278be145e30861b7e8bdb723b5153070819c1d4d7893c9261910bd"
+      }
+    }
+  ]
+}

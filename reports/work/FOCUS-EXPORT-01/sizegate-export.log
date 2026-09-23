@@ -1,0 +1,12 @@
+stage=import-torch
+stage=import-coremltools
+stage=load-checkpoint
+stage=trace
+stage=convert
+Tuple detected at graph output. This will be flattened in the converted model.
+Converting PyTorch Frontend ==> MIL Ops:   0%|          | 0/358 [00:00<?, ? ops/s]Converting PyTorch Frontend ==> MIL Ops:  99%|█████████▉| 356/358 [00:00<00:00, 8531.88 ops/s]
+Running MIL frontend_pytorch pipeline:   0%|          | 0/5 [00:00<?, ? passes/s]Running MIL frontend_pytorch pipeline: 100%|██████████| 5/5 [00:00<00:00, 332.96 passes/s]
+Running MIL default pipeline:   0%|          | 0/95 [00:00<?, ? passes/s]Running MIL default pipeline:  36%|███▌      | 34/95 [00:00<00:00, 327.65 passes/s]Running MIL default pipeline:  71%|███████   | 67/95 [00:00<00:00, 185.02 passes/s]Running MIL default pipeline: 100%|██████████| 95/95 [00:00<00:00, 237.05 passes/s]
+Running MIL backend_mlprogram pipeline:   0%|          | 0/12 [00:00<?, ? passes/s]Running MIL backend_mlprogram pipeline: 100%|██████████| 12/12 [00:00<00:00, 537.53 passes/s]
+Exported /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-02-sizegate/FocusRingDetector.mlpackage (5038119 bytes, 5.038119 MB, 4.804725 MiB)
+ERROR: FocusRingDetector.mlpackage is 5038119 bytes, exceeds 5000000-byte budget; experimental output retained

@@ -1,0 +1,18 @@
+{
+  "command" : "fixture read-job",
+  "data" : {
+    "fixtureJobChunk" : {
+      "_0" : {
+        "data" : "ewogICJhY2NlcHRlZFJvd0NvdW50IiA6IDIsCiAgIm91dGNvbWUiIDogImNvbXBsZXRlZCIsCiAgInJlamVjdGlvbnMiIDogWwoKICBdLAogICJzY2hlbWFWZXJzaW9uIiA6IDEKfQ==",
+        "jobID" : "697018C6-FAB6-4524-A691-1BE4507C8F7F",
+        "offset" : 0,
+        "path" : "harvest-receipt.json",
+        "sha256" : "3612d1b433e65b784abfb1cb0bbbb28aa32e5234ec68c41b43d237e8a5209f68"
+      }
+    }
+  },
+  "durationMilliseconds" : 13,
+  "requestID" : "E9996640-67AE-4A1C-9C26-19348D080E76",
+  "schemaVersion" : 1,
+  "success" : true
+}

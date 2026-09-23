@@ -1,0 +1,650 @@
+{
+  "version": "direct-tvos-continuation-plan-v1",
+  "executionAllowed": false,
+  "trainingEligible": false,
+  "admittedPairs": 0,
+  "catalogSHA256": "444d03ece053cce32710260edc6da79c044975d9dfdc9178e57e60cb1a7035a7",
+  "predecessorSHA256": [
+    "7e419d25e299cbdf0e7b3993729c0acf4fd71ee13e0c7896b49bb5cd76f77ff2"
+  ],
+  "verifiedRecipes": 12,
+  "verifiedPairs": 30,
+  "remainingRecipes": [
+    {
+      "catalogIndex": 12,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 13,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 14,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 15,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 16,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 17,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "media_shelf",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "media_card_0",
+        "media_card_1",
+        "media_card_2",
+        "media_card_3"
+      ]
+    },
+    {
+      "catalogIndex": 18,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 19,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 20,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 21,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 22,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 23,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "settings_list",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "settings_row_0",
+        "settings_row_1",
+        "settings_row_2",
+        "settings_row_3"
+      ]
+    },
+    {
+      "catalogIndex": 24,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 25,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 26,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 27,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 28,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 29,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "hero_carousel",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "hero_btn_watch",
+        "hero_btn_details"
+      ]
+    },
+    {
+      "catalogIndex": 30,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 31,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 32,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 33,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 34,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 35,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "focus_maze",
+        "element_count": 4,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "maze_0_0",
+        "maze_0_1",
+        "maze_0_2",
+        "maze_1_0",
+        "maze_1_1",
+        "maze_1_2",
+        "maze_2_0",
+        "maze_2_2"
+      ]
+    },
+    {
+      "catalogIndex": 36,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 37,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 38,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 39,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 40,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 41,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    }
+  ]
+}

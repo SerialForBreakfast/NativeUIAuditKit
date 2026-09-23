@@ -1,0 +1,3494 @@
+{
+  "scores": [
+    {
+      "inferenceMilliseconds": 11.234208330279216,
+      "probability": 0.000103116035,
+      "cropMilliseconds": 13.799250009469688,
+      "id": "office_home_initial:tile-0:base"
+    },
+    {
+      "inferenceMilliseconds": 1.3178749941289425,
+      "probability": 0.00042366982,
+      "cropMilliseconds": 13.150666665751487,
+      "id": "office_home_initial:tile-1:base"
+    },
+    {
+      "inferenceMilliseconds": 1.2825833400711417,
+      "probability": 0.00027179718,
+      "cropMilliseconds": 13.250375021016225,
+      "id": "office_home_initial:tile-2:base"
+    },
+    {
+      "inferenceMilliseconds": 1.1734583240468055,
+      "probability": 0.0007915497,
+      "cropMilliseconds": 13.559833343606442,
+      "id": "office_home_initial:tile-3:base"
+    },
+    {
+      "inferenceMilliseconds": 1.2400000123307109,
+      "probability": 0.00065135956,
+      "cropMilliseconds": 14.369749987963587,
+      "id": "office_home_initial:tile-4:base"
+    },
+    {
+      "inferenceMilliseconds": 1.2407499889377505,
+      "probability": 0.00046730042,
+      "cropMilliseconds": 14.776291645830497,
+      "id": "office_home_initial:tile-5:base"
+    },
+    {
+      "inferenceMilliseconds": 1.2272916501387954,
+      "probability": 2.7775764e-05,
+      "cropMilliseconds": 14.190833317115903,
+      "id": "office_home_initial:tile-0:left4"
+    },
+    {
+      "inferenceMilliseconds": 1.271166664082557,
+      "probability": 0.0038986206,
+      "cropMilliseconds": 13.773416663752869,
+      "id": "office_home_initial:tile-1:left4"
+    },
+    {
+      "inferenceMilliseconds": 1.2908333155792207,
+      "probability": 0.0027885437,
+      "cropMilliseconds": 13.908499997342005,
+      "id": "office_home_initial:tile-2:left4"
+    },
+    {
+      "inferenceMilliseconds": 1.5747500001452863,
+      "probability": 0.003124237,
+      "cropMilliseconds": 13.972083310363814,
+      "id": "office_home_initial:tile-3:left4"
+    },
+    {
+      "inferenceMilliseconds": 1.7450000159442425,
+      "probability": 0.003063202,
+      "cropMilliseconds": 14.067999989492819,
+      "id": "office_home_initial:tile-4:left4"
+    },
+    {
+      "inferenceMilliseconds": 1.9226250005885959,
+      "probability": 0.0026836395,
+      "cropMilliseconds": 14.166208333335817,
+      "id": "office_home_initial:tile-5:left4"
+    },
+    {
+      "inferenceMilliseconds": 1.702958339592442,
+      "probability": 2.2828579e-05,
+      "cropMilliseconds": 14.282291667768732,
+      "id": "office_home_initial:tile-0:right4"
+    },
+    {
+      "inferenceMilliseconds": 1.6462499916087836,
+      "probability": 0.00040006638,
+      "cropMilliseconds": 13.870541675714776,
+      "id": "office_home_initial:tile-1:right4"
+    },
+    {
+      "inferenceMilliseconds": 1.4719166501890868,
+      "probability": 0.0007095337,
+      "cropMilliseconds": 14.0595416596625,
+      "id": "office_home_initial:tile-2:right4"
+    },
+    {
+      "inferenceMilliseconds": 1.4277916634455323,
+      "probability": 0.0004708767,
+      "cropMilliseconds": 13.965791673399508,
+      "id": "office_home_initial:tile-3:right4"
+    },
+    {
+      "inferenceMilliseconds": 1.4782499929424375,
+      "probability": 0.0002360344,
+      "cropMilliseconds": 14.07241667038761,
+      "id": "office_home_initial:tile-4:right4"
+    },
+    {
+      "inferenceMilliseconds": 1.4465833373833448,
+      "probability": 0.0002323389,
+      "cropMilliseconds": 14.03112499974668,
+      "id": "office_home_initial:tile-5:right4"
+    },
+    {
+      "inferenceMilliseconds": 1.4977083483245224,
+      "probability": 2.9742718e-05,
+      "cropMilliseconds": 14.705041685374454,
+      "id": "office_home_initial:tile-0:up4"
+    },
+    {
+      "inferenceMilliseconds": 1.6467916721012443,
+      "probability": 0.00044083595,
+      "cropMilliseconds": 13.90587500645779,
+      "id": "office_home_initial:tile-1:up4"
+    },
+    {
+      "inferenceMilliseconds": 1.2950833479408175,
+      "probability": 0.00082969666,
+      "cropMilliseconds": 13.919291668571532,
+      "id": "office_home_initial:tile-2:up4"
+    },
+    {
+      "inferenceMilliseconds": 1.3009999820496887,
+      "probability": 0.00022339821,
+      "cropMilliseconds": 13.75616667792201,
+      "id": "office_home_initial:tile-3:up4"
+    },
+    {
+      "inferenceMilliseconds": 1.280333352042362,
+      "probability": 0.0002323389,
+      "cropMilliseconds": 13.73825001064688,
+      "id": "office_home_initial:tile-4:up4"
+    },
+    {
+      "inferenceMilliseconds": 1.2967083312105387,
+      "probability": 0.0003888607,
+      "cropMilliseconds": 13.750624988460913,
+      "id": "office_home_initial:tile-5:up4"
+    },
+    {
+      "inferenceMilliseconds": 1.291499997023493,
+      "probability": 1.9848347e-05,
+      "cropMilliseconds": 14.496041665552184,
+      "id": "office_home_initial:tile-0:down4"
+    },
+    {
+      "inferenceMilliseconds": 1.5172499988693744,
+      "probability": 0.00041127205,
+      "cropMilliseconds": 13.90458332025446,
+      "id": "office_home_initial:tile-1:down4"
+    },
+    {
+      "inferenceMilliseconds": 1.8618333560880274,
+      "probability": 0.00040459633,
+      "cropMilliseconds": 13.769416691502556,
+      "id": "office_home_initial:tile-2:down4"
+    },
+    {
+      "inferenceMilliseconds": 1.667958335019648,
+      "probability": 0.00026535988,
+      "cropMilliseconds": 13.86362500488758,
+      "id": "office_home_initial:tile-3:down4"
+    },
+    {
+      "inferenceMilliseconds": 1.5434583183377981,
+      "probability": 0.0004324913,
+      "cropMilliseconds": 13.840583327692002,
+      "id": "office_home_initial:tile-4:down4"
+    },
+    {
+      "inferenceMilliseconds": 1.5235833125188947,
+      "probability": 0.00031495094,
+      "cropMilliseconds": 14.07358335563913,
+      "id": "office_home_initial:tile-5:down4"
+    },
+    {
+      "inferenceMilliseconds": 1.2606666423380375,
+      "probability": 1.4066696e-05,
+      "cropMilliseconds": 14.258958341088146,
+      "id": "office_home_initial:tile-0:pad4"
+    },
+    {
+      "inferenceMilliseconds": 1.333833351964131,
+      "probability": 0.0010280609,
+      "cropMilliseconds": 14.229916647309437,
+      "id": "office_home_initial:tile-1:pad4"
+    },
+    {
+      "inferenceMilliseconds": 1.4781249919906259,
+      "probability": 0.0009150505,
+      "cropMilliseconds": 14.428458351176232,
+      "id": "office_home_initial:tile-2:pad4"
+    },
+    {
+      "inferenceMilliseconds": 1.651166647206992,
+      "probability": 0.00046563148,
+      "cropMilliseconds": 14.41020832862705,
+      "id": "office_home_initial:tile-3:pad4"
+    },
+    {
+      "inferenceMilliseconds": 1.6380833112634718,
+      "probability": 0.0005722046,
+      "cropMilliseconds": 14.51079169055447,
+      "id": "office_home_initial:tile-4:pad4"
+    },
+    {
+      "inferenceMilliseconds": 1.3079166819807142,
+      "probability": 0.00018668175,
+      "cropMilliseconds": 14.204250008333474,
+      "id": "office_home_initial:tile-5:pad4"
+    },
+    {
+      "inferenceMilliseconds": 1.3772500096820295,
+      "probability": 8.958578e-05,
+      "cropMilliseconds": 13.8640416553244,
+      "id": "office_home_initial:tile-0:inset4"
+    },
+    {
+      "inferenceMilliseconds": 1.381666661472991,
+      "probability": 0.009597778,
+      "cropMilliseconds": 14.224833314074203,
+      "id": "office_home_initial:tile-1:inset4"
+    },
+    {
+      "probability": 0.013168335,
+      "inferenceMilliseconds": 4.8929583572316915,
+      "id": "office_home_initial:tile-2:inset4",
+      "cropMilliseconds": 14.693999983137473
+    },
+    {
+      "probability": 0.0029582977,
+      "inferenceMilliseconds": 1.5268749848473817,
+      "id": "office_home_initial:tile-3:inset4",
+      "cropMilliseconds": 14.06629165285267
+    },
+    {
+      "probability": 0.0031719208,
+      "inferenceMilliseconds": 1.4777499891351908,
+      "id": "office_home_initial:tile-4:inset4",
+      "cropMilliseconds": 14.532541652442887
+    },
+    {
+      "probability": 0.003824234,
+      "inferenceMilliseconds": 1.5947083302307874,
+      "id": "office_home_initial:tile-5:inset4",
+      "cropMilliseconds": 14.477166667347774
+    },
+    {
+      "probability": 0.00021493435,
+      "inferenceMilliseconds": 1.7045833228621632,
+      "id": "office_home_step01:tile-0:base",
+      "cropMilliseconds": 13.672125001903623
+    },
+    {
+      "probability": 0.033813477,
+      "inferenceMilliseconds": 1.560708333272487,
+      "id": "office_home_step01:tile-1:base",
+      "cropMilliseconds": 14.121708343736827
+    },
+    {
+      "probability": 0.0008659363,
+      "inferenceMilliseconds": 1.3089583371765912,
+      "id": "office_home_step01:tile-2:base",
+      "cropMilliseconds": 13.774374994682148
+    },
+    {
+      "probability": 0.00081014633,
+      "inferenceMilliseconds": 1.3310000067576766,
+      "id": "office_home_step01:tile-3:base",
+      "cropMilliseconds": 13.73299999977462
+    },
+    {
+      "probability": 0.0007209778,
+      "inferenceMilliseconds": 1.2960000021848828,
+      "id": "office_home_step01:tile-4:base",
+      "cropMilliseconds": 14.160374994389713
+    },
+    {
+      "probability": 0.000746727,
+      "inferenceMilliseconds": 1.4528750034514815,
+      "id": "office_home_step01:tile-5:base",
+      "cropMilliseconds": 13.640916673466563
+    },
+    {
+      "probability": 1.0311604e-05,
+      "inferenceMilliseconds": 1.3462916831485927,
+      "id": "office_home_step01:tile-0:left4",
+      "cropMilliseconds": 13.744208350544795
+    },
+    {
+      "probability": 0.049102783,
+      "inferenceMilliseconds": 1.2865416647400707,
+      "id": "office_home_step01:tile-1:left4",
+      "cropMilliseconds": 14.238541654776782
+    },
+    {
+      "probability": 0.00579834,
+      "inferenceMilliseconds": 2.136124996468425,
+      "id": "office_home_step01:tile-2:left4",
+      "cropMilliseconds": 13.49395833676681
+    },
+    {
+      "probability": 0.0043296814,
+      "inferenceMilliseconds": 1.5844166628085077,
+      "id": "office_home_step01:tile-3:left4",
+      "cropMilliseconds": 13.511791679775342
+    },
+    {
+      "probability": 0.0040245056,
+      "inferenceMilliseconds": 1.6094166785478592,
+      "id": "office_home_step01:tile-4:left4",
+      "cropMilliseconds": 13.928416650742292
+    },
+    {
+      "probability": 0.00349617,
+      "inferenceMilliseconds": 1.2692083546426147,
+      "id": "office_home_step01:tile-5:left4",
+      "cropMilliseconds": 13.675833324668929
+    },
+    {
+      "probability": 2.9325485e-05,
+      "inferenceMilliseconds": 1.5666666731704026,
+      "id": "office_home_step01:tile-0:right4",
+      "cropMilliseconds": 13.313875009771436
+    },
+    {
+      "probability": 0.07098389,
+      "inferenceMilliseconds": 1.5130833489820361,
+      "id": "office_home_step01:tile-1:right4",
+      "cropMilliseconds": 14.034208317752928
+    },
+    {
+      "probability": 0.002620697,
+      "inferenceMilliseconds": 1.444208319298923,
+      "id": "office_home_step01:tile-2:right4",
+      "cropMilliseconds": 13.85708333691582
+    },
+    {
+      "probability": 0.001748085,
+      "inferenceMilliseconds": 1.3600833190139383,
+      "id": "office_home_step01:tile-3:right4",
+      "cropMilliseconds": 13.74179165577516
+    },
+    {
+      "probability": 0.0023059845,
+      "inferenceMilliseconds": 1.3354166585486382,
+      "id": "office_home_step01:tile-4:right4",
+      "cropMilliseconds": 13.77429167041555
+    },
+    {
+      "probability": 0.0016613007,
+      "inferenceMilliseconds": 1.5230833378154784,
+      "id": "office_home_step01:tile-5:right4",
+      "cropMilliseconds": 13.992041669553146
+    },
+    {
+      "probability": 0.000101566315,
+      "inferenceMilliseconds": 1.651666680118069,
+      "id": "office_home_step01:tile-0:up4",
+      "cropMilliseconds": 13.819999992847443
+    },
+    {
+      "probability": 0.9980469,
+      "inferenceMilliseconds": 1.4532916538883,
+      "id": "office_home_step01:tile-1:up4",
+      "cropMilliseconds": 13.771249999990687
+    },
+    {
+      "probability": 0.0036373138,
+      "inferenceMilliseconds": 1.5462083392776549,
+      "id": "office_home_step01:tile-2:up4",
+      "cropMilliseconds": 13.75466666650027
+    },
+    {
+      "probability": 0.1809082,
+      "inferenceMilliseconds": 1.4815416652709246,
+      "id": "office_home_step01:tile-3:up4",
+      "cropMilliseconds": 13.649208325659856
+    },
+    {
+      "probability": 0.12878418,
+      "inferenceMilliseconds": 1.3455416483338922,
+      "id": "office_home_step01:tile-4:up4",
+      "cropMilliseconds": 13.47670832183212
+    },
+    {
+      "probability": 0.20141602,
+      "inferenceMilliseconds": 1.5528333315160125,
+      "id": "office_home_step01:tile-5:up4",
+      "cropMilliseconds": 14.090249984292313
+    },
+    {
+      "probability": 0.00018537045,
+      "inferenceMilliseconds": 1.4143333246465772,
+      "id": "office_home_step01:tile-0:down4",
+      "cropMilliseconds": 13.828291645040736
+    },
+    {
+      "probability": 0.009864807,
+      "inferenceMilliseconds": 1.3855833385605365,
+      "id": "office_home_step01:tile-1:down4",
+      "cropMilliseconds": 13.912875001551583
+    },
+    {
+      "probability": 0.0039138794,
+      "inferenceMilliseconds": 1.3337916461750865,
+      "id": "office_home_step01:tile-2:down4",
+      "cropMilliseconds": 13.655208342242986
+    },
+    {
+      "probability": 0.0012998581,
+      "inferenceMilliseconds": 1.3201250112615526,
+      "id": "office_home_step01:tile-3:down4",
+      "cropMilliseconds": 14.526208338793367
+    },
+    {
+      "probability": 0.001159668,
+      "inferenceMilliseconds": 1.4899583184160292,
+      "id": "office_home_step01:tile-4:down4",
+      "cropMilliseconds": 13.62350000999868
+    },
+    {
+      "probability": 0.0013999939,
+      "inferenceMilliseconds": 1.35441665770486,
+      "id": "office_home_step01:tile-5:down4",
+      "cropMilliseconds": 13.860791659681126
+    },
+    {
+      "probability": 0.000114142895,
+      "inferenceMilliseconds": 1.4110833290033042,
+      "id": "office_home_step01:tile-0:pad4",
+      "cropMilliseconds": 14.12474998505786
+    },
+    {
+      "probability": 0.058776855,
+      "inferenceMilliseconds": 1.731583324726671,
+      "id": "office_home_step01:tile-1:pad4",
+      "cropMilliseconds": 14.126041671261191
+    },
+    {
+      "probability": 0.009902954,
+      "inferenceMilliseconds": 1.66433333652094,
+      "id": "office_home_step01:tile-2:pad4",
+      "cropMilliseconds": 14.843416662188247
+    },
+    {
+      "probability": 0.008087158,
+      "inferenceMilliseconds": 1.3695833331439644,
+      "id": "office_home_step01:tile-3:pad4",
+      "cropMilliseconds": 14.290499995695427
+    },
+    {
+      "inferenceMilliseconds": 4.4951666495762765,
+      "id": "office_home_step01:tile-4:pad4",
+      "probability": 0.0069007874,
+      "cropMilliseconds": 14.437374979024753
+    },
+    {
+      "inferenceMilliseconds": 1.3441249902825803,
+      "id": "office_home_step01:tile-5:pad4",
+      "probability": 0.009300232,
+      "cropMilliseconds": 13.761375012109056
+    },
+    {
+      "inferenceMilliseconds": 1.2582500057760626,
+      "id": "office_home_step01:tile-0:inset4",
+      "probability": 0.00017011166,
+      "cropMilliseconds": 13.689291663467884
+    },
+    {
+      "inferenceMilliseconds": 1.2571666447911412,
+      "id": "office_home_step01:tile-1:inset4",
+      "probability": 0.9951172,
+      "cropMilliseconds": 13.64474999718368
+    },
+    {
+      "inferenceMilliseconds": 1.2048750068061054,
+      "id": "office_home_step01:tile-2:inset4",
+      "probability": 0.025039673,
+      "cropMilliseconds": 13.592291652457789
+    },
+    {
+      "inferenceMilliseconds": 1.3319999852683395,
+      "id": "office_home_step01:tile-3:inset4",
+      "probability": 0.87353516,
+      "cropMilliseconds": 14.174541662214324
+    },
+    {
+      "inferenceMilliseconds": 1.2960416788700968,
+      "id": "office_home_step01:tile-4:inset4",
+      "probability": 0.69384766,
+      "cropMilliseconds": 13.995250017615035
+    },
+    {
+      "inferenceMilliseconds": 1.2339999957475811,
+      "id": "office_home_step01:tile-5:inset4",
+      "probability": 0.8364258,
+      "cropMilliseconds": 13.612750015454367
+    },
+    {
+      "inferenceMilliseconds": 1.2343749986030161,
+      "id": "office_home_step02:tile-0:base",
+      "probability": 0.00013244152,
+      "cropMilliseconds": 13.734833337366581
+    },
+    {
+      "inferenceMilliseconds": 1.204958331072703,
+      "id": "office_home_step02:tile-1:base",
+      "probability": 0.0009889603,
+      "cropMilliseconds": 13.938749994849786
+    },
+    {
+      "inferenceMilliseconds": 1.2384583242237568,
+      "id": "office_home_step02:tile-2:base",
+      "probability": 0.63916016,
+      "cropMilliseconds": 14.01374998386018
+    },
+    {
+      "inferenceMilliseconds": 1.3830416719429195,
+      "id": "office_home_step02:tile-3:base",
+      "probability": 0.0009851456,
+      "cropMilliseconds": 13.71712499530986
+    },
+    {
+      "inferenceMilliseconds": 1.2594166619237512,
+      "id": "office_home_step02:tile-4:base",
+      "probability": 0.00090026855,
+      "cropMilliseconds": 13.711166684515774
+    },
+    {
+      "inferenceMilliseconds": 1.2110833486076444,
+      "id": "office_home_step02:tile-5:base",
+      "probability": 0.0010604858,
+      "cropMilliseconds": 13.534625002648681
+    },
+    {
+      "inferenceMilliseconds": 1.227458327775821,
+      "id": "office_home_step02:tile-0:left4",
+      "probability": 3.349781e-05,
+      "cropMilliseconds": 13.583333318820223
+    },
+    {
+      "inferenceMilliseconds": 1.2181249912828207,
+      "id": "office_home_step02:tile-1:left4",
+      "probability": 0.0006093979,
+      "cropMilliseconds": 13.79766664467752
+    },
+    {
+      "inferenceMilliseconds": 1.259166660020128,
+      "id": "office_home_step02:tile-2:left4",
+      "probability": 0.3022461,
+      "cropMilliseconds": 13.998333335621282
+    },
+    {
+      "inferenceMilliseconds": 1.2110416719224304,
+      "id": "office_home_step02:tile-3:left4",
+      "probability": 0.008026123,
+      "cropMilliseconds": 13.48720834357664
+    },
+    {
+      "inferenceMilliseconds": 1.2399583356454968,
+      "id": "office_home_step02:tile-4:left4",
+      "probability": 0.0044021606,
+      "cropMilliseconds": 13.629875000333413
+    },
+    {
+      "inferenceMilliseconds": 1.2463750026654452,
+      "id": "office_home_step02:tile-5:left4",
+      "probability": 0.004085541,
+      "cropMilliseconds": 13.234083337010816
+    },
+    {
+      "inferenceMilliseconds": 1.3019166653975844,
+      "id": "office_home_step02:tile-0:right4",
+      "probability": 2.6285648e-05,
+      "cropMilliseconds": 13.820208347169682
+    },
+    {
+      "inferenceMilliseconds": 1.6624166746623814,
+      "id": "office_home_step02:tile-1:right4",
+      "probability": 0.008773804,
+      "cropMilliseconds": 13.904958323109895
+    },
+    {
+      "inferenceMilliseconds": 1.335250010015443,
+      "id": "office_home_step02:tile-2:right4",
+      "probability": 0.4338379,
+      "cropMilliseconds": 14.176458324072883
+    },
+    {
+      "inferenceMilliseconds": 1.4508333406411111,
+      "id": "office_home_step02:tile-3:right4",
+      "probability": 0.0044021606,
+      "cropMilliseconds": 13.643791666254401
+    },
+    {
+      "inferenceMilliseconds": 1.7486250144429505,
+      "id": "office_home_step02:tile-4:right4",
+      "probability": 0.0026836395,
+      "cropMilliseconds": 13.644333346746862
+    },
+    {
+      "inferenceMilliseconds": 1.6703750006854534,
+      "id": "office_home_step02:tile-5:right4",
+      "probability": 0.0028896332,
+      "cropMilliseconds": 13.767083320999518
+    },
+    {
+      "inferenceMilliseconds": 1.4498750097118318,
+      "id": "office_home_step02:tile-0:up4",
+      "probability": 0.00022518635,
+      "cropMilliseconds": 13.70029165991582
+    },
+    {
+      "inferenceMilliseconds": 1.5428749902639538,
+      "id": "office_home_step02:tile-1:up4",
+      "probability": 0.86621094,
+      "cropMilliseconds": 14.116416656179354
+    },
+    {
+      "inferenceMilliseconds": 1.6558750066906214,
+      "id": "office_home_step02:tile-2:up4",
+      "probability": 0.02178955,
+      "cropMilliseconds": 14.266749989474192
+    },
+    {
+      "inferenceMilliseconds": 1.419208332663402,
+      "id": "office_home_step02:tile-3:up4",
+      "probability": 0.90722656,
+      "cropMilliseconds": 13.849624985596165
+    },
+    {
+      "inferenceMilliseconds": 1.3153750041965395,
+      "id": "office_home_step02:tile-4:up4",
+      "probability": 0.8232422,
+      "cropMilliseconds": 14.035041647730395
+    },
+    {
+      "inferenceMilliseconds": 1.422125002136454,
+      "id": "office_home_step02:tile-5:up4",
+      "probability": 0.86572266,
+      "cropMilliseconds": 13.987083308165893
+    },
+    {
+      "inferenceMilliseconds": 1.3751666701864451,
+      "id": "office_home_step02:tile-0:down4",
+      "probability": 9.030104e-05,
+      "cropMilliseconds": 14.07670832122676
+    },
+    {
+      "inferenceMilliseconds": 1.2812083296012133,
+      "id": "office_home_step02:tile-1:down4",
+      "probability": 0.0020751953,
+      "cropMilliseconds": 13.6285416665487
+    },
+    {
+      "inferenceMilliseconds": 1.3077500043436885,
+      "id": "office_home_step02:tile-2:down4",
+      "probability": 0.5317383,
+      "cropMilliseconds": 13.682083343155682
+    },
+    {
+      "inferenceMilliseconds": 1.2312083272263408,
+      "id": "office_home_step02:tile-3:down4",
+      "probability": 0.004070282,
+      "cropMilliseconds": 13.415958354016766
+    },
+    {
+      "inferenceMilliseconds": 1.2669583375100046,
+      "id": "office_home_step02:tile-4:down4",
+      "probability": 0.0034694672,
+      "cropMilliseconds": 13.200624991441146
+    },
+    {
+      "inferenceMilliseconds": 1.2837916729040444,
+      "id": "office_home_step02:tile-5:down4",
+      "probability": 0.003824234,
+      "cropMilliseconds": 13.503458350896835
+    },
+    {
+      "probability": 9.4652176e-05,
+      "inferenceMilliseconds": 4.187166661722586,
+      "cropMilliseconds": 14.427166664972901,
+      "id": "office_home_step02:tile-0:pad4"
+    },
+    {
+      "probability": 0.036895752,
+      "inferenceMilliseconds": 1.2351666809991002,
+      "cropMilliseconds": 14.101916662184522,
+      "id": "office_home_step02:tile-1:pad4"
+    },
+    {
+      "probability": 0.1583252,
+      "inferenceMilliseconds": 1.1776666797231883,
+      "cropMilliseconds": 14.330041682114825,
+      "id": "office_home_step02:tile-2:pad4"
+    },
+    {
+      "probability": 0.04232788,
+      "inferenceMilliseconds": 1.1695416760630906,
+      "cropMilliseconds": 13.932750007370487,
+      "id": "office_home_step02:tile-3:pad4"
+    },
+    {
+      "probability": 0.023742676,
+      "inferenceMilliseconds": 1.1994166707154363,
+      "cropMilliseconds": 13.878583326004446,
+      "id": "office_home_step02:tile-4:pad4"
+    },
+    {
+      "probability": 0.030792236,
+      "inferenceMilliseconds": 1.1415833432693034,
+      "cropMilliseconds": 13.84324999526143,
+      "id": "office_home_step02:tile-5:pad4"
+    },
+    {
+      "probability": 0.00028038025,
+      "inferenceMilliseconds": 1.187958347145468,
+      "cropMilliseconds": 13.82929168175906,
+      "id": "office_home_step02:tile-0:inset4"
+    },
+    {
+      "probability": 0.5205078,
+      "inferenceMilliseconds": 1.1931250046472996,
+      "cropMilliseconds": 13.884291693102568,
+      "id": "office_home_step02:tile-1:inset4"
+    },
+    {
+      "probability": 0.04321289,
+      "inferenceMilliseconds": 1.151749980635941,
+      "cropMilliseconds": 13.77225000760518,
+      "id": "office_home_step02:tile-2:inset4"
+    },
+    {
+      "probability": 0.9838867,
+      "inferenceMilliseconds": 1.150291645899415,
+      "cropMilliseconds": 13.78212499548681,
+      "id": "office_home_step02:tile-3:inset4"
+    },
+    {
+      "probability": 0.9404297,
+      "inferenceMilliseconds": 1.1841249943245202,
+      "cropMilliseconds": 13.769916666205972,
+      "id": "office_home_step02:tile-4:inset4"
+    },
+    {
+      "probability": 0.9482422,
+      "inferenceMilliseconds": 1.1914583155885339,
+      "cropMilliseconds": 13.813708326779306,
+      "id": "office_home_step02:tile-5:inset4"
+    },
+    {
+      "probability": 0.00013768673,
+      "inferenceMilliseconds": 1.3055833405815065,
+      "cropMilliseconds": 13.87433332274668,
+      "id": "office_session2_home:tile-0:base"
+    },
+    {
+      "probability": 0.001036644,
+      "inferenceMilliseconds": 1.3019166653975844,
+      "cropMilliseconds": 13.971041684271768,
+      "id": "office_session2_home:tile-1:base"
+    },
+    {
+      "probability": 0.68652344,
+      "inferenceMilliseconds": 1.2956249993294477,
+      "cropMilliseconds": 14.27004166180268,
+      "id": "office_session2_home:tile-2:base"
+    },
+    {
+      "probability": 0.0009965897,
+      "inferenceMilliseconds": 1.330916682491079,
+      "cropMilliseconds": 13.781666668364778,
+      "id": "office_session2_home:tile-3:base"
+    },
+    {
+      "probability": 0.0010404587,
+      "inferenceMilliseconds": 1.3552916643675417,
+      "cropMilliseconds": 14.15037500555627,
+      "id": "office_session2_home:tile-4:base"
+    },
+    {
+      "probability": 0.0009365082,
+      "inferenceMilliseconds": 1.3144583208486438,
+      "cropMilliseconds": 14.10779164871201,
+      "id": "office_session2_home:tile-5:base"
+    },
+    {
+      "probability": 2.6285648e-05,
+      "inferenceMilliseconds": 1.7810833232942969,
+      "cropMilliseconds": 14.023958327015862,
+      "id": "office_session2_home:tile-0:left4"
+    },
+    {
+      "probability": 0.00054836273,
+      "inferenceMilliseconds": 1.7065000138245523,
+      "cropMilliseconds": 14.085833332501352,
+      "id": "office_session2_home:tile-1:left4"
+    },
+    {
+      "probability": 0.2685547,
+      "inferenceMilliseconds": 1.6833750123623759,
+      "cropMilliseconds": 14.4072083348874,
+      "id": "office_session2_home:tile-2:left4"
+    },
+    {
+      "probability": 0.009269714,
+      "inferenceMilliseconds": 1.6627500008326024,
+      "cropMilliseconds": 14.195291674695909,
+      "id": "office_session2_home:tile-3:left4"
+    },
+    {
+      "probability": 0.004486084,
+      "inferenceMilliseconds": 1.563583326060325,
+      "cropMilliseconds": 14.09974999842234,
+      "id": "office_session2_home:tile-4:left4"
+    },
+    {
+      "probability": 0.0042495728,
+      "inferenceMilliseconds": 1.5136666770558804,
+      "cropMilliseconds": 13.967166654765606,
+      "id": "office_session2_home:tile-5:left4"
+    },
+    {
+      "probability": 3.0755997e-05,
+      "inferenceMilliseconds": 1.2623333313968033,
+      "cropMilliseconds": 13.965666672447696,
+      "id": "office_session2_home:tile-0:right4"
+    },
+    {
+      "probability": 0.007843018,
+      "inferenceMilliseconds": 1.2165000080130994,
+      "cropMilliseconds": 13.637541676871479,
+      "id": "office_session2_home:tile-1:right4"
+    },
+    {
+      "probability": 0.46289062,
+      "inferenceMilliseconds": 1.1975000088568777,
+      "cropMilliseconds": 14.072333317017183,
+      "id": "office_session2_home:tile-2:right4"
+    },
+    {
+      "probability": 0.004470825,
+      "inferenceMilliseconds": 1.1830833391286433,
+      "cropMilliseconds": 13.684916659258306,
+      "id": "office_session2_home:tile-3:right4"
+    },
+    {
+      "probability": 0.0027580261,
+      "inferenceMilliseconds": 1.258166681509465,
+      "cropMilliseconds": 13.75670832931064,
+      "id": "office_session2_home:tile-4:right4"
+    },
+    {
+      "probability": 0.002878189,
+      "inferenceMilliseconds": 1.2294166663195938,
+      "cropMilliseconds": 13.882416678825393,
+      "id": "office_session2_home:tile-5:right4"
+    },
+    {
+      "probability": 0.00011873245,
+      "inferenceMilliseconds": 1.2373333156574517,
+      "cropMilliseconds": 13.813875004416332,
+      "id": "office_session2_home:tile-0:up4"
+    },
+    {
+      "probability": 0.81152344,
+      "inferenceMilliseconds": 1.2214583402965218,
+      "cropMilliseconds": 13.74737499281764,
+      "id": "office_session2_home:tile-1:up4"
+    },
+    {
+      "probability": 0.019088745,
+      "inferenceMilliseconds": 1.186500012408942,
+      "cropMilliseconds": 14.324999996460974,
+      "id": "office_session2_home:tile-2:up4"
+    },
+    {
+      "probability": 0.9116211,
+      "inferenceMilliseconds": 1.1976666864939034,
+      "cropMilliseconds": 13.657375006005168,
+      "id": "office_session2_home:tile-3:up4"
+    },
+    {
+      "probability": 0.78027344,
+      "inferenceMilliseconds": 1.2267916463315487,
+      "cropMilliseconds": 13.778708322206512,
+      "id": "office_session2_home:tile-4:up4"
+    },
+    {
+      "probability": 0.8408203,
+      "inferenceMilliseconds": 1.2084166519343853,
+      "cropMilliseconds": 13.897708326112479,
+      "id": "office_session2_home:tile-5:up4"
+    },
+    {
+      "probability": 7.969141e-05,
+      "inferenceMilliseconds": 1.3017083401791751,
+      "cropMilliseconds": 13.770291669061407,
+      "id": "office_session2_home:tile-0:down4"
+    },
+    {
+      "probability": 0.0020828247,
+      "inferenceMilliseconds": 1.2338749947957695,
+      "cropMilliseconds": 13.77900000079535,
+      "id": "office_session2_home:tile-1:down4"
+    },
+    {
+      "inferenceMilliseconds": 4.0702083497308195,
+      "id": "office_session2_home:tile-2:down4",
+      "cropMilliseconds": 14.578875008737668,
+      "probability": 0.5649414
+    },
+    {
+      "inferenceMilliseconds": 1.2990416726097465,
+      "id": "office_session2_home:tile-3:down4",
+      "cropMilliseconds": 13.845458335708827,
+      "probability": 0.0041656494
+    },
+    {
+      "inferenceMilliseconds": 1.212916657095775,
+      "id": "office_session2_home:tile-4:down4",
+      "cropMilliseconds": 13.828458322677761,
+      "probability": 0.0035114288
+    },
+    {
+      "inferenceMilliseconds": 1.2424166779965162,
+      "id": "office_session2_home:tile-5:down4",
+      "cropMilliseconds": 14.040333335287869,
+      "probability": 0.0037212372
+    },
+    {
+      "inferenceMilliseconds": 1.304541656281799,
+      "id": "office_session2_home:tile-0:pad4",
+      "cropMilliseconds": 14.279499999247491,
+      "probability": 8.612871e-05
+    },
+    {
+      "inferenceMilliseconds": 1.3204999850131571,
+      "id": "office_session2_home:tile-1:pad4",
+      "cropMilliseconds": 14.377916668308899,
+      "probability": 0.03277588
+    },
+    {
+      "inferenceMilliseconds": 1.3643749989569187,
+      "id": "office_session2_home:tile-2:pad4",
+      "cropMilliseconds": 14.34779167175293,
+      "probability": 0.11315918
+    },
+    {
+      "inferenceMilliseconds": 1.3184166455175728,
+      "id": "office_session2_home:tile-3:pad4",
+      "cropMilliseconds": 14.328125020256266,
+      "probability": 0.059326172
+    },
+    {
+      "inferenceMilliseconds": 1.3252083444967866,
+      "id": "office_session2_home:tile-4:pad4",
+      "cropMilliseconds": 14.329833327792585,
+      "probability": 0.023834229
+    },
+    {
+      "inferenceMilliseconds": 1.2540416500996798,
+      "id": "office_session2_home:tile-5:pad4",
+      "cropMilliseconds": 14.058541652048007,
+      "probability": 0.025512695
+    },
+    {
+      "inferenceMilliseconds": 1.3997500063851476,
+      "id": "office_session2_home:tile-0:inset4",
+      "cropMilliseconds": 14.229583321139216,
+      "probability": 0.00028038025
+    },
+    {
+      "inferenceMilliseconds": 1.3229583273641765,
+      "id": "office_session2_home:tile-1:inset4",
+      "cropMilliseconds": 13.9681666623801,
+      "probability": 0.33520508
+    },
+    {
+      "inferenceMilliseconds": 1.3632916670758277,
+      "id": "office_session2_home:tile-2:inset4",
+      "cropMilliseconds": 14.219666685676202,
+      "probability": 0.042816162
+    },
+    {
+      "inferenceMilliseconds": 1.748333335854113,
+      "id": "office_session2_home:tile-3:inset4",
+      "cropMilliseconds": 14.08570833154954,
+      "probability": 0.98291016
+    },
+    {
+      "inferenceMilliseconds": 1.6931249992921948,
+      "id": "office_session2_home:tile-4:inset4",
+      "cropMilliseconds": 14.05320834601298,
+      "probability": 0.9243164
+    },
+    {
+      "inferenceMilliseconds": 1.2575416767504066,
+      "id": "office_session2_home:tile-5:inset4",
+      "cropMilliseconds": 14.069666649447754,
+      "probability": 0.9394531
+    },
+    {
+      "inferenceMilliseconds": 1.268958323635161,
+      "id": "office_home_step03:tile-0:base",
+      "cropMilliseconds": 15.869750001002103,
+      "probability": 0.00013446808
+    },
+    {
+      "inferenceMilliseconds": 1.305583311477676,
+      "id": "office_home_step03:tile-1:base",
+      "cropMilliseconds": 15.79787500668317,
+      "probability": 0.00063848495
+    },
+    {
+      "inferenceMilliseconds": 1.2986249930690974,
+      "id": "office_home_step03:tile-2:base",
+      "cropMilliseconds": 15.801250003278255,
+      "probability": 0.0013713837
+    },
+    {
+      "inferenceMilliseconds": 1.283541671000421,
+      "id": "office_home_step03:tile-3:base",
+      "cropMilliseconds": 16.15616667550057,
+      "probability": 0.0006213188
+    },
+    {
+      "inferenceMilliseconds": 1.2235416797921062,
+      "id": "office_home_step03:tile-4:base",
+      "cropMilliseconds": 16.235958348261192,
+      "probability": 0.00074338913
+    },
+    {
+      "inferenceMilliseconds": 1.2746249849442393,
+      "id": "office_home_step03:tile-5:base",
+      "cropMilliseconds": 16.171875002328306,
+      "probability": 0.0008864403
+    },
+    {
+      "inferenceMilliseconds": 1.2562499905470759,
+      "id": "office_home_step03:tile-6:base",
+      "cropMilliseconds": 16.178374993614852,
+      "probability": 0.39941406
+    },
+    {
+      "inferenceMilliseconds": 1.222416671225801,
+      "id": "office_home_step03:tile-7:base",
+      "cropMilliseconds": 16.20570835075341,
+      "probability": 9.9897385e-05
+    },
+    {
+      "inferenceMilliseconds": 1.2246250116731972,
+      "id": "office_home_step03:tile-8:base",
+      "cropMilliseconds": 16.51312501053326,
+      "probability": 0.13671875
+    },
+    {
+      "inferenceMilliseconds": 1.2489583459682763,
+      "id": "office_home_step03:tile-9:base",
+      "cropMilliseconds": 15.829999989364296,
+      "probability": 0.00027179718
+    },
+    {
+      "inferenceMilliseconds": 1.7387499974574894,
+      "id": "office_home_step03:tile-10:base",
+      "cropMilliseconds": 16.286375001072884,
+      "probability": 0.00012540817
+    },
+    {
+      "inferenceMilliseconds": 1.3856666628271341,
+      "id": "office_home_step03:tile-11:base",
+      "cropMilliseconds": 16.129166673636064,
+      "probability": 0.0042152405
+    },
+    {
+      "inferenceMilliseconds": 1.1678750161081553,
+      "id": "office_home_step03:tile-12:base",
+      "cropMilliseconds": 16.133124998304993,
+      "probability": 0.03567505
+    },
+    {
+      "inferenceMilliseconds": 1.1530416668392718,
+      "id": "office_home_step03:tile-13:base",
+      "cropMilliseconds": 16.091124998638406,
+      "probability": 0.0032367706
+    },
+    {
+      "inferenceMilliseconds": 1.3167083379812539,
+      "id": "office_home_step03:tile-14:base",
+      "cropMilliseconds": 16.21908333618194,
+      "probability": 0.0026016235
+    },
+    {
+      "inferenceMilliseconds": 1.280916651012376,
+      "id": "office_home_step03:tile-15:base",
+      "cropMilliseconds": 16.33137499447912,
+      "probability": 0.00016605854
+    },
+    {
+      "inferenceMilliseconds": 1.201291655888781,
+      "id": "office_home_step03:tile-16:base",
+      "cropMilliseconds": 16.254749993095174,
+      "probability": 0.040100098
+    },
+    {
+      "inferenceMilliseconds": 1.609999977517873,
+      "id": "office_home_step03:tile-17:base",
+      "cropMilliseconds": 16.314791690092534,
+      "probability": 0.0030288696
+    },
+    {
+      "inferenceMilliseconds": 1.5102916804607958,
+      "id": "office_home_step03:tile-18:base",
+      "cropMilliseconds": 16.50133333168924,
+      "probability": 0.16088867
+    },
+    {
+      "inferenceMilliseconds": 1.5725833363831043,
+      "id": "office_home_step03:tile-19:base",
+      "cropMilliseconds": 16.39487501233816,
+      "probability": 0.0009150505
+    },
+    {
+      "inferenceMilliseconds": 1.6907500103116035,
+      "id": "office_home_step03:tile-20:base",
+      "cropMilliseconds": 16.866958350874484,
+      "probability": 0.021209717
+    },
+    {
+      "inferenceMilliseconds": 1.6734999953769147,
+      "id": "office_home_step03:tile-21:base",
+      "cropMilliseconds": 16.395999991800636,
+      "probability": 0.003944397
+    },
+    {
+      "id": "office_home_step03:tile-22:base",
+      "inferenceMilliseconds": 5.022333323722705,
+      "cropMilliseconds": 16.956083331024274,
+      "probability": 0.0064888
+    },
+    {
+      "id": "office_home_step03:tile-23:base",
+      "inferenceMilliseconds": 1.5303750114981085,
+      "cropMilliseconds": 16.484916675835848,
+      "probability": 0.0008864403
+    },
+    {
+      "id": "office_home_step03:tile-0:left4",
+      "inferenceMilliseconds": 1.3433750136755407,
+      "cropMilliseconds": 16.42262499080971,
+      "probability": 1.013279e-05
+    },
+    {
+      "id": "office_home_step03:tile-1:left4",
+      "inferenceMilliseconds": 1.2646250252146274,
+      "cropMilliseconds": 16.50479165255092,
+      "probability": 0.0040397644
+    },
+    {
+      "id": "office_home_step03:tile-2:left4",
+      "inferenceMilliseconds": 1.280625001527369,
+      "cropMilliseconds": 16.121874999953434,
+      "probability": 0.0059776306
+    },
+    {
+      "id": "office_home_step03:tile-3:left4",
+      "inferenceMilliseconds": 1.2088333314750344,
+      "cropMilliseconds": 16.14254165906459,
+      "probability": 0.002866745
+    },
+    {
+      "id": "office_home_step03:tile-4:left4",
+      "inferenceMilliseconds": 1.224499981617555,
+      "cropMilliseconds": 16.20612500119023,
+      "probability": 0.0038394928
+    },
+    {
+      "id": "office_home_step03:tile-5:left4",
+      "inferenceMilliseconds": 1.1921249970328063,
+      "cropMilliseconds": 16.135416663018987,
+      "probability": 0.004886627
+    },
+    {
+      "id": "office_home_step03:tile-6:left4",
+      "inferenceMilliseconds": 1.2052500096615404,
+      "cropMilliseconds": 16.14854167564772,
+      "probability": 0.68066406
+    },
+    {
+      "id": "office_home_step03:tile-7:left4",
+      "inferenceMilliseconds": 1.1678333394229412,
+      "cropMilliseconds": 15.996291680494323,
+      "probability": 0.0003876686
+    },
+    {
+      "id": "office_home_step03:tile-8:left4",
+      "inferenceMilliseconds": 1.1737500026356429,
+      "cropMilliseconds": 16.278874973068014,
+      "probability": 0.5317383
+    },
+    {
+      "id": "office_home_step03:tile-9:left4",
+      "inferenceMilliseconds": 1.2266666744835675,
+      "cropMilliseconds": 16.137083322973922,
+      "probability": 0.0013046265
+    },
+    {
+      "id": "office_home_step03:tile-10:left4",
+      "inferenceMilliseconds": 1.2803333229385316,
+      "cropMilliseconds": 16.165500011993572,
+      "probability": 0.00016868114
+    },
+    {
+      "id": "office_home_step03:tile-11:left4",
+      "inferenceMilliseconds": 1.2217916664667428,
+      "cropMilliseconds": 16.068583325250074,
+      "probability": 0.003124237
+    },
+    {
+      "id": "office_home_step03:tile-12:left4",
+      "inferenceMilliseconds": 1.2521249882411212,
+      "cropMilliseconds": 16.171333321835846,
+      "probability": 0.1003418
+    },
+    {
+      "id": "office_home_step03:tile-13:left4",
+      "inferenceMilliseconds": 1.2426666799001396,
+      "cropMilliseconds": 16.12162499804981,
+      "probability": 0.014953613
+    },
+    {
+      "id": "office_home_step03:tile-14:left4",
+      "inferenceMilliseconds": 1.1994583474006504,
+      "cropMilliseconds": 16.04549997136928,
+      "probability": 0.010734558
+    },
+    {
+      "id": "office_home_step03:tile-15:left4",
+      "inferenceMilliseconds": 1.1960416741203517,
+      "cropMilliseconds": 15.948166663292795,
+      "probability": 0.00016868114
+    },
+    {
+      "id": "office_home_step03:tile-16:left4",
+      "inferenceMilliseconds": 1.1596249823924154,
+      "cropMilliseconds": 15.943416656227782,
+      "probability": 0.23620605
+    },
+    {
+      "id": "office_home_step03:tile-17:left4",
+      "inferenceMilliseconds": 1.4092499914113432,
+      "cropMilliseconds": 16.170999995665625,
+      "probability": 0.0026416779
+    },
+    {
+      "id": "office_home_step03:tile-18:left4",
+      "inferenceMilliseconds": 1.5305000124499202,
+      "cropMilliseconds": 16.590708313742653,
+      "probability": 0.07080078
+    },
+    {
+      "id": "office_home_step03:tile-19:left4",
+      "inferenceMilliseconds": 1.665416668402031,
+      "cropMilliseconds": 16.69374998891726,
+      "probability": 0.003648758
+    },
+    {
+      "id": "office_home_step03:tile-20:left4",
+      "inferenceMilliseconds": 1.2982916668988764,
+      "cropMilliseconds": 16.367999982321635,
+      "probability": 0.013069153
+    },
+    {
+      "id": "office_home_step03:tile-21:left4",
+      "inferenceMilliseconds": 1.3518750201910734,
+      "cropMilliseconds": 16.256666684057564,
+      "probability": 0.004348755
+    },
+    {
+      "id": "office_home_step03:tile-22:left4",
+      "inferenceMilliseconds": 1.3277499820105731,
+      "cropMilliseconds": 16.376166662666947,
+      "probability": 0.0035800934
+    },
+    {
+      "id": "office_home_step03:tile-23:left4",
+      "inferenceMilliseconds": 1.3687083264812827,
+      "cropMilliseconds": 16.20987500064075,
+      "probability": 0.0041656494
+    },
+    {
+      "id": "office_home_step03:tile-0:right4",
+      "inferenceMilliseconds": 1.3935416645836085,
+      "cropMilliseconds": 16.299708338920027,
+      "probability": 2.18153e-05
+    },
+    {
+      "id": "office_home_step03:tile-1:right4",
+      "inferenceMilliseconds": 1.3582083338405937,
+      "cropMilliseconds": 16.36870831134729,
+      "probability": 0.002462387
+    },
+    {
+      "id": "office_home_step03:tile-2:right4",
+      "inferenceMilliseconds": 1.5055416733957827,
+      "cropMilliseconds": 16.36825001332909,
+      "probability": 0.008773804
+    },
+    {
+      "id": "office_home_step03:tile-3:right4",
+      "inferenceMilliseconds": 1.5629999979864806,
+      "cropMilliseconds": 16.62833333830349,
+      "probability": 0.0014438629
+    },
+    {
+      "id": "office_home_step03:tile-4:right4",
+      "inferenceMilliseconds": 1.4559999981429428,
+      "cropMilliseconds": 16.555874986806884,
+      "probability": 0.0021419525
+    },
+    {
+      "id": "office_home_step03:tile-5:right4",
+      "inferenceMilliseconds": 1.2511250097304583,
+      "cropMilliseconds": 16.051958344178274,
+      "probability": 0.0028018951
+    },
+    {
+      "id": "office_home_step03:tile-6:right4",
+      "inferenceMilliseconds": 1.4654583355877548,
+      "cropMilliseconds": 15.997958340449259,
+      "probability": 0.69384766
+    },
+    {
+      "id": "office_home_step03:tile-7:right4",
+      "inferenceMilliseconds": 1.292499975534156,
+      "cropMilliseconds": 16.480583348311484,
+      "probability": 0.00061655045
+    },
+    {
+      "id": "office_home_step03:tile-8:right4",
+      "inferenceMilliseconds": 1.260708348127082,
+      "cropMilliseconds": 16.56729166279547,
+      "probability": 0.25634766
+    },
+    {
+      "id": "office_home_step03:tile-9:right4",
+      "inferenceMilliseconds": 1.2453333183657378,
+      "cropMilliseconds": 16.264083329588175,
+      "probability": 3.170967e-05
+    },
+    {
+      "id": "office_home_step03:tile-10:right4",
+      "inferenceMilliseconds": 1.2392500066198409,
+      "cropMilliseconds": 16.20312497834675,
+      "probability": 0.00018668175
+    },
+    {
+      "id": "office_home_step03:tile-11:right4",
+      "inferenceMilliseconds": 1.1931666522286832,
+      "cropMilliseconds": 16.046375007135794,
+      "probability": 0.0041656494
+    },
+    {
+      "inferenceMilliseconds": 4.000874992925674,
+      "id": "office_home_step03:tile-12:right4",
+      "probability": 0.21936035,
+      "cropMilliseconds": 16.33083334309049
+    },
+    {
+      "inferenceMilliseconds": 1.212291681440547,
+      "id": "office_home_step03:tile-13:right4",
+      "probability": 0.018585205,
+      "cropMilliseconds": 16.079083346994594
+    },
+    {
+      "inferenceMilliseconds": 1.1772083526011556,
+      "id": "office_home_step03:tile-14:right4",
+      "probability": 0.0056419373,
+      "cropMilliseconds": 15.984875004505739
+    },
+    {
+      "inferenceMilliseconds": 1.1475000064820051,
+      "id": "office_home_step03:tile-15:right4",
+      "probability": 0.00021493435,
+      "cropMilliseconds": 15.918124991003424
+    },
+    {
+      "inferenceMilliseconds": 1.2431666546035558,
+      "id": "office_home_step03:tile-16:right4",
+      "probability": 0.5649414,
+      "cropMilliseconds": 16.079333319794387
+    },
+    {
+      "inferenceMilliseconds": 1.2906249903608114,
+      "id": "office_home_step03:tile-17:right4",
+      "probability": 0.0019493103,
+      "cropMilliseconds": 16.24066667864099
+    },
+    {
+      "inferenceMilliseconds": 1.3984583492856473,
+      "id": "office_home_step03:tile-18:right4",
+      "probability": 0.10748291,
+      "cropMilliseconds": 16.195791686186567
+    },
+    {
+      "inferenceMilliseconds": 1.5204166702460498,
+      "id": "office_home_step03:tile-19:right4",
+      "probability": 0.0022621155,
+      "cropMilliseconds": 16.197791672311723
+    },
+    {
+      "inferenceMilliseconds": 1.4617916604038328,
+      "id": "office_home_step03:tile-20:right4",
+      "probability": 0.009788513,
+      "cropMilliseconds": 16.197499993722886
+    },
+    {
+      "inferenceMilliseconds": 1.290416665142402,
+      "id": "office_home_step03:tile-21:right4",
+      "probability": 0.017501831,
+      "cropMilliseconds": 16.395874990848824
+    },
+    {
+      "inferenceMilliseconds": 1.292625005589798,
+      "id": "office_home_step03:tile-22:right4",
+      "probability": 0.06817627,
+      "cropMilliseconds": 16.25804166542366
+    },
+    {
+      "inferenceMilliseconds": 1.2789583124686033,
+      "id": "office_home_step03:tile-23:right4",
+      "probability": 0.0022010803,
+      "cropMilliseconds": 16.18262499687262
+    },
+    {
+      "inferenceMilliseconds": 1.3495000021066517,
+      "id": "office_home_step03:tile-0:up4",
+      "probability": 5.477667e-05,
+      "cropMilliseconds": 16.31262499722652
+    },
+    {
+      "inferenceMilliseconds": 1.2964583584107459,
+      "id": "office_home_step03:tile-1:up4",
+      "probability": 0.09039307,
+      "cropMilliseconds": 16.102916648378596
+    },
+    {
+      "inferenceMilliseconds": 1.3237500097602606,
+      "id": "office_home_step03:tile-2:up4",
+      "probability": 0.004184723,
+      "cropMilliseconds": 16.14508335478604
+    },
+    {
+      "inferenceMilliseconds": 1.368583325529471,
+      "id": "office_home_step03:tile-3:up4",
+      "probability": 0.035888672,
+      "cropMilliseconds": 16.237041680142283
+    },
+    {
+      "inferenceMilliseconds": 1.59087500651367,
+      "id": "office_home_step03:tile-4:up4",
+      "probability": 0.08355713,
+      "cropMilliseconds": 16.707541653886437
+    },
+    {
+      "inferenceMilliseconds": 1.349458354525268,
+      "id": "office_home_step03:tile-5:up4",
+      "probability": 0.08477783,
+      "cropMilliseconds": 16.69233333086595
+    },
+    {
+      "inferenceMilliseconds": 1.2374999932944775,
+      "id": "office_home_step03:tile-6:up4",
+      "probability": 0.8540039,
+      "cropMilliseconds": 16.322000010404736
+    },
+    {
+      "inferenceMilliseconds": 1.1947083403356373,
+      "id": "office_home_step03:tile-7:up4",
+      "probability": 0.0007915497,
+      "cropMilliseconds": 16.008000005967915
+    },
+    {
+      "inferenceMilliseconds": 1.2441249855328351,
+      "id": "office_home_step03:tile-8:up4",
+      "probability": 0.16479492,
+      "cropMilliseconds": 16.53341666678898
+    },
+    {
+      "inferenceMilliseconds": 1.2531249958556145,
+      "id": "office_home_step03:tile-9:up4",
+      "probability": 0.00065898895,
+      "cropMilliseconds": 16.220250021433458
+    },
+    {
+      "inferenceMilliseconds": 1.263916667085141,
+      "id": "office_home_step03:tile-10:up4",
+      "probability": 8.291006e-05,
+      "cropMilliseconds": 16.498958342708647
+    },
+    {
+      "inferenceMilliseconds": 1.564000005600974,
+      "id": "office_home_step03:tile-11:up4",
+      "probability": 0.0037078857,
+      "cropMilliseconds": 16.214208328165114
+    },
+    {
+      "inferenceMilliseconds": 1.4815416652709246,
+      "id": "office_home_step03:tile-12:up4",
+      "probability": 0.013793945,
+      "cropMilliseconds": 16.895041655516252
+    },
+    {
+      "inferenceMilliseconds": 1.3202083355281502,
+      "id": "office_home_step03:tile-13:up4",
+      "probability": 0.008415222,
+      "cropMilliseconds": 16.348583332728595
+    },
+    {
+      "inferenceMilliseconds": 1.6192083421628922,
+      "id": "office_home_step03:tile-14:up4",
+      "probability": 0.0041503906,
+      "cropMilliseconds": 16.51699998183176
+    },
+    {
+      "inferenceMilliseconds": 1.4633749960921705,
+      "id": "office_home_step03:tile-15:up4",
+      "probability": 7.665157e-05,
+      "cropMilliseconds": 16.307916666846722
+    },
+    {
+      "inferenceMilliseconds": 1.2865000171586871,
+      "id": "office_home_step03:tile-16:up4",
+      "probability": 0.007232666,
+      "cropMilliseconds": 16.15037498413585
+    },
+    {
+      "inferenceMilliseconds": 1.3247916649561375,
+      "id": "office_home_step03:tile-17:up4",
+      "probability": 0.09753418,
+      "cropMilliseconds": 16.209374996833503
+    },
+    {
+      "inferenceMilliseconds": 1.3271666830405593,
+      "id": "office_home_step03:tile-18:up4",
+      "probability": 0.036224365,
+      "cropMilliseconds": 16.267708328086883
+    },
+    {
+      "inferenceMilliseconds": 1.302333315834403,
+      "id": "office_home_step03:tile-19:up4",
+      "probability": 0.8408203,
+      "cropMilliseconds": 16.301750001730397
+    },
+    {
+      "inferenceMilliseconds": 1.2867500190623105,
+      "id": "office_home_step03:tile-20:up4",
+      "probability": 0.014450073,
+      "cropMilliseconds": 16.374875005567446
+    },
+    {
+      "inferenceMilliseconds": 1.4454583288170397,
+      "id": "office_home_step03:tile-21:up4",
+      "probability": 0.004196167,
+      "cropMilliseconds": 16.149750008480623
+    },
+    {
+      "inferenceMilliseconds": 1.36749999364838,
+      "id": "office_home_step03:tile-22:up4",
+      "probability": 0.020492554,
+      "cropMilliseconds": 16.722500004107133
+    },
+    {
+      "inferenceMilliseconds": 1.4736249868292361,
+      "id": "office_home_step03:tile-23:up4",
+      "probability": 0.83984375,
+      "cropMilliseconds": 16.659916669595987
+    },
+    {
+      "inferenceMilliseconds": 1.6677083331160247,
+      "id": "office_home_step03:tile-0:down4",
+      "probability": 5.2273273e-05,
+      "cropMilliseconds": 16.41029166057706
+    },
+    {
+      "inferenceMilliseconds": 1.8023750162683427,
+      "id": "office_home_step03:tile-1:down4",
+      "probability": 0.0010480881,
+      "cropMilliseconds": 16.52912501594983
+    },
+    {
+      "probability": 0.0031604767,
+      "cropMilliseconds": 16.72183335176669,
+      "inferenceMilliseconds": 5.032291664974764,
+      "id": "office_home_step03:tile-2:down4"
+    },
+    {
+      "probability": 0.0009551048,
+      "cropMilliseconds": 16.69083334854804,
+      "inferenceMilliseconds": 1.359166664769873,
+      "id": "office_home_step03:tile-3:down4"
+    },
+    {
+      "probability": 0.0012302399,
+      "cropMilliseconds": 16.497750009875745,
+      "inferenceMilliseconds": 1.2989583192393184,
+      "id": "office_home_step03:tile-4:down4"
+    },
+    {
+      "probability": 0.0010690689,
+      "cropMilliseconds": 16.137208323925734,
+      "inferenceMilliseconds": 1.3015833392273635,
+      "id": "office_home_step03:tile-5:down4"
+    },
+    {
+      "probability": 0.82177734,
+      "cropMilliseconds": 16.184083331609145,
+      "inferenceMilliseconds": 1.2722916435450315,
+      "id": "office_home_step03:tile-6:down4"
+    },
+    {
+      "probability": 0.00022876263,
+      "cropMilliseconds": 16.11850000335835,
+      "inferenceMilliseconds": 1.2815833324566483,
+      "id": "office_home_step03:tile-7:down4"
+    },
+    {
+      "probability": 0.25854492,
+      "cropMilliseconds": 16.70049998210743,
+      "inferenceMilliseconds": 1.266791659872979,
+      "id": "office_home_step03:tile-8:down4"
+    },
+    {
+      "probability": 5.477667e-05,
+      "cropMilliseconds": 16.20870834449306,
+      "inferenceMilliseconds": 1.3173749903216958,
+      "id": "office_home_step03:tile-9:down4"
+    },
+    {
+      "probability": 4.9889088e-05,
+      "cropMilliseconds": 16.369708348065615,
+      "inferenceMilliseconds": 1.3670833432115614,
+      "id": "office_home_step03:tile-10:down4"
+    },
+    {
+      "probability": 0.0005354881,
+      "cropMilliseconds": 16.340750007657334,
+      "inferenceMilliseconds": 1.4655833365395665,
+      "id": "office_home_step03:tile-11:down4"
+    },
+    {
+      "probability": 0.0032367706,
+      "cropMilliseconds": 16.348250006558374,
+      "inferenceMilliseconds": 1.605666649993509,
+      "id": "office_home_step03:tile-12:down4"
+    },
+    {
+      "probability": 0.018051147,
+      "cropMilliseconds": 16.553958324948326,
+      "inferenceMilliseconds": 1.4014583139214665,
+      "id": "office_home_step03:tile-13:down4"
+    },
+    {
+      "probability": 0.027542114,
+      "cropMilliseconds": 16.566458332818,
+      "inferenceMilliseconds": 1.4301666524261236,
+      "id": "office_home_step03:tile-14:down4"
+    },
+    {
+      "probability": 0.00038290024,
+      "cropMilliseconds": 16.50875000632368,
+      "inferenceMilliseconds": 1.2685416731983423,
+      "id": "office_home_step03:tile-15:down4"
+    },
+    {
+      "probability": 0.0010566711,
+      "cropMilliseconds": 16.181749990209937,
+      "inferenceMilliseconds": 1.4475000207312405,
+      "id": "office_home_step03:tile-16:down4"
+    },
+    {
+      "probability": 0.0012598038,
+      "cropMilliseconds": 16.595458349911496,
+      "inferenceMilliseconds": 1.595541660208255,
+      "id": "office_home_step03:tile-17:down4"
+    },
+    {
+      "probability": 0.01525116,
+      "cropMilliseconds": 16.397583327488974,
+      "inferenceMilliseconds": 1.3014583382755518,
+      "id": "office_home_step03:tile-18:down4"
+    },
+    {
+      "probability": 0.0039596558,
+      "cropMilliseconds": 16.359541652491316,
+      "inferenceMilliseconds": 1.2987916707061231,
+      "id": "office_home_step03:tile-19:down4"
+    },
+    {
+      "probability": 0.012580872,
+      "cropMilliseconds": 16.24783332226798,
+      "inferenceMilliseconds": 1.2997916783206165,
+      "id": "office_home_step03:tile-20:down4"
+    },
+    {
+      "probability": 0.00030303,
+      "cropMilliseconds": 16.167875000974163,
+      "inferenceMilliseconds": 1.2985416688024998,
+      "id": "office_home_step03:tile-21:down4"
+    },
+    {
+      "probability": 0.0006465912,
+      "cropMilliseconds": 16.040500020608306,
+      "inferenceMilliseconds": 1.3302916777320206,
+      "id": "office_home_step03:tile-22:down4"
+    },
+    {
+      "probability": 0.0038394928,
+      "cropMilliseconds": 16.26616666908376,
+      "inferenceMilliseconds": 1.2916249979753047,
+      "id": "office_home_step03:tile-23:down4"
+    },
+    {
+      "probability": 2.3007393e-05,
+      "cropMilliseconds": 16.648833348881453,
+      "inferenceMilliseconds": 1.34508335031569,
+      "id": "office_home_step03:tile-0:pad4"
+    },
+    {
+      "probability": 0.008125305,
+      "cropMilliseconds": 16.720999992685392,
+      "inferenceMilliseconds": 1.4692499826196581,
+      "id": "office_home_step03:tile-1:pad4"
+    },
+    {
+      "probability": 0.013580322,
+      "cropMilliseconds": 16.706958325812593,
+      "inferenceMilliseconds": 1.5157083398662508,
+      "id": "office_home_step03:tile-2:pad4"
+    },
+    {
+      "probability": 0.005428314,
+      "cropMilliseconds": 17.24954164819792,
+      "inferenceMilliseconds": 1.4519583492074162,
+      "id": "office_home_step03:tile-3:pad4"
+    },
+    {
+      "probability": 0.0074005127,
+      "cropMilliseconds": 16.985250025754794,
+      "inferenceMilliseconds": 1.5978333249222487,
+      "id": "office_home_step03:tile-4:pad4"
+    },
+    {
+      "probability": 0.006362915,
+      "cropMilliseconds": 16.90241665346548,
+      "inferenceMilliseconds": 1.5197083412203938,
+      "id": "office_home_step03:tile-5:pad4"
+    },
+    {
+      "probability": 0.83984375,
+      "cropMilliseconds": 16.917916655074805,
+      "inferenceMilliseconds": 1.5620416670572013,
+      "id": "office_home_step03:tile-6:pad4"
+    },
+    {
+      "probability": 0.0013933182,
+      "cropMilliseconds": 16.882125026313588,
+      "inferenceMilliseconds": 1.4418333594221622,
+      "id": "office_home_step03:tile-7:pad4"
+    },
+    {
+      "probability": 0.22619629,
+      "cropMilliseconds": 17.20741664757952,
+      "inferenceMilliseconds": 1.287833321839571,
+      "id": "office_home_step03:tile-8:pad4"
+    },
+    {
+      "probability": 0.0009551048,
+      "cropMilliseconds": 16.780416655819863,
+      "inferenceMilliseconds": 1.3195416831877083,
+      "id": "office_home_step03:tile-9:pad4"
+    },
+    {
+      "probability": 0.000269413,
+      "cropMilliseconds": 16.569291648920625,
+      "inferenceMilliseconds": 1.3097916671540588,
+      "id": "office_home_step03:tile-10:pad4"
+    },
+    {
+      "probability": 0.00061655045,
+      "cropMilliseconds": 16.51774998754263,
+      "inferenceMilliseconds": 1.267541665583849,
+      "id": "office_home_step03:tile-11:pad4"
+    },
+    {
+      "probability": 0.040924072,
+      "cropMilliseconds": 16.442708350950852,
+      "inferenceMilliseconds": 1.2494999973569065,
+      "id": "office_home_step03:tile-12:pad4"
+    },
+    {
+      "probability": 0.0385437,
+      "cropMilliseconds": 16.375166655052453,
+      "inferenceMilliseconds": 1.255583338206634,
+      "id": "office_home_step03:tile-13:pad4"
+    },
+    {
+      "probability": 0.08947754,
+      "cropMilliseconds": 16.85770833864808,
+      "inferenceMilliseconds": 1.4364999951794744,
+      "id": "office_home_step03:tile-14:pad4"
+    },
+    {
+      "probability": 0.00024914742,
+      "cropMilliseconds": 16.870208317413926,
+      "inferenceMilliseconds": 1.2691666779574007,
+      "id": "office_home_step03:tile-15:pad4"
+    },
+    {
+      "probability": 0.008476257,
+      "cropMilliseconds": 16.73975001904182,
+      "inferenceMilliseconds": 4.154791677137837,
+      "id": "office_home_step03:tile-16:pad4"
+    },
+    {
+      "probability": 0.015312195,
+      "cropMilliseconds": 16.37050000135787,
+      "inferenceMilliseconds": 1.2587083328980953,
+      "id": "office_home_step03:tile-17:pad4"
+    },
+    {
+      "probability": 0.08123779,
+      "cropMilliseconds": 16.413250006735325,
+      "inferenceMilliseconds": 1.2722083483822644,
+      "id": "office_home_step03:tile-18:pad4"
+    },
+    {
+      "probability": 0.029937744,
+      "cropMilliseconds": 16.188125009648502,
+      "inferenceMilliseconds": 1.2876666442025453,
+      "id": "office_home_step03:tile-19:pad4"
+    },
+    {
+      "probability": 0.021057129,
+      "cropMilliseconds": 16.332500003045425,
+      "inferenceMilliseconds": 1.2242916563991457,
+      "id": "office_home_step03:tile-20:pad4"
+    },
+    {
+      "probability": 0.000641346,
+      "cropMilliseconds": 16.382583329686895,
+      "inferenceMilliseconds": 1.1848750000353903,
+      "id": "office_home_step03:tile-21:pad4"
+    },
+    {
+      "probability": 0.0009326935,
+      "cropMilliseconds": 16.31754168192856,
+      "inferenceMilliseconds": 1.1809583229478449,
+      "id": "office_home_step03:tile-22:pad4"
+    },
+    {
+      "probability": 0.028274536,
+      "cropMilliseconds": 16.39712500036694,
+      "inferenceMilliseconds": 1.274374983040616,
+      "id": "office_home_step03:tile-23:pad4"
+    },
+    {
+      "probability": 0.00041866302,
+      "cropMilliseconds": 16.219916666159406,
+      "inferenceMilliseconds": 1.5071250090841204,
+      "id": "office_home_step03:tile-0:inset4"
+    },
+    {
+      "probability": 0.92089844,
+      "cropMilliseconds": 16.385791648644954,
+      "inferenceMilliseconds": 1.255625014891848,
+      "id": "office_home_step03:tile-1:inset4"
+    },
+    {
+      "probability": 0.043029785,
+      "cropMilliseconds": 16.438749997178093,
+      "inferenceMilliseconds": 1.283499994315207,
+      "id": "office_home_step03:tile-2:inset4"
+    },
+    {
+      "probability": 0.8178711,
+      "cropMilliseconds": 16.34445833042264,
+      "inferenceMilliseconds": 1.2898749846499413,
+      "id": "office_home_step03:tile-3:inset4"
+    },
+    {
+      "probability": 0.8833008,
+      "cropMilliseconds": 16.539791657123715,
+      "inferenceMilliseconds": 1.3236249797046185,
+      "id": "office_home_step03:tile-4:inset4"
+    },
+    {
+      "probability": 0.86621094,
+      "cropMilliseconds": 16.456249984912574,
+      "inferenceMilliseconds": 1.3291666691657156,
+      "id": "office_home_step03:tile-5:inset4"
+    },
+    {
+      "probability": 0.73876953,
+      "cropMilliseconds": 16.829625004902482,
+      "inferenceMilliseconds": 1.4914166822563857,
+      "id": "office_home_step03:tile-6:inset4"
+    },
+    {
+      "probability": 0.0028018951,
+      "cropMilliseconds": 16.796208336018026,
+      "inferenceMilliseconds": 1.526791660580784,
+      "id": "office_home_step03:tile-7:inset4"
+    },
+    {
+      "probability": 0.3618164,
+      "cropMilliseconds": 16.893666674150154,
+      "inferenceMilliseconds": 1.5069999790284783,
+      "id": "office_home_step03:tile-8:inset4"
+    },
+    {
+      "probability": 0.0004324913,
+      "cropMilliseconds": 16.604125004960224,
+      "inferenceMilliseconds": 1.603541662916541,
+      "id": "office_home_step03:tile-9:inset4"
+    },
+    {
+      "probability": 7.545948e-05,
+      "cropMilliseconds": 16.39624999370426,
+      "inferenceMilliseconds": 1.335583336185664,
+      "id": "office_home_step03:tile-10:inset4"
+    },
+    {
+      "probability": 0.0026626587,
+      "cropMilliseconds": 15.915666648652405,
+      "inferenceMilliseconds": 1.281999982893467,
+      "id": "office_home_step03:tile-11:inset4"
+    },
+    {
+      "probability": 0.006122589,
+      "cropMilliseconds": 16.47795832832344,
+      "inferenceMilliseconds": 1.2282500101719052,
+      "id": "office_home_step03:tile-12:inset4"
+    },
+    {
+      "probability": 0.03125,
+      "cropMilliseconds": 16.315374989062548,
+      "inferenceMilliseconds": 1.2001249997410923,
+      "id": "office_home_step03:tile-13:inset4"
+    },
+    {
+      "probability": 0.0793457,
+      "cropMilliseconds": 16.20591664686799,
+      "inferenceMilliseconds": 1.2425833265297115,
+      "id": "office_home_step03:tile-14:inset4"
+    },
+    {
+      "probability": 0.00018668175,
+      "cropMilliseconds": 16.38337501208298,
+      "inferenceMilliseconds": 1.2110416719224304,
+      "id": "office_home_step03:tile-15:inset4"
+    },
+    {
+      "probability": 0.0028457642,
+      "cropMilliseconds": 16.52000000467524,
+      "inferenceMilliseconds": 1.3097500195726752,
+      "id": "office_home_step03:tile-16:inset4"
+    },
+    {
+      "probability": 0.45141602,
+      "cropMilliseconds": 16.187416680622846,
+      "inferenceMilliseconds": 1.2334166676737368,
+      "id": "office_home_step03:tile-17:inset4"
+    },
+    {
+      "probability": 0.099975586,
+      "cropMilliseconds": 16.591249994235113,
+      "inferenceMilliseconds": 1.2419583217706531,
+      "id": "office_home_step03:tile-18:inset4"
+    },
+    {
+      "probability": 0.8828125,
+      "cropMilliseconds": 16.36516666621901,
+      "inferenceMilliseconds": 1.2250833387952298,
+      "id": "office_home_step03:tile-19:inset4"
+    },
+    {
+      "probability": 0.023117065,
+      "cropMilliseconds": 16.33437498821877,
+      "inferenceMilliseconds": 1.3893333380110562,
+      "id": "office_home_step03:tile-20:inset4"
+    },
+    {
+      "probability": 0.0039138794,
+      "cropMilliseconds": 16.38166667544283,
+      "inferenceMilliseconds": 1.2600416666828096,
+      "id": "office_home_step03:tile-21:inset4"
+    },
+    {
+      "probability": 0.006587982,
+      "cropMilliseconds": 16.287375008687377,
+      "inferenceMilliseconds": 1.2124583590775728,
+      "id": "office_home_step03:tile-22:inset4"
+    },
+    {
+      "probability": 0.89990234,
+      "cropMilliseconds": 16.323041665600613,
+      "inferenceMilliseconds": 1.2182083446532488,
+      "id": "office_home_step03:tile-23:inset4"
+    },
+    {
+      "probability": 0.00012636185,
+      "cropMilliseconds": 18.527416657889262,
+      "inferenceMilliseconds": 1.2164166546426713,
+      "id": "office_home_col5:tile-0:base"
+    },
+    {
+      "probability": 0.08081055,
+      "cropMilliseconds": 18.207958346465603,
+      "inferenceMilliseconds": 1.2277500063646585,
+      "id": "office_home_col5:tile-1:base"
+    },
+    {
+      "probability": 0.011871338,
+      "cropMilliseconds": 18.084041686961427,
+      "inferenceMilliseconds": 1.5200000198092312,
+      "id": "office_home_col5:tile-2:base"
+    },
+    {
+      "probability": 0.005241394,
+      "cropMilliseconds": 18.301041680388153,
+      "inferenceMilliseconds": 1.277041679713875,
+      "id": "office_home_col5:tile-3:base"
+    },
+    {
+      "probability": 0.010818481,
+      "cropMilliseconds": 18.347583332797512,
+      "inferenceMilliseconds": 1.3875833246856928,
+      "id": "office_home_col5:tile-4:base"
+    },
+    {
+      "probability": 0.02128601,
+      "cropMilliseconds": 18.453458353178576,
+      "inferenceMilliseconds": 1.3942916702944785,
+      "id": "office_home_col5:tile-5:base"
+    },
+    {
+      "inferenceMilliseconds": 4.612374992575496,
+      "id": "office_home_col5:tile-6:base",
+      "probability": 0.6298828,
+      "cropMilliseconds": 18.894624983659014
+    },
+    {
+      "inferenceMilliseconds": 1.5562083281110972,
+      "id": "office_home_col5:tile-7:base",
+      "probability": 6.353855e-05,
+      "cropMilliseconds": 18.793916649883613
+    },
+    {
+      "inferenceMilliseconds": 1.5940833545755595,
+      "id": "office_home_col5:tile-8:base",
+      "probability": 0.77685547,
+      "cropMilliseconds": 19.09191664890386
+    },
+    {
+      "inferenceMilliseconds": 1.255583338206634,
+      "id": "office_home_col5:tile-9:base",
+      "probability": 0.00015604496,
+      "cropMilliseconds": 18.644583324203268
+    },
+    {
+      "inferenceMilliseconds": 1.280249998671934,
+      "id": "office_home_col5:tile-10:base",
+      "probability": 1.4424324e-05,
+      "cropMilliseconds": 18.457833328284323
+    },
+    {
+      "inferenceMilliseconds": 1.2447916669771075,
+      "id": "office_home_col5:tile-11:base",
+      "probability": 0.00070142746,
+      "cropMilliseconds": 18.883583339629695
+    },
+    {
+      "inferenceMilliseconds": 1.1770833225455135,
+      "id": "office_home_col5:tile-12:base",
+      "probability": 0.0023422241,
+      "cropMilliseconds": 18.34916666848585
+    },
+    {
+      "inferenceMilliseconds": 1.1884583509527147,
+      "id": "office_home_col5:tile-13:base",
+      "probability": 0.00013768673,
+      "cropMilliseconds": 18.417083338135853
+    },
+    {
+      "inferenceMilliseconds": 1.2591250124387443,
+      "id": "office_home_col5:tile-14:base",
+      "probability": 0.0025806427,
+      "cropMilliseconds": 18.152541655581445
+    },
+    {
+      "inferenceMilliseconds": 1.2174166622571647,
+      "id": "office_home_col5:tile-15:base",
+      "probability": 8.893013e-05,
+      "cropMilliseconds": 18.188708345405757
+    },
+    {
+      "inferenceMilliseconds": 1.203916675876826,
+      "id": "office_home_col5:tile-16:base",
+      "probability": 0.00045609474,
+      "cropMilliseconds": 18.407791649224237
+    },
+    {
+      "inferenceMilliseconds": 1.2159166799392551,
+      "id": "office_home_col5:tile-17:base",
+      "probability": 0.0010166168,
+      "cropMilliseconds": 18.308708327822387
+    },
+    {
+      "inferenceMilliseconds": 1.3250833144411445,
+      "id": "office_home_col5:tile-18:base",
+      "probability": 0.017852783,
+      "cropMilliseconds": 18.241791665786877
+    },
+    {
+      "inferenceMilliseconds": 1.272708352189511,
+      "id": "office_home_col5:tile-19:base",
+      "probability": 0.0001500845,
+      "cropMilliseconds": 18.148875009501353
+    },
+    {
+      "inferenceMilliseconds": 1.2595833104569465,
+      "id": "office_home_col5:tile-20:base",
+      "probability": 0.0028324127,
+      "cropMilliseconds": 17.905708344187587
+    },
+    {
+      "inferenceMilliseconds": 1.3052500144112855,
+      "id": "office_home_col5:tile-21:base",
+      "probability": 0.00047802925,
+      "cropMilliseconds": 17.975958326132968
+    },
+    {
+      "inferenceMilliseconds": 1.2359999818727374,
+      "id": "office_home_col5:tile-22:base",
+      "probability": 0.00034332275,
+      "cropMilliseconds": 18.08537502074614
+    },
+    {
+      "inferenceMilliseconds": 1.2632916623260826,
+      "id": "office_home_col5:tile-23:base",
+      "probability": 0.00018107891,
+      "cropMilliseconds": 18.062041664961725
+    },
+    {
+      "inferenceMilliseconds": 1.2797083181794733,
+      "id": "office_home_col5:tile-0:left4",
+      "probability": 4.7564507e-05,
+      "cropMilliseconds": 18.21091669262387
+    },
+    {
+      "inferenceMilliseconds": 1.461583306081593,
+      "id": "office_home_col5:tile-1:left4",
+      "probability": 0.037261963,
+      "cropMilliseconds": 18.61466668196954
+    },
+    {
+      "inferenceMilliseconds": 1.3181249960325658,
+      "id": "office_home_col5:tile-2:left4",
+      "probability": 0.04940796,
+      "cropMilliseconds": 18.54112499859184
+    },
+    {
+      "inferenceMilliseconds": 1.3647916784975678,
+      "id": "office_home_col5:tile-3:left4",
+      "probability": 0.0043144226,
+      "cropMilliseconds": 19.571416662074625
+    },
+    {
+      "inferenceMilliseconds": 1.7969583277590573,
+      "id": "office_home_col5:tile-4:left4",
+      "probability": 0.014556885,
+      "cropMilliseconds": 19.181625015335158
+    },
+    {
+      "inferenceMilliseconds": 1.7234583210665733,
+      "id": "office_home_col5:tile-5:left4",
+      "probability": 0.023330688,
+      "cropMilliseconds": 19.995083333924413
+    },
+    {
+      "inferenceMilliseconds": 1.8290833395440131,
+      "id": "office_home_col5:tile-6:left4",
+      "probability": 0.48950195,
+      "cropMilliseconds": 22.765375004382804
+    },
+    {
+      "inferenceMilliseconds": 1.334500004304573,
+      "id": "office_home_col5:tile-7:left4",
+      "probability": 0.00054454803,
+      "cropMilliseconds": 25.557749992003664
+    },
+    {
+      "inferenceMilliseconds": 1.8077083223033696,
+      "id": "office_home_col5:tile-8:left4",
+      "probability": 0.92089844,
+      "cropMilliseconds": 21.114125003805384
+    },
+    {
+      "inferenceMilliseconds": 1.5002083382569253,
+      "id": "office_home_col5:tile-9:left4",
+      "probability": 8.416176e-05,
+      "cropMilliseconds": 20.57349999086
+    },
+    {
+      "inferenceMilliseconds": 1.3066249957773834,
+      "id": "office_home_col5:tile-10:left4",
+      "probability": 1.4603138e-05,
+      "cropMilliseconds": 18.08966667158529
+    },
+    {
+      "inferenceMilliseconds": 2.613375021610409,
+      "id": "office_home_col5:tile-11:left4",
+      "probability": 0.00023972988,
+      "cropMilliseconds": 18.231333320727572
+    },
+    {
+      "inferenceMilliseconds": 1.3581249804701656,
+      "id": "office_home_col5:tile-12:left4",
+      "probability": 0.0025501251,
+      "cropMilliseconds": 17.796499974792823
+    },
+    {
+      "inferenceMilliseconds": 1.2991666735615581,
+      "id": "office_home_col5:tile-13:left4",
+      "probability": 0.0006213188,
+      "cropMilliseconds": 17.704208323266357
+    },
+    {
+      "inferenceMilliseconds": 1.3217500236351043,
+      "id": "office_home_col5:tile-14:left4",
+      "probability": 0.006462097,
+      "cropMilliseconds": 17.945166677236557
+    },
+    {
+      "inferenceMilliseconds": 1.673041668254882,
+      "id": "office_home_col5:tile-15:left4",
+      "probability": 3.7312508e-05,
+      "cropMilliseconds": 18.16062501166016
+    },
+    {
+      "inferenceMilliseconds": 1.5808333409950137,
+      "id": "office_home_col5:tile-16:left4",
+      "probability": 0.001086235,
+      "cropMilliseconds": 18.010791653068736
+    },
+    {
+      "inferenceMilliseconds": 1.2993749987799674,
+      "id": "office_home_col5:tile-17:left4",
+      "probability": 0.0004863739,
+      "cropMilliseconds": 17.81287501216866
+    },
+    {
+      "inferenceMilliseconds": 1.3347916537895799,
+      "id": "office_home_col5:tile-18:left4",
+      "probability": 0.0049057007,
+      "cropMilliseconds": 17.86125000216998
+    },
+    {
+      "inferenceMilliseconds": 1.2499166768975556,
+      "id": "office_home_col5:tile-19:left4",
+      "probability": 0.000749588,
+      "cropMilliseconds": 17.841541673988104
+    },
+    {
+      "probability": 0.0017623901,
+      "id": "office_home_col5:tile-20:left4",
+      "cropMilliseconds": 18.714333331445232,
+      "inferenceMilliseconds": 4.170541651546955
+    },
+    {
+      "probability": 5.4359436e-05,
+      "id": "office_home_col5:tile-21:left4",
+      "cropMilliseconds": 18.30541668459773,
+      "inferenceMilliseconds": 1.2790833425242454
+    },
+    {
+      "probability": 2.0444393e-05,
+      "id": "office_home_col5:tile-22:left4",
+      "cropMilliseconds": 18.509625020669773,
+      "inferenceMilliseconds": 1.254500006325543
+    },
+    {
+      "probability": 0.0007042885,
+      "id": "office_home_col5:tile-23:left4",
+      "cropMilliseconds": 18.43120835837908,
+      "inferenceMilliseconds": 1.3448749959934503
+    },
+    {
+      "probability": 1.3411045e-05,
+      "id": "office_home_col5:tile-0:right4",
+      "cropMilliseconds": 18.68770833243616,
+      "inferenceMilliseconds": 1.5069166547618806
+    },
+    {
+      "probability": 0.012008667,
+      "id": "office_home_col5:tile-1:right4",
+      "cropMilliseconds": 18.754583317786455,
+      "inferenceMilliseconds": 1.6132500022649765
+    },
+    {
+      "probability": 0.015426636,
+      "id": "office_home_col5:tile-2:right4",
+      "cropMilliseconds": 18.535166658693925,
+      "inferenceMilliseconds": 1.2629166594706476
+    },
+    {
+      "probability": 0.002521515,
+      "id": "office_home_col5:tile-3:right4",
+      "cropMilliseconds": 18.378958309767768,
+      "inferenceMilliseconds": 1.2262500240467489
+    },
+    {
+      "probability": 0.0031719208,
+      "id": "office_home_col5:tile-4:right4",
+      "cropMilliseconds": 18.597499991301447,
+      "inferenceMilliseconds": 1.3902916689403355
+    },
+    {
+      "probability": 0.003364563,
+      "id": "office_home_col5:tile-5:right4",
+      "cropMilliseconds": 18.64150000619702,
+      "inferenceMilliseconds": 1.4659999869763851
+    },
+    {
+      "probability": 0.79541016,
+      "id": "office_home_col5:tile-6:right4",
+      "cropMilliseconds": 18.521124991821125,
+      "inferenceMilliseconds": 1.4024166739545763
+    },
+    {
+      "probability": 3.9756298e-05,
+      "id": "office_home_col5:tile-7:right4",
+      "cropMilliseconds": 18.66550001432188,
+      "inferenceMilliseconds": 1.2822499847970903
+    },
+    {
+      "probability": 0.58496094,
+      "id": "office_home_col5:tile-8:right4",
+      "cropMilliseconds": 18.479083344573155,
+      "inferenceMilliseconds": 1.2311250029597431
+    },
+    {
+      "probability": 0.00011962652,
+      "id": "office_home_col5:tile-9:right4",
+      "cropMilliseconds": 18.610458326293156,
+      "inferenceMilliseconds": 1.2742499820888042
+    },
+    {
+      "probability": 9.614229e-05,
+      "id": "office_home_col5:tile-10:right4",
+      "cropMilliseconds": 18.35883333114907,
+      "inferenceMilliseconds": 1.202166691655293
+    },
+    {
+      "probability": 0.0011558533,
+      "id": "office_home_col5:tile-11:right4",
+      "cropMilliseconds": 18.706208327785134,
+      "inferenceMilliseconds": 1.205000007757917
+    },
+    {
+      "probability": 0.005935669,
+      "id": "office_home_col5:tile-12:right4",
+      "cropMilliseconds": 18.31720830523409,
+      "inferenceMilliseconds": 1.211833325214684
+    },
+    {
+      "probability": 0.00039052963,
+      "id": "office_home_col5:tile-13:right4",
+      "cropMilliseconds": 18.351666687522084,
+      "inferenceMilliseconds": 1.1721666669473052
+    },
+    {
+      "probability": 0.011512756,
+      "id": "office_home_col5:tile-14:right4",
+      "cropMilliseconds": 18.23583332588896,
+      "inferenceMilliseconds": 1.1889166489709169
+    },
+    {
+      "probability": 0.0002270937,
+      "id": "office_home_col5:tile-15:right4",
+      "cropMilliseconds": 18.538250005804002,
+      "inferenceMilliseconds": 1.2639999913517386
+    },
+    {
+      "probability": 0.0018606186,
+      "id": "office_home_col5:tile-16:right4",
+      "cropMilliseconds": 18.24695832328871,
+      "inferenceMilliseconds": 1.2124166532885283
+    },
+    {
+      "probability": 0.00025725365,
+      "id": "office_home_col5:tile-17:right4",
+      "cropMilliseconds": 18.43937498051673,
+      "inferenceMilliseconds": 1.2470833316911012
+    },
+    {
+      "probability": 0.0051002502,
+      "id": "office_home_col5:tile-18:right4",
+      "cropMilliseconds": 18.295583315193653,
+      "inferenceMilliseconds": 1.183166663395241
+    },
+    {
+      "probability": 0.00017547607,
+      "id": "office_home_col5:tile-19:right4",
+      "cropMilliseconds": 18.316708330530673,
+      "inferenceMilliseconds": 1.2156250013504177
+    },
+    {
+      "probability": 0.0031852722,
+      "id": "office_home_col5:tile-20:right4",
+      "cropMilliseconds": 18.244333332404494,
+      "inferenceMilliseconds": 1.1892916518263519
+    },
+    {
+      "probability": 0.0003540516,
+      "id": "office_home_col5:tile-21:right4",
+      "cropMilliseconds": 18.225166684715077,
+      "inferenceMilliseconds": 1.2050416553393006
+    },
+    {
+      "probability": 0.00058174133,
+      "id": "office_home_col5:tile-22:right4",
+      "cropMilliseconds": 18.211874994449317,
+      "inferenceMilliseconds": 1.1701666517183185
+    },
+    {
+      "probability": 0.0001398325,
+      "id": "office_home_col5:tile-23:right4",
+      "cropMilliseconds": 18.50262499647215,
+      "inferenceMilliseconds": 1.6426249931100756
+    },
+    {
+      "probability": 7.426739e-05,
+      "id": "office_home_col5:tile-0:up4",
+      "cropMilliseconds": 18.850749998819083,
+      "inferenceMilliseconds": 1.2886666809208691
+    },
+    {
+      "probability": 0.050231934,
+      "id": "office_home_col5:tile-1:up4",
+      "cropMilliseconds": 18.546458333730698,
+      "inferenceMilliseconds": 1.3550000148825347
+    },
+    {
+      "probability": 0.020233154,
+      "id": "office_home_col5:tile-2:up4",
+      "cropMilliseconds": 18.541708326665685,
+      "inferenceMilliseconds": 1.5256250044330955
+    },
+    {
+      "probability": 0.34228516,
+      "id": "office_home_col5:tile-3:up4",
+      "cropMilliseconds": 18.812833353877068,
+      "inferenceMilliseconds": 1.4783333463128656
+    },
+    {
+      "probability": 0.018127441,
+      "id": "office_home_col5:tile-4:up4",
+      "cropMilliseconds": 18.865333317080513,
+      "inferenceMilliseconds": 1.6813749971333891
+    },
+    {
+      "probability": 0.015609741,
+      "id": "office_home_col5:tile-5:up4",
+      "cropMilliseconds": 18.86004165862687,
+      "inferenceMilliseconds": 1.3147083227522671
+    },
+    {
+      "probability": 0.4230957,
+      "id": "office_home_col5:tile-6:up4",
+      "cropMilliseconds": 18.769708345644176,
+      "inferenceMilliseconds": 1.285750011447817
+    },
+    {
+      "probability": 2.7120113e-05,
+      "id": "office_home_col5:tile-7:up4",
+      "cropMilliseconds": 18.790583329973742,
+      "inferenceMilliseconds": 1.5043749881442636
+    },
+    {
+      "probability": 0.8935547,
+      "id": "office_home_col5:tile-8:up4",
+      "cropMilliseconds": 18.888083315687254,
+      "inferenceMilliseconds": 1.3045000087004155
+    },
+    {
+      "probability": 0.0005617142,
+      "id": "office_home_col5:tile-9:up4",
+      "cropMilliseconds": 18.40762500069104,
+      "inferenceMilliseconds": 1.2375416699796915
+    },
+    {
+      "cropMilliseconds": 18.711833312409,
+      "id": "office_home_col5:tile-10:up4",
+      "inferenceMilliseconds": 4.082708328496665,
+      "probability": 0.00010806322
+    },
+    {
+      "cropMilliseconds": 18.862750002881512,
+      "id": "office_home_col5:tile-11:up4",
+      "inferenceMilliseconds": 1.2475416588131338,
+      "probability": 0.0036373138
+    },
+    {
+      "cropMilliseconds": 18.399708351353183,
+      "id": "office_home_col5:tile-12:up4",
+      "inferenceMilliseconds": 1.1502083507366478,
+      "probability": 0.00064373016
+    },
+    {
+      "cropMilliseconds": 18.375916668446735,
+      "id": "office_home_col5:tile-13:up4",
+      "inferenceMilliseconds": 1.2292500177863985,
+      "probability": 0.00076436996
+    },
+    {
+      "cropMilliseconds": 18.42379168374464,
+      "id": "office_home_col5:tile-14:up4",
+      "inferenceMilliseconds": 1.1625000042840838,
+      "probability": 0.0012998581
+    },
+    {
+      "cropMilliseconds": 18.28429166926071,
+      "id": "office_home_col5:tile-15:up4",
+      "inferenceMilliseconds": 1.1377083137631416,
+      "probability": 0.00022339821
+    },
+    {
+      "cropMilliseconds": 18.316416651941836,
+      "id": "office_home_col5:tile-16:up4",
+      "inferenceMilliseconds": 1.1460833193268627,
+      "probability": 0.00014317036
+    },
+    {
+      "cropMilliseconds": 18.213125003967434,
+      "id": "office_home_col5:tile-17:up4",
+      "inferenceMilliseconds": 1.1396250047255307,
+      "probability": 0.00032258034
+    },
+    {
+      "cropMilliseconds": 18.185791675932705,
+      "id": "office_home_col5:tile-18:up4",
+      "inferenceMilliseconds": 1.1870416929014027,
+      "probability": 0.037109375
+    },
+    {
+      "cropMilliseconds": 18.33950000582263,
+      "id": "office_home_col5:tile-19:up4",
+      "inferenceMilliseconds": 1.221999991685152,
+      "probability": 9.4652176e-05
+    },
+    {
+      "cropMilliseconds": 18.85425002546981,
+      "id": "office_home_col5:tile-20:up4",
+      "inferenceMilliseconds": 1.4573749795090407,
+      "probability": 0.002735138
+    },
+    {
+      "cropMilliseconds": 18.587625003419816,
+      "id": "office_home_col5:tile-21:up4",
+      "inferenceMilliseconds": 1.2716666678898036,
+      "probability": 0.0002360344
+    },
+    {
+      "cropMilliseconds": 18.425791669869795,
+      "id": "office_home_col5:tile-22:up4",
+      "inferenceMilliseconds": 1.5829166513867676,
+      "probability": 0.0015068054
+    },
+    {
+      "cropMilliseconds": 18.644583353307098,
+      "id": "office_home_col5:tile-23:up4",
+      "inferenceMilliseconds": 1.5179583278950304,
+      "probability": 0.00016093254
+    },
+    {
+      "cropMilliseconds": 18.78862499142997,
+      "id": "office_home_col5:tile-0:down4",
+      "inferenceMilliseconds": 1.4592499937862158,
+      "probability": 1.5437603e-05
+    },
+    {
+      "cropMilliseconds": 18.62208332750015,
+      "id": "office_home_col5:tile-1:down4",
+      "inferenceMilliseconds": 1.554916671011597,
+      "probability": 0.008613586
+    },
+    {
+      "cropMilliseconds": 18.480500002624467,
+      "id": "office_home_col5:tile-2:down4",
+      "inferenceMilliseconds": 1.3430416875053197,
+      "probability": 0.0345459
+    },
+    {
+      "cropMilliseconds": 18.691499979468063,
+      "id": "office_home_col5:tile-3:down4",
+      "inferenceMilliseconds": 1.5537916624452919,
+      "probability": 0.0066184998
+    },
+    {
+      "cropMilliseconds": 18.83087499300018,
+      "id": "office_home_col5:tile-4:down4",
+      "inferenceMilliseconds": 1.5543333429377526,
+      "probability": 0.002571106
+    },
+    {
+      "cropMilliseconds": 18.73179167159833,
+      "id": "office_home_col5:tile-5:down4",
+      "inferenceMilliseconds": 1.360541646135971,
+      "probability": 0.003124237
+    },
+    {
+      "cropMilliseconds": 18.68824998382479,
+      "id": "office_home_col5:tile-6:down4",
+      "inferenceMilliseconds": 1.3071666762698442,
+      "probability": 0.6660156
+    },
+    {
+      "cropMilliseconds": 18.42520831269212,
+      "id": "office_home_col5:tile-7:down4",
+      "inferenceMilliseconds": 1.2307500001043081,
+      "probability": 0.000103116035
+    },
+    {
+      "cropMilliseconds": 18.458708334947005,
+      "id": "office_home_col5:tile-8:down4",
+      "inferenceMilliseconds": 1.214333315147087,
+      "probability": 0.7939453
+    },
+    {
+      "cropMilliseconds": 18.516624986659735,
+      "id": "office_home_col5:tile-9:down4",
+      "inferenceMilliseconds": 1.291833323193714,
+      "probability": 2.7298927e-05
+    },
+    {
+      "cropMilliseconds": 18.71708335238509,
+      "id": "office_home_col5:tile-10:down4",
+      "inferenceMilliseconds": 1.2920416775159538,
+      "probability": 1.013279e-05
+    },
+    {
+      "cropMilliseconds": 18.9893749775365,
+      "id": "office_home_col5:tile-11:down4",
+      "inferenceMilliseconds": 1.6821250028442591,
+      "probability": 0.00041866302
+    },
+    {
+      "cropMilliseconds": 18.46004166873172,
+      "id": "office_home_col5:tile-12:down4",
+      "inferenceMilliseconds": 1.2752499897032976,
+      "probability": 0.0015735626
+    },
+    {
+      "cropMilliseconds": 18.62208332750015,
+      "id": "office_home_col5:tile-13:down4",
+      "inferenceMilliseconds": 1.5037916891742498,
+      "probability": 0.00015246868
+    },
+    {
+      "cropMilliseconds": 18.565916660008952,
+      "id": "office_home_col5:tile-14:down4",
+      "inferenceMilliseconds": 1.5707499987911433,
+      "probability": 0.00919342
+    },
+    {
+      "cropMilliseconds": 18.369500001426786,
+      "id": "office_home_col5:tile-15:down4",
+      "inferenceMilliseconds": 1.3887083332519978,
+      "probability": 2.3186207e-05
+    },
+    {
+      "cropMilliseconds": 18.41179165057838,
+      "id": "office_home_col5:tile-16:down4",
+      "inferenceMilliseconds": 1.304916659137234,
+      "probability": 0.00028657913
+    },
+    {
+      "cropMilliseconds": 18.421416665660217,
+      "id": "office_home_col5:tile-17:down4",
+      "inferenceMilliseconds": 1.3893333380110562,
+      "probability": 0.0004901886
+    },
+    {
+      "cropMilliseconds": 18.608416663482785,
+      "id": "office_home_col5:tile-18:down4",
+      "inferenceMilliseconds": 1.6267916653305292,
+      "probability": 0.026870728
+    },
+    {
+      "cropMilliseconds": 18.54445831850171,
+      "id": "office_home_col5:tile-19:down4",
+      "inferenceMilliseconds": 1.28900000709109,
+      "probability": 0.00017011166
+    },
+    {
+      "cropMilliseconds": 18.4694999770727,
+      "id": "office_home_col5:tile-20:down4",
+      "inferenceMilliseconds": 1.6869583341758698,
+      "probability": 0.0017347336
+    },
+    {
+      "cropMilliseconds": 18.45725000021048,
+      "id": "office_home_col5:tile-21:down4",
+      "inferenceMilliseconds": 1.3740833383053541,
+      "probability": 0.00066947937
+    },
+    {
+      "cropMilliseconds": 18.56116668204777,
+      "id": "office_home_col5:tile-22:down4",
+      "inferenceMilliseconds": 1.3915416784584522,
+      "probability": 0.0007209778
+    },
+    {
+      "cropMilliseconds": 18.645083328010514,
+      "id": "office_home_col5:tile-23:down4",
+      "inferenceMilliseconds": 1.5437916736118495,
+      "probability": 0.00024342537
+    },
+    {
+      "id": "office_home_col5:tile-0:pad4",
+      "cropMilliseconds": 19.051291659707204,
+      "inferenceMilliseconds": 4.348333342932165,
+      "probability": 9.357929e-06
+    },
+    {
+      "id": "office_home_col5:tile-1:pad4",
+      "cropMilliseconds": 18.833833310054615,
+      "inferenceMilliseconds": 1.3927083346061409,
+      "probability": 0.0017547607
+    },
+    {
+      "id": "office_home_col5:tile-2:pad4",
+      "cropMilliseconds": 19.210666650906205,
+      "inferenceMilliseconds": 1.6869166574906558,
+      "probability": 0.01537323
+    },
+    {
+      "id": "office_home_col5:tile-3:pad4",
+      "cropMilliseconds": 18.810749985277653,
+      "inferenceMilliseconds": 1.2615416781045496,
+      "probability": 0.0018978119
+    },
+    {
+      "id": "office_home_col5:tile-4:pad4",
+      "cropMilliseconds": 18.67141667753458,
+      "inferenceMilliseconds": 1.2041250010952353,
+      "probability": 0.0009293556
+    },
+    {
+      "id": "office_home_col5:tile-5:pad4",
+      "cropMilliseconds": 18.808416643878445,
+      "inferenceMilliseconds": 1.4586250181309879,
+      "probability": 0.0005636215
+    },
+    {
+      "id": "office_home_col5:tile-6:pad4",
+      "cropMilliseconds": 18.61370832193643,
+      "inferenceMilliseconds": 1.425708323949948,
+      "probability": 0.82910156
+    },
+    {
+      "id": "office_home_col5:tile-7:pad4",
+      "cropMilliseconds": 18.890750012360513,
+      "inferenceMilliseconds": 1.2323750124778599,
+      "probability": 0.00016605854
+    },
+    {
+      "id": "office_home_col5:tile-8:pad4",
+      "cropMilliseconds": 18.83979167905636,
+      "inferenceMilliseconds": 1.3179999950807542,
+      "probability": 0.9165039
+    },
+    {
+      "id": "office_home_col5:tile-9:pad4",
+      "cropMilliseconds": 19.121749995974824,
+      "inferenceMilliseconds": 1.2817916576750576,
+      "probability": 3.170967e-05
+    },
+    {
+      "id": "office_home_col5:tile-10:pad4",
+      "cropMilliseconds": 19.37137497588992,
+      "inferenceMilliseconds": 1.4469999878201634,
+      "probability": 9.763241e-05
+    },
+    {
+      "id": "office_home_col5:tile-11:pad4",
+      "cropMilliseconds": 19.633166666608304,
+      "inferenceMilliseconds": 1.4473750197794288,
+      "probability": 0.000103890896
+    },
+    {
+      "id": "office_home_col5:tile-12:pad4",
+      "cropMilliseconds": 19.156833324814215,
+      "inferenceMilliseconds": 1.2519166630227119,
+      "probability": 0.001748085
+    },
+    {
+      "id": "office_home_col5:tile-13:pad4",
+      "cropMilliseconds": 18.935791653348133,
+      "inferenceMilliseconds": 1.347499986877665,
+      "probability": 0.00033926964
+    },
+    {
+      "id": "office_home_col5:tile-14:pad4",
+      "cropMilliseconds": 19.139208336127922,
+      "inferenceMilliseconds": 1.6034583386499435,
+      "probability": 0.011734009
+    },
+    {
+      "id": "office_home_col5:tile-15:pad4",
+      "cropMilliseconds": 18.974541657371446,
+      "inferenceMilliseconds": 1.6317916742991656,
+      "probability": 0.000104665756
+    },
+    {
+      "id": "office_home_col5:tile-16:pad4",
+      "cropMilliseconds": 19.04566667508334,
+      "inferenceMilliseconds": 1.2981250183656812,
+      "probability": 0.0011739731
+    },
+    {
+      "id": "office_home_col5:tile-17:pad4",
+      "cropMilliseconds": 18.854833324439824,
+      "inferenceMilliseconds": 1.3405000208877027,
+      "probability": 0.00060224533
+    },
+    {
+      "id": "office_home_col5:tile-18:pad4",
+      "cropMilliseconds": 18.911874998593703,
+      "inferenceMilliseconds": 1.3814166595693678,
+      "probability": 0.012527466
+    },
+    {
+      "id": "office_home_col5:tile-19:pad4",
+      "cropMilliseconds": 19.16458335472271,
+      "inferenceMilliseconds": 1.5054999967105687,
+      "probability": 0.0002529621
+    },
+    {
+      "id": "office_home_col5:tile-20:pad4",
+      "cropMilliseconds": 19.19858335168101,
+      "inferenceMilliseconds": 1.8063749885186553,
+      "probability": 0.003376007
+    },
+    {
+      "id": "office_home_col5:tile-21:pad4",
+      "cropMilliseconds": 19.384083338081837,
+      "inferenceMilliseconds": 1.3092916633468121,
+      "probability": 1.6212463e-05
+    },
+    {
+      "id": "office_home_col5:tile-22:pad4",
+      "cropMilliseconds": 18.918208341347054,
+      "inferenceMilliseconds": 1.3141249946784228,
+      "probability": 2.092123e-05
+    },
+    {
+      "id": "office_home_col5:tile-23:pad4",
+      "cropMilliseconds": 18.93083332106471,
+      "inferenceMilliseconds": 1.480333332438022,
+      "probability": 0.00033521652
+    },
+    {
+      "id": "office_home_col5:tile-0:inset4",
+      "cropMilliseconds": 19.193166663171723,
+      "inferenceMilliseconds": 1.6759999853093177,
+      "probability": 0.000116825104
+    },
+    {
+      "id": "office_home_col5:tile-1:inset4",
+      "cropMilliseconds": 19.164583325618878,
+      "inferenceMilliseconds": 1.274875015951693,
+      "probability": 0.096191406
+    },
+    {
+      "id": "office_home_col5:tile-2:inset4",
+      "cropMilliseconds": 18.84149998659268,
+      "inferenceMilliseconds": 1.2689166469499469,
+      "probability": 0.21728516
+    },
+    {
+      "id": "office_home_col5:tile-3:inset4",
+      "cropMilliseconds": 19.1155000065919,
+      "inferenceMilliseconds": 1.6488333349116147,
+      "probability": 0.6738281
+    },
+    {
+      "id": "office_home_col5:tile-4:inset4",
+      "cropMilliseconds": 18.980458320584148,
+      "inferenceMilliseconds": 1.5123333141673356,
+      "probability": 0.06347656
+    },
+    {
+      "id": "office_home_col5:tile-5:inset4",
+      "cropMilliseconds": 19.061250000959262,
+      "inferenceMilliseconds": 1.3345833285711706,
+      "probability": 0.043945312
+    },
+    {
+      "id": "office_home_col5:tile-6:inset4",
+      "cropMilliseconds": 18.57745833694935,
+      "inferenceMilliseconds": 1.2546249781735241,
+      "probability": 0.2368164
+    },
+    {
+      "id": "office_home_col5:tile-7:inset4",
+      "cropMilliseconds": 18.610208324389532,
+      "inferenceMilliseconds": 1.2785833387169987,
+      "probability": 0.00043940544
+    },
+    {
+      "id": "office_home_col5:tile-8:inset4",
+      "cropMilliseconds": 19.05370832537301,
+      "inferenceMilliseconds": 1.3655833317898214,
+      "probability": 0.17346191
+    },
+    {
+      "id": "office_home_col5:tile-9:inset4",
+      "cropMilliseconds": 19.033708318602294,
+      "inferenceMilliseconds": 1.3307083281688392,
+      "probability": 0.00038170815
+    },
+    {
+      "id": "office_home_col5:tile-10:inset4",
+      "cropMilliseconds": 18.735291669145226,
+      "inferenceMilliseconds": 1.2908749922644347,
+      "probability": 7.247925e-05
+    },
+    {
+      "id": "office_home_col5:tile-11:inset4",
+      "cropMilliseconds": 18.773958348901942,
+      "inferenceMilliseconds": 1.2641666689887643,
+      "probability": 0.0019874573
+    },
+    {
+      "id": "office_home_col5:tile-12:inset4",
+      "cropMilliseconds": 18.760583334369585,
+      "inferenceMilliseconds": 1.2645416427403688,
+      "probability": 0.0011558533
+    },
+    {
+      "id": "office_home_col5:tile-13:inset4",
+      "cropMilliseconds": 18.44975000130944,
+      "inferenceMilliseconds": 1.2197916803415865,
+      "probability": 0.002462387
+    },
+    {
+      "inferenceMilliseconds": 3.9950833306647837,
+      "id": "office_home_col5:tile-14:inset4",
+      "cropMilliseconds": 18.349124991800636,
+      "probability": 0.007232666
+    },
+    {
+      "inferenceMilliseconds": 1.2495833216235042,
+      "id": "office_home_col5:tile-15:inset4",
+      "cropMilliseconds": 18.269666645210236,
+      "probability": 0.0003876686
+    },
+    {
+      "inferenceMilliseconds": 1.5281666710507125,
+      "id": "office_home_col5:tile-16:inset4",
+      "cropMilliseconds": 18.322708318009973,
+      "probability": 0.00036549568
+    },
+    {
+      "inferenceMilliseconds": 1.5723749820608646,
+      "id": "office_home_col5:tile-17:inset4",
+      "cropMilliseconds": 18.986000010045245,
+      "probability": 0.003944397
+    },
+    {
+      "inferenceMilliseconds": 1.2900000147055835,
+      "id": "office_home_col5:tile-18:inset4",
+      "cropMilliseconds": 19.359625002834946,
+      "probability": 0.03466797
+    },
+    {
+      "inferenceMilliseconds": 1.4984166773501784,
+      "id": "office_home_col5:tile-19:inset4",
+      "cropMilliseconds": 19.17220832547173,
+      "probability": 0.0006260872
+    },
+    {
+      "inferenceMilliseconds": 1.4093333156779408,
+      "id": "office_home_col5:tile-20:inset4",
+      "cropMilliseconds": 19.347583322087303,
+      "probability": 0.0029945374
+    },
+    {
+      "inferenceMilliseconds": 1.4024999982211739,
+      "id": "office_home_col5:tile-21:inset4",
+      "cropMilliseconds": 19.470916653517634,
+      "probability": 0.000749588
+    },
+    {
+      "inferenceMilliseconds": 1.3200833345763385,
+      "id": "office_home_col5:tile-22:inset4",
+      "cropMilliseconds": 19.061500002862886,
+      "probability": 0.0012397766
+    },
+    {
+      "inferenceMilliseconds": 1.4307500096037984,
+      "id": "office_home_col5:tile-23:inset4",
+      "cropMilliseconds": 19.150208332575858,
+      "probability": 0.0006093979
+    }
+  ],
+  "timing": [
+    {
+      "host": "Version 26.4.1 (Build 25E253)",
+      "modelLoadMilliseconds": 17.317916674073786,
+      "version": 1,
+      "computeUnits": "cpuOnly"
+    },
+    {
+      "modelLoadMilliseconds": 17.59454165585339,
+      "version": 1,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly"
+    },
+    {
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly",
+      "version": 1,
+      "modelLoadMilliseconds": 16.848750005010515
+    },
+    {
+      "modelLoadMilliseconds": 16.02166666998528,
+      "version": 1,
+      "computeUnits": "cpuOnly",
+      "host": "Version 26.4.1 (Build 25E253)"
+    },
+    {
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly",
+      "version": 1,
+      "modelLoadMilliseconds": 15.710291685536504
+    },
+    {
+      "computeUnits": "cpuOnly",
+      "version": 1,
+      "modelLoadMilliseconds": 16.38937502866611,
+      "host": "Version 26.4.1 (Build 25E253)"
+    },
+    {
+      "version": 1,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly",
+      "modelLoadMilliseconds": 15.00645832857117
+    },
+    {
+      "host": "Version 26.4.1 (Build 25E253)",
+      "modelLoadMilliseconds": 16.45941668539308,
+      "computeUnits": "cpuOnly",
+      "version": 1
+    },
+    {
+      "version": 1,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly",
+      "modelLoadMilliseconds": 15.13041666476056
+    },
+    {
+      "computeUnits": "cpuOnly",
+      "version": 1,
+      "modelLoadMilliseconds": 16.51658333139494,
+      "host": "Version 26.4.1 (Build 25E253)"
+    },
+    {
+      "version": 1,
+      "computeUnits": "cpuOnly",
+      "host": "Version 26.4.1 (Build 25E253)",
+      "modelLoadMilliseconds": 15.420541662024334
+    },
+    {
+      "host": "Version 26.4.1 (Build 25E253)",
+      "version": 1,
+      "modelLoadMilliseconds": 15.058833319926634,
+      "computeUnits": "cpuOnly"
+    },
+    {
+      "version": 1,
+      "modelLoadMilliseconds": 16.43841667100787,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "computeUnits": "cpuOnly"
+    },
+    {
+      "modelLoadMilliseconds": 14.89362501888536,
+      "host": "Version 26.4.1 (Build 25E253)",
+      "version": 1,
+      "computeUnits": "cpuOnly"
+    }
+  ],
+  "evaluation": {
+    "base": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.7070707070707071,
+        "0.5": {
+          "tp": 2,
+          "fn": 4,
+          "fp": 2,
+          "tn": 64,
+          "accuracy": 0.9166666666666666
+        },
+        "0.85": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 0,
+          "tn": 66,
+          "accuracy": 0.9166666666666666
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "no-focus",
+          "selectedElementID": null
+        }
+      ],
+      "ambiguityBandCount": 1,
+      "nearThresholdCount": 0
+    },
+    "left4": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.6717171717171717,
+        "0.5": {
+          "tp": 1,
+          "fn": 5,
+          "fp": 2,
+          "tn": 64,
+          "accuracy": 0.9027777777777778
+        },
+        "0.85": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 1,
+          "tn": 65,
+          "accuracy": 0.9027777777777778
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "wrong-focus",
+          "selectedElementID": "tile-8"
+        }
+      ],
+      "ambiguityBandCount": 0,
+      "nearThresholdCount": 0
+    },
+    "right4": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.6868686868686869,
+        "0.5": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 4,
+          "tn": 62,
+          "accuracy": 0.8611111111111112
+        },
+        "0.85": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 0,
+          "tn": 66,
+          "accuracy": 0.9166666666666666
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "no-focus",
+          "selectedElementID": null
+        }
+      ],
+      "ambiguityBandCount": 1,
+      "nearThresholdCount": 1
+    },
+    "up4": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.5694444444444444,
+        "0.5": {
+          "tp": 1,
+          "fn": 5,
+          "fp": 12,
+          "tn": 54,
+          "accuracy": 0.7638888888888888
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 5,
+          "fp": 6,
+          "tn": 60,
+          "accuracy": 0.8472222222222222
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "correct",
+          "selectedElementID": "tile-1"
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "multiple-focus-abstention",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "wrong-focus",
+          "selectedElementID": "tile-3"
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "wrong-focus",
+          "selectedElementID": "tile-6"
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "wrong-focus",
+          "selectedElementID": "tile-8"
+        }
+      ],
+      "ambiguityBandCount": 6,
+      "nearThresholdCount": 3
+    },
+    "down4": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.6818181818181818,
+        "0.5": {
+          "tp": 2,
+          "fn": 4,
+          "fp": 3,
+          "tn": 63,
+          "accuracy": 0.9027777777777778
+        },
+        "0.85": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 0,
+          "tn": 66,
+          "accuracy": 0.9166666666666666
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "no-focus",
+          "selectedElementID": null
+        }
+      ],
+      "ambiguityBandCount": 2,
+      "nearThresholdCount": 0
+    },
+    "pad4": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.6515151515151515,
+        "0.5": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 3,
+          "tn": 63,
+          "accuracy": 0.875
+        },
+        "0.85": {
+          "tp": 0,
+          "fn": 6,
+          "fp": 1,
+          "tn": 65,
+          "accuracy": 0.9027777777777778
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "wrong-focus",
+          "selectedElementID": "tile-8"
+        }
+      ],
+      "ambiguityBandCount": 2,
+      "nearThresholdCount": 0
+    },
+    "inset4": {
+      "metrics": {
+        "count": 72,
+        "auroc": 0.5252525252525253,
+        "0.5": {
+          "tp": 1,
+          "fn": 5,
+          "fp": 18,
+          "tn": 48,
+          "accuracy": 0.6805555555555556
+        },
+        "0.85": {
+          "tp": 1,
+          "fn": 5,
+          "fp": 12,
+          "tn": 54,
+          "accuracy": 0.7638888888888888
+        }
+      },
+      "frameDecisions": [
+        {
+          "frameID": "office_home_initial",
+          "decision": "no-focus",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step01",
+          "decision": "multiple-focus-abstention",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step02",
+          "decision": "multiple-focus-abstention",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_session2_home",
+          "decision": "multiple-focus-abstention",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_step03",
+          "decision": "multiple-focus-abstention",
+          "selectedElementID": null
+        },
+        {
+          "frameID": "office_home_col5",
+          "decision": "no-focus",
+          "selectedElementID": null
+        }
+      ],
+      "ambiguityBandCount": 3,
+      "nearThresholdCount": 1
+    }
+  }
+}

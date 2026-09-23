@@ -1,0 +1,115 @@
+{
+  "version": "focus-source-review-v1",
+  "manifestSHA256": "aac4e31d1e78eb36ddbdf8f75e8f687390d333a2a6409cb2b28a463aa77f4e98",
+  "reviewer": "NUIAK architect \u2014 prior review binding only",
+  "reviewReference": "reports/work/FOCUS-EXP-01/review.md",
+  "priorReview": {
+    "path": "reports/work/FOCUS-EXP-01/review.md",
+    "sha256": "072bf7120ac846c5279719c68b38ad7ada381d8e79fa188eca3a8f97df6cb607"
+  },
+  "priorUse": "development",
+  "relationshipsKnown": true,
+  "trainingApproved": false,
+  "pairs": {
+    "119ffc48bac3a59dbf0da34c67f4150e9d2e964fd0808296fe142e07101ff78f": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "289a43714cb8d4cda4e077f6bcf691d5a312e3aa0ea6209f5870ae18ab671946": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "1d43fe05f662906902d51d6ee8c4eb7bc7e729cba725db4adea6b09800f5d038": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "c1516eb0ae9e0b309f0f461668d429119d1040c8acdab53dd5c74ccaca9b8f0b": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "58eb9dbe1d8336a1254943c7b233265576b7c055541ac63b2447a9c9431d6148": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "8fb8b2e31afaac25667b6f0328a4e023e40086e511c067fb09c5901b44a4da32": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "1e2e15e1327342517767de4f04f3def3e2d3ccfbb28a441bc9cf9440922ef031": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "ed97fd127fbbd152a8e5abae51c3179389d532a00c37b202e5f11fecc72dfe17": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "9291a9d80e2f6902e9f5960c30d4a54dbb5fd82a0810c5d7ca690f805ff1b91c": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "a0d8a9c2b0bac1a3a0509b1afabb1d455686ced6b26e47f8f719b53b788b6bba": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "170ce4fa1ded3a4d1fccc934208ace589b7e8e9dda25b6895564d5c11068bc35": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "9dd4483240c6566912b1dfb17ae1e0121f4021cd4df5478a9859046d735775e5": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "f6725a52c12e57644327b80264f1547c18c875dec39edac3a3f6e48c13869a00": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "18a019a74a38736853af820a173b31f555a7fcdaf2357cec1517309b7a7228e5": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "064d4c086df00c996aff838e2c4ab8c78e3efca8210485edffff56ae3c8a0aed": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "6a96efb26939fb4c6567bcab7ef0e59592bc7c0def66daa1d75dd23cf883e1bd": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "c7a08667ad263ef7c753dcbb678660516981b2ecc3a17296a8a2ff16d7d67658": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "c694f079ce149005957db8e9f66d4aa5e018bc79cecf8c6665a46fc4efda639d": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "d86257a255c4f042ede69b024bf23fa852b74953bdb4c8f28b72983afb47c3ba": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "22cf8dea1fdfd33e8561f5b108398366882a55b0124118619d893af41eaf26f8": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "47f9b18b493ceefbfe1129a99389e95e6b90258645c8afba94c041b8bf4399ad": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "57e575c88959bfd0cddd237c2248892ed365d33fa9c304386ce41e2370d8c912": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "ffbd5d4b4ff9105515e50c13acdccdda7dc575aec60dab86a497895da7347e99": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "2bb9d7cc5f9b0e9de52a07a377fae08ccb618be2db7335cad23140ad3706b7c8": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    },
+    "fe36efea55703e599d7e92f450e305c3c16f501258baabccb04f60d01e17dded": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-general-development"
+    }
+  }
+}

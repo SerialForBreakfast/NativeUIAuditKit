@@ -1,0 +1,63 @@
+{
+  "version": "focus-source-review-v1",
+  "manifestSHA256": "7b10b6d7b02a9e68a39ef11d609e96771814a821608b7c46c5695217f0982a0f",
+  "reviewer": "NUIAK architect \u2014 prior review binding only",
+  "reviewReference": "reports/work/OS-FOCUS-02/handoff.md",
+  "priorReview": {
+    "path": "reports/work/OS-FOCUS-02/handoff.md",
+    "sha256": "54e7c67e3e594805327fae74f7d836efbb0eee99f5548d14ef201eeb83ca66e9"
+  },
+  "priorUse": "development",
+  "relationshipsKnown": true,
+  "trainingApproved": false,
+  "pairs": {
+    "4fb9502ee384ec8a5aedf7d8a37e20b1713c98e2d1effaee6533e0318594142e": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "8469016dbc6ca7f0b0c36b6232f940d2098772d4dad36edcd16131f10311b221": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "61d3133025a7af16ccbff73a9fc1a49248713af56b01865c61b24d48ac5be876": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "00d58ec120bedc4bb70e22cf887e12454dfe3380d30d6d3b08e688fc4c1133c0": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "cb5175fbc07fc19689840217a084e7df5906ce8d91c1b7c77ca8973468de61c3": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "2cf034c3312a13947c232ab311e888ed655c4273baa27364f30f99e69d6e1f69": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "0702b46fe405a4effae43d5804e367c042be79e0458d001b7c0334bd860711d1": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "fef8d032e7b6c5e80e52b58e3061453c82015e28a1967d958024e970b2da95fa": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "e5f50bbf9e26e4df7eecb23b6053e163140bff1aef67f9ad4ee2e4948a44aa43": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "d5a0ab8eb7cee9e78fa2b13079c322ea137caa86af822c63e136bc4efad8468b": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "c60389aa6946c5f141d6afd13a022e196fb72b550428f626e8cc35c6b09676ae": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    },
+    "28c543d4a4254b8f1c38c1887d8c7895237aad6d4567b24e49ddad12f19d6a2f": {
+      "partition": "train",
+      "relatedGroup": "tvos26.5-settings-root-default-layout-development"
+    }
+  }
+}

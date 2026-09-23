@@ -1,0 +1,19 @@
+{
+  "version": "focus-source-review-v1",
+  "manifestSHA256": "82842a477ae99151b2e498258482b1011f723d9cb81764417592e013e8075302",
+  "reviewer": "NUIAK architect \u2014 prior direct review binding only",
+  "reviewReference": "reports/work/TTR-SMOKE-20260922-2119/direct-visual-review.md",
+  "priorUse": "development",
+  "relationshipsKnown": true,
+  "trainingApproved": false,
+  "pairs": {
+    "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93": {
+      "partition": "development",
+      "relatedGroup": "seed:7"
+    },
+    "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace": {
+      "partition": "development",
+      "relatedGroup": "seed:7"
+    }
+  }
+}

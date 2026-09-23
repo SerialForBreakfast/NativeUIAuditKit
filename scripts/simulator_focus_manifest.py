@@ -65,6 +65,9 @@ def build(contract: dict[str, Any], corpus_id: str, producer_reference: str, req
             "unfocused": {"path": row["unfocusedPath"], "sha256": row["unfocusedSHA256"]},
             "focused": {"path": row["focusedPath"], "sha256": row["focusedSHA256"]},
             "elements": row["elements"],
+            "sidecarVersion": row.get("sidecarVersion"),
+            "observationBinding": row.get("observationBinding"),
+            "annotation": {"path": row.get("metadataPath"), "sha256": row.get("metadataSHA256")},
         })
     if not pairs:
         raise SimulatorManifestError("no_usable_pairs")

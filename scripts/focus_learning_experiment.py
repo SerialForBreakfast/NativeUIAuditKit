@@ -168,8 +168,13 @@ def validate_document(doc):
     return support
 
 
-def load_protocol(path, arm, run_name):
+def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get("version")=="focus-development-experiment-v1":
+        from focus_development_experiment import load_protocol as development_protocol
+        return development_protocol(path,arm,run_name,approval_path)
+    if approval_path is not None:
+        raise FocusDataError("approval_requires_development_protocol")
     base = dict(doc); expected = base.pop("protocolSHA256", None)
     if expected != digest(base):
         raise FocusDataError("changed_protocol")

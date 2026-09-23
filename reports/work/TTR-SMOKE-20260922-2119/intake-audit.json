@@ -1,0 +1,272 @@
+{
+  "purpose": "inspection-only; no training admission",
+  "runtime": {
+    "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+    "hostOS": "26.4.1",
+    "architecture": "arm64"
+  },
+  "preprocessing": {
+    "expansion": 0.16,
+    "cropSize": [
+      256,
+      256
+    ],
+    "coordinates": "xywh-top-left-pixels",
+    "resize": "FocusRingClassifier.makeCrop-v1"
+  },
+  "files": [
+    {
+      "bytes": 1691,
+      "path": "calibration.json",
+      "sha256": "fe4b259a2b8c7210dad6b3a7404fa0cbc57bd4299ac8c9f72c98e424480e04a8"
+    },
+    {
+      "bytes": 2840,
+      "path": "dataset-index.json",
+      "sha256": "4466f5c7bf4c37877f1397bfee4eecb6bb9e2778cd2e01d154af53ad1d705307"
+    },
+    {
+      "bytes": 103,
+      "path": "harvest-receipt.json",
+      "sha256": "3612d1b433e65b784abfb1cb0bbbb28aa32e5234ec68c41b43d237e8a5209f68"
+    },
+    {
+      "bytes": 4,
+      "path": "held-out.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    },
+    {
+      "bytes": 1691,
+      "path": "manifest.json",
+      "sha256": "fe4b259a2b8c7210dad6b3a7404fa0cbc57bd4299ac8c9f72c98e424480e04a8"
+    },
+    {
+      "bytes": 5820476,
+      "path": "synth-0_focused.png",
+      "sha256": "0816bcbba5119f32b1b065970f47b07a90c5415b689b90b143232a521cfaf593",
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "decodedRGBSHA256": "81b622561cb74bec1e489a3ca77bcb577bf21a5971cdb7824403d37d114981c4"
+    },
+    {
+      "bytes": 6246,
+      "path": "synth-0_metadata.json",
+      "sha256": "b8a324497488a0a01c0685f72a76b1b64a789b5e30ff0034b224f288e6cd2cbe"
+    },
+    {
+      "bytes": 5802284,
+      "path": "synth-0_unfocused.png",
+      "sha256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979",
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "decodedRGBSHA256": "0be84868e6e668ebf81b5c2a9016872deef187703c3770514697a8908ba2dd8d"
+    },
+    {
+      "bytes": 5809163,
+      "path": "synth-1_focused.png",
+      "sha256": "11e4f3fe7d19f63ed4ebbef0c0614bc60525a494de5d9d9189ac72b8d5760911",
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "decodedRGBSHA256": "c668c80de82b11485f7cb00c8d48f44d56008c2809d93db7e9e36f69638be4d2"
+    },
+    {
+      "bytes": 6246,
+      "path": "synth-1_metadata.json",
+      "sha256": "e86bba9aa9fa9bb825259a41f53657da80437800eaa1c4dec28721684df6575e"
+    },
+    {
+      "bytes": 5802284,
+      "path": "synth-1_unfocused.png",
+      "sha256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979",
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "decodedRGBSHA256": "0be84868e6e668ebf81b5c2a9016872deef187703c3770514697a8908ba2dd8d"
+    },
+    {
+      "bytes": 4,
+      "path": "training.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    }
+  ],
+  "pairs": [
+    {
+      "id": "synth-0",
+      "elementID": "dialog_btn_0",
+      "split": "calibration",
+      "frames": {
+        "focused": {
+          "bounds": [
+            1200,
+            1525,
+            700.0000000000001,
+            143.99999999999997
+          ],
+          "observation": {
+            "generation": 3,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "dialog_btn_0",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requestedID": "dialog_btn_0",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "imageProvenance": {
+            "capturedNanoseconds": 188764157064041,
+            "generation": 1,
+            "height": 2160,
+            "observationID": "2E125F52-C2C5-4733-9E6B-9C5143884A74",
+            "pngSHA256": "0816bcbba5119f32b1b065970f47b07a90c5415b689b90b143232a521cfaf593",
+            "providerID": "simctl-screenshot-companion",
+            "receivedNanoseconds": 188764731674000,
+            "sourceDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+            "width": 3840
+          }
+        },
+        "unfocused": {
+          "bounds": [
+            1200,
+            1525,
+            700.0000000000001,
+            143.99999999999997
+          ],
+          "observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "imageProvenance": {
+            "capturedNanoseconds": 188762270928666,
+            "generation": 1,
+            "height": 2160,
+            "observationID": "31529573-C918-4798-8529-B5C04DFA7BBD",
+            "pngSHA256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979",
+            "providerID": "simctl-screenshot-companion",
+            "receivedNanoseconds": 188762872368625,
+            "sourceDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+            "width": 3840
+          }
+        }
+      }
+    },
+    {
+      "id": "synth-1",
+      "elementID": "dialog_btn_1",
+      "split": "calibration",
+      "frames": {
+        "focused": {
+          "bounds": [
+            1940.0000000000002,
+            1525,
+            699.9999999999999,
+            143.99999999999997
+          ],
+          "observation": {
+            "generation": 4,
+            "geometrySource": "uikit_window_converted_bounds",
+            "observedID": "dialog_btn_1",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "requestedID": "dialog_btn_1",
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "imageProvenance": {
+            "capturedNanoseconds": 188765947256208,
+            "generation": 1,
+            "height": 2160,
+            "observationID": "75A4213E-08BC-44F6-9699-98515560C2DC",
+            "pngSHA256": "11e4f3fe7d19f63ed4ebbef0c0614bc60525a494de5d9d9189ac72b8d5760911",
+            "providerID": "simctl-screenshot-companion",
+            "receivedNanoseconds": 188766575435583,
+            "sourceDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+            "width": 3840
+          }
+        },
+        "unfocused": {
+          "bounds": [
+            1940.0000000000002,
+            1525,
+            699.9999999999999,
+            143.99999999999997
+          ],
+          "observation": {
+            "generation": 2,
+            "geometrySource": "uikit_window_converted_bounds",
+            "plannedFocusIDs": [
+              "dialog_btn_0",
+              "dialog_btn_1"
+            ],
+            "source": "uikit_focus_system",
+            "verified": true
+          },
+          "imageProvenance": {
+            "capturedNanoseconds": 188762270928666,
+            "generation": 1,
+            "height": 2160,
+            "observationID": "31529573-C918-4798-8529-B5C04DFA7BBD",
+            "pngSHA256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979",
+            "providerID": "simctl-screenshot-companion",
+            "receivedNanoseconds": 188762872368625,
+            "sourceDeviceID": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+            "width": 3840
+          }
+        }
+      }
+    }
+  ],
+  "gaps": [
+    "sourceDescription.collectedAt is numeric Swift Date; consumer requires nonempty string",
+    "recipe.theme missing in both sidecars; explicit requested theme is not resolved-theme evidence",
+    "baseline native observedID absent; reference focus mapping must be source-reviewed, not invented",
+    "per-frame focus freshness and capture bracketing not retained in sidecar; image observationID is not a focus-callback frameID",
+    "focused visual enlargement exists while recorded focused and baseline bounds are identical; distinguish nominal layout bounds from focus-effect bounds"
+  ],
+  "entrypointValidation": "invalid_metadata",
+  "runtimeCrops": {
+    "results": [
+      {
+        "id": "synth-0-focused",
+        "cropMilliseconds": 54.746541660279036,
+        "cropSHA256": "7f4628bc955539888ce3fc8476a7057bced9d6e29bdda0789ca8c7140f7567bc"
+      },
+      {
+        "id": "synth-0-unfocused",
+        "cropMilliseconds": 53.20516668143682,
+        "cropSHA256": "42dc8f05a87fe0e31394c08b8007b0a7c06ba6b0a7cd505c75660d1b4023f986"
+      },
+      {
+        "id": "synth-1-focused",
+        "cropMilliseconds": 55.74475001776591,
+        "cropSHA256": "7bf70e4758c7c0fd8e14bcefb1ebf92cf4e93e7169e2c2165417aad6fb3f938f"
+      },
+      {
+        "id": "synth-1-unfocused",
+        "cropMilliseconds": 55.87100001866929,
+        "cropSHA256": "c59b39efcb8f6b16d44f8b4173924f207ee970f3fdbe0e87ddf70bcddc47bfad"
+      }
+    ],
+    "version": 1,
+    "host": "Version 26.4.1 (Build 25E253)",
+    "computeUnits": "cpuOnly"
+  },
+  "seconds": 0.6688948750088457
+}

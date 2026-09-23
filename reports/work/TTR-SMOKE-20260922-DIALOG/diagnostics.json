@@ -1,0 +1,137 @@
+{
+  "command" : "diagnostics collect",
+  "data" : {
+    "incidentDiagnostics" : {
+      "_0" : {
+        "deliveryFailure" : "persistenceFailed",
+        "report" : {
+          "build" : "unknown",
+          "cachedProcessID" : 84718,
+          "cachedProcessIdentity" : {
+            "build" : "1",
+            "evidence" : "direct_process_executable_on_disk_not_loaded_image_attestation",
+            "hashAvailability" : "unavailable_or_bound_exceeded",
+            "version" : "1.0"
+          },
+          "cachedProcessRunID" : "A7BEAA4C-133E-4C04-B217-003B850BA457",
+          "cleanupState" : "not_observed",
+          "clockDomain" : "wall_clock_utc",
+          "collectedAt" : 811791110.89168,
+          "collectorIdentity" : {
+            "build" : "unavailable",
+            "evidence" : "direct_process_executable_on_disk_not_loaded_image_attestation",
+            "hashAvailability" : "unavailable_or_bound_exceeded",
+            "version" : "unavailable"
+          },
+          "digestScope" : "legacy_report_only_not_package_integrity",
+          "dispatchState" : "not_dispatched",
+          "events" : [
+
+          ],
+          "incidentID" : "690665B5-ECCD-44B6-8058-1F91A079E9B2",
+          "manifestSHA256" : "db7a008ecb569b355de241573925b697359a0ca592c363f14993befd802d5361",
+          "processID" : 85909,
+          "processRunID" : "6C951805-4A66-49E1-B9E5-6D2146DBD6BD",
+          "schemaVersion" : 1,
+          "selectedJobID" : "661FFE7C-26C8-4B78-9007-56E43DEA3995",
+          "sources" : [
+            {
+              "code" : "retained_debug_events",
+              "coverage" : "current_process_debug_only",
+              "eventCount" : 4,
+              "id" : "debug.live_log",
+              "observedAt" : 811791110.891054,
+              "state" : "collected",
+              "truncated" : false
+            },
+            {
+              "code" : "coordinator_cached_only",
+              "coverage" : "cached_only_no_refresh",
+              "eventCount" : 0,
+              "id" : "gui.cached",
+              "observedAt" : 811791110.900573,
+              "state" : "collected",
+              "truncated" : false
+            },
+            {
+              "code" : "log_query_denied_or_failed",
+              "coverage" : "bounded_unified_log_history",
+              "eventCount" : 0,
+              "id" : "startup.history",
+              "observedAt" : 811791111.016934,
+              "state" : "denied",
+              "truncated" : false
+            },
+            {
+              "code" : "retained_receipts_read_only",
+              "coverage" : "persisted_receipt_not_current_session_or_cleanup",
+              "eventCount" : 0,
+              "id" : "jobs.retained",
+              "observedAt" : 811791063,
+              "state" : "collected",
+              "truncated" : false
+            },
+            {
+              "code" : "cached_missing_or_expired",
+              "coverage" : "source_observation_time_not_current_readiness",
+              "eventCount" : 0,
+              "id" : "workspace.cached",
+              "state" : "unavailable",
+              "truncated" : false
+            },
+            {
+              "code" : "cached_only",
+              "coverage" : "source_observation_time_not_current_readiness",
+              "eventCount" : 2,
+              "id" : "fixture.cached",
+              "observedAt" : 811791063.275149,
+              "state" : "collected",
+              "truncated" : false
+            },
+            {
+              "code" : "cached_missing_or_expired",
+              "coverage" : "source_observation_time_not_current_readiness",
+              "eventCount" : 0,
+              "id" : "capture.cached",
+              "state" : "unavailable",
+              "truncated" : false
+            },
+            {
+              "code" : "retained_job_diagnostics",
+              "coverage" : "cached_job_receipts_only",
+              "eventCount" : 1,
+              "id" : "jobs.cached",
+              "observedAt" : 811791063.284814,
+              "state" : "collected",
+              "truncated" : false
+            }
+          ],
+          "stage" : "startup_or_workspace_unknown",
+          "summary" : "Partial incident evidence; GUI cached stage: startup_or_workspace_unknown. No target was queried or repaired. Cached job 661FFE7C-26C8-4B78-9007-56E43DEA3995: failed; cleanup unknown; evidence save_attempt_not_persistence_confirmation. Failure telemetry_bracket:identityMismatch. Cached native focus: ready; generation 2, sampled 2, samples 33, missing geometry 0, resolution identifier. Not current readiness.",
+          "terminalReceipt" : {
+            "collectedAt" : 811791111.017061,
+            "deadlineMilliseconds" : 15000,
+            "outcome" : "partial",
+            "partial" : true
+          },
+          "windowSeconds" : 180,
+          "workspace" : {
+            "ownership" : [
+              {
+                "observed_at" : 811791020.529525,
+                "source" : "persisted",
+                "state" : "clear"
+              }
+            ],
+            "readinessObservedAt" : 811791021.518057,
+            "scope" : "Last observed in this app process; copying does not refresh. Missing or old evidence is not current readiness."
+          }
+        }
+      }
+    }
+  },
+  "durationMilliseconds" : 126,
+  "requestID" : "F4C22B4F-011E-4F3C-BF95-9F775682918A",
+  "schemaVersion" : 1,
+  "success" : true
+}

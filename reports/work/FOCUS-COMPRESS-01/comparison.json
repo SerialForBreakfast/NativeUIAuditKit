@@ -1,0 +1,153 @@
+{
+  "formatVersion": "focus-compression-comparison-v1",
+  "releaseEligible": false,
+  "reportHashes": {
+    "reports/work/FOCUS-EXPORT-01/parity.json": "ed494d3ac6dad8ba58013706a16e8a7475a1767e436bb49606d7dc97e4113825",
+    "reports/work/FOCUS-COMPRESS-01/parity.json": "b08cef88bb73c5013ad0dd3dafe44532abc26d24067b5209c31d47bdee7a8e64"
+  },
+  "packageHashes": {
+    "fp16": "4d43d6f4aedb7d26e820c7c33d79fa4e21b28d64a25a683f03c6219e64ccdf02",
+    "int8": "9591f3cc88b555074bfd25762a5cb9944df538414e25acdfd43ac03f29e8dd5c"
+  },
+  "sizes": {
+    "fp16": {
+      "size_bytes": 5038123,
+      "size_mb": 5.038123,
+      "size_mib": 4.8047285079956055,
+      "size_limit_bytes": 5000000,
+      "size_gate_version": "decimal-bytes-v1",
+      "size_gate_pass": false
+    },
+    "int8": {
+      "size_bytes": 2612925,
+      "size_mb": 2.612925,
+      "size_mib": 2.491879463195801,
+      "size_limit_bytes": 5000000,
+      "size_gate_version": "decimal-bytes-v1",
+      "size_gate_pass": true
+    }
+  },
+  "reductionPercent": 48.13693512445012,
+  "fp16Differences": [
+    {
+      "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:focused",
+      "fp16": 1,
+      "int8": 1,
+      "absoluteError": 0,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "8c43a19b8389b28430e8d91df0ad64919aae311d1a22b43acca3d96a53533cf8:unfocused",
+      "fp16": 4.887581e-06,
+      "int8": 4.5895576e-06,
+      "absoluteError": 2.9802340000000055e-07,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:focused",
+      "fp16": 1,
+      "int8": 1,
+      "absoluteError": 0,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "7e4c25676f1053787551e7ad9e25d5b7c52cc17cb9f372f16a58ecf9717f1e8e:unfocused",
+      "fp16": 5.90086e-06,
+      "int8": 5.841255e-06,
+      "absoluteError": 5.960500000000059e-08,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:focused",
+      "fp16": 1,
+      "int8": 1,
+      "absoluteError": 0,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "d5e66d4de66714d45bc3a757f1c9b3210250716acaa37e76b4d2b5461c666089:unfocused",
+      "fp16": 7.8082085e-06,
+      "int8": 8.523464e-06,
+      "absoluteError": 7.152554999999997e-07,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:focused",
+      "fp16": 1,
+      "int8": 1,
+      "absoluteError": 0,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "28da9b9564558c38ae946c10c8a0f612ce0a9758b1d16145a890bed2bcf1400f:unfocused",
+      "fp16": 7.987022e-06,
+      "int8": 8.404255e-06,
+      "absoluteError": 4.172330000000003e-07,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:focused",
+      "fp16": 1,
+      "int8": 1,
+      "absoluteError": 0,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "baa5efe5940b3163b808c3734e6c8c696d7b4facd1be8ad01c580a0716af1bd6:unfocused",
+      "fp16": 1.2993813e-05,
+      "int8": 1.2874603e-05,
+      "absoluteError": 1.192099999999995e-07,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:focused",
+      "fp16": 1,
+      "int8": 1,
+      "absoluteError": 0,
+      "disagreedThresholds": []
+    },
+    {
+      "id": "0326530d0c955e8593a1af4a0e4e1bd1faca1fb37f02830010f696b4e00c081c:unfocused",
+      "fp16": 3.516674e-06,
+      "int8": 3.4570694e-06,
+      "absoluteError": 5.960459999999999e-08,
+      "disagreedThresholds": []
+    }
+  ],
+  "maxFP16AbsoluteError": 7.152554999999997e-07,
+  "fp16ComparisonPassed": true,
+  "torchComparisonPassed": true,
+  "timing": {
+    "fp16": {
+      "loadMilliseconds": [
+        45.911416673334315,
+        14.826041646301746
+      ],
+      "firstPredictionMilliseconds": [
+        4.959333338774741,
+        4.20437499997206
+      ],
+      "warmMedianMilliseconds": 1.3601249956991524,
+      "cropMedianMilliseconds": 68.35899999714456
+    },
+    "int8": {
+      "loadMilliseconds": [
+        77.75966665940359,
+        15.709916682681069
+      ],
+      "firstPredictionMilliseconds": [
+        4.270333331078291,
+        4.3213749886490405
+      ],
+      "warmMedianMilliseconds": 1.3669791806023568,
+      "cropMedianMilliseconds": 69.36372918426059
+    }
+  },
+  "limitations": [
+    "12 correlated same-app development crops; saturated scores do not establish near-threshold parity",
+    "CPU only; not ANE or device latency",
+    "Native boxes supplied, no model-driven navigation",
+    "No full corpus/model gate or promotion",
+    "Single sequential host trials; no statistically supported speedup claim."
+  ]
+}

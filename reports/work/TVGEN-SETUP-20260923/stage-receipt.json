@@ -1,0 +1,31 @@
+{
+  "source": "/Users/josephmccraw/Documents/GitHub/TVTestRig/.local-work/nuiak-admission-2026-09-22/fixture-signed/DerivedData/Build/Products/Debug-appletvsimulator/TVTestRigFixture.app",
+  "destination": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app",
+  "fileSHA256": {
+    "Assets.car": "8594aede8c1b3470d76aad7ebffdb4fdc7f8ce4a834b5774573e56f27d2e6b9c",
+    "Info.plist": "1666a066b89d76a4146e8acdadbbf2888720888083b5a35776d8ee01b4a2141b",
+    "PkgInfo": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "TVTestRigFixture": "021420354b9dd2e11572ed032a03adb2b343af5cc77ec739d9b8116da4d7b128",
+    "TVTestRigFixture.debug.dylib": "46011bb0a95cb007325a64baaab643ad913e0bf46c250a7198caab7b9f31a095",
+    "_CodeSignature/CodeResources": "283f194a9c25412f0ca7f0ed80508d99a1995424287ff5a15e73c4e998324757",
+    "__preview.dylib": "6cbada28b35adbc6e381fd89d630254e4f427db426cab79b8a84342e8e2055bb",
+    "reference-440-44100.wav": "ddb3693af48f39c3790017805b03fa4eec15ded59aeb1572c93ca7450be8185b",
+    "reference-440-48000.wav": "bd787d3f6391e971e83f66e38344e14e9505b7b682d6de3eea214e7d928f0b1a"
+  },
+  "removedFromCopyOnly": [],
+  "sourceBytesAndRootAttributesUnchanged": true,
+  "verification": {
+    "command": [
+      "codesign",
+      "--verify",
+      "--deep",
+      "--strict",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "resigned": false,
+  "installed": false
+}

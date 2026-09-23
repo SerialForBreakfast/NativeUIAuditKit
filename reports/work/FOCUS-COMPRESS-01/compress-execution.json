@@ -1,0 +1,19 @@
+{
+  "stage": "compress",
+  "command": [
+    "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+    "scripts/compress_focus_ring_coreml.py",
+    "--package",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/FocusRingDetector.mlpackage",
+    "--source-report",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-01/focus_ring_detector_training_report.json",
+    "--source-sha256",
+    "4d43d6f4aedb7d26e820c7c33d79fa4e21b28d64a25a683f03c6219e64ccdf02",
+    "--output-dir",
+    "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/focus_ring_runs/fdr007-native-incremental/export-03-int8",
+    "--experimental-id",
+    "fdr007-int8-01"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 2.617422292008996
+}

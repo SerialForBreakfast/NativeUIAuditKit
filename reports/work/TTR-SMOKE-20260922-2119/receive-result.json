@@ -1,0 +1,70 @@
+{
+  "jobID": "697018C6-FAB6-4524-A691-1BE4507C8F7F",
+  "files": [
+    {
+      "bytes": 1691,
+      "path": "calibration.json",
+      "sha256": "fe4b259a2b8c7210dad6b3a7404fa0cbc57bd4299ac8c9f72c98e424480e04a8"
+    },
+    {
+      "bytes": 2840,
+      "path": "dataset-index.json",
+      "sha256": "4466f5c7bf4c37877f1397bfee4eecb6bb9e2778cd2e01d154af53ad1d705307"
+    },
+    {
+      "bytes": 103,
+      "path": "harvest-receipt.json",
+      "sha256": "3612d1b433e65b784abfb1cb0bbbb28aa32e5234ec68c41b43d237e8a5209f68"
+    },
+    {
+      "bytes": 4,
+      "path": "held-out.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    },
+    {
+      "bytes": 1691,
+      "path": "manifest.json",
+      "sha256": "fe4b259a2b8c7210dad6b3a7404fa0cbc57bd4299ac8c9f72c98e424480e04a8"
+    },
+    {
+      "bytes": 5820476,
+      "path": "synth-0_focused.png",
+      "sha256": "0816bcbba5119f32b1b065970f47b07a90c5415b689b90b143232a521cfaf593"
+    },
+    {
+      "bytes": 6246,
+      "path": "synth-0_metadata.json",
+      "sha256": "b8a324497488a0a01c0685f72a76b1b64a789b5e30ff0034b224f288e6cd2cbe"
+    },
+    {
+      "bytes": 5802284,
+      "path": "synth-0_unfocused.png",
+      "sha256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979"
+    },
+    {
+      "bytes": 5809163,
+      "path": "synth-1_focused.png",
+      "sha256": "11e4f3fe7d19f63ed4ebbef0c0614bc60525a494de5d9d9189ac72b8d5760911"
+    },
+    {
+      "bytes": 6246,
+      "path": "synth-1_metadata.json",
+      "sha256": "e86bba9aa9fa9bb825259a41f53657da80437800eaa1c4dec28721684df6575e"
+    },
+    {
+      "bytes": 5802284,
+      "path": "synth-1_unfocused.png",
+      "sha256": "30a0f146a0f6d958bb9949a2a542f3c09afeeb2398c9293eab183658f1743979"
+    },
+    {
+      "bytes": 4,
+      "path": "training.json",
+      "sha256": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05"
+    }
+  ],
+  "seconds": 5.144394709001062,
+  "destination": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/dataset/tvos_captures/ttr-smoke-20260922-2119/ipc-received",
+  "transport": "documented fixture read-job IPC",
+  "writer": "NUA caller; no app-container access",
+  "complete": true
+}

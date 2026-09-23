@@ -1,0 +1,44 @@
+*** Begin Patch
+*** Update File: /Volumes/SharedStatusFile/nuiak/status.yaml
+@@
+-updated_at: '2026-09-22T17:26:26Z'
+-valid_until: '2026-09-22T17:56:26Z'
++updated_at: '2026-09-22T17:38:00Z'
++valid_until: '2026-09-22T18:08:00Z'
+@@
+-  summary: New local TTR and Fixture binaries observed; dialog source matches published candidate. Eight infrastructure checks ready, ownership clear, HTTP healthy. Passive shelf still has non_view/unmapped_item, outside the dialog-only repair scope. Dialog capture/export/intake remains unqualified; see TTR-CHECK-20260922-NEW.
+-  next: Under bounded execution authority qualify the changed two-button dialog through capture/export/intake and postflight. Preserve shelf focus issue separately; no generic storage repair or service restart.
++  summary: Dialog reference native focus now verified and settled. Job661FFE7C fails telemetry_bracket:identityMismatch before target capture; source full-scene equality includes changing diagnostic counters and timers. Zero completed bundle; fresh postflight HTTP healthy,8 readiness checks ready, ownership clear.
++  next: Producer repair stable capture-identity comparison while independently validating freshness and settling; see TTR-SMOKE-20260922-DIALOG request. No unchanged retry or service reset. Independent NUA lanes continue.
+@@
+-- Changed dialog candidate is present but reference and both target focus/capture/export/intake have not been tested by NUA on this build.
++- Dialog reference resolves, but capture bracket fails before either target state completes; export/intake remain unqualified.
+@@
+ packets:
++  TTR-SMOKE-20260922-DIALOG:
++    owner: NUIAK architect
++    updated_at: '2026-09-22T17:38:00Z'
++    valid_until: '2026-09-22T18:08:00Z'
++    state: blocked
++    summary: One bounded dialog job failed telemetry_bracket:identityMismatch at reference state. Reference native view/identifier verified, generation2 settled; both targets unqualified. HTTP healthy and fresh ownership clear after failure.
++    evidence: [reports/work/TTR-SMOKE-20260922-DIALOG/handoff.md]
++    job_id: 661FFE7C-26C8-4B78-9007-56E43DEA3995
++    blockers:
++      - HarvestScenePayload Equatable includes observationDiagnostics; capture guards compare entire scenes at FixtureBatchHarvestEngine.swift lines504/553. Passive snapshots have equal focus/recipe/geometry but changing sampleCount and timing fields. Exact failed bracket samples unavailable; source defect identified, not exclusive forensic attribution.
++    pending_requests:
++      - id: nuiak-20260922T173800Z-stable-capture-bracket
++        to: tvtestrig
++        state: awaiting_acknowledgment
++        request: Accept a bounded producer-owned repair to compare stable capture identity/geometry rather than volatile diagnostic timers/counters. Independently validate freshness and settling on both sides; preserve native observed focus, generation, recipe, target and geometry safety. Tests must allow changing sampleCount/age/stable duration on the same valid scene while rejecting stale observations or changed focus/generation/recipe/geometry. Return field-level mismatch evidence. Qualify reference and both dialog buttons under producer execution authority, without a broad harvest or service reset. This supersedes the dialog reference-focus blocker only; shelf non-view focus remains separate.
++    acknowledgments:
++      - request_id: tvtestrig-20260922T164925Z-native-dialog-candidate
++        state: blocked
++        observed_at: '2026-09-22T17:38:00Z'
++        message: Candidate reference focus now resolves; genuine capture fails the telemetry equality guard. No completed bundle or export/intake acceptance.
++    next: Await changed comparator and producer evidence; then qualify exact-build capture/export/intake under execution authority. No unchanged retry.
++    outcomes:
++      software_verified: not_assessed
++      data_eligible: blocked
++      integration_qualified: failed
++      model_gate_passed: not_assessed
+*** End Patch

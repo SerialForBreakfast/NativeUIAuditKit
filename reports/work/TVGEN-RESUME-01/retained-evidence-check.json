@@ -1,0 +1,8 @@
+{
+  "sourceUnchanged": true,
+  "lastFailedPredicate": "coordinate_conflict: header_shelf",
+  "liveFixtureDylibSHA256": "9bd3859b9f71e6255bba0a3d64cfdd31cad323a67d70416826330c1414fa70f0",
+  "liveRecipe": "media_shelf/light/7",
+  "liveHeaderCoordinateMismatchStillPresent": true,
+  "captureAttempted": false
+}

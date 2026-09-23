@@ -1,0 +1,664 @@
+{
+  "retainedPairs": 138,
+  "retainedRecipes": 36,
+  "diagnosticOnly": true,
+  "admittedPairs": 0,
+  "sheets": [
+    "action_dialog.png",
+    "hero_carousel.png",
+    "media_shelf.png",
+    "settings_list.png",
+    "focus_maze.png",
+    "grid_matrix.png"
+  ],
+  "edgeCases": [
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-reference.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-000.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-001.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-002.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-003.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-004.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-005.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-006.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/030-007.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": true
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-reference.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-000.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-001.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-002.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-003.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-004.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-005.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-006.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/031-007.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": true
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-reference.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-000.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-001.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-002.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-003.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-004.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-005.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-006.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/032-007.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": true
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-reference.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-000.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-001.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-002.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-003.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-004.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-005.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-006.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/033-007.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": true
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-reference.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-000.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-001.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-002.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-003.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-004.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-005.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-006.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/034-007.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": true
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-reference.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-000.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-001.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-002.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-003.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-004.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-005.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-006.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": false
+    },
+    {
+      "path": "dataset/tvos_captures/direct-pilot-rest-20260923/035-007.png",
+      "element": "maze_2_2",
+      "bounds": [
+        1020,
+        2080,
+        884,
+        80
+      ],
+      "reason": "touches_image_edge",
+      "focused": true
+    }
+  ]
+}

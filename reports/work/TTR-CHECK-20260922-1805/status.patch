@@ -1,0 +1,42 @@
+*** Begin Patch
+*** Update File: /Volumes/SharedStatusFile/nuiak/status.yaml
+@@
+-updated_at: '2026-09-22T17:38:00Z'
+-valid_until: '2026-09-22T18:08:00Z'
++updated_at: '2026-09-22T18:08:00Z'
++valid_until: '2026-09-22T18:38:00Z'
+@@
+-  summary: Dialog reference native focus now verified and settled. Job661FFE7C fails telemetry_bracket:identityMismatch before target capture; source full-scene equality includes changing diagnostic counters and timers. Zero completed bundle; fresh postflight HTTP healthy,8 readiness checks ready, ownership clear.
+-  next: Producer repair stable capture-identity comparison while independently validating freshness and settling; see TTR-SMOKE-20260922-DIALOG request. No unchanged retry or service reset. Independent NUA lanes continue.
++  summary: Changed TTR comparator passes the dialog reference stage; jobE5BCE43B now fails first target native focus handoff. Requested dialog_btn_0 but actual native focus remains reference, geometry complete and samples fresh. Zero completed bundle. Postflight HTTP healthy,8 checks ready, ownership clear.
++  next: Producer repair and qualify reference-to-button native focus handoff; see TTR-CHECK-20260922-1805. No unchanged retry, storage repair or reset. Independent NUA lanes remain available.
+@@
+-- Dialog reference resolves, but capture bracket fails before either target state completes; export/intake remain unqualified.
++- First target focus_mismatch with stableMilliseconds0; neither focused target capture nor export/intake is qualified. Previous reference bracket blocker no longer reproduced.
+@@
+ packets:
++  TTR-CHECK-20260922-1805:
++    owner: NUIAK architect
++    updated_at: '2026-09-22T18:08:00Z'
++    valid_until: '2026-09-22T18:38:00Z'
++    state: blocked
++    summary: Changed TTR binary and fresh Fixture instance, same Fixture code hash. One two-button smoke advances past reference bracket but fails native_focus_or_geometry_unavailable:sceneNotSettled on first button. No completed bundle/export/intake.
++    evidence: [reports/work/TTR-CHECK-20260922-1805/handoff.md]
++    job_id: E5BCE43B-D60E-467B-93D3-7771D20A649F
++    blockers:
++      - Generation3 requested dialog_btn_0, native referenceFocused true, focus_mismatch, stableMilliseconds0. Failure37 fresh samples, no missing geometry; postflight422 samples shows same mismatch.
++    pending_requests:
++      - id: nuiak-20260922T180800Z-dialog-focus-handoff
++        to: tvtestrig
++        state: awaiting_acknowledgment
++        request: Own a bounded native focus-handoff repair. Inspect once-per-generation request consumption, UIKit focus-environment preference and reference/defaultFocus competition as hypotheses, not proven causes. Demonstrate actual native callbacks and settled identity for reference then both dialog buttons, corresponding geometry/images and healthy postflight. Do not substitute requested focus labels, loosen admission, restart services or blindly increase delays. Return exact build/source identities and complete-bundle evidence under producer execution authority.
++    resolved_scope:
++      request_id: nuiak-20260922T173800Z-stable-capture-bracket
++      result: Changed comparator observed and reference stage passed on this job; not full integration qualification or peer acknowledgment.
++    next: Changed native handoff candidate and producer evidence, then separately authorized complete smoke/export/intake; no unchanged retry.
++    outcomes:
++      software_verified: not_assessed
++      data_eligible: blocked
++      integration_qualified: failed
++      model_gate_passed: not_assessed
+*** End Patch

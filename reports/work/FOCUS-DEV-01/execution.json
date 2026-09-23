@@ -1,0 +1,48 @@
+[
+  {
+    "step": "assembly",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "scripts/focus_mixed_assembly.py",
+      "--input",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-DEV-01/input.json",
+      "--output",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-DEV-01/dataset"
+    ],
+    "exitCode": 0,
+    "expectedExitCode": 0,
+    "seconds": 146.28636358398944
+  },
+  {
+    "step": "preflight",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "scripts/train_focus_ring_detector.py",
+      "--experiment-protocol",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-DEV-01/dataset/focus_dataset_manifest.json",
+      "--experiment-arm",
+      "warm-stretch",
+      "--name",
+      "mixed-appearance-development-proposed",
+      "--dry-run"
+    ],
+    "exitCode": 2,
+    "expectedExitCode": 2,
+    "seconds": 145.1209254580026
+  },
+  {
+    "step": "production-rejection",
+    "command": [
+      "/Users/josephmccraw/Library/Application Support/NativeUIAuditKit/Environments/focus-export-01/bin/python",
+      "scripts/train_focus_ring_detector.py",
+      "--dataset",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/FOCUS-DEV-01/dataset",
+      "--name",
+      "mixed-appearance-development-proposed",
+      "--preflight"
+    ],
+    "exitCode": 2,
+    "expectedExitCode": 2,
+    "seconds": 0.08994204201735556
+  }
+]

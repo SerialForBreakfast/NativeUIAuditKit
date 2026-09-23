@@ -1,0 +1,76 @@
+{
+  "formatVersion": "focus-baseline-protocol-v1",
+  "artifact": {
+    "sha256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+    "metadataSHA256": "cf847ab2dd843c692cd2073530606d74ecd3efd6274544261eb61a76fa6682ab",
+    "outputs": [
+      "confidence",
+      "is_focused_prob"
+    ]
+  },
+  "manifestSHA256": "c24c6d4b1598cc613dd08b29253c320d2801921d2399c1593dd6c4be03ca20e5",
+  "preprocessing": {
+    "expansion": 0.16,
+    "cropSize": [
+      256,
+      256
+    ],
+    "coordinates": "xywh-top-left-pixels",
+    "resize": "FocusRingClassifier.makeCrop-v1"
+  },
+  "evidenceKind": "reviewed-fixture",
+  "partition": "development",
+  "sourceKind": "tvos_native_generator",
+  "threshold": 0.85,
+  "samples": [
+    {
+      "id": "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93:1",
+      "label": 1,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "control": "primaryButton",
+      "hard": false
+    },
+    {
+      "id": "d82da7d7d881696f6081e4be8937261c43a696ce31d3bf3594ce7cd469833f93:0",
+      "label": 0,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "control": "primaryButton",
+      "hard": false
+    },
+    {
+      "id": "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace:1",
+      "label": 1,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "control": "cancelAction",
+      "hard": false
+    },
+    {
+      "id": "c986fd723da74e5ed5c246b8bbf1c52797584c91d30367afbdf68d880225cace:0",
+      "label": 0,
+      "family": "actionDialog",
+      "theme": "highContrast",
+      "control": "cancelAction",
+      "hard": false
+    }
+  ],
+  "modelGatePassed": "not_assessed",
+  "implementationSHA256": {
+    "scripts/focus_ring_baseline.py": "f1074f23f6a67c03c70b60fb9dd39dabc33a41a22644522789338497145e58b4",
+    "scripts/focus_dataset_contract.py": "c10debbdedb351b2236bf848bb8f27d012c90ae7598dabde45bca891944e58cb",
+    "Sources/NativeUIAuditKit/Detection/FocusRingClassifier.swift": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+    "scripts/focus_runtime.py": "acb558d30a64b31be5b43e1797e9b102b249527217ef1344fccbdb9039f6b560"
+  },
+  "cropParity": {
+    "backend": "production-makeCrop",
+    "runtime": {
+      "sourceSHA256": "5fc98a9d47bd5171db06328c811b160ab3dda322a336923c5c40dc2f026c11e1",
+      "helperSHA256": "b5dd6cf51e066b066cc768d1c62298f834b77dbff4a985f151e0dd375a1b47af",
+      "hostOS": "26.4.1",
+      "architecture": "arm64"
+    }
+  },
+  "protocolSHA256": "3428471adfe3c38cfec2716c2e75ba7d05afde6c87ed78263b265db465ac8eb5"
+}

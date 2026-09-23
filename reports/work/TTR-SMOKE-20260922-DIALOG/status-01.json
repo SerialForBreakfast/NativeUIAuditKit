@@ -1,0 +1,26 @@
+{
+  "command" : "fixture job-status",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "failure" : "telemetry_bracket:identityMismatch; Resolve the retained harvest prerequisite before separately authorizing another harvest.",
+        "files" : [
+
+        ],
+        "jobID" : "661FFE7C-26C8-4B78-9007-56E43DEA3995",
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/661ffe7c-26c8-4b78-9007-56e43dea3995/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/661ffe7c-26c8-4b78-9007-56e43dea3995/recipes",
+        "schemaVersion" : 1,
+        "simulatorUDID" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "state" : "failed",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/661ffe7c-26c8-4b78-9007-56e43dea3995"
+      }
+    }
+  },
+  "durationMilliseconds" : 16,
+  "requestID" : "68978790-505E-483C-BD53-112B535CA20A",
+  "schemaVersion" : 1,
+  "success" : true
+}

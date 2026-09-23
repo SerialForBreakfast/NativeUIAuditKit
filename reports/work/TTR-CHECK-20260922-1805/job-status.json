@@ -1,0 +1,59 @@
+{
+  "command" : "fixture job-status",
+  "data" : {
+    "fixtureJob" : {
+      "_0" : {
+        "failure" : "native_focus_or_geometry_unavailable:sceneNotSettled; Resolve the retained harvest prerequisite before separately authorizing another harvest.",
+        "files" : [
+
+        ],
+        "jobID" : "E5BCE43B-D60E-467B-93D3-7771D20A649F",
+        "observationDiagnostics" : {
+          "generation" : 3,
+          "measuredIDs" : [
+            "dialog_btn_0",
+            "dialog_btn_1",
+            "dialog_container"
+          ],
+          "missingIDs" : [
+
+          ],
+          "nativeFocusResolved" : true,
+          "nativeProbe" : {
+            "focusSystemAvailable" : true,
+            "focusedItemKind" : "view",
+            "geometryAvailable" : true,
+            "geometrySource" : "uikit_window_converted_bounds",
+            "referenceAttached" : true,
+            "referenceFocusable" : true,
+            "referenceFocused" : true,
+            "resolution" : "identifier"
+          },
+          "reason" : "focus_mismatch",
+          "requestedID" : "dialog_btn_0",
+          "requiredIDs" : [
+            "dialog_btn_0",
+            "dialog_btn_1"
+          ],
+          "requiredMilliseconds" : 150,
+          "sampleAgeMilliseconds" : 63.937583327060565,
+          "sampleCount" : 37,
+          "sampledGeneration" : 3,
+          "stableMilliseconds" : 0
+        },
+        "outputPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/e5bce43b-d60e-467b-93d3-7771d20a649f/bundle",
+        "recipeSHA256" : "212f35c0395e8482756773652b238acc78ce000af18279370c21e2ea2999ea07",
+        "recipesPath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/e5bce43b-d60e-467b-93d3-7771d20a649f/recipes",
+        "schemaVersion" : 1,
+        "simulatorUDID" : "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "state" : "failed",
+        "storageReady" : true,
+        "workspacePath" : "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/FixtureJobs/e5bce43b-d60e-467b-93d3-7771d20a649f"
+      }
+    }
+  },
+  "durationMilliseconds" : 13,
+  "requestID" : "C4520E03-C54F-4AA9-B9C5-2CB24E3F79E3",
+  "schemaVersion" : 1,
+  "success" : true
+}

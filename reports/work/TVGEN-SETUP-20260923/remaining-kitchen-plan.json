@@ -1,0 +1,208 @@
+{
+  "version": "direct-tvos-continuation-plan-v1",
+  "executionAllowed": false,
+  "trainingEligible": false,
+  "admittedPairs": 0,
+  "catalogSHA256": "444d03ece053cce32710260edc6da79c044975d9dfdc9178e57e60cb1a7035a7",
+  "predecessorSHA256": [
+    "7e419d25e299cbdf0e7b3993729c0acf4fd71ee13e0c7896b49bb5cd76f77ff2",
+    "daa976627de0e7e74bd881363ea075ed746b387e17bfeac189a20f4db4230da0",
+    "024ab79280081dd98b2096c5031ef57397c8e66cefca485ef799e95687726aa7"
+  ],
+  "verifiedRecipes": 36,
+  "verifiedPairs": 138,
+  "remainingRecipes": [
+    {
+      "catalogIndex": 36,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "light",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 37,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "light",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 38,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 39,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "dark",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 40,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 7,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    },
+    {
+      "catalogIndex": 41,
+      "recipe": {
+        "schema_version": 1,
+        "archetype": "kitchen_sink",
+        "element_count": 41,
+        "theme": "high_contrast",
+        "density": "regular",
+        "seed": 19,
+        "step_index": 0
+      },
+      "expectedTargets": [
+        "sink_cancelAction",
+        "sink_collectionItem",
+        "sink_colorWell",
+        "sink_contextMenu",
+        "sink_destructiveButton",
+        "sink_disclosureGroup",
+        "sink_listRow",
+        "sink_menuButton",
+        "sink_picker",
+        "sink_primaryButton",
+        "sink_refreshControl",
+        "sink_secondaryButton",
+        "sink_segmentedControl",
+        "sink_sidebar",
+        "sink_tabBar",
+        "sink_textField",
+        "sink_toggle",
+        "sink_toolbar"
+      ]
+    }
+  ]
+}

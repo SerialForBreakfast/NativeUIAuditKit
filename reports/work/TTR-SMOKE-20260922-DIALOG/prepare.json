@@ -1,0 +1,14 @@
+{
+  "command" : "fixture prepare",
+  "durationMilliseconds" : 0,
+  "error" : {
+    "cause" : "access_denied",
+    "code" : "invalidArgument",
+    "message" : "Cannot read recipe file (access_denied). Use a readable regular file or import its JSON with --recipe-json. No coordinator request was sent.",
+    "retryable" : false,
+    "stage" : "recipe_read"
+  },
+  "requestID" : "90EC317F-8DB0-418F-9D97-739AA4C7C3DE",
+  "schemaVersion" : 1,
+  "success" : false
+}

@@ -62,6 +62,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--execute", action="store_true", help="Launch only after separate maintainer authorization and logged experiment")
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
+    p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
     p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit"])
     return p.parse_args()
 
@@ -71,6 +72,9 @@ def load_samples(dataset: Path, split: str) -> list[dict]:
     if not manifest_path.is_file():
         raise ValueError("missing_manifest")
     data = json.loads(manifest_path.read_text())
+    if data.get("version") == "focus-mixed-assembly-v1":
+        from focus_mixed_assembly import load_samples as mixed_samples
+        return mixed_samples(dataset, {"val":"validation"}.get(split,split))
     samples: list[dict] = []
     for pair in data.get("pairs") or []:
         from focus_dataset_contract import SPLITS, member
@@ -94,6 +98,10 @@ def load_samples(dataset: Path, split: str) -> list[dict]:
 
 def is_hard_negative(sample: dict) -> bool:
     return sample["label"] == 0.0 and sample.get("theme") in HARD_THEMES and sample.get("element_type") in HARD_TYPES
+
+
+def checkpoint_improved(loss, best, configuration):
+    return loss < best or (loss == best and configuration.get("selection") != "minimum-native-validation-bce-earliest-tie")
 
 
 def load_mobilenetv4_conv_small():
@@ -125,7 +133,7 @@ def main() -> int:
     if experimental:
         from focus_learning_experiment import load_protocol
         try:
-            report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name)
+            report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name, args.experiment_approval)
         except (OSError, ValueError, KeyError, TypeError) as error:
             print(json.dumps({"launchEligible": False, "blockers": [str(error)]})); return 2
         args.epochs = report["configuration"]["epochs"]
@@ -133,7 +141,7 @@ def main() -> int:
         args.lr = report["configuration"]["lr"]
         args.model = report["configuration"]["model"]
     else:
-        if args.experiment_arm:
+        if args.experiment_arm or args.experiment_approval:
             print("ERROR: experiment arm requires a protocol", file=sys.stderr); return 2
         from focus_training_preflight import preflight
         report = preflight(dataset, args.name, args.epochs, args.batch, args.lr, args.model)
@@ -149,6 +157,17 @@ def main() -> int:
         entry = (PROJECT_ROOT / "Research/ExperimentLog.md").read_text().split(f"## Run {args.experiment_id} ", 1)[1].split("\n## Run ", 1)[0]
         if report["protocolSHA256"] not in entry or args.experiment_arm not in entry or args.name not in entry:
             print("ERROR: experiment log must bind exact protocol, arm and output", file=sys.stderr); return 2
+        if report.get("approval"):
+            from focus_mixed_assembly import checked
+            checked(report["approval"])
+            checked(report["protocolFile"])
+    if "assemblySHA256" in report:
+        entry = (PROJECT_ROOT / "Research/ExperimentLog.md").read_text().split(f"## Run {args.experiment_id} ",1)[1].split("\n## Run ",1)[0]
+        if report["assemblySHA256"] not in entry or args.name not in entry:
+            print("ERROR: experiment log must bind exact assembly and output",file=sys.stderr); return 2
+        from focus_dataset_contract import digest
+        if digest(json.loads((dataset/"focus_dataset_manifest.json").read_text())) != report["manifestSHA256"]:
+            print("ERROR: assembly changed after preflight",file=sys.stderr); return 2
     started = time.monotonic()
     deadline = started + report["configuration"]["maxSeconds"] if experimental else float("inf")
     for key, value in os_env_defaults.items():
@@ -167,7 +186,7 @@ def main() -> int:
     print("importing torch…", flush=True)
     import torch
     from torch import nn
-    from torch.utils.data import DataLoader, Dataset
+    from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
     from PIL import Image
     print("torch ready", flush=True)
 
@@ -226,8 +245,13 @@ def main() -> int:
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
     loss_fn = nn.BCEWithLogitsLoss()
 
+    sampler = None
+    if "sampling" in report:
+        sampler = WeightedRandomSampler([r["samplingWeight"] for r in train], len(train), replacement=True,
+                                       generator=torch.Generator().manual_seed(42))
     train_loader = DataLoader(
-        CropDataset(train, not experimental), batch_size=batch, shuffle=True, num_workers=0, drop_last=False
+        CropDataset(train, not experimental), batch_size=batch, shuffle=sampler is None,
+        sampler=sampler, num_workers=0, drop_last=False
     )
     val_loader = DataLoader(
         CropDataset(val, False),
@@ -285,7 +309,7 @@ def main() -> int:
             "val_loss": val_loss,
         }
         torch.save(ckpt, weights_dir / "last.pt")
-        if val_loss <= best_val:
+        if checkpoint_improved(val_loss, best_val, report["configuration"]):
             best_val = val_loss
             torch.save(ckpt, best_path)
 

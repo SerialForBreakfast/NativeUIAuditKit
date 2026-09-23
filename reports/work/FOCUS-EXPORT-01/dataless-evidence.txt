@@ -1,0 +1,4 @@
+-rw-r--r--  1 josephmccraw  staff  hidden,compressed,dataless  3399 Aug 23 15:54 .venv-yolo/lib/python3.13/site-packages/coremltools/converters/libsvm/__init__.py
+-rw-r--r--  1 josephmccraw  staff  hidden,compressed,dataless  7189 Aug 23 15:54 .venv-yolo/lib/python3.13/site-packages/coremltools/converters/libsvm/_libsvm_converter.py
+-rw-r--r--  1 josephmccraw  staff  hidden,compressed,dataless   971 Aug 23 15:54 .venv-yolo/lib/python3.13/site-packages/coremltools/converters/libsvm/_libsvm_util.py
+-rw-r--r--  1 josephmccraw  staff  hidden,compressed,dataless 18567 Aug 27 17:58 .venv-yolo/lib/python3.13/site-packages/scipy/stats/__init__.py

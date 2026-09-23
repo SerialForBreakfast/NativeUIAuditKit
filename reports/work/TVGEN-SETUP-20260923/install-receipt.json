@@ -1,0 +1,32 @@
+[
+  {
+    "selected": [
+      {
+        "runtime": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+        "lastBootedAt": "2026-09-20T17:30:59Z",
+        "dataPath": "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data",
+        "dataPathSize": 2278744064,
+        "logPath": "/Users/josephmccraw/Library/Logs/CoreSimulator/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "udid": "9026ECA9-77DB-4AE6-8FE6-BB239E9571FA",
+        "isAvailable": true,
+        "logPathSize": 409600,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K",
+        "state": "Booted",
+        "name": "Apple TV 4K (3rd generation)"
+      }
+    ]
+  },
+  {
+    "args": [
+      "codesign",
+      "--verify",
+      "--deep",
+      "--strict",
+      "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/.build/debug-output/fixture-stage-20260923/TVTestRigFixture.app: resource fork, Finder information, or similar detritus not allowed\n",
+    "seconds": 0.017788833007216454
+  }
+]

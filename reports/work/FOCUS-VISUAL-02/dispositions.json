@@ -1,0 +1,17 @@
+{
+  "reviewed": [
+    "office_home_initial",
+    "office_home_step01",
+    "office_home_step02",
+    "office_session2_home",
+    "office_home_step03",
+    "office_home_col5"
+  ],
+  "excluded": {
+    "office_home_top_right": "App-switcher screenshot, not a live Home focus state"
+  },
+  "basis": "Visual inspection before inference, no callback or model-derived labels",
+  "unknownJourney": "All six retained in legacy44-unknown-journey, including near-repeated Settings-tile views",
+  "trainingEligible": false,
+  "releaseEligible": false
+}
