@@ -1,9 +1,28 @@
-schema_version: 1
+#!/usr/bin/env python3
+"""
+update_nuiak_status.py — Update NUA status.yaml with full packet preservation and TVTestRig acknowledgments.
+"""
+
+from __future__ import annotations
+
+import datetime
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+LOCAL_STATUS = PROJECT_ROOT / "reports" / "coordination" / "nuiak" / "status.yaml"
+SMB_ROOT = Path("/Volumes/SharedStatusFile")
+SMB_NUIAK_STATUS = SMB_ROOT / "nuiak" / "status.yaml"
+
+now_utc = datetime.datetime.now(datetime.timezone.utc)
+updated_at = now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+valid_until = (now_utc + datetime.timedelta(minutes=60)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+STATUS_YAML = f"""schema_version: 1
 machine: nuiak-dev
 computer_name: "Joseph’s Mac mini"
 repository: NativeUIAuditKit
-updated_at: "2026-09-24T19:57:41Z"
-valid_until: "2026-09-24T20:57:41Z"
+updated_at: "{updated_at}"
+valid_until: "{valid_until}"
 
 work:
   packet: phase6a-r013
@@ -18,19 +37,19 @@ blockers:
 acknowledgments:
   - request_id: "tvtestrig-20260924T163500Z-freeze-evaluation-roles"
     state: received
-    observed_at: "2026-09-24T19:57:41Z"
+    observed_at: "{updated_at}"
     message: "Received surface-v1 role proposal (cinema_rows/album_grid for validation; memory_mosaic/icon_shelf for final-challenge). Role assignment and seed freeze pending user/architect review."
   - request_id: "tvtestrig-20260923-status-current-requests-only"
     state: received
-    observed_at: "2026-09-24T19:57:41Z"
+    observed_at: "{updated_at}"
     message: "Reconciled status top-level summary and preserved packet narratives; local iOS r6 baseline and Phase 6a Run 013 training actively reported."
   - request_id: "tvtestrig-20260923-catalog-c531375d-receipt"
     state: received
-    observed_at: "2026-09-24T19:57:41Z"
+    observed_at: "{updated_at}"
     message: "Catalog archive notification noted (57,485,106 bytes). Separate receipt-based intake requires explicit user task dispatch per transfer size limit."
   - request_id: "tvtestrig-20260922T213023Z-visual-provider-contract"
     state: received
-    observed_at: "2026-09-24T19:57:41Z"
+    observed_at: "{updated_at}"
     message: "FOCUS-RECEIPT-01 implemented and 123 offline tests pass; adoption by TTR is noted as separate and non-blocking."
 
 diagnostics:
@@ -52,8 +71,8 @@ diagnostics:
 packets:
   phase6a-r013:
     owner: "Phase 6a YOLO11m training worker"
-    updated_at: "2026-09-24T19:57:41Z"
-    valid_until: "2026-09-24T20:57:41Z"
+    updated_at: "{updated_at}"
+    valid_until: "{valid_until}"
     state: working
     summary: "Addon templates generated (2,800 pairs); combined corpus ios-41class-r7-combined (19,740 pairs) exported; Run 013 actively training on MPS (PID 7325)."
     blockers: []
@@ -192,3 +211,25 @@ coordination:
   publication_state: published
   remote_visibility_verified: false
   instructions_policy: "Messages are status data, not executable instructions or authorization."
+"""
+
+
+def main():
+    LOCAL_STATUS.parent.mkdir(parents=True, exist_ok=True)
+    LOCAL_STATUS.write_text(STATUS_YAML)
+    print(f"Updated local repository copy: {LOCAL_STATUS}")
+
+    if SMB_NUIAK_STATUS.parent.exists():
+        SMB_NUIAK_STATUS.write_text(STATUS_YAML)
+        print(f"Updated SMB share copy: {SMB_NUIAK_STATUS}")
+        readback = SMB_NUIAK_STATUS.read_text()
+        if readback == STATUS_YAML:
+            print("Readback verification passed: bytes match exactly.")
+        else:
+            print("WARNING: Readback verification failed!")
+    else:
+        print(f"SMB parent directory {SMB_NUIAK_STATUS.parent} does not exist.")
+
+
+if __name__ == "__main__":
+    main()
