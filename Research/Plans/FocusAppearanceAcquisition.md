@@ -1,5 +1,11 @@
 # Focus appearance gap: acquisition and independent evaluation
 
+2026-09-23 dispatch clarification: APPEAR-A/A1 pilot software and acquisition,
+APPEAR-B/B1 assembly and retention-reference binding have delivered evidence.
+Their historical implementation text below remains the acceptance contract, not
+an instruction to repeat it. APPEAR-EVAL-RESERVE is the remaining grouped boundary;
+Tasks.md alone records current ownership/status and221-pair proposal evidence.
+
 ## APPEAR-EVAL-RESERVE — reservation, acquisition and candidate preparation
 
 Assigned 2026-09-23 to the NUIAK architect. Execute the grouped follow-up in

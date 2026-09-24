@@ -1,9 +1,10 @@
 # FOCUS-RECEIPT-01 — executed focus provenance
 
 2026-09-23 source assessment and implementation contract. Parent: TTR report-only
-visual verification. Tasks.md owns assignment/status. This is a proposed additive
-public API because the consumer cannot recover the missing information from existing
-observations. No current API or decision policy is changed by this document.
+visual verification. Tasks.md owns assignment/status. This records the additive
+public API implemented at baseline7588a92 because the older consumer cannot recover
+the information from observations alone. The contract below preserves its original
+acceptance scope; this planning audit makes no further API change.
 
 ## Pre-implementation verified boundary
 
@@ -107,4 +108,5 @@ Return changed files, exact API/receipt revision, compatibility matrix and tests
 model-identity algorithm and all unproven cases. Publish only the consumer consequence
 to SMB. Implementation evidence is in [the migration and handoff](../../reports/work/FOCUS-RECEIPT-01/handoff.md).
 The peer's older package pin remains without the receipt until it adopts a
-maintainer-published revision; uncommitted local software is not deployed integration.
+maintainer-published revision; committed NUIAK software alone is not peer adoption.
+The remaining source-pinned adoption work is [TTR-PROVIDER-01](QueueCompletion.md#ttr-provider-01).

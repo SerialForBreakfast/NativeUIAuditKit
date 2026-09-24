@@ -14,7 +14,8 @@ in Automation. Export does not automatically install it in an agent host.
 - Apply the user's current device allowlist and workspace rules first. Discovery
   does not authorize operation. Bind the exact authorized name to its discovered
   stable ID; do not embed one developer's IDs, paths, or credentials in a workflow.
-  In the TVTestRig development lab only exact `office` is authorized.
+  No target is authorized by this skill: NUIAK's current assignment names either
+  an exact simulator or physical device. Prior Office windows are not continuing grants.
 - Use TVTestRig CLI/MCP, not desktop control. A skill does not grant permission
   for pairing, system consent, installation, route changes or accessibility changes.
 - TVTestRig must be open. Use an available approved app-launch path if permitted;
@@ -35,6 +36,16 @@ in Automation. Export does not automatically install it in an agent host.
   does not imply capture release.
 
 ## Choose the interface
+
+NUIAK maintenance overlay2026-09-23: for current build/feature qualification read
+[the local repair loop](../../../Research/WorkerExecution/references/operational-lessons.md#ttr-featurerepair-qualification).
+The portable revision7 examples below and in interfaces.md are historical source
+contracts, not a current capability inventory or authority. In particular, later
+simulator app-managed jobs and supported chunk export have qualified recorded
+scopes; do not reimpose old Office-only job restrictions or infer fresh readiness.
+Use installed help/source and actual exact-build evidence before dispatch.
+For cross-machine work use [SMB coordination](../../../reports/coordination/SharedStatusSkill.md),
+not SSH; local runtime discovery precedes deciding which host must execute.
 
 For an installed DMG, no development team or source build is required. For an
 explicit source-build/launch request or signing setup failure, first read

@@ -5,6 +5,11 @@ description: Complete an assigned NativeUIAuditKit implementation packet or mult
 
 # NativeUIAuditKit packet execution
 
+For machine-specific build/runtime failures, TTR feature qualification, corpus/evaluation
+pitfalls or SMB coordination, read the relevant section of
+[operational lessons](references/operational-lessons.md). This is the compact routing
+layer for observed incidents; detailed evidence stays in BestPractices/reports.
+
 Read [WorkerWorkflow.md](../WorkerWorkflow.md), resolve your assigned packet through the [ImplementationPlans.md catalog](../ImplementationPlans.md), and read only its canonical contract and named knowledge/context. Do not load every packet document. AGENTS.md's mandatory reading and safety rules still apply. This skill lives under Research so its canonical source can be maintained without modifying the protected `.agents` directory; AGENTS.md explicitly routes workers here.
 
 1. Establish the full assignment's authorization, dependencies, current Tasks.md state, and completion boundary. For an authorized larger tranche, list included packets and integrated deliverables up front; do not silently reduce scope to a helper. Inspect read-only git status/diff and preserve unrelated changes. Do not assume another worker's plan status proves its artifacts exist.

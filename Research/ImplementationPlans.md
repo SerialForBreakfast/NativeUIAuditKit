@@ -9,7 +9,40 @@ groups untouched source reservations, missing-coverage acquisition/intake, evalu
 freeze and one candidate preparation. [Reservation requirements](../reports/work/APPEAR-EVAL-RESERVE-20260923/reservation-plan.md)
 are not admitted evaluation membership. Training requires separate approval.
 
-**Revision:** 5, 2026-09-22. Complete remaining-backlog catalog. Linked revision-4 contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
+**Revision:** 6, 2026-09-23. Complete remaining-backlog catalog. Existing contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
+
+## Supplemental packet index
+
+Every queued packet has an explicit row in this catalog. The tables contain contracts,
+not a second status board. Completed evidence linked elsewhere does not replace a
+forward contract. Apply [review-ready completion rules](Plans/QueueCompletion.md#review-ready-work)
+to review rows; do not redispatch accepted implementation. Historical next-action
+paragraphs below are context; current dispatch and ownership are in Tasks.md.
+
+| Packet | Contract |
+|---|---|
+| APPEAR-A | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-a--source-capability-audit-and-bounded-ground-truth-pilot) |
+| APPEAR-A1 | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-a1-integrated-software-tranche-assigned-2026-09-23) |
+| APPEAR-B | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-b--freeze-independent-challenge-and-one-future-experiment-proposal) |
+| APPEAR-B1 | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-b1--development-proposal-adapter) |
+| APPEAR-C | [Implementation and acceptance](Plans/CatalogAppearanceQualification.md) |
+| APPEAR-EVAL-RESERVE | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation) |
+| DATA-PROBE-INTAKE | [Implementation and acceptance](Plans/VisualStateCoverage.md#data-probe-intake--offline-export-admission) |
+| FOCUS-COMPRESS-01 | [Implementation and acceptance](Plans/NativeOSFocus.md#focus-compress-01--assigned-2026-09-22) |
+| FOCUS-EXP-01 | [Implementation and acceptance](Plans/FocusLearningExperiment.md) |
+| FOCUS-EXPORT-01 | [Implementation and acceptance](Plans/NativeOSFocus.md#assigned-candidate-exportparity--2026-09-22) |
+| FOCUS-PARITY-01 | [Implementation and acceptance](Plans/FocusIntegrationReplay.md) |
+| FOCUS-VISUAL-01 | [Implementation and acceptance](Plans/NativeOSFocus.md#focus-visual-01--reviewed-appearance-comparison-assigned-2026-09-22) |
+| FOCUS-VISUAL-02 | [Implementation and acceptance](Plans/NativeOSFocus.md#focus-visual-02--existing-home-appearance-comparison-assigned-2026-09-23) |
+| OS-FOCUS-01 | [Implementation and acceptance](Plans/NativeOSFocus.md) |
+| OS-FOCUS-02 | [Implementation and acceptance](Plans/NativeOSFocus.md#native-expansion-tranche--2026-09-22) |
+| OS-FOCUS-03 | [Implementation and acceptance](Plans/NativeOSFocus.md#os-focus-03--deterministic-home-screen-coverage) |
+| OS-FOCUS-04 | [Implementation and acceptance](Plans/NativeOSFocus.md#os-focus-04--incremental-native-and-fixture-corpus) |
+| P2-METRICS | [Implementation and acceptance](Plans/QueueCompletion.md#p2-metrics) |
+| REPO-CLEANUP-20260923 | [Implementation and acceptance](Plans/QueueCompletion.md#repo-cleanup-20260923) |
+| TEMP-FOCUS-DEV | [Implementation and acceptance](Plans/TemporalVisualVerificationSpike.md#assigned-development-precursor-temp-focus-dev-2026-09-23) |
+| TTR-CATALOG-01 | [Implementation and acceptance](Plans/QueueCompletion.md#ttr-catalog-01) |
+| TTR-PROVIDER-01 | [Implementation and acceptance](Plans/QueueCompletion.md#ttr-provider-01) |
 
 ## Remaining-work amendments and direct acquisition
 
@@ -28,10 +61,11 @@ now has an [integrated handoff](../reports/work/APPEAR-B1/handoff.md) and
 consume frozen membership/source-balanced weights while retaining missing independent
 evaluation, selection-reference and approval blockers. No operation authority implied.
 
-[APPEAR-A1 bounded catalog extension](../reports/work/APPEAR-A/handoff.md#next-local-implementation-appear-a1)
+[APPEAR-A1 bounded catalog extension](Plans/FocusAppearanceAcquisition.md#appear-a1-integrated-software-tranche-assigned-2026-09-23)
 now has an [integrated handoff](../reports/work/APPEAR-A1/handoff.md): source-pinned24-group
 catalog, offline readiness and production intake regression coverage. Old contracts
-remain intact. Next is separately authorized capture; no training authority.
+remain intact. The APPEAR-A2 pilot subsequently completed; remaining independent
+evaluation is APPEAR-EVAL-RESERVE, not repeated pilot capture.
 
 [APPEAR-A/B](Plans/FocusAppearanceAcquisition.md) turn FDR-008's measured Home/Photos
 failures into a source-capability audit, separately authorized bounded pilot and
@@ -103,10 +137,10 @@ blanket-pause assumptions in historical contracts.
 | ID-LIVE | [Detailed implementation contract](Plans/RemainingDelivery.md#id-live--genuine-screen-and-row-identity-evaluation) |
 | R-LABEL | [Detailed implementation contract](Plans/RemainingDelivery.md#r-label--trustworthy-physical-holdout-annotations) |
 | DATA-VIS | [Detailed implementation contract](Plans/RemainingDelivery.md#data-vis--controlled-visual-state-coverage) |
-| DATA-STATE-01 | [Unknown-aware state contract and evidence](../reports/work/DATA-STATE-01/handoff.md); native qualification separate |
-| DATA-SCHEDULE-01 | [Visual coverage plan](Plans/VisualStateCoverage.md); [planning CLI evidence](../reports/work/DATA-SCHEDULE-01/handoff.md) |
-| DATA-PROBE-01 | [Bounded adapter, native qualification requirements](../reports/work/DATA-PROBE-01/handoff.md) |
-| TTR-DIALOG-01 | [Closed dialog-style consumer compatibility](../reports/work/TTR-DIALOG-01/handoff.md) |
+| DATA-STATE-01 | [Native state contract and residual contrasts](Plans/VisualStateCoverage.md#packet-boundaries-and-remaining-delivery) |
+| DATA-SCHEDULE-01 | [Bounded schedule contract](Plans/VisualStateCoverage.md#packet-boundaries-and-remaining-delivery) |
+| DATA-PROBE-01 | [Adapter and native qualification contract](Plans/VisualStateCoverage.md#packet-boundaries-and-remaining-delivery) |
+| TTR-DIALOG-01 | [Software review and genuine intake](Plans/QueueCompletion.md#ttr-dialog-01) |
 | FOCUS-RECEIPT-01 | [Actual focus execution and consumer migration contract](Plans/FocusExecutionReceipt.md) |
 | DATA-SIM | [Detailed implementation contract](Plans/RemainingDelivery.md#data-sim--near-duplicate-similarity-feasibility) |
 | ALIGN-A | [Detailed implementation contract](Plans/RemainingDelivery.md#align-a--semantic-alignment-contract-and-offline-policy) |
@@ -285,6 +319,6 @@ simulator dataset packets; training and TTR operation retain separate authority.
 
 ## Dispatch text
 
-“Complete <packet-id or explicit tranche of packet IDs>, revision 5 catalog and the linked contract's revision/amendments, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
+“Complete <packet-id or explicit tranche of packet IDs>, revision 6 catalog and the linked contract's revision/amendments, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
 
 For external packets, replace NUA operating paths with the owning repository's approved assignment and instructions. For hardware, training, recovery-copy or promotion packets, name the authorized operation and verified prerequisites explicitly; catalog inclusion alone is not authorization.

@@ -107,9 +107,9 @@ def _validate_label(path: Path, image_id: str, class_count: int) -> None:
         if not all(math.isfinite(value) for value in coordinates):
             raise PredictionArtifactError(f"{image_id}: label line {line_number} has non-finite coordinates")
         cx, cy, width, height = coordinates
-        if width <= 0 or height <= 0 or cx < 0 or cy < 0 or cx > 1 or cy > 1:
+        if width <= 0 or height <= 0 or cx < -1e-5 or cy < -1e-5 or cx > 1 + 1e-5 or cy > 1 + 1e-5:
             raise PredictionArtifactError(f"{image_id}: label line {line_number} has invalid normalized bounds")
-        if cx - width / 2 < 0 or cx + width / 2 > 1 or cy - height / 2 < 0 or cy + height / 2 > 1:
+        if cx - width / 2 < -1e-5 or cx + width / 2 > 1 + 1e-5 or cy - height / 2 < -1e-5 or cy + height / 2 > 1 + 1e-5:
             raise PredictionArtifactError(f"{image_id}: label line {line_number} extends outside normalized image bounds")
 
 

@@ -6,8 +6,10 @@ training, producer edits, or mutation of the preserved iOS reconstruction.
 
 ## Evidence and priority
 
-Audit the 14,340-member preserved r6 prefix, not the incomplete planned 16,940
-corpus. Every sidecar was rehashed against IOS-COV-20260923/prefix-audit.json.
+The original inventory below covers the14,340-member preserved r6 prefix, not
+all16,940 members of the now-completed r6 corpus. Every inventoried sidecar was
+rehashed against IOS-COV-20260923/prefix-audit.json. Do not extrapolate its axis
+counts to the full corpus; the r6 handoff supplies full-corpus class support.
 Counts are recorded metadata, not automatic proof of rendered appearance.
 Retained r5 status-axis probes independently establish painted cellular/Wi-Fi/charge
 variation with clock/content fixed. Existing corpus remains useful; coverage gaps
@@ -34,6 +36,38 @@ are not permission to discard it or lower its existing completion gates.
 | tvOS actual Photos buttons | photos_like is collection-card artwork, not this surface | Existing APPEAR-EVAL-RESERVE request remains the acquisition dependency |
 
 ## Follow-on implementation assignments (proposals, no capture authority)
+
+## Packet boundaries and remaining delivery
+
+The VIS-A/B/C headings are work breakdowns, not extra queue IDs. DATA-VIS owns
+the gap inventory and a bounded addon proposal; DATA-STATE-01 owns truthful native
+state; DATA-SCHEDULE-01 owns planning; DATA-PROBE-01 owns the opt-in capture adapter;
+DATA-PROBE-INTAKE owns independent read-only admission. Status stays in Tasks.md.
+Existing six-case qualification is retained, not repeated to close software review.
+
+**Shared inputs:** pinned generator/schema source, existing v2 catalog and six-case
+r6 probe receipt/visual review, immutable r6 manifest, current class-support matrix.
+**File scope:** existing generator capture/config/writer and probe-planner/validator
+entrypoints, their tests and these plans; never rewrite r6 pixels or legacy defaults.
+**Authority:** offline review/software only until a new exact-target capture slice
+is assigned. New captures need frozen IDs/hash, counts, timeout, staging/output and
+runtime authority. No full144-case sweep, model execution or training is implied.
+
+| Packet | Remaining actionable slice | Acceptance and next action |
+|---|---|---|
+| DATA-STATE-01 | Review v1.2 caller wiring and unknown/null semantics; specify paired enabled/disabled and selected/unselected cases using actual native controls | Real writer/capture tests preserve v1.0 and reject default-as-observation claims. Twelve measured states do not establish both contrasts. Hand reviewed contrast cases to DATA-SCHEDULE-01 |
+| DATA-SCHEDULE-01 | Reconcile required joint-axis cells with six captured IDs; freeze a prioritized missing-cell subset of at most48, not another catalog implementation | Determinism, valid combinations, fixed-content contrasts and parent-group isolation; each requested trait classified supported/fixed/unknown. Hand frozen catalog/hash to DATA-PROBE-01 |
+| DATA-PROBE-01 | Review delivered six-case adapter and owned cleanup; when separately assigned, execute only the frozen missing-cell subset | Preflight is mutation-free; wrong target, stale catalog, staging collision, partial result and failed cleanup fail closed. Every selected ID accounted for. Hand immutable export to DATA-PROBE-INTAKE |
+| DATA-PROBE-INTAKE | Review existing six-case admission; admit each authorized new batch against independently retained catalog/IDs, then inspect all selected overlays | Byte/schema/geometry/state validation and visual findings are separate. Fixed AXXXL, unknown runtime traits and clipping remain explicit. Return coverage gaps to DATA-VIS |
+| DATA-VIS | Rank full-r6 class/visual gaps and propose one versioned addon with source-group quotas, requested versus effective axes and retention plan | No baseline/split mutation or Cartesian explosion. Deliver reviewed catalog, exact remaining counts, eligibility policy and separate execution proposal; IOS-COV determines gate applicability |
+
+**Verification/handoff:** focused positive/negative tests of changed real entrypoints,
+one integrated offline package pass for code changes; no rebuild for documentation
+alone. Record accepted/rejected/unexecuted cases, source hashes and four independent
+outcomes. Missing supported renderer/control is a capability gap, not permission to
+label requested settings as rendered truth. A new addon does not become training
+eligible merely because probes pass; corpus admission and a logged candidate remain
+separate assignments. No SMB update for these local-only changes.
 
 ### VIS-A — Truthful state and configuration provenance
 
@@ -107,6 +141,14 @@ membership. No accuracy improvement may be inferred from coverage counts alone.
 ## Verification scope
 
 ### DATA-PROBE-INTAKE — offline export admission
+
+**Bounded native evidence, 2026-09-23:** the separately authorized r6 tranche
+captured catalog-v2 seed19 probe-0/1 in all three families on the exact iOS26.5
+target. Independent intake and all six overlay reviews passed; see
+[native visual review](../../reports/work/IOS-R6-20260923/visual-review.md).
+This establishes the six-case path, not the full catalog or isolated visual-axis
+coverage. Twelve native UIControl states were measured; unknown states remain null.
+Training eligibility stays false. The software contract below remains unchanged.
 
 Finish the probe adapter's read-only consumer without launching capture. Require
 an independently supplied catalog, selected IDs and exact target, not only the

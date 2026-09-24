@@ -17,6 +17,51 @@
 
 ## P1-B — Run 009 real baseline inference
 
+### R6 baseline tranche
+
+2026-09-23 dispatch amendment to P1-B/P2-B/P3-B. Preserve the accepted software;
+complete this coherent tranche without helper-sized handoffs. No inference is
+authorized by this document. Offline preparation can proceed independently of TTR.
+
+**Inputs:** [r6 handoff](../../reports/work/IOS-R6-20260923/handoff.md), content
+inventory/seal, sidecar/ledger lineage, local Run009 checkpoint and existing exporter,
+reference comparator and regression selector. Corpus root is
+`NativeUITrainer/reconstructed_corpora/ios-41class-r6`; manifest SHA256
+`7980a9f362136b1fb061a91b31d1e662ca5b7ec384d9646024210f8066b56a0b`.
+Use the handoff's exact manifest filenames and independently verify their bytes.
+
+1. Review structural/label evidence and explicitly approve diagnostic evaluation
+   use without setting trainingEligible=true. Confirm complete2,000-member test
+   membership, immutable12,540/2,400/2,000 splits and available local checkpoint.
+   Validate any schema-to-evaluator adapter on small deterministic fixtures before
+   inference. Do not point the exporter at the broken historical YOLO symlinks.
+2. Resolve checkpoint/settings/taxonomy hashes and unique project-local outputs.
+   Record source/runtime and official versus custom metric implementations. Freeze
+   metadata-driven200–300-case diagnostic membership where support permits, before
+   inspecting model failures. Preserve full test membership; unsupported cells are gaps.
+3. After an explicit inference assignment, run P1-B once with complete accounting.
+   Successful empty predictions differ from failed inference. Do not shrink/retry
+   the corpus silently. Produce supported-class AP and required geometry metrics;
+   unsupported class metrics are unavailable. Test currently supports13/41 classes,
+   not a full41-class quality qualification.
+4. P2-B publishes the new replacement-corpus baseline and compatible references.
+   Historical0.586 is non-comparable; do not compute an improvement delta against it.
+   P3-B reuses per-image results for the frozen subset when the metric implementation
+   supports exact recomputation; otherwise report the missing compatible subset path
+   and request only necessary additional inference authority.
+
+**Acceptance:**2,000 inputs accounted for with hashes/predictions/failure disposition,
+truthful class support, frozen diagnostic membership and reproducible reference
+reports. No claim of DS-G8, training eligibility or external backup. Tests cover
+changed bytes, schema mismatch, absent classes, missing/corrupt images, output
+collision and subset determinism through actual callers. Reuse unchanged r6 full
+decoding evidence while rechecking seals; changed inputs invalidate it.
+**Files:** existing evaluation/export/comparison/selector code only as needed, focused
+tests, additive reports and canonical docs; corpus and checkpoints read-only.
+**Blockers:** missing checkpoint, rejected data-use review or missing inference
+authority stops inference only. Complete review/preflight/selection preparation.
+**Next:** IOS-COV gap decision and P5-B, not automatic candidate training.
+
 **Parent:** TASK-6a-11. **Inputs:** P1-A; eligible complete P0 test corpus; Run 009 best.pt; installed local dependencies. **Scope:** one actual PyTorch holdout evaluation and additive P1-B artifacts; no training/export.
 
 1. Record checkpoint/corpus hashes, taxonomy, completeness and original-versus-replacement identity. If historical original is recovered, verify all 2,000 members; a replacement uses its independently reviewed membership/version.

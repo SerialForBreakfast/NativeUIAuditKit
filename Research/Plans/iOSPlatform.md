@@ -21,15 +21,40 @@ capture requirement is introduced by reorganizing these tasks.
 
 ## 1. iOS corpus recovery and preservation
 
-**2026-09-23 correction:** no generation is running. r5 stopped after14,340 completed
-members; preserved r6 prefix passes every image/annotation check in the fresh audit.
-The remaining2,600 source recipes disagree with frozen partition counts while
-preserving16,940 total. [IOS-COV decision](../../reports/work/IOS-COV-20260923/coverage-decision.md)
-must be resolved before continuation. DATA-RET now has actual inventory/recovery
-software and a local drill, not independent external backup qualification. Do not
-infer a still-running process from the older r5 checkpoint or restart generation.
+### Authorized r6 continuation — 2026-09-23
 
-**Current dispatch amendment, 2026-09-22:** P0-C is already assigned and underway;
+Owner: reconstruction worker; status remains in Tasks.md. Baseline7588a92.
+Approved counts:12,540 train /2,400 validation /2,000 test. Continue the
+14,340-member prefix with700 UIKitControls,700 UIKitForm,700 UIKitList,
+300 UIKitToggleForm and200 WizardStepFlow images. First qualify32 distinct
+UIKitControls seeds under each of two profiles. Preserve historical failed trials.
+Use a project-owned planning/preflight/execution driver with exact simulator
+F3EF9DB8-0B0F-4757-B653-D1628269F6FF, iOS26.5 and Xcode26.6. Building/installing
+and standard simulator storage are authorized; host outputs remain project-local.
+Opt-in NUA_RECONSTRUCTION_RUN_NAME selects isolated Documents/reconstruction
+staging; legacy Documents/dataset remains untouched. Pin source/prefix/build hashes,
+resolve containers freshly, preserve partial output and fail closed on unresolved
+cleanup. Generation is bounded to90minutes; no automatic failed-attempt retry.
+
+Separately capture seed19 catalog-v2 probe-0/1 for UIKitControls, ChromeCoverage
+and DynamicTypeOverflow. Validate independent catalog bytes and inspect six
+overlays. These are development-only probes, not full visual-axis coverage.
+Complete corpus acceptance requires all member/ledger/hash checks, no decoded
+duplicates/leakage, unchanged prefix, coverage and retention evidence. Same-volume
+preservation is not independent backup. No inference/training/promotion is included;
+the subsequent Run009 baseline needs separate approval and DS-G8 remains open.
+
+**Executed evidence (2026-09-23):** the authorized r6 continuation completed2,600
+images and the corpus content seal verifies16,940 pairs at12,540/2,400/2,000.
+All prefix bytes and family assignments are preserved; zero decoded duplicates or
+cross-split leakage. Strict audit records retained `.DS_Store`; the content seal
+explicitly excludes only Finder metadata under BP-92, never pixels or annotations.
+Six separate probes passed intake and visual review. See the
+[handoff](../../reports/work/IOS-R6-20260923/handoff.md). No native job remains running.
+Visible support is39/41 train,12/41 validation,13/41 test. External backup and model
+qualification remain open; do not restart generation or infer full training eligibility.
+
+**Historical dispatch amendment, 2026-09-22 (superseded by r6 above):** P0-C was assigned and underway;
 preserve its owner and r5 configuration. Do not replay original-recovery searches
 or reopen accepted offline toolchain work merely because the historical sequence
 below describes them. DATA-RET prepares retention; IOS-COV resolves absent class

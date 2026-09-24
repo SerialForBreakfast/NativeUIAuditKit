@@ -2,6 +2,13 @@
 
 Lessons learned from building and running the spike experiments. Each entry describes a mistake or inefficiency encountered, the correct approach, and why it matters.
 
+2026-09-23 identifier repair: historical duplicate IDs are disambiguated by title.
+Seed independence (old63) is100; crop-content/orientation (old62) is101; real-candidate
+holdout isolation (old61) is102; signed-helper output authority (old60) is103;
+crop/backend parity (old68) is104; wire diagnostics (old95) is97. Historical reports
+retain their original numbering; resolve by topic, not the ambiguous old number.
+New skill routing lives in Research/WorkerExecution/references/operational-lessons.md.
+
 ---
 
 ## SwiftUI Layout & Coordinate Capture
@@ -1094,7 +1101,7 @@ both errors; the anchor-based policy passes them without unbounded frame storage
 Evidence: `scripts/test_transition_benchmark.py`, PER-05 handoff. Synthetic tests
 do not calibrate real-world thresholds or establish live navigation reliability.
 
-### BP-63: Seed separation is not pixel or journey independence
+### BP-100: Seed separation is not pixel or journey independence
 
 **2026-09-22 integration:** enforce decoded-content isolation at both perception
 byte verification and shared FocusRing intake, not only a separate audit script.
@@ -1117,7 +1124,7 @@ one duplicate-pixel group with conflicting focused/unfocused labels. Historical
 metrics remain historical, not independent quality evidence. See
 `reports/work/EVIDENCE-AUDIT/handoff.md`; original crops/reports were preserved.
 
-### BP-62: Test crop contents and orientation, not only tensor dimensions
+### BP-101: Test crop contents and orientation, not only tensor dimensions
 
 **Wrong:** A 256×256 crop and correct box arithmetic were treated as evidence that
 CoreGraphics selected the intended source pixels. A flipped draw context actually
@@ -1133,7 +1140,7 @@ after changing preprocessing. Pillow interpolation is not exact CoreGraphics par
 and exact runtime recrop checks now test content, not just shape. Evidence:
 `reports/work/FOCUS-LAUNCH/handoff.md`, 2026-09-21. Model quality remains unassessed.
 
-### BP-61: Validate the real candidate path without consuming its holdout
+### BP-102: Validate the real candidate path without consuming its holdout
 
 **Wrong:** Treat a one-epoch training run as a dry run, evaluate held-out hard
 negatives every epoch, or calculate theme quotas from minimum scene sizes.
@@ -1148,7 +1155,7 @@ within a partition; crossing partitions is not.
 pass minimum-denominator checks while becoming less representative as it grows.
 Evidence: `reports/work/FOCUS-CONSUMER/handoff.md`, adversarial tests, 2026-09-21.
 
-### BP-60: Shell cwd is not the signed helper's output authority
+### BP-103: Shell cwd is not the signed helper's output authority
 
 **Observed extension (2026-09-22):** `fixture prepare --recipe FILE` returned
 `serviceUnavailable` even while readiness passed before and after. The documented
@@ -1273,7 +1280,7 @@ execution publication, not only early rejection. [Review](../reports/work/TVGEN-
 
 ---
 
-### BP-68: Separate crop parity from model and backend quality
+### BP-104: Separate crop parity from model and backend quality
 
 **Wrong:** Assuming identical weights imply equivalent focus behavior, or attributing
 different scores to training while consumer crops omit the training-time context.
@@ -1683,6 +1690,18 @@ classification from default labels or retroactively invent missing measurements.
 Coverage improvements must preserve existing membership and cannot establish model
 improvement without evaluation. See reports/work/DATA-VIS-20260923/handoff.md.
 
+### BP-95: Native test dispatch needs a real xctestrun file and positive execution evidence
+
+**Observed:** The r6 driver supplied valid test-run plist contents with a `.plist`
+suffix; Xcode rejected it before launching any test. Ordinary plist validation did
+not expose this entrypoint requirement.
+**Correct:** Preserve the generated `.xctestrun` format and suffix when injecting
+test environment variables. Retain the pre-launch failure, test the actual dispatch
+arguments offline, and require the named native test to pass—not merely exit0 or
+an XCTest skip. Reuse unchanged compiled artifacts with their original build hashes.
+**Why:** This separates a host dispatch defect from failed rendering and prevents
+either an unnecessary rebuild or a skipped generation being reported as capture.
+
 ### BP-93: Reference-to-focus success does not establish focus-switch recognition
 
 **Wrong:** Generalize successful localization against an unfocused baseline to
@@ -1696,7 +1715,9 @@ switches correctly, with2 wrong and14 abstentions. The shipped+diff guardrail
 improved reference arrivals but did not solve focus switches. No live action
 policy should be inferred from this favorable baseline-only result.
 
-### BP-95: Verify execution diagnostics on the wire, not only in Swift
+### BP-97: Verify execution diagnostics on the wire, not only in Swift
+
+Renumbered from the duplicate BP-95 on2026-09-23; native test dispatch retains BP-95.
 
 **Wrong:** Assume synthesized Codable includes computed receipt counts because
 Swift callers can read them. FOCUS-RECEIPT-01 review found its initial computed
@@ -1719,3 +1740,32 @@ values and nonfinite subtraction results. Keep unsupported-class AP unavailable.
 Invented zeroes conceal absent evaluation evidence and misstate improvement or
 regression. Regression coverage: scripts/test_reference_comparison.py and the
 actual exported-corpus offline toolchain integration test.
+
+### BP-98: Reconcile skill examples with the qualified implementation
+
+**Wrong:** A model skill retained blanket Create ML `.scaleFill`/eval_map advice
+after production moved to YOLO letterboxing; older TTR guidance also described
+Office-only jobs after simulator app-managed jobs had passed a genuine smoke.
+**Correct:** Route workers to the current assigned contract and exact installed
+capabilities, label historical examples, and update the operational entrypoint when
+an interface changes. Preserve source/build/runtime and adoption as separate facts.
+Keep detailed incident evidence in the learning log, not copied into every skill.
+**Why:** Stale instructions can undo a repaired path or fabricate a new blocker.
+The2026-09-23 skill audit corrects the model entrypoint and adds the TTR local overlay;
+the original producer reference remains versioned, not represented as a new release.
+
+### BP-99: SMB delivery has distinct publication, transfer and intake boundaries
+
+**Wrong:** Treat a producer's filename/hash announcement as a delivered archive,
+or an acknowledgment as successful intake. The first APPEAR family check found no
+published archive despite having its expected identity; later copy verification
+completed before semantic intake.
+**Correct:** Verify the actual expected SMB mount, read only relevant metadata,
+copy separately approved final artifacts to new local storage, verify bytes, and
+publish an exact request/file/size/hash/receiver/time receipt. Review archive safety
+and consumer eligibility separately; sender verifies receipt before its owned cleanup.
+Reconcile offline guide copies with approved protocol amendments without deriving
+new operation authority from peer text. Keep unrelated local progress off the share.
+**Why:** This avoids premature cleanup, duplicate transfers, false training approval
+and repeated coordinator handoffs. Evidence:
+[family transfer](../reports/work/APPEAR-FAMILY-HANDOFF-20260923/coordination.md).

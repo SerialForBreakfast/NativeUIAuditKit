@@ -196,13 +196,21 @@ the existing P0-C/TVGEN-04 retention criteria consume this evidence, not a secon
 
 ## IOS-COV — Reconstruction coverage and 41-class qualification decision
 
-**Parent:** TASK-DATA-01/TASK-6a-10. **Inputs:** P0-C r5 configuration and final audit
-when available, frozen41-class mapping, retired web renderer evidence. **Scope:**
+**Parent:** TASK-DATA-01/TASK-6a-10. **Inputs:** completed P0-C r6 configuration,
+seal/coverage/lineage in [the r6 handoff](../../reports/work/IOS-R6-20260923/handoff.md),
+frozen41-class mapping and retired web renderer evidence. Preserve r5 failures as
+history, not current membership. **Scope:**
 NUA coverage/gate decision and a bounded native-generation proposal, no runtime or
 taxonomy modification without a separately assigned implementation.
 
 Enumerate actual per-class train/validation/test support and withheld families;
 report `webContent` absent, not detected with AP0 or silently removed from the map.
+The r6 starting support is39/41 train,12/41 validation and13/41 test; training also
+lacks dynamicIsland. Enumerate every missing validation/test class explicitly from
+the sealed coverage report, not only those two training gaps. Review diagnostic
+baseline use separately from all-class training/qualification. Any proposed addon
+must declare native-renderable class/family targets, exact quotas, source groups,
+coordinate/semantic evidence and preserved evaluation exclusions before capture.
 Determine which current gates cannot be assessed and distinguish valid partial
 baseline reporting from launch/ship eligibility. Specify a deterministic native
 replacement design if meaningful ground truth can be produced, with coordinate,

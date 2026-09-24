@@ -64,6 +64,11 @@ For shared checkouts, record a single owner for each overlapping implementation 
 
 ## Cross-machine status updates
 
+For approved artifact transactions, use the linked protocol's receipt exception:
+metadata acknowledgment, verified transfer, semantic intake and sender cleanup are
+different outcomes. The receiving worker does not delete peer artifacts. Ordinary
+status publication remains metadata-only and needs no transfer permission.
+
 Follow AGENTS.md's shared-status section and the repository copy of
 [SharedStatusSkill.md](../reports/coordination/SharedStatusSkill.md). Provide an update
 only for TVTestRig–NUA interaction at relevant assignment start, meaningful changes,

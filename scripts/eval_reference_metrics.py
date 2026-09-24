@@ -91,6 +91,59 @@ def build_synthetic_fixture_corpus() -> Dict[str, Any]:
     }
 
 
+def build_r6_replacement_corpus(r6_report_path: Optional[Path]) -> Dict[str, Any]:
+    if not r6_report_path or not r6_report_path.exists():
+        return {
+            "available": False,
+            "reason": "r6 replacement baseline eval_report.json does not exist.",
+        }
+    source = json.loads(r6_report_path.read_text(encoding="utf-8"))
+    per_class = [
+        {
+            "class": entry["name"],
+            "supported": entry["supported"],
+            "ap50": entry["ap50"],
+            "ap50_95": entry["ap50_95"],
+            "precision": entry["precision"],
+            "recall": entry["recall"],
+            "n": entry["n_gt"],
+        }
+        for entry in source.get("metrics", {}).get("perClass", [])
+    ]
+    return {
+        "available": True,
+        "sourceModel": source.get("model", {}).get("runName"),
+        "sourceEvalDate": source.get("evaluationDate"),
+        "split": source.get("corpus", {}).get("split"),
+        "nImages": source.get("corpus", {}).get("imageCount"),
+        "mAP50": source.get("metrics", {}).get("mAP50_supported"),
+        "mAP50_95": source.get("metrics", {}).get("mAP50_95_supported"),
+        "supportedClassCount": source.get("metrics", {}).get("supportedClassCount"),
+        "unsupportedClassCount": source.get("metrics", {}).get("unsupportedClassCount"),
+        "perClass": per_class,
+        "perImagePredictions": "reports/work/IOS-R6-BASELINE-20260923/prediction_artifact.json",
+        "sourceArtifact": str(r6_report_path.relative_to(PROJECT_ROOT)),
+    }
+
+
+def build_frozen_regression_corpus(reg_manifest_path: Optional[Path]) -> Dict[str, Any]:
+    if not reg_manifest_path or not reg_manifest_path.exists():
+        return {
+            "available": False,
+            "reason": "No frozen regression suite has been defined yet.",
+        }
+    reg_data = json.loads(reg_manifest_path.read_text(encoding="utf-8"))
+    return {
+        "available": True,
+        "manifestPath": str(reg_manifest_path.relative_to(PROJECT_ROOT)),
+        "formatVersion": reg_data.get("formatVersion"),
+        "seed": reg_data.get("seed"),
+        "target": reg_data.get("target"),
+        "memberCount": len(reg_data.get("members", [])),
+        "uncoveredClasses": reg_data.get("coverageExceptions", {}).get("uncoveredClasses", []),
+    }
+
+
 def build_unavailable(reason: str) -> Dict[str, Any]:
     return {"available": False, "reason": reason}
 
@@ -118,10 +171,19 @@ def compute_deltas(current: Dict[str, Any], previous: Optional[Dict[str, Any]]) 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--previous", type=Path, default=None, help="Prior pytorch_reference_metrics.json to diff against")
+    parser.add_argument(
+        "--r6-baseline",
+        type=Path,
+        default=PROJECT_ROOT / "reports/work/IOS-R6-BASELINE-20260923/eval_report.json",
+        help="Path to r6 baseline eval_report.json",
+    )
     args = parser.parse_args()
+
+    reg_manifest_path = PROJECT_ROOT / "reports/work/IOS-R6-BASELINE-20260923/synthetic_regression_manifest.json"
 
     corpora = {
         "synthetic_fixture_test_manifest": build_synthetic_fixture_corpus(),
+        "r6_replacement_test_manifest": build_r6_replacement_corpus(args.r6_baseline),
         "real_device_fixture_holdouts": build_unavailable(
             "No live hardware/simulator harvest has produced verified ground truth yet "
             "(Tasks.md TASK-6a-10 — every existing capture sidecar has empty 'elements')."
@@ -131,9 +193,7 @@ def main() -> int:
             "exploration, not paired images with bounding-box ground truth — nothing to "
             "compute mAP against."
         ),
-        "frozen_regression_suite": build_unavailable(
-            "No frozen regression suite has been defined yet."
-        ),
+        "frozen_regression_suite": build_frozen_regression_corpus(reg_manifest_path),
     }
 
     artifact: Dict[str, Any] = {

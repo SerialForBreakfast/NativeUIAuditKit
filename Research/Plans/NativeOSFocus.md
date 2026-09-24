@@ -2,6 +2,13 @@
 
 ## Latest delivery and next boundary
 
+2026-09-23 queue audit: historical next-run suggestions below have been executed
+through appearance acquisition and mixed-source diagnostics. Current remaining work
+is [APPEAR-EVAL-RESERVE](FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation)
+and the scoped native Home observation gap in OS-FOCUS-03. Do not repeat completed
+Home/Photos comparisons or FDR-008 merely to satisfy an older paragraph. Tasks.md
+owns dispatch; new capture/inference/training needs its own assignment.
+
 ### Appearance diagnostics delivered — 2026-09-23
 
 [FOCUS-VISUAL-03](../../reports/work/FOCUS-VISUAL-03/handoff.md) completes the assigned

@@ -22,11 +22,18 @@ restrictions—including a simulator pause—override availability of a command.
 - Use the existing fixture batch path for a bounded recipe smoke. Historical multi-tab
   scripts are not substitutes. Pin recipe/source/build identities and expected targets.
 - Keep outputs in approved NUIAK paths unless the user explicitly authorizes another
-  runtime/output location. No screenshots, labels or weights on the status share.
+  runtime/output location. Status/messages are metadata-only; separately assigned
+  artifact copies follow the [SMB receipt protocol](../../../reports/coordination/Instructions.md#explicit-receipt-based-artifact-exception--2026-09-23).
 - Physical rendering can supply real Apple TV focus effects. Simulator pixels do not
   qualify device shaders/parallax, performance or physical navigation.
 
 ## Paired focus capture and labels
+
+For producer changes, use [the exact-build repair loop](../../../Research/WorkerExecution/references/operational-lessons.md#ttr-featurerepair-qualification).
+Reuse completed jobs and original bytes when only export/intake failed; no recapture
+or producer rebuild for a consumer hash/schema mismatch. Pin producer serialization
+vectors and preserve legacy/null semantics before actual ingest/crop tests. A partial
+schema override must not weaken required sidecar fields; dispatch declared versions.
 
 1. Capture a resting baseline, then one focused state per supported interactive element.
 2. Verify producer-reported settled focus and matching scene/frame evidence. A 150ms

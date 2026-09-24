@@ -1,6 +1,6 @@
 # Concurrent delivery roadmap
 
-Revision 3, 2026-09-22. Dependencies and dispatch guidance only; [Tasks.md](../Tasks.md)
+Revision 4, 2026-09-23. Dependencies and dispatch guidance only; [Tasks.md](../Tasks.md)
 is the sole state/ownership queue. [ImplementationPlans.md](ImplementationPlans.md)
 maps every packet to its canonical contract. This revision supersedes contradictory
 Office-first, blanket simulator-pause and already-accepted-software dispatch language
@@ -8,11 +8,24 @@ in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
 
+**Current dispatch precedence (2026-09-23 audit):** the substantial tranches at the
+top of [Tasks](../Tasks.md#worker-packet-queue) supersede older next-action paragraphs
+below. FocusRing needs APPEAR-EVAL-RESERVE independent coverage and reviewed candidate
+readiness; APPEAR-A2 capture, mixed-source assembly and Home/Photos comparisons are
+already delivered. Do not repeat them as new assignments. Current v2 smoke/catalog
+intake is usable for its exact recorded builds, not proof every pilot cell works.
+IOS-COV plus the [r6 baseline tranche](Plans/EvaluationAndTraining.md#r6-baseline-tranche)
+can progress independently. [Completion contracts](Plans/QueueCompletion.md) close
+review/adoption gaps without retraining or hardware operations. Existing historical
+evidence below remains source-scoped; no current runtime is inferred from it.
+
 Independent iOS work progressed through IOS-COV and DATA-RET:
 [current count/coverage decision](../reports/work/IOS-COV-20260923/coverage-decision.md).
-P0-C is stopped with14,340 valid retained members, not a live r5 job; resolve frozen
-split totals before executing remaining2,600. Local retention verification does not
-require TTR, and an independent backup still needs its own destination/authority.
+P0-C r6 now seals16,940 members (12,540/2,400/2,000), preserving the14,340-member
+prefix; see [completed reconstruction](../reports/work/IOS-R6-20260923/handoff.md).
+The next independent iOS tranche is corpus/data-use review plus P1-B/P2-B/P3-B
+preflight, then separately authorized Run009 inference. Visible class support is
+39/12/13, not41 in each split. Independent backup needs a destination/authority.
 
 The grouped follow-up is now assigned as
 [APPEAR-EVAL-RESERVE](Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation).

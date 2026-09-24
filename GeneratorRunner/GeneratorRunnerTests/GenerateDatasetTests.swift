@@ -214,6 +214,15 @@ final class GenerateDatasetTests: XCTestCase {
     // MARK: - Set-up
 
     override func setUp() async throws {
+        if let name = ProcessInfo.processInfo.environment["NUA_RECONSTRUCTION_RUN_NAME"] {
+            guard !name.isEmpty, name.count <= 80,
+                  name.range(of: "^[A-Za-z0-9][A-Za-z0-9_-]*$", options: .regularExpression) != nil,
+                  ProcessInfo.processInfo.environment["SIMULATOR_UDID"] == "F3EF9DB8-0B0F-4757-B653-D1628269F6FF" else {
+                throw NSError(domain: "P0C", code: 2, userInfo: [NSLocalizedDescriptionKey: "Invalid continuation staging name or target"])
+            }
+            captureRootOverride = defaultDatasetDir.deletingLastPathComponent()
+                .appending(path: "reconstruction").appending(path: name)
+        }
         try requireCaptureReady()
         let fm = FileManager.default
         for split in ["train", "validation", "test"] {

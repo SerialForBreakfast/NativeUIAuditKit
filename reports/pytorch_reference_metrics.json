@@ -1,12 +1,401 @@
 {
   "corpora": {
     "frozen_regression_suite": {
-      "available": false,
-      "reason": "No frozen regression suite has been defined yet."
+      "available": true,
+      "formatVersion": "synthetic-regression-v1",
+      "manifestPath": "reports/work/IOS-R6-BASELINE-20260923/synthetic_regression_manifest.json",
+      "memberCount": 250,
+      "seed": 42,
+      "target": 250,
+      "uncoveredClasses": []
     },
     "production_tvos_system_holdout": {
       "available": false,
       "reason": "reports/tvos_settings_complete_tree.json is OCR/hierarchy text from crawl exploration, not paired images with bounding-box ground truth \u2014 nothing to compute mAP against."
+    },
+    "r6_replacement_test_manifest": {
+      "available": true,
+      "mAP50": 0.55486,
+      "mAP50_95": 0.398204,
+      "nImages": 2000,
+      "perClass": [
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "actionSheet",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "activityIndicator",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "alert",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "cancelAction",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "collectionItem",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "colorWell",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "contextMenu",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "destructiveButton",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "disclosureGroup",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "dynamicIsland",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "homeIndicator",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.157079,
+          "ap50_95": 0.146249,
+          "class": "imageView",
+          "n": 1900,
+          "precision": 0.404916,
+          "recall": 0.164737,
+          "supported": true
+        },
+        {
+          "ap50": 0.700443,
+          "ap50_95": 0.51534,
+          "class": "label",
+          "n": 9165,
+          "precision": 0.707353,
+          "recall": 0.74108,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "link",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "listRow",
+          "n": 700,
+          "precision": 0.0,
+          "recall": 0.0,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "mapView",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "menuButton",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.999785,
+          "ap50_95": 0.947303,
+          "class": "navigationBar",
+          "n": 800,
+          "precision": 0.899888,
+          "recall": 1.0,
+          "supported": true
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "pageControl",
+          "n": 600,
+          "precision": 0.0,
+          "recall": 0.0,
+          "supported": true
+        },
+        {
+          "ap50": 0.805288,
+          "ap50_95": 0.246539,
+          "class": "picker",
+          "n": 200,
+          "precision": 0.463855,
+          "recall": 0.77,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "popover",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.999968,
+          "ap50_95": 0.992847,
+          "class": "primaryButton",
+          "n": 1366,
+          "precision": 0.870618,
+          "recall": 1.0,
+          "supported": true
+        },
+        {
+          "ap50": 0.999754,
+          "ap50_95": 0.349217,
+          "class": "progressView",
+          "n": 200,
+          "precision": 1.0,
+          "recall": 0.745,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "refreshControl",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "scrollIndicator",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "searchField",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.0,
+          "ap50_95": 0.0,
+          "class": "secondaryButton",
+          "n": 341,
+          "precision": 0.0,
+          "recall": 0.0,
+          "supported": true
+        },
+        {
+          "ap50": 0.600131,
+          "ap50_95": 0.501458,
+          "class": "secureField",
+          "n": 200,
+          "precision": 0.516129,
+          "recall": 0.56,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "segmentedControl",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "sheet",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "sidebar",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "slider",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "statusBar",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.594027,
+          "ap50_95": 0.356416,
+          "class": "stepperControl",
+          "n": 200,
+          "precision": 0.5,
+          "recall": 1.0,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "tabBar",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": 0.548214,
+          "ap50_95": 0.396269,
+          "class": "textField",
+          "n": 503,
+          "precision": 0.711816,
+          "recall": 0.491054,
+          "supported": true
+        },
+        {
+          "ap50": 0.808488,
+          "ap50_95": 0.725009,
+          "class": "toggle",
+          "n": 1687,
+          "precision": 0.751166,
+          "recall": 0.764078,
+          "supported": true
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "toolbar",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "tooltip",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "unknown",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        },
+        {
+          "ap50": null,
+          "ap50_95": null,
+          "class": "webContent",
+          "n": 0,
+          "precision": null,
+          "recall": null,
+          "supported": false
+        }
+      ],
+      "perImagePredictions": "reports/work/IOS-R6-BASELINE-20260923/prediction_artifact.json",
+      "sourceArtifact": "reports/work/IOS-R6-BASELINE-20260923/eval_report.json",
+      "sourceEvalDate": "2026-09-24T02:24:31Z",
+      "sourceModel": "phase6a_r009",
+      "split": "test",
+      "supportedClassCount": 13,
+      "unsupportedClassCount": 28
     },
     "real_device_fixture_holdouts": {
       "available": false,
@@ -359,6 +748,6 @@
     "hasPrevious": false,
     "note": "First reference-metrics artifact \u2014 no prior run to diff against."
   },
-  "generatedAt": "2026-09-18T23:07:48Z",
-  "sha256": "226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405"
+  "generatedAt": "2026-09-24T02:26:08Z",
+  "sha256": "a70c7edb25c3cd392ab5c54f7fd458a726d5cdd1b11c1697ce488fe8cc535428"
 }

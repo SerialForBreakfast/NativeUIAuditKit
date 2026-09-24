@@ -76,7 +76,8 @@ partial derived files remain diagnostic evidence, not a completed corpus.
 
 The 2026-09-21 crop-origin correction changes runtime preprocessing, not weights.
 Historical runtime scores require re-baselining; test gradients establish location
-and orientation, not detector quality. See BP-62 and the launch-preparation handoff.
+and orientation, not detector quality. See BP-101 (formerly the crop-specific BP-62)
+and the launch-preparation handoff.
 
 Run `scripts/train_focus_ring_detector.py --dataset <local-dir> --name <unique-name>
 --dry-run` using `.venv-yolo/bin/python`. This imports no training runtime and

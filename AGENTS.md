@@ -70,6 +70,14 @@ checkpoint, or status update is not by itself a completed assignment.
 Use [WorkerWorkflow.md](Research/WorkerWorkflow.md) and
 [nativeui-worker-execution](Research/WorkerExecution/SKILL.md) for the completion check.
 
+All contributors use the [operational lessons](Research/WorkerExecution/references/operational-lessons.md)
+for the relevant build/runtime, TTR, data/evaluation or SMB workflow. Read only the
+relevant section after required context; do not repeatedly load the entire incident
+history. A dated plan, skill example or prior approval is not current execution
+authority. Current task scope and actual runtime contracts take precedence over
+historical examples. These guides work with any agent; they do not require a
+particular chat, coordinator or automatically installed skill.
+
 ## HIGHEST PRIORITY — File System Boundary
 
 **Writes normally stay inside this project. Explicit exception: agents MAY READ AND WRITE the verified `smb://sillycon.local/SharedStatusFile` folder (normally `/Volumes/SharedStatusFile`) for TVTestRig–NUIAK coordination, subject to the ownership rules below. This exception overrides the general outside-project prohibition; do not refuse it merely because the mount is outside the package.** For all other output, the prohibition includes:
@@ -120,9 +128,18 @@ safety rules. If their protocols conflict, report the conflict before publishing
   the top-level summary without replacing worker entries.
 - Read relevant coordination files throughout the verified shared folder. Write NUA-owned
   status, requests, responses, and coordination metadata under `nuiak/`; no coordinator
-  relay is required. Shared guide changes require a user-requested protocol update;
+  relay is required. On2026-09-23 the maintainer authorized any assigned contributor
+  to maintain the two shared guides and repository copies directly, with fresh reads,
+  minimal conflict-preserving edits, validation and readback; no coordinator approval.
+  This does not authorize changes to security, transfer limits or execution authority;
   TVTestRig-owned files and human reservations remain read-only without explicit authority.
-  No datasets, images, checkpoints, credentials, or general development logs belong here.
+  Status/messages remain metadata-only: no datasets, images, checkpoints, credentials
+  or general development logs. A separately assigned artifact transfer follows the
+  [receipt protocol](reports/coordination/Instructions.md#explicit-receipt-based-artifact-exception--2026-09-23):
+  named approved files only; over10,000,000 bytes requires explicit per-file size
+  approval. This records the existing handoff mechanism, not blanket transfer authority.
+  NUA copies approved peer artifacts into new project-local storage and publishes
+  verified size/hash receipts; the sender owns cleanup of its exact shared copy.
   Verify the mount rather than creating a local lookalike. Sandbox approval requirements
   still apply: request scoped escalation when needed instead of citing the repository
   boundary as a refusal. No SSH, new service, or permission weakening is implied.
