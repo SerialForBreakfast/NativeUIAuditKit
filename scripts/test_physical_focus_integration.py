@@ -23,11 +23,13 @@ class PhysicalIntegrationTests(unittest.TestCase):
         pair = self.f.doc["pairs"][0]; frame = pair["frames"]["focused"]
         x, y, w, h = frame["bounds"]
         metadata = {"id": "sample", "focused_element_id": "e", "is_settled": True,
+                    "unfocused_png": pair["frames"]["unfocused"]["path"], "focused_png": frame["path"],
                     "recipe": {"archetype": "grid_matrix", "theme": "light", "seed": 1, "recipe_hash": "test-hash"},
                     "elements": [{"element_id": "e", "taxonomy_class": "collectionItem", "is_focused": True,
                                   "pixel_bounds": frame["bounds"], "normalized_bounds": [x/40, y/30, (x+w)/40, (y+h)/30]}]}
         (raw/"meta.json").write_text(json.dumps(metadata))
         row = {"id": "sample", "split": "training", "expectedFocus": "e", "box": frame["bounds"],
+               "sha256": frame["sha256"],
                "metadata": {"focusedPath": frame["path"], "unfocusedPath": pair["frames"]["unfocused"]["path"], "metadataPath": "meta.json"}}
         for name, value in (("manifest.json", [row]), ("training.json", [row]), ("calibration.json", []), ("held-out.json", [])):
             (raw/name).write_text(json.dumps(value))
