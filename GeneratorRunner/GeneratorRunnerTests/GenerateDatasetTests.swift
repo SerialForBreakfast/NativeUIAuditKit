@@ -52,11 +52,15 @@ final class GenerateDatasetTests: XCTestCase {
     private static let testFamilies: Set<String> = [
         "CardDetail", "WizardStepFlow", "NotificationCenter", "GalleryPage",
         "MultiSectionForm", "SettingsToggleDense", "EmptyState", "OnboardingPage",
-        "ModalDialogueFlow", "SystemNavigationShell", "InteractiveControlPalette", "RichContentFeed",
     ]
 
     private static let validationFamilies: Set<String> = [
         "TabViewNavigation", "SearchResults", "PickerDateEntry", "SettingsDisclosure",
+    ]
+
+    /// 41-class holdout addon families (BP-27 holdout with 2,000 train / 400 val / 400 test allocation).
+    private static let addonFamilies: Set<String> = [
+        "ModalDialogueFlow", "SystemNavigationShell", "InteractiveControlPalette", "RichContentFeed",
     ]
 
     private static let allTemplateFamilies: Set<String> = [
@@ -432,7 +436,8 @@ final class GenerateDatasetTests: XCTestCase {
         for i in 0..<count {
             let originalSeed = startSeed + UInt64(i)
             let state = simulatorStates[i % simulatorStates.count]
-            let acceptedPath = "\(splitFor(templateFamily: templateFamily).rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
+            let split = splitFor(templateFamily: templateFamily, index: i)
+            let acceptedPath = "\(split.rawValue)/" + String(format: "img_%06d.png", manifest.imageCount + 1)
             let (config, result) = try await distinctCapture(family: templateFamily, originalSeed: originalSeed, acceptedPath: acceptedPath) { seed in
                 var config = makeConfig(seed: seed, index: i, templateFamily: templateFamily, state: state)
                 if let profile = forceProfile {
@@ -451,7 +456,6 @@ final class GenerateDatasetTests: XCTestCase {
             let seed = config.seed
 
             let imageIndex = manifest.imageCount + 1
-            let split = splitFor(templateFamily: templateFamily)
             let baseName = String(format: "img_%06d", imageIndex)
             let pngName  = baseName + ".png"
             let jsonName = baseName + ".json"
@@ -1479,9 +1483,15 @@ final class GenerateDatasetTests: XCTestCase {
     // MARK: - Helpers
 
     /// Assigns one split to each complete template family, including its variants.
-    private func splitFor(templateFamily: String) -> DatasetSplit {
+    private func splitFor(templateFamily: String, index: Int = 0) -> DatasetSplit {
         precondition(Self.allTemplateFamilies.contains(templateFamily),
                      "New template family must be explicitly assigned before corpus generation: \(templateFamily)")
+        if Self.addonFamilies.contains(templateFamily) {
+            // 700 images per addon family: 500 train (2,000 total) / 100 val (400 total) / 100 test (400 total)
+            if index < 500 { return .train }
+            if index < 600 { return .validation }
+            return .test
+        }
         if Self.testFamilies.contains(templateFamily) { return .test }
         if Self.validationFamilies.contains(templateFamily) { return .validation }
         return .train
@@ -1489,22 +1499,29 @@ final class GenerateDatasetTests: XCTestCase {
 
     func testFamilySplitPolicyIsDisjointAndComplete() {
         XCTAssertTrue(Self.testFamilies.isDisjoint(with: Self.validationFamilies))
+        XCTAssertTrue(Self.testFamilies.isDisjoint(with: Self.addonFamilies))
+        XCTAssertTrue(Self.validationFamilies.isDisjoint(with: Self.addonFamilies))
         XCTAssertTrue(Self.testFamilies.isSubset(of: Self.allTemplateFamilies))
         XCTAssertTrue(Self.validationFamilies.isSubset(of: Self.allTemplateFamilies))
+        XCTAssertTrue(Self.addonFamilies.isSubset(of: Self.allTemplateFamilies))
 
         for family in Self.allTemplateFamilies {
             let memberships = [
                 Self.testFamilies.contains(family),
                 Self.validationFamilies.contains(family),
-                !(Self.testFamilies.contains(family) || Self.validationFamilies.contains(family)),
+                Self.addonFamilies.contains(family),
+                !(Self.testFamilies.contains(family) || Self.validationFamilies.contains(family) || Self.addonFamilies.contains(family)),
             ].filter { $0 }.count
-            XCTAssertEqual(memberships, 1, "\(family) must have exactly one split")
+            XCTAssertEqual(memberships, 1, "\(family) must have exactly one split assignment policy")
         }
 
         XCTAssertEqual(splitFor(templateFamily: "CardDetail"), .test)
         XCTAssertEqual(splitFor(templateFamily: "TabViewNavigation"), .validation)
         XCTAssertEqual(splitFor(templateFamily: "HardNegative_1"), .train)
         XCTAssertEqual(splitFor(templateFamily: "HardNegative_3"), .train)
+        XCTAssertEqual(splitFor(templateFamily: "ModalDialogueFlow", index: 100), .train)
+        XCTAssertEqual(splitFor(templateFamily: "ModalDialogueFlow", index: 550), .validation)
+        XCTAssertEqual(splitFor(templateFamily: "ModalDialogueFlow", index: 650), .test)
     }
 
     func testAnnotationWriterFrozenSchemaAndVisibleIntersection() throws {

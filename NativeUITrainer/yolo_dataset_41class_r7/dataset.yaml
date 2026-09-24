@@ -1,0 +1,48 @@
+path: /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/yolo_dataset_41class_r7
+train: train/images
+val: val/images
+test: test/images
+
+nc: 41
+names:
+  0: actionSheet
+  1: activityIndicator
+  2: alert
+  3: cancelAction
+  4: collectionItem
+  5: colorWell
+  6: contextMenu
+  7: destructiveButton
+  8: disclosureGroup
+  9: dynamicIsland
+  10: homeIndicator
+  11: imageView
+  12: label
+  13: link
+  14: listRow
+  15: mapView
+  16: menuButton
+  17: navigationBar
+  18: pageControl
+  19: picker
+  20: popover
+  21: primaryButton
+  22: progressView
+  23: refreshControl
+  24: scrollIndicator
+  25: searchField
+  26: secondaryButton
+  27: secureField
+  28: segmentedControl
+  29: sheet
+  30: sidebar
+  31: slider
+  32: statusBar
+  33: stepperControl
+  34: tabBar
+  35: textField
+  36: toggle
+  37: toolbar
+  38: tooltip
+  39: unknown
+  40: webContent

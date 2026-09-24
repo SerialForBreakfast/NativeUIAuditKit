@@ -1,0 +1,250 @@
+{
+  "source": "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/NativeUITrainer/reconstructed_corpora/ios-41class-r7-combined",
+  "pairs": 19740,
+  "images": {
+    "train": 14540,
+    "val": 2800,
+    "test": 2400
+  },
+  "boxes_per_class": {
+    "label": 60367,
+    "textField": 3965,
+    "secureField": 2800,
+    "toggle": 11617,
+    "picker": 1200,
+    "stepperControl": 3412,
+    "primaryButton": 7939,
+    "navigationBar": 14353,
+    "actionSheet": 549,
+    "destructiveButton": 1064,
+    "cancelAction": 2891,
+    "alert": 523,
+    "disclosureGroup": 2421,
+    "listRow": 40440,
+    "homeIndicator": 1800,
+    "tabBar": 3200,
+    "refreshControl": 1300,
+    "mapView": 1300,
+    "statusBar": 900,
+    "tooltip": 551,
+    "scrollIndicator": 900,
+    "unknown": 200,
+    "imageView": 8086,
+    "colorWell": 1231,
+    "contextMenu": 540,
+    "sidebar": 457,
+    "slider": 2939,
+    "pageControl": 2166,
+    "searchField": 1500,
+    "menuButton": 1200,
+    "activityIndicator": 2117,
+    "segmentedControl": 1800,
+    "progressView": 2074,
+    "secondaryButton": 5149,
+    "link": 1347,
+    "collectionItem": 5296,
+    "sheet": 613,
+    "popover": 535,
+    "toolbar": 900,
+    "dynamicIsland": 650
+  },
+  "dropped": {},
+  "unknown_types": {},
+  "holdout_families": [
+    "CardDetail",
+    "EmptyState",
+    "GalleryPage",
+    "MultiSectionForm",
+    "NotificationCenter",
+    "OnboardingPage",
+    "SettingsToggleDense",
+    "WizardStepFlow"
+  ],
+  "family_split": {
+    "AccountProfileForm": {
+      "train": 200
+    },
+    "ActionSheet": {
+      "train": 400
+    },
+    "Alert": {
+      "train": 200
+    },
+    "AlertWithTextField": {
+      "train": 200
+    },
+    "CardDetail": {
+      "test": 200
+    },
+    "ChromeCoverage": {
+      "train": 200
+    },
+    "ClippedContent": {
+      "train": 60
+    },
+    "ColorPicker": {
+      "train": 200
+    },
+    "ContextMenu": {
+      "train": 400
+    },
+    "DynamicTypeOverflow": {
+      "train": 60
+    },
+    "EmptyState": {
+      "test": 400
+    },
+    "FormValidation": {
+      "train": 400
+    },
+    "GalleryPage": {
+      "test": 200
+    },
+    "HardNegative_1": {
+      "train": 40
+    },
+    "HardNegative_3": {
+      "train": 40
+    },
+    "InteractiveControlPalette": {
+      "train": 500,
+      "val": 100,
+      "test": 100
+    },
+    "KitchenSink": {
+      "train": 200
+    },
+    "LinkRichText": {
+      "train": 200
+    },
+    "LiquidGlassNav": {
+      "train": 600
+    },
+    "LiquidGlassTab": {
+      "train": 600
+    },
+    "LoadingSkeleton": {
+      "train": 400
+    },
+    "LoginForm": {
+      "train": 200
+    },
+    "MapOverlays": {
+      "train": 600
+    },
+    "MediaCardGrid": {
+      "train": 400
+    },
+    "MenuButton": {
+      "train": 200
+    },
+    "ModalDialogueFlow": {
+      "train": 500,
+      "val": 100,
+      "test": 100
+    },
+    "MultiSectionForm": {
+      "test": 200
+    },
+    "NotificationCenter": {
+      "test": 200
+    },
+    "OccludedElement": {
+      "train": 60
+    },
+    "OffScreenElement": {
+      "train": 60
+    },
+    "OnboardingPage": {
+      "test": 400
+    },
+    "OverlappingControls": {
+      "train": 60
+    },
+    "PickerDateEntry": {
+      "val": 600
+    },
+    "Popover": {
+      "train": 400
+    },
+    "ProgressActivity": {
+      "train": 400
+    },
+    "RTLMirror": {
+      "train": 400
+    },
+    "RTLMirroringFailure": {
+      "train": 40
+    },
+    "RefreshControl": {
+      "train": 600
+    },
+    "RichContentFeed": {
+      "train": 500,
+      "val": 100,
+      "test": 100
+    },
+    "SearchResults": {
+      "val": 600
+    },
+    "SegmentedFilter": {
+      "train": 200
+    },
+    "SettingsDisclosure": {
+      "val": 600
+    },
+    "SettingsList": {
+      "train": 400
+    },
+    "SettingsToggleDense": {
+      "test": 200
+    },
+    "Sheet": {
+      "train": 400
+    },
+    "SliderPanel": {
+      "train": 200
+    },
+    "SmallHitTarget": {
+      "train": 60
+    },
+    "Stepper": {
+      "train": 600
+    },
+    "SystemNavigationShell": {
+      "train": 500,
+      "val": 100,
+      "test": 100
+    },
+    "TabViewNavigation": {
+      "val": 600
+    },
+    "ToolbarActions": {
+      "train": 200
+    },
+    "TruncatedLabel": {
+      "train": 60
+    },
+    "UIKitControls": {
+      "train": 700
+    },
+    "UIKitForm": {
+      "train": 700
+    },
+    "UIKitList": {
+      "train": 700
+    },
+    "UIKitToggleForm": {
+      "train": 300
+    },
+    "WizardStepFlow": {
+      "test": 200
+    },
+    "iPadSidebar": {
+      "train": 200
+    }
+  },
+  "empty_taxonomy_classes": [
+    "webContent"
+  ]
+}

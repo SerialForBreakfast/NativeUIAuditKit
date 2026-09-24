@@ -1186,3 +1186,39 @@ versus FDR-007, with one wrong-focus and one multiple-focus base frame. Fixture
 training fit did not establish native appearance transfer. Keep candidate experimental;
 next acquire observed-label appearance diversity and independent evaluation, not
 more epochs on existing members. Evidence `../reports/work/FOCUS-VISUAL-03/handoff.md`.
+
+---
+
+## Run 013 — Phase 6a iOS YOLO11m 41-Class Addon Generalization Training (Started 2026-09-24)
+
+**Trigger:**
+Run 009 achieved holdout test mAP@0.5 = 0.586 (58.6%), but 28 of the 41 classes were completely absent in the test split due to generator family limitations (the 8 holdout families only contained 13 classes). The other 28 classes had 0 test instances, preventing holdout evaluation of those classes. To achieve true 41-class generalization and coverage across all splits:
+1. Implemented and verified 4 new generator template families in `GeneratorRunner`:
+   - `ModalDialogueFlowTemplate`: `alert`, `actionSheet`, `sheet`, `popover`, `contextMenu`, `cancelAction`, `destructiveButton` (+ buttons/labels)
+   - `SystemNavigationShellTemplate`: `tabBar`, `toolbar`, `sidebar`, `statusBar`, `dynamicIsland`, `searchField` (+ navigationBar/labels)
+   - `InteractiveControlPaletteTemplate`: `colorWell`, `menuButton`, `segmentedControl`, `slider`, `disclosureGroup` (+ toggle, stepperControl)
+   - `RichContentFeedTemplate`: `collectionItem`, `mapView`, `activityIndicator`, `refreshControl`, `scrollIndicator`, `link`, `tooltip`
+2. Generated 2,800 pairs (700 per addon family: 500 train / 100 val / 100 test).
+3. Assembled the combined `ios-41class-r7-combined` corpus (16,940 r6 + 2,800 addon = 19,740 pairs: 14,540 train / 2,800 val / 2,400 test) with 202,292 total bounding boxes.
+4. Class presence:
+   - Train: 40/41 classes present (only `webContent` milestone exception absent).
+   - Val: 35/41 classes present.
+   - Test: 38/41 classes present (all 28 previously missing classes now evaluated on novel holdout images).
+
+**Configuration:**
+- Architecture: YOLO11m (`weights/yolo11m.pt`)
+- Classes: 41 native Apple UI classes
+- Batch size: `batch=8` (ADR-0006 D3)
+- Checkpoints: `save_period=-1` (ADR-0006 D1, only `best.pt` and `last.pt`, with `last.prev.pt` backup)
+- Metric plotting: `plots=False` (ADR-0006 D2)
+- Optimizer: AdamW, lr0=0.001, lrf=0.01, momentum=0.937, weight_decay=0.0005
+- Augmentations: Mosaic=1.0, OHEM callback enabled (hardest 20% oversampled 2×)
+- Dataset: `NativeUITrainer/yolo_dataset_41class_r7/dataset.yaml`
+- Target epochs: 150 with patience 15 early stopping
+- Device: Apple Silicon MPS (`mps`), workers=4
+- Output: `NativeUITrainer/yolo_runs/phase6a_r013/`
+
+**Dry-run Status:**
+- Completed 2 epochs on 5% sample (`phase6a_r010_dryrun`, exit 0). Verified label caching (2800 val, 14540 train), MPS execution, OHEM callbacks, loss calculation across 35 present classes in validation.
+
+**Status:** IN_PROGRESS (Launched PID 7325 with caffeinate on Apple Silicon MPS; logging to `NativeUITrainer/training_6a13.log`).

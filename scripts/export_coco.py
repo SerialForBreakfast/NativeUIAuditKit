@@ -44,11 +44,14 @@ DEFAULT_HOLDOUT_FAMILIES = [
     "SettingsToggleDense",
     "EmptyState",
     "OnboardingPage",
+]
+
+ADDON_FAMILIES = {
     "ModalDialogueFlow",
     "SystemNavigationShell",
     "InteractiveControlPalette",
     "RichContentFeed",
-]
+}
 
 DROP_TYPES = {"tabBarItem"}
 SPLIT_DIRS = ("train", "validation", "test")
@@ -188,6 +191,12 @@ def iter_pairs(dataset: Path):
 
 
 def target_split(original: str, family: str, holdout: set[str]) -> str:
+    if family in ADDON_FAMILIES:
+        if original == "train":
+            return "train"
+        if original == "validation":
+            return "val"
+        return "test"
     if family in holdout:
         return "test"
     if original == "train":
