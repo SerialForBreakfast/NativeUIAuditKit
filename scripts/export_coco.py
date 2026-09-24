@@ -44,6 +44,10 @@ DEFAULT_HOLDOUT_FAMILIES = [
     "SettingsToggleDense",
     "EmptyState",
     "OnboardingPage",
+    "ModalDialogueFlow",
+    "SystemNavigationShell",
+    "InteractiveControlPalette",
+    "RichContentFeed",
 ]
 
 DROP_TYPES = {"tabBarItem"}

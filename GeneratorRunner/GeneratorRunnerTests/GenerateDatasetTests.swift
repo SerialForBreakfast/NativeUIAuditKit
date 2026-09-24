@@ -52,6 +52,7 @@ final class GenerateDatasetTests: XCTestCase {
     private static let testFamilies: Set<String> = [
         "CardDetail", "WizardStepFlow", "NotificationCenter", "GalleryPage",
         "MultiSectionForm", "SettingsToggleDense", "EmptyState", "OnboardingPage",
+        "ModalDialogueFlow", "SystemNavigationShell", "InteractiveControlPalette", "RichContentFeed",
     ]
 
     private static let validationFamilies: Set<String> = [
@@ -71,6 +72,7 @@ final class GenerateDatasetTests: XCTestCase {
         "UIKitToggleForm", "TruncatedLabel", "ClippedContent", "OverlappingControls",
         "SmallHitTarget", "DynamicTypeOverflow", "RTLMirroringFailure", "OffScreenElement",
         "OccludedElement", "HardNegative_1", "HardNegative_3",
+        "ModalDialogueFlow", "SystemNavigationShell", "InteractiveControlPalette", "RichContentFeed",
     ]
 
     // MARK: - Fixtures
@@ -713,6 +715,18 @@ final class GenerateDatasetTests: XCTestCase {
         case "ChromeCoverage":
             let ccConfig = ChromeCoverageConfig.make(seed: seed, corpus: &corpus, status: config.simulatorOverride)
             return try await ScreenshotCapture.capture(ChromeCoverageTemplate(config: ccConfig), config: config)
+        case "ModalDialogueFlow":
+            let mdfConfig = ModalDialogueFlowConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(ModalDialogueFlowTemplate(config: mdfConfig), config: config)
+        case "SystemNavigationShell":
+            let snsConfig = SystemNavigationShellConfig.make(seed: seed, corpus: &corpus, osProfile: config.osProfile)
+            return try await ScreenshotCapture.capture(SystemNavigationShellTemplate(config: snsConfig), config: config)
+        case "InteractiveControlPalette":
+            let icpConfig = InteractiveControlPaletteConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(InteractiveControlPaletteTemplate(config: icpConfig), config: config)
+        case "RichContentFeed":
+            let rcfConfig = RichContentFeedConfig.make(seed: seed, corpus: &corpus)
+            return try await ScreenshotCapture.capture(RichContentFeedTemplate(config: rcfConfig), config: config)
         default:
             throw GenerateDatasetError.unknownTemplateFamily(templateFamily)
         }
@@ -1070,6 +1084,73 @@ final class GenerateDatasetTests: XCTestCase {
     /// Isolated `UIPageControl` in train (holdout Onboarding/Gallery dots were 97.5% miss).
     func testGenerateKitchenSinkImages() async throws {
         try await generateImages(templateFamily: "KitchenSink", count: 200, startSeed: 27601)
+    }
+
+    // MARK: - 41-Class Holdout Addon Templates (seeds 30001–32800)
+
+    /// Smoke test verifying that each of the 4 addon template families renders cleanly and yields annotations.
+    func testAddonTemplatesRenderSmoke() async throws {
+        var corpus = ContentCorpus(seed: 42)
+        var observedTypes = Set<String>()
+
+        for seed in UInt64(1)...UInt64(15) {
+            let config = makeConfig(seed: seed, index: Int(seed), templateFamily: "ModalDialogueFlow", state: simulatorStates[0])
+            let mdf = try await capture(templateFamily: "ModalDialogueFlow", seed: seed, config: config, corpus: &corpus)
+            for el in mdf.elements { observedTypes.insert(el.elementType) }
+        }
+
+        for seed in UInt64(1)...UInt64(10) {
+            let config = makeConfig(seed: seed, index: Int(seed), templateFamily: "SystemNavigationShell", state: simulatorStates[0])
+            let sns = try await capture(templateFamily: "SystemNavigationShell", seed: seed, config: config, corpus: &corpus)
+            for el in sns.elements { observedTypes.insert(el.elementType) }
+        }
+
+        let config = makeConfig(seed: 42, index: 0, templateFamily: "InteractiveControlPalette", state: simulatorStates[0])
+        let icp = try await capture(templateFamily: "InteractiveControlPalette", seed: 42, config: config, corpus: &corpus)
+        for el in icp.elements { observedTypes.insert(el.elementType) }
+
+        for seed in UInt64(1)...UInt64(5) {
+            let config = makeConfig(seed: seed, index: Int(seed), templateFamily: "RichContentFeed", state: simulatorStates[0])
+            let rcf = try await capture(templateFamily: "RichContentFeed", seed: seed, config: config, corpus: &corpus)
+            for el in rcf.elements { observedTypes.insert(el.elementType) }
+        }
+
+        let missingTargetClasses: Set<String> = [
+            "alert", "actionSheet", "sheet", "popover", "contextMenu", "cancelAction", "destructiveButton",
+            "tabBar", "toolbar", "sidebar", "statusBar", "dynamicIsland", "searchField",
+            "colorWell", "menuButton", "segmentedControl", "slider", "disclosureGroup",
+            "collectionItem", "mapView", "activityIndicator", "refreshControl", "scrollIndicator", "link", "tooltip"
+        ]
+        let covered = missingTargetClasses.intersection(observedTypes)
+        print("Observed \(observedTypes.count) types total. Target missing classes covered: \(covered.count) / \(missingTargetClasses.count)")
+        print("Target covered: \(covered.sorted())")
+        let missing = missingTargetClasses.subtracting(observedTypes)
+        print("Still missing from target in this sample: \(missing.sorted())")
+        XCTAssertTrue(missing.isEmpty, "All 25 missing target classes must be produced by the 4 addon template families: \(missing)")
+    }
+
+    /// Generates 700 ModalDialogueFlow images (seeds 30001–30700).
+    /// Covers alert, actionSheet, sheet, popover, contextMenu, cancelAction, destructiveButton.
+    func testGenerateModalDialogueFlowImages() async throws {
+        try await generateImages(templateFamily: "ModalDialogueFlow", count: 700, startSeed: 30001)
+    }
+
+    /// Generates 700 SystemNavigationShell images (seeds 30701–31400).
+    /// Covers tabBar, toolbar, sidebar, statusBar, dynamicIsland, searchField.
+    func testGenerateSystemNavigationShellImages() async throws {
+        try await generateImages(templateFamily: "SystemNavigationShell", count: 700, startSeed: 30701)
+    }
+
+    /// Generates 700 InteractiveControlPalette images (seeds 31401–32100).
+    /// Covers colorWell, menuButton, segmentedControl, slider, disclosureGroup.
+    func testGenerateInteractiveControlPaletteImages() async throws {
+        try await generateImages(templateFamily: "InteractiveControlPalette", count: 700, startSeed: 31401)
+    }
+
+    /// Generates 700 RichContentFeed images (seeds 32101–32800).
+    /// Covers collectionItem, mapView, activityIndicator, refreshControl, scrollIndicator, link, tooltip.
+    func testGenerateRichContentFeedImages() async throws {
+        try await generateImages(templateFamily: "RichContentFeed", count: 700, startSeed: 32101)
     }
 
     // MARK: - Run 005: Hard-negative templates for textField confusion

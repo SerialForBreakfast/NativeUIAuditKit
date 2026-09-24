@@ -37,6 +37,10 @@
 		C1000011000000000000C111 /* AccountProfileFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000001000000000000C101 /* AccountProfileFormTemplate.swift */; };
 		C2000011000000000000C211 /* ChromeCoverageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2000001000000000000C201 /* ChromeCoverageTemplate.swift */; };
 		C3000011000000000000C311 /* NativeUIPageControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3000001000000000000C301 /* NativeUIPageControlView.swift */; };
+		D1000011000000000000D111 /* ModalDialogueFlowTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000001000000000000D101 /* ModalDialogueFlowTemplate.swift */; };
+		D2000011000000000000D211 /* SystemNavigationShellTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2000001000000000000D201 /* SystemNavigationShellTemplate.swift */; };
+		D3000011000000000000D311 /* InteractiveControlPaletteTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3000001000000000000D301 /* InteractiveControlPaletteTemplate.swift */; };
+		D4000011000000000000D411 /* RichContentFeedTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4000001000000000000D401 /* RichContentFeedTemplate.swift */; };
 		CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000001000000000000CC01 /* GenerateDatasetTests.swift */; };
 		CC000011000000000000CC11 /* CaptureTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002000000000000BB02 /* CaptureTypes.swift */; };
 		CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003000000000000BB03 /* GeneratorConfig.swift */; };
@@ -130,6 +134,10 @@
 		C1000001000000000000C101 /* AccountProfileFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountProfileFormTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/AccountProfileFormTemplate.swift; sourceTree = SOURCE_ROOT; };
 		C2000001000000000000C201 /* ChromeCoverageTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChromeCoverageTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ChromeCoverageTemplate.swift; sourceTree = SOURCE_ROOT; };
 		C3000001000000000000C301 /* NativeUIPageControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NativeUIPageControlView.swift; path = ../NativeUIDatasetGenerator/Templates/NativeUIPageControlView.swift; sourceTree = SOURCE_ROOT; };
+		D1000001000000000000D101 /* ModalDialogueFlowTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModalDialogueFlowTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/ModalDialogueFlowTemplate.swift; sourceTree = SOURCE_ROOT; };
+		D2000001000000000000D201 /* SystemNavigationShellTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SystemNavigationShellTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SystemNavigationShellTemplate.swift; sourceTree = SOURCE_ROOT; };
+		D3000001000000000000D301 /* InteractiveControlPaletteTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InteractiveControlPaletteTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/InteractiveControlPaletteTemplate.swift; sourceTree = SOURCE_ROOT; };
+		D4000001000000000000D401 /* RichContentFeedTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RichContentFeedTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/RichContentFeedTemplate.swift; sourceTree = SOURCE_ROOT; };
 		BB000001000000000000BB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB000002000000000000BB02 /* CaptureTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CaptureTypes.swift; path = ../NativeUIDatasetGenerator/Sources/CaptureTypes.swift; sourceTree = SOURCE_ROOT; };
 		BB000003000000000000BB03 /* GeneratorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneratorConfig.swift; path = ../NativeUIDatasetGenerator/Sources/GeneratorConfig.swift; sourceTree = SOURCE_ROOT; };
@@ -303,6 +311,10 @@
 				C1000001000000000000C101 /* AccountProfileFormTemplate.swift */,
 				C2000001000000000000C201 /* ChromeCoverageTemplate.swift */,
 				C3000001000000000000C301 /* NativeUIPageControlView.swift */,
+				D1000001000000000000D101 /* ModalDialogueFlowTemplate.swift */,
+				D2000001000000000000D201 /* SystemNavigationShellTemplate.swift */,
+				D3000001000000000000D301 /* InteractiveControlPaletteTemplate.swift */,
+				D4000001000000000000D401 /* RichContentFeedTemplate.swift */,
 			);
 			name = Templates;
 			sourceTree = "<group>";
@@ -546,6 +558,10 @@
 				C1000011000000000000C111 /* AccountProfileFormTemplate.swift in Sources */,
 				C2000011000000000000C211 /* ChromeCoverageTemplate.swift in Sources */,
 				C3000011000000000000C311 /* NativeUIPageControlView.swift in Sources */,
+				D1000011000000000000D111 /* ModalDialogueFlowTemplate.swift in Sources */,
+				D2000011000000000000D211 /* SystemNavigationShellTemplate.swift in Sources */,
+				D3000011000000000000D311 /* InteractiveControlPaletteTemplate.swift in Sources */,
+				D4000011000000000000D411 /* RichContentFeedTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
