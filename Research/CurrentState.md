@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-23 (r6 corpus seal and six native visual probes; no new training)
+**As of:** 2026-09-27 (Run013 evaluation complete; no shipped model change)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,23 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+**2026-09-27 Run013 evaluated; DS-G8 remains open (no shipped model change):**
+[Review-ready handoff](../reports/work/IOS-R013-EVAL/handoff.md). Training completed
+106 epochs, best91. All19,740 r7 image/label pairs passed source-backed integrity
+checks; zero decoded duplicates/cross-split pixel groups. All2,400 test predictions
+succeeded. On the identical2,000 withheld-family cases, supported13-class custom
+mAP50 improves **0.5549→0.6322** (+0.0773), mAP70 **0.4310→0.5834**,
+mAP90 **0.2302→0.5299**, mAP50–95 **0.3982→0.5707**. Compatible retained Run009
+predictions were reused; historical original-corpus0.586 is not a delta baseline.
+Addon400-image mAP50 **0.9785** is within-family only; combined2,400-image/38-class
+**0.8790** is supplementary, not a gate pass. homeIndicator, unknown and webContent
+remain unavailable, and28 classes lack withheld-family support. Secondary buttons,
+page controls, list rows and image views still fail the per-class floor; toggle
+regresses. Next independent iOS assignment: source-label/geometry review and
+independent coverage specification, then a separately approved measured experiment.
+No training, export, promotion or capture was started; TTR/Photos is not a dependency.
+Software verification:23 focused Python tests, offline Swift build and123 Swift tests pass.
 
 **2026-09-23 iOS r6 Run 009 baseline completed (no shipped model change):**
 [Handoff](../reports/work/IOS-R6-BASELINE-20260923/handoff.md) establishes the replacement-corpus
@@ -62,14 +79,19 @@ abstentions. This supports exploring temporal proposals, not replacing focus
 verification. Native oracle boxes, source-related development images and constructed
 transitions are not live navigation or unseen-interface qualification. No new model.
 
-**2026-09-23 independent-evaluation preparation:**
+**2026-09-26 independent-evaluation preparation:**
 [APPEAR-EVAL-RESERVE handoff](../reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
 Actual assembly now binds the native-retention reference:221 candidate pairs and9
 retention pairs, unchanged sampling/membership, zero cross-partition conflicts.
-Twenty required source slots are specified but none is source-bound; ten role/stratum
-coverage gaps remain. Runtime coordinator and Fixture respond; missing untouched
-groups and actual Photos buttons are the dependency. One consolidated TTR request
-published/read back. No capture, frozen evaluation, training or model improvement.
+TTR's source-backed response now supplies four independently authored surface-v1 groups.
+Freeze: `cinema_rows`/`album_grid` for appearance validation and
+`memory_mosaic`/`icon_shelf` for final challenge, all seed 7. The installed tvOS 26.5
+Simulator has no Photos app. NUIAK nevertheless retains one historical physical-TTR
+Photos screen at `dataset/tvos_captures/office_photos_focused_shared.png`; it is
+development-only because its sidecar has `elements: []`, it has no paired native focus
+labels, and it is absent from the FocusRing training manifests. Capture authority,
+transfer, consumer intake and evaluation freeze remain separate gates. No new capture,
+training or model improvement is claimed.
 
 **2026-09-23 integrated appearance evaluation:** [handoff](../reports/work/APPEAR-FAMILY-EVAL-20260923/handoff.md).
 Pinned cda0a32 source resolves consumer drift; all9 new pairs/18 crops qualify for
@@ -420,7 +442,7 @@ not the previously resolved native-reference focus failure. No new training or p
 
 | Item | Why |
 |---|---|
-| 41-class iOS YOLO11m | Run 009 withheld-template holdout mAP@0.5 = **0.586** (DS-G8 ≥ 0.850). In-family val 0.991. |
+| 41-class iOS YOLO11m | Run013 r6 withheld-family diagnostic mAP50 **0.6322** vs same-input Run009 **0.5549**,13 supported classes; DS-G8 ≥0.850 remains unmet. Historical original-corpus Run009 **0.586** is non-comparable. No41-class promotion. |
 | FocusRing v1.0 | Need ≥6,000 pairs and non-vacuous `light`/`highContrast` hard-neg (FOCUS-DET-05). |
 | macOS detector | Phase 6c not started. |
 | Unified iOS+tvOS model | Phase 6b-U not started. Keep separate models until every gate passes. |

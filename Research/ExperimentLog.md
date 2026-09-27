@@ -1189,10 +1189,14 @@ more epochs on existing members. Evidence `../reports/work/FOCUS-VISUAL-03/hando
 
 ---
 
-## Run 013 — Phase 6a iOS YOLO11m 41-Class Addon Generalization Training (Started 2026-09-24)
+## Run 013 — Phase 6a iOS YOLO11m 41-Class Addon Training (2026-09-24–27)
 
 **Trigger:**
-Run 009 achieved holdout test mAP@0.5 = 0.586 (58.6%), but 28 of the 41 classes were completely absent in the test split due to generator family limitations (the 8 holdout families only contained 13 classes). The other 28 classes had 0 test instances, preventing holdout evaluation of those classes. To achieve true 41-class generalization and coverage across all splits:
+Run 009 achieved historical original-corpus holdout test mAP@0.5 = 0.586 (58.6%),
+but only13 of41 classes had test support. The replacement r6 baseline is0.5549
+using the retained custom AP workflow; these different corpora have no numerical
+delta. Run013 added coverage through the following within-family addon experiment,
+not a completed41-class withheld-family generalization qualification:
 1. Implemented and verified 4 new generator template families in `GeneratorRunner`:
    - `ModalDialogueFlowTemplate`: `alert`, `actionSheet`, `sheet`, `popover`, `contextMenu`, `cancelAction`, `destructiveButton` (+ buttons/labels)
    - `SystemNavigationShellTemplate`: `tabBar`, `toolbar`, `sidebar`, `statusBar`, `dynamicIsland`, `searchField` (+ navigationBar/labels)
@@ -1203,7 +1207,10 @@ Run 009 achieved holdout test mAP@0.5 = 0.586 (58.6%), but 28 of the 41 classes 
 4. Class presence:
    - Train: 40/41 classes present (only `webContent` milestone exception absent).
    - Val: 35/41 classes present.
-   - Test: 38/41 classes present (all 28 previously missing classes now evaluated on novel holdout images).
+   - Test: 38/41 classes present (25 additional classes; homeIndicator, unknown,
+     webContent absent). The400 addon test images share their four families with
+     training and validation; only the2,000 original r6 members are withheld-family
+     diagnostics. New image bytes alone do not establish family independence.
 
 **Configuration:**
 - Architecture: YOLO11m (`weights/yolo11m.pt`)
@@ -1221,4 +1228,40 @@ Run 009 achieved holdout test mAP@0.5 = 0.586 (58.6%), but 28 of the 41 classes 
 **Dry-run Status:**
 - Completed 2 epochs on 5% sample (`phase6a_r010_dryrun`, exit 0). Verified label caching (2800 val, 14540 train), MPS execution, OHEM callbacks, loss calculation across 35 present classes in validation.
 
-**Status:** IN_PROGRESS (Launched PID 7325 with caffeinate on Apple Silicon MPS; logging to `NativeUITrainer/training_6a13.log`).
+**Training status:** COMPLETE. Launched PID7325 with caffeinate on Apple Silicon
+MPS; `NativeUITrainer/training_6a13.log` records106 epochs in62.818hours and
+patience15 early stopping, best epoch91. No training was restarted by IOS-R013-EVAL.
+Epoch91 CSV validation: precision0.85058, recall0.88031, mAP50=0.88025,
+mAP50:95=0.85031. These validation values are not independent holdout scores.
+Frozen best.pt SHA-256:
+`88c3cffb51b0b29dd71672fb64f6e60be56757e6de507886ef2f5c2ff86dd9b7`.
+Evaluation evidence: [IOS-R013-EVAL](../reports/work/IOS-R013-EVAL/verification.md).
+
+**2026-09-27 evaluation complete, review-ready:**
+[Handoff](../reports/work/IOS-R013-EVAL/handoff.md),
+[metrics](../reports/work/IOS-R013-EVAL/metrics.md),
+[ranked failures/next work](../reports/work/IOS-R013-EVAL/error_analysis.md).
+Preparation audited all19,740 pairs in219.9s, zero integrity errors or decoded
+duplicates/cross-split pixel reuse. Frozen explicit-manifest MPS inference completed
+all2,400 cases with zero failures, preserving640 letterbox/confidence0.001/NMS0.7/max300.
+Export including manifest validation128.24s (prediction loop114.2s); whole infer/reuse
+stage140.7s. Retained Run009 predictions passed exact2,000-member input/settings/map/
+checkpoint accounting and were reused, then both models were rescored in30.1s with
+the same custom all-point interpolated AP implementation (not official COCO AP).
+
+| Population | Images/classes | mAP50 | mAP70 | mAP90 | mAP50–95 |
+| --- | --- | --- | --- | --- | --- |
+| Run009 same-input withheld baseline | 2,000/13 | 0.5549 | 0.4310 | 0.2302 | 0.3982 |
+| Run013 withheld | 2,000/13 | 0.6322 | 0.5834 | 0.5299 | 0.5707 |
+| Run013 addon, within-family diagnostic | 400/33 | 0.9785 | 0.9697 | 0.9696 | 0.9703 |
+| Run013 combined, supplementary only | 2,400/38 | 0.8790 | 0.8551 | 0.8375 | 0.8527 |
+
+Per-class support/AP/P/R and per-family comparisons are retained in the report.
+**Diagnosis/action:** improved localization and several classes, but withheld mean
+is below0.85; secondaryButton0, pageControl0.0012, listRow0.0721 and imageView0.1936
+remain below0.65. Toggle AP50 regresses5.54percentage points. Addon scrollIndicator
+AP50=0.29 and AP70=AP90=0 identify a thin-box weakness despite near-perfect addon mean.
+Keep candidate unshipped; next propose label-role/geometry review and independent
+41-class coverage, not another unmeasured training run. DS-G8 remains open; no
+threshold change, retraining, export, device capture or promotion. Software checks:
+23 focused Python tests, offline Swift build and14 XCTest+109 Swift Testing tests pass.

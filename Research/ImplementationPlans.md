@@ -9,7 +9,7 @@ groups untouched source reservations, missing-coverage acquisition/intake, evalu
 freeze and one candidate preparation. [Reservation requirements](../reports/work/APPEAR-EVAL-RESERVE-20260923/reservation-plan.md)
 are not admitted evaluation membership. Training requires separate approval.
 
-**Revision:** 6, 2026-09-23. Complete remaining-backlog catalog. Existing contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
+**Revision:** 7, 2026-09-24. Adds measured training-efficiency contracts under [ADR-0011](ADR-0011-Measured-Training-Efficiency.md). Existing contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
 
 ## Supplemental packet index
 
@@ -21,6 +21,9 @@ paragraphs below are context; current dispatch and ownership are in Tasks.md.
 
 | Packet | Contract |
 |---|---|
+| TRAIN-EFF-A | [Effective-configuration audit and offline tooling](Plans/TrainingEfficiency.md#train-eff-a) |
+| TRAIN-EFF-B | [Isolated throughput and stage-cost benchmark](Plans/TrainingEfficiency.md#train-eff-b) |
+| TRAIN-EFF-C | [Adoption and bounded learning comparison](Plans/TrainingEfficiency.md#train-eff-c) |
 | APPEAR-A | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-a--source-capability-audit-and-bounded-ground-truth-pilot) |
 | APPEAR-A1 | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-a1-integrated-software-tranche-assigned-2026-09-23) |
 | APPEAR-B | [Implementation and acceptance](Plans/FocusAppearanceAcquisition.md#appear-b--freeze-independent-challenge-and-one-future-experiment-proposal) |

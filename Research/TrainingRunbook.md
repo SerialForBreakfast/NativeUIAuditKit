@@ -12,6 +12,17 @@ Its successful report deliberately remains `launchEligible: false`; P5-B binds e
 real corpora. A fresh 41-class candidate uses 150 epochs, cosine scheduling, seed 42,
 warmup and full-frame augmentation. Do not use `--dry-run` as preflight: it trains.
 
+## Current efficiency policy
+
+Follow [ADR-0011](ADR-0011-Measured-Training-Efficiency.md) and the
+[TRAIN-EFF contracts](Plans/TrainingEfficiency.md): audit requested versus effective
+settings before tuning, preserve the active job, benchmark only with an approved
+exclusive compute window, and separate throughput gains from quality evidence.
+Saved workers/AMP/mosaic settings can be overridden by installed Ultralytics behavior.
+Initialization, resume and learning-policy changes require explicit experiment identity;
+no automatic restart or benchmark follows from a slow ETA. MPS allocation is not
+utilization, and early epochs do not establish a convergence date.
+
 This file is the **historical Create ML (Runs 001–005) procedure**. Keep it for BP-25 / disk-full diagnosis. Do not follow it to train a shippable detector.
 
 Last updated: 2026-09-18 (banner); body last written 2026-05-25.

@@ -40,3 +40,19 @@ the original request ID and added concrete response fields plus an explicit
 unsupported option. YAML safe parse and exact timestamp/request/state readback
 passed; peer acknowledgment remains absent. See resume-review.md. No producer
 file edits, artifact transfer, runtime inputs or capture authority expansion.
+
+Coordination update 2026-09-26T03:09:46Z: re-verified the SMB mount and read the
+producer snapshot updated 2026-09-25T17:30:00Z plus response
+`tvtestrig-20260924T161500Z-evaluation-source-reservations`. The earlier source-reservation
+blocker is resolved. NUIAK freezes `cinema_rows` and `album_grid` as appearance-validation
+groups and `memory_mosaic` and `icon_shelf` as final-challenge groups, all seed 7.
+The Photos-button stratum is explicitly unsupported in the installed Simulator and is
+not replaced by synthetic detail-action pairs. A historical physical-TTR Photos frame
+does exist locally at `dataset/tvos_captures/office_photos_focused_shared.png`, but its
+sidecar has no elements and it is not a training-manifest member, so it does not close
+the native-label or paired-focus gap. This publication requests no capture or
+training; TTR must obtain separate bounded capture authorization, then deliver receipts
+for NUIAK intake. NUIAK-owned packet `APPEAR-EVAL-RESERVE-20260923` was published to
+`/Volumes/SharedStatusFile/nuiak/status.yaml` at 2026-09-26T03:10:28Z; safe YAML parse,
+targeted-entry readback, and preservation of the worker-owned `phase6a-r013` packet
+passed. Peer acknowledgment of this freeze is not yet observed.

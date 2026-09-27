@@ -41,6 +41,7 @@ from prediction_artifact import (  # noqa: E402
     ensure_new_output,
     load_request,
     make_result,
+    sha256_file,
     write_artifact,
 )
 
@@ -456,9 +457,13 @@ def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: s
 
     from ultralytics import YOLO
 
+    checkpoint_hash = sha256_file(resolved_checkpoint)
     model = YOLO(str(resolved_checkpoint))
+    if [model.names[i] for i in range(len(model.names))] != names:
+        raise PredictionArtifactError("checkpoint category order does not match frozen taxonomy")
     records = []
-    for image in request.images:
+    started = time.perf_counter()
+    for index, image in enumerate(request.images, 1):
         try:
             kwargs = dict(
                 source=str(image.image_path),
@@ -487,6 +492,10 @@ def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: s
             records.append(make_result(image, len(names), detections=detections))
         except Exception as exc:
             records.append(make_result(image, len(names), failure={"code": "inference_failed", "message": str(exc)}))
+        if index % 100 == 0 or index == len(request.images):
+            print(f"Prediction export {index}/{len(request.images)} ({time.perf_counter() - started:.1f}s)", flush=True)
+    if sha256_file(resolved_checkpoint) != checkpoint_hash:
+        raise PredictionArtifactError("checkpoint changed during prediction export")
     artifact = build_artifact(
         request=request,
         checkpoint=resolved_checkpoint,

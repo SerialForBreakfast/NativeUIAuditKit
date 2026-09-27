@@ -27,7 +27,7 @@ valid_until: "{valid_until}"
 work:
   packet: phase6a-r013
   state: working
-  summary: "Addon templates generated (2,800 pairs); combined corpus ios-41class-r7-combined (19,740 pairs: 14,540 train / 2,800 val / 2,400 test) assembled and exported; Run 013 (YOLO11m 41-class) actively training on Apple Silicon MPS (PID 7325)."
+  summary: "Run 013 (YOLO11m 41-class) actively training on Apple Silicon MPS (PID 7325); completed 6/150 epochs. Val mAP@0.5 reached 0.5431 (+367% over epoch 1), precision 0.6360, recall 0.4493. Epoch 7 currently running."
   next: "Monitor Run 013 training epochs to completion; evaluate on 41-class holdout test set (38 classes present)."
 
 blockers:
@@ -48,15 +48,21 @@ acknowledgments:
     observed_at: "{updated_at}"
     message: "Catalog archive notification noted (57,485,106 bytes). Separate receipt-based intake requires explicit user task dispatch per transfer size limit."
   - request_id: "tvtestrig-20260922T213023Z-visual-provider-contract"
-    state: received
+    state: acknowledged
     observed_at: "{updated_at}"
-    message: "FOCUS-RECEIPT-01 implemented and 123 offline tests pass; adoption by TTR is noted as separate and non-blocking."
+    message: "TVTestRig confirmed adoption of NUIAK FOCUS-RECEIPT-01 at 9ce483f in TTR-LOCAL-VERIFICATION-20260924."
 
 diagnostics:
   source_revision: "f77dedc"
   working_tree_dirty: false
   training_run: "phase6a_r013"
   training_pid: 7325
+  completed_epochs: 6
+  current_epoch: 7
+  val_mAP50: 0.5431
+  val_mAP50_95: 0.4327
+  precision: 0.6360
+  recall: 0.4493
   dataset: "NativeUITrainer/yolo_dataset_41class_r7"
   dataset_pairs: 19740
   train_pairs: 14540
@@ -64,7 +70,7 @@ diagnostics:
   test_pairs: 2400
   present_classes_train: "40/41"
   present_classes_test: "38/41"
-  last_check: "2026-09-24: Addon templates integrated, dry-run passed, full 150-epoch training launched on Apple Silicon MPS."
+  last_check: "2026-09-24 15:50 local: Epoch 6 complete (val mAP@0.5 = 0.5431). Epoch 7 actively training on MPS."
   evidence: "NativeUITrainer/training_6a13.log"
   evidence_path_scope: "Relative to the NativeUIAuditKit checkout on nuiak-dev; artifacts are not copied to this share."
 
@@ -74,12 +80,12 @@ packets:
     updated_at: "{updated_at}"
     valid_until: "{valid_until}"
     state: working
-    summary: "Addon templates generated (2,800 pairs); combined corpus ios-41class-r7-combined (19,740 pairs) exported; Run 013 actively training on MPS (PID 7325)."
+    summary: "Completed 6/150 epochs at ~37 min/epoch. Val mAP@0.5 progressed: 0.1163 -> 0.1911 -> 0.2848 -> 0.3834 -> 0.4398 -> 0.5431. Precision 0.6360, Recall 0.4493. Epoch 7 currently running (batch 85/1818)."
     blockers: []
     pending_requests: []
     acknowledgments: []
-    evidence: ["NativeUITrainer/training_6a13.log", "Research/ExperimentLog.md"]
-    next: "Monitor training epochs, evaluate 41-class holdout test set"
+    evidence: ["NativeUITrainer/training_6a13.log", "NativeUITrainer/yolo_runs/phase6a_r013/results.csv", "Research/ExperimentLog.md"]
+    next: "Continue monitoring training progress; evaluate on holdout test set upon completion."
     outcomes:
       software_verified: passed
       data_eligible: passed

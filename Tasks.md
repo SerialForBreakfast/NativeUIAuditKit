@@ -1,6 +1,12 @@
 # NativeUIAuditKit — Tasks
 
-**Review-ready tranche (2026-09-23, NUIAK architect):** P1-B, P2-B, and P3-B
+**Latest review-ready tranche (2026-09-27):** IOS-R013-EVAL completed all2,400
+predictions and a compatible same-input Run009 comparison. Withheld-family custom
+mAP50 **0.5549→0.6322**, not a DS-G8 pass. Addon0.9785 and combined0.8790 are
+diagnostic/supplementary, not independent41-class qualification.
+[Handoff and next assignment](reports/work/IOS-R013-EVAL/handoff.md).
+
+**Prior review-ready tranche (2026-09-23, NUIAK architect):** P1-B, P2-B, and P3-B
 iOS r6 Run 009 replacement baseline completed. Evaluated all 2,000 replacement test
 members using Run 009 best.pt; 100% accounted for (0 failures). Supported 13 classes
 mAP@0.50 = 0.5549, mAP@0.50:0.95 = 0.3982. 28 unsupported classes reported as
@@ -8,7 +14,9 @@ unavailable without imputing AP 0.0 (P2-METRICS). Verified prediction-artifact-v
 with reference_comparison, froze 250-member synthetic regression suite with zero
 leakage, and published actionable error analysis. [Handoff](reports/work/IOS-R6-BASELINE-20260923/handoff.md).
 tvOS APPEAR-EVAL-RESERVE candidate pool (221 pairs + 9 retention) remains frozen;
-evaluation source acquisition blocked pending peer delivery over SMB. DS-G8 remains open.
+TTR has now supplied a source-backed four-group reservation matrix. Roles/seeds are
+frozen for the next bounded capture request; capture authority, transfer, consumer
+intake and the Photos-button gap remain separate. DS-G8 remains open.
 
 Open work only. Finished phases: [`CompletedTasks.md`](CompletedTasks.md).  
 Current snapshot: [`Research/CurrentState.md`](Research/CurrentState.md).  
@@ -23,8 +31,40 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**IOS-R013-EVAL — review-ready (current NUIAK evaluation worker, 2026-09-27):**
+[Approved scope](Research/Plans/Run013Evaluation.md) is implemented and verified;
+[handoff](reports/work/IOS-R013-EVAL/handoff.md) maps every acceptance criterion.
+All19,740 r7 pairs audited,2,000 withheld +400 addon predictions complete, Run009
+artifact reused only after compatibility validation. DS-G8 remains open. Training
+finished106 epochs (best91); no new training, export, promotion or device work.
+
+**Next iOS proposal — IOS-COV follow-up, unassigned; requires maintainer assignment:**
+[Ranked failure/coverage contract](reports/work/IOS-R013-EVAL/error_analysis.md):
+source-label/geometry audit for secondaryButton/pageControl/listRow/imageView,
+toggle regression and thin scrollIndicator; independent family/class coverage and
+validation-gap specification; then a frozen measured experiment proposal. Do not
+launch training or new rendering/capture from this queue entry. TTR/Photos is not
+a dependency. Existing FocusRing product priority and other owners are unchanged.
+
+**Training-efficiency follow-up (2026-09-24; status refreshed2026-09-27):** preserve
+the completed Run013 artifacts and ownership. The audit → measurement → adoption
+contracts below remain separate; evaluation completion does not authorize new MPS
+benchmarks or training. FocusRing remains the product priority. Local iOS efficiency
+work requires no SMB update.
+
+| Packet | State / owner | Action and execution boundary |
+|---|---|---|
+| TRAIN-EFF-A | ready for assignment / unassigned | [Effective-configuration audit and integrated offline benchmark tooling](Research/Plans/TrainingEfficiency.md#train-eff-a). Read-only diagnosis and offline software can proceed without interrupting training; preserve active worker file ownership. |
+| TRAIN-EFF-B | blocked / unassigned | [Bounded throughput and stage-cost comparison](Research/Plans/TrainingEfficiency.md#train-eff-b). Requires A acceptance, explicit benchmark approval and an exclusive compute window; no automatic pause. |
+| TRAIN-EFF-C | blocked / unassigned | [Adoption safeguards and one learning comparison](Research/Plans/TrainingEfficiency.md#train-eff-c). Requires reviewed measurements, frozen quality limits and separate training authorization. |
+
+Next meaningful efficiency assignment: **TRAIN-EFF-A in full**, including caller
+integration, adversarial offline tests and a frozen executable B proposal—not just
+a settings recommendation. All three packets are planned, not implemented or model-qualified.
+
 **Queue audit2026-09-23:**103 packet IDs map to explicit contracts in the
-[revision6 catalog](Research/ImplementationPlans.md). Review means evidence needs
+[catalog](Research/ImplementationPlans.md) at that audit; the three TRAIN-EFF packets
+above are the September 24 addition. Review means evidence needs
 acceptance, not permission to repeat implementation. Historical run IDs and VIS-A/B/C
 work breakdowns are not additional assignments. Existing owners are preserved;
 rows without a named owner require assignment before implementation. Platform
@@ -116,24 +156,31 @@ contrasts remain uncovered. No training authority.
 [Handoff and verification](reports/work/DATA-STATE-01/handoff.md):6Python tests,
 14XCTest+96SwiftTesting pass;10writer outputs pass full local schema validation.
 
-**APPEAR-EVAL-RESERVE — blocked at source reservation; preparation review, NUIAK architect (2026-09-23):**
+**APPEAR-EVAL-RESERVE — source reservation resolved; capture-authority handoff ready, NUIAK architect (2026-09-26):**
 [Contract](Research/Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation).
 Independent evaluation acquisition and candidate preparation assigned together.
-Twenty required role/stratum slots are specified; none yet source-bound. Actual
-Photos buttons are not covered by photos_like artwork. Coordinator/Fixture responded in the recorded handoff;
-source-backed untouched groups, not another runtime rebuild, are the current dependency.
+TTR's source-backed response now binds four independently authored surface-v1 groups:
+`cinema_rows` and `album_grid` for appearance validation, `memory_mosaic` and
+`icon_shelf` for final challenge, all at seed 7. The installed tvOS 26.5 Simulator
+has no Photos route, but the repository does retain one historical physical-TTR Photos
+screen (`office_photos_focused_shared.png`) as development-only evidence. Its sidecar
+has no element labels and it is not a FocusRing training-manifest member; synthetic
+`detail_action` pairs must not be relabeled as Photos coverage.
 Candidate retention-reference binding revalidated through actual assembly:460 rows,
 221 candidate pairs+9 retention pairs, unchanged membership/sampling, zero leakage.
-Ten independent-evaluation role/stratum gaps remain; no capture/freeze/training.
+No capture or training is authorized by this status update. The next owner action is
+TTR's separate bounded-capture authorization/request, followed by NUIAK receipt,
+intake, and evaluation freeze; do not start another producer repair loop.
 [Integrated handoff](reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
-Shared request `nuiak-20260923T163800Z-evaluation-source-reservations` published/read back;
-peer acknowledgment remains unverified.
+Shared request `nuiak-20260923T163800Z-evaluation-source-reservations` was answered by
+TTR in `tvtestrig-20260924T161500Z-evaluation-source-reservations`; the role-freeze
+acknowledgment was published/read back at `2026-09-26T03:10:28Z`. Peer visibility of
+this new freeze remains unverified.
 
-Producer17:42:55Z now reports four representative styles captured:8 pairs/48 files;
-consumer intake remains separate. No untouched allocation or actual Photos-button
-route/labels supplied. [Resume review](reports/work/APPEAR-EVAL-RESERVE-20260923/resume-review.md)
-revalidates candidate/reference hashes and requests concrete source rows or an explicit
-unsupported response; no generic rebuild, recapture or training requested.
+Producer 2026-09-25T17:30Z reports the surface-v1 reservations and current Simulator
+scope; producer-local validation captures remain undelivered. [Resume review](reports/work/APPEAR-EVAL-RESERVE-20260923/resume-review.md)
+remains the evidence for the preserved candidate/reference hashes. No generic rebuild,
+recapture, or training request is implied.
 
 **APPEAR-C — delivered appearance intake review, NUIAK architect:** [latest handoff](reports/work/APPEAR-C/visual-intake/handoff.md).
 **New family archive received; independent evaluation blocked:** [admission audit](reports/work/APPEAR-FAMILY-HANDOFF-20260923/evaluation-readiness.md).
@@ -337,9 +384,10 @@ Do not put architecture notes, run logs, or IPC war stories in this file. Those 
 ## iOS platform tasks
 
 **Target:** replace the shipped five-class `nativeui-ios-v2.0` only after the
-41-class candidate passes all applicable gates. Historical Run 009 mAP50 is 0.586;
-DS-G8 requires ≥0.85. Replacement r6 pixels now exist; review and an explicit
-inference assignment remain required. Historical original pixels remain unavailable.
+41-class candidate passes all applicable gates. Run013's same-input replacement-r6
+withheld-family mAP50 is0.6322 vs Run0090.5549; only13 classes supported. DS-G8
+requires ≥0.85 and independent coverage. Historical original Run0090.586 remains
+non-comparable; original pixels remain unavailable. Latest evaluation is review-ready.
 
 Detailed dispatch scope: [iOS platform delivery plan](Research/Plans/iOSPlatform.md).
 These are substantial execution tranches over existing packets, not new task IDs:
@@ -352,10 +400,10 @@ These are substantial execution tranches over existing packets, not new task IDs
 | 41-class candidate readiness and execution | P5-B, TRAIN-S/F; 6a-10 | Frozen eligible inputs/configuration, then separately authorized smoke and full candidate | Planned mixed-data experiment needs qualified fixture corpus; Office remains released |
 | Qualification and release evidence | TRAIN-Q, REL-A/B; 6a-10/DIST-02 | Independent holdout gates, package evidence, then maintainer-only promotion/tag | No fresh capture if accepted evaluation corpora exist |
 
-**Next dispatch:** review the sealed r6 corpus, then separately authorize P1-B/P2-B/P3-B
-Run009 baseline on the complete2,000-image replacement test split. Report absent-class
-AP as unavailable. Offline software is already accepted; do not redispatch it wholesale.
-Independent backup and remaining class/visual-axis coverage remain separate work.
+**Next iOS dispatch proposal:** review IOS-R013-EVAL, then assign the IOS-COV
+failure/independent-coverage follow-up above. The Run009 baseline and Run013
+comparison are already complete; do not redispatch inference or the offline evaluator
+wholesale. Independent backup and other visual-axis coverage remain separate work.
 Workers do not self-accept earlier review-ready packets. This plan does not assign
 workers, start generation/inference/training, or restore Office permission.
 
@@ -408,10 +456,11 @@ and coverage gaps; P5-B must bind eligible fixture and synthetic inputs before t
 
 **Requires:** a 6a-10 candidate, or continue using Run 009 weights as the baseline.
 
-**Actual baseline:** r6's complete2,000-image test split is available for review.
-Use the [r6 baseline contract](Research/Plans/EvaluationAndTraining.md#r6-baseline-tranche).
-Verify checkpoint, data-use scope and inference approval; preserve0.586 as historical,
-non-comparable evidence. No new inference has run.
+**Actual baseline/comparison:** r6's complete2,000-image Run009 baseline is retained
+and compatible with the original-member subset of r7. IOS-R013-EVAL now compares
+Run013 best epoch91 on those exact cases, with separate400-image addon diagnostics.
+See [handoff](reports/work/IOS-R013-EVAL/handoff.md); preserve0.586 as historical,
+non-comparable evidence. Broader real-device/multi-corpus qualification remains open.
 
 - [x] `scripts/eval_reference_metrics.py` + `reports/pytorch_reference_metrics.json` (SHA-256 `226755b88642d1a68a0f9c3cad4b685d6d874352d48090b910c6b406ea61e405`)
 - [x] Honest `available: false` for the three corpora that do not exist yet
@@ -419,6 +468,7 @@ non-comparable evidence. No new inference has run.
 - [x] Per-image predicted boxes / scores / class IDs from baseline evaluation (prediction-artifact-v1 with 2,000 accounted images)
 - [x] P1-B/P2-B: publish complete iOS Run 009 baseline artifacts with corpus/checkpoint/settings hashes; reconstructed pixels establish a new baseline, not reproduction of 0.586
 - [x] P3-B: freeze 200–300 diagnostic cases where coverage supports it, with explicit gaps; retain the complete holdout for DS-G8 (250 members frozen via regression_selector)
+- [x] IOS-R013-EVAL: full r7 prediction accounting, separated populations, compatible same-metric Run009 deltas, class/family error and coverage report; DS-G8 remains open
 - [ ] Populate `real_device_fixture_holdouts`, `production_tvos_system_holdout` when those image+box sets exist (`frozen_regression_suite` now populated)
 
 ---

@@ -77,6 +77,7 @@ def _decode_image(path: Path, image_id: str) -> tuple[int, int]:
         with Image.open(path) as image:
             image.verify()
         with Image.open(path) as image:
+            image.load()
             width, height = image.size
     except Exception as exc:  # Pillow exceptions differ by version/decoder.
         raise PredictionArtifactError(f"{image_id}: image cannot be decoded ({exc})") from exc
@@ -145,6 +146,11 @@ def load_request(manifest_path: Path, class_count: int) -> PredictionRequest:
         label_path = _relative_member(root, entry.get("labelPath"), "labelPath", image_id)
         width, height = _decode_image(image_path, image_id)
         _validate_label(label_path, image_id, class_count)
+        image_hash = sha256_file(image_path)
+        label_hash = sha256_file(label_path)
+        for key, actual in (("imageSHA256", image_hash), ("labelSHA256", label_hash)):
+            if key in entry and entry[key] != actual:
+                raise PredictionArtifactError(f"{image_id}: frozen {key} mismatch")
         resolved.append(
             ResolvedImage(
                 image_id=image_id,
@@ -152,8 +158,8 @@ def load_request(manifest_path: Path, class_count: int) -> PredictionRequest:
                 label_path=label_path,
                 width=width,
                 height=height,
-                image_sha256=sha256_file(image_path),
-                label_sha256=sha256_file(label_path),
+                image_sha256=image_hash,
+                label_sha256=label_hash,
             )
         )
     content = [

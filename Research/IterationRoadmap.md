@@ -1,12 +1,22 @@
 # Concurrent delivery roadmap
 
-Revision 4, 2026-09-23. Dependencies and dispatch guidance only; [Tasks.md](../Tasks.md)
+Revision 5, 2026-09-24. Dependencies and dispatch guidance only; [Tasks.md](../Tasks.md)
 is the sole state/ownership queue. [ImplementationPlans.md](ImplementationPlans.md)
 maps every packet to its canonical contract. This revision supersedes contradictory
 Office-first, blanket simulator-pause and already-accepted-software dispatch language
 in earlier roadmap revisions. It grants no new operation authority.
 
 ## Highest priority: usable FocusRing
+
+**September 24 efficiency lane:** Run 013 is recorded as executing; preserve its
+owner and artifacts. [TRAIN-EFF-A → B → C](Plans/TrainingEfficiency.md) provides an
+independent effective-settings audit, isolated performance measurement, then an
+authorized learning/adoption comparison. A's offline work is dispatchable without
+waiting for TTR or interrupting training. B waits for an exclusive compute window
+and approval; C retains separate training approval. No concurrent MPS inference or
+profiling. This does not demote FocusRing, reopen accepted baseline work or impose
+a new gate on unrelated software. [ADR-0011](ADR-0011-Measured-Training-Efficiency.md)
+supersedes historical unmeasured speedup assumptions; it does not change active settings.
 
 **Current dispatch precedence (2026-09-23 audit):** the substantial tranches at the
 top of [Tasks](../Tasks.md#worker-packet-queue) supersede older next-action paragraphs
@@ -29,10 +39,12 @@ preflight, then separately authorized Run009 inference. Visible class support is
 
 The grouped follow-up is now assigned as
 [APPEAR-EVAL-RESERVE](Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation).
-Resolve source-backed untouched groups and actual Photos-button coverage before
-capture; the existing seed7 siblings are development-only. Source reservation is
-the current dependency, not another app rebuild. Bind the existing native retention
-reference while waiting; do not weaken evaluation admission or launch training.
+Source reservation is now resolved: TTR supplied four untouched surface-v1 groups and
+NUIAK froze their roles/seeds on 2026-09-26. The next gate is separately authorized
+capture, receipt transfer and consumer intake. The installed tvOS 26.5 Simulator still
+cannot provide an actual Photos route; one historical physical-TTR Photos frame is
+development-only, so physical Photos acquisition remains a separate authority-gated
+option. Do not weaken evaluation admission or launch training.
 
 Latest [integrated family evidence](../reports/work/APPEAR-FAMILY-EVAL-20260923/handoff.md)
 shows0/9 unique base-frame decisions for all three tested models. Consumer compatibility

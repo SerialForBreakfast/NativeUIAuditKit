@@ -653,6 +653,15 @@ Full images are also included alongside strips (for alert and toggle coverage, w
 
 **Why:** Phase 6a's gate is mAP on a withheld-template test. Measuring on the generator test split repeats Run 006's in-distribution number and does not answer the gate.
 
+**Run013 correction (2026-09-27):** r7 appends four addon families with500/100/100
+train/validation/test members each. Calling their400 novel images "holdout"
+mistook new image identity for withheld-family independence. Preserve these useful
+within-family diagnostics, but report them separately from the2,000 original
+withheld-family members. A combined38-supported-class average cannot certify
+41-class generalization;25 added supported classes are not28. Freeze and test the
+population union/disjointness and report missing support as unavailable. Repeatedly
+used r6 tests also remain diagnostic, not a freshly untouched release challenge.
+
 ---
 
 ### BP-28: Drop generator labels that are not in the frozen 41-class taxonomy

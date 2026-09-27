@@ -1,5 +1,17 @@
 # ADR-0006: Training Iteration Efficiency on Apple Silicon (MPS)
 
+> **2026-09-24 amendment:** [ADR-0011](ADR-0011-Measured-Training-Efficiency.md)
+> supersedes this document's unmeasured optimization claims for future decisions.
+> Installed Ultralytics 8.4.124 forces MPS workers to zero and disables AMP through
+> its AMP check; saved configuration alone does not establish either behavior.
+> `rect=True` suppresses mosaic in the inspected dataset path. Low allocated memory
+> is not proof of GPU underutilization. The speedup percentages below are historical
+> estimates, not measured guarantees. `save_period=-1` does not eliminate last/best
+> serialization; a post-save `last.prev.pt` mirror does not guarantee previous-generation
+> recovery. Do not treat cache, batch or architecture claims below as universal rules.
+> Preserve single-owner MPS use, input integrity and existing checkpoints. No active
+> run changes, application shutdowns or system operations are authorized by this amendment.
+
 - **Status:** Approved for Run 009+ (Run 008 baseline preserved)
 - **Date:** 2026-08-29
 - **Deciders:** NativeUIAuditKit Architecture & ML Engineering
