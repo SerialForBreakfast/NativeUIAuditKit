@@ -1,5 +1,14 @@
 # NativeUIAuditKit — Tasks
 
+**Highest next priority (maintainer, 2026-09-27): tvOS focus.** The
+[received-data intake → validation baseline → candidate proposal tranche](Research/Plans/FocusAppearanceAcquisition.md#next-tranche--received-data-intake-and-validation-baseline-2026-09-27)
+is review-ready under existing APPEAR-EVAL-RESERVE ownership (NUIAK architect).
+[September27 handoff](reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md):96 pairs
+accepted for diagnostics, all3,744 validation predictions complete, candidate rebuilt
+and actual trainer preflight completed. No training is authorized. Next: source-backed
+independent admission and genuine Photos coverage; these still block full qualification
+and candidate launch, not the completed local comparison.
+
 **Latest review-ready tranche (2026-09-27):** IOS-R013-EVAL completed all2,400
 predictions and a compatible same-input Run009 comparison. Withheld-family custom
 mAP50 **0.5549→0.6322**, not a DS-G8 pass. Addon0.9785 and combined0.8790 are
@@ -14,9 +23,9 @@ unavailable without imputing AP 0.0 (P2-METRICS). Verified prediction-artifact-v
 with reference_comparison, froze 250-member synthetic regression suite with zero
 leakage, and published actionable error analysis. [Handoff](reports/work/IOS-R6-BASELINE-20260923/handoff.md).
 tvOS APPEAR-EVAL-RESERVE candidate pool (221 pairs + 9 retention) remains frozen;
-TTR has now supplied a source-backed four-group reservation matrix. Roles/seeds are
-frozen for the next bounded capture request; capture authority, transfer, consumer
-intake and the Photos-button gap remain separate. DS-G8 remains open.
+TTR's four frozen evaluation archives are now downloaded, hash/size verified and
+diagnostically evaluated in the September27 focus handoff above. Independent source
+admission, Photos-button coverage and DS-G8 remain open; no recapture or size reapproval.
 
 Open work only. Finished phases: [`CompletedTasks.md`](CompletedTasks.md).  
 Current snapshot: [`Research/CurrentState.md`](Research/CurrentState.md).  
@@ -30,6 +39,15 @@ The packet queue below is the only execution-state/ownership list. Platform sect
 group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
+
+**TTR-STATUS-20260927 — review: receipt complete (current TTR coordination worker):**
+All four approved archives (696,220,140bytes) and manifest copied into new gitignored
+`dataset/tvos_captures/frozen-surface-receipt-20260927/`; exact local sizes/hashes pass.
+Bounded archive/provenance-role preflight passes;43.68GB remains free. Immutable
+receiver receipt published/read back, owned status reconciled, other owners preserved.
+[Receipt and verification](reports/work/TTR-STATUS-20260927/receipt.md). Next: consumer
+crop/label/independence intake preserving frozen roles; no recapture or repeat size
+approval. No extraction, training, inference or sender cleanup was performed.
 
 **IOS-R013-EVAL — review-ready (current NUIAK evaluation worker, 2026-09-27):**
 [Approved scope](Research/Plans/Run013Evaluation.md) is implemented and verified;
@@ -72,15 +90,16 @@ checklists summarize parent acceptance and do not override packet state.
 
 **Next substantial dispatches (not new execution authority):**
 
-1. **FocusRing first — APPEAR-EVAL-RESERVE + TTR-DIALOG-01 intake:** reconcile
-   preserved source reservations and delivered artifacts; qualify genuinely untouched
-   appearance groups and actual Photos buttons, freeze evaluation, and finish one
-   candidate proposal. Unknown/undelivered groups remain gaps. New transfer, capture,
-   inference and training each retain their assigned scope; no same-data retraining.
-2. **Independent iOS — IOS-COV + P1-B/P2-B/P3-B:** review r6 data-use/coverage,
-   prepare checkpoint/export preflight and deterministic diagnostic membership;
-   after separate inference approval, deliver the full replacement baseline and
-   compatible reference/suite together. No TTR dependency.
+1. **FocusRing highest priority — APPEAR-EVAL-RESERVE:** local September27 tranche
+   is review-ready. [Next assignment](reports/work/APPEAR-EVAL-RESERVE-20260927/next-assignment.md)
+   resolves exact producer source ancestry and Photos coverage before any candidate
+   launch. Protect final challenge; do not repeat the completed diagnostic comparison
+   or request another transfer. No model replacement is recommended.
+   No new training, capture, export or promotion is included.
+2. **Independent iOS — IOS-COV follow-up:** Run013 evaluation and the same-input
+   Run009 comparison are already delivered. Use their ranked source-label/geometry
+   and independent-coverage findings for the next proposal; do not repeat the r6
+   baseline or prioritize it over tvOS focus. No TTR dependency.
 3. **Offline compatibility — TTR-PROVIDER-01 + review FOCUS-RECEIPT-01:** validate
    migration examples, old/new receipt semantics and exact peer package requirements;
    live adoption remains a TTR-owned assignment. Do not infer model reliability.
@@ -156,10 +175,12 @@ contrasts remain uncovered. No training authority.
 [Handoff and verification](reports/work/DATA-STATE-01/handoff.md):6Python tests,
 14XCTest+96SwiftTesting pass;10writer outputs pass full local schema validation.
 
-**APPEAR-EVAL-RESERVE — source reservation resolved; capture-authority handoff ready, NUIAK architect (2026-09-26):**
+**APPEAR-EVAL-RESERVE — local tranche review-ready; independent qualification blocked, NUIAK architect (updated2026-09-27):**
 [Contract](Research/Plans/FocusAppearanceAcquisition.md#appear-eval-reserve--reservation-acquisition-and-candidate-preparation).
+[Approved highest-priority next tranche](Research/Plans/FocusAppearanceAcquisition.md#next-tranche--received-data-intake-and-validation-baseline-2026-09-27).
 Independent evaluation acquisition and candidate preparation assigned together.
-TTR's source-backed response now binds four independently authored surface-v1 groups:
+TTR's response reports four independently authored surface-v1 groups; independent
+ancestry remains unverified (reported revision absent locally):
 `cinema_rows` and `album_grid` for appearance validation, `memory_mosaic` and
 `icon_shelf` for final challenge, all at seed 7. The installed tvOS 26.5 Simulator
 has no Photos route, but the repository does retain one historical physical-TTR Photos
@@ -168,19 +189,33 @@ has no element labels and it is not a FocusRing training-manifest member; synthe
 `detail_action` pairs must not be relabeled as Photos coverage.
 Candidate retention-reference binding revalidated through actual assembly:460 rows,
 221 candidate pairs+9 retention pairs, unchanged membership/sampling, zero leakage.
-No capture or training is authorized by this status update. The next owner action is
-TTR's separate bounded-capture authorization/request, followed by NUIAK receipt,
-intake, and evaluation freeze; do not start another producer repair loop.
-[Integrated handoff](reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
+The maintainer confirmed transfer approval; NUIAK downloaded and hash/size-verified
+the four24-row surface exports and published an immutable receiver receipt. Archive
+path/type/count/size preflight and embedded provenance role/job/seed checks pass.
+All96 rows now pass native-label/geometry intake and production crop QA. Three embedded
+training split defaults are preserved and bound to prospective frozen roles in diagnostic
+records; no independent reservation-v2 admission is asserted until source review resolves
+lineage. All3,744 validation predictions complete; unique correct selections are0/48
+shipped,1/48 FDR-007 and1/48 FDR-008. Final challenge remains unscored. Real assembly
+passes after460/460 exact crop runtime replay; real trainer preflight has valid
+configuration but rejects launch with10 independent-coverage blockers and missing
+approval.105 Python tests and offline Swift build/123 tests pass. No model replacement,
+training, export or promotion. [Current handoff](reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md).
+[Prior integrated handoff](reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
 Shared request `nuiak-20260923T163800Z-evaluation-source-reservations` was answered by
 TTR in `tvtestrig-20260924T161500Z-evaluation-source-reservations`; the role-freeze
-acknowledgment was published/read back at `2026-09-26T03:10:28Z`. Peer visibility of
-this new freeze remains unverified.
+acknowledgment was published/read back at `2026-09-26T03:10:28Z`. Peer acknowledgment
+of that freeze is now observed in its completed role-freeze request.
 
-Producer 2026-09-25T17:30Z reports the surface-v1 reservations and current Simulator
-scope; producer-local validation captures remain undelivered. [Resume review](reports/work/APPEAR-EVAL-RESERVE-20260923/resume-review.md)
-remains the evidence for the preserved candidate/reference hashes. No generic rebuild,
-recapture, or training request is implied.
+Producer2026-09-27T02:42Z publishes request
+`tvtestrig-20260927-frozen-surface-captures`; local copy receipt is now complete,
+and consumer diagnostic intake is complete; independent admission remains separate.
+[Current receipt](reports/work/TTR-STATUS-20260927/receipt.md).
+[Resume review](reports/work/APPEAR-EVAL-RESERVE-20260923/resume-review.md) remains
+the evidence for preserved candidate/reference hashes. No generic rebuild,
+recapture, or training request is implied. FR-A's capability response says alignment
+emission/VoiceOver focus observation is not implemented; do not block appearance-only
+intake on that separate semantic lane.
 
 **APPEAR-C — delivered appearance intake review, NUIAK architect:** [latest handoff](reports/work/APPEAR-C/visual-intake/handoff.md).
 **New family archive received; independent evaluation blocked:** [admission audit](reports/work/APPEAR-FAMILY-HANDOFF-20260923/evaluation-readiness.md).

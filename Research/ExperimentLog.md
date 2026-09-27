@@ -2,9 +2,39 @@
 
 Chronological record of every training run and major technical decision in Phase 6. Written so that any future agent or engineer can reconstruct what was tried, why, and what the outcome was — without reading the full conversation history.
 
-Last updated: 2026-08-23
+Last updated: 2026-09-27
 
 ---
+
+## 2026-09-27 FocusRing frozen-surface evaluation — no training run
+
+[Full metrics and errors](../reports/work/APPEAR-EVAL-RESERVE-20260927/metrics.md).
+Received96 native-labeled pairs pass strict intake and production cropping. Evaluated
+only cinema_rows/album_grid:48 pairs and48 complete24-control frames,1,248 predictions
+per model,3,744 total, zero failures. At fixed0.85, unique correct/wrong/no/multiple:
+shipped0/0/0/48; FDR-0071/22/0/25; FDR-0081/22/24/1. Paired TP/FN/FP/TN:
+shipped38/10/44/4;0072/46/14/34;0082/46/1/47. No replacement recommended.
+FDR-008 reduces competition FP299→23 versus007 but gains no recall/unique selection;
+94.01% competition crop accuracy is below95.83% always-negative accuracy.
+
+Native boxes isolate classification, not YOLO localization. All inputs are dark;
+Photos buttons remain absent. Zero exact overlap against3,789 prior images or across
+reserved roles does not prove source independence: exact producer source/ancestry
+review is unavailable. The48 final-challenge pairs remain unscored; no validation
+member enters training. Host CoreML CPU and PyTorch CPU are not an export-parity test.
+
+Runtime drift initially blocked the retained candidate assembly. All460 candidate/
+retention crops replayed pixel-identically under current production code; an explicit
+input-bound runtime proof now reconstructs the same221+9pairs, sampling and selection
+through the existing CLI. Historical manifests/checkpoints remain unchanged. Missing
+independent coverage and separate training approval remain binding: actual assembly
+exit0; actual trainer preflight exit2, configurationValid=true, launchEligible=false,
+10 independent-coverage blockers plus missing_experiment_approval. No new experiment
+ID, training, checkpoint, export, promotion or capture was created.
+
+Next: source-backed admission of the four reserved groups and genuine Photos coverage,
+then review the retained single source-balanced candidate proposal. Do not repeat
+same-data training or tune thresholds on these diagnostics.
 
 ## How to Read This Log
 

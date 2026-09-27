@@ -17,6 +17,7 @@ FAMILY_MAP = {
     "hero_carousel": "heroCarousel", "heroCarousel": "heroCarousel",
     "focus_maze": "focusMaze", "focusMaze": "focusMaze",
     "kitchen_sink": "kitchenSink", "kitchenSink": "kitchenSink",
+    "surface_template": "surfaceTemplate",
 }
 THEME_MAP = {"light": "light", "dark": "dark", "high_contrast": "highContrast", "highContrast": "highContrast"}
 SPLIT_MAP = {"training": "train", "calibration": "validation", "held-out": "test"}

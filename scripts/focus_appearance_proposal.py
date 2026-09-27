@@ -9,6 +9,7 @@ import time
 from focus_dataset_contract import ROOT, FocusDataError, digest, image, pixel_digest, local
 from focus_mixed_assembly import checked, reference, stratum
 from focus_runtime import identity
+from focus_runtime_replay import matches as runtime_matches
 from direct_tvos_capture import validate_capture, new_output
 from direct_focus_manifest import validate_direct_manifest
 
@@ -82,7 +83,7 @@ def audit(previous, appearance, protocol_path, output=None):
     require(old['protocolSHA256']==digest({k:v for k,v in old.items() if k!='protocolSHA256'}),'changed_previous_protocol')
     require(protocol['protocolSHA256']==digest({k:v for k,v in protocol.items() if k!='protocolSHA256'}),'changed_comparison_protocol')
     require(reference(previous)==protocol['trainingReference'] and reference(appearance)==protocol['manifest'],'changed_input_references')
-    require(new['runtimeCrop']==old['samples'][0]['runtime']==identity(),'changed_crop_runtime')
+    require(new['runtimeCrop']==old['samples'][0]['runtime'] and runtime_matches(new['runtimeCrop'], identity()),'changed_crop_runtime')
     for ref in protocol['models'].values(): checked(ref); refs[ref['path']]=ref
     root=ROOT/new['sourceRoot']; capture=load(root/'direct-capture.json')
     validate_capture(capture,root); validate_direct_manifest(new,root)

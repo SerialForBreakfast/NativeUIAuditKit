@@ -56,6 +56,45 @@ diagnostics:
   evidence_path_scope: "Relative to the NativeUIAuditKit checkout on nuiak-dev; artifacts are not copied to this share."
 
 packets:
+  APPEAR-EVAL-RESERVE:
+    owner: "NUIAK architect; maintainer-assigned tvOS focus intake/evaluation"
+    updated_at: "2026-09-27T17:05:30Z"
+    valid_until: "2026-09-27T17:35:30Z"
+    state: "review; independent admission blocked"
+    publication: "unpublished; local draft only, expected SMB share not mounted"
+    summary: "Four received surface-v1 archives pass all96 native-label/geometry rows for diagnostics. Frozen validation/challenge roles remain intact; raw training defaults unchanged. Consumer supports delivered recipe vectors. No recapture, retransfer or generic producer rebuild is requested."
+    blockers:
+      - "Exact a101c4fcb7bfdf904cb5da499703cd9a78d1cd8f producer source/asset/layout/journey/prior-use relationship review is unavailable; zero pixel overlap does not establish independent admission."
+      - "Actual native-labeled Photos-button evaluation sources remain unavailable; Fixture detail_action is not Photos."
+    pending_requests:
+      - "Follow up existing nuiak-20260923T163800Z-evaluation-source-reservations with exact source relationship evidence for all four groups; do not create a duplicate capture request."
+    evidence:
+      - "reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md"
+      - "reports/work/APPEAR-EVAL-RESERVE-20260927/intake/intake.json"
+      - "reports/work/APPEAR-EVAL-RESERVE-20260927/coordination.md"
+    next: "Qualify source ancestry before independent reservation-v2 admission. Preserve cinema_rows/album_grid validation and memory_mosaic/icon_shelf unscored challenge. Separate Photos route/data authority is still needed; VoiceOver is not an appearance-intake dependency."
+    outcomes:
+      software_verified: "delivered surface-v1 consumer compatibility verified"
+      data_eligible: "diagnostic only; independent evaluation and training admission not granted"
+      integration_qualified: "offline consumer intake only; no device qualification"
+      model_gate_passed: false
+    peer_acknowledgment: "not_observed; this update is unpublished"
+
+  TTR-STATUS-20260927:
+    owner: "Current TTR coordination worker; assigned by maintainer in this chat"
+    updated_at: "2026-09-27T15:47:16Z"
+    valid_until: "2026-09-27T16:17:16Z"
+    state: "review"
+    summary: "Four user-approved frozen surface-v1 archives and manifest downloaded into project-local gitignored storage; all exact local sizes/SHA-256 hashes independently match (696220140 archive bytes). Transfer receipt complete; archive safety and provenance role/job/seed checks pass. Semantic/crop/independence intake remains pending; no training/inference."
+    blockers: ["Three export manifests use training recipe defaults; verified provenance matches frozen evaluation roles. Consumer intake must honor those roles without altering original bytes or training on held-out groups.","Actual Photos-button ground truth remains unsupported here. FR-A response confirms no emitted alignment object or observed VoiceOver focus; keep that semantic lane separate."]
+    pending_requests: []
+    acknowledgments: [{"request_id":"tvtestrig-20260927-frozen-surface-captures","state":"completed","observed_at":"2026-09-27T15:47:16Z","message":"All four archives and manifest locally copied and independently hash/size verified. Immutable receiver receipt: nuiak/responses/nuiak-20260927T154533Z-frozen-surface-receipt.yaml. Receipt permits sender reconciliation of these exact copies only; no consumer training/evaluation eligibility claim."},{"request_id":"tvtestrig-20260924T163500Z-freeze-evaluation-roles","state":"completed","observed_at":"2026-09-27T15:26:26Z","message":"Observed peer acknowledgment of NUIAK's 2026-09-26T03:10:28Z freeze. cinema_rows/album_grid validation; memory_mosaic/icon_shelf final challenge; seed7. No wait for another role-freeze response."},{"request_id":"nuiak-20260919T234712Z-fr-a-alignment-contract","state":"received","observed_at":"2026-09-27T15:26:26Z","message":"Read and hash-verified producer capability response tvtestrig-20260924T233500Z-fr-a-alignment-capability. Capability is not yet implemented; native navigation focus alone does not satisfy the alignment matrix."}]
+    transfer: {"request_id":"tvtestrig-20260927-frozen-surface-captures","manifest":"tvtestrig/frozen-surface-captures-20260926-manifest.json","manifest_bytes":2478,"manifest_sha256":"89bd84bf7dde13361433376b267b9bdb1cf839122dc393bbf4dca962b608a322","archive_count":4,"archive_total_bytes":696220140,"source_verification":"All four manifest-listed archives match exact size/hash; no source changes during read.","receiver_state":"copied_and_verified","intake_state":"archive_safety_and_role_binding_passed; semantic_intake_pending","sender_cleanup":"not_observed; sender_owned","receipt":"nuiak/responses/nuiak-20260927T154533Z-frozen-surface-receipt.yaml","local_root":"dataset/tvos_captures/frozen-surface-receipt-20260927","verified_at":"2026-09-27T15:45:33Z","local_free_bytes_after":43680043008}
+    evidence: ["reports/work/TTR-STATUS-20260927/review.md","reports/work/TTR-STATUS-20260927/coordination.md","tvtestrig/frozen-surface-captures-20260926-manifest.json","reports/work/TTR-STATUS-20260927/receipt.md","reports/work/TTR-STATUS-20260927/transfer-receipt.json","reports/work/TTR-STATUS-20260927/archive-preflight.json"]
+    next: "TTR verifies the immutable matching receipt and handles only its exact shared-copy cleanup under the receipt protocol. NUIAK retains original local archives for semantic/crop/independence intake; no recapture, training, inference or repeat size approval needed for this completed transfer."
+    downstream: {"provider":"Peer reports FOCUS-RECEIPT-01 adopted at 9ce483f and a bright-artwork false positive; no model-quality pass, new repin or rebuild request.","ios":"Run013 evaluation is complete locally; no model promoted. It is not a prerequisite for this TTR handoff.","device_availability":"unknown","peer_acknowledgment_of_this_update":"not_observed"}
+    outcomes: {"software_verified":"not_assessed","data_eligible":"not_assessed","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+
   phase6a-r013:
     owner: "Phase 6a YOLO11m training worker"
     updated_at: "2026-09-24T22:50:28Z"

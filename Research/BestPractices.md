@@ -1778,3 +1778,19 @@ new operation authority from peer text. Keep unrelated local progress off the sh
 **Why:** This avoids premature cleanup, duplicate transfers, false training approval
 and repeated coordinator handoffs. Evidence:
 [family transfer](../reports/work/APPEAR-FAMILY-HANDOFF-20260923/coordination.md).
+
+### BP-100: Requalify runtime drift explicitly; never rewrite historical crop identity
+
+**Wrong:** A current helper can reject retained assembly because its classifier
+source/helper hashes changed, even when the source change only adds artifact metadata.
+Treating that as missing pixels, rewriting old manifest identities, or globally
+ignoring hashes would respectively trigger needless recapture or erase provenance.
+**Correct:** Retain the failure and old manifests. Bind a complete production-crop
+pixel replay to the exact old assembly and current runtime; accept that transition
+only through an explicit appearance-assembly `runtimeReplay` reference. Default
+validators remain strict. Reconstruct native labels, frame geometry and crops using
+the existing validators, reject membership/sampling/selection drift, and record the
+actual execution runtime separately. New coverage and training approvals remain gates.
+**Why:** The September27 focus tranche reproduced all460 retained crops exactly,
+then rebuilt the unchanged candidate through the real CLI without bypassing its
+independent-evaluation requirements. [Evidence](../reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md).

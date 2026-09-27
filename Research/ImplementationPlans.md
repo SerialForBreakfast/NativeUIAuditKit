@@ -8,6 +8,11 @@ interruptions and end-to-end detector geometry remain separate TEMP-LIVE work.
 groups untouched source reservations, missing-coverage acquisition/intake, evaluation
 freeze and one candidate preparation. [Reservation requirements](../reports/work/APPEAR-EVAL-RESERVE-20260923/reservation-plan.md)
 are not admitted evaluation membership. Training requires separate approval.
+[September27 received-data tranche](Plans/FocusAppearanceAcquisition.md#next-tranche--received-data-intake-and-validation-baseline-2026-09-27)
+specifies the approved local intake, validation-only comparison and candidate
+preparation. [September27 findings](../reports/work/APPEAR-EVAL-RESERVE-20260927/metrics.md)
+recommend no model replacement; final challenge stays unscored. Current
+priority/ownership is in Tasks.md.
 
 **Revision:** 7, 2026-09-24. Adds measured training-efficiency contracts under [ADR-0011](ADR-0011-Measured-Training-Efficiency.md). Existing contracts remain valid except explicit amendments. State/ownership lives only in [Tasks.md](../Tasks.md); dependencies in [IterationRoadmap.md](IterationRoadmap.md). Plans are not execution authority or evidence that work ran.
 

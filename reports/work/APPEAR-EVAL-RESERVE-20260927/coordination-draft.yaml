@@ -1,0 +1,10 @@
+schema_version: 1
+publication: unpublished
+reason: "Expected SharedStatusFile SMB mount is absent; no reconnect requested or attempted."
+destination: "smb://sillycon.local/SharedStatusFile/nuiak/status.yaml"
+packet: APPEAR-EVAL-RESERVE
+local_entry: "reports/coordination/nuiak/status.yaml:packets.APPEAR-EVAL-RESERVE"
+prepared_at: "2026-09-27T17:05:30Z"
+valid_until: "2026-09-27T17:35:30Z"
+readback: "local only; no shared publication or peer acknowledgment"
+resume: "Verify reconnected mount, re-read shared status, merge only owned packet with fresh evidence/timestamps, validate and read back. Never upload the entire local status snapshot."

@@ -158,7 +158,8 @@ def validate_manifest(document, dataset):
     from focus_runtime import RUNTIME_PREPROCESSING, identity, rendered_items
     if document.get("preprocessing") != (RUNTIME_PREPROCESSING if runtime else PREPROCESSING):
         raise FocusDataError("crop_parity_mismatch")
-    if runtime and document.get("runtimeCrop") != identity():
+    from focus_runtime_replay import matches as runtime_matches
+    if runtime and not runtime_matches(document.get("runtimeCrop"), identity()):
         raise FocusDataError("runtime_crop_implementation_changed")
     if document.get("evidenceKind") not in {"test-only", "reviewed-fixture"}:
         raise FocusDataError("missing_evidence_kind")

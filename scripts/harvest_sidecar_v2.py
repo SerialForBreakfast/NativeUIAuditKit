@@ -68,6 +68,27 @@ def dialog_style_digest_source(recipe):
     return ":dialog-style@1:" + ":".join(style[k] for k in ("size", "shape", "palette", "content"))
 
 
+def surface_digest_source(recipe):
+    """Closed surface-v1 extension, verified against four received producer vectors.
+
+    Recipe compatibility does not attest renderer independence or assign a split.
+    """
+    surface = recipe.get("surface")
+    if surface is None:
+        require(recipe.get("archetype") != "surface_template", "surface_missing")
+        return ""
+    require(isinstance(surface, dict) and {"version", "template"} <= set(surface)
+            and set(surface) <= {"version", "template", "family_id"}, "surface_fields")
+    require(type(surface["version"]) is int and surface["version"] == 1, "surface_version")
+    template = surface["template"]
+    require(isinstance(template, str) and template in
+            {"cinema_rows", "album_grid", "memory_mosaic", "icon_shelf"}, "surface_template")
+    require(recipe.get("archetype") == "surface_template" and recipe.get("appearance") is None
+            and recipe.get("dialog_style") is None, "surface_archetype")
+    require(surface.get("family_id") in (None, "surface-v1." + template), "surface_family")
+    return ":surface@1:" + template
+
+
 def recipe_hash(recipe):
     require(isinstance(recipe, dict), "recipe_missing")
     require(recipe.get("schema_version") == 1 and type(recipe.get("schema_version")) is int,
@@ -92,7 +113,7 @@ def recipe_hash(recipe):
     canonical = ":".join(str(recipe[k]) for k in
                          ("schema_version", "archetype", "element_count", "theme", "density", "seed", "step_index"))
     return hashlib.sha256((canonical + ":" + canonical_pack + appearance_digest_source(recipe)
-                           + dialog_style_digest_source(recipe)).encode()).hexdigest()
+                           + dialog_style_digest_source(recipe) + surface_digest_source(recipe)).encode()).hexdigest()
 
 
 def scene_check(scene, size, expected):

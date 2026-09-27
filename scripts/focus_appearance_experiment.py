@@ -125,6 +125,19 @@ def selection_check(selection, rows, warm):
 
 
 def assemble(spec):
+    from focus_runtime_replay import replay_scope
+    from focus_runtime import identity
+    with replay_scope(spec) as previous:
+        doc = _assemble(spec)
+        if previous is not None:
+            for key in ("samples", "sampling", "selection", "warmCheckpoint", "counts", "lineage", "configuration"):
+                require(doc[key] == previous[key], "replay_reconstruction_drift")
+            doc["executionRuntime"] = identity()
+            doc["protocolSHA256"] = digest({k: v for k, v in doc.items() if k != "protocolSHA256"})
+        return doc
+
+
+def _assemble(spec):
     require(isinstance(spec,dict) and spec.get("version") == INPUT_VERSION, "unsupported_appearance_input")
     saved, protected, visual = reconstruct(spec)
     warm = saved["initializationProposal"]; a.checked(warm)

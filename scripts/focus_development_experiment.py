@@ -9,6 +9,7 @@ from PIL import Image
 import focus_mixed_assembly as assembly
 from focus_dataset_contract import ROOT, FocusDataError, digest, local, image, text
 from focus_runtime import identity, invoke, RUNTIME_PREPROCESSING
+from focus_runtime_replay import matches as runtime_matches
 from direct_tvos_resume import audit_chain
 from direct_focus_manifest import pairs_from_capture
 
@@ -41,7 +42,7 @@ def retained_rows(review_ref, disposition_ref):
     require(decisions.get("reviewSHA256") == review["reviewSHA256"]
             and decisions.get("reviewFileSHA256") == review_ref["sha256"]
             and decisions.get("trainingEligible") is False, "unbound_dispositions")
-    require(review.get("trainingEligible") is False and review.get("runtime") == identity()
+    require(review.get("trainingEligible") is False and runtime_matches(review.get("runtime"), identity())
             and review.get("preprocessing") == RUNTIME_PREPROCESSING, "changed_crop_runtime")
     sources = [assembly.checked({k:s[k] for k in ("path","sha256")}) for s in review["sources"]]
     entries, _, count = audit_chain(sources)
@@ -110,7 +111,7 @@ def retained_rows(review_ref, disposition_ref):
             index += 1
     require(reconstructed==set(saved), "retained_membership_mismatch")
     require(decisions["counts"]==dict(Counter(p["disposition"] for p in decisions["pairs"])), "disposition_count_mismatch")
-    require(review["runtime"]==identity(), "changed_crop_runtime")
+    require(runtime_matches(review["runtime"], identity()), "changed_crop_runtime")
     # Recheck source chain after rendering; no publishing or capture operation occurs.
     audit_chain(sources)
     return rows

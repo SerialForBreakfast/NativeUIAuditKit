@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-27 (Run013 evaluation complete; no shipped model change)
+**As of:** 2026-09-27 (tvOS focus diagnostic comparison and Run013 evaluation complete; no shipped model change)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,21 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+**2026-09-27 highest-priority tvOS focus intake/evaluation:**
+[Metrics and next decision](../reports/work/APPEAR-EVAL-RESERVE-20260927/metrics.md).
+All96 transferred pairs pass strict native-label/crop intake. On48 validation frames
+with all24 candidates, shipped FocusRing yields0 uniquely correct; FDR-007 and008
+each1. FDR-008 reduces false positives but misses46/48 focused targets. No replacement
+is recommended. All3,744 predictions are accounted for;48 final-challenge pairs remain
+unscored. Exact pixels are disjoint from3,789 prior images, but independent renderer/
+journey qualification remains blocked on source review; genuine Photos buttons and
+non-dark support are absent. The retained221+9 candidate assembly is rebuilt with
+explicit runtime requalification after460/460 crops matched exactly. Actual trainer
+preflight confirms valid configuration but blocks launch on10 independent-coverage
+requirements and missing separate approval.105 Python and123 Swift tests pass.
+[Review-ready handoff](../reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md). No training,
+export, promotion or device work. [Next assignment](../reports/work/APPEAR-EVAL-RESERVE-20260927/next-assignment.md).
 
 **2026-09-27 Run013 evaluated; DS-G8 remains open (no shipped model change):**
 [Review-ready handoff](../reports/work/IOS-R013-EVAL/handoff.md). Training completed
@@ -79,7 +94,21 @@ abstentions. This supports exploring temporal proposals, not replacing focus
 verification. Native oracle boxes, source-related development images and constructed
 transitions are not live navigation or unseen-interface qualification. No new model.
 
-**2026-09-26 independent-evaluation preparation:**
+**2026-09-27 earlier TTR receipt (consumer diagnostics completed above):**
+[Highest-priority next tranche: tvOS focus intake, validation baseline and candidate
+proposal](Plans/FocusAppearanceAcquisition.md#next-tranche--received-data-intake-and-validation-baseline-2026-09-27)
+was subsequently approved and executed for local diagnostics; independent qualification remains open.
+[Completed receipt](../reports/work/TTR-STATUS-20260927/receipt.md). Four frozen seed7
+surface-v1 archives (696,220,140bytes) and manifest are retained in the new gitignored
+`dataset/tvos_captures/frozen-surface-receipt-20260927/`, with exact local hashes/sizes
+verified.43.68GB remains free. Immutable shared receiver receipt and status readback
+pass. Archive safety and embedded group/role/job/seed/freeze bindings pass;24 rows
+per group. No extraction, inference or training. Next is crop/label/independence
+intake, not recapture or another transfer approval. Preserve the frozen evaluation
+roles despite three embedded `training` defaults. Photos and VoiceOver alignment
+remain separate gaps; sender cleanup/acknowledgment is not yet observed.
+
+**2026-09-26 independent-evaluation preparation (handoff advanced above):**
 [APPEAR-EVAL-RESERVE handoff](../reports/work/APPEAR-EVAL-RESERVE-20260923/handoff.md).
 Actual assembly now binds the native-retention reference:221 candidate pairs and9
 retention pairs, unchanged sampling/membership, zero cross-partition conflicts.

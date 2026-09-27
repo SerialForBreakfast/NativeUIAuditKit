@@ -10,6 +10,7 @@ from pathlib import Path
 from focus_dataset_contract import (ROOT, FocusDataError, digest, local, member, image,
                                     pixel_digest, text, validate_manifest)
 from focus_runtime import identity, invoke, RUNTIME_PREPROCESSING
+from focus_runtime_replay import matches as runtime_matches
 
 VERSION = "focus-mixed-assembly-v1"
 PARTITIONS = {"train", "validation", "test", "development"}
@@ -51,7 +52,7 @@ def native_pairs(doc, manifest):
     content = dict(doc); expected = content.pop("manifestSHA256", None)
     if (digest(content) != expected or doc.get("completion") != "completed"
             or doc.get("sourceKind") != "tvos_simulator_os" or doc.get("partition") != "development"
-            or doc.get("preprocessing") != RUNTIME_PREPROCESSING or doc.get("runtime") != identity()):
+            or doc.get("preprocessing") != RUNTIME_PREPROCESSING or not runtime_matches(doc.get("runtime"), identity())):
         raise FocusDataError("unsupported_or_changed_native_manifest")
     source = local(ROOT/doc["sourceRoot"])
     # read_journey uses manifest.json too; its inventory must be hash-bound.

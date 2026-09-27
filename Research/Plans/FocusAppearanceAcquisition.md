@@ -37,7 +37,173 @@ Owner: NUIAK architect. Queue/ownership remains in Tasks.md under OS-FOCUS-04.
 Evidence: [FDR-008 appearance diagnosis](../../reports/work/FOCUS-VISUAL-03/handoff.md).
 This plan grants no capture, producer-edit or training authority.
 
+## Next tranche — received-data intake and validation baseline (2026-09-27)
+
+**Approved for implementation 2026-09-27; highest next priority per maintainer.** This is the next
+end-to-end slice of APPEAR-EVAL-RESERVE, not a new packet or permission to repeat
+completed acquisition. Ownership and execution state remain in Tasks.md. Approval
+covers local intake, necessary additive consumer/evaluator fixes, validation-only
+inference with existing models, verification, and one candidate proposal. It does
+not authorize training, final-challenge scoring, new capture/device operations,
+producer edits, export, promotion, threshold tuning or git writes.
+
+**Outcome:** determine what the received data can independently establish about
+tvOS focus, compare shipped/FDR-007/FDR-008 on identical admitted validation inputs,
+and deliver one evidence-backed next experiment or exact missing-data assignment.
+UI localization and focus classification remain separate claims. iOS work is not a
+dependency and does not displace this tranche.
+
+### 1. Freeze and safely admit the received artifacts
+
+Use the [completed receipt](../../reports/work/TTR-STATUS-20260927/receipt.md)
+and existing archives in `dataset/tvos_captures/frozen-surface-receipt-20260927/`.
+No redownload or repeat size approval. Recheck free space before extraction and
+bound expanded/crop storage; use fresh project-local output directories without
+overwriting earlier evidence. Reports go under
+`reports/work/APPEAR-EVAL-RESERVE-20260927/`; extracted images/crops stay in a new
+gitignored project-local dataset directory.
+
+Reverify hashes, bounded safe archive membership, manifest and frozen-role bindings.
+Extract only validated payloads, accounting for AppleDouble metadata separately.
+Reconcile all 96 exported rows to accepted, rejected or blocked dispositions; derive
+actual frame/pair/crop counts rather than assuming 96 independent examples.
+Validate decoding, native focus callbacks, frame correlation, settled geometry,
+positive/negative labels and complete pairs through existing intake entrypoints.
+Corrupt/missing inputs prevent complete acceptance; retain partial diagnostic evidence
+without silently dropping members or replacing them.
+
+Three embedded export split fields say `training` despite frozen evaluation roles.
+Preserve their raw bytes. Resolve this through reviewed, source-and-membership-bound
+consumer normalization using reservation-v2; add only necessary adapter support and
+regression tests. Ambiguous or contradictory provenance remains quarantined, not
+silently relabeled. A concrete producer defect gets an exact file/field request.
+
+### 2. Produce production crops and prove partition independence
+
+Reuse FocusRing's production 16%-expanded, 256×256 crop path and existing batching
+limits, including decoded-pixel bounds. Do not introduce a parallel cropper.
+Review label/geometry quality and representative validation crops plus anomalies.
+Audit source, renderer, journey and connected-component lineage together with exact
+frame/crop pixel overlap against candidate training, native retention and protected
+historical evidence. Same seed, different names or distinct byte hashes alone do not
+prove independence. Unknown relationships remain diagnostic-only.
+
+Keep `cinema_rows` and `album_grid` appearance-validation; keep `memory_mosaic` and
+`icon_shelf` final-challenge. Challenge admission checks may verify integrity, labels
+and lineage, but must not produce model scores, guide tuning or hand-pick favorable
+members. Freeze complete membership and record challenge scoring as not performed.
+
+Report actual support for dense-dark-media, bright-unfocused-artwork,
+gray/blank-placeholder and dock-neighbor-focus; do not infer it from group names.
+Actual Photos buttons remain the fifth, missing stratum. Preserve the existing
+two-unrelated-components-per-stratum-per-role coverage requirement. A partial
+validation baseline is useful but is not full evaluation readiness.
+
+### 3. Compare the three existing focus models on validation only
+
+Freeze admitted validation membership, production preprocessing, threshold **0.85**,
+candidate-set construction, model hashes and runtime/backend before inference.
+Use the existing comparison workflow for shipped FocusRing, FDR-007 and FDR-008.
+Verify actual loaded artifact identity. Prefer a common compatible runtime; if
+artifacts require different backends, disclose this and do not call it parity.
+Account for every eligible member for every model, including errors and abstentions.
+If independence fails, label any retained comparison development-only and do not
+claim a newly independent baseline.
+
+Report per-stratum/control/theme support, positive recall, false-positive rate,
+confusion counts and backend-specific latency. The primary behavioral report is
+per-frame **unique correct / wrong / no focus / multiple focus**, with explicit
+candidate completeness and abstention rules. Frames without a complete candidate
+set cannot substantiate unique-selection accuracy. Include misses, bright-artwork
+false positives and representative regressions; low-support results remain qualified.
+Native/oracle-box results measure focus classification, not end-to-end YOLO detection.
+Reuse known Home/Photos diagnostics as separately labeled history, never independent
+validation. Do not expand this tranche into new tvOS detector training or temporal
+architecture work.
+
+### 4. Finish one candidate proposal and an honest readiness decision
+
+Build a new immutable assembly via existing assembly/trainer-preflight entrypoints,
+preserving the 221 candidate pairs, 9 native-retention pairs, origin roles and frozen
+reference. Held-out members never enter training weights or loaders. Reconcile
+sampling and isolation and retain actual CLI readiness evidence, not only a helper test.
+Missing Photos coverage or other independent inputs must keep launch readiness blocked;
+do not weaken the gate to make preflight green.
+
+Use the [existing single-candidate configuration](../../reports/work/APPEAR-EVAL-RESERVE-20260923/candidate-plan.md)
+as the proposal starting point: exact FDR-007 initialization, fresh optimizer,
+50/50 native–Fixture sampling, 30 epochs, batch 64, learning rate 0.0003, seed 42,
+1,800-second cap, no augmentation. Preserve fixed preprocessing/threshold and native
+retention floor; checkpoint selection is minimum equal-source validation BCE among
+eligible epochs, earliest tie, with no last-checkpoint fallback. These are proposed
+settings, not a launched run or a claim that they solve the observed failures.
+
+Rank next work from measured failures and unsupported coverage. End with one explicit
+recommendation: qualify the exact missing independent data before a separately
+approved candidate, or request a separately versioned narrower experiment with its
+limitations. Do not silently narrow the current contract. Reserve no run ID or
+approval record. Final challenge remains unscored until a future approved candidate
+and model-selection decisions are frozen.
+
+### 5. Verify and hand off the whole tranche
+
+Acceptance evidence must cover all-row accounting, production crop integration,
+role reconciliation, changed-source/membership rejection, split/lineage isolation,
+missing support, complete model accounting and preserved challenge isolation.
+Use focused real-entrypoint positive/negative tests. If code changes, run required
+offline `swift build` and `swift test` as well; unexecuted checks are not passes.
+
+Deliver frozen input/reservation/membership manifests, intake dispositions, crops,
+validation predictions and comparison/error reports, assembly/preflight evidence,
+and the one candidate/data proposal. Update CurrentState, Tasks and experiment
+evaluation notes without inventing a training run. Handoff records software, data,
+integration and model-gate outcomes separately; no gate is inferred from software
+success. Publish shared metadata only for a concrete change to TTR's next action.
+
+**Dependency discipline:** received-data intake does not wait on TTR cleanup/receipt
+acknowledgment, Photos acquisition, VoiceOver alignment or iOS DS-G8. Training waits
+on usable evaluation and separate approval; evaluation does not wait on a new model.
+Do not request recapture merely because consumer normalization is unfinished.
+Missing Photos blocks full coverage/launch eligibility, not local intake, supported
+validation comparison or the final proposal. These rules prevent an avoidable
+capture → training → evaluation → capture approval loop.
+
+**Completion:** the entire intake-to-decision tranche is reviewable, with all inputs
+accounted for and an exact next assignment, even if full qualification stays open.
+If inputs cannot support independent evaluation, deliver that finding and finish all
+unaffected work; never replace the acceptance criteria with a partial success claim.
+
 ## Decision
+
+### September 27 implementation decisions
+
+Use an additive surface-v1 intake/evaluation adapter. The existing visual comparator
+retains its visual-only/development/compression contract unchanged. Native bracket
+validation and production crops remain mandatory; no public Swift API changes.
+Consumer surface recipe hashing is checked against all four received producer vectors;
+matching vectors are compatibility evidence, not reviewed renderer independence.
+Raw recipe-bucket split labels remain immutable. Consumer frozen roles are bound to
+source inventory and exact row membership; reservation records must not assert
+previously-unused independent lineage before evidence establishes it.
+
+At execution start the exact producer revision a101c4f is absent from the local TTR
+object database and the SMB share is not mounted. Preserve these source-review gaps;
+complete local integrity/native-label checks and validation-only diagnostics without
+admitting unknown-lineage groups into the independent experiment assembly. Four
+same-seed groups alone cannot override existing leakage checks. Final challenge
+remains unscored even if independence cannot be qualified. Reconstruct the preserved
+candidate assembly and actual preflight with these blockers explicitly retained.
+
+Runtime requalification discovered during execution: the retained candidate chain
+pins older classifier/helper hashes. The source diff adds artifact-identity metadata,
+not a crop change. Replaying all retained candidate crops can support an explicit,
+hash-bound `runtimeReplay` input to appearance assembly, never a global identity
+override. Default validators stay exact-runtime. Within this scoped reconstruction,
+only the proof's exact old/runtime pair is accepted, every existing source/label/crop
+parity check still runs, and the newly assembled membership/sampling/selection must
+equal the retained source. Preserve all old files and record current execution
+runtime separately. Any pixel, membership, proof or runtime mismatch rejects; the
+proof supplies no source-independence, model-parity or launch approval.
 
 APPEAR-B's [offline audit/proposal](../../reports/work/APPEAR-B/handoff.md) is delivered:
 202 candidate training pairs,9 native retention-validation pairs and6 protected
