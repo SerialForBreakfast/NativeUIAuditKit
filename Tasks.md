@@ -40,6 +40,17 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**PHOTOS-PILOT-01 — preparation review-ready; live pilot blocked/pending, current NUIAK worker (2026-09-27):**
+[Approved supervised pilot](Research/Plans/PhotosFocusPilot.md) local CLI, hash-bound
+human review, production crop path and operator checklist implemented.96 Python
+tests plus offline Swift build/123 tests pass. [Handoff](reports/work/PHOTOS-PILOT-01/handoff.md).
+No running current-host TTR coordinator/standard install found; exact Office host/build,
+exclusive readiness and maintainer availability remain unresolved. SMB unmounted;
+owned status draft unpublished. Resume with actual running helper/target/session
+readiness and the maintainer driving Photos. No live capture, model comparison,
+training or gate changes; no producer repair is presumed necessary. Source
+independence remains separate. Full pilot is not complete.
+
 **TTR-STATUS-20260927 — review: receipt complete (current TTR coordination worker):**
 All four approved archives (696,220,140bytes) and manifest copied into new gitignored
 `dataset/tvos_captures/frozen-surface-receipt-20260927/`; exact local sizes/hashes pass.

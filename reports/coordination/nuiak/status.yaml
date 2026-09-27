@@ -56,6 +56,29 @@ diagnostics:
   evidence_path_scope: "Relative to the NativeUIAuditKit checkout on nuiak-dev; artifacts are not copied to this share."
 
 packets:
+  PHOTOS-PILOT-01:
+    owner: "Current NUIAK worker; maintainer-assigned supervised Photos pilot"
+    updated_at: "2026-09-27T17:27:35Z"
+    valid_until: "2026-09-27T17:57:35Z"
+    state: "preparation review; live pilot pending"
+    publication: "unpublished; local draft only, expected SMB share not mounted"
+    summary: "Consumer diagnostic PNG/observation import and human review are ready for a user-driven Office pilot. No device/capture/navigation or producer edit performed. Prediction-based focus is not label truth; native Photos support is not established."
+    blockers:
+      - "No running TTR coordinator or standard installed app found on current host; exact Office execution host/build/helper and exclusive target/capture readiness remain unknown."
+      - "Maintainer availability for the supervised session is not confirmed."
+    pending_requests: []
+    evidence:
+      - "reports/work/PHOTOS-PILOT-01/capabilities.md"
+      - "reports/work/PHOTOS-PILOT-01/operator-checklist.md"
+      - "reports/work/PHOTOS-PILOT-01/handoff.md"
+    next: "Identify the actual running Office TTR host/helper and agree a supervised window; qualify one two-pair capture/export/review smoke with the user driving. No producer repair, new telemetry or artifact transfer is implied."
+    outcomes:
+      software_verified: "passed; offline consumer adapter only"
+      data_eligible: "not_assessed; no genuine Photos frames received"
+      integration_qualified: "not_assessed; installed Office runtime unknown"
+      model_gate_passed: "not_assessed"
+    peer_acknowledgment: "not_observed; unpublished"
+
   APPEAR-EVAL-RESERVE:
     owner: "NUIAK architect; maintainer-assigned tvOS focus intake/evaluation"
     updated_at: "2026-09-27T17:05:30Z"

@@ -1,5 +1,10 @@
 # Full backlog implementation packet catalog
 
+[PHOTOS-PILOT-01](Plans/PhotosFocusPilot.md) prepares the supervised, user-driven
+Office Photos pilot and diagnostic human-review intake. No native label substitution,
+training admission, model inference or autonomous navigation; live readiness and
+maintainer availability remain separate from software verification.
+
 [TEMP-FOCUS-DEV](Plans/TemporalVisualVerificationSpike.md#assigned-development-precursor-temp-focus-dev-2026-09-23)
 is the retained-image temporal localization precursor; genuine ordered journeys,
 interruptions and end-to-end detector geometry remain separate TEMP-LIVE work.

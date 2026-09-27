@@ -1794,3 +1794,16 @@ actual execution runtime separately. New coverage and training approvals remain 
 **Why:** The September27 focus tranche reproduced all460 retained crops exactly,
 then rebuilt the unchanged candidate through the real CLI without bypassing its
 independent-evaluation requirements. [Evidence](../reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md).
+
+### BP-101: Namespace imported frame files separately from evidence metadata
+
+**Wrong:** Even a path-safe frame ID such as `index` or `session` can overwrite
+retained metadata when its observation JSON shares the same raw directory and
+suffix. A native sidecar suffix can also collide with another valid frame ID.
+**Correct:** Validate IDs and place each frame's PNG/observation/native evidence
+in its own directory under `raw/frames/<id>/`; keep capture-index/session metadata
+outside that namespace. Reject duplicate IDs and existing destinations, and test
+reserved-looking names through the actual importer.
+**Why:** Path-traversal rejection alone does not preserve original evidence.
+The Photos pilot review caught and corrected this collision before live intake;
+its regression verifies the original index bytes survive. [Evidence](../reports/work/PHOTOS-PILOT-01/handoff.md).

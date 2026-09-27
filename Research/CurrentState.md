@@ -11,6 +11,14 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**2026-09-27 supervised Photos pilot preparation:** PHOTOS-PILOT-01 local
+diagnostic import/human-review/production-crop workflow is implemented and tested;
+96 Python regressions, offline Swift build and123 Swift tests pass. No live Photos
+capture or model comparison ran. Current-host inspection found no running TTR
+coordinator or standard installed app, and SMB is disconnected. Exact Office runtime,
+exclusive readiness and maintainer availability remain pending. No native Photos
+or training qualification is claimed. [Handoff and session checklist](../reports/work/PHOTOS-PILOT-01/handoff.md).
+
 **2026-09-27 highest-priority tvOS focus intake/evaluation:**
 [Metrics and next decision](../reports/work/APPEAR-EVAL-RESERVE-20260927/metrics.md).
 All96 transferred pairs pass strict native-label/crop intake. On48 validation frames
