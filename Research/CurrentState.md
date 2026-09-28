@@ -11,6 +11,13 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**2026-09-28 local annotation/review plan recorded (not implemented):**
+[HUMAN-REVIEW-01–04](Plans/LocalHumanAnnotationReview.md) separate local tool setup
+and real edit round trip, defect auditing, TTR recorder integration and explicit
+human-label admission. Begin with8 retained images; do not wait for new capture.
+Install/service/storage authority and later admission policy remain separate gates.
+No shipped artifact, runtime installation or data eligibility changed by this plan.
+
 **2026-09-28 supervised collection exposed a P0 workflow gap:**8 local Office
 checkpoint frames and9 human TTR inputs retained, including both Photos Welcome
 focus states. Button logging works; automatic per-input image retention is not

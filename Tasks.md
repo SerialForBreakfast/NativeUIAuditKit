@@ -42,6 +42,19 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
+**Local human annotation/review — proposed tranches, unassigned (2026-09-28).**
+Maintainer requested this implementation plan, not installation/execution.
+[Canonical plan](Research/Plans/LocalHumanAnnotationReview.md). TTR recorder work
+and retained-data review are parallel; first useful outcome is an actual local
+edit/export/reimport on the8 retained images, not another schema-only deliverable.
+
+| Packet | State / owner | Assignment and prerequisite |
+| --- | --- | --- |
+| HUMAN-REVIEW-01 | proposed / unassigned | Full local FiftyOne/CVAT review round trip; setup/storage approval before dependency or service changes. Existing inline/mixed-screen importer incompatibility explicitly in scope. |
+| HUMAN-REVIEW-02 | proposed / unassigned | Defect validators, random/targeted queues and coverage feedback; depends on01 review contracts. |
+| HUMAN-REVIEW-03 | proposed / unassigned | Automatic TTR bundle integration; needs01 plus exact producer schema/sample, separate live readiness. Does not block01/02. |
+| HUMAN-REVIEW-04 | proposed / unassigned | Explicit human-label policy and gated dataset candidate/preflight; needs01/02 plus separate admission-policy approval. No training. |
+
 **FOCUS-HUMAN-OFFICE-01 — blocked on action-linked recorder (2026-09-28), current NUIAK
 TTR consumer worker:** maintainer assigned supervised focus capture using human
 TTR controls. Session finalized/lease released, user control connection preserved;

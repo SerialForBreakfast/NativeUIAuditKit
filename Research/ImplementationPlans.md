@@ -47,6 +47,10 @@ paragraphs below are context; current dispatch and ownership are in Tasks.md.
 
 | Packet | Contract |
 |---|---|
+| HUMAN-REVIEW-01 | [Local setup and real annotation round trip](Plans/LocalHumanAnnotationReview.md#human-review-01--local-setup-and-real-annotation-round-trip) |
+| HUMAN-REVIEW-02 | [Defect audit and review queues](Plans/LocalHumanAnnotationReview.md#human-review-02--audit-defects-and-prioritize-review) |
+| HUMAN-REVIEW-03 | [Automatic recorder-to-review integration](Plans/LocalHumanAnnotationReview.md#human-review-03--connect-the-automatic-recorder-to-review) |
+| HUMAN-REVIEW-04 | [Human-label admission and dataset candidate](Plans/LocalHumanAnnotationReview.md#human-review-04--explicit-human-label-admission-and-dataset-candidate) |
 | TRAIN-EFF-A | [Effective-configuration audit and offline tooling](Plans/TrainingEfficiency.md#train-eff-a) |
 | TRAIN-EFF-B | [Isolated throughput and stage-cost benchmark](Plans/TrainingEfficiency.md#train-eff-b) |
 | TRAIN-EFF-C | [Adoption and bounded learning comparison](Plans/TrainingEfficiency.md#train-eff-c) |

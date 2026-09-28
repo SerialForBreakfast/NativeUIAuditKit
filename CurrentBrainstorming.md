@@ -215,6 +215,23 @@ Future entries: `date | idea ID | maintainer decision/priority | canonical task/
 
 ## Conversation log
 
+### 2026-09-28 — Local Python annotation/review implementation plan
+
+- Maintainer requested tasks/tranches for the local human review lane. Produced
+  [four-tranche plan](Research/Plans/LocalHumanAnnotationReview.md), indexed in
+  Tasks.md and the implementation catalog; no installation/code execution assigned.
+- B-06 expands into HUMAN-REVIEW-01/02: existing FiftyOne/CVAT integration, real
+  edit/export/reimport on8 retained frames first, then defect audit/sampling queues.
+- HUMAN-REVIEW-03 binds the real automatic-recorder schema; this does not block
+  retained-frame review. HUMAN-REVIEW-04 separately approves human-label admission,
+  preserving diagnostic rejection and source-separation rules until that decision.
+- Identified real importer mismatch: inline exports report outputWritten=false and
+  include large base64 receipts; Photos-only review fields cannot represent Home
+  or Settings. Plan an explicit compatible adapter, not rewritten source metadata.
+- Local service/dependency setup and Docker storage exceptions require scoped
+  approval; no cloud uploads or new inference assumed. Recommended first assignment
+  is HUMAN-REVIEW-01 end to end, while TTR recorder work proceeds separately.
+
 ### 2026-09-28 — Supervised capture exposed missing per-input images
 
 - Maintainer explicitly rejected chat between presses. Stop checkpoint collection;
