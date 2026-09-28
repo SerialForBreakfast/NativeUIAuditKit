@@ -338,3 +338,20 @@ Future entries: `date | idea ID | maintainer decision/priority | canonical task/
 - Added Command-Left/Right navigation alongside A/D, retaining unsaved-edit prompts.
 - Verified navigation also works after jumping to a Finish review exception.
   Next remains operator completion and revision-bound crop QA, not new tooling scope.
+
+### 2026-09-28 — Human data ready for a role decision
+
+- Joe completed8 frames/113 controls and2 explicit Photos pairs. All113 production
+  crops verified;111 distinct crop pixels, no hard integrity/label conflicts.
+- Completed HR2 audit with frozen hashes, separate seeded/targeted queues, visual
+  crop sheets and a correction/revalidation path. Repeated states stay preserved.
+- Highest next decision: reserve this correlated batch for development regression,
+  not training, and approve the proposed human-label evaluation lane plus one fixed
+  shipped-vs-FDR-009 comparison. No scoring/training has been started.
+- Next collection should add matched Settings positives, broader Photos layouts
+  and additional focused Home tiles through the action-linked recorder. Quantities
+  are collection targets, not new qualification thresholds. Model failures will
+  refine priorities after the approved comparison.
+-8 positives vs105 negatives makes raw accuracy misleading; report recall, false
+  positives and paired outcomes. Complete-frame coverage/source independence remain
+  unqualified. [Decision proposal](Research/Plans/HumanFocusAdmissionDecision.md).

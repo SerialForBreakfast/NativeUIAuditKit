@@ -11,29 +11,24 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
-**2026-09-28 local annotation review software verified; human review pending:**
-HUMAN-REVIEW-01 now uses an isolated local Labelme editor, not Docker/CVAT/FiftyOne.
-All8 retained Office frames are hash/inline-receipt/timeline verified and visible;
-two Photos controls across004/005 have unconfirmed box/class/state proposals.
-Stock editor save/close/reopen and checkbox edits passed on a separate software-test
-copy;4/4 production crops passed.123 Python tests and123 offline Swift tests pass.
-Next is the maintainer's batch review and explicit immutable revision, not new
-capture. Human data admission stays separate, model gate unassessed.
-Follow-up adds a41-label visual reference and rectangle-only creation with R/E
-shortcuts; the operator saved/closed and the updated editor was launched at frame007.
-Cross-frame Select all/Copy/Paste now have explicit Edit-menu actions and platform
-shortcuts; isolated Qt tests verify deep copies, local IDs, fresh confirmation,
-conflict guards and save/reopen. Current operator annotations were not changed.
-Finish review now adds a whole-batch exception list, jump-to-frame and explicit
-bulk confirmation of ready frames, with ID allocation, hash rechecks, backups and
-an immutable diagnostic revision.136 Python tests, actual Qt confirmation/cancel/
-stale-preview tests and123 offline Swift tests pass. Read-only saved-batch preview:
-113 rectangles; frames004/005/006/008 ready (17 boxes), Home001/002/003/007 blocked
-on missing focus state for IDs6/9. No real bulk confirmation has been performed.
-Latest editor refinement adds current-image All frame flags on/off and Command
-Left/Right navigation (A/D retained), with unsaved Save/Cancel protection. Actual
-Qt tests verify flag isolation, mixed-state behavior, file-list/canvas shortcuts,
-boundary behavior and save/reopen; no new human annotations are made by these tests.
+**2026-09-28 actual human review and crop/audit tranche complete for review:**
+Joe explicitly completed8/8 Office frames and113/113 controls in Finish review;
+the immutable revision and saved annotations match. Both explicit Photos pairs
+are reviewed.113/113 production16%/256×256 crops pass, with111 distinct crop pixels.
+HR2 finds no hard integrity/label-conflict errors, two duplicate crop groups and
+four near-frame heuristic matches. All evidence retained.8 positives/105 negatives,
+three screen contexts, one device/session; appearance/source independence and
+complete-frame candidate coverage remain unknown. No model quality claim.
+
+The lightweight local Labelme workflow includes rectangles, copy/paste, local IDs,
+Finish review, current-frame flag toggle and Command-arrow navigation.145 Python
+tests and offline Swift build/123 tests pass. Static audit queues and all eight
+production crop sheets are available. No new capture, inference or training.
+Next human decision: approve the proposed development-evaluation lane and one
+fixed shipped-vs-FDR-009 comparison. Recommend reserving this whole correlated
+batch for regression, not training. Existing diagnostic admission flags unchanged.
+[HR2 handoff](../reports/work/HUMAN-REVIEW-02/handoff.md) ·
+[Approval proposal](Plans/HumanFocusAdmissionDecision.md).
 [Operator guide](../reports/work/HUMAN-REVIEW-01/OperatorGuide.md) ·
 [Evidence-backed handoff](../reports/work/HUMAN-REVIEW-01/handoff.md).
 
@@ -44,7 +39,8 @@ qualified (Right/Up/Select setup has no intermediate images). Maintainer rejecte
 chat-per-press collection. Session finalized, owned lease released, provider idle;
 user control connection preserved. Next integration requirement is an
 [action-linked demonstration recorder](Plans/TTRActionLinkedCapture.md), not another
-chat-paced run. Raw data retained, bounds/crop review and training admission pending.
+chat-paced run. Raw data retained; human bounds/crop review is now complete above,
+while training admission remains unapproved.
 
 **2026-09-28 Max-local Office capture passed:** after the maintainer approved
 permission prompts, a fresh connection succeeded in124ms and one1920×1080 PNG

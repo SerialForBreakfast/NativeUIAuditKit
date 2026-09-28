@@ -215,6 +215,26 @@ geometry, metadata edits, repeated import, unsupported version and interrupted e
 
 ## HUMAN-REVIEW-02 — audit defects and prioritize review
 
+2026-09-28 assigned continuation: complete HR1's actual human-revision crop QA and
+HR2 on the eight reviewed Office frames. Use the existing Labelme editor and a
+static numbered HTML audit/queue, not the superseded FiftyOne/CVAT stack. Freeze
+the Finish review receipt/revision, verify all snapshots against reviewed controls,
+render production crops only, and preserve every sample. Seeded sampling is
+stratified by declared screen (available context), not evidence of independent
+sources. Report exact pixel duplicates and a documented low-resolution similarity
+heuristic separately; never discard near-duplicates automatically. Compare original
+proposals with final bounds and flag unusual overlap/scale only as reviewer cues.
+No predictions/model inference, training or challenge inputs. Completeness remains
+unknown under v1 despite operator-described coverage; a separate reviewed coverage
+contract would be required for complete-frame selection accuracy. Reviewer time is
+unavailable; do not infer active review duration from file timestamps.
+
+Queues link existing image IDs to the existing editor's --frame entrypoint.
+Correction produces another immutable Finish revision; rerun the same audit to
+remove resolved issues. Generated fixtures must exercise this round trip and hard
+failures. The tranche ends with an exact collection assignment and proposed
+human-label admission policy, not a new admitted dataset or training run.
+
 1. **HR2.1 Deterministic validators.** Reuse existing integrity and crop checks;
    report missing media, hash mismatch, invalid boxes/classes, duplicate identity,
    contradictory labels, missing pair members and source/role leakage. Validate

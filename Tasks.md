@@ -42,34 +42,20 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
-**Local human annotation/review — Tranche1 assigned (2026-09-28).**
-Maintainer assigned HUMAN-REVIEW-01; current NUIAK review-tool worker owns it.
-[Canonical plan](Research/Plans/LocalHumanAnnotationReview.md). TTR recorder work
-and retained-data review are parallel; first useful outcome is an actual local
-edit/export/reimport on the8 retained images, not another schema-only deliverable.
-The requested visual taxonomy/bounds guide and rectangle-only launcher follow-up
-are implemented; human review and safe relaunch of the current window remain
-operator-owned. See [label guide](Research/HumanReviewLabelGuide.md).
-Cross-frame clipboard follow-up is verified: explicit Select all/Copy/Paste,
-stable local IDs, conflict rejection and fresh destination confirmation; after
-operator-confirmed save/close, the updated editor was launched at frame007.
-No programmatic annotation changes or human acceptance.
-Finish review follow-up is implemented and verified: exception navigation, explicit
-reviewer attestation, bulk flags/local IDs, stale-preview rejection, backups and
-immutable diagnostic revision. Actual Qt tests plus136 Python and123 Swift tests
-pass. Operator saved/closed and updated editor launched at frame001; next is resolving Home IDs6/9 and explicit
-GUI confirmation, not another per-box confirmation session or training admission.
-Current-image frame-flag toggle and Command-arrow navigation are implemented;
-operator saved/closed and the updated editor was reopened at frame001. Scope
-excludes automatic focus/box acceptance. Actual Qt tests and136 Python/123 Swift
-checks pass; see the handoff for evidence.
+**Local human annotation/review — execution complete for review (2026-09-28).**
+Current NUIAK review-tool worker completed the actual Joe review/crop path and
+assigned HR2 continuation.8 frames/113 controls explicitly reviewed;113 production
+crops/111 distinct crop pixels;2 reviewed Photos pairs; no hard audit defects.
+145 Python tests and123 offline Swift tests pass. Remaining decision is the
+[human-label admission/comparison proposal](Research/Plans/HumanFocusAdmissionDecision.md),
+not more per-box confirmations. TTR recorder work remains independent.
 
 | Packet | State / owner | Assignment and prerequisite |
 | --- | --- | --- |
-| HUMAN-REVIEW-01 | software review-ready; operator completion pending / current NUIAK review-tool worker | Local Labelme installed;8/8 retained frames imported; real edit/save/reopen, rectangle/clipboard/bulk-Finish interaction verified,4/4 production crops,136 Python and123 Swift tests pass.113 rectangles saved; four Home frames need focus states for IDs6/9. Next: explicit Finish review attestation and revision-bound crop QA. No human labels accepted into an immutable real revision yet; no training admission. [Handoff](reports/work/HUMAN-REVIEW-01/handoff.md) · [Guide](reports/work/HUMAN-REVIEW-01/OperatorGuide.md). |
-| HUMAN-REVIEW-02 | proposed / unassigned | Defect validators, random/targeted queues and coverage feedback; depends on01 review contracts. |
+| HUMAN-REVIEW-01 | acceptance review-ready / current NUIAK review-tool worker | Actual human Finish receipt,113/113 production crops and2 reviewed Photos pairs complete. No operator annotation blocker; training/evaluation admission stays separate. [Handoff](reports/work/HUMAN-REVIEW-01/handoff.md). |
+| HUMAN-REVIEW-02 | acceptance review-ready / current NUIAK review-tool worker | Deterministic audit, separate random/targeted queues, generated CLI correction/revalidation tests, visual crop QA and coverage/collection recommendation complete. Zero hard issues;111 distinct crop pixels; all repetitions preserved. [Handoff](reports/work/HUMAN-REVIEW-02/handoff.md). |
 | HUMAN-REVIEW-03 | proposed / unassigned | Automatic TTR bundle integration; needs01 plus exact producer schema/sample, separate live readiness. Does not block01/02. |
-| HUMAN-REVIEW-04 | proposed / unassigned | Explicit human-label policy and gated dataset candidate/preflight; needs01/02 plus separate admission-policy approval. No training. |
+| HUMAN-REVIEW-04 | awaiting maintainer policy approval / unassigned execution | [Proposed development-regression lane and one fixed comparison](Research/Plans/HumanFocusAdmissionDecision.md). Reserve this batch from training; new versioned admission adapter plus separately explicit model execution included only if approved. No policy flags changed yet. |
 
 **FOCUS-HUMAN-OFFICE-01 — blocked on action-linked recorder (2026-09-28), current NUIAK
 TTR consumer worker:** maintainer assigned supervised focus capture using human
@@ -77,7 +63,7 @@ TTR controls. Session finalized/lease released, user control connection preserve
 8 checkpoint frames saved: Home
 Photos→Music→Photos, then both Photos Welcome focus states. Right/Left/Select/Up
 events retained and linked to after-frames. Two candidate Photos control pairs
-from one layout; bounds/crop review pending. Second Up completed with focus
+from one layout; human bounds/crop review completed in HUMAN-REVIEW-01/02. Second Up completed with focus
 visibly unchanged; retained as boundary-consistent sequence evidence, not extra
 diversity. Settings/General captured. Actual timeline has9 inputs but8 images:
 Right/Up/Select setup has no intermediate images. Per-input automatic capture is

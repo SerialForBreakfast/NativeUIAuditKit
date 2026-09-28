@@ -1,5 +1,16 @@
 # HUMAN-REVIEW-01 — lightweight local review handoff
 
+## Actual human completion and production crop QA
+
+2026-09-28 supersedes earlier operator-pending notes below. Joe explicitly finished
+all8 frames/113 controls at18:47:53Z. Verified immutable revision
+`office-batch/review-revisions/20260928T184752Z-15f34d37/revision/revision.json`
+matches the saved editor JSON; both defined Photos pairs reviewed. Actual production
+crop QA completed113/113 at `human-crops-joe-20260928/crop-qa.json`, with no model.
+All113 crops visually inspected during [HR2 audit](../HUMAN-REVIEW-02/handoff.md).
+Human diagnostics are ready; training/development-evaluation admission still requires
+the separate policy decision. No labels were silently changed during crop/audit.
+
 ## Follow-up: frame-flag toggle and fast image navigation
 
 2026-09-28. Added All frame flags on/off in the Flags panel and Edit menu. It

@@ -1,5 +1,17 @@
 # NativeUIAuditKit — Experiment Log
 
+## Data readiness — human Office review/crop audit (2026-09-28; not a model run)
+
+Joe's immutable review covers8 frames/113 controls and2 explicit Photos pairs.
+Production crop QA:113/113,111 distinct crop pixel hashes, fixed16%/256×256.
+Audit:0 hard errors;2 exact crop duplicate groups and4 soft near-frame matches,
+all retained.8 positives/105 negatives across Home/Photos Welcome/Settings in one
+device session; not independent transfer evidence.145 Python and123 Swift tests pass.
+No inference, training, export, promotion, new run ID or selection-rule change.
+Recommend development-regression reservation and separately approved fixed shipped
+vs FDR-009 comparison; no training admission. [Evidence](../reports/work/HUMAN-REVIEW-02/handoff.md)
+and [decision proposal](Plans/HumanFocusAdmissionDecision.md).
+
 ## Run FDR-009 — approved retention-selected Simulator development (2026-09-27)
 
 Preparation before launch. Maintainer answered "yes" to one retention-selected
