@@ -155,6 +155,10 @@ reports/work/OS-FOCUS-03/**/*.mp4
 /reports/work/**/*.xcresult/
 /reports/work/**/*.py
 
+# Offline focus diagnostic renderings/inventories are reproducible local evidence.
+/reports/work/FOCUS-OFFLINE-DIAG-01/analysis-*/
+/reports/work/SIM-FOCUS-DEV-01/review-sheets*/
+
 # Additional local environments/caches and unpromoted raw models.
 /.venv-*/
 /NativeUITrainer/.torch/
@@ -163,3 +167,6 @@ reports/work/OS-FOCUS-03/**/*.mp4
 *.pth
 *.mlpackage/
 # Do not blanket-ignore .mlmodelc: promoted model package resources are intentional.
+
+# Remote capture pairing state and delivered evidence are local, never source assets.
+/reports/work/EXT-CAP-02/client-state/

@@ -633,6 +633,18 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Approved retention-selected Simulator experiment (2026-09-27):** a separate
+`focus-retention-experiment-v1` binds the immutable52-pair training extension,
+preserving273 training/9 native-retention pairs and50/50 logical-source sampling.
+The maintainer approved one bounded FDR-007 warm-start run with fresh optimizer,
+30 epochs/batch64/lr0.0003/seed42/no augmentation/1,800-second cap. Select minimum
+retention BCE among epochs retaining18/18 accuracy at0.85, earliest tie; no eligible
+epoch means no selected checkpoint. This explicit development protocol retains
+the original appearance qualification blockers as unmet, rather than removing them
+from that protocol. No challenge inputs, export, promotion or automatic repeat run.
+Bind exact runtime/code/data/model and approval before execution through the existing
+trainer. [Approved decision](../reports/work/SIM-FOCUS-DEV-01/selection-decision.md).
+
 **Balanced appearance development adapter (2026-09-23):**
 [appearance-experiment-v1](schemas/focus-appearance-experiment-v1.md) is a separate
 explicit experiment contract. It preserves origin roles, uses training-only50/50

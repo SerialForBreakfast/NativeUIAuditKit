@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-27 (tvOS focus diagnostic comparison and Run013 evaluation complete; no shipped model change)
+**As of:** 2026-09-28 (Max-local Office still capture verified; remote pairing pending; no shipped model change)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -11,13 +11,90 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
-**2026-09-27 supervised Photos pilot preparation:** PHOTOS-PILOT-01 local
-diagnostic import/human-review/production-crop workflow is implemented and tested;
-96 Python regressions, offline Swift build and123 Swift tests pass. No live Photos
-capture or model comparison ran. Current-host inspection found no running TTR
-coordinator or standard installed app, and SMB is disconnected. Exact Office runtime,
-exclusive readiness and maintainer availability remain pending. No native Photos
-or training qualification is claimed. [Handoff and session checklist](../reports/work/PHOTOS-PILOT-01/handoff.md).
+**2026-09-28 supervised collection exposed a P0 workflow gap:**8 local Office
+checkpoint frames and9 human TTR inputs retained, including both Photos Welcome
+focus states. Button logging works; automatic per-input image retention is not
+qualified (Right/Up/Select setup has no intermediate images). Maintainer rejected
+chat-per-press collection. Session finalized, owned lease released, provider idle;
+user control connection preserved. Next integration requirement is an
+[action-linked demonstration recorder](Plans/TTRActionLinkedCapture.md), not another
+chat-paced run. Raw data retained, bounds/crop review and training admission pending.
+
+**2026-09-28 Max-local Office capture passed:** after the maintainer approved
+permission prompts, a fresh connection succeeded in124ms and one1920×1080 PNG
+was delivered locally, hash-verified and visually inspected (Home, Photos tile
+visibly focused). First timeout/connectionLost attempt preserved. Owned lease
+released, connection disconnected and provider idle verified. Max-local is now a
+demonstrated alternative to Sillycon for basic capture; remote pairing is not a
+dependency for this path. No input-sequence qualification, reviewed pair/training
+admission or model test. [Bounded test](../reports/work/LOCAL-OFFICE-CAPTURE-01/handoff.md).
+
+**2026-09-28 TTR consumer integration update:** existing local remote client passes
+help/status/register and standalone MCP initialization/12-tool discovery; signature
+verification passes in normal host execution. LAN service discovery returned no
+candidates; no pairing or capture performed. Producer runbook/schema metadata
+received and hash-verified; current registration output omits a custom state path.
+Await exact running-build binding, Sillycon listener/pairing window and remote
+simulator UUID/grant confirmation. No live integration or model gate pass.
+[EXT-CAP-02 checks and feedback](../reports/work/EXT-CAP-02/handoff.md).
+
+**2026-09-27 FDR-009 completed, not shipped:**30/30 epochs on273 training/9 retention
+pairs,50/50 native–Fixture sampling,FDR-007 warm weights/fresh optimizer. Selected
+epoch3 by minimum retention BCE0.000004791201; all30 epochs retain18/18 accuracy
+at0.85. Process350.552s including preflight,79.808s post-preflight training/result
+phase,torch2.7.0/MPS.106 Python tests and offline Swift build/123 tests pass; saved
+checkpoint and all epoch selection scores verified. No independent transfer test,
+export, promotion, final-challenge scoring or second run. Full qualification blockers
+remain unchanged. [Handoff](../reports/work/FDR-009/handoff.md). Next: separately
+assigned same-input48-frame development comparison, not additional training.
+
+**2026-09-27 local Simulator training data admitted:** user-authorized exclusive
+TTR/Fixture workflow completed40 new native-bracket pairs plus12 prior pairs.
+All52 reviewed pairs admitted to a new training extension:273 total training pairs
+and unchanged9 retention pairs.234 exported files verified;104 crops contain102
+distinct pixels. Two positive crops repeat, but no whole pair duplicates. Six
+appearance presets across grid/media and the prior dock add procedural diversity,
+not independent sources or native Photos coverage. No source manifest rewritten.
+Nine-control dock failed strict native-bracket identity; five matching recipes
+were not attempted. Request published to TTR; four-control data work completed
+independently.93 focused tests and offline Swift build/123 tests pass. No model
+run/inference launched; original coverage/selection gates remain unchanged.
+Actual trainer preflight completed: configuration valid, launch correctly blocked.
+[Expansion handoff](../reports/work/SIM-FOCUS-DEV-01/expansion-handoff.md).
+The concrete [retention-selected development experiment](../reports/work/SIM-FOCUS-DEV-01/selection-decision.md)
+was subsequently approved and completed as FDR-009 above. Remote pairing/switching
+remains unqualified. [Visual review](../reports/work/SIM-FOCUS-DEV-01/expansion-visual-review.md).
+
+**2026-09-27 offline focus diagnosis complete for review:** all3,744 retained
+probabilities reproduce published results;2,107 image files pass integrity,
+all221 candidate +9 retention pairs audited. Both candidates rank true focus strictly
+first on only1/48 frames. FDR-008 retains22 wrong and24 no-focus outcomes despite
+fewer false positives. No threshold-only unique-selection repair for47 frames with
+a strictly higher wrong competitor. Geometry/cue differences are hypotheses, not
+causal findings. Recommend targeted additional source-separated data, not unchanged
+retraining. [Handoff](../reports/work/FOCUS-OFFLINE-DIAG-01/handoff.md).
+68 Python tests,offline Swift build/123 tests pass; no validation inference/challenge
+analysis. Source/Photos gates remain open. TTR shared revision1's outdated two-frame
+grant and exact receipt-schema requirements published/read back under existing request.
+Live adapter/Photos acceptance unqualified; two Photos originals pending receipt.
+
+**2026-09-27 P0 integration priority — human-approved external TTR control:**
+The maintainer confirmed the two Office Photos captures are correct and show
+different focus states, but judged the manual iteration flow unusable. Capture
+proof achieved; one human-confirmed candidate pair, zero consumer-admitted pairs
+pending original-byte receipt, bounds review and production-crop QA. No native-label,
+training, independent-source or model gate passes; the full10-pair pilot is incomplete.
+Local diagnostic adapter remains verified by96 Python tests and offline Swift
+build/123 tests; no code or model changed in the request tranche.
+
+[Formal TTR request](Plans/TTRSupervisedExternalControl.md) now has highest next
+integration priority: human-approved external-client pairing and scoped qualified
+lease, integrated readiness/capture/verified delivery/review/cleanup. The observed
+38m42s to two successful captures includes manual/agent delay, not backend latency.
+Producer implementation/deployment is not assigned by this request. Reuse existing
+MCP work; no dependency on better models, native Photos telemetry, VoiceOver or DS-G8.
+[Request handoff](../reports/work/TTR-EXTERNAL-CONTROL-01/handoff.md).
+No Office session/lease cleanup receipt has been observed; current occupancy is unknown.
 
 **2026-09-27 highest-priority tvOS focus intake/evaluation:**
 [Metrics and next decision](../reports/work/APPEAR-EVAL-RESERVE-20260927/metrics.md).

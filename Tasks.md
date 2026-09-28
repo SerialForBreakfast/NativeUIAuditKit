@@ -1,11 +1,13 @@
 # NativeUIAuditKit — Tasks
 
 **Highest next priority (maintainer, 2026-09-27): tvOS focus.** The
+immediate P0 integration enabler is now [human-approved external TTR control](Research/Plans/TTRSupervisedExternalControl.md),
+after the successful but excessively manual Photos capture proof. The
 [received-data intake → validation baseline → candidate proposal tranche](Research/Plans/FocusAppearanceAcquisition.md#next-tranche--received-data-intake-and-validation-baseline-2026-09-27)
 is review-ready under existing APPEAR-EVAL-RESERVE ownership (NUIAK architect).
 [September27 handoff](reports/work/APPEAR-EVAL-RESERVE-20260927/handoff.md):96 pairs
 accepted for diagnostics, all3,744 validation predictions complete, candidate rebuilt
-and actual trainer preflight completed. No training is authorized. Next: source-backed
+and actual trainer preflight completed. Full candidate launch remains gated. Next: source-backed
 independent admission and genuine Photos coverage; these still block full qualification
 and candidate launch, not the completed local comparison.
 
@@ -40,16 +42,107 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
-**PHOTOS-PILOT-01 — preparation review-ready; live pilot blocked/pending, current NUIAK worker (2026-09-27):**
-[Approved supervised pilot](Research/Plans/PhotosFocusPilot.md) local CLI, hash-bound
-human review, production crop path and operator checklist implemented.96 Python
-tests plus offline Swift build/123 tests pass. [Handoff](reports/work/PHOTOS-PILOT-01/handoff.md).
-No running current-host TTR coordinator/standard install found; exact Office host/build,
-exclusive readiness and maintainer availability remain unresolved. SMB unmounted;
-owned status draft unpublished. Resume with actual running helper/target/session
-readiness and the maintainer driving Photos. No live capture, model comparison,
-training or gate changes; no producer repair is presumed necessary. Source
-independence remains separate. Full pilot is not complete.
+**FOCUS-HUMAN-OFFICE-01 — blocked on action-linked recorder (2026-09-28), current NUIAK
+TTR consumer worker:** maintainer assigned supervised focus capture using human
+TTR controls. Session finalized/lease released, user control connection preserved;
+8 checkpoint frames saved: Home
+Photos→Music→Photos, then both Photos Welcome focus states. Right/Left/Select/Up
+events retained and linked to after-frames. Two candidate Photos control pairs
+from one layout; bounds/crop review pending. Second Up completed with focus
+visibly unchanged; retained as boundary-consistent sequence evidence, not extra
+diversity. Settings/General captured. Actual timeline has9 inputs but8 images:
+Right/Up/Select setup has no intermediate images. Per-input automatic capture is
+not qualified; checkpoint capture must not be described as complete trajectory
+recording. User rejected chat-per-press collection. [P0 recorder contract](Research/Plans/TTRActionLinkedCapture.md):
+start once, navigate with automatic input-linked evidence, stop once, batch review.
+Producer owner/implementation and exact schema representative bundle required;
+consumer review/intake of retained frames remains possible without more capture.
+No autonomous input, inference or training. [Resume/cleanup
+and evidence](reports/work/FOCUS-HUMAN-OFFICE-01/session.md).
+
+**Local Focus integration prerequisite — established:** Max-local Office connection,
+one still delivery and owned cleanup passed on2026-09-28; bounded execution archived
+in CompletedTasks.md ([evidence](reports/work/LOCAL-OFFICE-CAPTURE-01/handoff.md)).
+Recommend local capture as the primary path. The subsequent supervised test above
+verified input logging but exposed missing automatic per-input images; the P0
+recorder contract now governs the next integration assignment. No automatic additional
+capture/navigation or training assignment. Sillycon remote pairing remains separate,
+not a blocker for the demonstrated local still path; retained Photos originals
+still need their own receipt/review.
+
+**EXT-CAP-02 — consumer interface tested; live pairing blocked (2026-09-28),
+owner: current NUIAK TTR consumer worker.** User assigned fresh producer-status
+review, request testing and feedback. Actual local remote CLI help/status/register
+and standalone MCP initialize/12-tool listing pass; app signature verifies with
+host keychain visibility. Discovery returned zero candidates; project-local state
+is unpaired. `register --print` omits the supplied custom state directory (feedback
+for producer). Matching binary/source receipt, Sillycon endpoint/pairing window and
+exact booted remote simulator UUID needed. Human confirmation requested for a
+15-minute still-only pass to this project. No pairing, registration install,
+capture, device inputs or model run completed. [Evidence/resume conditions](reports/work/EXT-CAP-02/handoff.md).
+Producer's newer source-build runbook names unavailable local commit c45f3e73,
+but an existing executable has the remote helpers; do not rebuild merely from
+checkout age. Preserve other TTR checkout edits and release-build pause.
+
+**SIM-FOCUS-DEV-01 — FDR-009 complete for review; transfer evaluation next
+(2026-09-27), owner: current NUIAK agent.** Exclusive local TTR/Fixture Simulator
+collection completed40 new pairs plus12 prior pairs. All52 pass review/admission:
+104 frame files/65 distinct frames,104 crops/102 distinct crop pixels;234 original
+export files verified. Training extension preserves221 original candidate pairs and
+adds52 (273 total), with unchanged9 retention pairs,50/50 sampling and full gates.
+Source manifests remain development-purpose; explicit reviews/assembly assign train.
+Ten four-control expansion recipes completed. Nine-control r02 failed native bracket
+identity; five matching geometry recipes were not attempted. Producer diagnosis
+request published/read back; no retry, producer edit or physical-device fallback.
+93 focused tests and offline Swift build/123 tests pass. Real assembly and trainer
+preflight complete: valid configuration, launch blocked by ten unchanged coverage
+requirements plus absent protocol-specific approval in that original full protocol.
+[Expansion handoff](reports/work/SIM-FOCUS-DEV-01/expansion-handoff.md).
+[Contract](Research/Plans/LocalSimulatorFocusDevelopment.md),
+[admission review](reports/work/SIM-FOCUS-DEV-01/expansion-visual-review.md).
+**Maintainer approved** one separately versioned retention-selected development
+experiment. FDR-009 completed30/30, PID13076 exited0; epoch3 selected,18/18 retention
+at0.85,350.552s process/79.808s post-preflight phase.106 Python tests and offline
+Swift build/123 tests pass. All scores/selected checkpoint verified. Full qualification
+gates unchanged; no repeat run,capture,export,promotion or challenge scoring.
+[Run handoff](reports/work/FDR-009/handoff.md). Next unassigned: FDR-009 versus retained
+baselines on the frozen48 development-validation frames; original boxes/0.85,
+complete accounting and unique-selection outcomes, no new training or challenge use.
+Do not ask again for generic usable-training-data permission or weaken original
+gates. Remote profile switching remains unqualified; no automatic failover.
+
+**FOCUS-OFFLINE-DIAG-01 — review (2026-09-27), owner: current NUIAK agent.**
+[Assigned offline tranche](Research/Plans/OfflineFocusDiagnosis.md) complete for review:
+all3,744 retained predictions reproduced,2,107 image files verified,230 pairs audited,
+95 evidence pages.68 Python tests and offline Swift build/123 tests pass.
+[Handoff](reports/work/FOCUS-OFFLINE-DIAG-01/handoff.md).
+Next: targeted source-separated data and exact provenance review; no new training.
+EXT-CAP consent-draft conflict and exact-schema requirements published/read back;
+consumer adapter/live Photos qualification remain separately assigned dependencies.
+
+**TTR-EXTERNAL-CONTROL-01 — P0 / highest next integration priority (maintainer, 2026-09-27):**
+Current NUIAK coordination worker owns formal request/status preparation; producer
+implementation is unassigned pending TTR acknowledgment, owner and approved scope.
+[Canonical request and acceptance contract](Research/Plans/TTRSupervisedExternalControl.md):
+human-approved client pairing plus scoped qualified lease, integrated readiness,
+capture/byte-verified delivery/review and owned cleanup. Reuse existing MCP work.
+No producer edit, service deployment, restart or new device action is assigned here.
+Request ID: `nuiak-20260927T182937Z-supervised-external-control`.
+[Delivery/handoff](reports/work/TTR-EXTERNAL-CONTROL-01/handoff.md).
+Next owner: TTR supplies a capability-gap map, security/transport plan, estimate and
+end-to-end qualification assignment; no model/native-telemetry dependency.
+
+**PHOTOS-PILOT-01 — capture proof achieved; full intake/pilot incomplete (current NUIAK worker):**
+Two physical Office PNG exports succeeded at18:21:09Z/18:24:42Z,1920x1080,current,
+same source/generation. Maintainer now explicitly confirms correct images with
+different focus states: one human-confirmed candidate pair, zero consumer-admitted
+pairs. Original images/hash receipts, per-frame bounds and production-crop QA remain
+pending; no native-label/training/model qualification. Full10-pair pilot is not complete.
+Current work is redirected to the P0 iteration-flow request, not more capture.
+Existing local adapter verification remains96 Python tests + offline Swift build/123
+Swift tests. [Evidence and runtime chronology](reports/work/PHOTOS-PILOT-01/coordination.md).
+Session/lease cleanup is not confirmed; current occupancy must not be inferred.
+Old readiness request is superseded by operator receipts/new request, not peer-acknowledged.
 
 **TTR-STATUS-20260927 — review: receipt complete (current TTR coordination worker):**
 All four approved archives (696,220,140bytes) and manifest copied into new gitignored

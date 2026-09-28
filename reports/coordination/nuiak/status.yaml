@@ -56,28 +56,90 @@ diagnostics:
   evidence_path_scope: "Relative to the NativeUIAuditKit checkout on nuiak-dev; artifacts are not copied to this share."
 
 packets:
+  SIM-FOCUS-DEV-01:
+    owner: "NUIAK local Simulator focus data worker"
+    updated_at: "2026-09-28T05:32:45Z"
+    valid_until: "2026-09-28T06:02:45Z"
+    state: blocked
+    summary: "Four-control local capture/export/intake completed: ten expansion jobs plus three calibration jobs, 52 native-bracket pairs admitted as training candidates after review; no independent qualification claim. Nine-control dock remains blocked by native-bracket identity failure; no retry or producer edit."
+    blockers:
+      - "grid_matrix/9/light/compact/seed20260928/appearance artwork dock: telemetry_bracket:identityMismatch before.focus_observation and after.focus_observation; two controls reported partly/fully clipped."
+    pending_requests:
+      - id: "nuiak-20260928T051536Z-nine-control-dock-bracket"
+        to: "TVTestRig Fixture owner"
+        state: requested
+        request: "Diagnose retained job300649B2-3A37-4E67-8619-1CEFCD9BA633 on local TTR executable SHA256 af824888d0c667bbf0157592302424a5639b7c034fb4251bfab6458a9a37d2d7. Native focus resolved but capture-bracket focus observations mismatch; grid_cell_2_1 partially_clipped_bounds and grid_cell_2_2 clipped_or_zero_bounds. Clipping is observed, not proven causal. Keep telemetry checks; supply a source-backed explanation and bounded remedy for reviewed larger geometry. No rebuild/device dispatch is authorized by this message. Other four-control recipes proceed independently; do not recapture completed jobs."
+    acknowledgments: []
+    evidence:
+      - "reports/work/SIM-FOCUS-DEV-01/expansion-amendment.md"
+      - "reports/work/SIM-FOCUS-DEV-01/r02-status-00.json"
+      - "reports/work/SIM-FOCUS-DEV-01/r02-post-readiness.json"
+      - "reports/work/SIM-FOCUS-DEV-01/expansion-visual-review.md"
+      - "reports/work/SIM-FOCUS-DEV-01/expansion-accounting.json"
+    next: "TTR diagnoses the retained nine-control dock job and proposes a bounded remedy without recapturing successful four-control jobs. Consumer admission is complete; EXT-CAP remote qualification remains separate."
+    outcomes:
+      software_verified: passed
+      data_eligible: passed
+      integration_qualified: blocked
+      model_gate_passed: not_assessed
+  FOCUS-OFFLINE-DIAG-01:
+    owner: "NUIAK offline focus diagnosis worker"
+    updated_at: "2026-09-28T02:25:43Z"
+    valid_until: "2026-09-28T02:55:43Z"
+    state: review
+    summary: "EXT-CAP-01 consumer contract reviewed; offline importer exists, exact producer schema and live compatibility remain unverified. Shared producer revision1 conflicts with newer user duration-only consent decisions."
+    blockers:
+      - "Producer descriptor provenanceReference does not yet define versioned observation/session/verified-receipt payloads."
+      - "Actual consumer transport binding and physical Photos qualification require separate assignments."
+    pending_requests:
+      - id: "nuiak-20260927T182937Z-supervised-external-control"
+        to: "Sillycon TTR implementation owner"
+        state: consumer_contract_reviewed_followup
+        request: "Reconcile shared revision1's 10-minute/two-frame grant and maximumFrames consent field with the newer user plan: editable 30-minute default, duration-only authorization, no frame-count permission limit, persistent paired trust, restart-invalidated grants. Keep capacity and consumer-pilot limits separate. Supply a versioned descriptor plus original observation/session/verified-receipt example: timestamps with epochs/units, provider/freshness, MIME/orientation, target/source/session/generation binding, image and metadata hashes, recipient/operation identity, expiry/restart pending-delivery and cleanup semantics. Do not fabricate legacy envelopes."
+    acknowledgments:
+      - request_id: "nuiak-20260927T182937Z-supervised-external-control"
+        state: received
+        observed_at: "2026-09-28T02:25:00Z"
+        message: "Read producer response and revision1 plan; consumer is existing scripts/photos_focus_pilot.py import/review. No remote-client adapter is installed or qualified by this review. No recapture or transfer requested; two operator-confirmed Photos frames remain pending consumer receipt."
+    evidence:
+      - "reports/work/FOCUS-OFFLINE-DIAG-01/ext-cap-consumer-checklist.md"
+      - "reports/work/PHOTOS-PILOT-01/cli-contract.md"
+    next: "TTR reconcile consent and deliver exact schema/example; separately assign NUIAK transport binding/tests. Offline source review does not depend on running TTR."
+    outcomes:
+      software_verified: passed
+      data_eligible: blocked
+      integration_qualified: blocked
+      model_gate_passed: not_assessed
   PHOTOS-PILOT-01:
     owner: "Current NUIAK worker; maintainer-assigned supervised Photos pilot"
-    updated_at: "2026-09-27T17:27:35Z"
-    valid_until: "2026-09-27T17:57:35Z"
-    state: "preparation review; live pilot pending"
-    publication: "unpublished; local draft only, expected SMB share not mounted"
-    summary: "Consumer diagnostic PNG/observation import and human review are ready for a user-driven Office pilot. No device/capture/navigation or producer edit performed. Prediction-based focus is not label truth; native Photos support is not established."
-    blockers:
-      - "No running TTR coordinator or standard installed app found on current host; exact Office execution host/build/helper and exclusive target/capture readiness remain unknown."
-      - "Maintainer availability for the supervised session is not confirmed."
-    pending_requests: []
-    evidence:
-      - "reports/work/PHOTOS-PILOT-01/capabilities.md"
-      - "reports/work/PHOTOS-PILOT-01/operator-checklist.md"
-      - "reports/work/PHOTOS-PILOT-01/handoff.md"
-    next: "Identify the actual running Office TTR host/helper and agree a supervised window; qualify one two-pair capture/export/review smoke with the user driving. No producer repair, new telemetry or artifact transfer is implied."
-    outcomes:
-      software_verified: "passed; offline consumer adapter only"
-      data_eligible: "not_assessed; no genuine Photos frames received"
-      integration_qualified: "not_assessed; installed Office runtime unknown"
-      model_gate_passed: "not_assessed"
-    peer_acknowledgment: "not_observed; unpublished"
+    updated_at: "2026-09-27T18:42:00Z"
+    valid_until: "2026-09-27T19:12:00Z"
+    state: "review"
+    publication: "published; readback evidence recorded in local coordination report"
+    summary: "Maintainer confirms both Office captures are correct with different focus states: one human-confirmed candidate pair, zero consumer-admitted pairs. Capture proof achieved; manual workflow judged unusable. P0 request: human-approved external-client pairing, scoped qualified lease, integrated readiness/capture/verified delivery/review/cleanup. Producer acknowledgment and implementation assignment pending."
+    first_capture_receipt: {"observed_at":"2026-09-27T18:21:09Z","request_id":"CAC8B187-CD19-4C57-AB6B-E86F9CF92D59","observation_id":"DBB07A1A-3332-4242-9305-B5FBEA29EA7B","source_device_id":"8D80F616-6C12-49A6-9015-8F594EE5F24E","dimensions":[1920,1080],"generation":1,"freshness":"current; estimated104ms","output_written":true,"image_review":"pending","artifact_receipt":"not_received","accepted_pairs":0}
+    session_receipt: {"observed_at":"2026-09-27T18:17:03Z","session_id":"65AF215E-05C6-48F1-AB28-5217C4DE047D","start_request":"99270FD5-FCFF-49D5-A6C9-BC6907FB1958","status_request":"EAEC3A57-3BD3-4EBC-9A49-896B5C764771","connection":"connected","control_epoch":1,"screenshots_directory":"absent per operator ls","image_capture":"not_yet_verified"}
+    post_connect_receipt: {"observed_at":"2026-09-27T18:13:02Z","session_status_request":"A19540C5-1D3B-4BC8-BE97-9AC9535D3A5F","provider_status_request":"0B843710-9637-497E-A24C-EC55D0108CDE","selected_device_id":"8D80F616-6C12-49A6-9015-8F594EE5F24E","connection":"connected","control_epoch":1,"session_id":"not_reported","provider_state":"idle","is_warm":false,"video_permission":"authorized","nuiak_enabled":false}
+    owned_lease_receipt: {"observed_at":"2026-09-27T18:09:06Z","connection_request":"90565945-2D20-4143-8094-0B09A178EE24","acquire_request":"89388C84-7947-49CB-B38E-0A10D53F0A39","repeat_request":"907B92F2-EE01-4FFC-9256-6530037212B9","device_id":"8D80F616-6C12-49A6-9015-8F594EE5F24E","owner_client_id":"nuiak-photos-pilot-20260927-01","lease_id":"544C001D-0312-4C37-9A54-5A5D953DAE7B","state":"held","generation":1,"resources":["video","control"],"warning_sequence":0,"last_activity_nanoseconds":813463628000}
+    selection_diagnosis: {"observed_at":"2026-09-27T18:03:28Z","device_get_request":"39B415DB-C88D-4CE6-B187-C1DC08ACF321","doctor_request":"C9D81ACB-ADC7-40F2-A7BA-E0AB0DD5293D","exact_office_id_resolves":true,"selected_device":"none reported","control":"disconnected","local_source_head":"46dce7b3a79e4f17af49bc0324d4aeba3cc0958d","source_build_match":"not_verified","capture":"not_started"}
+    lease_attempt: {"observed_at":"2026-09-27T17:57:37Z","client_id":"nuiak-photos-pilot-20260927-01","device_id":"8D80F616-6C12-49A6-9015-8F594EE5F24E","request_id":"E7CEE498-BA1E-48DB-A5C4-45682B88758A","success":false,"error":"deviceNotFound","retryable":false,"lease_id_returned":false}
+    readiness_receipt: {"observed_at":"2026-09-27T17:55:26Z","capture_lease":"no active holder reported; autoEnrollUnidentifiedCaptures false","session":"no sessionID reported; disconnected","provider":"avfoundation-video","provider_state":"idle","is_warm":false,"video_authorization":"authorized","audio_authorization":"authorized","audio_recording":"inactive; busy false; acceptedBufferCount 0","exclusive_human_use":"not_confirmed","image_export":"untested"}
+    runtime_receipt: {"source":"maintainer-pasted Sillycon terminal output","observed_at":"2026-09-27T17:46:02Z","app_transport":"verified","office_device_id":"8D80F616-6C12-49A6-9015-8F594EE5F24E","connection":"disconnected","pairing":"unknown","capture_ownership":"unknown","build_identity":"not_pinned","diagnostic_warning":"diagnostic_file_sink_failed persistenceFailed code24; capture/export not yet tested"}
+    execution_host: "Sillycon (maintainer-confirmed)"
+    maintainer_availability: "Human confirmed prior captures; no new session window or current exclusivity inferred."
+    blockers: ["external_workflow_not_qualified: no usable approved cross-host control/artifact path in this consumer; formal producer request now P0.","Original-byte receipt, reviewed per-frame bounds and crop QA pending; native Photos focus labels unavailable.","Existing session/lease teardown unconfirmed; current occupancy unknown."]
+    pending_requests: [{"id":"nuiak-20260927T174127Z-photos-office-readiness","to":"tvtestrig","state":"closed","request":"Provide a fresh read-only Sillycon-local readiness receipt from the actual running TTR and matching helper: app/build/helper identity, current coordinator response, exact Office target/source mapping, connection state, session, observation-provider readiness, controller/capture ownership and audio state. Discover installed help first; use only status/inventory/capability calls. Do not connect/start capture, take a lease, navigate, enable audio, restart, rebuild or modify devices. No images or credentials in shared metadata. Acknowledge this exact request in TVTestRig-owned status with observation time and evidence. The user drives Photos only after readiness is verified.","resolution":"Superseded for next action by maintainer-supplied receipts and P0 workflow request; no peer acknowledgment inferred."},{"id":"nuiak-20260927T182937Z-supervised-external-control","to":"tvtestrig","state":"requested","priority":"P0","request":"Acknowledge exact request, name owner, map existing MCP/lease/storage capabilities to human-approved external pairing and qualified lease; propose secure implementation, estimate and real-consumer qualification. No restart, deployment, capture or model operation authorized by request.","message_file":"nuiak/requests/nuiak-20260927T182937Z-supervised-external-control.yaml"}]
+    evidence: ["reports/work/PHOTOS-PILOT-01/capabilities.md","reports/work/PHOTOS-PILOT-01/operator-checklist.md","reports/work/PHOTOS-PILOT-01/coordination.md","Research/Plans/TTRSupervisedExternalControl.md","reports/work/TTR-EXTERNAL-CONTROL-01/handoff.md"]
+    next: "TTR acknowledges formal P0 request and names producer owner, capability gaps, security/transport plan, estimate and separate implementation/qualification assignment. Reuse existing MCP work. No dependency on models, native Photos telemetry, VoiceOver, DS-G8 or independent-source review. No additional capture requested."
+    outcomes: {"software_verified":"passed","data_eligible":"not_assessed","integration_qualified":"blocked","model_gate_passed":"not_assessed"}
+    peer_acknowledgment: "not_observed"
+    priority: "P0"
+    active_request_packet: "TTR-EXTERNAL-CONTROL-01"
+    freshness_scope: "Documentation/coordination only; historical device receipts do not establish current occupancy."
+    human_confirmation: {"recorded_at":"2026-09-27T18:42:00Z","source":"maintainer message in NUIAK chat","correct_different_focus_states":true,"human_confirmed_candidate_pairs":1,"consumer_admitted_pairs":0,"byte_receipt_bounds_crop_qa":"pending","native_focus_labels":"not_established"}
+    second_capture_receipt: {"observed_at":"2026-09-27T18:24:42Z","request_id":"B78B2DAB-21F0-4AF7-8F19-9E60F38FA62F","observation_id":"1B67F4D5-0113-458C-8E44-C3C1BDD10296","source_device_id":"8D80F616-6C12-49A6-9015-8F594EE5F24E","dimensions":[1920,1080],"generation":1,"freshness":"current; estimated112ms","output_written":true,"artifact_receipt":"not_received"}
+    cleanup: {"session_finalized":"not_verified","lease_released":"not_verified","current_device_occupancy":"unknown"}
+    outcome_scope: "software_verified refers to previously verified local adapter (96 Python /123 Swift tests); new external-control software unimplemented. Capture proof passed; end-to-end integration not qualified."
 
   APPEAR-EVAL-RESERVE:
     owner: "NUIAK architect; maintainer-assigned tvOS focus intake/evaluation"

@@ -21,6 +21,12 @@ three already-accessible Photos screen states. No model inference or audio recor
 - Verify capture ownership through current installed commands. Capture leases are
   separate from controller/session ownership, generally expire after30minutes;
   keep alive only our lease or pause and reacquire according to actual interface.
+  The18:03Z pilot diagnosis finds a selection prerequisite: device list/get does
+  not select the coordinator target; the inspected producer acquires leases only
+  for its selected device. After human exclusivity/occupancy checks, explicitly
+  connect Office control, then acquire the owned lease before image capture.
+  Stop on connection error, timeout or pairing request. Do not impose a lease-before-
+  control-connect loop or treat control connection as capture qualification.
 - You open Photos, handle prompts and choose non-sensitive content. Identify the
   first approved screen. No agent Select/Home/Back/directional commands. No account,
   settings, privacy-consent, installation or recording-route changes are incidental.

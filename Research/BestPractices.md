@@ -1807,3 +1807,70 @@ reserved-looking names through the actual importer.
 **Why:** Path-traversal rejection alone does not preserve original evidence.
 The Photos pilot review caught and corrected this collision before live intake;
 its regression verifies the original index bytes survive. [Evidence](../reports/work/PHOTOS-PILOT-01/handoff.md).
+
+### BP-102: Discovering a TTR device does not select it for capture ownership
+
+**Wrong:** Require capture-lease acquisition before control connection when the
+coordinator has no selected target. The Photos pilot returned deviceNotFound despite
+successful list/get of the same Office ID, creating an artificial setup loop.
+**Correct:** Inspect actual runtime status and matching source where available.
+The inspected coordinator requires selectedDevice equality for acquireCaptureLease;
+connect(to:) selects the discovered target before control connection. After fresh
+occupancy checks and human exclusivity, deliberately connect the authorized target,
+acquire its owned capture lease, then start separately authorized image capture.
+Stop on uncertain outcomes; no automatic pairing, restart or takeover. Distinguish
+local source diagnosis from verified identity of a remote installed binary.
+**Why:** Discovery, selection, control connection and capture ownership are separate
+states. Conflating them wastes supervised time and can prompt unnecessary repair.
+[Evidence](../reports/work/PHOTOS-PILOT-01/coordination.md).
+
+### BP-105: Qualify the operator workflow, not just individual TTR primitives
+
+**Wrong:** Treat successful IPC, lease acquisition or capture as proof that a
+supervised collection flow is usable. The Photos proof took38m42s from initial
+helper invocation to two exports, including agent/operator delay and manual relay.
+**Correct:** Batch passive readiness checks, preserve exact operation/artifact
+identities, and qualify approval → capture → verified delivery → review → owned
+cleanup with the actual consumer. Measure human interventions and end-to-end time
+separately from backend execution. Do not remove human consent or label review to
+meet a speed target, or launch new transport outside approved scope.
+**Why:** Repeated setup and status round trips consume the supervised collection
+window even when backend primitives work. The requested contract is in
+[TTRSupervisedExternalControl.md](Plans/TTRSupervisedExternalControl.md).
+
+**September28 follow-up:** Logging human TTR inputs does not mean every input has
+an image. The local session retained9 commands but only8 checkpoint observations;
+Right/Up/Select occurred without intermediate images. Never scale supervised
+collection through chat-per-press or describe final-frame command references as
+complete trajectories. Qualify action-triggered original-frame retention and explicit
+overlap/gap accounting first; batch human label review afterward. This prevents
+losing the very transitions the operator is demonstrating. [Repair contract](Plans/TTRActionLinkedCapture.md).
+
+### BP-106: Cached-score diagnosis must not invoke a full runtime/corpus validator
+
+**Wrong:** Reuse inference preparation for offline analysis when it also traverses
+protected challenge pixels or requires the original runtime. Treat fewer false
+positives/high imbalanced accuracy as proof of improved focus selection.
+**Correct:** Pin retained protocol/predictions and only authorized membership;
+verify byte/pixel identity, complete paired/frame relationships and cached-score
+accounting, then reuse the metric-only implementation. Keep ties and unsupported
+subsets explicit. Ranks explain failure; they do not replace the fixed selector.
+**Why:** FDR-008's299→23 competition false-positive reduction still leaves1/48
+unique-correct frames. The full surface runtime validator traverses challenge crop
+dependencies, which this offline tranche must not inspect.
+[Evidence](../reports/work/FOCUS-OFFLINE-DIAG-01/diagnosis.md).
+
+### BP-107: Separate training-data admission from independent model qualification
+
+**Wrong:** Treat every development-purpose Fixture manifest as permanently unusable
+for training, or rewrite its original split to make a trainer accept it. Conversely,
+do not let useful training pixels silently satisfy independent validation gates.
+**Correct:** Preserve source manifests and native observations. Bind explicit source
+reviews to immutable membership, validate production crops, exclude duplicates and
+protected-data overlap, and assign training roles in a separate versioned assembly.
+Keep original candidate/retention membership and launch gates intact. A narrower
+checkpoint-selection policy requires an explicit decision, not a validator bypass.
+**Why:** The local TTR expansion supplies usable native-bracket Fixture examples
+without native Photos or independent appearance-validation coverage. Data collection
+can advance while those separate qualification dependencies remain unresolved.
+[Admission contract](Plans/LocalSimulatorFocusDevelopment.md).

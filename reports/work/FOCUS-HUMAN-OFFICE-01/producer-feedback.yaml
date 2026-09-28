@@ -1,0 +1,33 @@
+schema_version: 1
+id: "nuiak-20260928T163540Z-action-linked-recorder-feedback"
+request_id: "nuiak-20260927T182937Z-supervised-external-control"
+from: nuiak
+to: tvtestrig
+created_at: "2026-09-28T16:35:40Z"
+expires_at: "2026-09-29T16:35:40Z"
+state: blocked
+priority: P0
+message: "Maintainer rejects chat-per-button capture as unacceptable. Need Start once, navigate normally using TTR GUI, Stop once, batch review. Local Max still capture works; remote pairing must not block this fix."
+observed:
+  frames: 8
+  human_input_events: 9
+  missing_images: "Timeline sequences15-17 Right/Up/Select have no observations between them; sequence18 is the Settings checkpoint. Explicit captures do not auto-follow GUI inputs."
+  cleanup: "Session finalized, owned lease released, provider idle, user control connection preserved."
+  data: "Original images and final timeline retained in NUIAK; no training admission or model inference."
+requirements:
+  - "Hook the shared GUI/agent input dispatch path. Retain exact action/hold/swipe details where supported, ID, target/generation, monotonic timing, outcome/failure/uncertainty."
+  - "Automatically preserve fresh before-frame and bounded settled-after evidence, plus available intermediate frames. No per-press chat, CLI copying or manual screenshot action."
+  - "Rapid inputs: preserve all events and label overlap/missing/timeout gaps. Never claim settled images between inputs if none existed; no silent dropping/replay/coalescing. Any input gating needs explicit operator consent."
+  - "Keep completed-input/no-focus-change cases and image/event mappings despite storage deduplication. Preserve partial evidence on expiry, target change, contention, disk-full and cancellation."
+  - "Attach image-bound OCR text/confidence/bounds and engine identity asynchronously where available. OCR is advisory, not native focus labels, and must not block raw capture. No dependency on new models."
+  - "One versioned local bundle: original images, hashes, full event/frame links, timing basis, session/source identity, gaps and final cleanup. NUIAK adapts existing importer/review to exact producer schema."
+  - "Visible recording target/state/counts and bounded Start/Stop. No automatic audio. Release only owned resources and preserve user control connection where supported."
+acceptance:
+  - "Proposed workflow trial: roughly5 minutes/20 inputs, zero per-input chat, single start/stop. These are collection usability targets, not qualification thresholds."
+  - "Cover movement, return, boundary/no-op, rapid input and app transition. Every input mapped to evidence or typed gap; verify delivery/hash/order/target and cleanup."
+  - "Offline tests for storage failure, stale/black frames, expiry and overlap through actual recorder callers; live trial separately authorized."
+next_owner_action: "TTR assign owner; first map existing recorder hooks, then implement/qualify missing automatic capture. Publish exact runtime interface/schema and representative bundle. Metadata does not authorize producer edits, rebuild, deployment or hardware action."
+evidence:
+  - "reports/work/FOCUS-HUMAN-OFFICE-01/session.md"
+  - "Research/Plans/TTRActionLinkedCapture.md"
+evidence_scope: "NUIAK repository-local; raw images not uploaded."

@@ -1,5 +1,21 @@
 # Full backlog implementation packet catalog
 
+[SIM-FOCUS-DEV-01](Plans/LocalSimulatorFocusDevelopment.md) has collected/reviewed
+52 local TTR/Fixture pairs and implemented explicit training-extension admission.
+The approved narrower retention-selected FDR-009 completed30 epochs; epoch3 retained
+18/18 native decisions. [Run handoff](../reports/work/FDR-009/handoff.md). Full candidate
+gates remain unchanged; transfer evaluation is next. Local capture is qualified for the
+completed four-control recipes, not remote switching or the failed nine-control dock.
+
+[FOCUS-OFFLINE-DIAG-01](Plans/OfflineFocusDiagnosis.md) diagnoses retained validation
+scores, audits candidate coverage and prepares the EXT-CAP-01 consumer checklist;
+no inference, challenge analysis or hardware operation.
+
+[TTR-EXTERNAL-CONTROL-01](Plans/TTRSupervisedExternalControl.md) is the P0 human-approved
+external pairing/qualified-lease and capture-delivery workflow request. Current work
+is documentation/coordination; producer implementation needs its own assignment.
+Tasks.md remains the authoritative queue.
+
 [PHOTOS-PILOT-01](Plans/PhotosFocusPilot.md) prepares the supervised, user-driven
 Office Photos pilot and diagnostic human-review intake. No native label substitution,
 training admission, model inference or autonomous navigation; live readiness and

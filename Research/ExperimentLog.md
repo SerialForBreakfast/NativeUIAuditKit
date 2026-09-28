@@ -1,5 +1,77 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run FDR-009 — approved retention-selected Simulator development (2026-09-27)
+
+Preparation before launch. Maintainer answered "yes" to one retention-selected
+development run, no export/promotion. Owner: current NUIAK agent. Output reserved
+as `NativeUITrainer/focus_ring_runs/fdr009-simulator-retention`, arm `warm-stretch`.
+273 training pairs (546 crops),9 native retention pairs (18 crops), using the
+immutable extension `53d358966d36e0c36387eae84e9cdf488fb46676885ad908986fe5b8d445a4de`.
+Initialize FDR-007 weights, fresh AdamW,50/50 native–Fixture sampling,30 epochs,
+batch64,lr0.0003,seed42,no augmentation,production16%/256 stretch,threshold0.85.
+Only epochs retaining18/18 retention accuracy are eligible; minimum retention BCE,
+earliest tie; no eligible epoch means no selected checkpoint. Internal1,800s cap
+and conservative external1,800s whole-process deadline; no automatic retry.
+Frozen protocol before launch:
+`9c525a6f1f6698417a2a4af299e13b97459b53cbf3002511cd12f93821f3423f`.
+Python3.12.9,torch2.7.0,numpy1.26.4,Pillow11.3.0,macOS26.4.1/arm64;
+approved resident focus-export-01 environment, actual MPS availability verified.
+Trainer SHA256 `72d364eccffc829f24b219c4eaca0210a08c4c1c5cd4058491423b29422ebaf0`.
+FDR-007 warm checkpoint SHA256
+`a5c7f2f44368feb4ec81477aab33f1e0f5e2f380c43fb5d9ebca3bd26c3499f0`.
+Actual preflight completed exit0 before launch: configurationValid=true,
+launchEligible=true, no development-launch blockers; all ten qualification blockers
+remain separately recorded.106 focused/legacy tests and offline Swift build/123
+tests pass. PID/timings follow in the execution receipt and outcome. Full appearance/Photos/source
+qualification blockers remain open; no model gate or independent validation claim.
+Existing48-frame diagnostic comparison is a next separate assignment, not included
+in this one-run approval. Evidence will be retained in `../reports/work/FDR-009/`.
+
+Outcome: completed30/30, exit0, PID13076,2026-09-28T06:26:37.297968Z–06:32:27.846988Z.
+350.552s process including revalidation /79.808s post-preflight phase,torch2.7.0/MPS.
+Every epoch met18/18 retention at0.85. Selected epoch3 by minimum eligible retention
+BCE0.000004791201 versus initialized0.000007347030; both TP9/FN0/FP0/TN9.
+Best SHA256 `e6e37ddc32c173ddf13e1e52756995a53cbbe1e1af18aa0e6da58b5767e47584`.
+Final epoch30 is preserved in last.pt, not selected. Training loss0.113968→0.000611891;
+not independent generalization evidence. All epoch selection scores/checkpoint bytes
+verified without new inference. No export, promotion, challenge scoring or second run.
+[Handoff](../reports/work/FDR-009/handoff.md). Next separately assign same-input48-frame
+development transfer comparison before considering any further training.
+
+## 2026-09-27 — SIM-FOCUS-DEV-01 training-data extension (no model run)
+
+Maintainer-authorized exclusive local Simulator/TTR collection produced40 new
+native-bracket pairs plus12 prior calibration pairs. All52 reviewed pairs admitted
+to training-only extension:273 total training pairs, unchanged9 retention pairs;
+original221 candidate pairs preserved.234 exported files/603,875,651 bytes verified;
+104 crops contain102 distinct pixels (two repeated positives, different paired
+negatives), no duplicate whole pairs or evaluation-overlap exclusions.
+Protocol `53d358966d36e0c36387eae84e9cdf488fb46676885ad908986fe5b8d445a4de`.
+
+Six procedural appearance presets and grid/media/dock context remain one conservative
+related Fixture group, not native Photos or independent evaluation. r02's native
+bracket failed; five equivalent nine-control geometry recipes were not attempted.
+No candidate experiment launched, run allocated, weights changed or challenge scored. Existing
+FDR-007 initialization/configuration,50/50 sampling,retention reference/selection
+and ten independent-coverage blockers are preserved. A retention-only development
+selection policy is a pending human decision, not an approval inferred from data
+admission. Actual trainer preflight completed with valid configuration and11 blockers
+(ten coverage requirements plus absent exact approval), no training output created.
+93 focused tests and offline Swift build/123 tests pass.
+[Handoff](../reports/work/SIM-FOCUS-DEV-01/expansion-handoff.md) and
+[decision](../reports/work/SIM-FOCUS-DEV-01/selection-decision.md).
+
+## 2026-09-27 — FOCUS-OFFLINE-DIAG-01 (cached analysis, no training run)
+
+Reproduced retained three-model fixed0.85 comparison from all3,744 probabilities;
+no new predictions/model loads by the diagnostic CLI. Both007/008 rank true focus
+strictly first on1/48 frames;008 paired medians focused0.001621/unfocused0.001355,
+with47/48 negative competitor margins. False positives decrease but unique selection
+remains1/48. Audited unchanged221+9 proposal and all460 bounds. Recommend source-
+separated cue/context data and full hard competitors, not a new training run.
+Configuration,retention/selection gates and shipped artifacts unchanged; challenge
+uninspected. [Evidence and next assignment](../reports/work/FOCUS-OFFLINE-DIAG-01/handoff.md).
+
 Chronological record of every training run and major technical decision in Phase 6. Written so that any future agent or engineer can reconstruct what was tried, why, and what the outcome was — without reading the full conversation history.
 
 Last updated: 2026-09-27

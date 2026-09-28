@@ -1,7 +1,23 @@
-# Capability inspection — source-backed, not live-qualified
+# Capability inspection — preparation and subsequent live evidence
+
+**Latest, 2026-09-27:** operator receipts verify local helper/app IPC, Office control
+connection, owned lease/session and two image exports; the maintainer confirms the
+images show the intended different focus states. This does not verify an approved
+remote transport from this chat, consumer byte receipt/crop QA, native focus labels
+or teardown. The initial matrix below is historical; see [coordination](coordination.md).
+The highest next integration priority is the
+[human-approved external-control request](../../../Research/Plans/TTRSupervisedExternalControl.md).
 
 2026-09-27. Current repository HEAD63d2ff4; initial working tree clean.
 Read-only source inspection, filesystem checks and scoped process inventory only.
+
+**Update17:46:02Z:** maintainer-supplied Sillycon help/status/device-list output
+verifies the matching helper reaches the running app. Office discovered but
+disconnected; pairing unknown. No active command/observation, NUIAK disabled.
+Capture ownership/provider/source binding/export remain unverified. Diagnostic-file
+sink code24 is separate from untested image export. Binary identity not pinned.
+SMB previously mounted/published/read back. The matrix below records historical
+initial preparation; current runtime evidence is in [coordination.md](coordination.md).
 
 | Capability | State | Evidence / next check |
 | --- | --- | --- |

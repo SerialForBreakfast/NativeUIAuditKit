@@ -1,6 +1,25 @@
 # NativeUIAuditKit — Completed Tasks
 
-Archive of finished phase work as of 2026-09-18.
+Archive of finished phase work and separately completed bounded executions.
+
+## Completed bounded execution — LOCAL-OFFICE-CAPTURE-01 (2026-09-28)
+
+Current Max TTR connected to authorized Office after operator permission approval,
+delivered one1920×1080 original PNG locally and passed visual/hash inspection.
+Owned lease released, connection disconnected and provider idle confirmed; failed
+first attempt retained. No producer/code/model changes or navigation. This closes
+the connection/capture test, not human-label intake, action-sequence recording or
+remote pairing qualification. [Handoff](reports/work/LOCAL-OFFICE-CAPTURE-01/handoff.md).
+
+## Completed bounded execution — FDR-009 (2026-09-27)
+
+The separately approved retention-selected Simulator development run completed30/30
+epochs on273 training/9 retention pairs. Selected epoch3; all epochs retain18/18
+classifications at0.85.106 focused/legacy Python tests and offline Swift build/123
+tests pass; actual preflight, bounded MPS execution and checkpoint/score verification
+complete. [Handoff](reports/work/FDR-009/handoff.md). This closes the single-run
+execution, not independent evaluation, export, promotion or a model qualification
+phase. Those remaining decisions stay in Tasks.md. Shipped models unchanged.
 
 **Open work lives only in [`Tasks.md`](Tasks.md).** Do not add remaining tasks here.
 When a task in `Tasks.md` is fully done, move its write-up into this file under the matching phase.

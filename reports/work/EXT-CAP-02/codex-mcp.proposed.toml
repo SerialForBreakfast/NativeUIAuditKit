@@ -1,0 +1,10 @@
+# Proposed project-scoped configuration; NOT installed or paired yet.
+# Explicit state is needed because current register --print omits --state-dir.
+[mcp_servers.tvtestrig-remote]
+command = "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-fssavpzkujakgqggjglqjvvrtyoo/Build/Products/Debug/TVTestRig.app/Contents/Helpers/tvtestrig-remote-mcp"
+args = []
+startup_timeout_sec = 20
+tool_timeout_sec = 180
+
+[mcp_servers.tvtestrig-remote.env]
+TVTESTRIG_REMOTE_STATE = "/Users/josephmccraw/Documents/GitHub/NativeUIAuditKit/reports/work/EXT-CAP-02/client-state"

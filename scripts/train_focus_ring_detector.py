@@ -102,6 +102,7 @@ def is_hard_negative(sample: dict) -> bool:
 
 def checkpoint_improved(loss, best, configuration):
     earliest = {"minimum-native-validation-bce-earliest-tie",
+                "minimum-retention-bce-floor-earliest-tie",
                 "minimum-equal-source-validation-bce-retention-floor-earliest-tie"}
     return loss < best or (loss == best and configuration.get("selection") not in earliest)
 
@@ -138,7 +139,7 @@ def main() -> int:
             report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name, args.experiment_approval)
         except (OSError, ValueError, KeyError, TypeError) as error:
             print(json.dumps({"launchEligible": False, "blockers": [str(error)]})); return 2
-        if report.get("formatVersion") == "focus-appearance-preflight-v1":
+        if report.get("formatVersion") in {"focus-appearance-preflight-v1", "focus-retention-preflight-v1"}:
             for flag, field in (("--epochs","epochs"),("--batch","batch"),("--lr","lr"),("--model","model")):
                 if any(x == flag or x.startswith(flag+"=") for x in sys.argv[1:]) and getattr(args,field) != report["configuration"][field]:
                     print(json.dumps({"launchEligible":False,"blockers":["protocol_configuration_override"]})); return 2
@@ -287,6 +288,9 @@ def main() -> int:
         result = {"loss": total_loss / max(1, count), "predictions": predictions}
         if report.get("formatVersion") == "focus-appearance-preflight-v1":
             from focus_appearance_experiment import selection_metrics
+            result.update(selection_metrics(predictions,val,report["selection"]))
+        elif report.get("formatVersion") == "focus-retention-preflight-v1":
+            from focus_retention_experiment import selection_metrics
             result.update(selection_metrics(predictions,val,report["selection"]))
         return result
     history = []

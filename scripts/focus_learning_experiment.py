@@ -170,6 +170,12 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get("version")=="focus-retention-experiment-v1":
+        from focus_retention_experiment import load_protocol as retention_protocol
+        return retention_protocol(path,arm,run_name,approval_path)
+    if doc.get("version")=="focus-training-extension-v1":
+        from focus_training_extension import load_protocol as extension_protocol
+        return extension_protocol(path,arm,run_name,approval_path)
     if doc.get("version")=="focus-appearance-experiment-v1":
         from focus_appearance_experiment import load_protocol as appearance_protocol
         return appearance_protocol(path,arm,run_name,approval_path)
