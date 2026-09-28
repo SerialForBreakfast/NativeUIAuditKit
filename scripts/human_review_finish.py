@@ -6,7 +6,7 @@ import human_annotation_review as h
 
 
 def prepare_document(frame, doc):
-    """Only propose confirmation flags/local IDs; never infer bounds or focus."""
+    """Propose binary checkbox defaults, confirmation and IDs for explicit consent."""
     proposed = copy.deepcopy(doc)
     h.bool_flags(proposed.get("flags"), h.FRAME_FLAGS)
     shapes = proposed["shapes"]
@@ -21,6 +21,10 @@ def prepare_document(frame, doc):
     assigned = []
     for n, shape in enumerate(shapes, 1):
         h.bool_flags(shape.get("flags"), h.SHAPE_FLAGS)
+        # Match the binary editor: unchecked Focused means unfocused. Preserve
+        # true/true conflicts for adjudication; preview never writes the source.
+        if not shape['flags']['focused'] and not shape['flags']['unfocused']:
+            shape['flags']['unfocused'] = True
         if shape.get("group_id") is None:
             shape["group_id"] = next(available)
             assigned.append(dict(box=n, groupID=shape["group_id"]))
@@ -30,11 +34,14 @@ def prepare_document(frame, doc):
     return proposed, assigned
 
 
-def preview(batch_path):
+def preview(batch_path, frame_ids=None):
     """Read-only whole-batch preview; blocked frames are never proposed for writes."""
     batch_path = h.local(batch_path)
     batch_ref = h.ref(batch_path)
     batch = h.validate_batch(batch_path)
+    scope = list(frame_ids) if frame_ids is not None else [f['id'] for f in batch['frames']]
+    h.require(len(scope) == len(set(scope)) and set(scope) <= {f['id'] for f in batch['frames']},
+              'invalid_review_scope')
     editor = batch_path.parent / "editor"
     expected = {f["editorStem"]+suffix for f in batch["frames"] if f["disposition"] == "imported"
                 for suffix in (".png", ".json")}
@@ -49,6 +56,9 @@ def preview(batch_path):
         path = editor / (frame["editorStem"]+".json")
         row["source"] = h.ref(path)
         row["imagePath"] = str(path.with_suffix(".png"))
+        if frame['id'] not in scope:
+            row['issues'] = ['outside_selected_review_batch']
+            continue
         try:
             doc = h.read(path)
             proposed, assigned = prepare_document(frame, doc)
@@ -63,20 +73,25 @@ def preview(batch_path):
         h.require(h.ref(path) == row["source"], "annotations_changed_during_preview")
     h.require(h.ref(batch_path) == batch_ref, "batch_changed")
     return dict(version="human-review-finish-preview-v1", **h.FLAGS,
-                batch=batch_ref, frames=rows)
+                batch=batch_ref, selectedFrames=scope, frames=rows)
 
 
-def apply_preview(plan, output, *, reviewer, attested, reviewer_kind="human"):
+def apply_preview(plan, output, *, reviewer, attested, reviewer_kind="human", complete_frames=False):
     """Explicit consent, backups and stale-state checks precede all annotation writes."""
     h.require(attested is True, "explicit_bulk_attestation_required")
     h.text(reviewer)
     h.require(bool(reviewer.strip()), "reviewer_required")
     h.require(reviewer_kind in ("human", "software-test"), "invalid_reviewer_kind")
+    h.require(type(complete_frames) is bool and (not complete_frames or reviewer_kind == 'human'),
+              'completeness_requires_human')
     batch_path = h.checked(h.ROOT, plan["batch"])
-    current = preview(batch_path)
+    current = preview(batch_path, plan.get('selectedFrames'))
     h.require(h.digest(current) == h.digest(plan), "review_preview_stale_reopen_finish_review")
     ready = [r for r in current["frames"] if r["ready"]]
     h.require(bool(ready), "no_ready_frames")
+    if complete_frames:
+        h.require(all(any(not s['flags']['rejected'] for s in row['document']['shapes']) for row in ready),
+                  'completeness_requires_reviewed_controls')
     output = h.fresh(output)
     output.mkdir(parents=True)
     backup = output / "before"
@@ -94,7 +109,7 @@ def apply_preview(plan, output, *, reviewer, attested, reviewer_kind="human"):
         for row in ready:
             source = h.checked(h.ROOT, row["source"])
             h.write(staged / source.name, row["document"])
-        h.require(h.digest(preview(batch_path)) == h.digest(plan), "review_preview_stale_before_write")
+        h.require(h.digest(preview(batch_path, plan.get('selectedFrames'))) == h.digest(plan), "review_preview_stale_before_write")
         expected = {r["source"]["path"]: r["source"]["sha256"] for r in current["frames"] if "source" in r}
         for row in ready:
             source = h.checked(h.ROOT, row["source"])
@@ -112,6 +127,10 @@ def apply_preview(plan, output, *, reviewer, attested, reviewer_kind="human"):
                        reviewer=reviewer.strip(), reviewerKind=reviewer_kind,
                        attested=True, revision=h.ref(output / "revision/revision.json"),
                        frameCounts=revision["frameCounts"], controlCounts=revision["controlCounts"])
+        if complete_frames:
+            from human_regression_review import attest_completeness
+            attest_completeness(output / 'revision/revision.json', applied, output / 'completeness.json')
+            receipt['completeness'] = h.ref(output / 'completeness.json')
         h.write(output / "receipt.json", receipt, sealed=True)
         return receipt
     except Exception as error:

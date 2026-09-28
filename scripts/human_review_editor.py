@@ -5,7 +5,7 @@ import os
 import sys
 
 from human_annotation_review import (EDITOR, FRAME_FLAGS, SHAPE_FLAGS, ROOT, local,
-                                     require, taxonomy, validate_batch)
+                                     require, review_labels, validate_batch)
 
 
 def configure(runtime):
@@ -39,7 +39,7 @@ def configuration():
     # that function, not the editor, using its pinned complete bundled defaults.
     config = yaml.safe_load((Path(labelme.__file__).parent/"config/default_config.yaml").read_text())
     config.update(store_data=False, auto_save=False, keep_prev=False,
-                  labels=taxonomy(), validate_label="exact", flags=list(FRAME_FLAGS),
+                  labels=review_labels(), validate_label="exact", flags=list(FRAME_FLAGS),
                   label_flags={".*": list(SHAPE_FLAGS)})
     for key in ("create_polygon", "create_circle", "create_line", "create_point", "create_linestrip"):
         config["shortcuts"][key] = None
@@ -50,14 +50,117 @@ def configuration():
     return config
 
 
-def window(batch_path, runtime):
+def window(batch_path, runtime, queue_path=None, batch_index=None):
     batch_path = local(batch_path)
     batch = validate_batch(batch_path)
+    queue_path = local(queue_path) if queue_path else None
+    from human_regression_review import queue_scope
+    require(queue_path is not None or batch_index is None, 'batch_index_requires_queue')
+    scope = queue_scope(local(queue_path), batch_path, batch_index) if queue_path else None
+    require(scope is None or bool(scope), 'empty_review_queue')
     runtime = configure(runtime)
     from qtpy import QtCore, QtGui, QtWidgets
     from labelme.app import MainWindow
+    from labelme.widgets.label_dialog import LabelDialog
+
+    class FocusLabelDialog(LabelDialog):
+        def setFlags(self, flags):
+            super().setFlags({k: bool(flags.get(k, False)) for k in SHAPE_FLAGS if k != 'unfocused'})
+            for i in range(self.flagsLayout.count()):
+                self.flagsLayout.itemAt(i).widget().installEventFilter(self)
+
+        def getFlags(self):
+            flags = super().getFlags()
+            flags['unfocused'] = not flags.get('focused', False)
+            return flags
+
+        def validate(self):
+            if self.edit.text().strip() in review_labels():
+                self.edit.setText(self.edit.text().strip())
+                super().validate()
+
+        def eventFilter(self, watched, event):
+            if event.type() == QtCore.QEvent.KeyPress and event.key() in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Enter):
+                self.validate()
+                return True
+            return super().eventFilter(watched, event)
+
     class RectangleReviewWindow(MainWindow):
         """Constrain the pinned editor's drawing entrypoint, not its geometry."""
+        def refreshFocusList(self, pinned=True):
+            import html
+            if not hasattr(self, 'labelList') or not hasattr(self, 'canvas'):
+                return
+            model = self.labelList.model()
+            role = QtCore.Qt.UserRole + 17
+            focused = 0
+            previous = model.blockSignals(True)
+            try:
+                for index, shape in enumerate(self.canvas.shapes):
+                    try:
+                        item = self.labelList.findItemByShape(shape)
+                    except ValueError:
+                        continue
+                    flags = shape.flags or {}
+                    active = bool(flags.get('focused')) and not flags.get('rejected')
+                    focused += active
+                    if flags.get('rejected'):
+                        state, color = 'EXCLUDED', '#999999'
+                    elif flags.get('focused') and flags.get('unfocused'):
+                        state, color = '! CONFLICT', '#e69f00'
+                    elif active:
+                        state, color = '● FOCUSED', '#009e73'
+                    elif flags.get('unfocused'):
+                        state, color = '○ unfocused', '#999999'
+                    else:
+                        state, color = '○ unfocused (default)', '#999999'
+                    label = html.escape(shape.label)
+                    identity = f' ({shape.group_id})' if shape.group_id is not None else ''
+                    symbol = '×' if flags.get('rejected') else '⚠' if flags.get('focused') and flags.get('unfocused') else '●' if active else '○'
+                    item.setText(f'<font color="{color}">{symbol}</font> {label}{identity}')
+                    item.setToolTip(f'{state}: {shape.label}{identity}. Checkbox controls visibility, not focus.')
+                    item.setData((0 if active or not pinned else 1)*1000000 + index, role)
+            finally:
+                model.blockSignals(previous)
+            model.setSortRole(role)
+            model.sort(0)
+            self.labelList.viewport().update()
+            if hasattr(self, 'shape_dock'):
+                message = 'none marked' if not focused else '1 focused' if focused == 1 else f'⚠ {focused} focused — review'
+                self.shape_dock.setWindowTitle('Control boxes — '+message)
+
+        def setDirty(self):
+            super().setDirty()
+            self.refreshFocusList()
+
+        def saveLabels(self, filename):
+            # Stock serialization iterates the list, not canvas stacking order.
+            # Temporarily restore original order; pinning is presentation only.
+            self.refreshFocusList(pinned=False)
+            try:
+                return super().saveLabels(filename)
+            finally:
+                self.refreshFocusList()
+
+        def loadShapes(self, shapes, replace=True):
+            super().loadShapes(shapes, replace=replace)
+            self.refreshFocusList()
+
+        def importDirImages(self, *args, **kwargs):
+            if getattr(self, '_frozenReviewQueue', False):
+                return
+            return super().importDirImages(*args, **kwargs)
+
+        def importDroppedImageFiles(self, *args, **kwargs):
+            if getattr(self, '_frozenReviewQueue', False):
+                return
+            return super().importDroppedImageFiles(*args, **kwargs)
+
+        def openFile(self, *args, **kwargs):
+            if getattr(self, '_frozenReviewQueue', False):
+                return
+            return super().openFile(*args, **kwargs)
+
         def toggleDrawMode(self, edit=True, createMode="rectangle"):
             require(edit or createMode == "rectangle", "rectangle_only_review")
             return super().toggleDrawMode(edit, createMode="rectangle")
@@ -91,6 +194,7 @@ def window(batch_path, runtime):
                                  if os.path.abspath(entry) == os.path.abspath(filename)), filename)
             result = super().loadFile(filename)
             self.refreshFrameFlags()
+            self.refreshFocusList()
             return result
 
         def resetState(self):
@@ -111,11 +215,14 @@ def window(batch_path, runtime):
                 if self.dirty:
                     return
             try:
-                plan = bulk.preview(batch_path)
+                if queue_path:
+                    require(queue_scope(queue_path, batch_path, batch_index) == scope, 'queue_changed')
+                plan = bulk.preview(batch_path, scope)
             except (ValueError, OSError, KeyError, TypeError) as error:
                 QtWidgets.QMessageBox.warning(self, "Review blocked", str(error))
                 return
             ready = [r for r in plan["frames"] if r["ready"]]
+            displayed = [r for r in plan['frames'] if r['id'] in plan['selectedFrames']]
             dialog = QtWidgets.QDialog(self)
             dialog.setObjectName("finishReviewDialog")
             dialog.setWindowTitle("Finish review — confirm ready frames")
@@ -123,15 +230,15 @@ def window(batch_path, runtime):
             layout = QtWidgets.QVBoxLayout(dialog)
             summary = QtWidgets.QLabel(
                 f"{len(ready)} ready frames / {sum(r['boxes'] for r in ready)} boxes; "
-                f"{len(plan['frames'])-len(ready)} frames need attention.\n"
+                f"{len(displayed)-len(ready)} displayed frames need attention.\n"
                 "Only Ready frames will be confirmed. Pending frames remain untouched.\n"
-                "Missing local IDs on new controls are assigned automatically. No focus states are inferred.")
+                "Missing local IDs are assigned automatically. Unchecked Focused means unfocused on confirmation; conflicts still require review.")
             summary.setWordWrap(True)
             layout.addWidget(summary)
             tree = QtWidgets.QTreeWidget()
             tree.setObjectName("reviewFrames")
             tree.setHeaderLabels(["Frame", "Screen", "Boxes", "Status"])
-            for row in plan["frames"]:
+            for row in displayed:
                 item = QtWidgets.QTreeWidgetItem([row["id"], row["screen"], str(row["boxes"]),
                     f"Ready (+{len(row['assignedIDs'])} local IDs)" if row["ready"] else "Needs attention"])
                 item.setData(0, QtCore.Qt.UserRole, row)
@@ -166,6 +273,11 @@ def window(batch_path, runtime):
                 "those frames are settled and their content is approved.")
             consent.setObjectName("bulkAttestation")
             layout.addWidget(consent)
+            completeness = QtWidgets.QCheckBox(
+                'Also confirm: ALL visible focusable controls are included in every Ready frame.\n'
+                'Optional — leave unchecked if anything is missing or uncertain.')
+            completeness.setObjectName('completeFrameAttestation')
+            layout.addWidget(completeness)
             buttons = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Cancel)
             confirm = buttons.addButton("Confirm ready frames and finish", QtWidgets.QDialogButtonBox.AcceptRole)
             confirm.setObjectName("confirmReadyFrames")
@@ -183,7 +295,8 @@ def window(batch_path, runtime):
             output = batch_path.parent / "review-revisions" / (stamp+"-"+uuid4().hex[:8])
             current_image = self.imagePath
             try:
-                receipt = bulk.apply_preview(plan, output, reviewer=reviewer.text(), attested=consent.isChecked())
+                receipt = bulk.apply_preview(plan, output, reviewer=reviewer.text(), attested=consent.isChecked(),
+                                             complete_frames=completeness.isChecked())
             except (ValueError, OSError, KeyError, TypeError) as error:
                 if output.exists() and current_image:
                     # Current edits were saved before preview; refresh any partial
@@ -203,6 +316,66 @@ def window(batch_path, runtime):
             stem = Path(self.imagePath).stem if self.imagePath else None
             frame = next((f for f in batch["frames"] if f.get("editorStem") == stem), None)
             return (frame["screen"], self.image.width(), self.image.height()) if frame else None
+
+        def saveBoxPreset(self):
+            import human_review_presets as presets
+            if not self.imagePath:
+                return
+            shapes = self.canvas.selectedShapes or self.canvas.shapes
+            name, ok = QtWidgets.QInputDialog.getText(self, 'Save rectangle preset',
+                'Name (for example Home grid or Settings navigation):')
+            if not ok:
+                return
+            try:
+                require(all(s.shape_type == 'rectangle' and len(s.points) == 2 for s in shapes), 'rectangles_only')
+                boxes = [dict(label=s.label, points=[
+                    [min(p.x() for p in s.points), min(p.y() for p in s.points)],
+                    [max(p.x() for p in s.points), max(p.y() for p in s.points)]]) for s in shapes]
+                presets.save(name.strip(), (self.image.width(), self.image.height()), boxes)
+                self.status(f'Saved preset {name}: {len(boxes)} boxes, no focus or approval flags.', 15000)
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                self.clipboardWarning(str(error))
+
+        def loadBoxPreset(self):
+            import human_review_presets as presets
+            from labelme.shape import Shape
+            if not self.imagePath:
+                return
+            paths = sorted(presets.DIRECTORY.glob('*.json'))
+            if not paths:
+                self.clipboardWarning('No presets yet. Draw or select boxes, then Save preset.')
+                return
+            name, ok = QtWidgets.QInputDialog.getItem(self, 'Load rectangle preset',
+                'Choose a compatible layout. Boxes are added; adjust geometry and focus afterward.',
+                [p.stem for p in paths], 0, False)
+            if not ok:
+                return
+            try:
+                boxes = presets.load(next(p for p in paths if p.stem == name),
+                                     (self.image.width(), self.image.height()))
+                require(len(self.canvas.shapes) + len(boxes) <= 100, 'too_many_boxes')
+                used = {s.group_id for s in self.canvas.shapes}
+                ids = iter(i for i in range(1, 100001) if i not in used)
+                shapes = []
+                for box in boxes:
+                    shape = Shape(label=box['label'], shape_type='rectangle', group_id=next(ids),
+                                  flags={key: False for key in SHAPE_FLAGS})
+                    for x, y in box['points']:
+                        shape.addPoint(QtCore.QPointF(x, y))
+                    shape.close()
+                    shapes.append(shape)
+                self.toggleDrawMode(True)
+                self.loadShapes(shapes, replace=False)
+                for i in range(self.flag_widget.count()):
+                    item = self.flag_widget.item(i)
+                    if item.text() == 'reviewed':
+                        item.setCheckState(QtCore.Qt.Unchecked)
+                self.shapeSelectionChanged(shapes)
+                self.canvas.update()
+                self.setDirty()
+                self.status(f'Loaded {len(shapes)} unconfirmed boxes. Adjust bounds and set focus states.', 15000)
+            except (ValueError, OSError, KeyError, TypeError, StopIteration) as error:
+                self.clipboardWarning(str(error))
 
         def clipboardWarning(self, message):
             QtWidgets.QMessageBox.warning(self, "Box copy/paste", message)
@@ -285,6 +458,52 @@ def window(batch_path, runtime):
     finally:
         QtCore.QSettings = settings_type
     require(local(result.settings.fileName()).is_relative_to(runtime), "external_qt_settings")
+    old_dialog = result.labelDialog
+    config = result._config
+    result.labelDialog = FocusLabelDialog(parent=result, labels=config['labels'],
+        sort_labels=config['sort_labels'], show_text_field=config['show_label_text_field'],
+        completion=config['label_completion'], fit_to_content=config['fit_to_content'], flags=config['label_flags'])
+    old_dialog.deleteLater()
+    dialog = result.labelDialog
+    dialog.editDescription.setPlaceholderText('Optional note — normally leave blank')
+    dialog.edit.setToolTip('Detector class, or focus:tabItem / focus:otherFocusable for focus-only annotation')
+    dialog.labelList.setToolTip('focus: roles do not add detector classes. Tab bar means the container, not its items.')
+    for widget in [dialog, *dialog.findChildren(QtWidgets.QWidget)]:
+        widget.installEventFilter(dialog)
+    dialog.buttonBox.button(QtWidgets.QDialogButtonBox.Ok).setDefault(True)
+    dialog.buttonBox.button(QtWidgets.QDialogButtonBox.Cancel).setAutoDefault(False)
+    if scope is not None:
+        # Keep the stock navigation and visible list backed by the same membership.
+        paths = {f['id']: 'editor/'+f['editorStem']+'.png' for f in batch['frames'] if f['disposition'] == 'imported'}
+        items = {result.fileListWidget.item(i).text(): result.fileListWidget.item(i).clone()
+                 for i in range(result.fileListWidget.count())}
+        result.fileListWidget.blockSignals(True)
+        result.fileListWidget.clear()
+        for frame_id in scope:
+            result.fileListWidget.addItem(items[paths[frame_id]])
+        result.fileListWidget.blockSignals(False)
+        result.loadFile(paths[scope[0]])
+        result._frozenReviewQueue = True
+        result.fileSearch.setEnabled(False)
+        result.fileSearch.setPlaceholderText('Frozen review batch — use Next/Previous')
+        result.actions.open.setEnabled(False)
+        result.setAcceptDrops(False)
+
+    class RectangleDoubleClick(QtCore.QObject):
+        def eventFilter(self, watched, event):
+            canvas = result.canvas
+            if (event.type() == QtCore.QEvent.MouseButtonDblClick and
+                    event.button() == QtCore.Qt.LeftButton and canvas.editing()):
+                point = canvas.transformPos(event.localPos())
+                for shape in reversed(canvas.shapes):
+                    if shape.shape_type == 'rectangle' and canvas.isVisible(shape) and shape.containsPoint(point):
+                        canvas.selectShapes([shape])
+                        result.editLabel(result.labelList.findItemByShape(shape))
+                        event.accept()
+                        return True
+            return False
+    result.rectangleDoubleClick = RectangleDoubleClick(result.canvas)
+    result.canvas.installEventFilter(result.rectangleDoubleClick)
     forbidden = [getattr(result.actions, name) for name in
                  ("createMode", "createCircleMode", "createLineMode", "createPointMode", "createLineStripMode")]
     for action in forbidden:
@@ -307,6 +526,13 @@ def window(batch_path, runtime):
     # Stock copy/paste live only in a canvas context menu. Register them in the
     # main menu too so keyboard shortcuts do not depend on opening that menu.
     result.actions.editMenu = clipboard_actions + (None,) + result.actions.editMenu
+    preset_actions = []
+    for caption, callback in [('Save preset…', result.saveBoxPreset), ('Load preset…', result.loadBoxPreset)]:
+        action = QtWidgets.QAction(caption, result)
+        action.triggered.connect(callback)
+        preset_actions.append(action)
+    result.actions.editMenu = tuple(preset_actions) + (None,) + result.actions.editMenu
+    result.actions.tool = tuple(preset_actions) + result.actions.tool
     toolbar = list(result.actions.tool)
     toolbar.insert(toolbar.index(result.actions.copy), select_all)
     result.actions.tool = tuple(toolbar)
@@ -349,7 +575,8 @@ def window(batch_path, runtime):
         action = getattr(result.actions, name)
         action.setText(caption)
         action.setIconText(caption.replace(" ", "\n", 1))
-    result.shape_dock.setWindowTitle("Control boxes")
+    result.labelList.setDragDropMode(QtWidgets.QAbstractItemView.NoDragDrop)
+    result.refreshFocusList()
     result.populateModeActions()
     result.toggleDrawMode(True)
     result.setWindowTitle("NUIAK diagnostic review — save edits, then Finish batch")
@@ -360,18 +587,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("batch")
     parser.add_argument("--frame", help="Start at an exact imported frame ID")
+    parser.add_argument('--queue', help='Frozen diagnostic regression queue')
+    parser.add_argument('--batch-index', type=int, help='One-based eight-frame queue slice')
     parser.add_argument("--runtime", default=str(ROOT/"reports/work/HUMAN-REVIEW-01/runtime"))
     args = parser.parse_args()
     configure(args.runtime)
     from qtpy import QtWidgets
     app = QtWidgets.QApplication([sys.argv[0]])
-    widget = window(args.batch, args.runtime)
+    widget = window(args.batch, args.runtime, args.queue, args.batch_index)
     widget.show()
     if args.frame:
         # window() changes cwd for short numbered file-list entries.
         batch = validate_batch(os.path.join(os.getcwd(), "batch.json"))
         frame = next((f for f in batch["frames"] if f["id"] == args.frame and f["disposition"] == "imported"), None)
         require(frame is not None, "unknown_start_frame")
+        require('editor/'+frame['editorStem']+'.png' in widget.imageList, 'start_frame_outside_queue')
         app.processEvents()
         widget.loadFile("editor/"+frame["editorStem"]+".png")
     sys.exit(app.exec_())

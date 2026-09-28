@@ -2,6 +2,15 @@
 
 Archive of finished phase work and separately completed bounded executions.
 
+## Completed bounded execution — FOCUS-REVIEW-PREP-01 (2026-09-28)
+
+Current NUIAK review-tool worker delivered the Apple/system operator checklist,
+frozen eight-frame review queues, exact-repeat/conflict accounting, optional batch
+completeness receipts, family/class/focus-treatment coverage and rectangle double-click
+label editing.168 Python tests,4 actual Qt interaction tests and offline Swift
+build/123 tests pass. Retained smoke CLI exercised; all8 saved annotations unchanged.
+No reannotation, capture, inference or model change. [Handoff](reports/work/FOCUS-REVIEW-PREP-01/handoff.md).
+
 ## Completed bounded execution — LOCAL-OFFICE-CAPTURE-01 (2026-09-28)
 
 Current Max TTR connected to authorized Office after operator permission approval,

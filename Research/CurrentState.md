@@ -11,6 +11,117 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**Trial02 crop QA/audit complete:**82/82 production crops from8 reviewed frames,
+82 distinct crop pixels,8 focused/74 unfocused. No hard audit issues. One near-frame
+warning visually resolved as Games→Apps focus change; preserve both. Static labels
+remain auxiliary annotations, not automatically focusable candidates. Next is
+role-aware development-admission proposal (including settled-state reconciliation),
+not training/inference. Circle-only focus row indicators implemented;11 Qt tests
+and offline Swift checks pass. [Handoff](../reports/work/FOCUS-REGRESSION-V2/office-trial-02/qa-handoff.md).
+
+**2026-09-28 22:51Z trial02 human review saved and verified:** revision
+20260928T225131Z-056fc495 contains8 reviewed frames/82 reviewed controls, including
+tabItem focus roles. Snapshot-bound revision validation passes; separate human
+completeness receipt covers all8 frames. Diagnostic-only, trainingEligible=false.
+Production crop QA/audit remain next; no inference or training performed.
+
+**Binary Finish review corrected:** unchecked Focused proposes unfocused during
+explicit confirmation; legacy unknown flags no longer block the binary workflow.
+Actual saved batch read-only preview8/8 ready, no automatic confirmation.59 Python,
+11 Qt tests and offline Swift build/test pass; editor restart pending save/close.
+
+**Annotation focus indicators:** focused controls now pin first with explicit
+state markers and count/multiple-focus warning. Selection, geometry, canvas and
+saved order remain unchanged.11 Qt tests and offline Swift checks pass; current
+window must be saved/closed/reopened. This does not relax multi-focus admission.
+
+**2026-09-28 focus-review taxonomy gap addressed:** individual tab items and other
+unmapped focusable controls can now be annotated as local focus-only roles.
+Editor, presets, Finish review, completeness, diagnostic coverage/audit and
+production crops support them.77 Python/9 Qt tests and offline Swift build/test
+pass. No detector IDs, native sidecar schema or weights changed; new-role model
+admission remains separate. User saved/closed; editor reopened at App Store tabs.
+[Handoff](../reports/work/HUMAN-FOCUS-ROLES/handoff.md).
+
+**2026-09-28 rectangle presets:** local annotation editor now has Save/Load preset.
+Follow-up: one Focused checkbox (unchecked saves unfocused), Enter accepts valid
+labels throughout the dialog, optional description; eight Qt tests pass.
+Layouts persist across batches with fresh IDs and no inherited focus/approval.
+Six Qt tests and offline Swift build/test pass; user window restart pending
+save/close. No model or data admission change.
+[Handoff](../reports/work/HUMAN-REVIEW-PRESETS/handoff.md).
+
+**22:05Z Office recording stopped:** trial02 completed166 actions/1082 observations.
+Cleanup reports owned_provider_released; Office control connected. Source retained;
+1009 images hash-verified,73 repeated pixel observations,24 producer-settled candidates.
+Export failed serviceUnavailable; exact cause unknown, coordinator healthy afterward.
+No recapture. Eight-image direct local diagnostic intake is now prepared and open
+in the rectangle editor: five Settings and three App Store frames. Metadata and
+original image hashes are preserved; the export defect does not block annotation.
+Remaining recording is archived, not a human assignment. No inference/training or qualification claim.
+[Session and non-blocking delivery-profile request](../reports/work/FOCUS-REGRESSION-V2/office-trial-02/session.md).
+
+**2026-09-28 offline review preparation complete:** FOCUS-REVIEW-PREP-01 adds
+rectangle double-click editing, balanced eight-frame queues with compatible exact
+duplicate omission (raw history retained), and one optional completeness assertion
+in Finish review. Hidden frames cannot be bulk-confirmed. Coverage is reported by
+family/class/focus treatment; unknowns remain explicit. Retained smoke dry run:
+7 selected/1 deferred by layout cap, no exact full-frame duplicates; all8 annotations
+unchanged. No new human completeness claimed.168 Python +4 Qt tests and offline Swift
+build/123 tests pass. [Handoff](../reports/work/FOCUS-REVIEW-PREP-01/handoff.md).
+The recorder blocker below is separate; no new capture or model execution occurred.
+
+**Immediate priority change (2026-09-28):** maintainer requests a substantially more
+diverse real-world development regression set and annotation, before training-data
+collection. Keep the8-frame set as a smoke test. Proposed v2 covers24 distinct
+screen situations/~48–72 selected frames across multiple interaction families and
+apps. Maintainer chose Apple apps, Settings and safe OS UI, and approved local
+human-operated Office recording. The new running build advertises MCP recording
+controls, but one record.start returned domainFailure/unsupportedCapability.
+Postcheck: recording false,0 actions/frames; control connection preserved.
+No retry or chat-paced fallback. Producer diagnosis/supported setup or matched repair
+was the capture blocker; no model or remote-pairing prerequisite.
+**20:41Z recheck:** newer running Max build97201 contains the producer's repaired
+`startActionRecording(destination:title:)` overload. Matching MCP status works.
+Office is currently disconnected, video idle, recorder off, no evidence session.
+Repair is present, but start/action/stop/export/import has not been live-qualified.
+Next is operator connection/availability confirmation and a bounded recording trial,
+not another unqualified claim that the whole workflow is fixed.
+[Repair/readiness evidence](../reports/work/FOCUS-REGRESSION-V2/recorder-recheck-2038/handoff.md).
+**Subsequent authorized trial:** user confirmed safe connected Office; live coordinator
+confirms connected despite stale device.list saying disconnected. One record.start
+now returns persistenceFailed for the project-local destination, not unsupportedCapability.
+Postflight recorder off, zero frames/actions; no retry or connection teardown.
+Next blocker is producer diagnosis of the exact storage write/export boundary.
+[Trial evidence](../reports/work/FOCUS-REGRESSION-V2/office-trial-01/handoff.md).
+**21:03Z new-build review:** actual build checkout Developer/TVTestRig is at0d9389ab;
+running PID99680 includes new destination resolver and recorder CLI help. Office
+coordinator connected; recorder off. Resolver can silently re-anchor absolute paths
+outside TTR's root; prior consumer request was absolute, not relative as producer
+diagnosis states. No new start until exact output/export contract is verified.
+[Review evidence](../reports/work/FOCUS-REGRESSION-V2/recorder-recheck-2102/handoff.md).
+**21:49Z candidate recheck:** running build3876/source7ddd182b fixes the reviewed
+path contract and adds prepare/export. Office connected. Actual no-write prepare
+succeeds in TTR-managed storage and rejects direct NUIAK output. Need user approval
+for that outside-project recording location followed by project-local export; no
+further producer code blocker established. Live capture/export/schema2 intake remain
+unqualified. [Preflight](../reports/work/FOCUS-REGRESSION-V2/recorder-recheck-2149/handoff.md).
+[Start failure](../reports/work/FOCUS-REGRESSION-V2/recorder-readiness/handoff.md).
+[Collection/annotation proposal](Plans/RealWorldFocusRegressionV2.md).
+
+**2026-09-28 approved human development comparison complete for review:**
+HUMAN-REVIEW-04 scored all113 controls with both exact models at0.85. Shipped
+FocusRing detects4/8 focused controls with11 false positives; FDR-009 epoch3 detects
+1/8 with15. Shipped passes both explicit Photos pairs; candidate passes neither.
+Both miss the focused Photos Home tile and General Settings row. No promotion or
+training; the whole8-frame session is reserved for development regression.154 Python
+tests and offline Swift build/123 tests pass.37 numbered error sheets and a ranked
+matched-data assignment are delivered. Source independence/complete-frame selection
+remain unqualified; original diagnostic flags unchanged.
+[Results](../reports/work/HUMAN-REVIEW-04/results.md) ·
+[Handoff](../reports/work/HUMAN-REVIEW-04/handoff.md) ·
+[Next assignment](../reports/work/HUMAN-REVIEW-04/next-assignment.md).
+
 **2026-09-28 actual human review and crop/audit tranche complete for review:**
 Joe explicitly completed8/8 Office frames and113/113 controls in Finish review;
 the immutable revision and saved annotations match. Both explicit Photos pairs
@@ -24,9 +135,9 @@ The lightweight local Labelme workflow includes rectangles, copy/paste, local ID
 Finish review, current-frame flag toggle and Command-arrow navigation.145 Python
 tests and offline Swift build/123 tests pass. Static audit queues and all eight
 production crop sheets are available. No new capture, inference or training.
-Next human decision: approve the proposed development-evaluation lane and one
-fixed shipped-vs-FDR-009 comparison. Recommend reserving this whole correlated
-batch for regression, not training. Existing diagnostic admission flags unchanged.
+The subsequent development-evaluation lane/comparison was approved and completed
+above. This whole correlated batch is reserved for regression, not training.
+Existing diagnostic admission flags remain unchanged.
 [HR2 handoff](../reports/work/HUMAN-REVIEW-02/handoff.md) ·
 [Approval proposal](Plans/HumanFocusAdmissionDecision.md).
 [Operator guide](../reports/work/HUMAN-REVIEW-01/OperatorGuide.md) ·

@@ -1,5 +1,27 @@
 # NativeUIAuditKit — Experiment Log
 
+## HUMAN-REVIEW-04 — approved development comparison (2026-09-28)
+
+Before execution: maintainer approved one fixed shipped CoreML CPU versus FDR-009
+epoch3 PyTorch CPU comparison. Eight Office frames,113 controls (8 focused/105
+unfocused),2 explicit Photos pairs, threshold0.85 and production16%/256 crops.
+New human-label development lane; all members excluded from training, unknown
+complete-frame coverage and source independence. No training run allocated, export,
+promotion or challenge scoring. Runtime is the resident focus-export-01 environment.
+Execution/metrics and frozen identities will be recorded under
+`reports/work/HUMAN-REVIEW-04/`; model gate remains unassessed.
+
+**Outcome:** one run complete,113/113 scores per model, no failed inputs/predictions.
+Shipped TP4/FN4/FP11/TN94; FDR-009 TP1/FN7/FP15/TN90. Recall50% versus12.5%;
+both Photos pairs pass shipped and fail candidate. All37 errors have numbered
+context/crop sheets. Exact-pixel sensitivity111 crops changes only TN, not errors.
+Pre/postflight hashes/runtime matched; no exact overlap with retained role indexes,
+independence still unknown.154 Python and123 Swift tests pass. A post-run nonfinite
+failure-receipt hardening did not repeat inference; exact executed code is archived,
+metric AST unchanged and results replayed. Next: targeted matched Home/Photos/Settings
+data under separate admission/collection approval, not an automatic new run.
+[Results and evidence](../reports/work/HUMAN-REVIEW-04/handoff.md).
+
 ## Data readiness — human Office review/crop audit (2026-09-28; not a model run)
 
 Joe's immutable review covers8 frames/113 controls and2 explicit Photos pairs.

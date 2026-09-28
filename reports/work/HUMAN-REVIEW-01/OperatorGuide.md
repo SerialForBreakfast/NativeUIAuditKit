@@ -45,17 +45,50 @@ at the first/last image. Save/close/relaunch once to activate an updated launche
    not its shadow/glow. Keep each frame's own box: focused controls can grow.
    The cropper will add16% context itself. Do not enlarge the annotation for it.
 3. Double-click an entry under **Control boxes**. Keep its Group ID unchanged.
-   Check exactly one of `focused` / `unfocused`, then `confirmed` only after
-   checking the box, class and state. **Neither = unknown**; `flagged` = needs
+   The single `focused` checkbox is checked for focused, unchecked for unfocused
+   when you press OK/Enter. Set `confirmed` only after checking bounds, role and
+   state. Opening/canceling leaves existing unknown proposals unchanged. `flagged` = needs
    discussion; `rejected` = exclude. Do not delete existing controls to exclude them.
    Label-list visibility checkboxes are **not** review confirmation.
 4. At the top-right, check `reviewed`, `settled`, `content_approved` for the frame
    only when true. Save, then use **Next Image** / **Prev Image** (D / A). Review
    frame005 the same way. Save both. The other six context frames may remain pending.
-5. For a new rectangle, use **Create rectangle** (R), click opposite corners, and choose a taxonomy class.
+5. For a new rectangle, use **Create rectangle** (R), click opposite corners, and choose a detector class or focus-only role.
    Give it an unused positive Group ID. Matching IDs across different frames mean
    the same control only within a declared screen/pair; pairing new examples needs
 an explicit reviewed pair assignment, not just matching integers.
+
+### Tabs and missing detector classes
+
+Finish review uses the binary Focused checkbox too: unchecked proposes unfocused.
+Legacy both-false flags no longer require opening each rectangle individually.
+The read-only preview commits this default only after your explicit confirmation;
+flagged controls and conflicting states still require attention.
+
+The **Control boxes** list pins active focused controls first with a green
+`●` marker; unfocused uses `○`. Hover for full state details. Conflicting and
+excluded controls use warning/cross symbols. The header shows the focus count and warns for multiple
+focused controls; it never unchecks another control automatically. Multiple-focus
+frames are recordable but remain blocked by the existing single-focus admission
+check. The row checkbox still means visibility, not focus. Pinning does not reorder
+canvas stacking or saved annotation order; manual list drag-reordering is disabled.
+
+Use **`focus:tabItem`** for each individual App Store tab, including Search when
+it is a tab destination. Discover is its own focused rectangle; other visible tabs
+are separate unfocused rectangles. `tabBar` describes the container, not each item.
+For focus-only annotation, do not add the surrounding container or decorative text
+as extra focus targets. Include the focused pill, not its shadow or glow; flag
+uncertain bounds rather than guess invisible hit areas.
+
+Use **`focus:otherFocusable`** only when a control is visibly focusable but has no
+accurate existing class or tab role. An optional note helps clarify this exception.
+These choices store focus roles with no detector class; they do not expand the
+41-class model. Presets retain the role without focus state or approvals.
+
+Completeness means every visible focusable control, not every view or offscreen
+element. Unsettled images can be annotated and saved with `settled` off; they remain
+blocked for settled-focus use. Do not bulk-confirm such a frame as ready: Finish
+review's confirmation asserts all three frame flags, including settled.
 
 **Already-open older window:** Save and close before relaunching for the new
 rectangle-only toolbar; we do not force-restart or auto-convert your annotations.

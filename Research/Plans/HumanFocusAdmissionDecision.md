@@ -1,6 +1,8 @@
-# Human focus development-evaluation lane — approval requested
+# Human focus development-evaluation lane — approved
 
-2026-09-28. Proposal only; **not implemented or authorized by the crop/audit tranche**.
+2026-09-28. Maintainer explicitly approved this proposal (“I approve it”).
+HUMAN-REVIEW-04 implements the separate development-only lane and one fixed comparison;
+the earlier crop/audit tranche itself did not authorize model execution.
 Evidence: [HUMAN-REVIEW-02](../../reports/work/HUMAN-REVIEW-02/handoff.md).
 
 ## Recommended decision

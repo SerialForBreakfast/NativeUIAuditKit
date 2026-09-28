@@ -29,7 +29,7 @@ def overlap(a, b):
 def audit(revision_path, crop_path, *, seed=42, per_screen=1):
     h.require(type(seed) is int and type(per_screen) is int and 0 < per_screen <= 256, "invalid_sampling")
     revision_path, crop_path = h.local(revision_path), h.local(crop_path)
-    revision = h.sealed(revision_path, h.REVISION)
+    revision = h.read_revision(revision_path)
     h.require(revision["reviewer"]["kind"] in ("human", "software-test")
               and revision["reviewer"]["confirmedBatch"] is True, "missing_review_attestation")
     batch_path = h.checked(h.ROOT, revision["batch"])
@@ -109,7 +109,7 @@ def audit(revision_path, crop_path, *, seed=42, per_screen=1):
         issue("duplicate_frame_pixels", members, "Exact decoded pixels; retained, not independent diversity.", "info")
     for members in crop_groups:
         states = {by_id[k]["state"] for k in members}
-        classes = {by_id[k]["class"] for k in members}
+        classes = {h.control_label(by_id[k]) for k in members}
         conflict = len(states) > 1 or len(classes) > 1
         issue("duplicate_crop_label_conflict" if conflict else "duplicate_crop_pixels", members,
               "Exact decoded crops; conflicting labels require adjudication." if conflict else "Repeated crop pixels; do not count as independent examples.",
@@ -137,7 +137,7 @@ def audit(revision_path, crop_path, *, seed=42, per_screen=1):
         members = [by_id.get(f+":"+spec["controlID"]) for f in spec["frames"]]
         valid = all(s and s["disposition"] == "reviewed" for s in members)
         valid = valid and {s["state"] for s in members} == {"focused", "unfocused"}
-        valid = valid and len({s["class"] for s in members}) == 1 and len({s["screen"] for s in members}) == 1
+        valid = valid and len({h.control_label(s) for s in members}) == 1 and len({s["screen"] for s in members}) == 1
         h.require(pair["disposition"] == ("reviewed" if valid else "blocked"), "pair_disposition_mismatch")
         if not valid:
             issue("pair_pending", [f+":"+spec["controlID"] for f in spec["frames"]], "Missing, conflicting or unreviewed pair member.", "hard")
@@ -160,7 +160,8 @@ def audit(revision_path, crop_path, *, seed=42, per_screen=1):
                 frames=frames, samples=samples, pairs=revision["pairs"], issues=issues,
                 exactFrameDuplicateGroups=frame_groups, exactCropDuplicateGroups=crop_groups, nearDuplicates=near,
                 randomQueue=dict(seed=seed, perScreen=per_screen, unit="frame", strata=random_queue),
-                coverage=dict(screens=dict(Counter(f["screen"] for f in frames)), classes=dict(Counter(s["class"] for s in samples)),
+                coverage=dict(screens=dict(Counter(f["screen"] for f in frames)), classes=dict(Counter(s["class"] for s in samples if s['class'] is not None)),
+                              focusRoles=dict(Counter(s['focusRole'] for s in samples if s.get('focusRole'))),
                               states=dict(Counter(s["state"] for s in samples)), appearance="unknown",
                               sourceSessions=1, sessionID=batch["sessionID"], sourceDeviceID=batch["sourceDeviceID"],
                               candidateCoverage="unknown", crossCorpusLeakage="not_assessed_no_external_role_manifests",
@@ -196,7 +197,7 @@ def render(report, output):
             x, y = (n%4)*256, (n//4)*292
             with Image.open(h.checked(h.ROOT, s["crop"])) as im:
                 sheet.paste(im.convert("RGB"), (x, y))
-            draw.text((x+4, y+258), f"{s['id']}  {s['state']}\n{s['class']}", fill="black")
+            draw.text((x+4, y+258), f"{s['id']}  {s['state']}\n{h.control_label(s)}", fill="black")
         sheet.save(output/(frame["id"]+"-crops.png"))
         frame_links.append(f"<h2 id='{html.escape(frame['id'])}'>{html.escape(frame['id'])} — {html.escape(frame['screen'])}</h2>"
                            f"<img width='960' src='{frame['id']}-context.png'><p><a href='{frame['id']}-crops.png'>Production crop sheet</a></p>"

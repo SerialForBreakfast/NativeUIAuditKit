@@ -1,5 +1,42 @@
 # Current brainstorming
 
+### 2026-09-28 — Fix focus coverage without corrupting detector labels
+
+Observed gap: App Store tab destinations cannot accurately be labeled as tabBar
+containers. Implemented separate focus:tabItem and focus:otherFocusable roles;
+keep the existing41-class detector unchanged. Prioritized follow-up: (1) annotate
+the retained tab frames using individual control boxes; (2) review unmatched roles
+and ambiguous bounds; (3) separately decide role-bearing model-evaluation admission
+and whether detector class expansion is justified. Preserve unsettled examples as
+blocked diagnostics. Complete-frame annotation covers visible focusable controls,
+not every rendered view. Do not burden the operator with detector taxonomy design.
+
+### 2026-09-28 — Efficient review, not more annotator chores
+
+Implemented rectangle double-click → existing label dialog; balanced eight-frame
+queues; exact-repeat mapping without deleting sequence history; one optional
+completeness confirmation in Finish review, never per rectangle. App/layout/family
+and optional focus-treatment metadata are preparer work, not repeated human forms.
+Existing annotations remain unchanged. [Checklist](reports/work/FOCUS-REVIEW-PREP-01/operator-checklist.md).
+
+Prioritized follow-up: (1) qualify repaired action-linked TTR recording; (2) collect
+six to eight varied Apple/system frames and measure review friction once; (3) expand
+coverage only after that pass, then separately assign full-frame metric admission.
+No extra smoke-set annotation or training run is needed now.
+
+### Latest priority — 2026-09-28: broader real-world regression and annotation
+
+The maintainer found the first batch too similar and prioritizes a much more varied
+development regression set. Keep the8-frame set as smoke evidence; propose24 distinct
+screen situations/~48–72 selected frames across grids, shelves, lists, buttons,
+navigation and safe overlays. Diversity precedes volume; all remain excluded from
+training. Start annotation with6–8 varied frames, then8–12-frame batches using the
+existing rectangle/copy workflow. Exact duplicate frames need one annotation with
+identity-bound reuse, while action/no-op evidence stays preserved. No chat-per-press
+capture. App selection and current recorder readiness precede a live session.
+[Proposal](Research/Plans/RealWorldFocusRegressionV2.md). This is the immediate
+priority instead of the previous training-collection recommendation.
+
 **Last updated:** 2026-09-28 (America/Los_Angeles)  
 **Purpose:** living summary of conversations, ideas and proposed follow-ups for maintainer review and prioritization.  
 **Current emphasis:** real-world tvOS focus evidence and a reliable TTR capture-to-review loop, leading toward bounded autonomous navigation.
@@ -355,3 +392,27 @@ Future entries: `date | idea ID | maintainer decision/priority | canonical task/
 -8 positives vs105 negatives makes raw accuracy misleading; report recall, false
   positives and paired outcomes. Complete-frame coverage/source independence remain
   unqualified. [Decision proposal](Research/Plans/HumanFocusAdmissionDecision.md).
+
+### 2026-09-28 — Approved real-screen comparison and measured next priorities
+
+- Maintainer approved the development-only role and one fixed shipped/FDR-009 test.
+  Implemented and executed;113/113 predictions from each model. This session is
+  excluded from training, with original diagnostic flags preserved.
+- FDR-009 regresses here:1/8 focused controls found and15 false positives, versus
+  shipped4/8 and11. Photos pairs pass shipped2/2, candidate0/2. Neither model detects
+  the focused Photos Home tile or General Settings row in the reviewed examples.
+- Prioritize matched Home artwork positives/negatives, native Photos-style buttons,
+  then Settings rows. Proposed24-pair initial target is a collection target, not
+  a qualification threshold. Keep action-linked capture and batch human review;
+  do not return to chat after every input.
+- No causal diagnosis from one small session, no threshold sweep, no new training
+  or promotion. Separate training-data admission and collection approval are next.
+  [Results](reports/work/HUMAN-REVIEW-04/results.md) ·
+  [Proposed next assignment](reports/work/HUMAN-REVIEW-04/next-assignment.md).
+# 2026-09-28 — unblock bounded annotation
+
+Prepared an eight-frame retained-recording diagnostic subset and opened the local
+rectangle editor on explicit user request. Producer export repair must not block
+human review when verified originals are already available through an approved
+local path. Prioritize reviewing this small varied batch, then crop QA; avoid
+assigning the entire recording or treating similar frames as identical geometry.

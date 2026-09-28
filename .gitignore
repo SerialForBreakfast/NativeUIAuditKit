@@ -178,3 +178,10 @@ reports/work/OS-FOCUS-03/**/*.mp4
 /reports/work/HUMAN-REVIEW-01/visual-reference/
 /reports/work/HUMAN-REVIEW-01/**/*.html
 /reports/work/HUMAN-REVIEW-02/**/*.html
+# Raw approved Office trial export; preserve locally, never commit captured media.
+/reports/work/FOCUS-REGRESSION-V2/office-trial-02/export/
+# Retained recording subset and annotation workspace.
+/reports/work/FOCUS-REGRESSION-V2/office-trial-02/review-batch/
+/reports/work/FOCUS-REGRESSION-V2/office-trial-02/review-prep/
+/reports/work/HUMAN-REVIEW-01/rectangle-presets/
+/reports/work/FOCUS-REGRESSION-V2/office-trial-02/qa-20260928/

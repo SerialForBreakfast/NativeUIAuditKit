@@ -1,5 +1,33 @@
 # NativeUIAuditKit — Tasks
 
+**FOCUS-REGRESSION-V2 QA — review / current review-tool worker:** production crops
+and audit complete82/82, no hard issues. Next: role-aware development-admission
+proposal, static-negative/candidate separation and settled-state reconciliation;
+no model execution authorized. [Handoff](reports/work/FOCUS-REGRESSION-V2/office-trial-02/qa-handoff.md).
+
+**FOCUS-REGRESSION-V2 latest checkpoint:** trial02 human revision
+20260928T225131Z-056fc495 verified:8 reviewed frames/82 controls; explicit
+complete-frame attestation for all8. Next: production crop QA and diagnostic audit,
+not additional annotation or model execution. Still diagnostic/training-ineligible.
+
+**Binary Finish review fix — review / current review-tool worker:** completed and
+verified; actual8-frame preview ready without writes. Await operator save/close
+for restart, then explicit human Finish confirmation. Existing admission unchanged.
+
+**HUMAN-FOCUS-ROLES — review / current review-tool worker:** focus:tabItem and
+focus:otherFocusable integrated through editor/presets/revision-v2/crops/audit;
+77 Python and9 Qt tests plus offline Swift build/test pass. Existing detector
+taxonomy unchanged. User saved/closed; editor reopened at App Store tabs. Subsequent role admission
+to model evaluation/training remains a separate assignment.
+[Handoff](reports/work/HUMAN-FOCUS-ROLES/handoff.md).
+
+**HUMAN-REVIEW-PRESETS — review / current review-tool worker:** reusable named
+Focus list indicators/pinning also implemented;11 Qt tests and offline Swift checks
+pass. User save/close needed for latest window restart.
+rectangle layouts implemented and tested; save/close/reopen of active editor
+also enables the single Focused checkbox and Enter-to-OK dialog improvements;
+awaits operator. [Handoff](reports/work/HUMAN-REVIEW-PRESETS/handoff.md).
+
 **Highest next priority (maintainer, 2026-09-27): tvOS focus.** The
 immediate P0 integration enabler is now [human-approved external TTR control](Research/Plans/TTRSupervisedExternalControl.md),
 after the successful but excessively manual Photos capture proof. The
@@ -46,8 +74,11 @@ group the same tasks; they do not create additional packet IDs or assignments.
 Current NUIAK review-tool worker completed the actual Joe review/crop path and
 assigned HR2 continuation.8 frames/113 controls explicitly reviewed;113 production
 crops/111 distinct crop pixels;2 reviewed Photos pairs; no hard audit defects.
-145 Python tests and123 offline Swift tests pass. Remaining decision is the
-[human-label admission/comparison proposal](Research/Plans/HumanFocusAdmissionDecision.md),
+The approved HUMAN-REVIEW-04 development comparison is complete for review:
+154 Python tests and123 offline Swift tests pass. Shipped4/8 focused controls with11
+false positives; FDR-0091/8 with15. No promotion/training. Maintainer now prioritizes
+[broader regression collection and annotation](Research/Plans/RealWorldFocusRegressionV2.md)
+before the earlier training-data proposal,
 not more per-box confirmations. TTR recorder work remains independent.
 
 | Packet | State / owner | Assignment and prerequisite |
@@ -55,7 +86,8 @@ not more per-box confirmations. TTR recorder work remains independent.
 | HUMAN-REVIEW-01 | acceptance review-ready / current NUIAK review-tool worker | Actual human Finish receipt,113/113 production crops and2 reviewed Photos pairs complete. No operator annotation blocker; training/evaluation admission stays separate. [Handoff](reports/work/HUMAN-REVIEW-01/handoff.md). |
 | HUMAN-REVIEW-02 | acceptance review-ready / current NUIAK review-tool worker | Deterministic audit, separate random/targeted queues, generated CLI correction/revalidation tests, visual crop QA and coverage/collection recommendation complete. Zero hard issues;111 distinct crop pixels; all repetitions preserved. [Handoff](reports/work/HUMAN-REVIEW-02/handoff.md). |
 | HUMAN-REVIEW-03 | proposed / unassigned | Automatic TTR bundle integration; needs01 plus exact producer schema/sample, separate live readiness. Does not block01/02. |
-| HUMAN-REVIEW-04 | awaiting maintainer policy approval / unassigned execution | [Proposed development-regression lane and one fixed comparison](Research/Plans/HumanFocusAdmissionDecision.md). Reserve this batch from training; new versioned admission adapter plus separately explicit model execution included only if approved. No policy flags changed yet. |
+| FOCUS-REGRESSION-V2 | eight-image annotation open / current NUIAK review-tool worker | Trial02 direct local diagnostic subset prepared and opened: five Settings and three App Store frames, original hashes and recording events preserved. Human review is unblocked independently of the producer export defect. Remaining recording archived, not assigned for annotation. Await human labels, then Finish review and crop QA; no training admission. [Session](reports/work/FOCUS-REGRESSION-V2/office-trial-02/session.md). |
+| HUMAN-REVIEW-04 | acceptance review-ready / current NUIAK review-tool worker | New development-only lane, actual113/113 scores per model,2 Photos pair outcomes,37 error sheets, overlap audit and154 Python/123 Swift tests complete. FDR-009 regresses; all8 frames reserved from training; original diagnostic flags unchanged. [Handoff](reports/work/HUMAN-REVIEW-04/handoff.md). |
 
 **FOCUS-HUMAN-OFFICE-01 — blocked on action-linked recorder (2026-09-28), current NUIAK
 TTR consumer worker:** maintainer assigned supervised focus capture using human

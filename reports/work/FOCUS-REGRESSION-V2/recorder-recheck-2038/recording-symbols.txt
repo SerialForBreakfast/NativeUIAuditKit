@@ -1,0 +1,2 @@
+0000000000533538 T TVTestRig.AutomationCoordinator.startActionRecording(destination: Foundation.URL?, title: Swift.String?) async throws -> TVTestRig.ActionRecordingStatus
+0000000000533760 T TVTestRig.AutomationCoordinator.startActionRecording(sessionName: Swift.String?, bundleDirectory: Foundation.URL?) async throws -> TVTestRig.ActionRecordingStatus

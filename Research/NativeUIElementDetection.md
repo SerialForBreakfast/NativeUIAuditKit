@@ -461,6 +461,12 @@ Each annotation file pairs 1:1 with a PNG. The `imageSHA256` checksum links the 
 
 ### 6.4 Coordinate Systems
 
+**Local human-focus review extension (2026-09-28):** diagnostic-only
+[focus roles v1](schemas/human-focus-roles-v1.md) distinguish individual `tabItem`
+and `otherFocusable` roles from detector classes. Role-bearing human revisions use
+v2 with nullable detector `class`; the native annotation schema, category IDs and
+shipped taxonomy remain unchanged. This does not grant detector training admission.
+
 Three coordinate systems are stored in every annotation. This is mandatory — Apple APIs use inconsistent origins and units:
 
 | System | Origin | Units | Used by |

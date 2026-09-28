@@ -50,13 +50,17 @@ class FinishReviewTests(unittest.TestCase):
             self.assertTrue(doc["shapes"][0]["flags"]["confirmed"])
         self.assertEqual(raw, {p: h.sha(p) for p in raw})
 
-    def test_unknown_frame_untouched_other_frame_completes(self):
+    def test_binary_default_preview_is_readonly_then_explicitly_committed(self):
         self.change(lambda d: d["shapes"][0]["flags"].update(focused=False))
         before = self.editor().read_bytes()
         plan = bulk.preview(self.path)
-        self.assertIn("unknown_focus", plan["frames"][0]["issues"][0])
-        self.assertEqual(self.apply(plan)["frameCounts"], {"blocked": 1, "reviewed": 1})
+        self.assertTrue(plan['frames'][0]['ready'])
         self.assertEqual(before, self.editor().read_bytes())
+        self.assertTrue(plan['frames'][0]['document']['shapes'][0]['flags']['unfocused'])
+        self.assertEqual(self.apply(plan)["frameCounts"], {"reviewed": 2})
+        flags = h.read(self.editor())['shapes'][0]['flags']
+        self.assertFalse(flags['focused']); self.assertTrue(flags['unfocused'])
+        self.assertEqual((self.output/'before'/self.editor().name).read_bytes(), before)
 
     def test_allocate_new_id_preserve_all_geometry_and_states(self):
         def append(doc):
@@ -126,7 +130,7 @@ class FinishReviewTests(unittest.TestCase):
 
     def test_no_ready_frames(self):
         for n in range(2):
-            self.change(lambda d: d["shapes"][0]["flags"].update(focused=False, unfocused=False), n)
+            self.change(lambda d: d["shapes"][0]["flags"].update(flagged=True), n)
         with self.assertRaisesRegex(ValueError, "no_ready_frames"):
             self.apply()
 

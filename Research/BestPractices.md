@@ -1924,3 +1924,36 @@ prove subsequent navigation. Test actual navigation after that entrypoint, and
 schedule modal-test responses after focus/event setup so a test timer cannot fire
 before the Save dialog exists. A frame-wide flag toggle must leave all box flags
 and other frames untouched; mutually exclusive focused/unfocused cannot use all-on.
+
+### BP-109: Invalid model scores must not prevent failure receipts
+
+**Wrong:** Catch an invalid/NaN score in metric validation, then serialize the raw
+non-finite prediction into strict JSON. Receipt writing fails, hiding the accounted
+partial result precisely when the evaluator needs it most.
+**Correct:** Reject metrics for incomplete/invalid predictions; retain invalid IDs
+and diagnostic values as strings, valid scores separately, and every unscored ID.
+Test the real runner's failure receipt, not only a metric helper's exception.
+**Why:** HUMAN-REVIEW-04's injected non-finite engine test verifies a serializable
+failure report with all expected samples accounted. Actual226 predictions were
+finite; the fix required no repeated model execution. See
+[handoff](../reports/work/HUMAN-REVIEW-04/handoff.md).
+
+### BP-110: Filtered review queues must scope bulk confirmation too
+
+**Wrong:** Filter the editor file list for convenience but let Finish review confirm
+every Ready frame in the source batch, including images the reviewer never saw.
+**Correct:** Freeze the exact queue membership, use it for navigation and Finish
+review, hash-check it before confirmation, and preserve hidden annotations unchanged.
+Keep completeness as a separate unchecked, revision-bound human assertion.
+**Why:** Faster review must not silently expand consent. FOCUS-REVIEW-PREP-01 tests
+the actual Qt Finish button and proves a hidden generated frame remains unchanged.
+
+### BP-111: Focus candidates are not constrained to detector container classes
+
+**Wrong:** Force each App Store tab into `tabBar` because the frozen detector
+taxonomy lacks a tab-item class, or omit it and claim complete focus coverage.
+**Correct:** Keep versioned diagnostic focus roles separate from detector class
+IDs. Preserve nullable mappings, explicit admission gates and per-control bounds.
+**Why:** A focused child is not its containing bar. The role extension unblocks
+annotation without silently changing the meaning of41-class training labels.
+See human-focus-roles-v1 and HUMAN-FOCUS-ROLES integration tests.

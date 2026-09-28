@@ -18,6 +18,9 @@ from photos_focus_pilot import (FLAGS, box, checked, envelope, fresh, identifier
 INDEX = "human-review-index-v1"
 BATCH = "human-review-batch-v1"
 REVISION = "human-review-revision-v1"
+FOCUS_REVISION = "human-review-revision-v2"
+ROLE_SCHEMA = 'human-focus-roles-v1'
+FOCUS_ROLES = ('tabItem', 'otherFocusable')
 EDITOR = "5.2.1"
 SHAPE_FLAGS = ("focused", "unfocused", "confirmed", "flagged", "rejected")
 FRAME_FLAGS = ("reviewed", "settled", "content_approved")
@@ -64,6 +67,29 @@ def taxonomy():
     return [c["name"] for c in read(CATEGORY)["categories"]]
 
 
+def review_labels():
+    return taxonomy() + ['focus:'+role for role in FOCUS_ROLES]
+
+
+def control_label(control):
+    return 'focus:'+control['focusRole'] if control.get('focusRole') else control['class']
+
+
+def read_revision(path):
+    version = read(path).get('version')
+    require(version in (REVISION, FOCUS_REVISION), 'unsupported_review_revision')
+    doc = sealed(path, version)
+    for frame in doc['frames']:
+        for control in frame['controls']:
+            if control.get('focusRole') is not None:
+                require(version == FOCUS_REVISION and control['focusRole'] in FOCUS_ROLES
+                        and control.get('class') is None and control.get('roleSchema') == ROLE_SCHEMA,
+                        'invalid_focus_role_mapping')
+            else:
+                require(control.get('class') in taxonomy(), 'invalid_detector_class')
+    return doc
+
+
 def binding(batch_id, frame):
     return {"batchID": batch_id, "frameID": frame["id"],
             "imageSHA256": frame["image"]["sha256"]}
@@ -82,6 +108,9 @@ def editor_document(batch_id, frame):
 
 
 def validate_batch(path):
+    if read(path).get('version') == 'human-recording-review-batch-v1':
+        from human_recording_review import validate
+        return validate(path)
     batch = sealed(path, BATCH)
     index = sealed(checked(ROOT, batch["index"]), INDEX)
     checked(ROOT, batch["categoryMap"])
@@ -263,7 +292,7 @@ def parse_editor_document(batch, frame, path, doc):
         gid = shape["group_id"]
         require(type(gid) is int and 0 < gid <= 100000 and gid not in groups, "invalid_control_id")
         groups.add(gid)
-        require(shape["shape_type"] == "rectangle" and shape["label"] in taxonomy(), "invalid_shape_or_class")
+        require(shape["shape_type"] == "rectangle" and shape["label"] in review_labels(), "invalid_shape_or_class")
         points = shape["points"]
         require(isinstance(points, list) and len(points) == 2 and
                 all(isinstance(p, list) and len(p) == 2 for p in points) and
@@ -285,6 +314,9 @@ def parse_editor_document(batch, frame, path, doc):
         disposition = "rejected" if flags["rejected"] else "blocked" if reasons else "reviewed"
         controls.append(dict(id=original.get(gid, f"new-{gid}"), groupID=gid, bounds=bounds,
                              **{"class": shape["label"]}, state=state, disposition=disposition, reasons=reasons))
+        if shape['label'].startswith('focus:'):
+            controls[-1].update({'class': None, 'focusRole': shape['label'].split(':', 1)[1],
+                                 'roleSchema': ROLE_SCHEMA})
     require(set(original) <= groups, "missing_control_use_rejected_flag")
     require(len({c["id"] for c in controls}) == len(controls), "ambiguous_control_identity")
     if sum(c["state"] == "focused" and c["disposition"] != "rejected" for c in controls) > 1:
@@ -338,10 +370,11 @@ def finish(batch_path, output, *, reviewer, reference, reviewer_kind, confirm_ba
         controls = [next((c for c in f["controls"] if c["id"] == spec["controlID"]), None) for f in (a, b)]
         valid = (a["screen"] == b["screen"] and all(c and c["disposition"] == "reviewed" for c in controls)
                  and {c["state"] for c in controls} == {"focused", "unfocused"}
-                 and len({c["class"] for c in controls}) == 1)
+                 and len({control_label(c) for c in controls}) == 1)
         pairs.append(dict(**spec, disposition="reviewed" if valid else "blocked",
                           reason=None if valid else "incomplete_or_conflicting_pair"))
-    revision = dict(version=REVISION, **FLAGS, batch=ref(local(batch_path)), editorSnapshots=snapshots,
+    version = FOCUS_REVISION if any(c.get('focusRole') for f in rows for c in f['controls']) else REVISION
+    revision = dict(version=version, **FLAGS, batch=ref(local(batch_path)), editorSnapshots=snapshots,
                     reviewer=dict(id=reviewer, reference=reference, kind=reviewer_kind,
                                   completedAt=datetime.now(timezone.utc).isoformat(), confirmedBatch=True),
                     frames=rows, pairs=pairs, completeFrameCandidates=False,
@@ -357,7 +390,7 @@ def crop_qa(batch_path, output, revision_path=None):
     batch, output = validate_batch(batch_path), fresh(output)
     revision = None
     if revision_path:
-        revision = sealed(revision_path, REVISION)
+        revision = read_revision(revision_path)
         require(revision["batch"] == ref(local(batch_path)), "wrong_revision_batch")
         for record in revision["editorSnapshots"]: checked(ROOT, record)
     items = []
