@@ -345,6 +345,12 @@ benchmark gap and predeclared held-out support, latency budget, and numeric gate
 
 ### 6.1 Core Principle: Generate, Don't Annotate
 
+**2026-09-28 scoped addition:** [human-review-v1](schemas/human-annotation-review-v1.md)
+adds a separately assigned, local diagnostic lane for retained real screenshots.
+Verified native generator labels remain preferred where available. Human proposals,
+reviewed labels and native observations remain distinct; this lane does not yet
+authorize training/evaluation admission or fabricate inaccessible native metadata.
+
 Do not rely on manual annotation. Generate UI screens from Swift source and export ground truth at render time — the app that renders the UI also exports the labels, bounds, traits, state, and text metadata.
 
 Manual annotation has three critical failure modes for this domain:

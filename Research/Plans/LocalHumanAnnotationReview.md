@@ -1,7 +1,8 @@
 # Local human annotation and data review — implementation plan
 
-Revision1,2026-09-28. Planning deliverable; implementation not started or authorized
-by this document. Tasks.md owns packet state/assignment. Focus is the first use
+Revision2,2026-09-28. Maintainer assigned Tranche1, then explicitly rejected the
+Docker/CVAT stack and approved a lightweight local editor. Tasks.md owns state.
+Focus is the first use
 case; support existing UI-element labels without changing public taxonomy or Swift APIs.
 
 ## Outcome and design
@@ -9,7 +10,97 @@ case; support existing UI-element labels without changing public taxonomy or Swi
 **Capture a batch → inspect/correct locally → validate → explicitly admit an immutable
 dataset revision.** No chat between individual annotations or remote inputs.
 
-Two complementary lanes:
+## Superseding Tranche1 decision
+
+Maintainer follow-up: [visual label/bounds reference](../HumanReviewLabelGuide.md)
+and rectangle-only drawing in the pinned launcher. Save/relaunch is operator-owned;
+no live-window interruption or automatic conversion of existing polygons.
+
+Follow-up: expose Select all boxes, Copy boxes and Paste boxes in the Edit menu
+and toolbar. Selection is distinct from visibility checkmarks. Use a session-local
+deep-copy clipboard across frames of the same declared screen and pixel dimensions;
+do not overwrite existing controls or permit duplicate control IDs. Copy assigns
+missing positive local review IDs in the source (dirty, never autosaved), preserving
+existing valid IDs and rejecting conflicts. These are review IDs, not native identity.
+Pasted focus flags are proposals: clear each pasted confirmation and the destination
+reviewed flag, while preserving destination image binding and other existing boxes.
+Require manual geometry/focus review, especially focused-tile scaling. Reject
+cross-screen/dimension mismatches with a visible explanation. Verify real Qt menu,
+toolbar, keyboard, save/reopen and repeated-paste behavior on isolated batches.
+
+Flag/navigation refinement: one All frame flags on/off button in the Flags panel
+sets or clears only reviewed/settled/content_approved for the current image. Its
+label reflects the next action; mixed states become all-on. No box focus/confirmed
+flags, other frames or admission gates change. It is an explicit operator assertion,
+not automated approval. Add platform Command-Left/Right navigation while retaining
+A/D and the existing unsaved-edit Save/Discard/Cancel behavior. Verify button state
+across loads, actual key presses from canvas/file list, boundaries and saved flags.
+Normalize known absolute image paths to the file-list entry on load: Finish review's
+Open frame uses absolute paths, while stock next/previous indexes relative entries.
+
+Maintainer-assigned Finish review follow-up: one modal batch summary in the existing
+editor, not a new application. Save the current frame with explicit consent first;
+inspect the entire saved batch without modifying annotations. List ready frames and
+exact exceptions with an Open frame action. A reviewer name plus an unchecked explicit
+attestation authorizes bulk confirmation only of the listed ready frames: bounds,
+classes and focus states reviewed, frames settled, content approved. Unknown or
+conflicting focus, flagged controls, invalid geometry/IDs, and integrity/provenance
+failures stay blocked; no automatic focus inference. Missing IDs on new controls
+can receive unused local IDs, but missing identities of original proposals cannot
+be guessed. Do not convert native labels or create pair assignments.
+
+Recheck batch/annotation hashes before applying; reject stale previews. Back up
+the exact originals in a new local output directory before atomic per-file updates,
+retain failure/recovery evidence on partial I/O failure, and never overwrite history.
+Reuse the existing finish function to produce an immutable diagnostic-only revision
+with complete dispositions. Confirmation is explicit in the dialog, not inferred
+from earlier chat or Save. Pending frames stay untouched. Tests use generated
+fixtures or software-test revisions, never attest the maintainer's current labels.
+Crop QA remains a separate operation on the sealed revision, not inference in the UI.
+
+Use **Labelme**, a standalone Python/Qt annotation editor, and its JSON format.
+No Docker, server, database, CVAT or FiftyOne installation. The original two-tool
+design and service criteria below are historical and superseded for Tranche1.
+Later triage-tool selection remains deferred, not an implementation dependency.
+
+Pin Labelme5.2.1 (classic non-AI editor), NumPy1.26.4, imgviz1.7.5 and PyQt5.15.11
+in an isolated project-local environment; record the full resolved dependency lock.
+This is a deliberately bounded local editor, not endorsement of an old release
+for network-exposed use. No automatic model downloads or inference. Use a minimal
+version-checked launcher with explicit project-local settings/config and the
+stock editor window, as detailed below. No editor fork or annotation application.
+
+Keep HR1.3–1.6 integrity, label provenance, crop and real round-trip requirements.
+Installed-source correction: Labelme5.2.1's `get_default_config()` writes
+`~/.labelmerc` even with `--config`. The version-pinned launcher must load the
+bundled YAML directly and supply it to the stock `MainWindow(config=...)`, plus
+project-local Qt INI settings. This is a small launcher using a pinned internal
+constructor, not a fork or new editor. Test this exact startup path; never launch
+the bare `labelme` CLI in this repository workflow.
+
+Host verification found Qt5.15.19 treats plugins underneath `.venv-review` as
+hidden and omits them from plugin discovery, even outside the shell sandbox.
+Use the ignored non-dot-prefixed
+`reports/work/HUMAN-REVIEW-01/runtime/venv` environment instead. Do not weaken
+permissions or change system file flags to repair editor startup.
+
+Qt's organization/application `QSettings` constructor ignores the default INI
+format on this host. Inject one explicit project-file `QSettings(..., IniFormat)`
+only during the pinned stock window's construction; restore Qt's constructor
+immediately afterward. Assert the actual settings filename before opening media.
+No global HOME override, vendor source modification or preference migration.
+
+Replace HR1.1/1.2 with local environment install, start/close/reopen and retained
+annotation verification. Replace CVAT integration with Labelme import/finish:
+per-object flags focused/unfocused/confirmed/flagged/rejected, numeric group IDs
+bound to control IDs, per-frame content/settled/reviewed flags, and explicit batch
+completion. No checked focus flag means unknown. Conflicting flags block intake.
+Save is not human acceptance. Test stock application load/save/reopen offscreen
+as software evidence; actual operator confirmation remains separate and pending
+until performed. Preserve images and original metadata outside the mutable editor
+directory. Export immutable reviewed revisions; no training admission in Tranche1.
+
+Original proposal (retained for decision history): two complementary lanes:
 
 - **Annotation:** self-hosted CVAT for drawing/correcting control boxes, class and
   focus attributes, keyboard-driven object review and human decisions.

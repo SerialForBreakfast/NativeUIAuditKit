@@ -170,3 +170,10 @@ reports/work/OS-FOCUS-03/**/*.mp4
 
 # Remote capture pairing state and delivered evidence are local, never source assets.
 /reports/work/EXT-CAP-02/client-state/
+
+# Mutable local human-review workspace, Qt settings and dependency artifacts.
+/reports/work/HUMAN-REVIEW-01/editor/
+/reports/work/HUMAN-REVIEW-01/runtime/
+/reports/work/HUMAN-REVIEW-01/**/runtime/
+/reports/work/HUMAN-REVIEW-01/visual-reference/
+/reports/work/HUMAN-REVIEW-01/**/*.html

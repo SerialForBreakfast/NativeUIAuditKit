@@ -37,7 +37,7 @@ All rows are **pending maintainer prioritization/promotion** as brainstorming it
 | 3 | B-03 | Complete intake of the two existing Photos captures | Original-byte receipt, reviewed per-frame control bounds/states and production crop QA for the operator-confirmed pair | Receive retained originals; do not recapture merely to complete intake. Current ownership/cleanup remains unverified. |
 | 4 | B-04 | Define and collect a small real-screen focus benchmark | Approximately 20–30 distinct screen situations, reviewed pairs/competitors and genuine transitions; frozen intended roles and complete accounting | Requires approved session scope and B-02 for action-labeled sequences. Formal human-label admission is a separate decision; current Photos lane is diagnostic-only. |
 | 5 | B-05 | Evaluate FDR-009 on the existing frozen development comparison | Same-input comparison against retained baselines on 48 frames, with complete predictions and frame-level focus outcomes | Existing next unassigned task; requires evaluation assignment. No new training, threshold sweep or protected-challenge use. Can proceed independently of TTR integration. |
-| 6 | B-06 | Prove a minimal interactive review-tool workflow | Small retained-image batch through local triage/editor, corrected labels/boxes, lossless identity/coordinate round trip and timed review | Leading option: FiftyOne plus self-hosted CVAT. Do not require a full platform before the first diagnostic session. Installation and any external data sharing need scope. |
+| 6 | B-06 | Prove a minimal interactive review-tool workflow | Promoted to HUMAN-REVIEW-01; local Labelme stock-editor round trip and crop integration verified on8 retained frames; human batch review/timing next | Maintainer rejected Docker/CVAT as overkill; one local Python/Qt editor first. FiftyOne/triage deferred. No training admission implied. |
 | 7 | B-07 | Define failure-to-collection feedback between TTR and NUIAK | Failure record → review → scoped collection request → verified delivery → explicit data-role admission | Capture transport is distinct from durable asynchronous requests and issue coordination. Do not assume EXT-CAP-01 completes both. |
 | 8 | B-08 | Audit iOS class coverage, label semantics and geometry | Reviewed class/source/scale matrix, corrected demonstrated defects and a targeted data specification before another full run | Local work does not depend on Photos or TTR. No taxonomy change or new rendering implied. |
 | 9 | B-09 | Profile detector training and benchmark a matched CUDA workload | Measured throughput, memory, setup cost and projected cost per comparable experiment; choose local/cloud execution based on evidence | No known M4-to-CUDA multiplier. Spending, uploads and benchmark/model execution require approval. Preserve custom training behavior and evaluation comparability. |
@@ -215,6 +215,33 @@ Future entries: `date | idea ID | maintainer decision/priority | canonical task/
 
 ## Conversation log
 
+### 2026-09-28 — Explain labels visually; restrict annotation to rectangles
+
+- Maintainer requested a visual reference for every editor label, particularly
+  Home-screen icons and whether captions belong in their boxes. Generator evidence
+  confirms `collectionItem` for the tile with separate `label` caption; focus-only
+  review does not require a separate caption target. `homeIndicator` is unrelated.
+- Produced41 schematic label examples plus a quick tvOS reference. Distinguish
+  control role from focus state and exclude diffuse glow/padding from bounds.
+- Made creation rectangle-only with R/E controls and verified the actual two-click
+  canvas path. No forced restart or conversion of in-progress human annotations.
+- This refines B-06/HUMAN-REVIEW-01; it does not change taxonomy, historical labels,
+  training admission or model gates. [Rules](Research/HumanReviewLabelGuide.md).
+
+### 2026-09-28 — One local review editor, no Docker
+
+- Maintainer rejected Docker as disproportionate and approved proceeding with a
+  lightweight local Python annotation workflow. B-06 is promoted to HUMAN-REVIEW-01.
+- Implemented a pinned stock Labelme editor and a small NUIAK integrity/review
+  adapter; no service, database, CVAT or FiftyOne dependency. Eight retained
+  frames load; Photos004/005 have explicit manual proposals to review in a batch.
+- Installed-editor save/reopen, checkbox editing and production crops are verified
+  as software tests. The next human step is reviewing bounds/classes/states and
+  explicitly finishing the batch; no chat per control and no training admission.
+- Triage/coverage queues remain later work. [Guide](reports/work/HUMAN-REVIEW-01/OperatorGuide.md)
+  and [handoff](reports/work/HUMAN-REVIEW-01/handoff.md) hold implementation evidence;
+  Tasks.md remains the sole execution queue.
+
 ### 2026-09-28 — Local Python annotation/review implementation plan
 
 - Maintainer requested tasks/tranches for the local human review lane. Produced
@@ -281,3 +308,33 @@ Future entries: `date | idea ID | maintainer decision/priority | canonical task/
 - Discussed CUDA economics and corrected unsupported runtime/speedup assumptions; separated hardware turnaround from dataset quality.
 - Reviewed five iOS data/evaluation issues and proposed an audit → coverage specification → targeted collection → short experiment sequence.
 - Requested this living document so the maintainer can review and promote follow-ups by priority. Documentation creation only; no new execution assignment inferred.
+
+### 2026-09-28 — Batch rectangle reuse
+
+- Highest immediate review friction: visibility checkmarks looked like selection,
+  and cross-frame paste was not dependable for the operator. Implemented explicit
+  Select all/Copy/Paste, local review IDs and fresh confirmation on pasted boxes.
+- Next: save/relaunch and use the Home frames to check the real operator workflow;
+  adjust tile scale and focus states, then perform the separately explicit Finish.
+- Proposed later follow-up: assess whether focus-state batch editing would help
+  after this reuse workflow is tried. Do not infer labels or bulk-confirm unseen boxes.
+
+### 2026-09-28 — Explicit batch completion instead of confirmation busywork
+
+- Maintainer completed tagging and assigned a Finish review action. Saved audit
+  found113 rectangles, missing local IDs, eight unknown focus states (IDs6/9 on
+  four Home frames), and mostly unchecked confirmation flags.
+- Implemented one ready/exception summary with jump-to-frame and named-reviewer
+  attestation for the ready subset. Automatic local ID bookkeeping is separate
+  from human focus decisions; unresolved frames remain pending.
+- Next priority: operator resolves exceptions and confirms the batch, then run
+  production crop QA against that immutable revision. Training admission remains
+  a separate assignment. No new capture or model run is needed for this step.
+
+### 2026-09-28 — Faster per-image review controls
+
+- Added requested All frame flags on/off for the three current-image assertions;
+  kept box focus states and confirmation separate.
+- Added Command-Left/Right navigation alongside A/D, retaining unsaved-edit prompts.
+- Verified navigation also works after jumping to a Finish review exception.
+  Next remains operator completion and revision-bound crop QA, not new tooling scope.

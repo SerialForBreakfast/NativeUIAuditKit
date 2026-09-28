@@ -42,15 +42,31 @@ group the same tasks; they do not create additional packet IDs or assignments.
 
 ## Worker packet queue
 
-**Local human annotation/review — proposed tranches, unassigned (2026-09-28).**
-Maintainer requested this implementation plan, not installation/execution.
+**Local human annotation/review — Tranche1 assigned (2026-09-28).**
+Maintainer assigned HUMAN-REVIEW-01; current NUIAK review-tool worker owns it.
 [Canonical plan](Research/Plans/LocalHumanAnnotationReview.md). TTR recorder work
 and retained-data review are parallel; first useful outcome is an actual local
 edit/export/reimport on the8 retained images, not another schema-only deliverable.
+The requested visual taxonomy/bounds guide and rectangle-only launcher follow-up
+are implemented; human review and safe relaunch of the current window remain
+operator-owned. See [label guide](Research/HumanReviewLabelGuide.md).
+Cross-frame clipboard follow-up is verified: explicit Select all/Copy/Paste,
+stable local IDs, conflict rejection and fresh destination confirmation; after
+operator-confirmed save/close, the updated editor was launched at frame007.
+No programmatic annotation changes or human acceptance.
+Finish review follow-up is implemented and verified: exception navigation, explicit
+reviewer attestation, bulk flags/local IDs, stale-preview rejection, backups and
+immutable diagnostic revision. Actual Qt tests plus136 Python and123 Swift tests
+pass. Operator saved/closed and updated editor launched at frame001; next is resolving Home IDs6/9 and explicit
+GUI confirmation, not another per-box confirmation session or training admission.
+Current-image frame-flag toggle and Command-arrow navigation are implemented;
+operator saved/closed and the updated editor was reopened at frame001. Scope
+excludes automatic focus/box acceptance. Actual Qt tests and136 Python/123 Swift
+checks pass; see the handoff for evidence.
 
 | Packet | State / owner | Assignment and prerequisite |
 | --- | --- | --- |
-| HUMAN-REVIEW-01 | proposed / unassigned | Full local FiftyOne/CVAT review round trip; setup/storage approval before dependency or service changes. Existing inline/mixed-screen importer incompatibility explicitly in scope. |
+| HUMAN-REVIEW-01 | software review-ready; operator completion pending / current NUIAK review-tool worker | Local Labelme installed;8/8 retained frames imported; real edit/save/reopen, rectangle/clipboard/bulk-Finish interaction verified,4/4 production crops,136 Python and123 Swift tests pass.113 rectangles saved; four Home frames need focus states for IDs6/9. Next: explicit Finish review attestation and revision-bound crop QA. No human labels accepted into an immutable real revision yet; no training admission. [Handoff](reports/work/HUMAN-REVIEW-01/handoff.md) · [Guide](reports/work/HUMAN-REVIEW-01/OperatorGuide.md). |
 | HUMAN-REVIEW-02 | proposed / unassigned | Defect validators, random/targeted queues and coverage feedback; depends on01 review contracts. |
 | HUMAN-REVIEW-03 | proposed / unassigned | Automatic TTR bundle integration; needs01 plus exact producer schema/sample, separate live readiness. Does not block01/02. |
 | HUMAN-REVIEW-04 | proposed / unassigned | Explicit human-label policy and gated dataset candidate/preflight; needs01/02 plus separate admission-policy approval. No training. |

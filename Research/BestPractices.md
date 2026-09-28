@@ -1874,3 +1874,53 @@ checkpoint-selection policy requires an explicit decision, not a validator bypas
 without native Photos or independent appearance-validation coverage. Data collection
 can advance while those separate qualification dependencies remain unresolved.
 [Admission contract](Plans/LocalSimulatorFocusDevelopment.md).
+
+### BP-108: Verify a local annotation tool's actual settings and plugin paths
+
+**Wrong:** Assume `--config` or `QSettings.setDefaultFormat(IniFormat)` keeps all
+Labelme5.2.1 settings project-local, or mistake every Qt plugin failure for a
+sandbox denial. Its default-config loader still attempts `~/.labelmerc`; the
+organization/application QSettings overload still selected native preferences.
+Qt5.15.19 on this host also omitted plugin files below a hidden `.venv-review`.
+**Correct:** Inspect the installed pin, supply its complete bundled config to the
+stock window, scope an explicit project-file QSettings object to construction,
+and assert the actual settings filename. Use a non-hidden project-local venv
+for this Qt build. Verify real load/edit/save/close/reopen and JSON identity,
+not merely successful pip installation. Do not change HOME or system permissions.
+**Why:** A lightweight tool can still violate storage assumptions or fail at
+startup. Integration evidence must include the actual editor, while automated
+GUI edits remain software tests—not human confirmation of labels.
+[Evidence](../reports/work/HUMAN-REVIEW-01/handoff.md).
+
+**Rectangle-only follow-up:** stock Labelme's tool buttons wrap QAction in
+QWidgetAction and retain a separate iconText. Verify the actual visible button
+and canvas, not only QAction.text()/toolbar.actions(). Hide non-rectangle actions
+and shortcuts, guard the draw-mode entrypoint across file loads, and update both
+text and iconText. A rectangle-only importer does not by itself prevent users
+from drawing incompatible polygons in an unmodified generic editor.
+
+**Clipboard follow-up:** visibility checkmarks are not selected shapes. The pinned
+editor exposes copy/paste primarily through the canvas context menu and its stock
+paste loads clipboard shape instances directly. Put explicit Select all/Copy/Paste
+in the main menu, verify actual platform shortcuts, and deep-copy on every paste
+so destination edits cannot change the next paste. Preserve local identities,
+reject collisions, and clear copied confirmation/destination review. Reusing boxes
+is a geometry proposal, never evidence that another frame has been reviewed.
+
+**Bulk completion follow-up:** requiring individual confirmation clicks after a
+human has reviewed a batch adds friction without supplying a better audit trail.
+Offer an explicit, named-reviewer attestation for an exact previewed ready subset;
+reuse the importer checks and leave unknown/conflicting/flagged rows pending.
+Hash-bind the preview, back up saved JSON before updates, and record partial I/O
+failure membership rather than rolling back over possible concurrent edits.
+Allocation of missing local IDs is bookkeeping; it must never guess original
+proposal/native identity. A Cancel path and stale-preview test are required in
+the actual editor, not just the backend. Software tests remain nonhuman evidence.
+
+**Navigation follow-up:** stock next/previous indexes `filename` verbatim against
+its file list. Normalize a known absolute path (such as Finish review's Open frame)
+to the matching relative list entry before load; a successful load alone does not
+prove subsequent navigation. Test actual navigation after that entrypoint, and
+schedule modal-test responses after focus/event setup so a test timer cannot fire
+before the Save dialog exists. A frame-wide flag toggle must leave all box flags
+and other frames untouched; mutually exclusive focused/unfocused cannot use all-on.

@@ -11,12 +11,31 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
-**2026-09-28 local annotation/review plan recorded (not implemented):**
-[HUMAN-REVIEW-01–04](Plans/LocalHumanAnnotationReview.md) separate local tool setup
-and real edit round trip, defect auditing, TTR recorder integration and explicit
-human-label admission. Begin with8 retained images; do not wait for new capture.
-Install/service/storage authority and later admission policy remain separate gates.
-No shipped artifact, runtime installation or data eligibility changed by this plan.
+**2026-09-28 local annotation review software verified; human review pending:**
+HUMAN-REVIEW-01 now uses an isolated local Labelme editor, not Docker/CVAT/FiftyOne.
+All8 retained Office frames are hash/inline-receipt/timeline verified and visible;
+two Photos controls across004/005 have unconfirmed box/class/state proposals.
+Stock editor save/close/reopen and checkbox edits passed on a separate software-test
+copy;4/4 production crops passed.123 Python tests and123 offline Swift tests pass.
+Next is the maintainer's batch review and explicit immutable revision, not new
+capture. Human data admission stays separate, model gate unassessed.
+Follow-up adds a41-label visual reference and rectangle-only creation with R/E
+shortcuts; the operator saved/closed and the updated editor was launched at frame007.
+Cross-frame Select all/Copy/Paste now have explicit Edit-menu actions and platform
+shortcuts; isolated Qt tests verify deep copies, local IDs, fresh confirmation,
+conflict guards and save/reopen. Current operator annotations were not changed.
+Finish review now adds a whole-batch exception list, jump-to-frame and explicit
+bulk confirmation of ready frames, with ID allocation, hash rechecks, backups and
+an immutable diagnostic revision.136 Python tests, actual Qt confirmation/cancel/
+stale-preview tests and123 offline Swift tests pass. Read-only saved-batch preview:
+113 rectangles; frames004/005/006/008 ready (17 boxes), Home001/002/003/007 blocked
+on missing focus state for IDs6/9. No real bulk confirmation has been performed.
+Latest editor refinement adds current-image All frame flags on/off and Command
+Left/Right navigation (A/D retained), with unsaved Save/Cancel protection. Actual
+Qt tests verify flag isolation, mixed-state behavior, file-list/canvas shortcuts,
+boundary behavior and save/reopen; no new human annotations are made by these tests.
+[Operator guide](../reports/work/HUMAN-REVIEW-01/OperatorGuide.md) ·
+[Evidence-backed handoff](../reports/work/HUMAN-REVIEW-01/handoff.md).
 
 **2026-09-28 supervised collection exposed a P0 workflow gap:**8 local Office
 checkpoint frames and9 human TTR inputs retained, including both Photos Welcome

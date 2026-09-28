@@ -1,0 +1,2 @@
+1be0d5ac4759e75859a53b30c29ecb1b096c3e3904671e5296328a3e68a8e82b  scripts/human_review_editor.py
+3439f0affccebae969a4ce23d154251fc85f2fbb022e215e0d0ffa9280e20605  scripts/verify_review_clipboard.py
