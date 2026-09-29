@@ -64,6 +64,20 @@ class RecordingTests(unittest.TestCase):
         self.f.dump(self.source/'manifest.json', dict(schemaVersion=3))
         with self.assertRaises(ValueError): self.prepare()
 
+    def test_unverified_requires_explicit_option_and_preserves_role(self):
+        path = self.source/'events.jsonl'
+        rows = r.events(path); rows[0]['frame']['_0']['role'] = 'postInputUnverified'
+        path.write_text('\n'.join(json.dumps(row) for row in rows))
+        with self.assertRaises(ValueError): self.prepare()
+        p = r.prepare(self.source, self.f.root/'second', [(0,'home')], include_unverified=True)
+        doc = h.validate_batch(p)
+        self.assertEqual(doc['frames'][0]['recordingEvent']['role'], 'postInputUnverified')
+        self.assertFalse(h.read(p.parent/'editor/001-recorded-0.json')['flags']['settled'])
+        rows[0]['frame']['_0']['role'] = 'transition'
+        path.write_text('\n'.join(json.dumps(row) for row in rows))
+        with self.assertRaises(ValueError):
+            r.prepare(self.source, self.f.root/'third', [(0,'home')], include_unverified=True)
+
 
 if __name__ == '__main__':
     unittest.main()

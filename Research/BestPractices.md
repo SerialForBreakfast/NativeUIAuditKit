@@ -1957,3 +1957,51 @@ IDs. Preserve nullable mappings, explicit admission gates and per-control bounds
 **Why:** A focused child is not its containing bar. The role extension unblocks
 annotation without silently changing the meaning of41-class training labels.
 See human-focus-roles-v1 and HUMAN-FOCUS-ROLES integration tests.
+
+### BP-112: Clear transient canvas state across image navigation
+
+**Wrong:** Assume the pinned Labelme canvas reset clears selected objects and
+keyboard movement state. A delayed key release can index an old shape in the new
+image and abort through an uncaught PyQt callback.
+**Correct:** Clear transient selection/movement at reset, guard stale release and
+test actual key-release events after navigation as well as legitimate movement/undo.
+**Why:** The observed batch02 crash retained saved JSON but could lose unsaved work;
+ordinary loadFile tests alone did not cover the delayed event boundary.
+
+### BP-113: Action completion and a post-frame tag do not establish a transition
+
+**Wrong:** Count completed remote dispatches as successful UI transitions, or use
+every action-associated image as a settled after-state. Trial02 has165 completed
+dispatches but only15 bounded declared-settled associations; some post associations
+precede command completion or follow another input.
+**Correct:** Join explicit IDs/hashes, retain raw timestamps/generations, separate
+dispatch outcome from visual outcome, and bound after-states by the next input.
+Report conservative exclusions and producer settlement as attributed evidence,
+not native focus truth. Equal or unequal pixels alone cannot label a no-op.
+**Why:** A temporal learner needs defensible action/state correspondence; otherwise
+faster collection can teach another action's result. See REVIEW-PARALLEL-01.
+
+### Harvest target coverage is not the accepted-row count
+
+**Observed:** SYNTH-01 exports accepted rows separately from excluded, interrupted,
+unattempted or rejected targets. Legacy receipts have no complete inventory.
+**Correct:** Bind accepted recipe/target identities to rows and native planned IDs;
+preserve incomplete dispositions through crop export. Compare the expected campaign
+recipe list separately; absent legacy coverage stays unavailable.
+**Why:** A valid partial dataset must not masquerade as an exhaustive sweep simply
+because every retained row passed validation. See canvas-consumer.md handoff.
+
+### Annotation dialog defaults: retain labels, reset per-box evidence
+
+**Preview follow-up:** Labelme paints both current and its transient line guide.
+Setting current for a complete suggested rectangle without clearing line resurrects
+the last manual guide. Reset the transient guide, not saved shapes; test actual
+painting plus zero/one annotation counts on Cancel/Accept.
+
+**Observed:** Suggested rectangles passed an empty label to Labelme, clearing its
+existing repeat-label workflow on every click. Canceled text can also remain in
+the dialog even though it was never accepted.
+**Correct:** Reuse the accepted label and restore it on cancellation; independently
+reset focus, confirmation and notes. Test the actual modal dialog with Enter.
+**Why:** Efficient repetitive labeling should not copy another control's focus or
+review evidence. See HUMAN-CLICK-BOX last-label follow-up.

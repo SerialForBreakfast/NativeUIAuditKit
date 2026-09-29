@@ -2,6 +2,7 @@
 from __future__ import annotations
 import hashlib, json, math, struct, zlib
 from harvest_sidecar_v2 import SidecarError, validate as validate_sidecar_v2
+from harvest_target_coverage import validate_coverage
 from pathlib import Path
 from typing import Any
 
@@ -105,7 +106,7 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
     for row in rows:
         if isinstance(row, dict) and isinstance(row.get("metadata"), dict): expected.update(row["metadata"].get(k) for k in ("unfocusedPath", "focusedPath", "metadataPath"))
     if expected != set(data): raise HarvestValidationError("unsafe_or_invalid_manifest")
-    normalized=[]; unknown=0; seen_baselines={}
+    normalized=[]; unknown=0; seen_baselines={}; native_plans={}
     for row in rows:
         if row.get("split") not in ("training","calibration","held-out") or not isinstance(row.get("metadata"),dict): raise HarvestValidationError("invalid_metadata")
         m=row["metadata"]; names=[m.get("unfocusedPath"),m.get("focusedPath"),m.get("metadataPath")]
@@ -135,6 +136,15 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
             try:
                 binding=validate_sidecar_v2(meta,row,size,{role:hashlib.sha256(data[name]).hexdigest() for role,name in zip(("unfocused","focused"),names)})
             except SidecarError as error: raise HarvestValidationError(str(error)) from error
+            if receipt.get('targetCoverage') is not None:
+                recipe_file = m.get('recipeFile')
+                planned = binding['focusedScene']['focus_observation']['plannedFocusIDs']
+                baseline_planned = binding['baselineScene']['focus_observation']['plannedFocusIDs']
+                if (not isinstance(recipe_file, str) or not recipe_file
+                        or set(planned) != set(baseline_planned)
+                        or (recipe_file in native_plans and set(native_plans[recipe_file]) != set(planned))):
+                    raise HarvestValidationError('invalid_target_coverage: inconsistent_native_inventory')
+                native_plans[recipe_file] = planned
         usable=[]
         for e in elems:
             n=e.get("normalized_bounds"); p=e.get("pixel_bounds")
@@ -148,4 +158,8 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
         normalized.append({"id":row["id"],"split":row["split"],"platform":"tvOS","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"sourceDescription":source_description,"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"elements":usable,"recipe":meta.get("recipe"),"unfocusedPath":names[0],"focusedPath":names[1],"metadataPath":names[2],"unfocusedSHA256":hashlib.sha256(data[names[0]]).hexdigest(),"focusedSHA256":hashlib.sha256(data[names[1]]).hexdigest()})
         normalized[-1].update(sidecarVersion=meta.get("schema_version"), observationBinding=binding,
                               metadataSHA256=hashlib.sha256(data[names[2]]).hexdigest())
-    return {"contractVersion":"harvest-compatibility-v1","integrity":"pass","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"sourceDescription":source_description,"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"unknownClassCount":unknown,"acceptedRowCount":len(rows),"usableRows":normalized}
+    try:
+        coverage = validate_coverage(receipt, rows, native_plans)
+    except ValueError as error:
+        raise HarvestValidationError(str(error)) from error
+    return {"contractVersion":"harvest-compatibility-v1","integrity":"pass","producer":index.get("producer"),"producerBuild":index.get("producerBuild"),"sourceDescription":source_description,"identityEvidence":None,"provenance":"unverified-pixel-telemetry-binding","eligibleForTraining":False,"unknownClassCount":unknown,"acceptedRowCount":len(rows),"usableRows":normalized,"targetCoverage":coverage}

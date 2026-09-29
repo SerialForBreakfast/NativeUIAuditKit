@@ -1,5 +1,106 @@
 # NativeUIAuditKit — Tasks
 
+**Keyboard Fixture coverage — requirements ready / current NUIAK Fixture worker:**
+Inspected field-level Fixture support; per-key system telemetry unverified. Producer
+contract separates custom native-labeled volume, genuine-system transfer, OCR
+proposals and OS-version drift regression. Implementation/capture not claimed;
+annotation and existing crop QA remain independent.
+[Contract](Research/Plans/KeyboardFocusTraining.md).
+
+**Canvas consumer offline tranche — review / current NUIAK Fixture worker:**
+Closed canvas-v1 identity/range validation and native-bound receipt accounting
+integrated into importer and production-crop CLI.34 Python/123 Swift tests and
+offline build pass; retained4/8 dock pairs still validate. Live4/24 checklist ready;
+matched deployment/capture approval remains separate. Annotation editor untouched.
+[Handoff](reports/work/SYNTH-FOCUS-FACTORY-01/canvas-consumer.md).
+
+**Click-box duplicate preview — reopened for review / current review-tool worker:**
+Cleared stale Labelme manual guide before suggestion preview; saved boxes unchanged.
+16 actual Qt tests and offline Swift build/test pass. User confirmed closed;
+batch03 reopened with the fix. [Evidence](reports/work/HUMAN-CLICK-BOX/handoff.md).
+
+**Click-box last label — reopened for review / current review-tool worker:**
+Suggestion retains last accepted label; Enter accepts, Cancel restores prior
+default, focus/confirmation reset per box.15 Qt/123 Swift tests and build pass.
+Batch03 reopened after user request with the fix; saved annotations preserved.
+[Evidence](reports/work/HUMAN-CLICK-BOX/handoff.md).
+
+**SYNTH-FOCUS-FACTORY-01 — repair qualified; factory pending / current NUIAK Fixture worker:**
+Approved source integration and matched deployment complete. Human project-folder
+grant resolved startup. Actual four-control and nine-item recipes completed:
+4+8 accepted native pairs, zero rejected rows, 24/24 production crops; the ninth
+dock item is disabled and excluded from native eligible membership. Export hashes
+verified; 29 consumer tests pass. Samples remain test-only, not training-admitted.
+Signed builds/82 producer tests/6 model checks passed previously. Direct caller
+export hit permission error513; supported Ruby exporter delivered both jobs.
+Clean-canvas cumulative source now received/hash-verified:50 files reconciled,
+no semantic hash/base conflict; two newline-only differences preserved. Canvas
+identity is now supported offline by the consumer; source still uses reference-negative
+pairs. Next: approve new canvas integration/matched deployment and bounded4/24
+qualification, then source-pinned consumer checks/crop intake. Competitor pairs and
+campaign resume remain separate. No training started.
+[Canvas intake](reports/work/SYNTH-FOCUS-FACTORY-01/canvas-intake.md).
+[Plan](Research/Plans/SyntheticFocusFactory.md) · [Evidence](reports/work/SYNTH-FOCUS-FACTORY-01/handoff.md).
+
+**REVIEW-PARALLEL-01 — review / current review-tool worker:** role-aware evaluator
+freeze/run/render, one-command immutable QA and retained sequence audit delivered.
+59 Python tests, offline Swift build/123 tests pass; actual batch02 QA89/89 passes.
+Recorder166 actions:165 completed,15 declared-settled associations,14 conservatively
+clean; not transition-training admission. Open batch03 untouched; no model/device
+execution. [Handoff](reports/work/REVIEW-PARALLEL-01/handoff.md).
+
+**Trial02 completed-batch coverage/admission preparation — review / current review-tool worker:**
+16 frames/171 crops revalidated;154 proposed candidates,16 auxiliary,1 unresolved
+clock/avatar. Zero admitted pairs;14 explicitly qualified visual pair proposals.
+Candidate-set605 and original three-tab settlement decisions remain; no inference.
+Targeted collection and batch03 QA handoff ready; open editor untouched.
+[Evidence](reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch12-coverage-handoff.md).
+
+**FOCUS-REGRESSION-V2 batch03 — human review open / current review-tool worker:**
+eight unused retained frames prepared and editor launched; populated App Store
+cards/results, changed focus targets, Settings row/top-shelf. Zero exact pixel
+overlap with prior sixteen. Producer-unverified settlement and human flags remain
+pending. No capture, inference or training; completed batches unchanged.
+[Handoff](reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch03-handoff.md).
+
+**Batch02 QA complete for review:** revision20260928T232705Z-8a71fdbe verified,
+8 frames/89 controls,89/89 production crops, no hard audit issues. Bounds blocker
+resolved through a new human-confirmed revision; prior evidence preserved. Next:
+development admission decision/targeted training collection plan, not automatic
+model execution. [Evidence](reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch02-crop-qa.md).
+
+**HUMAN-CLICK-BOX — review / current review-tool worker:** default-off rectangle
+suggestions and numeric boundary tolerance implemented/tested. User save/close
+then reopen, explicitly finish batch02, then complete QA. Feature remains
+experimental until usefulness measured. [Handoff](reports/work/HUMAN-CLICK-BOX/handoff.md).
+
+**Batch02 crop QA:**70/70 crops generated/verified for7 reviewed frames; no exact
+crop duplicates internally/across batch01. Full audit blocked on preserved pending
+frame249 (unassigned IDs following boundary-rounding rejection). Next: tolerance
+repair and explicit new revision for that frame, then full audit. No model work.
+[Evidence](reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch02-crop-qa.md).
+
+**Batch02 review checkpoint:**7 reviewed frames/70 controls verified against saved
+snapshots and completeness receipt20260928T231403Z-405f04f0. Frame249 blocked by
+invalid_bounds in Finish preview (19 untouched boxes, unassigned IDs). Next:
+targeted geometry diagnosis/correction and production crop QA; no model execution.
+
+**HUMAN-REVIEW-NAV-CRASH — review / current review-tool worker:** stale selection
+on delayed key release fixed;13 Qt tests and offline Swift checks pass. Batch02
+reopened at image6 with five saved annotated images preserved. TTR coordination
+updated/read back; peer acknowledgment pending. [Handoff](reports/work/HUMAN-REVIEW-NAV-CRASH/handoff.md).
+
+**Numbered control list — review / current review-tool worker:** implemented and
+verified (11 Qt tests, offline Swift checks); active batch02 window requires a
+saved/closed restart. Presentation only; annotations unchanged.
+
+**FOCUS-REGRESSION-V2 batch02 — human review open / current review-tool worker:**
+8 new distinct frames prepared/opened (3 Home,2 VoiceOver Settings,3 tab states).
+Frame249 retains producer-unverified settlement; human checks it. No completed
+batch overwritten. In parallel, [development admission proposal](Research/Plans/Trial02DevelopmentAdmission.md)
+partitions first batch into67 candidates/15 auxiliary negatives; awaits approval
+and App Store settlement reconciliation. No model execution.
+
 **FOCUS-REGRESSION-V2 QA — review / current review-tool worker:** production crops
 and audit complete82/82, no hard issues. Next: role-aware development-admission
 proposal, static-negative/candidate separation and settled-state reconciliation;

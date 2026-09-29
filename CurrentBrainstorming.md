@@ -1,5 +1,62 @@
 # Current brainstorming
 
+### 2026-09-29 — Keyboard focus without per-letter human labor
+
+Prioritize one key role with character/action metadata, bulk native-labeled custom
+Fixture capture, and a small genuine-OS transfer lane. OS-owned keyboard geometry
+may not be exposed to the Fixture; probe rather than infer. OCR/template proposals
+assist layout review but do not establish focus. Selected parent/mode state stays
+separate from active focus. Pin OS build/layout/locale, invalidate presets on drift,
+and retain old-version regression. No promise that synthetic alone covers future OS.
+[Producer/consumer contract](Research/Plans/KeyboardFocusTraining.md).
+
+### 2026-09-28 — Synthetic factory direction promoted
+
+User approved pursuing the synthetic factory. [Implementation contract](Research/Plans/SyntheticFocusFactory.md)
+now separates producer canvas/sweep work from NUIAK intake/QA. Verified dock repair
+receipt:36 compatible source files, not installed. Existing TTR campaign runner
+should be reused; unknown-cleanup resume must be qualified before unattended scale.
+Human review remains focused on real transfer and synthetic exceptions, not drawing
+every generated box. Source integration/installation requires explicit producer
+authority; no new training approved by this planning decision.
+
+### 2026-09-28 — Synthetic Fixture should supply volume; humans verify transfer
+
+Maintainer direction: prioritize an uncluttered, fully configurable Fixture canvas,
+one observed focused control, and automated traversal/pair capture across every
+planned item. Human annotation is too slow to be the bulk training-data factory;
+its distinct role is real-world regression, transfer checks and failure discovery.
+This discussion is a proposal, not new producer-edit/capture/training authority.
+
+Verified retained status:52 Fixture pairs admitted, incorporated into273-pair
+FDR-009; nine-control dock previously failed strict telemetry identity. Producer
+status read now (2026-09-28T23:49:51Z) reports actual-container-width dock repair,
+offline tests and Simulator compilation, but no installation/live consumer trial.
+Small four-control path is proven; dense arbitrary canvases and custom asset/Top
+Shelf pipeline are not. FDR-009's later Office regression shows volume/retention
+alone did not establish transfer (1/8 positives vs shipped4/8 on that small set).
+
+Suggested priorities for promotion:
+1. Qualify the delivered dock repair on a bounded matched-runtime trial; preserve
+   strict observed native focus and per-state geometry checks.
+2. Specify clean dataset mode: no telemetry overlays in captured pixels; separate
+   controls/debug panel; seeded layout/assets/background/focus-style controls,
+   sparse and dense scenes, explicit viewport/scroll/clipping behavior.
+3. Sweep every visible target with native focus confirmation. Pair each target's
+   focused state with another target-focused state, preserving all competitors and
+   actual scaled bounds. Keep direct-focus data generation separate from remote
+   directional navigation evidence. Count unique crops/pairs, not combinatorial
+   reuse as independent examples; balance negatives and sample difficult ones.
+4. Qualify a representative pilot end-to-end, then unattended resumable batches
+   with manifest receipts, failures, storage limits and automatic production crop QA.
+   Reserve recipe/asset/layout families before capture; no random sibling-frame split.
+5. Use a small reviewed real-world benchmark to test whether each synthetic
+   expansion improves transfer. Realism in focus cues/geometry/context matters;
+   attractive decoration alone does not. Synthetic native labels still require
+   verified pixel/telemetry correlation, not a promise of infallible annotations.
+
+Do not block synthetic collection engineering on completion of human batch03.
+
 ### 2026-09-28 — Fix focus coverage without corrupting detector labels
 
 Observed gap: App Store tab destinations cannot accurately be labeled as tabBar

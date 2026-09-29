@@ -153,6 +153,8 @@ class EditorTests(unittest.TestCase):
         self.w.shapeSelectionChanged([first])
         self.w.refreshFocusList()
         self.assertIs(self.w.labelList[0].shape(), second)
+        self.assertIn('2. primaryButton', self.w.labelList[0].text())
+        self.assertIn('1. primaryButton', self.w.labelList[1].text())
         self.assertIn('●', self.w.labelList[0].text())
         self.assertNotIn('FOCUSED', self.w.labelList[0].text())
         self.assertIn('FOCUSED', self.w.labelList[0].toolTip())
@@ -165,6 +167,7 @@ class EditorTests(unittest.TestCase):
         self.assertEqual([s['group_id'] for s in h.read(path)['shapes']], [first.group_id, 2])
         self.w.loadFile(self.w.imagePath)
         self.assertEqual(self.w.labelList[0].shape().group_id, 2)
+        self.assertIn('2. primaryButton', self.w.labelList[0].text())
 
     def test_multiple_focus_unknown_and_excluded_indicators(self):
         first = self.w.canvas.shapes[0]
@@ -198,6 +201,36 @@ class EditorTests(unittest.TestCase):
             self.double_click(30, 25)
             edit.assert_not_called()
 
+    def test_navigation_clears_movement_and_delayed_key_release(self):
+        from qtpy import QtCore, QtGui
+        old = self.w.canvas.shapes[0]
+        self.w.shapeSelectionChanged([old])
+        self.w.canvas.movingShape = True
+        self.w.loadFile('editor/002-frame-1.png')
+        self.assertFalse(self.w.canvas.movingShape)
+        self.assertEqual(self.w.canvas.selectedShapes, [])
+        self.app.sendEvent(self.w.canvas, QtGui.QKeyEvent(QtCore.QEvent.KeyRelease, QtCore.Qt.Key_Right, QtCore.Qt.NoModifier))
+        self.assertEqual(len(self.w.canvas.shapes), 1)
+        # Defensive guard also handles stale state without an intervening reset.
+        self.w.canvas.selectedShapes = [old]
+        self.w.canvas.movingShape = True
+        self.app.sendEvent(self.w.canvas, QtGui.QKeyEvent(QtCore.QEvent.KeyRelease, QtCore.Qt.Key_Right, QtCore.Qt.NoModifier))
+        self.assertFalse(self.w.canvas.movingShape)
+        self.assertEqual(self.w.canvas.selectedShapes, [])
+
+    def test_valid_movement_release_keeps_edit_and_undo(self):
+        from qtpy import QtCore, QtGui
+        canvas = self.w.canvas
+        shape = canvas.shapes[0]
+        self.w.shapeSelectionChanged([shape])
+        shape.points[0] += QtCore.QPointF(1, 0)
+        canvas.movingShape = True
+        count = len(canvas.shapesBackups)
+        self.app.sendEvent(canvas, QtGui.QKeyEvent(QtCore.QEvent.KeyRelease, QtCore.Qt.Key_Right, QtCore.Qt.NoModifier))
+        self.assertFalse(canvas.movingShape)
+        self.assertGreater(len(canvas.shapesBackups), count)
+        self.assertTrue(self.w.dirty)
+
     def test_queue_navigation_and_finish_dialog_same_membership(self):
         from qtpy import QtCore, QtWidgets
         self.assertEqual(len(self.w.imageList), 1)
@@ -214,6 +247,85 @@ class EditorTests(unittest.TestCase):
         QtCore.QTimer.singleShot(10, inspect_dialog)
         self.w.finishReview()
         self.assertEqual(observations, [(1, False)])
+
+    def test_optional_click_proposal_cancel_accept_and_off(self):
+        from qtpy import QtCore, QtTest
+        action=self.w.actions.suggestBox
+        self.assertFalse(action.isChecked())
+        canvas=self.w.canvas
+        location=((QtCore.QPointF(85,45)+canvas.offsetToCenter())*canvas.scale).toPoint()
+        with patch('human_click_box.suggest', return_value=[[70,35],[95,55]]) as suggest:
+            QtTest.QTest.mouseClick(canvas,QtCore.Qt.LeftButton,pos=location)
+            suggest.assert_not_called()
+            action.setChecked(True)
+            with patch.object(self.w.labelDialog,'popUp',return_value=(None,None,None,None)):
+                QtTest.QTest.mouseClick(canvas,QtCore.Qt.LeftButton,pos=location)
+            self.assertEqual(len(canvas.shapes),1)
+            with patch.object(self.w.labelDialog,'popUp',return_value=('listRow',{},None,'')):
+                QtTest.QTest.mouseClick(canvas,QtCore.Qt.LeftButton,pos=location)
+            self.assertEqual(len(canvas.shapes),2)
+            self.assertTrue(canvas.shapes[-1].flags['unfocused'])
+            self.assertFalse(canvas.shapes[-1].flags['confirmed'])
+            self.assertIsNone(canvas.current)
+            self.w.toggleDrawMode(False,'rectangle')
+            self.assertFalse(action.isChecked())
+        action.setChecked(True)
+        with patch('human_click_box.suggest', return_value=None), patch.object(self.w.labelDialog,'popUp') as dialog:
+            QtTest.QTest.mouseClick(canvas,QtCore.Qt.LeftButton,pos=location)
+            dialog.assert_not_called()
+        self.assertEqual(len(canvas.shapes),2)
+
+    def test_suggestion_preview_clears_stale_manual_guide_not_saved_boxes(self):
+        from qtpy import QtCore
+        from labelme.shape import Shape
+        canvas = self.w.canvas
+        original = list(canvas.shapes)
+        for accepted in (False, True):
+            canvas.line = Shape(shape_type='rectangle')
+            canvas.line.points = [QtCore.QPointF(5,5), QtCore.QPointF(60,15)]
+            canvas.line.close()
+            before = len(canvas.shapes)
+            def inspect_preview(*args, **kwargs):
+                self.assertEqual(canvas.line.points, [])
+                self.assertEqual(len(canvas.shapes), before)
+                self.assertEqual([(p.x(),p.y()) for p in canvas.current.points],
+                                 [(70,35),(95,55)])
+                self.assertFalse(canvas.grab().isNull())  # Exercise actual paintEvent.
+                return ('listRow', {}, None, '') if accepted else (None,None,None,None)
+            with patch('human_click_box.suggest', return_value=[[70,35],[95,55]]), \
+                    patch.object(self.w.labelDialog, 'popUp', side_effect=inspect_preview):
+                self.w.suggestRectangle(QtCore.QPointF(85,45))
+            self.assertIsNone(canvas.current)
+            self.assertEqual(len(canvas.shapes), before + int(accepted))
+            self.assertIs(canvas.shapes[0], original[0])
+
+    def test_suggestion_reuses_accepted_label_and_enter_with_fresh_flags(self):
+        from qtpy import QtCore, QtTest
+        dialog = self.w.labelDialog
+        # An ordinary label dialog establishes the session default.
+        QtCore.QTimer.singleShot(10, dialog.validate)
+        self.assertEqual(dialog.popUp('listRow', move=False,
+                                     flags={'focused': True, 'confirmed': True})[0], 'listRow')
+        def cancel_edit():
+            dialog.edit.setText('collectionItem')
+            dialog.reject()
+        QtCore.QTimer.singleShot(10, cancel_edit)
+        self.assertIsNone(dialog.popUp(move=False)[0])
+        self.assertEqual(dialog.edit.text(), 'listRow')
+        observed = []
+        def accept_suggestion():
+            observed.append((dialog.edit.text(), dialog.getFlags()))
+            QtTest.QTest.keyClick(dialog.edit, QtCore.Qt.Key_Return)
+        for _ in range(2):
+            QtCore.QTimer.singleShot(10, accept_suggestion)
+            with patch('human_click_box.suggest', return_value=[[70,35],[95,55]]):
+                self.w.suggestRectangle(QtCore.QPointF(85,45))
+            self.assertEqual(self.w.canvas.shapes[-1].label, 'listRow')
+            self.assertTrue(self.w.canvas.shapes[-1].flags['unfocused'])
+            self.assertFalse(self.w.canvas.shapes[-1].flags['confirmed'])
+        self.assertEqual([label for label, _ in observed], ['listRow', 'listRow'])
+        self.assertTrue(all(not flags['focused'] and not flags['confirmed']
+                            for _, flags in observed))
 
     def test_actual_finish_button_writes_scoped_completeness(self):
         from qtpy import QtCore, QtWidgets

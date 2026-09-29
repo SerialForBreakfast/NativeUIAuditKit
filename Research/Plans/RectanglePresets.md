@@ -41,3 +41,14 @@ UI must disclose unchecked=unfocused and show uncommitted legacy defaults clearl
 Visual refinement: use only filled/hollow circles for normal focus states in
 control rows; full state text remains in tooltips. Preserve warning/exclusion
 symbols and the dock's focused-count warning. No label or annotation change.
+
+Control rows also display a one-based box number in canvas order. Pinning does
+not renumber controls; numbering is presentation only and does not allocate or
+change Group IDs. Deleting boxes can compact the displayed sequence.
+
+## Navigation crash repair
+
+Observed fatal PyQt callback: Canvas.keyReleaseEvent tried shapes.index on a
+selection absent from the current image. Reset transient selection/movement on
+image reset and guard stale selection at key release. Preserve legitimate movement
+and undo behavior; test actual key events across image changes. No vendor edits.

@@ -12,3 +12,9 @@ are allowed; same existing rectangle editor and Finish review snapshot contract.
 Validate membership against copied frame events and inventory, exact target/session,
 size/hash and original event identity before opening or finishing. This is a direct
 local subset intake, not a claim that the failing TTR export works.
+
+Second diagnostic batch: explicit include-unverified option may retain
+postInputUnverified frames with original role unchanged; transition frames remain
+rejected. Human settled confirmation is separate from producer settlement. The
+sealed batch records this option. Each new batch gets a path-bound unique ID;
+legacy batches retain their IDs. No new training/evaluation eligibility.

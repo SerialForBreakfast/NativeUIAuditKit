@@ -15,6 +15,7 @@ from focus_surface_evaluation import runtime, seal_check
 from focus_surface_intake import fresh, write
 
 VERSION = "human-focus-development-evaluation-v1"
+ROLE_VERSION = "human-focus-development-evaluation-v2"
 ROLE = "development-regression"
 POLICY = dict(trainingEligible=False, independentEvaluationEligible=False,
               developmentEvaluationEligible=True, completeFrameCandidates=False,
@@ -28,8 +29,8 @@ def check(ref):
     return h.checked(h.ROOT, ref)
 
 
-def admitted(revision, crops):
-    h.require(h.read_revision(revision)['version'] == h.REVISION,
+def admitted(revision, crops, admission=None):
+    h.require(admission is not None or h.read_revision(revision)['version'] == h.REVISION,
               'focus_role_evaluation_requires_separate_admission')
     report = audit(revision, crops)
     h.require(report["reviewer"]["kind"] == "human", "human_review_required")
@@ -37,9 +38,19 @@ def admitted(revision, crops):
     h.require(report["samples"] and all(s["disposition"] == "reviewed" for s in report["samples"]),
               "incomplete_review")
     frames = {f["id"]: f for f in report["frames"]}
+    if admission is not None:
+        from human_focus_roles import admit
+        report['roleAdmission'] = admit(admission, report, revision, crops)
+        report['pairs'] = [p for p in report['pairs'] if p['id'] in report['roleAdmission']['pairIDs']]
     rows = [{**s, "label": int(s["state"] == "focused"), "family": s["screen"],
-             "theme": "unknown", "control": s["class"], "hard": False,
+             "theme": "unknown", "control": h.control_label(s), "hard": False,
              "image": frames[s["frameID"]]["image"]} for s in report["samples"]]
+    if admission is not None:
+        policy = report['roleAdmission']
+        populations = {i:k for k,ids in policy['populations'].items() for i in ids}
+        settlement = {f['id']:f['settlement'] for f in policy['frames']}
+        for row in rows:
+            row.update(population=populations[row['id']], settlement=settlement[row['frameID']])
     return report, rows
 
 
@@ -90,7 +101,8 @@ def role_audit(report, specs):
 
 
 def approval_check(approval, report, revision, crops):
-    h.require(approval.get("version") == "human-focus-evaluation-approval-v1"
+    role_aware = 'roleAdmission' in report
+    h.require(approval.get("version") == ("human-focus-evaluation-approval-v2" if role_aware else "human-focus-evaluation-approval-v1")
               and approval.get("approved") is True and approval.get("maxRuns") == 1
               and approval.get("role") == ROLE and approval.get("reviewer")
               and approval.get("authorizationReference") and approval.get("threshold") == .85
@@ -103,19 +115,29 @@ def approval_check(approval, report, revision, crops):
     h.require(set(approval["models"]) == {"shipped", "fdr009"}, "wrong_model_roles")
 
 
+def admitted_approval(approval, revision, crops):
+    return admitted(revision, crops, check(approval['admission']) if approval.get('admission') else None)
+
+
+def code_for(doc):
+    return CODE + (('human_focus_roles.py', 'human_regression_review.py') if doc['version'] == ROLE_VERSION else ())
+
+
 def freeze(approval_path, output):
     output = fresh(output)
     approval = h.read(approval_path)
     revision, crops = check(approval["revision"]), check(approval["crops"])
-    report, rows = admitted(revision, crops)
+    report, rows = admitted_approval(approval, revision, crops)
     approval_check(approval, report, revision, crops)
-    doc = dict(version=VERSION, **POLICY, role=ROLE, approval=h.ref(approval_path),
+    doc = dict(version=ROLE_VERSION if 'roleAdmission' in report else VERSION, **POLICY, role=ROLE, approval=h.ref(approval_path),
                revision=h.ref(revision), crops=h.ref(crops), samples=rows, pairs=report["pairs"],
                source=report["coverage"], reviewer=report["reviewer"], inputs=report["inputs"],
                duplicateGroups=report["exactCropDuplicateGroups"],
                overlap=role_audit(report, approval["roleManifests"]), threshold=.85,
                preprocessing=RUNTIME_PREPROCESSING, models=approval["models"], runtime=runtime(),
-               implementation=[h.ref(h.ROOT/"scripts"/name) for name in CODE], output=approval["output"])
+               output=approval["output"])
+    if 'roleAdmission' in report: doc['roleAdmission'] = report['roleAdmission']
+    doc['implementation'] = [h.ref(h.ROOT/'scripts'/name) for name in code_for(doc)]
     doc["seal"] = h.digest(doc)
     validate(doc)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -125,20 +147,22 @@ def freeze(approval_path, output):
 
 def validate(doc):
     seal_check(doc)
-    h.require(doc.get("version") == VERSION and doc.get("role") == ROLE
+    h.require(doc.get("version") in (VERSION, ROLE_VERSION) and doc.get("role") == ROLE
               and all(doc.get(k) == v for k, v in POLICY.items())
               and doc.get("threshold") == .85 and doc.get("preprocessing") == RUNTIME_PREPROCESSING,
               "unsupported_human_evaluation_policy")
     approval = h.read(check(doc["approval"]))
     revision, crops = check(doc["revision"]), check(doc["crops"])
-    report, rows = admitted(revision, crops)
+    report, rows = admitted_approval(approval, revision, crops)
+    h.require(doc.get('roleAdmission') == report.get('roleAdmission') and
+              (doc['version'] == ROLE_VERSION) == ('roleAdmission' in report), 'changed_role_admission')
     approval_check(approval, report, revision, crops)
     h.require(doc["samples"] == rows and doc["pairs"] == report["pairs"] and doc["inputs"] == report["inputs"]
               and doc["source"] == report["coverage"] and doc["reviewer"] == report["reviewer"]
               and doc["duplicateGroups"] == report["exactCropDuplicateGroups"], "changed_membership")
     h.require(doc["overlap"] == role_audit(report, approval["roleManifests"]), "changed_role_inventory")
     h.require(doc["runtime"] == runtime() and doc["runtime"]["crop"] == h.read(crops)["runtime"], "changed_runtime")
-    h.require(doc["implementation"] == [h.ref(h.ROOT/"scripts"/name) for name in CODE], "changed_implementation")
+    h.require(doc["implementation"] == [h.ref(h.ROOT/"scripts"/name) for name in code_for(doc)], "changed_implementation")
     h.require(doc["models"] == approval["models"] and doc["output"] == approval["output"], "changed_execution_binding")
     check(doc["models"]["fdr009"])
     shipped = doc["models"]["shipped"]
@@ -146,7 +170,8 @@ def validate(doc):
               "changed_shipped_model")
 
 
-def metrics(rows, predictions, pairs):
+def metrics(rows, predictions, pairs, role_admission=None):
+    h.require(len({r['id'] for r in rows}) == len(rows), 'duplicate_sample')
     h.require([r["id"] for r in rows] == [p.get("id") for p in predictions], "prediction_membership")
     h.require(all(type(p.get("probability")) in (float, int) and math.isfinite(p["probability"])
                   and 0 <= p["probability"] <= 1 for p in predictions), "invalid_probability")
@@ -176,6 +201,11 @@ def metrics(rows, predictions, pairs):
         neg = next(i for i in ids if not by_id[i]["label"])
         outcomes.append(dict(id=pair["id"], members=ids, focusedScore=values[pos], unfocusedScore=values[neg],
                              delta=values[pos]-values[neg], bothCorrect=values[pos] >= .85 and values[neg] < .85))
+    if role_admission is not None:
+        from human_focus_roles import metrics as role_metrics
+        result = role_metrics(rows, predictions, role_admission, summarize)
+        result.update(pairs=outcomes, accounted=len(rows))
+        return result
     return dict(full=summarize(rows), duplicateSensitivity=summarize(unique), pairs=outcomes,
                 completeFrameSelection={"status":"unavailable", "reason":"candidate completeness unknown"},
                 accounted=len(rows))
@@ -229,7 +259,7 @@ def run(protocol_path, output):
         started = time.monotonic()
         try:
             infer(name, doc, predictions, receipts)
-            result = dict(state="complete", metrics=metrics(doc["samples"], predictions, doc["pairs"]))
+            result = dict(state="complete", metrics=metrics(doc["samples"], predictions, doc["pairs"], doc.get('roleAdmission')))
         except Exception as error:
             result = dict(state="failed", error=f"{type(error).__name__}: {error}", metrics=None)
         # Preserve invalid-score diagnostics as strings, never non-finite JSON.
@@ -259,7 +289,7 @@ def run(protocol_path, output):
     postflight = None
     try: validate(doc)
     except Exception as error: postflight = str(error)
-    report = dict(version=VERSION, **POLICY, protocol=h.ref(protocol_path), results=results,
+    report = dict(version=doc['version'], **POLICY, protocol=h.ref(protocol_path), results=results,
                   postflightError=postflight, completed=postflight is None and all(r["state"] == "complete" for r in results.values()))
     write(output/"comparison.json", report)
     return report
@@ -272,12 +302,14 @@ def render(protocol_path, comparison_path, output):
     # BP-106: retained-score reporting needs reviewed pixels and bindings, not
     # model residency, the old runtime or traversal of protected corpora.
     seal_check(doc)
-    h.require(doc.get("version") == VERSION and doc.get("role") == ROLE
+    h.require(doc.get("version") in (VERSION, ROLE_VERSION) and doc.get("role") == ROLE
               and all(doc.get(k) == v for k,v in POLICY.items()) and doc.get("threshold") == .85
               and doc.get("preprocessing") == RUNTIME_PREPROCESSING, "unsupported_retained_protocol")
     approval = h.read(check(doc["approval"]))
     revision, crops = check(doc["revision"]), check(doc["crops"])
-    reviewed, rows = admitted(revision,crops)
+    reviewed, rows = admitted_approval(approval,revision,crops)
+    h.require(doc.get('roleAdmission') == reviewed.get('roleAdmission') and
+              (doc['version'] == ROLE_VERSION) == ('roleAdmission' in reviewed), 'changed_role_admission')
     approval_check(approval,reviewed,revision,crops)
     h.require(rows == doc["samples"] and reviewed["pairs"] == doc["pairs"]
               and doc["models"] == approval["models"], "changed_retained_membership")
@@ -288,10 +320,12 @@ def render(protocol_path, comparison_path, output):
         outcome = result["results"][name]
         h.require(outcome["state"] == "complete" and outcome["model"] == doc["models"][name]
                   and outcome["protocol"] == h.ref(protocol_path), "incompatible_retained_scores")
-        measured = metrics(doc["samples"], outcome["predictions"], doc["pairs"])
+        measured = metrics(doc["samples"], outcome["predictions"], doc["pairs"], doc.get('roleAdmission'))
         h.require(measured == outcome["metrics"], "changed_metrics")
         values = {p["id"]:p["probability"] for p in outcome["predictions"]}
         errors = [r for r in doc["samples"] if (values[r["id"]] >= .85) != bool(r["label"])]
+        if 'roleAdmission' in doc:
+            errors = [r for r in errors if r['population'] != 'unresolved' and r['settlement'] == 'settled']
         errors.sort(key=lambda r:(-r["label"], values[r["id"]] if r["label"] else -values[r["id"]], r["id"]))
         for row in errors:
             number = len(index)+1
@@ -307,6 +341,7 @@ def render(protocol_path, comparison_path, output):
             path = output/f"{number:03d}-{name}.png"; sheet.save(path)
             index.append(dict(number=number, model=name, sample=row["id"], kind=kind,
                               probability=values[row["id"]], sheet=h.ref(path)))
+            if 'roleAdmission' in doc: index[-1]['population'] = row['population']
     write(output/"index.json", dict(protocol=h.ref(protocol_path), comparison=h.ref(comparison_path), errors=index))
     return index
 

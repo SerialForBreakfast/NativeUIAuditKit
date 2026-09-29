@@ -11,6 +11,77 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**Synthetic focus factory priority:** dock repair source received and all36 files
+hash-verified and now integrated with explicit approval. Signed host/Fixture build
+pass;82 focused tests pass,1 live-only skipped;6 model checks pass. Fixture installed.
+Human project-folder grant resolved startup. Live four-control/nine-item sweeps
+passed:12 native pairs, zero rejected rows,24 production crops,29 consumer tests.
+All eight eligible dock targets captured; ninth item disabled. These samples remain
+test-only. Direct export permission error513 worked around using the supported
+caller exporter. Clean canvas/competitor-pair implementation remains next;
+human annotation continues independently; no model change. Clean-canvas source
+subsequently received:842765 bytes,50 source files verified/reconciled; not deployed.
+Consumer canvas compatibility and target accounting now pass34 Python/123 Swift
+tests including actual generated-bundle crop CLI; live rendering remains unrun. See
+[consumer handoff](../reports/work/SYNTH-FOCUS-FACTORY-01/canvas-consumer.md) and
+[canvas intake](../reports/work/SYNTH-FOCUS-FACTORY-01/canvas-intake.md).
+[Plan](Plans/SyntheticFocusFactory.md).
+
+**Review-parallel software complete for review:** role-aware development evaluator,
+one-command QA and retained sequence audit verified.59 Python/123 Swift tests pass;
+actual production crop replay89/89. Recorder input completion is not UI transition
+truth:15/166 actions have bounded declared-settled posts,14 pass conservative checks.
+No model execution or automatic admission; batch03 remains untouched.
+[Handoff](../reports/work/REVIEW-PARALLEL-01/handoff.md).
+
+**Trial02 coverage/admission preparation complete:**16 reviewed frames/171 crops,
+154 proposed focus candidates plus16 auxiliary annotations and1 unresolved role.
+Zero formally declared pairs;14 visual proposals retain identity/context caveats.
+No model execution; batch03 untouched. Frame605 completeness and original tab
+settlement remain admission decisions, not blockers to ongoing annotation.
+[Audit and next assignment](../reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch12-coverage-handoff.md).
+
+**Batch03 annotation open:** eight unused retained images validated and opened,
+including populated App Store cards/search results plus Settings row/top-shelf.
+No exact pixel overlap with prior sixteen. All producer-unverified; settlement
+and annotations require human review. No model changes.
+[Handoff](../reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch03-handoff.md).
+
+**Batch02 complete QA (23:27Z revision):**8 reviewed frames/89 controls with
+completeness receipt;89/89 production crops and full audit pass integrity checks,
+89 distinct crops. No hard issues; one near-frame warning is Arcade→Search focus.
+Two latest batches total16 frames/171 controls. Diagnostic-only, no inference or
+training admission; earlier partial QA retained. [Evidence](../reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch02-crop-qa.md).
+
+**Experimental click-box aid:** optional/default-off toolbar toggle implemented,
+44 Python/14 Qt tests and offline Swift checks pass. Retained probe:3 Settings
+panels suggested,1 tab abstained; not promoted. Numeric bounds dust repaired;
+batch02 previews8/8 ready without writes, awaiting explicit Finish confirmation
+and editor restart. [Handoff](../reports/work/HUMAN-CLICK-BOX/handoff.md).
+
+**Batch02 partial crop QA:**70/70 production crops verified,70 distinct pixels,
+no exact overlap with batch01 crops. Full audit remains blocked on immutable
+pending frame249; failure receipt preserved. Latest two batches total15 reviewed
+frames/152 controls, not matched training pairs. No inference/training/admission.
+
+**Batch02 human review verified (23:14Z):** revision231403Z-405f04f0 contains7
+reviewed frames/70 reviewed controls, with completeness attestation on those7.
+recorded-249 remains blocked: Finish preview reported invalid_bounds; its untouched
+snapshot retains19 boxes without assigned IDs, hence revision invalid_control_id.
+No auto-repair/confirmation. Crop QA pending; diagnostic/training-ineligible.
+
+**Editor navigation crash repaired:** stale rectangle selection on key release
+caused PyQt abort. Reset/guard added,13 Qt tests and offline Swift checks pass;
+batch02 reopened at image6, saved first5 annotations preserved. TTR notified that
+this was a consumer editor issue, not capture failure; export qualification remains
+separate. [Handoff](../reports/work/HUMAN-REVIEW-NAV-CRASH/handoff.md).
+
+**Second annotation batch opened:**8 distinct retained frames, zero exact pixel
+overlap with batch01;7 producer-settled/1 explicitly unverified diagnostic frame.
+First-batch admission proposal prepared:67 candidates,15 auxiliary background
+annotations, no source-label changes. Settlement reconciliation and separate
+model-evaluation approval remain. [Handoff](../reports/work/FOCUS-REGRESSION-V2/office-trial-02/batch02-handoff.md).
+
 **Trial02 crop QA/audit complete:**82/82 production crops from8 reviewed frames,
 82 distinct crop pixels,8 focused/74 unfocused. No hard audit issues. One near-frame
 warning visually resolved as Games→Apps focus change; preserve both. Static labels

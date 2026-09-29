@@ -1,5 +1,13 @@
 # Local focus review — Start / Review / Finish
 
+## Agent handoff after Finish review
+
+The agent can now run `scripts/human_review_qa.py REVISION NEW-OUTPUT --completeness RECEIPT`.
+It validates immutable annotations, runs production crops and writes an audit and
+summary in one command. It never sets your flags, admits training data or runs a
+model. Pending frames stay blocked. You can keep annotating another batch; no
+editor restart is needed for this CLI.
+
 No Docker, server, account or device connection. This batch contains the eight
 retained Office screenshots. Originals and receipts are separate from editable
 copies. Start with **004 and005**: the two Photos Welcome states.
@@ -60,12 +68,29 @@ an explicit reviewed pair assignment, not just matching integers.
 
 ### Tabs and missing detector classes
 
+### Optional experimental rectangle suggestions
+
+**Suggest box (experimental)** is off on every launch. Enable it in the toolbar
+or Edit menu, then click a plain interior area of a filled control (not text/icon).
+Inspect the rectangle preview, choose a label and OK, or Cancel. A suggestion is
+not an approved annotation. Turn the toggle off to adjust corners; choosing Create
+rectangle also disables it. No-result means use manual drawing/presets. Flat rows
+and panels are the initial target; artwork, dark/gradient backgrounds, tab text and
+clipped controls may fail. No model or remote processing is used.
+
+The tiny negative-edge rounding bug is fixed with a1e-7-pixel tolerance. Use Finish
+review again to create a new approved revision; no old approvals are rewritten.
+
 Finish review uses the binary Focused checkbox too: unchecked proposes unfocused.
 Legacy both-false flags no longer require opening each rectangle individually.
 The read-only preview commits this default only after your explicit confirmation;
 flagged controls and conflicting states still require attention.
 
 The **Control boxes** list pins active focused controls first with a green
+circle and shows each box's number before its label. Numbers follow original
+canvas order, not focused-first list position; pinning does not renumber them.
+Deleting a box may compact the display sequence; Group IDs remain separate.
+The focus-state
 `●` marker; unfocused uses `○`. Hover for full state details. Conflicting and
 excluded controls use warning/cross symbols. The header shows the focus count and warns for multiple
 focused controls; it never unchecks another control automatically. Multiple-focus

@@ -31,7 +31,7 @@ def appearance_digest_source(recipe):
     if appearance is None:
         return ""
     require(isinstance(appearance, dict) and {"version", "preset", "layout"} <= set(appearance)
-            and set(appearance) <= {"version", "preset", "layout", "family_id"},
+            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas"},
             "appearance_fields")
     require(type(appearance["version"]) is int and appearance["version"] == 1,
             "appearance_version")
@@ -45,10 +45,25 @@ def appearance_digest_source(recipe):
             "appearance_archetype_layout")
     # cda0a32 FixtureAppearance.decodeIfPresent: optional derived identity, not
     # another hash input or an assertion of independent evaluation membership.
+    suffix = ""
+    canvas = appearance.get("canvas")
+    if canvas is not None:
+        require(isinstance(canvas, dict) and set(canvas) ==
+                {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"},
+                "canvas_fields")
+        for field, lo, hi in (("version",1,1), ("columns",1,8), ("spacing",16,80),
+                              ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
+            require(type(canvas[field]) is int and lo <= canvas[field] <= hi,
+                    "canvas_" + field)
+        require(type(canvas['showLabels']) is bool, "canvas_showLabels")
+        require(recipe.get('archetype') == 'grid_matrix' and appearance['layout'] == 'standard',
+                "canvas_archetype_layout")
+        suffix = 'canvas@1:' + ':'.join(str(canvas[k]) for k in
+                    ('columns','spacing','inset','backgroundRGB')) + ':' + str(canvas['showLabels']).lower()
     family = appearance.get("family_id")
     require(family is None or (isinstance(family, str) and family ==
-            f"appearance-v1.{appearance['preset']}.{appearance['layout']}"), "appearance_family")
-    return f":appearance@1:{appearance['preset']}:{appearance['layout']}"
+            f"appearance-v1.{appearance['preset']}.{appearance['layout']}" + ('.'+suffix if suffix else '')), "appearance_family")
+    return f":appearance@1:{appearance['preset']}:{appearance['layout']}" + (':'+suffix if suffix else '')
 
 
 def dialog_style_digest_source(recipe):

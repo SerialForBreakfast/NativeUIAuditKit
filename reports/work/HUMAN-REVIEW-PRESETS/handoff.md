@@ -1,5 +1,13 @@
 # Rectangle presets
 
+## Numbered control rows
+
+Rows now display circle + one-based box number + label, retaining optional Group
+ID. Numbers track canvas order across focus pinning and save/reload; presentation
+only, no ID/label/geometry changes. Deletion may compact numbering.11 Qt tests and
+offline Swift build/test pass; logs numbered-boxes-{qt,build,test}.log under
+.build/human-review. Active user window preserved; restart pending save/close.
+
 ## Binary Finish review correction
 
 Finish preview now proposes unfocused=true for unchecked Focused (legacy both-false

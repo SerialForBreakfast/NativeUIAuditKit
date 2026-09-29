@@ -52,6 +52,8 @@ def validate_ttr_manifest(document, root):
     require(document.get("sourceKind") == "simulatorFixture" and document.get("purpose") == "development-pilot"
             and "trainingApproval" not in document, "ttr_development_only")
     contract = validate_bundle(root)
+    if 'targetCoverage' in document or contract['targetCoverage']['available']:
+        require(document.get('targetCoverage') == contract['targetCoverage'], 'changed_target_coverage')
     context = contract.get("sourceDescription") or {}
     environment = context.get("environment") or {}
     require(environment.get("isSimulator") is not False, "conflicting_simulator_source_context")
@@ -96,6 +98,7 @@ def derive(bundle, output, corpus, producer, *, review=None, test_only=False, dr
               "evidenceKind": "test-only" if test_only else "reviewed-fixture", "corpusID": corpus,
               "producerReference": producer, "sourceRoot": str(root.relative_to(ROOT)),
               "bundleIdentity": bundle_identity(root, contract), "observedSource": contract.get("sourceDescription"),
+              "targetCoverage": contract['targetCoverage'],
               "preprocessing": RUNTIME_PREPROCESSING, "runtimeCrop": identity(),
               "pairs": pairs_from_bundle(contract, corpus, producer)}
     if review is not None:
@@ -136,7 +139,8 @@ def main():
         result = derive(args.bundle, args.output, args.corpus_id, args.producer_reference,
                         review=json.loads(args.visual_review.read_text()) if args.visual_review else None,
                         test_only=args.test_only)
-        print(json.dumps({"pairs": len(result["pairs"]), "version": "1.5", "trainingApproval": False}))
+        print(json.dumps({"pairs": len(result["pairs"]), "version": "1.5", "trainingApproval": False,
+                          "targetCoverage": result['targetCoverage']}))
         return 0
     except (OSError, ValueError, KeyError, TypeError) as error:
         print(str(error), file=sys.stderr)

@@ -32,8 +32,9 @@ def validate(path):
               'unsupported_recording_claim')
     for f in batch['frames']:
         event = frames[f['observationID']]
+        roles = ('postInputSettled', 'postInputUnverified') if batch.get('includeUnverified') is True else ('postInputSettled',)
         h.require(f['recordingEvent'] == event and event['sourceDeviceID'] == batch['sourceDeviceID'] and
-                  event['role'] == 'postInputSettled' and f['image']['sha256'] == event['sha256'], 'frame_binding_changed')
+                  event['role'] in roles and f['image']['sha256'] == event['sha256'], 'frame_binding_changed')
         p = h.checked(h.ROOT, f['image'])
         h.require(p.stat().st_size == hashes[event['sha256']]['bytes'], 'image_size_changed')
         h.require(list(h.image(h.ROOT, f['image'])) == f['size'] and
@@ -42,9 +43,11 @@ def validate(path):
     return batch
 
 
-def prepare(source, output, selection):
+def prepare(source, output, selection, *, include_unverified=False):
     source = Path(source).resolve()
     output = h.fresh(output)
+    h.require(type(include_unverified) is bool, 'invalid_unverified_option')
+    batch_id = 'recording-review-'+h.digest(str(output.relative_to(h.ROOT)))[:16]
     manifest = json.loads((source/'manifest.json').read_text())
     h.require(manifest['schemaVersion'] == 2, 'unsupported_recording')
     raw_events = events(source/'events.jsonl')
@@ -78,13 +81,13 @@ def prepare(source, output, selection):
                    image=image, pixelSHA256=h.pixel_digest(h.ROOT,image), duplicateOf=None)
         rows.append(row)
         shutil.copyfile(original, output/'editor'/(stem+'.png'))
-        h.write(output/'editor'/(stem+'.json'), h.editor_document('office-trial02-review',row))
-    batch = dict(version=VERSION, **h.FLAGS, id='office-trial02-review',
+        h.write(output/'editor'/(stem+'.json'), h.editor_document(batch_id,row))
+    batch = dict(version=VERSION, **h.FLAGS, id=batch_id, includeUnverified=include_unverified,
                  manifest=refs['manifest.json'], events=refs['events.jsonl'], inventory=refs['files.jsonl'],
                  rawEvidence=list(refs.values())+[category], categoryMap=category,
                  sessionID=manifest['sessionID'], sourceDeviceID=manifest['targetDeviceID'],
                  frames=rows, pairs=[], transitions=[], counts={'imported':len(rows)},
-                 completeFrameCandidates=False, selectionBasis='preparer visual diversity; producer settled candidates')
+                 completeFrameCandidates=False, selectionBasis='preparer visual diversity; original producer settlement role preserved')
     h.write(output/'batch.json',batch,sealed=True)
     validate(output/'batch.json')
     return output/'batch.json'
@@ -93,6 +96,7 @@ def prepare(source, output, selection):
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('source');parser.add_argument('output');parser.add_argument('--selection',required=True)
+    parser.add_argument('--include-unverified', action='store_true', help='Allow diagnostic review of producer-unverified frames, never transition frames')
     args=parser.parse_args()
     selection=[(int(part.split(':',1)[0]),part.split(':',1)[1]) for part in args.selection.split(',')]
-    print(prepare(args.source,args.output,selection))
+    print(prepare(args.source,args.output,selection,include_unverified=args.include_unverified))

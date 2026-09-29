@@ -1,5 +1,10 @@
 # Full backlog implementation packet catalog
 
+[SYNTH-FOCUS-FACTORY-01](Plans/SyntheticFocusFactory.md) defines approved synthetic
+factory direction, dock repair qualification, clean configurable canvas, native
+sweep/pair semantics and bounded campaign acceptance. Deployment/producer edits
+remain explicitly gated; Tasks.md records current ownership and blockers.
+
 [SIM-FOCUS-DEV-01](Plans/LocalSimulatorFocusDevelopment.md) has collected/reviewed
 52 local TTR/Fixture pairs and implemented explicit training-extension admission.
 The approved narrower retention-selected FDR-009 completed30 epochs; epoch3 retained

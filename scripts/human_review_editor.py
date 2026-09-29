@@ -64,6 +64,14 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
     from labelme.widgets.label_dialog import LabelDialog
 
     class FocusLabelDialog(LabelDialog):
+        def popUp(self, *args, **kwargs):
+            previous = self.edit.text()
+            result = super().popUp(*args, **kwargs)
+            # Canceled edits must not become the next suggested box's default.
+            if result[0] is None:
+                self.edit.setText(previous)
+            return result
+
         def setFlags(self, flags):
             super().setFlags({k: bool(flags.get(k, False)) for k in SHAPE_FLAGS if k != 'unfocused'})
             for i in range(self.flagsLayout.count()):
@@ -117,8 +125,8 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
                     label = html.escape(shape.label)
                     identity = f' ({shape.group_id})' if shape.group_id is not None else ''
                     symbol = '×' if flags.get('rejected') else '⚠' if flags.get('focused') and flags.get('unfocused') else '●' if active else '○'
-                    item.setText(f'<font color="{color}">{symbol}</font> {label}{identity}')
-                    item.setToolTip(f'{state}: {shape.label}{identity}. Checkbox controls visibility, not focus.')
+                    item.setText(f'<font color="{color}">{symbol}</font> {index+1}. {label}{identity}')
+                    item.setToolTip(f'Box {index+1} — {state}: {shape.label}{identity}. Checkbox controls visibility, not focus.')
                     item.setData((0 if active or not pinned else 1)*1000000 + index, role)
             finally:
                 model.blockSignals(previous)
@@ -163,7 +171,58 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
 
         def toggleDrawMode(self, edit=True, createMode="rectangle"):
             require(edit or createMode == "rectangle", "rectangle_only_review")
+            if not edit and hasattr(self.actions, 'suggestBox'):
+                self.actions.suggestBox.setChecked(False)
             return super().toggleDrawMode(edit, createMode="rectangle")
+
+        def suggestRectangle(self, point):
+            from PIL import Image
+            from human_click_box import suggest
+            from labelme.shape import Shape
+            if not self.imagePath or len(self.canvas.shapes) >= 100:
+                return
+            try:
+                with Image.open(self.imagePath) as image:
+                    points = suggest(image, (point.x(), point.y()))
+            except (OSError, ValueError) as error:
+                self.status(f'Box suggestion unavailable: {error}', 10000)
+                return
+            if points is None:
+                self.status('No clear rectangular panel found. Click a plain interior area, or turn Suggest box off and draw manually.', 15000)
+                return
+            preview = Shape(shape_type='rectangle')
+            for x,y in points: preview.addPoint(QtCore.QPointF(x,y))
+            preview.close()
+            # Labelme paints its old manual-drawing guide whenever current exists.
+            # A suggestion is already a complete rectangle; it has no guide segment.
+            self.canvas.line = Shape(shape_type='rectangle')
+            self.canvas.current = preview
+            self.canvas.repaint()
+            try:
+                label, flags, _, description = self.labelDialog.popUp(
+                    text=None, flags={k: k == 'unfocused' for k in SHAPE_FLAGS})
+            finally:
+                self.canvas.current = None
+                self.canvas.update()
+            if label is None:
+                return
+            if not self.validateLabel(label):
+                self.clipboardWarning('Choose a valid review label. No box added.')
+                return
+            used = {s.group_id for s in self.canvas.shapes}
+            preview.label = label
+            preview.group_id = next(i for i in range(1,100001) if i not in used)
+            preview.flags = {k: bool((flags or {}).get(k, False)) for k in SHAPE_FLAGS}
+            preview.flags['unfocused'] = not preview.flags['focused']
+            preview.flags['confirmed'] = False
+            preview.description = description
+            self.loadShapes([preview], replace=False)
+            self.shapeSelectionChanged([preview])
+            for i in range(self.flag_widget.count()):
+                item=self.flag_widget.item(i)
+                if item.text()=='reviewed': item.setCheckState(QtCore.Qt.Unchecked)
+            self.setDirty()
+            self.status('Experimental proposal added, unconfirmed. Check bounds and focus; turn Suggest box off to move corners.', 15000)
 
         def refreshFrameFlags(self, *_):
             if not hasattr(self, "frameFlagsButton"):
@@ -198,6 +257,12 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             return result
 
         def resetState(self):
+            # Stock Canvas.resetState resets drawing resources, but not selected
+            # shapes or keyboard movement. A delayed release can target the old image.
+            if hasattr(self, 'canvas'):
+                self.canvas.movingShape = False
+                self.canvas.selectedShapes = []
+                self.canvas.selectedShapesCopy = []
             super().resetState()
             self.refreshFrameFlags()
 
@@ -491,6 +556,27 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
 
     class RectangleDoubleClick(QtCore.QObject):
         def eventFilter(self, watched, event):
+            action = getattr(result.actions, 'suggestBox', None)
+            if action and action.isChecked() and watched is result.canvas and result.canvas.editing():
+                if event.type() == QtCore.QEvent.MouseButtonPress and event.button() == QtCore.Qt.LeftButton:
+                    result.suggestRectangle(result.canvas.transformPos(event.localPos()))
+                    return True
+                if event.type() in (QtCore.QEvent.MouseButtonRelease, QtCore.QEvent.MouseButtonDblClick) and event.button() == QtCore.Qt.LeftButton:
+                    return True
+            if event.type() == QtCore.QEvent.KeyRelease and watched is result.canvas:
+                canvas = result.canvas
+                if canvas.movingShape:
+                    if not canvas.selectedShapes or any(s not in canvas.shapes for s in canvas.selectedShapes):
+                        canvas.movingShape = False
+                        result.shapeSelectionChanged([])
+                        canvas.selectedShapesCopy = []
+                        return True
+                    index = canvas.shapes.index(canvas.selectedShapes[0])
+                    if not canvas.shapesBackups or index >= len(canvas.shapesBackups[-1]):
+                        canvas.storeShapes()
+                        canvas.movingShape = False
+                        canvas.shapeMoved.emit()
+                        return True
             canvas = result.canvas
             if (event.type() == QtCore.QEvent.MouseButtonDblClick and
                     event.button() == QtCore.Qt.LeftButton and canvas.editing()):
@@ -526,6 +612,14 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
     # Stock copy/paste live only in a canvas context menu. Register them in the
     # main menu too so keyboard shortcuts do not depend on opening that menu.
     result.actions.editMenu = clipboard_actions + (None,) + result.actions.editMenu
+    suggest_box = QtWidgets.QAction('Suggest box (experimental)', result)
+    suggest_box.setCheckable(True)
+    suggest_box.setChecked(False)
+    suggest_box.setToolTip('Off by default. Click a plain control interior to propose a rectangle. No model; verify every proposal.')
+    suggest_box.toggled.connect(lambda enabled: result.toggleDrawMode(True) if enabled else None)
+    result.actions.suggestBox = suggest_box
+    result.actions.editMenu = (suggest_box,) + result.actions.editMenu
+    result.actions.tool = (suggest_box,) + result.actions.tool
     preset_actions = []
     for caption, callback in [('Save preset…', result.saveBoxPreset), ('Load preset…', result.loadBoxPreset)]:
         action = QtWidgets.QAction(caption, result)

@@ -298,6 +298,14 @@ def parse_editor_document(batch, frame, path, doc):
                 all(isinstance(p, list) and len(p) == 2 for p in points) and
                 all(type(v) in (int, float) and math.isfinite(v) for p in points for v in p), "invalid_bounds")
         (x, y), (x2, y2) = points
+        # Floating-point transforms can put an on-edge corner ~1e-14px outside.
+        # Normalize numeric dust only; meaningful out-of-frame boxes still fail.
+        def edge(value, limit):
+            if -1e-7 <= value < 0: return 0.0
+            if limit < value <= limit+1e-7: return float(limit)
+            return value
+        x, x2 = (edge(v, frame['size'][0]) for v in (x,x2))
+        y, y2 = (edge(v, frame['size'][1]) for v in (y,y2))
         bounds = [min(x, x2), min(y, y2), abs(x2-x), abs(y2-y)]
         box(bounds, frame["size"])
         flags = shape["flags"]
