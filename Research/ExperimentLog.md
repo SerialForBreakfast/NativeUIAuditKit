@@ -1,5 +1,19 @@
 # NativeUIAuditKit — Experiment Log
 
+## FOCUS-TTR-TEST-CYCLE-01 — development evaluation, no new training (2026-09-29)
+
+Maintainer authorized the benchmark→justified candidate→conditional test-export
+tranche. Existing evaluator froze three role-aware protocols before inference:
+24 trial02 frames,249 controls, fixed0.85, production16%/256 crops, shipped CoreML
+CPU versus FDR-009 epoch3 PyTorch CPU in resident focus-export-01 environment.
+All249 scored per model, successful postflight, zero failed predictions.
+202 settled candidates: shipped TP8/FN11/FP30/TN153; FDR-009 TP4/FN15/FP8/TN175.
+Complete-frame unique-correct3/13 versus2/13;11 frames unavailable with explicit
+reasons.68 error sheets;14 evaluator tests pass. No export parity claim.
+New12 dock pairs verified but test-only, no train/validation admission; existing
+273 training/9 retention unchanged. No new run ID or weights: do not repeat the
+failed transfer experiment without gap-addressing data. [Handoff](../reports/work/FOCUS-TTR-TEST-CYCLE-01/handoff.md).
+
 ## HUMAN-REVIEW-04 — approved development comparison (2026-09-28)
 
 Before execution: maintainer approved one fixed shipped CoreML CPU versus FDR-009

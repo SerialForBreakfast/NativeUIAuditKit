@@ -1,5 +1,34 @@
 # NativeUIAuditKit — Tasks
 
+**FOCUS-GAP-CORPUS-01 — software review; new data blocked / current NUIAK Fixture worker:**
+Deterministic12-slot pack/8supported recipes and actual-bundle membership/coverage
+audit delivered.7 focused tests and offline build/123 Swift tests pass. Existing
+pilot correctly rejected as wrong recipe for new corpus. Row-competitor/tab
+contract gaps and exact recipes published in owned request
+nuiak-20260929T063219Z-focus-gap-corpus. Max runs older dock path; no replacement
+or capture attempted. Resume with source-defined row/tab contract and qualified
+matched runtime/exact target window for new native-button pilot. No training admission.
+[Contract](Research/Plans/FocusGapCorpus.md).
+
+**SYNTH-COMPETITOR-INTAKE-01 — retained pilot review complete / current NUIAK Fixture worker:**
+Approved34778079-byte archive received/hash-verified. All12pairs validate and
+24production crops pass QA;4pairs preserve competitor-v3 focus. Fixed omitted-nil
+baseline focus compatibility using actual receipt;49 Python/123 Swift tests and
+offline build pass. Reviewed development manifests delivered; no training admission.
+24frame files contain16distinct pixel images: one seed/four collectionItems,
+not independent sources. Next: gap-targeted rows/buttons/tabs corpus assignment
+and explicit admission; no repeat pilot capture or extra manual annotation needed.
+[Handoff](reports/work/SYNTH-FOCUS-FACTORY-01/repaired-pilot-handoff.md).
+
+**FOCUS-TTR-TEST-CYCLE-01 — benchmark complete; training/data blocked / current NUIAK model-workflow worker:**
+24 frames/249 crops scored per model;202 supported candidates. Shipped recall8/19,
+FDR-0094/19; unique-correct3/13 versus2/13.68 error sheets;14 focused tests pass.
+Existing273+9 pairs verified; new12 dock pairs replay24 crops but remain test-only
+and do not fill the measured row/button/tab gaps. No new run/export/promotion.
+Next: bounded clean-canvas integration/capture and explicit new corpus admission.
+[Evidence](reports/work/FOCUS-TTR-TEST-CYCLE-01/handoff.md).
+[Contract](Research/Plans/FocusTTRTestCycle.md).
+
 **Keyboard Fixture coverage — requirements ready / current NUIAK Fixture worker:**
 Inspected field-level Fixture support; per-key system telemetry unverified. Producer
 contract separates custom native-labeled volume, genuine-system transfer, OCR

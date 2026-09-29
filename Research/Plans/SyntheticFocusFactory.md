@@ -9,6 +9,31 @@ not authorization to modify the producer repository or install a replacement app
 
 ## Outcome and work boundary
 
+### Competitor repair received — 2026-09-29
+
+Actual retained pilot receipt verified2026-09-29T06:20:52Z:12rows validate,
+4v3 competitor pairs crop successfully. Eight v2 rows expose a consumer bug:
+Swift omits nil focused_element_id in neutral baselines, while the new crop
+binding used direct indexing. Preserve absent/null equivalence already accepted
+by scene validation; add an actual entrypoint regression before retrying crops.
+
+Implementation continuation: maintainer assigned remaining work. Implement explicit
+v3 competitor intake and independent focus identity from the received source now;
+generated integration tests establish software behavior only. Obtain canonical
+vectors by executing the delivered Foundation-only producer type in project-local
+storage. Real capture archive34778079 bytes awaits named-file transfer approval.
+Reuse those producer captures before repeating a local Simulator pilot. Source
+v3 changes negative-scene focus semantics, so preserve its version and competitor
+ID through crop manifests; legacy v2 neutral-reference behavior must not change.
+
+New source archive4069730b… received/verified (545488 bytes,22 proposed files).
+Competitor v3 semantics and independent focus styles are now source-defined;
+the explicit consumer adapter is integrated and offline-verified. Both legacy
+canvas and v3 competitor modes retain their distinct negative semantics. Source includes campaign
+unknown-cleanup guards and a custom-scale candidate repair; no local rendered
+qualification claimed. Preserve the original representative-export-before-admission
+requirement. [Exact intake and boundaries](../../reports/work/SYNTH-FOCUS-FACTORY-01/competitor-v3-intake.md).
+
 Automate native-labeled focus examples in a clean configurable Fixture, then use
 human-reviewed real screens to measure transfer. Do not ask humans to draw boxes
 for every generated image. Native telemetry still needs pixel/geometry validation;

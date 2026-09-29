@@ -1,6 +1,8 @@
 """Source-pinned TTR v2 bracket checks; correlation is not authenticated identity."""
 import hashlib
 import math
+import base64
+import json
 
 
 class SidecarError(ValueError):
@@ -25,13 +27,49 @@ def identifiers(value):
             and len(set(value)) == len(value))
 
 
+def focus_digest_source(focus):
+    """Closed focus-v1 identity matching producer sorted JSON encoding."""
+    require(isinstance(focus, dict) and {"version", "kind"} <= set(focus)
+            and set(focus) <= {"version", "kind", "custom"}, "focus_fields")
+    require(type(focus["version"]) is int and focus["version"] == 1, "focus_version")
+    require(focus["kind"] in ("native_image", "native_button", "custom"), "focus_kind")
+    canonical = {"version": 1, "kind": focus["kind"]}
+    custom = focus.get("custom")
+    if focus["kind"] == "custom":
+        required = {"scale", "borderWidth", "borderRGB", "shadowOpacity", "shadowRGB", "cornerRadius"}
+        require(isinstance(custom, dict) and required <= set(custom)
+                and set(custom) <= required | {"tintRGB"}, "focus_custom_fields")
+        normalized = {}
+        for key, low, high in (("scale", 1, 1.2), ("borderWidth", 0, 8),
+                               ("shadowOpacity", 0, 1), ("cornerRadius", 0, 32)):
+            value = custom[key]
+            require(number(value) and low <= value <= high, "focus_" + key)
+            # JSONEncoder emits integral Double values without a decimal suffix.
+            normalized[key] = (value if value == 0 and math.copysign(1, value) < 0
+                               else int(value) if value == int(value) else value)
+        for key in ("borderRGB", "shadowRGB", "tintRGB"):
+            value = custom.get(key)
+            if key == "tintRGB" and value is None:
+                continue
+            require(type(value) is int and 0 <= value <= 0xFFFFFF, "focus_" + key)
+            normalized[key] = value
+        canonical["custom"] = normalized
+    else:
+        require(custom is None, "focus_native_override")
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    # All strings above are closed enum/key literals. Preserve JSONEncoder's
+    # signed Double zero spelling without touching arbitrary string content.
+    encoded = encoded.replace(':-0.0', ':-0')
+    return "focus@" + base64.b64encode(encoded.encode()).decode()
+
+
 def appearance_digest_source(recipe):
     """Closed producer appearance-v1 contract; absent/null preserves legacy hashes."""
     appearance = recipe.get("appearance")
     if appearance is None:
         return ""
     require(isinstance(appearance, dict) and {"version", "preset", "layout"} <= set(appearance)
-            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas"},
+            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus"},
             "appearance_fields")
     require(type(appearance["version"]) is int and appearance["version"] == 1,
             "appearance_version")
@@ -48,8 +86,9 @@ def appearance_digest_source(recipe):
     suffix = ""
     canvas = appearance.get("canvas")
     if canvas is not None:
-        require(isinstance(canvas, dict) and set(canvas) ==
-                {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"},
+        fields = {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"}
+        require(isinstance(canvas, dict) and fields <= set(canvas)
+                and set(canvas) <= fields | {"pairing"},
                 "canvas_fields")
         for field, lo, hi in (("version",1,1), ("columns",1,8), ("spacing",16,80),
                               ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
@@ -60,10 +99,22 @@ def appearance_digest_source(recipe):
                 "canvas_archetype_layout")
         suffix = 'canvas@1:' + ':'.join(str(canvas[k]) for k in
                     ('columns','spacing','inset','backgroundRGB')) + ':' + str(canvas['showLabels']).lower()
+        require(canvas.get('pairing') in (None, 'competitor_v1'), 'canvas_pairing')
+        if canvas.get('pairing') is not None:
+            suffix += ':' + canvas['pairing']
+    focus = appearance.get('focus')
+    focus_suffix = ''
+    if focus is not None:
+        focus_suffix = focus_digest_source(focus)
+        require(canvas is not None and recipe.get('archetype') == 'grid_matrix'
+                and appearance['layout'] == 'standard', 'focus_canvas')
+        require(focus['kind'] != 'native_button' or canvas['showLabels'], 'focus_button_labels')
     family = appearance.get("family_id")
     require(family is None or (isinstance(family, str) and family ==
-            f"appearance-v1.{appearance['preset']}.{appearance['layout']}" + ('.'+suffix if suffix else '')), "appearance_family")
-    return f":appearance@1:{appearance['preset']}:{appearance['layout']}" + (':'+suffix if suffix else '')
+            f"appearance-v1.{appearance['preset']}.{appearance['layout']}" + ('.'+suffix if suffix else '')
+            + ('.'+focus_suffix if focus_suffix else '')), "appearance_family")
+    return (f":appearance@1:{appearance['preset']}:{appearance['layout']}" + (':'+suffix if suffix else '')
+            + (':'+focus_suffix if focus_suffix else ''))
 
 
 def dialog_style_digest_source(recipe):
@@ -193,11 +244,19 @@ def scene_check(scene, size, expected):
 
 def validate(meta, row, size, hashes):
     """Returns raw evidence only after validating all four endpoint scenes."""
+    version = meta.get('schema_version')
+    require(type(version) is int and version in (2, 3), 'sidecar_version')
+    competitor = meta.get('competitor_element_id')
+    if version == 3:
+        require(meta.get('pairing_mode') == 'competitor_v1' and isinstance(competitor, str)
+                and competitor and competitor != row['expectedFocus'], 'competitor_identity')
+    else:
+        require('pairing_mode' not in meta and 'competitor_element_id' not in meta, 'pairing_downgrade')
     require(meta.get("bounds_semantics") == "measured_view_bounds; not_focus_effect_segmentation", "bounds_semantics")
     require((meta.get("scene_width"), meta.get("scene_height")) == size, "dimensions")
     generations = {}
     for role, key, scene_key, expected in (
-            ("unfocused", "reference_capture", "baseline_scene", None),
+            ("unfocused", "reference_capture", "baseline_scene", competitor),
             ("focused", "focused_capture", "focused_scene", row["expectedFocus"])):
         capture = meta.get(key)
         require(isinstance(capture, dict) and capture.get("correlation") == "validated_capture_bracket", "capture_bracket")
@@ -216,6 +275,15 @@ def validate(meta, row, size, hashes):
     require(meta["reference_capture"]["after_scene_received_host_ns"] <=
             meta["focused_capture"]["before_scene_received_host_ns"], "pair_host_order")
     require(baseline["recipe"] == focused["recipe"], "pair_recipe")
+    pairing = ((focused['recipe'].get('appearance') or {}).get('canvas') or {}).get('pairing')
+    require(pairing == ('competitor_v1' if version == 3 else None), 'pairing_recipe')
+    if version == 3:
+        planned = baseline['focus_observation']['plannedFocusIDs']
+        require(set(planned) == set(focused['focus_observation']['plannedFocusIDs'])
+                and {competitor, row['expectedFocus']} <= set(planned), 'competitor_membership')
+        baseline_types = {e['element_id']: e['taxonomy_class'] for e in baseline['elements']}
+        focused_types = {e['element_id']: e['taxonomy_class'] for e in focused['elements']}
+        require(baseline_types == focused_types, 'pair_element_membership')
     require(all(meta.get(k) == focused.get(k) for k in
                 ("recipe", "elements", "focused_element_id", "is_settled", "scene_width", "scene_height")), "flat_alias_conflict")
     require(all(k not in meta or meta[k] == focused.get(v) for k, v in
@@ -228,7 +296,10 @@ def validate(meta, row, size, hashes):
     require(exclusions == (probe.get("exclusionReasons") or {}), "exclusion_alias_conflict")
     target = row["expectedFocus"]
     require(any(e["element_id"] == target for e in baseline["elements"]), "reference_target_missing")
-    return {"schemaVersion": 2, "correlation": "validated_capture_bracket",
+    result = {"schemaVersion": version, "correlation": "validated_capture_bracket",
             "baselineScene": baseline, "focusedScene": focused,
             "referenceCapture": meta["reference_capture"], "focusedCapture": meta["focused_capture"],
             "layoutExclusions": exclusions, "boundsSemantics": meta["bounds_semantics"]}
+    if version == 3:
+        result.update(pairingMode='competitor_v1', competitorElementID=competitor)
+    return result

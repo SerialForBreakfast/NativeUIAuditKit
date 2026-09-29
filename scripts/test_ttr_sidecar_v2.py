@@ -135,10 +135,23 @@ class V2Tests(unittest.TestCase):
                    test_only=True, dry_run=True)
 
     def test_unsupported_versions(self):
-        for version in (1,3,None,"2",2.0,True):
+        for version in (1,4,None,"2",2.0,True):
             with self.subTest(version=version):
                 self.mutate(lambda m:m.update(schema_version=version))
                 with self.assertRaisesRegex(HarvestValidationError,"unsupported_version"): validate_bundle(self.bundle)
+
+    def test_omitted_nil_baseline_focus_uses_actual_crop_cli(self):
+        def omit(meta):
+            for scene in (meta['baseline_scene'], meta['reference_capture']['before_scene'],
+                          meta['reference_capture']['after_scene']):
+                scene.pop('focused_element_id')
+        self.mutate(omit)
+        output = self.root/'omitted-nil-crops'
+        result = self.cli('ttr_focus_manifest.py', '--bundle', self.bundle, '--output', output,
+                          '--corpus-id', 'omitted-nil', '--producer-reference', 'producer-nil', '--test-only')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        doc = json.loads((output/'focus_dataset_manifest.json').read_text())
+        self.assertIsNone(doc['pairs'][0]['frames']['unfocused']['observedFocusID'])
 
     def test_bracket_negative_matrix(self):
         cases = {

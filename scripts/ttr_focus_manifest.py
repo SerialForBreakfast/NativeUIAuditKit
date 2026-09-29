@@ -29,7 +29,8 @@ def pairs_from_bundle(contract, corpus, producer):
     pairs = []
     for row in manifest["pairs"]:
         binding = row.get("observationBinding")
-        require(row.get("sidecarVersion") == 2 and isinstance(binding, dict), "v2_brackets_required")
+        require(row.get("sidecarVersion") in (2, 3) and isinstance(binding, dict)
+                and binding.get("schemaVersion") == row["sidecarVersion"], "v2_brackets_required")
         focused = [e for e in row["elements"] if e["is_focused"]]
         require(len(focused) == 1 and focused[0]["taxonomy_class"] in FOCUSABLE, "unsupported_focus_target")
         target = focused[0]["element_id"]
@@ -38,7 +39,7 @@ def pairs_from_bundle(contract, corpus, producer):
             element = next((e for e in scene["elements"] if e["element_id"] == target), None)
             require(element is not None and element["taxonomy_class"] == focused[0]["taxonomy_class"], "pair_taxonomy_conflict")
             frames[role] = {**row[role], "bounds": element["pixel_bounds"],
-                            "labelSource": "fixtureCaptureBracket", "observedFocusID": target if role == "focused" else None}
+                            "labelSource": "fixtureCaptureBracket", "observedFocusID": scene.get("focused_element_id")}
         pairs.append({"pair_id": row["pairID"], "recipe_group": row["recipeGroup"],
                       "recipe_seed": int(row["recipeGroup"].split(":")[1]), "split": "development",
                       "original_split": row["split"], "fixture_scene": row["family"], "theme": row["theme"],

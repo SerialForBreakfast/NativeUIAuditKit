@@ -11,6 +11,32 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**Gap-targeted synthetic collection prepared (2026-09-29):**12 planned slots,
+8 source-supported recipes: native-button appearance and Settings-style rows;
+selected-tab contract still unavailable, row competitor pairing unavailable.
+New CLI freezes recipes and audits actual native-bound receipts with explicit
+missing/blocked/partial coverage.7 tests/build/123 Swift tests pass. Producer
+request published with exact recipe metadata. No new capture or model change;
+local running TTR remains older dock build. [Handoff](../reports/work/FOCUS-GAP-CORPUS-01/handoff.md).
+
+**Synthetic repaired pilot received and crop-qualified (2026-09-29):** approved
+34778079-byte archive verified;12/12pairs and24/24production crops pass, including
+4competitor-v3 pairs. Actual receipt exposed omitted-nil baseline key handling;
+consumer fixed with regression.49 Python/123 Swift tests and offline build pass.
+Reviewed development manifests retain native geometry/focus and image lineage.
+Only one seed/four collectionItems,16distinct full-frame pixels across24files;
+broader training corpus/admission still required. No model change or recapture.
+[Handoff](../reports/work/SYNTH-FOCUS-FACTORY-01/repaired-pilot-handoff.md).
+
+**Focus test cycle (2026-09-29):** batch03 now reviewed and QA78/78 complete;
+all three batches evaluated249/249 per model. Settled candidates202: shipped
+recall8/19 with30 false positives; FDR-0094/19 with8. Complete-frame unique
+selection3/13 versus2/13. No candidate release justified. Newly audited12 dock
+pairs remain test-only; clean-canvas gap-addressing corpus is the next dependency.
+1087/1105 label/focus conflicts quarantined; keyboard1043 frame coverage incomplete.
+No new training/export or shipped changes. [Handoff](../reports/work/FOCUS-TTR-TEST-CYCLE-01/handoff.md).
+This supersedes older statements below that batch03 remains open/untouched.
+
 **Synthetic focus factory priority:** dock repair source received and all36 files
 hash-verified and now integrated with explicit approval. Signed host/Fixture build
 pass;82 focused tests pass,1 live-only skipped;6 model checks pass. Fixture installed.

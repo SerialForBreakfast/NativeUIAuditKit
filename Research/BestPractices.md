@@ -1991,6 +1991,24 @@ recipe list separately; absent legacy coverage stays unavailable.
 **Why:** A valid partial dataset must not masquerade as an exhaustive sweep simply
 because every retained row passed validation. See canvas-consumer.md handoff.
 
+### Producer floating-point identity is not Python JSON identity
+
+**Nullable-field follow-up:** Actual v2 neutral-reference exports omit
+focused_element_id rather than serializing null. Validation accepted this, but a
+new crop adapter indexed the key directly and failed eight real pairs. Consumers
+must preserve the declared optional-field semantics through every layer; test
+omission as well as explicit null through the actual CLI. Competitor-v3 identity
+is still mandatory and must never be defaulted from a missing value.
+
+**Observed:** The focus-style producer encodes integral Double values as integers
+and negative zero as `-0`; ordinary Python JSON uses decimal suffixes. Equivalent
+render settings can therefore produce different recipe hashes.
+**Correct:** Verify canonicalization against emitted producer vectors, including
+fractions, optional fields and signed zero. Preserve that spelling in the closed
+contract; never strip a new style or pairing field to make an older hash pass.
+**Why:** Identity mismatch blocks valid evidence, while dropping fields incorrectly
+merges distinct recipes. See SYNTH-FOCUS-FACTORY-01/competitor-consumer.md.
+
 ### Annotation dialog defaults: retain labels, reset per-box evidence
 
 **Preview follow-up:** Labelme paints both current and its transient line guide.

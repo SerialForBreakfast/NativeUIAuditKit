@@ -116,14 +116,14 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
         size=a_size
         meta=_json(root,names[2]); elems=meta.get("elements") if isinstance(meta,dict) else None
         if not isinstance(meta,dict) or not isinstance(elems,list) or any(not isinstance(e,dict) for e in elems): raise HarvestValidationError("invalid_metadata")
-        if "schema_version" in meta and (type(meta["schema_version"]) is not int or meta["schema_version"] != 2): raise HarvestValidationError("unsupported_version")
-        if (meta.get("schema_version") != 2 and isinstance(meta.get("recipe"), dict)
+        if "schema_version" in meta and (type(meta["schema_version"]) is not int or meta["schema_version"] not in (2, 3)): raise HarvestValidationError("unsupported_version")
+        if (meta.get("schema_version") not in (2, 3) and isinstance(meta.get("recipe"), dict)
                 and meta["recipe"].get("appearance") is not None):
             raise HarvestValidationError("invalid_metadata: appearance_requires_v2_brackets")
-        if (meta.get("schema_version") != 2 and isinstance(meta.get("recipe"), dict)
+        if (meta.get("schema_version") not in (2, 3) and isinstance(meta.get("recipe"), dict)
                 and meta["recipe"].get("dialog_style") is not None):
             raise HarvestValidationError("invalid_metadata: dialog_style_requires_v2_brackets")
-        if (meta.get("schema_version") != 2 and isinstance(meta.get("recipe"), dict)
+        if (meta.get("schema_version") not in (2, 3) and isinstance(meta.get("recipe"), dict)
                 and (meta["recipe"].get("surface") is not None
                      or meta["recipe"].get("archetype") == "surface_template")):
             raise HarvestValidationError("invalid_metadata: surface_requires_v2_brackets")
@@ -132,7 +132,7 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
         focused=[e for e in elems or [] if isinstance(e,dict) and e.get("is_focused")]
         if meta.get("id") != row.get("id") or not meta.get("is_settled") or len(focused)!=1 or focused[0].get("element_id") != focus or focus != row.get("expectedFocus") or focused[0].get("pixel_bounds") != row.get("box"): raise HarvestValidationError("invalid_metadata")
         binding=None
-        if meta.get("schema_version") == 2:
+        if meta.get("schema_version") in (2, 3):
             try:
                 binding=validate_sidecar_v2(meta,row,size,{role:hashlib.sha256(data[name]).hexdigest() for role,name in zip(("unfocused","focused"),names)})
             except SidecarError as error: raise HarvestValidationError(str(error)) from error
