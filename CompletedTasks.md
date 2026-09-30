@@ -1,5 +1,13 @@
 # NativeUIAuditKit — Completed Tasks
 
+## ANNOTATOR-UNDO-01 — blank-frame batch Undo repaired,2026-09-30
+
+Empty baseline preserved before suggestion batch. Actual Undo action verified for
+Vision/raster, cancel/empty selection, repeated batches, prefilled annotations and
+save/reload. Real TTR sample19boxes→Undo0; originals unchanged.50Python/Qt and
+123Swift tests pass; offline build passes. No user editor restart/model work.
+[Handoff](reports/work/ANNOTATOR-UNDO-01/handoff.md).
+
 ## DATA-EXTERNAL-01 — cancelled by maintainer,2026-09-30
 
 External shared-drive and SSH/SFTP/rsync effort cancelled, not qualified or completed
@@ -2591,3 +2599,12 @@ admission. Closed canvas2subset compatibility verified against producer vectors.
 Offline Swift build/test passed. Exact receipts and geometry answer published/read
 back to own shared packet; no peer acknowledgment inferred. Evidence:
 [FDR016](reports/work/FDR-016/handoff.md), [native112](reports/work/NATIVE112-INTAKE-01/handoff.md).
+
+## HUMAN-CORPUS-INVENTORY-01 — delivered for review, 2026-09-30
+
+Offline inventory of all retained supported human revisions:40frames/517controls,
+five latest batches, exact hashes/crop lineage, prior FDR015/016 roles, source-group
+and duplicate screening. Exact conditional138train/315development membership and
+bounded matched-compute proposal delivered;64 exclusions and protected references
+preserved. No admission or execution.15focused tests plus offline build/123Swift
+tests pass. [Handoff](reports/work/HUMAN-CORPUS-INVENTORY-01/handoff.md).

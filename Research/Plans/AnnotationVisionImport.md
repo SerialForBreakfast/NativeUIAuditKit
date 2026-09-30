@@ -1,5 +1,18 @@
 # Optional TTR annotation suggestions
 
+## Blank-image undo repair —2026-09-30
+
+Assigned follow-up ANNOTATOR-UNDO-01: preserve the empty pre-import canvas state
+when there is no history, before the existing batch-add stores its post-state.
+Keep populated history untouched and explicitly enable the actual Undo action.
+Shared raster/Vision preview path must undo an accepted batch in one action, without
+changing existing shape geometry, labels or flags. Cancel/no selected boxes must
+not add history. Test actual menu action on blank/prefilled frames, repeated batches,
+save/reload of the undone result, and the retained real Vision sidecar on a disposable
+copy. No annotation truth, source-image, API or training changes; no user editor restart.
+Undo history after reopening is not promised. Run focused Qt tests and offline
+Swift build/test; local status only unless a producer action changes.
+
 User requested supplied OCR and box detection as optional annotation imports during
 FOCUS-GEOMETRY-LIVE-02. Use the existing Labelme editor and batch-preview path.
 Source contract inspected from the running build's VisionPairPreprocessor.swift:

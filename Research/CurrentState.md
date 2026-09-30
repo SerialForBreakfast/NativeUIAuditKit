@@ -11,6 +11,23 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**Human corpus inventoried,2026-09-30:** five latest human batches contain40 distinct
+frames/517 reviewed controls (515 distinct crops),453 existing selection controls
+and64 exclusions. Three sessions form two conservative related groups. Proposed
+whole-session reassignment:138 supplement controls for a static-human training lane,
+315 controls remain development; no independent real-world test claim. Existing
+training already includes40 native Settings pairs. No admission/model execution.
+15focused tests and123Swift tests/build pass. Next decision is explicit human-label
+admission plus matched comparison preflight, independent of TTR artwork delivery.
+[Handoff](../reports/work/HUMAN-CORPUS-INVENTORY-01/handoff.md).
+
+**Annotator Undo fixed,2026-09-30:** first optional Vision/raster batch on a blank
+image now has an empty baseline and can be removed in one Undo. Real TTR sample
+verified19→0→19/save/reload; originals unchanged.50Python/Qt tests, offline build
+and123Swift tests pass. Effective next editor launch; no human work interrupted.
+Measured artwork delivery/crop qualification remains the next focus dependency.
+[Handoff](../reports/work/ANNOTATOR-UNDO-01/handoff.md).
+
 **Consumer repair intake,2026-09-30 10:08PDT:** both repair archives/13payload members
 verified; actual Vision sidecar matches retained album_grid pair. Real editor preview,
 cancel/add/save/reload passes; blank-image first-import Undo leaves boxes (no empty

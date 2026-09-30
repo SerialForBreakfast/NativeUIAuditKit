@@ -389,6 +389,10 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             if not shapes: return
             self.actions.suggestBox.setChecked(False)
             self.labelDialog.edit.setText(chosen_label)
+            # A new image with no annotation file has no initial undo snapshot.
+            # loadShapes records the post-state; keep the empty baseline as well.
+            if not self.canvas.shapesBackups:
+                self.canvas.storeShapes()
             self.loadShapes(shapes, replace=False)
             self.shapeSelectionChanged(shapes)
             for i in range(self.flag_widget.count()):

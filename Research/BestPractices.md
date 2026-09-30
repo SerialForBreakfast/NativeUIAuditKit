@@ -8,7 +8,8 @@ an existing box passed and missed this boundary. **Correct approach:** record th
 pre-import state even when empty, then the batch post-state; test empty and populated
 images independently. Undo after reopening is a separate persistence contract, not
 assumed. **Why:** disposable suggestions must be reversible without deleting each
-box manually. Fix remains open in Tasks; source images were not modified.
+box manually. Fixed by ANNOTATOR-UNDO-01; actual QAction tested on blank/prefilled
+images and a real supplied sidecar. Source images were not modified.
 
 ## Artwork pair count is not native focus-effect coverage
 

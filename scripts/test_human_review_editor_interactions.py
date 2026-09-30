@@ -407,6 +407,56 @@ class EditorTests(unittest.TestCase):
         with patch('human_auto_boxes.detect') as detector:
             self.w.autoDetectBoxes(); detector.assert_not_called()
 
+    def test_blank_first_batch_undo_via_action_and_save(self):
+        import json
+        import shutil
+        from qtpy import QtCore, QtWidgets
+        from test_human_vision_import import document
+        image = self.f.root/'blank-annotations.png'
+        shutil.copyfile(self.w.imagePath, image)
+        self.w.dirty = False
+        self.w.loadFile(str(image))
+        self.assertEqual(self.w.canvas.shapes, [])
+        self.assertEqual(self.w.canvas.shapesBackups, [])
+        path = self.f.root/'blank-vision.json'
+        path.write_text(json.dumps(document(image)))
+
+        def respond(accept):
+            dialog = self.w.findChild(QtWidgets.QDialog, 'autoDetectDialog')
+            if accept == 'empty':
+                listing = dialog.findChild(QtWidgets.QListWidget, 'autoDetectCandidates')
+                for i in range(listing.count()):
+                    listing.item(i).setCheckState(QtCore.Qt.Unchecked)
+            dialog.accept() if accept else dialog.reject()
+
+        def run_preview(accept, vision):
+            for dialog in self.w.findChildren(QtWidgets.QDialog, 'autoDetectDialog'):
+                dialog.setParent(None); dialog.deleteLater()
+            QtCore.QTimer.singleShot(10, lambda: respond(accept))
+            if vision:
+                with patch.object(QtWidgets.QFileDialog, 'getOpenFileName', return_value=(str(path), 'JSON')):
+                    self.w.actions.importVisionSuggestions.trigger()
+            else:
+                self.w.reviewBoxProposals([[[10, 10], [30, 30]]])
+
+        run_preview(False, True)
+        self.assertEqual(self.w.canvas.shapesBackups, [])
+        run_preview('empty', True)
+        self.assertEqual(self.w.canvas.shapesBackups, [])
+        for vision in (True, False, True):
+            run_preview(True, vision)
+            self.assertEqual(len(self.w.canvas.shapes), 1)
+            self.assertTrue(self.w.actions.undo.isEnabled())
+            self.w.actions.undo.trigger()
+            self.assertEqual(self.w.canvas.shapes, [])
+            self.assertEqual(self.w.labelList.model().rowCount(), 0)
+            self.assertFalse(self.w.actions.undo.isEnabled())
+        with patch.object(QtWidgets.QFileDialog, 'getSaveFileName', return_value=(str(image.with_suffix('.json')), 'JSON')):
+            self.w.saveFile()
+        self.w.loadFile(str(image))
+        self.assertEqual(self.w.canvas.shapes, [])
+        self.assertEqual(json.loads(image.with_suffix('.json').read_text())['shapes'], [])
+
     def test_optional_vision_import_preview_cancel_add_undo_roundtrip(self):
         import json
         from pathlib import Path
@@ -427,7 +477,8 @@ class EditorTests(unittest.TestCase):
             else:dialog.reject()
         for accept in (False,True,True):
             if len(self.w.canvas.shapes)==3:
-                self.w.undoShapeEdit()
+                self.assertTrue(self.w.actions.undo.isEnabled())
+                self.w.actions.undo.trigger()
                 self.assertEqual(len(self.w.canvas.shapes),1)
             for d in self.w.findChildren(QtWidgets.QDialog,'autoDetectDialog'):
                 d.setParent(None);d.deleteLater()

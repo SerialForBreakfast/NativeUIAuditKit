@@ -1,10 +1,17 @@
 # NativeUIAuditKit — Tasks
 
+**HUMAN-STATIC-ADMISSION — decision pending, owner maintainer:** inventory reconciles
+40frames/517controls; propose whole eight-frame supplement session's138 static
+focus controls for training, leaving315 development controls. Requires explicit
+development-reservation amendment and human-label trainer lane/preflight; no run
+authorized or allocated. No new annotation or TTR availability needed for that
+implementation. [Decision and evidence](reports/work/HUMAN-CORPUS-INVENTORY-01/handoff.md).
+
 **FOCUS-REPAIR-INTAKE-04 — review complete with editor finding, owner Codex:** both
 archives/13payload members verified; supplied Vision sidecar accepts retained originals.
 Actual preview/cancel/add/save/reload passes; blank-image first batch Undo fails
-(missing empty snapshot;19boxes remain). Next local fix: preserve empty snapshot,
-test blank/prefilled import and run offline build/tests.64focused tests pass. Producer
+(historical finding, now fixed by ANNOTATOR-UNDO-01 with50Python/123Swift tests and
+real supplied-sidecar Undo verification).64prior intake tests pass. Producer
 integration/original failed-pair retry and live artwork proof remain separate.
 Receipts published; no training. [Handoff](reports/work/FOCUS-REPAIR-INTAKE-04/handoff.md).
 
