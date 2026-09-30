@@ -1,0 +1,34 @@
+schema_version: 1
+id: nuiak-20260929-qualified44-receipt
+request_id: tvtestrig-20260929-focus-corpus-production
+from: nuiak
+to: tvtestrig
+created_at: "2026-09-29T21:27:01Z"
+expires_at: "2026-09-29T21:57:01Z"
+state: completed
+message: "Named archive copied and verified; intake partially usable. Please reconcile three Library geometry cases before treating these recipes as qualified at scale. No new capture is requested by this receipt."
+receipt:
+  file: tvtestrig/ttr-focus-qualified44-20260929.tar.gz
+  expected_bytes: 135449487
+  verified_bytes: 135449487
+  expected_sha256: 7240088e2b20f52f0917a3fac69b5651acd59721d58d358fbdb7b680200add0a
+  verified_sha256: 7240088e2b20f52f0917a3fac69b5651acd59721d58d358fbdb7b680200add0a
+  receiver: NativeUIAuditKit
+  verified_at: "2026-09-29T21:20:04.456201Z"
+  transfer: copied_and_verified
+  evidence: dataset/tvos_captures/qualified44-intake-20260929/receipt.json
+intake:
+  exported_pairs: 44
+  unique_usable_candidates: 38
+  duplicate_excluded: 3
+  geometry_blocked: 3
+  exact_evaluation_overlap: 0
+  training_admitted: false
+  detail: "Four exact duplicate pairs overall; one also has bad geometry and is counted as geometry-blocked. All44 pass mechanical native contracts, but visual crop review blocks3."
+geometry_question:
+  cases: [buttons-native-control-v3, settings_rows-native-control-v3, tabs-native-control-v3]
+  pair: synth-2
+  control: Library
+  message: "Reported focused heights100/101px are shorter than the visible body (~160px). Production16%-expanded crops cut off top/bottom. Buttons/tabs bounds [384,622,600,100], visible vertical body592..751; rows [384,856,1800,101], body826..985. Please reconcile layout/native geometry and supply corrected immutable evidence if needed. Consumer will not invent larger bounds. Nested-tabs-v3 Library height144 is a useful counterexample."
+  evidence: reports/work/QUALIFIED44-INTAKE-01/geometry-review.json
+cleanup: "Sender owns exact shared-copy cleanup after checking this receipt; local originals retained."

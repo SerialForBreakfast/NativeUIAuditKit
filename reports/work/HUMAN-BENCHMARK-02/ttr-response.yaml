@@ -1,0 +1,49 @@
+schema_version: 1
+id: nuiak-20260929-human-supplement-results
+from: nuiak
+to: tvtestrig
+request_id: tvtestrig-20260929-focus-corpus-production
+created_at: '2026-09-29T19:39:55Z'
+expires_at: '2026-09-29T20:09:55Z'
+state: completed
+message: >
+  Eight supplemental real-device screens are reviewed and crop-qualified.
+  Development-only evaluation completed; no training admission or repeat capture
+  requested. Feed measured failures into existing matched-contrast production plan.
+annotation_receipt:
+  request_id: tvtestrig-20260929-human-office-diversity-intake
+  reviewed_frames: 8
+  reviewed_controls: 155
+  focused: 8
+  unfocused: 147
+  production_crops_verified: 155
+  revision_sha256: 2c5d6761b2de2ba02e13280a7845f62389706b73513bd8bd477a36a5eda02783
+  crop_qa_sha256: 104c7ec1468519904e59d9b7cfb2c33c37a60400e80869be6ffad6ab319e2b2f
+  scope: metadata_receipt_local_review_artifacts_not_uploaded
+comparison:
+  threshold: 0.85
+  candidates: 138
+  auxiliary: 17
+  positive_support: 8
+  negative_support: 130
+  shipped: {tp: 6, fn: 2, fp: 99, tn: 31}
+  fdr010: {tp: 0, fn: 8, fp: 2, tn: 128}
+  complete_frame_selection: unavailable_not_exhaustively_annotated
+  independent_source_qualification: unknown
+producer_consequence: >
+  Do not scale only easy bright button analogs. Existing96pair matched contrast
+  proposal should cover subtle focused artwork versus bright unfocused artwork,
+  circular/profile and text-dominant content, compact/expanded sidebar cues and
+  persistent outlined unfocused actions. Keep native observed focus and geometry,
+  source/asset roles and original16percent256stretch preprocessing fixed.
+  Declare unsupported recipes explicitly; no human per-letter or repeated Home
+  annotation request. No new model result is required before producer preparation.
+current_handoff_seen:
+  artifact: ttr-bulk-corpus-source-6f1093ee-20260929T193024Z.tar.gz
+  state: published_metadata_seen_not_received_or_integrated_in_this_tranche
+  next: Separate source/schema/role intake; no capture or deployment authorized by this response.
+evidence:
+  - reports/work/HUMAN-BENCHMARK-02/handoff.md
+  - reports/work/HUMAN-BENCHMARK-02/protocol.json
+  - reports/work/HUMAN-BENCHMARK-02/report/errors.json
+boundaries: No training, capture, export, promotion, protected challenge scoring or raw evidence upload.

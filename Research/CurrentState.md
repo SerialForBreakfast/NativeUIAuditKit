@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-28 (Max-local Office still capture verified; remote pairing pending; no shipped model change)
+**As of:** 2026-09-29 (FDR016 and native112 intake complete; no eligible model; shipped unchanged)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -11,13 +11,267 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
-**Gap-targeted synthetic collection prepared (2026-09-29):**12 planned slots,
-8 source-supported recipes: native-button appearance and Settings-style rows;
-selected-tab contract still unavailable, row competitor pairing unavailable.
-New CLI freezes recipes and audits actual native-bound receipts with explicit
-missing/blocked/partial coverage.7 tests/build/123 Swift tests pass. Producer
-request published with exact recipe metadata. No new capture or model change;
-local running TTR remains older dock build. [Handoff](../reports/work/FOCUS-GAP-CORPUS-01/handoff.md).
+**FOCUS-CONTROL32-ADMIT-01 — approved data admission:** 32 retained native-control
+pairs added to the candidate assembly: **395 training pairs**, comprising 133
+buttons, 26 tabs, 150 artwork and 86 rows. All prior members, 9 retention pairs,
+453 real selection crops and 64 selection exclusions preserved. The remaining
+64 artwork additions stay held for geometry review. This is a data-only assembly,
+not a runnable experiment or model improvement; shipped models are unchanged.
+[Evidence](../reports/work/FOCUS-CONTROL32-ADMIT-01/handoff.md).
+
+**FOCUS-OFFLINE-PREP-03 complete for review:** duplicate sensitivity does not
+resolve poor transfer (FDR0163/35TPunchanged,16/418FP→15/416unique-cropFP).
+64pair diagnostic consumer workflow tested end-to-end on source-shaped fixtures;
+v2cards/fillViewport and bright palette hashes now reproduce all8producer vectors.
+Exact32native-control-pair admission proposal subsequently approved above;64artwork pairs held.
+No new inference/training or shipped change. Real new-build bundle
+and geometry review remain pending. [Handoff](../reports/work/FOCUS-OFFLINE-PREP-03/handoff.md).
+
+**Matched artwork trial status,2026-09-30T01:50Z:** producer acknowledges the
+consumer adapter; measured trial/parameter response still pending. Local Simulator
+and Fixture observed, no local TTR host process. No new capture or data admission.
+[Source-backed trial checklist and resume conditions](../reports/work/FOCUS-MATCHED-TRIAL-01/handoff.md).
+
+**FOCUS-READINESS-02 completed retained audit:** FDR015/01629,202stored predictions
+replayed; all16latest real false positives are artwork, with0/18artwork positives
+detected.2,203image/crop files verified;24within-training duplicate crop groups,
+zero exact cross-role crop overlap (not proof of source independence).363training
+pairs/9retention pairs/453real selection crops at that audit;32of96diagnostic additions
+subsequently admitted above. Actual trainer dry-run validates and blocks on missing new
+approval. No model executed or promoted. Next is measured artwork geometry/contrast
+evidence and member-bound admission, not another unchanged run.
+[Handoff](../reports/work/FOCUS-READINESS-02/handoff.md).
+
+**Vision annotation comparison (diagnostic only):** on8retained development frames
+with78reviewed controls, Vision rectangles matched44atIoU0.5 versus32for current
+raster helper;244valid proposals versus65. More coverage but substantial clutter;
+not a semantic detector or automatic annotation replacement. OCR remains separate.
+Recommendation: optional filtered proposal trial with measured operator effort
+before TTR integration. [Results](../reports/work/VISION-ANNOTATION-COMPARE-01/handoff.md).
+
+**Annotator improvement (local tooling):** optional Auto-detect boxes action now
+proposes rectangles with a numbered selection preview and shared label choice.
+Unconfirmed/unfocused defaults; existing annotations preserved; no model inference
+or training changes.110Python/123Swift tests pass. Operator restart pending.
+[Handoff](../reports/work/ANNOTATOR-AUTO-DETECT-01/handoff.md).
+
+**FOCUS-GEOMETRY-ADAPTER-01 complete offline:** explicit diagnostic wrapper/layout
+crop selector integrated with existing TTR intake, strict native bracket validation
+and production16%/256square cropper. Eight retained crops byte-identical; eight
+layout requests unavailable as expected on old telemetry;19source files unchanged.
+No new measured producer sample or live geometry qualification; no inference,
+training, admission or shipped-model change. Next is the bounded matched geometry/
+contrast trial with fresh target/capture approval, not another unchanged run.
+[Handoff](../reports/work/FOCUS-GEOMETRY-ADAPTER-01/handoff.md).
+
+**FOCUS-GEOMETRY-CORPUS-01 preparation complete:**96member reuse proposal frozen
+and384frame/crop files rehashed:32controls,60caption-inclusive artwork,4caption-free
+artwork. TTR's additive nominal artwork-layout source contract inspected, not live
+qualified; no enlarged-body measurement inferred. Diagnostic geometry-role adapter
+is now completed above; proposed8scene/32pair matched contrast trial
+requires separate capture scope. No new run/admission/model change. Plan/questions
+published and read back in own shared packet; peer acknowledgment not observed.
+[Plan](../reports/work/FOCUS-GEOMETRY-CORPUS-01/plan.md).
+
+**FOCUS-PAIRED-INTAKE-01 complete:** FDR016 ran once,30epochs on cached FDR015
+features, actual MPS. Same initial predictions/corpus/gates verified; no encoder
+inference. Ranking11/13unchanged; two fixed0.85correct frame decisions, but
+Home ranks2/8still wrong, retention12/18 and real3TP/16FP. Zero eligible epochs;
+no best.pt/export. Recommendation: data/geometry alignment, not unchanged rerun.
+Both native100-r2/native12 archives received and production-crop reviewed:
+96usable development diagnostics,13duplicates,3old clipped Library holds.
+All12repaired bodies enclosed; no training admission. TTR receipt and geometry
+answer published/read back in own packet; peer acknowledgment not observed.
+[Run](../reports/work/FDR-016/handoff.md),
+[intake](../reports/work/NATIVE112-INTAKE-01/handoff.md).
+
+**FOCUS-ARTWORK-AUDIT-01 complete for review:**150admitted artwork pairs/559files
+verified; only24explicit native-image pairs, three procedural motifs/two backgrounds,
+fixed four-control rows. All150reported pair box areas equal;27source representative
+pairs inspected. Native-image examples have useful focus changes but narrow content
+and different box/caption treatment from Home; not proof of a single causal bug.
+The proposal was subsequently executed as FDR016 and the named archives received
+and reviewed above. Producer confirms wrapper/caption bounds, not transformed
+artwork-body geometry. [Audit handoff](../reports/work/FOCUS-ARTWORK-AUDIT-01/handoff.md).
+
+**FOCUS-RESET-01 complete for review (2026-09-29):** cached-score scoreboard/crop inspection
+complete. Ranking, strict ambiguity gate and runtime-style selection now distinct.
+FDR014 initial/epoch1/final first-choice scores8/13,11/13,5/13; largest annotated-box
+baseline8/13, random expectation1.398/13. Thresholded runtime-style decisions remain
+unsafe; no gate waived.13complete frames are predominantly Settings, not broad
+qualification.14,601scores replayed/488image files checked;44focused tests and offline
+Swift checks pass. Eight visual pages show stretched shapes/neighbor highlights;
+these are hypotheses, not relabeling. Official ImageNet weights approved, downloaded
+and hash verified; frozen-feature path integrated with93focused tests passing.
+FDR015 completed30epochs on verified MPS in94.55s overall/5.49s trainer. Final
+ranking11/13 versus FDR014 final5/13, AUROC0.726 versus0.601; fixed0.85 yields
+0/35TP,1FP,retention9/18 and0eligible checkpoints. No selected model. Both Home
+artwork frames still rank incorrectly; eight Settings-related/three tabs rank
+correctly. Next: matched artwork/context audit and separately approved grouped
+ranking/calibration design, not unchanged corpus scale or another automatic run.
+[FDR015 results](../reports/work/FDR-015/results.md).
+[Findings](../reports/work/FOCUS-RESET-01/findings.md),
+[handoff](../reports/work/FOCUS-RESET-01/handoff.md).
+
+**FDR-014 complete (2026-09-29,22:26Z):** corrected appearance sampling verified,
+same corpus/selector and one30epoch MPS run.0eligible checkpoints. Retention18/18
+throughout; minimumFP10 (prior21) still detects only2/35focus targets. Final4TP/35FP;
+real/artwork/frame guards fail every epoch. Sampling alone is insufficient.
+82focused tests, offline Swift build and14XCTest+109Swift Testing pass;14,601stored
+scores/selector metrics replayed. No best.pt, export, promotion or automatic rerun.
+Next: targeted native100/canvas-v2 contrast/geometry audit, not more unchanged training.
+[Results](../reports/work/FDR-014/results.md), [handoff](../reports/work/FDR-014/handoff.md).
+
+**FDR-013 complete (2026-09-29,22:00Z):**30epochs on MPS,124.34s trainer,
+217.41s overall.0eligible checkpoints.29epochs retain18/18, but every epoch
+fails real/artwork/full-frame guards; minimumFP21 exceeds9allowed. Tabs0/3
+throughout. All14,601stored predictions/metrics verified. No best.pt, conditional
+comparison not run; last.pt not substituted, no export/promotion. Next: targeted
+native100/canvas-v2 coverage audit, not unchanged retraining.
+[Results](../reports/work/FDR-013/results.md), [handoff](../reports/work/FDR-013/handoff.md).
+
+**FOCUS-SELECTION-01 complete (2026-09-29):** representative real-development
+selection now integrated in the trainer; legacy selectors preserved. Immutable
+363training+9retention pairs prepared, all668 prior rows unchanged.453 settled
+real candidates select checkpoints but never enter training;64excluded labels
+accounted. Only13/40frames support full-frame outcomes. All18retention decisions,
+real per-stratum floors and actual improvement are required before weightedBCE
+can choose a checkpoint. No eligible epoch means none selected.77focused tests
+and offline Swift build/14XCTest/109Swift Testing pass. Actual preflight valid;
+only blocker at preparation was missing_experiment_approval. The
+[bounded run](../reports/work/FOCUS-SELECTION-01/run-proposal.md) was subsequently
+approved/executed as FDR013 above; no eligible checkpoint or export.
+[Handoff](../reports/work/FOCUS-SELECTION-01/handoff.md).
+
+**QUALIFIED44 intake complete (2026-09-29):**135,449,487-byte archive received,
+hash verified;44 native pairs reviewed with production16%/256crops.38 unique usable
+development candidates,3 duplicates excluded,3 Library geometry cases quarantined.
+No exact evaluation overlap.39 focused tests pass. Original325+9 unchanged;
+potential363+9 was a proposal at intake, now prepared above. Representative real-screen
+selection proposal ready; no new run/inference/export. TTR receipt and precise
+geometry question published; acknowledgment pending. Selection implementation
+and candidate preflight subsequently completed above, independent of the three repairs.
+[Handoff](../reports/work/QUALIFIED44-INTAKE-01/handoff.md).
+
+**FDR-012 complete (2026-09-29,21:09Z):**30epochs on MPS in90.70seconds,
+396.55seconds including preflight. Epoch29 retains18/18;829/829comparisons complete.
+453settled real candidates:1/35focused found,15/418false positives versus FDR010
+3/35 and9/418. Related synthetic unique-correct18/50→20/50; artwork0/32→2/32.
+Real complete-frame selection2/13→1/13, plus1wrong. Development criterion failed;
+no export/promotion.33tests pass; shipped unchanged. Next: intake TTR's already-
+published44pairs, audit representative gaps and propose selection that measures
+transfer alongside retention before another run.44-pair intake subsequently completed above.
+[Results](../reports/work/FDR-012/results.md), [handoff](../reports/work/FDR-012/handoff.md).
+
+**FDR-011 execution interrupted (2026-09-29,20:45Z):** approved325+9 training
+passed preflight but restricted launch selected CPU, unlike baseline FDR010 MPS.
+Stopped owned process after3/30completed epochs;541seconds including preflight.
+Scoped host probe confirms MPS available. Partial weights remain unselected;
+no candidate inference/export/promotion.40real-frame/517score and50related-synthetic-
+pair/312score comparison inputs and baseline scores verified;33focused tests pass.
+Replacement approved as FDR-012 above; no new data/capture needed.
+[Historical handoff](../reports/work/FDR-011/handoff.md).
+
+**Related-synthetic policy approved (2026-09-29):** related renderer/motif ancestry
+alone no longer excludes new reviewed variants from a development training lane.
+Exact evaluation members/pixels stay excluded; related-synthetic results are reported
+separately from real-app transfer and independent qualification. BULK12 admission
+and325+9 assembly preflight are complete. Actual trainer configuration is valid;
+approval was subsequently granted for FDR-011 (interrupted as above).16tests and
+3actual negative admission checks pass; data-policy blocker resolved for this
+bounded development experiment, not production qualification.
+[Policy](Plans/FocusRelatedSyntheticAdmission.md).
+
+**First bulk-shard intake complete (2026-09-29):**12native pairs/24production crops
+verified and agent-reviewed.21distinct full-frame pixels;24distinct crop pixels;
+no conflicting labels or exact overlaps in10 checked reference manifests. TTR stopped
+after3cases due Simulator timeout; remaining88pairs not running. New examples share
+reserved SYNTH05 development ancestry, so training admission remains0 pending an
+explicit source-role/selection decision at intake time. That block is superseded
+by the approved325+9 development assembly above; shipped models remain unchanged.
+44pair non-executable coverage proposal ready; no human annotation requested.
+[Evidence](../reports/work/BULK12-INTAKE-01/handoff.md).
+
+**Human supplement benchmark comparison complete (2026-09-29):** reviewed8 frames
+now admitted through a separate development-evaluation lane; original diagnostic
+manifests unchanged.155/155 scores per model;138 focus candidates and17 auxiliary.
+Shipped finds6/8 positives with99FP; FDR-0100/8 with2FP. Candidate92.75% accuracy
+is negative-dominated, not successful focus detection. Full-frame selection remains
+unavailable; no training admission or release.23 tests/actual negative checks and
+metric replay pass; previous32-frame results reused without model execution.
+Next: TTR bulk revision3 schema/role intake and first100-pair shard acceptance.
+TTR19:38:41Z status reports that shard authorized/running; additional shards remain
+unapproved. Its2,000-pair planning target is not qualification or a replacement for
+existing coverage gates. Recipe-to-failure mapping, source-role separation and actual
+runtime receipt remain explicit coordination questions; acknowledgment pending.
+No unchanged training or broad manual relabeling.
+[Evidence](../reports/work/HUMAN-BENCHMARK-02/handoff.md).
+
+**Real-app supplemental review ready; diversity incomplete (2026-09-29):** Office
+recording895563805bytes received and hash-verified; all702 image files verified.
+Initial ten screens repeated prior coverage. Replacement eight-screen supplemental
+batch compares against32 prior reviewed frames: seven Paramount+ contexts and one
+OS Search. New visual/control examples do not establish broad app/source diversity.
+Human revision192241Z confirms8 frames/155 controls;155/155 production crops and
+structural audit pass.8 focused/147 unfocused, crop hashes unchanged. Maintainer
+confirms first Top Stories item focused and Watch Now unfocused in frame3; no
+annotation clarification remains. Complete-frame candidate coverage remains unknown.
+Maintainer
+removed repeat transfer-size approval; capacity and integrity checks remain. Two small
+TTR source/audit archives also received,not installed. No new capture or model run.
+[Checkpoint](../reports/work/HUMAN-REAL10-01/handoff.md).
+
+**Representative focus validation complete:** shipped/FDR-010 each scored312 new
+native-fixture crops;50pairs and50complete frames accounted,zero failed predictions.
+FDR-010 finds18/18 synthetic button/tab/row positives but0/32 artwork positives;
+unique-correct18/50 versus shipped7/50. Retained32 real frames reproduce poor
+transfer: candidate0/3buttons,0/3tabs,1/12artwork,2/7rows. No export/retraining.
+Production planner freezes313+9 membership and5727 additional canonical scene-pair
+targets;696 source-defined recipe jobs are only a scheduling envelope. Priority is
+matched native-effect/artwork/background/geometry contrasts and genuine OS transfer,
+not repeating unchanged templates. Independent source gaps and capacity remain open;
+33.4GiB free is below projected data plus10GiB work reserve. Legacy1500 crops exist
+but their v1 manifest lacks original/native bindings; no new admission.
+[Handoff](../reports/work/FOCUS-REPRESENTATIVE-01/handoff.md),
+[collection assignment](../reports/work/FOCUS-REPRESENTATIVE-01/production-assignment.md).
+Software:70Python/123Swift tests and offline build pass. Full production corpus
+collection and revised selection-policy approval remain separate next assignments.
+
+**SYNTH05 consumer intake complete:** approved22+28-pair capture archives verified;
+50 diagnostic pairs,100 production crops,74 distinct full-frame pixels. Native
+artwork and selected-parent/child hierarchy compatibility validated; all100 crops
+reviewed,64 focused Python/123 Swift tests pass. All12 groups are dark/seed7 on one
+reported Simulator target, not independent sources. No training admission;313+9
+candidate/retention membership unchanged. No recapture,model execution or producer
+deployment. Next: representative selection validation and production role/source
+reservation before scaling. [Handoff](../reports/work/SYNTH05-HIERARCHY-INTAKE-01/handoff.md).
+
+**FDR-010 complete; do not export:**313 training pairs/nine retention,30 epochs,
+epoch29 selected,18/18 retention. Same24-frame real benchmark finds3/19 positives
+with3 FP and2/13 unique-correct frames, versus shipped8/19,30 FP,3/13. Separate
+eight-frame Home/Photos/Settings set finds0/8 positives; both Photos pairs fail.
+362/362 candidate scores complete. The nine retention pairs all come from Settings/
+Accessibility; passing them does not establish broad transfer. No second run or
+model replacement. Next: representative selection validation and coverage-driven
+production campaign, not more unchanged recipes/epochs. [Handoff](../reports/work/FDR-010/handoff.md)
+and [production evidence map](../reports/work/FDR-010/production-acceptance.md).
+This resolves the narrower-decision-pending status in the historical entry below.
+
+**Gap-targeted synthetic corpus admitted (2026-09-29):** current running local
+TTR/Fixture completed8 jobs,40 native competitor pairs,0 rejected targets.
+24 button,8 Settings-row analog and8 selected-tab analog pairs;80 reviewed
+production crops,42 distinct full frames. Explicit admission preserves273 prior
+candidate pairs and9 retention pairs, adds40:313 training candidates plus9 retention.
+No real-regression overlap, contradictory crop labels or new complete-pair duplicates.
+Closed presentation/selection consumer support verified against actual producer
+hash vectors;83 focused tests and offline Swift build/123 tests pass. TTR request
+and qualification feedback published/read back. Original full protocol retains10
+independent-coverage blockers. The narrower proposal was subsequently approved and
+completed as FDR-010; failed transfer rejected export. No pending approval for that
+run. [Historical corpus handoff](../reports/work/FOCUS-GAP-LIVE-20260929/handoff.md).
+This supersedes the earlier gap pack's old-runtime, missing-row-competitor and
+missing-flat-tab statements. SYNTH05 now adds diagnostic nested hierarchy evidence;
+genuine native OS coverage remains separate.
 
 **Synthetic repaired pilot received and crop-qualified (2026-09-29):** approved
 34778079-byte archive verified;12/12pairs and24/24production crops pass, including

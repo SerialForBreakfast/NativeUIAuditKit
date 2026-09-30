@@ -63,7 +63,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch"])
     return p.parse_args()
 
 
@@ -102,9 +102,22 @@ def is_hard_negative(sample: dict) -> bool:
 
 def checkpoint_improved(loss, best, configuration):
     earliest = {"minimum-native-validation-bce-earliest-tie",
+                "minimum-balanced-real-bce-guarded-earliest-tie",
                 "minimum-retention-bce-floor-earliest-tie",
                 "minimum-equal-source-validation-bce-retention-floor-earliest-tie"}
     return loss < best or (loss == best and configuration.get("selection") not in earliest)
+
+
+def experiment_selection(predictions, rows, report):
+    """Shared epoch/selected-checkpoint dispatch; also exercised without a model."""
+    adapters = {"focus-appearance-preflight-v1": "focus_appearance_experiment",
+                "focus-retention-preflight-v1": "focus_retention_experiment",
+                "focus-representative-preflight-v1": "focus_representative_experiment"}
+    name = adapters.get(report.get("formatVersion"))
+    if name is None:
+        return {}
+    import importlib
+    return importlib.import_module(name).selection_metrics(predictions, rows, report["selection"])
 
 
 def load_mobilenetv4_conv_small():
@@ -139,7 +152,7 @@ def main() -> int:
             report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name, args.experiment_approval)
         except (OSError, ValueError, KeyError, TypeError) as error:
             print(json.dumps({"launchEligible": False, "blockers": [str(error)]})); return 2
-        if report.get("formatVersion") in {"focus-appearance-preflight-v1", "focus-retention-preflight-v1"}:
+        if report.get("formatVersion") in {"focus-appearance-preflight-v1", "focus-retention-preflight-v1", "focus-representative-preflight-v1"}:
             for flag, field in (("--epochs","epochs"),("--batch","batch"),("--lr","lr"),("--model","model")):
                 if any(x == flag or x.startswith(flag+"=") for x in sys.argv[1:]) and getattr(args,field) != report["configuration"][field]:
                     print(json.dumps({"launchEligible":False,"blockers":["protocol_configuration_override"]})); return 2
@@ -238,8 +251,19 @@ def main() -> int:
     torch.manual_seed(42)
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"device={device}  creating {args.model} pretrained=False (HF hub skipped)", flush=True)
-    model = mobilenetv4_conv_small(pretrained=False, num_classes=1)
+    train_dataset = CropDataset(train, not experimental)
+    val_dataset = CropDataset(val, False)
+    if report.get("pairedTraining"):
+        from focus_paired_experiment import prepare_features
+        print(f"device={device} reusing sealed features; no encoder loaded", flush=True)
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get("representation"):
+        from focus_pretrained_experiment import prepare_features
+        print(f"device={device} extracting frozen ImageNet features once", flush=True)
+        model, train_dataset, val_dataset = prepare_features(report, train_dataset, val_dataset, device, deadline, out)
+    else:
+        print(f"device={device}  creating {args.model} pretrained=False (HF hub skipped)", flush=True)
+        model = mobilenetv4_conv_small(pretrained=False, num_classes=1)
     if experimental and report["warmCheckpoint"]:
         from focus_learning_experiment import checked
         checkpoint = torch.load(checked(report["warmCheckpoint"]), map_location="cpu", weights_only=True)
@@ -253,15 +277,20 @@ def main() -> int:
     loss_fn = nn.BCEWithLogitsLoss()
 
     sampler = None
-    if "sampling" in report:
+    if report.get("pairedTraining"):
+        pair_config = report["pairedTraining"]
+        sampler = WeightedRandomSampler([p["weight"] for p in pair_config["pairs"]], pair_config["draws"],
+                                       replacement=True, generator=torch.Generator().manual_seed(42))
+        batch = pair_config["pairBatch"]
+    elif "sampling" in report:
         sampler = WeightedRandomSampler([r["samplingWeight"] for r in train], len(train), replacement=True,
                                        generator=torch.Generator().manual_seed(42))
     train_loader = DataLoader(
-        CropDataset(train, not experimental), batch_size=batch, shuffle=sampler is None,
+        train_dataset, batch_size=batch, shuffle=sampler is None,
         sampler=sampler, num_workers=0, drop_last=False
     )
     val_loader = DataLoader(
-        CropDataset(val, False),
+        val_dataset,
         batch_size=max(2, min(batch, 32)),
         shuffle=False,
         num_workers=0,
@@ -286,12 +315,7 @@ def main() -> int:
                     predictions.append({"id": val[count].get("id", str(count)), "label": int(label), "probability": probability})
                     count += 1
         result = {"loss": total_loss / max(1, count), "predictions": predictions}
-        if report.get("formatVersion") == "focus-appearance-preflight-v1":
-            from focus_appearance_experiment import selection_metrics
-            result.update(selection_metrics(predictions,val,report["selection"]))
-        elif report.get("formatVersion") == "focus-retention-preflight-v1":
-            from focus_retention_experiment import selection_metrics
-            result.update(selection_metrics(predictions,val,report["selection"]))
+        result.update(experiment_selection(predictions, val, report))
         return result
     history = []
     initial = evaluate() if experimental else None
@@ -304,7 +328,11 @@ def main() -> int:
             x, y = x.to(device), y.to(device)
             opt.zero_grad()
             logits = model(x)
-            loss = loss_fn(logits.view_as(y), y)
+            if report.get("pairedTraining"):
+                from focus_paired_experiment import paired_loss
+                loss = paired_loss(logits, y)
+            else:
+                loss = loss_fn(logits.view_as(y), y)
             if not torch.isfinite(loss): raise ValueError("nonfinite_training_loss")
             loss.backward()
             opt.step()
@@ -322,6 +350,9 @@ def main() -> int:
             "state_dict": model.state_dict(),
             "val_loss": val_loss,
         }
+        if report.get("representation"):
+            ckpt["representation"] = report["representation"]
+            ckpt["checkpointKind"] = "frozen-pretrained-linear-head-v1"
         torch.save(ckpt, weights_dir / "last.pt")
         if validation.get("checkpointEligible", True) and checkpoint_improved(val_loss, best_val, report["configuration"]):
             best_val = val_loss

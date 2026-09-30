@@ -22,7 +22,30 @@ def configure(runtime):
     import PyQt5
     from pathlib import Path
     # The macOS wheel's compiled prefix is not this dedicated venv.
-    QtCore.QCoreApplication.setLibraryPaths([str(Path(PyQt5.__file__).parent/"Qt5/plugins")])
+    plugins = Path(PyQt5.__file__).parent/"Qt5/plugins"
+    # Qt ignores BSD-hidden plugin files even though normal reads succeed.
+    # A byte-identical local cache leaves the installed wheel/flags untouched.
+    import hashlib
+    import shutil
+    import stat
+    platform_files = sorted((plugins/'platforms').glob('*.dylib'))
+    plugin_paths = [str(plugins)]
+    if any(getattr(p.stat(), 'st_flags', 0) & getattr(stat, 'UF_HIDDEN', 0) for p in platform_files):
+        hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in platform_files}
+        key = hashlib.sha256(repr(sorted(hashes.items())).encode()).hexdigest()
+        cached = local(runtime/'qt-plugins'/key)
+        (cached/'platforms').mkdir(parents=True, exist_ok=True)
+        for source in platform_files:
+            target = cached/'platforms'/source.name
+            require(not target.is_symlink() and local(target).is_relative_to(runtime), 'invalid_qt_plugin_cache')
+            if not target.exists(): shutil.copyfile(source, target)
+            require(hashlib.sha256(target.read_bytes()).hexdigest() == hashes[source.name], 'changed_qt_plugin_cache')
+            # Cache copies can also carry hidden flags on subsequent launches.
+            # Clear only that display bit on our verified copy, never wheel files.
+            flags = getattr(target.stat(), 'st_flags', 0)
+            if flags & stat.UF_HIDDEN: os.chflags(target, flags & ~stat.UF_HIDDEN)
+        plugin_paths.insert(0, str(cached))
+    QtCore.QCoreApplication.setLibraryPaths(plugin_paths)
     settings = runtime/"settings"
     settings.mkdir(parents=True, exist_ok=True)
     QtCore.QSettings.setDefaultFormat(QtCore.QSettings.IniFormat)
@@ -235,6 +258,107 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             self.frameFlagsButton.setEnabled(enabled)
             self.actions.toggleFrameFlags.setText(caption)
             self.actions.toggleFrameFlags.setEnabled(enabled)
+
+        def autoDetectBoxes(self):
+            from PIL import Image
+            from human_auto_boxes import detect
+            from labelme.shape import Shape
+            if not self.imagePath or not self.canvas.editing():
+                self.status('Open an image and use Edit rectangles before auto-detecting.', 10000)
+                return
+            remaining = 100-len(self.canvas.shapes)
+            if remaining <= 0:
+                self.status('This frame already has 100 boxes; remove unwanted boxes first.', 10000)
+                return
+            existing = [[[min(p.x() for p in s.points), min(p.y() for p in s.points)],
+                         [max(p.x() for p in s.points), max(p.y() for p in s.points)]]
+                        for s in self.canvas.shapes if len(s.points) >= 2]
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            try:
+                with Image.open(self.imagePath) as image:
+                    require(image.size == (self.image.width(), self.image.height()), 'image_dimensions_changed')
+                    proposals = detect(image, existing, remaining)
+            except (OSError, ValueError) as error:
+                self.status(f'Auto-detect unavailable: {error}', 15000)
+                return
+            finally:
+                QtWidgets.QApplication.restoreOverrideCursor()
+            if not proposals:
+                self.status('No new clear rectangular candidates. Existing boxes were kept; use Suggest box, presets or draw manually.', 15000)
+                return
+            dialog = QtWidgets.QDialog(self)
+            dialog.setObjectName('autoDetectDialog')
+            dialog.setWindowTitle('Auto-detect boxes — review proposals')
+            layout = QtWidgets.QVBoxLayout(dialog)
+            layout.addWidget(QtWidgets.QLabel('Geometry suggestions only—not class or focus predictions. Uncheck unwanted boxes.'))
+            layout.addWidget(QtWidgets.QLabel('Some proposals may be containers or parts of controls; adjust bounds after adding.'))
+            content = QtWidgets.QHBoxLayout()
+            preview = QtWidgets.QLabel(); preview.setObjectName('autoDetectPreview')
+            listing = QtWidgets.QListWidget(); listing.setObjectName('autoDetectCandidates')
+            listing.setMinimumWidth(230)
+            for index, points in enumerate(proposals, 1):
+                (x,y),(r,b) = points
+                item = QtWidgets.QListWidgetItem(f'{index}. {r-x:.0f} × {b-y:.0f} at {x:.0f}, {y:.0f}')
+                item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
+                item.setCheckState(QtCore.Qt.Checked); listing.addItem(item)
+            content.addWidget(preview); content.addWidget(listing); layout.addLayout(content)
+            label = QtWidgets.QComboBox(); label.setObjectName('autoDetectLabel')
+            label.addItems(review_labels())
+            last = self.labelDialog.edit.text().strip()
+            label.setCurrentText(last if last in review_labels() else 'collectionItem')
+            layout.addWidget(QtWidgets.QLabel('Initial label for selected boxes (edit individual labels afterward):'))
+            layout.addWidget(label)
+            toggle = QtWidgets.QPushButton('Select all / none'); toggle.setObjectName('autoDetectToggleAll')
+            layout.addWidget(toggle)
+            buttons = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
+            buttons.accepted.connect(dialog.accept); buttons.rejected.connect(dialog.reject)
+            layout.addWidget(buttons)
+            def redraw(*_):
+                pixmap = QtGui.QPixmap.fromImage(self.image).scaled(720,405,QtCore.Qt.KeepAspectRatio,QtCore.Qt.SmoothTransformation)
+                painter = QtGui.QPainter(pixmap)
+                sx,sy = pixmap.width()/self.image.width(),pixmap.height()/self.image.height()
+                count = 0
+                for index, ((x,y),(r,b)) in enumerate(proposals):
+                    checked = listing.item(index).checkState() == QtCore.Qt.Checked
+                    count += checked
+                    painter.setPen(QtGui.QPen(QtGui.QColor('#00d8ae' if checked else '#888888'),2))
+                    painter.drawRect(QtCore.QRectF(x*sx,y*sy,(r-x)*sx,(b-y)*sy))
+                    painter.drawText(QtCore.QPointF(x*sx+3,y*sy+14),str(index+1))
+                painter.end(); preview.setPixmap(pixmap)
+                buttons.button(QtWidgets.QDialogButtonBox.Ok).setText(f'Add {count} boxes')
+                buttons.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(count > 0)
+            def toggle_all():
+                all_on = all(listing.item(i).checkState() == QtCore.Qt.Checked for i in range(listing.count()))
+                listing.blockSignals(True)
+                for i in range(listing.count()):
+                    listing.item(i).setCheckState(QtCore.Qt.Unchecked if all_on else QtCore.Qt.Checked)
+                listing.blockSignals(False); redraw()
+            toggle.clicked.connect(toggle_all); listing.itemChanged.connect(redraw); redraw()
+            accepted = dialog.exec_() == QtWidgets.QDialog.Accepted
+            selected = [points for i, points in enumerate(proposals)
+                        if listing.item(i).checkState() == QtCore.Qt.Checked]
+            chosen_label = label.currentText()
+            dialog.deleteLater()
+            if not accepted:
+                return
+            used = {s.group_id for s in self.canvas.shapes}
+            ids = iter(i for i in range(1,100001) if i not in used)
+            shapes = []
+            for points in selected:
+                shape = Shape(label=chosen_label, shape_type='rectangle', group_id=next(ids),
+                              flags={k: k == 'unfocused' for k in SHAPE_FLAGS})
+                for x,y in points: shape.addPoint(QtCore.QPointF(x,y))
+                shape.close(); shapes.append(shape)
+            if not shapes: return
+            self.actions.suggestBox.setChecked(False)
+            self.labelDialog.edit.setText(chosen_label)
+            self.loadShapes(shapes, replace=False)
+            self.shapeSelectionChanged(shapes)
+            for i in range(self.flag_widget.count()):
+                item = self.flag_widget.item(i)
+                if item.text() == 'reviewed': item.setCheckState(QtCore.Qt.Unchecked)
+            self.canvas.update(); self.setDirty()
+            self.status(f'Added {len(shapes)} unconfirmed proposals. Adjust labels/bounds and set focus. Undo removes this batch. Nothing auto-saved.', 20000)
 
         def toggleFrameFlags(self):
             items = [self.flag_widget.item(i) for i in range(self.flag_widget.count())]
@@ -620,6 +744,13 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
     result.actions.suggestBox = suggest_box
     result.actions.editMenu = (suggest_box,) + result.actions.editMenu
     result.actions.tool = (suggest_box,) + result.actions.tool
+    auto_detect = QtWidgets.QAction('Auto-detect boxes…', result)
+    auto_detect.setIconText('Auto-detect\nboxes…')
+    auto_detect.setToolTip('Optional local rectangle proposals for this image. Preview, choose a label and add selected boxes; no automatic focus or approval.')
+    auto_detect.triggered.connect(result.autoDetectBoxes)
+    result.actions.autoDetectBoxes = auto_detect
+    result.actions.editMenu = (auto_detect,) + result.actions.editMenu
+    result.actions.tool = (auto_detect,) + result.actions.tool
     preset_actions = []
     for caption, callback in [('Save preset…', result.saveBoxPreset), ('Load preset…', result.loadBoxPreset)]:
         action = QtWidgets.QAction(caption, result)

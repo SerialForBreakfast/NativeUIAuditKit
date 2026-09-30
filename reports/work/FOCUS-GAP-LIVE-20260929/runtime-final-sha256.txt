@@ -1,0 +1,3 @@
+399998d13500fcee23d0e68d93f3576056e370911e9ebc861870acd3bce97eac  /Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-fssavpzkujakgqggjglqjvvrtyoo/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv
+260aa9f867b6408ef0538ee1e7d3b0fb2742f963e6bf3a5e044407f89a26543e  /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data/Containers/Bundle/Application/EC126AF1-6072-48AB-92BF-C69A25C4C02C/TVTestRigFixture.app/TVTestRigFixture
+e6c15f73aa902b0833c815075410c2c9fa9858ec5418436064707b4c1eca8f1d  /Users/josephmccraw/Library/Developer/CoreSimulator/Devices/9026ECA9-77DB-4AE6-8FE6-BB239E9571FA/data/Containers/Bundle/Application/EC126AF1-6072-48AB-92BF-C69A25C4C02C/TVTestRigFixture.app/TVTestRigFixture.debug.dylib

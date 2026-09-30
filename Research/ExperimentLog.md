@@ -1,5 +1,306 @@
 # NativeUIAuditKit — Experiment Log
 
+## Data admission only — FOCUS-CONTROL32-ADMIT-01 (2026-09-30 UTC)
+
+Exact user-approved 32 retained native-control pairs admitted: 363→395 candidate
+pairs, with 9 retention pairs and 453 real selection crops unchanged. 64 artwork
+pairs held pending geometry evidence. No new run number, weights, model execution
+or training approval. FDR016 remains the latest completed run. Data-only assembly
+is explicitly rejected by trainer preflight; a future experiment requires a new
+member-bound protocol and feature preparation. [Evidence](../reports/work/FOCUS-CONTROL32-ADMIT-01/handoff.md).
+
+## Run FDR-016 — approved paired frozen-feature head (2026-09-29)
+
+Owner: current NUIAK worker. Current-chat approval covers exactly one run.
+Protocol `d10227895837dabdda821faf6d18dfb5088aafd1b1cee82aff2709a99ab09f41`,
+arm `paired-stretch`, output `fdr016-paired-frozen-mps`.
+Same363training pairs/726crops,9retention pairs/18crops,453real selection crops;
+FDR015 immutable cached576features, same fresh577parameter head seed42.
+AdamW0.0003,30epochs,32pairs/64crops per batch,363pair draws per epoch,
+25%appearance mass. BCE plus softplus negative focused-minus-unfocused logit
+margin, coefficient1. Unchanged0.85 guards and minimum balanced-real BCE among
+eligible epochs; no eligible epoch means no selected checkpoint.1800s cap,
+MPS required in actual process; no encoder inference or newly received data.
+59focused tests passed; offline Swift build/test passed before launch.
+Completed30epochs on MPS,PID82133,23:44:27–23:45:58UTC,90.83s including preflight.
+Exit2/no timeout; zero eligible epochs and no best.pt. Final retention12/18,
+real3/35TP and16/418FP; top1 remains11/13, Home ranks2/8 unchanged and margins
+worse; AUROC0.7070 versus0.7261. Fixed0.85complete-frame decisions2correct/11none.
+No research-target or qualification win.14,601cached predictions reproduced;
+identical initial predictions/cache order verified. Do not repeat unchanged.
+Evidence: reports/work/FDR-016/. Pair-correlated batches are a comparison
+limitation, not a pure loss-only causal claim. No export/promotion authorized.
+
+## Run FDR-015 — approved frozen ImageNet feature baseline (2026-09-29)
+
+Owner: current NUIAK model worker. Research-led reset and named weight download
+approved in current chat. Protocol
+`353205a204ce39c4b3c6519dea11fdd9544cccf1822d9a1e015551cc17e4432e`,
+arm `pretrained-stretch`, output `fdr015-pretrained-frozen-mps`.
+Same363training pairs/726crops,9retention pairs/18crops,453real selection crops and
+64exclusions as FDR014; unchanged membership, appearance sampler, threshold0.85,
+selection guards and minimum-balanced-real-loss eligible checkpoint rule.
+Official MobileNetV3-Small ImageNet weights SHA256
+`047dcff4addef86ea5bc2eff13c9614dc11f47ab1160d0a71a25e7db994f4e1f`.
+Frozen encoder/BN, full256production crops/ImageNet RGB normalization (no center
+crop), cached576features, fresh577parameter linear head only. AdamW0.0003,
+batch64,30epochs,seed42,1800s cap. MPS assertion in actual trainer process;
+resident PyTorch2.13.0/torchvision0.28.0. Architecture, normalization and runtime
+differ from FDR014; not a causal pretraining ablation or latency comparison.
+93focused tests and offline Swift build/test pass. Runtime executable identity
+repair permits normal venv symlinks without weakening data containment.
+Completed30epochs,PID75348,23:10:26–23:12:00UTC;94.55s overall/5.49s trainer,
+exit2,no timeout. Frozen features/order/hashes verified. No eligible epoch;
+retention9/18 throughout. Final real0/35TP,1/418FP at0.85. Final top1 ranking11/13
+versus FDR014 final5/13 (but matches its epoch1); cropAUROC0.726 versus0.601.
+All14,601scores replayed. Settings-related8/8 and tabs3/3 rank first; both Home
+artwork cases fail. No best.pt; head-only last.pt diagnostic, not exporter-compatible.
+Next: matched artwork/context audit plus separately designed grouped calibration;
+do not lower threshold to manufacture a pass. No automatic repeat, export,
+promotion or new data admission. [Results](../reports/work/FDR-015/results.md),
+[handoff](../reports/work/FDR-015/handoff.md).
+
+## Run FDR-014 — appearance-sampling-only comparison (2026-09-29)
+
+Owner: current NUIAK model worker. User authorized sampler correction and one run.
+Protocol `e807725468811a02af7c775d881e8582a1a9a3d6caa69e20e139b9bd2291298a`,
+arm `warm-stretch`, output `fdr014-appearance-sampling-mps`.
+Same363training+9retention pairs,453real selection crops/64exclusions as FDR013;
+FDR007 initialization/freshAdamW,30epochs,batch64,lr0.0003,seed42,noaugmentation,
+MPS,1800s cap; unchanged representative checkpoint guards and objective.
+Only training sampling changes: buttons/tabs/artwork/rows25%each, balanced labels,
+uniform examples within each bucket. Drops source-first50/50; native Settings
+expected12.99%. Metadata identifies119button/17tab/150artwork/77row pairs; nested
+tab child buttons remain buttons.21780actual seed42 draws:5497button,5479tab,
+5366artwork,5438row.82tests and offline Swift build/tests verified before launch.
+Approval and immutable protocol in reports/work/FDR-014/. Completed all30epochs,
+PID67225,22:22:30–22:26:06UTC;123.54s trainer/216.07s overall,exit2. No eligible
+checkpoint. Retention18/18 throughout; every epoch fails real-improvement,artwork,
+complete-frame guards. MinimumFP10 at epoch4 versus FDR013's21, but still only2/35TP.
+Finalepoch4TP/35FP; tabs1/3 in six epochs, otherwise0/3. All14,601stored scores and
+selection metrics replayed; frozen code unchanged. Rebalancing alone insufficient.
+No conditional selected-checkpoint comparison, new data/export/promotion or rerun.
+Next: existing native100/canvas-v2 contrast/geometry audit before more training.
+[Results](../reports/work/FDR-014/results.md), [handoff](../reports/work/FDR-014/handoff.md).
+
+## Run FDR-013 — approved representative-selected development (2026-09-29)
+
+Owner: current NUIAK model worker. User approved the frozen FOCUS-SELECTION-01
+run proposal in this chat. Completed30epochs21:56:46–22:00:24Z,PID63806; MPS verified
+in the trainer process with PyTorch2.7.0. PID/start/end
+will be recorded in reports/work/FDR-013/started.json and execution.json.
+Protocol `1c39256bf41e133d1e9532d35f4b2d6d6f7e24240729eb0375fc04e866326ae7`,
+arm `warm-stretch`, output `fdr013-representative-mps`.
+363training pairs/726crops;9retention pairs/18crops;453real development selection
+crops;64excluded real labels. FDR007 initialization/freshAdamW,50/50 native–Fixture,
+30epochs,batch64,lr0.0003,seed42,noaugmentation,1,800second cap. Same-process MPS
+assertion required. Earliest minimum balanced real BCE only among epochs meeting
+all frozen real/retention/frame guards; no eligible epoch means no best checkpoint.
+Selected-checkpoint comparisons use the same frozen517real and312related-synthetic
+scores as FDR012; no new threshold, final challenge, export or promotion. No automatic
+rerun. Approval: reports/work/FDR-013/approval.json.
+
+Outcome: no eligible epoch; exit2, no best.pt.124.34s trainer/217.41s overall.
+Retention18/18 in29epochs,16/18 at epoch24. Every epoch fails real-improvement,
+artwork and complete-frame guards; minimumFP21 exceeds9, with only2/35TP at
+that epoch19. Epoch20 has5TP/24FP; finalepoch7TP/39FP. Tabs0/3 throughout.
+All14,601initial/epoch predictions and selection metrics replayed. No conditional
+selected-checkpoint comparison, export, promotion or automatic retraining.
+Next: targeted native100/canvas-v2 coverage audit, artwork hard negatives and tab
+contrasts. See reports/work/FDR-013/results.md and handoff.md.
+
+## Representative selection preparation — FOCUS-SELECTION-01 (2026-09-29; no run)
+
+Assigned software integration and immutable 363+9 candidate preflight following
+QUALIFIED44 review. Real development selection replaces retention-only selection
+for a future separately approved experiment; legacy runs remain unchanged.
+No new run ID, training, model inference or export is authorized by preparation.
+Policy: [FocusRepresentativeSelection.md](Plans/FocusRepresentativeSelection.md).
+
+Completed: immutable363+9 and453real-selection/64excluded labels; prior668rows
+preserved. Protocol `1c39256bf41e133d1e9532d35f4b2d6d6f7e24240729eb0375fc04e866326ae7`.
+Actual trainer preflight exits2 solely for missing_experiment_approval; no training
+directory created.77focused tests and offline Swift build/tests pass. Retained
+FDR010/FDR012 score replay confirms the new guards reject unchanged/worse transfer;
+no new epoch inference. See ../reports/work/FOCUS-SELECTION-01/handoff.md.
+
+## Post-FDR-012 data/selection review — QUALIFIED44 (2026-09-29; no run)
+
+Named TTR44-pair archive received and verified. Native contract and production
+crop checks completed; visual review blocks3 short Library geometries (two unique
+pixel pairs).38 usable new candidates and3 additional duplicates account for all44.
+No exact evaluation overlap. Existing325training+9retention assembly unchanged.
+39 focused tests pass. Proposed real-development checkpoint objective plus retention
+and false-positive guards replaces retention-only selection in a future approved
+experiment; proposal only, not trainer implementation or new training authority.
+See reports/work/QUALIFIED44-INTAKE-01/handoff.md and selection-proposal.md.
+
+## Run FDR-012 — approved MPS replacement (2026-09-29)
+
+Status: completed30/30epochs; development transfer criterion failed. Replaces
+interrupted FDR-011, not a resume. PID54962,21:03:10–21:09:47Z,exit0;
+90.70seconds training,396.55seconds including preflight. Same-process MPS verified.
+Selected epoch29,18/18retention, BCE2.8957965862683084e-8; all30epoch selections
+replayed. best.pt SHA256 b079f4c756af52889b055cda2a3a87d4310be9fe518703a1d28704b49dbd044c.
+829/829candidate comparisons complete.453settled real candidates:1/35TP,15/418FP
+versus FDR0103/35TP,9/418FP; shipped18/35TP,140/418FP. Complete real frames:
+1/13unique-correct,1wrong versus FDR0102/13correct,0wrong. Related synthetic:
+20/50unique-correct versus18/50; artwork2/32 versus0/32. No independent qualification.
+33focused tests pass. No export/promotion or extra run. Next: intake published44
+pairs and freeze representative-selection proposal before further training.
+Details/errors/frozen membership: reports/work/FDR-012/results.md and handoff.md.
+User explicitly approved replacement GPU run and frozen comparisons. MPS verified
+in the actual training process before invoking the existing trainer, failing closed.
+Protocol6699a6e689e33ae916fab21a437b9de0c31a7dd62bce4c2f1881561e77e6adac,
+arm warm-stretch, output related-synth-development-mps.325training pairs/650crops,
+9retention pairs/18crops,FDR007 initialization,fresh AdamW,30epochs,batch64,
+lr0.0003,seed42,50/50 native-Fixture,no augmentation,16%/256production crops.
+1,800second total cap including preflight. Minimum retention BCE among18/18correct
+at0.85; earliest tie. Compare selected checkpoint with shipped/FDR010 on frozen
+40real frames/517scores and separately50related synthetic pairs/312scores.
+Reuse verified baseline scores; no changed threshold, challenge scoring, additional
+run, export or promotion. Approval/execution evidence: reports/work/FDR-012/.
+
+## Run FDR-011 — approved related-synthetic development (2026-09-29)
+
+Status: interrupted after3/30 completed epochs; no selected checkpoint or evaluation.
+PID51386,20:36:43–20:45:44Z,541.19seconds including preflight, exit-15 (owned stop).
+Restricted launch selected CPU, unlike FDR010's MPS. Scoped host probe confirmed
+MPS available with the same PyTorch2.7.0 interpreter. This is a launch-context
+failure, not a data/model-quality result. Preserve partial best/last artifacts;
+do not use them as the approved30epoch result. No automatic second run.
+Next: separately approve replacement bounded run in verified MPS context with
+fresh output and an MPS assertion before trainer launch.40real frames/517scores
+and50related synthetic pairs/312scores are frozen; baseline metric replay and
+33focused tests pass. Candidate inference/export/promotion not run.
+PID/timestamps/elapsed and outcome in reports/work/FDR-011/execution.json and
+started.json; handoff and verification.json preserve complete accounting.
+Maintainer explicitly approved
+the exact run and comparison after325+9 data/configuration preflight.
+Protocol6699a6e689e33ae916fab21a437b9de0c31a7dd62bce4c2f1881561e77e6adac,
+arm warm-stretch, output related-synth-development-candidate.325training pairs,
+9retention pairs, FDR007 warm weights/fresh optimizer,30epochs,batch64,lr0.0003,
+seed42,50/50 native-Fixture, no augmentation, production16%/256 crops,1,800second cap.
+Minimum retention BCE among18/18correct at0.85; earliest tie; no eligible epoch
+means no selected checkpoint.12new native-image pairs are the only data addition.
+Compare selected checkpoint with shipped/FDR010 on frozen40real development frames
+and separately50related synthetic pairs. No challenge scoring, threshold sweep,
+automatic retry, second run, export or promotion. Execution approval is bound in
+reports/work/FDR-011/approval.json. Use resident focus-export-01 runtime.
+
+## RELATED-SYNTH-ADMIT-01 — approved data-use amendment (2026-09-29; no run)
+
+Maintainer approved new related synthetic variants for development training while
+retaining exact test-member exclusion and separate related-synthetic/real-transfer/
+independent-qualification reporting. Preparing existing313+12 training pairs and
+unchanged9 retention pairs through existing assembly/preflight. No new run ID,
+weight update, inference, export or training execution authorization in this entry.
+Completed actual trainer preflight20:34Z: configurationValid=true, expected exit2
+solely for missing_experiment_approval.325training/9retention pairs, previous644rows
+unchanged; protocol6699a6e689e33ae916fab21a437b9de0c31a7dd62bce4c2f1881561e77e6adac.
+See [policy](Plans/FocusRelatedSyntheticAdmission.md) and resulting
+`reports/work/RELATED-SYNTH-ADMIT-01/` evidence; runtime proposal retains FDR007
+initialization/fresh optimizer and fixed30epoch retention-selected configuration.
+
+## HUMAN-BENCHMARK-02 — evaluation complete (2026-09-29)
+
+Maintainer approved development benchmark admission and comparison for corrected
+8-frame/155-control human revision192241Z-aabb2be6. Shipped9e5ba294… versus FDR-010
+epoch29/775c3197…; fixed0.85, production16%/256 crops, CoreMLCPU/PyTorchCPU. No
+training run allocated. Frozen protocolfd5acf5e…;155/155 per model,0failed scores,
+unchanged pre/postflight identities.138 candidates: shippedTP6/FN2/FP99/TN31;
+FDR-010TP0/FN8/FP2/TN128.17 auxiliary:16FP shipped,0candidate. All8 positives
+missed by candidate despite92.75% candidate accuracy; no promotion. Actual CPU loops
+3.76s/4.41s are backend-specific, not comparable latency. Four retained benchmarks
+reused:32frames/362scores each/315supported crops. Full-frame selection unavailable
+for the new8 due to absent completeness and visible omissions.23 focused tests and
+five actual-artifact negative checks pass. Handoff under reports/work/HUMAN-BENCHMARK-02.
+Next: new TTR bulk contract intake and role-bound matched contrast corpus; training
+waits for admitted data/approved representative selection, not another identical run.
+
+## FOCUS-REPRESENTATIVE-01 — fixed evaluation, no training (2026-09-29)
+
+User assigned representative buttons/tabs/artwork/rows validation followed by
+coverage-driven corpus readiness. Frozen protocol77f417ee…; shipped9e5ba294… and
+FDR-010 epoch29 checkpoint775c3197…;0.85 threshold,original top-left bounds,
+production16%-each-side/256stretch crops. CoreMLCPU and PyTorch2.7CPU2threads,
+Python3.12.9.312/312 scores each complete; measured loops15.42s/7.29s are different
+backends, not directly comparable latency. No new training,export or challenge use.
+
+Synthetic50pairs: candidate TP4/4buttons,10/10tabs,0/32artwork,4/4rows,zero FP.
+Complete50frames:18unique-correct/32no-focus; shipped7unique/4wrong/39no-focus.
+Native-image32 versus native-button18 is confounded with content/geometry/labels;
+the result establishes a coverage failure, not its cause. Retained real32frame
+scores reproduced:362/model,315supported settled candidate crops. Candidate
+TP0/3buttons,0/3tabs,1/12artwork,2/7rows; shipped3/3,1/3,5/12,2/7 respectively.
+Four-stratum macro recall9.23% versus50.89%; tiny/development-exposed support.
+
+Decision: keep shipped, reject FDR-010 export; no unchanged repeat run. Immutable
+selection proposal preserves retention floor but needs representative source-balanced
+selection approval.313+9 unchanged;5727 canonical additional-pair deficits scheduled,
+with prioritized matched contrasts,real-source gaps and storage gate before capture.
+70Python/123Swift tests and offline build pass. [Evidence](../reports/work/FOCUS-REPRESENTATIVE-01/handoff.md).
+
+## SYNTH05 consumer intake — no model run (2026-09-29)
+
+Received22+28 producer pairs;50/50 native bracket/geometry/recipe checks and100/100
+production crops pass;74 distinct full frames. Artwork and selected-parent/child
+consumer compatibility now verified. All dark/seed7/related Simulator Fixture data;
+diagnostic-only,zero training admission.313+9 membership and FDR-010 outcome unchanged.
+64 focused Python tests,offline build/123 Swift tests pass.
+[Handoff](../reports/work/SYNTH05-HIERARCHY-INTAKE-01/handoff.md).
+
+## Run FDR-010 — approved gap-targeted retention development (2026-09-29)
+
+Logged before execution. Maintainer approved the bounded candidate and limited
+production milestone; no production promotion. Owner: current model-workflow worker.
+Output `NativeUITrainer/focus_ring_runs/fdr010-gap-retention`, arm `warm-stretch`.
+Frozen protocol `8dd1a45090ed372157dbcd453cb3d77f770db4fb54cc0118a34141fdc2e2399a`.
+313 training pairs/626 crops, nine retention pairs/18 crops. FDR-007 initialization,
+fresh AdamW,50/50 source sampling,30 epochs,batch64,lr0.0003,seed42,no augmentation,
+production16%/256 stretch,threshold0.85. Minimum retention BCE among18/18-correct
+epochs, earliest tie; no eligible epoch means no selected model. Internal and
+whole-process1,800-second limits. Resident focus-export-01 Python3.12.9/torch2.7.0,
+numpy1.26.4/Pillow11.3.0; actual backend/PID/timing recorded on execution.
+One run, then frozen24-frame and separate Photos regression; conditional observer
+export only if the research contract's improvement conditions hold. Full production
+coverage gates unchanged. [Contract](Plans/FocusLimitedProduction.md),
+[approval](../reports/work/FDR-010/approval.json). Initial preflight was pending at
+registration; completed outcome follows.
+
+**Outcome:** preflight exit0; single run exit0,PID21169,16:45:53Z–16:52:21Z,
+388.452s process/90.265s post-preflight phase,MPS/torch2.7.0. All30 epochs18/18
+retention; selected epoch29,BCE0.000017874388,best SHA256
+`775c3197a48169807fb8e20b41df71b4c61c8f152bde82f3ebbd56d25712583d`.
+Same24-frame benchmark: FDR-010 TP3/FN16/FP3/TN180 versus shipped8/11/30/153
+and FDR-0094/15/8/175; unique-correct2/13 versus shipped3/13. Separate113-crop
+Home/Photos/Settings benchmark: FDR-010 TP0/FN8/FP4/TN101; both Photos pairs fail.
+All362 candidate scores complete; compatible baselines reused with exact metric
+reproduction. Conditional observer export rejected: fewer false positives do not
+compensate for collapsed recall. No export/promotion/retraining. Next: representative
+selection validation and source/geometry coverage before a volume campaign, retaining
+the nine Settings pairs only as a forgetting check. [Handoff](../reports/work/FDR-010/handoff.md).
+
+## FOCUS-GAP-LIVE-20260929 — corpus preparation, no training run
+
+Current matched Max TTR/Fixture completed8 competitor jobs:40 pairs(24 native
+buttons,8 Settings-row analogs,8 selected-tab analogs),0 rejected targets.
+168 exported files/126,466,360bytes verified;80 frame files/42 distinct pixels,
+80 distinct production crops visually reviewed. All40 additions admitted to a
+new immutable extension, preserving273 prior training-candidate pairs and9 retention
+pairs:313+9 total. Zero new complete-pair duplicates, contradictory crop labels or
+real-world regression pixel overlap. Full protocol hash
+`cabd9dc9bac2a4a5192f7e004cd596c9878aa06bab46151d546b2f0fc97c032f`.
+All10 independent evaluation-coverage blockers remain. New retention-only proposal
+`8dd1a45090ed372157dbcd453cb3d77f770db4fb54cc0118a34141fdc2e2399a`
+initially awaited a specific scope decision; subsequently approved/executed as
+FDR-010 above. Previous FDR-009 approval was not reused.
+Actual trainer preflight completed(exit2,empty stderr): configurationValid=true,
+launchEligible=false,10 coverage blockers plus missing exact experiment approval.
+No run ID, new weights, dataset model inference, export or promotion in this preparation.
+83 focused Python tests and offline Swift build/123 tests pass.
+[Evidence/next decision](../reports/work/FOCUS-GAP-LIVE-20260929/next-run-decision.md).
+
 ## FOCUS-TTR-TEST-CYCLE-01 — development evaluation, no new training (2026-09-29)
 
 Maintainer authorized the benchmark→justified candidate→conditional test-export

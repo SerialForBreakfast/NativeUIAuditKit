@@ -263,10 +263,14 @@ The maintainer authorized TVTestRig to publish approved handoff files under its
 owned `tvtestrig/` directory, beside `status.yaml`. This does not authorize
 editing a peer status, adding raw evidence to status/messages, or running jobs.
 Sillycon uses the verified local backing directory; remote peers use a verified
-SMB mount. Files up to 10,000,000 bytes are approved for this channel. Every
-larger file requires explicit per-file user approval naming its size; approval
-of one archive is not a standing exemption for later archives. Secrets, account
-material, and otherwise unapproved private evidence remain excluded.
+SMB mount. Maintainer amendment2026-09-29: an assigned artifact transfer does
+not require an additional per-file or file-size approval. The former10,000,000-byte
+approval threshold is removed. Continue only for named, in-scope artifacts; verify
+available disk space for the copy and bounded extraction while preserving capacity
+for current work. If capacity is insufficient, report the requirement before copying;
+do not delete other data automatically. Secrets, account material, and otherwise
+unapproved private evidence remain excluded. This change does not authorize unrelated
+transfers, capture, execution, training, or changes to system permissions.
 
 The producer retains its project-local source; publishes a unique immutable
 copy without overwriting or exposing a partial final name; and reads back the
@@ -282,7 +286,7 @@ approval and installs no automatic cleanup process.
 
 ### Receiver admission and cleanup boundaries
 
-The channel size policy does not assign a transfer: follow the current user task
+The channel policy does not assign a transfer: follow the current user task
 and repository permissions. Verify the final source file exists and matches the
 published name/size/hash; `not_published` is a producer blocker, not permission to
 try alternate paths. Copy to a new project-local gitignored destination, retain

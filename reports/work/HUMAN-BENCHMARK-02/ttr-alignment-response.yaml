@@ -1,0 +1,48 @@
+schema_version: 1
+response_id: nuiak-20260929-focus-campaign-alignment
+request_id: tvtestrig-20260929-focus-corpus-production
+from: nuiak
+to: tvtestrig
+observed_at: '2026-09-29T19:44:21Z'
+state: followup
+summary: Align consumer intake with producer-reported authorized first100-pair shard; no model wait and no new runtime authorization.
+producer_status:
+  observed_update: '2026-09-29T19:38:41Z'
+  state: authorized_first_shard_running
+  bounds: First100 pairs only, two hours,1GiB,10GiB reserve; further shards unapproved.
+  qualification: Producer report, not NUIAK live runtime verification.
+source_inspection:
+  file: ttr-bulk-corpus-source-6f1093ee-20260929T193024Z.tar.gz
+  bytes: 378961
+  sha256: cfe71e41d482828819c3f5312478d944e84aa242de45276528e73f2073d097a3
+  scope: Archive hash verified in place; README/workflow ledger inspected. No consumer copy, member verification, integration or receiver receipt yet.
+agreed_contract_from_evidence:
+  - Producer collection correctness does not wait for model improvement.
+  - Proposed2000 pairs/500 recipes/20 shards are a collection target, not training eligibility or qualification.
+  - Grouped review and exception handling; do not require manual drawing of every synthetic pair.
+  - Native focus observations remain distinct from model predictions or input intent.
+  - Consumer retains production16percent expansion and256-square stretch; no margin or threshold sweep.
+division_of_work:
+  tvtestrig: Finish existing authorized shard, preserve failures/originals, publish terminal execution receipt and named artifact counts/hashes plus grouped sample evidence.
+  nuiak: Verify delivery/schema/accounting/source roles and production crops; retain reviewed benchmark/protected members outside training; return exact acceptance or concrete blockers.
+  next_joint_decision: Map measured coverage, storage and correctness before proposing further finite shards; eligible assembly and representative evaluation before separately approved training.
+questions:
+  - id: recipe_coverage
+    question: Map first-shard recipes to the earlier96-contrast proposal and artwork, compact-sidebar, persistent-button-outline and selected-but-unfocused-tab gaps. Which are covered or missing? Do not silently replace the running job.
+  - id: source_roles
+    question: Supply membership-bound source/family/asset ancestry for proposed training members versus retained50 diagnostic pairs and reserved evaluation/challenge sources. Unknown independence remains explicit; split-name changes are insufficient.
+  - id: execution_receipt
+    question: Reconcile stale diagnostics runtime not_installed_or_run with running status. Terminal receipt should identify actual run/target/build and attempted/completed/rejected/failed counts; confirm both states retain per-frame native focus, bounds, timestamps and source binding.
+  - id: acknowledgment
+    question: Acknowledge this division of work and nuiak-20260929-human-supplement-results.yaml; close the stale human-office-diversity human-review-pending state using that exact annotation/crop receipt.
+dependency_rule: These questions constrain consumer admission and later scaling, not completion of the already-authorized producer shard. No new training, capture, deployment or further-shard authorization is conveyed.
+model_consequence: Supplemental138 candidates show shipped6/8 positives with99FP and FDR0100/8 with2FP; no promotion or unchanged retraining. Keep matched real-world development evidence separate.
+evidence:
+  - nuiak/responses/nuiak-20260929-human-supplement-results.yaml
+  - reports/work/HUMAN-BENCHMARK-02/alignment.md
+outcomes:
+  software_verified: not_assessed
+  data_eligible: not_assessed
+  integration_qualified: not_assessed
+  model_gate_passed: not_assessed
+outcome_scope: New bulk corpus only; previous benchmark outcomes remain in original response.

@@ -1,5 +1,47 @@
 # NativeUIAuditKit — Best Practices
 
+## Artwork pair count is not native focus-effect coverage
+
+**Observed:** FDR015's150artwork training pairs contain only24explicit native-image
+effect pairs, covering three procedural motifs/two backgrounds. All150report equal
+target box area across states; inspected older examples mostly add rings/outlines.
+Two real Home failures instead involve enlarged icon bodies and visible titles.
+**Correct:** Audit actual effect/content/target-box conventions and sampling mass,
+not only taxonomy counts. Keep unknown effect metadata unknown; inspect native
+and legacy representatives. Match measured wrapper/body/transform semantics before
+adding geometry features or assuming more seeds add missing native appearances.
+**Why:** A class bucket can mix different focus mechanisms and crop conventions;
+scaling it may reinforce shortcuts rather than cover the measured failure.
+Evidence: FOCUS-ARTWORK-AUDIT-01/audit.json and findings.md. This is a demonstrated
+coverage mismatch, not proof of the model's sole failure cause.
+
+## Synthetic aggregate gains can hide both mechanism gaps and real transfer failure
+
+**Observed:** FOCUS-REPRESENTATIVE-01 gives FDR-01075% four-stratum macro recall
+on SYNTH05, but artwork is0/32 while native-button controls are18/18. Real buttons
+and tabs remain0/3each. Background,content,native effect,geometry and label visibility
+are coupled in existing recipes, so attributing failure to one axis is unsupported.
+**Correct approach:** report every stratum and real-source cohort separately; retain
+fixed production preprocessing and use matched single-axis contrasts before scale.
+Count admitted source/scene coverage, not seed count or requested elements; a theme
+label with unchanged explicit background does not diversify background luminance.
+**Why:** high aggregate scores or thousands of correlated examples can conceal the
+exact missing behavior needed for deployment. Evidence: `reports/work/FOCUS-REPRESENTATIVE-01/handoff.md`.
+
+## Retention-only selection can preserve a narrow domain while transfer collapses
+
+**Observed:** FDR-010's30 epochs all retain18/18 Settings/Accessibility crop decisions,
+yet its selected epoch finds only3/19 real benchmark positives and0/8 in the separate
+Home/Photos/Settings regression. Lower false positives inflate overall accuracy.
+**Correct approach:** retain these nine pairs as a forgetting floor; use separately
+reserved representative source/control validation for checkpoint selection, and
+untouched qualification for release. Report positive recall and complete-frame
+outcomes, not retention accuracy as transfer evidence. Do not auto-retrain or tune
+against the final test to repair this failure.
+**Why:** a narrow retention set cannot distinguish broadly useful epochs, even when
+every label and checkpoint-selection calculation is correct.
+Evidence: `reports/work/FDR-010/handoff.md`, `verification.json`, `comparison-summary.json`.
+
 Lessons learned from building and running the spike experiments. Each entry describes a mistake or inefficiency encountered, the correct approach, and why it matters.
 
 2026-09-23 identifier repair: historical duplicate IDs are disambiguated by title.
@@ -2023,3 +2065,191 @@ the dialog even though it was never accepted.
 reset focus, confirmation and notes. Test the actual modal dialog with Enter.
 **Why:** Efficient repetitive labeling should not copy another control's focus or
 review evidence. See HUMAN-CLICK-BOX last-label follow-up.
+
+### A recipe hash does not pin renderer semantics
+
+**Observed:** SYNTH-05 exports native-button grid controls as primaryButton; the
+prior source exported the same appearance recipes as collectionItem. The frozen
+older collection plan therefore cannot silently become the current contract.
+**Correct:** Bind producer build/source evidence alongside recipe hashes, validate
+actual emitted taxonomy and geometry, and create a separate capture/admission
+record when renderer semantics change. Keep old plans and receipts unchanged.
+**Why:** Configuration identity alone cannot establish identical labels or pixels
+across builds. See FOCUS-GAP-LIVE-20260929 and its emitted row/tab hash vectors.
+
+### Persistent outlines are not proof of current focus
+
+**Observed:** In HUMAN-REAL10-01 recorded-742, the agent suggested Watch Now was
+focused from its outline. The maintainer confirmed the first Top Stories item was
+focused and Watch Now was unfocused; the saved human annotation was correct.
+**Correct:** Treat outlines as candidate visual cues, not focus truth. Preserve
+explicit human confirmation and distinguish persistent button styling from current
+focus. Do not repeatedly request correction after that ambiguity is resolved.
+**Why:** Styling-based assumptions can turn valid hard negatives into wrong labels.
+
+### Review selection must add coverage, not merely different pixels
+
+**Observed:** HUMAN-REAL10-01 selected ten distinct decoded images but repeated
+Home, Photos Welcome and Settings contexts already in32 reviewed frames. Exact
+deduplication alone did not protect human annotation time.
+**Correct:** Compare proposed screens against completed review membership and
+control/context coverage. State the incremental value per example; distinguish
+new content within one app from new layout, focus treatment and source diversity.
+Keep a smaller useful supplement when the recording lacks broader coverage.
+**Why:** Different hashes, titles or focused items can consume review effort without
+addressing generalization gaps. See HUMAN-REAL10-01/coverage-correction.json.
+
+### Selected parent is not focused parent
+
+**Observed:** SYNTH05 Browse remains bright/selected while Home or a nested child
+has native focus. Interpreting brightness as focus would corrupt hard-negative labels.
+**Correct:** Preserve `isSelected`, `parent_element_id` and observed focus separately;
+check all bracket scenes and cross-pair relationships. Resolve logical IDs using
+the source descriptor, not visual canvas columns or an assumed array order.
+**Why:** Selected-unfocused examples are essential to distinguish navigation context
+from the one current focus target. A synthetic Selected subtitle is not a general
+real-app cue. See SYNTH05-HIERARCHY-INTAKE-01 visual review and tests.
+
+### Related synthetic evaluation is narrower evidence, not automatically invalid data
+
+**Observed:** BULK12 admission was held because new seed29001 variants shared
+renderer/motif ancestry with SYNTH05 development evidence. Calling every related
+score improvement artificial confused training utility with independent transfer.
+**Correct:** Under the explicit2026-09-29 member-bound amendment, admit reviewed
+new variants for development training while excluding exact evaluation members and
+decoded frame/crop overlap. Report related-synthetic interpolation separately from
+real-app development transfer and untouched source-separated qualification. Do not
+silently alter original reservations or count a new seed as a new independent source.
+**Why:** This permits useful iterative training without overclaiming generalization
+or contaminating the independent exam. See Plans/FocusRelatedSyntheticAdmission.md.
+
+### Verify training backend in the actual launch context before weight updates
+
+**Wrong:** FDR-011 reused the interpreter and configuration but launched in a
+restricted context. PyTorch reported MPS unavailable and the trainer silently
+selected CPU, unlike the FDR-010 MPS baseline. Three epochs completed before stop.
+**Correct:** Assert the intended accelerator is available in the same process
+context that launches training; use scoped host approval when required. Pin the
+actual backend as well as package versions. Preserve interrupted outputs and use
+fresh output/approval for a replacement, not an unrecorded retry or partial selection.
+**Why:** Matching interpreter versions does not guarantee hardware access. Silent
+fallback can waste the budget and confound an intended data-only comparison.
+Evidence: reports/work/FDR-011/backend-interruption.json and execution.json.
+
+### Native-label integrity does not establish visible-body geometry fidelity
+
+**Finding:** QUALIFIED44 passed mechanical native identity/bounds checks, but three
+Library examples reported100/101px heights for visible bodies around160px tall.
+Even the production16% expansion cut off body pixels; schema validity alone missed it.
+**Correct:** Inspect original-frame context and production crops before admitting a
+new geometry recipe. Quarantine exact affected members and ask the producer to
+reconcile layout/native observations; do not enlarge consumer bounds by guesswork.
+Keep unaffected members moving. The renderer cause is not established by this review.
+**Why:** Trustworthy focus identity can coexist with incomplete geometry, teaching
+unintended crop cues if scaled unchecked. Evidence: QUALIFIED44-INTAKE-01/geometry-review.json.
+
+### Retention-only checkpoint selection cannot establish transfer improvement
+
+**Observed:** FDR012 preserved18/18 familiar retention classifications while real
+development TP fell3→1 and FP rose9→15. Minimum retention BCE selected an epoch
+that did not satisfy the intended transfer goal.
+**Correct:** Explicitly assign representative development selection data, keep it
+out of training, and freeze per-stratum/complete-frame regression guards before
+execution. Only eligible epochs compete on a balanced objective; none eligible
+means no selected checkpoint. Preserve a separate untouched qualification set.
+**Why:** More training or lower familiar-set loss is not evidence of broader focus
+recognition. Reused selection screens cannot also support independent qualification.
+Evidence: FOCUS-SELECTION-01/qualified-audit.json and Plans/FocusRepresentativeSelection.md.
+
+### Audit effective sampling probabilities, not only corpus counts
+
+**Wrong:** FDR013 preserved source-first50/50 sampling while adding artwork and tab
+examples.40native Settings pairs received50% of draws;150collection-item pairs
+7.4%; tab-source examples under1%. Generic gridMatrix/primaryButton strata hid
+native tab presentations. Equal selection weights do not change training draws.
+**Correct:** Inspect actual training probabilities and deterministic sampler draws;
+use hash-bound recipe presentation to distinguish focus appearances. Keep nested
+child buttons separate from parent tabs. Freeze the change as a controlled
+experiment, not a retroactive claim of improvement or a public taxonomy change.
+**Why:** Adding examples need not meaningfully expose the optimizer to them.
+Evidence: FDR014 sampler-draw-verification.json; efficacy remains measured by the run.
+
+### Separate focus ranking, ambiguity gates and actual runtime choice
+
+**Wrong:** Reporting exactly-one-crop-above0.85 as if it were the shipped runtime's
+winner-above0.85 behavior, or interpreting failure at one threshold as no ranking
+signal. FDR014 epoch1 ranks focus first11/13 but actual winner-style thresholding
+gives2correct/2wrong/9none; the strict gate reports2multiple instead of2wrong.
+**Correct:** Report forced ranking, strict independent-crop positives and actual
+selection policy separately, with explicit incomplete/tied cases and simple baselines.
+Keep fixed release gates intact. Label native/human-box diagnostics separately from
+end-to-end detector geometry, role support and CoreML parity.
+**Why:** A policy discrepancy can conceal dangerous wrong selections, while headline
+recall can hide useful ranking information. Neither justifies post-hoc promotion.
+Evidence: FOCUS-RESET-01/final-evidence/report.json and findings.md.
+
+### Preserve virtual-environment executable identity without dataset admission checks
+
+**Wrong:** Resolving a project-local Python venv executable through the dataset
+containment helper rejects a normal symlink to the installed interpreter. FDR015
+assembly stopped before any model execution for this metadata-only reason.
+**Correct:** Record `sys.executable` as runtime metadata; keep strict resolved-path
+containment for actual datasets, weights and outputs. Test the venv symlink case.
+**Why:** Runtime provenance and artifact admission are different contracts; sharing
+the wrong validator can block valid runs without improving data safety.
+
+### Equal wrapper bounds are not evidence of an absent native focus effect
+
+**Wrong:** Comparing equal native-image wrapper rectangles with enlarged real icon
+body rectangles and concluding the native focus effect was absent or mislabeled.
+**Correct:** Keep measured wrapper, artwork layout and presentation geometry distinct.
+Inspect actual paired pixels; match the selected geometry role to the detector's
+annotation convention before making a transfer claim. Preserve originals and version
+any new crop-role selection. Native112 review shows visible image enlargement and
+caption overlap despite constant wrapper bounds; three separate short-control
+geometry defects remain held while twelve repaired examples pass crop enclosure.
+**Why:** Correct focus identity and valid measured view bounds can still produce a
+different visual training distribution. More volume does not resolve that mismatch.
+
+**Consumer implementation follow-up:** Validate optional artwork geometry at every
+native bracket endpoint, not just the flat export. Reuse the producer's1pixel
+artwork-coordinate tolerance rather than the wrapper's1.5pixel tolerance. Missing
+or explicitly unavailable geometry blocks only the requested diagnostic role;
+do not fall back silently. Bind role in crop identity even if two roles happen to
+produce identical pixels. FOCUS-GEOMETRY-ADAPTER-01 tests preserve legacy byte parity
+and reject altered brackets and rehashed wrong crops.
+
+### Qt can ignore readable platform plugins marked hidden
+
+**Wrong:** Treating “platform plugin not found” as proof the dependency is missing
+or as a reason to reinstall or widen permissions. In ANNOTATOR-AUTO-DETECT-01,
+both restricted and host launches failed; all4dylibs existed and were readable.
+Qt QDir.Files returned zero while Files|Hidden returned all4.
+**Correct:** Inspect the actual plugin directory/flags. Keep the wheel unchanged;
+use hash-verified byte-identical copies in the project-local runtime, clearing only
+the hidden display bit on owned cache files before loading. Test repeated startup.
+**Why:** Discovery failure and binary/loading permissions differ. This repair
+restored actual Qt tests without system permission changes or package installation.
+
+### Native rectangle observations are proposals, not control geometry
+
+**Wrong:** Assuming Vision rectangles are whole UI controls or always inside the
+image. The fixed eight-screen trial produced one out-of-frame rectangle and many
+text/logo/internal-artwork rectangles; OCR grouped keyboard letters into a line.
+**Correct:** Preserve raw observations, reject invalid bounds explicitly, keep OCR
+separate, and compare proposals to reviewed controls with one-to-one matching.
+Do not count unmatched proposals as false positives when review is incomplete.
+**Why:** More proposals can increase matching coverage while increasing human
+cleanup. Validate annotation effort before promoting a proposal engine.
+
+### Qualify actual proposed recipes before waiting for new captures
+
+**Wrong:** Treating a geometry adapter's passing tests as proof it accepts every
+new producer recipe. The matched proposal used v2 card/fillViewport and bright
+palette fields outside the previously qualified consumer subset.
+**Correct:** Run the exact producer-emitted recipe hashes through consumer identity
+validation first; extend only source-backed fields, preserve absent/null identity,
+and test original intake/crops with those recipes plus legacy negative cases.
+**Why:** This found and fixed a predictable intake rejection before live capture.
+Software compatibility is still separate from visible crop correctness and training
+admission. Evidence: FOCUS-OFFLINE-PREP-03, eight producer identity vectors.

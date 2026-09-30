@@ -95,6 +95,20 @@ class ExtensionTests(unittest.TestCase):
         with self.assertRaisesRegex(FocusDataError,"duplicate_sample"):
             e.extend(self.base,self.sources["new"]*2,[])
 
+    def test_protected_challenge_lineage_rejected_without_reading_images(self):
+        protected=self.new_pair('protected-only-metadata')
+        for r in protected:
+            r.update(split='challenge',use='final-challenge')
+        rows=self.new_pair('new-training')
+        for r in rows:r['relatedGroup']=protected[0]['relatedGroup']
+        # extend is metadata-only; deliberately impossible image paths prove that
+        # source relationship protection needs no challenge rendering or scoring.
+        for r in protected:
+            r['frame']['path']='missing-protected-frame.png'
+            r['crop']['path']='missing-protected-crop.png'
+        with self.assertRaisesRegex(FocusDataError,'cross_partition_lineage'):
+            e.extend(self.base,rows,protected)
+
     def test_empty_new_support_and_changed_base_rejected(self):
         with self.assertRaisesRegex(FocusDataError,"no_new_training_pairs"):
             e.extend(self.base,[],[])

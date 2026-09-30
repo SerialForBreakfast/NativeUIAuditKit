@@ -1,6 +1,130 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FOCUS-CONTROL32-ADMIT-01 — completed for review, 2026-09-30 UTC
+
+Applied exact user approval to 32 native-control pairs. Frozen 395-pair candidate
+assembly replayed identically, with all 1,197 old rows and selection policy/exclusions
+preserved. Native brackets and production crop parity verified; 64 artwork pairs
+held. 20 focused tests and offline build/123 Swift tests pass. Actual trainer
+preflight refuses the data-only assembly; no run created or model executed.
+[Handoff](reports/work/FOCUS-CONTROL32-ADMIT-01/handoff.md).
+
+## FOCUS-OFFLINE-PREP-03 — completed for review,2026-09-30UTC
+
+Three assigned lanes integrated:62cached snapshots with official/unique-crop metrics;
+real64pair consumer intake/geometry/sheet workflow and source-backed recipe compatibility;
+96member addition proposal (32controls proposed,64artwork held).5new/39legacy intake/
+10geometry/7cached tests pass; offline build/123Swift tests pass. No capture/model
+execution/admission. Peer-facing compatibility/delivery update published under owned
+packet. [Handoff](reports/work/FOCUS-OFFLINE-PREP-03/handoff.md).
+
+## FOCUS-READINESS-02 — completed retained audit/preflight,2026-09-30UTC
+
+User-approved items2–4: cached failure analysis, synthetic corpus audit and actual
+trainer preflight.2,203files/2,237references verified;29,202cached predictions replayed;
+exact363+9pairs/453selection/64excluded preserved. Artwork contains all16latestFP
+and0/18TP.26duplicate crop groups across existing corpus, none crossing roles;
+96diagnostic proposal has no overlap with existing crops, two internal individual
+crop duplicates. No admission/inference/training/capture. Real dry-run validates
+configuration, requires approval.7cached-diagnostic/4paired tests and retained-output
+acceptance pass; offline build/123Swift tests pass. Annotation environment missing
+torch failure retained; successful trainer check used existing .venv-yolo.
+[Evidence and next assignment](reports/work/FOCUS-READINESS-02/handoff.md).
+
+## VISION-ANNOTATION-COMPARE-01 — completed diagnostic,2026-09-29
+
+Eight frozen development frames,78reviewed controls; raw Vision/OCR, exact input
+hashes, side-by-side overlays and geometry metrics retained. Vision44/78versus
+heuristic32/78matches at IoU0.5; significantly more unmatched proposals. One invalid
+native rectangle explicitly excluded. Three focused tests, native conversion/hash
+checks, offline build and123Swift tests pass. No annotator/TTR engine replacement.
+[Handoff](reports/work/VISION-ANNOTATION-COMPARE-01/handoff.md).
+
+## ANNOTATOR-AUTO-DETECT-01 — implemented/verified,2026-09-29
+
+Whole-image local raster candidate rectangles, numbered checkable preview, batch
+label default, duplicate suppression, unconfirmed additions, undo and save/reload.
+110Python/123Swift tests pass. Qt hidden-plugin launch failure repaired with verified
+project-local byte-identical cache; installed wheel unchanged. Operator restart
+separate. [Handoff](reports/work/ANNOTATOR-AUTO-DETECT-01/handoff.md).
+
+## FOCUS-GEOMETRY-ADAPTER-01 — complete offline for review,2026-09-29
+
+Explicit diagnostic geometry CLI, optional artwork wire validation in all native
+brackets, source/runtime/role-bound identities and production crop parity replay.
+Legacy wrapper crops unchanged; absent/unavailable layout never substitutes boxes.
+Training/evaluation rejects the new diagnostic format. Real retained check:
+8identical wrapper crops,8unavailable layout crops,19source files unchanged.
+Source-shaped offline valid geometry and producer numeric vector verified; live
+sample qualification still pending. No capture/model/admission changes.
+[Handoff](reports/work/FOCUS-GEOMETRY-ADAPTER-01/handoff.md).
+
+## FOCUS-GEOMETRY-CORPUS-01 — preparation complete for review,2026-09-29
+
+Frozen96member reuse proposal,384image-file hashes rechecked; exact exclusions and
+32control/60caption-inclusive/4caption-free breakdown. Inspected source-pinned
+producer geometry docs without installing/extracting code. Prepared explicit
+geometry roles, consumer acceptance cases and8scene/32pair contrast proposal.
+Published/read back scoped TTR contract questions, preserving other entries.
+No code/model/capture/admission changes. [Handoff](reports/work/FOCUS-GEOMETRY-CORPUS-01/handoff.md).
+
+## FOCUS-ARTWORK-AUDIT-01 — completed for review, 2026-09-29
+
+150paired artwork cases/559files audited,27source representatives visually checked,
+native-effect/content/geometry/source gaps quantified. Retained producer metadata
+verified and box/caption question published/read back without new transfer/capture.
+One paired-loss head experiment specified; calibration and archive intake remain
+separate. Four helper checks,16contract tests and offline Swift checks pass.
+No model execution or admission change. [Handoff](reports/work/FOCUS-ARTWORK-AUDIT-01/handoff.md).
+
+## FOCUS-RESET-01 / FDR-015 — completed for review, 2026-09-29
+
+Cached-score replay, ranking/runtime/strict scoreboard, eight-page crop inspection,
+verified official ImageNet download, integrated frozen-feature trainer, one actual
+MPS baseline and identical-input comparison delivered.93focused tests/offline Swift
+checks pass. Same363train+9retention pairs/453real selection crops; no leakage or
+new admission.30epochs/0eligible checkpoints. Final ranking11/13 improves on
+prior final5/13, but0/35TP at0.85 and9/18retention fail model guards. No export,
+promotion or rerun. [Handoff](reports/work/FOCUS-RESET-01/handoff.md),
+[results/next assignment](reports/work/FDR-015/results.md).
+
 Archive of finished phase work and separately completed bounded executions.
+
+## FDR-014 — 2026-09-29
+
+Appearance-balanced sampler implemented, integrated and actual30epoch seed42 draws
+verified. Same363+9 corpus and real selector; one MPS run completed30epochs.
+0eligible checkpoints; retention18/18 throughout but real/artwork/frame guards fail.
+82focused tests, offline Swift build,14XCTest+109Swift Testing pass. All14,601saved
+scores and selection metrics replayed. No selected-checkpoint comparison, export,
+promotion or repeat. [Handoff](reports/work/FDR-014/handoff.md).
+
+## FDR-013 — 2026-09-29
+
+Approved363+9 representative-selected run completed30epochs on verified MPS.
+0eligible checkpoints, all14,601initial/epoch predictions replayed. Persistent
+real/artwork/full-frame failures; retention18/18 in29epochs. No best.pt,
+conditional comparison not run, no export/promotion/retry. Completed experiment,
+failed model gate. [Handoff](reports/work/FDR-013/handoff.md).
+
+## FOCUS-SELECTION-01 — 2026-09-29
+
+Representative checkpoint selector integrated with existing trainer; immutable
+363training+9retention pair assembly and453real-selection crops prepared.64excluded
+real labels accounted; all668previous assembly rows preserved. Actual trainer
+preflight valid, blocked only by missing run approval.77focused tests, offline
+Swift build,14XCTest+109Swift Testing pass. Retained-score audit rejects unchanged
+FDR010 and regressed FDR012 transfer without new inference. No training, export,
+capture or promotion. [Handoff](reports/work/FOCUS-SELECTION-01/handoff.md).
+
+## QUALIFIED44-INTAKE-01 — 2026-09-29
+
+Named archive received/hash verified;44 native pairs with production crop and agent
+visual review.38 usable unique candidates,3 duplicate excluded,3 geometry quarantined;
+all accounted. No exact evaluation overlap.39 focused tests pass;196 file references
+and11 sheets rehashed. Coverage-to-failure audit and representative-selection proposal
+delivered. TTR receipt/geometry request published; acknowledgment pending. No new
+model execution or training admission. [Handoff](reports/work/QUALIFIED44-INTAKE-01/handoff.md).
 
 ## Completed bounded execution — FOCUS-REVIEW-PREP-01 (2026-09-28)
 
@@ -2440,3 +2564,15 @@ Results:
 ---
 
 <!-- FOCUS-DET-05 remaining — see Tasks.md -->
+## FOCUS-PAIRED-INTAKE-01 — completed for review, 2026-09-29
+
+Implemented/integrated paired frozen-feature experiment, explicit approval/cache
+binding and legacy rejection. One FDR016 run completed30epochs, zero eligible
+checkpoints;14,601predictions replayed, same initialization/corpus/selection verified.
+Received both approved native100-r2/native12 archives; safe extraction, native
+validation, production crops and all112pair visual/dedup/reserved-hash checks done.
+96usable development diagnostics,13duplicates,3geometry holds; no new training
+admission. Closed canvas2subset compatibility verified against producer vectors.
+Offline Swift build/test passed. Exact receipts and geometry answer published/read
+back to own shared packet; no peer acknowledgment inferred. Evidence:
+[FDR016](reports/work/FDR-016/handoff.md), [native112](reports/work/NATIVE112-INTAKE-01/handoff.md).

@@ -645,6 +645,52 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+### Approved paired-loss cached-feature experiment (FDR-016)
+
+Following FDR015, the [paired/intake tranche](Plans/FocusPairedIntake.md) tests
+same-control BCE plus softplus(-(focusedLogit-unfocusedLogit)), coefficient1.0,
+using its exact frozen features. Pair draws preserve appearance/label mass but
+correlate batches; no causal single-variable claim. Train only a fresh linear head;
+selection remains the existing guarded real BCE, never the research ranking target.
+No calibration or new archive admission is implied. This is an explicit experimental
+trainer path, not a Swift API, taxonomy or production inference change.
+
+### Experimental frozen-feature focus baseline (FDR-015, 2026-09-29)
+
+The scoped [focus reset](Plans/FocusDiagnosticReset.md) adds an explicit
+`pretrained-stretch` experiment, not a shipped-backbone replacement. Official
+MobileNetV3-Small ImageNet features/BN remain frozen; a576→1linear head trains on
+existing admitted crops using the existing trainer/selector. Whole256production
+crops receive ImageNet normalization; no224center crop. Input roles, sampling,
+retention and0.85guards remain unchanged. Weights-only loading and extractor
+identity accompany head-only checkpoints; the existing exporter is not compatible.
+This narrow torchvision experiment does not reintroduce timm or change the public
+Swift model contract. FDR015 completed but failed model gates; promising development
+ranking is not an export/promotion authorization. [Outcome](../reports/work/FDR-015/results.md).
+
+FDR014 sampling correction (2026-09-29): additive `focus-sampler-experiment-v1`
+uses four equally weighted appearance groups with balanced labels, replacing the
+old source-first50/50sampler only for this approved experiment. Same corpus and
+selection policy; recipe-bound tabs no longer collapse into generic button groups.
+See [FocusSamplingCorrection.md](Plans/FocusSamplingCorrection.md).
+
+Representative development selection (2026-09-29): the additive
+`focus-representative-experiment-v1` contract is specified in
+[FocusRepresentativeSelection.md](Plans/FocusRepresentativeSelection.md).
+Real reviewed rows may select checkpoints without entering training batches.
+Legacy retention selection is unchanged; independent qualification is not waived.
+
+
+**Approved related-synthetic development admission (2026-09-29):**
+[member-bound policy](Plans/FocusRelatedSyntheticAdmission.md) permits new reviewed
+Fixture variants to train despite shared renderer/motif ancestry with separately
+retained synthetic development examples. Exact evaluation members and decoded
+frame/crop duplicates remain excluded. Report related-synthetic interpolation,
+real-app development transfer and untouched source-separated qualification as
+distinct outcomes. This exception does not weaken Section8.5's independent
+generalization requirements or authorize training execution. Preserve original
+diagnostic manifests and use existing explicit training-extension admission.
+
 **Approved retention-selected Simulator experiment (2026-09-27):** a separate
 `focus-retention-experiment-v1` binds the immutable52-pair training extension,
 preserving273 training/9 native-retention pairs and50/50 logical-source sampling.

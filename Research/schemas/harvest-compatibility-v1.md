@@ -1,5 +1,35 @@
 # Harvest bundle compatibility v1
 
+## Optional nominal artwork geometry — 2026-09-29
+
+Consumer now validates optional `elements[].artwork_geometry` v1 across all native
+capture bracket endpoints, preserving raw values and legacy wrapper bounds. Exact
+source-pinned fields/tolerances and local diagnostic format are documented in
+[FocusGeometryAdapter](../Plans/FocusGeometryAdapter.md). Present geometry requires
+v2/v3 native brackets; unknown versions/fields, invalid rectangles and contradictory
+unavailable states reject. Missing/null remains legacy unavailable. No public
+schema/taxonomy change; no new training admission. Explicit diagnostic role crops
+use `focus-geometry-diagnostic-v1`, rejected by ordinary training/evaluation intake.
+
+## SYNTH-05 native canvas presentations — 2026-09-29
+
+Source afc948ca/current checkout65d2f73f adds optional canvas presentation
+cards/buttons/settings_rows/tabs, selectedIndex(tabs only,0...63 and below count),
+and mixedSizes(Boolean). Absent/null preserves prior identity. Present fields append
+`:presentation=<value>`,`:selected=<integer>`,`:mixed=<lowercase Boolean>` in that
+order after the canvas pairing suffix. Family identity mirrors the same suffix.
+Non-card presentations require native_button plus showLabels=true. Unknown keys,
+bad types/ranges, stale family/hash or unsupported combinations reject. Artwork
+library descriptors remain outside this consumer extension.
+
+Actual emitted row/tab recipe vectors are pinned in test_ttr_canvas.py. Named local
+runtime capture/export/production crop intake passed40 pairs across eight recipes;
+see [handoff](../../reports/work/FOCUS-GAP-LIVE-20260929/handoff.md). The native-row
+analog exports listRow; tabs/buttons export primaryButton. Raw selection traits
+and native focus brackets remain separate. No new public taxonomy or wire schema.
+Analogs do not establish actual OS Settings/UITabBar or nested focus-scope coverage;
+different seeds/themes remain related development data, not independent holdout.
+
 ## Dialog-style-v1 additive recipe compatibility — 2026-09-23
 
 Source contract c25fa8fa (producer12105bc, dirty source explicitly declared) defines
@@ -269,3 +299,36 @@ Open questions that do not block P4-A parser work: the producer has no exported
 taxonomy version, and `HarvestIdentity` is not serialized into v1 artifacts.
 Those questions constrain `H1-unknown-taxonomy` and all eligibility assertions,
 respectively; they do not authorize a fabricated field or fallback identity.
+# SYNTH05 consumer extension (2026-09-29)
+
+Source authority: received recovery-afc948ca manifest and FixtureAppearance.swift.
+Add optional artwork-v1 (closed descriptor, embedded PNG hash/dimensions and
+reported rights), canvas labels and nested_tabs_v1/tabCount. Canonical JSON matches
+Swift JSONEncoder sorted keys, UTF-8 and escaped slashes. Existing absent fields
+do not change identity. Nested children must reference the selected parent; parent
+selection is an accessibility trait, not focus. Validate in every native scene,
+preserve complete raw evidence, and do not infer directional transitions. Artwork
+split is a family reservation, checked against row split, not proof of independence.
+Imported rights/source are producer assertions; hash validation is not legal or
+source attestation. New captures remain diagnostic-only pending separate admission.
+# Native112 received subset (2026-09-29)
+
+The named canvas-v2-native12 archive contains three canvas version2 recipes using
+the existing fields only (buttons, settings_rows, tabs). Admit this closed subset
+with `canvas@2` canonical identity, verified against the retained recipe hashes.
+Version1 identity remains unchanged. At that delivery fillViewport/background were
+unsupported; the later bounded fillViewport extension is documented below. Recipe acceptance is
+not a crop enclosure pass, training admission or retrospective repair of v1 data.
+
+## Matched artwork trial consumer extension — 2026-09-30
+
+Optional artwork.palette accepts only `bright`; absent/null is omitted from the
+Swift-compatible canonical JSON. It controls scene-wide colors, not focus labels.
+
+The existing v2 canvas subset now includes implicit/explicit cards and optional
+Boolean fillViewport. Canonical suffix is `:fill=false`/`:fill=true`, after optional
+labels, exactly as the delivered FixtureAppearance.swift source specifies. Absent
+or null adds no suffix; v1 rejects non-null fillViewport. Background objects remain
+unsupported in this bounded extension. Eight producer-emitted proposal hashes bind
+the actual recipe compatibility tests. This changes local intake compatibility,
+not native annotation schema, public taxonomy, training eligibility or live evidence.

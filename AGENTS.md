@@ -136,8 +136,11 @@ safety rules. If their protocols conflict, report the conflict before publishing
   Status/messages remain metadata-only: no datasets, images, checkpoints, credentials
   or general development logs. A separately assigned artifact transfer follows the
   [receipt protocol](reports/coordination/Instructions.md#explicit-receipt-based-artifact-exception--2026-09-23):
-  named approved files only; over10,000,000 bytes requires explicit per-file size
-  approval. This records the existing handoff mechanism, not blanket transfer authority.
+  named in-scope files only. Maintainer amendment2026-09-29 removes the additional
+  per-file size approval requirement and10,000,000-byte threshold. Check disk space
+  for copying/extraction and current work; insufficient capacity requires a plan,
+  not automatic deletion. Assigned transfers need no repeated size approval; this
+  is not blanket authority for unrelated transfers, capture or execution.
   NUA copies approved peer artifacts into new project-local storage and publishes
   verified size/hash receipts; the sender owns cleanup of its exact shared copy.
   Verify the mount rather than creating a local lookalike. Sandbox approval requirements

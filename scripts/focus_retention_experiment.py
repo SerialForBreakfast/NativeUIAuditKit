@@ -26,7 +26,7 @@ def runtime_identity():
                "focus_learning_experiment.py", "focus_appearance_experiment.py",
                "focus_mixed_assembly.py", "focus_dataset_contract.py", "focus_runtime.py")
     return {"python": platform.python_version(), "environment": sys.prefix,
-            "executable": str(local(sys.executable)) if str(sys.executable).startswith(str(ROOT)+"/") else sys.executable,
+            "executable": sys.executable,
             "hostOS": platform.mac_ver()[0], "architecture": platform.machine(),
             "packages": {p: importlib.metadata.version(p) for p in ("torch", "numpy", "Pillow")},
             "code": [a.reference(ROOT/"scripts"/p) for p in sources], "crop": identity()}

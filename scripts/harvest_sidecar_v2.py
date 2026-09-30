@@ -3,6 +3,9 @@ import hashlib
 import math
 import base64
 import json
+import unicodedata
+from harvest_artwork import artwork_identity, swift_json, validate_hierarchy
+from harvest_artwork_geometry import validate as validate_artwork_geometry
 
 
 class SidecarError(ValueError):
@@ -69,7 +72,7 @@ def appearance_digest_source(recipe):
     if appearance is None:
         return ""
     require(isinstance(appearance, dict) and {"version", "preset", "layout"} <= set(appearance)
-            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus"},
+            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus", "artwork"},
             "appearance_fields")
     require(type(appearance["version"]) is int and appearance["version"] == 1,
             "appearance_version")
@@ -88,20 +91,59 @@ def appearance_digest_source(recipe):
     if canvas is not None:
         fields = {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"}
         require(isinstance(canvas, dict) and fields <= set(canvas)
-                and set(canvas) <= fields | {"pairing"},
+                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport"},
                 "canvas_fields")
-        for field, lo, hi in (("version",1,1), ("columns",1,8), ("spacing",16,80),
+        for field, lo, hi in (("version",1,2), ("columns",1,8), ("spacing",16,80),
                               ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
             require(type(canvas[field]) is int and lo <= canvas[field] <= hi,
                     "canvas_" + field)
         require(type(canvas['showLabels']) is bool, "canvas_showLabels")
         require(recipe.get('archetype') == 'grid_matrix' and appearance['layout'] == 'standard',
                 "canvas_archetype_layout")
-        suffix = 'canvas@1:' + ':'.join(str(canvas[k]) for k in
+        require(canvas['version'] == 1 or canvas.get('presentation') in
+                (None, 'cards', 'buttons', 'settings_rows', 'tabs'), 'unsupported_canvas_v2_subset')
+        suffix = f"canvas@{canvas['version']}:" + ':'.join(str(canvas[k]) for k in
                     ('columns','spacing','inset','backgroundRGB')) + ':' + str(canvas['showLabels']).lower()
         require(canvas.get('pairing') in (None, 'competitor_v1'), 'canvas_pairing')
         if canvas.get('pairing') is not None:
             suffix += ':' + canvas['pairing']
+        presentation = canvas.get('presentation')
+        require(presentation is None or (isinstance(presentation, str) and presentation in
+                {'cards', 'buttons', 'settings_rows', 'tabs', 'nested_tabs_v1'}), 'canvas_presentation')
+        if presentation is not None:
+            suffix += ':presentation=' + presentation
+        selected = canvas.get('selectedIndex')
+        if selected is not None:
+            require(type(selected) is int and presentation in ('tabs', 'nested_tabs_v1') and
+                    0 <= selected < 64 and uint(recipe.get('element_count')) and
+                    selected < recipe['element_count'], 'canvas_selectedIndex')
+            suffix += ':selected=' + str(selected)
+        mixed = canvas.get('mixedSizes')
+        if mixed is not None:
+            require(type(mixed) is bool, 'canvas_mixedSizes')
+            suffix += ':mixed=' + str(mixed).lower()
+        tabs = canvas.get('tabCount')
+        if presentation == 'nested_tabs_v1':
+            require(type(tabs) is int and 2 <= tabs <= 8 and
+                    tabs < recipe['element_count'] <= 64 and type(selected) is int and
+                    0 <= selected < tabs, 'canvas_tabCount')
+        else:
+            require(tabs is None, 'canvas_tabCount')
+        if tabs is not None:
+            suffix += ':tabs=' + str(tabs)
+        labels = canvas.get('labels')
+        if labels is not None:
+            require(isinstance(labels, list) and len(labels) == recipe['element_count'] <= 64
+                    and canvas['showLabels'] and presentation in
+                    ('buttons', 'settings_rows', 'tabs', 'nested_tabs_v1') and
+                    all(isinstance(s, str) and 0 < len(s.encode('utf-8')) <= 128 and
+                        not any(unicodedata.category(c) in ('Cc', 'Cf') for c in s)
+                        for s in labels), 'canvas_labels')
+            suffix += ':labels=' + base64.b64encode(swift_json(labels)).decode()
+        fill = canvas.get('fillViewport')
+        if fill is not None:
+            require(canvas['version'] == 2 and type(fill) is bool, 'canvas_fillViewport')
+            suffix += ':fill=' + str(fill).lower()
     focus = appearance.get('focus')
     focus_suffix = ''
     if focus is not None:
@@ -109,12 +151,23 @@ def appearance_digest_source(recipe):
         require(canvas is not None and recipe.get('archetype') == 'grid_matrix'
                 and appearance['layout'] == 'standard', 'focus_canvas')
         require(focus['kind'] != 'native_button' or canvas['showLabels'], 'focus_button_labels')
+    if canvas is not None and canvas.get('presentation') not in (None, 'cards'):
+        require(focus is not None and focus['kind'] == 'native_button' and
+                canvas['showLabels'], 'canvas_presentation_native_button')
+    artwork = appearance.get('artwork')
+    artwork_suffix = ''
+    if artwork is not None:
+        require(canvas is not None and canvas.get('presentation') in (None, 'cards') and
+                (focus is None or focus['kind'] != 'native_button'), 'artwork_canvas')
+        artwork_suffix = artwork_identity(artwork, require)
     family = appearance.get("family_id")
     require(family is None or (isinstance(family, str) and family ==
             f"appearance-v1.{appearance['preset']}.{appearance['layout']}" + ('.'+suffix if suffix else '')
-            + ('.'+focus_suffix if focus_suffix else '')), "appearance_family")
+            + ('.'+focus_suffix if focus_suffix else '')
+            + ('.'+artwork['familyID'] if artwork is not None else '')), "appearance_family")
     return (f":appearance@1:{appearance['preset']}:{appearance['layout']}" + (':'+suffix if suffix else '')
-            + (':'+focus_suffix if focus_suffix else ''))
+            + (':'+focus_suffix if focus_suffix else '')
+            + (':'+artwork_suffix if artwork_suffix else ''))
 
 
 def dialog_style_digest_source(recipe):
@@ -196,6 +249,7 @@ def scene_check(scene, size, expected):
     require(identifiers(ids), "element_ids")
     focused = []
     for e in elements:
+        validate_artwork_geometry(e.get("artwork_geometry"), size, require)
         require(type(e.get("is_focused")) is bool and isinstance(e.get("taxonomy_class"), str), "element_label")
         if e["is_focused"]:
             focused.append(e["element_id"])
@@ -239,6 +293,7 @@ def scene_check(scene, size, expected):
                 and probe.get("referenceFocused") is True, "unverified_reference")
     recipe = scene.get("recipe")
     require(recipe_hash(recipe) == recipe.get("recipe_hash"), "recipe_hash")
+    validate_hierarchy(scene, require)
     return generation
 
 
@@ -272,6 +327,9 @@ def validate(meta, row, size, hashes):
         generations[role] = agen
     require(generations["focused"] > generations["unfocused"], "pair_generation")
     focused, baseline = meta["focused_scene"], meta["baseline_scene"]
+    artwork = (focused['recipe'].get('appearance') or {}).get('artwork')
+    if artwork is not None:
+        require(artwork['split'] == row.get('split'), 'artwork_split_reservation')
     require(meta["reference_capture"]["after_scene_received_host_ns"] <=
             meta["focused_capture"]["before_scene_received_host_ns"], "pair_host_order")
     require(baseline["recipe"] == focused["recipe"], "pair_recipe")
@@ -284,6 +342,10 @@ def validate(meta, row, size, hashes):
         baseline_types = {e['element_id']: e['taxonomy_class'] for e in baseline['elements']}
         focused_types = {e['element_id']: e['taxonomy_class'] for e in focused['elements']}
         require(baseline_types == focused_types, 'pair_element_membership')
+        def relationships(scene):
+            return {e['element_id']: (e.get('parent_element_id'),
+                    'isSelected' in e.get('accessibility_traits', [])) for e in scene['elements']}
+        require(relationships(baseline) == relationships(focused), 'pair_hierarchy_changed')
     require(all(meta.get(k) == focused.get(k) for k in
                 ("recipe", "elements", "focused_element_id", "is_settled", "scene_width", "scene_height")), "flat_alias_conflict")
     require(all(k not in meta or meta[k] == focused.get(v) for k, v in

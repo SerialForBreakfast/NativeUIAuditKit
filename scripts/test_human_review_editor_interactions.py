@@ -346,6 +346,67 @@ class EditorTests(unittest.TestCase):
         self.assertEqual(regression.checked_completeness(receipt, receipt.parent/'revision/revision.json'), {'frame-0'})
         self.assertEqual(h.sha(hidden), before)
 
+    def test_auto_detect_preview_cancel_select_add_undo_and_reload(self):
+        from qtpy import QtCore, QtWidgets
+        original=self.w.canvas.shapes[0]
+        original_flags=dict(original.flags)
+        for i in range(self.w.flag_widget.count()):
+            self.w.flag_widget.item(i).setCheckState(QtCore.Qt.Checked)
+        self.w.labelDialog.edit.setText('listRow')
+        proposals=[[[65,5],[95,25]],[[65,30],[95,55]]]
+        def inspect(accept):
+            dialog=self.w.findChild(QtWidgets.QDialog,'autoDetectDialog')
+            self.assertIsNotNone(dialog)
+            label=dialog.findChild(QtWidgets.QComboBox,'autoDetectLabel')
+            self.assertEqual(label.currentText(),'listRow')
+            listing=dialog.findChild(QtWidgets.QListWidget,'autoDetectCandidates')
+            self.assertEqual(listing.count(),2)
+            self.assertFalse(dialog.findChild(QtWidgets.QLabel,'autoDetectPreview').pixmap().isNull())
+            toggle=dialog.findChild(QtWidgets.QPushButton,'autoDetectToggleAll')
+            toggle.click()
+            self.assertTrue(all(listing.item(i).checkState()==QtCore.Qt.Unchecked for i in range(2)))
+            toggle.click(); listing.item(1).setCheckState(QtCore.Qt.Unchecked)
+            dialog.grab().save(str(h.ROOT/'.build/human-review/gui-tests/auto-detect.png'))
+            if accept: dialog.accept()
+            else: dialog.reject()
+        for accept in (False,True):
+            # Delete the prior closed preview so lookup finds the current one.
+            for dialog in self.w.findChildren(QtWidgets.QDialog,'autoDetectDialog'):
+                dialog.setParent(None); dialog.deleteLater()
+            QtCore.QTimer.singleShot(10,lambda accept=accept:inspect(accept))
+            with patch('human_auto_boxes.detect',return_value=proposals):
+                self.w.actions.autoDetectBoxes.trigger()
+            self.assertEqual(len(self.w.canvas.shapes),1+int(accept))
+            self.assertEqual(original.flags,original_flags)
+        added=self.w.canvas.shapes[-1]
+        self.assertEqual(added.label,'listRow')
+        self.assertTrue(added.flags['unfocused'])
+        self.assertFalse(added.flags['focused']); self.assertFalse(added.flags['confirmed'])
+        self.assertNotEqual(added.group_id,original.group_id)
+        frame_flags={self.w.flag_widget.item(i).text():self.w.flag_widget.item(i).checkState()==QtCore.Qt.Checked
+                     for i in range(self.w.flag_widget.count())}
+        self.assertFalse(frame_flags['reviewed'])
+        self.assertTrue(frame_flags['settled']); self.assertTrue(frame_flags['content_approved'])
+        self.w.undoShapeEdit(); self.assertEqual(len(self.w.canvas.shapes),1)
+        # Add again then roundtrip without modal UI (same integrated shape path).
+        for dialog in self.w.findChildren(QtWidgets.QDialog,'autoDetectDialog'):
+            dialog.setParent(None); dialog.deleteLater()
+        QtCore.QTimer.singleShot(10,lambda:inspect(True))
+        with patch('human_auto_boxes.detect',return_value=proposals): self.w.autoDetectBoxes()
+        self.w.saveFile(); self.w.loadFile(self.w.imagePath)
+        self.assertEqual(len(self.w.canvas.shapes),2)
+        self.assertFalse(self.w.canvas.shapes[-1].flags['confirmed'])
+
+    def test_auto_detect_empty_failure_and_drawing_preserve_annotations(self):
+        original=list(self.w.canvas.shapes)
+        with patch('human_auto_boxes.detect',return_value=[]): self.w.autoDetectBoxes()
+        with patch('human_auto_boxes.detect',side_effect=ValueError('test_failure')):
+            self.w.autoDetectBoxes()
+        self.assertEqual(self.w.canvas.shapes,original)
+        self.w.toggleDrawMode(False,'rectangle')
+        with patch('human_auto_boxes.detect') as detector:
+            self.w.autoDetectBoxes(); detector.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()

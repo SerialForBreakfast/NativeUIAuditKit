@@ -117,6 +117,8 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
         meta=_json(root,names[2]); elems=meta.get("elements") if isinstance(meta,dict) else None
         if not isinstance(meta,dict) or not isinstance(elems,list) or any(not isinstance(e,dict) for e in elems): raise HarvestValidationError("invalid_metadata")
         if "schema_version" in meta and (type(meta["schema_version"]) is not int or meta["schema_version"] not in (2, 3)): raise HarvestValidationError("unsupported_version")
+        if meta.get("schema_version") not in (2, 3) and any(e.get("artwork_geometry") is not None for e in elems):
+            raise HarvestValidationError("invalid_metadata: artwork_geometry_requires_v2_brackets")
         if (meta.get("schema_version") not in (2, 3) and isinstance(meta.get("recipe"), dict)
                 and meta["recipe"].get("appearance") is not None):
             raise HarvestValidationError("invalid_metadata: appearance_requires_v2_brackets")

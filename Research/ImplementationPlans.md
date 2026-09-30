@@ -1,5 +1,46 @@
 # Full backlog implementation packet catalog
 
+[FOCUS-CONTROL32-ADMIT-01](Plans/FocusControl32Admission.md): exact approved
+32-pair data admission and additive assembly; no model execution approval.
+
+[FOCUS-OFFLINE-PREP-03](Plans/FocusOfflinePreparation03.md): completed duplicate
+sensitivity,64pair consumer preparation and exact retained-pair addition proposal;
+no capture/training/admission.
+
+[VISION-ANNOTATION-COMPARE-01](Plans/VisionAnnotationComparison.md): completed
+fixed native rectangle/OCR comparison; optional filtering trial recommended.
+
+[ANNOTATOR-AUTO-DETECT-01](Plans/AnnotatorAutoDetect.md): optional local candidate
+rectangles and batch preview in the existing human-review editor.
+
+[FOCUS-GEOMETRY-ADAPTER-01](Plans/FocusGeometryAdapter.md) implements the explicit
+diagnostic artwork-layout role through existing native intake and production crops.
+
+[FOCUS-GEOMETRY-CORPUS-01](Plans/FocusGeometryCorpus.md) specifies retained reuse,
+geometry roles and a bounded contrast trial; no automatic model/device execution.
+
+[FOCUS-PAIRED-INTAKE-01](Plans/FocusPairedIntake.md) implements one approved cached
+paired-loss experiment and independently receives/validates native12/native100.
+
+[FOCUS-ARTWORK-AUDIT-01](Plans/FocusArtworkAudit.md) audits retained artwork contrasts
+and proposes the bounded next representation/ranking experiment after FDR015.
+
+[FOCUS-RESET-01](Plans/FocusDiagnosticReset.md) reconciles cached ranking, runtime
+selection and strict gate metrics, inspects crops, and bounds a pretrained baseline.
+
+[HUMAN-BENCHMARK-02](Plans/HumanSupplementBenchmark.md) admits the reviewed real-app
+supplement for development regression and compares shipped/FDR-010 at fixed0.85;
+no training admission or invented full-frame completeness.
+
+[FOCUS-REPRESENTATIVE-01](Plans/FocusRepresentativeValidation.md) freezes real and
+synthetic development validation and a coverage-driven production campaign without
+another training run or implicit capture. [SYNTH05 intake](Plans/Synth05ConsumerIntake.md)
+supplies native artwork/hierarchy diagnostics, not training admission.
+
+[FDR-010 / limited production milestone](Plans/FocusLimitedProduction.md) binds
+the approved single gap-targeted development run, frozen real-screen comparison,
+conditional observer artifact and unchanged production qualification requirements.
+
 [SYNTH-FOCUS-FACTORY-01](Plans/SyntheticFocusFactory.md) defines approved synthetic
 factory direction, dock repair qualification, clean configurable canvas, native
 sweep/pair semantics and bounded campaign acceptance. Deployment/producer edits

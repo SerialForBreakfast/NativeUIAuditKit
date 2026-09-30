@@ -1,0 +1,83 @@
+schema_version: 1
+id: nuiak-20260929-focus-representative-results
+response_to: tvtestrig-20260929-focus-corpus-production
+owner: Current NUIAK validation worker
+state: evidence_delivered_revised_contrasts_requested
+scope: Sanitized coordination metadata only; no model or raw image transfer and no execution authority.
+models:
+  shipped_sha256: 9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7
+  candidate: FDR-010 epoch29
+  candidate_sha256: 775c3197a48169807fb8e20b41df71b4c61c8f152bde82f3ebbd56d25712583d
+  threshold: 0.85
+  backends: Shipped CoreML CPU; candidate PyTorch CPU. No export parity or comparable latency claim.
+preprocessing:
+  coordinates: Original top-left pixel xywh; SYNTH05 native point bounds scaled2 to3840x2160 pixels.
+  expansion: 0.16 of width/height on EACH side, clamped to original image.
+  crop: FocusRingClassifier.makeCrop-v1; CGContext high interpolation; rounded intermediate crop dimensions; stretch256x256; aspect-fit disabled.
+  source_sha256: 37bfaa55be5fa0e8ead574211e6ac7e7772a74ae3653e2ac9df158c3a16554a3
+  helper_sha256: c099d89f293e1b059d7fa0ba301fb81f1e1fadfbf5bdbcc6eb14fea353ad5f09
+  candidate_normalization: Production crop PNG decoded RGB, CHW float32 divided255; sigmoid logits. No ImageNet mean/std.
+  shipped_input: Same production crop through BGRA pixel buffer into shipped CoreML model; model-owned preprocessing.
+  runtime: macOS26.4.1 arm64; Python3.12.9; torch2.7.0 CPU2threads,batch32; numpy1.26.4; Pillow11.3.0.
+synthetic:
+  protocol_sha256: 77f417eeb83598ca72a2103b52cbf5cc0e215fd8027a4925b93fd33f67df76d2
+  membership: All50 retained SYNTH05 pairs,100 target crops plus212 complete-frame competitor crops;312 scores per model,zero missing/invalid.
+  role: Calibration/development evaluation; no training admission or independent-source claim.
+  groups: Twelve delivered recipe groups, one reported Simulator/OS, dark seed7; native-image32pairs/native-button18pairs. Groups are not independent sources.
+  paired_support_and_tp_fp:
+    buttons: {positive: 4, negative: 4, shipped_tp: 0, shipped_fp: 0, candidate_tp: 4, candidate_fp: 0}
+    tabs: {positive: 10, negative: 10, shipped_tp: 1, shipped_fp: 0, candidate_tp: 10, candidate_fp: 0}
+    artwork: {positive: 32, negative: 32, shipped_tp: 6, shipped_fp: 2, candidate_tp: 0, candidate_fp: 0}
+    rows: {positive: 4, negative: 4, shipped_tp: 0, shipped_fp: 0, candidate_tp: 4, candidate_fp: 0}
+  complete_frames:
+    shipped: {unique_correct: 7, wrong: 4, no_focus: 39, multiple_focus: 0}
+    candidate: {unique_correct: 18, wrong: 0, no_focus: 32, multiple_focus: 0}
+real_transfer:
+  membership: Retained32 reviewed frames;362 scores per model verified,315 settled candidate crops reported below,47 outside that population.24-frame and8-frame benchmarks remain separate.
+  role: Development-exposed; no new training or independent qualification.
+  support_and_tp_fp:
+    buttons: {positive: 3, negative: 3, shipped_tp: 3, shipped_fp: 0, candidate_tp: 0, candidate_fp: 0}
+    tabs: {positive: 3, negative: 21, shipped_tp: 1, shipped_fp: 10, candidate_tp: 0, candidate_fp: 0}
+    artwork: {positive: 12, negative: 181, shipped_tp: 5, shipped_fp: 31, candidate_tp: 1, candidate_fp: 7}
+    rows: {positive: 7, negative: 64, shipped_tp: 2, shipped_fp: 0, candidate_tp: 2, candidate_fp: 0}
+    other: {positive: 2, negative: 19, shipped_tp: 1, shipped_fp: 0, candidate_tp: 0, candidate_fp: 0}
+  confusion_interpretation: FN=positive minus TP; TN=negative minus FP. No missing scores hidden in denominators.
+  photos: Three reviewed focused button crops missed; both admitted same-control Photos pairs fail. Background/geometry/native-effect explanations are hypotheses, not established causes.
+examples:
+  - id: ttr-synth05-partial-pilot-20260929-flat-export:synth-0:pair:focused
+    image_sha256: 24f5e755829076a62ac62028d60dd80df8e4a514f73151886b2672d9108ab07f
+    crop_sha256: 7a4999f9536b2cf882446909ee53b818768df65fa9c772773e1a86e3b918a6e5
+    bounds_xywh: [320,280,440,420]
+    candidate_score: 0.000010050862329080701
+    shipped_score: 0.39575195
+  - id: ttr-synth05-partial-pilot-20260929-buttons-export:synth-0:pair:focused
+    image_sha256: cdd5a5449d95f0a9b3820e287130c0b4228cc4dafc3d841c1112b998cc9885f3
+    crop_sha256: 758e1d2e9d256b829e0db5e4bb49454b8ae427e74f792e7a36b5ed0a08789a26
+    bounds_xywh: [320,280,600,144]
+    candidate_score: 0.9998971223831177
+    shipped_score: 0.55908203
+  - id: frame-004:shared-albums
+    image_sha256: 9f6c26c669ebb8dab9d587df752e9094ad79922b1e6f4e0fa334cb6528155f6c
+    crop_sha256: 3233ae7f66d2d0fe47549cf8ac7ce9fc56d78052c3003056a220450aba05838b
+    bounds_xywh: [308,679,520,74]
+    candidate_score: 0.0001282580487895757
+  - id: frame-005:all-icloud-photos
+    image_sha256: e79797ba296879d0be5a38136ccd537609d0ff774a75e9ef7c2ba16e7aa45c06
+    crop_sha256: 3e0ed2e6895728d5b8f29becd4f18fb3b9fb26b7b1c24e1b53f6c3be328f0729
+    bounds_xywh: [314,597,508,74]
+    candidate_score: 0.00001730013536871411
+next:
+  - Reconcile the existing failed native-image and successful native-button examples with this production crop identity before adding pixels; no unchanged training run.
+  - Revise held92case proposal around matched content/native-effect/background/geometry contrasts. Explicit background changes must accompany intended luminance changes; theme label alone is insufficient. Decouple mixed geometry from checkerboard and label visibility from control type.
+  - Propose source/asset-bound training versus independent evaluation reservations before collection; do not reuse the50 calibration members or existing real regression as new training.
+  - Suggested initial contrast target96pairs from3asset families x2native focus modes x2backgrounds x2geometry profiles x4controls; a planning target, not an authorized capture or qualification threshold. Producer confirms actual supported recipes and eligible targets.
+  - Consumer retained313training+9retention unchanged. Ten independent appearance-validation/challenge gaps remain.6000scene quotas imply5727additional canonical pairs before any legacy recovery;696recipe scheduling envelope is not a demand to repeat a factorial blindly.
+  - Full-volume storage estimate exceeds current free space plus10GiB working reserve; stage capacity before volume. No sender cleanup or archive deletion newly authorized.
+selection: Existing nine-pair retention is forgetting floor only. Proposed representative four-stratum source-balanced selection requires separate approval and frozen membership. Current observed benchmarks remain development-exposed; challenge remains untouched.
+intake_update: Prior28+22captures already received and50pairs/100crops accepted diagnostically; see SYNTH05-HIERARCHY-INTAKE-01 receipts. Do not duplicate capture. New ccc2d3a6 source is not installed or qualified by this response.
+evidence:
+  - reports/work/FOCUS-REPRESENTATIVE-01/handoff.md
+  - reports/work/FOCUS-REPRESENTATIVE-01/report/metrics.md
+  - reports/work/FOCUS-REPRESENTATIVE-01/production-assignment.md
+  - reports/work/FOCUS-REPRESENTATIVE-01/validation/protocol.json
+outcomes: {software_verified: passed, data_eligible: diagnostic_only, integration_qualified: retained_consumer_only, model_gate_passed: failed}

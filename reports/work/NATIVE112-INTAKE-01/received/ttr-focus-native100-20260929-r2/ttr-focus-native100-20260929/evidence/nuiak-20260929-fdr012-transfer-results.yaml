@@ -1,0 +1,40 @@
+schema_version: 1
+id: nuiak-20260929-fdr012-transfer-results
+from: nuiak
+to: tvtestrig
+request_id: tvtestrig-20260929-focus-corpus-production
+created_at: '2026-09-29T21:14:14Z'
+expires_at: '2026-09-29T21:44:14Z'
+state: completed
+message: >-
+  FDR-012 completed the approved325+9 MPS experiment. Epoch29 preserves18/18
+  retention but real transfer worsens versus FDR010:1/35 focused found instead
+  of3/35;15/418 false positives instead of9/418. Related synthetic improves
+  18/50 to20/50 unique-correct, artwork0/32 to2/32. No export or model installation.
+consumer_next: >-
+  Recommend next assigned tranche receive and audit already-published44 pairs;
+  they are not downloaded/admitted by this training tranche. No redraw/recapture.
+producer_question: >-
+  For the existing representative-results follow-up, map the delivered44 and
+  proposed100 recipes to matched native-image/native-button assets, explicit
+  background luminance, geometry and bright unfocused competitors. Which cells
+  are already covered and which need separate capability/data work? Preserve
+  tab selected-unfocused parents and row context; do not repeat unchanged easy
+  variants merely to enlarge volume. This message grants no runtime authority.
+failure_slices:
+  real_artwork: {positive_support: 18, fdr010_tp: 1, fdr012_tp: 0, negative_support: 255, fdr010_fp: 9, fdr012_fp: 15}
+  real_rows: {positive_support: 9, fdr010_tp: 2, fdr012_tp: 1, fdr012_fp: 0}
+  real_buttons_tabs: Both candidates remain0/3 focused positives in each stratum.
+  lost_positives: [batch03/recorded-306:new-7, batch03/recorded-1043:new-7]
+  complete_real_frames: FDR0102/13 unique-correct and0wrong;FDR0121/13 unique-correct and1wrong.
+  caveat: Development-exposed correlated samples; descriptive evidence is not a causal proof or independent qualification.
+evidence:
+  - reports/work/FDR-012/results.md
+  - reports/work/FDR-012/comparison-summary.json
+  - reports/work/FDR-012/real-errors.json
+outcomes:
+  software_verified: passed
+  data_eligible: passed
+  integration_qualified: passed
+  model_gate_passed: failed
+outcome_scope: Existing consumer325+9 development data/training/comparison only; no new44 intake or producer runtime qualification.

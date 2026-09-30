@@ -1,5 +1,74 @@
 # Current brainstorming
 
+### 2026-09-29 — Geometry consumer ready; prioritize actual matched evidence
+
+Diagnostic role adapter is implemented with unchanged legacy crops. Promote the
+32pair caption/brightness/density/size trial next, contingent on measured producer
+output and explicit capture scope. Do not treat nominal artwork layout as enlarged
+body bounds or assume a crop change fixes model transfer. No human redraw needed.
+
+### 2026-09-29 — Match geometry and contrast before another run
+
+FDR016 paired loss did not fix Home ranking;16false positives and no eligible
+checkpoint. Native112 intake leaves96usable diagnostics, but60artwork pairs include
+captions and only4are caption-free. Constant wrapper bounds are not proof of absent
+native focus effects. TTR now supplies a source-level nominal artwork-layout role;
+it is not enlarged-body ground truth. Priorities for promotion: (1) diagnostic role
+adapter preserving originals; (2) bounded32pair contrasts for captions/brightness/
+density/size, automatically native-labeled; (3) member-bound admission and one
+data-informed experiment; (4) deployment parity and independent real qualification.
+No new annotation batch or unchanged bulk sweep. These collection quantities are
+diagnostic targets, not reduced production gates. [Plan](reports/work/FOCUS-GEOMETRY-CORPUS-01/plan.md).
+
+### 2026-09-29 — Representative validation now identifies the next corpus
+
+Measured rather than assumed: FDR-010 passes18/18 new synthetic button/tab/row
+positives but0/32 native-image artwork; real buttons/tabs remain0/3each. Priority:
+(1) reconcile retained crop/native-effect evidence with TTR, then matched content/
+background/geometry contrasts; (2) reserve genuine source-separated transfer and
+selection examples; (3) recover legacy provenance and solve capacity before the
+5727-pair canonical production deficit; (4) admit data and approve revised selection,
+then train/evaluate once.696 recipe jobs are a scheduling envelope, not useful
+diversity or a qualification pass by themselves. No added manual annotation batch.
+[Validation and assignment](reports/work/FOCUS-REPRESENTATIVE-01/handoff.md).
+
+### 2026-09-29 — Selected versus focused; SYNTH05 intake
+
+Selected Browse intentionally remains bright when another control has focus.
+Preserve selection, hierarchy and native focus as separate facts; use selected-
+unfocused controls as hard negatives, not automatic label errors. Avoid teaching
+the model to rely on the Fixture's literal Selected subtitle.
+
+Received50 native pairs/100 reviewed production crops; useful artwork/hierarchy
+coverage but all dark/seed7/one related renderer. No new annotation burden or
+training admission. Priority: (1) representative model-selection validation,
+(2) frozen source/role reservations and structurally varied production collection,
+(3) admitted corpus → bounded training → real transfer check → conditional TTR
+test export. [Intake handoff](reports/work/SYNTH05-HIERARCHY-INTAKE-01/handoff.md).
+
+### 2026-09-29 — Production milestone, not endless small experiments
+
+Maintainer approved the bounded FDR-010 candidate as a checkpoint within a
+limited-production milestone.313 training pairs are development-scale; production
+still requires the existing6,000-pair/coverage and held-out quality gates. Infrastructure
+progress is not model improvement. Judge progress by real-screen correct focus
+selection and errors, then deployed behavior—not training loss alone.
+
+Priority: (1) finish one frozen candidate comparison and make an export/no-export
+decision; (2) use measured failures to choose native synthetic variation plus minimal
+real transfer evidence; (3) inventory eligible data and reserve source-separated
+qualification before scaling the factory; (4) train/qualify the production corpus;
+(5) verify CoreML and opt-in TTR observation before separately approved navigation.
+No new manual annotation marathon or automatic sequence of training runs.
+[Approved current contract](Research/Plans/FocusLimitedProduction.md) and
+[production evidence map](reports/work/FDR-010/production-acceptance.md).
+
+Outcome: FDR-010 completed but real recall regressed (3/19 versus shipped8/19;
+separate Photos/Home/Settings0/8). No export. Priority is representative selection
+validation: all nine current retention pairs are Settings/Accessibility, and every
+epoch passed them despite poor transfer. Preserve this useful forgetting check,
+but do not treat it as the production selector. [Results](reports/work/FDR-010/handoff.md).
+
 ### 2026-09-29 — Keyboard focus without per-letter human labor
 
 Prioritize one key role with character/action metadata, bulk native-labeled custom

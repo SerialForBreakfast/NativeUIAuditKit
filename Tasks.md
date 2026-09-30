@@ -1,6 +1,204 @@
 # NativeUIAuditKit — Tasks
 
-**FOCUS-GAP-CORPUS-01 — software review; new data blocked / current NUIAK Fixture worker:**
+**Next focus work — measured artwork geometry, then one changed-data experiment:**
+User approved 32 native-control pairs; additive candidate assembly now has 395
+training pairs (133 buttons, 26 tabs, 150 artwork, 86 rows). Retention and real
+selection are unchanged. 64 artwork pairs remain held. No training run approved.
+FOCUS-CONTROL32-ADMIT-01 completed for review; deterministic assembly replay and
+actual trainer refusal verified. [Handoff](reports/work/FOCUS-CONTROL32-ADMIT-01/handoff.md).
+
+**Next focus decision — exact additions and real geometry delivery:**
+FOCUS-OFFLINE-PREP-03 complete for review. Duplicate sensitivity leaves FDR016
+recall3/35and changesFP16/418→15/416; diagnosis unchanged.64pair consumer workflow
+and actual producer recipe compatibility tested. Its32native-control additions
+are now approved/admitted above;64artwork pairs remain held for geometry. No run.
+[Handoff and exact proposal](reports/work/FOCUS-OFFLINE-PREP-03/handoff.md).
+
+**FOCUS-MATCHED-TRIAL-01 — blocked live capture, owner Codex:** fresh producer
+acknowledgment checked01:50Z; no new measured sample. Producer has since supplied
+8scene/64exhaustive-pair proposal,32common records and8competitor-matched density
+comparisons, with size/position confounds. Consumer software now prepared above.
+Updated build, fresh runtime/target ownership and explicit expanded capture scope
+remain pending; previous host-absent observation is historical, not refreshed.
+[Original handoff](reports/work/FOCUS-MATCHED-TRIAL-01/handoff.md).
+
+**Retained readiness evidence — superseded admission counts:**
+FOCUS-READINESS-02 completed retained diagnosis/audit/preflight. All16 FDR016 real
+false positives are artwork;0/18 artwork positives detected.2,203files verified;
+24within-training duplicate crop groups, no exact cross-role overlap.363training
+pairs at that audit;32of96retained additions subsequently admitted above. Actual trainer preflight
+validates configuration and rejects launch without approval. Next: existing8scene/
+32pair measured geometry/contrast trial under explicit target/capture approval,
+then exact member admission and one changed-data experiment—not unchangedFDR016.
+[Handoff](reports/work/FOCUS-READINESS-02/handoff.md).
+
+**Next decision — optional Vision proposal filtering, not automatic TTR port:**
+Completed fixed comparison on8development screens/78reviewed controls. Vision
+matches44versus32 at IoU0.5, but244versus65proposals. Before integration, test
+proposal filtering and actual human accept/edit/delete time; keep OCR separate.
+No annotation/model changes. [Results](reports/work/VISION-ANNOTATION-COMPARE-01/handoff.md).
+
+**Annotator auto-detect — implementation complete; operator restart pending:**
+Optional whole-image candidate rectangles with numbered preview, batch label,
+duplicate suppression, unconfirmed defaults and group undo.110Python/123Swift
+tests pass. Existing annotations preserved; save/close current window before
+relaunch. Raster proposals are not semantic/focus predictions or exhaustive
+coverage. [Handoff](reports/work/ANNOTATOR-AUTO-DETECT-01/handoff.md).
+
+**Next — qualify measured artwork geometry on the matched trial:**
+FOCUS-GEOMETRY-ADAPTER-01 completed offline: explicit wrapper/layout crop CLI,
+all native bracket checks, diagnostic-only outputs, legacy byte parity verified.
+No further human annotation needed for this adapter. Next: TTR confirms contrast
+parameters and supplies a newly measured sample under separately approved target/
+capture scope and adequate disk reserve, then compare wrapper/layout crops on the
+proposed8scene/32pair trial. Nominal layout is not enlarged-body ground truth.
+No training admission/run until that evidence supports a member-bound proposal.
+[Handoff](reports/work/FOCUS-GEOMETRY-ADAPTER-01/handoff.md).
+
+**Retained preparation — geometry/corpus proposal:**
+FOCUS-GEOMETRY-CORPUS-01 preparation is complete for review.96exact retained reuse
+members:32native controls,60caption-inclusive artwork,4caption-free artwork.
+The source-pinned optional artwork_geometry consumer path is now implemented with
+role selection and production-crop tests, preserving legacy output. TTR has three
+contract questions and an8scene/32pair matched trial proposal; capture needs separate
+target/time approval. No new model run, data admission or inferred enlarged-body
+labels. [Plan and acceptance cases](reports/work/FOCUS-GEOMETRY-CORPUS-01/plan.md).
+
+**Next decision — geometry-aligned native artwork, not another unchanged run:**
+FOCUS-PAIRED-INTAKE-01 complete; FDR016 fixed-threshold decisions2/13 but
+Home ranks2/8unchanged,16false positives, retention12/18, zero eligible epochs.
+Native112 receipt/QA complete:96usable development diagnostics,13duplicates,
+3old geometry holds. All12repaired controls enclose their bodies; only2new crop
+pairs after deduplication. No training admission/export/promotion.
+The geometry-role/corpus proposal is now prepared above. After consumer adapter and
+matched crop evidence, separately approve admission and a measured experiment;
+do not repeat the failed unchanged loss approach.
+TTR has exact receipts and the current crop-convention answer; peer acknowledgment
+and any sender cleanup are not yet observed. No human redraw or capture needed
+to close this tranche. [Experiment](reports/work/FDR-016/handoff.md),
+[intake](reports/work/NATIVE112-INTAKE-01/handoff.md),
+[geometry answer](reports/work/NATIVE112-INTAKE-01/geometry-response.md).
+
+**Representative selection readiness — run executed as FDR013:**
+FOCUS-SELECTION-01 is complete for review (see CompletedTasks.md): integrated
+selector, immutable363 training +9retention pairs,453 real selection crops and
+64 explicitly excluded real labels. Actual trainer preflight configurationValid;
+only blocker at preparation was missing_experiment_approval.77focused tests,
+offline Swift build,14XCTest+109Swift Testing pass. Subsequently approved and run
+as FDR013; experiment complete with no eligible checkpoint. No export.
+[Exact run proposal](reports/work/FOCUS-SELECTION-01/run-proposal.md),
+[handoff](reports/work/FOCUS-SELECTION-01/handoff.md).
+TTR geometry repair for3pairs remains independent; those pairs stay quarantined.
+
+**FDR-012 — complete for review / current NUIAK model worker:**
+30/30epochs on verified MPS; epoch29 retains18/18, all selections replayed.
+829/829scores complete. Real focus TP3/35→1/35,FP9→15; synthetic unique-correct
+18/50→20/50. Development success criterion failed: do not export/promote/repeat
+unchanged.33tests pass. [Results](reports/work/FDR-012/results.md),
+[handoff](reports/work/FDR-012/handoff.md). TTR consequence published/read back;
+acknowledgment pending. Named44-pair intake and selection proposal now completed;
+next proposed assignment is implementation/preflight above, not another unchanged run.
+
+**FDR-011 — interrupted / current NUIAK model worker:**
+Approved325+9 run stopped after3/30epochs because restricted launch fell back to
+CPU instead of baseline MPS. Owned PID51386 stopped; no process remains. Host probe
+confirms MPS available. Partial weights preserved, not selected or evaluated.
+40real-frame/517score and50related-synthetic-pair/312score comparison frozen;
+baseline replay and33focused tests pass. Replacement approved as FDR-012 above,
+using fresh output, same data/configuration, then frozen comparisons.
+No export/promotion or automatic rerun. [Handoff](reports/work/FDR-011/handoff.md).
+
+**RELATED-SYNTH-ADMIT-01 — complete for review / current NUIAK admission worker:**
+Maintainer approved related synthetic variants for development training, separate
+related-synthetic and real-transfer reporting, and untouched qualification retained.
+Applying12-pair member-bound admission with original50 synthetic evaluation pairs
+excluded; immutable325+9 assembly and actual trainer preflight complete. Configuration
+valid;16tests+3real negative checks pass. Approval subsequently granted and FDR-011
+launched; see interrupted FDR-011 and completed FDR-012 above. Data admission remains valid.
+[Policy](Research/Plans/FocusRelatedSyntheticAdmission.md),
+[handoff](reports/work/RELATED-SYNTH-ADMIT-01/handoff.md).
+
+**BULK12-INTAKE-01 — complete for review / current NUIAK consumer worker:**
+Partial first shard received/hash-verified;12native pairs/24production crops pass;
+all3sheets agent-reviewed, no human redraw. Source-role conflict blocks training
+admission originally (related SYNTH05 development ancestry), not data integrity.
+Superseded by RELATED-SYNTH-ADMIT-01's approved325+9 development assembly.
+44pair non-executable next-coverage proposal prepared; timeout repair/capture and
+explicit role/selection amendment remain separate. [Handoff](reports/work/BULK12-INTAKE-01/handoff.md).
+
+**HUMAN-BENCHMARK-02 — complete for review / current NUIAK evaluation worker:**
+8-frame supplement admitted development-only;155/155 scores each.138 candidates:
+shipped6/8 positives with99FP; FDR-0100/8 with2FP.17 auxiliary reported separately.
+Complete-frame selection unavailable; no invented completeness or source independence.
+23 focused tests and exact metric replay pass;32 prior real frames reused unchanged.
+Next: receive/reconcile TTR bulk revision3 schema/roles and the first100-pair shard,
+reported authorized/running by TTR at19:38:41Z (superseded:19:49:30Z partial12 exported,
+runtime blocked; BULK12 intake above complete). Consumer admission proceeds independently
+of producer capture; further shards remain unapproved. Map production recipes to
+artwork/compact-sidebar/persistent-outline gaps before approved assembly and
+representative selection. No unchanged training/export or human redraw.
+[Team alignment](reports/work/HUMAN-BENCHMARK-02/alignment.md); peer acknowledgment pending.
+[Handoff](reports/work/HUMAN-BENCHMARK-02/handoff.md), [contract](Research/Plans/HumanSupplementBenchmark.md).
+
+**HUMAN-REAL10-01 — supplemental review and crop QA complete; diversity incomplete / current NUIAK review worker:**
+Office e93b12da archive895563805bytes received/hash-verified and safely extracted;
+all702 image files verified. Initial ten-screen selection repeated prior coverage;
+superseded by coverage-supplement-01 after comparison with32 previously reviewed
+frames. Eight distinct control/context examples, seven from Paramount+ and one OS
+Search, not a broadly diverse corpus. Existing batches/edits preserved. Editor opened.
+Maintainer removed repeat per-file size approval on2026-09-29; capacity/integrity
+checks remain. Small source/audit archives also received, not installed.
+Revision192241Z confirms8 frames/155 controls; production crops155/155 and structural
+audit pass.8 focused/147 unfocused; completeness unknown. Two state-only changes;
+all crop hashes unchanged. Maintainer confirms frame3 first Top Stories item focused,
+Watch Now unfocused; saved labels correct, clarification resolved. Next: coverage-driven
+collection planning; no further annotation correction requested for this batch.
+No training admission. [QA](reports/work/HUMAN-REAL10-01/qa-supplement-02/handoff.md).
+Existing importer validation passed. Broad coverage still needs other app design
+systems, overlays/player/modal states; do not pad count with Home/Photos/Settings repeats.
+[Checkpoint](reports/work/HUMAN-REAL10-01/handoff.md).
+
+**FOCUS-REPRESENTATIVE-01 — complete for review / current NUIAK validation worker:**
+312/312 new scores per model;50native pairs/complete frames plus reused32real frames.
+FDR-01018/18 synthetic button/tab/row positives,0/32artwork; real buttons/tabs0/3each.
+No export or unchanged retraining.313+9 retained;5727 canonical pair deficit,
+696recipe scheduling envelope,source/role reservations and revised selection proposal.
+70Python/123Swift tests and offline build pass. Full corpus not collected.
+Next: TTR maps supplied crop/failure metadata to matched contrasts; bind new
+source/asset roles,capacity and exact capture window before dispatch. Legacy1500
+source recovery may reduce deficits; independent appearance gaps remain open.
+[Contract](Research/Plans/FocusRepresentativeValidation.md),
+[handoff](reports/work/FOCUS-REPRESENTATIVE-01/handoff.md).
+
+**SYNTH05-HIERARCHY-INTAKE-01 — complete for review / current NUIAK Fixture consumer worker:**
+Both approved capture archives received/hash-verified;50/50 pairs and100 production
+crops pass.74 distinct frame pixels,100 distinct crop pixels; all50 visually reviewed.
+Artwork/nested hierarchy compatibility and64 Python/123 Swift tests pass.
+Diagnostic-only; zero training admission. Next: representative selection validation
+and source/role reservation before volume collection, not another unchanged run.
+[Handoff](reports/work/SYNTH05-HIERARCHY-INTAKE-01/handoff.md).
+
+**FDR-010 — complete for review; observer export rejected / current NUIAK model-workflow worker:**
+313-pair run completed30 epochs,epoch29 selected,18/18 retention; real recall3/19
+versus shipped8/19,unique-correct2/13 versus3/13. Separate Photos regression0/8
+positives,both pairs fail.362/362 scores complete. No export/promotion/second run.
+Next assignment: representative selection validation plus source/geometry coverage
+and full campaign reservation; keep existing nine Settings pairs as retention only.
+[Contract](Research/Plans/FocusLimitedProduction.md),[handoff](reports/work/FDR-010/handoff.md).
+This resolves the decision pending in the historical corpus entry below.
+
+**FOCUS-GAP-LIVE-20260929 — corpus complete; model decision resolved by FDR-010 / current NUIAK Fixture/model worker:**
+Eight current-runtime jobs delivered40 native pairs,80 reviewed production crops,
+0 rejections; all40 admitted,313 candidate pairs plus9 retention preserved.
+Rows/tabs competitor analogs now qualified; native OS/nested hierarchy remains
+separate.83 focused tests and offline build/123 Swift tests pass. Full protocol
+still has10 independent-coverage blockers. The narrower proposal was subsequently
+approved and executed as FDR-010 above; its failed transfer check rejected export.
+No outstanding approval request for that already-completed run.
+[Contract](Research/Plans/FocusGapLive20260929.md),
+[decision](reports/work/FOCUS-GAP-LIVE-20260929/next-run-decision.md).
+
+**FOCUS-GAP-CORPUS-01 — prior software review; runtime superseded above / current NUIAK Fixture worker:**
 Deterministic12-slot pack/8supported recipes and actual-bundle membership/coverage
 audit delivered.7 focused tests and offline build/123 Swift tests pass. Existing
 pilot correctly rejected as wrong recipe for new corpus. Row-competitor/tab
