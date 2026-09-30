@@ -650,6 +650,23 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**MPS comparison,2026-09-30:** [TRAIN-MPS-COMPARE-14](Plans/MPSBatchComparison.md)
+compares batch8/16through existing diagnostics under one1800s budget. Primary
+epoch1membership is identical; warmup/padding differ and epoch2OHEM membership may
+diverge. Diagnostic-only; no automatic trainer-default or model-promotion change.
+
+**Bounded diagnostic,2026-09-30:** [TRAIN-MPS-DIAG-13](Plans/MPSBoundedTiming.md)
+uses a separately frozen512train/64validation subset for two early epochs with
+host timing, conservative memory/disk guards and an1800s supervisor deadline.
+Diagnostic weights cannot be promoted; quality and steady-state speed are unassessed.
+
+**2026-09-30 OHEM repair (TRAIN-OHEM-TIMING-12):** iOS OHEM now replaces
+only slots sharing the source image's original rectangular output shape. Dataset
+length and batch geometry remain fixed; insufficient compatible slots are reported,
+not filled across shapes. Ranking is a batch-loss proxy, not per-image difficulty.
+Optional `--timing` records host-wall aggregate costs without device synchronization.
+See [repair contract](Plans/OHEMBatchTiming.md). No new training run is implied.
+
 2026-09-30: [approved full-corpus fit](Plans/FocusFullCorpusFitPreparation.md)
 extends cached-feature learning through a separate `focus-full-fit-v1` protocol:
 928admitted controls, native/human80/20weighted BCE, balanced label mass, full-batch

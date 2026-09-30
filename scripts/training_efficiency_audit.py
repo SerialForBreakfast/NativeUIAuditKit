@@ -108,8 +108,8 @@ def run(run_dir,dataset,site,output,log=None):
         counts=counts,classSupport=support,modelLoaded=False,
         findings=[dict(id='batch-loss-proxy',severity='interpretation',evidence='ohem_callback.on_train_batch_end',
             detail='detach().cpu() scalar shared across all images in batch; not individual losses. Synchronization cost not timed.'),
-            dict(id='rect-replacement',severity='benchmark_blocker',evidence='sync_dataset_lists',
-            detail='File/label/image caches change but batch/batch_shapes do not. Slot aspect grouping can become stale; actual impact unmeasured.'),
+            dict(id='rect-replacement',severity='repaired_pending_measurement',evidence='compatible_oversample',
+            detail='Current callback restricts replacements to equal original rectangular output shapes and reports unfulfilled requests. Historical run used unrestricted replacement; impact unmeasured.'),
             dict(id='cache-reset',severity='cost_unknown',evidence='sync_dataset_lists',detail='All decoded image cache entries invalidated each epoch.'),
             dict(id='checkpoint-mirror',severity='recovery',evidence='_backup_last_pt',detail='last.prev is a post-save mirror, not the previous epoch or an atomic backup guarantee.'),
             dict(id='local-backend',severity='scope',evidence='train_ios_model.main',detail='MPS only; user excludes unavailable CUDA hardware. No backend migration proposed.')])
@@ -124,9 +124,9 @@ def run(run_dir,dataset,site,output,log=None):
         stages=['cold_load','data_wait','forward_backward_optimizer','validation','ohem','checkpoint','unattributed'],
         synchronization='Synchronize backend at timing boundaries, not every step; retain raw repetition timings.',
         memory='Reserve OS/other-task headroom; stop before budget exhaustion, nonfinite loss, or unstable backend. No forced OOM.',
-        correctnessGate='Resolve rectangular OHEM metadata risk before semantic-equivalent benchmark; no silent no-OHEM substitution.',
+        correctnessGate='Use repaired shape-compatible OHEM and record fulfilled replacements; no silent no-OHEM substitution.',
         sourcePins=pins,launchCommand=None,
-        blockers=['separate local compute authorization','existing trainer timing adapter required','OHEM rectangular metadata decision'],
+        blockers=['separate local compute authorization','bounded benchmark harness with explicit synchronization; --timing provides host-wall diagnostics only'],
         adoption='MPS only. No speedup claim before repeated local measurements. Batch changes affect warmup and OHEM batch-loss proxies, so quality equivalence is not assumed.')
     for pin in pins:
         if sha(ROOT/pin['path'])!=pin['sha256']:raise ValueError('source_changed_during_audit')

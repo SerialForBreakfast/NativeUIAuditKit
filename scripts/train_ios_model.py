@@ -81,6 +81,7 @@ def parse_args():
         help="2 epochs, batch=4, 5%% of images — smoke-test the pipeline",
     )
     p.add_argument("--no-ohem", action="store_true", help="Disable OHEM callback")
+    p.add_argument("--timing", action="store_true", help="Write aggregate host-wall timing JSONL; no GPU synchronization")
     return p.parse_args()
 
 
@@ -194,6 +195,8 @@ def main():
     print()
 
     model = YOLO(model_arg)
+    from training_timing import TrainingTiming
+    timing = TrainingTiming(PROJECT_ROOT) if args.timing else None
 
     if not args.no_ohem:
         sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
@@ -211,7 +214,7 @@ def main():
             if handler is None:
                 print(f"WARNING: OHEM missing handler for {event!r}")
                 continue
-            model.add_callback(event, handler)
+            model.add_callback(event, timing.measured("ohem_" + event, handler) if timing else handler)
 
     def _backup_last_pt(trainer) -> None:
         """Copy last.pt → last.prev.pt after each save so a power cut cannot leave only a torn file."""
@@ -219,7 +222,9 @@ def main():
         if last.exists():
             shutil.copy2(last, last.with_name("last.prev.pt"))
 
-    model.add_callback("on_model_save", _backup_last_pt)
+    model.add_callback("on_model_save", timing.measured("checkpoint_mirror", _backup_last_pt) if timing else _backup_last_pt)
+    if timing:
+        timing.register(model)
 
     train_kwargs = dict(
         data=str(yaml_path),
@@ -269,7 +274,13 @@ def main():
         train_kwargs["resume"] = True
 
     print("Starting model.train()…", flush=True)
-    results = model.train(**train_kwargs)
+    try:
+        results = model.train(**train_kwargs)
+    finally:
+        if timing:
+            # Ultralytics teardown is not emitted when training raises.
+            timing.terminal(getattr(model, "trainer", None),
+                            "failed" if sys.exc_info()[0] is not None else "completed")
     best = output_dir / run_name / "weights" / "best.pt"
     print(f"\nTraining complete. best.pt → {best}")
     print("CoreML export (after a full run):")

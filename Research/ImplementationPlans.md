@@ -1,5 +1,14 @@
 # Full backlog implementation packet catalog
 
+[TRAIN-MPS-COMPARE-14](Plans/MPSBatchComparison.md): matched batch8/16local MPS
+diagnostics, four trials under one1800s budget, no default/model promotion changes.
+
+[TRAIN-MPS-DIAG-13](Plans/MPSBoundedTiming.md): frozen512/64 early-training
+diagnostic through the existing trainer, guarded local MPS execution and receipts.
+
+[TRAIN-OHEM-TIMING-12](Plans/OHEMBatchTiming.md): shape-compatible OHEM repair,
+optional trainer timing and offline verification; no model execution.
+
 [FOCUS-OFFLINE-PRODUCTIVITY-11](Plans/FocusOfflineProductivity.md): optional
 annotation filtering, retained-score decision reporting and MPS-only efficiency
 audit/benchmark preparation. No CUDA, inference, capture or training execution.

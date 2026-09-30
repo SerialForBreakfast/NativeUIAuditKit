@@ -11,6 +11,28 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
+**MPS batch comparison completed,2026-09-30:** TRAIN-MPS-COMPARE-14 completed
+four two-epoch trials in11m52s. Batch16delivered7.67%higher first-epoch throughput,
+but MPS driver allocation rose5.62→10.60GiB and minimum available RAM fell to
+3.374GiB. Retain batch8default on this24GiB M4. No quality equivalence, full-run
+speedup or promotion claim. Next priority returns to focus coverage/validation.
+[Results](../reports/work/TRAIN-MPS-COMPARE-14/handoff.md).
+
+**MPS diagnostic completed,2026-09-30:** TRAIN-MPS-DIAG-13 attempt02 completed
+two epochs on512train/64validation inputs in189.832s, exit0. Training batch
+intervals80.3%of epoch time; OHEM/checkpoint costs minor. Minimum sampled available
+RAM6.376GiB; all guards held after user freed memory. Diagnostic weights isolated,
+shipped models unchanged; no quality/speedup claim. Next proposed experiment:
+bounded matched batch8/16MPS comparison, now completed above. Prior30Python/
+123Swift/build passes apply to packet13.
+[Handoff](../reports/work/TRAIN-MPS-DIAG-13/handoff.md).
+
+**Trainer software,2026-09-30:** TRAIN-OHEM-TIMING-12 repairs rectangular OHEM
+replacement using equal-output-shape slots and adds optional host-wall timing.
+43Python tests,123Swift tests and offline build pass. No model/run changes or
+measured speedup. Next compute step remains a separately approved bounded MPS
+experiment. [Handoff](../reports/work/TRAIN-OHEM-TIMING-12/handoff.md).
+
 **Offline productivity tranche,2026-09-30:** optional annotation preview filter
 reduces retained Vision244→193proposals without losing44reviewed matches; default
 off, human time benefit unmeasured. Existing-score report reproduces FDR020strata

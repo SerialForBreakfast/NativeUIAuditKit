@@ -1,5 +1,69 @@
 # NativeUIAuditKit — Experiment Log
 
+## TRAIN-MPS-COMPARE-14 — bounded batch comparison (2026-09-30; completed)
+
+All four trials completed, exit0, aggregate712.116s. PIDs87684/88127/88576/88973;
+elapsed181.614/171.228/173.388/181.663s. Median epoch1training wall77.258s(batch8)
+versus71.751s(batch16):7.13%less time /7.67%higher throughput. Peak logged MPS
+driver allocation5.62versus10.60GiB; lowest sampled available RAM5.465versus
+3.374GiB. All guards held. Decision: retain batch8default; modest gain does not
+justify thinner shared-machine headroom. No model quality qualification or promotion.
+Same source membership in epoch1does not mean equal optimizer work:19versus15
+optimizer steps during warmup. Epoch2OHEM membership differs. No pure GPU scaling claim.
+[Results and receipt hashes](../reports/work/TRAIN-MPS-COMPARE-14/handoff.md).
+
+User continued after batch8/16recommendation. Four diagnostic trials8,16,16,8;
+2epochs each, same frozen512train/64validation inputs, local yolo11m.pt,
+MPS/640/seed42/workers0; existing OHEM, warmup and optimizer unchanged. Primary
+comparison is epoch1training wall before OHEM changes membership; optimizer warmup
+and rectangular grouping still differ. No quality-equivalence/default-change claim.
+One aggregate1800s budget (2s monitoring interval, up to10s owned-child termination
+grace),8GiB launch/3GiB runtime RAM,10GiB free disk,2GiB output per trial. Stop
+whole comparison on first failure/block/limit; no retries. Actual PID/times above.
+Bundle SHA256:519da3f7336f8699fc015edc8e2f98efae46cffa7e896db52d359fbca4725d28.
+Software verification:35Python tests,123Swift tests and offline build pass.
+[Contract](Plans/MPSBatchComparison.md).
+
+## TRAIN-MPS-DIAG-13 — bounded timing diagnostic (2026-09-30; completed)
+
+Resume authorized2026-09-30 after user closed applications. Fresh memory observation
+12.93GiB available; launch attempt02 uses the unchanged frozen plan and limits.
+Attempt01 remains preserved. Attempt02 child PID85595 completed, exit0,
+189.832s. Epochs85.423/81.210s,128batches; batch intervals133.759s total (80.3%of
+epoch time), inter-batch gaps19.443s, validation9.635s, saves2.692s, mirrors0.287s.
+Nested OHEM batch callbacks0.039s; epoch replacement0.022s. Replacements94/102
+then75/83,8unfulfilled each epoch. Minimum sampled available RAM6.376GiB;
+maximum sampled output724.407MiB. No guard breach. Frozen inputs/source pins
+reverified; diagnostic weights isolated and never promoted. MPS nondeterministic
+operation warnings mean seed42is not a bitwise reproduction guarantee.
+Next: matched batch8/16MPS timing proposal; no automatic training continuation.
+[Execution evidence](../reports/work/TRAIN-MPS-DIAG-13/execution.md).
+
+User continuation authorizes the next bounded local MPS diagnostic. Not a model
+candidate run; no FDR/iOS run number allocated. Configuration: pinned local
+yolo11m.pt,512original training members,64original validation members,2epochs,
+batch8,imgsz640,MPS,workers0,seed42; existing repaired OHEM, optimizer and3epoch
+warmup unchanged. Explicit host timing enabled. Maximum child wall time1800s;
+launch8GiB available memory, runtime3GiB reserve,10GiB free disk,2GiB artifact cap.
+Initial read-only memory observation about6GiB available; launch may be blocked.
+Historical attempt01 preflight:5,410,406,400bytes available RAM (5.04GiB), below8GiB guard;
+48,145,682,432bytes disk free. Outcome blocked before model loading, PID none,
+model elapsed time none. Frozen576members verified. Model quality and steady-state
+throughput remain unassessed. No automatic retry. Runner tests30Python/123Swift pass.
+Plan SHA256:21f83fffcb44e545d3c7299c2964bd122ca5647705eb73a1ad2b8ad096e3066a.
+[Handoff](../reports/work/TRAIN-MPS-DIAG-13/handoff.md).
+[Contract](Plans/MPSBoundedTiming.md).
+
+## Trainer software repair — no run allocated (2026-09-30)
+
+TRAIN-OHEM-TIMING-12 repairs rectangular slot compatibility in iOS OHEM and adds
+optional host-wall timing. Original membership is restored each epoch; replacements
+are limited to equal original output shapes, with explicit unfulfilled counts.
+The existing batch-loss proxy and MPS backend remain unchanged. No model loaded,
+training launched, weights changed or speedup measured. Next compute experiment
+still requires a bounded, separately approved MPS benchmark specification.
+[Contract](Plans/OHEMBatchTiming.md).
+
 ## Run FDR-020 — approved full-corpus weighted fit (2026-09-30)
 
 FOCUS-FULL-FIT-03, owner Codex. Maintainer approved prepared proposal

@@ -1,9 +1,30 @@
 # NativeUIAuditKit — Tasks
 
+**TRAIN-MPS-COMPARE-14 — complete for review / current Codex:** all four trials
+completed in712.116s. Batch16throughput+7.67%, but peak logged MPS allocation
+10.60vs5.62GiB and minimum available RAM3.374vs5.465GiB. Retain batch8default.
+35Python/123Swift tests and build pass; no model promotion. Next: return to focus
+representative data/validation; refresh TTR handoff for approved three-pair proof,
+not another batch sweep. [Handoff](reports/work/TRAIN-MPS-COMPARE-14/handoff.md).
+
+**TRAIN-MPS-DIAG-13 — complete for review / current Codex:**
+Attempt02 completed two MPS epochs/128batches in189.832s, exit0; all resource
+guards held. Training batch intervals80.3%of epoch wall time; OHEM callbacks and
+checkpoint work minor.512train/64validation/source pins reverified. Batch8/16
+follow-up is completed in packet14above; no further run implied.
+Diagnostic weights only; no quality qualification or shipped-model change.
+[Handoff](reports/work/TRAIN-MPS-DIAG-13/handoff.md).
+
+**TRAIN-OHEM-TIMING-12 — review / current Codex:** rectangular OHEM repaired;
+optional trainer `--timing` integrated, including failure evidence.43Python tests,
+123Swift tests and offline build pass. Bounded MPS continuation is now packet13
+above, completed as a diagnostic; no full training or CUDA.
+[Handoff](reports/work/TRAIN-OHEM-TIMING-12/handoff.md).
+
 **FOCUS-OFFLINE-PRODUCTIVITY-11 — review / current Codex:** optional preview filtering
 reduces retained Vision proposals244→193 with44/78matches unchanged; cached-score
 decision report and MPS-only efficiency audit/spec delivered.62Python/123Swift tests
-and offline build pass. Next: review rectangular-OHEM repair/timing assignment;
+and offline build pass. Rectangular-OHEM repair/timing delivered in packet12 above;
 separate local compute approval precedes any batch benchmark. No CUDA, new inference,
 training or capture. [Handoff](reports/work/FOCUS-OFFLINE-PRODUCTIVITY-11/handoff.md).
 

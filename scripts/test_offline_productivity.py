@@ -125,22 +125,22 @@ class EfficiencyTests(unittest.TestCase):
             with self.assertRaises(ValueError):a.epoch_times(text)
         self.assertEqual(a.log_evidence(None)['status'],'unavailable')
 
-    def test_real_callback_proxy_cache_alignment_and_rect_risk(self):
+    def test_real_callback_proxy_cache_alignment_and_rect_repair(self):
         class Loss:
             def detach(self):return self
             def cpu(self):return self
             def __float__(self):return 8.
         ds=SimpleNamespace(im_files=['a','b','c','d'],labels=[{'id':i} for i in range(4)],
-            batch=[0,0,1,1],batch_shapes=[[64,128],[128,64]])
+            rect=True,batch_size=2,batch=[0,0,1,1],batch_shapes=[[64,128],[128,64]])
         loader=SimpleNamespace(dataset=ds,reset=lambda:None)
         trainer=SimpleNamespace(train_loader=loader,preprocess_batch=lambda b:b,loss=Loss())
         cb=OHEMCallback(fraction=.5);cb.on_pretrain_routine_end(trainer)
         trainer.preprocess_batch(dict(im_file=['c','d']));cb.on_train_batch_end(trainer)
         self.assertEqual(cb._epoch_loss['c'],[4.]);self.assertEqual(cb._epoch_loss['d'],[4.])
         cb.on_train_epoch_end(trainer)
-        self.assertEqual(ds.im_files,['c','b','c','d']);self.assertEqual(ds.labels[0],{'id':2})
+        self.assertEqual(ds.im_files,['a','b','c','c']);self.assertEqual(ds.labels[3],{'id':2})
         self.assertEqual(ds.ims,[None]*4);self.assertFalse(cb._epoch_loss)
-        self.assertEqual(ds.batch_shapes,[[64,128],[128,64]]) # risk reproduced, not silently repaired
+        self.assertEqual(ds.batch_shapes,[[64,128],[128,64]]) # equal-shape replacement preserves padding
 
     def test_imports_never_load_models(self):
         code="import sys; import annotation_proposal_filter,focus_decision_report,training_efficiency_audit; assert not any(x in sys.modules for x in ('torch','ultralytics','coremltools'))"

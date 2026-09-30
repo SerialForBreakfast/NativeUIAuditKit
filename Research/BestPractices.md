@@ -2343,3 +2343,30 @@ performance comparison; do not silently change the trainer during a source audit
 remain aligned. Batch-average loss proxies and synchronous scalar extraction also
 need separate interpretation/timing; they are not measured per-image difficulty.
 Evidence: FOCUS-OFFLINE-PRODUCTIVITY-11 actual callback tests and source audit.
+
+**Resolution, TRAIN-OHEM-TIMING-12:** the callback now restricts replacements to
+equal original rectangular output shapes and reports any shortfall. Calling
+Ultralytics `set_rectangle()` again would fail because its first call consumes
+label `shape`; do not assume that metadata remains available. Reset augmentation
+buffer indexes along with decoded caches. Refuse changed dataset identity/geometry
+instead of applying an old snapshot after an automatic loader rebuild.
+
+**Timing lesson:** Ultralytics8.4.124 emits teardown after, not inside, the training
+`finally` block. Preserve failure timing in the calling trainer's `finally` instead.
+Monotonic host intervals overlap and may contain synchronization costs; they are
+not pure GPU execution times or pure data-loader times.
+
+**Measured follow-up, TRAIN-MPS-DIAG-13 attempt02:** OHEM's batch callbacks took
+0.039s and epoch replacements0.022s across two epochs, while training batch
+intervals took133.759s. Do not attribute historical slowness to scalar extraction
+from source inspection alone: earlier operations may already synchronize. Likewise,
+seed42with warn-only deterministic algorithms produced MPS nondeterminism warnings;
+record this limitation rather than promising identical reruns.
+
+**Batch-size follow-up, TRAIN-MPS-COMPARE-14:** do not treat twice the batch as
+twice the speed or equal optimizer work. Four early-training trials found7.67%
+higher throughput at16versus8, but MPS allocations10.60versus5.62GiB and different
+warmup update counts15versus19in epoch1. Compare matching source membership before
+OHEM changes it, record update counts and memory headroom, and keep later epochs
+supplementary. This prevents a modest resource tradeoff being called a quality-
+equivalent or pure-GPU improvement. Batch8remains the default.

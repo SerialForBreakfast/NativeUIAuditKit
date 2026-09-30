@@ -1,5 +1,28 @@
 # NativeUIAuditKit — Completed Tasks
 
+## TRAIN-MPS-COMPARE-14 completed for review,2026-09-30
+
+Four bounded batch8/16MPS trials completed in712.116s with all guards satisfied.
+35Python/123Swift tests/build pass. Median first-epoch throughput+7.67%for batch16,
+but much thinner memory margin; retain batch8default. Shipped weights unchanged.
+[Handoff](reports/work/TRAIN-MPS-COMPARE-14/handoff.md).
+
+## TRAIN-MPS-DIAG-13 software and bounded diagnostic complete,2026-09-30
+
+Frozen512/64membership, integrity/source/runtime checks, isolated staging and
+bounded existing-trainer supervisor;30Python/123Swift tests and offline build pass.
+Attempt01 stopped at memory preflight; after user freed memory, attempt02 completed
+two MPS epochs/128batches in189.832s with all guards satisfied. Batch intervals
+dominated measured epoch time. Diagnostic weights isolated; model gates unchanged.
+[Handoff](reports/work/TRAIN-MPS-DIAG-13/handoff.md).
+
+## TRAIN-OHEM-TIMING-12 implementation complete for review,2026-09-30
+
+Shape-compatible rectangular OHEM replacement, drift guards and explicit replacement
+shortfalls; optional host-wall timing integrated in iOS trainer with partial-failure
+records.43Python/123Swift tests and offline build pass. No training/model changes.
+[Handoff](reports/work/TRAIN-OHEM-TIMING-12/handoff.md).
+
 ## FOCUS-OFFLINE-PRODUCTIVITY-11 implementation complete for review,2026-09-30
 
 Optional editor filter, retained-score report and source/log-backed MPS efficiency
