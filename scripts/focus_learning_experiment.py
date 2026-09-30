@@ -170,6 +170,12 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get("version")=="focus-fit-diagnostic-v1":
+        from focus_fit_diagnostic import load_protocol as fit_protocol
+        return fit_protocol(path,arm,run_name,approval_path)
+    if doc.get("version")=="focus-human-static-experiment-v1":
+        from focus_human_static_experiment import load_protocol as static_protocol
+        return static_protocol(path,arm,run_name,approval_path)
     if doc.get("version")=="focus-paired-experiment-v1":
         from focus_paired_experiment import load_protocol as paired_protocol
         return paired_protocol(path,arm,run_name,approval_path)

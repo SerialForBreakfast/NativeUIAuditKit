@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
 import time
@@ -63,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic"])
     return p.parse_args()
 
 
@@ -251,9 +252,14 @@ def main() -> int:
     torch.manual_seed(42)
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    if (report.get("staticHuman") or report.get("fitDiagnostic")) and device.type != "mps":
+        raise ValueError("static_experiment_requires_mps_no_cpu_fallback")
     train_dataset = CropDataset(train, not experimental)
     val_dataset = CropDataset(val, False)
-    if report.get("pairedTraining"):
+    if report.get("fitDiagnostic"):
+        from focus_fit_diagnostic import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get("pairedTraining"):
         from focus_paired_experiment import prepare_features
         print(f"device={device} reusing sealed features; no encoder loaded", flush=True)
         model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
@@ -282,11 +288,11 @@ def main() -> int:
         sampler = WeightedRandomSampler([p["weight"] for p in pair_config["pairs"]], pair_config["draws"],
                                        replacement=True, generator=torch.Generator().manual_seed(42))
         batch = pair_config["pairBatch"]
-    elif "sampling" in report:
+    elif "sampling" in report and not report.get("staticHuman"):
         sampler = WeightedRandomSampler([r["samplingWeight"] for r in train], len(train), replacement=True,
                                        generator=torch.Generator().manual_seed(42))
     train_loader = DataLoader(
-        train_dataset, batch_size=batch, shuffle=sampler is None,
+        train_dataset, batch_size=batch, shuffle=sampler is None and not report.get("fitDiagnostic"),
         sampler=sampler, num_workers=0, drop_last=False
     )
     val_loader = DataLoader(
@@ -298,13 +304,15 @@ def main() -> int:
 
     best_val = float("inf")
     best_path = weights_dir / "best.pt"
-    def evaluate():
+    def evaluate(loader=None, rows=None, training_fit=False):
+        loader = val_loader if loader is None else loader
+        rows = val if rows is None else rows
         model.eval()
         predictions = []
         total_loss = 0.0
         count = 0
         with torch.no_grad():
-            for x, y in val_loader:
+            for x, y in loader:
                 if time.monotonic() >= deadline: raise TimeoutError("experiment_compute_budget")
                 x, y = x.to(device), y.to(device)
                 logits = model(x)
@@ -312,18 +320,28 @@ def main() -> int:
                 if not torch.isfinite(loss): raise ValueError("nonfinite_validation_loss")
                 total_loss += float(loss.item()) * x.size(0)
                 for probability, label in zip(torch.sigmoid(logits).view(-1).cpu().tolist(), y.view(-1).cpu().tolist()):
-                    predictions.append({"id": val[count].get("id", str(count)), "label": int(label), "probability": probability})
+                    predictions.append({"id": rows[count].get("id", str(count)), "label": int(label), "probability": probability})
                     count += 1
         result = {"loss": total_loss / max(1, count), "predictions": predictions}
-        result.update(experiment_selection(predictions, val, report))
+        if training_fit:
+            from focus_fit_diagnostic import fit_metrics
+            result.update(fit_metrics(predictions, rows, result["loss"]))
+        else:
+            result.update(experiment_selection(predictions, rows, report))
         return result
     history = []
     initial = evaluate() if experimental else None
+    initial_fit = evaluate(train_loader, train, True) if report.get("fitDiagnostic") else None
+    consecutive_fit = 0
     for epoch in range(1, epochs + 1):
         model.train()
         running = 0.0
         n = 0
-        for x, y in train_loader:
+        if report.get("staticHuman"):
+            from focus_human_static_experiment import train_epoch
+            running = train_epoch(model, train_dataset, report, epoch, device, opt, deadline)
+            n = 1
+        for x, y in (() if report.get("staticHuman") else train_loader):
             if time.monotonic() >= deadline: raise TimeoutError("experiment_compute_budget")
             x, y = x.to(device), y.to(device)
             opt.zero_grad()
@@ -335,14 +353,35 @@ def main() -> int:
                 loss = loss_fn(logits.view_as(y), y)
             if not torch.isfinite(loss): raise ValueError("nonfinite_training_loss")
             loss.backward()
+            if report.get("fitDiagnostic"):
+                gradient_norm = sum(float(p.grad.detach().norm().item()) for p in model.parameters() if p.grad is not None)
+                if not math.isfinite(gradient_norm): raise ValueError("nonfinite_fit_gradient")
             opt.step()
             running += float(loss.item()) * x.size(0)
             n += x.size(0)
         train_loss = running / max(1, n)
 
+        if report.get("fitDiagnostic"):
+            observation = evaluate(train_loader, train, True)
+            consecutive_fit = consecutive_fit + 1 if observation["fitPass"] else 0
+            done = consecutive_fit >= report["fitDiagnostic"]["consecutivePasses"] or epoch == epochs
+            validation = evaluate() if done or epoch % 50 == 0 else None
+            history.append(dict(epoch=epoch, trainLoss=train_loss, training=observation,
+                                gradientNorm=gradient_norm, validation=validation))
+            if validation is not None:
+                print(f"fit update {epoch}/{epochs}: BCE={observation['loss']:.6f}, confident={observation['confidentCorrect']}/{len(train)}", flush=True)
+                (out/"progress.json").write_text(json.dumps(dict(history=history,initial=initial,initialTraining=initial_fit),allow_nan=False))
+            if done:
+                torch.save(dict(epoch=epoch,model_name=args.model,state_dict=model.state_dict(),
+                    checkpointKind="fit-diagnostic-not-selected",representation=report["representation"]),weights_dir/"last.pt")
+                break
+            continue
         validation = evaluate()
         val_loss = validation.get("selectionLoss", validation["loss"])
         history.append({"epoch": epoch, "trainLoss": train_loss, "validation": validation})
+        if report.get("staticHuman"):
+            # Preserve each completed budget even if a subsequent deadline interrupts.
+            (out/"progress.json").write_text(json.dumps(dict(history=history,initial=initial),allow_nan=False))
         print(f"epoch {epoch}/{epochs}  train_loss={train_loss:.4f}  val_loss={val_loss:.4f}")
         ckpt = {
             "epoch": epoch,
@@ -358,6 +397,17 @@ def main() -> int:
             best_val = val_loss
             torch.save(ckpt, best_path)
 
+    if report.get("fitDiagnostic"):
+        from focus_pretrained_experiment import state_digest
+        result=dict(status="diagnostic_completed",fitPassed=consecutive_fit >= report["fitDiagnostic"]["consecutivePasses"],
+            releaseEligible=False,protocolSHA256=report["protocolSHA256"],history=history,initial=initial,
+            initialTraining=initial_fit,experimentID=args.experiment_id,device=str(device),pid=os.getpid(),
+            elapsedSeconds=time.monotonic()-started,torchVersion=str(torch.__version__),
+            finalHeadSHA256=state_digest(model),
+            stopReason="training_fit" if consecutive_fit >= report["fitDiagnostic"]["consecutivePasses"] else "update_cap")
+        (out/"experiment-result.json").write_text(json.dumps(result,indent=2,allow_nan=False))
+        print(f"Diagnostic complete: fitPassed={result['fitPassed']}; no selected/release checkpoint",flush=True)
+        return 0
     if experimental:
         import hashlib
         if not best_path.exists():
@@ -365,6 +415,8 @@ def main() -> int:
                       "protocolSHA256":report["protocolSHA256"],"selection":report.get("selection"),
                       "history":history,"initial":initial,"experimentID":args.experiment_id,
                       "elapsedSeconds":time.monotonic()-started}
+            result.update(arm=args.experiment_arm, pid=os.getpid(), device=str(device),
+                          torchVersion=str(torch.__version__), trainCount=len(train), validationCount=len(val))
             (out/"experiment-result.json").write_text(json.dumps(result,indent=2,allow_nan=False))
             print("ERROR: no checkpoint met the frozen retention floor; last.pt is not selected",file=sys.stderr)
             return 2

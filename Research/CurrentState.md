@@ -11,7 +11,40 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 
 ## Shipped
 
-**Human corpus inventoried,2026-09-30:** five latest human batches contain40 distinct
+**Training-fit diagnosis completed,2026-09-30:** FDR019 learned all48balanced
+admitted examples at update162 (BCE0.038574), with18/18retention. Separate exposed
+development:17/27focused hits,38/288false positives;14complete frames yield7unique
+correct,5multiple,1wrong,1no focus. This is diagnostic, not release-qualified.
+Retained FDR017/018 heads also failed to fit their own native training positives:
+32/395 and27/395hits at0.85 (646/790 and626/790 correct at0.5). Training underfit
+was not isolated before the prior data-mix experiments. Tiny-set success does not
+prove full-corpus separability or fix transfer;31of38new false positives are artwork.
+Next model decision: full-corpus fitting/optimization proposal with balanced loss
+accounting before replacing the encoder. No additional run/export authorized here;
+shipped model unchanged. [Handoff](../reports/work/FOCUS-FIT-01/handoff.md).
+
+**TTR coordination checked18:21UTC,2026-09-30:** producer18:15UTC update reports
+qualified four-pair artwork delivery and a new retained crop audit. Both named shared
+archives exist with advertised sizes; not yet copied/hash-receipted or accepted here.
+Audit reports8source images/64role crops,32identical role comparisons, no image-edge
+clamp, but neighboring nominal bounds intersect every crop and visible slivers occur.
+This is a crop-context hypothesis, not a demonstrated cause of focus regressions.
+Next: local production-crop parity and semantic review; keep16%expansion fixed.
+Old producer disk/runtime hold is superseded. Remaining60pairs are planned, not
+qualified; current device readiness was not checked. Producer has acknowledged the
+earlier inventory only, not the completed FDR017/018 experiment update.
+
+**Static-human experiment completed,2026-09-30:** approved FDR017/018 each completed
+30epochs on MPS in~72s including preflight. Whole supplement session138controls now
+has explicit static-human training reservation;315controls remain development and
+64exclusions remain. Matched human auxiliary mixture worsened final27positive recall
+(1hit→0) and288negative false positives(5→15);14complete frames1→0correct.
+Retention9/18both; zero eligible epochs, no best.pt/export/promotion. Same frozen
+encoder/head recipe is not ready for release. The subsequent FDR019 diagnosis above
+changes the next model decision; qualified artwork delivery/crop acceptance remains
+parallel data work. [Handoff](../reports/work/HUMAN-STATIC-ADMISSION/handoff.md).
+
+**Human corpus inventory at original handoff,2026-09-30 (admission superseded above):** five latest human batches contain40 distinct
 frames/517 reviewed controls (515 distinct crops),453 existing selection controls
 and64 exclusions. Three sessions form two conservative related groups. Proposed
 whole-session reassignment:138 supplement controls for a static-human training lane,

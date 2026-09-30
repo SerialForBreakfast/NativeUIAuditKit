@@ -79,7 +79,7 @@ def selection_metrics(predictions, rows, selection):
     overall = report['metrics']['candidate']['groups']['overall']
     checks = {'retention': ret['checkpointEligible'],
               'realImprovement': overall['tp'] > 3 and overall['fp'] <= 9,
-              'completeFrames': frame['supported'] == 13 and counts.get('unique_correct', 0) >= 2
+              'completeFrames': frame['supported'] == selection.get('expectedCompleteFrames', 13) and counts.get('unique_correct', 0) >= 2
                   and counts.get('wrong', 0) == counts.get('multiple_focus', 0) == 0}
     for lane, (tp, fp) in FLOORS.items():
         m = report['strata'][lane]

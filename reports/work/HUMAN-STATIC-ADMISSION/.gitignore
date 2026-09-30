@@ -1,0 +1,4 @@
+frozen*/
+*.log
+*.json
+tmp/

@@ -645,6 +645,15 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+2026-09-30: [balanced fit diagnostic](Plans/FocusFitDiagnostic.md) tests optimization
+on a fixed48crop admitted training subset with stored features. Training-fit stopping
+is separate from development selection; no best.pt or release claim from memorization.
+
+2026-09-30: [approved static-human comparison](Plans/FocusHumanStaticExperiment.md)
+adds an explicit human-reviewed auxiliary BCE lane, separate from native paired
+labels. Whole-session reservation amendment moves138controls into training and
+leaves315development controls; no public taxonomy or shipped-model change.
+
 ### Approved paired-loss cached-feature experiment (FDR-016)
 
 Following FDR015, the [paired/intake tranche](Plans/FocusPairedIntake.md) tests

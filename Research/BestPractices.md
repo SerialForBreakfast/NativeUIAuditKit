@@ -2283,3 +2283,28 @@ redacted paths and UI toggles do not prove the cause. A new remote-access servic
 requires explicit scope and explanation of its broader access, not a silent fallback.
 **Why:** DATA-EXTERNAL-01 was cancelled after these approaches did not qualify a
 remote write. Storage must not become a dependency of independent focus work.
+
+### Matched compute does not isolate the source-domain effect
+
+**Wrong:** Treating an equal-budget real-versus-baseline auxiliary comparison as
+proof that real examples alone caused a quality change, without reporting label mass.
+**Correct:** Record effective positive/negative loss mass alongside source/frame
+weights. FDR017/018 matched initialization, feature vectors, genuine-pair draws,
+updates and crop counts, but auxiliary positive mass changed from roughly50% to6.68%.
+Report the whole tested mixture, not an isolated causal effect; keep checkpoint gates.
+**Why:** The approved human mix reduced focused hits1→0 and increased artwork false
+positives5→15. Neither “real data always helps” nor “negative-heavy data merely
+reduces confidence” explains these observations. Evidence: HUMAN-STATIC-ADMISSION.
+
+### Establish training fit before blaming transfer or replacing the encoder
+
+**Wrong:** Interpreting poor development focus scores as a data-diversity or encoder
+failure without measuring predictions on the actual training examples.
+**Correct:** Report per-source/class training loss and scores, then run a bounded,
+training-only tiny-set fit diagnostic when needed. FDR017/018 detected only32/395
+and27/395 native training positives at0.85. FDR019 fitted48/48 balanced samples with
+the same frozen features, proving learnability of that subset, not the whole corpus.
+**Why:** Fit, calibration and transfer are distinct problems. The diagnostic improved
+development hits but produced38false positives; changing several optimization/data
+settings together cannot establish which change caused improvement. Keep release
+gates unchanged and do not promote an intentionally overfit diagnostic.

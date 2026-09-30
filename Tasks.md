@@ -1,11 +1,27 @@
 # NativeUIAuditKit — Tasks
 
-**HUMAN-STATIC-ADMISSION — decision pending, owner maintainer:** inventory reconciles
-40frames/517controls; propose whole eight-frame supplement session's138 static
-focus controls for training, leaving315 development controls. Requires explicit
-development-reservation amendment and human-label trainer lane/preflight; no run
-authorized or allocated. No new annotation or TTR availability needed for that
-implementation. [Decision and evidence](reports/work/HUMAN-CORPUS-INVENTORY-01/handoff.md).
+**Next model assignment — full-corpus fitting audit and bounded optimization proposal:**
+FOCUS-FIT-01 completed: FDR019 fits48/48 balanced training crops at update162;
+retention18/18, development17/27hits but38/288false positives and7/14unique-correct
+frames. Prior FDR017/018 heads detect only32/395 and27/395 native training positives
+at0.85; neither had established adequate training fit. Do not jump straight to an
+encoder replacement or unchanged broad run. Propose a full admitted-corpus schedule
+with explicit per-source/class training-fit checks, balanced loss accounting and
+fixed development gates; separately approve execution. Artwork remains the largest
+development failure (31/38false positives). No further annotation needed for this
+proposal. [Diagnostic handoff](reports/work/FOCUS-FIT-01/handoff.md).
+
+**Parallel data assignment — artwork crop acceptance:**
+Approved static-human FDR017/018 completed30epochs each, neither eligible. Human
+mixture worsened TP1/27→0/27andFP5/288→15/288; do not repeat/promote.138human controls
+now explicitly reserved for training;315remain development,64exclusions preserved.
+TTR18:15UTC reports qualified four-pair archive plus retained crop audit published.
+Producer audit:8source images/64role crops,32identical role comparisons, no image-edge
+clamp; every crop intersects neighboring nominal bounds and visible slivers confirmed.
+Receive/hash-verify both and compare local production crops; this is a possible
+confound, not a proven cause of model failures. Keep16%crop unchanged pending evidence.
+Check measured artwork geometry before considering the remaining60pairs. No new
+annotation required. [Experiment handoff](reports/work/HUMAN-STATIC-ADMISSION/handoff.md).
 
 **FOCUS-REPAIR-INTAKE-04 — review complete with editor finding, owner Codex:** both
 archives/13payload members verified; supplied Vision sidecar accepts retained originals.
@@ -15,7 +31,11 @@ real supplied-sidecar Undo verification).64prior intake tests pass. Producer
 integration/original failed-pair retry and live artwork proof remain separate.
 Receipts published; no training. [Handoff](reports/work/FOCUS-REPAIR-INTAKE-04/handoff.md).
 
-**FOCUS-GEOMETRY-RESUME-03 — preflight complete; matched runtime blocked, owner Codex:**
+**FOCUS-GEOMETRY-RESUME-03 — historical local runtime block; consumer intake now ready, owner Codex:**
+September30 18:21UTC status reconciliation: producer's former disk/runtime hold is
+superseded by its qualified four-pair publication and crop audit. Consumer receipt,
+parity and semantic crop acceptance remain pending; no local runtime replacement
+or broad60pair capture qualification is implied. The following records the earlier check:
 external storage cancelled, not a dependency. TTR responds but host/helper and installed
 Fixture bytes remain the prior failed pair; all9Simulators shut down. No newer producer
 runtime installed locally. SharedStatusFile reconnected09:54PDT: producer reports
@@ -45,8 +65,9 @@ sidecar still needs delivery acceptance (no automatic import or label confirmati
 
 **Next focus work — measured artwork geometry, then one changed-data experiment:**
 User approved 32 native-control pairs; additive candidate assembly now has 395
-training pairs (133 buttons, 26 tabs, 150 artwork, 86 rows). Retention and real
-selection are unchanged. 64 artwork pairs remain held. No training run approved.
+training pairs (133 buttons, 26 tabs, 150 artwork, 86 rows). At this data-only handoff,
+retention and real selection were unchanged; subsequent FDR017/018 are recorded above.
+64 artwork pairs remain held. No further training run approved.
 FOCUS-CONTROL32-ADMIT-01 completed for review; deterministic assembly replay and
 actual trainer refusal verified. [Handoff](reports/work/FOCUS-CONTROL32-ADMIT-01/handoff.md).
 

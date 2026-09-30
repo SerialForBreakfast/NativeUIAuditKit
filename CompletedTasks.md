@@ -1,5 +1,23 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FOCUS-FIT-01 — balanced learning diagnosis complete,2026-09-30
+
+Implemented versioned48crop diagnostic through the real trainer and ran FDR019 once
+on MPS. Training-fit criterion passed at update162; retention18/18, development7/14
+unique-correct but38false positives. Audited original FDR017/018 training fit without
+retraining: both substantially underfit native positives.42Python/123Swift tests and
+offline build pass; source hashes, prediction replay and stop rule verified. No model
+promotion. [Handoff](reports/work/FOCUS-FIT-01/handoff.md).
+
+## HUMAN-STATIC-ADMISSION — bounded comparison complete for review,2026-09-30
+
+Implemented explicit whole-session static-human training lane and matched schedules
+through the existing trainer.138human controls admitted for this development experiment;
+315selection controls/18retention and64excluded labels preserved. FDR017/018 both30epochs
+on actual MPS; no eligible checkpoints. Human mixture worsens1/27→0/27TP and5→15FP.
+70focused/legacy Python and123offline Swift tests pass. No export/promotion or challenge
+scoring. [Handoff](reports/work/HUMAN-STATIC-ADMISSION/handoff.md).
+
 ## ANNOTATOR-UNDO-01 — blank-frame batch Undo repaired,2026-09-30
 
 Empty baseline preserved before suggestion batch. Actual Undo action verified for

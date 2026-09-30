@@ -1,5 +1,73 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run FDR-019 — approved balanced training-fit diagnostic (2026-09-30)
+
+Owner Codex, FOCUS-FIT-01. Maintainer approved small balanced learning diagnostic.
+Protocol `c818c7ab4e98f1a6fa1781273761b2fb15bf303a138fc3894163f4f56759bdaa`,
+arm `fit-diagnostic`, output `fdr019-balanced-fit`. Exactly48admitted training crops,
+24focused/24unfocused:16genuine native/Fixture pairs (four/appearance stratum) plus
+8human positives/8human negatives, one each per supplement frame. No invented pairs.
+Exact FDR017 frozen576feature cache/order/labels, fresh577parameter linear head
+seed42; fullbatch48, BCE, AdamWlr0.01/default weight_decay0.01. No augmentation,
+sampling or pair auxiliary loss. Up to1000updates/300model-seconds/600external-seconds.
+Stop on five consecutive training-only checks with48/48confident (.85positive/.15
+negative) and BCE<=.05; otherwise stop at cap. This deliberately tests tiny-set fit,
+not a comparable30epoch improvement run.315development+18retention are observed
+initially/every50updates/terminally, never used to stop or tune. Original0.85guards
+and14complete-frame policy retained. MPS required; no encoder loaded. No best.pt,
+export, promotion, new data or additional runs.42focused/legacy Python and123offline
+Swift tests pass; actual preflight and launch receipts under reports/work/FOCUS-FIT-01/.
+Completed PID34480,18:33:56–18:35:04UTC,68.756s including preflight; model loop1.726s.
+Stopped at update162 on the fifth consecutive training-fit pass:48/48confident,
+BCE0.038574;32/32native and16/16human. Gradients finite and head parameters changed.
+Retention18/18. Terminal development at0.85:17/27TP,38/288FP; complete frames7correct,
+5multiple,1wrong,1no focus;18incomplete frames unavailable. Artwork3/12TP and31/181FP
+dominates remaining errors; rows7/7TP and1/64FP. No selected checkpoint or promotion.
+Replay verifies7,824training and1,665development/retention predictions, pinned sources
+and training-only stopping. Retained FDR017/018 head audit reproduces saved development
+scores exactly and finds native trainingTP32/395 and27/395 at0.85; at0.5 classification
+646/790 and626/790. FDR018 human trainingTP0/8 at0.85. Evidence supports inadequate
+prior training fit, not a proven broken encoder or a causal claim about data diversity.
+Different subset/loss/lr/budget prevent a controlled model-improvement claim. Next:
+full-corpus fitting/optimization proposal, separately approved; keep development gates.
+[Handoff](../reports/work/FOCUS-FIT-01/handoff.md).
+
+## Run FDR-017 — approved matched baseline (2026-09-30)
+
+Owner Codex, HUMAN-STATIC-ADMISSION; maintainer “Lets try that experiment”.
+Protocol `f2eca5bd9644f2f6497820e7763362f4046527ec5e90fd5836c1c6b4c0682316`,
+arm `static-baseline`, output `fdr017-static-baseline`.395genuine training pairs,
+138baseline auxiliary draws/epoch; human crops encoded for matched feature identity
+but never used in this arm's optimization.18retention and315human development crops,
+14complete frames. Frozen ImageNet MobileNetV3-small/BN, fresh577parameter head,
+seed42 AdamW0.0003,30epochs,13updates/epoch,1800second external cap.80%paired
+BCE+softplus loss,20%weighted auxiliary BCE; identical schedules inFDR018 except
+auxiliary content. Production256stretch/ImageNet normalization; threshold0.85.
+Original absolute eligibility guards preserved with14-frame completeness amendment;
+minimum balanced devBCE/earliest tie, no eligible epoch=>no best.pt. MPS required,
+PyTorch2.13.0/torchvision0.28.0.29focused tests and123offline Swift tests pass.
+Completed30epochs,PID30063,18:13:22–18:14:34UTC,72.28s including preflight
+(4.85s model execution). Exit2/no timeout: no eligible epoch or best.pt. Final
+retention9/18,TP1/27,FP5/288,complete frames1correct/13none. BalancedBCE0.488012.
+Exact receipts/results in reports/work/HUMAN-STATIC-ADMISSION/.
+No export, promotion, capture or further run authorized.
+
+## Run FDR-018 — approved matched static-human auxiliary (2026-09-30)
+
+Same approval/protocol `f2eca5bd9644f2f6497820e7763362f4046527ec5e90fd5836c1c6b4c0682316`,
+arm `static-human`, output `fdr018-static-human`. Same395pairs and13updates/epoch
+asFDR017; auxiliary slots are138human controls (8positive/130negative) from one
+whole reassigned eight-frame supplement session. Once/crop/epoch, equal frame loss
+mass, maximum30presentations. Human labels receive BCE only, no fabricated pairs.
+Same18retention/315development, preprocessing, initialization, optimizer, seed,
+30epoch/1800s budget, MPS and unchanged eligibility guards asFDR017. No historical
+453-member score delta or independent-transfer claim. Completed30epochs,PID30313,
+18:15:08–18:16:20UTC,72.14s including preflight(4.54s model execution). Exit2/no
+timeout: zero eligible epochs/no best.pt. Final retention9/18,TP0/27,FP15/288,
+14complete frames all no-focus, balancedBCE0.549087. This mixture regresses versus
+matched FDR017; no repeat/promotion. Exact receipts and matched comparison under
+reports/work/HUMAN-STATIC-ADMISSION/.
+
 ## Data admission only — FOCUS-CONTROL32-ADMIT-01 (2026-09-30 UTC)
 
 Exact user-approved 32 retained native-control pairs admitted: 363→395 candidate
