@@ -1,5 +1,22 @@
 # Full backlog implementation packet catalog
 
+[FOCUS-OFFLINE-PRODUCTIVITY-11](Plans/FocusOfflineProductivity.md): optional
+annotation filtering, retained-score decision reporting and MPS-only efficiency
+audit/benchmark preparation. No CUDA, inference, capture or training execution.
+
+[FOCUS-R2-COMPAT-09](Plans/FocusR2CompatibilityCapture.md): strict additive recipe
+compatibility, regression/caller tests and user-approved three-pair proof subject
+to actual matched local runtime; no remaining21or training.
+
+[FOCUS-CONTRAST-PREP-05](Plans/FocusMatchedAppearancePilot.md):24pair matched
+appearance contract, producer capability request and first-proof acceptance;
+preparation only, capture/training separately authorized.
+
+[FOCUS-FIT-PREP-02](Plans/FocusFullCorpusFitPreparation.md): full-corpus fitting
+proposal and retained artwork receipt/crop review; no training execution.
+Its explicit execution amendment assigns FOCUS-FULL-FIT-03/FDR020, now complete:
+[handoff](../reports/work/FOCUS-FULL-FIT-03/handoff.md).
+
 [FOCUS-REPAIR-INTAKE-04](Plans/FocusRepairIntake04.md): producer repair receipts,
 real supplied-sidecar consumer tests and artwork-policy compatibility review.
 

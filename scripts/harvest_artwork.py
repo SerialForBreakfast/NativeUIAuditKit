@@ -23,7 +23,7 @@ def artwork_identity(value, require):
             'artwork_identity')
     motifs, assets = value['motifs'], value['assets']
     allowed = {'icon','bands','landscape','flat','linear_gradient','radial_gradient',
-               'checkerboard','texture','typography','imported'}
+               'checkerboard','texture','typography','imported','emblem','cityscape'}
     require(isinstance(motifs, list) and 1 <= len(motifs) <= 10 and
             all(isinstance(m, str) and m in allowed for m in motifs) and
             len(set(motifs)) == len(motifs), 'artwork_motifs')

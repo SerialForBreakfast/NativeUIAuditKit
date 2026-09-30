@@ -2308,3 +2308,38 @@ the same frozen features, proving learnability of that subset, not the whole cor
 development hits but produced38false positives; changing several optimization/data
 settings together cannot establish which change caused improvement. Keep release
 gates unchanged and do not promote an intentionally overfit diagnostic.
+
+### Distinguish crop clipping from floating-point rectangle differences
+
+**Wrong:** Using exact rectangle inequality before/after intersection to label an
+image-edge clamp. The retained TTR audit reported64clamps where all windows fit.
+**Correct:** Test expanded boundaries against image dimensions, or use an explicit
+coordinate tolerance; retain raw rectangles for diagnosis. Consumer64/64PNGparity
+passed despite all64incorrect flags, with differences<=3.41e-13pixels.
+**Why:** Diagnostic metadata can be wrong while crop pixels are correct. Do not
+recapture data or change production preprocessing based on the flag alone.
+Evidence: FOCUS-FIT-PREP-02; producer correction requested, not applied locally.
+
+### Report fitting, confidence and transfer separately
+
+**Wrong:** Calling a run simply “failed to learn” because an all-confident criterion
+fails, or calling it successful because training classification reaches100%.
+**Correct:** FDR020classifies928/928training examples correctly at0.5 but only901
+meet the predefined.85positive/.15negative separation. Development artwork detects
+1/12positives despite low training loss. Report these as separate observations.
+**Why:** Full-corpus optimization now demonstrates fitting capacity, while the
+remaining transfer weakness needs a targeted investigation; neither more unchanged
+epochs nor lowering the decision threshold is justified by this result alone.
+
+### Preserve rectangular-batch semantics when replacing training images
+
+**Wrong:** Assuming equal dataset length and synchronized file/label/cache lists
+make OHEM replacement equivalent under rectangular batching.
+**Correct:** Audit batch/aspect grouping and batch_shapes as well. The current
+callback fixture demonstrates a tall-image slot can be replaced without rebuilding
+its original rectangular batch metadata. Resolve the grouping policy before a
+performance comparison; do not silently change the trainer during a source audit.
+**Why:** Padding/resize work and learning semantics can change even when labels
+remain aligned. Batch-average loss proxies and synchronous scalar extraction also
+need separate interpretation/timing; they are not measured per-image difficulty.
+Evidence: FOCUS-OFFLINE-PRODUCTIVITY-11 actual callback tests and source audit.

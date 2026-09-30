@@ -64,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit"])
     return p.parse_args()
 
 
@@ -252,11 +252,11 @@ def main() -> int:
     torch.manual_seed(42)
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    if (report.get("staticHuman") or report.get("fitDiagnostic")) and device.type != "mps":
+    if (report.get("staticHuman") or report.get("fitDiagnostic") or report.get("fullFit")) and device.type != "mps":
         raise ValueError("static_experiment_requires_mps_no_cpu_fallback")
     train_dataset = CropDataset(train, not experimental)
     val_dataset = CropDataset(val, False)
-    if report.get("fitDiagnostic"):
+    if report.get("fitDiagnostic") or report.get("fullFit"):
         from focus_fit_diagnostic import prepare_features
         model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
     elif report.get("pairedTraining"):
@@ -279,6 +279,9 @@ def main() -> int:
         model.load_state_dict(state, strict=True)
     print("model ready", flush=True)
     model.to(device)
+    if report.get("fullFit"):
+        from focus_full_fit_experiment import run
+        return run(model, train_dataset, val_dataset, report, train, val, device, out, started, deadline, args.experiment_id)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr)
     loss_fn = nn.BCEWithLogitsLoss()
 

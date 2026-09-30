@@ -1,5 +1,38 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run FDR-020 — approved full-corpus weighted fit (2026-09-30)
+
+FOCUS-FULL-FIT-03, owner Codex. Maintainer approved prepared proposal
+ef8001be1109177728ecd35ec8fd473bee31a6bf61782c08737070eb84a44537.
+928training controls (790native/Fixture,138human),315development/18retention unchanged.
+Frozen576feature cache, fresh577parameter linear head seed42; fullbatch928, AdamW
+lr0.01/weight_decay0.01, plain weighted BCE. Native80%/human20%, overall50/50labels;
+no encoder execution, augmentation or pair loss.1000updates/300model-seconds with
+600second external deadline; training-only five-consecutive fit stop; development
+every25updates/terminal, unchanged guarded minimum-loss checkpoint selection.
+One run only, no export/promotion. Arm `full-corpus-fit`, output `fdr020-full-corpus-fit`.
+Frozen protocol `b650da4919583d57180ca0f29c6577529c2b6984f7582ce0c2c3ab695b5644b7`.
+47focused/legacy tests and offline Swift build/123tests passed before launch.
+Actual preflight eligible. Completed PID40455,19:03:08–19:04:40UTC;91.530s including
+preflight,21.342s model loop, exit0/no timeout.1000update cap reached; strict five-
+consecutive all-confident fit criterion not met (901/928confident). Nevertheless,
+928/928training classifications correct at0.5,393/403positive hits and0/525FP at0.85;
+weighted BCE0.017118. Native385/395TP,0/395FP; human8/8TP,0/130FP.
+Terminal development14/27TP,3/288FP; retention18/18.14complete frames9unique correct,
+4no focus,1multiple,0wrong;18incomplete/unresolved frames remain unavailable.
+Strata: buttons3/3TP,1/3FP; tabs2/3TP,0/21FP; artwork1/12TP,2/181FP;
+rows6/7TP,0/64FP; other2/2TP,0/19FP. Photos frame004 unfocused all-iCloud button
+scores0.983845, causing the multiple-focus result. No eligible snapshot among40;
+no best.pt/export/promotion. This recipe fits training substantially better, but
+artwork transfer remains poor. Compared with FDR019's same development members,
+false positives38→3 and complete unique correct7→9, but focused hits17→14.
+This is not a controlled single-variable comparison or independent qualification.
+Saved-prediction replay passes928,928training/13,653development+retention predictions,
+training-only stopping, selection, code/source/crop hashes and changed head weights.
+Next: targeted artwork/Photos transfer diagnosis and one evidence-backed changed-
+representation/data experiment proposal, not a longer unchanged FDR020 run.
+[Handoff](../reports/work/FOCUS-FULL-FIT-03/handoff.md).
+
 ## Run FDR-019 — approved balanced training-fit diagnostic (2026-09-30)
 
 Owner Codex, FOCUS-FIT-01. Maintainer approved small balanced learning diagnostic.

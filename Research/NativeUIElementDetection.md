@@ -1,5 +1,10 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-09-30 consumer-only revision2extension: strict optional canvas.cardGeometry
+and canvas.nativeButton plus emblem/cityscape artwork motifs preserve legacy hashes.
+See [compatibility/capture contract](Plans/FocusR2CompatibilityCapture.md). These are
+producer recipe fields, not new detector classes or proof of rendered viewport fit.
+
 2026-09-23 additive consumer contract: [TTR sidecar-v2 intake](schemas/harvest-compatibility-v1.md#assigned-sidecar-v2-consumer-extension--2026-09-23)
 binds both native capture brackets to completed producer artifacts. Derived crop
 manifest v1.5 is simulator development-only, uses production makeCrop, and retains
@@ -644,6 +649,13 @@ Hard negatives train the model to avoid false positives on visually similar but 
 ---
 
 ## 8. Training
+
+2026-09-30: [approved full-corpus fit](Plans/FocusFullCorpusFitPreparation.md)
+extends cached-feature learning through a separate `focus-full-fit-v1` protocol:
+928admitted controls, native/human80/20weighted BCE, balanced label mass, full-batch
+updates with per-source training diagnostics. Development checkpoint guards remain
+unchanged and distinct from training-fit stopping. FDR020 completes with improved
+fit but no eligible checkpoint; no shipped API/model or taxonomy changes.
 
 2026-09-30: [balanced fit diagnostic](Plans/FocusFitDiagnostic.md) tests optimization
 on a fixed48crop admitted training subset with stored features. Training-fit stopping

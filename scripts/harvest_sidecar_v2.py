@@ -91,7 +91,7 @@ def appearance_digest_source(recipe):
     if canvas is not None:
         fields = {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"}
         require(isinstance(canvas, dict) and fields <= set(canvas)
-                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport"},
+                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "cardGeometry"},
                 "canvas_fields")
         for field, lo, hi in (("version",1,2), ("columns",1,8), ("spacing",16,80),
                               ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
@@ -144,6 +144,30 @@ def appearance_digest_source(recipe):
         if fill is not None:
             require(canvas['version'] == 2 and type(fill) is bool, 'canvas_fillViewport')
             suffix += ':fill=' + str(fill).lower()
+        # Source-pinned matched-appearance revision2; logical points, not pixel bounds.
+        button = canvas.get('nativeButton')
+        if button is not None:
+            require(isinstance(button, dict) and set(button) == {'version', 'width', 'restingFill'},
+                    'canvas_native_button_fields')
+            require(type(button['version']) is int and button['version'] == 1 and
+                    type(button['width']) is int and 120 <= button['width'] <= 1200 and
+                    button['restingFill'] in ('gray', 'light'), 'canvas_native_button_values')
+            require(canvas['version'] == 2 and presentation == 'buttons' and
+                    canvas['showLabels'] and mixed is not True and fill is not True,
+                    'canvas_native_button_combination')
+            suffix += f":native-button@1:{button['width']}:{button['restingFill']}"
+        geometry = canvas.get('cardGeometry')
+        if geometry is not None:
+            require(isinstance(geometry, dict) and set(geometry) == {'version', 'width', 'height'},
+                    'canvas_card_geometry_fields')
+            require(type(geometry['version']) is int and geometry['version'] == 1 and
+                    type(geometry['width']) is int and 80 <= geometry['width'] <= 1200 and
+                    type(geometry['height']) is int and 72 <= geometry['height'] <= 900,
+                    'canvas_card_geometry_values')
+            require(canvas['version'] == 2 and presentation in (None, 'cards') and
+                    button is None and mixed is not True and fill is not True,
+                    'canvas_card_geometry_combination')
+            suffix += f":card-geometry@1:{geometry['width']}:{geometry['height']}"
     focus = appearance.get('focus')
     focus_suffix = ''
     if focus is not None:
@@ -155,6 +179,9 @@ def appearance_digest_source(recipe):
         require(focus is not None and focus['kind'] == 'native_button' and
                 canvas['showLabels'], 'canvas_presentation_native_button')
     artwork = appearance.get('artwork')
+    if canvas is not None and canvas.get('nativeButton') is not None:
+        require(focus is not None and focus['kind'] == 'native_button' and artwork is None,
+                'native_button_focus_artwork')
     artwork_suffix = ''
     if artwork is not None:
         require(canvas is not None and canvas.get('presentation') in (None, 'cards') and

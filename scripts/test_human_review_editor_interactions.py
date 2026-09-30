@@ -54,6 +54,39 @@ class EditorTests(unittest.TestCase):
         self.w.loadFile(self.w.imageList[0])
         self.assertEqual(self.w.canvas.shapes[0].label, 'secondaryButton')
 
+    def test_optional_proposal_filter_restore_and_cancel(self):
+        from qtpy import QtCore, QtWidgets
+        before=list(self.w.canvas.shapes)
+        proposals=[[[10,10],[50,50]],[[11,11],[51,51]],[[70,30],[71,31]]]
+        def inspect(dialog):
+            filtering=dialog.findChild(QtWidgets.QCheckBox,'autoDetectDeduplicate')
+            listing=dialog.findChild(QtWidgets.QListWidget,'autoDetectCandidates')
+            self.assertFalse(filtering.isChecked())
+            filtering.setChecked(True)
+            self.assertTrue(listing.item(1).isHidden())
+            self.assertEqual(listing.item(1).checkState(),QtCore.Qt.Unchecked)
+            toggle=dialog.findChild(QtWidgets.QPushButton,'autoDetectToggleAll')
+            toggle.click();self.assertEqual(listing.item(0).checkState(),QtCore.Qt.Unchecked)
+            toggle.click();self.assertEqual(listing.item(0).checkState(),QtCore.Qt.Checked)
+            filtering.setChecked(False)
+            self.assertFalse(listing.item(1).isHidden())
+            self.assertEqual(listing.item(1).checkState(),QtCore.Qt.Checked)
+            return QtWidgets.QDialog.Rejected
+        with patch.object(QtWidgets.QDialog,'exec_',inspect):self.w.reviewBoxProposals(proposals)
+        self.assertEqual(self.w.canvas.shapes,before)
+
+    def test_optional_proposal_filter_invalid_geometry_does_not_escape_qt(self):
+        from qtpy import QtWidgets
+        before=list(self.w.canvas.shapes)
+        def inspect(dialog):
+            checkbox=dialog.findChild(QtWidgets.QCheckBox,'autoDetectDeduplicate')
+            checkbox.setChecked(True)
+            self.assertFalse(checkbox.isChecked())
+            return QtWidgets.QDialog.Rejected
+        with patch.object(QtWidgets.QDialog,'exec_',inspect):
+            self.w.reviewBoxProposals([[[0,0],[1000,1000]]])
+        self.assertEqual(self.w.canvas.shapes,before)
+
     def test_preset_roundtrip_and_dimension_rejection(self):
         from qtpy import QtWidgets
         import human_review_presets as presets

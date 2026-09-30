@@ -170,6 +170,9 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get("version")=="focus-full-fit-v1":
+        from focus_full_fit_experiment import load_protocol as full_protocol
+        return full_protocol(path,arm,run_name,approval_path)
     if doc.get("version")=="focus-fit-diagnostic-v1":
         from focus_fit_diagnostic import load_protocol as fit_protocol
         return fit_protocol(path,arm,run_name,approval_path)

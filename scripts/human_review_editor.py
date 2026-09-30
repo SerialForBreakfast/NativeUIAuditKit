@@ -342,6 +342,9 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             layout.addWidget(label)
             toggle = QtWidgets.QPushButton('Select all / none'); toggle.setObjectName('autoDetectToggleAll')
             layout.addWidget(toggle)
+            deduplicate = QtWidgets.QCheckBox('Hide duplicate / very small rectangles (experimental)')
+            deduplicate.setObjectName('autoDetectDeduplicate')
+            layout.addWidget(deduplicate)
             buttons = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
             buttons.accepted.connect(dialog.accept); buttons.rejected.connect(dialog.reject)
             layout.addWidget(buttons)
@@ -351,6 +354,7 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
                 sx,sy = pixmap.width()/self.image.width(),pixmap.height()/self.image.height()
                 count = 0
                 for index, ((x,y),(r,b)) in enumerate(proposals):
+                    if listing.item(index).isHidden(): continue
                     checked = listing.item(index).checkState() == QtCore.Qt.Checked
                     count += checked
                     painter.setPen(QtGui.QPen(QtGui.QColor('#00d8ae' if checked else '#888888'),2))
@@ -360,12 +364,35 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
                 buttons.button(QtWidgets.QDialogButtonBox.Ok).setText(f'Add {count} boxes')
                 buttons.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(0 < count <= 100-len(self.canvas.shapes))
             def toggle_all():
-                all_on = all(listing.item(i).checkState() == QtCore.Qt.Checked for i in range(listing.count()))
+                all_on = all(listing.item(i).checkState() == QtCore.Qt.Checked for i in range(listing.count()) if not listing.item(i).isHidden())
                 listing.blockSignals(True)
                 for i in range(listing.count()):
+                    if listing.item(i).isHidden(): continue
                     listing.item(i).setCheckState(QtCore.Qt.Unchecked if all_on else QtCore.Qt.Checked)
                 listing.blockSignals(False); redraw()
             toggle.clicked.connect(toggle_all); listing.itemChanged.connect(redraw); redraw()
+            saved_checks = {}
+            def filter_duplicates(enabled):
+                from annotation_proposal_filter import select
+                rectangle_ids=[i for i in range(len(proposals)) if not imported or imported['regions'][i]['kind']=='rectangle']
+                boxes=[[proposals[i][0][0],proposals[i][0][1],proposals[i][1][0]-proposals[i][0][0],
+                        proposals[i][1][1]-proposals[i][0][1]] for i in rectangle_ids]
+                try:
+                    _, removed=select(boxes,self.image.width(),self.image.height(),'compact')
+                except ValueError as error:
+                    deduplicate.blockSignals(True);deduplicate.setChecked(False);deduplicate.blockSignals(False)
+                    self.status(f'Proposal filter unavailable: {error}; suggestions unchanged.',15000)
+                    return
+                hidden={rectangle_ids[r['index']] for r in removed}
+                listing.blockSignals(True)
+                for i in hidden:
+                    item=listing.item(i)
+                    if enabled:
+                        saved_checks[i]=item.checkState();item.setCheckState(QtCore.Qt.Unchecked)
+                    else:item.setCheckState(saved_checks.get(i,QtCore.Qt.Unchecked))
+                    item.setHidden(enabled)
+                listing.blockSignals(False);redraw()
+            deduplicate.toggled.connect(filter_duplicates)
             accepted = dialog.exec_() == QtWidgets.QDialog.Accepted
             selected = [(i,points) for i, points in enumerate(proposals)
                         if listing.item(i).checkState() == QtCore.Qt.Checked]

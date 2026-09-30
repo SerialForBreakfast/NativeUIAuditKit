@@ -1,5 +1,76 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FOCUS-OFFLINE-PRODUCTIVITY-11 implementation complete for review,2026-09-30
+
+Optional editor filter, retained-score report and source/log-backed MPS efficiency
+audit/spec delivered with62Python/123Swift tests and offline build passing. No new
+model execution or data admission; human time trial and future capture remain open.
+[Handoff](reports/work/FOCUS-OFFLINE-PRODUCTIVITY-11/handoff.md).
+
+## FOCUS-R2-COMPAT-09 software portion complete,2026-09-30
+
+Strict additive consumer contracts,24golden/actual producer hashes,50Python tests,
+offline build and123Swift tests pass. Three-family test-fixture CLI integration passes.
+Approved live3pair capture remains open in Tasks: unmatched local runtime, no capture.
+[Handoff](reports/work/FOCUS-R2-COMPAT-09/handoff.md).
+
+## FOCUS-R2-REVIEW-08 — revision2receipt/static review complete,2026-09-30
+
+Verified46members,24condition axes and3+21partition. Static experiment accepted;
+identified24closed-parser failures requiring consumer compatibility. Defined exact
+first-proof limits and outstanding target/runtime authority. No capture/training.
+[Handoff](reports/work/FOCUS-R2-REVIEW-08/handoff.md).
+
+## FOCUS-PROPOSAL-REVIEW-07 — proposal receipt/review complete,2026-09-30
+
+Verified21members and16consumer recipe hashes; accounted for8unsupported buttons.
+Found geometry/content deviations and missing explicit one-target campaign binding.
+Requested revised proposal, no capture or training.
+[Review](reports/work/FOCUS-PROPOSAL-REVIEW-07/handoff.md).
+
+## FOCUS-QA-INTAKE-06 — two handoffs verified,2026-09-30
+
+Received immutable QA/correction archives, verified55declared members and64retained
+crop hashes, reconciled768QArows and missing-artwork/effect-bound limitations.
+Diagnostic acceptance only; no new code, capture or model execution.
+[Handoff](reports/work/FOCUS-QA-INTAKE-06/handoff.md).
+
+## FOCUS-CONTRAST-PREP-05 — pilot preparation complete,2026-09-30
+
+Specified24paired conditions and3pair first-proof gate; separated demonstrated
+capabilities from unresolved recipe mappings. Corrected tabs-only selection axis to
+geometry. Published/read back precise TTR capability request; no peer acknowledgment
+yet. No capture, training or code changes.
+[Handoff](reports/work/FOCUS-CONTRAST-PREP-05/handoff.md).
+
+## FOCUS-TRANSFER-DIAG-04 — retained diagnosis complete,2026-09-30
+
+Verified saved FDR020memberships/scores/cache/source hashes; generated20numbered
+crop/context sheets and395native pair contrasts. Identified sparse real positive
+artwork/Photos coverage and important nearest-neighbor counterexamples. Proposed one
+matched appearance contrast pilot, not another unchanged run. Two focused tests pass;
+offline Swift build/test verification recorded in packet. No models loaded, capture,
+relabeling, admission, threshold change or promotion.
+[Handoff](reports/work/FOCUS-TRANSFER-DIAG-04/handoff.md).
+
+## FOCUS-FULL-FIT-03 — implementation and FDR020 complete,2026-09-30
+
+Integrated sealed weighted full-corpus trainer mode, actual preflight and one MPS run.
+1000updates:928/928training correct at0.5,901/928strict confident; development9/14
+unique-correct and3false positives, retention18/18. No eligible checkpoint; preserve
+shipped model.47focused/legacy Python tests, offline build/123Swift tests and complete
+prediction/hash replay pass. No capture, export or promotion.
+[Handoff](reports/work/FOCUS-FULL-FIT-03/handoff.md).
+
+## FOCUS-FIT-PREP-02 — experiment proposal and artwork comparison,2026-09-30
+
+Pinned928training IDs/loss weights and unchanged315development/18retention; no model
+execution. Received2archives/96declared files, accepted4pairs for diagnostic intake,
+rendered both geometry roles and confirmed64/64producer crop byte/pixel parity.
+Reported64incorrect edge-clamp flags to TTR with exact receipts.37focused tests pass;
+no implementation change. Next is explicit full-corpus adapter/run approval.
+[Handoff](reports/work/FOCUS-FIT-PREP-02/handoff.md).
+
 ## FOCUS-FIT-01 — balanced learning diagnosis complete,2026-09-30
 
 Implemented versioned48crop diagnostic through the real trainer and ran FDR019 once

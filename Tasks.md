@@ -1,6 +1,86 @@
 # NativeUIAuditKit — Tasks
 
-**Next model assignment — full-corpus fitting audit and bounded optimization proposal:**
+**FOCUS-OFFLINE-PRODUCTIVITY-11 — review / current Codex:** optional preview filtering
+reduces retained Vision proposals244→193 with44/78matches unchanged; cached-score
+decision report and MPS-only efficiency audit/spec delivered.62Python/123Swift tests
+and offline build pass. Next: review rectangular-OHEM repair/timing assignment;
+separate local compute approval precedes any batch benchmark. No CUDA, new inference,
+training or capture. [Handoff](reports/work/FOCUS-OFFLINE-PRODUCTIVITY-11/handoff.md).
+
+**FOCUS-R2-LIVE-10 — new runtime verified, manifest entry blocked:** local helper
+b79b34e4 and Fixture062ddfe7 running; local tvOS26.5 Simulator booted and TTR readiness
+passes. First3 manifest rebound to local target; validate still returns invalidArgument
+before capture. Matching source masks manifest file-read failures; exact permission
+cause unproven. Request actionable manifest-read diagnostics and supported folder grant/import.
+Follow-up: TTR app-managed workspace refresh passes; its repair UI cannot grant a
+separate campaign input file. Producer manifest import/grant required, not another
+human permission retry. Existing per-recipe jobs lack the advertised one-target cap.
+21:17UTC: TTR acknowledges the request; diagnostic repair pending, not delivered.
+Running helper/Fixture unchanged. Reapproved capture and label/crop QA remain blocked
+before dispatch, not completed.
+Fixture scene responds but reports no_sample. Standing Simulator authority recorded;
+no new pairs/training. [Evidence and resume condition](reports/work/FOCUS-R2-LIVE-10/handoff.md).
+
+**Historical FOCUS-R2-COMPAT-09 — software complete, runtime findings superseded above:**24actual
+producer hashes match;50Python/123Swift tests and offline build pass. Local TTR/helper
+still2ec0ea71; validation-only first3manifest exits64/invalidArgument.9Simulators
+Shutdown; no capture attempted. Need local revision2-compatible host/Fixture delivery
+and exact exclusive target/setup binding. User's3pair approval retained; remaining21/
+training excluded. [Evidence](reports/work/FOCUS-R2-COMPAT-09/handoff.md).
+[Contract](Research/Plans/FocusR2CompatibilityCapture.md).
+
+**Historical revision2review — adapter completed above:** FOCUS-R2-REVIEW-08 received127670byte archive,
+verified46members/24axes and exact3+21partition. Static experiment contract accepted.
+All24existing consumer hash calls reject `canvas_fields`: add strict source-pinned
+cardGeometry/nativeButton and emblem/cityscape identity support, preserve legacy
+hashes, test actual intake and offline build/tests. No TTR repair needed for this
+consumer gap. Then obtain exact target/runtime scope for3pair proof (600s/512MiB/
+10GiBreserve); no capture/training authorized by review.
+[Review and scope](reports/work/FOCUS-R2-REVIEW-08/handoff.md).
+
+**FOCUS-PROPOSAL-REVIEW-07 — superseded by revision2review above:** received matched24proposal;
+21members verified,16/16consumer recipe hashes match. Geometry is near-square versus
+larger near-square, not wide/square or portrait/landscape; content varies palette
+only.8gray-button slots correctly blocked. Request revision with genuine aspect/content
+contrasts and explicit one-target campaign budget; no unchanged16recipe capture.
+[Review](reports/work/FOCUS-PROPOSAL-REVIEW-07/handoff.md).
+
+**FOCUS-QA-INTAKE-06 — complete:** both QA/correction archives and55declared members
+verified. Exactly64clamp flags corrected; PNGs/other fields unchanged. QA counts
+reconciled: older44pairs lack352artwork records; all768rows lack enlarged presentation
+effect bounds. Diagnostic acceptance only. [Handoff](reports/work/FOCUS-QA-INTAKE-06/handoff.md).
+
+**Historical publication — consumer review completed above:** TTR19:45:47UTC advertises proposal
+archive/21members;8wide gray-button slots explicitly unsupported, repair MATCH-APPEAR-01.
+Receive/review exact geometry and content independence before any capture; do not
+substitute or treat proposal publication as qualified runtime.
+
+**FOCUS-CONTRAST-PREP-05 — preparation complete, producer proposal published:**24pair
+contract and3pair first-proof gate prepared. Replaced invalid selected-state axis
+with geometry; selectedIndex remains tabs-only. Capability/recipe request
+`nuiak-20260930-matched-appearance-24` published/read back in owned shared packet.
+Need exact content/background independence and wide gray-button schema mappings,
+then fresh target/runtime approval before capture. No new annotation or training.
+[Contract](Research/Plans/FocusMatchedAppearancePilot.md).
+
+**Supporting diagnosis — matched appearance contrast pilot proposal:** retained diagnosis
+complete; all150native artwork pairs order correctly but development artwork hits1/12.
+Human training has6focused artwork examples and no Photos button contrasts. Inspected
+Photos false-positive crop excludes the neighboring focused button. Prepare a24pair
+content/background/selection-controlled Fixture recipe and acceptance contract before
+separate capture/training approval; do not repeat unchanged training or expand annotation.
+[Evidence and proposed intervention](reports/work/FOCUS-TRANSFER-DIAG-04/handoff.md).
+
+**Next focus assignment — targeted artwork/Photos transfer tranche:**
+FDR020 completed1000updates:928/928training correct at0.5,901/928strict confident,
+weighted BCE0.017118. Development14/27TP,3/288FP,9/14unique-correct; retention18/18.
+No eligible checkpoint: one Photos false positive/multiple focus and artwork recall
+1/12remain material failures. Do not extend/repeat unchanged training or lower0.85.
+Retained diagnosis is complete above; coverage mismatch is a supported hypothesis,
+not established causation. Preserve development membership. No next training run
+authorized. [Run handoff](reports/work/FOCUS-FULL-FIT-03/handoff.md).
+
+**Historical FDR019 diagnosis — full-corpus experiment completed above:**
 FOCUS-FIT-01 completed: FDR019 fits48/48 balanced training crops at update162;
 retention18/18, development17/27hits but38/288false positives and7/14unique-correct
 frames. Prior FDR017/018 heads detect only32/395 and27/395 native training positives
@@ -11,7 +91,16 @@ fixed development gates; separately approve execution. Artwork remains the large
 development failure (31/38false positives). No further annotation needed for this
 proposal. [Diagnostic handoff](reports/work/FOCUS-FIT-01/handoff.md).
 
-**Parallel data assignment — artwork crop acceptance:**
+**Artwork evidence received/compared — producer metadata correction pending:**
+FOCUS-FIT-PREP-02 received both named archives;96payload hashes verify.4calibration
+pairs pass diagnostic intake,8artwork/8wrapper target crops render,64/64reference
+crops match production bytes/pixels. All64producer edge-clamp flags incorrectly true
+from exact floating-point CGRect comparison; actual image-edge clamps0. Reported to
+TTR with exact receipts; no recapture needed. Neighbor slivers visible, prediction
+impact unassessed. New pairs not admitted to training. Remaining60capture scope
+separate. [Handoff](reports/work/FOCUS-FIT-PREP-02/handoff.md).
+
+**Historical assignment context — superseded by receipt above:**
 Approved static-human FDR017/018 completed30epochs each, neither eligible. Human
 mixture worsened TP1/27→0/27andFP5/288→15/288; do not repeat/promote.138human controls
 now explicitly reserved for training;315remain development,64exclusions preserved.
