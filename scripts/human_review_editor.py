@@ -286,12 +286,40 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             if not proposals:
                 self.status('No new clear rectangular candidates. Existing boxes were kept; use Suggest box, presets or draw manually.', 15000)
                 return
+            self.reviewBoxProposals(proposals)
+
+        def importVisionSuggestions(self):
+            from human_vision_import import load
+            if not self.imagePath or not self.canvas.editing():
+                self.status('Open an image and use Edit rectangles before importing.', 10000)
+                return
+            path, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Import optional TTR Vision sidecar', str(ROOT), 'JSON (*.json)')
+            if not path: return
+            existing = [[[min(p.x() for p in s.points), min(p.y() for p in s.points)],
+                         [max(p.x() for p in s.points), max(p.y() for p in s.points)]]
+                        for s in self.canvas.shapes if len(s.points)>=2]
+            try:
+                imported=load(path,self.imagePath,existing,100-len(self.canvas.shapes))
+            except (OSError,ValueError,KeyError,TypeError) as error:
+                self.clipboardWarning(f'Vision import unavailable: {error}')
+                return
+            if not imported['regions'] or imported['limit']==0:
+                self.status('No new suggestions to import; annotations unchanged.',15000)
+                return
+            self.reviewBoxProposals([r['points'] for r in imported['regions']], imported)
+
+        def reviewBoxProposals(self, proposals, imported=None):
+            from labelme.shape import Shape
             dialog = QtWidgets.QDialog(self)
             dialog.setObjectName('autoDetectDialog')
-            dialog.setWindowTitle('Auto-detect boxes — review proposals')
+            dialog.setWindowTitle('Import TTR OCR / boxes — review suggestions' if imported else 'Auto-detect boxes — review proposals')
             layout = QtWidgets.QVBoxLayout(dialog)
             layout.addWidget(QtWidgets.QLabel('Geometry suggestions only—not class or focus predictions. Uncheck unwanted boxes.'))
             layout.addWidget(QtWidgets.QLabel('Some proposals may be containers or parts of controls; adjust bounds after adding.'))
+            if imported:
+                layout.addWidget(QtWidgets.QLabel('OCR is unchecked by default: text bounds, not control bounds. Accepted OCR uses label and retains text as a note.'))
+                if imported['textTruncated']:
+                    layout.addWidget(QtWidgets.QLabel('Producer reports truncated OCR; text coverage is incomplete.'))
             content = QtWidgets.QHBoxLayout()
             preview = QtWidgets.QLabel(); preview.setObjectName('autoDetectPreview')
             listing = QtWidgets.QListWidget(); listing.setObjectName('autoDetectCandidates')
@@ -299,8 +327,12 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             for index, points in enumerate(proposals, 1):
                 (x,y),(r,b) = points
                 item = QtWidgets.QListWidgetItem(f'{index}. {r-x:.0f} × {b-y:.0f} at {x:.0f}, {y:.0f}')
+                if imported:
+                    region=imported['regions'][index-1]
+                    item.setText(f"{index}. {region['kind']} {region['confidence']:.2f}  {region['text'][:100]}  {r-x:.0f} × {b-y:.0f}")
                 item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
-                item.setCheckState(QtCore.Qt.Checked); listing.addItem(item)
+                checked=not imported or (region['kind']=='rectangle' and index<=imported['limit'])
+                item.setCheckState(QtCore.Qt.Checked if checked else QtCore.Qt.Unchecked); listing.addItem(item)
             content.addWidget(preview); content.addWidget(listing); layout.addLayout(content)
             label = QtWidgets.QComboBox(); label.setObjectName('autoDetectLabel')
             label.addItems(review_labels())
@@ -326,7 +358,7 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
                     painter.drawText(QtCore.QPointF(x*sx+3,y*sy+14),str(index+1))
                 painter.end(); preview.setPixmap(pixmap)
                 buttons.button(QtWidgets.QDialogButtonBox.Ok).setText(f'Add {count} boxes')
-                buttons.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(count > 0)
+                buttons.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(0 < count <= 100-len(self.canvas.shapes))
             def toggle_all():
                 all_on = all(listing.item(i).checkState() == QtCore.Qt.Checked for i in range(listing.count()))
                 listing.blockSignals(True)
@@ -335,7 +367,7 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
                 listing.blockSignals(False); redraw()
             toggle.clicked.connect(toggle_all); listing.itemChanged.connect(redraw); redraw()
             accepted = dialog.exec_() == QtWidgets.QDialog.Accepted
-            selected = [points for i, points in enumerate(proposals)
+            selected = [(i,points) for i, points in enumerate(proposals)
                         if listing.item(i).checkState() == QtCore.Qt.Checked]
             chosen_label = label.currentText()
             dialog.deleteLater()
@@ -344,9 +376,14 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             used = {s.group_id for s in self.canvas.shapes}
             ids = iter(i for i in range(1,100001) if i not in used)
             shapes = []
-            for points in selected:
-                shape = Shape(label=chosen_label, shape_type='rectangle', group_id=next(ids),
+            for index,points in selected:
+                region=imported['regions'][index] if imported else None
+                shape = Shape(label='label' if region and region['kind']=='ocr' else chosen_label, shape_type='rectangle', group_id=next(ids),
                               flags={k: k == 'unfocused' for k in SHAPE_FLAGS})
+                if imported:
+                    import json
+                    shape.description=json.dumps(dict(proposalOnly=True,kind=region['kind'],
+                        ocrText=region['text'],confidence=region['confidence'],**imported['provenance']),sort_keys=True)
                 for x,y in points: shape.addPoint(QtCore.QPointF(x,y))
                 shape.close(); shapes.append(shape)
             if not shapes: return
@@ -751,6 +788,13 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
     result.actions.autoDetectBoxes = auto_detect
     result.actions.editMenu = (auto_detect,) + result.actions.editMenu
     result.actions.tool = (auto_detect,) + result.actions.tool
+    import_vision = QtWidgets.QAction('Import TTR OCR / boxes…', result)
+    import_vision.setIconText('Import TTR\nOCR / boxes…')
+    import_vision.setToolTip('Optional hash-linked Vision sidecar. Preview suggestions; never automatic labels or focus.')
+    import_vision.triggered.connect(result.importVisionSuggestions)
+    result.actions.importVisionSuggestions = import_vision
+    result.actions.editMenu = (import_vision,) + result.actions.editMenu
+    result.actions.tool = (import_vision,) + result.actions.tool
     preset_actions = []
     for caption, callback in [('Save preset…', result.saveBoxPreset), ('Load preset…', result.loadBoxPreset)]:
         action = QtWidgets.QAction(caption, result)

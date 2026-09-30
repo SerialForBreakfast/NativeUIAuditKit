@@ -1,5 +1,15 @@
 # NativeUIAuditKit — Best Practices
 
+## Batch-import Undo must include the empty-image baseline
+
+**Observed:** FOCUS-REPAIR-INTAKE-04 real-sidecar editor check found first import on
+an unannotated image stores only the19-box post-state. Undo leaves all19; tests with
+an existing box passed and missed this boundary. **Correct approach:** record the
+pre-import state even when empty, then the batch post-state; test empty and populated
+images independently. Undo after reopening is a separate persistence contract, not
+assumed. **Why:** disposable suggestions must be reversible without deleting each
+box manually. Fix remains open in Tasks; source images were not modified.
+
 ## Artwork pair count is not native focus-effect coverage
 
 **Observed:** FDR015's150artwork training pairs contain only24explicit native-image
@@ -2253,3 +2263,22 @@ and test original intake/crops with those recipes plus legacy negative cases.
 **Why:** This found and fixed a predictable intake rejection before live capture.
 Software compatibility is still separate from visible crop correctness and training
 admission. Evidence: FOCUS-OFFLINE-PREP-03, eight producer identity vectors.
+
+### Preserve and validate additive producer views
+
+**Wrong:** Removing newly indexed derived views to make a strict legacy intake pass.
+**Correct:** Preserve exports and receipts; validate known additive summaries against
+canonical rows exactly, retaining native observations as the label authority.
+**Why:** FOCUS-GEOMETRY-LIVE-02 introduced derived views before artwork geometry
+was present. Accepting views is compatibility, not geometry evidence.
+
+### Stop storage troubleshooting when retries do not distinguish causes
+
+**Wrong:** Recommending repeated Finder/share recreation or filesystem/privacy
+changes after authentication and internal-versus-external behavior were established.
+**Correct:** Separate session authentication, share enumeration, tree connection and
+actual file read/write. Require a falsifiable boundary check before another retry;
+redacted paths and UI toggles do not prove the cause. A new remote-access service
+requires explicit scope and explanation of its broader access, not a silent fallback.
+**Why:** DATA-EXTERNAL-01 was cancelled after these approaches did not qualify a
+remote write. Storage must not become a dependency of independent focus work.

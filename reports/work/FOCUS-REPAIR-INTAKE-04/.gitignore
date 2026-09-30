@@ -1,0 +1,4 @@
+received/
+*.json
+*.log
+tmp/

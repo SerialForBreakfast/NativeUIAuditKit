@@ -80,6 +80,23 @@ particular chat, coordinator or automatically installed skill.
 
 ## HIGHEST PRIORITY — File System Boundary
 
+**Cancellation,2026-09-30 (supersedes storage exception below):** maintainer cancelled
+external shared-drive and SSH/SFTP/rsync work. Use project-local evidence and the
+verified SharedStatusFile/tvtestrig receipt flow. No automatic external storage retry,
+mount, migration or alternative access-service work. External storage is not a focus
+dependency. Historical designation below is not current execution authority.
+
+**Maintainer storage exception,2026-09-29:** `/Volumes/Crucial X9/data_training`
+is authorized for large training datasets, captures and checkpoints shared with
+Sillycon. This specific exception also applies wherever this document otherwise
+requires those artifacts to stay in-project. Verify the actual external volume before
+writes; never create a local lookalike when unmounted. Keep source, scripts, tests,
+environments/build caches and compact status/receipt metadata in-project. This does
+not authorize new capture/training, migration/deletion, sharing configuration or
+unrelated external writes. See `Research/ArtifactRetention.md`; existing path-bound
+manifests require explicit migration compatibility verification. Remote access and
+sandbox permissions must still be verified, not assumed.
+
 **Writes normally stay inside this project. Explicit exception: agents MAY READ AND WRITE the verified `smb://sillycon.local/SharedStatusFile` folder (normally `/Volumes/SharedStatusFile`) for TVTestRig–NUIAK coordination, subject to the ownership rules below. This exception overrides the general outside-project prohibition; do not refuse it merely because the mount is outside the package.** For all other output, the prohibition includes:
 
 - `/tmp/` or any system temporary directory — **forbidden, no exceptions**

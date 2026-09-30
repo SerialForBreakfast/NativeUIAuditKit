@@ -1,0 +1,6 @@
+*.json
+*.log
+recipes/
+exports/
+comparison/
+prepared/

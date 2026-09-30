@@ -1,0 +1,14 @@
+{
+  "version": "human-frame-completeness-confirmation-v1",
+  "frameID": "photos:frame-004",
+  "image": {
+    "path": "reports/work/HUMAN-REVIEW-01/office-batch/raw/frame-004.png",
+    "sha256": "9f6c26c669ebb8dab9d587df752e9094ad79922b1e6f4e0fa334cb6528155f6c"
+  },
+  "candidateIDs": ["photos:frame-004:all-icloud-photos", "photos:frame-004:shared-albums"],
+  "confirmation": "Yes, those are the only two focusable controls",
+  "questionScope": "View All iCloud Photos and View Only Shared Albums are the complete set; Photos logo is decorative",
+  "source": "explicit user reply in this conversation, 2026-09-30 UTC",
+  "coverage": "complete",
+  "scope": "one exact development-exposed frame only; no other frame, label or training admission changed"
+}

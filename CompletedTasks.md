@@ -1,5 +1,20 @@
 # NativeUIAuditKit — Completed Tasks
 
+## DATA-EXTERNAL-01 — cancelled by maintainer,2026-09-30
+
+External shared-drive and SSH/SFTP/rsync effort cancelled, not qualified or completed
+successfully. No corpus migration or remote write acceptance. Project-local evidence
+and existing verified receipt flow remain in use; no storage dependency for focus.
+[Closure and remaining system state](reports/work/DATA-EXTERNAL-01/status.md).
+
+## Optional TTR annotation import — implemented for review,2026-09-30UTC
+
+Explicit editor import for source-bound OCR/rectangle proposals with subset preview,
+OCR unchecked by default, provenance, duplicate suppression, undo and save/reload.
+No inference, automatic labels or training admission. Source-shaped contract and Qt
+integration tested; actual supplied producer sidecar acceptance remains pending.
+[Handoff](reports/work/FOCUS-GEOMETRY-LIVE-02/handoff.md).
+
 ## FOCUS-CONTROL32-ADMIT-01 — completed for review, 2026-09-30 UTC
 
 Applied exact user approval to 32 native-control pairs. Frozen 395-pair candidate

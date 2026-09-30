@@ -1,0 +1,4 @@
+*.json
+!photos-confirmation.json
+*.log
+runtime/

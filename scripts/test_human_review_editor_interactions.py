@@ -407,6 +407,47 @@ class EditorTests(unittest.TestCase):
         with patch('human_auto_boxes.detect') as detector:
             self.w.autoDetectBoxes(); detector.assert_not_called()
 
+    def test_optional_vision_import_preview_cancel_add_undo_roundtrip(self):
+        import json
+        from pathlib import Path
+        from qtpy import QtCore, QtWidgets
+        from test_human_vision_import import document
+        path=self.f.root/'supplied-vision.json'
+        path.write_text(json.dumps(document(self.w.imagePath)))
+        original=self.w.canvas.shapes[0]
+        def finish(accept):
+            dialog=self.w.findChild(QtWidgets.QDialog,'autoDetectDialog')
+            listing=dialog.findChild(QtWidgets.QListWidget,'autoDetectCandidates')
+            self.assertEqual(listing.count(),2)
+            self.assertEqual(listing.item(0).checkState(),QtCore.Qt.Checked)
+            self.assertEqual(listing.item(1).checkState(),QtCore.Qt.Unchecked)
+            if accept:
+                listing.item(1).setCheckState(QtCore.Qt.Checked)
+                dialog.accept()
+            else:dialog.reject()
+        for accept in (False,True,True):
+            if len(self.w.canvas.shapes)==3:
+                self.w.undoShapeEdit()
+                self.assertEqual(len(self.w.canvas.shapes),1)
+            for d in self.w.findChildren(QtWidgets.QDialog,'autoDetectDialog'):
+                d.setParent(None);d.deleteLater()
+            QtCore.QTimer.singleShot(10,lambda a=accept:finish(a))
+            with patch.object(QtWidgets.QFileDialog,'getOpenFileName',return_value=(str(path),'JSON')):
+                self.w.actions.importVisionSuggestions.trigger()
+            self.assertEqual(len(self.w.canvas.shapes),3 if accept else 1)
+        restored=self.w.canvas.shapes[0]
+        self.assertEqual(restored.points,original.points)
+        self.assertEqual(restored.label,original.label)
+        self.assertEqual(restored.flags,original.flags)
+        self.assertEqual(restored.description,original.description)
+        self.assertEqual(self.w.canvas.shapes[-1].label,'label')
+        self.assertIn('Search',self.w.canvas.shapes[-1].description)
+        for s in self.w.canvas.shapes[1:]:
+            self.assertFalse(s.flags['confirmed']);self.assertFalse(s.flags['focused'])
+        self.w.saveFile();self.w.loadFile(self.w.imagePath)
+        self.assertEqual(len(self.w.canvas.shapes),3)
+        self.assertIn('sidecarSHA256',self.w.canvas.shapes[-1].description)
+
 
 if __name__ == '__main__':
     unittest.main()

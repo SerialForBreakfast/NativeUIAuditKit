@@ -1,5 +1,41 @@
 # NativeUIAuditKit — Tasks
 
+**FOCUS-REPAIR-INTAKE-04 — review complete with editor finding, owner Codex:** both
+archives/13payload members verified; supplied Vision sidecar accepts retained originals.
+Actual preview/cancel/add/save/reload passes; blank-image first batch Undo fails
+(missing empty snapshot;19boxes remain). Next local fix: preserve empty snapshot,
+test blank/prefilled import and run offline build/tests.64focused tests pass. Producer
+integration/original failed-pair retry and live artwork proof remain separate.
+Receipts published; no training. [Handoff](reports/work/FOCUS-REPAIR-INTAKE-04/handoff.md).
+
+**FOCUS-GEOMETRY-RESUME-03 — preflight complete; matched runtime blocked, owner Codex:**
+external storage cancelled, not a dependency. TTR responds but host/helper and installed
+Fixture bytes remain the prior failed pair; all9Simulators shut down. No newer producer
+runtime installed locally. SharedStatusFile reconnected09:54PDT: producer reports
+campaign artwork-policy propagation repair (58offline passes), four-pair proof
+pending producer disk reserve (9.58GiB available versus10GiB minimum). Named repair
+and Vision sample sidecar await consumer receipt/acceptance; no Max recapture requested.
+Cancellation/current focus status published and verified. Frozen8scene/64pair proposal and first
+export reverified intact;45GiB local free. Resume after matched repaired build delivery
+and fresh exact-target runtime approval; first4pair geometry/crop gate before60remaining.
+[Handoff](reports/work/FOCUS-GEOMETRY-RESUME-03/handoff.md).
+
+**FOCUS-INTEGRATION-03 — offline review complete; producer integration blocked:**
+1,947admitted image/crop files verified. Exact human Photos completeness confirmation
+adds one button case in a separate14frame policy; original13frame benchmark preserved.
+Actual retained Vision command fails serviceUnavailable while status works; precise
+producer request published. No new capture/model execution. Real sidecar and measured
+artwork geometry remain required. [Handoff](reports/work/FOCUS-INTEGRATION-03/handoff.md).
+
+**FOCUS-GEOMETRY-LIVE-02 — first-case geometry blocked, owner Codex:** authorized
+first4pairs captured/exported and accepted for diagnostic intake. All8 wrapper
+crops pass; all8 artwork-layout bounds are `not_supplied`. Remaining60pairs not
+attempted under first-case gate. Postflight ready, ownership clear. Producer must
+deliver measured artwork geometry from the actual installed Fixture before resume.
+Optional annotation OCR/box import implemented and tested; a real supplied Vision
+sidecar still needs delivery acceptance (no automatic import or label confirmation).
+[Contract](Research/Plans/FocusGeometryLive02.md).
+
 **Next focus work — measured artwork geometry, then one changed-data experiment:**
 User approved 32 native-control pairs; additive candidate assembly now has 395
 training pairs (133 buttons, 26 tabs, 150 artwork, 86 rows). Retention and real

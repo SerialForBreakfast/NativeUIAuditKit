@@ -78,6 +78,27 @@ def _source_description(index: dict[str, Any]) -> dict[str, Any] | None:
             raise HarvestValidationError("invalid_metadata")
     return source
 
+def validate_derived_views(root, rows, artifacts):
+    """Check optional summaries without treating them as native/action evidence."""
+    allowed = {'focus-view.json', 'intent-action-view.json'} & set(artifacts)
+    if 'focus-view.json' in allowed:
+        expected = dict(schema_version=1, role='focus_appearance', admission='consumer_pending',
+            entries=[dict(id=r['id'], before_image=r['metadata']['unfocusedPath'],
+                after_image=r['metadata']['focusedPath'], after_sha256=r['sha256'],
+                evidence_sidecar=r['metadata']['metadataPath'], bounds=r['box'],
+                focus_label=r['expectedFocus'], split=r['split'],
+                control_mode='direct_focus_assignment', temporal_settlement='not_established',
+                provenance='use_original_capture_brackets; not_atomic_callback_identity') for r in rows])
+        if _json(root, 'focus-view.json') != expected:
+            raise HarvestValidationError('conflicting_or_unsupported_focus_view')
+    if 'intent-action-view.json' in allowed:
+        expected = dict(schema_version=1, role='intent_action', admission='unavailable', entries=[],
+            excluded_ids=[r['id'] for r in rows], reason='direct_focus_assignment_is_not_directional_action')
+        if _json(root, 'intent-action-view.json') != expected:
+            raise HarvestValidationError('conflicting_or_unsupported_intent_view')
+    return allowed
+
+
 def validate_bundle(directory: Path) -> dict[str, Any]:
     root = directory.resolve(strict=False)
     if not root.is_dir() or ".partial-" in root.name: raise HarvestValidationError("incomplete_run")
@@ -105,6 +126,7 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
     expected = set(required)
     for row in rows:
         if isinstance(row, dict) and isinstance(row.get("metadata"), dict): expected.update(row["metadata"].get(k) for k in ("unfocusedPath", "focusedPath", "metadataPath"))
+    expected.update(validate_derived_views(root, rows, data))
     if expected != set(data): raise HarvestValidationError("unsafe_or_invalid_manifest")
     normalized=[]; unknown=0; seen_baselines={}; native_plans={}
     for row in rows:

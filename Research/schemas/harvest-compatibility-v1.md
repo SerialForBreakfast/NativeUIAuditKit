@@ -332,3 +332,14 @@ or null adds no suffix; v1 rejects non-null fillViewport. Background objects rem
 unsupported in this bounded extension. Eight producer-emitted proposal hashes bind
 the actual recipe compatibility tests. This changes local intake compatibility,
 not native annotation schema, public taxonomy, training eligibility or live evidence.
+# Optional derived view artifacts — observed 2026-09-30
+
+The matched local TTR capture emits `focus-view.json` and `intent-action-view.json`
+as indexed, hash-bound derived summaries. Preserve originals and validate these
+optional artifacts against canonical manifest rows; they never replace native
+capture brackets or grant temporal/action labels. Support only schema1 direct-focus
+summaries observed in FOCUS-GEOMETRY-LIVE-02: focus_appearance consumer_pending,
+and intent_action unavailable with all IDs excluded because direct focus assignment
+is not directional input. Unknown artifacts/versions or conflicting images, IDs,
+hashes, bounds, splits and focus labels remain rejected. Legacy bundles without
+these artifacts remain unchanged. No public schema or taxonomy change.

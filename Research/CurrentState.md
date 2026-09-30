@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-29 (FDR016 and native112 intake complete; no eligible model; shipped unchanged)
+**As of:** 2026-09-30 (storage status reconciled; model/runtime results below retain their observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,60 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+**Consumer repair intake,2026-09-30 10:08PDT:** both repair archives/13payload members
+verified; actual Vision sidecar matches retained album_grid pair. Real editor preview,
+cancel/add/save/reload passes; blank-image first-import Undo leaves boxes (no empty
+snapshot).64focused tests pass; local Undo repair next. Artwork policy source-compatible,
+not live-qualified; producer four-pair proof pending disk reserve. Exact receipts
+published; no source merge/runtime/training. [Handoff](../reports/work/FOCUS-REPAIR-INTAKE-04/handoff.md).
+
+**Focus resume check,2026-09-30 09:45PDT:** TTR GUI1268/status responds, idle queue;
+helper and installed Fixture hashes unchanged from prior missing-artwork-geometry
+trial. All9tvOS Simulators shut down.8scene/64pair proposal and18indexed first-case
+artifacts hash-verified intact;45GiB project-local free. No new capture/model work.
+Next gate is matched repaired runtime plus fresh bounded Simulator authority, not
+external storage. SharedStatusFile reconnected09:54PDT; producer16:52:15Z reports
+campaign artwork-policy propagation repaired (58offline passes), but four-pair proof
+unrun due to producer9.58GiB free below10GiB reserve. Vision repair/sample sidecar
+also published, consumer receipt/import pending. Cancellation and current focus
+delta published/read back; new peer acknowledgment pending. No new runtime checks
+or downloads in status reconciliation; previous local preflight remains09:45PDT.
+[Resume handoff](../reports/work/FOCUS-GEOMETRY-RESUME-03/handoff.md).
+
+**External storage cancelled,2026-09-30:** no further shared-drive/SSH/SFTP/rsync
+work; use project-local evidence and verified SharedStatusFile receipts. Not a focus
+blocker. User reports later authentication/enumeration success, repeated external
+share mount failure even after APFS reformat/permission refresh; cause unproven.
+No agent reformat/migration. Remote Login last user-reported enabled, shutdown
+unverified; no automatic cleanup. [Closure](../reports/work/DATA-EXTERNAL-01/status.md).
+
+Historical superseded storage observation: maintainer authorized
+`/Volumes/Crucial X9/data_training` for shared datasets/captures/checkpoints. At09:05PDT
+the same volume/partition UUID is mounted as `/Volumes/training`; folder and SMB
+share now point to `/Volumes/training/data_training`. exFAT, approximately1.8TiB free.
+Old mount path absent; no consumer relocation performed. Latest reported Sillycon attempt rejects SMB authentication;
+remote mount/write access remains blocked, not a proven filesystem incompatibility.
+Existing data not moved/deleted; path-bound manifests need migration checks.
+Coordination share unmounted; current update unpublished. [Status](../reports/work/DATA-EXTERNAL-01/status.md).
+
+**FOCUS-INTEGRATION-03,2026-09-30UTC:**1,947admitted images/crops reverified;
+user confirmed exact Photos frame004 has two focusable buttons. Separate development
+policy now supports14whole frames (buttons1,tabs3,artwork2,rows6,other2), preserving
+original13frame baseline and453crop membership. Cached FDR016 ranks this button
+correctly but0.826<0.85still abstains. No new model execution or admission.
+Actual TTR retained Vision processing fails before sidecar despite working status;
+producer-stage diagnosis requested. Geometry runtime unchanged, no capture repeated.
+[Handoff](../reports/work/FOCUS-INTEGRATION-03/handoff.md).
+
+**Updated local TTR acceptance,2026-09-30UTC:** authorized first4pairs captured,
+exported with verified chunks and accepted for diagnostic intake. All8 wrapper
+crops render; all8 artwork-layout crops blocked because geometry is `not_supplied`.
+Remaining60pairs not attempted; postflight ready/ownership clear. Producer must
+qualify the installed Fixture geometry before capture resumes. Optional TTR OCR/
+rectangle sidecar import now available in annotator; supplied-file acceptance pending.
+No new training admission or model operation;395pair candidate remains unchanged.
+[Checkpoint](../reports/work/FOCUS-GEOMETRY-LIVE-02/handoff.md).
 
 **FOCUS-CONTROL32-ADMIT-01 — approved data admission:** 32 retained native-control
 pairs added to the candidate assembly: **395 training pairs**, comprising 133

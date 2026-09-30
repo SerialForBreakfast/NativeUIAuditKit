@@ -1,5 +1,17 @@
 # Full backlog implementation packet catalog
 
+[FOCUS-REPAIR-INTAKE-04](Plans/FocusRepairIntake04.md): producer repair receipts,
+real supplied-sidecar consumer tests and artwork-policy compatibility review.
+
+[FOCUS-INTEGRATION-03](Plans/FocusIntegrationReadiness03.md): retained TTR Vision
+import acceptance and exact development-validation coverage/next-experiment decision.
+
+[Optional annotation Vision import](Plans/AnnotationVisionImport.md): user-added
+scope alongside FOCUS-GEOMETRY-LIVE-02; supplied OCR/boxes only, no automatic labels.
+
+[FOCUS-GEOMETRY-LIVE-02](Plans/FocusGeometryLive02.md): updated local TTR acceptance,
+bounded measured artwork trial, crop comparison and next-data decision.
+
 [FOCUS-CONTROL32-ADMIT-01](Plans/FocusControl32Admission.md): exact approved
 32-pair data admission and additive assembly; no model execution approval.
 
