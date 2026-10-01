@@ -1,5 +1,63 @@
 # NativeUIAuditKit — Experiment Log
 
+## FDR021 candidate pixel-contract repair — 2026-10-01UTC
+
+User approved continuation; no training. Same775head/encoder/trace, fresh FP32 model
+ID `focus-ring-experimental-fdr021-reviewed-contrast-rgb-v1`,3,788,293bytes. Metadata
+requires `png-straight-rgb-v1`. Production16%/256crop unchanged; input discards alpha
+using exact saved-PNG RGB semantics instead of opaque-context redraw.
+All333crop AND final model-input RGB hashes match. CoreML CPU versus Torch CPU:
+max0.0000340920,mean0.0000014878; zero threshold flips at0.5/0.70/0.85.
+Original failed packages retained.12Python tests,112Swift tests and offline build
+pass. Source/compiled/package hashes, runtimes and bounded stage timings retained
+in [handoff](../reports/work/FDR021-PIXEL-PARITY/handoff.md). TTR build/device
+qualification and release gates remain unassessed/open; no promotion.
+
+## FDR021 complete-model export verification — 2026-10-01UTC
+
+No new training. Selected775head plus pinned ImageNet MobileNetV3-small encoder,
+in-graph ImageNet normalization, RGB/255 image input. Full Torch CPU trace agrees
+with cached MPS scores on333development/retention crops. Existing resident
+Torch2.7/coremltools9 converted the Torch2.13trace without installation.
+FP16package1,953,933bytes: production CPU parity FAIL(max0.211059).
+FP32package3,788,242bytes: production CPU parity FAIL(max0.418649,mean0.002125).
+Direct FP32 CoreML on the SAME saved RGB crops PASSES(max0.0000340939,
+mean0.0000014878), zero decision flips at0.5/0.70/0.85.63PNGcrops have partial
+alpha. RGB hashes before inference do not attest the opaque pixel-buffer input;
+direct versus production image handling must be reconciled. No threshold,
+labels or corpus altered. No promotion or TTR transfer of weights. Exact commands,
+PIDs, timeouts, hashes and scores: [handoff](../reports/work/FDR021-COREML/handoff.md).
+
+## Run FDR-021 — approved reviewed contrast addition (2026-09-30)
+
+Status: completed; eligible checkpoint update775, not promoted. User explicitly approved58new
+controls and one bounded encoding/training/comparison. Membership986train
+(790native+196human),315development,18retention; no duplicates/role migration.
+Arm reviewed-full-fit; output fdr021-reviewed-contrast. Fresh577parameter linear
+head, frozen ImageNet MobileNetV3-small576features; seed42, AdamWlr0.01,
+weight_decay0.01, native/human80/20label-balanced loss, full batch986,
+1000updates/300model-seconds,600second external training deadline.
+New58crops encoding:300internal/600external seconds; existing features reused.
+Data-ready protocol b04e18d6e44b8000a3c4405948d67778104a1f17fd3f269a98ee6665b6ce10e1.
+Final feature-bound protocol 1140910f741a048cefe155b4146087c6f5831ff55860c514416367e773097543.
+Encoding completed on MPS, PID94705, exit0; exact58members and encoder state match.
+Training PID94800,2026-09-30T23:55:03–23:55:24UTC,21.115s external/17.701s model;
+1000updates, exit0, no timeout. Encoding PID94705,5.683s external, exit0.
+Selected checkpoint update775:16/27development positives (FDR02014/27),3/288FP
+(unchanged),12/14unique-correct complete frames (was9/14),18/18retention unchanged.
+Artwork2/12(was1/12), artworkFP3(was2); rows7/7(was6/7); buttons3/3and0FP
+(was3/3and1FP); tabs2/3unchanged. Photos all-iCloud unfocused score0.983845→0.766655,
+below0.85but in abstention band, not a confident negative. App Store featured
+positive regressed0.889582→0.383987; new now-streaming negativeFP0.984190.
+Predeclared bounded development objective met, broad/model release gates still open.
+Training-fit stop not met; stopped at1000update cap. No export/promotion/retry.
+Best head SHA256bc1b5978f1febbf86ba57ae51d13c8f0fb68ffa4107e303f2f6ccf57fb0c2ec8.
+Replay verified986986training+13653validation predictions for this run, identical
+initial validation predictions/membership and source hashes.15focused tests,
+offline Swift build and109Swift tests passed. See execution-handoff.md.
+Compare fixed0.85against FDR020, unchanged guarded checkpoint selection. No export,
+promotion or automatic retries. Authority/evidence: FOCUS-REVIEW-CONTINUE-16.
+
 ## TRAIN-MPS-COMPARE-14 — bounded batch comparison (2026-09-30; completed)
 
 All four trials completed, exit0, aggregate712.116s. PIDs87684/88127/88576/88973;

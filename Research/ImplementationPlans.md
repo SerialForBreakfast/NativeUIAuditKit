@@ -1,5 +1,22 @@
 # Full backlog implementation packet catalog
 
+[FDR021-PIXEL-PARITY](Plans/FocusFDR021PixelParity.md): complete candidate-only
+straight-RGB compatibility repair;333production input/score parity passes. TTR
+consumer adoption/identity qualification is next, not another training run.
+
+[FDR021-COREML](Plans/FocusFDR021Export.md): complete encoder+head exported/compiled;
+333direct RGB parity passes, production opaque-buffer parity fails. Next assignment:
+resolve alpha semantics with legacy regression evidence before TTR integration.
+
+[FOCUS-REVIEW-CONTINUE-16](Plans/FocusReviewContinuation.md): integrated human
+review/crop/admission/changed-data trainer path; real pending-state preflight and
+generated positive/negative integration tests. New labels and model execution
+remain separate gates, not unfinished adapter work.
+
+[FOCUS-RETAINED-NEXT-15](Plans/FocusRetainedNext.md): retained coverage discovery,
+actual FDR020 input/loss audit and conditional changed-data proposal. Four-frame
+human review pending; no new model/capture execution.
+
 [TRAIN-MPS-COMPARE-14](Plans/MPSBatchComparison.md): matched batch8/16local MPS
 diagnostics, four trials under one1800s budget, no default/model promotion changes.
 

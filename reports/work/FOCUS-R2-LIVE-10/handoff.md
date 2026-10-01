@@ -1,5 +1,25 @@
 # Revision-2 local live preflight — 2026-09-30
 
+## Recheck at 22:46UTC
+
+Verified existing sillycon.local/SharedStatusFile SMB mount. Latest producer status
+is22:03:24UTC, expired22:33:24UTC: request nuiak-20260930-r2-local-runtime remains
+acknowledged_diagnostic_repair_pending. Its separately published0.3.1/build6 DMG
+does not claim the manifest repair. No release installation substituted for the fix.
+
+Host-context read-only process inventory found no TVTestRig, aatv or Fixture process;
+restricted ps was denied before the host-context check. This supersedes earlier
+running-process claims, not the retained historical readiness evidence. Local
+StableCLIRunner.readManifestFile still converts a failed Data read to invalidArgument.
+No supported import repair was identified. No repeated failing validation, capture,
+lease, new training or model inference was attempted.
+
+Resume requires TTR to identify the repaired manifest entrypoint/runtime and its
+verification evidence under the existing request. Then launch the matched runtime,
+requalify target/native scene, dispatch only the approved three pairs, export and
+perform label/crop QA. Software consumer evidence remains passed; data absent,
+integration blocked, model gate unassessed. Capture and crop QA are not complete.
+
 Capture remains blocked before dispatch. This supersedes the old-build and shutdown-Simulator blockers in FOCUS-R2-COMPAT-09, not its passing consumer tests.
 
 ## Verified runtime
@@ -59,7 +79,7 @@ does not accept a project grant or switch workspace during repair. Consequently
 the current repair UI is not an input-file grant for this campaign. No user retry
 of that control, Full Disk Access, or app restart is requested.
 
-Required producer change/answer: a supported caller-to-coordinator manifest import
+Historical required producer change/answer: a supported caller-to-coordinator manifest import
 (analogous to existing `fixture prepare --recipe-json`) or a dedicated user-selected
 manifest grant, preserving the current workspace, exact bytes/hash and campaign
 budgets. Include actionable manifest-read errors and actual sandboxed-helper tests.
@@ -71,3 +91,15 @@ was attempted with unchanged inputs/runtime.
 - Data: zero new pairs; no admission or crop-QA pass claimed.
 - Integration: Simulator readiness passed; campaign entry blocked; native scene unqualified.
 - Model: unassessed, shipped artifacts unchanged.
+
+## Superseding status2026-10-01T00:26UTC
+
+Producer snapshot00:19:36UTC reports source repair and corrected build7DMG
+available;23:10:12UTC acknowledgment references the exact existing request.
+Source archive `tvtestrig/ttr-campaign-manifest-import-20260930-r1.tar.gz`,123565bytes,
+SHA2562436d78f656a353ef718b503850085a2ce1a7b7ce27a225eccfce9c87758c768.
+Build7DMG13084692bytes,SHA2561e53503112a7c4ffce8afaa527ca3b9df76879b33afcfbdcb80bd92fa434c80d.
+These are producer claims, not receiver receipts or installed/running-build proof.
+Next: verify named handoff and actual matched runtime, then scene/approved-first3/
+export/crop acceptance. No new implementation request, repeated permission prompt,
+transfer, installation or capture performed during this status-only check.

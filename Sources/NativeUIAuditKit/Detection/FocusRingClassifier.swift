@@ -9,6 +9,7 @@ import CoreGraphics
 import CoreML
 import CoreVideo
 import Foundation
+import ImageIO
 
 /// Classifies whether a 256×256 crop of a tvOS UI element shows active system focus.
 ///
@@ -19,6 +20,8 @@ package struct FocusRingClassifier: @unchecked Sendable {
     let model: MLModel
     /// Identity attached only by the load-bracketed bundled loader, nil for custom models.
     let artifactDigest: String?
+    private let inputPixelContract: String?
+    package static let straightRGBContract = "png-straight-rgb-v1"
 
     /// Probability at or above which `isFocused` is asserted. Read from model metadata when present.
     let focusThreshold: Float
@@ -61,6 +64,7 @@ package struct FocusRingClassifier: @unchecked Sendable {
     package init(model: MLModel, artifactDigest: String? = nil) {
         self.model = model
         self.artifactDigest = artifactDigest
+        self.inputPixelContract = (model.modelDescription.metadata[.creatorDefinedKey] as? [String: String])?["inputPixelContract"]
         self.focusThreshold = Self.metadataFloat(model, key: "focusThreshold", fallback: Self.defaultFocusThreshold)
         self.ambiguityThreshold = Self.metadataFloat(model, key: "ambiguityThreshold", fallback: Self.defaultAmbiguityThreshold)
     }
@@ -73,9 +77,7 @@ package struct FocusRingClassifier: @unchecked Sendable {
         guard crop.width == Self.cropSize, crop.height == Self.cropSize else {
             throw NativeUIDetectionError.imagePreprocessingFailed
         }
-        guard let pixelBuf = Self.makePixelBuffer(crop) else {
-            throw NativeUIDetectionError.imagePreprocessingFailed
-        }
+        let pixelBuf = try inputPixelBuffer(crop: crop)
         let inputName = model.modelDescription.inputDescriptionsByName.keys.first ?? "image"
         let provider = try MLDictionaryFeatureProvider(dictionary: [
             inputName: MLFeatureValue(pixelBuffer: pixelBuf),
@@ -181,7 +183,17 @@ package struct FocusRingClassifier: @unchecked Sendable {
         return ctx.makeImage()
     }
 
-    private static func makePixelBuffer(_ image: CGImage) -> CVPixelBuffer? {
+    /// Package diagnostic access to the exact model input, not a second preprocessing path.
+    package func inputPixelBuffer(crop: CGImage) throws -> CVPixelBuffer {
+        guard crop.width == Self.cropSize, crop.height == Self.cropSize,
+              let buffer = Self.makePixelBuffer(crop, contract: inputPixelContract) else {
+            throw NativeUIDetectionError.imagePreprocessingFailed
+        }
+        return buffer
+    }
+
+    internal static func makePixelBuffer(_ image: CGImage, contract: String? = nil) -> CVPixelBuffer? {
+        guard contract == nil || contract == straightRGBContract else { return nil }
         let attrs = [
             kCVPixelBufferCGImageCompatibilityKey: true,
             kCVPixelBufferCGBitmapContextCompatibilityKey: true,
@@ -198,6 +210,45 @@ package struct FocusRingClassifier: @unchecked Sendable {
 
         CVPixelBufferLockBaseAddress(pixelBuf, [])
         defer { CVPixelBufferUnlockBaseAddress(pixelBuf, []) }
+        if contract == straightRGBContract {
+            // Match ImageIO PNG -> PIL.convert("RGB") training semantics exactly.
+            // Redrawing into an opaque context composites alpha instead of dropping it.
+            // A lossless in-memory roundtrip also pins ImageIO's unpremultiply rounding.
+            let png = NSMutableData()
+            guard let destination = CGImageDestinationCreateWithData(png, "public.png" as CFString, 1, nil) else { return nil }
+            CGImageDestinationAddImage(destination, image, nil)
+            guard CGImageDestinationFinalize(destination),
+                  let source = CGImageSourceCreateWithData(png, nil),
+                  let decoded = CGImageSourceCreateImageAtIndex(source, 0, [kCGImageSourceShouldCache: false] as CFDictionary),
+                  decoded.bitsPerComponent == 8,
+                  decoded.colorSpace?.model == .rgb,
+                  let bytes = decoded.dataProvider?.data,
+                  let src = CFDataGetBytePtr(bytes),
+                  let base = CVPixelBufferGetBaseAddress(pixelBuf) else { return nil }
+            let channels: Int
+            if decoded.alphaInfo == .last && decoded.bitsPerPixel == 32 { channels = 4 }
+            else if decoded.alphaInfo == .none && decoded.bitsPerPixel == 24 { channels = 3 }
+            else { return nil }
+            let order = decoded.bitmapInfo.intersection(.byteOrderMask)
+            guard order.isEmpty || order == .byteOrder32Big,
+                  decoded.width == image.width, decoded.height == image.height,
+                  decoded.bytesPerRow >= image.width * channels,
+                  CFDataGetLength(bytes) >= decoded.bytesPerRow * image.height else { return nil }
+            let dst = base.assumingMemoryBound(to: UInt8.self)
+            let stride = CVPixelBufferGetBytesPerRow(pixelBuf)
+            // Initialize row padding too; never depend on allocator contents.
+            memset(base, 0, stride * image.height)
+            for y in 0..<image.height {
+                for x in 0..<image.width {
+                    let s = y * decoded.bytesPerRow + x * channels
+                    let d = y * stride + x * 4
+                    dst[d] = src[s + 2]; dst[d + 1] = src[s + 1]
+                    dst[d + 2] = src[s]; dst[d + 3] = 255
+                }
+            }
+            return pixelBuf
+        }
+        // Unmarked shipped/legacy models retain their existing byte path.
         guard let ctx = CGContext(
             data: CVPixelBufferGetBaseAddress(pixelBuf),
             width: image.width,

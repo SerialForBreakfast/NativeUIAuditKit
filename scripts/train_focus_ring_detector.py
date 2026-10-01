@@ -64,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit"])
     return p.parse_args()
 
 
@@ -256,7 +256,10 @@ def main() -> int:
         raise ValueError("static_experiment_requires_mps_no_cpu_fallback")
     train_dataset = CropDataset(train, not experimental)
     val_dataset = CropDataset(val, False)
-    if report.get("fitDiagnostic") or report.get("fullFit"):
+    if report.get('protocolVersion') == 'focus-reviewed-full-fit-v1':
+        from focus_review_continuation import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get("fitDiagnostic") or report.get("fullFit"):
         from focus_fit_diagnostic import prepare_features
         model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
     elif report.get("pairedTraining"):

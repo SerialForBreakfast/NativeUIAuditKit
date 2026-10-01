@@ -1,5 +1,46 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FDR021 candidate production pixel parity,2026-10-01UTC
+
+Versioned opt-in pixel contract implemented in the actual classifier.333/333input
+hashes and production scores pass; FP32package3,788,293bytes. Shipped/legacy path
+unchanged. Generated alpha0/1/127/254/255, premultiplied/straight, orientation,
+repeatability and unknown-contract cases pass;12Python/112Swift tests/build pass.
+TTR loading/device qualification and promotion remain separate.
+[Handoff](reports/work/FDR021-PIXEL-PARITY/handoff.md).
+
+## FDR021 CoreML artifact and conversion diagnosis,2026-10-01UTC
+
+Complete FP32 model exported/compiled at3.79MB; direct RGB parity333/333passes.
+Production integration remains BLOCKED, not completed. Failed runtime evidence
+preserved;12focused tests pass. No promotion.
+[Handoff](reports/work/FDR021-COREML/handoff.md).
+
+## FDR021approved changed-data execution completed for review,2026-09-30
+
+58admitted controls encoded;986-control full-fit run completed once in21.115s
+external time. Selected775eligible; identical-input comparison12/14unique-correct
+(was9/14),16/27positive hits(was14/27),3FPunchanged,18/18retention. Artwork still
+2/12with3FP; no export/promotion. All recorded predictions replay-verified.
+[Handoff](reports/work/FOCUS-REVIEW-CONTINUE-16/execution-handoff.md).
+
+## FOCUS-REVIEW-CONTINUE-16 software complete for review,2026-09-30
+
+Integrated review/crop/admission/assembly/trainer path and gated new-feature caching.
+73focused tests, offline build,109Swift tests pass. Actual retained preflight verifies
+928training/315development/18retention unchanged and reports concrete pending human
+and execution gates. No real model execution, new labels or promotion.
+[Handoff](reports/work/FOCUS-REVIEW-CONTINUE-16/handoff.md).
+
+## FOCUS-RETAINED-NEXT-15 offline preparation complete for review,2026-09-30
+
+739observations/702files inventoried; four targeted diagnostic frames and optional
+rectangle presets prepared. FDR0201261crop hashes and actual928training loss weights
+verified. Conditional changed-data proposal preserves315development/18retention;
+actual trainer rejects occupied old output and non-executable proposal. New labels,
+crop QA, admission, source review and launch remain separate gates, not completed.
+[Handoff](reports/work/FOCUS-RETAINED-NEXT-15/handoff.md).
+
 ## TRAIN-MPS-COMPARE-14 completed for review,2026-09-30
 
 Four bounded batch8/16MPS trials completed in712.116s with all guards satisfied.

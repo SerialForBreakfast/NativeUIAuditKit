@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-30 (storage status reconciled; model/runtime results below retain their observation dates)
+**As of:** 2026-10-01T00:26UTC (status reconciliation; underlying results retain their observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,75 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+**TTR coordination check,00:26UTC:** fresh peer snapshot00:19:36UTC reports
+manifest repair plus corrected0.3.1/build7available. Capture track now awaits
+consumer verification, not producer implementation. No new local runtime check,
+download or capture was performed. FDR021RGB consumer request remains published
+without peer acknowledgment; it postdates the current peer snapshot. Local333/333
+production parity remains passed; TTR candidate loading/deployment remains unverified.
+
+**FDR021 runtime repair,2026-10-01UTC:** production CPU parity now PASSES333/333;
+exact model-input RGB hashes match the frozen training convention, maximum score
+error0.0000341 with zero0.5/0.70/0.85decision changes. Candidate metadata
+`inputPixelContract=png-straight-rgb-v1` opts into lossless in-memory PNG straight-RGB
+handling; absent metadata keeps shipped code path, unknown contracts fail closed.
+Fresh complete FP32 package3,788,293bytes.12Python/112Swift tests/build pass.
+No bundled model replaced. TTR candidate loader/build is not yet verified; ask for
+explicit contract enforcement and loaded artifact identity before observer testing.
+[Runtime handoff](../reports/work/FDR021-PIXEL-PARITY/handoff.md).
+
+**Historical FDR021 initial CoreML export,2026-10-01UTC (superseded above):** experimental complete FP32 model built and
+compiled,3,788,242bytes. Direct RGB CoreML CPU matches all333frozen development/
+retention crops(max error0.0000341; no0.5/0.70/0.85decision changes). Production
+Swift path DOES NOT pass(max0.418649);63crops have partial alpha, exposing saved-RGB
+versus opaque-buffer handling. FP16 also failed. No shipped asset replaced or TTR
+deployment. Next: scoped alpha compatibility repair and production parity.
+[Export handoff](../reports/work/FDR021-COREML/handoff.md).
+
+**FDR021completed,2026-09-30:** approved58-control addition produced an eligible
+experimental checkpoint at update775. Same315/18evaluation members: unique-correct
+frames9/14→12/14, positive hits14/27→16/27,3FPunchanged, retention18/18. Artwork
+hits1/12→2/12but artworkFP2→3; Photos FP removed at0.85, still uncertain negative.
+No production qualification/promotion. The selected head requires the pinned encoder;
+subsequent complete CoreML export is recorded above. Production parity precedes
+observer integration; artwork coverage remains a major gap.
+[Execution handoff](../reports/work/FOCUS-REVIEW-CONTINUE-16/execution-handoff.md).
+
+**Next focus experiment prepared,2026-09-30:** source review verifies existing
+whole-session training reservation; no independent-transfer claim. Exact addition
+proposes58focus-control crops (4positive/54negative), excludes21text/decorative crops
+without deleting annotations. Projected986training controls;315development/18retention
+unchanged. Weights checked through existing implementation. This proposal was
+subsequently approved and executed as FDR021; see current result above.
+[Decision](../reports/work/FOCUS-REVIEW-CONTINUE-16/source-admission-review.md).
+
+**Human review received,2026-09-30:** four confirmed frames,79controls,79distinct
+production crops; crop QA completed79/79 with no audit issues. Exact protected and
+baseline crop overlap checks found none (not proof of source independence).
+User confirmed Ghost focused in frame598; new correction revision preserves the
+original and changes only that label.79crops reverified unchanged;4focused/75unfocused,
+one focused per frame. Subsequent58-control admission and FDR021execution complete.
+Evidence: FOCUS-REVIEW-CONTINUE-16/ghost-confirmed-qa.
+
+**Review continuation,2026-09-30 — FOCUS-REVIEW-CONTINUE-16:** the previously missing
+review→crop QA→explicit admission→changed-data trainer adapter is implemented and
+verified. Actual retained preflight preserves928train/315development/18retention,
+the initial preflight had zero admitted new controls. Human review, crop QA and
+subsequent approved execution now complete.73software tests plus15execution tests,
+offline build and109Swift tests pass. Model result is recorded above.
+[Handoff](../reports/work/FOCUS-REVIEW-CONTINUE-16/handoff.md).
+
+**Retained focus work,2026-09-30 — FOCUS-RETAINED-NEXT-15:**702retained image
+files/739frame observations screened against40reviewed frames.625unreviewed
+candidate pixels are mostly nearby states, not625new screen designs. Four
+Paramount contrast frames now reviewed with79verified crops; admission remains
+pending. All1261FDR020 training/development/retention crops verified;
+human training has6focused artwork and0focused buttons. Photos/Home/Settings
+also occur in the supplement recording: source-session identity alone cannot
+establish independence. Frozen315development/18retention remain unchanged.
+Changed-data proposal, not a training launch; shipped models unchanged.
+[Handoff](../reports/work/FOCUS-RETAINED-NEXT-15/handoff.md).
 
 **MPS batch comparison completed,2026-09-30:** TRAIN-MPS-COMPARE-14 completed
 four two-epoch trials in11m52s. Batch16delivered7.67%higher first-epoch throughput,
@@ -50,6 +119,11 @@ Native Fixture scene returns no_sample; capture/crop QA remain pending, no new p
 Follow-up workspace check passes in app-managed mode; current folder-repair UI
 does not grant separate manifest input access. Producer import/grant path remains required.
 User grants standing Simulator use; remaining21/training excluded from this proof.
+22:46UTC recheck supersedes runtime liveness above: no TTR/helper/Fixture processes
+observed. Latest producer22:03UTC status still lists manifest repair pending and is
+expired; local manifest reader still masks file-read failure. No repeat capture
+attempt or speculative release installation. Resume on an identified repaired
+runtime/import contract, then refresh target and native-scene qualification.
 [Live evidence](../reports/work/FOCUS-R2-LIVE-10/handoff.md).
 
 **Historical revision2consumer readiness,2026-09-30 (runtime superseded above):**24actual producer

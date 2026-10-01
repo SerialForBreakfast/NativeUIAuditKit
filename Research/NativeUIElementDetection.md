@@ -650,6 +650,34 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Candidate input contract,2026-10-01UTC:** `inputPixelContract=png-straight-rgb-v1`
+selects an in-memory ImageIO PNG roundtrip and explicit straight RGB→opaque BGRA
+copy in FocusRingClassifier. This exactly matches PNG/PIL RGB training on333frozen
+crops and passes production score parity. No blending/recoloring at this boundary.
+Missing metadata preserves legacy preprocessing; unknown values fail closed.
+Candidate adoption requires a consumer that enforces the metadata before loading;
+older consumers ignore it and are NOT compatible. Full-package identity and source
+hashes are in [FDR021-PIXEL-PARITY](../reports/work/FDR021-PIXEL-PARITY/artifact-index.json).
+No public API change, taxonomy change or model promotion.
+
+**Initial FDR021 export diagnosis (repaired above):** the experimental frozen MobileNetV3-small576feature
+head needs a complete encoder+head export with in-graph ImageNet normalization.
+The sealed trace receipt binds encoder, head, protocol and333CPU reference scores.
+FP32 direct RGB CoreML parity passes; production CGImage→opaque-buffer parity
+fails on the current corpus, including63partial-alpha crops. RGB PNG hash equality
+does not establish model-input equality. Do not silently change shipped preprocessing.
+See [export contract](Plans/FocusFDR021Export.md). No public API/taxonomy changes.
+
+**Reviewed-data continuation,2026-09-30:**
+[FOCUS-REVIEW-CONTINUE-16](Plans/FocusReviewContinuation.md) adds the versioned
+`focus-reviewed-full-fit-v1` adapter. Original FDR020 membership and selection
+remain sealed; explicit human review, crop QA and source/membership-bound admission
+precede additions. Original native weights remain80%; the human20% is redistributed
+across confirmed frames and labels. New feature encoding is separately authorized;
+ordered receipts must match the original frozen encoder. The existing trainer and
+full-fit loop consume the changed assembly. This is software readiness, not new
+training, independence qualification, or permission to export/promote.
+
 **MPS comparison,2026-09-30:** [TRAIN-MPS-COMPARE-14](Plans/MPSBatchComparison.md)
 compares batch8/16through existing diagnostics under one1800s budget. Primary
 epoch1membership is identical; warmup/padding differ and epoch2OHEM membership may

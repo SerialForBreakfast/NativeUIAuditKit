@@ -1,34 +1,68 @@
 # NativeUIAuditKit — Tasks
 
-**TRAIN-MPS-COMPARE-14 — complete for review / current Codex:** all four trials
-completed in712.116s. Batch16throughput+7.67%, but peak logged MPS allocation
-10.60vs5.62GiB and minimum available RAM3.374vs5.465GiB. Retain batch8default.
-35Python/123Swift tests and build pass; no model promotion. Next: return to focus
-representative data/validation; refresh TTR handoff for approved three-pair proof,
-not another batch sweep. [Handoff](reports/work/TRAIN-MPS-COMPARE-14/handoff.md).
+**Status reconciliation,2026-10-01T00:26UTC:** TTR00:19:36UTC status reports
+manifest-import repair and corrected build7 available; producer implementation is
+no longer the capture blocker. Consumer receipt/runtime/scene/three-pair acceptance
+remain unverified. No acknowledgment yet of `nuiak-20261001-fdr021-rgb-consumer`
+(request was published after that peer snapshot). Next priorities: TTR candidate
+loader/contract confirmation for FDR021; separately, verified build7 intake and
+bounded first3capture/crop proof. No repeated training or annotation required.
 
-**TRAIN-MPS-DIAG-13 — complete for review / current Codex:**
-Attempt02 completed two MPS epochs/128batches in189.832s, exit0; all resource
-guards held. Training batch intervals80.3%of epoch wall time; OHEM callbacks and
-checkpoint work minor.512train/64validation/source pins reverified. Batch8/16
-follow-up is completed in packet14above; no further run implied.
-Diagnostic weights only; no quality qualification or shipped-model change.
-[Handoff](reports/work/TRAIN-MPS-DIAG-13/handoff.md).
+**FDR021-PIXEL-PARITY — complete for review / Codex:** candidate-only production
+input repair passes333/333exact RGB hashes and score parity(max0.0000341; no flips).
+Fresh FP32 package3,788,293bytes,12Python/112Swift tests and offline build pass.
+Shipped path retained. Next: TTR confirms experimental loader/source contract and
+loaded identity before separately scoped observer testing; do not replace bundled
+weights. [Handoff](reports/work/FDR021-PIXEL-PARITY/handoff.md).
 
-**TRAIN-OHEM-TIMING-12 — review / current Codex:** rectangular OHEM repaired;
-optional trainer `--timing` integrated, including failure evidence.43Python tests,
-123Swift tests and offline build pass. Bounded MPS continuation is now packet13
-above, completed as a diagnostic; no full training or CUDA.
-[Handoff](reports/work/TRAIN-OHEM-TIMING-12/handoff.md).
+**FDR021 original CoreML export — superseded:** original3,788,242byte package failed
+production alpha parity. Preserved as diagnostic evidence; use the new explicitly
+contracted artifact above. [Original handoff](reports/work/FDR021-COREML/handoff.md).
 
-**FOCUS-OFFLINE-PRODUCTIVITY-11 — review / current Codex:** optional preview filtering
-reduces retained Vision proposals244→193 with44/78matches unchanged; cached-score
-decision report and MPS-only efficiency audit/spec delivered.62Python/123Swift tests
-and offline build pass. Rectangular-OHEM repair/timing delivered in packet12 above;
-separate local compute approval precedes any batch benchmark. No CUDA, new inference,
-training or capture. [Handoff](reports/work/FOCUS-OFFLINE-PRODUCTIVITY-11/handoff.md).
+**FOCUS-REVIEW-CONTINUE-16 / FDR021 — completed for review:**58controls admitted,
+encoded and trained once. Selected775:12/14unique-correct frames(was9/14),
+16/27positives(was14/27),3FPunchanged,18/18retention. Artwork2/12remains weak;
+new artworkFP/regression documented. Subsequent export and local production parity
+pass. Observer-only TTR testing remains separately scoped work.
+[Execution handoff](reports/work/FOCUS-REVIEW-CONTINUE-16/execution-handoff.md).
 
-**FOCUS-R2-LIVE-10 — new runtime verified, manifest entry blocked:** local helper
+**FOCUS-REVIEW-CONTINUE-16 — software complete for review / Codex:** integrated
+review→production crop QA→explicit admission→changed-data assembly→real trainer
+preflight.73focused tests and109Swift tests passed; build passed. Retained preflight
+preserves928/315/18. Human review and79/79crop QA are complete, including the
+user-confirmed Ghost correction. Subsequent approved execution completed as FDR021;
+see current result above. [Software handoff](reports/work/FOCUS-REVIEW-CONTINUE-16/handoff.md),
+[resume commands](reports/work/FOCUS-REVIEW-CONTINUE-16/operator.md).
+
+**FOCUS-RETAINED-NEXT-15 — current Codex, complete preparation for review:** retained recording
+inventory, FDR020 input/weight audit and a conditional changed-data experiment.
+Four-frame diagnostic batch reviewed; human labels and crop QA complete. Explicit
+admission and source-relationship review precede any run. No model execution authorized.
+[Contract](Research/Plans/FocusRetainedNext.md),
+[handoff](reports/work/FOCUS-RETAINED-NEXT-15/handoff.md).
+
+**Immediate focus queue (supersedes historical next-action prose below):**
+1. Four-frame revision20260930T234213Z-2517905f received;79/79production crops pass,
+   no audit issues or exact protected/baseline pixel overlaps. User confirmed Ghost
+   focused: new ghost-confirmed revision changes only recorded-598:new-1. All4frames
+   now have one focused control;79crops unchanged. Original revision preserved.
+2. FDR021completed on986train/315development/18retention. Preserve selected775;
+   qualify TTR's candidate loading and explicit pixel contract before observer-only integration.
+   No repeat annotation or unchanged training. Target future
+   training-source collection at artwork/top-shelf gaps; do not reuse development
+   failures as training data.
+3. FOCUS-R2-LIVE-10 is now consumer-verification pending: producer reports repair
+   and build7 available. No fresh local runtime or capture acceptance claimed.
+4. Model execution/export/promotion require their respective readiness and approval.
+
+Completed OHEM/timing, MPS diagnostic/comparison and offline productivity entries
+are archived in CompletedTasks.md and their handoffs; do not redispatch them.
+
+**FOCUS-R2-LIVE-10 — superseding00:26UTC status:** producer reports source repair
+and build7published; existing request acknowledged23:10UTC. Consumer intake and
+fresh local scene/export/crop acceptance remain pending, not another producer fix.
+
+**Historical FOCUS-R2-LIVE-10 runtime failure:** local helper
 b79b34e4 and Fixture062ddfe7 running; local tvOS26.5 Simulator booted and TTR readiness
 passes. First3 manifest rebound to local target; validate still returns invalidArgument
 before capture. Matching source masks manifest file-read failures; exact permission
@@ -37,7 +71,10 @@ Follow-up: TTR app-managed workspace refresh passes; its repair UI cannot grant 
 separate campaign input file. Producer manifest import/grant required, not another
 human permission retry. Existing per-recipe jobs lack the advertised one-target cap.
 21:17UTC: TTR acknowledges the request; diagnostic repair pending, not delivered.
-Running helper/Fixture unchanged. Reapproved capture and label/crop QA remain blocked
+22:46UTC recheck: no TTR/helper/Fixture processes running. Producer22:03UTC status
+still records diagnostic repair pending (now expired); packaged0.3.1/build6 does
+not claim this repair. Local readManifestFile remains unchanged.
+Reapproved capture and label/crop QA remain blocked
 before dispatch, not completed.
 Fixture scene responds but reports no_sample. Standing Simulator authority recorded;
 no new pairs/training. [Evidence and resume condition](reports/work/FOCUS-R2-LIVE-10/handoff.md).

@@ -1,6 +1,7 @@
 import Foundation
 import CoreGraphics
 import CoreML
+import CoreVideo
 import ImageIO
 import CryptoKit
 import NativeUIAuditKit
@@ -27,6 +28,7 @@ struct ItemResult: Encodable, Sendable {
     let probability: Float?
     let cropMilliseconds: Double
     let inferenceMilliseconds: Double?
+    var modelInputRGBSHA256: String? = nil
 }
 struct Reply: Encodable, Sendable {
     let version: Int
@@ -96,7 +98,19 @@ func run(output: FileHandle) throws {
             let inferenceStart = ProcessInfo.processInfo.systemUptime
             let p = try classifier.classify(crop: crop).isFocusedProbability
             guard p.isFinite, (0...1).contains(p) else { throw ToolError.invalidModel }
-            results.append(ItemResult(id: item.id, png: nil, probability: p, cropMilliseconds: cropTime, inferenceMilliseconds: milliseconds(inferenceStart)))
+            let inferenceTime = milliseconds(inferenceStart)
+            let buffer = try classifier.inputPixelBuffer(crop: crop)
+            CVPixelBufferLockBaseAddress(buffer, .readOnly)
+            defer { CVPixelBufferUnlockBaseAddress(buffer, .readOnly) }
+            guard let base = CVPixelBufferGetBaseAddress(buffer) else { throw ToolError.invalidImage }
+            let bytes = base.assumingMemoryBound(to: UInt8.self)
+            var rgb = Data("(256, 256)".utf8); rgb.append(0)
+            for y in 0..<256 { for x in 0..<256 {
+                let i = y * CVPixelBufferGetBytesPerRow(buffer) + x * 4
+                rgb.append(bytes[i + 2]); rgb.append(bytes[i + 1]); rgb.append(bytes[i])
+            } }
+            results.append(ItemResult(id: item.id, png: nil, probability: p, cropMilliseconds: cropTime, inferenceMilliseconds: inferenceTime,
+                modelInputRGBSHA256: SHA256.hash(data: rgb).map { String(format: "%02x", $0) }.joined()))
         } else {
             let png = NSMutableData()
             guard let destination = CGImageDestinationCreateWithData(png, "public.png" as CFString, 1, nil) else { throw ToolError.invalidImage }

@@ -2370,3 +2370,54 @@ warmup update counts15versus19in epoch1. Compare matching source membership befo
 OHEM changes it, record update counts and memory headroom, and keep later epochs
 supplementary. This prevents a modest resource tradeoff being called a quality-
 equivalent or pure-GPU improvement. Batch8remains the default.
+
+### Focus input-audit follow-up — presentation strata are not control-name buckets
+
+**Wrong:** Audit native training coverage using only the evaluator's control-name
+mapping. Native tabs or rows implemented as buttons/toggles then appear absent or
+misclassified, despite correct presentation-aware sampling. Also, a different
+recording/session ID is not evidence of a different UI family.
+
+**Correct:** Trace the actual frozen sampler's appearance support and loss mass,
+and name any alternate control-based grouping explicitly. Inspect retained session
+context before extending admission. FOCUS-RETAINED-NEXT-15 verified four native
+appearance strata each receive20%total loss, whereas the human subset has6focused
+artwork examples and no focused buttons. The same recording contains OS families
+related to development; no independent-test claim follows from its session ID.
+
+**Why:** Prevents a false missing-stratum diagnosis or an accidental independence
+claim while choosing additions that address the actual human coverage gaps.
+
+### CoreML parity — test the final pixel-buffer boundary
+
+**Wrong:** Assume matching saved RGB crop hashes establish the input consumed by
+CoreML. FDR021 direct RGB parity passed while production inference disagreed;
+63retained PNGs contain partial alpha, discarded by PIL RGB but redrawn by Swift.
+
+**Correct:** Check complete-model conversion independently, then production crop
+and pixel-buffer handling on opaque and partial-alpha cases. Preserve failed
+evidence; scope compatibility changes explicitly rather than adjusting thresholds
+or overwriting training pixels. FP32 may fix precision errors but not image handling.
+
+**Why:** Separates model conversion from preprocessing drift and prevents shipping
+a model whose runtime decisions differ from its development evaluation.
+
+**Verified repair,2026-10-01:** candidate-only `png-straight-rgb-v1` performs a
+lossless in-memory PNG roundtrip followed by explicit RGB→BGRA copy, matching
+333/333model input hashes and scores. A generic premultiply/unpremultiply formula
+or black composite was not assumed equivalent. Preserve legacy behavior via
+absent metadata; require explicit consumer support before handing off new weights.
+
+### Reviewed-data continuation — static labels are not transition pairs
+
+**Wrong:** Reuse a paired test fixture for independently reviewed frames whose
+focus labels no longer represent an observed switch. This produced an unresolved
+pair issue even though each individual static crop had a valid reviewed label.
+
+**Correct:** Keep static human samples pair-free; reserve pair membership for
+verified same-control transitions. Test the complete review/crop/admission/trainer
+path, not just a mocked readiness report. Ordered new-feature receipts must bind
+exact control IDs, labels, crop hashes and the original frozen encoder state.
+
+**Why:** Avoids blocking valid static supervision or silently inventing temporal
+evidence, while ensuring a changed-data comparison really reuses the same encoder.

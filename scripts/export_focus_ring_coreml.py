@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-export_focus_ring_coreml.py — Export FocusRingDetector .pt → FP16 CoreML.
+export_focus_ring_coreml.py — Export FocusRingDetector .pt → CoreML (FP16 default).
 
 Uses torch.jit.trace → coremltools, bypassing the ONNX step (no `onnx` package needed).
 
@@ -38,11 +38,14 @@ def utc_now() -> str:
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Export FocusRingDetector model to FP16 CoreML")
+    p = argparse.ArgumentParser(description="Export FocusRingDetector model to CoreML")
     p.add_argument("--weights", required=True, help="Path to best.pt checkpoint")
     p.add_argument("--output-dir", default=None,
                    help="Export directory (default: <weights>/../export/)")
     p.add_argument("--model", default="mobilenetv4_conv_small")
+    p.add_argument('--trace-receipt', help='Explicit sealed complete-model TorchScript receipt; never a head-only export')
+    p.add_argument('--precision',choices=['fp16','fp32'],default='fp16',help='Explicit conversion precision; default legacy FP16')
+    p.add_argument('--pixel-contract', choices=['png-straight-rgb-v1'], help='Explicit candidate runtime input contract; absent preserves legacy')
     p.add_argument("--experimental-id", required=True, help="Unique non-production artifact identity, e.g. fdr007-native-incremental")
     return p.parse_args()
 
@@ -109,6 +112,11 @@ def main() -> int:
     ckpt = torch.load(weights, map_location="cpu", weights_only=True)
     model_name = ckpt.get("model_name", args.model) if isinstance(ckpt, dict) else args.model
     state = ckpt["state_dict"] if isinstance(ckpt, dict) and "state_dict" in ckpt else ckpt
+    if args.trace_receipt:
+        from focus_reviewed_export import checked_trace
+        receipt = checked_trace(args.trace_receipt, weights_hash, ckpt)
+        traced = torch.jit.load(str(PROJECT_ROOT/receipt['trace']['path']), map_location='cpu').eval()
+        return convert_traced(args, weights, weights_hash, export_dir, model_name, traced, torch, ct, receipt)
     if model_name != "mobilenetv4_conv_small": raise ValueError("unsupported_backbone")
     if not state or any(not torch.isfinite(v).all() for v in state.values()):
         raise ValueError("nonfinite_or_empty_checkpoint")
@@ -146,6 +154,11 @@ def main() -> int:
     traced = torch.jit.trace(wrapped, example)
     traced.eval()
 
+    return convert_traced(args, weights, weights_hash, export_dir, model_name, traced, torch, ct)
+
+
+def convert_traced(args, weights, weights_hash, export_dir, model_name, traced, torch, ct, receipt=None):
+
     print("stage=convert", flush=True)
     mlmodel = ct.convert(
         traced,
@@ -162,7 +175,7 @@ def main() -> int:
             ct.TensorType(name="confidence"),
         ],
         convert_to="mlprogram",
-        compute_precision=ct.precision.FLOAT16,
+        compute_precision=ct.precision.FLOAT16 if args.precision=='fp16' else ct.precision.FLOAT32,
         minimum_deployment_target=ct.target.macOS15,
     )
 
@@ -173,9 +186,15 @@ def main() -> int:
     mlmodel.user_defined_metadata["versionString"] = "0.0.0-experimental"
     mlmodel.user_defined_metadata["checkpointSHA256"] = weights_hash
     mlmodel.user_defined_metadata["releaseEligible"] = "false"
+    if args.pixel_contract:
+        mlmodel.user_defined_metadata['inputPixelContract'] = args.pixel_contract
     mlmodel.user_defined_metadata["focusThreshold"] = "0.85"
     mlmodel.user_defined_metadata["ambiguityThreshold"] = "0.70"
     mlmodel.user_defined_metadata["backboneArchitecture"] = model_name
+    if receipt:
+        mlmodel.user_defined_metadata['encoderSHA256'] = receipt['encoder']['sha256']
+        mlmodel.user_defined_metadata['traceSHA256'] = receipt['trace']['sha256']
+        mlmodel.user_defined_metadata['normalization'] = 'in-graph ImageNet mean/std; RGB255 input'
 
     pkg = export_dir / "FocusRingDetector.mlpackage"
     export_dir.mkdir(parents=True, exist_ok=False)
@@ -193,8 +212,10 @@ def main() -> int:
         "releaseEligible": False,
         "torchVersion": torch.__version__,
         "coremltoolsVersion": ct.__version__,
-        "method": "torch.jit.trace/FP16/macOS15/RGB255",
+        "method": "torch.jit.trace/"+args.precision.upper()+"/macOS15/RGB255",
         "model_name": model_name,
+        "traceReceipt": receipt,
+        "inputPixelContract": args.pixel_contract,
         "mlpackage": str(pkg),
         **size,
     }

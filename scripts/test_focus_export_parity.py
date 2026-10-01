@@ -68,6 +68,16 @@ class ExportParityTests(unittest.TestCase):
             "releaseEligible": "false", "focusThreshold": "0.85", "ambiguityThreshold": "0.70"}}
         path = model/"metadata.json"; path.write_text(json.dumps([metadata]))
         self.assertIn("sha256", validate_model_identity(model, export))
+        contracted={**export,'inputPixelContract':'png-straight-rgb-v1'}
+        with self.assertRaisesRegex(FocusDataError, "compiled_identity_mismatch"):
+            validate_model_identity(model, contracted)
+        metadata['userDefinedMetadata']['inputPixelContract']='png-straight-rgb-v1'
+        path.write_text(json.dumps([metadata]))
+        self.assertIn('sha256',validate_model_identity(model,contracted))
+        metadata['userDefinedMetadata']['inputPixelContract']='unknown'
+        path.write_text(json.dumps([metadata]))
+        with self.assertRaisesRegex(FocusDataError, "compiled_identity_mismatch"):
+            validate_model_identity(model, contracted)
         metadata["userDefinedMetadata"]["checkpointSHA256"] = "other"
         path.write_text(json.dumps([metadata]))
         with self.assertRaisesRegex(FocusDataError, "compiled_identity_mismatch"):

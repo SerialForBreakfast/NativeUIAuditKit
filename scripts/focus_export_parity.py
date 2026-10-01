@@ -21,6 +21,8 @@ def validate_model_identity(model, export):
     expected = {"modelID": "focus-ring-experimental-"+export["experimentalID"],
         "checkpointSHA256": export["checkpointSHA256"], "releaseEligible": "false",
         "focusThreshold": "0.85", "ambiguityThreshold": "0.70"}
+    if export.get('inputPixelContract'):
+        expected['inputPixelContract'] = export['inputPixelContract']
     if any(metadata.get(k) != v for k,v in expected.items()):
         raise FocusDataError("compiled_identity_mismatch")
     return contract
