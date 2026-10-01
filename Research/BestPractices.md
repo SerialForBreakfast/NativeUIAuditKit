@@ -2388,6 +2388,20 @@ related to development; no independent-test claim follows from its session ID.
 **Why:** Prevents a false missing-stratum diagnosis or an accidental independence
 claim while choosing additions that address the actual human coverage gaps.
 
+### Simulator scene and campaign export boundaries — 2026-09-30
+
+**Wrong:** Treat a booted/headless Fixture process or successful capture as proof
+of native layout readiness or caller-path export access.
+
+**Correct:** Correlate endpoint to the exact Simulator process and inspect settled
+native scene. In FOCUS-R2-LIVE-11, opening the Simulator display changed no_sample
+to settled geometry without restart/reinstall. Completed3pairs survived failed
+project export; app-owned export and hash-verified local receipt succeeded.
+
+**Why:** Separates rendering readiness and writer access from capture integrity,
+avoiding unnecessary recapture or broad permission changes. This observation does
+not establish a universal no_sample cause or qualify arbitrary export destinations.
+
 ### CoreML parity — test the final pixel-buffer boundary
 
 **Wrong:** Assume matching saved RGB crop hashes establish the input consumed by

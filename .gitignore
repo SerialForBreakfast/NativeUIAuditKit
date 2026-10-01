@@ -214,3 +214,6 @@ reports/work/OS-FOCUS-03/**/*.mp4
 /reports/work/FDR021-PIXEL-PARITY/export/
 /reports/work/FDR021-PIXEL-PARITY/compiled/
 /reports/work/FDR021-PIXEL-PARITY/*.log
+/reports/work/FOCUS-R2-LIVE-11/received/
+/reports/work/FOCUS-R2-LIVE-11/crops/
+/reports/work/FOCUS-R2-LIVE-11/*.log

@@ -1,5 +1,14 @@
 # NativeUIAuditKit — Tasks
 
+**FOCUS-R2-LIVE-11 — completed for review:** new running local TTRf2d9728c validates
+inline manifest and captures approved3/3pairs in15.485s. Received44files/10,515,400bytes
+with matching hashes; existing consumer accepts all3native brackets;6/6production
+crops pass and visually reviewed. Native-button artwork role unavailable, not inferred.
+Direct project campaign export still fails; app-owned export plus verified receipt
+works. Postflight idle/clear/settled. No more recapture of these originals. Next:
+use these diagnostics in the coverage decision; remaining21capture/training not run.
+[Handoff](reports/work/FOCUS-R2-LIVE-11/handoff.md).
+
 **Status reconciliation,2026-10-01T00:26UTC:** TTR00:19:36UTC status reports
 manifest-import repair and corrected build7 available; producer implementation is
 no longer the capture blocker. Consumer receipt/runtime/scene/three-pair acceptance
@@ -51,8 +60,9 @@ admission and source-relationship review precede any run. No model execution aut
    No repeat annotation or unchanged training. Target future
    training-source collection at artwork/top-shelf gaps; do not reuse development
    failures as training data.
-3. FOCUS-R2-LIVE-10 is now consumer-verification pending: producer reports repair
-   and build7 available. No fresh local runtime or capture acceptance claimed.
+3. FOCUS-R2-LIVE-11 closes the approved first3consumer proof with actual capture,
+   native-label intake and crop QA. Direct export remains a nonblocking TTR issue;
+   app-owned export/verified receipt works. Remaining21cases not dispatched.
 4. Model execution/export/promotion require their respective readiness and approval.
 
 Completed OHEM/timing, MPS diagnostic/comparison and offline productivity entries

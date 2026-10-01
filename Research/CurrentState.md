@@ -1,6 +1,6 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-10-01T00:26UTC (status reconciliation; underlying results retain their observation dates)
+**As of:** 2026-09-30 18:04 PDT /2026-10-01T01:04UTC (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
@@ -10,6 +10,15 @@ This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md
 ---
 
 ## Shipped
+
+**Three-pair runtime proof complete,2026-09-30PDT:** local new TTRf2d9728c and
+installed Fixture062ddfe7 captured3/3approved pairs; independent receiver hashes
+44files/10,515,400bytes match. All3native-label brackets and6production crops pass.
+Direct campaign export to project failed; supported app-owned export then verified
+receipt succeeded without recapture. Target9026ECA9postflight ready/ownership clear,
+Fixture settled/responsive. Initial no_sample resolved when Simulator display opened.
+Diagnostic-only;15other targets excluded by approved cap; no training/promotion.
+[Evidence](../reports/work/FOCUS-R2-LIVE-11/handoff.md).
 
 **TTR coordination check,00:26UTC:** fresh peer snapshot00:19:36UTC reports
 manifest repair plus corrected0.3.1/build7available. Capture track now awaits
