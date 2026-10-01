@@ -57,6 +57,9 @@ def receipt_check(receipt, doc):
     before = {k:v for k,v in doc.items() if k != 'protocolSHA256'}
     before.update(inputs={**doc['inputs'], 'newFeatures':None},
                   blockers=doc['blockers']+['missing_native_feature_cache'])
+    # Encoded bytes bind the encoder/members/preprocessing, not the subsequent
+    # trainer source revision. Retain and verify the original runtime receipt.
+    before['runtime'] = encoded['runtime']
     before['protocolSHA256'] = h.digest(before)
     h.require(encoded == before, 'changed_encoding_protocol')
     approved = read_ref(receipt['approval'])
@@ -65,7 +68,20 @@ def receipt_check(receipt, doc):
 
 def make_protocol(spec):
     h.require(spec.get('version') == INPUT_VERSION and
-              set(spec) <= {'version','assembly','encodingBudget','newFeatures'}, 'native_experiment_inputs')
+              set(spec) <= {'version','assembly','encodingBudget','newFeatures','reweightPolicy'}, 'native_experiment_inputs')
+    policy = spec.get('reweightPolicy')
+    h.require(policy in (None,assembly.CONTINUITY_POLICY), 'unsupported_weight_policy')
+    # Validate the unchanged encoding contract first; weighting affects the head
+    # objective, never the cached encoder output or its historical approval.
+    if policy is not None:
+        original = make_protocol({k:v for k,v in spec.items() if k!='reweightPolicy'})
+        base = read_ref(original['baseline'])
+        additions = [r for r in original['samples'] if r['split']=='train'][original['baselineTraining']:]
+        original['inputs']['reweightPolicy'] = policy
+        original['fullFit'] = {**original['fullFit'], 'weights':assembly.continuous_weights(base,additions)}
+        original.pop('protocolSHA256')
+        original['protocolSHA256'] = h.digest(original)
+        return original
     native = verified_assembly(spec['assembly'])
     base = read_ref(native['baseline'])
     h.require(base['version'] == reviewed.VERSION and base['protocolSHA256'] == assembly.BASE_SEAL,

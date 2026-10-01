@@ -25,8 +25,11 @@ def rect(value):
 
 def validate(doc, scene=None):
     require(isinstance(doc, dict), 'object_required')
+    composition=((scene or {}).get('recipe',{}).get('appearance') or {}).get('composition')
+    complete=doc.get('coverage')=='complete_declared_composition'
+    require(not complete or composition is not None,'complete_without_composition')
     require(type(doc.get('version')) is int and doc['version']==1 and
-            doc.get('scope')=='instrumented_scene_components' and doc.get('coverage')=='partial', 'unsupported_contract')
+            doc.get('scope')=='instrumented_scene_components' and doc.get('coverage') in ('partial','complete_declared_composition'), 'unsupported_contract')
     require(ids(doc.get('unavailable_roles')), 'unavailable_roles')
     require(type(doc.get('generation')) is int and 0<=doc['generation']<2**64, 'generation')
     width,height=doc.get('width'),doc.get('height')
@@ -41,7 +44,9 @@ def validate(doc, scene=None):
     by_id={e['id']:e for e in elements}; wrappers={}; focused=[]
     for e in elements:
         role=e.get('role')
-        require(role in ('control_wrapper','label_view','image_view'), 'unsupported_role')
+        require(role in ('control_wrapper','label_view','image_view') or complete and role in ('layout_region','decorative_background'), 'unsupported_role')
+        if role in ('layout_region','decorative_background'):
+            require(e.get('focusable') is False and e.get('input_focused') is False,'decorative_focus')
         require(all(isinstance(e.get(k),str) and e[k] for k in ('native_class','source')), 'native_provenance')
         for field in ('parent_id','declared_parent_id'):
             require(e.get(field) is None or isinstance(e[field],str) and bool(e[field]), 'parent_type')
@@ -84,6 +89,16 @@ def validate(doc, scene=None):
             if clip is None:
                 require(all(abs(a-b)<=1 for a,b in zip(visible,[x,y,w,h])), 'missing_clipping_state')
     require(set(wrappers).isdisjoint(exclusions) and set(wrappers)|set(exclusions)==set(expected), 'control_accounting')
+    if complete:
+        from fixture_composition import resolve
+        resolved,_=resolve(composition,scene['recipe'],require)
+        require(not doc['truncated'] and not exclusions and set(wrappers)=={i['id'] for i in resolved},'composition_complete_membership')
+        require({e['id'] for e in elements if e['role']=='layout_region'}=={r['id'] for r in composition['regions']} and
+                {e['id'] for e in elements if e['role']=='decorative_background'}=={'composition.background'},'composition_decorative_membership')
+        for i in resolved:
+            w=wrappers[i['id']]
+            require(w.get('focusable')==i['focusable'] and w.get('declared_parent_id')==i['parent'],'composition_declared_binding')
+            if i['kind']=='tab': require(w.get('selected')==i['selected'],'composition_tab_selection')
     for eid in keys:
         seen=set(); current=eid
         while current is not None:
@@ -106,7 +121,7 @@ def validate(doc, scene=None):
             # Existing scene bounds are screen-clipped control rectangles.
             bounds=wrapper.get('visible_pixel_bounds')
             require(bounds is not None and all(abs(a-b)<=1.5 for a,b in zip(bounds,element['pixel_bounds'])), 'scene_control_bounds')
-    return dict(version=1, coverage='partial', elements=len(elements), roles=dict(Counter(e['role'] for e in elements)),
+    return dict(version=1, coverage=doc['coverage'], elements=len(elements), roles=dict(Counter(e['role'] for e in elements)),
                 excludedControls=len(exclusions), truncated=doc['truncated'], focusKnown=doc['focus_known'],
                 completeScene=False, trainingEligible=False)
 

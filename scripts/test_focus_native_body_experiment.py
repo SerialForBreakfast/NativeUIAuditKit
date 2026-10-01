@@ -159,6 +159,25 @@ class NativeExecutionTests(unittest.TestCase):
         (self.root/'native.pt').write_bytes(b'corrupted')
         with self.assertRaisesRegex(ValueError,'changed_hash'):e.load_document(self.path(protocol))
 
+    def test_explicit_reweight_reuses_cache_and_requires_new_run_approval(self):
+        # Give the generated baseline realistic sampling roles and budgets.
+        for r in self.old+self.new:r.update(use='train-candidate',sourceKind='simulatorFixture')
+        for r in self.human:r.update(use='human-static-auxiliary',sourceKind='human')
+        self.base.update(samples=self.old+self.human+self.val,
+                         fullFit=dict(weights={r['id']:(.4 if r in self.old else .1) for r in self.old+self.human}))
+        self.base_ref=self.save('weighted-base.json',self.base);self.native['baseline']=self.base_ref
+        doc,protocol,approval=self.prepared()
+        changed=e.make_protocol(dict(doc['inputs'],reweightPolicy=e.assembly.CONTINUITY_POLICY))
+        self.assertEqual(changed['inputs']['newFeatures'],doc['inputs']['newFeatures'])
+        self.assertEqual(changed['samples'],doc['samples'])
+        self.assertEqual(changed['fullFit']['weights']['r2'],.1)
+        self.assertEqual(changed['fullFit']['weights']['r4'],.2)
+        ref=self.save('reweighted.json',changed)
+        with self.assertRaisesRegex(ValueError,'approval_binding'):
+            e.load_protocol(self.path(ref),e.ARM,'generated-native-test',self.path(approval))
+        report,_=e.load_protocol(self.path(ref),e.ARM,'generated-native-test')
+        self.assertEqual(report['blockers'],['missing_run_approval'])
+
     def test_run_approval_not_encoding_approval_and_ordinary_loader_rejects(self):
         doc,protocol,approval=self.prepared()
         with self.assertRaises(ValueError):e.load_protocol(self.path(protocol),e.ARM,'other-run',self.path(approval))

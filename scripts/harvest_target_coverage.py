@@ -16,7 +16,7 @@ def validate_coverage(receipt, rows, native_plans):
     require(isinstance(unavailable, list) and len(unavailable) <= 10000
             and all(isinstance(x, str) and x for x in unavailable), 'unavailable_recipes')
     require(len(set(unavailable)) == len(unavailable), 'duplicate_unavailable')
-    allowed = {'accepted', 'rejected', 'unattempted', 'excluded_by_limit', 'interrupted'}
+    allowed = {'accepted', 'rejected', 'unattempted', 'excluded_by_limit', 'excluded_by_selection', 'interrupted'}
     declared = {}
     for target in targets:
         require(isinstance(target, dict) and set(target) == {'recipe','elementID','outcome'}, 'target_fields')

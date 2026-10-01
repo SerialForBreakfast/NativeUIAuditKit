@@ -64,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit", "context-local", "context-geometry", "context-scene", "visual-local-frozen", "visual-context-frozen", "visual-local-partial", "visual-context-partial", "artwork-readiness", "artwork-control-partial", "artwork-added-partial", "transfer-emphasis-partial", "transfer-aspect-partial"])
     return p.parse_args()
 
 
@@ -73,6 +73,8 @@ def load_samples(dataset: Path, split: str) -> list[dict]:
     if not manifest_path.is_file():
         raise ValueError("missing_manifest")
     data = json.loads(manifest_path.read_text())
+    if data.get('version') in ('focus-context-experiment-v1','focus-visual-experiment-v1','focus-artwork-experiment-v1','focus-transfer-experiment-v1'):
+        raise ValueError('context_requires_explicit_experiment_mode')
     if data.get('version') == 'focus-native-body-full-fit-v1':
         raise ValueError('native_body_requires_explicit_experiment_mode')
     if data.get('version') == 'focus-native-body-assembly-v1':
@@ -260,7 +262,19 @@ def main() -> int:
         raise ValueError("static_experiment_requires_mps_no_cpu_fallback")
     train_dataset = CropDataset(train, not experimental)
     val_dataset = CropDataset(val, False)
-    if report.get('protocolVersion') == 'focus-native-body-full-fit-v1':
+    if report.get('protocolVersion') == 'focus-transfer-experiment-v1':
+        from focus_transfer_experiment import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get('protocolVersion') == 'focus-artwork-experiment-v1':
+        from focus_artwork_experiment import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get('protocolVersion') == 'focus-visual-experiment-v1':
+        from focus_visual_experiment import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get('protocolVersion') == 'focus-context-experiment-v1':
+        from focus_context_experiment import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get('protocolVersion') == 'focus-native-body-full-fit-v1':
         from focus_native_body_experiment import prepare_features
         model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
     elif report.get('protocolVersion') == 'focus-reviewed-full-fit-v1':

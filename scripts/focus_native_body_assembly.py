@@ -58,7 +58,7 @@ def candidates(entries, protected):
                     frameIDs=[f['id'] for f in frames],
                     controlIDs=[f['id']+':'+c['id'] for f in frames for c in f['proposals']]))
                 continue
-            expected,contract=native.source_record(h.local(h.ROOT/source['root']),protected_here)
+            expected,contract=native.source_record(h.local(h.ROOT/source['root']),protected_here,source.get('pairIDs'))
             h.require(expected==source,'source_binding_changed')
             safe_sources.append(source);contracts.append(contract)
         projection=native.project(safe_sources,contracts,body_geometry=True)
@@ -94,6 +94,7 @@ def candidates(entries, protected):
                 h.require(c['geometryRole']=='rendered_control_body' and c['state'] in ('focused','unfocused'),
                           'unknown_geometry_or_focus')
                 reasons = ['protected_or_evaluation_overlap'] if px in protected_here else []
+                reasons.extend(frame.get('admissionBlockers',[]))
                 if frame['nativeUnresolved']: reasons.append('incomplete_body_inventory')
                 if c['renderedBodyGeometry'].get('clipping'): reasons.append('clipping_requires_separate_acceptance')
                 if frame['id'] in conflicts:
@@ -105,7 +106,7 @@ def candidates(entries, protected):
                     relatedGroup=SOURCE_GROUP, intrinsicGroup=SOURCE_GROUP,
                     recipe=frame['recipe'], recipeSeed=frame['recipe'].get('seed'),
                     scene=frame['recipe']['archetype'], style=frame['recipe']['theme'], control=c['class'],
-                    label=int(c['state']=='focused'), labelSource='observed_native_bracket',
+                    label=int(c['state']=='focused'), labelSource=c.get('labelSource','observed_native_bracket'),
                     bounds=c['bounds'], geometryRole=c['geometryRole'],
                     nativeRecord=frame['nativeRecord'], batch=entry['batch'], cropQA=entry['crops'],
                     generationOnlyConflictResolved=(frame['id'] not in conflicts and
@@ -178,7 +179,43 @@ def admit(rows, decision, spec, baseline):
             for s in sorted(selected)]
 
 
-def weighting(base, additions):
+CONTINUITY_POLICY = 'baseline-fixture-budget-v1'
+
+
+def continuous_weights(base, additions):
+    """Preserve non-fixture members exactly; share each fixture label budget.
+
+    This is an explicit experimental policy, not a reinterpretation of v1 runs.
+    No-addition identity also preserves historical within-fixture differences.
+    """
+    from focus_appearance_experiment import FIXTURE_KINDS
+    train = [r for r in base['samples'] if r['split'] == 'train']
+    old = base['fullFit']['weights']
+    h.require(len({r['id'] for r in train+additions}) == len(train+additions), 'duplicate_weight_member')
+    h.require(set(old) == {r['id'] for r in train} and
+              all(type(w) in (int,float) and math.isfinite(w) and w > 0 for w in old.values())
+              and math.isclose(sum(old.values()),1), 'invalid_baseline_weights')
+    h.require(all(type(r['label']) is int and r['label'] in (0,1) for r in train+additions), 'invalid_weight_label')
+    fixture = [r for r in train if r['use'] == 'train-candidate' and r['sourceKind'] in FIXTURE_KINDS]
+    h.require(all(r['split'] == 'train' and r['use'] == 'train-candidate'
+                  and r['sourceKind'] in FIXTURE_KINDS for r in additions), 'nonfixture_weight_addition')
+    if not additions:
+        return dict(old)
+    result = dict(old)
+    for label in (0,1):
+        original = [r for r in fixture if r['label'] == label]
+        members = [r for r in fixture+additions if r['label'] == label]
+        h.require(original and members, 'missing_fixture_label_budget')
+        mass = math.fsum(old[r['id']] for r in original)
+        result.update({r['id']:mass/len(members) for r in members})
+    h.require(math.isclose(math.fsum(result.values()),1), 'invalid_weight_mass')
+    return result
+
+
+def weighting(base, additions, policy=None):
+    h.require(policy in (None, CONTINUITY_POLICY), 'unsupported_weight_policy')
+    if policy == CONTINUITY_POLICY:
+        return continuous_weights(base, additions)
     if not additions: return dict(base['fullFit']['weights'])
     from focus_appearance_experiment import weights
     native_rows=[r for r in base['samples'] if r['split']=='train' and r['use']=='train-candidate']+additions
@@ -216,7 +253,7 @@ def assemble(spec):
     if not additions: blockers.append('no_admitted_native_controls')
     baseline_train=[r for r in base['samples'] if r['split']=='train']
     evaluation=[r for r in base['samples'] if r['split']!='train']
-    weights=weighting(base,additions)
+    weights=weighting(base,additions,spec.get('weightPolicy'))
     # Existing caches remain byte-bound; do not deserialize them in a dry run.
     cache_refs=[base['baseCachedInputs'][k] for k in ('cache','receipt','preflight')]
     cache_refs += list(base['inputs']['newFeatures'].values())
@@ -260,10 +297,13 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--inventory',required=True);p.add_argument('--source',nargs=2,action='append',required=True,metavar=('BATCH','CROPS'))
     p.add_argument('--admission');p.add_argument('--output',required=True)
+    p.add_argument('--weight-policy',choices=[CONTINUITY_POLICY],
+                   help='Explicit experimental continuity policy; omitted preserves legacy behavior')
     args=p.parse_args();out=h.fresh(args.output)
     spec=dict(version=INPUT_VERSION,inventory=h.ref(h.local(args.inventory)),
               sources=[dict(batch=h.ref(h.local(b)),crops=h.ref(h.local(c))) for b,c in args.source])
     if args.admission:spec['admission']=h.ref(h.local(args.admission))
+    if args.weight_policy:spec['weightPolicy']=args.weight_policy
     try:
         doc=assemble(spec);out.mkdir(parents=True)
         h.write(out/'focus_dataset_manifest.json',doc)

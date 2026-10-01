@@ -31,6 +31,21 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 
 ## Execution contract — finish the authorized tranche
 
+### Local experiment tranche approval — 2026-10-01
+
+The maintainer approved whole local experiment tranches. An assigned model-experiment
+tranche may execute up to three justified comparisons, at most300training seconds
+each,1800seconds total execution wall time and2GiB new outputs, without asking again
+per launch. Define hypotheses, membership, metrics and budgets before execution;
+automate per-run pins, log entries and tranche-derived authorization records.
+“Separately approved model execution” in older skills is satisfied by this explicit
+tranche assignment. No automatic sweep or unassigned recurring work is authorized.
+New encoding/backbone work must be explicitly included in the tranche's stated
+scope/budget. Scope or budget expansion, paid compute, downloads, new data admission,
+split/selection changes, protected tests, device operations, external uploads,
+destructive cleanup, export and promotion still require their own authorization.
+See [LocalExperimentApprovalEnvelope](Research/Plans/LocalExperimentApprovalEnvelope.md).
+
 ### Local-first execution amendment — 2026-09-30, LOCAL-FIRST-01
 
 This amendment reconciles ADR-0012 with the operational guides and supersedes older

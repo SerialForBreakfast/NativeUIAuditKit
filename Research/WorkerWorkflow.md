@@ -39,6 +39,12 @@ Assign a substantial coherent deliverable with explicit acceptance criteria, not
 
 ## Tranche completion and stopping
 
+As of2026-10-01, assigned local model-experiment tranches use the approved
+[experiment envelope](Plans/LocalExperimentApprovalEnvelope.md). Generate exact
+tranche-derived run records automatically; do not ask the maintainer to approve
+each in-scope launch. This satisfies older separately-assigned execution language,
+without waiving preflight, runtime permissions or release boundaries.
+
 At dispatch, specify included packets, shared interface revisions, owned files, integrated
 outcome, allowed operations, and final verification. For broad authorized continuation,
 choose a coherent set of ready work within the requested scope after checking ownership;

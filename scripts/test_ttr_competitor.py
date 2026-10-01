@@ -95,8 +95,60 @@ class CompetitorTests(unittest.TestCase):
         r['recipe_hash'] = recipe_hash(r); replace_recipes(meta, r); self.fixture.publish(meta)
         with self.assertRaisesRegex(HarvestValidationError, 'pairing_recipe'): validate_bundle(self.fixture.bundle)
 
+    def test_composition_competitor_real_bundle_and_negative_paths(self):
+        from test_fixture_composition import recipe as composition_recipe
+        r = composition_recipe()
+        c = r['appearance']['composition']
+        c['regions'][0]['frame'][2] = 240
+        c['regions'][0]['items'].append(dict(id='x', component='d', content='c', selected=False))
+        r['element_count'] = 2
+        r['recipe_hash'] = recipe_hash(r)
+        meta = copy.deepcopy(self.meta)
+        replace_recipes(meta, r)
+        def parents(value):
+            if isinstance(value, dict):
+                if 'element_id' in value:value['parent_element_id'] = 'region'
+                for child in value.values():parents(child)
+            elif isinstance(value, list):
+                for child in value:parents(child)
+        parents(meta)
+        self.fixture.publish(meta)
+        self.assertEqual(validate_bundle(self.fixture.bundle)['acceptedRowCount'], 1)
+        bad = copy.deepcopy(meta)
+        bad['reference_capture']['frame_png_sha256'] = '0'*64
+        self.fixture.publish(bad)
+        with self.assertRaisesRegex(HarvestValidationError, 'frame_hash'):
+            validate_bundle(self.fixture.bundle)
+        bad = copy.deepcopy(meta)
+        bad['reference_capture']['frame_received_host_ns'] = 0
+        self.fixture.publish(bad)
+        with self.assertRaisesRegex(HarvestValidationError, 'host_order'):
+            validate_bundle(self.fixture.bundle)
+        r['appearance']['composition']['regions'][0]['items'][1]['id'] = 'absent'
+        r['recipe_hash'] = recipe_hash(r)
+        replace_recipes(meta, r)
+        self.fixture.publish(meta)
+        with self.assertRaisesRegex(HarvestValidationError, 'composition_'):
+            validate_bundle(self.fixture.bundle)
+
 
 class FocusIdentityTests(unittest.TestCase):
+    def test_selection_exclusions_never_count_as_accepted_or_complete(self):
+        from harvest_target_coverage import validate_coverage
+        rows=[dict(expectedFocus='e',metadata=dict(recipeFile='r'))]
+        receipt=dict(acceptedRowCount=1,targetCoverage=dict(unavailableRecipes=[],targets=[
+            dict(recipe='r',elementID='e',outcome='accepted'),
+            dict(recipe='r',elementID='x',outcome='excluded_by_selection')]))
+        result=validate_coverage(receipt,rows,{'r':['e','x']})
+        self.assertFalse(result['complete'])
+        self.assertEqual(result['counts'],{'accepted':1,'excluded_by_selection':1})
+        receipt['targetCoverage']['targets'][0]['outcome']='excluded_by_selection'
+        with self.assertRaisesRegex(ValueError,'accepted_membership'):
+            validate_coverage(receipt,rows,{'r':['e','x']})
+        receipt['targetCoverage']['targets'][0]['outcome']='invented'
+        with self.assertRaisesRegex(ValueError,'outcome'):
+            validate_coverage(receipt,rows,{'r':['e','x']})
+
     def test_emitted_producer_vectors(self):
         # Emitted by delivered 0ef89d79 FixtureAppearance.swift using the retained
         # identity-probe/main.swift; constants are not consumer-derived.

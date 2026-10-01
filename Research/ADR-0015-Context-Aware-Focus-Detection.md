@@ -23,6 +23,36 @@ about 0.0000341, with no tested threshold flips. Keep automated parity.
 
 ## Experiment direction
 
+### FOCUS-CONTEXT-04 outcome — October 1, 2026
+
+Executed matched local nonlinear / +geometry / +frozen scene comparisons on the
+same1550training controls. All learn every training label confidently; none yields
+an eligible checkpoint. Artwork terminal hits0/1/1of12,FP10/9/24vsFDR0212and3.
+All34saved snapshots replay correctly. This rejects increased head capacity and
+this specific frozen context-fusion recipe as solutions, not all contextual
+models. Growth normalization remains a measured input problem, but preserving
+geometry alone was insufficient. Next compare trainable visual features against
+a matched frozen control before more bulk generation. No causal claim that the
+encoder alone explains failure; appearance coverage remains an interacting factor.
+[Evidence](../reports/work/FOCUS-CONTEXT-04/handoff.md).
+
+### Growth-preserving input evidence — October 1, 2026 PDT
+
+FOCUS-GROWTH-01analyzed112retained same-element state comparisons. Among32with
+>8%growth on both axes, median raw width/height growth16.7%/18.1%becomes only
+0.09%/0.05%in the current proportional256crop geometry. Full-frame shared scaling
+preserves ratios; current CoreML input receives neither viewport geometry nor
+neighbor boxes. Accurate enlarged-body annotations remain correct.
+
+Propose local detail plus shared viewport-scaled scene context and candidate geometry,
+not simply a larger proportional margin. No labels/native focus truth in prediction
+inputs; no unavailable unfocused reference at runtime. Temporal growth requires
+separate tracked sequences. Fix the SYN-13weight-policy discontinuity before a
+controlled representation comparison. FOCUS-GROWTH-02 implements the experimental
+pixel/geometry builder and explicit weighting repair; the fusion model remains
+unimplemented. Learning benefit and Swift/CoreML input parity must be measured.
+[Analysis and acceptance path](../reports/work/FOCUS-GROWTH-01/handoff.md).
+
 1. Build coverage-driven data before repeating unchanged training. Include buttons,
    tabs, artwork, rows and supported keyboard controls, selected-but-unfocused
    parents, hard negatives and visible competitors. A proposed 5,000+ pair collection

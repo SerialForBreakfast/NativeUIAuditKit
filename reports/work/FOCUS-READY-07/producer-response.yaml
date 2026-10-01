@@ -1,0 +1,34 @@
+schema_version: 1
+id: nuiak-20261001-ready07-proposal-receipt
+updated_at: '2026-10-01T19:53:36Z'
+request_id: ttr-20261001-white-artwork-proposal
+related_request: nuiak-20260929-focus-representative-results
+receiver: NativeUIAuditKit
+receipt:
+  file: tvtestrig/ttr-white-artwork-proposal-20261001-r1.tar.gz
+  bytes: 56372
+  sha256: 948b3d3aa234db90e0118db7ef1553e4df7011c758120376636bc8e1ffd0ccdf
+  state: copied_and_verified
+  verified_at: '2026-10-01T19:47:31.723364Z'
+  indexed_files_verified: 132
+  sender_cleanup: Sender owns cleanup of this exact shared archive; local copy retained.
+review:
+  assets: 24
+  native_image_pair_proposals: 48
+  custom_pair_proposals: 0
+  source_pixels: 24 distinct 256x160 PNGs; source-only near-white fractions 97.61-100 percent.
+  status: Proposal promising; renderer unimplemented; no capture, crop acceptance or training admission.
+consumer_descriptor:
+  input: Actual production 16-percent-expanded 256x256 crop, decoded 8-bit RGB.
+  region: 'center [32:224,32:224], 192x192 pixels'
+  pixel_test: min(R,G,B)>220 and max(R,G,B)-min(R,G,B)<25
+  descriptive_fraction: '>0.65'
+  limitations: Not a label classifier or qualification threshold; do not substitute resized source PNGs.
+next:
+  - Native-image first; custom counterparts optional separate experiment, not prerequisite.
+  - Preserve linked asset, structure, palette, layout and renderer ancestry; no independent held-out split claim. Proposal-only roles remain unadmitted.
+  - Require observed focused target and unfocused target with another visible actually focused competitor. All30 D1 artwork negative frames currently lack a focused competitor. Requested focus alone is not evidence.
+  - Preserve content and surroundings across each pair; capture measured rendered bodies and production crop evidence.
+  - Existing competitor-v3 canvas intake is supported. Composition-v2 needs exact producer schema and representative example before consumer adapter work.
+  - Include the referenced but absent Docs/Plans/2026-10-01-white-artwork-proposal.md with the renderer contract handoff.
+authority: No runtime dispatch, purchase, admission, encoding, training or promotion authorized by this response.

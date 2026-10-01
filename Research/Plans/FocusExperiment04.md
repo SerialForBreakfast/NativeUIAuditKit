@@ -1,5 +1,23 @@
 # FOCUS-EXPERIMENT-04 — changed-data comparison
 
+## Execution outcome — October 1, 2026 PDT
+
+SYN-13interpretation correction: FDR022changed effective sub-source weighting, even
+though the outer80/20mass stayed fixed. OS-native9.3%→40%is a policy discontinuity;
+recomputing identical old native membership changes all790weights. Repair/version
+weight continuity and test baseline sub-source budgets before using this result to
+justify a representation change. This supersedes the clean data-only interpretation,
+not the recorded scores. [Diagnosis](../../reports/work/SYN-13-DIAGNOSIS/handoff.md).
+
+SYN-12completed the first data-only arm as FDR022 after explicit sampled review,
+564-member admission, bounded encoding and one-run approval.1550training controls;
+333evaluation unchanged. No eligible checkpoint across1000updates. Terminal
+TP15/27,FP6,unique-correct10/14,artwork2/12,retention18/18; fails the predeclared
+comparison against FDR021. No export/promotion/automatic second arm. Historical
+proposal wording below records the original contract, not a current blocked status.
+Next representation/context experiment needs separate assignment and approval.
+[Full result](../../reports/work/SYN-12-EXECUTION/handoff.md).
+
 ## SYN-10 implementation scope — 2026-10-01
 
 Add a separate `focus-native-body-full-fit-v1` execution protocol, not an executable

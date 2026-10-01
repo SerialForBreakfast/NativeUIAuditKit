@@ -1,9 +1,168 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-10-01 UTC, REVIEW-QT-01 (underlying results retain observation dates)
+**As of:** October 1, 2026 PDT, FOCUS-PAIRED-11 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**FOCUS-PAIRED-11 complete:**2996retained contrast/no-op cases,1702native fixed-window
+crops. Growth finds6/6Home arrival contrasts versus0/6independent resizing (reused
+screens, not independent tests). Frozen combined rule6/12eligible frame directions;
+separate unchanged-threshold clipping follow-up12/12versusFDR021transition7/12.
+Only sixpairs/nineframes. Scrolling retention row gives a wrong direction; movement,
+content replacement and illumination prevent deployment. Next: translation-only
+alignment/rejection, preserve scale, stress unchanged focus. No neural fit or model
+replacement.23Python/134Swift tests pass;7CLI tamper rejections; primary replay exact.
+[Results](../reports/work/FOCUS-PAIRED-11/results.md).
+
+**FOCUS-TRANSFER-10 complete; both changes rejected:** FDR03310×relative emphasis
+finds4/12artwork but29FP; FDR034native aspect-fit finds7/12but68FP and0/3focused
+buttons. Both100updates; no eligible checkpoint. FDR032matched control3/12/25FP;
+FDR021remains2/12/3FP and is not replaced. All1895production inputs replay pixel-exact,
+333evaluation members unchanged,30saved evaluations replay exactly.46Python tests,
+actual CLI2positive/6negative checks, offline build/134Swift tests pass.
+Concrete next coverage: composite cards, wide rows, varied icon/hero arrangements,
+actual focus positions and action-linked measured growth. Published TTR request
+`nuiak-20261001-transfer10-coverage`; planning feedback, not new capture dispatch.
+No further unchanged training or human redraw of accepted pairs recommended.
+[Results](../reports/work/FOCUS-TRANSFER-10/results.md).
+
+**FOCUS-CAMPAIGN-09 training comparison completed:** six sampled screens approved
+without corrections; maintainer explicitly assigned six producer-calibration pairs
+to consumer development-training.12targets admitted; original records preserved.
+FDR031control vsFDR032added data each completed100updates: artwork3/12vs3/12,
+FP24vs25, unique12/14both, retention18/18both. New model learns12/12added crops
+but does not improve real-screen transfer. No eligible checkpoint; preserveFDR021
+(artwork2/12,FP3).20evaluations replay exactly;333evaluation members unchanged.
+42Python tests, actual CLI positive/six negative checks, offline build/134Swift tests
+pass. [Results](../reports/work/FOCUS-CAMPAIGN-09/results.md).
+TTR22:14:46UTC confirms backup receipt/capacity restoration; remaining42captures
+blocked by screenshot timeout/runner cleanup, not consumer review or storage.
+Consumer role-migration receipt published/read back; no new capture/export.
+Earlier preparation snapshots below are historical, not current blockers.
+
+**TTR status, October 1 at2:26PM PDT:** producer reports new six-pair/12frame
+standard owned-artwork campaign completed, including host brackets, PNG binding
+and measured growth. FOCUS-CAMPAIGN-09 now verifies archive/95members,12native
+brackets and312production crops. Consumer composition pairing/selection-exclusion
+compatibility repaired. Six prefilled sample checks and explicit source-role
+decision remain before admission; all six producer manifests say calibration.
+Conditional comparison is1550vs1562training controls, unchanged333evaluation.
+Seven missing real Settings endpoints prepared with72unconfirmed proposals.
+73Python tests, offline build/134Swift tests and native Cocoa doctor pass.
+This is new evidence
+to evaluate, not repaired timing for the previous48diagnostic pairs. Prior metadata
+correction receipt acknowledged and sender cleanup reported. No new training.
+[Handoff](../reports/work/FOCUS-CAMPAIGN-09/handoff.md).
+
+**TEMP-FOCUS-02 retained spike completed:** fixed brightness rule matches all109
+Settings development/retention controls, equal toFDR021; mixed315control application
+produces58FP versus3. Settings-oracle hybrid does not improve frame selection;
+agreement-only loses one correct frame.9static Settings pairs show clear brightening,
+but only54/112Fixture pairs do; all48white-artwork pairs remain below the fixed delta.
+No neural training or runtime deployment.14/166recorded actions pass timing checks,
+none has both endpoints in accepted reviewed annotations; genuine transition test
+requires paired endpoint review and runtime context/matching validation.
+Artwork correction independently verifies48recipe bindings/96PNGhashes; host capture
+correlation remains unavailable. [Results](../reports/work/TEMP-FOCUS-02/handoff.md).
+
+**FOCUS-ARTWORK-08 complete for review:** composition-v2 and explicit diagnostic
+pair intake integrated. All48 target pairs/96 frames/2,496 production crops pass
+diagnostic QA; all48 owned targets meet the white descriptor in both states and
+have focused competitors.96 unique target crops conditionally proposed; original
+source roles and333 evaluation controls unchanged. Eight balanced prefilled review
+samples ready, no human action assumed.129 Python tests and Swift build/134 tests
+pass. Admission waits on specific index-hash/capture-binding evidence and sampled
+acceptance, not renderer implementation or another unchanged run.
+TTR isolated observer proof received:96/96 crop PNG/RGB-input hashes match local
+crops; supplied scores recount TP32/TN40/FP8/FN16. All misses dark, all FP light;
+descriptive, not causal or held-out evidence. No local model execution/promotion;
+installed app path not qualified. [Handoff](../reports/work/FOCUS-ARTWORK-08/handoff.md).
+
+**FOCUS-READY-07 complete for review (historical receipt stage):** FDR021 observer archive delivered and TTR
+copied/verified receipt received; not loaded or promoted. Offline readiness CLI and
+actual trainer preflight tested:106 Python tests, Swift build and134 Swift tests
+pass. D1 has350 distinct crop candidates and3,706 duplicate observations; all30
+artwork negative target frames lack a focused competitor, and no matched white
+artwork additions qualify. Baseline1,550 training/333 evaluation controls and source
+weights remain unchanged. TTR's24-asset/48-pair proposal received; rendering remains
+unimplemented. No new model execution or admission.
+[Handoff](../reports/work/FOCUS-READY-07/handoff.md).
+
+**FOCUS-APPEARANCE-06 complete for review:** D1 received and native composition
+compatibility implemented, including previously omitted tabs.78 target pairs,
+156 frame records,4,056/4,056 production-body crops pass; six prefilled sample frames
+ready.132 Python and134 Swift tests pass. D1's complex layouts do not close the
+appearance gap:0/1,530 unfocused artwork observations meet the retained white-body
+descriptor. Calibration/source ancestry preserved; no admission or model execution.
+Next: targeted white/logo/blank artwork proposal, not another unchanged run or broad
+human redraw. [Handoff](../reports/work/FOCUS-APPEARANCE-06/handoff.md).
+
+**FOCUS-VISUAL-05 complete:** four frozen/partial-backbone × detail/context runs;
+no eligible checkpoint. Terminal artwork0/0/3/2of12, FP3/33/24/23,
+unique11/7/12/10of14; all retention18/18. All39 evaluations replay exactly;
+initial predictions match, partial tails change, BN/prefix remain frozen.
+78Python tests and offline Swift build/134tests pass. PreserveFDR021, no export.
+Retained-pixel audit identifies0/554 mostly-white unfocused training collection
+items versus57/181 development artwork negatives;21/24 FDR029 false positives
+meet that diagnostic descriptor. Not causal proof. Next inventory existing TTR
+composition delivery for matched appearance coverage before new collection/run.
+[Handoff](../reports/work/FOCUS-VISUAL-05/handoff.md).
+
+**FOCUS-CONTEXT-04 completed:** FDR024/025/026all fit1550/1550training controls,
+but no eligible checkpoint. Terminal local/geometry/scene artwork0/1/1of12,
+FP10/9/24,unique7/9/11of14; baselineFDR0212/12,3FP,12/14. All retain18/18.
+All34saved evaluations replay exactly; identical initial predictions. Increased
+head capacity and this frozen context recipe fail transfer; annotation improvement
+alone is insufficient. Next: bounded learnable visual representation comparison,
+not another unchanged head or bulk-data run. No export/promotion. Tranche approval
+adopted and this three-run scope completed.
+[Diagnosis](../reports/work/FOCUS-CONTEXT-04/handoff.md).
+
+**FOCUS-WEIGHT-03:** approved FDR023weight-control run completed on MPS
+(1000updates,31.301training seconds). Selected update275reducesFP3→2but regresses
+TP16→13,unique-correct12/14→10/14and artwork2/12→1/12vsFDR021; retention18/18.
+All40snapshots replay correctly; no snapshot improves artwork beyond2hits.
+Comparison rejected; FDR021retained. Correcting source budgets alone is insufficient.
+Representation follow-up now completed above; no export/promotion.
+[Outcome](../reports/work/FOCUS-WEIGHT-03/handoff.md).
+
+**FOCUS-GROWTH-02:** explicit baseline-budget repair and experimental context-input
+CLI complete. Retained1883controls across693scenes prepared with existing detail
+crops, shared scene transforms, masks and current geometry;32/32growing pairs retain
+growth.152missing historical bounds recovered without relabeling.57Python tests and
+offline Swift build/134tests pass. Reweighted1550/333cached protocol passes actual
+trainer configuration; new run approval is the only execution blocker. No retained
+model run, fusion model or CoreML export. [Handoff](../reports/work/FOCUS-GROWTH-02/handoff.md).
+
+**FOCUS-GROWTH-01:** analytic replay of112same-element comparisons confirms scale
+normalization.32interior growing controls: median raw16.7%width/18.1%height growth
+becomes0.09%/0.05%after current resize. Viewport-scaled context preserves growth;
+recommend experimental detail+shared-scene+candidate-geometry input after weighting
+repair. Static source data already retained; no TTR build needed. No changed crops,
+model execution or claim of learned growth. [Analysis](../reports/work/FOCUS-GROWTH-01/handoff.md).
+
+**SYN-13 offline diagnosis:** FDR022contains a weighting-policy confound: OS-native
+loss mass9.3%→40%, prior fixture70.7%→27%, added fixture13%, human20%unchanged.
+Recomputing the old native corpus alone changes all790weights. Cache label/shape/
+hash checks pass. Correct proportional crops normalize absolute growth; retained
+feature neighborhoods suggest weak artwork focus separation but do not prove cause.
+Prioritize weighting-continuity repair/control before a backbone/context change.
+No new model execution or implementation change. [Diagnosis](../reports/work/SYN-13-DIAGNOSIS/handoff.md).
+
+**SYN-12-EXECUTION (October 1, 2026 PDT):** all12new sampled frames/90controls
+human-confirmed, unchanged annotations; prior SYN-06five-frame acceptance retained.
+Exact admission/reassembly passes:564native additions,1550training controls;
+333evaluation records exactly unchanged,196human controls retain20%loss mass.
+764blocked candidates and52source-quarantined controls remain excluded. Related
+procedural-renderer group is training-only, not independent evaluation. Encoding
+approved and completed:564crops,3.224encoder seconds on MPS,1,520,229bytecache,
+encoder unchanged. Separately approved FDR022completed1000updates in31.217model
+seconds: no eligible checkpoint. Terminal TP15/27vsFDR02116/27, FP6vs3,
+unique-correct10/14vs12/14, retention18/18unchanged. Artwork hits2/12unchanged;
+rows regress7/7→6/7. Data-only comparison fails; FDR021preserved, no export,
+promotion or automatic retry. Existing metrics replayed over all saved predictions.
+[Handoff](../reports/work/SYN-12-EXECUTION/handoff.md).
 
 This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md`, fix those to match this file.
 

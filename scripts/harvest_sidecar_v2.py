@@ -72,10 +72,17 @@ def appearance_digest_source(recipe):
     if appearance is None:
         return ""
     require(isinstance(appearance, dict) and {"version", "preset", "layout"} <= set(appearance)
-            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus", "artwork"},
+            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus", "artwork", "composition"},
             "appearance_fields")
     require(type(appearance["version"]) is int and appearance["version"] == 1,
             "appearance_version")
+    if appearance.get('composition') is not None:
+        from fixture_composition import resolve
+        require(recipe['archetype']=='grid_matrix' and appearance['preset']=='artwork' and appearance['layout']=='standard' and
+                all(appearance.get(k) is None for k in ('canvas','focus','artwork')), 'composition_appearance')
+        _,suffix=resolve(appearance['composition'],recipe,require)
+        require(appearance.get('family_id') in (None,'appearance-v1.artwork.standard.'+suffix),'appearance_family')
+        return ':appearance@1:artwork:standard:'+suffix
     require(isinstance(appearance["preset"], str) and appearance["preset"] in
             {"artwork", "bright_unfocused", "gray_placeholder", "blank_placeholder",
              "high_contrast", "photos_like"}, "appearance_preset")
@@ -384,7 +391,9 @@ def validate(meta, row, size, hashes):
     present=[s.get('semantic_inventory') is not None for s in (baseline,focused)]
     require(len(set(present))==1, 'semantic_inventory_pair_disappearance')
     availability=meta.get('semantic_inventory_availability')
-    require(availability is None or availability==('partial_instrumented_components' if all(present) else 'unavailable_legacy'),
+    complete=all(present) and all(s['semantic_inventory'].get('coverage')=='complete_declared_composition' for s in (baseline,focused))
+    require(not any(present) or len({s['semantic_inventory'].get('coverage') for s in (baseline,focused)})==1,'semantic_inventory_pair_coverage')
+    require(availability is None or availability==('complete_declared_composition' if complete else 'partial_instrumented_components' if all(present) else 'unavailable_legacy'),
             'semantic_inventory_availability')
     artwork = (focused['recipe'].get('appearance') or {}).get('artwork')
     if artwork is not None:
@@ -393,7 +402,14 @@ def validate(meta, row, size, hashes):
             meta["focused_capture"]["before_scene_received_host_ns"], "pair_host_order")
     require(baseline["recipe"] == focused["recipe"], "pair_recipe")
     pairing = ((focused['recipe'].get('appearance') or {}).get('canvas') or {}).get('pairing')
-    require(pairing == ('competitor_v1' if version == 3 else None), 'pairing_recipe')
+    composition = (focused['recipe'].get('appearance') or {}).get('composition')
+    if version == 3 and composition is not None:
+        from fixture_composition import resolve
+        items, _ = resolve(composition, focused['recipe'], require)
+        focusable = {item['id'] for item in items if item['focusable']}
+        require({competitor, row['expectedFocus']} <= focusable, 'composition_competitor_membership')
+    else:
+        require(pairing == ('competitor_v1' if version == 3 else None), 'pairing_recipe')
     if version == 3:
         planned = baseline['focus_observation']['plannedFocusIDs']
         require(set(planned) == set(focused['focus_observation']['plannedFocusIDs'])

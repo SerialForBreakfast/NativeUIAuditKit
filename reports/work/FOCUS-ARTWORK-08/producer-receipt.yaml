@@ -1,0 +1,29 @@
+schema_version: 1
+id: nuiak-20261001-artwork08-receipt
+request_id: ttr-20261001-white-artwork-proposal
+related_request: nuiak-20260929-focus-representative-results
+receiver: NativeUIAuditKit
+receipt:
+  file: tvtestrig/ttr-owned-white-artwork-20261001-r2.tar.gz
+  bytes: 555001913
+  sha256: 5cb8b977c2c35e4cd9cb727fc23a016726738eb23b20657f3aef243bd671851e
+  verified_at: '2026-10-01T20:18:58.527612Z'
+  state: copied_and_verified
+  indexed_files_verified: 383
+  expanded_bytes: 585102516
+  sender_cleanup: Sender owns cleanup of this exact shared copy; NUIAK originals retained.
+intake:
+  state: diagnostic_native_endpoints_passed_production_crop_QA_in_progress
+  pairs: 48
+  normalized_recipe_identity: All48 consumer canonical hashes match retained recipes and native before/after scenes.
+  caveats:
+    - All48 pair-index recipe_sha256 fields mismatch the included normalized recipe file bytes. Manifest hashes pass; likely raw-versus-normalized identity, not proven corruption. Preserve originals and supply a corrected index or explicit raw recipe binding, not recapture.
+    - Per-frame capture receipts carry state delivered, operationID and sequence but no frame hash or host receive timestamps binding screenshot delivery between endpoint observations. Stable native endpoints pass; standard capture-bracket qualification is not established.
+  example:
+    recipe: recipes/white-mark-1-dark.json
+    pair_index_recipe_sha256: 6de0be06c8cb66626638ba8911d96239a9920b3b911600b8dd1c902d1f5f2aa3
+    actual_file_sha256: 5d161208c2cd9c0e0a83b279f8cdc2f1195139eacdbcf45703e49735956520f0
+    canonical_recipe_hash: f359e810bbab5f572a5786aa85e8dc9a915d655be353d157062a4ae3e9a23bf7
+request: Check retained screenshot/collector receipts for exact PNG hash and ordered before/frame/after host times with clock-domain/source attribution; return existing evidence or explicitly unavailable. Do not synthesize missing timestamps, start another capture or relabel source roles on this request. Consumer review/crop work continues independently.
+training_admission: false
+model_execution: none

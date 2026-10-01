@@ -1,5 +1,133 @@
 # TEMP-LIVE: Temporal visual-verification spike
 
+## TEMP-FOCUS-02 — brightness and paired-change spike (2026-10-01)
+
+### Assigned execution — 2026-10-01
+
+**Outcome:** retained-evidence tranche completed; see
+[results](../../reports/work/TEMP-FOCUS-02/handoff.md). Settings rule matches baseline,
+not an improvement; universal brightness rejected. Genuine action-linked evaluation
+remains open because no timing-valid retained action has both endpoints represented
+in the accepted reviewed annotations. No fresh model execution or training occurred.
+
+User assigned pending experiments and simple spikes. Execute a retained-evidence
+tranche now: verify the supplied artwork metadata correction; compare FDR021 cached
+scores with fixed brightness rules on the unchanged333 development/retention controls;
+measure before/after scalar changes on existing same-control state pairs; audit the
+retained Office action recording for reviewed, settled endpoints. No new model loads,
+training, capture, split reassignment or human approval inference. Artwork training
+cannot proceed while capture correlation and sampled acceptance remain missing.
+
+Freeze this exploratory policy before measuring: use production256 crops; summarize
+center192 pixels (body proxy, not a new cropper) with Rec.709-weighted encoded-RGB
+luma, bright-neutral fraction(minRGB>220,range<25), and center-minus-outer-band mean.
+Brightness rule requires luma>=0.60 and neutral fraction>=0.45; at frame level use
+existing fixed0.85 selection metrics on binary rule decisions. A settings-scoped
+hybrid substitutes that rule only for independently annotated settings families;
+this is an oracle-context diagnostic, not a validated runtime Settings recognizer.
+Also report model/rule agreement-only decisions. Fixed signed temporal luma delta
+>=0.08 indicates arrival, <=-0.08 departure; otherwise unknown. Global motion,
+missing tracking, clipping or unsettled input must be unavailable to any runtime
+proposal. Downsample16/32/64/192body sizes are numerical sensitivity checks only,
+not candidate thresholds to optimize after results. Preserve raw geometry growth
+separately. Constructed pairs/no-op controls remain explicitly noncausal diagnostics.
+No held-out qualification or model-selection claim from this already exposed set.
+
+Maintainer requested adding this spike after reviewing the older results. Planning
+owner: Codex; retained execution completed above, genuine follow-up remains in Tasks.md. This section is the current scoped
+focus experiment proposal, not a claim that the older interruption spike ran.
+No new capture, inference, fitting or TTR dispatch occurs in this planning task.
+
+**Plain question:** Does comparing a control before and after a press identify
+focus more reliably than looking at the after image alone, and can simple rules
+do the job without another neural model?
+
+### 1. Audit the available evidence first
+
+Inventory retained TTR exports for actual ordered before/action/after sequences,
+frame correlation, settled states, observed focus and stable control matching.
+Pair counts alone do not establish a temporal corpus: independently rendered
+focused/unfocused examples can support a static paired diagnostic but cannot prove
+that a press moved focus, settling time, tracking or live navigation performance.
+Record exact usable counts by settings rows, buttons, tabs and artwork; missing
+sequences are a scoped collection request, not permission to fabricate ordering.
+Use retained valid evidence without waiting for the deferred diverse-UI library.
+
+Group by source/layout ancestry and session before splitting. Keep paired frames,
+neighboring frames, cosmetic variants and derived recipes in the same split.
+Previously inspected examples are development data. Tune only on development;
+freeze rules before untouched grouped evaluation. If support is too small or no
+untouched groups exist, report exploratory evidence rather than a generalization win.
+
+### 2. Compare simple, inspectable signals
+
+Reuse existing frame-change primitives and measured/detected control boxes. Build
+small deterministic pixel summaries: interior luminance distribution and bright
+pixel fraction, contrast against a surrounding band, edge/ring contrast, and changes
+in those quantities across matched frames. Preserve raw viewport-relative width,
+height and area changes: resizing each box to the same size erases growth evidence.
+Declare the color/luminance conversion and resize method; use lossless source
+pixels, not JPEG artifacts. Test several downsample sizes on development only and
+measure whether compression removes thin highlights. Do not change production
+FocusRing preprocessing as a side effect of this experiment.
+
+Mask or separately account for text/artwork and clipped/occluded regions where
+possible; a white poster is not focus. A same-control increase relative to its own
+prior appearance can be informative, but global brightness shifts, changing media,
+scrolling and animation can produce the same signal. Pairwise change also cannot
+settle unchanged focus, initial-screen focus or uncertain control correspondence.
+Keep an explicit unavailable/uncertain result for these cases.
+
+### 3. Matched comparison arms
+
+1. Current retained FDR021 single-frame decisions with unchanged fixed threshold.
+2. Simple single-frame brightness/contrast rule, without model scores.
+3. Before/after rule using matched-control change, growth and competitor evidence.
+4. FDR021 plus paired-change verification, with explicit disagreement/abstention.
+
+Report settings-only results separately from mixed UI results. A settings-specific
+rule may be useful, but must be scoped by a validated runtime context signal—not
+by a hidden ground-truth screen label. Test wrong/missing context classification.
+Treat existing native focus as scoring truth, never a visual feature or decision
+shortcut. Report oracle/native bounds and actual detected-box performance separately;
+do not silently match controls using IDs unavailable to the deployed visual path.
+
+A tiny learned classifier on these summaries is a possible follow-up, not required
+to call this spike useful. Fit only under an assigned experiment envelope, using
+independent native/human labels—not heuristic predictions as ground truth. To feed
+these signals into a later model, version the feature contract and ensure every
+feature is available at inference; train-only before images are not legitimate inputs
+for a single-screenshot model. First establish incremental benefit of each signal.
+
+### 4. Required stress cases and decision
+
+Include bright unfocused artwork, subtle focused rows, dark focus, selected but
+unfocused parents, focus leaving/arriving, no movement at a boundary, unchanged
+focus, full-screen brightness changes, video/carousel motion, scrolling, overlays,
+transitions, partial clipping, wrong tracking, missing/stale/reordered frames and
+settled versus unsettled observations. Record absent strata, not synthetic passes.
+
+Before held-out scoring, fix the comparison policy and acceptable false-selection,
+abstention and latency limits. Report correct/wrong/no/multiple selection per frame,
+transition verification errors, per-family support, coverage versus abstention,
+and per-stage latency. Use paired differences and uncertainty at the independent
+journey/family level; correlated frames do not supply independent confidence.
+Existing release gates remain unchanged.
+
+**Deliverables:** executable offline replay comparison with negative tests, exact
+evidence inventory/split, readable example overlays, per-arm results and a decision:
+use a settings-scoped rule, pursue a general temporal model, or reject the added
+complexity. Offline build/tests and actual caller integration are required for
+implementation completion. No automatic threshold sweep, promotion or live control.
+The old 0/9 versus6/9 result used older shipped-model scores and is historical only;
+it is not the baseline score of FDR021.
+
+**Next executable scope when assigned:** inventory → feature/rule implementation →
+development calibration → frozen replay evaluation → evidence-backed recommendation.
+Do not split this into one-helper handoffs. If genuine sequences are missing, finish
+software and explicitly limited static diagnostics, and specify only the missing
+ordered capture evidence needed to complete the real transition comparison.
+
 ## Assigned development precursor: TEMP-FOCUS-DEV (2026-09-23)
 
 Under the continuing unblocked-work assignment, NUIAK owns one offline temporal

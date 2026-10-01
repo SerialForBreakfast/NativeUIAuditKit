@@ -98,12 +98,14 @@ class FullFitTests(unittest.TestCase):
         real_require=e.require
         def test_device_check(ok,reason):
             if reason!='full_fit_requires_mps':real_require(ok,reason)
-        for eligible in (False,True):
+        for eligible,context in ((False,False),(True,False),(True,True)):
             with self.subTest(eligible=eligible),tempfile.TemporaryDirectory(dir=root) as directory:
                 out=Path(directory);(out/'weights').mkdir();torch.manual_seed(42)
                 model=torch.nn.Linear(1,1)
                 report=dict(fullFit=dict(weights={r['id']:.25 for r in rows},weightDecay=.01),
                     configuration={**e.CONFIG,'epochs':26},representation={},selection={},protocolSHA256='test')
+                if context:report.update(protocolVersion='focus-context-experiment-v1',
+                                         arm='context-local',contextFeatures={'generated':True})
                 score=dict(checkpointEligible=eligible,selectionLoss=.1)
                 start=time.monotonic()
                 with patch.object(e,'require',side_effect=test_device_check),patch.object(e.s.rep,'selection_metrics',return_value=score):
@@ -111,6 +113,10 @@ class FullFitTests(unittest.TestCase):
                 result=json.loads((out/'experiment-result.json').read_text())
                 self.assertEqual(result['selectedUpdate'],25 if eligible else None)
                 self.assertEqual((out/'weights/best.pt').exists(),eligible)
+                if eligible:
+                    saved=torch.load(out/'weights/best.pt',weights_only=True)
+                    self.assertEqual(saved['checkpointKind'],'context-mlp-head-v1' if context
+                                     else 'frozen-pretrained-linear-head-v1')
                 self.assertEqual(len((out/'training-observations.jsonl').read_text().splitlines()),27)
                 self.assertEqual([r['update'] for r in result['history'] if r['validation'] is not None],[25,26])
                 self.assertEqual(result['stopReason'],'update_cap')

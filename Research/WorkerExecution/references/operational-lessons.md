@@ -48,6 +48,12 @@ for failure categories and verification. Offscreen success alone is not Cocoa pr
 
 ## CoreML and dependency residency
 
+- For local MPS training, verify device availability in the actual launch context
+  before expensive corpus revalidation. FDR023's restricted process passed data
+  checks but reported MPS unavailable; a scoped host probe reported available.
+  Zero-update evidence was preserved and the same approved run used scoped host
+  execution. Do not silently use CPU or reinterpret a trained failure as startup.
+
 Distinguish import, optimizer initialization, trace, conversion, compile/load and
 inference. A fast warmed `import torch` does not qualify AdamW or coremltools startup.
 Use bounded readiness probes only within assigned execution scope, with an external

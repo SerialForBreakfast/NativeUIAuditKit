@@ -1,0 +1,26 @@
+schema_version: 1
+id: nuiak-20261001-artwork08-observer-receipt
+request_id: nuiak-20261001-fdr021-rgb-consumer
+receiver: NativeUIAuditKit
+receipt:
+  file: tvtestrig/ttr-fdr021-observer-proof-20261001-r1.tar.gz
+  bytes: 38588
+  sha256: b8ab4f604785734d2a8da0eb89afa7def5c70a6ac9aa67dd2f5997727110bb15
+  state: copied_and_verified
+  indexed_files_verified: 16
+  sender_cleanup: Sender owns exact shared-copy cleanup; consumer source retained.
+consumer_result:
+  scope: Independent original/bounds/truth/crop/RGB-input verification and recount of received scores, not new inference or independent score parity.
+  originals_and_bounds_matched: 96
+  crop_png_hashes_matched: 96
+  rgb_input_hashes_matched: 96
+  counts: {tp: 32, tn: 40, fp: 8, fn: 16, ambiguous: 6}
+  failure_strata: All16 misses on dark surroundings; all8 false positives on light surroundings. Descriptive association, not causal proof.
+  model: FDR021 experimental RGB; exact compiled/source identities match delivered candidate.
+  backend: Producer receipt CPU-only; no ANE or installed-app qualification.
+  training_admission: false
+  promotion: false
+feedback:
+  - Preserve isolated runner result separately from installed TTR app integration.
+  - Shared status currently contains colon-prefixed keys such as ':packet' and ':file'. Please emit ordinary string schema keys so strict consumers can read work/artifact fields; no need to republish unchanged proof bytes.
+evidence: reports/work/FOCUS-ARTWORK-08/artifacts/observer-audit.json

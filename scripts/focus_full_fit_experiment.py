@@ -151,6 +151,22 @@ def schedule(update, fit_pass, streak, maximum=1000):
     return streak, done, done or update % 25 == 0
 
 
+def weighted_backward(model, x, y, weights, microbatch, deadline):
+    """Accumulate the same weighted sum, not per-microbatch mean losses."""
+    import torch
+    total=0.
+    for offset in range(0,len(y),microbatch):
+        if time.monotonic()>=deadline:
+            model.zero_grad(set_to_none=True)
+            return None
+        sl=slice(offset,offset+microbatch)
+        loss=(torch.nn.functional.binary_cross_entropy_with_logits(model(x[sl]).view_as(y[sl]),
+              y[sl],reduction='none')*weights[sl]).sum()
+        require(bool(torch.isfinite(loss)),'nonfinite_training_loss')
+        loss.backward();total+=float(loss.detach().item())
+    return total
+
+
 def run(model, train_data, val_data, report, train, val, device, out, started, deadline, experiment_id):
     import torch
     from train_focus_ring_detector import checkpoint_improved
@@ -158,7 +174,9 @@ def run(model, train_data, val_data, report, train, val, device, out, started, d
     cfg = report['fullFit']; weights = cfg['weights']
     x, y = (t.to(device) for t in train_data.tensors)
     w = torch.tensor([weights[r['id']] for r in train], dtype=torch.float32, device=device).reshape(-1, 1)
-    opt = torch.optim.AdamW(model.parameters(), lr=report['configuration']['lr'], weight_decay=cfg['weightDecay'])
+    visual=report.get('visualTraining',False)
+    parameters=model.optimizer_groups(report['configuration']['lr'],cfg['tailLR']) if visual else model.parameters()
+    opt = torch.optim.AdamW(parameters, lr=report['configuration']['lr'], weight_decay=cfg['weightDecay'])
     def predictions(data, rows):
         model.eval(); result = []
         with torch.no_grad():
@@ -176,6 +194,17 @@ def run(model, train_data, val_data, report, train, val, device, out, started, d
     best_loss = float('inf'); selected = None; history = []; streak = 0; stop = 'update_cap'
     initial = observe_val(); initial_train = observe_train()
     def checkpoint(update, kind):
+        if visual:
+            return dict(epoch=update,model_name=report['configuration']['model'],state_dict=model.state_dict(),
+                        checkpointKind='visual-partial-candidate-v1' if kind=='frozen-pretrained-linear-head-v1'
+                        else 'visual-partial-diagnostic-v1',representation=report['representation'],
+                        protocolSHA256=report['protocolSHA256'],arm=report['arm'],features=report['features'])
+        if report.get('protocolVersion') == 'focus-context-experiment-v1':
+            return dict(epoch=update,model_name=report['configuration']['model'],state_dict=model.state_dict(),
+                        checkpointKind='context-mlp-head-v1' if kind=='frozen-pretrained-linear-head-v1'
+                        else 'context-mlp-diagnostic-last-v1',representation=report['representation'],
+                        protocolSHA256=report['protocolSHA256'],contextArm=report['arm'],
+                        contextFeatures=report['contextFeatures'],inputWidth=1736,hiddenWidth=64)
         return dict(epoch=update, model_name=report['configuration']['model'], state_dict=model.state_dict(),
                     checkpointKind=kind, representation=report['representation'], protocolSHA256=report['protocolSHA256'])
     with (out/'training-observations.jsonl').open('x') as observations:
@@ -184,16 +213,22 @@ def run(model, train_data, val_data, report, train, val, device, out, started, d
             if time.monotonic() >= deadline:
                 stop = 'time_cap'; break
             model.train(); opt.zero_grad()
-            loss = (torch.nn.functional.binary_cross_entropy_with_logits(model(x).view_as(y), y, reduction='none')*w).sum()
-            require(bool(torch.isfinite(loss)), 'nonfinite_training_loss'); loss.backward()
+            loss = weighted_backward(model,x,y,w,cfg.get('microbatch',len(train)),deadline)
+            if loss is None:
+                stop='time_cap';break
             grad = sum(float(p.grad.detach().norm().item()) for p in model.parameters() if p.grad is not None)
             require(math.isfinite(grad), 'nonfinite_training_gradient'); opt.step()
             obs = observe_train(); observations.write(json.dumps(dict(update=update, **obs), allow_nan=False)+'\n')
-            streak, done, evaluate = schedule(update, obs['fitPass'], streak, report['configuration']['epochs'])
+            if visual:
+                streak=streak+1 if obs['fitPass'] else 0
+                done=update==report['configuration']['epochs']
+                evaluate=done or update%cfg['validationEvery']==0
+            else:
+                streak, done, evaluate = schedule(update, obs['fitPass'], streak, report['configuration']['epochs'])
             timed = time.monotonic() >= deadline
             evaluate = evaluate or timed
             validation = observe_val() if evaluate else None
-            history.append(dict(update=update, optimizedLoss=float(loss.item()), gradientNorm=grad,
+            history.append(dict(update=update, optimizedLoss=loss, gradientNorm=grad,
                                 training={k:v for k,v in obs.items() if k != 'predictions'}, validation=validation))
             if evaluate:
                 torch.save(checkpoint(update, 'full-fit-diagnostic-last'), out/'weights/last.pt')
@@ -204,7 +239,7 @@ def run(model, train_data, val_data, report, train, val, device, out, started, d
                 (out/'progress.json').write_text(json.dumps(dict(history=history, selectedUpdate=selected), allow_nan=False))
                 print(f"update {update}: trainingBCE={obs['groups']['overall']['weightedBCE']:.5f} confident={obs['groups']['overall']['confidentCorrect']}/{len(train)} eligible={validation['checkpointEligible']}", flush=True)
             if done or timed:
-                stop = 'training_fit' if streak >= 5 else 'time_cap' if timed else 'update_cap'; break
+                stop = 'training_fit' if streak >= 5 and not visual else 'time_cap' if timed else 'update_cap'; break
     # Preserve last completed step even when deadline was reached between updates.
     if history and history[-1]['validation'] is None:
         history[-1]['validation'] = observe_val()
@@ -218,6 +253,14 @@ def run(model, train_data, val_data, report, train, val, device, out, started, d
         experimentID=experiment_id, device=str(device), pid=os.getpid(), stopReason=stop,
         elapsedSeconds=time.monotonic()-started, torchVersion=str(torch.__version__),
         finalHeadSHA256=fit.paired.base.state_digest(model))
+    if visual:
+        tail=fit.paired.base.state_digest(model.tail)
+        bn=fit.paired.base.state_digest(torch.nn.ModuleList([m for m in model.tail.modules()
+            if isinstance(m,torch.nn.modules.batchnorm._BatchNorm)]))
+        require(bn==report['initialBNSHA256'],'visual_batchnorm_changed')
+        if report['arm'].endswith('frozen'):require(tail==report['initialTailSHA256'],'visual_frozen_tail_changed')
+        result['visualState']=dict(initialTail=report['initialTailSHA256'],finalTail=tail,
+                                  tailChanged=tail!=report['initialTailSHA256'],batchNormUnchanged=True)
     (out/'experiment-result.json').write_text(json.dumps(result, indent=2, allow_nan=False))
     print(f"Completed: fitPassed={result['fitPassed']}, selectedUpdate={selected}; no export/promotion", flush=True)
     return 0

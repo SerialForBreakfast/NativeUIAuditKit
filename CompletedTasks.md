@@ -1,5 +1,140 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FOCUS-PAIRED-11 retained before/after comparison — complete October1,2026
+
+2996cases,1702native common-window crops, exact replay. Homegrowth6/6directional
+contrasts versus0normalized; sixeligible framepairs yield12/12directions in isolated
+clipping follow-up versusFDR021transition7/12. Scrolling retention failure and stress
+false changes block deployment; no neuralfit/export/promotion.23Python tests,
+7CLI negatives, offline build/134Swift tests pass. Nextmovement alignment/rejection.
+[Handoff](reports/work/FOCUS-PAIRED-11/handoff.md).
+
+## FOCUS-TRANSFER-10 controlled transfer diagnosis — complete October1,2026
+
+Audited real errors against admitted synthetic inputs and48retained recipes;
+all1895production crops replayed pixel-exact. Two100update isolated experiments:
+FDR033emphasis4/12artwork/29FP; FDR034aspect-fit7/12/68FP and0/3buttons. Both
+rejected; unchangedFDR021retained.333evaluation records preserved,30metric
+replays,46Python tests, actual CLI2positive/6negative checks and offline build/
+134Swift tests pass. Published concrete TTR coverage request; no new capture,
+annotation, admission, export or promotion. [Handoff](reports/work/FOCUS-TRANSFER-10/handoff.md).
+
+## FOCUS-CAMPAIGN-09 reviewed admission and comparison — complete October1,2026
+
+Maintainer approved six samples and explicit development-training use of six pairs.
+12targets admitted;312post-review crops unchanged. One1.83second encoding, two
+100update partial-backbone runs (FDR031/032),20exact metric replays. Added model
+learns12/12new crops but artwork stays3/12andFP24→25; no eligible checkpoint.
+333evaluation members and retainedFDR021unchanged; no export/promotion.42Python
+tests, real CLI positive/six negative checks, offline build/134Swift tests pass.
+Consumer role-migration receipt published/read back to TTR. Remaining42delivery
+and seven Settings endpoint reviews stay in Tasks.
+[Results](reports/work/FOCUS-CAMPAIGN-09/results.md).
+
+## FOCUS-CAMPAIGN-09 independent preparation — complete October 1, 2026
+
+New standard campaign received/verified; composition competitor and targeted
+exclusion compatibility integrated;12native brackets/312crops pass. Six sample
+screens and exact12target-addition comparison prepared. Seven retained Settings
+endpoints recovered with72unconfirmed proposals.73Python tests, offline build,
+134Swift tests and native editor doctor pass. Training/source admission and genuine
+temporal qualification remain in Tasks; no model run or promotion.
+[Handoff](reports/work/FOCUS-CAMPAIGN-09/handoff.md).
+
+## TEMP-FOCUS-02 retained-evidence spike — complete October 1, 2026
+
+Fixed brightness/settings-oracle/consensus comparison against cachedFDR021 on333
+unchanged evaluation controls;112Fixture and9Settings static-pair probes;48white-
+artwork paired counterexamples;166action audit with exact reviewed-image joins.
+Settings rule matches baseline; universal brightness and consensus replacement
+rejected. Corrected48recipe/96PNGbindings verified without altering originals.
+39Python tests, offline build and134Swift tests pass. Genuine temporal accuracy,
+runtime context/geometry, human review and corpus admission remain open in Tasks.
+[Handoff](reports/work/TEMP-FOCUS-02/handoff.md).
+
+## FOCUS-ARTWORK-08 — completed for review October 1, 2026
+
+Received/verified r2 owned-artwork and isolated observer proof. Implemented exact
+composition-v2 plus explicit non-campaign diagnostic intake, integrated native
+labels/rendered bodies/production crops and balanced sampled review.48 pairs,
+96 frames,2,496 crops pass diagnostic QA;96 target crops conditionally proposed.
+All96 observer crop and RGB-input hashes match independently; scores recounted,
+no new local inference.129 Python and134 Swift tests pass; offline build passes.
+Eight prefilled samples prepared; recipe-file index and screenshot-correlation
+gaps reported to TTR, no fake receipt/approval/admission. Shipped models unchanged.
+[Handoff](reports/work/FOCUS-ARTWORK-08/handoff.md).
+
+## FOCUS-READY-07 — completed for review October 1, 2026
+
+Delivered existing FDR021 observer package; exact TTR receiver receipt observed,
+not runtime loading. Added offline artwork-readiness CLI with native intake,
+production crop evidence, pixel deduplication, matched competitor/appearance checks
+and source-weight continuity. Actual trainer dry-run validates the configuration
+and blocks execution/admission as intended.106 Python and134 Swift tests pass;
+offline Swift build passes. Received24 proposed artwork assets/48 pairs and supplied
+producer feedback. No inference, encoding, training, capture or model replacement.
+[Handoff](reports/work/FOCUS-READY-07/handoff.md).
+
+## FOCUS-APPEARANCE-06 — completed for review October 1, 2026
+
+Received and verified D1 plus the composition contract archive. Implemented strict
+source-compatible composition/native inventory intake, bounded512MiB review lane,
+and native menuButton→existing focus:tabItem projection. All78 pairs/4,056 production
+crops pass; six prefilled random review frames prepared.132 Python tests and offline
+Swift build/134 tests pass. D1 adds layout complexity but no mostly-white artwork
+under the retained diagnostic rule; calibration ancestry and admission gates stay
+unchanged. Published receipts; next producer action is targeted appearance coverage.
+No new capture, inference, encoding, training or promotion. FDR021 retained.
+[Handoff](reports/work/FOCUS-APPEARANCE-06/handoff.md).
+
+## FOCUS-VISUAL-05 — completed October 1, 2026; all four candidates rejected
+
+Implemented production-detail plus fixed-scale masked-context input and actual
+partial-backbone training with immutable-prefix cache, frozen BN and exact weighted
+gradient accumulation. Executed assigned FDR027–030; all39 saved evaluations replay.
+No selected checkpoint; terminal artwork0/0/3/2, FP3/33/24/23. KeepFDR021.
+78Python tests and offline Swift build/134tests pass. Appearance audit finds a
+specific white-artwork gap (21/24 FDR029 false positives), motivating inventory
+of the existing TTR delivery before new collection. No export or new admission.
+[Handoff](reports/work/FOCUS-VISUAL-05/handoff.md).
+
+## FOCUS-CONTEXT-04 — completed October 1, 2026; comparisons rejected
+
+Implemented context-cache encoding, geometry/mask validation, shared1736→64→1
+ablated heads and real trainer integration. Executed FDR024/025/026 under one
+adopted tranche authorization. All fit1550/1550training controls; no eligible
+checkpoint; artwork0/1/1and FP10/9/24vsFDR021artwork2and FP3. All34saved
+evaluations replay exactly.67Python tests and offline Swift build/134tests pass.
+PreserveFDR021; no export/promotion. Next: trainable visual representation rather
+than another frozen head. [Handoff](reports/work/FOCUS-CONTEXT-04/handoff.md).
+
+## FOCUS-WEIGHT-03 — approved comparison completed October 1, 2026
+
+FDR023weight-continuity control executed and all40saved snapshots replayed through
+existing metrics. Selected275regresses focused hits and complete-frame selection
+despite fewerFP; comparison rejected, FDR021preserved. No automatic rerun/export.
+Scoped MPS startup recovery preserved zero-update failure evidence. Tranche-level
+approval policy is proposed only. [Handoff](reports/work/FOCUS-WEIGHT-03/handoff.md).
+
+## FOCUS-GROWTH-02 — software/input preparation completed October 1, 2026
+
+Explicit weighting continuity and retained-cache reuse integrated in the existing
+assembly/experiment/trainer paths. Experimental scene/mask/geometry builder prepares
+all1883members; recovered152historical bounds with pair/frame/crop binding.32/32growth
+masks preserve enlargement;57Python and134Swift tests pass with offline build.
+No retained-data training, new fusion model or production change. The next controlled
+run remains separately approved. [Handoff](reports/work/FOCUS-GROWTH-02/handoff.md).
+
+## SYN-13-DIAGNOSIS — offline failure diagnosis completed October 1, 2026 PDT
+
+Measured source-weighting discontinuity, verified three retained feature caches,
+compared descriptive cosine neighborhoods and inspected four retained crops.
+FDR022is confounded by a policy change (OS mass9.3%→40%), not a clean added-data
+test. Correct body crop normalization also removes direct absolute growth; feature
+limits remain a hypothesis. No code fix, model execution or label edits. Next:
+separately assigned weighting-continuity repair and controlled cached-feature run.
+[Evidence](reports/work/SYN-13-DIAGNOSIS/handoff.md).
+
 ## REVIEW-QT-01 — persistent startup guard completed for review 2026-10-01
 
 Integrated a20second-bounded fresh child Qt probe before every supported annotator
@@ -2931,3 +3066,13 @@ prefilled human queue prepared; native/custom growth, no-growth, mixed aspect,
 selected-parent/focused-child and clipping visually inspected.44fixture,46TTR,
 136human tests plus offline Swift build and120+14tests pass. No training admission,
 capture, inference or model changes. [Handoff](reports/work/SYN-06-BODY/handoff.md).
+## SYN-12-EXECUTION — completed October 1, 2026 PDT
+
+Sample review → exact admission → approved encoding → approved FDR022comparison
+completed end to end.12new frames/90controls human-confirmed;564native additions
+admitted,1550training controls,333evaluation unchanged. Encoding3.224seconds MPS,
+1,520,229bytecache; training1000updates/31.217model seconds, exit0. No eligible
+checkpoint; terminal real-frame performance regressed. Candidate rejected, FDR021
+unchanged. Full saved-prediction replay and runtime/cache identities verified.
+Software/data integration passed; model comparison failed. No export/promotion.
+[Evidence](reports/work/SYN-12-EXECUTION/handoff.md).

@@ -170,6 +170,21 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get('version')=='focus-transfer-experiment-v1':
+        from focus_transfer_experiment import load_protocol as transfer_protocol
+        return transfer_protocol(path,arm,run_name,approval_path)
+    if doc.get('version')=='focus-artwork-experiment-v1':
+        from focus_artwork_experiment import load_protocol as artwork_protocol
+        return artwork_protocol(path,arm,run_name,approval_path)
+    if doc.get('version')=='focus-artwork-readiness-v1':
+        from focus_artwork_readiness import load_protocol as artwork_readiness
+        return artwork_readiness(path,arm,run_name,approval_path)
+    if doc.get('version')=='focus-visual-experiment-v1':
+        from focus_visual_experiment import load_protocol as visual_protocol
+        return visual_protocol(path, arm, run_name, approval_path)
+    if doc.get('version')=='focus-context-experiment-v1':
+        from focus_context_experiment import load_protocol as context_protocol
+        return context_protocol(path,arm,run_name,approval_path)
     if doc.get('version')=='focus-native-body-full-fit-v1':
         from focus_native_body_experiment import load_protocol as native_execution_protocol
         return native_execution_protocol(path,arm,run_name,approval_path)

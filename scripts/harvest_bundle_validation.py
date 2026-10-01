@@ -99,7 +99,9 @@ def validate_derived_views(root, rows, artifacts):
     return allowed
 
 
-def validate_bundle(directory: Path) -> dict[str, Any]:
+def validate_bundle(directory: Path, *, max_total_bytes=LIMIT_TOTAL) -> dict[str, Any]:
+    if type(max_total_bytes) is not int or not 0 < max_total_bytes <= 512*1024*1024:
+        raise HarvestValidationError('invalid_bundle_budget')
     root = directory.resolve(strict=False)
     if not root.is_dir() or ".partial-" in root.name: raise HarvestValidationError("incomplete_run")
     index = _json(root, "dataset-index.json")
@@ -114,7 +116,8 @@ def validate_bundle(directory: Path) -> dict[str, Any]:
     for a in artifacts:
         if not isinstance(a, dict) or not isinstance(a.get("path"), str) or a["path"] in data: raise HarvestValidationError("unsafe_or_invalid_manifest")
         b = _read(root, a["path"]); total += len(b)
-        if total > LIMIT_TOTAL or a.get("byteCount") != len(b) or a.get("sha256") != hashlib.sha256(b).hexdigest(): raise HarvestValidationError("integrity_failed")
+        if total > max_total_bytes: raise HarvestValidationError('bundle_size_limit')
+        if a.get("byteCount") != len(b) or a.get("sha256") != hashlib.sha256(b).hexdigest(): raise HarvestValidationError("integrity_failed")
         data[a["path"]] = b
     required = {"manifest.json", "training.json", "calibration.json", "held-out.json"}
     if not required <= data.keys(): raise HarvestValidationError("unsafe_or_invalid_manifest")

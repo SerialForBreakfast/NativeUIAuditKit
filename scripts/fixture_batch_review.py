@@ -30,9 +30,13 @@ def preflight(root, protected):
         h.require(h.sha(p) not in protected,'protected_bytes')
 
 
-def source_record(root, protected):
+def source_record(root, protected, pair_ids=None):
+    if (root/'pair-index.json').is_file():
+        from fixture_owned_pairs import source_record as diagnostic_source
+        return diagnostic_source(root,protected,pair_ids)
+    h.require(pair_ids is None,'pair_selection_requires_diagnostic_source')
     preflight(root,protected)
-    contract=validate_bundle(root)
+    contract=validate_bundle(root,max_total_bytes=512*1024*1024)
     h.require(len(contract['usableRows'])==contract['acceptedRowCount'],'unusable_pair_membership')
     h.require(all(r['sidecarVersion'] in (2,3) for r in contract['usableRows']),'native_brackets_required')
     index=h.read(root/'dataset-index.json')
@@ -48,6 +52,12 @@ def project(sources, contracts, *, body_geometry=False):
         root=h.ROOT/source['root']; source_key=h.digest(source['files'])[:16]
         for pair in contract['usableRows']:
             binding=pair['observationBinding']; recipe=pair['recipe']
+            composition=(recipe.get('appearance') or {}).get('composition')
+            tab_ids=set()
+            if composition:
+                from fixture_composition import resolve
+                resolved,_=resolve(composition,recipe,h.require)
+                tab_ids={i['id'] for i in resolved if i['kind']=='tab'}
             key=h.digest(dict(source=source_key,recipe=recipe))
             original_ids=sorted({e['element_id'] for role in ('baselineScene','focusedScene') for e in binding[role]['elements']})
             local_ids={eid:f'control-{i:03d}' for i,eid in enumerate(original_ids,1)}
@@ -62,6 +72,11 @@ def project(sources, contracts, *, body_geometry=False):
                     nativeRecord=h.ref(root/pair['metadataPath']),sourcePairID=pair['id'],sourceRole=role,
                     sourceRoot=source['root'],recipeKey=key,recipe=recipe,proposals=[],nativeUnresolved=False,
                     duplicateOf=None,reviewFindings=[])
+                if pair.get('admissionBlockers'):
+                    frame.update(admissionBlockers=pair['admissionBlockers'],
+                        observationCorrelation=binding['correlation'],sourceAncestry=pair['sourceAncestry'],
+                        sourceRole=pair['sourceRole'],labelSource=pair['labelSource'])
+                    frame['reviewFindings'].extend(pair['admissionBlockers'])
                 semantics={e['id']:e for e in inventory['elements']} if inventory else {}
                 scene_ids={e['element_id'] for e in scene['elements']}
                 if inventory is None: frame['reviewFindings'].append('legacy_semantics_unavailable')
@@ -69,7 +84,8 @@ def project(sources, contracts, *, body_geometry=False):
                 for e in scene['elements']:
                     eid=e['element_id']; native=semantics.get(eid,{})
                     reason=None
-                    if e['taxonomy_class'] not in FOCUSABLE: reason='unsupported_or_nonfocusable_taxonomy'
+                    label='focus:tabItem' if eid in tab_ids else e['taxonomy_class']
+                    if label not in FOCUSABLE and label!='focus:tabItem': reason='unsupported_or_nonfocusable_taxonomy'
                     elif inventory and native.get('focusable') is not True: reason='native_focusability_unknown_or_false'
                     body=e.get('rendered_body_geometry')
                     if body_geometry and reason is None:
@@ -83,10 +99,10 @@ def project(sources, contracts, *, body_geometry=False):
                         frame['reviewFindings'].append(reason)
                         continue
                     proposal=dict(id=local_ids[eid],sourceElementID=eid,bounds=e['pixel_bounds'],
-                        **{'class':e['taxonomy_class']},state='focused' if e['is_focused'] else 'unfocused',
+                        **{'class':label},state='focused' if e['is_focused'] else 'unfocused',
                         selected=native.get('selected'),accessibilityLabel=native.get('accessibility_label'),
                         declaredParentID=native.get('declared_parent_id'),declaredTaxonomy=native.get('declared_taxonomy'),
-                        labelSource='observed_native_bracket',geometryRole='control_wrapper')
+                        labelSource=pair.get('labelSource','observed_native_bracket'),geometryRole='control_wrapper')
                     if body_geometry:
                         proposal.update(bounds=bounds,geometryRole='rendered_control_body',
                             layoutWrapperBounds=e['pixel_bounds'],renderedBodyGeometry=body)
@@ -145,7 +161,7 @@ def validate(path):
     contracts=[]
     for source in batch['sources']:
         for ref in source['files']: h.checked(h.ROOT,ref)
-        expected,contract=source_record(h.local(h.ROOT/source['root']),protected)
+        expected,contract=source_record(h.local(h.ROOT/source['root']),protected,source.get('pairIDs'))
         h.require(expected==source,'source_binding_changed'); contracts.append(contract)
     expected=project(batch['sources'],contracts,body_geometry=version==BODY_VERSION)
     for field in ('frames','pairs','records','recipes'):
@@ -154,10 +170,11 @@ def validate(path):
     return batch
 
 
-def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limit=8, body_geometry=False):
+def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limit=8, body_geometry=False, pair_ids=None):
     output=h.fresh(output); protected_path=h.local(protected_path)
     protected_ref=h.ref(protected_path); protected=metadata_hashes(h.read(protected_path))
     roots=sorted(map(h.local,bundles)); h.require(roots and len(roots)<=128 and len(set(roots))==len(roots),'bundle_membership')
+    h.require(pair_ids is None or len(roots)==1,'pair_selection_single_source')
     h.require(not any(output.is_relative_to(root) for root in roots),'output_inside_source')
     h.require(type(seed) is int and type(count) is int and 1<=count<=256 and
               type(exception_limit) is int and 0<=exception_limit<=256,'invalid_sampling_limits')
@@ -166,7 +183,7 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
         row=dict(sourceRoot=str(root.relative_to(h.ROOT)),disposition='rejected',reasons=[])
         outcomes.append(row)
         try:
-            source,contract=source_record(root,protected)
+            source,contract=source_record(root,protected,pair_ids)
             sources.append(source); contracts.append(contract)
             row.update(disposition='accepted_for_diagnostic_QA',pairCount=len(contract['usableRows']),
                        targetCoverage=contract['targetCoverage'])
@@ -231,10 +248,11 @@ def main():
     p.add_argument('--seed',type=int,default=42); p.add_argument('--count',type=int,default=8)
     p.add_argument('--exception-limit',type=int,default=8)
     p.add_argument('--rendered-body',action='store_true',help='Use measured body bounds; no layout fallback')
+    p.add_argument('--pair-id',action='append',help='Exact diagnostic pair identity; one source only')
     a=p.parse_args()
     try:
         result=prepare(a.bundle,a.output,a.protected_metadata,seed=a.seed,count=a.count,exception_limit=a.exception_limit,
-                       body_geometry=a.rendered_body)
+                       body_geometry=a.rendered_body,pair_ids=a.pair_id)
         print(json.dumps({k:result[k] for k in ('counts','pairCount','trainingEligible')}))
         return 2 if result['counts'].get('rejected') else 0
     except (ValueError,OSError,KeyError,TypeError) as error:

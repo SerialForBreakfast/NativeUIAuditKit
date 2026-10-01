@@ -1,5 +1,190 @@
 # NativeUIAuditKit — Tasks
 
+## Next — paired alignment after FOCUS-PAIRED-11
+
+FOCUS-PAIRED-11 complete: fixed-window growth exposes useful signal; no model
+promotion. Clipping follow-up12/12directions from sixeligible pairs versusFDR0217/12,
+but a scrolled retention row gives wrong direction. [Results](reports/work/FOCUS-PAIRED-11/results.md).
+
+- [ ] Implement/evaluate translation-only alignment or movement rejection without
+  normalizing away enlargement. Retain161pxscroll, row-removal, content replacement,
+  lighting and unchanged-focus counterexamples. Then optional diagnostic verifier;
+  do not repeat unchanged neural training. New assignment, not automatically started.
+
+## Next — coverage change after FOCUS-TRANSFER-10
+
+FOCUS-TRANSFER-10 complete for review: FDR033emphasis4/12artwork with29FP;
+FDR034aspect-fit7/12with68FP and0/3buttons. Both rejected; FDR021preserved.
+All1895production crops pixel-exact,333evaluation records unchanged,30metric
+replays,46Python tests and134Swift tests pass. [Results](reports/work/FOCUS-TRANSFER-10/results.md).
+
+- [ ] Reconcile TTR response to `nuiak-20261001-transfer10-coverage`: map existing
+  templates/remaining42cases to composite artwork containers, wide rows and varied
+  icon/hero layouts; propose a structurally diverse generation matrix with actual
+  focus positions and measured paired growth. No new runtime dispatch from this
+  planning request; no unchanged retraining or redraw of the accepted six pairs.
+Retained paired comparison completed in FOCUS-PAIRED-11 above. Contrast endpoints
+are not action-linked navigation tests. Global aspect-fit and10×emphasis remain
+rejected settings, not new defaults; new coverage needs its own intake/admission.
+
+**TTR backup, October1:** user-copied training-drive destination verified:
+15archives/4,878,703,538bytes, all sizes/SHA256 match. Exact generated receipt
+returned through SharedStatusFile; producer22:14:46UTC acknowledges verification
+and capacity restored. No consumer source deletion or new capture. Narrow backup verification
+does not restart cancelled storage services or migrate the training pipeline.
+[Receipt/status](reports/work/TTR-BACKUP-20261001/status.md).
+
+**FOCUS-CAMPAIGN-09 / Codex — comparison complete; FDR021 retained:**
+Six samples approved; explicit training designation and exact12target admission
+complete. FDR031/032each100updates: artwork3/12both,FP24→25,unique12/14both,
+retention18/18both. All12new crops learned but no real-screen transfer improvement.
+333evaluation controls unchanged;20snapshots replay exactly.42Python tests,
+actual CLI checks and offline build/134Swift tests pass. No export/promotion.
+[Results](reports/work/FOCUS-CAMPAIGN-09/results.md).
+
+- [ ] Inspect remaining42case delivery for genuinely new coverage before another
+  admission/run. TTR22:14:46UTC reports timeout/runner-cleanup blocker after backup
+  capacity restoration. Do not recapture these six or repeat unchanged training.
+- [ ] Review seven recovered Settings endpoints, then validate context/control
+  matching and actual transition accuracy; timing alone is not focus truth.
+
+[Integrated handoff](reports/work/FOCUS-CAMPAIGN-09/handoff.md),
+[prefilled review](reports/work/FOCUS-CAMPAIGN-09/review.md).
+
+**TTR delivery update — October 1, 2026, 2:26 PM PDT:** producer reports six
+standard-campaign artwork pairs/12frames with host capture brackets, PNG hashes,
+native competitor focus and measured growth. Named85,180,795-byte archive is
+present with matching advertised size; subsequently copied, hash-verified and
+imported by FOCUS-CAMPAIGN-09 above. **Next priority: source-role decision and
+sampled verification of this new six-pair delivery.** This addresses the missing
+timing evidence for these new frames only; it does not rehabilitate the older48
+diagnostic pairs or constitute training admission. TTR acknowledged our prior
+correction receipt and reports sender-owned shared-copy cleanup completed.
+[Status evidence](reports/work/FOCUS-CAMPAIGN-STATUS-01/status.md).
+
+**Latest producer update,2:33PM PDT:** remaining42cases prepared in7batches;
+new capture paused by producer disk reserve. Existing six-pair consumer work is
+not blocked by that capacity issue. No NUIAK storage workaround initiated.
+
+## Queued spike — TEMP-FOCUS-02: before/after focus and simple brightness rules
+
+- [ ] TEMP-FOCUS-02 genuine-transition follow-up / unassigned: retained-evidence
+  spike completed2026-10-01. Brightness matches109/109Settings controls but yields
+  58FP on315mixed controls; Settings-only hybrid equals FDR021, not improvement.
+  Nine static Settings pairs brighten correctly;112Fixture pairs yield54expected/
+  1opposite/57unknown;48white-artwork pairs all unknown by luma delta.
+  Office166actions include14timing-valid associations but zero with both endpoints
+  in accepted reviewed annotations. Seven missing Settings endpoints now prepared by
+  FOCUS-CAMPAIGN-09 (not yet approved). Complete
+  paired review, then validate runtime context/matching and genuine transitions.
+  [Completed spike](reports/work/TEMP-FOCUS-02/handoff.md).
+  [Scope and acceptance](Research/Plans/TemporalVisualVerificationSpike.md#temp-focus-02--brightness-and-paired-change-spike-2026-10-01).
+  Test settings-specific benefit and mixed-UI counterexamples separately. Existing
+  pairs are not automatically real action sequences. Reuse existing differencing,
+  box/crop and replay tooling; no new neural training is required for the rule test.
+  Deliver full offline comparison and a keep/reject decision, not merely helpers.
+  Current artwork work remains in place; no live capture or model training occurred.
+  This refreshes the old focus diagnostic, not the full TEMP-LIVE
+  interruption qualification or the deferred diverse-source corpus project.
+
+## Deferred backlog — DIVERSE-UI-CORPUS (not current critical path)
+
+Maintainer requested planning on2026-10-01; planning owner Codex, implementation
+owners unassigned. [Canonical plan](Research/Plans/DiverseNativeUICorpus.md).
+Reuse existing Fixture/export/import/review; no acquisition, capture or training
+dispatched. Current focus experiment and artwork evidence remain higher priority.
+
+- [ ] DUC-A — NUIAK: rights-reviewed source/asset register and independent screen-family
+  coverage matrix; rank Apple samples, MIT tvOS components, Swiftfin and any actually
+  available Ferret-UI2 data. Reject/replace unclear content; preserve notices.
+- [ ] DUC-B — TTR + NUIAK: agree and implement one native scene adapter and measured
+  per-frame annotation export through existing contracts; verify focus growth,
+  clipping, hierarchy and screenshot correlation. Depends onDUC-A source approval.
+- [ ] DUC-C — TTR: expand approved source families and seeded appearance/structure
+  controls; generate balanced same-content focus pairs with competitors and native
+  geometry. Depends onDUC-B; pilot targets are not production qualification gates.
+- [ ] DUC-D — NUIAK: integrate all-frame QA plus stratified random and targeted
+  prefilled human review, with defect-rate/confidence assumptions and OS/renderer
+  requalification. Reuse existing review tooling; validate onDUC-C pilot.
+- [ ] DUC-E — NUIAK: group source/layout ancestry before splits, then assign a matched
+  data-only comparison on withheld families and separate real-app evaluation;
+  retain/reject by predeclared results before scaling or release.
+
+TTR producer scope is drafted in the plan, not published/dispatched. Publish as an
+addendum to the existing semantic/Fixture request when this work is prioritized;
+do not interrupt current TTR fixes or create a duplicate capture pipeline.
+
+**Next — resolve exact artwork evidence and admit the reviewed subset:**
+FOCUS-ARTWORK-08 completed consumer composition-v2 integration and diagnostic QA:
+48 matched white-artwork pairs,96 frames,2,496 production crops; all targets have
+competitors and measured growth. Conditional proposal is96 unique target crops,
+not2,496 new examples. Eight balanced prefilled samples are ready for later review.
+TTR metadata correction verified by TEMP-FOCUS-02:48normalized recipe bindings and
+96PNGhashes match. Host capture-time correlation explicitly unavailable; source-role
+and sampled acceptance still pending. No training admission from correction alone.
+NUIAK: after evidence/source-role and sampled acceptance, exact admission and the
+matched data-only experiment with unchanged333 evaluation controls/source budgets.
+No automatic run or independent holdout claim. [Handoff](reports/work/FOCUS-ARTWORK-08/handoff.md),
+[review](reports/work/FOCUS-ARTWORK-08/review.md).
+
+**TTR observer follow-up:** isolated FDR021 CPU loader proof received;96/96 crop
+PNG and RGB-input hashes match independently generated NUIAK crops. Recounted
+TP32/TN40/FP8/FN16; all misses dark, all false positives light. Installed TTR app
+integration and independent score replay remain unqualified. Preserve shipped
+defaults; no promotion. Earlier READY-07 loader-unavailable and APPEARANCE-06
+white-artwork-proposal dependencies are superseded by this concrete delivery.
+
+**Prior follow-up — now completed by FOCUS-VISUAL-05:** FOCUS-CONTEXT-04 completed
+all three comparisons. All fit1550/1550training controls but no eligible checkpoint;
+artwork0/1/1,FP10/9/24for local/geometry/scene. PreserveFDR021. Prepare a bounded
+partial-backbone comparison with matched frozen control and unchanged admitted
+data/evaluation. No fourth run under the exhausted three-run envelope. No TTR
+capture or reannotation prerequisite. Tranche-level approval policy adopted.
+[Diagnosis](reports/work/FOCUS-CONTEXT-04/handoff.md).
+
+**FOCUS-WEIGHT-03 — completed / Codex; candidate rejected:** FDR023selected275
+hasTP13/27,FP2,unique10/14,retention18/18; FDR021has16,3,12/14,18/18.
+Weight repair alone does not solve transfer; preserve FDR021. No encoding/export/
+promotion. Next: explicit context-fusion experiment using prepared common-scale
+inputs, not another identical head fit; this follow-up is now completed above.
+Tranche-level approval envelope adopted. [Handoff](reports/work/FOCUS-WEIGHT-03/handoff.md).
+
+**FOCUS-GROWTH-02 — completed for review / Codex:** explicit baseline-budget
+weighting repair, cache-reuse protocol and experimental scene/mask/geometry CLI.
+All1883controls/693scenes prepared;152historical bounds recovered by exact identities.
+32/32growth masks retain enlargement.57Python tests, offline Swift build and134tests
+pass. Real trainer preflight configuration passes; only run approval missing.
+Next: one bounded cached-feature weight-control comparison, then separately designed
+context-fusion experiment. No new encoding/training or production preprocessing change.
+[Handoff](reports/work/FOCUS-GROWTH-02/handoff.md).
+
+**Growth-preserving input — prior analysis (implementation now above):**
+FOCUS-GROWTH-01quantifies current scale loss:32interior growth comparisons have
+median16.7%/18.1%raw width/height growth but0.09%/0.05%after proportional resize.
+Proposed local+shared-scene+candidate-geometry branch preserves observable scale;
+actual learning and runtime parity unqualified. Existing TTR originals suffice for
+static input preparation. Fix weighting continuity first, then separately assign
+versioned input builder, invariance/parity tests and bounded comparative training.
+No preprocessing/model change. [Analysis](reports/work/FOCUS-GROWTH-01/handoff.md).
+
+**Next focus work — weighting-continuity repair, not another bulk-data run:**
+SYN-13offline diagnosis found FDR022changed the effective source-weighting policy:
+80OScontrols9.3%→40%total loss, old fixture70.7%→27%, new fixture13%. Same-corpus
+recomputation changes all790native weights. Cache shapes/labels/hashes pass; crop
+normalization suppresses absolute growth and8/12real artwork positives have closer
+opposite-label neighbors in frozen features (descriptive, not accuracy).
+First proposed repair: explicit baseline sub-source budgets, no-op/source-mass tests
+and a separately approved cached-feature reweighting comparison. No fix/training
+implemented by this diagnosis. [Evidence](reports/work/SYN-13-DIAGNOSIS/handoff.md).
+
+**Prior result — FDR022 rejected, no automatic rerun:** SYN-12review/admission/
+encoding/training comparison completed. FDR022has no eligible checkpoint; terminal
+TP15/27,FP6,unique-correct10/14vsFDR02116/27,3,12/14; retention18/18unchanged.
+Preserve FDR021. Next proposed assignment: offline feature/context and weighting
+diagnosis using existing crops/caches and saved predictions, then one separately
+approved representation or context experiment. No more same-configuration bulk-data
+run, threshold relaxation, export or promotion is authorized. [Outcome and scope](reports/work/SYN-12-EXECUTION/handoff.md).
+
 **REVIEW-QT-01 — completed for review / Codex:** every supported editor CLI launch
 now performs a20second-bounded child-process Qt check before opening annotations.
 Shared verified cache, structured failure receipts and `--doctor` prevent repeat
@@ -112,7 +297,7 @@ not fresh execution authority. [Contract](Research/Plans/LocalFirstDelivery.md).
 | 1 LOCAL-FIRST-01 | Completed for review / Codex | Documentation reconciliation only; see CompletedTasks and linked handoff. |
 | 2 LOCAL-TOOLS-02 | Completed for review / Codex | CLI/MCP, real retained-image smokes, 8 new Swift tests, 4 process tests and full offline checks pass. [Handoff](reports/work/LOCAL-TOOLS-02/handoff.md). No agent registration installed. |
 | 3 FOCUS-CORPUS-03 | Audit/readiness decision delivered; production assembly blocked / Codex | Fresh recheck:1319crops,395complete native pairs,3diagnostic pairs unchanged. Explicit family/scene matrix and NO-GO production decision delivered. Need exact new recipe/source-layout manifest, then reservation, bounded capture, admission and final assembly; keyboard can remain a separate unsupported lane. No unchanged training. [Decision](reports/work/FOCUS-CORPUS-03/readiness-decision.md), [handoff](reports/work/FOCUS-CORPUS-03/handoff.md). |
-| 4 FOCUS-EXPERIMENT-04 | Encoding/trainer integration completed for review; execution blocked / Codex | [Data-only comparison configuration](Research/Plans/FocusExperiment04.md), fixed baseline/evaluation and proposed decision criteria prepared. SYN-09 supplies564unique candidates; SYN-10 passes89generated tests and actual retained blocked preflight. Need sampled review/exact admission, approved encoding/cache receipt and exact run approval. No unchanged rerun or automatic later arms. |
+| 4 FOCUS-EXPERIMENT-04 | First data-only comparison completed; candidate rejected / Codex | SYN-12 admitted564controls, encoded and ran FDR022 once. No eligible checkpoint; real-frame regression. Preserve FDR021; further representation/context work requires a new bounded assignment. [Handoff](reports/work/SYN-12-EXECUTION/handoff.md). |
 | 5 FOCUS-DELIVERY-05 | Pending selected candidate and runtime scope / unassigned | CoreML parity, explicit selection/rollback, TTR loaded-identity observer proof; no automatic promotion. |
 
 FDR021 remains the development baseline (12/14 complete frames; artwork 2/12).

@@ -407,10 +407,11 @@ def crop_qa(batch_path, output, revision_path=None):
     items = []
     for frame in batch["frames"]:
         if frame["disposition"] != "imported": continue
+        image_path=str(checked(ROOT, frame["image"]))
         controls = frame["proposals"] if revision is None else next(f["controls"] for f in revision["frames"] if f["id"] == frame["id"])
         for c in controls:
             if c.get("disposition") == "rejected": continue
-            items.append(dict(id=frame["id"]+":"+c["id"], path=str(checked(ROOT, frame["image"])),
+            items.append(dict(id=frame["id"]+":"+c["id"], path=image_path,
                               sha256=frame["image"]["sha256"], bounds=c["bounds"]))
     runtime = identity()
     output.mkdir(parents=True)

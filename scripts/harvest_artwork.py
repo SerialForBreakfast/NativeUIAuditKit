@@ -72,6 +72,10 @@ def artwork_identity(value, require):
 
 def validate_hierarchy(scene, require):
     recipe = scene['recipe']
+    if (recipe.get('appearance') or {}).get('composition') is not None:
+        from fixture_composition import hierarchy
+        hierarchy(scene,require)
+        return
     canvas = (recipe.get('appearance') or {}).get('canvas') or {}
     elements = scene['elements']
     presentation = canvas.get('presentation')

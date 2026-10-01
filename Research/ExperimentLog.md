@@ -1,5 +1,350 @@
 # NativeUIAuditKit — Experiment Log
 
+## FOCUS-PAIRED-11 — retained-pixel diagnostic, no neural training (October1,2026)
+
+Fixed policy before scoring: common before-anchored native16%/256crop, rectangular
+edge ratios>=1.05/<=.95, luma delta±.08, conflict abstention.513native training pairs,
+9retention pairs,227real-control pairs;2996forward/reverse/identical cases.1702crops
+rendered84.22s; firstreplay6.07s. Growth63/513native arrivals versus13normalized;
+6/6Homearrival contrasts versus0normalized, repeated-layout diagnostic only.
+Frozen combined6/12eligible frame directions; FDR021transition7/12. Separate
+predeclared clipping-availability follow-up12/12, but retention arrival8/9with one
+wrong departure on161pxscroll. Stress light/content/translation causes false changes.
+No training, export, threshold tuning or promotion.23Python/134Swift tests pass,
+7CLI negatives,2996exact primary replays. Nexttranslation-only alignment/rejection
+before pairedlearning. [Evidence](../reports/work/FOCUS-PAIRED-11/results.md).
+
+## Run FDR033 — isolated artwork emphasis (October 1, 2026)
+
+Status: completed100updates in238.196seconds onMPS, PID99434; no eligible
+checkpoint. Terminal artwork4/12 versus retainedFDR032's3/12, butFP29vs25;
+overallTP18. Reject the trade-off; unchangedFDR021 remains the acceptance bar.
+Assigned FOCUS-TRANSFER-10; full retained-metric replay passed withFDR034.
+Arm `transfer-emphasis-partial`, output `fdr033-emphasis`, protocol
+`634c2a558b608de15e2710a9adb258b85cc0202cf5cbe91b35f9f071ec743315`.
+Same1562training/315development/18retention controls asFDR032, same cached prefix,
+seed42 initialization, partial MobileNetV3 detail-only, frozen prefix/BN,
+fresh1152→64→1head, headLR.01/tailLR.0001, AdamW weightDecay.01,
+32microbatch whole-corpus weighted gradients;100updates/300seconds maximum,
+evaluation every10plus terminal, fixed.85 threshold. Only change:12new target
+controls receive10×relative emphasis within fixture positive/negative budgets;
+all nonfixture weights and each fixture label total preserved. No augmentation,
+strips, threshold search, scientific retry, export or promotion. Compare matched
+FDR032updates and unchangedFDR021 gates. Final preflight passed before execution.
+
+## Run FDR034 — isolated native aspect-fit inputs (October 1, 2026)
+
+Status: completed100updates in208.930seconds onMPS, PID99695; no eligible
+checkpoint. Terminal artwork7/12butFP68, complete-screen selection10/14,
+focused buttons0/3; retention18/18. Reject global aspect-fit. All30evaluations
+acrossFDR032/033/034replay exactly,333evaluation members unchanged. All12new
+training targets confidently correct in both new runs. FDR033retention18/18,
+complete-screen selection11/14; neither run has a strict-passing update.
+[Analysis and decision](../reports/work/FOCUS-TRANSFER-10/results.md).
+Arm `transfer-aspect-partial`, output `fdr034-aspect`, protocol
+`0305c537b0f9828ea88aa2e39907091929248edb926c31f6f815b4f67d12ef02`.
+Same settings/membership/initialization asFDR033, but ORIGINAL FDR032weights.
+Only change versusFDR032: existing native makeCrop experimentalAspectFit branch,
+same16%context and256-square output, black letterbox instead of stretching.
+All1895production crops replayed pixel-exact before rendering. Frozen prefix
+encoding completed1895inputs in4.78seconds onMPS, unchanged prefix. Tests shape
+distortion only, not absolute enlargement. Unused context feature stream zero.
+100updates/300seconds, same evaluation/gates, no retry/export/promotion.
+
+## Run FDR031 — matched artwork control (October 1, 2026)
+
+Status: completed100updates in242.687seconds onMPS, PID95644; no eligible
+checkpoint. Terminal developmentTP17/FP24, artwork3/12, unique12/14;
+retention18/18. All10evaluations replay exactly. Tail changed,
+batch norm unchanged. Owner Codex. Derived from
+the assigned [FOCUS-CAMPAIGN-09 comparison](Plans/FocusArtwork09.md) and maintainer
+source-role decision. Protocol
+`155b44a226506d51276f5fb89f62c6e91f5497add627e50a4f7121e933083a25`,
+arm `artwork-control-partial`, output `fdr031-artwork-control`.
+1550training/315development/18retention, seed42, partial MobileNetV3 detail-only,
+frozen prefix and batch norm, fresh1152→64→1 head, headLR.01/tailLR.0001,
+AdamW weightDecay.01, whole-corpus weighted gradients with32microbatch,
+100updates/300seconds cap, evaluations every10 plus terminal. No strips,
+augmentation, threshold change, export or promotion. Reuse1883cached activations.
+No promotion; added-data run must be compared at matched updates.
+
+## Run FDR032 — matched artwork additions (October 1, 2026)
+
+Status: completed100updates in243.741seconds onMPS, PID95905. No eligible
+checkpoint. Terminal TP17/FP25, artwork3/12, unique12/14, retention18/18;
+all10evaluations replay exactly. All12added training controls confidently correct
+(focused probabilities≥.99975, unfocused≤.000375), but no artwork improvement
+over control at any matched evaluation update. One former false positive corrected,
+two introduced at terminal. Tail changed, BN unchanged; initial predictions and333
+evaluation members exactly match control. Same configuration asFDR031
+except1562training controls (12new unique targets,6focus pairs; explicit consumer
+development-training designation preserving original producer calibration roles).
+Fixture label mass redistributed under existing continuity policy; OS/human
+weights and333evaluation members unchanged. Protocol
+`b53ea79baa9849d17b7e680fda0dfa71a45a597cae8f689f1c967ffe284d0bcf`,
+arm `artwork-added-partial`, output `fdr032-artwork-added`.
+New12prefix encodings completed in1.83seconds; reused1883existing values. Same
+ImageNet prefix hash, no download. Sampled review6screens/156controls required
+zero corrections;312post-review crop checks passed. No independent-test claim.
+Diagnosis: these six pairs were ingested and learned but did not improve transfer.
+Their total objective weight is0.695%; three designs on shared layout ancestry are
+not evidence that broad artwork training cannot work. Both candidates fail the
+retainedFDR021 comparison (2/12artwork,3FP,12/14frames,18/18retention). KeepFDR021;
+no export/retry/promotion. [Full comparison](../reports/work/FOCUS-CAMPAIGN-09/results.md).
+
+## TEMP-FOCUS-02 — fixed-rule retained replay (October 1, 2026)
+
+No new training/inference run ID. User assigned pending simple experiments; froze
+brightness0.60/neutral0.45 and signed luma delta0.08 before scoring. Existing333
+evaluation controls and112training-state pairs only; no split changes or held-out
+claim. Brightness all315development:TP19/FP58 vsFDR021TP16/FP3; Settings-scoped
+oracle hybrid matches baseline12/14complete frames. Consensus givesTP14/FP0but
+11/14frames.109/109Settings controls correct for both model and rule.9/9static
+Settings arrivals pass delta;112Fixture pairs give54arrival/1departure/57unknown.
+48white-artwork pairs all delta-unknown; brightness48TP/48FP versus receivedFDR021
+32TP/40TN/8FP/16FN. No evidence to replace model. Genuine transition truth unavailable
+at both ends of retained timing-valid actions. [Evidence](../reports/work/TEMP-FOCUS-02/handoff.md).
+
+## FOCUS-ARTWORK-08 — data readiness and received-score audit only (October 1, 2026)
+
+No new NUIAK training/inference/encoding/export or run ID.48 native artwork pairs
+yield96 conditionally proposed target crops;1,646 prospective training members
+versus1,550 baseline, unchanged315 development+18 retention and source-label
+budgets. No admission implied. TTR separately supplied isolated FDR021 CPU scores;
+independent96/96 crop PNG and RGB-input hashes match, and received probabilities
+recount32TP/40TN/8FP/16FN. Misses all dark, false positives all light; diagnostic
+association, not causal proof or independent evaluation. Metadata evidence and
+eight sampled human checks remain pending. [Handoff](../reports/work/FOCUS-ARTWORK-08/handoff.md).
+
+## FOCUS-READY-07 — comparison preparation only (October 1, 2026)
+
+No model run, run ID, encoding or export assigned. Prepare a matched partial-detail
+control versus added-artwork-data comparison from FOCUS-VISUAL-05's unchanged1550/
+315/18 membership, fixed selection, ImageNet initialization and seed42. Preserve
+non-fixture weights and fixture label budgets with the existing continuity policy.
+Human/source admission and a new execution envelope remain pending. Readiness CLI
+is deliberately non-executable, even if an execute flag or approval is supplied.
+Existing FDR021 RGB artifact delivery reuses prior parity; it is not a new model.
+[Contract](Plans/FocusReady07.md).
+
+Completed preparation: actual trainer dry-run validates configuration but correctly
+blocks launch; D1 yields zero supported matched artwork additions. Baseline weights
+and evaluation membership unchanged.106 Python tests and offline Swift build/134
+Swift tests pass. TTR received existing candidate, not loaded.24-asset/48-pair
+producer proposal reviewed; rendering and admission still pending. No model run.
+[Handoff](../reports/work/FOCUS-READY-07/handoff.md).
+
+## Run FDR-027 — visual matrix, local frozen
+
+Assigned October1,2026 as one four-cell tranche. Protocol
+edbe052cf08ca0d8f67cfa01ffcd43c46143615db5cbf91041e0e7b7b57f1f06,
+arm visual-local-frozen, output fdr027-local-frozen. Exact1550train/315dev/18retention
+fromFDR023, unchanged weights and fixed0.85selection. Resident ImageNet MobileNetV3
+prefix[:9] cached unchanged; tail[9:] frozen; BN frozen.1152→64→1head, context
+disabled. Seed42, AdamWheadlr.01,decay.01, full-corpus weighted gradients accumulated
+in32-control microbatches.100updates/300seconds, evaluate every10plus terminal;
+no stop for100%training fit. Existing checkpoint eligibility/minimum loss; strict
+FDR021comparison unchanged. All four cells≤1800seconds/2GiB; no automatic retry,
+export, promotion, challenge or new capture. [Contract](Plans/FocusVisual05.md).
+Status: logged before launch; PID/timing/outcome pending. Initial PID70020 stopped
+after2.109seconds before optimization because the adapter omitted warmCheckpoint=None.
+No checkpoint or training observation exists; preserved under startup-no-updates.
+Original protocol96ff9ef875258008f2b625a42bce73a13693e50d31959caf0ecfe55c7a809443
+is retained. Corrected binding above; data/features/recipe unchanged. Charge both
+attempts to the same tranche budget; positive real-caller test added.
+Corrected PID70186completed100updates,112.790seconds process/112.050run seconds.
+No eligible checkpoint. Terminal:TP14/27,FP3,artwork0/12,unique11/14,wrong1,
+no-focus2; retention verified in final replay. Training confident1527/1550.
+Tail and BN unchanged; retention18/18. All four cells now completed; no export/promotion.
+
+## Run FDR-028 — visual matrix, contextual frozen
+
+Protocoledbe052cf08ca0d8f67cfa01ffcd43c46143615db5cbf91041e0e7b7b57f1f06,
+arm visual-context-frozen, output fdr028-context-frozen. Same configuration asFDR027,
+but adds candidate-centered fixed-viewport-scale context and label-free spatial
+pooling mask. Context head columns initialized zero; same initial predictions.
+PID70353completed100updates,216.067seconds process/215.244run seconds. No eligible
+checkpoint. TerminalTP14/27,FP33,artwork0/12,unique7/14,multiple5,no-focus2,
+retention18/18; training confident1549/1550. Tail/BNunchanged. Partial-backbone
+cells completed below; no export/promotion.
+
+## Run FDR-029 — visual matrix, local trainable tail
+
+Protocoledbe052cf08ca0d8f67cfa01ffcd43c46143615db5cbf91041e0e7b7b57f1f06,
+arm visual-local-partial, output fdr029-local-partial. Same input/head/objective/
+schedule asFDR027, but tail[9:] convolution/SE weights train atlr.0001. All BatchNorm
+statistics and affine parameters stay frozen. Frozen prefix cache reused.
+Completed PID70509,100updates,246.072process/245.287model seconds. No eligible
+checkpoint. TerminalTP17/27,FP24,artwork3/12,unique12/14,multiple1,no-focus1,
+retention18/18. Train confident1544/1550. Tail changed,BNunchanged. All24FPare
+artwork;21meet post-hoc mostly-white-body descriptor. Rejected, not exported.
+
+## Run FDR-030 — visual matrix, contextual trainable tail
+
+Protocoledbe052cf08ca0d8f67cfa01ffcd43c46143615db5cbf91041e0e7b7b57f1f06,
+arm visual-context-partial, output fdr030-context-partial. Same contextual input as
+FDR028 and trainable blocks asFDR029; shared tail across streams, allBNfrozen.
+This completes the predeclared2×2matrix; no fifth comparison under this authority.
+Completed PID70681,87updates,301.674process/300.878model seconds, cooperative
+time_cap. No eligible checkpoint. TerminalTP16/27,FP23,artwork2/12,unique10/14,
+multiple3,no-focus1,retention18/18. Train confident1550/1550. Tail changed,
+BNunchanged. All39 matrix evaluations replay exactly, initial predictions identical.
+Common-update80comparison also fails. Total887.975process seconds including startup
+failures/encoding;419,248,074runner-accounted output bytes. KeepFDR021; no export.
+Next: matched white-artwork coverage inventory before another run, not threshold
+relaxation. [Full diagnosis](../reports/work/FOCUS-VISUAL-05/handoff.md).
+
+## Runs FDR-024 / FDR-025 / FDR-026 — context ablations (2026-10-01)
+
+Status: completed; all three comparisons rejected. User approved the whole
+experiment tranche. Contract: Research/Plans/FocusContext04.md; exact inputs and
+derived execution authority in reports/work/FOCUS-CONTEXT-04/. Same 1550 training,
+315 development and 18 retention controls as FDR023, same weights and selection,
+fixed0.85, seed42, AdamWlr.01/decay.01, full batch, at most1000updates/300training
+seconds each. Three1736→64→1 heads with identical initial predictions: FDR024
+local-only, FDR025 local+geometry, FDR026 local+geometry+scene. Disabled columns
+zeroed; non-local first-layer weights initially zero. Frozen encoder unchanged.
+No export, promotion, protected challenge, threshold adjustment or new capture.
+Aggregate execution cap1800seconds, outputs2GiB. Encoding: failed initial pass
+PID66319 (129.591s, MPS non-divisible mask resize), corrected pass PID66815
+(135.674s,693scenes/1883controls) passed. Mask resizing now CPU, encoder still MPS;
+no scientific result was produced by the failed pass. Compare against FDR021:
+artworkTP>2,totalTP>=16,FP<=3,unique>=12,zero wrong/multiple,retention18/18,
+and no other-stratum regressions. Development comparison only.
+
+## Run FDR-024 — local nonlinear capacity control
+
+Protocol0399de2a10e8196e489c5bbb6e61650b534e76d8aa5762ef7a17a57d964396db,
+arm context-local, output fdr024-local-mlp. Exact configuration and authority are
+the context-ablation entry above. PID67335 stopped before model loading/updates
+because a combined log heading did not satisfy the existing per-run log parser;
+126.334seconds charged to tranche. Corrected exact binding, no trained retry.
+Corrected PID67553 completed147.185seconds total,17.918training seconds,335updates,
+training-fit stop:1550/1550confident training classifications correct. No eligible
+selected checkpoint. Terminal diagnostic:TP14/27,FP10,unique7/14,multiple4,wrong1,
+no-focus2,artwork0/12,retention18/18. Increased head capacity solves memorization
+but does not transfer. No export/promotion. All14saved snapshots replay exactly.
+
+## Run FDR-025 — geometry ablation
+
+Protocol0399de2a10e8196e489c5bbb6e61650b534e76d8aa5762ef7a17a57d964396db,
+arm context-geometry, output fdr025-geometry-mlp. Same context-ablation configuration
+and authority above. PID67645completed142.629seconds total,15.391training seconds,
+300updates,training-fit stop:1550/1550confident training classifications correct.
+No eligible selected checkpoint. Terminal diagnostic:TP15/27,FP9,unique9/14,
+multiple3,wrong1,no-focus1,artwork1/12,retention18/18. Geometry alone does not
+resolve transfer. No export/promotion; all12saved snapshots replay exactly.
+
+## Run FDR-026 — scene-context ablation
+
+Protocol0399de2a10e8196e489c5bbb6e61650b534e76d8aa5762ef7a17a57d964396db,
+arm context-scene, output fdr026-scene-mlp. Same context-ablation configuration
+and authority above. PID67759completed137.585seconds total,11.070training seconds,
+198updates,training-fit stop:1550/1550confident training classifications correct.
+No eligible checkpoint. Terminal diagnostic:TP15/27,FP24,unique11/14,multiple1,
+wrong1,no-focus1,artwork1/12,retention18/18. All8saved snapshots replay exactly.
+All3arms have identical initial predictions; zero existing-eligible or strict-pass
+snapshots. No export/promotion. This frozen-context recipe does not fix transfer;
+next investigate learnable visual representation with unchanged data/evaluation.
+[Complete diagnosis](../reports/work/FOCUS-CONTEXT-04/handoff.md).
+
+## Run FDR-023 — approved weighting-continuity control (2026-10-01 PDT)
+
+Status: completed, comparison rejected; MPS PID65517. Initial restricted PID65333 stopped before
+any update because MPS was unavailable in that context (121.968seconds including
+successful input preflight). Only preflight.json existed; preserved under
+FOCUS-WEIGHT-03/startup-blocked. Scoped host probe confirmed MPS available, then
+same approved run dispatched with470second remaining outer allowance. This is
+startup recovery, not a second trained candidate. Maintainer approved the comparison.
+Protocol438ceeeeb1eeb6c0627f49da19a01febafb62e5559d0b6c85a51718d23fb2767,
+arm `native-body-full-fit`, output `fdr023-weight-continuity`.
+1550training/315development/18retention unchanged from FDR022. Fresh577parameter
+head, frozen576features, seed42, AdamWlr.01/decay.01, full batch1550,
+1000updates/300training seconds,600second outer process limit. Existing25-update
+evaluation/selection, fixed.85, no augmentation; production16%/256unchanged.
+Only deliberate change from FDR022: baseline-fixture-budget-v1 weighting
+(fixture70.6976744%, OS9.3023256%, human20%; preserve OS/human member weights,
+redistribute fixture budget equally within each label). No scene-context input.
+Compare against FDR021 and FDR022 using retained predictions and unchanged metrics:
+artworkTP>2/12,totalTP>=16/27,FP<=3/288,unique-correct>=12/14,zero wrong/multiple,
+retention18/18 and no other-stratum regressions. No independent-transfer claim.
+No retry, new encoding, export or promotion. PID/timing/outcome pending.
+[Authorization](../reports/work/FOCUS-WEIGHT-03/authorization.md).
+
+Execution started2026-10-01T17:11:16.875660Z; exit0,152.902seconds total,
+31.301training seconds,1000updates,update-cap stop,fitPassed=false.17/40snapshots
+pass existing selection guards; minimum-loss selected update275. Best.ptSHA256
+a533cc21265c39e786aa0c05d2fcb6798abbe4ae246e5e2abc78310ecf820c22.
+Selected vs FDR021: TP13/27vs16/27,FP2vs3,unique-correct10/14vs12/14,
+no-focus4vs2,zero wrong/multiple,retention18/18both. Artwork1/12vs2/12,
+tabs1/3vs2/3,rows6/7vs7/7; buttons3/3and other2/2unchanged.
+Terminal is diagnostic-only:TP15,FP5,unique10,multiple1. No snapshot exceeds
+2artwork hits. All40saved validation snapshots replay exactly through existing
+metrics; initial predictions exactly match FDR022. Source-weight repair alone does
+not fix transfer. Comparison fails; preserve FDR021, no export/retry/promotion.
+[Comparison](../reports/work/FOCUS-WEIGHT-03/comparison.json).
+
+## Run FDR-022 — approved native measured-body addition (2026-10-01 PDT)
+
+**Interpretation correction (SYN-13):** not a clean data-only comparison. Effective
+weighting policy changed:80OScontrols9.3%→40%total mass;710old fixture70.7%→27%;
+564new fixture13%, human20%. Recompute on old native membership alone changes all
+790weights, proving a policy discontinuity independent of added data. FDR022scores
+and rejection remain valid; do not attribute failure solely to the new corpus or
+frozen representation. [Diagnosis](../reports/work/SYN-13-DIAGNOSIS/handoff.md).
+
+Status: completed, rejected; no eligible checkpoint. User answered
+“Approve one bounded training run”. Arm `native-body-full-fit`, output
+`NativeUITrainer/focus_ring_runs/fdr022-native-body`, exact protocol
+2196c2c1285661373bfee5c27f1a549433a1aca3046424a4ff340747519d731c.
+1550training controls (986baseline+564native additions;1354native/196human),
+315development/18retention unchanged. Fresh577parameter linear head, frozen
+ImageNet MobileNetV3-small576features; verified928+58+564cache chain. Seed42,
+AdamWlr0.01/weightDecay0.01, full batch1550, native/human loss80/20, max1000updates/
+300training seconds,600second outer process bound, same25-update evaluation and
+guarded checkpoint selection. No augmentation,16%/256straight-RGB unchanged.
+Compare selected checkpoint at0.85against FDR021: artworkTP>2/12, totalTP≥16/27,
+FP≤3/288, unique-correct≥12/14, zero wrong/multiple, retention18/18; no TP loss/FP
+gain in buttons/tabs/rows/other. Development comparison only, not independent transfer.
+No retry, additional arm, export or promotion. Exact approval and request under
+reports/work/SYN-12-EXECUTION; runtime PID/timing/results will be appended after
+execution. No source data or existing weights overwritten.
+
+Execution PID61890, start2026-10-01T16:25:06.910134Z (09:25:06PDT), exit0,
+153.074seconds total/31.217seconds model runtime.1000updates, update-cap stop;
+training-fit criterion false, selectedUpdate null, no best.pt. All40evaluation
+snapshots ineligible: complete-frame gate fails39; other early failures prevent
+the remaining snapshot qualifying. Terminal last.pt is diagnostic-only, SHA256
+a53eab12cc92f96593d68fb7efc64ecfcf9e966cd60553980e11038932a6f3dd.
+Terminal versus FDR021selected775 at0.85: TP15/27vs16/27; FP6/288vs3/288;
+unique-correct10/14vs12/14; no-focus3vs2, multiple-focus1vs0, wrong0both;
+retention18/18both. ArtworkTP2/12unchanged, FP6vs3; rows6/7vs7/7. Buttons3/3,
+tabs2/3, other2/2unchanged with0FP. Selection BCE0.674482vs0.716423improves,
+but decision gates regress; do not relax threshold or selector to accept this run.
+Replayed1,551,550training and13,653evaluation predictions using existing metrics;
+verified exact evaluation rows and identical initial predictions, checkpoint choice,
+all recorded metrics,22runtime/assembly/cache references unchanged. FDR021head hash
+unchanged. Comparison failed; no export, promotion or retry. Evidence:
+[SYN-12 comparison](../reports/work/SYN-12-EXECUTION/comparison.json).
+
+## SYN-12 native feature encoding — 2026-10-01 PDT
+
+Status: encoding completed, exit0, under explicit “Approve bounded encoding” response;
+not a training run. Exact564admitted native controls, unchanged frozen ImageNet
+MobileNetV3-small576features; existing986baseline caches retained.32-image batches,
+300second cooperative encoding limit,16MiBcache cap, local MPS.600second outer
+deadline covers input revalidation/startup plus encoding; no automatic retry.
+Protocol3299d584ee1f6cec95359204f86201481ea3ab634bb824c7ed3fec223e9f3f97.
+Outputs and configured caches remain project-local. No head updates, new run ID,
+export or promotion authorized. [Approval](../reports/work/SYN-12-EXECUTION/encoding-approval.json),
+[execution log](../reports/work/SYN-12-EXECUTION/encoding.log).
+Actual start2026-10-01T16:17:56.858582Z (09:17:56PDT),125.232seconds total including
+revalidation;3.224seconds encoding/imports, MPS.564members,1,520,229bytecache;
+frozen encoder state unchanged, exact feature/tensor validation passed in encoder.
+Cache SHA25612836d5d7f5fb747e6448e742f374a4611118c127177c5808ae7142365515f76.
+Current/driver allocation snapshots3,783,168/1,093,648,384bytes; not peak memory.
+Post-cache training protocol preparation follows; no training run authorized yet.
+
 ## FDR021 candidate pixel-contract repair — 2026-10-01UTC
 
 User approved continuation; no training. Same775head/encoder/trace, fresh FP32 model

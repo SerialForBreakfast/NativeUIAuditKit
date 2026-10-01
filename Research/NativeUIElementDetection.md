@@ -656,6 +656,51 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**FOCUS-PAIRED-11:** diagnostic-only paired inputs reuse the native cropper with a
+before-frame anchor for both images, preserving relative size. Pixel-only edge/
+brightness rules never read the after truth box or focus label. Box-ratio oracle,
+constructed state contrasts, real reviewed contrasts and genuine action sequences
+are separate evidence lanes. This does not change the static classifier input or
+declare a paired training corpus; [assigned experiment](Plans/FocusPaired11.md).
+
+**Assigned FOCUS-TRANSFER-10:** [contract](Plans/FocusTransfer10.md) isolates the
+new artwork examples' training emphasis from an audit-selected experimental input
+change. Same1562training/333evaluation membership, existing partial-detail model,
+source-label budgets and decision gates. Experimental inputs remain opt-in;
+production cropper/annotations are not changed. FDR032 is the retained control.
+The audit-selected input uses existing native experimentalAspectFit (same16%
+expansion, black letterbox,256-square), after all1895production crops replayed
+pixel-exact. It tests wide-control distortion, not absolute enlargement; source
+frames and measured bounds remain necessary for a later growth/temporal model.
+
+**Assigned FOCUS-VISUAL-05:** [four-cell contract](Plans/FocusVisual05.md) compares
+detail versus detail+fixed-viewport-scale context and frozen versus trainable final
+MobileNetV3 blocks. Frozen prefix caches only; exact full-corpus gradient accumulation
+and frozen BatchNorm.100updates/every10evaluation, no training-fit early stop.
+Production16%/256detail preprocessing, labels, weights and selection remain unchanged.
+
+**Completed context comparison,2026-10-01:** [FOCUS-CONTEXT-04](Plans/FocusContext04.md)
+compared a64hidden-unit crop-feature MLP, geometry addition, then frozen full-scene
+and mask-pooled features using identical membership/budgets and the existing trainer.
+One bounded scene-encoding pass and three short head fits are included in the
+maintainer-approved tranche. All arms fit every training control, but none produced
+an eligible checkpoint. Next investigate trainable visual representation with a
+matched control. No production input/API or backbone changes in this tranche.
+
+**Experimental focus input preparation (FOCUS-GROWTH-02, October 1):** existing
+16%-expanded 256x256 production crops remain unchanged. The diagnostic-only
+`focus-context-inputs-v1` adds a shared 768x432 letterboxed full scene, a candidate
+mask and normalized current bounds/clipping flags. It preserves spatial scale but
+is not a shipped model input or evidence of learned growth. Labels and native focus
+callbacks are excluded from prediction-input records. Training requires a separately
+specified fusion architecture and Python/CoreML parity.
+
+`baseline-fixture-budget-v1` explicitly preserves baseline non-fixture weights and
+fixture mass per label, dividing only fixture mass over old+new members. Historical
+assembly inputs retain their old policy. Cached encoding can be reused by an explicit
+reweighted experiment without changing source membership or encoder receipts.
+[Implementation scope](Plans/FocusGrowth02.md).
+
 **Candidate input contract,2026-10-01UTC:** `inputPixelContract=png-straight-rgb-v1`
 selects an in-memory ImageIO PNG roundtrip and explicit straight RGB→opaque BGRA
 copy in FocusRingClassifier. This exactly matches PNG/PIL RGB training on333frozen
@@ -823,7 +868,77 @@ gate.
 
 **Current production path:** Ultralytics YOLO11 → CoreML NMS export. Create ML `objectPrint` (Option A) is **retired** for production (Run 006+). Living snapshot: [`CurrentState.md`](CurrentState.md). Run history: [`ExperimentLog.md`](ExperimentLog.md).
 
+### Composition intake compatibility (FOCUS-APPEARANCE-06, 2026-10-01)
+
+Consume TTR composition-v1 as an additive source-pinned diagnostic contract, not
+a new training partition. Validate closed component/style/content/region references,
+producer canonical recipe identity, declared hierarchy and complete declared native
+inventory. Measured rendered bodies, not requested design frames or union audit
+crops, remain annotation/crop input. Preserve calibration roles and common renderer
+ancestry. Complete declared inventory is not pixel-occlusion or real-world coverage.
+Native review alone may accept bounded campaign bundles up to512MiB; ordinary
+harvest validation retains256MiB and per-file32MiB. Capacity overflow must be
+distinguished from changed hashes. No gate, training, taxonomy or public API change.
+Composition's native `menuButton` tab instances map to the existing diagnostic
+`focus:tabItem` role, retaining the producer taxonomy separately. Never drop them
+from an exhaustive focus review merely because the detector harvest allowlist lacks
+menuButton. This is not a new detector class or implicit class mapping.
+
+### Appearance acceptance and observer delivery (FOCUS-READY-07, 2026-10-01)
+
+Deliver the retained parity-verified FDR021 RGB candidate as an immutable opt-in
+artifact, never a bundled replacement. Bind package/compiled tree hashes, exact
+compatibility source and metadata; CPU parity does not qualify TTR loading or ANE.
+Observer receipt, loaded identity and rollback remain explicit consumer outcomes.
+
+Add a local diagnostic acceptance report over existing measured-body review batches
+and crop receipts. Reuse native reconstruction, protected-source checks and duplicate/
+conflicting-label accounting. Measure appearance in retained production crops; retain
+both states, visible competitors, recipe/content identities and producer roles.
+The white-body descriptor reports coverage only; it cannot certify logo semantics,
+label correctness, independence or training admission. Unknown asset claims remain
+unknown. Keep duplicate raw evidence but do not multiply unique coverage or weights.
+
+Prepare, but do not execute, a matched data-only comparison using the retained
+FOCUS-VISUAL-05 partial-detail configuration, unchanged evaluation/selection, seed,
+initialization and source-label budgets. Use existing continuity weighting. A
+readiness protocol is always non-executable; exact admitted additions, prefix
+encoding and a newly assigned execution envelope are required for a runnable arm.
+Human sample acceptance remains pending, not replaced by automated geometry checks.
+
+**FOCUS-ARTWORK-08 consumer tranche (2026-10-01):** extend the closed composition
+decoder only against TTR's delivered composition-v2 schema and canonical identity
+implementation. Bind owned artwork declarations and assets; reject unknown fields,
+unsupported versions, invalid vector budgets and ambiguous content rather than
+normalizing them into v1. Continue using observed focus and measured rendered bodies
+for labels and production crops. Verify paired competitors and actual appearance,
+preserve source roles/related ancestry and prepare a small reproducible prefilled
+human sample. Source asset claims are not manual approval, and producer context
+crops are not consumer production-crop parity. Freeze exact candidate additions
+and continuity weights without executing or admitting a model experiment.
+
+The delivered `ttr_owned_artwork_native_pairs_v1` is not a campaign bundle. Its
+producer-indexed PNGs and stable native endpoints can support diagnostic annotation
+review, but screenshot receipts lack standard frame-hash/host-time correlation.
+Use a distinct source kind and correlation claim, retain raw records, and block
+automatic admission pending exact evidence qualification. Never synthesize a
+completed harvest receipt or fabricate missing times to pass the legacy validator.
+The optional review sampler balances a named native target's focused/unfocused
+states within each asset family, using seeded draws and explicit per-stratum
+denominators. Missing states remain missing, not substituted. This keeps an
+eight-frame review useful without claiming independent statistical confidence.
+
 ### 8.1 Task Formulation
+
+**FOCUS-CAMPAIGN-09 compatibility (2026-10-01):** composition recipes have no
+canvas pairing field. For validated composition-v1/v2, competitor-v3 is declared
+by the sidecar and independently checked against both native focus brackets,
+planned membership and unchanged recipe/hierarchy. Require both target and
+competitor to be focusable composition instances. Legacy canvas recipes still
+require their explicit `competitor_v1` field; do not relax their downgrade guard.
+This admits diagnostic import only, not training or source-role reassignment.
+The delivered targeted campaign also reports `excluded_by_selection`; account for
+these native inventory members as excluded, never accepted or complete coverage.
 
 Object detection is the correct task: one-stage or two-stage detector outputs per-class bounding boxes. This fits both Chrome regions (large, visually consistent) and controls (smaller, more variable).
 

@@ -1,5 +1,33 @@
 # NativeUIAuditKit — Best Practices
 
+## Preserve scene scale separately from accurate control bounds (FOCUS-GROWTH-02)
+
+**Wrong:** Expect a larger rendered-body box to create a larger model input body
+after resizing its proportional crop to a fixed size, or use intentionally smaller
+annotations to force that effect.
+**Correct:** Keep accurate bounds and the production detail crop. An experimental
+context branch uses one viewport transform for every candidate and a separate
+candidate mask/normalized geometry. Pixel tests must verify growth and global
+resolution invariance; label/state metadata must not supply prediction inputs.
+**Why:** All 32 retained growing pairs retain enlargement in common-scale masks,
+where proportional crops almost erase it. Preserved information is necessary,
+not proof a model has learned focus. See FOCUS-GROWTH-02 retained audit.
+
+## Preserve effective sub-source weights when testing added data (SYN-13)
+
+**Wrong:** Report unchanged80/20native-human loss as an unchanged sampling policy
+without checking native subgroups. FDR022switched from preserved baseline native
+weights to an equal-OS/fixture recomputation:80OScontrols rose9.3%→40%of total loss,
+old fixture fell70.7%→27%, new fixture received13%. Even recomputing the old corpus
+alone changed all790native weights.
+**Correct:** Pin/version the actual weighting policy; require empty-addition
+identity and explicit source/label mass plus member-weight delta reports. Preserve
+baseline source budgets for the controlled data comparison or separately approve
+and name the policy change as another intervention.
+**Why:** Normalized totals and outer80/20balance passed while the intended data-only
+comparison was confounded. Failed transfer does not isolate bad data or inadequate
+features. [Diagnostic evidence](../reports/work/SYN-13-DIAGNOSIS/handoff.md).
+
 ## Match producer geometry tolerances before rejecting native annotations (SYN-02)
 
 **Wrong:** Require full and projected visible rectangles to agree to machine precision
@@ -2569,6 +2597,30 @@ all geometry, focus and semantic differences significant; preserve old review se
 **Why:** Retained SYN-08 assembly exposed generation-only false conflicts that would
 discard useful corpus members without improving label quality.
 
+### Reconcile every native focus target before calling a review exhaustive (2026-10-01)
+
+**Wrong:** Reuse the detector-oriented harvest allowlist as the complete focus
+annotation vocabulary. D1's two `menuButton` tabs per screen were silently omitted
+from a24-control projection of26 native focus targets.
+**Correct:** Bind composition instance kind and native focusability, map tabs to
+the existing `focus:tabItem` diagnostic role, preserve producer taxonomy, and test
+the actual intake/crop caller. Account for nonfocusable content separately. Do not
+repair this by adding an untrained detector class or asking the human to redraw tabs.
+**Why:** Correct image hashes and body boxes cannot compensate for missing controls;
+complete-frame focus selection would otherwise be evaluated against incomplete labels.
+
+### Audit appearance by control role, not just box quality or corpus size (2026-10-01)
+
+**Wrong:** Treat corrected rendered bounds and hundreds of added crops as evidence
+that real-app appearance coverage is sufficient, or treat white button examples as
+equivalent to white artwork negatives.
+**Correct:** Audit retained failures against role × appearance × focus-state coverage;
+use explicit descriptive rules and reviewer observations, then request matched
+same-asset/layout positives and negatives without moving evaluation into training.
+**Why:** FOCUS-VISUAL-05 found0/554 mostly-white unfocused training collection items
+versus57/181 development artwork negatives;21/24 FDR029 false positives matched
+that descriptor. This motivates targeted data, not a causal claim or new threshold.
+
 ### Bound aggregate corpus manifests separately from per-frame documents (2026-10-01)
 
 **Wrong:** Assume a generic8MiB JSON limit can read a complete multi-delivery candidate
@@ -2578,6 +2630,36 @@ seal/reassembly validation, and test both above-old-limit acceptance and above-n
 limit rejection. Do not raise all JSON or image limits globally.
 **Why:** SYN-09's8,455,778-byte valid combined assembly otherwise failed at the actual
 trainer caller after all crop/data checks passed; capacity is not data admission.
+
+FOCUS-READY-07 follow-up: do not duplicate a full composition recipe on every control.
+The first4,056-control readiness report grew to84.6MB and failed the actual32MiB
+preflight reader. Store each exact recipe once by canonical identity and reference
+it from controls; the integrated15.3MB report passes the same bounded reader without
+raising limits. Preserve per-control identity and reconstruct native evidence.
+
+### Preserve diagnostic export boundaries instead of manufacturing campaign evidence (2026-10-01)
+
+**Wrong:** Convert a direct screenshot/native-endpoint pair into a completed harvest
+receipt, or treat its index's recipe-file hash as the canonical recipe identity.
+**Correct:** Verify archive membership and canonical recipes independently, retain
+declared-versus-observed file identities, and use an explicit diagnostic adapter.
+Stable native endpoints and matching pixels support review; missing screenshot
+time/hash correlation remains an admission gap, not invented telemetry. Request
+retained metadata repairs rather than recapturing unchanged correct geometry.
+**Why:** FOCUS-ARTWORK-08 found48 index recipe-file mismatches despite valid archive
+and canonical recipe hashes. All96 original/crop/RGB-input matches with TTR's
+observer pass independently of those missing capture claims.
+
+### Balance a small focus review by state without pretending it is independent (2026-10-01)
+
+**Wrong:** Assume two random frames per artwork family will exercise both focus
+states. The first eight-frame draw contained six unfocused targets and omitted
+focused examples in three families.
+**Correct:** Optionally stratify by an explicitly named native target's observed
+focused/unfocused state, retain seeded selections and stratum denominators, and
+leave unsupported states empty. Preserve the original draw as superseded evidence.
+**Why:** Eight prefilled frames can inspect both enlargement and hard negatives
+without requesting sixteen manual redraws or claiming a population confidence bound.
 
 ### Reuse the complete feature-cache chain when adding native controls (2026-10-01)
 
@@ -2590,3 +2672,83 @@ missing segment. Encoding and run approvals bind different protocols.
 **Why:** SYN-10's caller inspection found both assumptions would misroute the new
 native corpus. Generated tensor tests now verify the complete join without another
 real training run or fabricated human/pair labels.
+
+### Composition competitor intake is not legacy canvas intake (2026-10-01)
+
+**What went wrong:** a valid new standard campaign failed `pairing_recipe` because
+the consumer assumed all competitor scenes have `appearance.canvas.pairing`.
+After correcting that, targeted coverage failed on `excluded_by_selection`.
+**Correct approach:** validate the actual composition identity and focusable
+competitor membership, while preserving native before/frame/after, PNG, observed
+focus and legacy-canvas downgrade checks. Account selection exclusions without
+counting them as accepted or complete coverage. Exercise the real bundle importer
+and negative hash/timing cases, not only the composition decoder.
+**Why:** source schema support alone does not establish compatibility through
+the full import path. These consumer failures require neither recapture nor
+fabricated producer metadata. Evidence: FOCUS-CAMPAIGN-09, six delivered pairs.
+
+### Broad continuation means an integrated outcome, not receipt checkpoints (2026-10-01)
+
+**Wrong:** Repeatedly end at a status refresh, archive receipt or prepared helper and
+ask the maintainer to authorize the next already-implied step. The maintainer again
+reported this regression after TEMP-FOCUS-02 and the campaign status update.
+**Correct:** For a broad implementation continuation, name an integrated tranche
+covering intake, evidence checks, review readiness, eligible experiments and parallel
+unblocked work. Track remaining work to concrete input/authority dependencies.
+A status-only request remains status-only; it does not itself dispatch execution.
+**Why:** Useful evidence boundaries should not become repeated conversational gates.
+Human review and actual data eligibility still cannot be silently manufactured.
+
+### Brightness rules and compression need scoped evidence (2026-10-01)
+
+**Wrong:** Generalize a white Settings highlight rule to artwork, or assume preserved
+mean brightness after downsampling preserves thresholded pixel evidence.
+**Correct:** TEMP-FOCUS-02matches109Settings controls but produces58FP on315mixed
+development controls and48FP on48white-artwork negatives. Gate any future rule by
+validated screen context; do not use annotation family as a deployed recognizer.
+16/32pixel body summaries changed7of557rule decisions despite nearly identical mean
+luma. Test the actual thresholded feature and thin cues, not just average error.
+**Why:** A useful Settings-specific heuristic is not a universal focus detector;
+compression can erase the signal while an aggregate similarity measure stays stable.
+
+### Qualify actual MPS mask-pooling dimensions before encoding (2026-10-01)
+
+**Wrong:** Assume CPU success for area resizing a432pixel mask to14feature cells
+establishes MPS support. MPS adaptive-average-pooling rejects non-divisible sizes.
+**Correct:** Test the actual dimensions on the intended device. Resize the small,
+label-free mask explicitly on CPU and transfer the reduced mask to MPS; retain
+encoder features and weighted pooling on MPS. Do not silently switch the encoder
+or enable global fallback. Preserve the failed receipt and account for its time.
+**Why:** FOCUS-CONTEXT-04's first encoding failed before cache creation. The exact
+432→14smoke test and corrected full693scene pass succeeded; this was a backend
+compatibility failure, not evidence against the representation hypothesis.
+
+### Audit actual failure structures before scaling a successful annotation flow (2026-10-01)
+
+**What went wrong:** Correct automatic boxes and twelve confidently learned white
+artwork crops were treated as likely to fix real artwork failures. The new examples
+shared a target slot/layout, while failures included composite heroes, artwork/text
+footers and4:1ranked rows. Different recipe hashes did not imply different layouts.
+**Correct:** Compare failed original screens, actual model inputs and added examples;
+separate structural coverage, weighting and preprocessing hypotheses. In
+FOCUS-TRANSFER-10 all1895production crops replayed pixel-exact. A10×relative
+emphasis test preserved fixture label budgets and nonfixture weights, yet moved
+artwork3→4/12 while increasing false positives25→29; reject that setting rather
+than report the extra hit as a win. Native aspect-fit tests distortion separately;
+proportional aspect-fit still does not preserve absolute focus enlargement.
+**Why:** A reliable annotation pipeline proves label delivery, not transfer learning.
+Scale a specified missing visual distinction, not merely the number of valid files.
+
+### Preserve growth without confusing scrolling with focus (2026-10-01)
+
+**Wrong:** Independently resize both focus states and expect absolute enlargement
+to remain; or fix a crop in screen coordinates while the control scrolls away.
+**Correct:** Shared-scale windows preserve growth (Paired11Home6/6versus0/6normalized),
+but track translation independently or abstain. The retained Accessibility Shortcut
+moves161px; its old window becomes dark background and incorrectly looks unfocused.
+Do not count geometry-only matches after row removal as stable identities. Separate
+clipped context eligibility for edge probes from same-window brightness availability;
+keep the original experiment when testing that correction.
+**Why:** Growth is useful evidence, not a universal rule. Content replacement and
+lighting can imitate focus. Reversed/reused pairs are not independent trials, and
+externally supplied context flags do not prove a runtime safety detector.

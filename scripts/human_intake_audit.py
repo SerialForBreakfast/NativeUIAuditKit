@@ -76,7 +76,7 @@ def findings(doc):
     return sorted(set(reasons))
 
 
-def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8):
+def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8, focus_element=None):
     h.require(type(seed) is int and type(count) is int and 1 <= count <= 256 and
               type(exception_limit) is int and 0 <= exception_limit <= 256, 'invalid_sampling_limits')
     batch_path = h.local(batch_path)
@@ -98,10 +98,25 @@ def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8)
                          findings=sorted(set(findings(docs[frame['id']])+native_findings)) if frame['id'] in docs else native_findings))
     population = [r['id'] for r in rows if not r['excluded']]
     selected = sorted(random.Random(seed).sample(population, min(count, len(population))))
+    stratified=None
+    if focus_element is not None:
+        h.require(isinstance(focus_element,str) and focus_element and count>=2 and count%2==0,'invalid_focus_stratification')
+        groups={'focused':[],'unfocused':[]};by_id={f['id']:f for f in batch['frames']}
+        for fid in population:
+            target=[p for p in by_id[fid]['proposals'] if p.get('sourceElementID')==focus_element]
+            h.require(len(target)==1 and target[0]['state'] in groups,'unknown_sampling_target')
+            groups[target[0]['state']].append(fid)
+        rng=random.Random(seed);stratified={};selected=[]
+        for state,members in groups.items():
+            chosen=sorted(rng.sample(members,min(count//2,len(members))))
+            stratified[state]=dict(population=members,selected=chosen,denominator=len(members),
+                                  inclusionProbability=len(chosen)/len(members) if members else None)
+            selected.extend(chosen)
+        selected.sort()
     flagged = [r['id'] for r in rows if not r['excluded'] and r['findings']]
     exceptions = flagged[:exception_limit]
     union = selected + [i for i in exceptions if i not in selected]
-    return dict(version=PLAN, **h.FLAGS, sourceBatch=h.ref(batch_path),
+    result=dict(version=PLAN, **h.FLAGS, sourceBatch=h.ref(batch_path),
                 sourceRevision=h.ref(h.local(revision_path)) if revision_path else None,
                 seed=seed, requestedCount=count, exceptionLimit=exception_limit,
                 sampling=dict(method='simple-random-without-replacement', unit='eligible-frame',
@@ -117,13 +132,18 @@ def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8)
                              'Related frames are not independent source groups; no confidence-bound claim.',
                              'Exception yield is not a random-sample defect estimate.',
                              'No Vision execution or OCR-derived control/focus truth.'])
+    if stratified is not None:
+        result['focusElement']=focus_element
+        result['sampling'].update(method='stratified-random-without-replacement',strata=stratified,inclusionProbability=None)
+    return result
 
 
 def validate_plan(path):
     doc = h.sealed(h.local(path), PLAN)
     expected = plan(h.checked(h.ROOT, doc['sourceBatch']),
                     h.checked(h.ROOT, doc['sourceRevision']) if doc['sourceRevision'] else None,
-                    seed=doc['seed'], count=doc['requestedCount'], exception_limit=doc['exceptionLimit'])
+                    seed=doc['seed'], count=doc['requestedCount'], exception_limit=doc['exceptionLimit'],
+                    focus_element=doc.get('focusElement'))
     h.require(h.digest(expected) == doc['seal'], 'audit_population_or_selection_changed')
     return doc
 
@@ -225,13 +245,14 @@ def main():
     prep.add_argument('batch'); prep.add_argument('output'); prep.add_argument('--revision')
     prep.add_argument('--seed', type=int, default=42); prep.add_argument('--count', type=int, default=8)
     prep.add_argument('--exception-limit', type=int, default=8)
+    prep.add_argument('--focus-element',help='Balance random review across this native target’s two focus states')
     summary = sub.add_parser('summary')
     summary.add_argument('queue'); summary.add_argument('revision'); summary.add_argument('output')
     args = p.parse_args()
     try:
         if args.command == 'prepare':
             result = prepare(args.batch, args.output, args.revision, seed=args.seed, count=args.count,
-                             exception_limit=args.exception_limit)
+                             exception_limit=args.exception_limit,focus_element=args.focus_element)
             print(json.dumps(result['counts'], sort_keys=True))
         else:
             result = summarize(args.queue, args.revision)
