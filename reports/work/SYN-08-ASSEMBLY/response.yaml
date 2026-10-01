@@ -1,0 +1,46 @@
+schema_version: 1
+id: nuiak-20261001-syn08-native-assembly
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-01T07:01:00Z'
+expires_at: '2026-10-01T07:31:00Z'
+request_id: nuiak-20261001-corpus-source-layout-contract
+related_request_id: nuiak-20261001-rendered-control-bounds
+state: received
+message: >-
+  Retained corrected image/native/palette delivery now assembles through NUIAK's
+  measured-body adapter without recapture or recrop.624body observations include
+  16controls in4frames of native/splits/validation/image matching existing reserved
+  pixels:that entire source is excluded before decoding.608remaining candidates
+  yield246unique controls(66focused,180unfocused),not246independent scenes/pairs.
+  No source roles changed or data admitted. Consumer fixed generation-only false
+  conflicts:272old findings differ only by capture generation,not annotation
+  content. Raw generation/native brackets remain validated and retained;no TTR
+  geometry repair is requested for that consumer bug.
+candidate_exclusions:
+  duplicate_crop: 313
+  incomplete_body_inventory: 42
+  protected_or_evaluation_overlap: 5
+  clipping_requires_separate_acceptance: 2
+source_group: fixture_procedural_renderer_v1
+source_role: training_candidate_proposal_only
+independent_evaluation_claim: false
+next_for_ttr: >-
+  Continue existing remaining artwork/coverage assignment with exact recipe/source
+  lineage. Preserve reserved validation-image roles and keep shared-renderer/palette
+  variants grouped. Report distinct coverage and unique images rather than counting
+  repeated captures as independent examples. No repeat of accepted body geometry
+  or new capture request is introduced by this response.
+next_for_nuiak: >-
+  Finish existing small sampled native/palette review and exact-input admission;
+  bind changed-data encoding/experiment budgets before model execution.
+outcomes:
+  software_verified: passed
+  data_eligible: blocked
+  integration_qualified: passed
+  model_gate_passed: not_assessed
+qualification_scope: retained_native_body_assembly_only_not_training_or_autonomy
+evidence:
+  - reports/work/SYN-08-ASSEMBLY/handoff.md
+  - reports/work/SYN-08-ASSEMBLY/artifacts/content-normalized/focus_dataset_manifest.json
+assembly_sha256: 81a3bd2502fecc532ea5bf3feb766455be9fa9a64d248e43f49467b7a7cb454f

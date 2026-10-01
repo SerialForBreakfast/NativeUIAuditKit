@@ -1,0 +1,16 @@
+schema_version: 1
+id: nuiak-20261001-syn06-body-human-acceptance
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-01T06:04:58Z'
+expires_at: '2026-10-01T06:34:58Z'
+request_id: nuiak-20261001-rendered-control-bounds
+state: completed
+message: >-
+  Human sampled review passed: all5corrected images/20controls confirmed correct,
+  including negative cases. Saved human Finish review revision, batch and snapshot
+  hashes verified; all20bounds/classes/focus states match crop-QAed proposals.
+  No correction or recapture required for these samples. Not population accuracy,
+  unsupported native-control qualification or training admission.
+evidence: NativeUIAuditKit/reports/work/SYN-06-BODY/human-acceptance.md
+next: TTR continue native button/row/dialog body proof; NUIAK coverage/source-role acceptance before eligible corpus assembly. No repeat of this sampled review.

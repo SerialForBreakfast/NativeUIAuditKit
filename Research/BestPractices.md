@@ -2267,6 +2267,22 @@ the hidden display bit on owned cache files before loading. Test repeated startu
 **Why:** Discovery failure and binary/loading permissions differ. This repair
 restored actual Qt tests without system permission changes or package installation.
 
+**SYN-11 follow-up:** discovery is not binary loadability. Relocating only
+`platforms/libqcocoa.dylib` broke its`../../lib`framework lookup (QtDBus followed by
+QtPrintSupport); the installed original loaded. Cache a matching
+`plugins/platforms`layout and a validated link to the existing in-project Qt5/lib.
+Preserve the wheel, reject conflicting links/changed cache bytes, and verify the
+actual Cocoa loader in a fresh process before GUI startup. No reinstall or global
+DYLD override is needed.
+
+**REVIEW-QT-01 prevention:** the supported editor CLI now runs that loadability and
+QApplication check automatically in a bounded child before loading annotations.
+Reuse the shared verified cache; preserve structured failure receipts. Native aborts,
+timeouts and missing/invalid receipts block launch without opening a review window.
+Use `human_review_editor.py --doctor`, not another ad-hoc Qt investigation. See
+[the canonical startup guide](AnnotationStartup.md). A runtime check catches startup
+failures; it does not guarantee future callbacks or remove the need for GUI tests.
+
 ### Native rectangle observations are proposals, not control geometry
 
 **Wrong:** Assuming Vision rectangles are whole UI controls or always inside the
@@ -2528,4 +2544,49 @@ Validate source, identity, generation, clipping and normalization inside native
 capture brackets. Preserve layout/full/visible geometry separately. Missing native
 body measurements stay unresolved, without a guessed scale or layout fallback.
 **Why:** SYN-06-BODY's focused image measures520×496 against440×420layout, while
-native buttons/rows remain unavailable. The same fix cannot be assumed for every renderer.
+native buttons/rows remain unavailable in that delivery. The same fix cannot be assumed for every renderer.
+
+### Quarantine protected source bundles without rejecting unrelated batch members (2026-10-01)
+
+**Wrong:** Decode an entire combined review batch to validate it before checking
+reserved frame identities, or let a protected member make unrelated bundles unusable.
+**Correct:** Compare exact source/frame metadata with protected and reserved ledgers
+first. Quarantine the whole affected source bundle, retain its declared member IDs,
+and reconstruct safe source projections with the existing validator. Preserve geometry
+and labels exactly; subset numbering and cross-source alias summaries may differ.
+**Why:** SYN-08-ASSEMBLY found four reserved frame-pixel matches in the earlier
+image-body delivery. Geometry QA and sampled human approval had never admitted those
+frames for training. Source-level quarantine preserves that boundary while allowing
+independent native-control and palette data to continue through assembly checks.
+
+### Compare annotation content, not capture generations (2026-10-01)
+
+**Wrong:** Treat identical pixels and labels from separate captures as contradictory
+because a rendered-body generation counter changed.
+**Correct:** Validate generation against its own native bracket, retain original
+evidence, then exclude only that counter when comparing annotation content. Keep
+all geometry, focus and semantic differences significant; preserve old review seals.
+**Why:** Retained SYN-08 assembly exposed generation-only false conflicts that would
+discard useful corpus members without improving label quality.
+
+### Bound aggregate corpus manifests separately from per-frame documents (2026-10-01)
+
+**Wrong:** Assume a generic8MiB JSON limit can read a complete multi-delivery candidate
+ledger merely because every constituent batch is valid.
+**Correct:** Give the native-body aggregate reader an explicit32MiB bound, retain
+seal/reassembly validation, and test both above-old-limit acceptance and above-new-
+limit rejection. Do not raise all JSON or image limits globally.
+**Why:** SYN-09's8,455,778-byte valid combined assembly otherwise failed at the actual
+trainer caller after all crop/data checks passed; capacity is not data admission.
+
+### Reuse the complete feature-cache chain when adding native controls (2026-10-01)
+
+**Wrong:** Treat FDR021's986 training controls as a single historical cache, or send
+its native extension through a path that recognizes only human `added:` IDs.
+**Correct:** Join the original928-control cache and reviewed58-control extension
+with the existing validator, then append exact native admission members. Test all
+three segments and unchanged333 evaluation tensors; training never re-encodes a
+missing segment. Encoding and run approvals bind different protocols.
+**Why:** SYN-10's caller inspection found both assumptions would misroute the new
+native corpus. Generated tensor tests now verify the complete join without another
+real training run or fabricated human/pair labels.

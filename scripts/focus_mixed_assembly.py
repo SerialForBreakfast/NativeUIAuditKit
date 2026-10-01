@@ -198,6 +198,9 @@ def sampling(rows):
 
 
 def assemble(spec):
+    if isinstance(spec,dict) and spec.get('version')=='focus-native-body-input-v1':
+        from focus_native_body_assembly import assemble as native_body_assemble
+        return native_body_assemble(spec)
     if isinstance(spec,dict) and spec.get("version")=="focus-retention-input-v1":
         from focus_retention_experiment import assemble as retention_assemble
         return retention_assemble(spec)

@@ -34,6 +34,18 @@ Tasks.md supplies ownership; dated reports supply evidence, not current readines
 Evidence: BP-67,69,76,83 and BP-95 (native dispatch);
 [r6 handoff](../../../reports/work/IOS-R6-20260923/handoff.md).
 
+## Annotation startup
+
+For annotation startup, use the canonical `.venv-review/bin/python
+scripts/human_review_editor.py BATCH --queue QUEUE --runtime PROJECT_RUNTIME`.
+It automatically runs a bounded child-process Qt probe before opening annotations.
+For diagnosis alone use the same command with `--doctor` and no batch/queue.
+Read its exact `runtime/startup/<id>/receipt.json` and logs, not a generic crash
+message. Shared hash-verified plugin cache/framework lookup is implemented already;
+do not recreate per-batch Qt fixes, reinstall packages, set global DYLD overrides,
+or close an active review window. See [annotation startup](../../AnnotationStartup.md)
+for failure categories and verification. Offscreen success alone is not Cocoa proof.
+
 ## CoreML and dependency residency
 
 Distinguish import, optimizer initialization, trace, conversion, compile/load and

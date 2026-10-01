@@ -170,6 +170,12 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get('version')=='focus-native-body-full-fit-v1':
+        from focus_native_body_experiment import load_protocol as native_execution_protocol
+        return native_execution_protocol(path,arm,run_name,approval_path)
+    if doc.get('version')=='focus-native-body-assembly-v1':
+        from focus_native_body_assembly import load_protocol as native_body_protocol
+        return native_body_protocol(path,arm,run_name,approval_path)
     if doc.get('version')=='focus-reviewed-full-fit-v1':
         from focus_review_continuation import load_protocol as reviewed_protocol
         return reviewed_protocol(path,arm,run_name,approval_path)

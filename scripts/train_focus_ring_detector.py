@@ -64,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit"])
     return p.parse_args()
 
 
@@ -73,6 +73,10 @@ def load_samples(dataset: Path, split: str) -> list[dict]:
     if not manifest_path.is_file():
         raise ValueError("missing_manifest")
     data = json.loads(manifest_path.read_text())
+    if data.get('version') == 'focus-native-body-full-fit-v1':
+        raise ValueError('native_body_requires_explicit_experiment_mode')
+    if data.get('version') == 'focus-native-body-assembly-v1':
+        raise ValueError('native_body_requires_explicit_dry_run')
     if data.get("version") == "focus-mixed-assembly-v1":
         from focus_mixed_assembly import load_samples as mixed_samples
         return mixed_samples(dataset, {"val":"validation"}.get(split,split))
@@ -256,7 +260,10 @@ def main() -> int:
         raise ValueError("static_experiment_requires_mps_no_cpu_fallback")
     train_dataset = CropDataset(train, not experimental)
     val_dataset = CropDataset(val, False)
-    if report.get('protocolVersion') == 'focus-reviewed-full-fit-v1':
+    if report.get('protocolVersion') == 'focus-native-body-full-fit-v1':
+        from focus_native_body_experiment import prepare_features
+        model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
+    elif report.get('protocolVersion') == 'focus-reviewed-full-fit-v1':
         from focus_review_continuation import prepare_features
         model, train_dataset, val_dataset = prepare_features(report, train, val, device, out)
     elif report.get("fitDiagnostic") or report.get("fullFit"):

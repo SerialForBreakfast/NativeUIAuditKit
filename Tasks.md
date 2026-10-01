@@ -1,10 +1,68 @@
 # NativeUIAuditKit — Tasks
 
+**REVIEW-QT-01 — completed for review / Codex:** every supported editor CLI launch
+now performs a20second-bounded child-process Qt check before opening annotations.
+Shared verified cache, structured failure receipts and `--doctor` prevent repeat
+ad-hoc startup investigation.33Python tests, real Cocoa doctor/failed-launch checks
+and offline Swift build/120+14tests pass. Existing review process57665untouched.
+[Guide](Research/AnnotationStartup.md), [handoff](reports/work/REVIEW-QT-01/handoff.md).
+
+**SYN-11-REVIEW — preparation/repair complete; human review pending / Codex:**
+five-image safe artwork queue launched in the annotator; native3/palette4remain
+unchanged. Fixed cached Cocoa plugin framework lookup;26Python editor/cache tests
+and offline Swift build/120+14tests pass. Exact unapproved564-control proposal
+passes existing weighting (1550total training,333evaluation unchanged). No admission,
+encoding or training. [Review instructions](reports/work/SYN-11-REVIEW/review.md),
+[handoff](reports/work/SYN-11-REVIEW/handoff.md). Next human step: Finish review in
+the open five-image queue, then verify the remaining seven prefilled frames.
+
+**SYN-10-ENCODING — completed for review / Codex:** native-body encoding and actual
+trainer integration delivered with separate budgeted encoding/run approvals.
+89generated Python tests, offline Swift build/120+14tests and real retained CLI
+preflight pass. Exact986training/333evaluation membership, labels/weights preserved;
+564native candidates remain unadmitted. No real encoding/training or new run.
+[Handoff](reports/work/SYN-10-ENCODING/handoff.md). Next: complete three prefilled
+SYN-07/SYN-09sample reviews (3+4+5frames), exact admission and bounded encoding/run
+approval; software integration no longer blocks that sequence.
+
+**SYN-09-ARTWORK — completed for review / Codex:**356members verified;14new recipes,
+42captured pairs and756/756production crops pass. Combined corpus now564unique
+candidates (137focused/427unfocused), up318; reserved sources remain excluded.
+Final five-image prefilled queue uses13safe sources, with zero recrop.30recipe
+bindings and162of240capacity verified. Native manifest reader bound increased
+locally to32MiB with tests; actual trainer preflight passes configuration and blocks
+unapproved execution.26assembly/44fixture tests, Swift build/120+14tests pass.
+[Handoff](reports/work/SYN-09-ARTWORK/handoff.md). Next: sampled review/exact admission,
+encoding-executor integration; TTR supplies genuine variants for78target deficit.
+
+**SYN-08-ASSEMBLY — completed for review / Codex:** native-body adapter, exact-input
+admission and encoding-plan preparation integrated with existing mixed CLI/trainer
+dry-run.624body observations yield246unique candidates (66focused/180unfocused),
+362blocked plus16reserved-source exclusions. Fixed generation-only false conflicts;
+all986baseline training/333evaluation members and weights preserved.25assembly,
+11training,44fixture tests and offline Swift build/120+14tests pass. Real mixed CLI
+matches adapter; trainer correctly refuses execution. No admission, encoding or run.
+[Handoff](reports/work/SYN-08-ASSEMBLY/handoff.md). Next: sampled native/palette review,
+exact membership, remaining coverage generation and changed-data executor/budget.
+
+**SYN-07-READINESS — completed for review / Codex:** deterministic corpus/lineage
+readiness CLI delivered; new native-control repair accepted through unchanged
+consumer tools (six scenes,16captured pairs,154/154crops), followed by nine palette/
+long-row scenes,26pairs and320/320crops. Nine new tests and25corpus
+tests pass. All four family generation capabilities now have delivered proof;
+remaining work is artwork coverage, exact source-role binding, bounded
+balanced generation and native encoding/execution (assembly now delivered by SYN-08-ASSEMBLY), not another geometry rewrite.
+[Handoff](reports/work/SYN-07-READINESS/handoff.md),
+[TTR assignment](reports/work/SYN-07-READINESS/generation-assignment.md).
+No consumer capture, split mutation, admission or model execution.
+
 **SYN-06-BODY — consumer implementation complete for review / Codex:** corrected
 archive's231members verified;8scene bundles/21captured pairs,150measured-body crops
 pass. Versioned proposals and Markdown overlays preserve legacy reviews and hold
-60unsupported body observations. Small prefilled human review prepared; broader
-native button/row/dialog body proof and source-role acceptance remain open.
+60unsupported body observations. Human review passed for all5sampled frames/20controls,
+including negative cases; verified saved revision matches crop-QAed proposals.
+See [human acceptance](reports/work/SYN-06-BODY/human-acceptance.md). Broader
+native body proof now passes under SYN-07-READINESS; source-role acceptance remains open.
 [Handoff](reports/work/SYN-06-BODY/handoff.md). No training or model change.
 
 **SYN-05 offline tranche — completed for review / Codex:** resumable per-bundle
@@ -17,8 +75,9 @@ adapter and training admission remain held. [Handoff](reports/work/SYN-05/handof
 review found uniform wrapper boxes do not enclose native focus enlargement.
 Affected samples remain diagnostic-only, not training eligible. Request
 [rendered control-body geometry](Research/Requests/TTR-Rendered-Control-Bounds.md);
-Image-card repair is now mapped and visually inspected; human acceptance and
-native button/row/dialog body proof remain open. Prior
+Image-card repair is now mapped, visually inspected and sampled human review passed;
+native button/row/dialog body proof now passes for delivered configurations under
+SYN-07-READINESS. Prior
 60/60crop generation is not visual bounds acceptance.
 
 **SYN-03 / SYN-02 — representative consumer proof complete for review / Codex:**
@@ -53,7 +112,7 @@ not fresh execution authority. [Contract](Research/Plans/LocalFirstDelivery.md).
 | 1 LOCAL-FIRST-01 | Completed for review / Codex | Documentation reconciliation only; see CompletedTasks and linked handoff. |
 | 2 LOCAL-TOOLS-02 | Completed for review / Codex | CLI/MCP, real retained-image smokes, 8 new Swift tests, 4 process tests and full offline checks pass. [Handoff](reports/work/LOCAL-TOOLS-02/handoff.md). No agent registration installed. |
 | 3 FOCUS-CORPUS-03 | Audit/readiness decision delivered; production assembly blocked / Codex | Fresh recheck:1319crops,395complete native pairs,3diagnostic pairs unchanged. Explicit family/scene matrix and NO-GO production decision delivered. Need exact new recipe/source-layout manifest, then reservation, bounded capture, admission and final assembly; keyboard can remain a separate unsupported lane. No unchanged training. [Decision](reports/work/FOCUS-CORPUS-03/readiness-decision.md), [handoff](reports/work/FOCUS-CORPUS-03/handoff.md). |
-| 4 FOCUS-EXPERIMENT-04 | Configuration proposal delivered; execution blocked / Codex preparation | [Data-only comparison configuration](Research/Plans/FocusExperiment04.md), fixed baseline/evaluation and proposed decision criteria prepared. Need eligible changed members, actual native assembly/encoding integration, resource binding and exact run approval. No unchanged rerun or automatic later arms. |
+| 4 FOCUS-EXPERIMENT-04 | Encoding/trainer integration completed for review; execution blocked / Codex | [Data-only comparison configuration](Research/Plans/FocusExperiment04.md), fixed baseline/evaluation and proposed decision criteria prepared. SYN-09 supplies564unique candidates; SYN-10 passes89generated tests and actual retained blocked preflight. Need sampled review/exact admission, approved encoding/cache receipt and exact run approval. No unchanged rerun or automatic later arms. |
 | 5 FOCUS-DELIVERY-05 | Pending selected candidate and runtime scope / unassigned | CoreML parity, explicit selection/rollback, TTR loaded-identity observer proof; no automatic promotion. |
 
 FDR021 remains the development baseline (12/14 complete frames; artwork 2/12).

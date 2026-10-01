@@ -8,6 +8,37 @@ from human_annotation_review import (EDITOR, FRAME_FLAGS, SHAPE_FLAGS, ROOT, loc
                                      require, review_labels, validate_batch)
 
 
+def cache_platform_plugins(plugins, runtime):
+    """Preserve Cocoa's relative framework lookup without copying/editing Qt."""
+    import hashlib
+    import shutil
+    import stat
+    library = local(plugins.parent/'lib')
+    require(library.is_dir(), 'missing_qt_framework_directory')
+    sources = sorted((plugins/'platforms').glob('*.dylib'))
+    require(bool(sources), 'missing_qt_platform_plugins')
+    hashes = {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
+    key = hashlib.sha256(repr(sorted(hashes.items())).encode()).hexdigest()
+    cached = local(runtime/'qt-plugins'/key)
+    platform = cached/'plugins/platforms'
+    require(not any(p.is_symlink() for p in (platform,*platform.parents)), 'invalid_qt_plugin_cache')
+    platform.mkdir(parents=True,exist_ok=True)
+    link = cached/'lib'
+    if link.is_symlink():
+        require(link.resolve() == library, 'changed_qt_framework_link')
+    else:
+        require(not link.exists(), 'qt_framework_link_collision')
+        link.symlink_to(library,target_is_directory=True)
+    for source in sources:
+        target = platform/source.name
+        require(not target.is_symlink(), 'invalid_qt_plugin_cache')
+        if not target.exists(): shutil.copyfile(source,target)
+        require(hashlib.sha256(target.read_bytes()).hexdigest() == hashes[source.name], 'changed_qt_plugin_cache')
+        flags = getattr(target.stat(),'st_flags',0)
+        if flags & stat.UF_HIDDEN: os.chflags(target,flags & ~stat.UF_HIDDEN)
+    return cached/'plugins'
+
+
 def configure(runtime):
     runtime = local(runtime)
     require(runtime.is_relative_to(ROOT/".build") or runtime.is_relative_to(ROOT/"reports/work"),
@@ -25,26 +56,11 @@ def configure(runtime):
     plugins = Path(PyQt5.__file__).parent/"Qt5/plugins"
     # Qt ignores BSD-hidden plugin files even though normal reads succeed.
     # A byte-identical local cache leaves the installed wheel/flags untouched.
-    import hashlib
-    import shutil
     import stat
     platform_files = sorted((plugins/'platforms').glob('*.dylib'))
     plugin_paths = [str(plugins)]
     if any(getattr(p.stat(), 'st_flags', 0) & getattr(stat, 'UF_HIDDEN', 0) for p in platform_files):
-        hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in platform_files}
-        key = hashlib.sha256(repr(sorted(hashes.items())).encode()).hexdigest()
-        cached = local(runtime/'qt-plugins'/key)
-        (cached/'platforms').mkdir(parents=True, exist_ok=True)
-        for source in platform_files:
-            target = cached/'platforms'/source.name
-            require(not target.is_symlink() and local(target).is_relative_to(runtime), 'invalid_qt_plugin_cache')
-            if not target.exists(): shutil.copyfile(source, target)
-            require(hashlib.sha256(target.read_bytes()).hexdigest() == hashes[source.name], 'changed_qt_plugin_cache')
-            # Cache copies can also carry hidden flags on subsequent launches.
-            # Clear only that display bit on our verified copy, never wheel files.
-            flags = getattr(target.stat(), 'st_flags', 0)
-            if flags & stat.UF_HIDDEN: os.chflags(target, flags & ~stat.UF_HIDDEN)
-        plugin_paths.insert(0, str(cached))
+        plugin_paths.insert(0, str(cache_platform_plugins(plugins,ROOT/'.build/human-review/qt-cache')))
     QtCore.QCoreApplication.setLibraryPaths(plugin_paths)
     settings = runtime/"settings"
     settings.mkdir(parents=True, exist_ok=True)
@@ -888,12 +904,25 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("batch")
+    parser.add_argument("batch", nargs='?')
+    parser.add_argument('--doctor', action='store_true', help='Probe Qt in a bounded child process; no annotation window')
     parser.add_argument("--frame", help="Start at an exact imported frame ID")
     parser.add_argument('--queue', help='Frozen diagnostic regression queue')
     parser.add_argument('--batch-index', type=int, help='One-based eight-frame queue slice')
     parser.add_argument("--runtime", default=str(ROOT/"reports/work/HUMAN-REVIEW-01/runtime"))
     args = parser.parse_args()
+    if args.doctor and any((args.batch,args.frame,args.queue,args.batch_index)):
+        parser.error('--doctor takes no annotation input')
+    if not args.doctor and not args.batch:
+        parser.error('batch is required unless --doctor is used')
+    from human_review_startup import preflight
+    import json
+    result = preflight(args.runtime)
+    if args.doctor or not result['passed']:
+        print(json.dumps(result,indent=2))
+        if not result['passed']:
+            print('Annotation window was not opened. Diagnostic receipt: '+result['receipt'],file=sys.stderr)
+        return 0 if result['passed'] else 2
     configure(args.runtime)
     from qtpy import QtWidgets
     app = QtWidgets.QApplication([sys.argv[0]])
@@ -911,4 +940,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -231,3 +231,16 @@ reports/work/OS-FOCUS-03/**/*.mp4
 !/reports/work/SYN-05/replay-plan.json
 /reports/work/SYN-06-BODY/artifacts/
 /reports/work/SYN-06-BODY/*.log
+/reports/work/SYN-07-READINESS/artifacts/
+/reports/work/SYN-08-ASSEMBLY/artifacts/
+/reports/work/SYN-09-ARTWORK/artifacts/
+/reports/work/SYN-09-ARTWORK/*.log
+/reports/work/SYN-08-ASSEMBLY/*.log
+/reports/work/SYN-07-READINESS/*.log
+/reports/work/SYN-10-ENCODING/artifacts/
+/reports/work/SYN-10-ENCODING/*.log
+/reports/work/SYN-11-REVIEW/artifacts/
+/reports/work/SYN-11-REVIEW/runtime/
+/reports/work/SYN-11-REVIEW/*.log
+/reports/work/REVIEW-QT-01/runtime/
+/reports/work/REVIEW-QT-01/*.log

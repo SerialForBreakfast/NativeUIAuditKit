@@ -1,5 +1,12 @@
 # Coordination — SYN-06-BODY
 
+Human follow-up published/read back:
+`/Volumes/SharedStatusFile/nuiak/responses/nuiak-20261001-syn06-body-human-acceptance.yaml`
+and own `packets.SYN-06-BODY`. All5sampled frames/20controls passed human review,
+including negative cases; saved revision verified. Fresh mount/read, unique-key YAML
+validation and unrelated-field preservation passed. Peer acknowledgment of this
+follow-up is unobserved. Local source: `human-response.yaml`.
+
 Published and read back at2026-10-01T05:48:45Z:
 
 - `/Volumes/SharedStatusFile/nuiak/responses/nuiak-20261001-syn06-body-acceptance.yaml`

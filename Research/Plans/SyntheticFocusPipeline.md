@@ -1,5 +1,137 @@
 # Synthetic focus pipeline — joint delivery plan
 
+## REVIEW-QT-01 — persistent annotation startup contract
+
+All supported editor CLI launches must first run a bounded fresh-process Qt probe
+using the same interpreter, configured plugin paths and platform as the editor.
+Check actual QPluginLoader loadability and QApplication creation, not only files
+or plugin discovery. Native aborts/timeouts remain confined to the probe and yield
+a structured diagnostic receipt; never retry blindly or reinstall dependencies.
+Use one project-local hash-verified plugin cache across batches, preserving the
+framework lookup repair from SYN-11. Doctor mode needs no annotation input and
+must not open a review window. Retain existing settings per review runtime and
+never close a running annotator to test startup. Probe success is startup evidence,
+not a guarantee about later Qt callbacks or annotation correctness.
+
+## SYN-11 — sampled human review and exact candidate proposal
+
+Use the existing prefilled queues without regenerating annotations. Open safe
+artwork5 first, then native3/palette4. Prepare a proposal for the564unblocked
+unique native controls and all reasoned exclusions; retain approved=false until
+sampled geometry and source-role decisions are recorded. Check proposed weighting
+against the unchanged baseline before asking for encoding/run approval. Proposal
+arithmetic is not data admission and does not assert transfer or independence.
+
+SYN-11 startup repair: the hidden-plugin cache relocated Cocoa without retaining
+its `../../lib` framework lookup. Loader diagnostics show missing QtDBus, then
+QtPrintSupport; the installed original loads successfully. Preserve the installed
+wheel and cache a matching `plugins/platforms` layout with a checked read-only link
+to its in-project Qt5/lib directory. Test loadability, not only plugin discovery.
+
+## SYN-10-ENCODING — consumer executor delivered for review
+
+Native-body assembly now connects to a separately approved, bounded feature encoder
+and the existing full-fit trainer through `focus-native-body-full-fit-v1`.
+Generated tests cover the three-cache chain, exact approvals, corruption and real
+CLI dispatch; retained blocked preflight preserves986training/333evaluation inputs.
+No new producer schema or geometry repair required. Sampled reviews/exact admission,
+approved encoding and a bounded changed-data run remain; wider generation continues
+asynchronously under the existing78-target content/layout request. See
+[handoff](../../reports/work/SYN-10-ENCODING/handoff.md).
+
+## SYN-09-ARTWORK — delivered corpus completion before executor binding
+
+TTR's newly published artwork/layout archive takes priority over preparing an
+executor against incomplete membership. Receive only the named136,425,377-byte
+archive, verify its356listed members, inspect source-role/campaign metadata and
+reuse unchanged native-body intake/crop tools. Preserve reserved-source exclusions;
+never decode protected images for failure mining. Prepare a bounded seeded/exception
+human queue with prefilled boxes, inspect representative overlays, and recompute
+the combined native-body assembly without admission. Validate the producer's
+162/240feasible target report and identify the actual remaining variation needs.
+Return exact receipt and next-action feedback. No capture, encoding, training,
+role reassignment or automatic human approval; executor work follows stable inputs.
+
+Retained combined manifest is8,455,778bytes, exceeding the generic8MiB JSON reader.
+Native-body protocol loading may use a bounded32MiB read (matching the existing
+reference-file limit), while keeping full seal/reassembly and admission validation.
+Other document readers are unchanged. Test a valid whitespace-expanded document
+above8MiB and rejection above32MiB; this is capacity compatibility, not a gate waiver.
+
+Once combined assembly identifies reserved sources, build the final human queue
+from a new safe-source-only native projection. Preserve the initial queue as
+superseded evidence; do not ask humans to annotate excluded sources. Reuse existing
+projection/review functions and retained crops; no recapture or corpus-wide recrop.
+
+## SYN-08-ASSEMBLY — native-body assembly and trainer dry-run integration
+
+Same-pixel conflict checks in this new assembly compare proposal content with only
+the rendered-body capture `generation` removed. Generation is still validated in
+each native bracket and retained in source evidence; it is not an annotation label.
+Do not rewrite legacy sealed review projections. Actual bounds, focus, role and
+semantic disagreements remain conflicts. Record resolved generation-only findings.
+
+Adapt existing v2 native review batches plus production crop receipts into a local
+versioned assembly. Revalidate native source brackets/body projection and exact crop
+membership; retain every control's disposition, original IDs, geometry and source
+references. These are native-observed static controls, not human labels or fabricated
+transition pairs. Preserve the original batch pair relationships separately.
+
+Join to the pinned FDR021 inventory with source/evaluation metadata checked before
+decoding candidates. Exact duplicates are deterministic aliases; conflicting labels,
+incomplete native bodies and protected/evaluation overlaps cannot be selected. Source
+review and sampled geometry acceptance require explicit exact-input-bound admission;
+absence produces a reviewable assembly and blocked trainer preflight, never a silent
+promotion. No actual admission is created in this tranche.
+
+Preserve all986baseline training and333evaluation rows in order. For an explicitly
+admitted future addition, reuse existing native/fixture stratum/label balancing within
+the80%native mass; keep the196human controls'20%weights unchanged. Report deltas.
+Produce an ordered encoding plan with crop/label/encoder/cache bindings and explicit
+missing budgets; never load a model or encode features here. Wire the actual mixed
+assembly CLI and trainer preflight dispatch. This assembly is not an executable
+experiment protocol: execution remains blocked even if an unrelated approval is
+supplied. The later assigned experiment must bind encoding and runtime budgets.
+
+Verify retained three-body-batch dry run, deterministic accounting, protected/held
+overlap, duplicates/conflicts, changed hashes, crop/body mismatches, admission scope,
+unchanged evaluation, weight mass and actual trainer rejection before model imports.
+Use existing crop evidence, not another recrop/review cycle. No capture or training.
+
+Actual retained metadata reveals four reserved frame-pixel matches in the earlier
+image-body batch. Quarantine the affected source bundles before decode, preserving
+declared frame/control accounting. Reconstruct unaffected bundles using the same
+native source validator/projector; only numbering and cross-source duplicate/review
+summaries may change in the subset. Never relax protected membership or decode a
+known reserved bundle simply to validate unrelated members of a combined batch.
+
+## SYN-07-READINESS — generation decision and candidate accounting
+
+Following the five-frame human acceptance, join the corrected body batch, actual
+review revision, crop receipts, retained baseline and producer source-lineage catalog
+into one reproducible readiness report. Keep all candidates' dispositions; check
+exact frame/crop overlap and semantic recipe matches without inferring independence
+from absent matches. Preserve the producer's conservative relationships and explicitly
+distinguish shared recipe assets from proven duplicate pixels. Human sample acceptance
+does not silently attest unreviewed recipes or admit a whole campaign.
+
+Return an exact collection assignment using existing480pair/60slot targets, with
+image-body capability separated from unsupported native controls, role reservation,
+unrendered variation and downstream trainer integration. No new capture, role
+mutation, encoding, training or threshold changes. Receive the named lineage archive;
+do not spend another crop/review cycle on its older wrapper-only images. This is
+local readiness tooling and producer coordination, not a second annotation pipeline.
+
+During execution TTR published its native-button/row/dialog/tab body repair. Include
+that named16pair archive's integrity, existing-contract intake, production crops
+and representative overlays in this same readiness tranche. Reconcile the decision
+from actual consumer results; do not leave the geometry gap marked unavailable
+if delivery now proves it. No additional runtime or training authority is implied.
+The subsequent26pair palette/long-row archive is also included in offline receipt
+and existing QA. Keep its independent report alongside the readiness replay; close
+this tranche after these named deliveries rather than following an endless stream
+of producer updates. Remaining artwork campaign is the next producer assignment.
+
 ## Assigned SYN-05 offline continuation,2026-09-30 PDT
 
 Implement one local plan-driven replay CLI with immutable per-bundle attempts and

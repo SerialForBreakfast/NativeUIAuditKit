@@ -1,5 +1,77 @@
 # NativeUIAuditKit — Completed Tasks
 
+## REVIEW-QT-01 — persistent startup guard completed for review 2026-10-01
+
+Integrated a20second-bounded fresh child Qt probe before every supported annotator
+CLI launch, shared hash-verified plugin cache and no-batch `--doctor`. Structured
+logs/receipts distinguish environment, framework lookup, integrity, platform,
+timeout and native exit failures without touching annotations or retrying.
+33Python tests, actual Cocoa doctor/negative CLI and offline Swift build/120+14tests
+pass. Existing process57665untouched; no dependency install/system change/model work.
+[Handoff](reports/work/REVIEW-QT-01/handoff.md), [runbook](Research/AnnotationStartup.md).
+
+## SYN-11-REVIEW — preparation and startup repair complete 2026-10-01 UTC
+
+Five-image prefilled artwork queue launched; human review itself remains pending.
+Resolved cached Cocoa plugin's relative-framework lookup with matching directory
+layout and verified in-project library link; wheel unchanged.26Python editor/cache
+tests, fresh Cocoa loader proof, actual app process and Swift build/120+14tests pass.
+Prepared exact564member unapproved admission proposal with764reasoned exclusions;
+52source-quarantined controls remain outside candidates. Existing weighting accepts
+1550total training/333unchanged evaluation. No model execution/admission.
+[Handoff](reports/work/SYN-11-REVIEW/handoff.md).
+
+## SYN-10-ENCODING — completed for review 2026-10-01 UTC
+
+Versioned native-body experiment integrates bounded separate encoding and existing
+trainer/full-fit runner. Reuses original928+reviewed58baseline feature chain, appends
+exact native admission members, preserves333evaluation and native80/human20weights.
+11new generated tests;89total affected Python tests, Swift build/120+14tests pass.
+Actual retained CLI validates configuration and refuses unapproved execution; no run
+directory, admission, real encoding, training or weights. Three pending sampled-review
+queues and exact data/encoding/run approval remain. [Handoff](reports/work/SYN-10-ENCODING/handoff.md).
+
+## SYN-09-ARTWORK — completed for review 2026-10-01 UTC
+
+Delivered artwork intake through combined assembly:356members verified,14new recipes,
+42captured pairs/77unique images/756production crops.30source bindings/capacity audited.
+Combined564unique native candidates,318more; existing986+333members/weights unchanged.
+Five prefilled review images drawn from13safe sources; reserved dark-parent source
+excluded and original reviews retained. Native protocol reader32MiBbound fixes actual
+8.46MBmanifest with seal/reassembly preserved.26assembly/44fixture tests,8receiver
+safety cases, offline Swift build/120+14tests pass. Actual trainer dry-run validates
+configuration and refuses unapproved execution. No admission, encoding or training.
+[Handoff](reports/work/SYN-09-ARTWORK/handoff.md).
+
+## SYN-08-ASSEMBLY — completed for review 2026-10-01 UTC
+
+Native measured-body review/crop adapter integrated with mixed assembly CLI and
+trainer dry-run.624body observations account as16reserved-source exclusions plus
+608candidates;246unique candidates (66focused/180unfocused),362blocked. Generation
+counters no longer create false annotation conflicts; old review seals preserved.
+Actual mixed CLI reproduces the same assembly; trainer preflight validates inputs
+but returns exit2/launchEligible:false without a run. All986baseline training and
+333evaluation members/weights unchanged. Exact-input admission and ordered encoding
+plan supported; actual admission remains absent.25assembly,11training,44fixture
+tests pass; offline Swift build/120+14tests pass. No model or capture execution.
+[Handoff](reports/work/SYN-08-ASSEMBLY/handoff.md). Remaining exact membership,
+sampled geometry acceptance and changed-data encoding/execution are not completed.
+
+## SYN-07-READINESS — completed for review 2026-09-30 PDT
+
+Delivered offline versioned readiness CLI joining exact native-body candidates,
+saved human review, production crops, retained role inventory and producer lineage/
+catalog. Nine negative/positive tests and25corpus tests pass; real replay covers
+150original crops plus154new native-body crops. Received251lineage and195native-body
+manifest members; six new scene bundles/16captured pairs pass unchanged intake/crop
+tools. Representative enlarged-body overlays checked. Exact30recipe references bind
+60collection slots without assigning splits. Existing240training +240validation
+targets remain collection targets, not qualification. Swift build and120+14tests pass.
+Palette/long-row follow-on: nine scenes/26pairs/320crops pass with174members verified.
+Source-role acceptance, remaining artwork coverage, generation dispatch,
+native assembly/encoding and model execution remain separate work.
+[Handoff](reports/work/SYN-07-READINESS/handoff.md).
+
 ## SYN-05 offline continuation — completed for review 2026-09-30 PDT
 
 Implemented local plan-driven immutable attempts/completion receipts, guarded
@@ -2847,6 +2919,9 @@ bounded matched-compute proposal delivered;64 exclusions and protected reference
 preserved. No admission or execution.15focused tests plus offline build/123Swift
 tests pass. [Handoff](reports/work/HUMAN-CORPUS-INVENTORY-01/handoff.md).
 # SYN-06-BODY — consumer software and diagnostic proof (2026-10-01)
+
+Human follow-up: all5sampled frames/20controls accepted, including negative cases.
+Saved human revision verified; proposals unchanged. [Acceptance](reports/work/SYN-06-BODY/human-acceptance.md).
 
 Received corrected rendered-body archive (231verified members), integrated exact
 v1body evidence through native sidecar validation and opt-in review-batchv2, preserving

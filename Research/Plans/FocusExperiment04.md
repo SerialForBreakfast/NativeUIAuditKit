@@ -1,5 +1,30 @@
 # FOCUS-EXPERIMENT-04 — changed-data comparison
 
+## SYN-10 implementation scope — 2026-10-01
+
+Add a separate `focus-native-body-full-fit-v1` execution protocol, not an executable
+reinterpretation of the diagnostic assembly. Revalidate the sealed native assembly,
+reuse both FDR021 baseline caches (original features plus reviewed-human extension),
+append only exactly admitted native controls and preserve evaluation order, labels,
+selection and optimizer. Ordinary dataset loading must reject this protocol.
+
+Encoding approval binds the pre-cache protocol, exact output directory and explicit
+limits: at most300seconds, at most2048new controls, fixed32-image batches and a
+bounded tensor output size. The batch bound limits input tensors, not total process
+memory. Record end-of-encoding MPS allocation snapshots, not peak-memory or hard
+memory-limit claims.
+The deadline is cooperative (checked around batches and before publication), not
+an operating-system kill timer for a hung framework import or accelerator call.
+Reuse the existing frozen encoder implementation and normalization. Refuse changed
+encoder state, receipt membership, tensor dimensions/dtypes/labels, nonfinite values,
+cache hashes or feature digest. Training never silently re-encodes absent features.
+
+After encoding, a new protocol binds that cache and needs a separate one-run
+approval and experiment-log entry. Tests may use generated tensors and fake encoder
+dependencies; they do not authorize actual inference, admission or training.
+Retained unadmitted data exercises the blocked CLI path. Current human-review and
+source-role decisions remain pending, independent of software readiness.
+
 Status: configuration proposal prepared for review, 2026-09-30 PDT.
 Execution blocked on eligible changed corpus and exact run approval. No run ID is
 allocated and no approval file is created. This assignment prepares the experiment;
@@ -85,9 +110,11 @@ remain unavailable for full-frame accuracy, not treated as easy negatives.
 6. Preserve selected/terminal predictions, errors and rejected trials. Pass/fail the
    comparison without changing rules after observing scores. Export is separate.
 
-Current missing bindings: new eligible members, producer ancestry/fields, any required
-native-assembly adapter, encoding resource cap, executable protocol and run approval.
-Preparing this document does not satisfy them. A smaller explicitly approved
+SYN-10 supplies the native-assembly execution adapter, bounded encoding interface
+and executable protocol software; actual data/encoding/run approvals remain absent.
+Current missing bindings: exact eligible members with sampled geometry/source-role
+acceptance, approved encoding limits/cache receipt, and one-run approval.
+Software completion does not satisfy them. A smaller explicitly approved
 development experiment need not claim production corpus qualification; it still
 requires eligible changed data and cannot waive the existing release gates.
 

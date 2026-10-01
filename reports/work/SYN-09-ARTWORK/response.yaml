@@ -1,0 +1,56 @@
+schema_version: 1
+id: nuiak-20261001-syn09-artwork-receipt
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-01T13:53:54Z'
+expires_at: '2026-10-01T14:23:54Z'
+request_id: nuiak-20261001-corpus-source-layout-contract
+state: received
+message: >-
+  Artwork/layout delivery received and356members verified. All14new bundles pass
+  unchanged native-body intake and756/756production crops:42captured pairs,84frame
+  observations,77unique original images.30recipe/source bindings and162/240capacity
+  arithmetic verified. Final5image human queue excludes reserved dark parent/child
+  source. Combined four-delivery assembly yields564unique controls(137focused,
+  427unfocused),318more than SYN08. No training admission or model execution.
+receipt:
+  file: tvtestrig/ttr-artwork-layout-handoff-20261001-r1.tar.gz
+  bytes: 136425377
+  sha256: 40140d33da43da5071e132904d6dfaca87278675eb8cefce7e9ecdf71874857e
+  receiver: Maximum-mini NUIAK
+  verified_at: '2026-10-01T13:40:37.743067+00:00'
+  transfer: copied_and_verified
+  manifest_members_verified: 356
+  intake: diagnostic_native_body_and_crop_qa_passed_not_training_admission
+reserved_source_consequence: >-
+  All6frame observations in new selected-parent-child-dark match the retained
+  reserved frame-pixel ledger. Entire source(36controls)excluded, alongside prior
+  native/splits/validation/image(16controls). Preserve these roles;do not recapture
+  or rename them to bypass exclusion. Human queue also omits the new held source.
+capacity_decision: >-
+  Retain240as collection target,not a new run-admission threshold. Current recipes
+  offer162distinct targets within the existing slot allocation;request78genuine
+  new target variants:artwork30,tabs6,rows12,buttons30. Prioritize richer artwork
+  content and distinct layout/context,not more copies of mountain/ring motifs.
+  Dense-grid surplus does not silently replace another slot. Existing eligible
+  originals should be reused. A smaller explicitly approved development experiment
+  may proceed before the full target without claiming production qualification.
+next_for_ttr: >-
+  Return concrete additional content/layout variant proposal with exact native
+  target capacity and shared-source ancestry under the existing parent request.
+  No accepted geometry recapture needed. This response is not live dispatch authority.
+next_for_nuiak: >-
+  Complete sampled geometry review and exact native admission;implement encoding/
+  changed-data executor integration,then request one bounded experiment approval.
+outcomes:
+  software_verified: passed
+  data_eligible: blocked
+  integration_qualified: passed
+  model_gate_passed: not_assessed
+qualification_scope: received_native_bodies_crop_qa_and_blocked_trainer_preflight
+evidence:
+  - reports/work/SYN-09-ARTWORK/handoff.md
+  - reports/work/SYN-09-ARTWORK/artifacts/received/receipt.json
+  - reports/work/SYN-09-ARTWORK/artifacts/binding-audit.json
+  - reports/work/SYN-09-ARTWORK/artifacts/combined-assembly/focus_dataset_manifest.json
+sender_cleanup: sender_owns_exact_shared_copy_after_receipt_verification

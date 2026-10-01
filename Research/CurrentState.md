@@ -1,18 +1,92 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-10-01 UTC, SYN-03 consumer proof (underlying results retain observation dates)
+**As of:** 2026-10-01 UTC, REVIEW-QT-01 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
 This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md`, fix those to match this file.
 
+**REVIEW-QT-01:** supported annotation launches automatically probe actual Qt
+plugin loading/QApplication creation in a bounded child before opening a batch.
+Shared verified plugin cache and `--doctor` are the canonical path; no reinstall
+or per-batch Qt workaround.33Python tests, real Cocoa/failed-launch checks and
+Swift build/120+14tests pass. Current annotation window left running; corpus and
+model state unchanged. [Guide](AnnotationStartup.md).
+
+**SYN-11-REVIEW:** safe five-image artwork review launched; pending native3/palette4
+queues unchanged. Repaired the annotation plugin cache's missing relative Qt
+framework lookup without modifying installed dependencies;26editor/cache tests and
+Swift build/120+14tests pass. Unapproved exact564-addition proposal is weighting-
+feasible:1550training controls,333evaluation unchanged, native80%/human20%mass.
+Human sampled review/source-role acceptance and exact admission remain necessary;
+no encoding or training. [Handoff](../reports/work/SYN-11-REVIEW/handoff.md).
+
+**SYN-10-ENCODING:** native-body feature encoder and actual trainer integration
+implemented;89generated tests and offline Swift build/120+14tests pass. Reuses all
+986baseline features through the original928+reviewed58cache chain, then appends
+exact admitted native members. Separate encoding/output-budget and one-run approvals;
+no automatic encoding from training. Actual retained preflight passes configuration
+and correctly blocks on missing admission, features and run approval (exit2).
+No saved revisions in the SYN-07native3/palette4 or SYN-09safe5review queues;
+564unique candidates remain unadmitted. No new model run or weights. TTR's existing
+78genuine variant request remains separate; no new transport/geometry requirement.
+[Handoff](../reports/work/SYN-10-ENCODING/handoff.md).
+
+**SYN-09-ARTWORK:** received356verified members,14new recipe bundles/42captured pairs/
+756production crops;77new unique images. Combined native audit now564unique candidates
+(137focused/427unfocused),318more than SYN-08.52reserved-source controls excluded;
+764duplicate/incomplete/clipped/protected candidates held. Baseline986training and
+333evaluation members/weights unchanged. All30representative recipes now have producer
+proof; current per-slot capacity162/240 requires78genuine extra layout/content targets,
+not duplicate captures. Final five-frame human queue excludes reserved dark-parent
+source. Native-body protocol reader supports this8.46MBassembly under a32MiBbound;
+26assembly/44fixture tests and Swift build/120+14tests pass. Actual trainer preflight
+blocks execution correctly; no admission/encoding/training. Next: sampled acceptance,
+exact membership, native encoding/trainer integration and a budgeted comparison.
+[Handoff](../reports/work/SYN-09-ARTWORK/handoff.md).
+
+**SYN-08-ASSEMBLY:** measured-body adapter integrates existing assembly and trainer
+dry-run without recapture/recrop. Of624retained body crops,16reserved-source controls
+are excluded before decode;608candidates yield246unique candidates (66focused,
+180unfocused),362reasoned exclusions. Corrected generation-only false conflict
+comparison while preserving original native records and old review seals. All986
+baseline training and333evaluation members and existing weights remain unchanged.
+Actual admission remains empty; encoding plan is prepared, not executed. Next:
+sampled native/palette geometry acceptance and exact source-role membership, remaining
+coverage-driven generation, then a separately budgeted changed-data experiment.
+No model execution or quality claim. [Handoff](../reports/work/SYN-08-ASSEMBLY/handoff.md).
+
+**SYN-07-READINESS (2026-10-01 UTC):** native configured button/row/tab/dialog repair
+received and accepted through unchanged consumer intake:16captured pairs, six scenes,
+32frames,154/154production crops;195manifest members verified. Representative overlays
+visually checked. Three prefilled native-review images await human verification;
+prior five-image artwork review remains accepted. New offline readiness CLI joins
+saved review/crops, retained1,319crop inventory,72recipe lineage and30recipe catalog.
+All60collection slots bind exact recipes;9producer layout signatures and recurrent
+motifs are not independent train/validation sources. No roles reserved or training
+admitted. Core geometry capability now exists across four families; remaining
+artwork coverage, source-role binding and native assembly/encoding precede
+changed-data training. Nine new and25corpus tests pass; Swift build/120+14tests pass.
+[Handoff](../reports/work/SYN-07-READINESS/handoff.md).
+
+Same-tranche palette follow-on: nine scenes/26captured pairs/320crops pass;174more
+member hashes verified. Across corrected image/native/palette deliveries:63pairs,
+77unique image files,624body crop observations. Four exact-image cross-recipe
+overlaps match producer evidence and must stay grouped; no independent split implied.
+High-contrast native controls and long/duplicate rows are now delivered. Remaining
+artwork combinations are TTR's next action; consumer assembly remains local work.
+
 **SYN-06-BODY (2026-10-01 UTC):** corrected native/custom image-body intake integrated
 without altering legacy review batches.231producer member hashes verified;8scene
 bundles/21captured pairs;150/150production crops from measured bodies,60unsupported
 observations explicitly unavailable. Original growth box now520×496vs440×420wrapper;
 representative overlays inspected and a small prefilled human queue prepared.
-Native buttons/rows/dialogs and complete tab-parent geometry remain unsupported.
+**Human acceptance:** all5sampled frames/20controls confirmed correct, including
+negative cases. Saved human revision and snapshots verified; bounds/classes/focus
+unchanged from crop-QAed proposals. [Receipt](../reports/work/SYN-06-BODY/human-acceptance.md).
+Native buttons/rows/dialogs and tab-parent geometry were unsupported in this archive;
+the subsequent SYN-07-READINESS delivery above supersedes that blocker.
 44fixture,46TTR,136human tests; offline Swift build and120+14tests pass. Diagnostic-only;
 human/corpus/source-role acceptance remains separate. No training or model change.
 [Handoff](../reports/work/SYN-06-BODY/handoff.md).

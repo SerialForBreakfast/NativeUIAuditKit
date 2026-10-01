@@ -1,0 +1,75 @@
+schema_version: 1
+id: nuiak-20261001-syn07-generation-readiness
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-01T06:31:27Z'
+expires_at: '2026-10-01T07:01:27Z'
+request_id: nuiak-20261001-corpus-source-layout-contract
+related_request_id: nuiak-20261001-rendered-control-bounds
+state: received
+message: >-
+  Native button/row/tab/dialog repair accepted by unchanged consumer intake:
+  six scenes,16captured pairs,154/154production crops,representative body overlays
+  inspected. Earlier five-image human acceptance preserved. Source-lineage archive
+  verified and joined to exact30recipe catalog;60collection slots bound with no
+  role reservation or training admission. Additional palette archive also passes:
+  nine scenes,26captured pairs,320/320production crops. All620manifest-listed
+  members across these three archives verified unchanged after QA.
+receipts:
+  - file: tvtestrig/ttr-syn04-native20-lineage-20261001-r1.tar.gz
+    bytes: 85106353
+    sha256: 89e0ce350718f386d8edb672259b179ef6f19e22f96e1a6c6aac08a3af27cded
+    receiver: Maximum-mini NUIAK
+    verified_at: '2026-10-01T06:09:10.393146+00:00'
+    transfer: copied_and_verified
+    manifest_members_verified: 251
+    intake: accepted_lineage_only_older_wrapper_captures_not_admitted
+    evidence: reports/work/SYN-07-READINESS/artifacts/received/receipt.json
+  - file: tvtestrig/ttr-native-button-body-20261001-r1.tar.gz
+    bytes: 193963873
+    sha256: 1956fd0bcb88df1a8837c218c8fc9757ecd52ba56b8305d0c1d28bd2ac0e1738
+    receiver: Maximum-mini NUIAK
+    verified_at: '2026-10-01T06:19:31.447405+00:00'
+    transfer: copied_and_verified
+    manifest_members_verified: 195
+    intake: accepted_diagnostic_body_and_crop_QA_not_training
+    evidence: reports/work/SYN-07-READINESS/artifacts/native-body-received/receipt.json
+  - file: tvtestrig/ttr-native-palette-rows-20261001-r1.tar.gz
+    bytes: 98270509
+    sha256: 8b9d21b698a1356a26e290f9df277a72c3bf703bc72816c5e947ebda39822368
+    receiver: Maximum-mini NUIAK
+    verified_at: '2026-10-01T06:29:53.140530+00:00'
+    transfer: copied_and_verified
+    manifest_members_verified: 174
+    intake: accepted_diagnostic_body_and_crop_QA_not_training
+    evidence: reports/work/SYN-07-READINESS/artifacts/palette-received/receipt.json
+source_group_decision:
+  status: grouping_recommendation_no_role_mutation
+  rule: >-
+    Keep exact-image duplicates and related palette/layout/content variants in
+    one connected source group. The current catalog is a training-candidate group,
+    not a source of independent train/validation partitions. Four consumer-verified
+    cross-recipe image overlaps must not be split. Existing diagnostic/calibration
+    exports stay diagnostic; future training members require explicit binding.
+  independent_validation: >-
+    Separate genuinely different reviewed layout/content sources; unmatched hashes
+    alone do not establish independence. Preserve retained evaluation membership.
+next:
+  producer: >-
+    Continue remaining artwork-family proof under your assigned runtime scope:
+    contrast-neighbors,dense-grids,hero-neighbors,remaining mixed-aspect palettes,
+    selected-parent-child. Return exact training campaign recipes/controls/content
+    lineage and feasible bounds for existing96artwork+48tabs+48rows+48buttons target.
+    Four-control recipes must not claim eight distinct pairs by duplication. No
+    repeat of accepted image/native-control proofs. This message is not dispatch.
+  consumer: >-
+    Native-body assembly/encoding integration and explicit eligible membership,
+    then the separately approved changed-data comparison. No unchanged model run.
+  human: >-
+    New small prefilled review queues only; do not request redrawing generated boxes
+    or repeating the accepted five-image sample.
+limits:
+  - First-wave pair targets are not production qualification thresholds.
+  - No model execution,split mutation,training admission or runtime dispatch by NUIAK.
+  - Sender alone owns exact shared-copy cleanup after checking these receipts.
+evidence: reports/work/SYN-07-READINESS/handoff.md

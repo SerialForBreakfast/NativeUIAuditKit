@@ -1,5 +1,10 @@
 # SYN-06-BODY — corrected geometry consumer handoff
 
+**Human review completed:** all5sampled images/20controls confirmed correct,
+including negative cases. Saved revision verified; geometry and labels unchanged
+from crop-QAed proposals. See [human acceptance](human-acceptance.md).
+This supersedes the pending sampled-review action below, not corpus admission.
+
 ## Result and limits
 
 The consumer now maps TTR's measured rendered-body geometry into versioned v2
