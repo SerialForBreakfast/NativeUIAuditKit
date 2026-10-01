@@ -1,5 +1,13 @@
 # Full backlog implementation packet catalog
 
+[LOCAL-TOOLS-02](../reports/work/LOCAL-TOOLS-02/handoff.md): completed CLI/MCP
+implementation and bounded retained-image runtime verification under tranche 2.
+Next assignment is focus corpus coverage, not another CLI wrapper.
+
+[Local-first delivery](Plans/LocalFirstDelivery.md): current five-tranche scope and
+acceptance contract. Tasks.md holds execution state. Supersedes conflicting older
+next-action prose, not historical evidence or execution boundaries.
+
 [FDR021-PIXEL-PARITY](Plans/FocusFDR021PixelParity.md): complete candidate-only
 straight-RGB compatibility repair;333production input/score parity passes. TTR
 consumer adoption/identity qualification is next, not another training run.

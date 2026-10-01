@@ -1,5 +1,32 @@
 # NativeUIAuditKit — Tasks
 
+## Current delivery queue — LOCAL-FIRST-01 reconciliation, 2026-09-30
+
+This queue supersedes older next-action lists below; dated results remain evidence,
+not fresh execution authority. [Contract](Research/Plans/LocalFirstDelivery.md).
+
+| Order / ID | State / owner | Next action and dependency |
+| --- | --- | --- |
+| 1 LOCAL-FIRST-01 | Completed for review / Codex | Documentation reconciliation only; see CompletedTasks and linked handoff. |
+| 2 LOCAL-TOOLS-02 | Completed for review / Codex | CLI/MCP, real retained-image smokes, 8 new Swift tests, 4 process tests and full offline checks pass. [Handoff](reports/work/LOCAL-TOOLS-02/handoff.md). No agent registration installed. |
+| 3 FOCUS-CORPUS-03 | Ready for assignment / unassigned | Next: inventory existing data, freeze coverage/splits, then scoped native generation and automated intake. Confirm exact generation scope before capture; no training. |
+| 4 FOCUS-EXPERIMENT-04 | Pending eligible corpus and run approval / unassigned | Data-first baseline comparison, then isolated context/backbone arms; no unchanged rerun. |
+| 5 FOCUS-DELIVERY-05 | Pending selected candidate and runtime scope / unassigned | CoreML parity, explicit selection/rollback, TTR loaded-identity observer proof; no automatic promotion. |
+
+FDR021 remains the development baseline (12/14 complete frames; artwork 2/12).
+Its existing CoreML parity is passed; TTR candidate loading is unverified. That
+consumer proof can be separately assigned without waiting for a new model. The
+approved first-three-pair capture is complete; do not repeat it. No new model run,
+capture or training admission is authorized by this queue. Hierarchical iOS and
+unified-focus detector research are deferred, not dependencies.
+
+Local implementation uses resident inputs/dependencies. TTR archives are asynchronous;
+unavailable shared status does not block independent work. One concise report per
+tranche; automated correctness gates retained. Only actionable consumer/producer
+changes are published, not this local planning queue.
+
+## Earlier evidence and superseded scheduling
+
 **FOCUS-R2-LIVE-11 — completed for review:** new running local TTRf2d9728c validates
 inline manifest and captures approved3/3pairs in15.485s. Received44files/10,515,400bytes
 with matching hashes; existing consumer accepts all3native brackets;6/6production
@@ -9,7 +36,7 @@ works. Postflight idle/clear/settled. No more recapture of these originals. Next
 use these diagnostics in the coverage decision; remaining21capture/training not run.
 [Handoff](reports/work/FOCUS-R2-LIVE-11/handoff.md).
 
-**Status reconciliation,2026-10-01T00:26UTC:** TTR00:19:36UTC status reports
+**Historical status reconciliation,2026-10-01T00:26UTC (capture portion superseded by LIVE-11):** TTR00:19:36UTC status reports
 manifest-import repair and corrected build7 available; producer implementation is
 no longer the capture blocker. Consumer receipt/runtime/scene/three-pair acceptance
 remain unverified. No acknowledgment yet of `nuiak-20261001-fdr021-rgb-consumer`

@@ -1,5 +1,11 @@
 # Concurrent delivery roadmap
 
+**2026-09-30 superseding dispatch note:** use the current delivery queue at the top
+of [Tasks.md](../Tasks.md) and [five-tranche contract](Plans/LocalFirstDelivery.md).
+The dated roadmap below is historical dependency context, not current run state or
+authority. Run013 and the latest three-pair proof have completed; do not redispatch
+them from older prose. ADR-0012 governs local-first/asynchronous execution.
+
 Revision 5, 2026-09-24. Dependencies and dispatch guidance only; [Tasks.md](../Tasks.md)
 is the sole state/ownership queue. [ImplementationPlans.md](ImplementationPlans.md)
 maps every packet to its canonical contract. This revision supersedes contradictory

@@ -1,5 +1,21 @@
 # NativeUIAuditKit — Completed Tasks
 
+## LOCAL-TOOLS-02 — production CLI/MCP, completed for review 2026-09-30
+
+doctor/scan/scan-batch and stdio tools use NativeUIDetectionSession, with bounded
+input roots, complete results, identities, timings and honest warning/strict policy.
+8new Swift tests +4real-process tests; full120Swift Testing/14XCTest and build pass.
+Retained iOS/tvOS runtime and warm/MCP smokes pass. No model change or agent install.
+[Handoff](reports/work/LOCAL-TOOLS-02/handoff.md).
+
+## LOCAL-FIRST-01 — workflow reconciliation, completed for review 2026-09-30
+
+Four ADRs corrected against recorded Run013/FDR021 evidence; local-first workflow
+reconciled across AGENTS, worker guides and verification cadence. Five-tranche
+contract and sole Tasks queue define measurable completion and separate authority.
+Documentation-only: no capture, model execution, taxonomy or shipped changes.
+[Verification and handoff](reports/work/LOCAL-FIRST-01/handoff.md).
+
 ## Revision2approved first3capture and crop proof,2026-09-30PDT
 
 FOCUS-R2-LIVE-11:3pairs captured,44files independently received/hashed,

@@ -1,5 +1,11 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-09-30 LOCAL-TOOLS-02: [CLI/MCP adapter](../Tools/NativeUIAuditCLI/README.md)
+adds an executable over NativeUIDetectionSession without a second inference stack
+or public library API change. Tooling JSON records identity, settings, modality/focus
+evidence and timings. Heuristic audit findings remain warnings.
+See [ADR-0013](ADR-0013-NativeUI-CLI-and-MCP-Server.md).
+
 2026-09-30 consumer-only revision2extension: strict optional canvas.cardGeometry
 and canvas.nativeButton plus emblem/cityscape artwork motifs preserve legacy hashes.
 See [compatibility/capture contract](Plans/FocusR2CompatibilityCapture.md). These are

@@ -1,72 +1,80 @@
 # ADR-0013: Model Delivery via Native CLI and Model Context Protocol (MCP)
 
 - Date: 2026-09-30
-- Status: Accepted / Active
-- Scope: Model productization, developer tooling (`nativeui-audit`), and AI agent integration (MCP server).
-- Relates to: [ADR-0005](ADR-0005-Native-Screenshot-Flow-And-Pedagogy-Validation.md), [NativeUIElementDetection](NativeUIElementDetection.md).
+- Status: Implemented, review-ready as LOCAL-TOOLS-02; agent registration not installed.
+- Contract: [Local-first delivery](Plans/LocalFirstDelivery.md).
 
----
+## Corrected context
 
-## 1. Context and Problem Statement
+The models are already accessible through the Swift package, not confined to eval
+scripts. [NativeUIDetectionRequest](../Sources/NativeUIAuditKit/Detection/NativeUIDetectionRequest.swift)
+provides letterboxing, inference, OCR fusion, focus, audit rules and timings.
+[Package.swift](../Package.swift) also has diagnostic tools. The missing product
+is a convenient supported general CLI/MCP entrypoint.
 
-NativeUIAuditKit possesses two mature, high-performing YOLO11n CoreML models:
-- **`nativeui-ios-v2.0`**: 5-class iOS model with mAP@0.5 = 0.935.
-- **`nativeui-tvos-v3.0`**: tvOS model with mAP@0.5 = 0.9822.
+Shipped benchmark results (iOS five-class mAP50 0.935; tvOS 0.9822) describe their
+recorded corpora, not arbitrary-app guarantees.
 
-However, neither model is currently accessible outside of isolated offline evaluation scripts (`scripts/eval_yolo_map.swift`). Developers cannot easily run scans from their terminal, CI/CD pipelines cannot gate on UI layout regressions, and AI agents (such as Claude Code, Cursor, or Antigravity) cannot use the models to inspect generated UIs without relying on expensive, slow, and hallucination-prone multimodal image tokens.
+## Design
 
-Because the models are locked in a research silo, there has been no real-world developer feedback loop to guide further model improvements.
+- Implement `nativeui-audit doctor`, `scan` and `scan-batch` using the production
+  library. Do not create a parallel detector or re-extract preprocessing/NMS.
+- Doctor reports availability, actual model identity, capability limits and actionable
+  errors. Presence does not prove inference or Neural Engine execution.
+- Scan returns versioned boxes, OCR, focus, warnings, identities and timings,
+  preserving unavailable/ambiguous states. Batch reuses a loaded session and accounts
+  for every input, including failures.
+- Add a thin stdio MCP wrapper with `audit_doctor` and `audit_screenshot`.
+  Keep logs separate from protocol output and restrict reads to explicitly configured
+  local scope. No uploads, navigation or source-edit side effects.
+- Select parsing/protocol dependencies during implementation; new network installation
+  is not implicit authority.
 
----
+## Honest audit and performance contract
 
-## 2. Decision Drivers
+Reuse existing audit rules with their uncertainty. Screenshot pixels alone do not
+establish point-scale targets or semantic clipping. Edge proximity, legitimate
+nesting and ellipses are not automatically defects. Any strict exit policy must
+name validated supported failure conditions; heuristics do not silently fail CI.
 
-- **Zero-Token AI Agent Feedback:** Allow non-multimodal and reasoning LLMs to receive structured JSON layout audits (bounding boxes, clipping, touch targets, truncation) in milliseconds without processing image pixels in context.
-- **Single Source of Truth:** Prevent logic drift between command-line tools and AI agent integrations.
-- **Fast Cold-Start & Zero-Daemon Overhead:** The tool should run on demand over `stdio` without requiring background daemon services or complex multi-tenant servers.
-- **Actionable Self-Healing for Agents:** Error outputs must provide structured remediation hints (`nextCommand`, `fixSuggestion`) rather than raw stderr stack traces.
+Structured JSON avoids requiring image inspection by the agent, but is not zero-token.
+Sub-200ms latency, fixed cold-start overhead, ~200-token responses and guaranteed ANE
+placement are unverified targets, not promises. Measure cold/warm load, detection,
+OCR, focus and total latency on named hardware and fixed inputs.
 
----
+## Acceptance and scope
 
-## 3. Considered Options
+Implementation and runtime checks completed; see [handoff](../reports/work/LOCAL-TOOLS-02/handoff.md)
+and [usage](../Tools/NativeUIAuditCLI/README.md). Two retained screenshots verify
+CLI/MCP operation, not arbitrary-app accuracy. First-process versus warmed results
+are measured rather than asserting sub-200ms performance.
 
-- **Option A (Xcode-Only Integration):** Package models strictly as internal SPM libraries consumed by XCTest suites inside Xcode projects.
-- **Option B (Cloud/REST Microservice):** Host models in a Python/FastAPI web service accessed over HTTP.
-- **Option C (Native CLI Binary + Thin Stdio MCP Server — Selected):** Build a standalone macOS CLI executable (`nativeui-audit`) using `ArgumentParser` and CoreML, and wrap it with a lightweight Model Context Protocol (MCP) server communicating over `stdio`.
+Implementation contract (LOCAL-TOOLS-02): one dependency-free Swift executable
+target with internal types and a test target; no new public library API. Commands
+use JSON by default and a thin newline-delimited stdio MCP dispatcher supporting
+protocol 2025-11-25. MCP requires an explicit --root; CLI defaults to its working
+directory. Canonical path and opened-file checks reject root escapes/special files.
+Inputs are bounded to 50MiB/24MP, batches to 128 image files and MCP lines to 1MiB.
+Sequential processing reuses a production session; no arbitrary model override.
+Doctor hashes bundled resources and validates manifests without claiming load or
+hardware success. Scans record loaded detector identity and actual focus receipt;
+requested compute units are distinct from unknown hardware dispatch.
 
----
+Strict mode fails degraded/failed processing, NOT speculative screenshot defects.
+Existing audit issues remain warnings. Output includes that policy explicitly.
+No screenshot scale/sidecar guess or second OCR pipeline is added. Raw OCR outside
+detected controls is not exposed by the current library. Runtime smoke is limited
+to the two retained test screenshots and a repeated warm case, plus MCP transport
+smokes. Normal Apple CoreML runtime caches may be system-managed; explicit outputs,
+logs, temp and configurable caches stay in-project. No daemon or app configuration
+is installed automatically.
 
-## 4. Decision
+Protocol references: [stdio](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports),
+[lifecycle](https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle),
+[tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools).
 
-We adopt **Option C: Native CLI Binary + Thin Stdio MCP Server**.
-
-### 4.1 Architecture
-1. **Core Library Target (`NativeUIDetector`):**
-   - Extract the validated letterbox, `CVPixelBuffer` creation, CoreML inference, and greedy NMS logic from `scripts/eval_yolo_map.swift` into a reusable Swift target.
-   - Implement `IssueClassifier` to evaluate native UI rules:
-     - `tappableTargetTooSmall`: control size < 44pt equivalent.
-     - `clippedElement`: control bounding box within 2px of screen edge.
-     - `overlappingElements`: cross-class IoU collision > 0.3.
-2. **Native CLI Target (`nativeui-audit`):**
-   - Subcommand `doctor`: Verifies model presence, weights integrity, and neural engine availability; outputs JSON diagnostics with `recommendedNextCommand`.
-   - Subcommand `scan <image>`: Scans a single screenshot with `--format json|table` and `--strict` (exit code 1 on defects for CI gates).
-   - Subcommand `scan-batch <dir>`: Scans multiple images in a single warm-model invocation to avoid repetitive CoreML cold-load penalties.
-3. **Model Context Protocol (MCP) Server:**
-   - Thin stdio server exposing two primary tools:
-     - `audit_doctor()`: Preflight environment check.
-     - `audit_screenshot(imagePath, minConfidence)`: Executes `nativeui-audit scan --format json` and returns compact structured defect reports.
-   - Future M2 extension: `audit_swiftui_view(code, matrix)` to render and audit views across device and dynamic type permutations.
-
----
-
-## 5. Consequences
-
-### Positive
-- **Instant Agent Utility:** AI agents can audit UI code changes deterministically in <200ms using local Apple Silicon compute.
-- **Context Preservation:** Replaces thousands of multimodal image tokens with compact ~200-token structured JSON responses.
-- **CI/CD Integration:** The `nativeui-audit scan --strict` command can immediately serve as a visual linter in local pre-commit hooks and GitHub Actions.
-- **Codebase Momentum:** Shifting focus to tool delivery activates the models in daily work, generating real user feedback.
-
-### Negative / Tradeoffs
-- **CoreML Cold Start:** One-off CLI calls incur a 0.5–1.0s model compilation/loading overhead. (Mitigated by adding `scan-batch` and potential persistent daemon mode for tight agent loops).
-- **Maintenance Surface:** Adding CLI and MCP targets expands the surface area of `Package.swift` and requires maintaining argument parsing and documentation.
+Require real CLI/library wiring, positive/negative CLI and MCP tests, retained-image
+smokes, complete accounting, offline package checks, usage examples and timings.
+Runtime model smoke execution must be included in the assignment; mocks alone do
+not establish performance. No weight, stable-taxonomy or production preprocessing
+change. Autonomous control and self-healing edits are outside this interface.

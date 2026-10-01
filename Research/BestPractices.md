@@ -1,5 +1,19 @@
 # NativeUIAuditKit — Best Practices
 
+## CLI timing and strict health are not UI qualification (LOCAL-TOOLS-02)
+
+**Wrong:** Interpret session-internal modelLoadMs=0 as zero cold startup, or fail CI
+on every heuristic issue exposed through the screenshot API.
+
+**Correct:** Measure wrapper load/identity and end-to-end time separately. Report
+first-in-process versus warmed calls and actual modality/focus failures. Keep inferred
+scale and heuristic clipping/overlap/truncation as review warnings, not strict defects.
+
+**Why:** The real cold iOS smoke took about 1.03s while its warmed repeat took 0.19s;
+the preloaded session reported zero inner load time for both. AuditRules also infers
+scale without a sidecar. See LOCAL-TOOLS-02 evidence; these timings are observations,
+not a performance guarantee. Preserve protocol-only stdout when wrapping native APIs.
+
 ## Batch-import Undo must include the empty-image baseline
 
 **Observed:** FOCUS-REPAIR-INTAKE-04 real-sidecar editor check found first import on

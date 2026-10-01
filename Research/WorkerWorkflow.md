@@ -4,6 +4,13 @@
 
 ## Ownership and sources of truth
 
+**LOCAL-FIRST-01 amendment (2026-09-30):** one coherent assignment, one concise
+handoff, linked automated evidence. Routine work can use a bounded Tasks.md entry
+and the user assignment instead of a new packet document. Internal checkpoints
+do not need separate handoffs; complex experiments retain one canonical contract.
+This refines the templates below, not safety or qualification gates. See
+[ADR-0012](ADR-0012-Local-First-Workflow-Decoupling.md).
+
 - **Architect/project manager:** orders the work, writes executable packets, resolves architecture questions, reviews evidence, and records acceptance. This task holds that role. It does not start workers or recurring monitoring implicitly.
 - **Worker:** completes the assigned packet or multi-packet tranche through implementation, integration, verification, and evidence-backed handoff. A packet is a specification, not authorization to execute it before assignment.
 - **Maintainer:** controls commits, external writes, hardware access, and explicit exceptions. Architect acceptance is not authorization for those actions.
@@ -14,7 +21,7 @@
 | Open queue, packet state, owner | Tasks.md |
 | Current shipped state and active bottleneck | Research/CurrentState.md |
 | Architecture and dataset decisions | NativeUIElementDetection.md / TrainingDataStrategy.md |
-| Work contract | One canonical packet linked from Research/ImplementationPlans.md |
+| Work contract | User assignment plus bounded Tasks entry; one catalog-linked plan when complexity requires it |
 | Confirmed reusable lessons | Research/BestPractices.md |
 | Evidence index and unresolved knowledge conflicts | Research/WorkerKnowledge.md |
 | Experiments | Research/ExperimentLog.md |
@@ -139,7 +146,12 @@ After a deterministic failure, investigate before retrying. For a transient fail
 
 ## Review and handoff
 
-Workers write `reports/work/<packet-id>/handoff.md` with:
+Workers write one `reports/work/<tranche-id>/handoff.md`. The fields below are an
+evidence checklist, not eight mandatory prose sections or per-helper reports.
+A short outcome table, acceptance evidence links, verification result and next
+action suffice when they cover the assignment. Do not hash prose plans or require
+a maintainer commit as completion evidence. Existing machine-bound experiment
+seals and artifact/corpus/runtime identities remain intact.
 
 Start with four outcome rows: **software verified**, **data eligible**, **integration qualified**,
 **model gate passed**. Each is pass/fail/not-run/not-applicable with evidence and reason. Keep

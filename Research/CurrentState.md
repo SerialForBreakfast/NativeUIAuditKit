@@ -7,6 +7,25 @@
 
 This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md`, fix those to match this file.
 
+**Workflow reconciliation, LOCAL-FIRST-01 (2026-09-30 PDT):** ADR-0012 adopted as
+local-first/asynchronous workflow; ADR-0013 is a queued wrapper around the existing
+production library, not a new inference stack. ADR-0014/0015 are comparative model
+hypotheses, not approved replacements. One concise tranche report and automated
+batch checks replace repetitive helper paperwork; data reservations, parity and
+execution gates remain intact. [Delivery contract](Plans/LocalFirstDelivery.md).
+Next assigned-work candidate: CLI/MCP; focus corpus remains the model priority.
+No software, data, model or TTR runtime changed by that documentation tranche.
+
+**LOCAL-TOOLS-02 completed for review (2026-09-30 PDT):** nativeui-audit doctor,
+scan, scan-batch and stdio MCP wrap the existing production session. Bounded roots,
+input accounting, model identity, OCR/focus health and timing are exposed; heuristic
+audit findings remain warnings. 120Swift Testing +14XCTest and4real-process tests
+pass; offline build warning-free. Real iOS/tvOS fixture smokes pass, including warm
+reuse and intentional corrupt input. M4 observation: iOS977ms cold/138ms warm,
+tvOS1007ms cold; not a performance or accuracy gate. Shipped weights unchanged;
+no TTR/agent configuration installed. Next: FOCUS-CORPUS-03 coverage-driven assembly.
+[Usage](../Tools/NativeUIAuditCLI/README.md), [handoff](../reports/work/LOCAL-TOOLS-02/handoff.md).
+
 ---
 
 ## Shipped
@@ -20,7 +39,7 @@ Fixture settled/responsive. Initial no_sample resolved when Simulator display op
 Diagnostic-only;15other targets excluded by approved cap; no training/promotion.
 [Evidence](../reports/work/FOCUS-R2-LIVE-11/handoff.md).
 
-**TTR coordination check,00:26UTC:** fresh peer snapshot00:19:36UTC reports
+**Historical TTR coordination check,00:26UTC (capture superseded by proof above):** peer snapshot00:19:36UTC reports
 manifest repair plus corrected0.3.1/build7available. Capture track now awaits
 consumer verification, not producer implementation. No new local runtime check,
 download or capture was performed. FDR021RGB consumer request remains published

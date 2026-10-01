@@ -20,6 +20,13 @@ the right checks earlier and reusing unchanged evidence is the optimization.
 
 ## Verification cadence
 
+LOCAL-FIRST-01 (2026-09-30) makes this cadence the default: one concise tranche
+report, no per-helper dossier or routine prose-plan hash. Automated batch preflight
+replaces repetitive manual crop paperwork, not full integrity or eligibility checks.
+TTR artifacts arrive asynchronously; only live capture/intake/consumer qualification
+waits for the producer. Local work uses resident inputs and dependencies. Native
+rendering still needs its authorized runtime. See [ADR-0012](ADR-0012-Local-First-Workflow-Decoupling.md).
+
 | Change / boundary | Required feedback |
 |---|---|
 | Prose-only edit | Content, links and diff review; no package build or simulator |

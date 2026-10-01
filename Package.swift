@@ -11,6 +11,7 @@ let package = Package(
         .visionOS(.v1)
     ],
     products: [
+        .executable(name: "nativeui-audit", targets: ["NativeUIAuditCLI"]),
         .library(
             name: "NativeUIAuditKitModels",
             targets: ["NativeUIAuditKitModels"]
@@ -53,6 +54,17 @@ let package = Package(
             path: "Sources/NativeUIAuditKit"
         ),
         // Offline diagnostic adapters sharing the production perception primitives.
+        .executableTarget(
+            name: "NativeUIAuditCLI",
+            dependencies: ["NativeUIAuditKit", "NativeUIAuditKitModels"],
+            path: "Tools/NativeUIAuditCLI",
+            exclude: ["README.md"]
+        ),
+        .testTarget(
+            name: "NativeUIAuditCLITests",
+            dependencies: ["NativeUIAuditCLI"],
+            path: "Tests/NativeUIAuditCLITests"
+        ),
         .executableTarget(
             name: "AnchorTool",
             dependencies: ["NativeUIAuditKit"],

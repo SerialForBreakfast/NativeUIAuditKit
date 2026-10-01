@@ -8,6 +8,10 @@ A portable Swift package for detecting native Apple platform UI elements in scre
 
 ## Add as a Dependency
 
+For local screenshot inspection without writing Swift, use the
+[nativeui-audit CLI and stdio MCP server](Tools/NativeUIAuditCLI/README.md).
+It wraps the production pipeline without replacing shipped models.
+
 ```swift
 // Package.swift
 dependencies: [
@@ -15,7 +19,7 @@ dependencies: [
 ]
 ```
 
-Two products — pick the one that matches what you need:
+Two library products — pick the one that matches what you need:
 
 - **`NativeUIAuditKitModels`** — just the trained model + versioned metadata, no Vision
   framework dependency. Use this if you bring your own inference/rendering code (this is

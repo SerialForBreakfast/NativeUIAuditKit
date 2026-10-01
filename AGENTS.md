@@ -17,7 +17,7 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 **Current state:** see [`Research/CurrentState.md`](Research/CurrentState.md). Open work is [`Tasks.md`](Tasks.md) only; finished phases are [`CompletedTasks.md`](CompletedTasks.md).
 
 - Phases 0–5b, 6 (5-class iOS YOLO11n `nativeui-ios-v2.0`), 6d, 6-gate (skipped), 6b tvOS v3.0, 6b-FD FocusRing v0.1, 7, 8, 9-1: **complete.**
-- Phase 6a: **in progress.** Run 009 holdout mAP@0.5 = **0.586**. Do not ship 41-class weights (DS-G8). Phase 6c waits on that gate.
+- Phase 6a: **in progress.** Run 013 matched withheld mAP@0.5 = **0.6322**, versus Run 009 **0.5549** on identical inputs (13 supported classes). Historical Run 009 0.586 is not the matched baseline. Do not ship 41-class weights (DS-G8); Phase 6c waits on that gate.
 
 **Before making any code changes, read in this order:**
 1. `Research/CurrentState.md` — living snapshot
@@ -30,6 +30,36 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 ---
 
 ## Execution contract — finish the authorized tranche
+
+### Local-first execution amendment — 2026-09-30, LOCAL-FIRST-01
+
+This amendment reconciles ADR-0012 with the operational guides and supersedes older
+procedural requirements for routine prose-plan hashing, separate helper dossiers and
+repeated human approval within an already authorized tranche. It does not waive
+filesystem, git, runtime, data-use or model safety boundaries.
+
+- Use resident dependencies and versioned local inputs for independent development.
+  TTR delivery is asynchronous; peer availability/acknowledgment blocks only work
+  requiring that producer or live integration, not local implementation/evaluation.
+- A bounded Tasks.md entry plus the user assignment is sufficient for routine work.
+  Add one canonical plan for complex contracts/experiments, not one per helper.
+  Produce one concise tranche handoff linking automated results; do not duplicate
+  that evidence in a separate packet report for each internal checkpoint.
+- Automate batch integrity, labels, geometry, crop, membership and split checks.
+  Keep artifact hashes and production parity; do not replace them with sampled
+  human review. Human confirmation remains necessary for uncertain labels, data-use
+  decisions and new authority, not every already verified crop.
+- Do not require hashes of prose plans for new routine work. Existing machine-bound
+  seals remain valid until a scoped compatibility change is tested, never bypassed.
+- Local native generation still needs an authorized qualified renderer/Simulator.
+  This amendment grants no capture, training, export, installation or promotion.
+- Documentation-only verification is content/link/diff review. Integrated code still
+  requires focused tests and offline Swift build/test. Reuse unchanged evidence.
+- Tasks.md remains the sole queue. Publish shared metadata only for actionable
+  cross-repository consequences, not local planning or acknowledgment chasing.
+
+See [ADR-0012](Research/ADR-0012-Local-First-Workflow-Decoupling.md) and
+[delivery tranches](Research/Plans/LocalFirstDelivery.md).
 
 For implementation requests, continue working in the current turn until the assigned
 deliverable is implemented, integrated, verified, and handed off, or a concrete blocker
@@ -239,7 +269,9 @@ nohup .venv-yolo/bin/python scripts/train_ios_model.py \
 echo "PID: $!"
 ```
 
-Log: `NativeUITrainer/training_6a.log`. Do not ship 41-class weights until DS-G8 (holdout mAP@0.5 ≥ 0.85). Run 009 is 0.586.
+Log: `NativeUITrainer/training_6a.log` (historical command above, not run authority).
+Do not ship 41-class weights until DS-G8 (holdout mAP@0.5 ≥ 0.85).
+Run 013 matched withheld mAP50 is 0.6322 on 13 supported classes; full coverage is incomplete.
 
 FocusRing train: `scripts/train_focus_ring_detector.py` (vendored backbone, BP-47). Export: `scripts/export_focus_ring_coreml.py` (`torch.jit.trace`, not ONNX).
 
@@ -255,7 +287,7 @@ FocusRing train: `scripts/train_focus_ring_detector.py` (vendored backbone, BP-4
 |---|---|---|
 | DS-G5 | Per-class mAP ≥ 0.50 for all 5 iOS classes | ✅ `nativeui-ios-v2.0` |
 | DS-G6 | Withheld-template mAP ≥ 0.70 on iOS 5-class | ✅ 0.934 vs 0.935 in-distribution |
-| DS-G8 | 41-class withheld-template mAP@0.5 ≥ 0.85 | ❌ Run 009 = 0.586 |
+| DS-G8 | 41-class withheld-template mAP@0.5 ≥ 0.85 | ❌ Run 013 = 0.6322 on 13 supported withheld classes; coverage incomplete |
 
 ---
 

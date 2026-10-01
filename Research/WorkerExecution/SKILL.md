@@ -10,7 +10,15 @@ pitfalls or SMB coordination, read the relevant section of
 [operational lessons](references/operational-lessons.md). This is the compact routing
 layer for observed incidents; detailed evidence stays in BestPractices/reports.
 
-Read [WorkerWorkflow.md](../WorkerWorkflow.md), resolve your assigned packet through the [ImplementationPlans.md catalog](../ImplementationPlans.md), and read only its canonical contract and named knowledge/context. Do not load every packet document. AGENTS.md's mandatory reading and safety rules still apply. This skill lives under Research so its canonical source can be maintained without modifying the protected `.agents` directory; AGENTS.md explicitly routes workers here.
+Read [WorkerWorkflow.md](../WorkerWorkflow.md). Resolve scope from the user assignment
+and bounded Tasks.md entry; consult the [ImplementationPlans.md catalog](../ImplementationPlans.md)
+when there is a canonical complex contract. Do not require a new plan for routine
+work or a handoff per helper. LOCAL-FIRST-01 uses one concise tranche handoff with
+linked automated evidence; the checklist below is not a paperwork quota. Do not
+hash routine prose plans; preserve existing machine-bound seals and data/model
+identities. Read only assigned context, not every packet. AGENTS.md's mandatory
+pre-code reading and safety rules still apply. This Research skill is the canonical
+source; no protected .agents edit is needed.
 
 1. Establish the full assignment's authorization, dependencies, current Tasks.md state, and completion boundary. For an authorized larger tranche, list included packets and integrated deliverables up front; do not silently reduce scope to a helper. Inspect read-only git status/diff and preserve unrelated changes. Do not assume another worker's plan status proves its artifacts exist.
 2. Record ownership of the packet. If an overlapping file is owned by another active worker, coordinate through the architect before editing it. Do not spawn workers implicitly.
