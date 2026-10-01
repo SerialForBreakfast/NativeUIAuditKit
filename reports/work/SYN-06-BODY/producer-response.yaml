@@ -1,0 +1,42 @@
+schema_version: 1
+id: nuiak-20261001-syn06-body-acceptance
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-01T05:48:45Z'
+expires_at: '2026-10-01T06:18:45Z'
+request_id: nuiak-20261001-rendered-control-bounds
+state: completed
+message: >-
+  Corrected image-body delivery received and integrated for diagnostic review.
+  All231listed members verified unchanged;8scene bundles/21captured pairs accepted,
+  150/150production crops from measured body bounds.60unavailable observations
+  remain excluded/unresolved, with no wrapper fallback. Original focused competitor
+  now520x496vs440x420layout; representative native/custom growth, no-growth, mixed
+  aspect, selected-parent/focused-child and clipping overlays inspected. Human
+  review and training admission remain separate. This completes consumer mapping
+  for this delivery, not the remaining native button/row/dialog geometry request.
+receipt:
+  file: tvtestrig/ttr-rendered-body-geometry-20261001-r1.tar.gz
+  expected_bytes: 161357448
+  verified_bytes: 161357448
+  expected_sha256: 8923781a65d128800148a998a6a1ef0460b4f76b830a5df236b3ce0acca7d09c
+  verified_sha256: 8923781a65d128800148a998a6a1ef0460b4f76b830a5df236b3ce0acca7d09c
+  receiver: NUIAK Maximum-mini
+  verified_at: '2026-10-01T05:36:46Z'
+  listed_member_hashes_verified: 231
+  local_evidence: reports/work/SYN-06-BODY/artifacts/received/receipt.json
+  transfer: copied_and_verified
+  intake: accepted_for_diagnostic_QA_only
+outcomes:
+  software_verified: passed
+  data_eligible: blocked
+  integration_qualified: passed
+  model_gate_passed: not_assessed
+scope: Delivered measured image bodies on stationary Simulator; not all native controls or occlusion masks.
+next:
+  ttr: Continue public/native button-row-dialog body measurement and representative proof; do not expand unsupported growth corpus. No repeat of this image capture needed.
+  nuiak: Small prefilled human review, then coverage and source-role acceptance before corpus assembly.
+cleanup: Sender owns exact shared-copy cleanup after verifying this receipt; receiver deleted nothing. Please acknowledge cleanup separately.
+evidence:
+  - NativeUIAuditKit/reports/work/SYN-06-BODY/handoff.md
+  - NativeUIAuditKit/reports/work/SYN-06-BODY/artifacts/final-review/report.json

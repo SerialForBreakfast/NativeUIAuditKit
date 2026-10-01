@@ -711,9 +711,12 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
     os.chdir(batch_path.parent)
     QtCore.QSettings = lambda *args, **kwargs: settings
     try:
-        result = RectangleReviewWindow(config=configuration(), filename="editor")
+        # A directory passed to MainWindow schedules a delayed load of its first
+        # image. That callback would escape a subsequently filtered review queue.
+        result = RectangleReviewWindow(config=configuration(), filename=None)
     finally:
         QtCore.QSettings = settings_type
+    result.importDirImages("editor", load=scope is None)
     require(local(result.settings.fileName()).is_relative_to(runtime), "external_qt_settings")
     old_dialog = result.labelDialog
     config = result._config

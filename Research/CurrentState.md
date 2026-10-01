@@ -7,7 +7,32 @@
 
 This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md`, fix those to match this file.
 
+**SYN-06-BODY (2026-10-01 UTC):** corrected native/custom image-body intake integrated
+without altering legacy review batches.231producer member hashes verified;8scene
+bundles/21captured pairs;150/150production crops from measured bodies,60unsupported
+observations explicitly unavailable. Original growth box now520×496vs440×420wrapper;
+representative overlays inspected and a small prefilled human queue prepared.
+Native buttons/rows/dialogs and complete tab-parent geometry remain unsupported.
+44fixture,46TTR,136human tests; offline Swift build and120+14tests pass. Diagnostic-only;
+human/corpus/source-role acceptance remains separate. No training or model change.
+[Handoff](../reports/work/SYN-06-BODY/handoff.md).
+
+**SYN-05 offline continuation (2026-09-30 PDT):** plan-driven local intake now
+resumes completed bundles without recropping or overwriting human edits. Retained
+image/rows/tabs replay:3bundles,5captured pairs,60crops; second invocation reused all3.
+Thirty recipes yield14theme/seed-normalized layout/content signatures in one
+conservative connected source group; no independent validation group established
+or role reserved. Markdown side-by-side wrapper/annotation overlays explicitly
+hold rendered-body acceptance.37fixture tests,136human tests, offline Swift build
+and120+14Swift tests pass. No capture, training or model change.
+[Usage and limitations](../reports/work/SYN-05/handoff.md).
+
 **SYN-03 consumer proof:** five current TTR image/row/tab pairs accepted,60/60
+production crops generated. **Human-review correction:** the native-image focused
+tile grows beyond its exported wrapper box. Affected growth samples are held from
+training; crop generation/schema checks do not establish rendered-body alignment.
+[Producer repair request](Requests/TTR-Rendered-Control-Bounds.md).
+Earlier software proof remains valid:60/60
 production crops generated; five unique prefilled audit frames from ten originals
 (two exact duplicate aliases excluded). All79emitted-pack members verified unchanged.
 Rows retain budget halt and one unattempted case. Deliberate corrupt sidecar rejects

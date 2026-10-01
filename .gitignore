@@ -226,3 +226,8 @@ reports/work/OS-FOCUS-03/**/*.mp4
 /reports/work/SYN-02/*.log
 /reports/work/SYN-03/artifacts/
 /reports/work/SYN-03/*.log
+/reports/work/SYN-05/artifacts/
+/reports/work/SYN-05/*.log
+!/reports/work/SYN-05/replay-plan.json
+/reports/work/SYN-06-BODY/artifacts/
+/reports/work/SYN-06-BODY/*.log

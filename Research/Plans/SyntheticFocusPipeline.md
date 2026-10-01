@@ -1,5 +1,26 @@
 # Synthetic focus pipeline — joint delivery plan
 
+## Assigned SYN-05 offline continuation,2026-09-30 PDT
+
+Implement one local plan-driven replay CLI with immutable per-bundle attempts and
+completion receipts. Resume verifies frozen input identities and completed output
+hashes, never repeats completed work or overwrites human edits. Interrupted/failed
+attempts remain inspectable; retries use fresh directories. A single-writer lock
+fails closed; a stale lock requires explicit operator reconciliation, not PID guessing.
+This assignment does not implement capture dispatch or a speculative TTR adapter.
+
+Review the received30recipe catalog into conservative connected source groups and
+theme-independent structural signatures. Shared renderer ancestry remains a grouping
+constraint, not proof that all pixels are identical. Suggest keeping each connected
+group on the training-candidate side only; reserve no actual roles and identify the
+independent validation and retained-source ancestry still missing.
+
+Add Markdown visual QA with separately named wrapper and annotation bounds, explicit
+rendered-body-unavailable status, and a training hold until human/native rendered
+alignment evidence exists. Uniform boxes are a review signal, not an automatic
+failure for controls that do not grow. No OCR/edge estimate becomes ground truth.
+Preserve current production cropping; crop success is not geometry acceptance.
+
 ## Assigned offline batch QA and review — SYN-03, 2026-10-01
 
 Emitted proof exposed a legacy nested-tab validator requiring primaryButton.
@@ -253,3 +274,12 @@ schema/example and A/B delivery order. SYN-02 binds to that exact schema, not a 
 Implementation tests must exercise actual callers plus malformed/partial/stale inputs,
 preserve legacy imports and source evidence, and run required offline Python/Swift
 checks for code changes. Keep software, data, integration and model outcomes separate.
+# SYN-06-BODY — corrected body consumer acceptance (2026-10-01)
+
+Assigned continuation: receive the producer's rendered-body archive, validate its
+additive v1 contract, and prepare diagnostic annotations/crops using measured visible
+body bounds. Preserve original layout wrappers, full bounds, clipping and measurement
+identity. Legacy review batches retain their v1 projection; opt-in v2 body batches
+never substitute layout bounds for absent or unavailable body evidence. Unsupported
+controls remain explicitly unresolved, not training negatives. Human review and
+training admission remain separate from file integrity and crop execution.

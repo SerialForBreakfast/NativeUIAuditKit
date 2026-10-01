@@ -1,0 +1,16 @@
+{
+  "version": "fixture-offline-plan-v1",
+  "protectedMetadata": "reports/work/APPEAR-B/protected-evidence.json",
+  "seed": 42,
+  "sampleCount": 1,
+  "exceptionLimit": 1,
+  "bundles": [
+    {"id":"image","path":"reports/work/SYN-03/artifacts/emitted/ttr-emitted-native-acceptance-20261001-r1/image/splits/validation/image"},
+    {"id":"rows","path":"reports/work/SYN-03/artifacts/emitted/ttr-emitted-native-acceptance-20261001-r1/rows/splits/validation/rows"},
+    {"id":"tabs","path":"reports/work/SYN-03/artifacts/emitted/ttr-emitted-native-acceptance-20261001-r1/tabs/splits/validation/tabs"}
+  ],
+  "catalog": {
+    "path":"reports/work/SYN-03/artifacts/received/ttr-semantic-proof-repair-20261001-r1/Docs/Contracts/fixture-semantic-inventory-v1/syn04-membership.json",
+    "root":"reports/work/SYN-03/artifacts/received/ttr-semantic-proof-repair-20261001-r1"
+  }
+}

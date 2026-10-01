@@ -1,5 +1,13 @@
 # SYN-03 coordination
 
+Human-review correction,2026-09-30 PDT: published and read back
+`/Volumes/SharedStatusFile/nuiak/requests/nuiak-20261001-rendered-control-bounds.yaml`
+and corrected own `packets.SYN-03`. Focus enlargement exceeds wrapper boxes;
+affected growth samples held from training. Existing crop execution checks are
+not visual bounds acceptance. Fresh mount/read, unique-key YAML checks and
+unrelated-entry preservation passed. Peer acknowledgment pending. Local request:
+`Research/Requests/TTR-Rendered-Control-Bounds.md`. No source image or annotation edited.
+
 Published and read back on2026-10-01 UTC:
 
 - `/Volumes/SharedStatusFile/nuiak/responses/nuiak-20261001-syn03-emitted-acceptance.md`

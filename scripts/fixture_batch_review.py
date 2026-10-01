@@ -1,7 +1,6 @@
 """Offline native-bundle crop QA and sampled review; never capture, infer or admit."""
 import argparse
 from collections import Counter
-import html
 import json
 from pathlib import Path
 import shutil
@@ -13,6 +12,7 @@ from harvest_focus_pairs import FOCUSABLE
 from human_corpus_inventory import metadata_hashes
 
 VERSION='fixture-native-review-batch-v1'
+BODY_VERSION='fixture-native-review-batch-v2'
 
 
 def preflight(root, protected):
@@ -41,7 +41,7 @@ def source_record(root, protected):
     return dict(root=str(root.relative_to(h.ROOT)), files=refs, targetCoverage=contract['targetCoverage']),contract
 
 
-def project(sources, contracts):
+def project(sources, contracts, *, body_geometry=False):
     """Deterministic normalized proposals, with every observed native record accounted."""
     frames=[]; pairs=[]; records=[]; recipes={}; owners={}; pixel_annotations={}
     for source,contract in zip(sources,contracts):
@@ -71,6 +71,13 @@ def project(sources, contracts):
                     reason=None
                     if e['taxonomy_class'] not in FOCUSABLE: reason='unsupported_or_nonfocusable_taxonomy'
                     elif inventory and native.get('focusable') is not True: reason='native_focusability_unknown_or_false'
+                    body=e.get('rendered_body_geometry')
+                    if body_geometry and reason is None:
+                        from fixture_rendered_body import validate as validate_body
+                        bounds=validate_body(body,frame['size'],eid,scene['focus_observation']['generation'])
+                        if bounds is None:
+                            reason='rendered_body_unavailable'
+                            frame['nativeUnresolved']=True
                     if reason:
                         records.append(dict(frameID=fid,elementID=eid,disposition='excluded',reason=reason))
                         frame['reviewFindings'].append(reason)
@@ -80,6 +87,11 @@ def project(sources, contracts):
                         selected=native.get('selected'),accessibilityLabel=native.get('accessibility_label'),
                         declaredParentID=native.get('declared_parent_id'),declaredTaxonomy=native.get('declared_taxonomy'),
                         labelSource='observed_native_bracket',geometryRole='control_wrapper')
+                    if body_geometry:
+                        proposal.update(bounds=bounds,geometryRole='rendered_control_body',
+                            layoutWrapperBounds=e['pixel_bounds'],renderedBodyGeometry=body)
+                        if body.get('clipping'):
+                            frame['reviewFindings'].append('clipped_rendered_body_occlusion_unmeasured')
                     if native.get('selected') is True and not e['is_focused']:
                         frame['reviewFindings'].append('selected_but_unfocused_control')
                     if native.get('clipping'): frame['reviewFindings'].append('clipped_control')
@@ -125,7 +137,9 @@ def project(sources, contracts):
 
 
 def validate(path):
-    batch=h.sealed(path,VERSION)
+    version=h.read(path).get('version')
+    h.require(version in (VERSION,BODY_VERSION),'native_review_version')
+    batch=h.sealed(path,version)
     h.require(h.ref(h.CATEGORY)==batch['categoryMap'],'taxonomy_changed')
     protected=metadata_hashes(h.read(h.checked(h.ROOT,batch['protectedMetadata'])))
     contracts=[]
@@ -133,14 +147,14 @@ def validate(path):
         for ref in source['files']: h.checked(h.ROOT,ref)
         expected,contract=source_record(h.local(h.ROOT/source['root']),protected)
         h.require(expected==source,'source_binding_changed'); contracts.append(contract)
-    expected=project(batch['sources'],contracts)
+    expected=project(batch['sources'],contracts,body_geometry=version==BODY_VERSION)
     for field in ('frames','pairs','records','recipes'):
         h.require(batch[field]==expected[field],'native_review_projection_changed:'+field)
     h.require(not batch['transitions'] and batch['completeFrameCandidates'] is False,'unsupported_native_claim')
     return batch
 
 
-def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limit=8):
+def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limit=8, body_geometry=False):
     output=h.fresh(output); protected_path=h.local(protected_path)
     protected_ref=h.ref(protected_path); protected=metadata_hashes(h.read(protected_path))
     roots=sorted(map(h.local,bundles)); h.require(roots and len(roots)<=128 and len(set(roots))==len(roots),'bundle_membership')
@@ -163,7 +177,7 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
                 row['receipt']=h.ref(receipt)
                 try: row['producerReportedReceipt']=h.read(receipt)
                 except (ValueError,OSError): pass
-    projection=project(sources,contracts)
+    projection=project(sources,contracts,body_geometry=body_geometry)
     estimated=sum(h.checked(h.ROOT,f['image']).stat().st_size*3 for f in projection['frames'])
     estimated+=sum(len(f['proposals'])*300000 for f in projection['frames'])
     h.require(shutil.disk_usage(h.ROOT).free>estimated+2_000_000_000,'insufficient_space_for_review')
@@ -174,7 +188,8 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
     h.write(output/'intake.json',dict(report,phase='intake_only'),sealed=True)
     if projection['frames']:
         work=output/'native-review'; (work/'editor').mkdir(parents=True); (output/'sheets').mkdir()
-        batch=dict(version=VERSION,**h.FLAGS,id='native-'+h.digest(sources)[:20],sources=sources,
+        version=BODY_VERSION if body_geometry else VERSION
+        batch=dict(version=version,**h.FLAGS,id='native-'+h.digest([version,sources])[:20],sources=sources,
             protectedMetadata=protected_ref,categoryMap=h.ref(h.CATEGORY),**projection,
             transitions=[],completeFrameCandidates=False,counts=dict(Counter(f['disposition'] for f in projection['frames'])))
         h.write(work/'batch.json',batch,sealed=True)
@@ -199,10 +214,10 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
             file=output/'sheets'/f'{n:03d}-recipe.png'
             h.preview(h.checked(h.ROOT,f['image']),file,f'{n:03d} {f["id"]} — proposals only',f['proposals'])
             details=[{k:c.get(k) for k in ('sourceElementID','class','state','selected','accessibilityLabel','declaredParentID')} for c in f['proposals']]
-            cards.append(f'<h2>{n:03d} {html.escape(key)}</h2><p>{html.escape(f["id"])}</p>'
-                f'<img width="1000" src="sheets/{file.name}"><pre>{html.escape(json.dumps(details,indent=2))}</pre>')
-        (output/'review.html').write_text('<!doctype html><meta charset="utf-8"><title>Native recipe QA</title>'
-            '<h1>Diagnostic native proposals — not training admission</h1>'+''.join(cards))
+            cards.append(f'## {n:03d} {key}\n\n{f["id"]}\n\n'
+                f'![Native annotation proposals]({file})\n\n```json\n{json.dumps(details,indent=2)}\n```\n')
+        (output/'review.md').write_text('# Native recipe QA\n\n'
+            'Diagnostic proposals only. Crop generation does not establish rendered-body alignment.\n\n'+'\n'.join(cards))
         validate(work/'batch.json')
     h.require(h.ref(protected_path)==protected_ref,'protected_metadata_changed')
     h.write(output/'report.json',report,sealed=True)
@@ -215,9 +230,11 @@ def main():
     p.add_argument('--protected-metadata',required=True)
     p.add_argument('--seed',type=int,default=42); p.add_argument('--count',type=int,default=8)
     p.add_argument('--exception-limit',type=int,default=8)
+    p.add_argument('--rendered-body',action='store_true',help='Use measured body bounds; no layout fallback')
     a=p.parse_args()
     try:
-        result=prepare(a.bundle,a.output,a.protected_metadata,seed=a.seed,count=a.count,exception_limit=a.exception_limit)
+        result=prepare(a.bundle,a.output,a.protected_metadata,seed=a.seed,count=a.count,exception_limit=a.exception_limit,
+                       body_geometry=a.rendered_body)
         print(json.dumps({k:result[k] for k in ('counts','pairCount','trainingEligible')}))
         return 2 if result['counts'].get('rejected') else 0
     except (ValueError,OSError,KeyError,TypeError) as error:

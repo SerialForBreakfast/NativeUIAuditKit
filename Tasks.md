@@ -1,5 +1,26 @@
 # NativeUIAuditKit — Tasks
 
+**SYN-06-BODY — consumer implementation complete for review / Codex:** corrected
+archive's231members verified;8scene bundles/21captured pairs,150measured-body crops
+pass. Versioned proposals and Markdown overlays preserve legacy reviews and hold
+60unsupported body observations. Small prefilled human review prepared; broader
+native button/row/dialog body proof and source-role acceptance remain open.
+[Handoff](reports/work/SYN-06-BODY/handoff.md). No training or model change.
+
+**SYN-05 offline tranche — completed for review / Codex:** resumable per-bundle
+intake/crop/review,30recipe source-group proposal and Markdown geometry overlays
+verified on the retained5pair delivery;60crops, zero repeated work on resume.
+Remaining SYN-05 runtime dispatch is unassigned/dependent on TTR; rendered-body
+adapter and training admission remain held. [Handoff](reports/work/SYN-05/handoff.md).
+
+**SYN-03 rendered geometry — image repair integrated under SYN-06-BODY / Codex:** human
+review found uniform wrapper boxes do not enclose native focus enlargement.
+Affected samples remain diagnostic-only, not training eligible. Request
+[rendered control-body geometry](Research/Requests/TTR-Rendered-Control-Bounds.md);
+Image-card repair is now mapped and visually inspected; human acceptance and
+native button/row/dialog body proof remain open. Prior
+60/60crop generation is not visual bounds acceptance.
+
 **SYN-03 / SYN-02 — representative consumer proof complete for review / Codex:**
 TTR's five emitted image/row/tab pairs pass native intake and60/60production crops;
 five unique prefilled review frames prepared. Bounded-partial campaign accounted,
@@ -59,7 +80,7 @@ authorize new runtime/model execution or duplicate those assignments.
 | SYN-02 | NUIAK / representative proof completed for review | Current emitted native image/rows/tabs validated; corrupt derivative rejected. |
 | SYN-03 | NUIAK / completed for review | Production crop QA60/60; numbered sheets and five-frame prefilled queue; no training admission. |
 | SYN-04 | NUIAK / software completed; reservations pending | Coverage planner and exact slot mapping delivered; source/content independence and rendered variation still open. |
-| SYN-05 | NUIAK / pending SYN-03 + TTR-C/D | Bounded resumable capture-to-review orchestration with offline replay. |
+| SYN-05 | NUIAK / offline replay completed for review; runtime pending | Local intake/retry/crop/review implemented; capture dispatch and corrected geometry remain separate. |
 | SYN-06 | NUIAK + reviewer / pending campaign | Recipe/sample QA, explicit eligible corpus and split acceptance. |
 | SYN-07 | NUIAK / pending SYN-06 + run approval | Existing EXPERIMENT-04: changed-data comparison; real-frame and retention results. |
 | SYN-08 | NUIAK + TTR / pending selected candidate | Existing DELIVERY-05: CoreML parity and TTR-E observer proof/rollback. |

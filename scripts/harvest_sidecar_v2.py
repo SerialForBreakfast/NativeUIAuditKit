@@ -168,10 +168,12 @@ def appearance_digest_source(recipe):
             suffix += f":card-geometry@1:{geometry['width']}:{geometry['height']}"
         composition = canvas.get('composition')
         if composition is not None:
-            require(composition == 'hero_neighbors_v1' and canvas['version'] == 2 and
-                    presentation in (None, 'cards') and geometry is None and button is None
+            require(composition in ('hero_neighbors_v1','tab_artwork_v1') and canvas['version'] == 2 and
+                    (presentation == 'nested_tabs_v1' if composition == 'tab_artwork_v1' else presentation in (None, 'cards'))
+                    and geometry is None and button is None
                     and mixed is not True and fill is not True and
-                    type(recipe.get('element_count')) is int and 2 <= recipe['element_count'] <= 5,
+                    type(recipe.get('element_count')) is int and
+                    (tabs < recipe['element_count'] <= 64 if composition == 'tab_artwork_v1' else 2 <= recipe['element_count'] <= 5),
                     'canvas_composition')
             suffix += ':composition=' + composition
         contrast = canvas.get('contrastNeighbors')
@@ -187,7 +189,8 @@ def appearance_digest_source(recipe):
                 and appearance['layout'] == 'standard', 'focus_canvas')
         require(focus['kind'] != 'native_button' or canvas['showLabels'], 'focus_button_labels')
     if canvas is not None and canvas.get('presentation') not in (None, 'cards'):
-        require(focus is not None and focus['kind'] == 'native_button' and
+        require(focus is not None and (focus['kind'] == 'native_button' or
+                (canvas.get('composition') == 'tab_artwork_v1' and focus['kind'] == 'native_image')) and
                 canvas['showLabels'], 'canvas_presentation_native_button')
     artwork = appearance.get('artwork')
     if canvas is not None and canvas.get('nativeButton') is not None:
@@ -195,7 +198,8 @@ def appearance_digest_source(recipe):
                 'native_button_focus_artwork')
     artwork_suffix = ''
     if artwork is not None:
-        require(canvas is not None and canvas.get('presentation') in (None, 'cards') and
+        require(canvas is not None and (canvas.get('presentation') in (None, 'cards') or
+                canvas.get('composition') == 'tab_artwork_v1') and
                 (focus is None or focus['kind'] != 'native_button'), 'artwork_canvas')
         artwork_suffix = artwork_identity(artwork, require)
     family = appearance.get("family_id")
@@ -313,6 +317,12 @@ def scene_check(scene, size, expected):
     generation = observation.get("generation")
     require(uint(generation) and all(type(diagnostics.get(k)) is int and diagnostics[k] == generation
                                     for k in ("generation", "sampledGeneration")), "generation")
+    from fixture_rendered_body import validate as validate_body
+    for element in elements:
+        try:
+            validate_body(element.get('rendered_body_geometry'), size, element['element_id'], generation)
+        except ValueError as error:
+            raise SidecarError('invalid_metadata: '+str(error)) from error
     require(uint(diagnostics.get("sampleCount")) and diagnostics["sampleCount"] > 0
             and number(diagnostics.get("sampleAgeMilliseconds"))
             and 0 <= diagnostics["sampleAgeMilliseconds"] < 1000, "stale_sample")

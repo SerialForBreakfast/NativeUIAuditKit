@@ -53,7 +53,7 @@ class ReviewTests(unittest.TestCase):
         self.assertNotIn('reviewed',doc['frameCounts'])
         self.assertEqual(before,{p:h.sha(p) for p in before})
         self.assertEqual(h.validate_batch(work)['version'],b.VERSION)
-        self.assertTrue((self.root/'qa/review.html').is_file())
+        self.assertTrue((self.root/'qa/review.md').is_file())
         with self.assertRaisesRegex(ValueError,'output_collision'): self.prepare()
 
     def test_legacy_remains_diagnostic_and_sample_is_deterministic(self):

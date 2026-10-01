@@ -2498,6 +2498,17 @@ cannot establish independence by removing a known relationship.
 cross-role ancestry. No reservation proposal or metadata check substitutes for
 source review, pixel/native QA or explicit corpus admission.
 
+### Install review membership before loading images (2026-10-01)
+
+**Wrong:** Construct Labelme with a directory, then filter its file list. Its queued
+startup callback still loads the original first image after filtering; Next crashes
+when that filename is absent from the review queue.
+**Correct:** Construct without a filename, populate the directory synchronously,
+then install queue membership and load its first frame. Test event-loop startup
+with a queue that excludes the directory's first image, not only a first-frame queue.
+**Why:** The SYN-03 human review hit `openNextImg` ValueError despite the prior
+offscreen smoke passing. File-list membership and the loaded image must agree.
+
 ### Preserve corrected producer taxonomy without weakening hierarchy (2026-10-01)
 
 **Wrong:** Require primaryButton for every nested-tab native control simply because
@@ -2507,3 +2518,14 @@ fails intake despite valid parent, selection and focus evidence.
 rewriting either; retain parent membership, selected-state and semantic checks.
 **Why:** SYN-03's real tab delivery exposed this stale consumer assumption. Source
 compatibility tests now cover both labels, unsupported container classes and bad parents.
+### Version geometry projections; crop execution is not visual acceptance (2026-10-01)
+
+**Wrong:** Reinterpret old wrapper boxes as rendered-body bounds, or silently change
+the projection used to validate an already sealed review batch. Successful crop
+generation cannot establish that the solid focused body was enclosed.
+**Correct:** Keep v1 wrapper reviews reproducible; opt into v2 measured-body reviews.
+Validate source, identity, generation, clipping and normalization inside native
+capture brackets. Preserve layout/full/visible geometry separately. Missing native
+body measurements stay unresolved, without a guessed scale or layout fallback.
+**Why:** SYN-06-BODY's focused image measures520×496 against440×420layout, while
+native buttons/rows remain unavailable. The same fix cannot be assumed for every renderer.

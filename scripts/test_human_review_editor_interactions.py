@@ -281,6 +281,23 @@ class EditorTests(unittest.TestCase):
         self.w.finishReview()
         self.assertEqual(observations, [(1, False)])
 
+    def test_startup_queue_excludes_directory_first_frame(self):
+        # Constructor timers must not restore frame-0 after the queue is frozen.
+        self.w.dirty = False
+        self.w.close()
+        before = {str(p): h.sha(p) for p in (self.f.batch/'editor').glob('*.json')}
+        with patch('human_regression_review.queue_scope', return_value=['frame-1']):
+            self.w = editor.window(self.f.batch/'batch.json', self.f.root/'runtime', self.queue, 1)
+        self.w.show()
+        for _ in range(3): self.app.processEvents()
+        self.assertEqual(self.w.imageList, ['editor/002-frame-1.png'])
+        self.assertEqual(self.w.filename, self.w.imageList[0])
+        self.w.openNextImg(); self.app.processEvents()
+        self.w.openPrevImg(); self.app.processEvents()
+        self.assertEqual(self.w.filename, self.w.imageList[0])
+        self.assertFalse(self.w.dirty)
+        self.assertEqual(before, {str(p): h.sha(p) for p in (self.f.batch/'editor').glob('*.json')})
+
     def test_optional_click_proposal_cancel_accept_and_off(self):
         from qtpy import QtCore, QtTest
         action=self.w.actions.suggestBox

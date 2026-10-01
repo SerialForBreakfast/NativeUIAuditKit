@@ -91,7 +91,8 @@ def validate_hierarchy(scene, require):
         require(element.get('parent_element_id') == (None if index < count else parent),
                 'hierarchy_parent')
         # Preserve legacy exports and the producer's corrected bordered-button role.
-        require(element['taxonomy_class'] in ('primaryButton', 'secondaryButton'), 'hierarchy_taxonomy')
+        allowed = ('collectionItem',) if canvas.get('composition') == 'tab_artwork_v1' and index >= count else ('primaryButton', 'secondaryButton')
+        require(element['taxonomy_class'] in allowed, 'hierarchy_taxonomy')
         traits = element.get('accessibility_traits', [])
         require(isinstance(traits,list) and ('isSelected' in traits) == (index == selected),
                 'hierarchy_selection')

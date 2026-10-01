@@ -1,5 +1,23 @@
 # NativeUIAuditKit — Completed Tasks
 
+## SYN-05 offline continuation — completed for review 2026-09-30 PDT
+
+Implemented local plan-driven immutable attempts/completion receipts, guarded
+resume, existing intake/crop/editor integration,30recipe conservative source-role
+proposal and Markdown geometry QA. Tests cover11new retry/grouping scenarios;
+37fixture and136human tests pass, plus Swift build/120+14tests. Actual5pair replay
+produced60crops; repeat used3completed bundles with zero recrop. Existing annotation
+workspace untouched. Runtime orchestration, rendered-body adapter and admission
+are not included in this completion. [Handoff](reports/work/SYN-05/handoff.md).
+
+## Annotator queue startup crash — repaired 2026-09-30 PDT
+
+Removed delayed directory-first load before queue filtering. Regression excludes
+the first directory image; actual five-frame SYN-03 queue traversed forward/backward
+and endpoints with saved JSON hashes unchanged.136human tests, Swift build and
+120Swift Testing+14XCTest passed. No training/data eligibility changes; local-only,
+TTR coordination not applicable. Evidence: `reports/work/SYN-03/queue-repair-*.log`.
+
 ## SYN-03 — batch QA and representative emitted proof, completed for review 2026-10-01
 
 Native bundle adapter uses existing production cropper, seeded random/exception
@@ -2828,3 +2846,13 @@ and duplicate screening. Exact conditional138train/315development membership and
 bounded matched-compute proposal delivered;64 exclusions and protected references
 preserved. No admission or execution.15focused tests plus offline build/123Swift
 tests pass. [Handoff](reports/work/HUMAN-CORPUS-INVENTORY-01/handoff.md).
+# SYN-06-BODY — consumer software and diagnostic proof (2026-10-01)
+
+Received corrected rendered-body archive (231verified members), integrated exact
+v1body evidence through native sidecar validation and opt-in review-batchv2, preserving
+legacy wrapper reviews. Eight scenes/21captured pairs;150/150production crops;
+60unsupported body observations remain unavailable. Markdown overlays and a small
+prefilled human queue prepared; native/custom growth, no-growth, mixed aspect,
+selected-parent/focused-child and clipping visually inspected.44fixture,46TTR,
+136human tests plus offline Swift build and120+14tests pass. No training admission,
+capture, inference or model changes. [Handoff](reports/work/SYN-06-BODY/handoff.md).

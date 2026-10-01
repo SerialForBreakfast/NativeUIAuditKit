@@ -1,5 +1,11 @@
 # SYN-03 — native batch crop QA and review handoff
 
+**Human-review correction,2026-09-30 PDT:** focused artwork visibly grows beyond
+the exported uniform wrapper rectangles. Geometry alignment for these growth
+samples is not accepted; training remains held.60/60below is crop execution, not
+rendered-body correctness. See `Research/Requests/TTR-Rendered-Control-Bounds.md`
+and `coordination.md` for the published repair request. Original artifacts unchanged.
+
 Completed for review,2026-10-01 UTC. No runtime/device operation, training,
 inference, admission or promotion. TTR independently supplied current emitted data.
 
@@ -48,7 +54,15 @@ Protected metadata/splits/byte hashes are checked before source image decoding.
 
 ## Prepared human review (not opened automatically)
 
+Startup repair,2026-09-30 PDT: the original manual launch crashed on Next because
+Labelme's deferred directory-first callback escaped the sampled queue. Constructor
+now starts empty, then populates and loads the chosen queue synchronously.136human
+tests and actual five-frame forward/backward traversal pass; saved JSON unchanged.
+Swift build and120+14tests pass. GUI launch also needs the existing Qt framework
+lookup below when plugins are copied into the local hidden-file workaround cache.
+
 ```sh
+DYLD_FRAMEWORK_PATH="$PWD/.venv-review/lib/python3.12/site-packages/PyQt5/Qt5/lib" \
 PYTHONDONTWRITEBYTECODE=1 .venv-review/bin/python scripts/human_review_editor.py \
  reports/work/SYN-03/artifacts/live-review-r2/audit/review/batch.json \
  --queue reports/work/SYN-03/artifacts/live-review-r2/audit/combined-queue.json \
