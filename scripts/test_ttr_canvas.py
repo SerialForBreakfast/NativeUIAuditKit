@@ -20,6 +20,51 @@ def canvas_recipe():
 
 
 class CanvasTests(unittest.TestCase):
+    def test_nested_tab_taxonomy_preserves_bordered_and_legacy_roles(self):
+        from harvest_artwork import validate_hierarchy
+        from harvest_sidecar_v2 import require
+        scene={'recipe':{'element_count':3,'appearance':{'canvas':{
+            'presentation':'nested_tabs_v1','tabCount':2,'selectedIndex':1}}},
+            'elements':[{'element_id':eid,'taxonomy_class':'secondaryButton',
+                         'parent_element_id':None if i<2 else 'grid_cell_0_1',
+                         'accessibility_traits':['isSelected'] if i==1 else []}
+                        for i,eid in enumerate(['grid_cell_0_0','grid_cell_0_1','grid_cell_1_0'])]}
+        validate_hierarchy(scene,require)
+        scene['elements'][0]['taxonomy_class']='primaryButton'
+        validate_hierarchy(scene,require)
+        scene['elements'][0]['taxonomy_class']='tabBar'
+        with self.assertRaisesRegex(SidecarError,'hierarchy_taxonomy'):
+            validate_hierarchy(scene,require)
+        scene['elements'][0]['taxonomy_class']='secondaryButton'
+        scene['elements'][2]['parent_element_id']=None
+        with self.assertRaisesRegex(SidecarError,'hierarchy_parent'):
+            validate_hierarchy(scene,require)
+
+    def test_source_pinned_hero_and_contrast_identity(self):
+        r=canvas_recipe(); r['element_count']=3
+        c=r['appearance']['canvas']; c.update(version=2,presentation='cards',composition='hero_neighbors_v1',contrastNeighbors=True)
+        expected=(':appearance@1:artwork:standard:canvas@2:4:32:80:2105376:false'
+                  ':presentation=cards:composition=hero_neighbors_v1:contrast=true')
+        self.assertEqual(appearance_digest_source(r),expected)
+        original=recipe_hash(r); c['contrastNeighbors']=False
+        self.assertNotEqual(recipe_hash(r),original)
+        for field,value in [('version',1),('composition','unknown'),('contrastNeighbors',1),
+                            ('mixedSizes',True),('fillViewport',True),('cardGeometry',{'version':1,'width':120,'height':80})]:
+            bad=copy.deepcopy(r); bad['appearance']['canvas'][field]=value
+            with self.assertRaises(SidecarError): recipe_hash(bad)
+        r['element_count']=6
+        with self.assertRaises(SidecarError): recipe_hash(r)
+
+    def test_v2_nested_tabs_and_null_new_fields(self):
+        r=canvas_recipe(); r['element_count']=6
+        c=r['appearance']['canvas']; c.update(version=2,presentation='nested_tabs_v1',selectedIndex=1,tabCount=2,showLabels=True)
+        r['appearance']['focus']={'version':1,'kind':'native_button'}
+        original=recipe_hash(r)
+        c.update(composition=None,contrastNeighbors=None)
+        self.assertEqual(recipe_hash(r),original)
+        c['contrastNeighbors']=False
+        with self.assertRaises(SidecarError): recipe_hash(r)
+
     def test_received_canvas_v2_vectors(self):
         for presentation, columns, expected in (
             ('buttons',2,'76b9a0eb885bc80b9a290bbd759c20137f3525bad7cf032ee7686a4da6b07e1b'),

@@ -1,11 +1,54 @@
 # NativeUIAuditKit — Current State
 
-**As of:** 2026-09-30 18:04 PDT /2026-10-01T01:04UTC (underlying results retain observation dates)
+**As of:** 2026-10-01 UTC, SYN-03 consumer proof (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
 This page is the living snapshot. If it disagrees with `AGENTS.md` or `README.md`, fix those to match this file.
+
+**SYN-03 consumer proof:** five current TTR image/row/tab pairs accepted,60/60
+production crops generated; five unique prefilled audit frames from ten originals
+(two exact duplicate aliases excluded). All79emitted-pack members verified unchanged.
+Rows retain budget halt and one unattempted case. Deliberate corrupt sidecar rejects
+at alias consistency; direct semantic validation independently rejects out-of-frame
+bounds. Legacy nested-tab primaryButton restriction repaired to preserve current
+secondaryButton exports. No labels inferred from selected state, no training admission.
+Thirty source recipes map60slots; they are not all rendered-qualified. Swift build,
+120Swift Testing+14XCTest,46TTR,26fixture,12bundle,135human tests pass, plus installed
+editor offscreen smoke. [Handoff](../reports/work/SYN-03/handoff.md).
+
+**Earlier SYN-02 consumer integration:** three TTR contract/catalog archives received and
+all36 listed member hashes verified. Optional native semantic inventory now validates
+inside sidecar2/3 intake, preserving legacy absence and raw observations. Exact
+fabricated examples,15new consumer tests,43TTR tests,12bundle tests and three
+unchanged retained pairs pass; offline Swift build and120+14tests pass. New04:10:09Z
+catalog supplies eight original recipes/ten sources, mapped to all60 planner slots.
+Zero roles reserved or samples admitted: shared ancestry remains open; representative
+emitted-image proof is now completed above. [Earlier handoff](../reports/work/SYN-02/handoff.md).
+
+**TTR progress reconciliation,04:07UTC:** fresh producer status04:00:43Z reports
+concrete `semantic_inventory` implementation, measured UILabel/image regions and
+native accessibility properties;93tests passed/3disabled plus Fixture compile pass.
+At that check, contract/source metadata were read directly from published archives;
+SYN-02 above subsequently completed local receipt. Fabricated examples enabled offline consumer
+mapping; matching captured examples remain pending. Four recipe families share
+`shared_fixture_training_canvas`, so they do not establish independent train/validation
+sources. Both INTAKE-AUDIT-01 and SYN-04 acknowledged by TTR. [Details](../reports/work/INTAKE-AUDIT-01/status-20261001-0407.md).
+
+**Corpus planner, SYN-04 (2026-10-01 UTC):** offline planner revalidates the retained
+1,319 crops/395 native pairs and generates prioritized artwork/tab/row/button
+requests with separate intended training/validation sources. Default first-wave
+targets total480 pairs over60 slots, not qualification thresholds or captured data.
+All60 remain unbound pending exact reviewed recipe ancestry. Known transitive
+source/content conflicts block proposals; no existing role, hold or gate changed.
+[Handoff](../reports/work/SYN-04/handoff.md).
+
+**Intake audit update, 2026-10-01 UTC:** existing annotation flow now supports a
+reproducible random sample plus separate structural-exception queue, prefilled from
+immutable reviewed annotations or producer proposals without inheriting approval.
+Consumer software/retained replay verified; emitted TTR semantic contract pack still
+pending. No corpus admission or model change. [Handoff](../reports/work/INTAKE-AUDIT-01/handoff.md).
 
 **Workflow reconciliation, LOCAL-FIRST-01 (2026-09-30 PDT):** ADR-0012 adopted as
 local-first/asynchronous workflow; ADR-0013 is a queued wrapper around the existing
@@ -13,7 +56,7 @@ production library, not a new inference stack. ADR-0014/0015 are comparative mod
 hypotheses, not approved replacements. One concise tranche report and automated
 batch checks replace repetitive helper paperwork; data reservations, parity and
 execution gates remain intact. [Delivery contract](Plans/LocalFirstDelivery.md).
-Next assigned-work candidate: CLI/MCP; focus corpus remains the model priority.
+CLI/MCP is now delivered below; focus corpus remains the model priority.
 No software, data, model or TTR runtime changed by that documentation tranche.
 
 **LOCAL-TOOLS-02 completed for review (2026-09-30 PDT):** nativeui-audit doctor,
@@ -25,6 +68,27 @@ reuse and intentional corrupt input. M4 observation: iOS977ms cold/138ms warm,
 tvOS1007ms cold; not a performance or accuracy gate. Shipped weights unchanged;
 no TTR/agent configuration installed. Next: FOCUS-CORPUS-03 coverage-driven assembly.
 [Usage](../Tools/NativeUIAuditCLI/README.md), [handoff](../reports/work/LOCAL-TOOLS-02/handoff.md).
+
+**FOCUS-CORPUS-03 — local audit delivered; production generation incomplete:**
+Follow-up recheck reproduces the inventory exactly; all eight indexed inputs remain
+unchanged. [Readiness decision](../reports/work/FOCUS-CORPUS-03/readiness-decision.md)
+provides the explicit family/split matrix and NO-GO for production assembly.
+Forty native pairs have separate Settings scene names and are not silently credited
+to settingsList. SYN-01 coverage specification is delivered; new producer recipe
+membership remains missing. Keyboard is a separate capability gap, not a blocker
+to a bounded supported-family pilot. No unchanged training approval is requested.
+1319 baseline crops pass file/pixel/role checks (986training,315development,18retention);
+395native training pairs plus196static human crops, not591pairs. All3retained native
+diagnostic pairs pass native bracket/geometry and production crop replay. No new
+admission or model execution. Reassembled current-runtime trainer preflight preserves
+all data/selection/weights and is blocked only on new-run approval; this is baseline
+reusability, not production readiness. Twelve tab/nested-tab pairs are present under
+primaryButton labels; explicit keyboard support absent.64held pairs remain held.
+TTR coverage archive received:32native-button pairs need no artwork-only recapture;
+12native-image pairs retain body-specific geometry gaps. Source/layout-bound new
+production campaign and keyboard/parent-state contracts remain open; no bulk capture
+dispatched. [Audit and remaining scope](../reports/work/FOCUS-CORPUS-03/handoff.md),
+[collection assignment](../reports/work/FOCUS-CORPUS-03/collection.md).
 
 ---
 

@@ -108,6 +108,9 @@ def editor_document(batch_id, frame):
 
 
 def validate_batch(path):
+    if read(path).get('version') == 'fixture-native-review-batch-v1':
+        from fixture_batch_review import validate
+        return validate(path)
     if read(path).get('version') == 'human-recording-review-batch-v1':
         from human_recording_review import validate
         return validate(path)

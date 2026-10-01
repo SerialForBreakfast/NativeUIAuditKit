@@ -1,5 +1,16 @@
 # NativeUIAuditKit — Best Practices
 
+## Match producer geometry tolerances before rejecting native annotations (SYN-02)
+
+**Wrong:** Require full and projected visible rectangles to agree to machine precision
+when the producer deliberately allows one-pixel rounding before marking clipping.
+**Correct:** Inspect the pinned projection implementation, retain full and visible
+bounds separately and match that tolerance, while still checking normalized geometry,
+frame bounds and scene binding. Keep unknown anchor focusability unknown.
+**Why:** Otherwise good native observations are rejected as clipping defects. A
+fractional-pixel fixture now passes; a larger unmarked shift still fails. Neither
+tolerance nor accessibility text proves complete annotations or visual focus.
+
 ## CLI timing and strict health are not UI qualification (LOCAL-TOOLS-02)
 
 **Wrong:** Interpret session-internal modelLoadMs=0 as zero cold startup, or fail CI
@@ -2449,3 +2460,50 @@ exact control IDs, labels, crop hashes and the original frozen encoder state.
 
 **Why:** Avoids blocking valid static supervision or silently inventing temporal
 evidence, while ensuring a changed-data comparison really reuses the same encoder.
+
+### Corpus coverage — distinguish detector labels from rendered control roles
+
+**Wrong:** Treat zero `focus:tabItem` training rows as proof that no tab examples
+exist, or demand artwork-body geometry for every native button. FOCUS-CORPUS-03
+found12 retained tab/nested-tab pairs exported as `primaryButton`, and a producer
+matrix of32 native-button pairs with an inapplicable artwork role.
+
+**Correct:** Report label support and source-pinned recipe/presentation support
+separately. Join retained native sidecars by exact hashes, not filename guesses.
+Use observed control-wrapper geometry for native buttons; missing native-image
+body geometry remains a distinct gap. Preserve existing admissions and holds.
+
+**Why:** Prevents redundant capture requests and misleading diversity counts without
+inventing semantic labels or promoting diagnostic data. See FOCUS-CORPUS-03.
+
+### Intake audits: separate random sampling from exception yield (2026-10-01)
+
+**Wrong:** Count deliberately suspicious frames as a random defect estimate, or
+copy old reviewed/confirmed flags when making a new annotation audit workspace.
+**Correct:** Freeze the eligible population and seed, report exclusions and sampling
+probabilities, keep flagged exceptions separately counted, and review overlapping
+selections only once. Prefill immutable labels but reset approvals in an isolated
+workspace. Never infer independent sources from a count of frames.
+**Why:** Reduces duplicate human work without falsely claiming independent quality
+evidence. INTAKE-AUDIT-01 tests real queue/Finish/crop entrypoints and source preservation.
+
+### Keep invalid lineage bridges in split checks (2026-10-01)
+
+**Wrong:** Drop a recipe from a source graph when its file hash or review fails,
+then declare remaining training and validation recipes unrelated.
+**Correct:** Preserve already validated source/layout links for that blocked recipe
+and propagate the hold through its connected component. Missing or invalid evidence
+cannot establish independence by removing a known relationship.
+**Why:** SYN-04's corrupt-bridge test demonstrates that deleting a bad node can hide
+cross-role ancestry. No reservation proposal or metadata check substitutes for
+source review, pixel/native QA or explicit corpus admission.
+
+### Preserve corrected producer taxonomy without weakening hierarchy (2026-10-01)
+
+**Wrong:** Require primaryButton for every nested-tab native control simply because
+the first fixture exported that class. The corrected bordered-button export then
+fails intake despite valid parent, selection and focus evidence.
+**Correct:** Accept the explicitly supported historical/current button labels without
+rewriting either; retain parent membership, selected-state and semantic checks.
+**Why:** SYN-03's real tab delivery exposed this stale consumer assumption. Source
+compatibility tests now cover both labels, unsupported container classes and bad parents.

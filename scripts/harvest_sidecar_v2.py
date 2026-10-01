@@ -91,7 +91,7 @@ def appearance_digest_source(recipe):
     if canvas is not None:
         fields = {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"}
         require(isinstance(canvas, dict) and fields <= set(canvas)
-                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "cardGeometry"},
+                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "cardGeometry", "composition", "contrastNeighbors"},
                 "canvas_fields")
         for field, lo, hi in (("version",1,2), ("columns",1,8), ("spacing",16,80),
                               ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
@@ -100,8 +100,6 @@ def appearance_digest_source(recipe):
         require(type(canvas['showLabels']) is bool, "canvas_showLabels")
         require(recipe.get('archetype') == 'grid_matrix' and appearance['layout'] == 'standard',
                 "canvas_archetype_layout")
-        require(canvas['version'] == 1 or canvas.get('presentation') in
-                (None, 'cards', 'buttons', 'settings_rows', 'tabs'), 'unsupported_canvas_v2_subset')
         suffix = f"canvas@{canvas['version']}:" + ':'.join(str(canvas[k]) for k in
                     ('columns','spacing','inset','backgroundRGB')) + ':' + str(canvas['showLabels']).lower()
         require(canvas.get('pairing') in (None, 'competitor_v1'), 'canvas_pairing')
@@ -168,6 +166,19 @@ def appearance_digest_source(recipe):
                     button is None and mixed is not True and fill is not True,
                     'canvas_card_geometry_combination')
             suffix += f":card-geometry@1:{geometry['width']}:{geometry['height']}"
+        composition = canvas.get('composition')
+        if composition is not None:
+            require(composition == 'hero_neighbors_v1' and canvas['version'] == 2 and
+                    presentation in (None, 'cards') and geometry is None and button is None
+                    and mixed is not True and fill is not True and
+                    type(recipe.get('element_count')) is int and 2 <= recipe['element_count'] <= 5,
+                    'canvas_composition')
+            suffix += ':composition=' + composition
+        contrast = canvas.get('contrastNeighbors')
+        if contrast is not None:
+            require(type(contrast) is bool and canvas['version'] == 2 and presentation in (None, 'cards'),
+                    'canvas_contrast_neighbors')
+            suffix += ':contrast=' + str(contrast).lower()
     focus = appearance.get('focus')
     focus_suffix = ''
     if focus is not None:
@@ -321,6 +332,12 @@ def scene_check(scene, size, expected):
     recipe = scene.get("recipe")
     require(recipe_hash(recipe) == recipe.get("recipe_hash"), "recipe_hash")
     validate_hierarchy(scene, require)
+    if scene.get('semantic_inventory') is not None:
+        from fixture_semantic_inventory import validate as validate_semantics
+        try:
+            validate_semantics(scene['semantic_inventory'], scene)
+        except (ValueError, KeyError, TypeError) as error:
+            require(False, str(error))
     return generation
 
 
@@ -349,11 +366,16 @@ def validate(meta, row, size, hashes):
         before, after = capture.get("before_scene"), capture.get("after_scene")
         bgen, agen = scene_check(before, size, expected), scene_check(after, size, expected)
         require(bgen == agen and all(before.get(k) == after.get(k) for k in
-                ("recipe", "elements", "focus_observation")), "changed_bracket")
+                ("recipe", "elements", "focus_observation", "semantic_inventory")), "changed_bracket")
         require(after == meta.get(scene_key), "scene_alias_conflict")
         generations[role] = agen
     require(generations["focused"] > generations["unfocused"], "pair_generation")
     focused, baseline = meta["focused_scene"], meta["baseline_scene"]
+    present=[s.get('semantic_inventory') is not None for s in (baseline,focused)]
+    require(len(set(present))==1, 'semantic_inventory_pair_disappearance')
+    availability=meta.get('semantic_inventory_availability')
+    require(availability is None or availability==('partial_instrumented_components' if all(present) else 'unavailable_legacy'),
+            'semantic_inventory_availability')
     artwork = (focused['recipe'].get('appearance') or {}).get('artwork')
     if artwork is not None:
         require(artwork['split'] == row.get('split'), 'artwork_split_reservation')
@@ -377,6 +399,8 @@ def validate(meta, row, size, hashes):
                 ("recipe", "elements", "focused_element_id", "is_settled", "scene_width", "scene_height")), "flat_alias_conflict")
     require(all(k not in meta or meta[k] == focused.get(v) for k, v in
                 (("activeFocusId", "focused_element_id"), ("isSettled", "is_settled"))), "flat_alias_conflict")
+    require('semantic_inventory' not in meta or meta['semantic_inventory']==focused.get('semantic_inventory'),
+            'semantic_inventory_flat_alias_conflict')
     exclusions = meta.get("layout_exclusions")
     require(isinstance(exclusions, dict) and all(isinstance(k, str) and k and isinstance(v, str) and v
                                                for k, v in exclusions.items()), "layout_exclusions")

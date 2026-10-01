@@ -1,5 +1,27 @@
 # NativeUIAuditKit — Tasks
 
+**SYN-03 / SYN-02 — representative consumer proof complete for review / Codex:**
+TTR's five emitted image/row/tab pairs pass native intake and60/60production crops;
+five unique prefilled review frames prepared. Bounded-partial campaign accounted,
+corrupt derivative rejected, all79delivery members unchanged. See CompletedTasks
+and [handoff](reports/work/SYN-03/handoff.md). Remaining: sampled human verification,
+broader rendered-family proof and source-role reservation, not another importer blocker.
+
+**SYN-04 — recipe binding pending / Codex:** planner software completed for review.
+60 coverage slots/480 proposed pairs; retained 1,319 crops and 395 native pairs
+verified, roles unchanged. TTR's repaired30exact recipes now received and mapped
+to all60slots;58repair delivery members verified. Shared renderer/content
+ancestry remains unresolved for independent role reservation; actual variation and
+palette require emitted evidence. [Review](reports/work/SYN-02/source-catalog-review.json).
+No new run or admission granted. [Handoff](reports/work/SYN-04/handoff.md).
+
+**INTAKE-AUDIT-01 — producer integration pending / Codex:** consumer audit software
+and retained-format replay completed for review; see [handoff](reports/work/INTAKE-AUDIT-01/handoff.md).
+TTR now publishes concrete `semantic_inventory` contract and fabricated offline
+fixtures, superseding the illustrative envelope. Offline contract mapping/tests are
+now complete under SYN-02; SYN-03 completes emitted valid/partial-budget/corrupt-bounds
+integration. Human verification and broader rendered qualification remain pending.
+
 ## Current delivery queue — LOCAL-FIRST-01 reconciliation, 2026-09-30
 
 This queue supersedes older next-action lists below; dated results remain evidence,
@@ -9,8 +31,8 @@ not fresh execution authority. [Contract](Research/Plans/LocalFirstDelivery.md).
 | --- | --- | --- |
 | 1 LOCAL-FIRST-01 | Completed for review / Codex | Documentation reconciliation only; see CompletedTasks and linked handoff. |
 | 2 LOCAL-TOOLS-02 | Completed for review / Codex | CLI/MCP, real retained-image smokes, 8 new Swift tests, 4 process tests and full offline checks pass. [Handoff](reports/work/LOCAL-TOOLS-02/handoff.md). No agent registration installed. |
-| 3 FOCUS-CORPUS-03 | Ready for assignment / unassigned | Next: inventory existing data, freeze coverage/splits, then scoped native generation and automated intake. Confirm exact generation scope before capture; no training. |
-| 4 FOCUS-EXPERIMENT-04 | Pending eligible corpus and run approval / unassigned | Data-first baseline comparison, then isolated context/backbone arms; no unchanged rerun. |
+| 3 FOCUS-CORPUS-03 | Audit/readiness decision delivered; production assembly blocked / Codex | Fresh recheck:1319crops,395complete native pairs,3diagnostic pairs unchanged. Explicit family/scene matrix and NO-GO production decision delivered. Need exact new recipe/source-layout manifest, then reservation, bounded capture, admission and final assembly; keyboard can remain a separate unsupported lane. No unchanged training. [Decision](reports/work/FOCUS-CORPUS-03/readiness-decision.md), [handoff](reports/work/FOCUS-CORPUS-03/handoff.md). |
+| 4 FOCUS-EXPERIMENT-04 | Configuration proposal delivered; execution blocked / Codex preparation | [Data-only comparison configuration](Research/Plans/FocusExperiment04.md), fixed baseline/evaluation and proposed decision criteria prepared. Need eligible changed members, actual native assembly/encoding integration, resource binding and exact run approval. No unchanged rerun or automatic later arms. |
 | 5 FOCUS-DELIVERY-05 | Pending selected candidate and runtime scope / unassigned | CoreML parity, explicit selection/rollback, TTR loaded-identity observer proof; no automatic promotion. |
 
 FDR021 remains the development baseline (12/14 complete frames; artwork 2/12).
@@ -25,7 +47,42 @@ unavailable shared status does not block independent work. One concise report pe
 tranche; automated correctness gates retained. Only actionable consumer/producer
 changes are published, not this local planning queue.
 
+## Synthetic pipeline task breakdown — planned
+
+[Joint implementation plan and acceptance](Research/Plans/SyntheticFocusPipeline.md).
+This decomposes FOCUS-CORPUS-03 → EXPERIMENT-04 → DELIVERY-05; it does not
+authorize new runtime/model execution or duplicate those assignments.
+
+| Task | Owner / state | Dependency and deliverable |
+| --- | --- | --- |
+| SYN-01 | NUIAK / delivered for review in FOCUS-CORPUS-03 | [Coverage, geometry and split acceptance matrix](reports/work/FOCUS-CORPUS-03/readiness-decision.md); production membership remains pending exact producer manifest. |
+| SYN-02 | NUIAK / representative proof completed for review | Current emitted native image/rows/tabs validated; corrupt derivative rejected. |
+| SYN-03 | NUIAK / completed for review | Production crop QA60/60; numbered sheets and five-frame prefilled queue; no training admission. |
+| SYN-04 | NUIAK / software completed; reservations pending | Coverage planner and exact slot mapping delivered; source/content independence and rendered variation still open. |
+| SYN-05 | NUIAK / pending SYN-03 + TTR-C/D | Bounded resumable capture-to-review orchestration with offline replay. |
+| SYN-06 | NUIAK + reviewer / pending campaign | Recipe/sample QA, explicit eligible corpus and split acceptance. |
+| SYN-07 | NUIAK / pending SYN-06 + run approval | Existing EXPERIMENT-04: changed-data comparison; real-frame and retention results. |
+| SYN-08 | NUIAK + TTR / pending selected candidate | Existing DELIVERY-05: CoreML parity and TTR-E observer proof/rollback. |
+
+TTR-A/B are native contract and representative proof; TTR-C/D are composable
+recipes and bounded traversal; TTR-E is observer loading; TTR-F is optional Hover
+Text. They are requested producer deliverables, not locally assigned TTR tasks.
+Next tranche: SYN-05 offline resume/accounting orchestration using the now-proven
+consumer path, alongside SYN-04 source-role reservation review. Broader capture
+remains TTR-owned;30new recipes are source-qualified, not rendered-qualified.
+[Joint operational acceptance](Research/Requests/TTR-Synthetic-Pipeline-Acceptance.md).
+No per-image human labeling
+requirement for verified generated controls. Model outcomes remain unassessed.
+
 ## Earlier evidence and superseded scheduling
+
+**SEMANTIC-EXPORT-REQUEST-01 — requested / NUIAK Codex coordination; TTR implementation owner pending:**
+Maintainer requested native accessibility export, optional Hover Text OCR, and
+Fixture ground-truth generation for complex screens. [Implementation request](Research/Requests/TTR-Semantic-Export-and-Fixture-Ground-Truth.md).
+Reuse native runner/capture; separate observed focus, selection, accessibility and
+geometry from inferred OCR. Native/Fixture work need not wait for Hover Text or braille.
+Next: TTR acknowledges owner, schema example, supported fields and bounded proof scope;
+NUIAK binds importer after schema agreement. No device/settings/training dispatch.
 
 **FOCUS-R2-LIVE-11 — completed for review:** new running local TTRf2d9728c validates
 inline manifest and captures approved3/3pairs in15.485s. Received44files/10,515,400bytes

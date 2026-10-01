@@ -1,5 +1,48 @@
 # NativeUIAuditKit — Completed Tasks
 
+## SYN-03 — batch QA and representative emitted proof, completed for review 2026-10-01
+
+Native bundle adapter uses existing production cropper, seeded random/exception
+queue, annotation editor and Finish review. Preserves unknowns, selection versus
+focus, child/wrapper roles and all exclusions. Five current captured pairs yield
+60/60crops and five unique prefilled review frames; no human approvals fabricated.
+79emitted and58repair package members verified,30source recipes parsed/mapped.
+Partial campaign and deliberate invalid sidecar accounted. Actual legacy tab-class
+compatibility repaired without relabeling.46TTR+26fixture+12bundle+135human tests,
+installed Qt smoke, Swift build and120+14Swift tests pass. Broader family qualification,
+source independence, human audit and model admission remain open.
+[Acceptance evidence and commands](reports/work/SYN-03/handoff.md).
+
+## SYN-02 — offline semantic intake, completed for review 2026-10-01 UTC
+
+Received three named producer archives and verified all36 manifest members. Optional
+native inventory integrates into existing sidecar2/3 validation; no new wire format
+or model execution. Six exact fabricated-example CLI checks,15new consumer tests,
+43TTR contract tests,12bundle tests and three unchanged retained native pairs pass.
+Eight exact recipes/ten source files map all60 requested slots without reserving
+roles. Offline Swift build and120Swift Testing+14XCTest pass. Emitted native-image
+qualification and admission remain open in Tasks. [Handoff](reports/work/SYN-02/handoff.md).
+
+## SYN-04 — offline corpus planner, completed for review 2026-10-01 UTC
+
+Coverage-driven CLI reuses retained integrity audit, preserves existing roles/gates,
+and proposes 60 collection slots across artwork/tabs/rows/buttons. Optional local
+lineage catalog connects actual recipes, source/layout/content and declared near-
+duplicate relations transitively; unknown/conflicting components stay blocked.
+25 corpus tests, retained 1,319-crop/395-pair replay, offline Swift build and full
+120 Swift Testing +14 XCTest pass. No actual producer recipes invented or admitted;
+real recipe binding remains in Tasks. [Handoff](reports/work/SYN-04/handoff.md).
+
+## INTAKE-AUDIT-01 — consumer audit software, completed for review 2026-10-01 UTC
+
+Seeded random and separate exception queues reuse the existing editor and Finish
+review. Isolated prefilled copies preserve original revisions and clear approvals.
+135 human-review tests, 41 harvest tests, installed offscreen UI, retained real-image
+fork and three-pair/six-crop legacy replay passed. Offline Swift build and full
+120 Swift Testing +14 XCTest passed with platform-service access and local caches.
+New producer semantic contract acceptance remains open in Tasks, not completed.
+[Handoff](reports/work/INTAKE-AUDIT-01/handoff.md).
+
 ## LOCAL-TOOLS-02 — production CLI/MCP, completed for review 2026-09-30
 
 doctor/scan/scan-batch and stdio tools use NativeUIDetectionSession, with bounded

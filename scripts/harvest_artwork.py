@@ -90,7 +90,8 @@ def validate_hierarchy(scene, require):
         element = by_id[eid]
         require(element.get('parent_element_id') == (None if index < count else parent),
                 'hierarchy_parent')
-        require(element['taxonomy_class'] == 'primaryButton', 'hierarchy_taxonomy')
+        # Preserve legacy exports and the producer's corrected bordered-button role.
+        require(element['taxonomy_class'] in ('primaryButton', 'secondaryButton'), 'hierarchy_taxonomy')
         traits = element.get('accessibility_traits', [])
         require(isinstance(traits,list) and ('isSelected' in traits) == (index == selected),
                 'hierarchy_selection')

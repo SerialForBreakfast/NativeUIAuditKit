@@ -92,6 +92,9 @@ def prepare(batch_path, metadata_path=None, *, limit=72, per_layout=3):
 
 
 def validate_queue(path):
+    if h.read(path).get('version') == 'human-intake-audit-queue-v1':
+        from human_intake_audit import validate_queue as validate_intake_queue
+        return validate_intake_queue(path)
     queue = h.sealed(path, QUEUE)
     expected = prepare(h.checked(h.ROOT, queue['batch']),
                        h.checked(h.ROOT, queue['metadata']) if queue['metadata'] else None,
@@ -156,6 +159,7 @@ def checked_completeness(path, revision_path):
 
 def coverage(queue_path, revision_path=None, completeness_path=None):
     queue = validate_queue(queue_path)
+    h.require(queue['version'] != 'human-intake-audit-queue-v1', 'use_intake_audit_summary_for_audit_queue')
     h.require(not completeness_path or revision_path, 'completeness_requires_revision')
     revision = checked_revision(revision_path) if revision_path else None
     if revision:

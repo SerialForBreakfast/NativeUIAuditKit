@@ -218,3 +218,11 @@ reports/work/OS-FOCUS-03/**/*.mp4
 /reports/work/FOCUS-R2-LIVE-11/crops/
 /reports/work/FOCUS-R2-LIVE-11/*.log
 /reports/work/LOCAL-TOOLS-02/*.txt
+/reports/work/INTAKE-AUDIT-01/artifacts/
+/reports/work/INTAKE-AUDIT-01/*.log
+/reports/work/SYN-04/artifacts/
+/reports/work/SYN-04/*.log
+/reports/work/SYN-02/artifacts/
+/reports/work/SYN-02/*.log
+/reports/work/SYN-03/artifacts/
+/reports/work/SYN-03/*.log

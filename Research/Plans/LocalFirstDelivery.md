@@ -2,9 +2,9 @@
 
 Established 2026-09-30 from the maintainer's approved breakdown. This is the scope
 and acceptance contract, not a second task board. Execution state/ownership lives
-in [Tasks.md](../../Tasks.md). Tranche 1 is complete; the maintainer assigned tranche 2
-next, including bounded retained-image inference, CLI/MCP implementation and offline
-verification. No training, capture or candidate promotion is included.
+in [Tasks.md](../../Tasks.md). Tranches 1 and 2 are delivered for review. The maintainer
+assigned tranche 3: corpus inventory, coverage/split contract, automated QA and real
+trainer preflight. No training or candidate promotion is included.
 
 ## 1 — Workflow and ADR reconciliation (LOCAL-FIRST-01)
 
@@ -59,6 +59,23 @@ Acceptance:
   5,000+ pairs is a proposed collection target, not a substitute for existing gates.
 - Final output is a reproducible assembly with complete accepted/rejected/blocked
   accounting and a trainer preflight. No training launched in this tranche.
+
+Implementation decision: the corpus inventory is a local diagnostic format, not a
+new training-admission lane. It references the unchanged FDR021 protocol and retains
+its selection and sampling verbatim; the actual trainer revalidates that protocol
+without execution approval. The FDR021 runtime binding predates the candidate pixel
+parity repair. Reassembly may refresh runtime identity in a new protocol only after
+asserting that every non-runtime field (including inputs, samples, weights and
+selection) is unchanged. Preserve the original and its failed preflight as evidence;
+this is not authorization to replay FDR021. Latest retained native diagnostic manifests are checked
+through the existing manifest validator and production cropper, not relabeled as
+training. Coverage uses explicit control/appearance metadata; native AX numeric
+roles remain unmapped unless an existing reviewed mapping establishes their meaning.
+Source/session overlap is reported even for previously approved development data.
+New production collection must establish source/layout reservations first: changing
+seeds, colors or corpus IDs cannot create independent families. Protected evidence
+is read as metadata only. No generic audit may erase prior eligibility or grant new
+eligibility. Missing native keyboard/parent-state contracts remain explicit gaps.
 
 ## 4 — Controlled focus experiments (FOCUS-EXPERIMENT-04)
 
