@@ -1,6 +1,6 @@
 ---
 name: nativeui-worker-execution
-description: Complete an assigned NativeUIAuditKit implementation packet or multi-packet tranche through integration, verification, and evidence-backed handoff, or review its deliverables. Use for assigned work, not unassigned training/hardware operations.
+description: Select and complete substantial NativeUIAuditKit implementation tranches from the approved backlog, integrate and verify their outcomes, or review deliverables. Preserve action-specific training and hardware authority.
 ---
 
 # NativeUIAuditKit packet execution
@@ -20,7 +20,29 @@ identities. Read only assigned context, not every packet. AGENTS.md's mandatory
 pre-code reading and safety rules still apply. This Research skill is the canonical
 source; no protected .agents edit is needed.
 
-1. Establish the full assignment's authorization, dependencies, current Tasks.md state, and completion boundary. For an authorized larger tranche, list included packets and integrated deliverables up front; do not silently reduce scope to a helper. Inspect read-only git status/diff and preserve unrelated changes. Do not assume another worker's plan status proves its artifacts exist.
+## Maintainer preference: substantial progress per tranche
+
+Follow [standing backlog selection](../WorkerWorkflow.md#substantial-tranche-selection).
+For implementation/continuation, select a meaningful set of approved, goal-aligned
+Tasks.md work, not just the next helper. Existing approval permits local backlog
+selection without a new prompt for each item; restricted operations keep their gates.
+
+- Pair every small primary task with at least one self-contained unblocked approved
+  task or permitted experiment. The primary task's required tests/docs/status are
+  not a second deliverable. State the companion and complete it too.
+- Keep independent work ready when TTR/data/human dependencies block another item.
+  Reassess relevant pending items instead of declaring the whole backlog blocked.
+  If no suitable companion exists, name the candidates and concrete reasons.
+- Do not skip approved items without a blocker, superseding decision or goal mismatch.
+  Preserve ownership and priority; no unchanged reruns or make-work to inflate output.
+- End with a substantial next-tranche recommendation: ordered outcomes, work ready
+  now, and precise evidence/consent boundaries. Let the maintainer choose priorities.
+  A suggestion never replaces execution of remaining selected, authorized work.
+
+Explicitly narrow and read-only requests remain narrow. Do not infer approval of a
+new training/data-use/device/export operation merely from backlog membership.
+
+1. Establish the full tranche's authorization, dependencies, current Tasks.md state, and completion boundary. Use standing backlog selection for approved local work; list included items, a companion for small work, and integrated deliverables up front. Do not silently reduce scope to a helper. Inspect read-only git status/diff and preserve unrelated changes. Do not assume another worker's plan status proves its artifacts exist.
 2. Record ownership of the packet. If an overlapping file is owned by another active worker, coordinate through the architect before editing it. Do not spawn workers implicitly.
 3. Follow the packet's file scope and acceptance criteria. Record research decisions before implementation. Use the existing model/navigation skills only when their operations are actually in scope.
 4. Before execution, check outputs and caches stay in-project, input corpora remain unmodified, and the command does not introduce network, hardware, or training activity beyond assignment. An option called dry-run is not evidence of read-only behavior: K-02 applies.
@@ -60,4 +82,6 @@ stop the affected action; finish other authorized work without broadening scope.
 
 Final handoff states: scope completed for review, or incomplete/blocked with evidence.
 Include verification commands/results, the four independent outcomes, and what remains.
+Check the small-task companion rule and propose the next substantial tranche with
+prioritized outcomes and explicit consent/dependency boundaries before finalizing.
 User interruption or a real runtime limit is a truthful checkpoint, never a fabricated pass.

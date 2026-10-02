@@ -1,9 +1,51 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 1, 2026 PDT, FOCUS-INTERRUPTIONS-17 (underlying results retain observation dates)
+**As of:** October 2, 2026 PDT, FOCUS-REVIEWED-TRANSITIONS-21 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**October2 human review update:** all seven Settings frames reviewed. Maintainer
+approved20row-type corrections in378/391; all72controls now`listRow`, preserving
+every bound and focus label. Original revision retained; corrected revision and
+completeness validate;72/72production crops pass.7/14timing-ready actions now have
+both endpoints annotated. Next: screen/control correspondence and recorded-change
+scoring. [Correction](../reports/work/FOCUS-REVIEWED-TRANSITIONS-21/listrow-correction.md).
+
+**FOCUS-REVIEWED-TRANSITIONS-21:** saved human revisions now feed recorded-endpoint
+readiness and a retrospective native-crop comparison CLI. Tracking sees pixels and
+before-bounds only; after-labels/geometry supply separate, ambiguity-aware scoring.
+9/9 fixed generated pixel cases pass. One retained387→391transition has9/10controls
+tracked but all10decisions uncertain; correctness awaits human labels. Recording
+still has14timing-ready/0fully reviewed endpoint pairs. Seven prefilled frames open
+together for review.111Python/134Swift tests pass. [Handoff](../reports/work/FOCUS-REVIEWED-TRANSITIONS-21/handoff.md).
+
+**FOCUS-READINESS-20:** fixed measured-body assembly visibility-policy replay;
+complete campaign now feeds a non-executable matched-data comparison, retaining
+target-pair aliases, competitor label conflicts and evaluation membership. Retained
+25pairs replay through1300candidates;333evaluation controls unchanged. Recording
+audit accounts for166actions/14timing-ready/0fully annotated pairs; seven existing
+reviews would complete endpoint annotation for seven actions, not prove navigation.
+118Python/134Swift tests pass. Structural originals still await delivery; no new
+training, capture, admission or model-quality claim.
+[Handoff](../reports/work/FOCUS-READINESS-20/handoff.md).
+
+**FOCUS-CAMPAIGN-INTAKE-19:** one campaign command now verifies exact planned
+membership, measured-body bounds, visibility and production crops, then prepares
+one family/focus-balanced annotation queue. Resume preserves human edits and rejects
+changed inputs/outputs.103Python/134Swift tests pass; generated48case integration
+checks192crops and eight-frame editor/Finish review. Legacy50frame batch unchanged.
+Software verified, not new corpus/model improvement: actual producer48case pixels
+remain undelivered as of04:17UTC; next human step follows that intake.
+[Handoff](../reports/work/FOCUS-CAMPAIGN-INTAKE-19/handoff.md).
+
+**FOCUS-LOCAL-PLAN-18:** updated local helper now passes actual48case planning,
+consumer hash parity, deterministic reorder/repeat and five invalid-input checks.
+Coordinator/Simulator readiness pass, Fixture not checked. Retained Vision retry
+still fails, now precisely before_preflight/access_denied/NSCocoaErrorDomain513.
+No new sidecar/capture/training. Producer reports48appearance+16transitions complete
+locally; captured data delivery still pending. No producer build requested.
+[Handoff](../reports/work/FOCUS-LOCAL-PLAN-18/handoff.md).
 
 **FOCUS-INTERRUPTIONS-17 completed:** corrected interruptionr2 received,168manifest
 files verified;20stable capture brackets and447production crops pass.98covered/

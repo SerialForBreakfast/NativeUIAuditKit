@@ -551,6 +551,17 @@ See `Research/CoordinateSpike.md` for the full results tables and detailed test 
 
 ---
 
+### Campaign-to-review intake (2026-10-01)
+
+The optional `fixture_campaign_intake.py` path matches a structural coverage plan
+to completed native bundles before preparing a single review. It requires measured
+rendered-body geometry and current visibility, runs production crop QA, then samples
+by family and target focus state with explicit inclusion probabilities. Duplicate
+pixels do not multiply human work; contradictory annotations remain exclusions.
+Legacy sidecars and sealed batches are unchanged. This is diagnostic review, not
+automatic admission or evidence of independent source diversity. See
+[campaign workflow](Plans/FocusCampaignIntake19.md) for limits and actual CLI usage.
+
 ## 7. Native UI Generator Architecture
 
 ### 7.1 `NativeUIDatasetGenerator` (shipped)

@@ -76,7 +76,9 @@ def findings(doc):
     return sorted(set(reasons))
 
 
-def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8, focus_element=None):
+def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8, focus_element=None,
+         family_focus=False):
+    h.require(type(family_focus)is bool,'invalid_family_focus_policy')
     h.require(type(seed) is int and type(count) is int and 1 <= count <= 256 and
               type(exception_limit) is int and 0 <= exception_limit <= 256, 'invalid_sampling_limits')
     batch_path = h.local(batch_path)
@@ -96,10 +98,51 @@ def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8,
         rows.append(dict(id=frame['id'], screen=frame['screen'], excluded=sorted(set(excluded)),
                          duplicateOf=frame.get('duplicateOf'),
                          findings=sorted(set(findings(docs[frame['id']])+native_findings)) if frame['id'] in docs else native_findings))
+    if family_focus:
+        h.require(isinstance(focus_element,str) and bool(focus_element),'missing_family_focus_target')
+        # Deduplicate review burden across recipe variants, without modifying source
+        # projection or treating contradictory labels as an approved alias.
+        by_id={f['id']:f for f in batch['frames']}; pixels={}
+        for row in rows:
+            f=by_id[row['id']]
+            if row['excluded']: continue
+            signature=h.digest(sorted([dict(bounds=p['bounds'],label=p['class'],state=p['state'])
+                for p in f['proposals']],key=lambda p:h.digest(p)))
+            pixels.setdefault(f['pixelSHA256'],[]).append((row,signature))
+        for group in pixels.values():
+            if len({s for _,s in group})>1:
+                for row,_ in group: row['excluded'].append('same_pixels_conflicting_annotations')
+            else:
+                for row,_ in group[1:]:row['excluded'].append('campaign_exact_duplicate_pixels')
     population = [r['id'] for r in rows if not r['excluded']]
     selected = sorted(random.Random(seed).sample(population, min(count, len(population))))
     stratified=None
-    if focus_element is not None:
+    if family_focus:
+        from fixture_composition import resolve
+        by_id={f['id']:f for f in batch['frames']}; families=set(); membership={}
+        for f in batch['frames']:
+            recipe=f.get('recipe',{}); composition=recipe.get('appearance',{}).get('composition')
+            h.require(composition is not None,'family_sampling_requires_composition')
+            items,_=resolve(composition,recipe,h.require)
+            targets=[i for i in items if i['id']==focus_element and i['focusable']]
+            h.require(len(targets)==1,'family_sampling_target_missing')
+            families.add(targets[0]['kind']);membership[f['id']]=targets[0]['kind']
+        groups={family+':'+state:[] for family in sorted(families) for state in ('focused','unfocused')}
+        for fid in population:
+            target=[p for p in by_id[fid]['proposals'] if p.get('sourceElementID')==focus_element]
+            h.require(len(target)==1 and target[0]['state'] in ('focused','unfocused'),'unknown_sampling_target')
+            groups[membership[fid]+':'+target[0]['state']].append(fid)
+        h.require(groups and count>=len(groups),'sample_count_below_family_focus_strata')
+        h.require(all(groups.values()),'missing_eligible_family_focus_stratum')
+        rng=random.Random(seed);stratified={};selected=[]
+        for n,(key,members) in enumerate(sorted(groups.items())):
+            quota=count//len(groups)+(n<count%len(groups))
+            chosen=sorted(rng.sample(members,min(quota,len(members))))
+            stratified[key]=dict(population=members,selected=chosen,denominator=len(members),
+                                inclusionProbability=len(chosen)/len(members))
+            selected.extend(chosen)
+        selected.sort()
+    elif focus_element is not None:
         h.require(isinstance(focus_element,str) and focus_element and count>=2 and count%2==0,'invalid_focus_stratification')
         groups={'focused':[],'unfocused':[]};by_id={f['id']:f for f in batch['frames']}
         for fid in population:
@@ -135,6 +178,9 @@ def plan(batch_path, revision_path=None, *, seed=42, count=8, exception_limit=8,
     if stratified is not None:
         result['focusElement']=focus_element
         result['sampling'].update(method='stratified-random-without-replacement',strata=stratified,inclusionProbability=None)
+    if family_focus:
+        result['familyFocus']=True
+        result['sampling']['unit']='eligible-deduplicated-frame-within-family-and-target-focus'
     return result
 
 
@@ -143,7 +189,7 @@ def validate_plan(path):
     expected = plan(h.checked(h.ROOT, doc['sourceBatch']),
                     h.checked(h.ROOT, doc['sourceRevision']) if doc['sourceRevision'] else None,
                     seed=doc['seed'], count=doc['requestedCount'], exception_limit=doc['exceptionLimit'],
-                    focus_element=doc.get('focusElement'))
+                    focus_element=doc.get('focusElement'),family_focus=doc.get('familyFocus',False))
     h.require(h.digest(expected) == doc['seal'], 'audit_population_or_selection_changed')
     return doc
 
@@ -246,13 +292,14 @@ def main():
     prep.add_argument('--seed', type=int, default=42); prep.add_argument('--count', type=int, default=8)
     prep.add_argument('--exception-limit', type=int, default=8)
     prep.add_argument('--focus-element',help='Balance random review across this native target’s two focus states')
+    prep.add_argument('--family-focus',action='store_true',help='Balance each native composition family and target focus; deduplicate pixels')
     summary = sub.add_parser('summary')
     summary.add_argument('queue'); summary.add_argument('revision'); summary.add_argument('output')
     args = p.parse_args()
     try:
         if args.command == 'prepare':
             result = prepare(args.batch, args.output, args.revision, seed=args.seed, count=args.count,
-                             exception_limit=args.exception_limit,focus_element=args.focus_element)
+                             exception_limit=args.exception_limit,focus_element=args.focus_element,family_focus=args.family_focus)
             print(json.dumps(result['counts'], sort_keys=True))
         else:
             result = summarize(args.queue, args.revision)

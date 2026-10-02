@@ -12,7 +12,7 @@ This refines the templates below, not safety or qualification gates. See
 [ADR-0012](ADR-0012-Local-First-Workflow-Decoupling.md).
 
 - **Architect/project manager:** orders the work, writes executable packets, resolves architecture questions, reviews evidence, and records acceptance. This task holds that role. It does not start workers or recurring monitoring implicitly.
-- **Worker:** completes the assigned packet or multi-packet tranche through implementation, integration, verification, and evidence-backed handoff. A packet is a specification, not authorization to execute it before assignment.
+- **Worker:** completes the selected packet or multi-packet tranche through implementation, integration, verification, and evidence-backed handoff. The maintainer's standing backlog-selection authority permits selection of approved local work during implementation/continuation; a draft proposal alone does not authorize restricted operations.
 - **Maintainer:** controls commits, external writes, hardware access, and explicit exceptions. Architect acceptance is not authorization for those actions.
 
 | Information | Canonical location |
@@ -39,6 +39,37 @@ Assign a substantial coherent deliverable with explicit acceptance criteria, not
 
 ## Tranche completion and stopping
 
+### Substantial tranche selection
+
+Apply AGENTS.md's October1 standing backlog-selection amendment. Read the relevant
+Tasks.md entries and verify their prerequisites/ownership; do not load the entire
+historical backlog indiscriminately. Approved, current-goal local work does not need
+a fresh user dispatch for each item. Record the selected scope in the existing queue
+and briefly explain the integrated result in commentary.
+
+Plan for both the main outcome and independent useful work while external inputs
+are pending. A small primary task must be paired with at least one self-contained
+approved backlog item or permitted experiment. A test/doc/status step required to
+finish the primary task is not a companion. Choose work that resolves a real open
+question or delivers usable behavior, not added paperwork or an unchanged run.
+
+For example, a small intake fix can accompany a pending local annotation feature or
+an approved diagnostic experiment with available inputs. If genuine captures are
+missing, finish eligible local work rather than stopping after checking the mailbox.
+If all plausible companions are blocked or conflict with current goals, name those
+specific candidates and missing prerequisites; do not manufacture work to meet a quota.
+
+Complete the selected tranche, including integration and verification. If a selected
+item blocks, evaluate an approved substitute before ending. Keep deferred task state
+honest: blocked with a resume condition, superseded with a reason, or still pending.
+This is not an endless backlog sweep and does not waive model-execution budgets,
+data-use decisions, device scope, ownership or other action-specific permissions.
+
+Every implementation handoff ends with a substantial next-tranche recommendation:
+ordered concrete outcomes, which can start now, which depend on new evidence or
+human consent, and the recommended priority. The maintainer chooses/reorders it.
+Do not substitute this suggestion for finishing already selected executable work.
+
 As of2026-10-01, assigned local model-experiment tranches use the approved
 [experiment envelope](Plans/LocalExperimentApprovalEnvelope.md). Generate exact
 tranche-derived run records automatically; do not ask the maintainer to approve
@@ -58,7 +89,9 @@ incremental evidence or status updates without ending the turn. Continue impleme
 the contract allows it; a toy-only implementation missing required behavior is not.
 
 Before a final response, ask: **Is there safe, authorized work left in this assignment?**
-If yes, continue. If no, state completed-for-review or the exact blocker for each remaining
+Also check whether a small assignment has a completed companion or a documented
+reason no relevant approved companion can proceed. If work remains, continue.
+Otherwise state completed-for-review or the exact blocker for each remaining
 criterion. A newly introduced failing test needs diagnosis/repair, not a perfunctory handoff.
 Do not wait for user approval between already authorized steps. Do not claim work is
 continuing in a final response. Use commentary for those updates and actually continue.

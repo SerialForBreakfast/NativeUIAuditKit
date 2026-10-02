@@ -31,6 +31,43 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 
 ## Execution contract — finish the authorized tranche
 
+### Substantial tranches and standing backlog selection — 2026-10-01
+
+The maintainer authorizes proactive selection from the approved Tasks.md backlog
+for implementation/continuation work. Do not require a new assignment for each
+already approved, self-contained local item. This supersedes older per-packet
+dispatch wording for that selection, not action-specific permissions or gates.
+
+- At tranche planning, inspect the relevant open backlog and actual prerequisites.
+  Choose a substantial integrated outcome plus useful independent work that can
+  proceed if the main dependency stalls. State the selected items and finish them;
+  do not define an artificially tiny scope to justify stopping early.
+- If the primary task is small, always add at least one self-contained, unblocked,
+  goal-aligned approved backlog task or experiment. Required tests, routine status
+  updates and the primary task's own documentation do not count as that companion.
+  If no suitable item is executable, identify the concrete blockers or goal mismatch
+  of the relevant candidates rather than making a blanket claim that nothing is left.
+- Approved backlog items are expected to be completed unless blocked, superseded or
+  no longer aligned with current goals. Record why an item is deferred; do not ignore
+  it because it needs debugging, because TTR is busy, or because a helper just passed.
+  Respect existing ownership, dependencies and higher-priority user direction.
+- When one item blocks, continue other selected work and check for a suitable
+  approved substitute. Missing producer data blocks its intake, not unrelated local
+  work. No busywork, unchanged reruns, arbitrary experiment sweeps or perpetual
+  expansion: finish a meaningful bounded tranche with evidence.
+- Before ending, account for completed items, remaining blockers/consent boundaries,
+  and the small-task companion when applicable. Always recommend a substantial next
+  tranche with concrete outcomes, priority order and any human decisions required,
+  so the maintainer can select or reorder it. Do not merely ask “shall I continue?”
+- Explicitly narrow requests and answer/review/diagnosis-only requests remain narrow.
+  This standing selection authority does not authorize another repository, overwrite
+  another worker, spend money, change data roles, capture, train, export or promote
+  without the applicable authority. An experiment may be selected and executed only
+  within its approved scope/budget; existing tranche approval needs no per-run renewal.
+
+Operational selection and completion checks live in
+[WorkerWorkflow.md](Research/WorkerWorkflow.md#substantial-tranche-selection).
+
 ### Local experiment tranche approval — 2026-10-01
 
 The maintainer approved whole local experiment tranches. An assigned model-experiment
@@ -108,8 +145,9 @@ checkpoint, or status update is not by itself a completed assignment.
   call it complete. Do not choose arbitrary time or micro-packet limits yourself.
 - Persistence does not authorize other repositories, new hardware/training runs, unsafe
   operations, taking another worker's files, bypassing gates, or an endless backlog sweep.
-  For broad assignments, establish a coherent tranche from authorized ready work; beyond
-  that boundary requires a new assignment. Review/diagnosis requests remain read-only
+  For broad assignments, use the standing backlog-selection rule above to establish
+  a coherent tranche; materially new goals or operations need new authority.
+  Review/diagnosis requests remain read-only
   unless changes are requested.
 
 Use [WorkerWorkflow.md](Research/WorkerWorkflow.md) and

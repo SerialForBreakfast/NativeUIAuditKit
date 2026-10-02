@@ -2805,3 +2805,44 @@ leaves the requested target unavailable. Its20files are only6unique screenshots.
 **Why:** Geometric stability, requested-target success, current focus and sample
 diversity are different facts. Repeated interruption controls are not new independent
 training coverage, and archive hashes alone do not bind screenshot capture timing.
+
+### Campaign intake must preserve geometry and reduce review fragmentation (2026-10-01)
+
+**Wrong:** Run the old default wrapper-bound reviewer once per newly captured bundle,
+then call the resulting collection a balanced campaign review. It repeats human work
+and may hide missing planned cases or focused-growth geometry.
+**Correct:** Match complete recipe/target membership first, explicitly select measured
+body bounds and visibility, crop every usable control, then make one seeded
+family-by-focus review. Deduplicate matching pixel/annotation pairs and expose
+contradictory labels. Preserve existing seals and human edits on resume; verify the
+immutable output membership, not only whichever file hashes a marker happens to list.
+FOCUS-CAMPAIGN-INTAKE-19 verifies this with48generated cases and a single8frame editor
+queue, plus unchanged retained50frame review. This is software evidence, not live
+annotation acceptance or independent-corpus confidence.
+**Why:** An efficient review is a representative selection from an explicitly known
+population, not an arbitrary concatenation of packet-sized approval requests.
+
+### Carry projection policy through comparison preparation (2026-10-01)
+
+**Wrong:** Validate visibility-aware native reviews, then reconstruct candidates
+with the old default projection; or filter to targets before checking whether a
+competitor assigns an opposite label to the same pixels.
+**Correct:** Replay the batch's declared visibility policy (including legacy absence),
+detect conflicts across all candidates, then choose duplicate representatives among
+the intended training targets. Keep complete pair membership and unique pixel-pair
+counts distinct. FOCUS-READINESS-20's48case software fixture contains only one unique
+target pair; its plan correctly proposes two controls rather than96.
+**Why:** A successful intake does not prove downstream assembly uses the same geometry,
+and filtering/alias ownership must not hide contradictions or manufacture diversity.
+
+### Bind reviewed endpoint images separately from reviewed rectangles (2026-10-01)
+
+**Wrong:** Treat a sealed review or verified editor snapshot as sufficient to attach
+its frame-level image/context fields to recorded-action scoring. Snapshot control
+validation alone does not prove those separate fields still match the original batch.
+**Correct:** Verify exact batch, frame membership, image reference and screen label,
+then parse immutable snapshots. Keep pending working edits separate and detect
+conflicts with frozen accepted labels. Test a re-sealed revision with a substituted
+frame image, as FOCUS-REVIEWED-TRANSITIONS-21 does.
+**Why:** Correct rectangles attached to the wrong recorded endpoint produce plausible
+but invalid transition scores; a checksum is integrity evidence, not semantic binding.

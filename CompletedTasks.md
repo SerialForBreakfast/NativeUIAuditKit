@@ -1,5 +1,43 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FOCUS-REVIEWED-TRANSITIONS-21 — software and fixed pixel experiment
+
+Immutable human-revision integration, retrospective recorded-action CLI with
+truth-isolated prediction and unique geometric scoring, optional unscored pending
+after-image diagnostics,9/9generated pixel stress cases,111Python/134Swift checks.
+One retained real transition observed:9/10tracked,10/10uncertain. Human revision,
+context correspondence and genuine correctness remain in Tasks.md.
+[Handoff](reports/work/FOCUS-REVIEWED-TRANSITIONS-21/handoff.md).
+
+## FOCUS-READINESS-20 — comparison preparation and endpoint diagnostics
+
+Campaign-to-candidate integration fixed for declared visibility policy; complete
+target pairs and pixel aliases now feed a non-executable matched-data proposal.
+Competitor conflicts cannot disappear under target filtering. Retained25pair1300crop
+candidate replay preserves333evaluation controls. Exact small-batch endpoint review
+frontier covers166recorded actions; seven prepared reviews can complete annotation
+for seven timing-ready actions.118Python/134Swift tests pass. Actual structural
+delivery, human reviews, context qualification and admission remain open in Tasks.md.
+[Handoff](reports/work/FOCUS-READINESS-20/handoff.md).
+
+## FOCUS-CAMPAIGN-INTAKE-19 — campaign workflow implemented and verified
+
+One plan-bound intake handles all bundles, measured-body/visibility projection,
+production crop QA and one deduplicated family/focus sample. Completed resumes pin
+immutable outputs while preserving human edits.103Python/134Swift tests pass;
+generated48cases/192crops and actual eight-frame Qt review navigation pass;
+legacy50frame review validates unchanged. Real producer delivery/label acceptance
+remains open in Tasks.md. No capture, training, admission or producer build request.
+[Handoff](reports/work/FOCUS-CAMPAIGN-INTAKE-19/handoff.md).
+
+## FOCUS-LOCAL-PLAN-18 — local planner qualified; Vision retry diagnosed
+
+Updated running helper compiles48cases with exact consumer recipe/digest parity;
+repeat/reordered plans agree and five invalid requests reject. Readiness passes with
+Fixture not checked. Exact retained Vision retry isolates before_preflight file-access
+denial; importer awaits a sidecar. No new captures, training or producer build request.
+[Handoff](reports/work/FOCUS-LOCAL-PLAN-18/handoff.md).
+
 ## FOCUS-INTERRUPTIONS-17 — complete for review (October1,2026)
 
 Retainedr2 archive received;168members,20capture brackets and447production crops

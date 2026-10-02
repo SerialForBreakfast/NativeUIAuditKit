@@ -1,11 +1,66 @@
 # NativeUIAuditKit — Tasks
 
+## Review — FOCUS-REVIEWED-TRANSITIONS-21 / Codex
+
+- [x] Integrate immutable reviewed endpoints with retained recording readiness.
+- [x] Deliver actual pixel/native-crop retrospective scoring with isolated truth,
+  geometric ambiguity accounting and explicit context limits.
+- [x] Run companion pixel stress experiment (9/9), retained pixel observation
+  (9/10 tracked,10/10 uncertain),111Python tests and134Swift tests.
+  [Handoff](reports/work/FOCUS-REVIEWED-TRANSITIONS-21/handoff.md).
+- [x] Ingest seven-frame human revision and approved20-control`listRow`correction;
+  preserve all focus/bounds;72/72production crops pass.7/14timing-ready actions now
+  have annotated endpoints. [Correction](reports/work/FOCUS-REVIEWED-TRANSITIONS-21/listrow-correction.md).
+- [ ] Resolve screen-context correspondence and score genuine recorded changes.
+  [Plan](Research/Plans/FocusReviewedTransitions21.md).
+
+## Review — FOCUS-READINESS-20 / Codex
+
+- [x] Finish structural comparison preparation using the real campaign caller,
+  including measured-visibility replay, pair exclusions and frozen evaluation.
+- [x] Audit retained action-linked endpoints and minimize the remaining human
+  review needed; report timing, labels and runtime-context gaps independently.
+- [x] Verify both CLI paths and negative cases, retained native/recording replay,
+  offline build and118Python/134Swift checks. No admission or model execution.
+  [Handoff](reports/work/FOCUS-READINESS-20/handoff.md).
+- [ ] Receive structural originals (still not advertised), run campaign intake and
+  structural readiness on actual pixels, then sampled human review/source-role
+  decision. Do not substitute generated software fixtures for captured training data.
+- [x] Review existing seven Settings endpoints together; corrected revision and
+  all72crops validated October2. Endpoint annotation complete for7of14timing-ready actions.
+- [ ] Qualify screen/control correspondence before genuine-transition scoring.
+  [Review instructions](reports/work/FOCUS-READINESS-20/review.md).
+
+## Review — FOCUS-CAMPAIGN-INTAKE-19 / Codex
+
+- [x] Integrate full campaign-to-review intake: plan/actual coverage accounting,
+  measured-body and visibility-aware native projection, all-crop QA, one seeded
+  family/focus-stratified review, fail-closed/resumable source/output verification,
+  actual CLI and adversarial tests, retained-corpus replay and offline Swift checks.
+  103 Python and 134 Swift tests pass; generated48case/192crop integration and actual
+  eight-frame Qt navigation/Finish review pass. Legacy50frame selection unchanged.
+  [Handoff](reports/work/FOCUS-CAMPAIGN-INTAKE-19/handoff.md).
+- [ ] Apply the single campaign command to the pending actual48case producer export,
+  then obtain one sampled human review. No new data advertised as of04:17UTC.
+  Preserve calibration/source ancestry; admission/training is a separate decision.
+
+## Next — after FOCUS-LOCAL-PLAN-18
+
+- [ ] Receive existing48appearance+16transition captured data exports. Updated local
+  helper now passes48case planner/consumer parity and deterministic/rejection checks;
+  no need for a producer build or repeated capture. Full local generation/export
+  remains unqualified; exact source revision still needed for reproducibility.
+- [ ] Resolve retained Vision helper file access: exact original pair retry now fails
+  before_preflight/access_denied/NSCocoaErrorDomain513; no sidecar or importer result.
+  Request supported grant/IPC path, not restart/recapture. [Evidence](reports/work/FOCUS-LOCAL-PLAN-18/handoff.md).
+
 ## Next — after FOCUS-INTERRUPTIONS-17
 
 - [ ] Receive the first four structural-family proof originals and exact published
   TTR repair revision afterbdfac475; build locally from Git, not a producer binary.
-  TTR02:16:17UTC reports four passed and remaining44appearance cases collecting.
-  Consumer acceptance awaits delivery. Existing14/16requests remain active.
+  Historical02:16:17UTC report of four passed is superseded by the02:55UTC report
+  of48appearance+16transitions verified locally. Consumer acceptance still awaits
+  delivery; follow the existing18 captured-data request, not a new capture request.
 - [ ] Before interruption training admission, resolve overlay settling/focus ownership,
   two fullscreen baseline verification mismatches and image/observation-time binding.
   Retainedr2 diagnostics complete:20frames,168members,447crop checks;98covered/removed
@@ -21,8 +76,9 @@
   checks pass; legacy50frame batch unchanged. [Handoff](reports/work/FOCUS-VISIBILITY-16/handoff.md).
 - [ ] Resolve actual source revision: configured local TTR master46dce7b and fetched
   simulator-harvest967d585 lack CorpusCoverageRequest.swift. Requested branch/commit
-  or commit/push only; no Git writes or dirty-checkout replacement. TTR reports recovery
-  passed but first composite-card validation failed with zero accepted pairs.
+  or commit/push only; no Git writes or dirty-checkout replacement. The historical
+  zero-pair failure is superseded by producer02:55UTC completion claims; actual
+  running planner verification passed in18. Source identity remains unresolved.
 
 ## Review — FOCUS-HANDOFF-15 / Codex
 
@@ -30,11 +86,13 @@
   compatibility; check running local caller capabilities without target inputs;
   review plan/resume/export semantics and publish concrete findings. No capture,
   restart, model execution or new admission.17members and four examples pass;
-  source request SHA matches producer CLI receipt. Running local helper lacks the
-  new planner (actual exit64 invalidArgument). [Handoff](reports/work/FOCUS-HANDOFF-15/handoff.md).
+  source request SHA matches producer CLI receipt. At this checkpoint the helper
+  lacked the planner (exit64); that runtime gap was subsequently closed by18.
+  [Handoff](reports/work/FOCUS-HANDOFF-15/handoff.md).
 - [ ] Sync TTR source through Git and build/test locally; request only a producer
   commit/push and branch/commit identity if needed, never a build or binary handoff.
-  Generate and verify the coverage plan locally, then qualify generation/resume/export.
+  Coverage planning is already verified by18; do not repeat it as unfinished work.
+  Qualify generation/resume/export separately when exact source/runtime inputs exist.
   Keep existing async captured-data intake usable; preserve checkout/runtime permissions.
 
 ## Review — FOCUS-STRUCTURE-14 / Codex
@@ -1820,6 +1878,11 @@ Contract: [SA-B](Research/Plans/ConsumersAndRelease.md#sa-b--dependency-bridge-a
 ## TASK-DOC-01: Documentation and skill consistency [ ]
 
 Contract: DOC-A in [maintenance packets](Research/Plans/ConsumersAndRelease.md).
+
+- [x] October1 bounded queue-consistency correction: retain15/16historical results,
+  mark planner failure superseded by18, and reconcile17delivery wording with the
+  later producer completion report. Source identity and consumer receipt remain
+  open; no live/corpus gate closed by this documentation correction.
 
 - [ ] Correct historical inference advice without changing shipped YOLO letterboxing
 - [ ] Clarify prediction diagnostics are not training annotations

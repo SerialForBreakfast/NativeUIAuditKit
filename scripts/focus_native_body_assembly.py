@@ -61,7 +61,8 @@ def candidates(entries, protected):
             expected,contract=native.source_record(h.local(h.ROOT/source['root']),protected_here,source.get('pairIDs'))
             h.require(expected==source,'source_binding_changed')
             safe_sources.append(source);contracts.append(contract)
-        projection=native.project(safe_sources,contracts,body_geometry=True)
+        projection=native.project(safe_sources,contracts,body_geometry=True,
+                                 visibility_policy=raw.get('visibilityPolicy'))
         original={f['id']:f for f in raw['frames']}
         h.require(len(original)==len(raw['frames']), 'duplicate_frame')
         # Only presentation numbering and cross-source duplicate/review summaries

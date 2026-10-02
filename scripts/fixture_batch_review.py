@@ -188,7 +188,8 @@ def validate(path):
     return batch
 
 
-def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limit=8, body_geometry=False, pair_ids=None):
+def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limit=8, body_geometry=False, pair_ids=None,
+            family_focus_element=None):
     output=h.fresh(output); protected_path=h.local(protected_path)
     protected_ref=h.ref(protected_path); protected=metadata_hashes(h.read(protected_path))
     roots=sorted(map(h.local,bundles)); h.require(roots and len(roots)<=128 and len(set(roots))==len(roots),'bundle_membership')
@@ -241,7 +242,8 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
             raise
         report['cropQA']=h.ref(output/'crops/crop-qa.json')
         report['crops']=dict(expected=qa['expected'],completed=qa['completed'])
-        sample=audit.prepare(work/'batch.json',output/'audit',seed=seed,count=count,exception_limit=exception_limit)
+        options={} if family_focus_element is None else dict(focus_element=family_focus_element,family_focus=True)
+        sample=audit.prepare(work/'batch.json',output/'audit',seed=seed,count=count,exception_limit=exception_limit,**options)
         report['audit']=h.ref(output/'audit/plan.json'); report['reviewCounts']=sample['counts']
         report['reviewQueue']=h.ref(output/'audit/combined-queue.json')
         cards=[]
