@@ -1,5 +1,9 @@
 # Full backlog implementation packet catalog
 
+[FOCUS-INTAKE-13](Plans/FocusIntake13.md): verified25 delivery, production crop QA,
+single sampled-review queue and retained whole-scene gain/loss diagnostic. No new
+training admission or runtime dispatch; Tasks.md holds next structural coverage work.
+
 [LOCAL-TOOLS-02](../reports/work/LOCAL-TOOLS-02/handoff.md): completed CLI/MCP
 implementation and bounded retained-image runtime verification under tranche 2.
 Next assignment is focus corpus coverage, not another CLI wrapper.

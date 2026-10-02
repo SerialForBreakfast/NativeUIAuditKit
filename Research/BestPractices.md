@@ -2752,3 +2752,56 @@ keep the original experiment when testing that correction.
 **Why:** Growth is useful evidence, not a universal rule. Content replacement and
 lighting can imitate focus. Reversed/reused pairs are not independent trials, and
 externally supplied context flags do not prove a runtime safety detector.
+
+### Shared visible support preserves scale at viewport edges (2026-10-01)
+
+**Wrong:** Reject every translated crop that clips a different amount, or silently
+resize each clipped window independently. Alignment12's first rule rejected seven
+forward retention rows even after finding their texture correspondence.
+**Correct:** Trim equal context from both windows using the intersection of their
+visible support; preserve equal dimensions and reject if that removes the nominal
+body. Keep translated control bounds separate from proxy native-crop request bounds.
+The isolated correction recovered18/18retention directions, including the161pxscroll,
+without changing matching thresholds. Native edge tests have one-code-value border
+rounding differences: do not claim bit equality merely from identical geometry.
+**Why:** Translation recovery and growth preservation are compatible, but rigid
+texture matching still rejects enlarging artwork and content changes can mimic focus.
+Neither improved retention nor caller-supplied flags proves safe autonomous control.
+
+### Visibility metadata must reach annotation projection (2026-10-01)
+
+**Wrong:** Validate optional native hidden/alpha fields but still emit every focusable
+rectangle as an annotation. A hidden or transparent view can retain valid geometry.
+**Correct:** New sealed review projections exclude explicit hidden/zero-alpha views;
+focused/invisible conflicts block their frame/pairs. Keep partial alpha reviewable,
+missing fields unknown, and original observations intact. Pin projection behavior so
+existing sealed batches replay with their original policy. FOCUS-VISIBILITY-16 tests
+exercise real intake/crops and replay the retained50frame batch unchanged.
+**Why:** An invisible control is not an unfocused visual training example. Schema
+acceptance alone does not mean new observations are respected downstream.
+
+### Opposing visual changes are corroboration, not focus causality (2026-10-01)
+
+**Wrong:** Treat one brightening and one dimming control as proof that focus moved.
+**Correct:** Require complete candidate coverage and persistent identity, but still
+label the result a candidate. FOCUS-INTAKE-13's actual two-row pixel counterexample
+changes only content colors and yields departure/arrival plus a false scene switch.
+Requiring both directions reduced retained correct results11→7of12; resolving every
+background control rejected all12. The four additional abstentions were caused by
+unavailable background matches despite a valid gain/loss pair, not by missing the
+departing focus itself. Preserve abstention causes and false-change counts.
+**Why:** Aggregating correlated visual evidence cannot distinguish identical pixels
+with different causes. Test content-only transitions before adding another safety
+rule or declaring model improvement; input receipts alone do not supply focus truth.
+
+### Interruption focus and settling are separate from underlay targets (2026-10-01)
+
+**Wrong:** Treat a stable modal screenshot as a verified underlay-focus training
+frame, or convert covered/removed controls into ordinary unfocused examples.
+**Correct:** Preserve native and overlay focus independently, exclude covered bodies,
+retain missing settling/verification, and keep diagnostic crops separate from admission.
+FOCUS-INTERRUPTIONS-17 has stable brackets but8not-settled frames; removal correctly
+leaves the requested target unavailable. Its20files are only6unique screenshots.
+**Why:** Geometric stability, requested-target success, current focus and sample
+diversity are different facts. Repeated interruption controls are not new independent
+training coverage, and archive hashes alone do not bind screenshot capture timing.

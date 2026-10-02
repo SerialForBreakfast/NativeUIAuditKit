@@ -1,15 +1,93 @@
 # NativeUIAuditKit — Tasks
 
-## Next — paired alignment after FOCUS-PAIRED-11
+## Next — after FOCUS-INTERRUPTIONS-17
+
+- [ ] Receive the first four structural-family proof originals and exact published
+  TTR repair revision afterbdfac475; build locally from Git, not a producer binary.
+  TTR02:16:17UTC reports four passed and remaining44appearance cases collecting.
+  Consumer acceptance awaits delivery. Existing14/16requests remain active.
+- [ ] Before interruption training admission, resolve overlay settling/focus ownership,
+  two fullscreen baseline verification mismatches and image/observation-time binding.
+  Retainedr2 diagnostics complete:20frames,168members,447crop checks;98covered/removed
+  bodies excluded;8not-settled;6unique screens. Do not recapture unchanged originals.
+  [Findings](reports/work/FOCUS-INTERRUPTIONS-17/handoff.md).
+
+## Review — FOCUS-VISIBILITY-16 / Codex
+
+- [x] Verify Git/source availability and producer status; harden new native review
+  projection for explicit hidden/zero-alpha observations, preserve legacy sealed
+  batches, exercise actual intake/crop/review callers and publish source-only feedback.
+  No capture, training, source-role change or producer build request.84Python/134Swift
+  checks pass; legacy50frame batch unchanged. [Handoff](reports/work/FOCUS-VISIBILITY-16/handoff.md).
+- [ ] Resolve actual source revision: configured local TTR master46dce7b and fetched
+  simulator-harvest967d585 lack CorpusCoverageRequest.swift. Requested branch/commit
+  or commit/push only; no Git writes or dirty-checkout replacement. TTR reports recovery
+  passed but first composite-card validation failed with zero accepted pairs.
+
+## Review — FOCUS-HANDOFF-15 / Codex
+
+- [x] Verify TTR self-service source handoff, exact receipt and consumer recipe
+  compatibility; check running local caller capabilities without target inputs;
+  review plan/resume/export semantics and publish concrete findings. No capture,
+  restart, model execution or new admission.17members and four examples pass;
+  source request SHA matches producer CLI receipt. Running local helper lacks the
+  new planner (actual exit64 invalidArgument). [Handoff](reports/work/FOCUS-HANDOFF-15/handoff.md).
+- [ ] Sync TTR source through Git and build/test locally; request only a producer
+  commit/push and branch/commit identity if needed, never a build or binary handoff.
+  Generate and verify the coverage plan locally, then qualify generation/resume/export.
+  Keep existing async captured-data intake usable; preserve checkout/runtime permissions.
+
+## Review — FOCUS-STRUCTURE-14 / Codex
+
+- [x] Consume TTR's structural-v3 source checkpoint: verify its archive/member
+  receipt, implement strict v3 recipe and optional semantic-metadata compatibility,
+  exercise all delivered recipes through the consumer, run focused and offline Swift
+  checks, and publish concrete compatibility feedback. No capture, new admission,
+  encoding, training or promotion. Live qualification awaits one measured proof per
+  composite-card, ranked-row, home-icon and hero family. See
+  [plan](Research/Plans/FocusStructure14.md). Completed:81members,64recipes,
+  actual review-caller integration for four families,61Python/134Swift tests.
+  [Handoff](reports/work/FOCUS-STRUCTURE-14/handoff.md).
+- [ ] Receive first four measured structural proofs plus producer digest vectors
+  and a clipped-scroll inventory example; qualify live geometry/membership before
+  expanding production collection. TTR self-service generation/export remains parallel.
+
+## Next — structural coverage after FOCUS-INTAKE-13
+
+**FOCUS-INTAKE-13 / Codex — completed for review:**25source pairs/50frames received,
+389manifest members verified,1,300production crops pass.50new target pixels, one
+layout/position; six prefilled checks ready together. Scene gain/loss corroboration
+7/12versus11/12arrival-only; opposing content changes still fool actual pixel/scene
+CLIs. No deployment/admission/training.93Python/134Swift tests pass.
+[Handoff](reports/work/FOCUS-INTAKE-13/handoff.md).
+
+- [ ] Decide source role/exact admission for new25pairs only if useful for the next
+  changed-data experiment. Six sampled checks are human-approved October1PDT;
+  [acceptance](reports/work/FOCUS-INTAKE-13/sample-acceptance.md). No automatic
+  training or independent-test designation. This is not the missing structural diversity.
+- [ ] TTR structural successor: first prove composite card, ranked row, home icon and
+  hero with explicit whole-control/child geometry; then planned48pair matrix. Existing
+  request `nuiak-20261001-transfer10-coverage`; no new runtime dispatch in this tranche.
+- [ ] Resume genuine Settings transition evaluation after seven prepared endpoints
+  are reviewed. Persistent runtime identity/context remain unqualified. Keep scene
+  corroboration optional; no unconditional fallback for failed artwork tracking.
+
+FOCUS-ALIGNMENT-12 completed for review: opt-in CLI, two2996case replays, native
+common-support geometry,34Python/134Swift tests. Known scroll recovered;18/18retention
+directions,11/12eligible frame directions; artwork matching and content-only false
+changes prevent deployment. [Results](reports/work/FOCUS-ALIGNMENT-12/results.md).
+
+Archive receipt/full coverage review and retained scene comparison completed above.
+Calibration ancestry unchanged; no automatic admission or retraining.
+
+## Context — paired alignment after FOCUS-PAIRED-11
 
 FOCUS-PAIRED-11 complete: fixed-window growth exposes useful signal; no model
 promotion. Clipping follow-up12/12directions from sixeligible pairs versusFDR0217/12,
 but a scrolled retention row gives wrong direction. [Results](reports/work/FOCUS-PAIRED-11/results.md).
 
-- [ ] Implement/evaluate translation-only alignment or movement rejection without
-  normalizing away enlargement. Retain161pxscroll, row-removal, content replacement,
-  lighting and unchanged-focus counterexamples. Then optional diagnostic verifier;
-  do not repeat unchanged neural training. New assignment, not automatically started.
+Translation-only/common-support experiment and optional diagnostic CLI completed
+above; failure cases retained. No unchanged neural training recommended.
 
 ## Next — coverage change after FOCUS-TRANSFER-10
 
@@ -18,11 +96,9 @@ FDR034aspect-fit7/12with68FP and0/3buttons. Both rejected; FDR021preserved.
 All1895production crops pixel-exact,333evaluation records unchanged,30metric
 replays,46Python tests and134Swift tests pass. [Results](reports/work/FOCUS-TRANSFER-10/results.md).
 
-- [ ] Reconcile TTR response to `nuiak-20261001-transfer10-coverage`: map existing
-  templates/remaining42cases to composite artwork containers, wide rows and varied
-  icon/hero layouts; propose a structurally diverse generation matrix with actual
-  focus positions and measured paired growth. No new runtime dispatch from this
-  planning request; no unchanged retraining or redraw of the accepted six pairs.
+Full TTR response inspected by FOCUS-INTAKE-13: remaining campaign is explicitly
+same-slot coverage, structural successor proposed above. No new runtime dispatch;
+no unchanged retraining or redraw of the accepted six pairs.
 Retained paired comparison completed in FOCUS-PAIRED-11 above. Contrast endpoints
 are not action-linked navigation tests. Global aspect-fit and10×emphasis remain
 rejected settings, not new defaults; new coverage needs its own intake/admission.
@@ -42,9 +118,9 @@ retention18/18both. All12new crops learned but no real-screen transfer improveme
 actual CLI checks and offline build/134Swift tests pass. No export/promotion.
 [Results](reports/work/FOCUS-CAMPAIGN-09/results.md).
 
-- [ ] Inspect remaining42case delivery for genuinely new coverage before another
-  admission/run. TTR22:14:46UTC reports timeout/runner-cleanup blocker after backup
-  capacity restoration. Do not recapture these six or repeat unchanged training.
+25of42subsequent pairs now verified by FOCUS-INTAKE-13;17remain producer-runtime
+blocked per23:35:36UTC snapshot. Neither recapture nor same-slot completion is a
+prerequisite for the recommended structural successor.
 - [ ] Review seven recovered Settings endpoints, then validate context/control
   matching and actual transition accuracy; timing alone is not focus truth.
 

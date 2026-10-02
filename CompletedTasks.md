@@ -1,5 +1,30 @@
 # NativeUIAuditKit — Completed Tasks
 
+## FOCUS-INTERRUPTIONS-17 — complete for review (October1,2026)
+
+Retainedr2 archive received;168members,20capture brackets and447production crops
+verified.98covered/removed bodies excluded;8not-settled frames and failed recovery
+preserved. Only6unique full screens: diagnostic cases, not new diverse training.
+New bounded offline auditor, Markdown previews,93Python/134Swift tests pass.
+No capture/training/admission/build request. [Handoff](reports/work/FOCUS-INTERRUPTIONS-17/handoff.md).
+
+## FOCUS-INTAKE-13 — completed for review (October1,2026)
+
+Exact verified25 archive received;389members and1,300production crops pass.
+Novelty/structure audit and single six-frame prefilled review ready; calibration
+ancestry unchanged. Optional scene gain/loss CLI plus retained and content-only
+counterexamples reject deployment (7/12versus prior11/12).93Python/134Swift tests
+pass. No training/admission/promotion. [Handoff](reports/work/FOCUS-INTAKE-13/handoff.md).
+
+## FOCUS-ALIGNMENT-12 — complete for review October1,2026
+
+Translation-only tracking plus native common-support crops recover scrolled Settings
+focus:18/18retention directions and11/12eligible frame directions. Home growth
+correspondence and content-only false changes still block deployment. Actual opt-in
+CLI defaults disabled; no model replacement. Two2996case replays,1045exact matched
+pixel-decision replays,34Python/134Swift tests,21generatedCLI checks, two retainedCLI
+requests and fournative geometry cases. [Handoff](reports/work/FOCUS-ALIGNMENT-12/handoff.md).
+
 ## FOCUS-PAIRED-11 retained before/after comparison — complete October1,2026
 
 2996cases,1702native common-window crops, exact replay. Homegrowth6/6directional
@@ -3076,3 +3101,22 @@ checkpoint; terminal real-frame performance regressed. Candidate rejected, FDR02
 unchanged. Full saved-prediction replay and runtime/cache identities verified.
 Software/data integration passed; model comparison failed. No export/promotion.
 [Evidence](reports/work/SYN-12-EXECUTION/handoff.md).
+# FOCUS-STRUCTURE-14 — October 1, 2026
+
+Structural-v3 source compatibility completed for review:81verified manifest members,
+64delivered recipes, four-family real intake/review caller tests,61Python/134Swift
+tests. Receipt/contract feedback published and read back. No new pixels or admission;
+four measured family proofs, producer digest parity and clipped-scroll qualification
+remain in Tasks.md. [Handoff](reports/work/FOCUS-STRUCTURE-14/handoff.md).
+# FOCUS-HANDOFF-15 — October 1, 2026
+
+Self-service source handoff verified:17members, four compatible examples and exact
+request hash match. Actual running local planner rejected with exit64; matched build,
+full plan and four captured proofs requested. No implementation/model/data changes.
+[Handoff](reports/work/FOCUS-HANDOFF-15/handoff.md).
+# FOCUS-VISIBILITY-16 — October 1, 2026
+
+Visibility-aware native review projection implemented and integrated;84Python/
+134Swift tests and unchanged legacy50frame replay pass. Source/status investigation
+identified missing self-service compiler in examined local refs; exact revision
+requested, never a producer build. [Handoff](reports/work/FOCUS-VISIBILITY-16/handoff.md).

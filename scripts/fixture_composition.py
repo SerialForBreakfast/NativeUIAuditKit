@@ -1,4 +1,4 @@
-"""Closed TTR composition-v1/v2 consumer; design frames are never annotation truth."""
+"""Closed TTR composition-v1/v2/v3 consumer; design frames are never annotation truth."""
 import base64
 import copy
 import hashlib
@@ -40,7 +40,7 @@ def resolve(value, recipe, require):
     def ident(v): return isinstance(v,str) and re.fullmatch(r'[A-Za-z0-9_.-]{1,96}',v)
     def num(v): return type(v) in (float,int) and math.isfinite(v)
     fields(value, ('version','styles','definitions','contents','regions','background'))
-    require(type(value['version']) is int and value['version'] in (1,2),'composition_version')
+    require(type(value['version']) is int and value['version'] in (1,2,3),'composition_version')
     canonical=copy.deepcopy(value)
     for key,limit in [('styles',16),('definitions',32),('contents',64)]:
         require(isinstance(value[key],dict) and 1<=len(value[key])<=limit and all(ident(k) for k in value[key]),'composition_budget')
@@ -54,13 +54,16 @@ def resolve(value, recipe, require):
         require(all(integer(s[c],0,0xffffff) for c in ('foreground','background')) and integer(s['fontSize'],14,80) and
                 integer(s['cornerRadius'],0,32) and num(s['opacity']) and .1<=s['opacity']<=1 and type(s['blur']) is bool,'composition_style')
         canonical['styles'][k]['focus']=json.loads(base64.b64decode(focus_digest_source(s['focus']).split('@',1)[1]))
-    kinds=('poster','thumbnail','button','row','tab','text','artwork')
+    structural=('composite_card','ranked_row','home_icon','hero')
+    composites=('composite_card','ranked_row','hero')
+    images=('poster','thumbnail','artwork')+structural
+    kinds=('poster','thumbnail','button','row','tab','text','artwork')+(structural if value['version']==3 else ())
     for d in value['definitions'].values():
         fields(d,('kind','style','width','height'))
         require(d['kind'] in kinds and isinstance(d['style'],str) and d['style'] in value['styles'] and
                 integer(d['width'],40,1600) and integer(d['height'],24,900),'composition_definition')
     for k,c in value['contents'].items():
-        fields(c,('title','seed','preset'),('subtitle','design')+ (('owned_artwork',) if value['version']==2 else ()))
+        fields(c,('title','seed','preset'),('subtitle','design')+ (('owned_artwork',) if value['version']>=2 else ()))
         require(isinstance(c['title'],str) and 0<len(c['title'])<=160 and
                 (c.get('subtitle') is None or isinstance(c['subtitle'],str) and len(c['subtitle'])<=240) and
                 integer(c['seed'],0,2**64-1) and c['preset'] in ('artwork','bright_unfocused','gray_placeholder','blank_placeholder','high_contrast','photos_like') and
@@ -72,7 +75,10 @@ def resolve(value, recipe, require):
     regions=value['regions'];require(isinstance(regions,list) and 1<=len(regions)<=16,'composition_regions')
     ids={'composition.background'};occupied=[];result=[]
     for ri,r in enumerate(regions):
-        fields(r,('id','axis','frame','gap','items'))
+        fields(r,('id','axis','frame','gap','items'),('scroll',))
+        require(r.get('scroll') is None or type(r['scroll']) is bool,'composition_scroll_type')
+        require(r.get('scroll') is not True or value['version']==3,'composition_scroll_version')
+        if r.get('scroll') is None: canonical['regions'][ri].pop('scroll',None)
         require(ident(r['id']) and r['id'] not in ids and r['axis'] in ('row','column','shelf') and integer(r['gap'],0,120),'composition_region')
         ids.add(r['id']);f=r['frame']
         require(isinstance(f,list) and len(f)==4 and all(type(x) is int for x in f) and
@@ -87,14 +93,19 @@ def resolve(value, recipe, require):
             d=value['definitions'][i['component']];c=value['contents'][i['content']];sk=d['style'] if i.get('style') is None else i['style']
             require(isinstance(sk,str) and sk in value['styles'],'composition_style_reference');s=value['styles'][sk];kind=d['kind']
             x=f[0]+(0 if r['axis']=='column' else cursor);y=f[1]+(cursor if r['axis']=='column' else 0)
-            require(x+d['width']<=f[0]+f[2] and y+d['height']<=f[1]+f[3],'composition_overflow')
+            limit_x=3840 if r.get('scroll') is True and r['axis']!='column' else f[2]
+            limit_y=2160 if r.get('scroll') is True and r['axis']=='column' else f[3]
+            require(x+d['width']<=f[0]+limit_x and y+d['height']<=f[1]+limit_y,'composition_overflow')
             require(not i['selected'] or kind=='tab','composition_selected')
-            require(c.get('design') is None or kind in ('poster','thumbnail','artwork') and c['preset']=='artwork','composition_design')
-            require(c.get('owned_artwork') is None or kind in ('poster','thumbnail','artwork') and c['preset']=='artwork','composition_owned_artwork_kind')
+            require(c.get('design') is None or kind in images and c['preset']=='artwork','composition_design')
+            require(c.get('owned_artwork') is None or kind in images and c['preset']=='artwork','composition_owned_artwork_kind')
             focusable=kind not in ('text','artwork')
             require(not focusable or not s['blur'] and s['opacity']==1,'composition_control_effect')
             require(kind not in ('button','row','tab') or s['focus']['kind']=='native_button','composition_button_focus')
-            require(kind not in ('poster','thumbnail') or s['focus']['kind']!='native_button' and s['cornerRadius']==(s['focus'].get('custom') or {}).get('cornerRadius',12),'composition_image_focus')
+            require(kind not in images or not focusable or s['focus']['kind']!='native_button' and s['cornerRadius']==(s['focus'].get('custom') or {}).get('cornerRadius',12),'composition_image_focus')
+            require(kind not in composites or s['focus']['kind']=='custom','composition_composite_focus')
+            require(kind!='ranked_row' or 3*d['height']<=d['width']<=5*d['height'] and d['width']>=d['height']+202,'composition_ranked_size')
+            require(kind not in composites or d['width']>=160 and d['height']>=140,'composition_composite_size')
             result.append(dict(id=i['id'],parent=r['id'],kind=kind,focusable=focusable,selected=i['selected'],content=c,style=s))
             canonical['regions'][ri]['items'][ii]={a:b for a,b in i.items() if b is not None}
             cursor+=(d['height'] if r['axis']=='column' else d['width'])+r['gap']
@@ -120,6 +131,7 @@ def hierarchy(scene, require):
     require(set(elements)=={i['id'] for i in resolved},'composition_native_membership')
     taxonomy={'poster':('collectionItem',),'thumbnail':('collectionItem',),'button':('primaryButton','secondaryButton'),
               'row':('listRow',),'tab':('menuButton',),'text':('label',),'artwork':('imageView',)}
+    taxonomy.update({kind:('collectionItem',) for kind in ('composite_card','ranked_row','home_icon','hero')})
     for i in resolved:
         e=elements[i['id']]
         require(e.get('parent_element_id')==i['parent'] and e['taxonomy_class'] in taxonomy[i['kind']],'composition_native_role')

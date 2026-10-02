@@ -141,5 +141,54 @@ class ReviewTests(unittest.TestCase):
         self.assertFalse((self.root/'qa/report.json').exists())
         self.assertEqual(h.read(self.root/'qa/failure.json')['stage'],'production_crop_QA')
 
+    def test_visibility_policy_preserves_legacy_and_unknown(self):
+        self.attach();source,contract=b.source_record(self.bundle,set())
+        legacy=b.project([source],[contract]);current=b.project([source],[contract],visibility_policy=b.VISIBILITY_POLICY)
+        self.assertEqual(legacy,current)
+        for key in ('baselineScene','focusedScene'):
+            e=contract['usableRows'][0]['observationBinding'][key]['semantic_inventory']['elements'][0]
+            e.update(is_hidden=True,effective_alpha=0)
+        self.assertEqual(b.project([source],[contract]),legacy)
+        current=b.project([source],[contract],visibility_policy=b.VISIBILITY_POLICY)
+        self.assertEqual(current['pairs'],[])
+        self.assertTrue(all(not f['proposals'] for f in current['frames']))
+        self.assertTrue(any('focused_visibility_conflict' in f['reviewFindings'] for f in current['frames']))
+        with self.assertRaisesRegex(ValueError,'unsupported_visibility_policy'):
+            b.project([source],[contract],visibility_policy='future')
+
+    def test_partial_alpha_metadata_and_zero_alpha(self):
+        self.attach();source,contract=b.source_record(self.bundle,set())
+        for key in ('baselineScene','focusedScene'):
+            e=contract['usableRows'][0]['observationBinding'][key]['semantic_inventory']['elements'][0]
+            e.update(is_hidden=False,effective_alpha=.5,scroll_container_id='main',scroll_offset_points=[0,4])
+        current=b.project([source],[contract],visibility_policy=b.VISIBILITY_POLICY)
+        self.assertEqual(len(current['pairs']),1)
+        for f in current['frames']:
+            self.assertIn('partially_transparent_control',f['reviewFindings'])
+            self.assertEqual(f['proposals'][0]['nativeVisibility']['scroll_offset_points'],[0,4])
+        contract['usableRows'][0]['observationBinding']['focusedScene']['semantic_inventory']['elements'][0]['effective_alpha']=0
+        current=b.project([source],[contract],visibility_policy=b.VISIBILITY_POLICY)
+        self.assertFalse(current['pairs'])
+        self.assertIn('native_zero_alpha_control',current['frames'][1]['reviewFindings'])
+
+    def test_actual_visibility_intake_and_sealed_policy(self):
+        self.attach()
+        def walk(v):
+            if isinstance(v,dict):
+                for child in list(v.values()):walk(child)
+                if 'scene_width' in v:
+                    v['semantic_inventory']['elements'][0].update(is_hidden=not v['elements'][0]['is_focused'],effective_alpha=1)
+            elif isinstance(v,list):
+                for child in v:walk(child)
+        walk(self.f.meta);self.f.mutate(lambda _:None)
+        result=self.prepare(count=1)
+        self.assertEqual(result['pairCount'],0)
+        self.assertEqual(result['crops'],dict(expected=1,completed=1))
+        path=self.root/'qa/native-review/batch.json';doc=h.validate_batch(path)
+        self.assertEqual(doc['visibilityPolicy'],b.VISIBILITY_POLICY)
+        self.assertTrue(any(r['reason']=='native_hidden_control' for r in doc['records'] if 'reason' in r))
+        doc['visibilityPolicy']='future';doc.pop('seal');doc['seal']=h.digest(doc);path.write_text(json.dumps(doc))
+        with self.assertRaisesRegex(ValueError,'unsupported_visibility_policy'):h.validate_batch(path)
+
 
 if __name__=='__main__': unittest.main()

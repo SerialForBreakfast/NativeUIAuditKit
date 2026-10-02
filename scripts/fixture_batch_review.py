@@ -13,6 +13,7 @@ from human_corpus_inventory import metadata_hashes
 
 VERSION='fixture-native-review-batch-v1'
 BODY_VERSION='fixture-native-review-batch-v2'
+VISIBILITY_POLICY='native-observed-v1'
 
 
 def preflight(root, protected):
@@ -45,8 +46,9 @@ def source_record(root, protected, pair_ids=None):
     return dict(root=str(root.relative_to(h.ROOT)), files=refs, targetCoverage=contract['targetCoverage']),contract
 
 
-def project(sources, contracts, *, body_geometry=False):
+def project(sources, contracts, *, body_geometry=False, visibility_policy=None):
     """Deterministic normalized proposals, with every observed native record accounted."""
+    h.require(visibility_policy in (None,VISIBILITY_POLICY),'unsupported_visibility_policy')
     frames=[]; pairs=[]; records=[]; recipes={}; owners={}; pixel_annotations={}
     for source,contract in zip(sources,contracts):
         root=h.ROOT/source['root']; source_key=h.digest(source['files'])[:16]
@@ -87,6 +89,16 @@ def project(sources, contracts, *, body_geometry=False):
                     label='focus:tabItem' if eid in tab_ids else e['taxonomy_class']
                     if label not in FOCUSABLE and label!='focus:tabItem': reason='unsupported_or_nonfocusable_taxonomy'
                     elif inventory and native.get('focusable') is not True: reason='native_focusability_unknown_or_false'
+                    if visibility_policy and reason is None:
+                        invisible=native.get('is_hidden') is True or native.get('effective_alpha')==0
+                        if invisible:
+                            reason='native_hidden_control' if native.get('is_hidden') is True else 'native_zero_alpha_control'
+                            if e['is_focused']:
+                                frame.update(disposition='blocked',nativeUnresolved=True)
+                                frame['reasons'].append('focused_visibility_conflict')
+                                frame['reviewFindings'].append('focused_visibility_conflict')
+                        elif native.get('effective_alpha') is not None and native['effective_alpha']<1:
+                            frame['reviewFindings'].append('partially_transparent_control')
                     body=e.get('rendered_body_geometry')
                     if body_geometry and reason is None:
                         from fixture_rendered_body import validate as validate_body
@@ -103,6 +115,10 @@ def project(sources, contracts, *, body_geometry=False):
                         selected=native.get('selected'),accessibilityLabel=native.get('accessibility_label'),
                         declaredParentID=native.get('declared_parent_id'),declaredTaxonomy=native.get('declared_taxonomy'),
                         labelSource=pair.get('labelSource','observed_native_bracket'),geometryRole='control_wrapper')
+                    if visibility_policy:
+                        observed={k:native[k] for k in ('is_hidden','effective_alpha','scroll_container_id',
+                                  'scroll_offset_points','viewport_pixel_bounds') if k in native}
+                        if observed: proposal['nativeVisibility']=observed
                     if body_geometry:
                         proposal.update(bounds=bounds,geometryRole='rendered_control_body',
                             layoutWrapperBounds=e['pixel_bounds'],renderedBodyGeometry=body)
@@ -136,6 +152,7 @@ def project(sources, contracts, *, body_geometry=False):
                 if role=='focused' and frame['disposition']=='imported' and not frame['duplicateOf']:
                     recipes.setdefault(key,dict(recipe=recipe,frameID=fid,sourceRoot=source['root']))
             left,right=pair_frames
+            if visibility_policy and any(f['disposition']=='blocked' for f in pair_frames): continue
             other={c['id']:c for c in right['proposals']}
             for c in left['proposals']:
                 b=other.get(c['id'])
@@ -163,7 +180,8 @@ def validate(path):
         for ref in source['files']: h.checked(h.ROOT,ref)
         expected,contract=source_record(h.local(h.ROOT/source['root']),protected,source.get('pairIDs'))
         h.require(expected==source,'source_binding_changed'); contracts.append(contract)
-    expected=project(batch['sources'],contracts,body_geometry=version==BODY_VERSION)
+    expected=project(batch['sources'],contracts,body_geometry=version==BODY_VERSION,
+                     visibility_policy=batch.get('visibilityPolicy'))
     for field in ('frames','pairs','records','recipes'):
         h.require(batch[field]==expected[field],'native_review_projection_changed:'+field)
     h.require(not batch['transitions'] and batch['completeFrameCandidates'] is False,'unsupported_native_claim')
@@ -194,7 +212,7 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
                 row['receipt']=h.ref(receipt)
                 try: row['producerReportedReceipt']=h.read(receipt)
                 except (ValueError,OSError): pass
-    projection=project(sources,contracts,body_geometry=body_geometry)
+    projection=project(sources,contracts,body_geometry=body_geometry,visibility_policy=VISIBILITY_POLICY)
     estimated=sum(h.checked(h.ROOT,f['image']).stat().st_size*3 for f in projection['frames'])
     estimated+=sum(len(f['proposals'])*300000 for f in projection['frames'])
     h.require(shutil.disk_usage(h.ROOT).free>estimated+2_000_000_000,'insufficient_space_for_review')
@@ -206,7 +224,8 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
     if projection['frames']:
         work=output/'native-review'; (work/'editor').mkdir(parents=True); (output/'sheets').mkdir()
         version=BODY_VERSION if body_geometry else VERSION
-        batch=dict(version=version,**h.FLAGS,id='native-'+h.digest([version,sources])[:20],sources=sources,
+        batch=dict(version=version,visibilityPolicy=VISIBILITY_POLICY,**h.FLAGS,
+            id='native-'+h.digest([version,sources,VISIBILITY_POLICY])[:20],sources=sources,
             protectedMetadata=protected_ref,categoryMap=h.ref(h.CATEGORY),**projection,
             transitions=[],completeFrameCandidates=False,counts=dict(Counter(f['disposition'] for f in projection['frames'])))
         h.write(work/'batch.json',batch,sealed=True)

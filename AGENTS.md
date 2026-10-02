@@ -253,6 +253,18 @@ The user commits manually. Stage files if asked, but never commit.
 
 ## Build and Test Workflow
 
+### TTR source-first local builds — maintainer directive, 2026-10-01
+
+Do not request TTR builds, binaries, DMGs, packaged candidates or a build-only
+handoff for NUIAK's local testing. Synchronize source through Git and build/test
+locally on the consuming machine. If necessary, ask the TTR owner to commit/push
+their changes and identify the branch and commit; do not offload our build work
+onto their pipeline. Generate local planning/check outputs locally when supported.
+This does not cancel TTR's independently assigned implementation or runtime work,
+or requests for actual captured evidence. Existing Git-write, repository ownership,
+signing, app-replacement and device-operation permissions still apply; this rule
+does not authorize an agent to commit/push or overwrite another checkout.
+
 ```bash
 # From the package root (directory containing Package.swift)
 swift build    # must succeed before any code change is considered done

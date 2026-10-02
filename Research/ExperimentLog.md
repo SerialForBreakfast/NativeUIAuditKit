@@ -1,5 +1,33 @@
 # NativeUIAuditKit — Experiment Log
 
+## FOCUS-INTAKE-13 — scene corroboration, no model training (October1,2026)
+
+Compared two predeclared aggregation rules on retained Alignment12outputs: exactly
+one gain/one loss, versus also requiring every background decision resolved.
+No threshold changes, truth-based selection, new encoding or training. Six eligible
+pairs/twelve directions:7correct5abstain versus0correct12abstain; prior arrival-only
+11correct1abstain. Both return unchanged on12identical cases. Existing offline
+correspondence is assumed, not qualified persistent runtime identity. All72grouped
+real cases retained,48outside existing full-frame eligibility. Two opposite color
+changes fool both actual pixel calls and scene CLI despite no focus change.
+Reject deployment: corroboration alone cannot establish focus causality.
+18aggregation CLI cases,93Python/134Swift tests pass. New25pair archive integrity
+and1,300crop QA passed separately, no data admission. [Handoff](../reports/work/FOCUS-INTAKE-13/handoff.md).
+
+## FOCUS-ALIGNMENT-12 — translation diagnostic, no model training (October1,2026)
+
+Frozen gradient-template translation/reciprocal/ambiguity method, same before-window
+size, native cropper. Primary2996cases:9/12eligible frame directions,4/18retention,
+no wrong retained decisions but excessive edge clipping abstention. Isolated
+common-support crop geometry follow-up (matching thresholds unchanged):11/12frame
+directions,18/18retention; known161pxscroll recovered at158.44pxestimate. Home
+enlargement fails texture correspondence (0/6vs prior fixed-window6/6). Two of11
+generated stress cases wrongly report content changes as focus changes; no deployment.
+182.84sprimary/185.92sfollow-up CPU replay,222/347new native crops.34Python,
+21generatedCLI, two retainedCLI, fournative edge cases, offline build/134Swift tests.
+1045final matched pixel decisions replay exactly; source snapshots retained.
+No training run ID, weights, promotion or data-role change. [Results](../reports/work/FOCUS-ALIGNMENT-12/results.md).
+
 ## FOCUS-PAIRED-11 — retained-pixel diagnostic, no neural training (October1,2026)
 
 Fixed policy before scoring: common before-anchored native16%/256crop, rectangular

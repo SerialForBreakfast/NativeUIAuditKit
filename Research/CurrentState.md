@@ -1,9 +1,77 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 1, 2026 PDT, FOCUS-PAIRED-11 (underlying results retain observation dates)
+**As of:** October 1, 2026 PDT, FOCUS-INTERRUPTIONS-17 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**FOCUS-INTERRUPTIONS-17 completed:** corrected interruptionr2 received,168manifest
+files verified;20stable capture brackets and447production crops pass.98covered/
+removed bodies excluded;8frames report not settled;20files contain6unique screenshots.
+Failed recovery and unknown overlay-underlay focus remain explicit. Diagnostic only,
+no training admission/model change.93Python/134Swift tests pass. TTR02:16:17UTC reports
+four structural families passed and remaining44appearance cases collecting; their
+proof originals and published source repair are still needed for consumer acceptance.
+No producer build requested. [Handoff](../reports/work/FOCUS-INTERRUPTIONS-17/handoff.md).
+
+**FOCUS-VISIBILITY-16 completed:** new sealed native review projections exclude
+explicitly hidden/zero-alpha controls and block focused/invisible conflicts; partial
+alpha and native scroll metadata retained. Legacy50frame batch validates unchanged.
+84Python/134Swift tests pass. TTR acknowledges source-only/local-build policy;
+01:12:19UTC status says recovery passed, first composite-card validation failed,
+zero accepted pairs. Configured local TTR master46dce7b and fetched simulator-harvest
+967d585 lack the self-service compiler, including working tree. Requested exact
+branch/commit (commit/push only if needed), not a build. No local TTR build attempted
+from the wrong source; no model or corpus change.
+[Handoff](../reports/work/FOCUS-VISIBILITY-16/handoff.md).
+
+**FOCUS-HANDOFF-15 verified:** TTR's self-service source checkpoint is received;
+17files match hashes, example request matches producer signed-CLI receipt, all four
+structural examples pass consumer parsing. Source adds deterministic planning,
+unattempted-only resume and grouped local export; no new pixels. Running Maximum-mini
+helper is not the reported candidate: help lacks plan/generate/resume and an actual
+plan-only call exits64 invalidArgument. The build/candidate request was withdrawn by
+maintainer direction: sync source through Git, build and produce planning evidence
+locally; only request commit/push and revision identity if needed. First-four
+capture/scroll proofs remain open. Producer
+HTML selects first verified case per family, not a random sample; retain NUIAK's
+seeded annotator review. Receipt/feedback published and read back; no app replacement,
+capture, training or admission. [Handoff](../reports/work/FOCUS-HANDOFF-15/handoff.md).
+
+**FOCUS-STRUCTURE-14 completed for review:** structural-v3 source archive received,
+81members verified;48appearance and16transition recipes pass consumer checks.
+Four structural kinds now flow through the existing diagnostic review caller;
+hidden/alpha/scroll metadata is validated without inventing missing observations.
+61Python/134Swift tests pass. Matrix distinguishes36custom-growth and12native-image
+cases. No new captured data or training: first four measured family proofs, producer
+digest parity and clipped-scroll membership remain open. TTR is independently
+implementing self-service generation/export. Prior six sampled checks are approved.
+[Handoff](../reports/work/FOCUS-STRUCTURE-14/handoff.md).
+
+**FOCUS-INTAKE-13 completed for review:** received/hash-verified25new pairs/50frames,
+all389manifest members and1,300production crops pass.130unique crop pixels,68new
+versus prior six;50new target crops but only one layout/position. Six prefilled
+checks ready together; no training admission. Full TTR48pair structural proposal
+read and aligned. Opposing gain/loss scene rule yields7/12correct,5abstentions
+versus arrival-only11/12; strict background resolution abstains on all12. A whole
+screen with two content-color changes still falsely reports a switch through both
+actual CLIs. Reject deployment; preserve FDR021.93Python/134Swift tests pass.
+October1PDT: maintainer approved all six sampled alignment checks; saved revision
+records6reviewed/44blocked. No source-role migration/training admission implied.
+Next structural proofs (composite/row/icon/hero), not another same-slot training run.
+[Handoff](../reports/work/FOCUS-INTAKE-13/handoff.md).
+
+**FOCUS-ALIGNMENT-12 complete for review:** opt-in translation-aware offline CLI
+recovers the161pxscroll (158.44pxestimated). Equal visible-support follow-up gives
+18/18retention directions and11/12eligible frame directions, one abstention;
+Home enlargement defeats rigid texture matching (0/6versus prior6/6). Two generated
+content-only cases still cause false changes: no deployment or FDR021replacement.
+Two2996case replays,34Python/134Swift tests,21generatedCLI cases,1045exact matched
+pixel-decision replays. [Results](../reports/work/FOCUS-ALIGNMENT-12/results.md).
+Producer23:35:36UTC reports25newpairs/50frames delivered,31/48total,17runtime-blocked;
+coverage request acknowledged with proposed48pair structural successor. No receiver
+receipt/admission for the25in this local alignment tranche. Next intake/coverage
+assessment and full-scene focus-change corroboration.
 
 **FOCUS-PAIRED-11 complete:**2996retained contrast/no-op cases,1702native fixed-window
 crops. Growth finds6/6Home arrival contrasts versus0/6independent resizing (reused

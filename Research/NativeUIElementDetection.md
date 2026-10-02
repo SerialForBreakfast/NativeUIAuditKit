@@ -656,6 +656,24 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**FOCUS-INTAKE-13:** scene-level diagnostic consumes attributed control-change
+results and requires one gain plus one loss with declared complete coverage and
+persistent correspondence. Unknown background is reported; a separate strict arm
+requires it resolved. Context assertions are not runtime proof. Opposing content
+changes can imitate focus, so both arms remain advisory and never dispatch input.
+The new25pair archive receives crop QA only, without changing calibration ancestry
+or training/evaluation membership. [Scope](Plans/FocusIntake13.md).
+
+**FOCUS-ALIGNMENT-12:** optional offline paired verifier estimates translation from
+polarity-insensitive texture correlation, keeping the same body-window dimensions
+and native cropper. After truth geometry is audit-only, never a tracking input.
+Ambiguity, viewport changes and illumination warnings abstain. Original clipping
+rejection is retained; an isolated opt-in common-support variant trims equal
+context from both windows, preserving native rounded dimensions without using
+after truth bounds.18/18retention directions recovered, but Home artwork matching
+and content-only false changes prevent deployment. No static classifier replacement;
+[experiment scope](Plans/FocusAlignment12.md), [usage](FocusTransitionDiagnostic.md).
+
 **FOCUS-PAIRED-11:** diagnostic-only paired inputs reuse the native cropper with a
 before-frame anchor for both images, preserving relative size. Pixel-only edge/
 brightness rules never read the after truth box or focus label. Box-ratio oracle,
@@ -929,6 +947,28 @@ denominators. Missing states remain missing, not substituted. This keeps an
 eight-frame review useful without claiming independent statistical confidence.
 
 ### 8.1 Task Formulation
+
+**FOCUS-VISIBILITY-16 (2026-10-01):** new native-review batches carry optional
+`visibilityPolicy: native-observed-v1` in their sealed diagnostic contract. Missing
+policy preserves historical projection exactly. Under this policy explicit native
+hidden or effective-alpha-zero controls are excluded, not unfocused training boxes.
+Focused-but-hidden/zero-alpha conflicts block the frame and paired proposals;
+partial alpha is retained for review, not equated with invisibility. Absent metadata
+remains unknown. Preserve the original native visibility/scroll fields on proposals;
+they do not prove occlusion, focus correctness or rendered-body geometry. Unsupported
+policy values fail closed. This is a review projection addition, not a producer
+sidecar rewrite or a change to approved corpus membership.
+
+**FOCUS-STRUCTURE-14 compatibility (2026-10-01):** composition-v3 adds
+composite_card, ranked_row, home_icon and hero, all existing collectionItem targets.
+Composite bodies include their artwork and semantic children; annotations still
+require measured rendered-body geometry rather than a union of child/design bounds.
+Composite focus is explicitly custom growth; native home-icon image focus is a
+separate evaluation stratum. Optional scroll regions have bounded design extents;
+optional native hidden/alpha/scroll observations remain unknown when absent and do
+not replace clipping or visibility evidence. Existing strict native membership and
+paired-focus checks remain; recipe acceptance alone does not qualify clipped scroll
+exports. Source checkpoint compatibility and captured-data qualification are separate.
 
 **FOCUS-CAMPAIGN-09 compatibility (2026-10-01):** composition recipes have no
 canvas pairing field. For validated composition-v1/v2, competitor-v3 is declared

@@ -52,8 +52,17 @@ def validate(doc, scene=None):
             require(e.get(field) is None or isinstance(e[field],str) and bool(e[field]), 'parent_type')
         parent=e.get('parent_id')
         require(parent is None or parent in by_id and parent!=e['id'], 'parent_closure')
-        for field in ('enabled','selected','focusable','input_focused','is_accessibility_element'):
+        for field in ('enabled','selected','focusable','input_focused','is_accessibility_element','is_hidden'):
             require(e.get(field) is None or type(e[field]) is bool, 'invalid_'+field)
+        alpha=e.get('effective_alpha')
+        require(alpha is None or number(alpha) and 0<=alpha<=1,'invalid_effective_alpha')
+        container=e.get('scroll_container_id')
+        require(container is None or isinstance(container,str) and 0<len(container.encode('utf-8'))<=65536,'invalid_scroll_container_id')
+        offset=e.get('scroll_offset_points')
+        require(offset is None or isinstance(offset,list) and len(offset)==2 and all(number(v) for v in offset),'invalid_scroll_offset_points')
+        if e.get('viewport_pixel_bounds') is not None: rect(e['viewport_pixel_bounds'])
+        # Hidden, alpha, clipping and occlusion are distinct observations. Missing
+        # optional fields remain unknown; none establish an annotation rectangle.
         require(type(e.get('text_truncated')) is bool, 'text_truncated')
         for field in ('text','accessibility_label','accessibility_value','accessibility_hint','declared_text','declared_taxonomy','declared_defect'):
             # Bound retained payload without treating Swift Character count as Python len.

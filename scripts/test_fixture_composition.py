@@ -28,7 +28,7 @@ class CompositionTests(unittest.TestCase):
     def test_closed_contract_and_mutations(self):
         r=recipe();v=r['appearance']['composition'];items,identity=c.resolve(v,r,require)
         self.assertEqual(items[0]['id'],'e');self.assertTrue(items[0]['focusable']);self.assertTrue(identity.startswith('composition@1:'))
-        mutations=[lambda d:d.update(version=3),lambda d:d.update(extra=1),lambda d:d['styles']['s'].update(opacity=.5),
+        mutations=[lambda d:d.update(version=4),lambda d:d.update(extra=1),lambda d:d['styles']['s'].update(opacity=.5),
             lambda d:d['styles']['s'].update(fontSize=True),lambda d:d['regions'][0]['items'][0].update(style=''),
             lambda d:d['regions'][0]['items'][0].update(content='missing'),lambda d:d['regions'][0]['items'][0].update(selected=True),
             lambda d:d['regions'].append(copy.deepcopy(d['regions'][0])),lambda d:d['definitions']['d'].update(width=300),
