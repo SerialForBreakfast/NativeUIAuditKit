@@ -1,0 +1,3 @@
+# Retained structural corpus
+
+48 appearance pairs and16 controlled-transition pairs. Captured originals copied without recapture or modification. Producer verification is separate from human review, consumer admission and training; all three remain pending. All layouts share fixture_procedural_renderer_v1 ancestry: retain whole-layout exclusions. Appearance pairs prove appearance, not directional success. Transition records retain actual actions, native brackets and scrolling observations. Historical failed attempts remain in trial summaries and are not extra eligible pairs. No source/build/binary is included.

@@ -1,5 +1,25 @@
 # NativeUIAuditKit — Completed Tasks
 
+## SETTINGS-STABILITY-23 — unchanged-focus and content-change diagnostics
+
+Optional local near-identical-pixel extension and coherent-highlight guard, actual
+CLI/native-crop replay, source-bound scoring and action-level completeness accounting.
+Same48scorable controls:4→33correct, zero wrong,44→15abstentions. Guard rejects the
+generated content-only false arrival;9/9stress cases pass.105Python/134Swift checks.
+Development evidence only; human sample and broader qualification remain open.
+[Handoff](reports/work/SETTINGS-STABILITY-23/handoff.md).
+
+## FOCUS-RECORDED-STRUCTURAL-22 — actual corpus intake and fixed comparisons
+
+DATA64r1 receipt/hash/manifest verification;48appearance cases,96frames and264native
+crops accepted for diagnostic QA;48unique target pairs/96proposed target controls.
+One grouped eight-frame review prepared. Native OCR resolves recorded Settings
+correspondence; three fixed arms score identical membership. Brightness correctly
+finds two real moves, while unchanged controls mostly abstain.16native transition
+contracts audited with actionable identity/membership findings.98Python tests and
+offline134Swift tests pass. Human sample/source-role admission and producer repair
+remain in Tasks.md. [Handoff](reports/work/FOCUS-RECORDED-STRUCTURAL-22/handoff.md).
+
 ## FOCUS-REVIEWED-TRANSITIONS-21 — software and fixed pixel experiment
 
 Immutable human-revision integration, retrospective recorded-action CLI with

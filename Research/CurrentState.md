@@ -1,9 +1,27 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 2, 2026 PDT, FOCUS-REVIEWED-TRANSITIONS-21 (underlying results retain observation dates)
+**As of:** October 2, 2026 PDT, SETTINGS-STABILITY-23 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**SETTINGS-STABILITY-23:** fixed near-identical pixel rule increases correct recorded
+Settings control decisions from4to33, with zero wrong and15abstentions across48scorable
+controls (50total). Broad-highlight guard rejects a content-only false arrival and
+preserves both real moves;9/9generated stress cases pass. Full-screen outcomes remain
+incomplete; this is development pixel-rule evidence, not a new model or live runtime
+qualification.105Python/134Swift checks pass.
+[Handoff](../reports/work/SETTINGS-STABILITY-23/handoff.md).
+
+**FOCUS-RECORDED-STRUCTURAL-22:** actual DATA64 received and verified.48appearance
+cases/96frames/264production crops pass;48unique target pairs yield96proposed controls,
+with one eight-frame sampled review ready. Source-role/admission remain pending.
+Native OCR resolves five same-screen Settings pairs and two page changes. Fixed
+brightness identifies both real moves (four correct control changes, zero wrong,
+44abstentions among48scorable controls); growth contributes no decisions because
+row context is clipped.16native transition pairs remain blocked by duplicate child
+IDs and planned-versus-visible membership.98Python/134Swift tests pass.
+[Handoff](../reports/work/FOCUS-RECORDED-STRUCTURAL-22/handoff.md).
 
 **October2 human review update:** all seven Settings frames reviewed. Maintainer
 approved20row-type corrections in378/391; all72controls now`listRow`, preserving
@@ -12,7 +30,7 @@ completeness validate;72/72production crops pass.7/14timing-ready actions now ha
 both endpoints annotated. Next: screen/control correspondence and recorded-change
 scoring. [Correction](../reports/work/FOCUS-REVIEWED-TRANSITIONS-21/listrow-correction.md).
 
-**FOCUS-REVIEWED-TRANSITIONS-21:** saved human revisions now feed recorded-endpoint
+**Earlier FOCUS-REVIEWED-TRANSITIONS-21 checkpoint (review counts superseded above):** saved human revisions feed recorded-endpoint
 readiness and a retrospective native-crop comparison CLI. Tracking sees pixels and
 before-bounds only; after-labels/geometry supply separate, ambiguity-aware scoring.
 9/9 fixed generated pixel cases pass. One retained387→391transition has9/10controls

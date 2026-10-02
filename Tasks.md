@@ -1,5 +1,24 @@
 # NativeUIAuditKit — Tasks
 
+## Review / next — SETTINGS-STABILITY-23 / Codex
+
+- [ ] Diagnose378→386alignment/neighbor contamination with pixel overlays and a fixed
+  row-body versus context comparison; preserve thresholds until failure is explained.
+- [ ] Validate beyond two real focus moves before runtime integration/promotion.
+  Completed33correct/0wrong/15abstained comparison,9/9guarded generated stress,
+  action accounting and105Python/134Swift tests:
+  [handoff](reports/work/SETTINGS-STABILITY-23/handoff.md).
+
+## Review / next — FOCUS-RECORDED-STRUCTURAL-22 / Codex
+
+- [ ] Human sample acceptance: one eight-frame grouped, prefilled queue across all
+  four appearance families; choose source role before exact admission/encoding.
+- [ ] TTR: stable scene-unique semantic child IDs; clarify off-screen planned IDs
+  versus visible inventory, then replay all16native transition pairs.
+- [x] Settings unchanged-focus experiment and content-change guard completed in23;
+  preserved separate truth and coverage/error reporting.
+  Completed intake, comparison and checks: [handoff](reports/work/FOCUS-RECORDED-STRUCTURAL-22/handoff.md).
+
 ## Review — FOCUS-REVIEWED-TRANSITIONS-21 / Codex
 
 - [x] Integrate immutable reviewed endpoints with retained recording readiness.
@@ -11,7 +30,8 @@
 - [x] Ingest seven-frame human revision and approved20-control`listRow`correction;
   preserve all focus/bounds;72/72production crops pass.7/14timing-ready actions now
   have annotated endpoints. [Correction](reports/work/FOCUS-REVIEWED-TRANSITIONS-21/listrow-correction.md).
-- [ ] Resolve screen-context correspondence and score genuine recorded changes.
+- [x] Resolve screen-context correspondence and score genuine recorded changes;
+  completed in FOCUS-RECORDED-STRUCTURAL-22 with native OCR and separate human truth.
   [Plan](Research/Plans/FocusReviewedTransitions21.md).
 
 ## Review — FOCUS-READINESS-20 / Codex
@@ -23,12 +43,12 @@
 - [x] Verify both CLI paths and negative cases, retained native/recording replay,
   offline build and118Python/134Swift checks. No admission or model execution.
   [Handoff](reports/work/FOCUS-READINESS-20/handoff.md).
-- [ ] Receive structural originals (still not advertised), run campaign intake and
-  structural readiness on actual pixels, then sampled human review/source-role
-  decision. Do not substitute generated software fixtures for captured training data.
+- [x] Receive structural originals and run actual campaign intake/readiness in22.
+  Sampled human review/source-role decision is tracked in22above.
 - [x] Review existing seven Settings endpoints together; corrected revision and
   all72crops validated October2. Endpoint annotation complete for7of14timing-ready actions.
-- [ ] Qualify screen/control correspondence before genuine-transition scoring.
+- [x] Resolve advisory screen/control correspondence for retrospective scoring in22;
+  runtime persistent identity remains unqualified.
   [Review instructions](reports/work/FOCUS-READINESS-20/review.md).
 
 ## Review — FOCUS-CAMPAIGN-INTAKE-19 / Codex

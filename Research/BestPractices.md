@@ -2846,3 +2846,29 @@ conflicts with frozen accepted labels. Test a re-sealed revision with a substitu
 frame image, as FOCUS-REVIEWED-TRANSITIONS-21 does.
 **Why:** Correct rectangles attached to the wrong recorded endpoint produce plausible
 but invalid transition scores; a checksum is integrity evidence, not semantic binding.
+
+### Keep harvest-plan membership distinct from visible transition membership (2026-10-02)
+
+**Wrong:** Assume a strict harvest scene validator also qualifies scrolling transition
+records, or remove its membership check when planned off-screen IDs are absent from
+visible elements. DATA64's scroll records exposed exactly this mismatch.
+**Correct:** Record the actual planned/visible disagreement, obtain an explicit
+visibility/exclusion contract, and test transition-specific validation separately.
+Repeated child labels or asset names such as `film` must also have scene-unique IDs;
+parent association does not make a duplicate global ID unique automatically.
+**Why:** Valid scrolling can change visibility while identity remains stable. Quietly
+dropping checks or guessing scoped identities would conceal genuine correspondence
+errors and contaminate before/after labels.
+
+### Brightness change needs spatial support; stability needs absolute differences (2026-10-02)
+
+**Wrong:** Treat mean brightness increase as sufficient focus arrival, or near-zero
+signed change as unchanged focus. SETTINGS-STABILITY-23's content replacement caused
+a false arrival in the previous rule; positive/negative changes can also cancel.
+**Correct:** For the narrow Settings experiment, measure absolute differences for
+stability and require distributed same-direction change for highlight evidence.
+Retain ambiguous tracking, illumination and incomplete-scene abstentions. Test both
+content-only changes and actual focus changes; keep thin-outline/growth-only styles
+outside this guard's qualified scope.
+**Why:** Content and focus both alter pixels. More decisions are useful only with
+explicit false-positive checks and coverage, not a conditional accuracy headline.
