@@ -1,5 +1,18 @@
 # NativeUIAuditKit — Experiment Log
 
+## NATIVE-FOCUS-EFFECT-SPIKE-26 — capture qualification (October2,2026)
+
+Approved1,000training+250evaluation-pair spike started, not a model training run.
+Structural home_icon/native_image plan passed, then case validation rejected it
+(`commandRejected`,0accepted). One discriminating retained canvas-v2 native-image
+recipe completed1pair/0rejected in6.149s. Current scene explicitly reports
+`unavailable_native_effect_not_measured` with layout-only artwork bounds. That
+diagnostic repeat is not admitted to training. Direct export fails for both project
+and USB paths; app-owned export passes. Postflight ready/ownership clear. Corrected
+matching Fixture source/build and consumer-readable delivery required before scale.
+No encoder/training execution, no weights or model metrics changed.
+[Evidence and resume conditions](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+
 ## FOCUS-INTAKE-13 — scene corroboration, no model training (October1,2026)
 
 Compared two predeclared aggregation rules on retained Alignment12outputs: exactly

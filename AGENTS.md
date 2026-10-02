@@ -163,6 +163,15 @@ particular chat, coordinator or automatically installed skill.
 
 ## HIGHEST PRIORITY — File System Boundary
 
+**Local USB exception,2026-10-02:** maintainer authorizes large corpus and scratch
+outputs for NATIVE-FOCUS-EFFECT-SPIKE-26 under
+`/Volumes/training-drive/data/NUIAK/NATIVE-FOCUS-EFFECT-SPIKE-26`.
+Verify the actual mounted local volume before writes; never create an unmounted
+lookalike. Keep code/environments and compact metadata project-local. This supersedes
+the cancellation below only for this local spike storage, not SMB/SSH services,
+unrelated migration, deletion or new model/device execution. Measure I/O overhead;
+do not infer permission to clean unrelated projects. Sandbox permissions still apply.
+
 **Cancellation,2026-09-30 (supersedes storage exception below):** maintainer cancelled
 external shared-drive and SSH/SFTP/rsync work. Use project-local evidence and the
 verified SharedStatusFile/tvtestrig receipt flow. No automatic external storage retry,

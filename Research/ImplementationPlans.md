@@ -1,5 +1,13 @@
 # Full backlog implementation packet catalog
 
+[NATIVE-FOCUS-EFFECT-SPIKE-26](Plans/NativeFocusEffectSpike26.md): approved native
+focus capture/learning spike, 1,000 training plus 250 grouped evaluation pairs,
+local USB storage and stage timings. Actual runtime qualification is recorded in
+the linked handoff; source delivery and measured-body compatibility remain explicit.
+
+[Corpus lifecycle ADR](ADR-0017-Corpus-Lifecycle-and-OS-Support.md): accepted OS
+support and proportionate retention policy; automation backlog is CORPUS-LIFECYCLE-27.
+
 [FOCUS-INTAKE-13](Plans/FocusIntake13.md): verified25 delivery, production crop QA,
 single sampled-review queue and retained whole-scene gain/loss diagnostic. No new
 training admission or runtime dispatch; Tasks.md holds next structural coverage work.

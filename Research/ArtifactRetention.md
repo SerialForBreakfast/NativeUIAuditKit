@@ -1,5 +1,15 @@
 # Repository artifacts and cleanup policy
 
+## October 2 amendment — synthetic corpus lifecycle
+
+[ADR-0017](ADR-0017-Corpus-Lifecycle-and-OS-Support.md) supersedes blanket preservation
+or independent-backup prerequisites for replaceable synthetic bulk data. Keep recipes,
+assets/licenses, versions, manifests and small historical references; preserve private
+device captures and human corrections. Exact cleanup still requires assigned scope.
+The maintainer authorizes local USB corpus/scratch storage for the native-focus spike
+at `/Volumes/training-drive/data/NUIAK/NATIVE-FOCUS-EFFECT-SPIKE-26`, after mount
+verification. The cancelled shared-drive/SSH investigation below remains cancelled.
+
 Source control retains source, reusable tests, schemas, canonical plans, concise
 reviewed result/decision handoffs and compact artifact hash indexes. It is not the
 dataset or execution-log store. Artifact retention and model gates remain unchanged.

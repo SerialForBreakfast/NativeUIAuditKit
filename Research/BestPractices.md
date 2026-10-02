@@ -2872,3 +2872,29 @@ content-only changes and actual focus changes; keep thin-outline/growth-only sty
 outside this guard's qualified scope.
 **Why:** Content and focus both alter pixels. More decisions are useful only with
 explicit false-positive checks and coverage, not a conditional accuracy headline.
+
+### Removing context can remove focus evidence (2026-10-02)
+
+**Wrong:** Promote body-only stability because it resolves more unchanged Settings
+rows. SETTINGS-CONTEXT-24 improved33→37correct decisions on retained examples, but
+masked away a generated focus outline and falsely declared unchanged.
+**Correct:** Keep actual production crops and compare measurement regions explicitly;
+test neighboring-control changes and outside-body focus effects as separate cases.
+Scope any region-specific rule to demonstrated focus styles. Preserve counterexamples
+even when the small retained development score improves.
+**Why:** Neighbor contamination and legitimate focus decoration occupy the same
+surrounding region. Removing both improves apparent stability but can hide a real
+focus change; geometry alone does not distinguish their meaning.
+
+### Updated host does not imply updated Fixture annotations (2026-10-02)
+
+**Wrong:** Infer repaired rendered-body annotations from a new host CLI, passing
+planner or a successful native capture. Spike26's host compiled a structural-v3
+plan, while the installed Fixture still reported native-effect geometry unmeasured;
+a legacy native-image capture nevertheless completed successfully.
+**Correct:** Check actual Fixture geometry source/status on the captured scene before
+scale-up. Pin host/helper and installed Fixture separately. An accepted pair with
+layout-only geometry remains unsuitable for measured-body training. Obtain the
+matching source and build locally rather than repeatedly regenerating legacy labels.
+**Why:** Host and Simulator app can be updated independently. Planning, capture and
+annotation-contract compatibility are separate boundaries.

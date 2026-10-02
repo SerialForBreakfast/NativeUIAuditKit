@@ -1,9 +1,24 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 2, 2026 PDT, SETTINGS-STABILITY-23 (underlying results retain observation dates)
+**As of:** October 2, 2026 PDT, SETTINGS-CONTEXT-24 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**NATIVE-FOCUS-EFFECT-SPIKE-26, October2:** approved execution started. New structural
+native recipe fails TTR case validation. Legacy native-image compatibility capture
+passes1pair/6.149s/0rejected, but the running Fixture explicitly reports native effect
+geometry unmeasured (layout rectangles). Full corpus/training waits on corrected
+Fixture source/build and verified external delivery. ADR-0017 adopts versioned OS
+support and proportionate synthetic retention. [Handoff](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+
+**SETTINGS-CONTEXT-24:** source-bound visual diagnosis confirms neighbor contamination
+and residual text/edge differences after scrolling. Body-only stability improves
+retained correct decisions33→37, but falsely calls a generated focus-outline change
+unchanged. Reject blanket body-only substitution; retain23's full-context guarded
+rule.111Python/134Swift checks pass. Next model-quality step remains eight-frame
+sample review/source-role decision, then admitted matched training.
+[Handoff](../reports/work/SETTINGS-CONTEXT-24/handoff.md).
 
 **SETTINGS-STABILITY-23:** fixed near-identical pixel rule increases correct recorded
 Settings control decisions from4to33, with zero wrong and15abstentions across48scorable

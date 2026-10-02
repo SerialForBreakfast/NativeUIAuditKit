@@ -1,9 +1,70 @@
 # NativeUIAuditKit — Tasks
 
+## Blocked runtime / active preparation — NATIVE-FOCUS-EFFECT-SPIKE-26 / Codex
+
+October2 maintainer assigns execution, Simulator use and local external-drive corpus
+storage. ADR-0017 records the approved lifecycle/retention policy. Verify exact runtime,
+supported generation/storage paths and split membership before capture/training.
+Actual start: structural recipe rejected; legacy native capture1pair/6.149s succeeds,
+but Fixture explicitly exports unmeasured native-effect layout bounds. Need corrected
+source/Fixture and external delivery qualification before scale-up/training.
+[Runtime evidence and resume conditions](reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+
+User-requested bundled spike: determine whether native enlargement/shading/shadow
+improves focus learning beyond artwork brightness. Automated batch checks at scale.
+
+Priority raised by maintainer: confirmed1,000training+250evaluation pairs/2,500screenshots; repeated accurate
+reviews waive another manual pilot prerequisite. Automated checks and exception review
+remain. Verify existing native batch capability and request only its concrete gaps.
+Keep occasional random spot checks separate from detector-flagged/error-focused review.
+If the experiment fails, diagnose the cause and justify the changed rerun first.
+Optional TTR pacing/settling and coordinated multi-Simulator backlog request is
+tracked under26; these low-priority improvements do not block serial generation.
+
+- [ ] Verify genuine native-effect paired generation, observed focus and measured
+  body geometry during the batch; distinguish native effects from custom imitations.
+- [ ] Compare current per-control resizing with a scale-preserving paired input;
+  retain surrounding shadow/context, identical artwork within each pair, dark/light
+  backgrounds and bright unfocused distractors. Freeze eligible membership and splits.
+- [ ] Measure generation throughput and annotation failures; run an explicitly scoped
+  matched training comparison when pilot review and data admission pass. Report real
+  artwork misses/false positives, retention and whether larger generation is justified.
+  [Spike contract](Research/Plans/NativeFocusEffectSpike26.md).
+
+## Backlog — CORPUS-LIFECYCLE-27 / Codex
+
+- [ ] Implement explicit OS-support/disposition filtering into immutable training
+  manifests, with provenance validation, split preservation and historical replay.
+- [ ] Add a read-only retirement/cleanup report with dependency and irreplaceable-data
+  checks. No deletion or runtime removal without an exact approved scope.
+  [Accepted policy](Research/ADR-0017-Corpus-Lifecycle-and-OS-Support.md).
+
+## Ready — SETTINGS-SWIFT-SPIKE-25 / Codex
+
+User-assigned bundled spike: compare the current Python/OpenCV pipeline with a
+Swift/Vision tracking candidate, then deliver an evidence-informed ADR as one tranche.
+
+- [ ] Port the full-context pixel/stability/highlight rules to a local Swift diagnostic
+  caller; prove arithmetic/crop parity using identical inputs before swapping tracking.
+- [ ] Compare OpenCV versus Vision correspondence and end-to-end focus-change results
+  on identical retained pairs and generated counterexamples; report correctness,
+  wrong changes/false unchanged, abstentions, coverage, tracking errors and latency.
+- [ ] Write an ADR recommending integration, further research or rejection, with
+  measured trade-offs and an optional advisory NUIAK→TTR observation contract.
+  [Scope and acceptance](Research/Plans/SettingsSwiftSpike25.md).
+
+## Review — SETTINGS-CONTEXT-24 / Codex
+
+Body-only37correct versus full-context33on48scorable controls, but a generated focus
+outline is incorrectly called unchanged. Candidate rejected for general use; retain
+the guarded full-context rule. Visual gallery and111Python/134Swift tests complete.
+[Handoff](reports/work/SETTINGS-CONTEXT-24/handoff.md).
+
 ## Review / next — SETTINGS-STABILITY-23 / Codex
 
-- [ ] Diagnose378→386alignment/neighbor contamination with pixel overlays and a fixed
-  row-body versus context comparison; preserve thresholds until failure is explained.
+- [x] Diagnose378→386alignment/neighbor contamination and fixed body/context comparison
+  in24; neighbor contamination and residual text/edge differences observed. Body-only
+  masking rejected after focus-outline counterexample.
 - [ ] Validate beyond two real focus moves before runtime integration/promotion.
   Completed33correct/0wrong/15abstained comparison,9/9guarded generated stress,
   action accounting and105Python/134Swift tests:

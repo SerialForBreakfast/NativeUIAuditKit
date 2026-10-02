@@ -1,5 +1,13 @@
 # NativeUIAuditKit — Completed Tasks
 
+## SETTINGS-CONTEXT-24 — context diagnosis and rejected region-only candidate
+
+Source-bound native-crop gallery and fixed row-body versus full-context comparison.
+37versus33correct retained decisions, but body masking hides a generated focus-outline
+change. Preserve full-context guarded rule. Residual text/edge differences remain
+after scrolling; no threshold relaxation.111Python/134Swift checks pass.
+[Handoff](reports/work/SETTINGS-CONTEXT-24/handoff.md).
+
 ## SETTINGS-STABILITY-23 — unchanged-focus and content-change diagnostics
 
 Optional local near-identical-pixel extension and coherent-highlight guard, actual

@@ -290,6 +290,12 @@ These are derived by audit rules and post-processing, not by the pixel detector:
 
 ## 6. Dataset Strategy
 
+**Lifecycle amendment, October 2, 2026:** follow
+[ADR-0017](ADR-0017-Corpus-Lifecycle-and-OS-Support.md) for OS support, immutable
+membership, historical benchmarks and proportionate synthetic-data retention.
+Retiring data changes future training manifests, not already-trained weights.
+Private real-device captures and human corrections remain preserved separately.
+
 **FocusRing consumer hardening (2026-09-21):** the assigned offline tranche uses
 an explicit NUIAK review artifact (`focus-pair-evidence-v1`) for frame-bound
 callback truth, never inferred producer fields. Crop manifest v1.2 is validated
