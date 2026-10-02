@@ -1,5 +1,23 @@
 # Full backlog implementation packet catalog
 
+[ACCESSIBILITY-TRACKING-30](Plans/AccessibilityTracking30.md): exact producer failure
+diagnosis, retained alignment comparison and existing Home-reference preparation.
+[Integrated handoff](../reports/work/ACCESSIBILITY-TRACKING-30/handoff.md).
+
+[ACCESSIBILITY-ASSISTED-29](Plans/AccessibilityAssistedFocus29.md): current TTR
+accessibility evidence, optional annotation-assistance contract and prioritized
+ordinary real-pair qualification. High Contrast outlines and ordinary body boxes
+remain separate; implementation/admission state is in Tasks.md.
+
+[Settings Swift ADR](ADR-0018-Settings-Swift-Pixel-Parity.md): arithmetic port matches
+the existing pipeline; tested Vision tracking substitution rejected. Local29/25
+implementation and remaining real-data gaps are in the
+[integrated handoff](../reports/work/ACCESSIBILITY-ASSISTED-29/handoff.md).
+
+[NATIVE-FOCUS-TRANSFER-28](Plans/NativeFocusTransfer28.md): frozen-model cue probes,
+real reference-pair coverage audit and guarded offline advisory caller. Local results
+complete; real native-artwork paired evidence remains required before integration.
+
 [NATIVE-FOCUS-EFFECT-SPIKE-26](Plans/NativeFocusEffectSpike26.md): approved native
 focus capture/learning spike, 1,000 training plus 250 grouped evaluation pairs,
 local USB storage and stage timings. Actual runtime qualification is recorded in

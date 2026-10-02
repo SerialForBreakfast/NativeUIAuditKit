@@ -1,5 +1,71 @@
 # NativeUIAuditKit — Experiment Log
 
+## SETTINGS-BRIGHTNESS-33 — fixed mean comparison (October2,2026)
+
+Predeclared SettingsBrightness33; no learned model/training. Reuse exact OpenCV
+tracking, native crops and reviewed semantics from25:5action pairs,50controls,
+48scorable;2title changes excluded. Plain signed mean4correct/41wrong/3abstained;
+guarded mean33/0/15equals existing rule, including2arrivals+2departures and29
+unchanged controls. All5full-screen outcomes remain incomplete due to existing
+coverage/semantic gaps; unchanged controls do not establish whole-screen no-ops.
+14generated stress cases separately: sign9exact, existing/guarded12exact; guarded
+methods retain uncertainty on neighbor-only change and unavailable content-only
+tracking.11.397seconds. Outcome: reject simple sign replacement, no gain from
+guarded mean; keep existing safeguards.35Python checks and134Swift tests passed.
+Evidence: reports/work/SETTINGS-BRIGHTNESS-33/replay/result.json.
+
+## ACCESSIBILITY-TRACKING-30 — retained alignment diagnosis (October2,2026)
+
+No training or new tracking invocation. Fixed comparisons predeclared in
+AccessibilityTracking30: replay saved Vision positions, round their displacement,
+and a separately marked human-center geometry oracle. Same50controls/48scorable,
+production cropper and fixed full-context pixel rule. Raw and rounded2correct/0wrong/
+46abstentions; oracle36/0/12, including both real moves. Existing OpenCV33/0/15.
+Median accepted-track error3.11source pixels (33review-corresponded tracks), one
+wrong-row track and15unavailable tracks among scorable controls. Rounding rejected;
+oracle demonstrates sensitivity to alignment, not a runtime improvement.14generated
+cases:5/5/13exact respectively, zero wrong decisive calls. Final replays6.13s/0.57s.
+Initial stress read failed because the older generated-only envelope omits common
+diagnostic flags; compatibility verifies its specific version/seal without weakening
+normal intake. Failed log retained. [Evidence](../reports/work/ACCESSIBILITY-TRACKING-30/handoff.md).
+
+## SETTINGS-SWIFT-SPIKE-25 — offline fixed-rule comparison (October2,2026)
+
+No training. Assigned fixed scope in SettingsSwiftSpike25; per-run execution.json
+pins saved membership, tool and policy before replay. Five retained same-screen pairs,
+50controls/48scorable; two page-change exclusions. Existing Python33correct/0wrong/
+15abstentions exactly reproduced by Swift with identical tracking/crops; all45measured
+crop decisions agree, max stability metric error3.21e-13. Vision revision1 accurate
+reciprocal tracking plus Swift gives2correct/0wrong/46abstentions. Retained27.77s,
+14generated stress cases3.60s (12Python versus5Vision exact expected outcomes).
+Reject tracker substitution, retain diagnostic arithmetic port. No tuning or weights.
+Failed initial size lookup and restricted CVPixelBuffer attempts retained separately.
+[ADR and interpretation](ADR-0018-Settings-Swift-Pixel-Parity.md).
+
+## NATIVE-FOCUS-TRANSFER-28 — frozen-model cue probes (October2,2026)
+
+Assigned inference-only diagnostic, logged before execution. Reuse FDR036 final
+weights with its resident frozen prefix and exact500Native26 evaluation controls.
+Compare saved/common replay, equal-size20%per-body recrops, and rectangular-body
+neutralization. Fixed0.5/0.85 thresholds, no fitting/selection;1,800s wall/2GiBoutput
+cap includes prefix forward computation. Source remains USB; derived diagnostics
+project-local. Pin checkpoint/protocol/code/runtime in results. Report out-of-domain
+probe limits, scores/false positives/misses and whether real reference pairs exist.
+Completed: cue replay41.597s, baseline maximum score difference1.03e-8. At0.85,
+common500/500, equal-size398/500 (102missed focused, zero false focused), body-
+neutralized250/500 (all250focused missed). At0.5:500/436/250respectively.88of102
+equal-size misses occur on dark backgrounds. This supports sensitivity to scale
+plus interior appearance, not isolated shading causality: both probes change input
+distribution and the body mask removes rounded-corner pixels as well as content.
+Third predeclared negative stress took1.386s: all250unfocused examples remain below
+0.15at both0.8and1.2RGB gain. Saved-score composition:246/246content-only pairs and
+250/250identical no-ops remain unfocused; these are constructed, not actual actions.
+Actual advisory CLI/native crop/FDR036 call returns focused on accepted synthetic
+case n26-g08-v000; missing prerequisites return unavailable before inference.
+Real audit:166actions,14timing-ready,7reviewed endpoint pairs (Settings),0qualified
+native-artwork pairs.315representative controls have no pairID/sourceElementID.
+[Results and remaining coverage](../reports/work/NATIVE-FOCUS-TRANSFER-28/handoff.md).
+
 ## Run FDR035 — native-effect standard-crop comparison (October 2, 2026)
 
 Status: completed, PID15294, started19:37:13UTC;1,000updates in33.117s. Synthetic
@@ -2386,3 +2452,37 @@ Keep candidate unshipped; next propose label-role/geometry review and independen
 41-class coverage, not another unmeasured training run. DS-G8 remains open; no
 threshold change, retraining, export, device capture or promotion. Software checks:
 23 focused Python tests, offline Swift build and14 XCTest+109 Swift Testing tests pass.
+# October2 — REAL-REFERENCE-CHALLENGE-31 (completed frozen inference)
+
+User-approved continuation: FDR036 unchanged, four reviewed Home crops/two pairs.
+No optimization updates; thresholds0.5/0.85 and advisory bands0.15/0.85 fixed.
+300seconds/256MiB ceiling. Changing-neighbor contamination is retained and reported.
+PID26232;2.556seconds. Photos negative0.997888/positive0.994072;
+Music negative0.969501/positive0.995015. Both thresholds give2/4correct; advisory
+bands give2correct/2wrong/0uncertain. Production crop pixels match exactly.
+Result: reports/work/REAL-REFERENCE-CHALLENGE-31/scored/result.json.
+Diagnosis: synthetic success fails on these bright Home negatives; changing-neighbor
+context prevents attributing cause to artwork versus neighbor cues. Next use verified
+clean/contaminated controls and matched ablations, not an unchanged training repeat.
+This is retrospective development evidence, not an independent benchmark.
+# October2 — REAL-TRANSFER-DIAGNOSIS-32 (completed inference)
+
+Approved next tranche after explicit confirmation of six identities/focus states.
+FDR036 frozen;12new reviewed inputs,4Home baseline,4neighbor masks,4target masks.
+Maximum24inputs/300seconds/256MiB; thresholds0.5/0.85,advisory0.15/0.85 unchanged.
+Independent fixed luminance-order comparison uses those same paired crops. All
+results are development diagnostics. See Plans/RealTransferDiagnosis32.md.
+
+PID27827,2.716seconds,24inputs. Initial geometry-only preflight failed on clipped
+row context before model loading; preserved. Production-clamped offline diagnostic
+explicitly separates four clipped pairs from two contained new pairs. All body
+rectangles fully contained in actual windows. New pairs6/12correct at0.5/0.85,
+0/6focused detections; advisory6correct/5wrong/1uncertain. Home baseline parity
+maximum1.1921e-7. Neighbor masks leave two false positives (negative scores0.92259,
+0.88984); target masks drive all Home scores below0.008. These are sensitivity
+probes, not causal attribution. Fixed mean-brightness ordering8/8pairs correct,
+versus model ordering5/8; no no-op/navigation or independent evaluation claim.
+Source metadata audit verifies1,250pairs including1,000train; all train layout=row,
+body-aspect range1.084–1.761. Five new wide controls are outside that range.
+Action: test wide native controls and matched Home appearance, not unchanged scale-up.
+Evidence: reports/work/REAL-TRANSFER-DIAGNOSIS-32/{scored-clipping-aware,coverage-verified}.

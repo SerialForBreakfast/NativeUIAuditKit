@@ -1,5 +1,39 @@
 # NativeUIAuditKit — Best Practices
 
+### Positive-pair brightness ordering is not transition detection (October2,2026)
+
+**Wrong:** Infer a navigation detector from8/8known focused/unfocused pairs ordered
+by brightness. In the retained sequence, signed mean correctly found4changing
+controls but falsely called41unchanged controls arrival/departure.
+**Correct:** Include unchanged rows, noise/content/illumination/scroll negatives,
+preserve absolute-pixel stability and broad-highlight guards, and keep whole-screen
+completeness distinct. Guarded mean matches existing33correct/0wrong/15abstained;
+it does not improve coverage. **Why:** tiny nonzero differences have a direction
+without representing focus. Positive-only pair tests hide that failure boundary.
+
+### Row overlap is not precise pixel registration (2026-10-02)
+
+**Wrong:** Treat a tracker box that overlaps the right row as sufficiently aligned
+for a strict pixel-difference rule, or assume rounding fractional coordinates fixes it.
+**Correct:** Diagnose position error separately from arithmetic and focus labels.
+Tracking30 raw and rounded Vision each score2/48; human-center geometry yields36/48
+but is an oracle, not an inference gain. One accepted track follows the adjacent row;
+median error is3.11source pixels among33review-corresponded tracks. Preserve fixed
+scale and ambiguity guards, and distinguish wrong correspondence from crop jitter.
+**Why:** Small source offsets amplify in a short256px crop; overlap alone can hide
+the failure. Better alignment still leaves12abstentions, so do not blame every
+remaining error on tracking or relax stability thresholds without counterexamples.
+
+### Separate arithmetic parity from tracking replacement (2026-10-02)
+
+**Wrong:** Attribute a native pipeline regression to the focus rule without testing
+identical crop pixels, or assume Vision tracking improves an OpenCV diagnostic.
+**Correct:** Settings25 first reproduced45crop decisions in Swift (metric error below
+3.21e-13); only then substituted tracking. Scored decisions fell33→2with unchanged
+thresholds. Preserve tracking failures, semantic-target IoU and abstentions separately.
+**Why:** Correct arithmetic cannot recover a misaligned row. Changing both components
+at once hides which one failed. See ADR-0018; this result is candidate-specific.
+
 ## Preserve scene scale separately from accurate control bounds (FOCUS-GROWTH-02)
 
 **Wrong:** Expect a larger rendered-body box to create a larger model input body
@@ -2935,3 +2969,33 @@ pairs before integration; compare same-scale context/size ablations before attri
 the gain to any one cue. Preserve the broad model until its scope is independently met.
 **Why:** Clean labels and a learnable native effect do not eliminate renderer/domain
 shift. Narrow training can learn a useful specialist while producing a bad replacement.
+
+### Cue masking diagnoses sensitivity, not a unique learned mechanism (2026-10-02)
+
+**Wrong:** Interpret Native28's500→398correct after equal-size cropping as proof
+that enlargement alone explains focus, or500→250after body masking as proof that
+the network learned shading. Both transformations change multiple input properties.
+**Correct:** Preserve the exact baseline and replay parity; report scale/context and
+mask/distribution confounds. Test negative-only brightness/content changes separately.
+Require real paired transfer before choosing an operational cue or confidence policy.
+**Why:** A classifier can fail on an artificial mask because it is unfamiliar, and a
+resized crop changes both occupancy and surrounding pixels. A useful sensitivity
+result is narrower than causal attribution or deployment readiness.
+# Retrospective reference matching — October2,2026
+
+Spatial overlap is not control identity. In challenge31, a0.901IoU Settings
+candidate paired Automatically Install Apps with Profiles and Accounts after
+screen content moved. Keep spatial matches as proposals; inspect content and
+viewport before scoring, preserve negative examples, and never convert highIoU
+into automatic pair admission. This prevents false before/after labels even when
+each original frame's boxes and focus annotations were correctly reviewed.
+
+### Coverage names are not rendered control coverage — diagnosis32
+
+The native-effect training corpus's `row` layout meant a row of artwork tiles,
+not native Settings list rows: all1,000training body aspects were1.084–1.761,
+while five reviewed controls were7.140–11.049. Audit actual measured geometry and
+control rendering, not layout names, before claiming coverage. Also separate
+context clipped at the screenshot edge from body clipping: four reference windows
+lost context while both target bodies remained fully visible. Preserve production
+clamping for labeled offline diagnostics without weakening live eligibility gates.

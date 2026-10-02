@@ -1,9 +1,86 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 2, 2026 PDT, NATIVE-FOCUS-EFFECT-SPIKE-26 (underlying results retain observation dates)
+**As of:** October 2, 2026 PDT, SETTINGS-BRIGHTNESS-33 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**Brightness33:** simple brightness direction fails real unchanged rows:4correct/
+41wrong/3abstained on48scorable controls. Stability/coherent-highlight guarded mean
+matches existing33correct/0wrong/15abstained, including both actual switches.
+Generated stress:9/14exact sign versus12/14existing/guarded. Keep existing rule;
+positive-pair8/8brightness ordering is not transition reliability.48case native
+artwork/wide-button/list-row coverage intent prepared. TTR reports new density
+support, but local46dce7bdirty checkout lacks advertised dedfd613 and new source;
+build qualification waits for source publication/synchronization.35Python and134
+Swift tests passed. [Handoff](../reports/work/SETTINGS-BRIGHTNESS-33/handoff.md).
+
+**Transfer32:** maintainer confirmed all six identities/states. Frozen FDR036 gets
+6/12binary decisions correct, detects0/6focused controls; advisory6correct/5wrong/
+1uncertain. Four wide-row pairs have production-clamped context; tab/button pairs
+are contained and also miss. Home neighbor masking leaves both false positives;
+target masking drives all four near zero. Fixed paired brightness ordering succeeds
+8/8including Home, but is not a single-image detector or navigation qualification.
+Pinned metadata audit: all1,000training pairs use artwork-row layout, body aspects
+1.084–1.761; five new controls have aspects7.140–11.049. Home lies inside the aspect
+range, so geometry alone does not explain its failure. Prioritize control-family
+coverage plus matched native Home appearance diagnostics over scaling the same
+generator. [Results](../reports/work/REAL-TRANSFER-DIAGNOSIS-32/handoff.md).
+
+**Real challenge31:** approved frozen FDR036 scoring completed on two historical
+Home pairs/four crops with exact production pixel parity. All four score focused:
+2/4correct at0.5and0.85, both unfocused icons are false positives; zero uncertain
+at0.15/0.85. This is difficult-case development evidence, not clean transfer or a
+representative benchmark.46reviewed stills/31screen labels yield30spatial proposals;
+eight inspected, one wrong-identity rejected and one duplicate omitted, leaving
+six grouped identity checks. [Handoff](../reports/work/REAL-REFERENCE-CHALLENGE-31/handoff.md).
+
+**Accessibility30 / tracking diagnosis:** exact producer report received and hashed.
+Later correspondence stop is now explained: Hover Text reached headings instead of
+ordinary rows; a separate Home profile comparison changes body geometry306×183→253×151.
+Cross-profile box transfer rejected. Real-artwork reference pairs still unavailable.
+Two reviewed Home stills are now prepared as candidate Photos/Music reference pairs;
+changing-neighbor crop overlap8.5–10.3%keeps them out of clean transfer qualification.
+Diagnostic-use continuation approved and scored in31; clean qualification stays open.
+Vision alignment rounding stays2/48correct; reviewed-center diagnostic reaches36/48
+with zero wrong, versus existing OpenCV33/48. The oracle uses human geometry, so keep
+OpenCV tracking and Swift arithmetic. [Results and next steps](../reports/work/ACCESSIBILITY-TRACKING-30/handoff.md).
+
+**Review29 / Settings25 implemented:** optional High Contrast evidence now feeds a
+new grouped annotator batch with profile/correspondence checks, separate random and
+targeted samples, paired companions and a read-only evidence viewer. Ordinary boxes
+stay intact. Actual CLI/editor/Finish review/crop QA paths are covered. Real audit
+still finds zero qualified native-artwork reference pairs; TTR's exact later mismatch
+is resolved by30above, while FDR036 real replay remains blocked. Swift pixel-rule port
+matches33correct/0wrong on48scorable Settings controls; Vision tracking drops to2correct/
+46undecided. Keep OpenCV tracking. [Handoff](../reports/work/ACCESSIBILITY-ASSISTED-29/handoff.md)
+and [ADR-0018](ADR-0018-Settings-Swift-Pixel-Parity.md).
+
+**Accessibility planning updated:** published TTR45c84b6 implements optional Hover
+Text analysis; maintainer priority is now High Contrast focus verification first,
+with per-setting profile receipts/restoration. Display and motion comparisons follow;
+Switch Control is a discovery spike, and Hover Text remains optional. See the broader
+feature matrix and producer request in the linked plan. Existing Hover
+Text CLI/MCP proposals found5/6retained banners, with0/2off-control detections. High Contrast helps
+locate Home focus, but one outline is about10px inside each ordinary-body horizontal
+edge despite0.930IoU. Use assisted observations for identity/focus support; measure
+ordinary training bounds separately. Later producer status reports a correspondence
+mismatch stopped acquisition, now diagnosed in30. Profile-aware review import and
+Settings Swift comparison are implemented; ordinary reference-pair qualification
+remains next for Native28. Third-party interiors and real model benefit remain unqualified.
+[Evidence and priorities](Plans/AccessibilityAssistedFocus29.md). Source review is not
+verification of the installed runtime; the adjacent local TTR checkout is older/dirty.
+
+**Native28 complete locally, real transfer blocked:** frozen FDR036 replay500/500;
+equal-size crops398/500; interior-neutralized250/500at0.85. Removing growth costs102
+focused detections; retaining size/context alone after hiding interior appearance
+does not suffice. These diagnostic manipulations are not a pure causal separation.
+All250unfocused examples withstand0.8/1.2global brightness gain;246constructed
+content-only pairs and250identical no-ops remain unfocused. Actual offline advisory
+CLI passes native-crop/model parity and guarded-unavailable cases. Existing real
+recording has7reviewed Settings transitions, no qualified native-artwork reference
+pairs. Next: retrieve/prepare real paired evidence, score reference reliability and
+FDR036 transfer, then decide advisory integration. [Handoff](../reports/work/NATIVE-FOCUS-TRANSFER-28/handoff.md).
 
 **Native26 complete, October2:**1,250native-effect pairs,2,500screenshots and5,000
 validated crops received on USB (14.54GBexports). Matched1,000-update training:

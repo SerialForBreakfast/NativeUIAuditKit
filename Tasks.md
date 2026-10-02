@@ -1,5 +1,104 @@
 # NativeUIAuditKit — Tasks
 
+## Review / source publication blocked — SETTINGS-BRIGHTNESS-33 / Codex
+
+- [x] Compare fixed brightness/sign and guarded brightness against retained pixel rule,
+  including real unchanged controls and generated content/motion negatives.
+- [x] Check TTR source availability; prepare coverage-driven native comparison intent.
+- [x] Verify caller/tests, record results and actionable producer requirements.
+- [ ] Build/qualify the grid-density source once published and synchronized locally:
+  current checkout46dce7b is dirty and does not contain advertised dedfd613 or the
+  grid-density files. No source mutation/build of mismatched checkout.
+
+Sign rule4correct/41wrong/3abstentions; guarded mean matches existing33/0/15 on48
+scorable controls. Generated exact results9/14versus12/14guarded/existing. Keep
+existing rule.48case producer-neutral coverage intent prepared; source mapping and
+capture/admission remain pending.35Python checks and134Swift tests pass.
+[Handoff](reports/work/SETTINGS-BRIGHTNESS-33/handoff.md).
+
+Scope: [brightness33](Research/Plans/SettingsBrightness33.md).
+
+## Review — REAL-TRANSFER-DIAGNOSIS-32 / Codex
+
+- [x] Maintainer confirmed six31review identities and both focus states.
+- [x] Score six pairs with fixed FDR036 and reproduce Home baseline.
+- [x] Compare Home neighbor/target neutralization and fixed paired luminance ordering.
+- [x] Audit pinned training geometry/families against the real cases.
+- [x] Test actual caller, report per-family failure patterns and update status.
+
+6/12binary correct,0/6focused detected. All8pairs ordered correctly by fixed
+brightness; paired-only diagnostic. Neighbor masking fails to repair Home negatives.
+24Python checks and134Swift tests pass. [Handoff](reports/work/REAL-TRANSFER-DIAGNOSIS-32/handoff.md).
+
+Scope/budget: [diagnosis32](Research/Plans/RealTransferDiagnosis32.md).
+
+## Review — REAL-REFERENCE-CHALLENGE-31 / Codex
+
+- [x] Frozen FDR036 diagnostic on the two approved Home reference pairs, with crop parity.
+- [x] Inventory reviewed still images and prepare one grouped candidate review.
+- [x] Verify tests and report measured outcomes; consumer coordination recorded in handoff.
+
+Result2/4correct: all four called focused. Inventory46images/30spatial proposals;
+six identity checks after agent rejection of a wrong-row match and duplicate.
+15focused Python tests and134Swift tests passed. [Handoff](reports/work/REAL-REFERENCE-CHALLENGE-31/handoff.md).
+
+Scope: [challenge31](Research/Plans/RealReferenceChallenge31.md). Approval is for
+difficult-case development scoring, not clean-transfer qualification or training.
+
+## Review / clean reference qualification pending — ACCESSIBILITY-TRACKING-30 / Codex
+
+Assigned continuation October2: receive/verify the published ACC-MAP diagnosis,
+qualify any delivered ordinary reference pairs for grouped review and FDR036 replay,
+and independently diagnose Settings25 tracking failures on retained data.
+
+- [x] Verify sanitized producer report and reconcile exact failure/request receipt.
+- [x] Audit delivered/retained pairs; prepare two historical Home reference candidates
+  together with four production crops. Both have changing-neighbor contamination;
+  diagnostic continuation approved/scored in31; no clean transfer eligibility.
+- [x] Compare retained Vision alignment with fixed integer-displacement rounding and
+  separately labeled reviewed-center diagnostic alignment. Keep rule thresholds,
+  scale and correspondence scoring fixed; test generated counterexamples. Deliver
+  error attribution, crop gallery, tests and measured recommendation.
+- [x] Update ADR/status and publish only actionable consumer consequences to TTR.
+
+Raw/rounded Vision2correct/0wrong; reviewed-center oracle36/0 on48scorable versus
+OpenCV33/0. Oracle is diagnostic only.10new Python/20related checks and134Swift tests
+pass. [Results and remaining evidence boundary](reports/work/ACCESSIBILITY-TRACKING-30/handoff.md).
+
+Scope: [tracking diagnosis30](Research/Plans/AccessibilityTracking30.md).
+
+## Review / producer evidence blocked — ACCESSIBILITY-ASSISTED-29 / Codex
+
+October2 planning review of published TTR45c84b6: High Contrast can assist focus
+identity; its outline is not ordinary rendered-body truth. Hover Text CLI/MCP is
+implemented as advisory evidence (5/6 retained banner cases, 0/2 off controls).
+Later producer report stopped mapping acquisition on correspondence mismatch.
+[Evidence, consumer contract and priorities](Research/Plans/AccessibilityAssistedFocus29.md).
+
+- [x] Review current producer source/research, reconcile limitations and update priorities.
+- [x] Prioritize High Contrast; classify display, motion, navigation and shortcut
+  opportunities in the plan. Hover Text remains optional, not a core dependency.
+- [x] Add profile/correspondence provenance to optional consumer intake and
+  High Contrast proposal review; retain ordinary bounds and producer report metadata.
+  Broader per-setting runtime capability collection remains TTR-owned.
+- [ ] Coordinate TTR profile inspect/apply/verify/restore support and shortcut feasibility;
+  qualify contrast/transparency/motion individually before combined profiles. Switch
+  Control remains a discovery spike with scan/input-focus distinction and verified exit.
+- [x] Resolve producer's later identity failure: exact report received in30. Hover Text
+  reached headings instead of ordinary rows; separate High Contrast body-size change
+  rejects cross-profile box transfer. No qualified native-artwork reference delivered.
+- [x] Integrate optional profile-aware proposals into existing grouped annotation review;
+  test identity, geometry, headings, stale/profile/scroll mismatch and unknown cases.
+  Include random sampling plus separate failure/disagreement sampling.
+- [ ] Qualify ordinary-body geometry and focus with human samples against a plain-Vision
+  baseline; obtain explicit data-role/admission decision, then replay real FDR036 pairs.
+  Fresh physical capture and model execution retain applicable authorization.
+
+Local importer/editor/Finish review/crop QA and independent Settings25 comparison
+completed. [Integrated handoff](reports/work/ACCESSIBILITY-ASSISTED-29/handoff.md).
+Next: grouped ordinary real reference review → qualified FDR036 transfer. Identity
+failure diagnosis completed in30; real-model scoring remains blocked.
+
 ## Review — NATIVE-FOCUS-EFFECT-SPIKE-26 / Codex
 
 October2 maintainer assigns execution, Simulator use and local external-drive corpus
@@ -34,19 +133,32 @@ tracked under26; these low-priority improvements do not block serial generation.
   artwork misses/false positives, retention and whether larger generation is justified.
   [Spike contract](Research/Plans/NativeFocusEffectSpike26.md).
 
-## Proposed follow-up — NATIVE-FOCUS-TRANSFER-28
+## Review / real evidence blocked — NATIVE-FOCUS-TRANSFER-28 / Codex
 
-Prioritized result-driven tranche; not an automatic repeat or production promotion.
+Assigned October2: retained real-pair audit, two inference-only cue probes on the
+same500synthetic evaluation controls, and offline advisory CLI with applicability
+guards. Reuse FDR036; no fitting or threshold selection. Up to1,800s model execution,
+2GiB new outputs, resident MPS/prefix and production cropper. Derived diagnostic
+inputs stay project-local; original corpus remains on USB. Exact diagnostic scope:
+[plan](Research/Plans/NativeFocusTransfer28.md).
 
-- [ ] Audit existing reviewed native-artwork transitions for independently known
+- [x] Audit existing reviewed native-artwork transitions for independently known
   unfocused reference bounds and reliable correspondence. Freeze usable coverage;
   replay FDR036 when compatible inputs exist. Report missing coverage concretely.
-- [ ] Predeclare a matched size/context ablation and content-only/illumination
+ 166actions/14timing-ready/7reviewed Settings pairs; zero qualified native-artwork
+ pairs.315representative controls lack paired identities. Real replay remains blocked
+ until reviewed native-artwork reference pairs/correspondence are available.
+- [x] Predeclare a matched size/context ablation and content-only/illumination
   negatives to distinguish occupancy recognition from subtle native appearance.
   New experiment execution/admission follows the applicable scope and budget.
-- [ ] Implement an offline advisory integration candidate with explicit reference
+ Frozen-model results:500/500common,398/500equal-size,250/500interior-neutralized.
+ Global gain0.8/1.2on250negatives passes;246constructed content-only pairs pass.
+- [x] Implement an offline advisory integration candidate with explicit reference
   availability, applicability and uncertainty; make a measured go/no-go decision
   before requesting CoreML export or replacement of the broad model.
+ Actual CLI returns focused on an accepted fixture case and unavailable when a
+ prerequisite is unknown. Go for offline research; hold live use pending real paired
+ evidence. [Results, verification and next tranche](reports/work/NATIVE-FOCUS-TRANSFER-28/handoff.md).
 
 ## Review — CORPUS-LIFECYCLE-27 / Codex
 
@@ -58,19 +170,22 @@ Prioritized result-driven tranche; not an automatic repeat or production promoti
   [Implementation and tests](reports/work/CORPUS-LIFECYCLE-27/handoff.md). Existing
   corpus/OS dispositions remain unchanged pending an explicit selected-corpus policy.
 
-## Ready — SETTINGS-SWIFT-SPIKE-25 / Codex
+## Review — SETTINGS-SWIFT-SPIKE-25 / Codex
 
 User-assigned bundled spike: compare the current Python/OpenCV pipeline with a
 Swift/Vision tracking candidate, then deliver an evidence-informed ADR as one tranche.
 
-- [ ] Port the full-context pixel/stability/highlight rules to a local Swift diagnostic
+- [x] Port the full-context pixel/stability/highlight rules to a local Swift diagnostic
   caller; prove arithmetic/crop parity using identical inputs before swapping tracking.
-- [ ] Compare OpenCV versus Vision correspondence and end-to-end focus-change results
+- [x] Compare OpenCV versus Vision correspondence and end-to-end focus-change results
   on identical retained pairs and generated counterexamples; report correctness,
   wrong changes/false unchanged, abstentions, coverage, tracking errors and latency.
-- [ ] Write an ADR recommending integration, further research or rejection, with
+- [x] Write an ADR recommending integration, further research or rejection, with
   measured trade-offs and an optional advisory NUIAK→TTR observation contract.
   [Scope and acceptance](Research/Plans/SettingsSwiftSpike25.md).
+  Result: same-tracking Swift matches33correct/0wrong; Vision substitution2correct/
+  46abstentions among48scorable controls. Keep OpenCV tracking; retain Swift arithmetic
+  as diagnostic. [ADR-0018](Research/ADR-0018-Settings-Swift-Pixel-Parity.md).
 
 ## Review — SETTINGS-CONTEXT-24 / Codex
 

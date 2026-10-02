@@ -1,5 +1,12 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-10-02: [Accessibility-assisted review29](Plans/AccessibilityAssistedFocus29.md)
+adds a diagnostic consumer batch variant, `accessibility-review-batch-v1`, over
+existing sealed review inputs. Original capture/annotation schemas are unchanged.
+Profile/correspondence evidence stays separate from ordinary rendered-body proposals;
+human review and admission remain separate. Settings25 adds an offline Swift diagnostic
+for pixel-rule parity and Vision tracking, not a public API or detector replacement.
+
 2026-09-30 LOCAL-TOOLS-02: [CLI/MCP adapter](../Tools/NativeUIAuditCLI/README.md)
 adds an executable over NativeUIDetectionSession without a second inference stack
 or public library API change. Tooling JSON records identity, settings, modality/focus
@@ -691,6 +698,17 @@ shadow/shading recognition. Standard-crop real-frame selection regresses12/14→
 so synthetic-only training cannot replace the broad model. Next validate stable
 unfocused reference acquisition and real paired transfer; keep specialist applicability
 explicit. [Results](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+
+**Native28 frozen-model diagnosis:** equal-size20%per-body recrops reduce500/500to
+398/500at0.85; neutralizing the rectangular body reduces it to250/500. Both scale
+and interior appearance affect predictions; these out-of-distribution changes do
+not prove isolated shading recognition. Negative global brightness stress passes.
+`scripts/native_focus_transfer.py advisory` is an offline experimental caller using
+the existing cropper/model, with caller-attributed unfocused reference, correspondence,
+same-screen, settled, native-effect, unoccluded/clear-context and age<=5s prerequisites.
+Missing prerequisites produce unavailable before model loading. Caller assertions
+are not runtime verification; model scores are uncalibrated and authorize no input.
+No compatible real native-artwork pair exists in the audited reviewed action ledger.
 
 **FOCUS-INTAKE-13:** scene-level diagnostic consumes attributed control-change
 results and requires one gain plus one loss with declared complete coverage and

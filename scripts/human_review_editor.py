@@ -464,6 +464,35 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
             self.refreshFocusList()
             return result
 
+        def showAccessibilityEvidence(self):
+            """Read-only supporting image; never transfers assisted geometry to the canvas."""
+            import human_annotation_review as h
+            current = os.path.abspath(self.filename) if self.filename else None
+            frame = next((f for f in batch['frames'] if current ==
+                str(batch_path.parent/'editor'/(f['editorStem']+'.png'))), None)
+            if not frame or not frame.get('accessibility'):
+                self.status('No accessibility evidence for this frame.', 8000)
+                return
+            try:
+                h.validate_batch(batch_path)
+                a=frame['accessibility']
+                dialog=QtWidgets.QDialog(self);dialog.setWindowTitle('Accessibility evidence — ordinary boxes remain editable behind this window')
+                layout=QtWidgets.QVBoxLayout(dialog)
+                text=QtWidgets.QLabel('Random sample: '+str(a['randomSample'])+'; targeted: '+str(a['targetedReview'])+
+                    '\n'+(', '.join(a['reasons']) or 'Candidate match; confirm ordinary focus and bounds.'))
+                text.setWordWrap(True);layout.addWidget(text)
+                if a['evidence']:
+                    image=QtWidgets.QLabel(); image.setObjectName('accessibilityEvidenceImage')
+                    path=h.checked(h.ROOT,a['evidence']['assistedImage'])
+                    pixmap=QtGui.QPixmap(str(path))
+                    require(not pixmap.isNull(),'unreadable_assisted_image')
+                    image.setPixmap(pixmap.scaled(1000,650,QtCore.Qt.KeepAspectRatio,QtCore.Qt.SmoothTransformation))
+                    layout.addWidget(image)
+                close=QtWidgets.QPushButton('Close');close.clicked.connect(dialog.accept);layout.addWidget(close)
+                dialog.exec_()
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                self.clipboardWarning('Accessibility evidence unavailable: '+str(error))
+
         def resetState(self):
             # Stock Canvas.resetState resets drawing resources, but not selected
             # shapes or keyboard movement. A delayed release can target the old image.
@@ -845,6 +874,12 @@ def window(batch_path, runtime, queue_path=None, batch_index=None):
     result.actions.importVisionSuggestions = import_vision
     result.actions.editMenu = (import_vision,) + result.actions.editMenu
     result.actions.tool = (import_vision,) + result.actions.tool
+    if batch.get('version') == 'accessibility-review-batch-v1':
+        evidence_action=QtWidgets.QAction('Accessibility evidence…', result)
+        evidence_action.triggered.connect(result.showAccessibilityEvidence)
+        result.actions.accessibilityEvidence=evidence_action
+        result.actions.editMenu=(evidence_action,) + result.actions.editMenu
+        result.actions.tool=(evidence_action,) + result.actions.tool
     preset_actions = []
     for caption, callback in [('Save preset…', result.saveBoxPreset), ('Load preset…', result.loadBoxPreset)]:
         action = QtWidgets.QAction(caption, result)

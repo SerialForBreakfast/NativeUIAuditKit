@@ -2,7 +2,8 @@
 
 Assigned October2,2026 during roadmap discussion. One bundled spike ending in an
 evidence-informed ADR, not separate handoffs for scaffolding and measurements.
-Recorded now; implementation and comparison have not run.
+Completed October2: Swift arithmetic matches Python; tested Vision tracking rejected
+as a drop-in replacement. [Decision and measurements](../ADR-0018-Settings-Swift-Pixel-Parity.md).
 
 ## Question
 
