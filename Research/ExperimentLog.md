@@ -1,6 +1,67 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run FDR035 — native-effect standard-crop comparison (October 2, 2026)
+
+Status: completed, PID15294, started19:37:13UTC;1,000updates in33.117s. Synthetic
+evaluation at0.85:433/500correct,183/250both-correct pairs;250TP/183TN/67FP/0FN.
+All67false positives occur on dark backgrounds. At0.5:395/500correct. Train fit is
+2,000/2,000at both thresholds. FDR021 at0.85:283/500,33/250pairs. However real
+artwork false positives increase3→149of181unfocused controls, while focused artwork
+recall increases2→9of12. Complete real-frame selections fall12/14→0/14; retention
+remains18/18. Reject replacement: narrow synthetic learning fails real-domain transfer.
+Start receipt:
+`NativeUITrainer/focus_ring_runs/fdr035-native26-normalized/execution.json`.
+Arm `native26-normalized`, output `fdr035-native26-normalized`, protocol
+`989df846b9213d2e1980b54a6099cc6b8654cb5ba7956375d809bc1689423927`.
+2,000training controls from1,000pairs;500evaluation controls from250reserved pairs.
+Production per-body16%/256crops. Resident frozen MobileNetV3-small prefix with fresh
+partial-tail/MLP model; frozen BN; seed42; AdamW weightDecay.01; headLR.001,
+tailLR.0001; random32-control minibatches; max1,000updates/300training seconds.
+Fixed final checkpoint, no evaluation during training or threshold selection.
+Report0.5and0.85, train fit, missed/false focus and both-correct pairs. Replay pinned
+FDR021 on the same evaluation crops and unchanged315development+18retention controls;
+the new standard-crop candidate also receives that retained replay. Diagnostic only.
+Encoding6.490s; exact protocol/approval under
+`reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/model-protocols/`. Whole model clock1,800s;
+two encoding caches total below1GiB; no release admission from synthetic scores.
+
+## Run FDR036 — native-effect common-window comparison (October 2, 2026)
+
+Status: completed, PID15388, started19:38:23UTC;1,000updates in33.466s. Synthetic
+evaluation500/500correct and250/250both-correct pairs at both0.5and0.85; training
+fit2,000/2,000. Corrects all67FDR035errors at0.85without introducing new errors.
+Initialization and update counts match exactly. Both held-out configurations pass.
+This supports preserving native appearance/scale in this renderer; it does not isolate
+subtle shading from the easier size/occupancy cue, or establish real-app transfer.
+Use as a reference-window specialist candidate, not a production replacement.
+[Replayed results and analysis](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+Start receipt:
+`NativeUITrainer/focus_ring_runs/fdr036-native26-common/execution.json`.
+Arm `native26-common`, output `fdr036-native26-common`, protocol
+`1efdadfb932f4031037826c913aa5f2ba829045d87d84e997dbbaf3e4903169a`.
+Same2,000training/500evaluation controls, initialization, seed, optimizer, update/time
+caps and final-checkpoint rule asFDR035. Only input representation changes:20%context
+around the known unfocused reference box, held fixed for both states, retaining
+enlargement and surrounding appearance. This is not an arbitrary before-frame or
+drop-in single-frame production input. No compatible real-reference boxes exist for
+the333retained controls, so that replay is unavailable for this arm. Encoding5.918s.
+No automated retry, export or promotion. Compare paired outcomes and transfer limits.
+
 ## NATIVE-FOCUS-EFFECT-SPIKE-26 — capture qualification (October2,2026)
+
+Superseding execution checkpoint: updated Fixture passes measured native-body capture.
+Successful EBFD748D pair delivered through app-owned export and verified USB copy.
+Serial generation completed at19:25UTC:1,000training/250evaluation pairs,2,500original
+screenshots,5,000target crops and14,536,675,677verified export bytes on USB. One
+pre-capture Xcode probe failure recovered with explicit24+1receipt accounting.
+Existing harvest/observed-focus/body checks pass; the revised20%common window has
+zero exceptions. Initial35%window evidence remains retained separately.
+Approved feature encoding now starts: two fixed input arms,2,500controls each,
+batch32,300seconds per arm,1GiBcombined cache limit; overall model-work clock1,800s.
+Resident ImageNet prefix is frozen. Encoding writes USB caches and exact project-local
+protocols. FDR035/FDR036 will be logged with those hashes before training starts.
+
+Earlier qualification record:
 
 Approved1,000training+250evaluation-pair spike started, not a model training run.
 Structural home_icon/native_image plan passed, then case validation rejected it

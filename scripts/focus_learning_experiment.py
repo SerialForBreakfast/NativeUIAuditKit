@@ -170,6 +170,9 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get('version')=='native-focus-spike-model-v1':
+        from native_focus_spike_model import load_protocol as native26_protocol
+        return native26_protocol(path,arm,run_name,approval_path)
     if doc.get('version')=='focus-transfer-experiment-v1':
         from focus_transfer_experiment import load_protocol as transfer_protocol
         return transfer_protocol(path,arm,run_name,approval_path)

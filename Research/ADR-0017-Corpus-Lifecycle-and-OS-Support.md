@@ -60,11 +60,27 @@ measured I/O warrants it. NAS/cloud setup is not part of this decision.
 
 ## Implementation and acceptance
 
-The policy is adopted now. Automated lifecycle filtering is future implementation:
-validate required provenance for new admissions; resolve explicit dispositions into
-immutable manifests; reject split leakage and missing inputs; produce a read-only
-retirement/cleanup report before any deletion. Test unknown versions, retired entries,
-historical manifest replay and missing external mounts. Tasks.md owns this backlog.
+Implementation contract (CORPUS-LIFECYCLE-27): an explicit policy lists supported
+platform/OS versions and per-example dispositions; there is no inferred "latest"
+window. A sealed catalog binds file hashes, original split, connected source group,
+provenance and dependencies. Selection preserves split and filters unsupported
+examples without promoting evaluation into training. Missing provenance is reported
+as an exclusion, not guessed. Historical replay verifies the frozen manifest against
+its original catalog and bytes independently of the current policy.
+
+The cleanup report is advisory: protect real captures, human corrections, reference
+examples, retained metadata and anything referenced by a retained dependency. A retired
+synthetic render is only a candidate when its recreation inputs are retained and its
+active dependencies are absent. Candidate status never authorizes a delete operation.
+External roots require an explicit root plus an actually mounted volume; the CLI
+writes only compact immutable manifests/reports under the project root.
+
+The policy is adopted. CORPUS-LIFECYCLE-27 implements selection, historical replay
+and read-only cleanup recommendations in `scripts/corpus_lifecycle.py`. Tests cover
+unknown versions, retired entries, split leakage, changed inputs, historical replay
+and missing external mounts. Adoption for an existing corpus still requires its
+explicit supported-version policy and catalog; no OS retirement is implicit.
+[Implementation evidence](../reports/work/CORPUS-LIFECYCLE-27/handoff.md).
 
 Related: [artifact retention](ArtifactRetention.md),
 [native-focus spike](Plans/NativeFocusEffectSpike26.md).

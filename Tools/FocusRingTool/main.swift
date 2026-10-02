@@ -21,6 +21,8 @@ struct Request: Decodable, Sendable {
     let model: String?
     let items: [Item]
     let experimentalAspectFit: Bool?
+    // Explicit caller-authorized image storage; models remain project-local.
+    let imageRoot: String?
 }
 struct ItemResult: Encodable, Sendable {
     let id: String
@@ -53,11 +55,15 @@ func run(output: FileHandle) throws {
     guard FileManager.default.fileExists(atPath: root.appendingPathComponent("Package.swift").path),
           r.version == 1, ["crop", "infer"].contains(r.mode), !r.items.isEmpty,
           r.items.count <= 128, Set(r.items.map(\.id)).count == r.items.count else { throw ToolError.invalidRequest }
+    let imageRoot = URL(fileURLWithPath: r.imageRoot ?? r.root).standardizedFileURL
+    guard imageRoot.path == imageRoot.resolvingSymlinksInPath().path,
+          imageRoot.path != "/",
+          FileManager.default.fileExists(atPath: imageRoot.path) else { throw ToolError.outsideRoot }
     var inputs: [(Item, CGImage)] = []
     var totalPixels = 0
     for item in r.items {
         guard !item.id.isEmpty, item.bounds.count == 4, item.bounds.allSatisfy(\.isFinite) else { throw ToolError.invalidRequest }
-        let url = try checked(item.path, root: root)
+        let url = try checked(item.path, root: imageRoot)
         let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
         guard size > 0, size <= 32 * 1024 * 1024 else { throw ToolError.invalidImage }
         let bytes = try Data(contentsOf: url)

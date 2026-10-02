@@ -2898,3 +2898,40 @@ layout-only geometry remains unsuitable for measured-body training. Obtain the
 matching source and build locally rather than repeatedly regenerating legacy labels.
 **Why:** Host and Simulator app can be updated independently. Planning, capture and
 annotation-contract compatibility are separate boundaries.
+
+### Common-scale focus crops can include the competitor (2026-10-02)
+
+**Wrong:** Increase crop context to35% to preserve native growth/shadow without
+checking nearby controls. Native26's first25pairs included a neighbouring focused
+body in17/50common-window images, providing an unintended alternate focus signal.
+**Correct:** Measure context overlap against observed bodies in both frames before
+encoding. A fixed before-anchored20%window passed the first150pairs while retaining
+visible growth; continue checks across every layout rather than treating20%as universal.
+Keep production per-body crops separate and preserve the failed preprocessing evidence.
+**Why:** Accurate boxes alone do not ensure that the model sees only the intended
+focus cue. A neighbour can change state during the same pair and become a shortcut.
+
+### Campaign resume does not necessarily retry failed cases (2026-10-02)
+
+**Wrong:** Wait forever on `completed_with_failures`, or assume resume retries a
+failed case. Native26 encountered a pre-capture Xcode probe timeout; resume finished
+the unattempted cases but preserved the failed case as failed.
+**Correct:** Recognize all documented terminal states, reconcile individual cases
+and fresh ownership/readiness, then use a separately receipted exact-case recovery
+only when the failed boundary makes retry safe. Preserve original failures and count
+recovery separately. Do not replay an uncertain input or recapture successful cases.
+**Why:** Terminal partial success and resumability are different contracts. Aggregate
+"completed" claims can conceal a missing example or duplicate already captured data.
+
+### Native-effect synthetic accuracy is not broad focus qualification (2026-10-02)
+
+**Wrong:** Replace the general focus model because a native-effect specialist scores
+highly on held-out synthetic controls. Native26 standard crops improved56.6%→86.6%
+synthetically, while real complete-frame decisions regressed12/14→0/14.
+**Correct:** Report synthetic recognition and retained real-screen transfer separately.
+Common-window100%accuracy requires a known unfocused reference, and may exploit body
+occupancy rather than subtle shading. Qualify reference acquisition and held-out real
+pairs before integration; compare same-scale context/size ablations before attributing
+the gain to any one cue. Preserve the broad model until its scope is independently met.
+**Why:** Clean labels and a learnable native effect do not eliminate renderer/domain
+shift. Narrow training can learn a useful specialist while producing a bad replacement.

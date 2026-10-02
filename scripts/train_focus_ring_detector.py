@@ -64,7 +64,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit", "context-local", "context-geometry", "context-scene", "visual-local-frozen", "visual-context-frozen", "visual-local-partial", "visual-context-partial", "artwork-readiness", "artwork-control-partial", "artwork-added-partial", "transfer-emphasis-partial", "transfer-aspect-partial"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit", "context-local", "context-geometry", "context-scene", "visual-local-frozen", "visual-context-frozen", "visual-local-partial", "visual-context-partial", "artwork-readiness", "artwork-control-partial", "artwork-added-partial", "transfer-emphasis-partial", "transfer-aspect-partial", "native26-normalized", "native26-common"])
     return p.parse_args()
 
 
@@ -200,6 +200,9 @@ def main() -> int:
     for key, value in os_env_defaults.items():
         os.environ[key] = value
         Path(value).mkdir(parents=True, exist_ok=True)
+    if report.get('protocolVersion') == 'native-focus-spike-model-v1':
+        from native_focus_spike_model import run as run_native26
+        return run_native26(report,args.experiment_id)
     train = [r for r in experiment_rows if r["split"] == "train"] if experimental else load_samples(dataset, "train")
     val = [r for r in experiment_rows if r["split"] == "validation"] if experimental else load_samples(dataset, "validation")
     print(f"=== FocusRing train {utc_now()} ===")

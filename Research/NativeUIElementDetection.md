@@ -673,6 +673,25 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Native focus appearance spike (2026-10-02):** NATIVE-FOCUS-EFFECT-SPIKE-26 freezes
+1,000 native-effect training pairs and250 withheld synthetic pairs by configuration
+and artwork family. Compare per-body production16% crops with common before-body
+windows (20% context) through the same Swift cropper. The common window preserves
+enlargement but requires a known before/reference box; it is not a drop-in arbitrary
+single-image detector. Two equally initialized MobileNetV3-small partial-tail models
+reuse a frozen resident prefix, fixed final checkpoints and0.5/0.85reporting thresholds.
+Keep FDR021 baseline and real-app evaluation distinct. Exact limits and admission:
+[Native26 plan](Plans/NativeFocusEffectSpike26.md). Neither synthetic accuracy nor
+verified annotation geometry alone qualifies a production model.
+
+Completed Native26 comparison: standard crops433/500 versus common-window500/500
+held-out synthetic controls at0.85, with identical initialization and1,000updates.
+Common-window success may use relative occupancy; it does not establish isolated
+shadow/shading recognition. Standard-crop real-frame selection regresses12/14→0/14,
+so synthetic-only training cannot replace the broad model. Next validate stable
+unfocused reference acquisition and real paired transfer; keep specialist applicability
+explicit. [Results](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+
 **FOCUS-INTAKE-13:** scene-level diagnostic consumes attributed control-change
 results and requires one gain plus one loss with declared complete coverage and
 persistent correspondence. Unknown background is reported; a separate strict arm

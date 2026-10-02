@@ -26,7 +26,7 @@ def identity():
             "hostOS": platform.mac_ver()[0], "architecture": platform.machine()}
 
 
-def invoke(items, model=None, *, experimental_aspect_fit=False):
+def invoke(items, model=None, *, experimental_aspect_fit=False, image_root=None):
     identity()
     if not items or len(items) > 128:
         raise FocusDataError("invalid_runtime_batch")
@@ -36,6 +36,17 @@ def invoke(items, model=None, *, experimental_aspect_fit=False):
     request = {"version": 1, "root": str(ROOT), "mode": "infer" if model else "crop",
                "model": str(local(model)) if model else None, "items": items,
                "experimentalAspectFit": experimental_aspect_fit}
+    if image_root is not None:
+        # Opt-in for an explicitly authorized external corpus. Existing callers
+        # retain the project-only boundary. The caller verifies mounted storage.
+        path = Path(image_root).absolute()
+        if path == Path('/') or path.resolve() != path or not path.is_dir():
+            raise FocusDataError('invalid_image_root')
+        for item in items:
+            source = Path(item['path']).absolute()
+            if source.resolve() != source or not source.is_relative_to(path):
+                raise FocusDataError('image_outside_authorized_root')
+        request['imageRoot'] = str(path)
     try:
         result = subprocess.run([str(TOOL)], input=json.dumps(request, allow_nan=False),
                                 text=True, capture_output=True, timeout=120,

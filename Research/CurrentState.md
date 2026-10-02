@@ -1,16 +1,26 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 2, 2026 PDT, SETTINGS-CONTEXT-24 (underlying results retain observation dates)
+**As of:** October 2, 2026 PDT, NATIVE-FOCUS-EFFECT-SPIKE-26 (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
-**NATIVE-FOCUS-EFFECT-SPIKE-26, October2:** approved execution started. New structural
-native recipe fails TTR case validation. Legacy native-image compatibility capture
-passes1pair/6.149s/0rejected, but the running Fixture explicitly reports native effect
-geometry unmeasured (layout rectangles). Full corpus/training waits on corrected
-Fixture source/build and verified external delivery. ADR-0017 adopts versioned OS
-support and proportionate synthetic retention. [Handoff](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+**Native26 complete, October2:**1,250native-effect pairs,2,500screenshots and5,000
+validated crops received on USB (14.54GBexports). Matched1,000-update training:
+standard input433/500 versus reference-window500/500held-out synthetic controls;
+FDR021 baseline283/500at0.85. Growth-preserving input corrects all67standard errors.
+This establishes synthetic learnability, not isolated shading recognition or real
+generalization. Common windows require a known unfocused reference. Standard model
+real-frame selection regresses12/14→0/14; reject replacement. Next substantial work:
+real paired/reference validation, cue ablation and scoped advisory integration.
+Generation median7.61s/pair; training33.12s/33.47s. USB is adequate. All model workers
+completed; existing shipped weights unchanged. Earlier runtime blockers and exact
+recovery evidence are retained in the [handoff/history](../reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+
+**CORPUS-LIFECYCLE-27:** implemented explicit OS filtering, immutable selection,
+historical replay and read-only retirement advice. Existing OS policy/membership
+unchanged.58focused Python tests and134offline Swift tests pass for the tranche;
+final saved-prediction report replay passes for synthetic and333retained controls.
 
 **SETTINGS-CONTEXT-24:** source-bound visual diagnosis confirms neighbor contamination
 and residual text/edge differences after scrolling. Body-only stability improves

@@ -8,6 +8,88 @@ new capture/admission/model execution retain their applicable explicit scope.
 
 ## Maintainer clarification — scale and review
 
+### Execution design — October 2, 16:25 UTC
+
+The updated retained pair EBFD748D now passes capture, measured-body validation,
+app-owned export and hash-verified USB receipt (24 files,17,345,810 bytes).
+Legacy artwork-layout availability is not the additive rendered-body availability.
+Use the measured `rendered_body_geometry` contract for native growth.
+
+Generate ten fixed configuration groups,125 pairs each: eight horizontal native
+home-icon layouts for training (1,000), two vertical layouts for evaluation (250).
+Keep every variant of a configuration in its assigned split; horizontal/vertical
+structure is separated. Procedural artwork seeds are disjoint, with city/orbit/
+collage for training and checkerboard for evaluation. Vary background luminance,
+target position and control aspect ratio. This is a deliberately shifted synthetic
+evaluation sharing one renderer, not independent real-app or OS generalization.
+Producer calibration labels remain intact; the separately frozen consumer membership
+records the maintainer-authorized experiment roles. Qualification pairs are excluded.
+
+Run serial bounded chunks, preserve campaign IDs and per-stage timings, verify each
+received file and the existing harvest/observed-focus/rendered-body contracts.
+Stop a failing chunk rather than replay uncertain actions. TTR's internal staging
+requires a verified-transfer cleanup decision before capacity is exhausted; USB
+capacity alone does not solve producer staging. Preserve a10GiB internal reserve.
+
+Measured storage update after175pairs: internal free space is19.58GiB; verified
+exports average about11MiB/pair, below the original15.6MB estimate. Preserve the
+original plan and use `plan-storage-v2.json` for unstarted chunks8–49, changing only
+the internal floor to5GiB plus1GiB consumer pre-dispatch headroom. Membership, recipes,
+splits, per-chunk capture/time/byte caps and the active chunk remain identical.
+This fits the projected remaining staging without deleting originals; stop if the
+measured floor is reached. USB remains the corpus/crop/cache destination.
+
+Compare production per-body16% crops with a fixed before-body window extending20%
+on each side for BOTH images. Both use the production Swift crop mechanism;
+the latter is explicitly experimental and keeps native enlargement in the pixels.
+No focused bounds or labels enter the common-window placement. Guard clipping and
+neighbor overlap and retain them as measurable exclusions. Encoding/training config,
+resident initialization and run IDs must be pinned before model execution.
+Final intake checks expanded context for BOTH input arms. The comparison changes
+scale and surrounding context together; it cannot attribute gains solely to growth,
+shadow or shading without a separate intervention experiment.
+Primary scoring uses only each nominated target, once unfocused and once focused.
+Bright distractors appear in the full scenes but are excluded from these crops;
+target-pair accuracy therefore does not establish whole-screen selection or accuracy
+on those distractors. The common window uses an observed **unfocused** reference
+box; arbitrary before-frames where that control is already focused are not qualified
+inputs. Retained real-screen scoring applies only to the standard-crop candidate.
+
+First25pair crop qualification found17/50frames with a neighboring body inside the
+initial35%context window. Preserve those diagnostic crops; tighten the common window
+to20%before encoding, and recheck every frame for neighbour overlap and clipping.
+This changes preprocessing only, not captured pixels, annotations or split roles.
+
+Model execution design: two matched Native26-only comparisons reuse the resident
+ImageNet MobileNetV3-small prefix and existing partial-tail/MLP implementation.
+Encode both crop arms in batches of32, max300seconds per arm and1GiB combined
+feature-cache limit. Train each fresh, identically seeded head/tail for at most
+1,000 minibatch updates/300seconds on MPS; use a fixed final checkpoint rather than
+selecting against the250pair evaluation. Record unequal achieved update counts as
+a comparison limitation. Total model execution remains bounded by1,800seconds and
+2GiB new cache/checkpoint/results. Crop preparation and approved capture are separately
+timed. Evaluation reports both0.5and fixed0.85thresholds, focused misses, unfocused
+false calls and both-correct pairs; no claim of improvement on the retained333real
+controls without an actual compatible replay. This isolates input representation;
+same renderer and small number of structural families still limit generalization.
+Replay the pinned FDR021 head on the same500normalized synthetic evaluation crops
+as a frozen baseline, using its resident pretrained tail and matching normalization.
+This is not a new training run or a substitute for the unchanged real-app benchmark.
+After fixed final training, measure training-set fit for diagnosis. Also replay the
+normalized-input candidate and FDR021 on the resident, hash-verified315development
+plus18retention feature inputs, using the existing representative scorer. This is
+evaluation-only under the same1,800second envelope and changes no membership or
+selection thresholds. Verify identical prefix/normalization and retained crop hashes
+first. The common-window arm has no matching reference boxes for those static real
+frames, so its real-app transfer remains unavailable rather than substituting the
+wrong input representation.
+Record USB image read/decode, accelerator execution and feature-cache write/hash
+times separately, with explicit accelerator synchronization. Preserve the encoder
+identity, package versions and final training state so both arms can be replayed.
+Prepare a deterministic random review queue independently of model failures; keep
+failure-selected examples in a separate queue. Report uncertainty by configuration
+group rather than treating sibling renders as independent real-app evidence.
+
 ### Execution checkpoint — October 2, 15:45 UTC
 
 Maintainer assigned execution and approved Simulator/external storage. Exact booted

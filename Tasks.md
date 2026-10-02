@@ -1,14 +1,16 @@
 # NativeUIAuditKit — Tasks
 
-## Blocked runtime / active preparation — NATIVE-FOCUS-EFFECT-SPIKE-26 / Codex
+## Review — NATIVE-FOCUS-EFFECT-SPIKE-26 / Codex
 
 October2 maintainer assigns execution, Simulator use and local external-drive corpus
 storage. ADR-0017 records the approved lifecycle/retention policy. Verify exact runtime,
 supported generation/storage paths and split membership before capture/training.
-Actual start: structural recipe rejected; legacy native capture1pair/6.149s succeeds,
-but Fixture explicitly exports unmeasured native-effect layout bounds. Need corrected
-source/Fixture and external delivery qualification before scale-up/training.
-[Runtime evidence and resume conditions](reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
+Completed1,250pairs/2,500screenshots/5,000validated crops on USB. Two matched runs:
+FDR035 standard433/500 versus FDR036 common-window500/500held-out synthetic controls
+at0.85; baseline283/500. Common window20% preserves enlargement without neighbour
+contamination. FDR035 real-frame selections regress12/14→0/14; reject replacement.
+FDR036 needs a known unfocused reference; real transfer remains unqualified. Capture
+median7.61s/pair; training33.12s/33.47s. [Results](reports/work/NATIVE-FOCUS-EFFECT-SPIKE-26/handoff.md).
 
 User-requested bundled spike: determine whether native enlargement/shading/shadow
 improves focus learning beyond artwork brightness. Automated batch checks at scale.
@@ -21,23 +23,40 @@ If the experiment fails, diagnose the cause and justify the changed rerun first.
 Optional TTR pacing/settling and coordinated multi-Simulator backlog request is
 tracked under26; these low-priority improvements do not block serial generation.
 
-- [ ] Verify genuine native-effect paired generation, observed focus and measured
+- [x] Verify genuine native-effect paired generation, observed focus and measured
   body geometry during the batch; distinguish native effects from custom imitations.
-- [ ] Compare current per-control resizing with a scale-preserving paired input;
+- [x] Compare current per-control resizing with a scale-preserving paired input;
   retain surrounding shadow/context, identical artwork within each pair, dark/light
   backgrounds and bright unfocused distractors. Freeze eligible membership and splits.
-- [ ] Measure generation throughput and annotation failures; run an explicitly scoped
+  Full scenes contain distractors; this comparison scores nominated targets only.
+- [x] Measure generation throughput and annotation failures; run an explicitly scoped
   matched training comparison when pilot review and data admission pass. Report real
   artwork misses/false positives, retention and whether larger generation is justified.
   [Spike contract](Research/Plans/NativeFocusEffectSpike26.md).
 
-## Backlog — CORPUS-LIFECYCLE-27 / Codex
+## Proposed follow-up — NATIVE-FOCUS-TRANSFER-28
 
-- [ ] Implement explicit OS-support/disposition filtering into immutable training
+Prioritized result-driven tranche; not an automatic repeat or production promotion.
+
+- [ ] Audit existing reviewed native-artwork transitions for independently known
+  unfocused reference bounds and reliable correspondence. Freeze usable coverage;
+  replay FDR036 when compatible inputs exist. Report missing coverage concretely.
+- [ ] Predeclare a matched size/context ablation and content-only/illumination
+  negatives to distinguish occupancy recognition from subtle native appearance.
+  New experiment execution/admission follows the applicable scope and budget.
+- [ ] Implement an offline advisory integration candidate with explicit reference
+  availability, applicability and uncertainty; make a measured go/no-go decision
+  before requesting CoreML export or replacement of the broad model.
+
+## Review — CORPUS-LIFECYCLE-27 / Codex
+
+- [x] Implement explicit OS-support/disposition filtering into immutable training
   manifests, with provenance validation, split preservation and historical replay.
-- [ ] Add a read-only retirement/cleanup report with dependency and irreplaceable-data
+- [x] Add a read-only retirement/cleanup report with dependency and irreplaceable-data
   checks. No deletion or runtime removal without an exact approved scope.
   [Accepted policy](Research/ADR-0017-Corpus-Lifecycle-and-OS-Support.md).
+  [Implementation and tests](reports/work/CORPUS-LIFECYCLE-27/handoff.md). Existing
+  corpus/OS dispositions remain unchanged pending an explicit selected-corpus policy.
 
 ## Ready — SETTINGS-SWIFT-SPIKE-25 / Codex
 
