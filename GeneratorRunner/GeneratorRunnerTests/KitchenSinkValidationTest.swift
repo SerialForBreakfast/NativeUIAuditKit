@@ -20,9 +20,142 @@
 
 import XCTest
 import SwiftUI
+import CryptoKit
+
+/// Explicit corpus repair, separate from the normal offline unit suite.
+@MainActor
+final class PageDotRegenerationTest: XCTestCase {
+    private struct Catalog: Decodable, Sendable {
+        let version: String
+        let members: [Member]
+    }
+    private struct Member: Decodable, Sendable {
+        let id: String
+        let family: String
+        let seed: UInt64
+        let width: Int
+        let height: Int
+        let scale: Int
+        let colorScheme: GeneratorColorScheme
+        let dynamicTypeSize: GeneratorDynamicTypeSize
+        let locale: String
+        let layoutDirection: GeneratorLayoutDirection
+        let deviceName: String
+        let simulatorState: SimulatorStateOverride
+        let accessibilityFlags: AccessibilityFlags
+    }
+
+    func testApprovedPageDotRegeneration() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_PAGE_REGEN_EXECUTE"] == "approved-41" else {
+            throw XCTSkip("Explicit corpus regeneration approval required")
+        }
+        let path = try XCTUnwrap(env["NUA_PAGE_REGEN_CATALOG"])
+        let url = URL(fileURLWithPath: path)
+        guard url.resolvingSymlinksInPath() == url, env["SIMULATOR_UDID"] == env["NUA_PAGE_REGEN_TARGET"] else {
+            throw CocoaError(.fileReadInvalidFileName)
+        }
+        let data = try Data(contentsOf: url)
+        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        XCTAssertEqual(digest, env["NUA_PAGE_REGEN_SHA256"])
+        guard digest == env["NUA_PAGE_REGEN_SHA256"], data.count < 2_000_000 else { throw CocoaError(.fileReadCorruptFile) }
+        let catalog = try JSONDecoder().decode(Catalog.self, from: data)
+        guard catalog.version == "page-dot-regeneration-v1", catalog.members.count == 666,
+              Set(catalog.members.map(\.id)).count == 666 else { throw CocoaError(.fileReadCorruptFile) }
+        let fm = FileManager.default
+        let output = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("page-regeneration-41")
+        guard !fm.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try fm.createDirectory(at: output, withIntermediateDirectories: false)
+        let started = ProcessInfo.processInfo.systemUptime
+        var bytes = 0
+        for (index, row) in catalog.members.enumerated() {
+            guard ProcessInfo.processInfo.systemUptime - started < 1200,
+                  row.id.range(of: "^img_[0-9]{6}$", options: .regularExpression) != nil,
+                  [2, 3].contains(row.scale), ["MediaCardGrid", "ProgressActivity"].contains(row.family) else {
+                throw CocoaError(.userCancelled)
+            }
+            let config = GeneratorRunConfig(seed: row.seed, templateFamily: row.family,
+                osProfile: row.scale == 3 ? .ios26 : .ios17, simulatorOverride: row.simulatorState,
+                colorScheme: row.colorScheme, dynamicTypeSize: row.dynamicTypeSize, deviceName: row.deviceName,
+                pixelScale: row.scale, locale: row.locale, layoutDirection: row.layoutDirection,
+                accessibilityFlags: row.accessibilityFlags)
+            var corpus = ContentCorpus(seed: row.seed)
+            let view: AnyView
+            if row.family == "MediaCardGrid" {
+                view = AnyView(MediaCardGridTemplate(config: .make(seed: row.seed, corpus: &corpus)))
+            } else {
+                view = AnyView(ProgressActivityTemplate(config: .make(seed: row.seed, corpus: &corpus)))
+            }
+            let result = try await ScreenshotCapture.capture(view, config: config)
+            let dots = try XCTUnwrap(result.elements.first { $0.id == "pageControl_0" })
+            guard [25.0,40.0,55.0,70.0].contains(where: { abs(dots.frame.width - $0) < 1 }),
+                  abs(dots.frame.height - 10) < 1,
+                  Int(result.pixelSize.width) == row.width, Int(result.pixelSize.height) == row.height else {
+                throw CocoaError(.fileReadCorruptFile)
+            }
+            bytes += result.png.count
+            guard bytes < 2 * 1024 * 1024 * 1024 else { throw CocoaError(.fileWriteOutOfSpace) }
+            try result.png.write(to: output.appendingPathComponent(row.id + ".png"), options: .withoutOverwriting)
+            let annotation = output.appendingPathComponent(row.id + ".json")
+            try AnnotationWriter.write(result: result, config: config, imageFileName: row.id + ".png",
+                templateFamily: row.family, generatorVersion: "page-dot-repair-41", to: annotation)
+            bytes += try Data(contentsOf: annotation).count
+            if index % 50 == 0 { print("PAGE_REGEN_PROGRESS \(index + 1)/666 bytes=\(bytes)") }
+        }
+        let receipt: [String: Any] = ["count": 666, "catalogSHA256": digest,
+            "runtimeOS": ProcessInfo.processInfo.operatingSystemVersionString,
+            "seconds": ProcessInfo.processInfo.systemUptime - started, "bytes": bytes]
+        try JSONSerialization.data(withJSONObject: receipt, options: [.sortedKeys, .prettyPrinted])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("PAGE_REGEN_COMPLETE \(output.path)")
+    }
+}
 
 @MainActor
 final class KitchenSinkValidationTest: XCTestCase {
+
+    /// Opt-in rendered regression: exercise both repaired templates, not a mock
+    /// geometry formula. Attach evidence to the project-local xcresult only.
+    func testPageDotIntrinsicGeometry() async throws {
+        guard ProcessInfo.processInfo.environment["NUA_PAGE_DOT_PROBE"] == "1" else {
+            throw XCTSkip("Select the bounded page-dot rendering probe explicitly")
+        }
+        for width in [375.0, 430.0] {
+            for count in 2...5 {
+                for family in ["MediaCardGrid", "ProgressActivity"] {
+                    var corpus = ContentCorpus(seed: 40)
+                    let view: AnyView
+                    if family == "MediaCardGrid" {
+                        var config = MediaCardGridConfig.make(seed: 40, corpus: &corpus)
+                        config.pageCount = count
+                        config.currentPage = 0
+                        view = AnyView(MediaCardGridTemplate(config: config))
+                    } else {
+                        var config = ProgressActivityConfig.make(seed: 40, corpus: &corpus)
+                        config.pageCount = count
+                        config.currentPage = 0
+                        view = AnyView(ProgressActivityTemplate(config: config))
+                    }
+                    let result = try await ScreenshotCapture.capture(view,
+                        windowSize: CGSize(width: width, height: 1100), config: makeGeneratorConfig(seed: 40))
+                    let dots = try XCTUnwrap(result.elements.first { $0.id == "pageControl_0" })
+                    XCTAssertLessThan(dots.frame.width, width / 2, "Whole-row capture: \(family)")
+                    XCTAssertGreaterThan(dots.frame.height, 0)
+                    XCTAssertEqual(dots.frame.width, 10 + Double(count - 1) * 15, accuracy: 1)
+                    XCTAssertEqual(dots.frame.height, 10, accuracy: 1)
+                    let attachment = XCTAttachment(data: result.png, uniformTypeIdentifier: "public.png")
+                    attachment.name = "\(family)-\(Int(width))-\(count)-raw"
+                    attachment.lifetime = .keepAlways
+                    add(attachment)
+                    let overlay = XCTAttachment(data: BoundingBoxDebugRenderer.render(result), uniformTypeIdentifier: "public.png")
+                    overlay.name = "\(family)-\(Int(width))-\(count)-bounds"
+                    overlay.lifetime = .keepAlways
+                    add(overlay)
+                    print("PAGE_DOT_GEOMETRY \(family) width=\(width) count=\(count) bounds=\(dots.frame)")
+                }
+            }
+        }
+    }
 
     // MARK: - Expected element IDs
 

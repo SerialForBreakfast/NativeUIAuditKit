@@ -1,5 +1,21 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+2026-10-02 full-screen runner v2 (tranche40): an experimental consumer contract,
+not a sidecar/public API change. `storage: read-through` accepts project images or
+verified native26USB originals; all output stays project-local. `evaluationPolicy:
+terminal-last-checkpoint` preserves train/evaluation roles and prevents evaluation
+from entering trainer loaders, stopping decisions or checkpoint selection. Dataset
+labels are held in memory with adjacent image-cache access disabled. Fixed-last
+terminal metrics use confidence0.25 and matchingIoU0.5. Exact admission remains
+required independently of successful input checking. V1 behavior is retained.
+
+2026-10-02 pageControl geometry clarification (tranche39): manual SwiftUI page dots
+are annotated as the intrinsic complete dot group, before full-width alignment or
+outer padding. MediaCardGrid/ProgressActivity source capture order is repaired;
+retained Run013 labels remain unchanged for reproducibility. Native UIPageControl
+containers remain a separate documented geometry convention requiring a future
+rendered-policy review, not automatic relabeling. No taxonomy/schema change.
+
 2026-10-02: [Accessibility-assisted review29](Plans/AccessibilityAssistedFocus29.md)
 adds a diagnostic consumer batch variant, `accessibility-review-batch-v1`, over
 existing sealed review inputs. Original capture/annotation schemas are unchanged.
@@ -680,6 +696,27 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Tranche37 experimental full-screen focus entrypoint:** use an isolated one-class
+`focusedControl` research target, not a public taxonomy change. Validation-only must
+verify local checkpoint/image/annotation hashes, explicit admission of exact membership,
+complete focus annotations and source-group split separation before loading any model.
+Execution reuses tvOS YOLO training options with zero workers and offline dependency
+behavior; a parent watches only its launched child for wall-time and output budget,
+retains partial output on stop, and writes a terminal receipt. Limits are monitored,
+not filesystem quotas; overshoot is reported. New training requires its assigned
+experiment authority. Diagnostic real images are not silently admitted by this runner.
+
+**Transition repair intake34 (October2):** assigned offline reception of corrected
+16native transition pairs. Preserve planned versus visible control membership and
+explicit exclusions; validate new producer fields before extending old all-visible
+scene assumptions. Fixed pixel/guarded-stability replay is diagnostic only. Original
+rejected archives stay intact; no synthetic-to-training role change or live input.
+Implementation opts into `incomplete_declared_composition` only for corrected
+transition intake: expected wrappers equal declared recipe membership, visible IDs
+equal exported scene controls, and exclusions must partition membership with
+matching clipping evidence. All other harvest callers retain the original strict
+contract. Native readiness/settled checks remain mandatory in either mode.
+
 **Native focus appearance spike (2026-10-02):** NATIVE-FOCUS-EFFECT-SPIKE-26 freezes
 1,000 native-effect training pairs and250 withheld synthetic pairs by configuration
 and artwork family. Compare per-body production16% crops with common before-body
@@ -1070,6 +1107,16 @@ try model.write(to: outputURL.appendingPathComponent("NativeUIDetector.mlpackage
 Use for the first 5-class vertical slice. Move to Option B if mAP plateaus below 0.80.
 
 ### 8.3 Option B: YOLO11 → Ultralytics CoreML export (Production — Phase 6a)
+
+**FOCUS-AUGMENTATION-47 (October2,2026):** full-screen focus run-v2 accepts optional
+augmentation-v1 with bounded translation and isotropic scale only; omission retains
+zero variation. FSF003/004 compare5%translation versus5%translation+20%scale using
+the same admitted2,000frames, initializer and one-epoch schedule. Actual read-through
+training uses square inputs (`rect=False` in the dataset adapter), independently of
+the trainer's serialized `rect` option. Native labels remain original; the resident
+transform updates/clips training boxes, with regression tests and a real-input probe.
+Evaluation remains terminal-only and unaugmented. This is a hypothesis test for
+alignment/scale sensitivity, not a change to shipped preprocessing or dataset roles.
 
 **Decision (2026-08-23):** Phase 6a trains an **anchor-free YOLO11** detector on the full 41-class taxonomy via Ultralytics, then exports with `format=coreml, nms=True`. Run 006 already proved this path on the 5-class prototype (mAP@0.5 = 0.935 CoreML). Create ML `objectPrint` is retired for production training (BP-26).
 

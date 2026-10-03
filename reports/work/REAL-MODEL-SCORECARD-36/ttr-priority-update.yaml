@@ -1,0 +1,30 @@
+schema_version: 1
+id: nuiak-20261002-scorecard36-priority-update
+request_id: nuiak-20261002-brightness33-source-mapping
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-02T23:20:00Z'
+expires_at: '2026-10-02T23:50:00Z'
+state: completed
+message: >-
+  Consumer real-screen scorecard makes full-control proposal recall the immediate
+  priority alongside native family diversity. Shipped tvOS detector located 346/583
+  reviewed bodies and 21/46 focused targets. Bundled focus selected correctly on 4/7
+  explicitly complete Settings frames; remaining three miss the target body. This
+  reused diagnostic corpus is not an independent benchmark or an FDR036 score.
+  Existing coverage33 request stands: map native artwork, wide buttons and list rows
+  using actual supported recipe fields and full/visible ordinary body geometry.
+  Preserve all focusable controls, native component identity, source/layout ancestry,
+  settled focus bindings and normal-profile pixels. Consumer will compare full-screen
+  with crop approaches and retain assisted profiles as separate evidence. Publish
+  matching source branch/commit through Git when ready; NUIAK builds locally.
+  This updates priority, not a duplicate capture or producer-build request.
+evidence:
+  - reports/work/REAL-MODEL-SCORECARD-36/handoff.md
+  - reports/work/REAL-MODEL-SCORECARD-36/scorecard-final/scorecard.json
+  - reports/work/SETTINGS-BRIGHTNESS-33/coverage-intent/intent.json
+outcomes:
+  software_verified: passed
+  data_eligible: not_assessed
+  integration_qualified: passed
+  model_gate_passed: not_assessed

@@ -32,6 +32,10 @@ def preflight(root, protected):
 
 
 def source_record(root, protected, pair_ids=None):
+    if (root/'artifact-manifest.json').is_file() and (root/'audit.json').is_file():
+        h.require(pair_ids is None, 'reference_partial_selection_unsupported')
+        from reference_delivery import source_record as reference_source
+        return reference_source(root, protected)
     if (root/'pair-index.json').is_file():
         from fixture_owned_pairs import source_record as diagnostic_source
         return diagnostic_source(root,protected,pair_ids)
@@ -78,8 +82,11 @@ def project(sources, contracts, *, body_geometry=False, visibility_policy=None):
                     frame.update(admissionBlockers=pair['admissionBlockers'],
                         observationCorrelation=binding['correlation'],sourceAncestry=pair['sourceAncestry'],
                         sourceRole=pair['sourceRole'],labelSource=pair['labelSource'])
+                    if pair.get('evidenceKind'):
+                        frame.update(evidenceKind=pair['evidenceKind'], sourceEndpoint=role)
                     frame['reviewFindings'].extend(pair['admissionBlockers'])
                 semantics={e['id']:e for e in inventory['elements']} if inventory else {}
+                reference = (recipe.get('appearance') or {}).get('referencePack') is not None
                 scene_ids={e['element_id'] for e in scene['elements']}
                 if inventory is None: frame['reviewFindings'].append('legacy_semantics_unavailable')
                 elif inventory['truncated']: frame['reviewFindings'].append('truncated_semantic_inventory')
@@ -88,7 +95,13 @@ def project(sources, contracts, *, body_geometry=False, visibility_policy=None):
                     reason=None
                     label='focus:tabItem' if eid in tab_ids else e['taxonomy_class']
                     if label not in FOCUSABLE and label!='focus:tabItem': reason='unsupported_or_nonfocusable_taxonomy'
-                    elif inventory and native.get('focusable') is not True: reason='native_focusability_unknown_or_false'
+                    elif inventory and native.get('focusable') is not True:
+                        # Reference anchors are not themselves focusable UIKit views.
+                        # The validated planned native inventory supplies this identity,
+                        # not accessibility traits or a guessed Boolean on the anchor.
+                        if not (reference and native.get('focusable') is not False and
+                                eid in scene['focus_observation']['plannedFocusIDs']):
+                            reason='native_focusability_unknown_or_false'
                     if visibility_policy and reason is None:
                         invisible=native.get('is_hidden') is True or native.get('effective_alpha')==0
                         if invisible:
@@ -132,6 +145,8 @@ def project(sources, contracts, *, body_geometry=False, visibility_policy=None):
                     records.append(dict(frameID=fid,elementID=eid,disposition='proposed',controlID=proposal['id']))
                 for eid,e in semantics.items():
                     if eid not in scene_ids:
+                        if reference and eid in inventory['exclusions']:
+                            continue  # Accounted once below as a producer exclusion.
                         records.append(dict(frameID=fid,elementID=eid,disposition='excluded' if e['role']!='control_wrapper' else 'blocked',
                             reason='semantic_child_not_control' if e['role']!='control_wrapper' else 'no_scene_control_binding'))
                 if inventory:
@@ -203,9 +218,9 @@ def prepare(bundles, output, protected_path, *, seed=42, count=8, exception_limi
         outcomes.append(row)
         try:
             source,contract=source_record(root,protected,pair_ids)
-            sources.append(source); contracts.append(contract)
             row.update(disposition='accepted_for_diagnostic_QA',pairCount=len(contract['usableRows']),
                        targetCoverage=contract['targetCoverage'])
+            sources.append(source); contracts.append(contract)
         except (ValueError,OSError,KeyError,TypeError) as error:
             row['reasons']=[str(error)]
             receipt=root/'harvest-receipt.json'

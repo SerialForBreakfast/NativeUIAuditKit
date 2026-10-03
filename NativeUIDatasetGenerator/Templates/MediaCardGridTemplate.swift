@@ -159,8 +159,10 @@ public struct MediaCardGridTemplate: View {
                             pageCount: config.pageCount,
                             currentPage: config.currentPage
                         )
-                        .frame(maxWidth: .infinity)
+                        // Measure the visible dot group, not its full-width alignment row.
+                        .fixedSize()
                         .captureFrame(id: "pageControl_0")
+                        .frame(maxWidth: .infinity)
                         .padding(.bottom, 20)
                     }
                 }

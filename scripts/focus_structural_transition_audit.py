@@ -7,8 +7,6 @@ from fixture_owned_pairs import member
 from fixture_rendered_body import validate as body_bounds
 from harvest_sidecar_v2 import scene_check
 from synth05_intake import verify_package
-import focus_recorded_transition_eval as evaluate
-import focus_recorded_comparison as comparison
 
 
 def contract_observations(scene):
@@ -21,7 +19,7 @@ def contract_observations(scene):
                 plannedIDsAbsentFromVisibleElements=sorted(set(planned)-visible))
 
 
-def endpoint(root,evidence,capture,image_name):
+def endpoint(root,evidence,capture,image_name, *, transition_visibility=False):
     path=member(root,image_name)
     h.require(path.parent==evidence.parent and path.name==capture['image'],'transition_image_binding')
     ref=h.ref(path);h.require(ref['sha256']==capture['sha256'],'transition_image_hash')
@@ -31,8 +29,8 @@ def endpoint(root,evidence,capture,image_name):
     ticks=[capture[k] for k in ('before_scene_received_host_ns','frame_received_host_ns','after_scene_received_host_ns')]
     h.require(all(type(t)is int and t>=0 for t in ticks) and ticks==sorted(ticks),'transition_host_order')
     before,after=capture['before_scene'],capture['after_scene'];focus=after['focused_element_id']
-    gen=scene_check(after,size,focus)
-    h.require(scene_check(before,size,focus)==gen and all(before.get(k)==after.get(k) for k in
+    gen=scene_check(after,size,focus,transition_visibility=transition_visibility)
+    h.require(scene_check(before,size,focus,transition_visibility=transition_visibility)==gen and all(before.get(k)==after.get(k) for k in
         ('recipe','elements','focus_observation','semantic_inventory')),'transition_changed_bracket')
     receipt=capture['action_capture_receipt']
     h.require(receipt['state']=='delivered' and type(receipt['sequence'])is int and receipt['sequence']>0 and
@@ -48,6 +46,8 @@ def endpoint(root,evidence,capture,image_name):
 
 
 def run(root,output):
+    import focus_recorded_transition_eval as evaluate
+    import focus_recorded_comparison as comparison
     root=h.local(root);output=h.fresh(output);manifest=verify_package(root/'manifest.json')
     index=h.read(root/'transition-index.json');h.require(index['pairs']==len(index['cases'])==16,'transition_count')
     h.require(len({c['id'] for c in index['cases']})==16,'duplicate_transition_id')

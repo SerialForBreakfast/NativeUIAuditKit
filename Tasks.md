@@ -1,14 +1,323 @@
 # NativeUIAuditKit — Tasks
 
-## Review / source publication blocked — SETTINGS-BRIGHTNESS-33 / Codex
+## Review — FAMILY-TRANSFER-48 / Codex (producer integration pending)
+
+Continue47: qualify current TTR source/runtime/export boundary and executable native
+coverage plans. Preserve calibration roles. Independent companion: build a retained-
+prediction failure gallery and measured coverage priorities for the next data batch.
+- [x] Verify current producer identity/planners and retained-export repair availability.
+- [x] Build exact candidate coverage/membership proposal with grouped split exclusions.
+- [x] Produce grouped failure review from47 predictions; test actual CLI and update status.
+New data training requires an explicit admitted membership; existing reference61 stays
+calibration. Avoid unchanged export retry when neither source nor runtime changed.
+Current local source/helper unchanged; TTR actively implementing native-widget/spatial
+and export diagnostics.18cases/66targets validate;12-image failure review and all46
+retained-result rescoring complete. Six focused tests/reference regressions/134Swift
+checks pass. [Handoff](reports/work/FAMILY-TRANSFER-48/handoff.md).
+
+## Review — FOCUS-AUGMENTATION-47 / Codex
+
+[Approved comparison](Research/Plans/FocusAugmentation47.md).
+- [x] Add closed translation/scale configuration; qualify real transforms and split isolation.
+- [x] Execute FSF003/004 on unchanged membership and initializer; fixed-last terminal scoring.
+- [x] Compare robustness and real/reference transfer; tests, status and next priorities.
+
+Both500/500synthetic, versus425/500baseline. Translation-only improves real localization
+1/46→8/46and reduces known-unfocused detections46→19; translation+scale9/46but68wrong
+detections. Prefer translation-only as next experimental baseline. All7complete real
+screens still abstain; reference12remain0/12.77Python/134Swift checks pass.
+[Full outcomes and evidence](reports/work/FOCUS-AUGMENTATION-47/handoff.md).
+
+Next substantial tranche — family/scene transfer, priority order:
+- [ ] Qualify current producer export and retained native-button/grid-density plans;
+      inventory actual row/tab/button implementations and missing aspect/position coverage.
+- [ ] Define and obtain scoped approval for exact new training membership and whole-family
+      holdouts; keep reviewed61reference images as calibration unless reassigned explicitly.
+      Use paired-content focus switches and bright/dark unfocused distractors.
+- [ ] Ingest/QA the approved diverse batch and run one matched translation-only comparison
+      against FSF003, scoring the unchanged500synthetic/46real and reference challenges.
+      Report target recall and wrong selections jointly, with a grouped failure gallery.
+      Data admission/capture authority must cover the chosen batch before execution.
+
+## Review — FOCUS-PRIORITIES-46 / Codex
+
+[Three controlled comparisons](Research/Plans/FocusPriorities46.md).
+- [x] Pin12approved reference and18native development images; implement tested transforms.
+- [x] Compare resolution, fixed-content positions, and one- versus ten-epoch sensitivity.
+- [x] Diagnose results, rank next work, verify scripts and offline package, update status.
+
+Annotation is a low-priority failure hypothesis following repeated clean reviews.
+This tranche uses fixed models and preserves data roles; no repeated blanket review.
+
+300passes: native centered15/18, unaligned shifts0/18, stride-aligned shifts15/18and
+16/18;1280input0/18. More epochs centered8/18. Training has zero translation/scale
+variation.33Python/134Swift checks; all300rows reconstructed,30prior baselines match.
+[Handoff](reports/work/FOCUS-PRIORITIES-46/handoff.md).
+
+Next substantial tranche (highest priority; producer-independent):
+- [x] Add bounded, source-pinned translation/scale augmentation configuration to the
+      existing runner, with tests for transformed labels, clipping and split isolation.
+- [x] Compare same-initialization one-epoch translation-only versus translation+scale
+      against the retained one-epoch baseline on the same admitted2,000training images.
+      Record updates/exposure; keep original500development frames and reference/real
+      diagnostics out of fitting. Freeze run configurations and budgets before launch.
+- [x] Evaluate alignment robustness, ordinary focused-body accuracy and wrong selections
+      together; then prioritize remaining native row/tab/aspect coverage from failures.
+
+## Review — REFERENCE-BENCHMARK-45 / Codex
+
+[Scope](Research/Plans/ReferenceBenchmark45.md).
+- [x] Repair dependency-isolated review validation and open all12samples.
+- [x] Compare fixed resident production/FSF001 on distinct reference images, provisional labels.
+- [x] Qualify native-family source/planner capabilities and exact comparison membership choices.
+- [x] Complete tests, offline checks, status and actionable handoff.
+
+FSF0010/61focused-body matches vs production13/61; catalog unfocused candidates outrank
+focused candidates28/30even after relaxing diagnostic geometry to containment.
+Six styled-native-button cases/30target intentions validate; eight grid-density cases
+plan successfully. Human approved all12samples without corrections; role assignment
+remains open.126Python/134Swift
+checks pass. [Handoff](reports/work/REFERENCE-BENCHMARK-45/handoff.md).
+
+Next substantial tranche, priority order:
+- [x] Finish grouped12review: maintainer confirmed all samples perfect on October2.
+- [ ] Choose exact reference role; recommended retain the
+      61distinct images as development challenge data, not an independent test.
+- [ ] Qualify retained smoke export after producer repair, then execute the planned
+      native spatial coverage with measured positions; broaden artwork aspect ratios.
+- [ ] Build paired-content hard-negative training membership with whole-family holdouts,
+      run one justified data comparison and score unchanged synthetic/real challenges.
+      New capture/admission/training follows its scoped authority; no unchanged rerun.
+
+## Review — REFERENCE-IMPORT-44 / Codex
+
+[Scope](Research/Plans/ReferenceImport44.md).
+- [x] Integrate reference identity, clipped-control and observed-navigation validation.
+- [x] Qualify rich-reference36, run production crop QA and prepare grouped review.
+- [x] Deliver executable diversity inventory/comparison preflight, focused tests and offline checks.
+
+36cases/468crops pass;12distinct images prepared together. Calibration roles unchanged.
+Catalog median focused area+23%; guide no growth. Center-heavy positions and missing
+native Settings/tabs/dialog coverage remain.161Python test executions/134Swift checks.
+[Handoff](reports/work/REFERENCE-IMPORT-44/handoff.md).
+
+Next integrated tranche:
+- [x] Human grouped12sample review approved without corrections; confirmation is
+      `reports/work/REFERENCE-BENCHMARK-45/human-sample-approval.json`.
+- [ ] Exact role/membership decision for reference data.
+- [ ] Qualify missing native control families and distributed focus positions.
+- [ ] Run fixed-model data-diversity comparison with unchanged existing evaluation
+      after new-family admission/held-out membership is designated.
+
+## Review — TTR-UPDATE-43 / Codex
+
+- [x] Test updated running TTR planner, exact Simulator/Fixture readiness and new capabilities.
+- [x] Receive and independently audit rich-reference36 accepted cases and consumer compatibility.
+- [x] Update shared receipt/status and local priority gaps with an evidence-backed handoff.
+
+[Scope](Research/Plans/TTRUpdate43.md). Calibration roles remain unchanged.
+3/3live appearance captures complete; export blocked at app-owned writer.36received
+pairs pass image/observed-focus checks; strict consumer reference/native-navigation
+adapter remains required.7Python/134Swift checks pass.
+[Handoff](reports/work/TTR-UPDATE-43/handoff.md).
+
+Next integrated work:
+- [x] Implement referencePack v1/v2 import, explicit clipping/exclusions, native-navigation
+      brackets and renderer ancestry; run crop QA and prepare one grouped review.
+- [ ] Resume export of retained smoke campaigns after writer/access repair; no recapture.
+- [ ] Extend native Settings/tab scene coverage and freeze new data-use membership.
+
+## Review — REAL-TRANSFER-42 / Codex
+
+Maintainer continuation after41; [scope](Research/Plans/RealTransfer42.md).
+- [x] Fixed FSF001 real-screen inference, geometry and complete-frame comparison.
+- [x] Integrate666iOS replacements into full linked dataset; verify membership,
+      byte/pixel integrity, unchanged evaluation and validation coverage.
+- [x] Native layout/control coverage specification, tests, status and handoff.
+
+Real transfer1/46focused bodies versus production21/46;0/7complete selections
+versus4/7. Full19,740-member iOS export verified with666repairs and5200evaluation
+members unchanged.14Python/134Swift tests pass.
+[Handoff](reports/work/REAL-TRANSFER-42/handoff.md).
+
+Next substantial tranche, in priority order:
+- [ ] Qualify source/runtime generation of native rows, buttons, tabs and mixed
+      artwork scenes; implement executable grouped coverage plan before capture.
+- [ ] Resolve native pageControl visible-body versus container supervision; add
+      representative new validation membership before the repaired iOS comparison.
+- [ ] Execute the resulting scoped generation/training comparisons once new data
+      membership and use are approved. Preserve existing real diagnostic roles.
+
+## Review — FULLSCREEN-EXPERIMENT-41 / Codex
+
+Maintainer approved tranche40next steps. [Scope](Research/Plans/FullscreenExperiment41.md).
+- [x] Admit exact full-scene membership and execute FSF001:425/500exact,0FP,75FN.
+- [x] Complete authorized10epoch FSF002 comparison; time cap removed by maintainer.
+- [x] Regenerate666page-dot training members separately and verify rendered/YOLO labels.
+- [x] Focused tests, offline Swift checks, status and substantial next handoff.
+
+FSF001425/500exact versus FSF002194/500; both0FP. Diagnostic candidate recall at.001
+500→342/500, especially missing bottom targets. Horizontal-training/vertical-eval
+layout transfer is the next hypothesis; more unchanged fitting regressed.666iOS
+members/8,958labels repaired and verified;39Python/134Swift checks pass.
+[Handoff](reports/work/FULLSCREEN-EXPERIMENT-41/handoff.md).
+
+Next substantial tranche, in priority order:
+- [x] Compare the fixed one-epoch full-screen model on retained real-app development
+      screens against current focused-body coverage; define exact inference scope.
+- [x] Design native focus coverage across horizontal/vertical positions and control
+      families; preserve existing evaluation roles. New capture/admission scope
+      required before execution, rather than reusing failed evaluation as training.
+- [x] Integrate666replacement iOS members into a new training version and decide
+      representative validation coverage before the corresponding training comparison.
+
+## Review — FULLSCREEN-READTHROUGH-40 / Codex
+
+Assigned continuation: [scope](Research/Plans/FullscreenReadThrough40.md).
+- [x] Implement v2 direct-read originals/in-memory labels and fixed-last terminal evaluation.
+- [x] Verify resident dataset transforms, cache isolation, evaluation exclusion and caller wiring.
+- [x] Qualify exact2500-frame USB membership through the new input-check entrypoint.
+- [x] Render and inspect page-dot geometry across both repaired templates/counts/widths.
+- [x] Finish integrated checks and handoff; distinguish draft admission from executable training.
+
+35Python/134offlineSwift tests and16native geometry cases pass. Direct-read source
+qualification passes; exact full-scene admission remains pending. [Handoff](reports/work/FULLSCREEN-READTHROUGH-40/handoff.md).
+
+Next substantial tranche:
+- [x] Admit the exact2000train/500evaluation full scenes and execute one bounded
+      fixed-last full-screen comparison; retain original group roles. Requires the
+      full-scene data-use decision; target-only prior admission is not identical.
+- [x] Regenerate666affected page-dot training members into a new corpus version;
+      retain old evidence and decide separate new validation coverage before training.
+
+## Review — CONTROL-ELIGIBILITY-39 / Codex
+
+Assigned local continuation. [Scope](Research/Plans/ControlEligibility39.md).
+- [x] Compare fixed whole-control refinement using retained scores; audit grouping.
+- [x] Trace page-control labels, family support and residual box geometry; repair two source capture orders.
+- [x] Prepare exact native full-screen membership and readiness/compatibility evidence.
+- [x] Complete focused tests, offline checks and local handoff.
+
+666training manual-dot boxes are whole-row rather than intrinsic-group extents;
+source repaired, regeneration pending. Refinement4/7complete equals production.
+2500full-scene drafts verified; exact admission/USB loader/evaluation integration
+remain. [Handoff](reports/work/CONTROL-ELIGIBILITY-39/handoff.md).
+
+### Next substantive work
+- [x] Implement bounded USB read-through and terminal-only evaluation, preserving
+      native26evaluation membership; qualify exact full-screen admission/execution.
+- [x] Render/verify repaired page-dot geometry across counts/canvas sizes (40).
+      Exact666affected IDs prepared; corpus regeneration and representative validation
+      coverage remain above, with no reassignment of old test data.
+
+## Review — LOCAL-DIAGNOSTICS-38 / Codex
+
+User continuation with TTR deferred. [Scope](Research/Plans/LocalDiagnostics38.md).
+- [x] Score recovered geometry with production cropper/classifier; diagnose selection failures.
+- [x] Execute fixed40-frame iOS resolution comparison and report actionable result.
+- [x] Verify replay/tests and update local priorities/handoff.
+
+Union geometry selection6wrong/1tie on7complete frames; preserving known YOLO role
+exclusions2correct/5wrong, versus production4correct. Higher iOS resolution still
+0/40page-body operational recall at all3sizes.9Python/134Swift tests pass.
+[Results and next substantial local tranche](reports/work/LOCAL-DIAGNOSTICS-38/handoff.md).
+
+Local follow-up is completed in39above. Independent evaluation cannot be claimed
+from these already-exposed frames; full-screen execution remains explicitly pending.
+
+## Review / source mapping blocked — PROPOSAL-RECOVERY-37 / Codex
+
+Assigned continuation: [scope and fixed experiment](Research/Plans/ProposalRecovery37.md).
+Complete real proposal recovery comparison, 24-frame selective iOS OCR/coarse-role
+spike, bounded training entrypoint and dependency recheck as one tranche.
+
+Scorecard36 is complete; [measured priorities](reports/work/REAL-MODEL-SCORECARD-36/handoff.md).
+At the fixed operating point the shipped detector misses 25/46 reviewed focused
+targets. Recovering those proposals takes priority over another isolated head run.
+- [x] Compare shipped proposals against optional native rectangle/OCR-assisted row
+  proposals on the frozen real-screen inventory; report body recall, duplicate boxes
+  and unsupported controls separately. Define one bounded inference scope first.
+- [x] Build an offline bounded full-screen focus experiment entrypoint reusing the
+  resident YOLO trainer; enforce local checkpoint, time/output limits and grouped,
+  complete training membership. Existing --dry-run trains; do not use as preflight.
+- [ ] Map native coverage33 to published TTR source, build locally, and prepare the
+  same admitted groups for crop versus full-screen comparison. Execution/admission
+  scope remains explicit; diagnostic real frames stay diagnostic.
+- [x] iOS: test coarse body localization plus semantic-role resolution on retained
+  secondary/cancel examples; separately design page-dot/row geometry and family
+  coverage correction. Preserve labels/public taxonomy and DS-G8.
+
+Fixed union improves focused-body proposal recall21/46→42/46; candidate volume
+1,084→2,289. No final-selector gain claimed. Runner44Python/134Swift verification
+passed; positive child wiring uses a model double, real training still pending.
+Historical mapping block superseded by43/45: running Developer/TVTestRig87e59be5
+contains grid-density and its helper successfully plans eight cases. Native UIButton
+manifest validation also passes. Actual capture/export/admission for the intended
+comparison remains open. [Original handoff](reports/work/PROPOSAL-RECOVERY-37/handoff.md).
+
+Next substantial tranche: score recovered proposals with the actual focus selector
+and duplicate handling; intake the named TTR reference delivery with ordinary-body
+QA; assemble exact admitted full-screen membership for a bounded comparison. Define
+new inference/transfer/training scope and preserve diagnostic image roles.
+
+
+## Queued lower priority — LOCAL-SETTINGS-MAP-35 / Codex
+
+Maintainer October2 voice direction: prioritize real-app failure analysis and
+diverse synthetic coverage; perform local Simulator Settings mapping when capacity
+allows. Explicitly authorized building and launching the current local TTR source,
+then the previously requested safe Settings crawl and Mermaid export/feedback to TTR.
+No user presence or producer-built binary is required. Inspect current checkout,
+signing configuration, resident dependencies, matching runner, exact Simulator and
+ownership before execution. Preserve dirty source and active sessions; isolate build
+outputs in NUIAK. Git writes/source synchronization remain separately governed.
+
+- [ ] Build/launch current local TTR with its matching helper/runner; record source
+  and runtime identity. Resolve concrete signing/dependency blockers if encountered.
+- [ ] Run supported bounded read-only Settings traversal on the explicit Simulator;
+  preserve settings values, unknown-context stops, omissions and cleanup evidence.
+- [ ] Export Markdown/Mermaid graph and coverage ledger; distinguish partial mapping
+  from exhaustive/repeatable navigation. Send sanitized findings to TTR using the
+  existing shared handoff, with exact artifact transfer scope if required.
+
+This is a deferred execution assignment, not an active background job. No physical
+Apple TV operation, accessibility-setting change or training admission is included.
+
+## Review / producer readiness blocked — NATIVE-TRANSITIONS-34 / Codex
+
+Continue approved transition22 repair intake while density source publication is
+pending. Receive exact corrected16pair archive, verify manifest/geometry/native
+membership, add narrowly versioned compatibility if required, and replay fixed
+brightness/growth/combined plus guarded stability. Report same/changed intent,
+scorable/excluded controls and actual native results. No training admission.
+191,803,968byte archive SHA256
+cd2f42c0a05db7c99ce3408aca9fd7d0a9e8a4cfe7263e471fa98b3256438737.
+Use existing safe receiver/cropper; max16pairs/256controls/600seconds/1GiB new
+outputs beyond source copy, retaining5GB disk reserve. Companion: reconcile stale
+transition/review tasks against receipts and latest completed diagnostics (DOC-01).
+
+- [x] Receive/validate corrected transition source and contract:188member hashes;
+  duplicate IDs repaired, explicit clipped membership consumed with opt-in checks.
+- [x] Execute all compatible native transitions:12pairs,28scorable controls;
+  fixed20correct/0wrong/8abstained, guarded22/0/6. Four controls unmatched.
+- [x] Test negative contracts,101Python/134Swift checks, publish exact receipt/status.
+- [x] Reconcile stale seven-frame review dependencies (DOC-01); retain new review gates.
+- [ ] TTR resolve4scroll_moved after endpoints: requested item-1 versus observed
+  item-2, verified=false/is_settled=false/stableMilliseconds=0. Replay corrected
+  evidence after source-contract repair; request `nuiak-20261002-transition34-native-readiness`.
+  [Handoff](reports/work/NATIVE-TRANSITIONS-34/handoff.md).
+
+## Review / capture qualification pending — SETTINGS-BRIGHTNESS-33 / Codex
 
 - [x] Compare fixed brightness/sign and guarded brightness against retained pixel rule,
   including real unchanged controls and generated content/motion negatives.
 - [x] Check TTR source availability; prepare coverage-driven native comparison intent.
 - [x] Verify caller/tests, record results and actionable producer requirements.
-- [ ] Build/qualify the grid-density source once published and synchronized locally:
-  current checkout46dce7b is dirty and does not contain advertised dedfd613 or the
-  grid-density files. No source mutation/build of mismatched checkout.
+- [x] Resolve source availability and qualify the current grid-density planner:
+  REFERENCE-BENCHMARK-45 verifies Developer/TVTestRig87e59be5 and eight planned cases
+  through the matching running helper. Older Documents checkout remains untouched.
+- [ ] Qualify actual grid captures/export and map to the48case comparison intent;
+  planner success does not complete runtime/data admission.
 
 Sign rule4correct/41wrong/3abstentions; guarded mean matches existing33/0/15 on48
 scorable controls. Generated exact results9/14versus12/14guarded/existing. Keep
@@ -208,8 +517,9 @@ the guarded full-context rule. Visual gallery and111Python/134Swift tests comple
 
 - [ ] Human sample acceptance: one eight-frame grouped, prefilled queue across all
   four appearance families; choose source role before exact admission/encoding.
-- [ ] TTR: stable scene-unique semantic child IDs; clarify off-screen planned IDs
-  versus visible inventory, then replay all16native transition pairs.
+- [x] TTR stable scene-unique child IDs and explicit visible/excluded accounting
+  received and audited for all16cases in34.12pairs replayed;4movement cases retain
+  native-readiness mismatch tracked in34above.
 - [x] Settings unchanged-focus experiment and content-change guard completed in23;
   preserved separate truth and coverage/error reporting.
   Completed intake, comparison and checks: [handoff](reports/work/FOCUS-RECORDED-STRUCTURAL-22/handoff.md).
@@ -341,9 +651,9 @@ CLIs. No deployment/admission/training.93Python/134Swift tests pass.
 - [ ] TTR structural successor: first prove composite card, ranked row, home icon and
   hero with explicit whole-control/child geometry; then planned48pair matrix. Existing
   request `nuiak-20261001-transfer10-coverage`; no new runtime dispatch in this tranche.
-- [ ] Resume genuine Settings transition evaluation after seven prepared endpoints
-  are reviewed. Persistent runtime identity/context remain unqualified. Keep scene
-  corroboration optional; no unconditional fallback for failed artwork tracking.
+- [x] Seven endpoints reviewed/corrected in21; genuine Settings comparisons completed
+  in22/23/33. Persistent runtime identity/context remain unqualified; broader
+  movement validation stays in23and34, not another repeat human review.
 
 FOCUS-ALIGNMENT-12 completed for review: opt-in CLI, two2996case replays, native
 common-support geometry,34Python/134Swift tests. Known scroll recovered;18/18retention
@@ -394,8 +704,8 @@ actual CLI checks and offline build/134Swift tests pass. No export/promotion.
 25of42subsequent pairs now verified by FOCUS-INTAKE-13;17remain producer-runtime
 blocked per23:35:36UTC snapshot. Neither recapture nor same-slot completion is a
 prerequisite for the recommended structural successor.
-- [ ] Review seven recovered Settings endpoints, then validate context/control
-  matching and actual transition accuracy; timing alone is not focus truth.
+- [x] Seven recovered Settings endpoints reviewed in21; native OCR correspondence
+  and actual transitions scored in22/23/33. Timing alone remains insufficient truth.
 
 [Integrated handoff](reports/work/FOCUS-CAMPAIGN-09/handoff.md),
 [prefilled review](reports/work/FOCUS-CAMPAIGN-09/review.md).
@@ -417,15 +727,15 @@ not blocked by that capacity issue. No NUIAK storage workaround initiated.
 
 ## Queued spike — TEMP-FOCUS-02: before/after focus and simple brightness rules
 
-- [ ] TEMP-FOCUS-02 genuine-transition follow-up / unassigned: retained-evidence
+- [x] TEMP-FOCUS-02 retained genuine-transition follow-up completed in21/22/23/33;
+  runtime/broader validation remains separately queued in23/34. Historical first
   spike completed2026-10-01. Brightness matches109/109Settings controls but yields
   58FP on315mixed controls; Settings-only hybrid equals FDR021, not improvement.
   Nine static Settings pairs brighten correctly;112Fixture pairs yield54expected/
   1opposite/57unknown;48white-artwork pairs all unknown by luma delta.
   Office166actions include14timing-valid associations but zero with both endpoints
-  in accepted reviewed annotations. Seven missing Settings endpoints now prepared by
-  FOCUS-CAMPAIGN-09 (not yet approved). Complete
-  paired review, then validate runtime context/matching and genuine transitions.
+  in accepted reviewed annotations at that time. Seven missing Settings endpoints
+  were subsequently approved/corrected in21; genuine transition scoring followed.
   [Completed spike](reports/work/TEMP-FOCUS-02/handoff.md).
   [Scope and acceptance](Research/Plans/TemporalVisualVerificationSpike.md#temp-focus-02--brightness-and-paired-change-spike-2026-10-01).
   Test settings-specific benefit and mixed-UI counterexamples separately. Existing

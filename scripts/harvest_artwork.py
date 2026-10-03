@@ -70,11 +70,11 @@ def artwork_identity(value, require):
     return 'artwork@1:' + hashlib.sha256(swift_json(canonical)).hexdigest()
 
 
-def validate_hierarchy(scene, require):
+def validate_hierarchy(scene, require, *, transition_visibility=False):
     recipe = scene['recipe']
     if (recipe.get('appearance') or {}).get('composition') is not None:
         from fixture_composition import hierarchy
-        hierarchy(scene,require)
+        hierarchy(scene,require,transition_visibility=transition_visibility)
         return
     canvas = (recipe.get('appearance') or {}).get('canvas') or {}
     elements = scene['elements']

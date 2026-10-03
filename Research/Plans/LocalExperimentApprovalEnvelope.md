@@ -1,5 +1,11 @@
 # Approved: local experiment tranches, not individual launches
 
+October2 amendment: maintainer explicitly removed time constraints until further
+notice and requested continued training. Approved local training experiments may
+record `wallTimeLimit: null`; fixed epoch/hypothesis scope and2GiB output limits
+remain. This supersedes the five/thirty-minute defaults below, not the other
+permissions or a requirement to keep long runs observable and finite in work units.
+
 October 1, 2026. Adopted by the maintainer: “I approve the whole experiment
 tranches. Do the next steps.” This governs assigned local experiment tranches,
 not unattended work or an unlimited experiment loop. FDR023 retains its original

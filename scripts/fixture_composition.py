@@ -125,14 +125,20 @@ def resolve(value, recipe, require):
     return result,f'composition@{value["version"]}:'+hashlib.sha256(encoded).hexdigest()
 
 
-def hierarchy(scene, require):
+def hierarchy(scene, require, *, transition_visibility=False):
     recipe=scene['recipe'];resolved,_=resolve(recipe['appearance']['composition'],recipe,require)
     elements={e['element_id']:e for e in scene['elements']}
-    require(set(elements)=={i['id'] for i in resolved},'composition_native_membership')
+    expected={i['id'] for i in resolved}
+    inventory=scene.get('semantic_inventory') or {}
+    if transition_visibility and inventory.get('coverage')=='incomplete_declared_composition':
+        require(set(elements)==set(inventory.get('visible_control_ids',[])) and
+                set(elements)<=expected,'composition_native_membership')
+    else:require(set(elements)==expected,'composition_native_membership')
     taxonomy={'poster':('collectionItem',),'thumbnail':('collectionItem',),'button':('primaryButton','secondaryButton'),
               'row':('listRow',),'tab':('menuButton',),'text':('label',),'artwork':('imageView',)}
     taxonomy.update({kind:('collectionItem',) for kind in ('composite_card','ranked_row','home_icon','hero')})
     for i in resolved:
+        if i['id'] not in elements:continue  # Explicit exclusions validated by semantic inventory.
         e=elements[i['id']]
         require(e.get('parent_element_id')==i['parent'] and e['taxonomy_class'] in taxonomy[i['kind']],'composition_native_role')
         require(('isSelected' in e.get('accessibility_traits',[]))==i['selected'],'composition_native_selected')

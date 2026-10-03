@@ -26,8 +26,8 @@ os_env_defaults = {
 }
 
 for _k, _v in os_env_defaults.items():
-    os.environ[_k] = _v
-    Path(_v).mkdir(parents=True, exist_ok=True)
+    os.environ.setdefault(_k, _v)
+    Path(os.environ[_k]).mkdir(parents=True, exist_ok=True)
 
 
 
@@ -55,6 +55,19 @@ def resolve_weights(model_name: str) -> str:
     if local.exists():
         return str(local)
     return f"{model_name}.pt"
+
+
+def training_options(args, yaml_path):
+    """Shared tvOS YOLO recipe; callers may apply declared experiment overrides."""
+    return dict(data=str(yaml_path),epochs=2 if args.dry_run else args.epochs,
+        batch=8 if args.dry_run else args.batch,imgsz=args.imgsz,
+        fraction=.05 if args.dry_run else 1.,rect=not args.dry_run,
+        patience=args.patience,workers=2 if args.dry_run else args.workers,
+        device='mps',project=args.output_dir,
+        name=args.name+'_dryrun' if args.dry_run else args.name,exist_ok=True,
+        verbose=True,optimizer='AdamW',lr0=.001,lrf=.01,
+        warmup_epochs=0. if args.dry_run else 3.,box=7.5,cls=.5,dfl=1.5,
+        mosaic=0. if args.dry_run else 1.,plots=True)
 
 
 def main():
@@ -108,30 +121,7 @@ def main():
 
     print(f"Starting tvOS YOLO11 training: {epochs} epochs, batch={batch}, imgsz={args.imgsz}, fraction={fraction}, rect={rect}", flush=True)
 
-    train_kwargs = dict(
-        data=str(yaml_path),
-        epochs=epochs,
-        batch=batch,
-        imgsz=args.imgsz,
-        fraction=fraction,
-        rect=rect,
-        patience=args.patience,
-        workers=workers,
-        device="mps",
-        project=args.output_dir,
-        name=run_name,
-        exist_ok=True,
-        verbose=True,
-        optimizer="AdamW",
-        lr0=0.001,
-        lrf=0.01,
-        warmup_epochs=3.0 if not args.dry_run else 0.0,
-        box=7.5,
-        cls=0.5,
-        dfl=1.5,
-        mosaic=0.0 if args.dry_run else 1.0,
-        plots=True,
-    )
+    train_kwargs = training_options(args, yaml_path)
 
     results = model.train(**train_kwargs)
 

@@ -72,10 +72,14 @@ def appearance_digest_source(recipe):
     if appearance is None:
         return ""
     require(isinstance(appearance, dict) and {"version", "preset", "layout"} <= set(appearance)
-            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus", "artwork", "composition"},
+            and set(appearance) <= {"version", "preset", "layout", "family_id", "canvas", "focus", "artwork", "composition", "referencePack"},
             "appearance_fields")
     require(type(appearance["version"]) is int and appearance["version"] == 1,
             "appearance_version")
+    if appearance.get('referencePack') is not None:
+        from fixture_reference import resolve
+        _, suffix = resolve(recipe, require)
+        return ':appearance@1:artwork:standard:' + suffix
     if appearance.get('composition') is not None:
         from fixture_composition import resolve
         require(recipe['archetype']=='grid_matrix' and appearance['preset']=='artwork' and appearance['layout']=='standard' and
@@ -284,7 +288,7 @@ def recipe_hash(recipe):
                            + dialog_style_digest_source(recipe) + surface_digest_source(recipe)).encode()).hexdigest()
 
 
-def scene_check(scene, size, expected):
+def scene_check(scene, size, expected, *, transition_visibility=False):
     require(isinstance(scene, dict), "scene_missing")
     require(scene.get("is_settled") is True and scene.get("focused_element_id") == expected
             and scene.get("harvest_challenge_active", False) is False, "scene_focus")
@@ -314,12 +318,27 @@ def scene_check(scene, size, expected):
     observation = scene.get("focus_observation")
     diagnostics = scene.get("observation_diagnostics")
     require(isinstance(observation, dict) and isinstance(diagnostics, dict), "native_observation_missing")
+    reference = (scene.get('recipe', {}).get('appearance') or {}).get('referencePack') is not None
+    navigation = observation.get('verificationMode') == 'native_navigation'
+    require(observation.get('verificationMode') is None or navigation and reference and transition_visibility,
+            'native_verification_mode')
+    if navigation:
+        require('requestedID' not in observation and 'requestedID' not in diagnostics and
+                observation.get('initialRequestedID') in observation.get('plannedFocusIDs', []),
+                'native_navigation_initial_request')
     require(observation.get("verified") is True and observation.get("source") == "uikit_focus_system"
             and observation.get("geometrySource") == "uikit_window_converted_bounds"
-            and observation.get("observedID") == expected and observation.get("requestedID") == expected,
+            and observation.get("observedID") == expected and (navigation or observation.get("requestedID") == expected),
             "native_focus")
     planned = observation.get("plannedFocusIDs")
-    require(identifiers(planned) and set(planned) <= set(ids)
+    inventory=scene.get('semantic_inventory') or {}
+    allowed=(inventory.get('expected_control_ids',[]) if transition_visibility and
+             inventory.get('coverage')=='incomplete_declared_composition' else ids)
+    if reference:
+        from fixture_reference import visible_membership
+        allowed = visible_membership(scene, require)
+        require(set(planned or []) == set(allowed), 'reference_planned_membership')
+    require(identifiers(allowed) and identifiers(planned) and set(planned) <= set(allowed)
             and (expected is None or expected in planned), "planned_focus")
     generation = observation.get("generation")
     require(uint(generation) and all(type(diagnostics.get(k)) is int and diagnostics[k] == generation
@@ -334,7 +353,7 @@ def scene_check(scene, size, expected):
             and number(diagnostics.get("sampleAgeMilliseconds"))
             and 0 <= diagnostics["sampleAgeMilliseconds"] < 1000, "stale_sample")
     require(diagnostics.get("reason") == "ready" and diagnostics.get("nativeFocusResolved") is True
-            and diagnostics.get("requestedID") == expected and diagnostics.get("observedID") == expected,
+            and (navigation or diagnostics.get("requestedID") == expected) and diagnostics.get("observedID") == expected,
             "native_readiness")
     require(number(diagnostics.get("stableMilliseconds")) and number(diagnostics.get("requiredMilliseconds"))
             and diagnostics["requiredMilliseconds"] >= 0
@@ -348,11 +367,11 @@ def scene_check(scene, size, expected):
                 and probe.get("referenceFocused") is True, "unverified_reference")
     recipe = scene.get("recipe")
     require(recipe_hash(recipe) == recipe.get("recipe_hash"), "recipe_hash")
-    validate_hierarchy(scene, require)
+    validate_hierarchy(scene, require, transition_visibility=transition_visibility)
     if scene.get('semantic_inventory') is not None:
         from fixture_semantic_inventory import validate as validate_semantics
         try:
-            validate_semantics(scene['semantic_inventory'], scene)
+            validate_semantics(scene['semantic_inventory'], scene, transition_visibility=transition_visibility)
         except (ValueError, KeyError, TypeError) as error:
             require(False, str(error))
     return generation
@@ -403,7 +422,11 @@ def validate(meta, row, size, hashes):
     require(baseline["recipe"] == focused["recipe"], "pair_recipe")
     pairing = ((focused['recipe'].get('appearance') or {}).get('canvas') or {}).get('pairing')
     composition = (focused['recipe'].get('appearance') or {}).get('composition')
-    if version == 3 and composition is not None:
+    if version == 3 and (focused['recipe'].get('appearance') or {}).get('referencePack') is not None:
+        from fixture_reference import resolve
+        focusable, _ = resolve(focused['recipe'], require)
+        require({competitor, row['expectedFocus']} <= set(focusable), 'reference_competitor_membership')
+    elif version == 3 and composition is not None:
         from fixture_composition import resolve
         items, _ = resolve(composition, focused['recipe'], require)
         focusable = {item['id'] for item in items if item['focusable']}

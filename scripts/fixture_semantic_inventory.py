@@ -23,13 +23,15 @@ def rect(value):
     return value
 
 
-def validate(doc, scene=None):
+def validate(doc, scene=None, *, transition_visibility=False):
     require(isinstance(doc, dict), 'object_required')
     composition=((scene or {}).get('recipe',{}).get('appearance') or {}).get('composition')
+    reference=((scene or {}).get('recipe',{}).get('appearance') or {}).get('referencePack')
     complete=doc.get('coverage')=='complete_declared_composition'
+    incomplete=transition_visibility and doc.get('coverage')=='incomplete_declared_composition'
     require(not complete or composition is not None,'complete_without_composition')
     require(type(doc.get('version')) is int and doc['version']==1 and
-            doc.get('scope')=='instrumented_scene_components' and doc.get('coverage') in ('partial','complete_declared_composition'), 'unsupported_contract')
+            doc.get('scope')=='instrumented_scene_components' and (doc.get('coverage') in ('partial','complete_declared_composition') or incomplete), 'unsupported_contract')
     require(ids(doc.get('unavailable_roles')), 'unavailable_roles')
     require(type(doc.get('generation')) is int and 0<=doc['generation']<2**64, 'generation')
     width,height=doc.get('width'),doc.get('height')
@@ -44,7 +46,7 @@ def validate(doc, scene=None):
     by_id={e['id']:e for e in elements}; wrappers={}; focused=[]
     for e in elements:
         role=e.get('role')
-        require(role in ('control_wrapper','label_view','image_view') or complete and role in ('layout_region','decorative_background'), 'unsupported_role')
+        require(role in ('control_wrapper','label_view','image_view') or (complete or incomplete) and role in ('layout_region','decorative_background'), 'unsupported_role')
         if role in ('layout_region','decorative_background'):
             require(e.get('focusable') is False and e.get('input_focused') is False,'decorative_focus')
         require(all(isinstance(e.get(k),str) and e[k] for k in ('native_class','source')), 'native_provenance')
@@ -97,7 +99,33 @@ def validate(doc, scene=None):
             require(all(abs(a-b)<=1e-6 for a,b in zip(normalized,[vx/width,vy/height,(vx+vw)/width,(vy+vh)/height])), 'normalized_disagreement')
             if clip is None:
                 require(all(abs(a-b)<=1 for a,b in zip(visible,[x,y,w,h])), 'missing_clipping_state')
-    require(set(wrappers).isdisjoint(exclusions) and set(wrappers)|set(exclusions)==set(expected), 'control_accounting')
+    if reference is not None:
+        from fixture_reference import visible_membership
+        planned = visible_membership(scene, require)
+        visible = doc['visible_control_ids']
+        require(set(wrappers) == set(planned), 'reference_wrapper_membership')
+        for eid, reason in exclusions.items():
+            require(wrappers[eid].get('clipping') ==
+                    ('partially_clipped' if reason == 'partially_clipped_bounds' else 'fully_clipped'),
+                    'reference_exclusion_evidence')
+        require(all(wrappers[eid].get('clipping') is None for eid in visible),
+                'reference_visible_clipping')
+    elif incomplete:
+        require(composition is not None and not doc['truncated'], 'incomplete_composition')
+        visible=doc.get('visible_control_ids')
+        require(ids(visible) and doc.get('control_exclusions')==exclusions and
+                set(visible).isdisjoint(exclusions) and set(visible)|set(exclusions)==set(expected) and
+                set(wrappers)==set(expected), 'transition_control_accounting')
+        from fixture_composition import resolve
+        resolved,_=resolve(composition,scene['recipe'],require)
+        require(set(expected)=={i['id'] for i in resolved},'transition_declared_membership')
+        for eid,reason in exclusions.items():
+            require(reason in ('partially_clipped_bounds','fully_clipped_bounds') and
+                    wrappers[eid].get('clipping')==reason.removesuffix('_bounds'), 'transition_exclusion_evidence')
+        require(scene is not None and set(visible)=={e['element_id'] for e in scene['elements']},
+                'transition_visible_membership')
+    else:
+        require(set(wrappers).isdisjoint(exclusions) and set(wrappers)|set(exclusions)==set(expected), 'control_accounting')
     if complete:
         from fixture_composition import resolve
         resolved,_=resolve(composition,scene['recipe'],require)

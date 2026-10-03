@@ -1,5 +1,239 @@
 # NativeUIAuditKit — Experiment Log
 
+## FSF003 / FSF004 — assigned augmentation comparison, October2,2026
+
+FOCUS-AUGMENTATION-47 user approved after46. Same original yolo11n initializer,
+2,000training/500development frames, seed42,batch8,640px,oneepoch/fixedlast. FSF003
+translate=.05/scale=0; FSF004translate=.05/scale=.20. Serialized MPS; resident dependencies,
+no time cap per existing maintainer amendment, total2GiB outputs. Exact contracts and
+tranche-derived authorization will bind membership, source and runtime before execution.
+Terminal500-frame evaluation followed by the fixed30-frame diagnostic panel and
+46real-screen panel; no threshold selection, new data role or promotion.
+
+Completed: FSF003 PID84183,245.94s fit/46.22s terminal evaluation; FSF004 PID84577,
+248.16s fit/46.12s evaluation. Each processed2,000frames/250batches/31optimizer steps.
+Parent validation plus execution took519.47s and519.76s respectively; USB originals
+read directly, no image copies. Each arm peak observed output~45MiB. Baseline lacks
+direct update instrumentation; nominal exposure/schedule match. Actual dataset uses
+square rect=False despite historical serialized rect=True arguments.
+
+Both reach500/500exact development frames,250/250complete pairs,0FP/0FN versus
+FSF001425/500,175/250pairs,0FP/75FN. Fixed512-pass follow-up PID84853 took21.90s.
+Both localize18/18native targets at640and every tested padding position, versus
+baseline15/18ordinary and0/18unaligned top/bottom. FSF004 has one multiple-selection
+bottom case despite correct target localization. At1280FSF003localizes1/18;
+FSF0046/18but19known-negative detections and only one clean focus selection.
+Reference12remain0/12full-body localization in both arms across tested variants.
+
+Real focused-body localization atIoU.50: baseline1/46→FSF0038/46→FSF0049/46.
+Known-unfocused detections46→19→68; partial unreviewed predictions11→1→14.
+All7completeness-confirmed real screens still abstain; all new target matches are
+collectionItems (8/21and9/21). Rows0/16,primaryButtons0/4,tabs0/3 remain missing.
+This is exposed development evidence with one seed, not independent accuracy.
+
+Decision: use translation-only as the next experimental baseline; scale=.20 adds
+too many wrong real selections for one additional target. Prioritize native-family,
+aspect-ratio and scene coverage with paired-content negatives, not more unchanged
+epochs or blanket annotation review. Both checkpoints retained, no export/promotion.
+All512follow-up measurements/geometry and1,500terminal rows independently replay;
+77Python test executions and134offlineSwift tests pass. Evidence:
+reports/work/FOCUS-AUGMENTATION-47/{terminal-comparison.json,comparison,handoff.md}.
+
+## FOCUS-PRIORITIES-46 — assigned controlled inference, October2,2026
+
+User requested experiments to prioritize non-annotation failure sources. Fixed
+FSF001/FSF002,12approved reference samples plus18hash-selected native development
+frames balanced by focused item ID. Compare FSF001640/1280; identical640px content
+at three vertical padding positions; repeat positions with FSF002. Maximum240
+inferences,128MiB outputs, MPS, .001candidate/.25operating/.7NMS/IoU.50. No training,
+threshold selection or data-role change. Inputs/protocol pinned before execution.
+Completed initial240passes,PID82285,17.5276s execution. Native18: FSF00164015/18
+localized versus12800/18; reference12both0/12. Identical content at0/140/280top padding
+scores0/15/0of18native. FSF002center8/18andbothshifts0/18. These changes initially
+looked positional, but offsets changed phase modulo32as well.
+
+Added60-pass control within position comparison,PID82933,6.1831s execution: preserve
+phase with center±128padding12/268; FSF001recovers15/18and16/18native. Reference12
+still0/12. Total300passes; controlled content and label movement validate. These
+are exposed development/calibration diagnostics, not independent accuracy estimates.
+Training receipts show rect=true,translate=0,scale=0,multi_scale=0. Training variation
+is the next hypothesis; augmentation improvement has not yet been demonstrated.
+
+Independent audit reconstructed all300rows and reproduced30prior ordinary640baseline
+decisions and focused-body scores within1e-5. First audit attempts exposed PNG-alias
+mapping and differing historical pixel-hash dimension prefixes; fixed by retained
+alias binding and comparing both images through the same decoder/hash function.
+Earlier failed audit directories/logs are retained; no inference rerun was needed.
+Final evidence: reports/work/FOCUS-PRIORITIES-46/{run,alignment,audit-verified,handoff.md}.
+
+## REFERENCE-BENCHMARK-45 — assigned diagnostic inference, October2,2026
+
+Compare fixed FSF001(last.pt5428fdb4…) against shipped tvOS CLI detector/focus on
+the reference44calibration delivery. Deduplicate72frames to61decoded images with
+identical observed-native labels; preserve aliases for weighted reporting. Labels
+are provisional pending the open human sample review. FSF001640px/MPS/.25operating,
+.001candidate/.7NMS; shipped CLI tvOS/.5/no OCR/CoreML. Up to72images per arm,
+128MiB outputs, no training or threshold selection. Score known-target localization
+atIoU.5/.7/.9, known-negative selections, unknown unmatched geometry, per-family
+and distinct-vs-source-entry counts. Source/executable/checkpoint pins before run.
+Completed61distinct images/arm. FSF001focused-body localization0/61atIoU.50/.70/.90;
+production13/61,2/61,1/61. Source-entry-weighted.50results0/72versus15/72.
+FSF00173selected boxes overlap known unfocused controls;37selections remain unreviewed
+geometry. Production2known-unfocused and39unreviewed selections. Distinct visible
+control coverage72/398candidate versus65/398production; this is localization, not focus.
+Retained candidate containment: catalog30/30have a contained focused candidate at
+the.001diagnostic floor,4/30above.25, and28/30score an unfocused body higher. This
+separates wrong-control ranking from imperfect whole-card geometry; no labels or
+operating thresholds were changed. Guide31/31have no contained focused candidates.
+Per-image timings sum6.2704s candidate and28.5556s production; this excludes shared
+initialization/validation. Resume PID77862 completed remaining32pairs in18.2346s,
+reusing29verified pairs. Initial attempt was interrupted after Ultralytics created
+a fallback /tmp settings cache because the configured project cache parent did not
+exist. Project cache precreation/checks fixed the cause; no external cleanup performed.
+Replay verifies the complete scorecard. Labels remain provisional and roles calibration.
+Evidence: reports/work/REFERENCE-BENCHMARK-45/{benchmark,containment.json,handoff.md}.
+
+## REAL-TRANSFER-42 — completed diagnostic inference, October2,2026
+
+Continue after41: fixed FSF001 checkpoint on challenge31's46reviewed real screenshots,
+resident YOLO/MPS/640px, candidate confidence.001, operating.25/NMS.7. Maximum46
+inferences/128MiB, no time cap. Compare retained production proposals and7complete
+screen selections; preserve partial-label uncertainty and diagnostic roles. Geometry
+recall/AP atIoU.50/.70/.90, with AP confined to explicitly complete screens. No fit
+or threshold tuning. Runtime/model/input pins precede execution.
+
+PID62411 completed46inferences in2.615seconds including model setup. FSF001 focused
+body coverage is1/46 at each IoU.50/.70/.90; retained production is21/20/6of46.
+All7complete screens produce no-focus decisions, versus production4correct/3missed
+localizations. Complete-screen AP is0 at all three IoUs.46operating predictions
+overlap known unfocused controls;11are unreviewed on partial frames. Production uses
+its retained.5confidence versus FSF001.25: this compares operating systems, not an
+isolated architecture variable. Original inference retained; final analysis corrects
+the known-negative/unreviewed accounting without another inference pass.
+Canonical result: `reports/work/REAL-TRANSFER-42/focus/final-analysis.json`.
+Diagnosis: artwork-only synthetic success does not establish real transfer. Specify
+native control-family and scene coverage before another fit; preserve diagnostic
+roles. [Handoff](../reports/work/REAL-TRANSFER-42/handoff.md).
+
+## FSF002 — completed10epoch comparison, October2,2026
+
+Child52128 completed2,473.141seconds; fit2,392.988seconds, final500frame evaluation
+45.016seconds.194TP/0FP/306FN,194/500exact (38.8%), versus425/500 (85%) FSF001.
+Zero repaired screens,231regressions; complete pairs175/250→28/250. Top target
+166/166, middle28/168, bottom0/166. Longer fitting worsens configuration transfer.
+Fixed final checkpointSHA256efa5e0588c903d4c8aa27cee135640815e6fa88be87596cb865092ceed434d1d.
+Diagnostic: both fixed checkpoints on the same500frames atconf.001,≤1,000inferences/
+128MiB, to distinguish confidence from localization failures. Original.25conclusion
+remains fixed. Diagnostic PID54674 completed84.707seconds after byte verification,
+both declared.25results replay exactly. Atconfidence.001, one-epoch candidates
+localize500/500targets;10epoch candidates342/500. By position top166→166/166,
+middle168→152/168,bottom166→24/166. Middle median score.472→.022; bottom.787→0
+(0means no matching candidate above.001). This is evidence of layout-dependent
+generalization failure, not proof of a specific learned cue. Training horizontal
+rows versus vertical held-out stacks is the next coverage variable to test; a
+modest confidence adjustment alone is not supported as the remedy. Preserve FSF001
+as the stronger baseline; no further unchanged training recommended.
+
+Maintainer removed time constraints and requested continued training. Same exact
+2000/500screens, original resident yolo11n.pt initialization,640px,batch8,seed42,
+augmentation off, MPS.10fixed epochs, no time cap,2GiB outputs. Compare final-only
+confidence.25/IoU.5 scoring to FSF001425TP/0FP/75FN (425/500exact). Evaluation is
+exposed synthetic development evidence; no real-app transfer claim. Longer training
+is the experiment change (the resident epoch-dependent learning-rate schedule also
+follows that duration). Child PID52128, parent51921; completed as recorded above.
+
+## FSF001 — completed full-screen experiment, October2,2026
+
+Evaluation-only continuation PID50915 completed77.427seconds (43.550seconds scored
+inference), all500frames:425TP/0FP/75FN,425/500exact screens (85%). Group8:226/250;
+group9:199/250. Middle target accounts for61of75misses. Fixed checkpoint unchanged;
+all predictions retained for replay. Synthetic configuration-held-out development
+result, not real-app accuracy. Original combined-run timeout receipt is preserved.
+
+Fit completed: PID50482,250batches/oneepoch,238.57fitseconds. Combined child hit
+300.106s during terminal evaluation, before a final report. Fixed-last checkpoint
+SHA2565428fdb426b2b06c59623326444bd264945fd18a102cc51ff7161354cc734c4f
+retained. Complete the already-approved500frame scoring as evaluation-only phase,
+≤300seconds/64MiB, within1800second tranche envelope, with no additional fitting or
+selection. Use shared terminal evaluator; persist per-frame progress. Combined-run
+receipt remains partial. This is completion ofFSF001, not a second training run.
+
+Maintainer: “Great i approve that tranche”, following40. Exact2500native26frames,
+2000train/500evaluation, groups0–7/8–9 unchanged,7500control annotations. Resident
+yolo11n.pt, one epoch/batch8/640px/seed42, augmentation off, MPS, fixed-last weights.
+Terminal confidence0.25/matchingIoU0.5/NMSIoU0.7; TP/FP/FN/exact frames. Child300s,
+2GiB; preflight separately timed. Outputs reports/work/FULLSCREEN-EXPERIMENT-41.
+No matched crop-model delta implied; this tests full-scene localization.
+[Scope](Plans/FullscreenExperiment41.md).
+
+## CONTROL-ELIGIBILITY-39 — offline replay/audit, October2
+
+No new model execution. Fixed anchor-supported refinement replays retained2289scores:
+594eligible candidates,19/46focused bodies,4/7complete correct and3missing targets;
+matches production selection, does not improve it. All46are exposed development.
+Page-control label audit reveals666full-width manual-dot training boxes versus
+600tight evaluation groups. Capture source repaired, old corpus retained; no measured
+model improvement yet. Native26full-scene preparation validated2500frames/7500controls
+in270.73seconds and bound originals to receipts. Full-screen runner intentionally
+rejects unapproved draft; storage/terminal-evaluation compatibility remain.
+[Evidence](../reports/work/CONTROL-ELIGIBILITY-39/handoff.md).
+
+## LOCAL-DIAGNOSTICS-38 — completed October2
+
+Assigned local continuation: fixed union2,289crops through bundled classifier,
+600seconds/128MiB; independent40iOS frames at640/960/1280 with Run013,
+300inference seconds/64MiB. No fitting or threshold tuning. Scope and interpretation
+in [LocalDiagnostics38](Plans/LocalDiagnostics38.md).
+Focus PID42070 completed67.789seconds; aborted strict-bound passes retained before
+explicit expanded-region compatibility fix. All2,289crops scored;7complete frames
+6wrong/1tie; post-result role-filter diagnostic2correct/5wrong, baseline4correct.
+iOS PID41749,120evaluations/10.273seconds: operationalpage recall0/40atall3sizes;
+AP50 .000625/.078542/.108696, AP75 0/0/.001389. Reject global resolution increase
+as a sufficient fix and reject untyped proposal union as production focus input.
+9Python/134Swift checks pass. [Evidence](../reports/work/LOCAL-DIAGNOSTICS-38/handoff.md).
+
+## PROPOSAL-RECOVERY-37 — completed October 2
+
+Maintainer continuation of scorecard36: compare retained YOLO against existing
+raster/Vision rectangle proposals on the same 46 real frames; independent 24-frame
+iOS OCR cancellation-hint spike. Fixed rules in ProposalRecovery37, maximum 70 frames,
+600 processing seconds / 2 GiB. Retain full source hashes and outputs for replay.
+No training run; bounded runner implementation is tested independently.
+
+PID39036; native Vision/OCR70frames5.986seconds, raster/scoring4.465seconds. YOLO body
+recall346/583 and focused21/46; fixed union432/583 and42/46. IoU .75 focused17→35.
+Candidates1,084→2,289 after274near-duplicate suppressions. Existing raster alone
+214bodies/20focused, Vision298/35, OCR-supported raster wide rows11/5. Unmatched
+proposals are unreviewed, not false positives. This is candidate recall, not focus
+selection. iOS24selected examples: original fine12correct, coarse24, exact Cancel
+hint3correct/0wrong/21abstain; no fine-role improvement. Other cancellation strings
+are Dismiss4, Not Now3, Close2. Initial preflight stopped before inference on known
+in-project image links; verified resolved originals, then ran once. Retained-output
+replay agrees. [Evidence](../reports/work/PROPOSAL-RECOVERY-37/handoff.md).
+
+## REAL-MODEL-SCORECARD-36 — completed inference and diagnostic replay, October2
+
+User-approved priority tranche;46reviewed real tvOS stills/583controls/7explicitly
+complete screens. Shipped detector and bundled focus via nativeui-audit, tvOS,
+confidence0.5, OCR disabled; ≤300seconds inference/2GiB output. No training or
+threshold selection. Pin loaded identities and source/image hashes before execution;
+localization IoU0.50/0.75, matched class agreement and eligible frame focus reported
+separately. Partial annotations do not establish detection precision. PID/timing and
+outcome recorded below. [Contract](Plans/RealModelScorecard36.md).
+
+PID 35309; one 46-image CLI pass completed in 5.590 seconds (process/model loads
+included, not a controlled warm-throughput benchmark). Actual detector
+nativeui-tvos-v3.0 tree 86cc39b1e7d374d760251986d8ace8e2f35535633a82f94c9a611087d3050a79;
+bundled focus digest 1fe0de316544d7177c8d99757a9b0b5779aab102a1345c2ac71e5d3ffc5493c2,
+winner-takes-all-v1 threshold 0.8500000238418579. Located 346/583 controls at IoU .50,
+316 at .75; 21/46 focused targets located. Complete-frame focus 4/7, all Settings
+variants; remaining 3 lack a localized target. Initial 3/7 mistakenly penalized a
+selected duplicate box; regression-tested scoring correction replayed identical
+predictions and preserves the initial report as superseded. No new inference.
+This is not FDR021/FDR036 performance. iOS companion replays 2,000 retained prediction
+frames at confidence .25 / IoU .50 without inference; semantic/spatial diagnosis
+and full-screen readiness are in the [handoff](../reports/work/REAL-MODEL-SCORECARD-36/handoff.md).
+
 ## SETTINGS-BRIGHTNESS-33 — fixed mean comparison (October2,2026)
 
 Predeclared SettingsBrightness33; no learned model/training. Reuse exact OpenCV

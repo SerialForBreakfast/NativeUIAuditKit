@@ -1,9 +1,180 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 2, 2026 PDT, SETTINGS-BRIGHTNESS-33 (underlying results retain observation dates)
+**As of:** October 3, 2026, FAMILY-TRANSFER-48 preparation complete (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**Family48:** current TTR planner accepts18native-button cases/66target intentions,
+including three widths, two resting fills, two backgrounds and all control targets;
+eight prior grid-density cases also validate.12-image grouped Markdown failure review
+and all46real-result rescoring complete. Both47models miss25/25non-collection targets.
+Local87e59be5source/helper unchanged; campaign export repair remains pending. TTR's
+active SYNTH-01/02 now targets actual native table/tab/dialog, noncentral/aspect and
+export diagnostics. Shared consumer findings published/read back; no new acknowledgment
+yet. Existing61reference frames stay calibration, new membership is a proposal.
+Six focused tests/reference regressions/134Swift checks pass.
+[Handoff](../reports/work/FAMILY-TRANSFER-48/handoff.md).
+
+**Augmentation47:** two matched one-epoch runs demonstrate a useful training fix.
+Translation-only and translation+scale both improve synthetic exact screens425/500→
+500/500, with0FP. Tested native padding positions all localize18/18, fixing the
+prior0/18unaligned-shift failures. Translation-only improves real focused-body
+localization1/46→8/46 while known-unfocused detections fall46→19. Adding scale reaches
+9/46but increases those wrong detections to68; prefer translation-only for the next
+experiment. All7fully annotated real screens still abstain; reference12remain0/12.
+Real gains are collectionItems; rows0/16,primaryButtons0/4,tabs0/3 remain uncovered.
+Next priority: diverse native control families/aspects and paired-content negatives,
+with the same fixed challenges. Higher-resolution robustness also remains weak.
+Both fits complete,512follow-up inferences replay,77Python test executions/134Swift
+tests pass. Synthetic and real panels are exposed development evidence, not final
+independent accuracy. [Handoff](../reports/work/FOCUS-AUGMENTATION-47/handoff.md).
+
+**Priority46:**300fixed-model diagnostic passes identify severe alignment/scale
+sensitivity. On18native development images, one-epoch localization is15/18at640and
+0/18at1280. Identical640px content placed with top padding0/140/280scores0/15/0of18;
+stride-aligned padding12/268restores15/16of18. Thus the initial apparent position
+failure is strongly phase/alignment-dependent, not simply a center-position rule.
+Ten-epoch centered result8/18versus15/18one-epoch; more unchanged fitting is not the
+next priority. Training receipts confirm translate=0,scale=0,multi_scale=0. Prioritize
+a controlled translation/scale augmentation comparison on already admitted data,
+then diverse native control families. Reference12remain0/12full-body matches at640
+and1280. All300rows independently reconstructed;30ordinary baselines reproduce earlier
+decisions/scores.33Python/134Swift checks pass. Annotation review stays low priority
+absent specific evidence. [Handoff](../reports/work/FOCUS-PRIORITIES-46/handoff.md).
+
+**Human review update:** maintainer confirmed all12reference samples were perfect,
+with no corrections reported. Bounds and focus sample review is complete; calibration
+roles remain unchanged. [Exact confirmation](../reports/work/REFERENCE-BENCHMARK-45/human-sample-approval.json).
+Earlier pending/provisional descriptions below and in immutable benchmark receipts
+describe their execution-time status; this approval does not constitute exhaustive
+review of all61distinct frames.
+
+**Reference45:** fixed FSF001 misses full focused bodies on all61distinct reference
+calibration images; shipped proposals locate13/61 atIoU.50. These are provisional
+native labels, not independent real-app accuracy. Catalog containment diagnosis finds
+a low-score focused-card candidate in30/30images, but an unfocused card outranks it
+in28/30. This is not just a whole-card versus artwork-box mismatch. Guide rows get
+no contained focused candidates. The existing model has not generalized to these layouts.
+The grouped12-image annotator is running after removing an accidental OpenCV dependency
+from its validation path. Calibration roles stay unchanged. TTR accepted six native
+UIButton recipe cases/30target intentions and the eight-case grid-density plan;
+rows/tabs are styled buttons, not actual native list/tab widgets. Source absence in
+older33/37notes is superseded.126Python checks and134Swift checks pass; benchmark replay
+matches. [Results, caveats and next substantial tranche](../reports/work/REFERENCE-BENCHMARK-45/handoff.md).
+
+**Reference44:** strict reference/native-navigation importer now validates all36delivered
+cases; all468visible-control production crops pass. One12-image grouped review is ready.
+Catalog bodies grow ~23%in area; guide rows highlight without growth.72frames contain
+61unique decoded images; selected12are distinct. Focused positions are center-heavy
+and native Settings/tabs/dialog coverage remains missing. Calibration roles preserved;
+fixed-model data-comparison preflight pins existing500evaluation members unchanged.
+161Python test executions/134Swift checks pass; native Qt startup passes.
+[Handoff and next substantial work](../reports/work/REFERENCE-IMPORT-44/handoff.md).
+
+**TTR43 (historical intake, superseded by44above):** current running workspace is Developer/TVTestRig (source87e59be5), not
+the stale Documents checkout. v7/v11plans and3/3local appearance captures pass:
+native buttons3.23s, guide3.39s, catalog5.02s. Postflight ready/ownership clear.
+Campaign export to NUIAK returns persistenceFailed; retained captures preserved.
+Rich-reference36 archive received/hash-verified;36accepted pairs/72image entries/
+66unique hashes pass image and reported-focus checks. Existing importer rejects
+new reference inventory/native-navigation ancestry semantics. Next priority is the
+strict consumer adapter plus grouped crop review, alongside producer export repair.
+Guide rows are custom-highlighted; Settings rows/tabs remain a distinct coverage need.
+7Python/134Swift tests pass. Shared receipt and actionable request published.
+[Handoff](../reports/work/TTR-UPDATE-43/handoff.md).
+
+**Local42 complete:** fixed FSF001 finds only 1/46 reviewed real focused bodies at
+IoU .50, versus 21/46 retained production proposals. On seven completely annotated
+screens it abstains on all seven; production selects four correctly. There are 46
+predictions overlapping known unfocused controls and 11 unreviewed predictions on
+partial frames. Synthetic success has not transferred. Next coverage must include
+native rows, buttons and tabs alongside varied artwork, positions and scene layouts.
+The complete iOS r8 corpus/export is verified: 19,740 members, 666 repaired training
+members, all 5,200 evaluation members unchanged, zero decoded duplicates, zero pixel
+copy bytes. Page-control validation support remains absent; native container versus
+visible-body geometry needs an explicit decision before the next comparison.
+14 focused Python and 134 offline Swift tests pass.
+[Handoff](../reports/work/REAL-TRANSFER-42/handoff.md).
+
+**Local41 complete:** exact2,000train/500evaluation full scenes admitted. One epoch
+achieves425/500exact synthetic screens (85%);10epochs regresses to194/500 (38.8%),
+both0FP. Complete pairs175/250→28/250. Longer fit2,392.99seconds; no time cap.
+Diagnostic atconfidence.001 locates500/500targets in the one-epoch model versus
+342/500in the longer model; bottom target candidates166→24of166. Training layouts
+are horizontal; evaluation layouts vertical. Evidence points toward layout overfit,
+not a modest threshold-only fix; retain the one-epoch result as the better baseline.
+Next: diverse native positions/layouts plus real-app transfer before model delivery.
+iOS666replacement members regenerated on iOS26.5 in159.50seconds; all8,958exported
+labels verified. Old corpus/evaluation preserved.39Python/134offlineSwift checks
+and native regeneration pass. New iOS validation coverage/training remain separate.
+[Handoff](../reports/work/FULLSCREEN-EXPERIMENT-41/handoff.md).
+
+**Local40:** full-screen v2 reads USB originals directly, keeps evaluation out of
+trainer loaders and evaluates fixed-last weights only after completion. All2500
+frames input-qualified;0image-copy bytes. Parent decode/check211.15s; child byte-hash
+recheck22.17s. Resident preprocessing passed on actual USB train/evaluation examples.
+Exact full-scene admission remains a draft; model execution still pending.
+iOS repair now rendered:16/16cases across2templates×2widths×4dot counts passed;
+boxes25/40/55/70×10pt, visually inspected overlays.35Python/134offlineSwift plus
+the native render test pass. Next: exact full-screen admission/run and new-version
+regeneration of666affected training examples, with a separate validation coverage
+decision. [Handoff](../reports/work/FULLSCREEN-READTHROUGH-40/handoff.md).
+
+**Local39:** found source-backed pageControl supervision mismatch:666training
+examples measure whole-width rows, while600test examples measure intrinsic dot groups.
+MediaCardGrid/ProgressActivity capture order repaired; old data preserved, fresh
+render qualification pending. Conservative proposal refinement restores4/7Settings
+selection but only19/46target coverage; no gain over production. Full native26scenes
+validated:2,500frames/7,500controls,2,000train+500evaluation,13.87GBoriginals onUSB.
+Full-screen draft prepared; exact admission, USB read-through and terminal-only
+evaluation integration remain.35Python/134Swift tests pass; TTR update deferred.
+[Handoff](../reports/work/CONTROL-ELIGIBILITY-39/handoff.md).
+
+**Local38:** scored2,289recovered proposals. Geometry-only selection6wrong/1tie on
+7complete screens; preserving known YOLO role exclusions2correct/5wrong versus
+production4correct.35/46frames saturate at1.0; extra rectangles need whole-control
+eligibility, not blanket focus scoring. iOS40page-controls at640/960/1280 remain
+0/40localized atconfidence.25; AP50improves only among lower-score candidates.
+Keep current configuration.9Python/134Swift tests passed. TTR update deferred.
+[Handoff](../reports/work/LOCAL-DIAGNOSTICS-38/handoff.md).
+
+**Proposal37:** same 46 real frames, fixed YOLO+raster+Vision union finds 42/46
+focused bodies versus 21/46 YOLO alone; all reviewed-body recall 432/583 versus
+346/583. Candidates increase 1,084→2,289, so final focus selection/precision remain
+unqualified. Tight .75 IoU focused coverage improves17→35. iOS selected24-button
+diagnostic: coarse family24/24, original fine role12/24; exact Cancel OCR hints3/3,
+21abstentions, no fine-role gain. Bounded full-screen runner implemented/tested with
+read-only preflight, exact admission/group checks and owned-child budget stops;
+first real training through it remains pending.44Python/134Swift checks pass.
+TTR acknowledges scorecard36 priorities and reports a new18-image reference delivery;
+local dirty46dce7b still lacks grid-density source. [Handoff](../reports/work/PROPOSAL-RECOVERY-37/handoff.md).
+
+**Priority reset / scorecard36:** shipped tvOS detector locates 346/583 reviewed
+controls at IoU .50 (316 at .75), including only 21/46 focused targets, across 46
+retained real screenshots. Exact role agreement is 265/320 localized controls with
+mapped detector roles; 26 localized focus-only roles have no class equivalent.
+Bundled production focus succeeds on 4/7 explicitly complete screens, all Settings
+variants; the other three miss the focused row before classification. This is reused
+development evidence, not general accuracy. Initial 3/7 score was corrected for
+overlapping duplicate predictions; retained inference was replayed, not rerun.
+Prioritize proposal recovery and native control-family diversity before more isolated
+focus-head tuning. Full-screen diagnostic inputs prepared; bounded trainer and admitted
+grouped synthetic membership still required for training. iOS 2,000-frame replay:
+secondary buttons localized 292/341 but correct type 0; page controls localized 0/600;
+list rows 106/700. Separate semantic and spatial remedies. 32 Python / 134 Swift tests
+pass. [Results and next tranche](../reports/work/REAL-MODEL-SCORECARD-36/handoff.md).
+
+**Transitions34:** corrected16case archive received,188member hashes verified.
+Scene-unique semantic IDs are repaired; opt-in consumer accounting preserves clipped
+controls separately from visible scoring membership.12pairs pass settled-bracket
+checks; all4scroll_moved after endpoints remain unsettled/unverified because requested
+item-1 differs from observed item-2. Fixed signals20correct/0wrong/8abstentions;
+guarded stability22/0/6 on28scorable controls, all unchanged;4additional controls
+are excluded after scrolling. This is custom-effect composite-card calibration,
+not native-growth model improvement or qualified movement detection.101Python and
+134Swift tests pass. Exact receipt and actionable readiness request published and
+read back; peer acknowledgment/cleanup pending. [Handoff](../reports/work/NATIVE-TRANSITIONS-34/handoff.md).
 
 **Brightness33:** simple brightness direction fails real unchanged rows:4correct/
 41wrong/3abstained on48scorable controls. Stability/coherent-highlight guarded mean

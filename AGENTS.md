@@ -70,6 +70,12 @@ Operational selection and completion checks live in
 
 ### Local experiment tranche approval — 2026-10-01
 
+**Maintainer amendment2026-10-02:** “You are no longer bound by time constraints
+until further notice continue training.” Local approved training experiments may
+use a recorded no-wall-time-limit override. This supersedes the training/tranche
+time caps below until further notice, while retaining fixed hypotheses/epochs,
+output/storage caps, data-role boundaries and all other action permissions.
+
 The maintainer approved whole local experiment tranches. An assigned model-experiment
 tranche may execute up to three justified comparisons, at most300training seconds
 each,1800seconds total execution wall time and2GiB new outputs, without asking again

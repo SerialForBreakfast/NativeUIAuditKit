@@ -1,0 +1,31 @@
+schema_version: 1
+id: nuiak-20261003-reference45-coverage
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-03T05:22:00Z'
+expires_at: '2026-10-03T05:52:00Z'
+state: review
+message: >-
+  Current local source87e59be5/matching helper successfully validates six native
+  UIButton coverage recipes (30 target intentions), and plans eight grid-density
+  cases. Older NUIAK source-absence blockers are superseded. All cases unattempted;
+  calibration and capture/admission boundaries remain distinct.
+coverage:
+  native_candidate: '3x3 buttons, three vertical row-styled buttons, three horizontal tab-styled buttons; dark/light backgrounds, all candidate IDs explicit.'
+  limitation: 'Source row/tab presentations use UIButton; they do not establish actual native Settings-list or UITabBar coverage.'
+  grid_candidate: 'Two five/six-column layouts, four appearance/scroll/boundary scenarios; compiler targets one interior item per case.'
+consumer_findings: >-
+  On61distinct reference calibration images with provisional native labels, fixed
+  FSF001 finds0full focused bodies atIoU.50 versus13from shipped proposals. A contained
+  focused-card candidate exists in30/30catalog images at.001, but an unfocused card
+  scores higher28/30. Need same-content focus contrasts with varied tall/wide bodies
+  and distributed positions; additional recoloring of center-only layouts is insufficient.
+next_action: >-
+  Keep the existing native-family coverage request scoped to actual native widget
+  support and spatial/aspect coverage. Existing nuiak-20261003-ttr43-campaign-export
+  remains open for retained smoke data; source commit/push only, NUIAK builds locally.
+  No build-only handoff requested. NUIAK owns review, exact data roles and model comparison.
+evidence:
+  - reports/work/REFERENCE-BENCHMARK-45/handoff.md
+  - reports/work/REFERENCE-BENCHMARK-45/planner/verified-source.json
+  - reports/work/REFERENCE-BENCHMARK-45/containment.json

@@ -1,5 +1,95 @@
 # NativeUIAuditKit — Completed Tasks
 
+## TTR-UPDATE-43 qualification and compatibility audit — October2
+
+Identified current Developer checkout/runtime; v7/v11plans and3live appearance
+captures passed. Exact rich-reference36 archive received, all582files accounted,
+36accepted cases/72PNG entries/66unique hashes independently audited. Strict full
+consumer admission remains blocked by reference/native-navigation support; new
+local campaign export fails with persistenceFailed. Captures retained; shared
+receipt and actionable request published.7Python/134Swift checks pass.
+[Handoff](reports/work/TTR-UPDATE-43/handoff.md).
+
+## REAL-TRANSFER-42 — October2
+
+Fixed FSF001 evaluated on46real reviewed screenshots:1/46focused-body coverage,
+0/7complete-screen selections, versus retained production21/46and4/7. Native
+control-family/layout coverage specification completed. Integrated666approved iOS
+repairs into complete19,740-member r8 corpus and YOLO export, preserving all5200
+evaluation members and original data; zero decoded duplicates/pixel-copy bytes.
+14Python/134Swift tests pass. New native coverage generation, page-control target
+geometry and validation coverage remain next work. TTR publication deferred by user.
+[Handoff](reports/work/REAL-TRANSFER-42/handoff.md).
+
+## FULLSCREEN-EXPERIMENT-41 — October2
+
+Exact2,000/500full-scene admission and two fixed-last YOLO runs completed. Oneepoch
+425/500exact,10epochs194/500; both0FP. Confidence/localization replay identifies
+layout-dependent regression (all bottom-position detections lost at.25); longer
+fitting is rejected as an improvement.666iOS page-dot training members regenerated
+and8,958replacement YOLO labels verified.39Python/134Swift checks and native render
+pass. User removed training time caps until further notice. Subsequent real transfer,
+native layout coverage and iOS validation/training remain in Tasks.
+[Handoff](reports/work/FULLSCREEN-EXPERIMENT-41/handoff.md).
+
+## FULLSCREEN-READTHROUGH-40 — October2
+
+USB read-through/full-screen terminal-only runner integration;2500-frame input
+qualification and actual resident loader checks. Parent211.15s/child recheck22.17s.
+Native page-dot render qualification16cases, two overlays inspected.35Python,
+134offlineSwift and1native test pass. Exact full-scene admission/model run and666
+member regeneration remain open. [Handoff](reports/work/FULLSCREEN-READTHROUGH-40/handoff.md).
+
+## CONTROL-ELIGIBILITY-39 — October2
+
+Fixed proposal-refinement replay, source-backed666page-dot label defect diagnosis
+and two template capture-order repairs;2500native full-scene preparation and original
+receipt binding.35Python/134Swift checks; generator runtime and full-screen training
+remain separately pending. [Handoff](reports/work/CONTROL-ELIGIBILITY-39/handoff.md).
+
+## LOCAL-DIAGNOSTICS-38 — October2
+
+Completed fixed2,289crop proposal selection and120image iOS resolution diagnostics,
+production expanded-edge crop compatibility and9Python/134Swift verification.
+Results reject blanket geometry union and resolution-only page-control repair.
+[Handoff](reports/work/LOCAL-DIAGNOSTICS-38/handoff.md). TTR source work deferred.
+
+## PROPOSAL-RECOVERY-37 — local comparison, runner and iOS semantic spike
+
+Fixed rectangle ensemble doubles reviewed focused-body coverage21→42of46 at IoU.50,
+all-control coverage346→432of583; 2.1×candidate volume remains a selector trade-off.
+Native70-image comparison/replay, independent24-button semantic spike, bounded
+full-screen runner with validation/admission/split guards and child budget receipts,
+plus controlled iOS geometry follow-up design completed.44Python/134Swift tests pass.
+TTR source mapping remains explicitly open in Tasks.md; real training through the
+new runner and final focus selection on recovered boxes are next qualification steps.
+[Handoff](reports/work/PROPOSAL-RECOVERY-37/handoff.md).
+
+## REAL-MODEL-SCORECARD-36 — measured model priorities and challenger readiness
+
+Executed shipped tvOS/CoreML pipeline once on 46 reviewed real screenshots; 346/583
+control bodies localized, 21/46 focused targets localized, 4/7 complete Settings
+frames correctly selected. Immutable predictions support offline replay; tested
+duplicate-proposal scoring correction retains the superseded initial report.
+Prepared full-screen diagnostic geometry/membership and resident trainer preflight.
+Independently replayed iOS Run013's 2,000 withheld frames to distinguish missing boxes
+from wrong roles and audited source labels. 32 Python / 134 Swift tests pass.
+No model quality gain claimed: the outcome is a concrete priority reset toward
+proposal recall, native family coverage, and separated semantic/spatial corrections.
+[Handoff](reports/work/REAL-MODEL-SCORECARD-36/handoff.md).
+
+## NATIVE-TRANSITIONS-34 — corrected export compatibility and partial replay
+
+Exact191,803,968byte transfer and188file hashes verified. Implemented actual
+campaign-v1 CLI intake with sidecar/image/action/recipe bindings and opt-in
+visible-versus-declared membership; legacy admission remains strict.12of16pairs
+valid, all unchanged-focus cases: guarded stability22correct/0wrong/6abstentions
+versus fixed20/0/8 on28scorable controls, four additional unmatched controls.
+Four movement endpoints rejected for native focus/readiness mismatch.101Python/
+134Swift tests pass; receipt and repair request published/read back. DOC-01 companion
+closed stale seven-frame review dependencies. Movement qualification remains Tasks.md.
+[Handoff](reports/work/NATIVE-TRANSITIONS-34/handoff.md).
+
 ## SETTINGS-CONTEXT-24 — context diagnosis and rejected region-only candidate
 
 Source-bound native-crop gallery and fixed row-body versus full-context comparison.

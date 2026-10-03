@@ -94,6 +94,8 @@ NativeUITrainer/.mplconfig/
 NativeUITrainer/yolo_dataset/
 NativeUITrainer/yolo_dataset_41class/
 NativeUITrainer/yolo_dataset_tvos/
+NativeUITrainer/yolo_page_dot_patch_v2/
+NativeUITrainer/yolo_dataset_41class_r8/
 
 # YOLO training runs (checkpoints, metrics — too large to commit)
 NativeUITrainer/yolo_runs/

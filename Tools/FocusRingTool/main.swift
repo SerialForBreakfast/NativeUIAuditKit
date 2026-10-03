@@ -23,6 +23,9 @@ struct Request: Decodable, Sendable {
     let experimentalAspectFit: Bool?
     // Explicit caller-authorized image storage; models remain project-local.
     let imageRoot: String?
+    // Diagnostic detector proposals can cross the image edge. The production
+    // cropper expands first, then clamps; do not pre-clamp the body instead.
+    let allowOutOfFrameBounds: Bool?
 }
 struct ItemResult: Encodable, Sendable {
     let id: String
@@ -78,8 +81,10 @@ func run(output: FileHandle) throws {
         let b = item.bounds
         totalPixels += width * height
         guard totalPixels <= 80_000_000 else { throw ToolError.invalidImage }
-        guard b[0] >= 0, b[1] >= 0, b[2] > 0, b[3] > 0,
-              b[0]+b[2] <= Double(width), b[1]+b[3] <= Double(height) else { throw ToolError.invalidImage }
+        let contained = b[0] >= 0 && b[1] >= 0 && b[0]+b[2] <= Double(width) && b[1]+b[3] <= Double(height)
+        let intersects = b[0]-b[2]*0.16 < Double(width) && b[1]-b[3]*0.16 < Double(height) && b[0]+b[2]*1.16 > 0 && b[1]+b[3]*1.16 > 0
+        guard b[2] > 0, b[3] > 0, b.allSatisfy({ abs($0) <= 80_000 }),
+              contained || (r.allowOutOfFrameBounds == true && intersects) else { throw ToolError.invalidImage }
         inputs.append((item, image))
     }
     var classifier: FocusRingClassifier?

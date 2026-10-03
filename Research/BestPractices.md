@@ -1,5 +1,37 @@
 # NativeUIAuditKit — Best Practices
 
+## Page-dot supervision must measure the dots before layout expansion — October2
+
+Wrong: MediaCardGrid and ProgressActivity applied `.frame(maxWidth: .infinity)`
+before `captureFrame`, producing666whole-row training labels for small centered
+SwiftUI dot groups. Evaluation used intrinsic dots. Train aspect ratios37–39 versus
+test4–7 created different localization targets despite the same class/style.
+
+Correct: fix the intrinsic dot group size, capture it, then align/pad its container.
+Preserve prior labels for replay; regenerate a new version and verify real rendered
+bounds before admission. Native UIPageControl container semantics remain separately
+reviewed. Class presence alone does not establish geometry/style coverage; validation
+also needs representative page-control support.
+
+Why: increasing resolution cannot reliably correct contradictory target extents.
+Source capture-order checks guard regression, but cannot replace rendered geometry QA.
+Evidence: CONTROL-ELIGIBILITY-39 page audit and666hash-verified affected training frames.
+
+## Diagnostic proposal eligibility and crop-edge parity — October2, local38
+
+What went wrong: untyped rectangle union recovered focused bodies but introduced
+text fragments and enclosing panels into a classifier trained on control crops.
+35/46frames saturated at1.0; preserving known role exclusions still underperformed
+production on the7complete screens. Proposal recall is not selector improvement.
+Preserve semantic eligibility and evaluate whole-control proposals separately.
+
+The strict crop probe also rejected detector boxes crossing the image edge,
+including boxes whose bodies were outside but expanded regions overlapped.
+Production expands the original body then clamps; pre-clamping changes pixels.
+Use explicit diagnostic opt-in for bounded expanded-region overlap, preserving
+strict default and rejecting crops with no overlap. Match the real preprocessing
+before attributing a failure to model quality.
+
 ### Positive-pair brightness ordering is not transition detection (October2,2026)
 
 **Wrong:** Infer a navigation detector from8/8known focused/unfocused pairs ordered
@@ -2999,3 +3031,148 @@ control rendering, not layout names, before claiming coverage. Also separate
 context clipped at the screenshot edge from body clipping: four reference windows
 lost context while both target bodies remained fully visible. Preserve production
 clamping for labeled offline diagnostics without weakening live eligibility gates.
+
+### A repaired identity contract does not prove action-driven readiness (2026-10-02)
+
+**Wrong:** Accept a delivered scroll/focus case as settled because duplicate child
+IDs and off-screen membership were repaired. In transition34, all four movement
+endpoints still report observed item-2 against requested item-1, verified=false and
+zero stable time. **Correct:** Separate declared/visible/excluded membership with
+explicit validation, then independently require consistent native readiness and
+image brackets. Preserve the mismatch and ask the producer to clarify/repair the
+action-linked readiness contract; never rewrite requested focus in the consumer.
+**Why:** Twelve valid unchanged cases can test false-change behavior, but cannot
+substitute for the four rejected actual moves or qualify navigation reliability.
+
+### Score selected focus independently of duplicate proposal assignment (2026-10-02)
+
+**Wrong:** Grade focus by whether the selected prediction is the exact index chosen
+by a one-to-one box-recall matcher. Two overlapping predictions can represent the
+same reviewed row; scorecard36 initially reported 3/7 instead of 4/7 because the
+matcher assigned its unselected duplicate. **Correct:** Retain one-to-one matching
+for localization recall; independently check the actual selected box against the
+focused body and flag ambiguous overlap with multiple truths. Test duplicate boxes
+and raw probability versus final selection. **Why:** Bookkeeping must not turn a
+correct runtime selection into a false failure. Retain old reports and replay the
+same predictions when fixing a metric; never imply new inference or model gains.
+
+### Proposal recovery is not final focus accuracy (2026-10-02)
+
+**Wrong:** Treat ensemble42/46 focused-body coverage as42/46 correct focus selections.
+**Correct:** Report candidate recall alongside candidate burden (1,084→2,289 here),
+duplicate suppression, and then independently score the actual selector on those
+boxes. Unmatched proposals on partial annotations remain unreviewed, not false positives.
+**Why:** Vision rectangles recovered useful bodies but also increased competing
+regions; proposal improvement can coexist with unchanged or worse final selection.
+
+### Dataset switches are not isolation guarantees (2026-10-02)
+
+**Wrong:** Assume Ultralytics `cache=False` prevents adjacent `.npy` reads/deletion,
+or `val=False` prevents final-epoch and final-checkpoint validation.
+**Correct:** For immutable USB corpora use an in-memory-label dataset that disables
+the adjacent cache path. For final-only evaluation, exclude evaluation membership
+from both trainer loaders, override validation hooks, and explicitly score fixed
+last-epoch weights after completion. Test the resident implementation, not only flags.
+**Why:** Both default behaviors survive the apparently disabling switches. They
+can mutate originals or allow held-out evaluation to influence checkpoint selection.
+
+### Avoid decoding the corpus twice inside the training budget (2026-10-02)
+
+**Wrong:** Repeat the complete image decode/pixel-duplicate check inside the owned
+training child after the parent has just verified the same originals.
+**Correct:** Bind the parent's validated result by hash, then recheck source bytes,
+annotations, admission, runtime and code in the child. Reuse decoded dimensions and
+pixel identities only when original byte hashes still match. Changed inputs fail.
+**Why:** The2500-frame read/decode check took211seconds before any training;
+duplicating it would consume most of a300second run envelope.
+
+### Preserve completed fitting when terminal scoring is interrupted (2026-10-02)
+
+**Wrong:** Treat a combined training/scoring timeout as a failed model fit and
+restart training, or report quality from only the frames scored before interruption.
+**Correct:** Save the completed epoch count and fixed checkpoint hash before scoring;
+time scoring separately and retain per-frame predictions. Finish evaluation against
+that exact checkpoint and complete membership, preserving the original partial receipt.
+**Why:** FSF001 finished fitting in238.57seconds but exhausted its old300second
+envelope during scoring. Reusing the completed fit produced the full500frame result
+without another training run or selecting a different checkpoint.
+
+### Separate reviewed negatives from unlabeled regions (2026-10-02)
+
+**Wrong:** Classify every non-target prediction on a partially annotated frame as
+unreviewed, hiding predictions that overlap explicitly reviewed unfocused controls.
+**Correct:** Match predictions against reviewed focused and unfocused bodies first;
+reserve unknown status for genuinely unreviewed regions. Restrict whole-frame AP and
+exhaustive selection scoring to completeness-confirmed frames.
+**Why:** REAL-TRANSFER-42 contains46known-unfocused overlaps and11unreviewed predictions.
+Combining those obscured a real failure mode even though partial labels cannot support
+a blanket false-positive judgment for every unmatched box.
+
+### Identify the running build's source workspace before declaring a feature missing (2026-10-02)
+
+**Wrong:** Inspect the familiar Documents/TVTestRig checkout and conclude the newly
+running app lacks reference generation because that checkout is old.
+**Correct:** Discover the actual running executable, its matching helper and build
+workspace; test its advertised contract. Record checkout revision separately from
+loaded-image attestation, and preserve other checkouts unchanged.
+**Why:** TTR43 ran from Developer/TVTestRig87e59be5 while Documents remained46dce7b.
+The new app successfully generated native controls and rich catalog/guide pairs.
+
+### Reference measurement anchors are not focusable controls (2026-10-02)
+
+**Wrong:** Require each UIKit measurement anchor to report focusable=true, or require
+the planned native control inventory to equal only the fully visible controls.
+Both rejected valid reference exports; scroll navigation also need not retain a
+requestedID equal to the newly observed focus.
+**Correct:** Validate the versioned reference recipe, exact visible-plus-excluded
+membership, semantic exclusion evidence and measured bodies. Use observed native
+focus and planned identities; keep an anchor's unknown focusability unknown. Allow
+the explicit native-navigation mode only in its transition contract, preserving
+initialRequestedID separately. Keep older contracts strict.
+**Why:** Reference44validated36real deliveries and468crops without inventing focus,
+including1476clipped/offscreen planned-control observations across72frames.
+
+### Review validation must not import the model-analysis dependency tree (2026-10-02)
+
+**Wrong:** Import OpenCV evaluation helpers at module scope in a file also used for
+reference contract validation. The isolated Qt review interpreter then crashes before
+opening even though no pixel analysis is requested.
+**Correct:** Keep contract validation lightweight; import analysis dependencies inside
+the execution function. Test actual review-environment imports with cv2, torch,
+ultralytics and coremltools explicitly blocked.
+**Why:** Reference45's first real annotator launch failed on a transitive cv2 import
+despite earlier startup-doctor success. The repaired actual caller opened all12samples.
+
+### Cache paths must exist before importing inference libraries (2026-10-02)
+
+**Wrong:** Set YOLO_CONFIG_DIR to an absent project directory and assume the library
+will create it there. Ultralytics fell back to /tmp and created settings outside the
+allowed project boundary in the first reference45attempt.
+**Correct:** Create and verify project-owned cache parents and the expected library
+subdirectory before import. Preserve an interrupted run and reuse only complete,
+input/configuration-bound prediction pairs after fixing setup.
+**Why:** Environment variables alone do not enforce output placement. Reference45
+retained29complete pairs and resumed32without repeating inference or hiding the incident.
+
+### Separate pixel-grid alignment from absolute position sensitivity (2026-10-02)
+
+**Wrong:** Attribute a fixed-content translation failure directly to learned screen
+position, or assume higher-resolution inference must preserve focus performance.
+**Correct:** Hold resized content and canvas dimensions fixed, translate boxes exactly,
+and compare both stride-aligned and unaligned offsets. Check training translation/
+scale variation and independently replay baseline predictions before proposing a fix.
+**Why:** Priority46native localization fell15/18→0/18with140px shifts but returned
+15/18and16/18with128px shifts. Both move content; only the latter preserve32px-grid
+phase. Higher-resolution inference also fell to0/18. This supports testing training
+invariance first, not blaming clean annotations or merely requesting more central data.
+
+### Record effective data-loader settings, not just trainer arguments (2026-10-02)
+
+**Wrong:** Infer rectangular training from `args.yaml` when a custom dataset constructor
+overrides that setting, or treat batch count as optimizer-update count.
+**Correct:** Inspect and test the actual dataset caller; record effective geometry,
+training-frame count, batches and optimizer steps in the completion receipt. Keep the
+same effective preprocessing when isolating augmentation changes.
+**Why:** Augmentation47 found historical `rect=true` arguments but an actual square
+`rect=False` read-through dataset. Its first one-epoch run processed250batches but
+made31optimizer updates because of accumulation. These are different measurements.

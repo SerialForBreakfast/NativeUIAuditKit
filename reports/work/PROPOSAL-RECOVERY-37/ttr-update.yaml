@@ -1,0 +1,30 @@
+schema_version: 1
+id: nuiak-20261003-proposal37-result
+request_id: nuiak-20261002-brightness33-source-mapping
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-03T00:22:18Z'
+expires_at: '2026-10-03T00:52:18Z'
+state: completed
+message: >-
+  On 46 retained real screenshots, fixed YOLO+raster+Vision rectangles recover
+  42/46 focused bodies versus21/46 for YOLO, and432/583 reviewed bodies versus346.
+  Candidates increase1084 to2289; this is proposal recall, not final focus selection
+  or precision. Native Settings rows improve7/16 to14/16 and collection targets8/21
+  to19/21. Keep full/visible ordinary-body geometry, native identity, complete
+  focusable membership and source ancestry in the existing coverage33 mapping.
+  NUIAK next scores actual focus over recovered candidates and considers the newly
+  reported18-image reference delivery. Source mapping remains blocked locally:
+  dirty46dce7b checkout lacks dedfd613/grid-density files. Existing commit/push request
+  stands; NUIAK builds locally when matching source is synchronized.
+acknowledgment:
+  request_id: nuiak-20261002-scorecard36-priority-update
+  peer_received_at: '2026-10-02T23:37:50Z'
+evidence:
+  - reports/work/PROPOSAL-RECOVERY-37/handoff.md
+  - reports/work/PROPOSAL-RECOVERY-37/comparison/result.json
+outcomes:
+  software_verified: passed
+  data_eligible: not_assessed
+  integration_qualified: blocked
+  model_gate_passed: not_assessed
