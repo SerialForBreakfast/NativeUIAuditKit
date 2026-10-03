@@ -1,5 +1,29 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run DTM004 — global-context spatial fit diagnostic (2026-10-03)
+
+Registered before launch under assigned GLOBAL-CONTEXT-57. Arm
+`transition-direct-pixels`, output `context57-dtm004`, protocol
+`41ca7a8fdff64adb88fa44158909ccb4808ac3cd939c112bbbe7bf9d0d9cc0d2`.
+Same four train IDs as DTM003,120epochs,Adam0.001,batch8,seed42,CPU2threads,
+96×64, unchanged cell CE/geometry L1/change BCE, fixed-last. Add pooled4×6
+full-frame context through64latent units and spatial residual decoder to both
+localization heads. No data-role/resolution/threshold change.2GiB combined outputs,
+no wall-time cap;34GiB free. Conditional DTM005 only after4/4correct change and
+paired IoU≥0.5. No capture/export/promotion. Prior proposed DTM004 was never launched.
+
+Completed exit0,120updates,17.150s including intake/fit/development scoring; execution
+session96587 (OS PID not captured). Loss7.04483→0.178018. Checkpoint SHA256
+`bc0cad5ee140c4c89a3e810f97b56ae4fd585fd6c8c9de6dc7e6b67f9ef829f0`.
+Run3,549,011bytes. Exact fitted4: change4/4, cells8/8, paired boxes0/4.
+Mean cell CE0.0875325 versus DTM0032.99362; geometry L10.0811559 versus0.0808444.
+Heights approach zero; correct cell selection does not repair geometry.
+All24train-role pairs rescored (only4fitted): change17/24,paired0/24. Settings5:
+change5/5,paired0/5; all5emit decisions despite wrong boxes. Not calibrated geometry
+confidence or usable navigation. Warm CPU median4.232ms,p954.291ms; reload parity
+passed. DTM005 preparation exits1 `memorization_gate_failed`; no second fit.
+[Handoff](../reports/work/GLOBAL-CONTEXT-57/handoff.md).
+
 ## Run DTM003 — spatial four-pair memorization diagnostic (2026-10-03)
 
 Registered before launch under approved Spatial56 tranche. Arm

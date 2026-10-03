@@ -14,13 +14,27 @@ Preserve prior roles/checkpoints; at most two fixed runs/2GiB, no capture/export
 - [x] Focused software checks and134offline Swift tests pass.
 [Handoff](reports/work/SPATIAL-TRANSITION-56/handoff.md). No usable model promoted.
 
-## Proposed — GLOBAL-CONTEXT-57 (next model tranche; execution scope review)
+## Review — GLOBAL-CONTEXT-57 / Codex (diagnostic complete; geometry gate failed)
 
 Replace the local-only spatial heads with a full-frame-context spatial decoder;
 repeat the same4pair/120epoch fit test, then conditionally compare all24/5 at30epochs.
 Keep preprocessing, roles and thresholds fixed. Pair with the deconfounded intake
 specification below; no new capture or data admission is implied.
 [Next contract](Research/Plans/FocusTransitionLearning49.md#next-proposal--global-context57-and-deconfounded-intake).
+- [x] Context decoder integrated with training/inference and legacy loading.
+- [x] DTM004: same4pairs/120epochs, change4/4; cells8/8 versus DTM0030/8.
+- [x] Paired boxes0/4: heights collapse; DTM005 gate refuses execution.
+- [x] Deconfounded intake CLI, evidence hashes and split/coverage rejection tests.
+- [x] 29Python/134Swift tests pass. No capture/export/promotion.
+[Handoff](reports/work/GLOBAL-CONTEXT-57/handoff.md).
+
+## Proposed — GEOMETRY-58 (next controlled model tranche)
+
+Keep the context cell decoder and exact four-pair diagnostic; test non-saturating
+supervised geometry logits before any larger candidate. Same pixels, roles and
+gates; no threshold tuning or automatic retry. Pair with retained-source observation
+inventory for missing scroll/change fields.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-proposal--geometry58).
 
 ## Review — STORAGE-LIVE-02 / Codex (r5 retention migration complete)
 

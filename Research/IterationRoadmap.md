@@ -1,5 +1,10 @@
 # Concurrent delivery roadmap
 
+**Context57 complete:** global context fixes diagnostic center-cell selection0/8→8/8,
+but heights collapse and paired localization remains0/4. Larger candidate blocked.
+Next: controlled geometry-gradient experiment plus retained-source coverage intake.
+Correct cells/change labels are not usable focus boxes. No promotion or new roles.
+
 **Spatial56 complete:** four-pair120epoch spatial diagnostic learned vertical cells8/8
 but horizontal0/8; paired boxes0/4. The planned full candidate was correctly blocked
 by the memorization gate. Next isolate full-frame context in localization heads, not

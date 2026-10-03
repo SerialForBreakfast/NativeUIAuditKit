@@ -1,7 +1,7 @@
 """Spatial paired-image experimental head. Ground truth is used only by loss()."""
 
 
-def make_model(torch):
+def make_model(torch, global_context=False):
     nn = torch.nn
 
     class SpatialTransition(nn.Module):
@@ -12,10 +12,17 @@ def make_model(torch):
             self.cells = nn.Conv2d(24,2,1)
             self.geometry = nn.Conv2d(24,8,1)
             self.change = nn.Sequential(nn.Flatten(),nn.Linear(24*16*24,64),nn.ReLU(),nn.Linear(64,1))
+            if global_context:
+                self.context = nn.Sequential(nn.AdaptiveAvgPool2d((4,6)),nn.Flatten(),
+                    nn.Linear(24*4*6,64),nn.ReLU(),nn.Linear(64,10*16*24))
 
         def fields(self, images):
             features = self.encoder(images)
-            return self.cells(features), self.geometry(features).reshape(-1,2,4,16,24), self.change(features)
+            cells, geometry = self.cells(features), self.geometry(features)
+            if hasattr(self,'context'):
+                context = self.context(features).reshape(-1,10,16,24)
+                cells, geometry = cells+context[:,:2], geometry+context[:,2:]
+            return cells, geometry.reshape(-1,2,4,16,24), self.change(features)
 
         def forward(self, images):
             cells, geometry, change = self.fields(images)

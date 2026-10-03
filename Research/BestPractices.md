@@ -3290,3 +3290,14 @@ Keep ground-truth-cell/oracle decompositions clearly separate from actual predic
 **Why:** Spatial56 fitted4pairs: change4/4, vertical cells8/8, but horizontal0/8 and
 paired boxes0/4. Its local head sees15×15input pixels; wider context is a hypothesis,
 not proof of cause. The failed gate correctly prevented the full candidate launch.
+
+### Correct center cells do not establish usable boxes (2026-10-03)
+
+**Wrong:** Accept total-loss reduction or correct cells as localization success, or
+interpret high change confidence as confidence in geometry.
+**Correct:** Measure cells, offsets, width/height and paired IoU separately. Inspect
+sigmoid outputs near0/1 and their vanishing derivatives before adding epochs. Keep
+the full-box gate and separately evaluate abstention/localization reliability.
+**Why:** DTM004 learned8/8center cells but0/4paired boxes; heights collapsed while
+change remained4/4. All5Settings pairs emitted decisions despite0/5paired boxes.
+More context solved one fitted-subset error, not the task.

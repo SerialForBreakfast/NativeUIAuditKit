@@ -297,6 +297,17 @@ not run. All24train-role pairs were rescored but only4were fitted. No promotion.
 
 ### Next proposal — global-context57 and deconfounded intake
 
+October3 execution assignment: maintainer requested the next tranche. Freeze a
+context residual decoder: existing encoder → adaptive average pool4×6 → flatten
+576 → linear64/ReLU → linear3840, reshaped into2cell and8geometry residual maps.
+Add these to the unchanged local heads; keep the change head, loss and input fixed.
+This retains coarse spatial order and gives every output cell full-frame context.
+DTM004 is the120epoch diagnostic (the earlier conditional DTM004 never launched);
+DTM005 is conditional30epoch candidate. Maximum two runs,2GiB combined outputs.
+Independent deliverable: executable metadata-only intake validation of observed
+focus change versus observed scrolling, evidence references and journey partitions.
+It reports coverage, never grants data admission or fabricates scrolling from boxes.
+
 Implementation outcome: give both spatial classification and geometry heads access
 to full-frame features rather than only15×15local neighborhoods. Keep96×64 input,
 the existing grid/loss, admitted24/5roles, confidence and seed fixed to isolate context.
@@ -319,8 +330,58 @@ reserve genuinely independent evaluation before failure-driven selection. Curren
 coverage has no unchanged/stationary training pairs; displacement alone cannot fill
 the scroll matrix. A proposal is not a producer assignment or capture authorization.
 
+Metadata contract `transition-intake-coverage-v1`: records require a unique `id`,
+`journeyGroup`, `partition` (train/development/evaluation), boolean `focusChanged`
+and independently observed boolean `scrolled`, `labelSource` (fixture-observed or
+human-reviewed), two `decodedFrameHashes`, and hash-bound project-local references
+`beforeObservation`, `afterObservation`, `actionReceipt`, `cleanupReceipt`.
+The metadata validator checks reference bytes, rejects duplicate IDs, journey/pixel
+cross-partition leakage and unknown labels, and reports all12partition×scroll×change
+cells. It cannot authenticate caller labels or verify their semantic relation to
+images: source-specific intake must do that before admission. Missing/unknown scroll
+observations stay in a pending review queue, never default to false. No current29pair
+member is silently converted to this contract. Real no-op captures must be distinct
+observations, not copied frames. Future acquisition should populate the four training
+cells plus independent journey groups reserved before model-driven selection.
+CLI: `scripts/transition_intake_coverage.py --input MANIFEST --output NEW_REPORT`.
+This tool always reports trainingEligible=false; its coverage is metadata evidence,
+not a new training approval or proof that caller-supplied pixel hashes were decoded.
+
 Acceptance: fitted-subset and full-partition metrics clearly distinguished; no
 ground-truth-cell oracle reported as model accuracy; exact gate decision and ranked
 remaining data/model weaknesses. Existing shipped models and five exposed Settings
 development examples remain unchanged. Select/request new data only under its own
 authority; do not let producer availability block this local representation test.
+
+### Context57 result
+
+DTM004 at120epochs selects8/8correct fitted center cells, versus0/8forDTM003;
+change4/4 but paired boxes0/4. Geometry saturates, especially height near zero.
+Parameter count595,291→881,819; warm CPU4.156→4.232ms on these measurements,
+not a controlled hardware performance benchmark. Model output3.55MB; no CoreML export.
+The exact candidate gate refused DTM005. Prediction CLI parity passes for DTM004,
+DTM003 and DTM002. Metadata intake delivers coverage/reference validation only.
+
+### Next proposal — geometry58
+
+Inputs: unchanged29pair admission, exact4diagnostic IDs and frozen DTM004 results.
+Hypothesis: sigmoid-followed-by-L1 geometry can saturate and lose useful gradients;
+supervising the existing geometry logits with binary cross entropy against the same
+fractional0–1coordinate targets may avoid that failure. This treats coordinates as
+bounded regression targets, not calibrated class probabilities.
+Keep context architecture, input, seed, optimizer, unit loss weighting, cell/change
+objectives and sigmoid decoding fixed. Change only geometry loss. Test analytically
+that extreme negative height logits get finite, nonzero correcting gradients; test
+coordinate endpoints, serialization, strict configs and unchanged old predictions.
+On assignment: one120epoch diagnostic and, only if all4have correct change and both
+IoUs≥0.5, one30epoch24/5candidate. Two runs/2GiB/no wall-time cap; fixed-last, no
+data-role change, automatic retry, capture, export or promotion. Log runs before launch.
+Report cell/geometry losses, saturation, paired IoU, change, abstention and latency.
+Failure ends fitting with diagnosis; success is development evidence, not release.
+
+Independent companion: inspect retained source observations read-only for explicit
+scroll/change/action/cleanup evidence. Produce a source-field-to-intake mapping and
+missing-evidence inventory. Do not infer scrolling from bounding-box displacement,
+rewrite historical captures, relabel journeys or fabricate receipt references.
+Acceptance: integrated trainer/CLI and focused/offline package checks, exact gate
+decision, comparison toDTM004, and actionable missing-data requests ready for review.

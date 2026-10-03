@@ -6,13 +6,14 @@ import focus_spatial_transition as s
 from focus_recorded_transition_eval import iou
 
 
-def run(output):
+def run(output,result_path=None):
     out=d.h.fresh(output)
-    result_path=d.h.ROOT/'NativeUITrainer/focus_ring_runs/spatial56-dtm003/result.json'
+    result_path=d.h.local(result_path) if result_path else d.h.ROOT/'NativeUITrainer/focus_ring_runs/spatial56-dtm003/result.json'
     result=d.h.read(result_path);protocol=d.h.read(d.h.checked(d.h.ROOT,result['protocol']))
-    d.h.require(protocol['pins']==d.pins() and protocol['configuration']==d.SPATIAL_DIAGNOSTIC,'diagnostic_binding')
+    config=protocol['configuration']
+    d.h.require(protocol['pins']==d.pins() and config in (d.SPATIAL_DIAGNOSTIC,d.CONTEXT_DIAGNOSTIC),'diagnostic_binding')
     corpus=d.collect(protocol['sources']);rows=d.admitted(corpus,d.h.read(d.h.checked(d.h.ROOT,protocol['admission'])))
-    rows=d.training_rows([r for r in rows if r['split']=='train'],d.SPATIAL_DIAGNOSTIC)
+    rows=d.training_rows([r for r in rows if r['split']=='train'],config)
     d.h.require([r['id'] for r in rows]==result['trainingIDs'],'fit_membership_changed')
     t=d.torch_runtime();t.set_num_threads(2)
     state=t.load(d.h.checked(d.h.ROOT,result['model']),map_location='cpu',weights_only=True)
@@ -49,9 +50,11 @@ def run(output):
         meanGeometryL1=float(np.mean([e['geometryL1'] for e in endpoints])),
         meanChangeBCE=float(np.mean([r['changeBCE'] for r in details])),details=details,
         limitation='Ground-truth-cell IoU is a scoring-only oracle decomposition, never a prediction or quality gate.',
-        architectureObservation='Local cell/geometry heads have a 15x15 input-pixel receptive field; change head has full-frame context. This is a structural limitation, not proven causal attribution.')
+        architectureObservation=('Spatial heads receive full-frame pooled context residuals.' if config==d.CONTEXT_DIAGNOSTIC else
+            'Local cell/geometry heads have a 15x15 input-pixel receptive field; change head has full-frame context. This is a structural limitation, not proven causal attribution.'))
     d.h.write(out,report,sealed=True);print({k:v for k,v in report.items() if k not in ('details','source','model')})
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--output',required=True);run(p.parse_args().output)
+    p=argparse.ArgumentParser();p.add_argument('--output',required=True);p.add_argument('--result')
+    a=p.parse_args();run(a.output,a.result)

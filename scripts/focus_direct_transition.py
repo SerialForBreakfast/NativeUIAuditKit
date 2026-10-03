@@ -20,10 +20,12 @@ CONFIG=dict(model=ARM,epochs=30,batch=8,lr=.001,seed=42,maxSeconds=None,
 LOCALIZATION_CONFIG=dict(CONFIG,boxLoss='giou-l1-v1')
 SPATIAL_CONFIG=dict(CONFIG,representation='spatial-cells-v1',boxLoss='cell-ce-offset-size-l1')
 SPATIAL_DIAGNOSTIC=dict(SPATIAL_CONFIG,epochs=120,trainingSubset='first-two-per-change')
+CONTEXT_CONFIG=dict(SPATIAL_CONFIG,representation='spatial-global-context-v1')
+CONTEXT_DIAGNOSTIC=dict(CONTEXT_CONFIG,epochs=120,trainingSubset='first-two-per-change')
 
 
 def valid_configuration(config):
-    return config in (CONFIG,LOCALIZATION_CONFIG,SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC)
+    return config in (CONFIG,LOCALIZATION_CONFIG,SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC,CONTEXT_CONFIG,CONTEXT_DIAGNOSTIC)
 
 
 def box_loss(prediction,target,configuration):
@@ -46,7 +48,7 @@ def pins():
         ('focus_direct_transition.py','focus_corrected_transition_audit.py','focus_structural_transition_audit.py',
          'focus_recorded_semantics.py','focus_recorded_readiness.py','human_annotation_review.py',
          'artifact_storage.py','focus_dataset_contract.py','photos_focus_pilot.py','focus_spatial_transition.py',
-         'prepare_spatial56.py','evaluate_direct_transition.py','train_focus_ring_detector.py')],
+         'prepare_spatial56.py','prepare_context57.py','evaluate_direct_transition.py','train_focus_ring_detector.py')],
         dependencies={name:dependency_version(name) for name in ('torch','numpy','pillow')},python=sys.version)
 
 
@@ -193,6 +195,10 @@ def load_protocol(path,arm,run_name,approval_path=None):
         h.require(doc.get('diagnosticGate') is not None,'missing_memorization_gate')
         from prepare_spatial56 import verify_gate
         verify_gate(doc['diagnosticGate'],corpus,rows)
+    if doc['configuration']==CONTEXT_CONFIG:
+        h.require(doc.get('diagnosticGate') is not None,'missing_memorization_gate')
+        from prepare_context57 import verify_gate
+        verify_gate(doc['diagnosticGate'],corpus,rows)
     for split in ('train','development'):
         if {r['changed'] for r in rows if r['split']==split}!={True,False}:blockers.append(split+'_missing_change_states')
     approval=None
@@ -220,15 +226,15 @@ def model(configuration=None):
     torch=torch_runtime();nn=torch.nn
     configuration=CONFIG if configuration is None else configuration
     h.require(valid_configuration(configuration),'direct_configuration')
-    if configuration in (SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC):
+    if configuration in (SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC,CONTEXT_CONFIG,CONTEXT_DIAGNOSTIC):
         from focus_spatial_transition import make_model
-        return make_model(torch)
+        return make_model(torch,configuration in (CONTEXT_CONFIG,CONTEXT_DIAGNOSTIC))
     return nn.Sequential(nn.Conv2d(6,8,3,2,1),nn.ReLU(),nn.Conv2d(8,16,3,2,1),nn.ReLU(),
         nn.Conv2d(16,24,3,2,1),nn.ReLU(),nn.Flatten(),nn.Linear(24*8*12,64),nn.ReLU(),nn.Linear(64,9))
 
 
 def training_rows(rows,configuration):
-    if configuration!=SPATIAL_DIAGNOSTIC:return rows
+    if configuration not in (SPATIAL_DIAGNOSTIC,CONTEXT_DIAGNOSTIC):return rows
     ordered=sorted(rows,key=lambda r:r['id'])
     selected=[r for state in (False,True) for r in [v for v in ordered if v['changed']==state][:2]]
     h.require(len(selected)==4 and all(r.get('split')=='train' for r in selected),'diagnostic_train_subset')
@@ -250,7 +256,7 @@ def fit(rows,configuration=None):
         order=torch.randperm(len(rows));losses=[]
         for ids in order.split(configuration['batch']):
             optimizer.zero_grad()
-            if configuration in (SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC):
+            if configuration in (SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC,CONTEXT_CONFIG,CONTEXT_DIAGNOSTIC):
                 from focus_spatial_transition import loss as spatial_loss
                 loss=spatial_loss(torch,net,x[ids],y[ids])
             else:

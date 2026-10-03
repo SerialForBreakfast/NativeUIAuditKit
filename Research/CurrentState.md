@@ -1,9 +1,16 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 3, 2026, DTM003 spatial diagnostic completed (underlying results retain observation dates)
+**As of:** October 3, 2026, DTM004 context diagnostic completed (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**Context57 / DTM004:** same4pair120epoch test now selects8/8correct center cells
+(DTM0030/8), but still0/4paired boxes. Heights collapse toward zero; cell CE falls
+2.9936→0.08753 while geometry L1 remains~0.0812. Change4/4. DTM005 gate refused;
+no larger run or promotion. Deconfounded intake metadata CLI delivered, no new data
+admission. Next: isolate geometry saturation, not longer unchanged training.
+[Handoff](../reports/work/GLOBAL-CONTEXT-57/handoff.md).
 
 **Spatial56 / DTM003:**120epoch fit on4admitted Fixture pairs: raw change4/4,
 paired localization0/4. Vertical grid cells8/8, horizontal0/8; local heads lack wider

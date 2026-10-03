@@ -2,8 +2,10 @@
 
 [SPATIAL-TRANSITION-56](Plans/FocusTransitionLearning49.md#spatial56--spatial-fit-diagnostic-and-deconfounded-coverage-audit):
 spatial fit diagnostic and coverage audit complete; DTM003 fails the4pair gate.
-[GLOBAL-CONTEXT-57 proposal](Plans/FocusTransitionLearning49.md#next-proposal--global-context57-and-deconfounded-intake):
-full-frame-context localization and deconfounded intake specification; no execution yet.
+[GLOBAL-CONTEXT-57](Plans/FocusTransitionLearning49.md#next-proposal--global-context57-and-deconfounded-intake):
+context diagnostic complete: cells8/8, boxes0/4; metadata intake CLI delivered.
+[GEOMETRY-58 proposal](Plans/FocusTransitionLearning49.md#next-proposal--geometry58):
+geometry-logit diagnostic and retained-source inventory; not yet executed.
 
 [STORAGE-LIVE-01](Plans/ArtifactStorage.md): explicit read-only SSD mappings,
 verified bulk migration, real-consumer compatibility and recovery instructions.
