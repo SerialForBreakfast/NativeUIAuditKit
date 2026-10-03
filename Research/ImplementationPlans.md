@@ -1,5 +1,10 @@
 # Full backlog implementation packet catalog
 
+[SPATIAL-TRANSITION-56](Plans/FocusTransitionLearning49.md#spatial56--spatial-fit-diagnostic-and-deconfounded-coverage-audit):
+spatial fit diagnostic and coverage audit complete; DTM003 fails the4pair gate.
+[GLOBAL-CONTEXT-57 proposal](Plans/FocusTransitionLearning49.md#next-proposal--global-context57-and-deconfounded-intake):
+full-frame-context localization and deconfounded intake specification; no execution yet.
+
 [STORAGE-LIVE-01](Plans/ArtifactStorage.md): explicit read-only SSD mappings,
 verified bulk migration, real-consumer compatibility and recovery instructions.
 

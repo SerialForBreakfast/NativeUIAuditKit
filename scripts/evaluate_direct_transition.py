@@ -54,7 +54,7 @@ def run(result_path,output):
     checkpoint=d.h.checked(d.h.ROOT,result['model']);state=torch.load(checkpoint,map_location='cpu',weights_only=True)
     d.h.require(state['version']==d.VERSION and d.valid_configuration(state['configuration']) and
                 state['configuration']==protocol['configuration'],'checkpoint_contract')
-    net=d.model();net.load_state_dict(state['state'],strict=True);net.eval();load_seconds=time.monotonic()-start
+    net=d.model(state['configuration']);net.load_state_dict(state['state'],strict=True);net.eval();load_seconds=time.monotonic()-start
     scores=[];first=None;warm=[]
     for r in rows:
         before,after=[d.pixels(i) for i in r['images']]

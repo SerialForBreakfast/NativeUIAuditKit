@@ -1,5 +1,11 @@
 # Concurrent delivery roadmap
 
+**Spatial56 complete:** four-pair120epoch spatial diagnostic learned vertical cells8/8
+but horizontal0/8; paired boxes0/4. The planned full candidate was correctly blocked
+by the memorization gate. Next isolate full-frame context in localization heads, not
+more epochs or capture on the same failed architecture. Independently specify missing
+stationary/no-op and scroll/change coverage. No model promotion or new data roles.
+
 **Localization55 complete:** one same-architecture GIoU+L1 comparison did not fix
 training localization (paired2/24→0/24). Next prioritize an explicitly scoped spatial
 representation/fit diagnostic and coverage audit; hold data roles/thresholds fixed.

@@ -18,10 +18,12 @@ CONFIG=dict(model=ARM,epochs=30,batch=8,lr=.001,seed=42,maxSeconds=None,
             maxOutputBytes=2*1024**3,width=96,height=64,confidence=.85,
             selection='fixed-last',backend='cpu',optimizer='adam')
 LOCALIZATION_CONFIG=dict(CONFIG,boxLoss='giou-l1-v1')
+SPATIAL_CONFIG=dict(CONFIG,representation='spatial-cells-v1',boxLoss='cell-ce-offset-size-l1')
+SPATIAL_DIAGNOSTIC=dict(SPATIAL_CONFIG,epochs=120,trainingSubset='first-two-per-change')
 
 
 def valid_configuration(config):
-    return config==CONFIG or config==LOCALIZATION_CONFIG
+    return config in (CONFIG,LOCALIZATION_CONFIG,SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC)
 
 
 def box_loss(prediction,target,configuration):
@@ -43,7 +45,8 @@ def pins():
     return dict(code=[h.ref(h.ROOT/'scripts'/name) for name in
         ('focus_direct_transition.py','focus_corrected_transition_audit.py','focus_structural_transition_audit.py',
          'focus_recorded_semantics.py','focus_recorded_readiness.py','human_annotation_review.py',
-         'artifact_storage.py','focus_dataset_contract.py','photos_focus_pilot.py')],
+         'artifact_storage.py','focus_dataset_contract.py','photos_focus_pilot.py','focus_spatial_transition.py',
+         'prepare_spatial56.py','evaluate_direct_transition.py','train_focus_ring_detector.py')],
         dependencies={name:dependency_version(name) for name in ('torch','numpy','pillow')},python=sys.version)
 
 
@@ -186,6 +189,10 @@ def load_protocol(path,arm,run_name,approval_path=None):
     out=old.fresh_run(run_name);rows=[];blockers=[]
     if doc.get('admission') is None:blockers.append('missing_exact_data_role_admission')
     else:rows=admitted(corpus,h.read(h.checked(h.ROOT,doc['admission'])))
+    if doc['configuration']==SPATIAL_CONFIG:
+        h.require(doc.get('diagnosticGate') is not None,'missing_memorization_gate')
+        from prepare_spatial56 import verify_gate
+        verify_gate(doc['diagnosticGate'],corpus,rows)
     for split in ('train','development'):
         if {r['changed'] for r in rows if r['split']==split}!={True,False}:blockers.append(split+'_missing_change_states')
     approval=None
@@ -209,10 +216,23 @@ def torch_runtime():
     return torch
 
 
-def model():
+def model(configuration=None):
     torch=torch_runtime();nn=torch.nn
+    configuration=CONFIG if configuration is None else configuration
+    h.require(valid_configuration(configuration),'direct_configuration')
+    if configuration in (SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC):
+        from focus_spatial_transition import make_model
+        return make_model(torch)
     return nn.Sequential(nn.Conv2d(6,8,3,2,1),nn.ReLU(),nn.Conv2d(8,16,3,2,1),nn.ReLU(),
         nn.Conv2d(16,24,3,2,1),nn.ReLU(),nn.Flatten(),nn.Linear(24*8*12,64),nn.ReLU(),nn.Linear(64,9))
+
+
+def training_rows(rows,configuration):
+    if configuration!=SPATIAL_DIAGNOSTIC:return rows
+    ordered=sorted(rows,key=lambda r:r['id'])
+    selected=[r for state in (False,True) for r in [v for v in ordered if v['changed']==state][:2]]
+    h.require(len(selected)==4 and all(r.get('split')=='train' for r in selected),'diagnostic_train_subset')
+    return selected
 
 
 def fit(rows,configuration=None):
@@ -220,16 +240,22 @@ def fit(rows,configuration=None):
     configuration=CONFIG if configuration is None else configuration
     h.require(valid_configuration(configuration),'direct_configuration')
     h.require(rows and {r['changed'] for r in rows}=={False,True},'training_change_states')
-    torch=torch_runtime();torch.manual_seed(CONFIG['seed']);torch.set_num_threads(2)
-    net=model();optimizer=torch.optim.Adam(net.parameters(),lr=CONFIG['lr'])
+    rows=training_rows(rows,configuration)
+    torch=torch_runtime();torch.manual_seed(configuration['seed']);torch.set_num_threads(2)
+    net=model(configuration);optimizer=torch.optim.Adam(net.parameters(),lr=configuration['lr'])
     x=torch.from_numpy(np.stack([encode(*(pixels(i) for i in r['images'])) for r in rows]))
     y=torch.tensor([[*target_box(r['boxes'][0],r['size']),*target_box(r['boxes'][1],r['size']),float(r['changed'])] for r in rows])
     history=[]
-    for epoch in range(CONFIG['epochs']):
+    for epoch in range(configuration['epochs']):
         order=torch.randperm(len(rows));losses=[]
-        for ids in order.split(CONFIG['batch']):
-            optimizer.zero_grad();out=net(x[ids])
-            loss=box_loss(out[:,:8].sigmoid(),y[ids,:8],configuration)+torch.nn.functional.binary_cross_entropy_with_logits(out[:,8],y[ids,8])
+        for ids in order.split(configuration['batch']):
+            optimizer.zero_grad()
+            if configuration in (SPATIAL_CONFIG,SPATIAL_DIAGNOSTIC):
+                from focus_spatial_transition import loss as spatial_loss
+                loss=spatial_loss(torch,net,x[ids],y[ids])
+            else:
+                out=net(x[ids])
+                loss=box_loss(out[:,:8].sigmoid(),y[ids,:8],configuration)+torch.nn.functional.binary_cross_entropy_with_logits(out[:,8],y[ids,8])
             h.require(bool(torch.isfinite(loss)),'nonfinite_direct_loss');loss.backward();optimizer.step();losses.append(float(loss.detach()))
         history.append(dict(epoch=epoch+1,trainingLoss=sum(losses)/len(losses)))
     return net.eval(),history
@@ -264,6 +290,7 @@ def run(report,experiment_id):
             baseline=r['baseline']))
     h.require(sum(p.stat().st_size for p in out.iterdir())<CONFIG['maxOutputBytes'],'direct_output_budget')
     h.write(out/'result.json',dict(version='focus-direct-result-v1',experimentID=experiment_id,model=h.ref(out/'last.pt'),
+        trainingIDs=[r['id'] for r in training_rows([r for r in rows if r['split']=='train'],report['configuration'])],
         protocol=report['protocolFile'],results=results,summary=summarize(results),history=history,
         elapsedSeconds=time.monotonic()-start,**h.FLAGS))
     h.require(sum(p.stat().st_size for p in out.iterdir())<CONFIG['maxOutputBytes'],'direct_output_budget')
@@ -291,7 +318,7 @@ def predict(request,checkpoint):
     torch=torch_runtime();path=h.local(checkpoint);h.require(path.stat().st_size<=CONFIG['maxOutputBytes'],'checkpoint_size')
     state=torch.load(path,map_location='cpu',weights_only=True)
     h.require(state['version']==VERSION and valid_configuration(state['configuration']),'direct_model_contract')
-    net=model();net.load_state_dict(state['state'],strict=True);net.eval()
+    net=model(state['configuration']);net.load_state_dict(state['state'],strict=True);net.eval()
     return dict(infer(net,pixels(request['before']),pixels(request['after'])),model=h.ref(path))
 
 

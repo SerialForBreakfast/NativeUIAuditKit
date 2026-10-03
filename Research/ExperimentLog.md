@@ -1,5 +1,35 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run DTM003 — spatial four-pair memorization diagnostic (2026-10-03)
+
+Registered before launch under approved Spatial56 tranche. Arm
+`transition-direct-pixels`, output `spatial56-dtm003`, protocol
+`7a06f6d582d7498ef9cb1cb15e593e57e62d86be224c15192d32781f4d307518`.
+Existing24Fixture/train and5Settings/development roles unchanged; select first two
+changed and first two unchanged training IDs deterministically.4training pairs,
+120epochs/120updates, Adam0.001,batch8,seed42,CPU2threads,96×64ordered frames.
+Spatial24×16cell classification and per-cell offset/size L1 plus change BCE; fixed-last,
+confidence0.85/IoU0.5. No wall-time cap,2GiB combined tranche outputs;34GiB internal
+free. Full30epoch candidate allowed only after4/4paired localization and raw change
+on these exact diagnostic training members. No data-role change, capture/export/promotion.
+Protocol/approval: `reports/work/SPATIAL-TRANSITION-56/diagnostic-ready/`.
+
+Completed exit0,PID6966,120epochs/120updates;19.810s reported execution including
+revalidation/fit/development scoring (initial CLI preflight is additional). Loss
+7.03160→3.09710. Checkpoint047d03230e799a458206317aac47a0805f587d888350295bcc0b8fc1641a6bce;
+run2,400,468bytes. Exact fitted4pairs: raw change4/4, both boxes0/4; correct spatial
+cells0/8. Vertical target cell correct8/8, horizontal0/8 (predicted x8–10 versus
+target x12). Mean cell CE2.99362, geometry L10.08084, change BCE≈8.27e-21.
+All24admitted train-role pairs were diagnostically rescored, but only4were fitted;
+do not interpret the24pair summary as a24pair training run. Five exposed Settings
+pairs: raw change5/5, both boxes0/5, all10endpoint boxes invalid, all5abstained.
+Reload parity and actual prediction CLI pass; warm CPU median4.156ms/p954.288ms.
+DTM004 not launched: preparation rejected `memorization_gate_failed` as specified.
+No retry/tuning/export/promotion. Coverage has no unchanged/stationary training pairs
+and5/58endpoint boxes under4input pixels tall. Next hypothesis: full-frame context
+for spatial localization; local15×15receptive field may not identify wide-row centers.
+[Handoff](../reports/work/SPATIAL-TRANSITION-56/handoff.md).
+
 ## Run DTM002 — localization loss comparison (2026-10-03)
 
 Registered before launch under approved Localization55 tranche. Arm

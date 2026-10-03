@@ -1,5 +1,27 @@
 # NativeUIAuditKit — Tasks
 
+## Review — SPATIAL-TRANSITION-56 / Codex (diagnostic complete; candidate gate failed)
+
+Implement and qualify spatial paired-frame localization, audit encoded-input ambiguity
+and deconfounded coverage, execute fixed four-pair DTM003 diagnostic, and conditionally
+execute DTM004 full24/5comparison only after its memorization gate passes.
+[Contract](Research/Plans/FocusTransitionLearning49.md#spatial56--spatial-fit-diagnostic-and-deconfounded-coverage-audit).
+Preserve prior roles/checkpoints; at most two fixed runs/2GiB, no capture/export/promotion.
+- [x] Spatial model/trainer/checkpoint/CLI integration and source-pinned preparation.
+- [x] DTM003120epoch fit:4/4change,0/4paired boxes; vertical cells8/8,horizontal0/8.
+- [x] Checkpoint parity, loss decomposition and coverage/encoded-ambiguity audit.
+- [x] DTM004 gate correctly refuses execution; no automatic second experiment.
+- [x] Focused software checks and134offline Swift tests pass.
+[Handoff](reports/work/SPATIAL-TRANSITION-56/handoff.md). No usable model promoted.
+
+## Proposed — GLOBAL-CONTEXT-57 (next model tranche; execution scope review)
+
+Replace the local-only spatial heads with a full-frame-context spatial decoder;
+repeat the same4pair/120epoch fit test, then conditionally compare all24/5 at30epochs.
+Keep preprocessing, roles and thresholds fixed. Pair with the deconfounded intake
+specification below; no new capture or data admission is implied.
+[Next contract](Research/Plans/FocusTransitionLearning49.md#next-proposal--global-context57-and-deconfounded-intake).
+
 ## Review — STORAGE-LIVE-02 / Codex (r5 retention migration complete)
 
 [Contract](Research/Plans/ArtifactStorage.md#storage-live-02--dependency-audit-and-retained-r5-prefix).

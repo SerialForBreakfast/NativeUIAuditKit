@@ -3279,3 +3279,14 @@ bytes before accepting a replacement export. Preserve unmanifested evidence sepa
 the default exporter produced24,911instead of19,740images. Parity checks caught the
 error before training. The old r7 export also has39,487tracked files, so its symlinks
 and local targets must stay intact until maintainer-directed untracking.
+
+### Check spatial context before scaling a failed localization head (2026-10-03)
+
+**Wrong:** Assume a dense spatial head automatically localizes wide controls, or read
+an admitted training-partition score as the fit score of a smaller diagnostic subset.
+**Correct:** Record exact fitted IDs; require a tiny memorization gate before scale-up.
+Decompose row/column selection, geometry and change loss, and inspect receptive field.
+Keep ground-truth-cell/oracle decompositions clearly separate from actual predictions.
+**Why:** Spatial56 fitted4pairs: change4/4, vertical cells8/8, but horizontal0/8 and
+paired boxes0/4. Its local head sees15×15input pixels; wider context is a hypothesis,
+not proof of cause. The failed gate correctly prevented the full candidate launch.

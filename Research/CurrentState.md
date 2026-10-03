@@ -1,9 +1,17 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 3, 2026, DTM002 comparison completed (underlying results retain observation dates)
+**As of:** October 3, 2026, DTM003 spatial diagnostic completed (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**Spatial56 / DTM003:**120epoch fit on4admitted Fixture pairs: raw change4/4,
+paired localization0/4. Vertical grid cells8/8, horizontal0/8; local heads lack wider
+context. This suggests, but does not prove, a receptive-field limitation. Full DTM004
+candidate gate failed and no second run launched. Coverage audit found no stationary/
+unchanged training examples and5/58boxes under4input pixels tall; no exact encoded
+target conflicts. Next proposed tranche isolates global context, retaining the same
+data/preprocessing. [Handoff](../reports/work/SPATIAL-TRANSITION-56/handoff.md).
 
 **Live SSD storage:** seven report artifact trees now read through explicit mappings
 to `/Volumes/training-drive/data/NUIAK/live/`;14.77GiB local copies removed after

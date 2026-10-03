@@ -253,3 +253,74 @@ the declared comparison and diagnose failure rather than changing the split or t
 Independent companion: TASK-DOC-01 packaged FocusRing metadata reconciliation against
 the actual resource/registry, distinguishing artifact version from unmet v1.0 quality
 milestone. No protected skill, shipped weight, capture, export or promotion changes.
+
+## Spatial56 — spatial fit diagnostic and deconfounded coverage audit
+
+October3 maintainer approves this next substantial tranche. Keep the existing exact
+24Fixture/train and5Settings/development admission,96×64ordered RGB preprocessing,
+CPU/Adam0.001/seed42/batch8, confidence0.85 and fixed-last selection. Replace only
+the localization representation: stride4shared convolution features (24×16 grid),
+two spatial cell classifiers and per-cell sigmoid x/y offsets plus normalized width/
+height. Change head reads shared visual features. No truth, IDs or boxes at inference.
+Train cell cross entropy plus L1 offset/size regression at target cells and unchanged
+change BCE, unit weights. Decode the highest-scoring cell per endpoint plus its learned
+offset/size; report invalid/clipped predictions honestly. This is an experimental
+representation, not a public API or calibrated confidence change.
+
+First audit all admitted pairs for identical encoded images with differing targets;
+report semantic change versus endpoint displacement and source-group support. Do not
+claim a shifted box proves scrolling, or claim coverage of no-focus/dialog cases not
+labeled in this corpus. Keep the five exposed Settings examples development-only.
+
+DTM003: deterministic first two changed and first two unchanged training IDs,120epochs.
+This is a training-only memorization diagnostic, not new data-role admission. Proceed
+to DTM004 only if all four pairs have both endpoint IoUs≥0.5 and correct raw change.
+DTM004: same spatial implementation, all24training pairs,30epochs, score5development
+pairs without tuning. Maximum two runs, combined2GiB outputs, no wall-time cap under
+standing approval; no downloads or automatic retries. Log/pin each run before launch.
+If DTM003 fails, preserve results and finish diagnosis/coverage audit, not another fit.
+
+Integrate legacy checkpoint loading and actual trainer/prediction/evaluation entrypoints.
+Test spatial target geometry, gradients, strict configs, serialization parity and no
+label-input leakage; focused tests plus one offline Swift pass. Report training fit,
+per-endpoint errors, raw change, abstentions and latency separately. Deliver one handoff,
+ranked data/architecture gaps and an actionable next tranche; no TTR capture or SMB
+publication unless a concrete producer request changes its next action.
+
+### Spatial56 result
+
+DTM003 finished120epochs on four fixed train members: change4/4,paired boxes0/4;
+vertical cells8/8but horizontal0/8. Mean cell CE2.9936 dominates the remaining loss.
+Local15×15pixel receptive field is a plausible context limitation; not proof of cause.
+The actual candidate preparation refused `memorization_gate_failed`, so DTM004 did
+not run. All24train-role pairs were rescored but only4were fitted. No promotion.
+
+### Next proposal — global-context57 and deconfounded intake
+
+Implementation outcome: give both spatial classification and geometry heads access
+to full-frame features rather than only15×15local neighborhoods. Keep96×64 input,
+the existing grid/loss, admitted24/5roles, confidence and seed fixed to isolate context.
+Do not hardcode observed row centers or infer widths from labels at prediction time.
+Retain old model/config decoding and frozen prior reports.
+
+Proposed execution envelope for review: same four IDs,120epochs and the same4/4fit
+gate. Only on pass, one30epoch all24/5comparison.2GiB total, no wall-time cap; log
+new protocols/IDs before launch. Never combine a context change with a resolution,
+dataset or threshold change in the same comparison. No automatic retry if it fails.
+Tests: spatial geometry, finite gradients, complete field of view, image-only prediction,
+checkpoint/legacy parity, actual CLI/preflight rejection and one offline package pass.
+
+Independent intake specification: require source-truth semantic focus change and
+explicit scroll state separately, covering all four scroll/no-scroll × switch/no-switch
+cells. Request real no-op/stationary examples rather than inventing repeated-frame
+labels. Record before/after settled identity, boxes, frame hashes, action receipts,
+source/journey grouping and cleanup. Keep related journeys in one partition and
+reserve genuinely independent evaluation before failure-driven selection. Current
+coverage has no unchanged/stationary training pairs; displacement alone cannot fill
+the scroll matrix. A proposal is not a producer assignment or capture authorization.
+
+Acceptance: fitted-subset and full-partition metrics clearly distinguished; no
+ground-truth-cell oracle reported as model accuracy; exact gate decision and ranked
+remaining data/model weaknesses. Existing shipped models and five exposed Settings
+development examples remain unchanged. Select/request new data only under its own
+authority; do not let producer availability block this local representation test.
