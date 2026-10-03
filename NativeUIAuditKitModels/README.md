@@ -25,6 +25,7 @@ This package distributes pre-trained CoreML models and runtime descriptors for u
 - **Superseded**: `nativeui-tvos-v1.0` (10-class prototype), `nativeui-tvos-v2.0` (21-class).
 
 ### 3. `FocusRingDetector.mlmodelc` (`focus-ring-detector-v1.0`)
+- **Version versus qualification**: embedded `versionString=1.0.0`; historical “v0.1” means the initial, incompletely qualified milestone, not another artifact. The later FOCUS-DET-05 gates remain open. Metadata declares this graph non-updatable (`isUpdatable=0`).
 - **Architecture**: MobileNetV4-Conv-Small (vendored `scripts/focus_ring_backbone.py`; trained from scratch, not Ultralytics YOLO).
 - **Target Platform**: tvOS Stage 2 focus classification on 256×256 YOLO crops.
 - **Outputs**: `is_focused_prob`, `confidence` (metadata `focusThreshold=0.85`, `ambiguityThreshold=0.70`).

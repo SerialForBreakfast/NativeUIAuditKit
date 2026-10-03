@@ -2,6 +2,7 @@
 import argparse
 from collections import Counter,defaultdict
 import os
+import shutil
 from pathlib import Path
 import time
 import human_annotation_review as h
@@ -40,7 +41,7 @@ def assemble():
     for split in EXPECTED:(TARGET/split).mkdir()
     entries=[];lineage=[];started=time.monotonic()
     for e in manifest['entries']:
-        name=e['fileName'];old=SOURCE/name;old_ann=old.with_suffix('.json')
+        name=e['fileName'];old=h.local(SOURCE/name);old_ann=old.with_suffix('.json')
         h.require(old.resolve()==old and old_ann.resolve()==old_ann and h.sha(old)==e['sha256'],'changed_source_image')
         current=dict(e);image=old;annotation=old_ann
         if name in replacements:
@@ -54,7 +55,12 @@ def assemble():
             current['priorGenerationDate']=current.pop('generationDate',None)
             current['regenerationEvidence']=h.ref(PATCH)
         destination=TARGET/name
-        os.link(image,destination);os.link(annotation,destination.with_suffix('.json'))
+        for src,dst in ((image,destination),(annotation,destination.with_suffix('.json'))):
+            if src.stat().st_dev == dst.parent.stat().st_dev:
+                os.link(src,dst)
+            else:
+                shutil.copyfile(src,dst)
+                h.require(h.sha(src)==h.sha(dst),'cross_volume_copy_changed')
         lineage.append(dict(name=name,split=e['split'],replaced=name in replacements,
             originalImage=h.ref(old),originalAnnotation=h.ref(old_ann),
             selectedImage=h.ref(image),selectedAnnotation=h.ref(annotation)))
@@ -63,8 +69,8 @@ def assemble():
         imageCount=len(entries),entries=entries,parent=h.ref(SOURCE/'manifest.json'),patch=h.ref(PATCH)))
     h.write(BASE/'ios-lineage.json',dict(source=h.ref(SOURCE/'manifest.json'),patch=h.ref(PATCH),
         target=h.ref(TARGET/'manifest.json'),rows=lineage,seconds=time.monotonic()-started,
-        pixelCopyBytes=0,note='Hard-linked immutable inputs; source and new view must not be edited in place.'))
-    print('Linked',len(entries),'members; zero pixel-copy bytes.',flush=True)
+        note='Same-volume inputs hard-linked; cross-volume inputs copied and hash verified. Do not edit either view in place.'))
+    print('Assembled',len(entries),'members.',flush=True)
 
 
 def audit():
@@ -78,7 +84,7 @@ def audit():
     started=time.monotonic()
     for i,(e,l) in enumerate(zip(manifest['entries'],lineage['rows'])):
         h.require(e['fileName']==l['name'] and e['split']==l['split'],'membership_changed')
-        info,classes,meta,warnings=v.inspect_pair(TARGET,e,schema)
+        info,classes,meta,warnings=v.inspect_pair(h.local(TARGET),e,schema)
         h.require(info['imageSHA256']==l['selectedImage']['sha256'] and
             info['annotationSHA256']==l['selectedAnnotation']['sha256'],'selected_bytes_changed')
         if not l['replaced']:
@@ -107,7 +113,7 @@ def verify_export():
         h.require(row['name']==l['name'],'lineage_order')
         split='val' if row['split']=='validation' else row['split'];name=Path(row['name']).name
         image=NEW_YOLO/split/'images'/name;label=NEW_YOLO/split/'labels'/Path(name).with_suffix('.txt')
-        h.require(image.resolve()==TARGET/row['name'] and h.sha(image)==row['imageSHA256'],'export_image_changed')
+        h.require(image.resolve()==h.local(TARGET/row['name']) and h.sha(image)==row['imageSHA256'],'export_image_changed')
         ann=h.read(TARGET/Path(row['name']).with_suffix('.json'));expected=[]
         for e in ann['elements']:
             kind=e['elementType'];box=vision_to_yolo(e['boundsVisionNormalized'])

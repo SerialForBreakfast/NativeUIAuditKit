@@ -78,6 +78,15 @@ matches this table exactly: `modelID` is `focus-ring-detector-v1.0` and
 `versionString` is `1.0.0`. FDR-001 is the training-run label, not a model
 version. No model resource or qualification claim changes here.
 
+**Reverified October3 (TASK-DOC-01):** `v0.1` in the historical milestone and
+loader documentation describes the limited qualification level, not a second
+compiled graph or its embedded version. Artifact identity remains the table above;
+FOCUS-DET-05's non-vacuous quality gates are still open. Metadata file SHA256:
+`cf847ab2dd843c692cd2073530606d74ecd3efd6274544261eb61a76fa6682ab`.
+The resource declares `isUpdatable=0`; incremental on-device adaptation is not an
+existing capability of these packaged weights. Thresholds remain0.85/0.70 and
+input remains RGB256×256. Do not rename or re-export weights to reconcile prose.
+
 Package size gate: FP16 `.mlpackage` **≤ 5.0 MB = 5,000,000 bytes**,
 counting all regular files in the package (not compiled-cache size or allocated
 filesystem blocks). Report MiB separately;5MiB is not this gate. Historical export

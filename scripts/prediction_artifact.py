@@ -63,6 +63,9 @@ def _relative_member(root: Path, raw: Any, field: str, image_id: str) -> Path:
     if candidate.is_absolute() or ".." in candidate.parts:
         raise PredictionArtifactError(f"{image_id}: {field} must remain relative to the manifest")
     path = (root / candidate).resolve(strict=False)
+    import artifact_storage
+    if path.is_relative_to(artifact_storage.BASE):
+        artifact_storage.resolve_input(path)
     if not path.exists():
         raise PredictionArtifactError(f"{image_id}: {field} is missing or has a dangling symlink target")
     if not path.is_file():

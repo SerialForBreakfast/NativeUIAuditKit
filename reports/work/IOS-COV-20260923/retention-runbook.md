@@ -1,5 +1,11 @@
 # DATA-RET: preserved iOS prefix inventory and recovery procedure
 
+**October3 lifecycle update:** the two redundant local recovery-drill copies were
+reverified against the surviving prefix and deleted under maintainer cleanup
+authority. Original r6 prefix remains local. Failed r2/r4/r5 evidence is now on
+the training drive; see [storage handoff](../STORAGE-20261003/handoff.md) for exact
+locations and restoration. The rest of this document records the original drill.
+
 Scope: `.build/debug-output/p0c-resume/r6-verified-prefix`, containing14,340 accepted
 image/annotation pairs plus complete-prefix rejected-trial evidence and manifests.
 Do not clean `.build` as if this tree were disposable. The prefix, original r4/r5

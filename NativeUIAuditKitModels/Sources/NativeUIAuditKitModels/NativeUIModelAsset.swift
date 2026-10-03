@@ -77,9 +77,10 @@ public enum NativeUIModelAsset {
 
     // MARK: - FocusRingDetector (Stage 2)
 
-    /// URL of the compiled FocusRingDetector v0.1 graph, or `nil` if the resource was stripped.
+    /// URL of the compiled FocusRingDetector graph, or `nil` if the resource was stripped.
     ///
-    /// v0.1 is bundled (`Package.swift` copies `FocusRingDetector.mlmodelc`). Call sites still
+    /// Artifact metadata is version 1.0.0; “v0.1” denotes its initial qualification milestone.
+    /// It is bundled (`Package.swift` copies `FocusRingDetector.mlmodelc`). Call sites still
     /// handle `nil` and fall back to the heuristic `resolveTVOSFocus`.
     public static var focusRingDetectorURL: URL? {
         Bundle.module.url(forResource: "FocusRingDetector", withExtension: "mlmodelc")

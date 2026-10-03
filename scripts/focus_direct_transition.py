@@ -17,12 +17,33 @@ ARM='transition-direct-pixels'
 CONFIG=dict(model=ARM,epochs=30,batch=8,lr=.001,seed=42,maxSeconds=None,
             maxOutputBytes=2*1024**3,width=96,height=64,confidence=.85,
             selection='fixed-last',backend='cpu',optimizer='adam')
+LOCALIZATION_CONFIG=dict(CONFIG,boxLoss='giou-l1-v1')
+
+
+def valid_configuration(config):
+    return config==CONFIG or config==LOCALIZATION_CONFIG
+
+
+def box_loss(prediction,target,configuration):
+    """Paired normalized cx/cy/w/h; differentiable overlap loss, no truth inputs."""
+    torch=torch_runtime()
+    h.require(valid_configuration(configuration),'direct_configuration')
+    if configuration==CONFIG:return torch.nn.functional.mse_loss(prediction,target)
+    p=prediction.reshape(-1,4);t=target.reshape(-1,4)
+    plo,phi=p[:,:2]-p[:,2:]/2,p[:,:2]+p[:,2:]/2
+    tlo,thi=t[:,:2]-t[:,2:]/2,t[:,:2]+t[:,2:]/2
+    intersection=(torch.minimum(phi,thi)-torch.maximum(plo,tlo)).clamp(min=0).prod(dim=1)
+    union=p[:,2:].prod(dim=1)+t[:,2:].prod(dim=1)-intersection
+    enclosure=(torch.maximum(phi,thi)-torch.minimum(plo,tlo)).clamp(min=0).prod(dim=1)
+    giou=intersection/union.clamp(min=1e-8)-(enclosure-union)/enclosure.clamp(min=1e-8)
+    return (1-giou).mean()+torch.nn.functional.l1_loss(prediction,target)
 
 
 def pins():
     return dict(code=[h.ref(h.ROOT/'scripts'/name) for name in
         ('focus_direct_transition.py','focus_corrected_transition_audit.py','focus_structural_transition_audit.py',
-         'focus_recorded_semantics.py','focus_recorded_readiness.py','human_annotation_review.py')],
+         'focus_recorded_semantics.py','focus_recorded_readiness.py','human_annotation_review.py',
+         'artifact_storage.py','focus_dataset_contract.py','photos_focus_pilot.py')],
         dependencies={name:dependency_version(name) for name in ('torch','numpy','pillow')},python=sys.version)
 
 
@@ -156,7 +177,7 @@ def admitted(corpus,admission):
 
 
 def load_protocol(path,arm,run_name,approval_path=None):
-    doc=h.read(h.local(path));h.require(doc.get('version')==VERSION and doc.get('configuration')==CONFIG,'direct_configuration')
+    doc=h.read(h.local(path));h.require(doc.get('version')==VERSION and valid_configuration(doc.get('configuration')),'direct_configuration')
     h.require(arm==ARM and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}',run_name),'direct_arm_name')
     h.require(doc.get('protocolSHA256')==digest({k:v for k,v in doc.items() if k!='protocolSHA256'}),'direct_protocol_hash')
     h.require(doc['implementation']==h.ref(Path(__file__)),'direct_implementation_changed')
@@ -175,7 +196,7 @@ def load_protocol(path,arm,run_name,approval_path=None):
                   a.get('protocolSHA256')==doc['protocolSHA256'] and a.get('arm')==ARM and
                   a.get('runName')==run_name and a.get('decisionReference'),'direct_execution_binding')
     return dict(formatVersion='focus-direct-preflight-v1',protocolVersion=VERSION,
-        configurationValid=True,launchEligible=not blockers,blockers=blockers,configuration=CONFIG,
+        configurationValid=True,launchEligible=not blockers,blockers=blockers,configuration=doc['configuration'],
         protocolFile=h.ref(h.local(path)),protocolSHA256=doc['protocolSHA256'],approval=approval,
         corpusSHA256=corpus['corpusSHA256'],output=str(out.relative_to(h.ROOT)),arm=ARM,
         releaseEligible=False,executionAuthorized=False),rows
@@ -194,8 +215,10 @@ def model():
         nn.Conv2d(16,24,3,2,1),nn.ReLU(),nn.Flatten(),nn.Linear(24*8*12,64),nn.ReLU(),nn.Linear(64,9))
 
 
-def fit(rows):
+def fit(rows,configuration=None):
     import numpy as np
+    configuration=CONFIG if configuration is None else configuration
+    h.require(valid_configuration(configuration),'direct_configuration')
     h.require(rows and {r['changed'] for r in rows}=={False,True},'training_change_states')
     torch=torch_runtime();torch.manual_seed(CONFIG['seed']);torch.set_num_threads(2)
     net=model();optimizer=torch.optim.Adam(net.parameters(),lr=CONFIG['lr'])
@@ -206,7 +229,7 @@ def fit(rows):
         order=torch.randperm(len(rows));losses=[]
         for ids in order.split(CONFIG['batch']):
             optimizer.zero_grad();out=net(x[ids])
-            loss=torch.nn.functional.mse_loss(out[:,:8].sigmoid(),y[ids,:8])+torch.nn.functional.binary_cross_entropy_with_logits(out[:,8],y[ids,8])
+            loss=box_loss(out[:,:8].sigmoid(),y[ids,:8],configuration)+torch.nn.functional.binary_cross_entropy_with_logits(out[:,8],y[ids,8])
             h.require(bool(torch.isfinite(loss)),'nonfinite_direct_loss');loss.backward();optimizer.step();losses.append(float(loss.detach()))
         history.append(dict(epoch=epoch+1,trainingLoss=sum(losses)/len(losses)))
     return net.eval(),history
@@ -229,8 +252,8 @@ def run(report,experiment_id):
     h.require(fresh==report and fresh['launchEligible'],'direct_preflight_changed')
     out=old.fresh_run(Path(report['output']).name);out.mkdir(parents=True)
     h.write(out/'execution.json',dict(experimentID=experiment_id,protocol=report['protocolFile'],status='started'))
-    net,history=fit([r for r in rows if r['split']=='train']);torch=torch_runtime()
-    torch.save(dict(version=VERSION,configuration=CONFIG,state=net.state_dict()),out/'last.pt')
+    net,history=fit([r for r in rows if r['split']=='train'],report['configuration']);torch=torch_runtime()
+    torch.save(dict(version=VERSION,configuration=report['configuration'],state=net.state_dict()),out/'last.pt')
     results=[]
     for r in rows:
         if r['split']!='development':continue
@@ -267,7 +290,7 @@ def predict(request,checkpoint):
     if not all(request['context'].values()):return dict(decision='unavailable',reason='context_unverified')
     torch=torch_runtime();path=h.local(checkpoint);h.require(path.stat().st_size<=CONFIG['maxOutputBytes'],'checkpoint_size')
     state=torch.load(path,map_location='cpu',weights_only=True)
-    h.require(state['version']==VERSION and state['configuration']==CONFIG,'direct_model_contract')
+    h.require(state['version']==VERSION and valid_configuration(state['configuration']),'direct_model_contract')
     net=model();net.load_state_dict(state['state'],strict=True);net.eval()
     return dict(infer(net,pixels(request['before']),pixels(request['after'])),model=h.ref(path))
 

@@ -1,5 +1,40 @@
 # Repository artifacts and cleanup policy
 
+## Live SSD readers — STORAGE-LIVE-01
+
+Seven bulk report trees now use explicit read-only mappings, not symlinks. See
+[storage operations](../reports/storage/README.md) and
+[migration evidence](../reports/work/STORAGE-LIVE-01/handoff.md). Shared input/ref
+helpers preserve logical identities; local output helpers reject mapped prefixes.
+Do not move other corpus trees without verifying their actual consumers, especially
+YOLO symlink exports. Prior experiment code pins remain historical; new execution
+protocols must pin the updated readers. No training occurred during migration.
+
+## October 3 — local archive migration authorized
+
+Additional explicit maintainer approval covers the inactive Xcode DerivedData
+folders `TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr` and
+`JoesProxy-dxemdjtrbsmajlcxomqjmywpxhsk`, plus GeneratorRunner's `Documents/dataset`
+and `Documents/reconstruction` in iOS simulator
+`F3EF9DB8-0B0F-4757-B653-D1628269F6FF`, app container
+`C8AB9407-5AEE-427B-8350-B4B6C6B31A46`. This is a one-off exact-target cleanup,
+not blanket Library/Simulator deletion authority. Preserve the running TTR build
+`TVTestRig-fssavpzkujakgqggjglqjvvrtyoo`, app installations and other simulator data.
+Delete only verified generated-data duplicates; archive unique bytes first.
+
+Maintainer now designates `/Volumes/training-drive/data/NUIAK` for inactive repo
+artifacts to reclaim internal space. This supersedes the prior cancellation for
+local storage only, not SMB/SSH/service changes or new model/device execution.
+Verify the mounted local volume before writing. Keep source, environments, current
+build caches and active path-bound model inputs local. Archive inactive scratch and
+recovery outputs to a new dated directory, recording exact original paths, membership,
+SHA256 hashes and restore instructions. Verify complete copies and unchanged source
+before removing exact local members; never delete an unverified original. Do not
+create symlink replacements that bypass strict consumer path checks. Archived sealed
+evidence can require restoration to its original path before replay; moving it is
+not a new data admission. One external copy is an archive, not redundant backup.
+Inventory and migration evidence: `reports/work/STORAGE-20261003/`.
+
 ## October 2 amendment — synthetic corpus lifecycle
 
 [ADR-0017](ADR-0017-Corpus-Lifecycle-and-OS-Support.md) supersedes blanket preservation
@@ -85,6 +120,10 @@ redirection. Peer acknowledgment pending.
   resources and deliberate test fixtures remain versioned in their own directories.
 
 ## This cleanup
+
+The following describes September23 historical policy. October3 authorized cleanup
+above supersedes its blanket no-move/no-delete wording; verified redundant recovery
+drills were deleted and failed-capture evidence archived. See STORAGE-20261003.
 
 No files are deleted or moved, no Git index/history is changed, and no data is uploaded.
 Current generated artifacts are retained at their existing locations and fingerprinted

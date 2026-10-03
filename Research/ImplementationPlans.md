@@ -1,8 +1,18 @@
 # Full backlog implementation packet catalog
 
+[STORAGE-LIVE-01](Plans/ArtifactStorage.md): explicit read-only SSD mappings,
+verified bulk migration, real-consumer compatibility and recovery instructions.
+
+[DIRECT-TRANSITION-55](Plans/FocusTransitionLearning49.md#localization55--approved-controlled-comparison-and-metadata-companion):
+completed localization-loss comparison and independent shipped metadata reconciliation;
+DTM002 not usable, next representation diagnostic remains separately scoped.
+
+[DIRECT-TRANSITION-54](Plans/FocusTransitionLearning49.md#execution54-approval--october3):
+DTM001 approved split/30epoch execution, checkpoint parity and training-fit/transfer diagnosis.
+
 [DIRECT-TRANSITION-53](Plans/FocusTransitionLearning49.md#direct-paired-image53):
 direct six-channel box/change baseline,29source-bound pairs, exact role proposal;
-implementation ready, real fit awaits admission.
+implemented; exact split admitted and fit executed in54/55.
 
 [CORRESPONDENCE-52](Plans/FocusTransitionLearning49.md#feature-correspondence52):
 feature-consensus replay, mixed-motion diagnosis and direct paired-image next decision.

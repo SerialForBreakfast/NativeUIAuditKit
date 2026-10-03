@@ -17,7 +17,7 @@ def prepare():
     plan=h.read(planpath);rows=[]
     for m in plan['members']:
         h.require(m['split']=='train' and m['family'] in ('MediaCardGrid','ProgressActivity'),'unexpected_member')
-        rel=m['imageID'].replace('/images/','/');image=SOURCE/rel;ann=image.with_suffix('.json')
+        rel=m['imageID'].replace('/images/','/');image=h.local(SOURCE/rel);ann=image.with_suffix('.json')
         h.require(h.sha(image)==m['imageSHA256'],'old_image_changed')
         a=h.read(ann);p=a['generatorProfile'];v=a['image']
         h.require(p['seed']==m['seed'] and p['templateFamily']==m['family'] and

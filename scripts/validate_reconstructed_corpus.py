@@ -110,7 +110,9 @@ def inspect_pair(corpus,entry,schema):
 
 def validate(corpus,expected=None):
     expected=EXPECTED if expected is None else expected
-    corpus=corpus.absolute();require(corpus.resolve()==corpus and corpus.is_relative_to(ROOT),"corpus_boundary")
+    import artifact_storage
+    corpus=artifact_storage.resolve_input(corpus)
+    require(corpus.resolve()==corpus,"corpus_boundary")
     mp=member(corpus,"manifest.json");before=sha256(mp);doc=read_json(mp)
     require(isinstance(doc,dict) and isinstance(doc.get("entries"),list) and 0<len(doc["entries"])<=20000,"manifest_entries")
     schema=read_json(SCHEMA)

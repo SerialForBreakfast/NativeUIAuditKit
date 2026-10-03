@@ -56,7 +56,15 @@ class ReconstructionTests(unittest.TestCase):
         self.assertEqual(a,self.report());self.assertFalse(a["trainingEligible"])
         self.assertIn("webContent",a["missingClasses"]["train"])
         self.assertEqual(len(a["members"][0]["annotationSHA256"]),64)
-        self.assertEqual(a["visibleClassCounts"]["train"],{"primaryButton":1})
+
+    def test_storage_resolution_preserves_corpus_identity(self):
+        import artifact_storage
+        before=self.report()
+        with patch.object(artifact_storage,'resolve_input',return_value=self.root) as resolver:
+            after=v.validate(v.ROOT/'reports/work/mapped-corpus',{"train":1,"validation":0,"test":0})
+        resolver.assert_called_once()
+        self.assertEqual(before,after)
+        self.assertEqual(after["visibleClassCounts"]["train"],{"primaryButton":1})
 
     def test_corrupt_decoding_not_just_header_and_hash(self):
         self.png.write_bytes(self.png.read_bytes()[:24]);self.entry["sha256"]=v.sha256(self.png)

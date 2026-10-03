@@ -169,6 +169,18 @@ particular chat, coordinator or automatically installed skill.
 
 ## HIGHEST PRIORITY — File System Boundary
 
+**Local archive/storage exception, 2026-10-03:** maintainer designates
+`/Volumes/training-drive/data/NUIAK` for inactive bulk artifacts and authorizes
+reclaiming internal space, including deletion of verified redundant/reproducible
+outputs without backup. Verify the actual mounted local volume, capacity and exact
+targets first. Keep source, environments, active caches and current path-bound
+inputs local until consumer migration is explicitly verified. Preserve original
+captures, reviewed labels, checkpoints and useful failure evidence by content-verified
+archive before local removal. Keep compact manifests/receipts and restoration paths
+in-project; no blind whole-tree moves or symlink substitutions. This supersedes
+older local-storage restrictions below, not remote service, Git, training or device
+permissions. See `Research/ArtifactRetention.md` and STORAGE-20261003 handoff.
+
 **Local USB exception,2026-10-02:** maintainer authorizes large corpus and scratch
 outputs for NATIVE-FOCUS-EFFECT-SPIKE-26 under
 `/Volumes/training-drive/data/NUIAK/NATIVE-FOCUS-EFFECT-SPIKE-26`.

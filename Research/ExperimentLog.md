@@ -1,5 +1,53 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run DTM002 — localization loss comparison (2026-10-03)
+
+Registered before launch under approved Localization55 tranche. Arm
+`transition-direct-pixels`, output `direct55-dtm002`, protocol
+`832c544cc449e88b4132c3452132b4f7c0da179dbf9a19abc8fffa5c623d08e5`.
+Same admitted24Fixture/train and5Settings/development, same six-channel96×64CNN,
+30epochs, Adam0.001,batch8,seed42,CPU2threads,fixed-last,confidence0.85/IoU0.5.
+Only objective changes: box mean GIoU loss+mean coordinate L1, plus unchanged BCE.
+One comparison,2GiB outputs,no wall-time limit;5.1GiB available. No new admission,
+capture, export or promotion. Compare frozen DTM001 evidence; Settings is exposed
+development, not final evaluation.
+
+Completed exit0,30epochs/90updates,16.814s including revalidation/fit/scoring;
+tool session90861completed (OS PID not recorded). Loss1.91144→1.22733; not numerically
+comparable with DTM001's different objective. Checkpoint
+`1b0a81413f79912da5e84ea824ff564642e4b14060f9618eae2bf3510172d463`;
+run625,188bytes. Train raw change24/24, paired localization0/24 (DTM0012/24).
+Settings raw change5/5, paired localization0/5, all5abstained. No invalid decoded
+boxes, but sizes/locations wrong; training mean endpoint IoU0.2705/0.2643 versus
+0.4023/0.3954. Reload parity passes, warm CPU median4.269ms,p954.477ms. Hypothesis
+not supported at this fixed budget; no follow-up run, export or promotion.
+[Full evidence](../reports/work/DIRECT-TRANSITION-55/handoff.md).
+
+## Run DTM001 — direct paired-image candidate (2026-10-03)
+
+Maintainer explicitly approved exact24Fixture/train and5Settings/development split
+and one candidate. Source corpus9735108bf5ae011dfb17c07f7d49c4b42dfba4c9e1e027459a2b377047f589aa.
+Arm `transition-direct-pixels`, output `direct54-dtm001`, protocol
+`9b4255f08a9d54ac778de1a76766cacc031c77112f7d19c1681ee6626b5b8439`.
+Scratch six-channel96×64CNN,30epochs,Adam0.001,batch8,seed42,CPU2threads,
+fixed-last,confidence0.85,boxIoU0.5;2GiB output cap, no wall-time cap per amendment.
+No augmentation, downloads, capture, export or promotion. Inputs/source roles remain
+unchanged; consumer admission is scoped to this experiment. Five Settings pairs are
+exposed development, not independent final evaluation. Registered before execution;
+completed outcome follows.5.2GiB free at preflight.
+
+Completed exit0,30epochs,90optimizer batches,15.896s run-reported execution including
+revalidation/fit/development scoring. PID unavailable: host process listing denied;
+execution session6075completed successfully. Training loss0.753225→0.009214.
+Fixed-last checkpoint SHA256151b88d06c6403c0f8ab0d7e7866cfb19d69b0207f42931f5e785e9d27199e18,
+616,661bytes; complete run625,127bytes. Training change24/24, both boxesIoU≥0.5only2/24.
+Settings raw change2/5;3decisions(2correct changes/1false change),2abstentions;
+both boxes0/5 and joint success0/5. Retained measurement baseline1correct unchanged
+decision/4abstentions, not an equivalent box predictor. Checkpoint reload parity
+passes. CPU2thread warm median4.099ms and p954.160ms,
+20samples excluding PNG load; first measured pair15.728ms, model load478.439ms.
+No promotion or automatic retraining. [Handoff](../reports/work/DIRECT-TRANSITION-54/handoff.md).
+
 ## Direct Transition53 — October3: implementation and real preflight, no real fit
 
 Reconstructed29paired-image records:24native(12changed/12unchanged),5Settings

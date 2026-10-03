@@ -1,5 +1,17 @@
 # Concurrent delivery roadmap
 
+**Localization55 complete:** one same-architecture GIoU+L1 comparison did not fix
+training localization (paired2/24→0/24). Next prioritize an explicitly scoped spatial
+representation/fit diagnostic and coverage audit; hold data roles/thresholds fixed.
+No automatic training loop or promotion. TTR cleanup remains an independent live
+blocker, not a dependency for this retained-data diagnosis.
+
+**DTM001/54 outcome supersedes pending53execution:** direct paired training ran with
+the approved24/5split. Change fits training24/24but paired boxes only2/24; Settings
+paired boxes0/5. Prioritize a controlled localization-focused candidate, not longer
+training or production integration of this checkpoint. No TTR dependency for this
+local experiment; independent evaluation/coverage remains a later requirement.
+
 **Direct53 next execution:** consumer training no longer needs tracker recovery or
 fresh TTR capture for a development proof.29retained pairs have valid known-focus
 labels. Approve exact Fixture24train/Settings5development roles, then execute one

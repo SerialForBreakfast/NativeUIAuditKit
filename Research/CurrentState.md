@@ -1,15 +1,48 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 3, 2026, DIRECT-TRANSITION-53 implementation complete (underlying results retain observation dates)
+**As of:** October 3, 2026, DTM002 comparison completed (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**Live SSD storage:** seven report artifact trees now read through explicit mappings
+to `/Volumes/training-drive/data/NUIAK/live/`;14.77GiB local copies removed after
+verification.29pair transition corpus hash unchanged after removal;115Python and
+134Swift checks pass. Keep SSD mounted for these inputs; unmigrated datasets and
+YOLO exports remain local. [Operations](../reports/storage/README.md).
+The inactive r5 prefix was subsequently preserved on SSD and its5.76GiB local content
+reclaimed;16,334files verified after removal, active29pair hash unchanged. Internal
+free space remains about21GiB at this observation. Active iOS corpora remain local
+until absolute-link/export compatibility is qualified. No new model/data qualification.
+
+**STORAGE-LIVE-03:** r7/r8/addon SSD inputs qualified; r8/addon local copies reclaimed
+(10.74GiB logical content). Internal free space ~34GiB. New r7 export
+`NativeUITrainer/yolo_dataset_r7_ssd03_frozen` preserves19,740members and exact labels;
+default directory scanning incorrectly included5,171extra pairs. Use manifest-only
+mode for frozen exports. r7 local source remains until maintainer untracks its old
+generated export.48loader samples match, full r7 audit has zero integrity errors;
+59Python/134Swift tests pass. Storage no longer blocks model implementation; model
+quality and execution approvals are unchanged. [Handoff](../reports/work/STORAGE-LIVE-03/handoff.md).
+
+**Localization55 / DTM002:** same24/5split,30epochs, only box objective changed to
+GIoU+L1. Training paired localization fell2/24→0/24; Settings remains0/5. Raw change
+improved2/5→5/5but all5abstain at fixed threshold. No adoption; warm CPU4.27ms.
+68Python/134Swift checks and both legacy/new prediction parity pass. TASK-DOC-01
+metadata label reconciliation complete; weights untouched. Next: controlled spatial
+fit diagnostic, not threshold tuning or promotion. [Handoff](../reports/work/DIRECT-TRANSITION-55/handoff.md).
+
+**Direct54 / DTM001:** approved24train/5development split;30epoch candidate completed.
+Training change24/24, paired boxes2/24; Settings change2/5, paired boxes0/5.
+Checkpoint reload parity passed; warm CPU median4.1ms excluding PNG load. Not usable
+for navigation; no export/promotion/retrain.65Python/134Swift checks pass. Next controlled
+experiment should address localization fit before treating this solely as domain
+transfer. [Handoff](../reports/work/DIRECT-TRANSITION-54/handoff.md).
+
 **Direct Transition53:** full-frame before/after CNN and trainer/prediction CLIs are
 implemented. Strict source reconstruction yields29known-focus pairs,14changed,
 without requiring tracker success. Proposal:24Fixture pairs train,5Settings development;
-zero cross-group decoded-pixel overlap. Calibration→train admission remains unapproved;
-real preflight correctly exits2, no real fit.117Python/134Swift checks pass, including
+zero cross-group decoded-pixel overlap. Historical53preflight exited2before admission;
+54above records approval and real fit.117Python/134Swift checks passed for53, including
 generated-fixture optimization only. [Handoff](../reports/work/DIRECT-TRANSITION-53/handoff.md).
 
 **Correspondence52:** pixel-feature consensus eliminates5native wrong matches and

@@ -5,14 +5,14 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import artifact_storage
 
 ROOT = Path(__file__).resolve().parents[1]
 SPLITS = {"train": "train", "val": "validation", "validation": "validation", "test": "test", "development": "development"}
 PREPROCESSING = {"expansion": 0.16, "cropSize": [256, 256], "coordinates": "xywh-top-left-pixels", "resize": "Pillow-affine-bilinear-v1"}
 
 
-class FocusDataError(ValueError):
-    pass
+FocusDataError = artifact_storage.StorageError
 
 
 def digest(value):
@@ -26,10 +26,7 @@ def text(value):
 
 
 def local(path):
-    path = Path(path).resolve()
-    if not path.is_relative_to(ROOT):
-        raise FocusDataError("outside_project")
-    return path
+    return artifact_storage.resolve_input(path)
 
 
 def member(root, name):
@@ -37,9 +34,9 @@ def member(root, name):
     p = Path(name)
     if p.is_absolute() or ".." in p.parts:
         raise FocusDataError("unsafe_member")
-    root = local(root)
-    target = root / p
-    if not target.resolve().is_relative_to(root) or any(v.is_symlink() for v in [target, *target.parents] if v != root.parent):
+    root = artifact_storage.logical_path(root)
+    target = local(root / p)
+    if not artifact_storage.logical_path(target).is_relative_to(root) or any(v.is_symlink() for v in [target, *target.parents]):
         raise FocusDataError("unsafe_member")
     if not target.is_file():
         raise FocusDataError("missing_pixels")

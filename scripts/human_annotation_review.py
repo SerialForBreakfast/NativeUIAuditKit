@@ -9,6 +9,7 @@ import json
 import math
 from pathlib import Path
 import shutil
+import artifact_storage
 
 from PIL import Image
 from focus_dataset_contract import ROOT, FocusDataError, digest, image, local, pixel_digest, text
@@ -288,7 +289,7 @@ def parse_editor_document(batch, frame, path, doc):
     require(doc.get("nuiak") == binding(batch["id"], frame), "changed_image_binding")
     require(doc.get("imagePath") == frame["editorStem"]+".png" and doc.get("imageData") is None and
             [doc.get("imageWidth"), doc.get("imageHeight")] == frame["size"], "changed_image_metadata")
-    checked(ROOT, dict(path=str((path.parent/doc["imagePath"]).relative_to(ROOT)), sha256=frame["image"]["sha256"]))
+    checked(ROOT, dict(path=str(artifact_storage.logical_path(path.parent/doc["imagePath"]).relative_to(ROOT)), sha256=frame["image"]["sha256"]))
     bool_flags(doc.get("flags"), FRAME_FLAGS)
     shapes = doc["shapes"]
     require(isinstance(shapes, list) and len(shapes) <= 100, "control_limit")
@@ -364,7 +365,7 @@ def finish(batch_path, output, *, reviewer, reference, reviewer_kind, confirm_ba
         try:
             row["controls"] = parse_editor(batch, frame, snapshot)
             # Also detect tampering of the working image, not only immutable original.
-            checked(ROOT, dict(path=str((directory/"editor"/(frame["editorStem"]+".png")).relative_to(ROOT)),
+            checked(ROOT, dict(path=str(artifact_storage.logical_path(directory/"editor"/(frame["editorStem"]+".png")).relative_to(ROOT)),
                                sha256=frame["image"]["sha256"]))
             if reviewer_kind == "software-test":
                 for c in row["controls"]:

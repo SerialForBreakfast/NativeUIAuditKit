@@ -3235,3 +3235,47 @@ tracking. Data-role permission, source grouping and final evaluation remain sepa
 **Why:** Direct53recovers29valid known-focus pairs, including14changes, while native
 positive tracking remained0/12. This enables a development experiment without new
 capture, but does not itself authorize using calibration data for training.
+### Score each direct-transition head against its task metric (2026-10-03)
+
+**Wrong:** Interpret low combined BCE/normalized-box-MSE as successful localization,
+or explain all development failures as domain transfer without checking training fit.
+**Correct:** Report change accuracy and both endpoint box IoUs independently on train
+and development, plus joint confident success. Keep training rescoring diagnostic.
+**Why:** DTM001loss reached0.009214and training change24/24, but only2/24training pairs
+and0/5Settings pairs localized both boxes atIoU0.5. This supports localization-first
+diagnosis rather than automatically adding epochs or promoting a fast model.
+
+### Validate an overlap-loss change instead of assuming it fixes localization (2026-10-03)
+
+**Wrong:** Assume GIoU necessarily improves a multi-head regressor, or compare raw
+loss magnitudes across different objectives as model-quality evidence.
+**Correct:** Freeze membership, seed, architecture, epochs and inference thresholds;
+compare per-endpoint IoU, size/center errors and confident joint outcomes. Preserve
+the failed comparison before proposing another representation or optimization budget.
+**Why:** DTM002's GIoU+L1 objective reduced train paired localization2/24→0/24 and
+increased width error despite correct raw change labels. Settings5/5raw classification
+still yielded0confident decisions. Neither result establishes navigation readiness.
+
+### Preserve logical identity when relocating evidence (2026-10-03)
+
+**Wrong:** Replace artifact directories with symlinks or assume a verified copy
+means every reader can use it. Physical external paths can break repo-relative
+image bindings even when every byte is intact.
+**Correct:** Resolve approved logical prefixes explicitly, convert physical inputs
+back to logical references, and keep output routing separate. Verify real consumer
+results before reclamation; retain tracked files and fail closed without the SSD.
+**Why:** STORAGE-LIVE-01 first exposed a human-editor `relative_to(ROOT)` failure.
+After fixing it and adding regression coverage, the29pair corpus retained its exact
+hash before and after local-copy removal. Generic shell tools still need resolved paths.
+
+### Frozen exports must follow manifest membership, not directory contents (2026-10-03)
+
+**Wrong:** Re-export a qualified corpus by globbing all PNGs and assume copied files
+have the same membership. Ignore rules also do not remove previously tracked exports.
+**Correct:** Use `export_coco.py --manifest-members-only` for frozen corpora. Reject
+missing/changed/duplicate manifest members and compare split membership plus label
+bytes before accepting a replacement export. Preserve unmanifested evidence separately.
+**Why:** STORAGE-LIVE-03 found5,171extra duplicate-named pairs in the retained r7 tree;
+the default exporter produced24,911instead of19,740images. Parity checks caught the
+error before training. The old r7 export also has39,487tracked files, so its symlinks
+and local targets must stay intact until maintainer-directed untracking.

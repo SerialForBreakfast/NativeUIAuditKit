@@ -96,6 +96,7 @@ NativeUITrainer/yolo_dataset_41class/
 NativeUITrainer/yolo_dataset_tvos/
 NativeUITrainer/yolo_page_dot_patch_v2/
 NativeUITrainer/yolo_dataset_41class_r8/
+NativeUITrainer/yolo_dataset_41class_r7/
 
 # YOLO training runs (checkpoints, metrics — too large to commit)
 NativeUITrainer/yolo_runs/
@@ -281,3 +282,7 @@ reports/work/FOCUS-ALIGNMENT-12/*.log
 /reports/work/FOCUS-LOCAL-PLAN-18/artifacts/
 /reports/work/FOCUS-CAMPAIGN-INTAKE-19/artifacts/
 /reports/work/FOCUS-READINESS-20/artifacts/
+/reports/storage/locations.json
+# Local SSD compatibility exports; labels/caches stay local, pixels are linked.
+/NativeUITrainer/yolo_dataset_r7_ssd03/
+/NativeUITrainer/yolo_dataset_r7_ssd03_frozen/

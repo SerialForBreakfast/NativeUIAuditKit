@@ -15,6 +15,7 @@ import os
 import platform
 import sys
 import time
+import artifact_storage
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -81,6 +82,7 @@ def expected_label(sidecar, names):
 
 def prepare(out, dataset=DATASET, source=SOURCE, expected_counts=None):
     """Decode and freeze source-backed membership, with no model imports."""
+    source = artifact_storage.resolve_input(source)
     out = ensure_new_output(out, ROOT)
     out.mkdir(parents=True)
     names = load_names()
@@ -150,7 +152,7 @@ def prepare(out, dataset=DATASET, source=SOURCE, expected_counts=None):
         errors.append({"error": "unexpected test-family overlap", "families": sorted(unexpected_overlap)})
     coverage = {s: {name: sum(r["classes"].count(i) for r in inventory if r["split"] == s)
                     for i, name in enumerate(names)} for s in counts}
-    audit = {"formatVersion": "run013-preflight-v1", "source": str(source), "dataset": str(dataset),
+    audit = {"formatVersion": "run013-preflight-v1", "source": str(artifact_storage.logical_path(source)), "dataset": str(dataset),
         "sourceManifestSHA256": manifest_hash, "memberCount": len(inventory), "splitCounts": counts,
         "errors": errors, "integrityPassed": not errors, "classSupport": coverage,
         "familySplit": families, "testFamilyOverlap": family_overlap,

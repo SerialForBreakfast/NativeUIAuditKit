@@ -27,6 +27,8 @@ import argparse
 import json
 import os
 import sys
+import artifact_storage
+import hashlib
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -68,7 +70,14 @@ def load_category_map(path: Path) -> tuple[dict[str, int], list[str]]:
 def discover_dataset(explicit: str | None) -> Path:
     candidates: list[Path] = []
     if explicit:
-        candidates.append(Path(explicit).expanduser())
+        chosen = Path(explicit).expanduser().absolute()
+        # Preserve the historical explicit sibling-dataset contract; only known
+        # project/SSD paths are subject to the machine-local relocation registry.
+        if chosen.is_relative_to(PROJECT_ROOT) or chosen.is_relative_to(artifact_storage.BASE):
+            chosen = artifact_storage.resolve_input(chosen)
+        if not ((chosen / 'manifest.json').exists() or (chosen / 'train').is_dir()):
+            raise ValueError('explicit_dataset_missing')
+        return chosen.resolve()
     env = os.environ.get("NATIVEUI_DATASET")
     if env:
         candidates.append(Path(env).expanduser())
@@ -190,6 +199,28 @@ def iter_pairs(dataset: Path):
                 yield split, png, js
 
 
+def manifest_pairs(dataset: Path):
+    """Frozen membership, never directory extras; fail before exporting missing pairs."""
+    entries = json.loads((dataset / 'manifest.json').read_text())['entries']
+    seen = set(); pairs = []
+    for entry in entries:
+        name = entry['fileName']; relative = Path(name); split = entry['split']
+        if (relative.is_absolute() or '..' in relative.parts or str(relative) != name or
+            name in seen or split not in SPLIT_DIRS or relative.parts[0] != split or
+            relative.suffix != '.png'):
+            raise ValueError('invalid_manifest_member')
+        seen.add(name); png = dataset / relative; ann = png.with_suffix('.json')
+        if not png.is_file() or not ann.is_file():
+            raise ValueError('missing_manifest_pair:' + name)
+        with png.open('rb') as f:
+            if hashlib.file_digest(f, 'sha256').hexdigest() != entry['sha256']:
+                raise ValueError('changed_manifest_image:' + name)
+        pairs.append((split,png,ann))
+    if not pairs:
+        raise ValueError('empty_manifest')
+    return pairs
+
+
 def target_split(original: str, family: str, holdout: set[str]) -> str:
     if family in ADDON_FAMILIES:
         if original == "train":
@@ -219,6 +250,8 @@ def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--dataset", default=None, help="Native dataset root (PNG+JSON splits)")
     p.add_argument("--output", default=str(DEFAULT_OUT), help="In-package YOLO/COCO output")
+    p.add_argument("--manifest-members-only", action="store_true",
+                   help="Export only hash-verified members of manifest.json; reject missing pairs")
     p.add_argument(
         "--holdout-families",
         nargs="*",
@@ -272,7 +305,7 @@ def main():
         (out_dir / "annotations").mkdir(parents=True, exist_ok=True)
 
     n_pairs = 0
-    for original, png, js in iter_pairs(dataset):
+    for original, png, js in (manifest_pairs(dataset) if args.manifest_members_only else iter_pairs(dataset)):
         n_pairs += 1
         try:
             ann = json.loads(js.read_text())

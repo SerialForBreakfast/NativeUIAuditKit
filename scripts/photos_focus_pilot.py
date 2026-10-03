@@ -10,6 +10,7 @@ import math
 from pathlib import Path
 import re
 import shutil
+import artifact_storage
 
 from PIL import Image, ImageDraw
 
@@ -40,7 +41,7 @@ def sha(path):
 
 def ref(path):
     path = local(path)
-    return {"path": str(path.relative_to(ROOT)), "sha256": sha(path)}
+    return {"path": str(artifact_storage.logical_path(path).relative_to(ROOT)), "sha256": sha(path)}
 
 
 def checked(root, record, limit=32 * 1024 * 1024):
@@ -66,7 +67,7 @@ def read(path):
 def fresh(path):
     path = Path(path).absolute()
     require(not any(p.is_symlink() for p in (path, *path.parents)), "symlink_output")
-    path = local(path)
+    path = artifact_storage.local_output(path)
     require(any(path.is_relative_to(ROOT / prefix) for prefix in
                 ("dataset/tvos_captures", "dataset/focus_ring", "reports/work", ".build")), "diagnostic_output_required")
     require(not path.exists(), "output_collision")

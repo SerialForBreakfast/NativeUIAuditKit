@@ -1,17 +1,113 @@
 # NativeUIAuditKit — Tasks
 
-## Review — DIRECT-TRANSITION-53 / Codex (software complete; data-role decision needed)
+## Review — STORAGE-LIVE-02 / Codex (r5 retention migration complete)
+
+[Contract](Research/Plans/ArtifactStorage.md#storage-live-02--dependency-audit-and-retained-r5-prefix).
+Audit remaining corpus/YOLO dependencies, preserve and migrate the inactive r5 prefix,
+verify complete inventories and actual resolved reads before reclaim, then record
+restore evidence. Active r7 absolute-link exports and r6 prefix remain local pending
+reader/export qualification. No training, inference, capture or Git writes.
+- [x] 16,334 files / 6,182,843,541 bytes copied, verified and reclaimed locally.
+- [x] Post-removal resolver verification passes; active29pair corpus hash unchanged.
+- [x] 11 storage safety tests pass; previous unchanged Swift evidence reused.
+[Handoff](reports/work/STORAGE-LIVE-02/handoff.md). Free space about21GiB; logical
+reclamation is not an equal APFS free-space gain.
+
+## Review — STORAGE-LIVE-03 / Codex (SSD inputs qualified; tracked r7 cleanup pending)
+
+Qualify versioned SSD-backed YOLO exports, current evaluation/regeneration readers,
+complete content/label/split parity and actual input loading before moving r7/r6 pixels.
+[Implementation plan](Research/Plans/ArtifactStorage.md#storage-live-03--active-ios-dataset-compatibility-next-implementation-tranche).
+Preserve historical seals and supported links; no training/inference or new data roles.
+- [x] r7/r8/addon SSD copies verified;19,740untracked r8 image links rebound with recovery inventory.
+- [x] r8/addon local content reclaimed:11,530,385,038bytes; r7 local source preserved.
+- [x] Manifest-only r7 export excludes5,171unmanifested extra pairs; complete label/membership parity.
+- [x] Full r7 audit19,740members/zero errors; r8 configuration-only preflight passes.
+- [x] 48actual Ultralytics decode/resize samples match;59Python/134Swift checks pass.
+- [ ] Maintainer untracks old r7 generated export; then inventory/rebind its links and
+  reclaim r7 source.39,487tracked files prevent safe automatic cleanup without a huge
+  machine-specific diff. [Exact commands](reports/storage/README.md#ios-exports-after-storage-live-03).
+[Handoff](reports/work/STORAGE-LIVE-03/handoff.md). This remaining cleanup does not block
+local model development with the SSD mounted. No new training was launched.
+
+## Review — STORAGE-LIVE-01 / Codex (SSD reads and migration complete)
+
+Implement explicit SSD input resolution, qualify real consumers, migrate substantial
+bulk evidence with hash verification, then reclaim local copies. Preserve identities,
+source/code, model settings and data roles; no training/capture/Git writes.
+[Contract](Research/Plans/ArtifactStorage.md).
+- [x] Explicit fail-closed input/ref mapping; local output isolation and regression tests.
+- [x] Seven trees copied/verified;14.77GiB local content reclaimed,56tracked files kept.
+- [x] Actual post-removal CLI:29pairs, zero exclusions, unchanged corpus hash.
+- [x] 115Python/134Swift tests pass; registry/receipts and operational guide retained.
+[Handoff](reports/work/STORAGE-LIVE-01/handoff.md). Next storage tranche:
+qualify YOLO symlink/export and dataset-loader paths before migrating remaining
+iOS corpora or tvOS dataset trees. No training/inference or new data admission.
+
+## Review — STORAGE-20261003 / Codex (cleanup complete)
+
+Expanded cleanup also complete: two explicitly approved inactive Xcode build folders
+deleted;77,363GeneratorRunner output files accounted for, duplicates removed and
+899unique files archived. Internal free space now39GiB (~22GiB more this tranche).
+Running TTR build, apps, simulators and corpus originals preserved.
+[Expanded handoff](reports/work/STORAGE-20261003/generator-handoff.md).
+
+- [x] Delete two verified redundant recovery copies; archive three failed-capture
+  trees and four compressed handoff packages to the designated local drive.
+- [x] Verify hashes before removal; preserve originals/current inputs and validate
+  unchanged29pair transition corpus. Free space5.9GiB→16GiB at observation.
+- [x] Record mount, manifests, restoration mapping and additional cleanup guidance.
+[Handoff](reports/work/STORAGE-20261003/handoff.md). No Git/model/device changes.
+Further corpus/report migration requires storage-aware consumer compatibility,
+not blind moves. Local storage approval is recorded in AGENTS/ArtifactRetention.
+
+## Review — DIRECT-TRANSITION-55 / Codex (comparison complete; candidate not usable)
+
+Approved localization-first DTM002 comparison: same24/5admission,30epochs and CNN;
+GIoU+L1 box objective, unchanged change BCE and thresholds. Complete checkpoint
+parity, endpoint error/fit/transfer diagnosis, integrated verification and handoff.
+Independent companion: TASK-DOC-01 shipped metadata/milestone reconciliation.
+[Contract](Research/Plans/FocusTransitionLearning49.md#localization55--approved-controlled-comparison-and-metadata-companion).
+No capture, new data roles, export, promotion or automatic second run.
+- [x] DTM00230epoch fit, real prediction/evaluation CLIs and legacy checkpoint parity.
+- [x] Endpoint diagnosis: training paired localization2/24→0/24; Settings0/5→0/5.
+  Raw Settings change2/5→5/5but all5abstain at fixed threshold; no usable gain.
+- [x] TASK-DOC-01 metadata companion complete;68Python/134Swift checks pass.
+[Handoff](reports/work/DIRECT-TRANSITION-55/handoff.md).
+Next proposed tranche: spatial localization/representation fit diagnostic with
+bounded small-subset memorization, then unchanged full24/5comparison if that passes;
+include a deconfounded coverage audit. Pin a new representation and fixed run budget
+before execution; do not treat5exposed Settings pairs as final evaluation. No live
+capture while the last observed TTR cleanup blocker remains unresolved.
+
+## Review — DIRECT-TRANSITION-54 / Codex (DTM001 executed; not usable yet)
+
+Maintainer approved53exact split and one30epoch candidate, DTM001.
+- [x] Bind admission/preflight and execute fixed-last candidate on24Fixture pairs.
+- [x] Evaluate5Settings pairs: boxes/change/abstentions/latency and baseline comparison.
+- [x] Diagnose failures without retuning; preserve weights and update handoff.
+No capture, export or promotion; existing source pixels and original roles retained.
+30epochs completed; training change24/24but both boxes2/24. Settings change2/5,
+both boxes0/5,3decisions/2abstentions. Checkpoint parity passes; warm4.1ms CPU.
+65focused Python/134Swift checks pass. [Handoff](reports/work/DIRECT-TRANSITION-54/handoff.md).
+Next substantial tranche: localization-first controlled candidate using this exact
+admitted split, box-sensitive loss and explicit per-endpoint localization diagnostics;
+check training fit before interpreting Settings transfer. This comparison was
+approved and executed as55above; no automatic second candidate. Broader independent
+data remains necessary before qualification, but does not block local software work.
+
+## Review — DIRECT-TRANSITION-53 / Codex (software complete; candidate executed in54)
 
 - [x] Rebuild source-bound paired-image labels without tracker admission dependency.
 - [x] Integrate direct box/change CNN, strict preflight and prediction through existing trainer.
 - [x] Verify real CLIs, data/model tests and offline Swift checks.
-- [ ] Fit one candidate after exact real data-role admission and bound execution record.
+- [x] Fit one candidate after exact real data-role admission and bound execution record (DTM001/54).
 [Contract](Research/Plans/FocusTransitionLearning49.md#direct-paired-image53).
 Preserve calibration roles; live cleanup50 remains separate. No production change.
 29pairs qualify structurally without tracking:24Fixture(12changed/12unchanged),
 5Settings(2changed/3unchanged), zero decoded-pixel overlap across those two groups.
-Unapproved exact proposal: Fixture24train, exposed Settings5development, no final
-evaluation claim. Existing calibration role is not automatically overwritten.
+Maintainer approved exact proposal in54: Fixture24train, exposed Settings5development,
+no final evaluation claim. Original source metadata preserved with consumer admission.
 117Python/134Swift tests pass. [Handoff](reports/work/DIRECT-TRANSITION-53/handoff.md).
 Next substantial tranche after that role decision: one30epoch CPU direct-image run,
 fixed-last paired-box/change evaluation on the5Settings pairs, measured latency,
@@ -2532,7 +2628,9 @@ Contract: DOC-A in [maintenance packets](Research/Plans/ConsumersAndRelease.md).
 
 - [ ] Correct historical inference advice without changing shipped YOLO letterboxing
 - [ ] Clarify prediction diagnostics are not training annotations
-- [ ] Reconcile FocusRing artifact metadata with qualification milestone labels
+- [x] Reconcile FocusRing artifact metadata with qualification milestone labels (October3:
+  embedded1.0.0 vs historical v0.1 qualification, loader/README/spec aligned;
+  metadata hash retained in spec, weights and gates unchanged).
 - [ ] Correct stale phase/section references and validate changed links/skills
 - [ ] Complete protected skill changes only through the permitted filesystem workflow
 

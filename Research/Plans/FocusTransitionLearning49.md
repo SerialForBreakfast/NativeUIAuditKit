@@ -221,3 +221,35 @@ can qualify only after genuine intake. Complete inventory, trainer/prediction CL
 adversarial/model tests and offline package checks. A real fit is conditional on
 admitted data; numerical fixture optimization is software evidence only. No capture
 retry, download, export, promotion or implicit reclassification of retained evidence.
+
+### Execution54 approval — October3
+
+Maintainer approved the exact53proposal:24Fixture/train and5Settings/development,
+one fixed30epoch direct-image candidate. New admission/protocol/approval files in
+`reports/work/DIRECT-TRANSITION-54/` preserve the old unapproved proposal. DTM001
+uses the unchanged53architecture/configuration; no tuning, automatic retry or model
+promotion. Complete held-out development scoring, loaded-checkpoint parity/latency,
+training-fit diagnosis and a concise failure/next-experiment report. Extra read-only
+checkpoint evaluation is diagnostic only, never checkpoint selection or training.
+
+### Localization55 — approved controlled comparison and metadata companion
+
+October3 maintainer continuation authorizes one DTM002 comparison on the existing
+24 Fixture/train and5 Settings/development admission. Freeze all DTM001 settings,
+architecture, epochs, seed and thresholds; replace box MSE with mean generalized-IoU
+loss plus mean absolute coordinate error, retaining unit-weight change BCE. Hypothesis:
+overlap-sensitive gradients improve training localization, unlike a small coordinate
+MSE that can hide large relative errors on narrow controls. No additional run or sweep
+is planned. Fixed-last30epochs, resident CPU dependencies, no wall-time cap,2GiB total.
+Report per-endpoint IoU, invalid boxes, normalized center/size errors, change errors,
+joint decisions and latency on both partitions. Compare frozen DTM001 evidence without
+rerunning or modifying it; five exposed Settings pairs are development, not qualification.
+
+Preserve legacy checkpoint/configuration loading and strict configuration rejection;
+test identical/disjoint boxes, finite nonzero gradients, coordinate conventions,
+actual trainer/prediction/evaluation entrypoints and one integrated offline Swift pass.
+Log/pin the new implementation and execution authorization before launching. Stop after
+the declared comparison and diagnose failure rather than changing the split or thresholds.
+Independent companion: TASK-DOC-01 packaged FocusRing metadata reconciliation against
+the actual resource/registry, distinguishing artifact version from unmet v1.0 quality
+milestone. No protected skill, shipped weight, capture, export or promotion changes.

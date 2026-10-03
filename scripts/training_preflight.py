@@ -5,6 +5,7 @@ import hashlib, json
 import struct
 import zlib
 from pathlib import Path
+import artifact_storage
 
 class PreflightError(ValueError): pass
 
@@ -81,6 +82,9 @@ def validate(dataset: Path, initial_weights: Path | None, resume: Path | None, o
         if not pngs: raise PreflightError("ineligible_corpus")
         if any(not (labels / (p.stem + ".txt")).is_file() for p in pngs): raise PreflightError("missing_label")
         for png in pngs:
+            target = png.resolve()
+            if target.is_relative_to(artifact_storage.BASE):
+                artifact_storage.resolve_input(target)  # verified registered SSD only
             if not png.is_file(): raise PreflightError("missing_pixel")
             _png_dimensions(png)
         counts[split] = len(pngs)
