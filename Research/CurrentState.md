@@ -1,9 +1,48 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 3, 2026, FAMILY-TRANSFER-48 preparation complete (underlying results retain observation dates)
+**As of:** October 3, 2026, DIRECT-TRANSITION-53 implementation complete (underlying results retain observation dates)
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**Direct Transition53:** full-frame before/after CNN and trainer/prediction CLIs are
+implemented. Strict source reconstruction yields29known-focus pairs,14changed,
+without requiring tracker success. Proposal:24Fixture pairs train,5Settings development;
+zero cross-group decoded-pixel overlap. Calibration→train admission remains unapproved;
+real preflight correctly exits2, no real fit.117Python/134Swift checks pass, including
+generated-fixture optimization only. [Handoff](../reports/work/DIRECT-TRANSITION-53/handoff.md).
+
+**Correspondence52:** pixel-feature consensus eliminates5native wrong matches and
+raises correct identities43→86; positive correspondence remains0/12. It loses both
+Settings departure matches, so default remains unchanged. Six native positive boxes
+contain distinct stationary and scrolling feature evidence; direct paired-image
+learning should be considered instead of making data admission depend on successful
+single-motion tracking.108Python/134Swift tests pass; no capture/train/promotion.
+[Handoff](../reports/work/CORRESPONDENCE-52/handoff.md).
+
+**Correspondence51:** retained24reference actions and5Settings same-screen actions
+replayed with opt-in90%/512px templates. Native correct identity43→89, but wrong
+identity5→10 and arrival/departure still0/12. Guarded reference decisions15→30;
+Settings33→36, both zero wrong guarded decisions. Candidate rejected for default
+adoption and blocked from temporal learner admission.101Python/134Swift tests pass.
+No live operation, training or promotion. [Handoff](../reports/work/CORRESPONDENCE-51/handoff.md).
+
+**Reference Transition50:**24genuine reference actions replayed (12native-confirmed
+moves), correcting49's limited inventory. Guarded control scores15correct/0wrong/
+105abstained of120; all12scorable arrival/departure controls fail pixel correspondence.
+41combined action pairs are now in the learner inventory; no complete-scene benchmark.
+All9Settings raw endpoints pinned. User authorized generation/training; fresh8case TTR
+campaign failed on its first case81.069s/cleanupTimedOut,0accepted,7unattempted.
+Supported reconcile retained cleanup; Fixture postflight/device timed out. No restart,
+retry or real candidate.106Python/134Swift checks pass. [Handoff](../reports/work/REFERENCE-TRANSITION-50/handoff.md).
+
+**Focus Transition49 (historical two-source scope, expanded above):** paired-measurement learner and
+prediction adapter integrated;78Python/134Swift tests pass. Retained17action pairs
+provide76scorable controls:55correct,0wrong,21abstained with the guarded baseline.
+Full-scene scoring has zero eligible actions. Two actual switches come from one
+exposed Settings journey; accepted TTR pairs contain no moves. Strict preflight blocks
+candidate training pending exact admission and separated move-bearing groups.
+No real transition candidate was trained or promoted. [Handoff](../reports/work/FOCUS-TRANSITION-49/handoff.md).
 
 **Family48:** current TTR planner accepts18native-button cases/66target intentions,
 including three widths, two resting fills, two backgrounds and all control targets;

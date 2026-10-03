@@ -68,6 +68,91 @@ def validate_case(root,evidence,case):
     return d,b,a
 
 
+def score_pair(before, after,*,tracker='template'):
+    """Predict from before proposals only; native after truth is scoring-only."""
+    import focus_recorded_transition_eval as evaluate
+    import focus_recorded_comparison as comparison
+    import settings_focus_stability as stability
+    proposals=[dict(id=c['id'],bounds=c['bounds']) for c in before['controls']]
+    options={} if tracker=='template' else dict(tracker=tracker)
+    predictions,runtime=evaluate.predict(before['image'],after['image'],proposals,**options)
+    metrics,crop_runtime=stability.crop_metrics(before['image'],after['image'],proposals,predictions)
+    h.require(runtime is None or runtime==crop_runtime,'transition_runtime_changed')
+    matches=[dict(before=c['id'],after=c['id'] if c['id'] in {a['id'] for a in after['controls']} else None,
+                  text=c['id'],reason='native_control_excluded_after') for c in before['controls']]
+    # Persist prediction-only measurements, not the guarded decision or after truth.
+    for p in predictions:p['stability']=dict(metrics=metrics.get(p['id']))
+    scored=comparison.compare(predictions,before['controls'],after['controls'],matches)
+    guarded=copy.deepcopy(predictions)
+    for p in guarded:
+        p['decision']=stability.guard(stability.extend(p,metrics.get(p['id']),settings_context=True),metrics.get(p['id']))['decision']
+    guardrows=comparison.compare(guarded,before['controls'],after['controls'],matches)
+    for row,guard in zip(scored,guardrows):
+        row['arms']['guardedStability']=guard['arms']['combined']
+        for arm in row['arms'].values():
+            if arm['scorable']:arm['scoreReason']='native_identity_correspondence'
+    return scored,runtime or crop_runtime
+
+
+def reference_run(root,output,*,tracker='template'):
+    """Replay delivered reference actions; appearance captures are not actions."""
+    from audit_reference43 import accepted_cases,verify_files
+    import focus_recorded_transition_eval as evaluate
+    import focus_recorded_comparison as comparison
+    import focus_transition_verifier as visual
+    policy=visual.tracker_policy(tracker)
+    root,output=h.local(root),h.fresh(output)
+    start=time.monotonic();file_count=verify_files(root)
+    manifest=h.ref(root/'artifact-manifest.json');entries=accepted_cases(root)
+    h.require(Counter(e['kind'] for e in entries)==dict(appearance=12,scroll_moved=12,scroll_unchanged=12),
+              'reference_condition_membership')
+    pairs=[];excluded=[];runtimes=[];total=0
+    for entry in entries:
+        if entry['kind']=='appearance':
+            excluded.append(dict(id=entry['case_id'],reason='direct_focus_capture_not_action'));continue
+        h.require(time.monotonic()-start<600,'reference_replay_deadline')
+        base=member(root,entry['path'])
+        campaign_path=member(root,f"campaigns/{entry['campaign']}/campaign-manifest.json")
+        campaign=h.read(campaign_path)
+        cases=[c for c in campaign['cases'] if c['case_id']==entry['case_id']]
+        h.require(len(cases)==1,'reference_case_membership');case=cases[0]
+        row=dict(id=entry['case_id'],condition=entry['kind'],status='blocked');pairs.append(row)
+        try:
+            h.require(case['split_group']=='validation' and case['recipe']['recipe_hash']==entry['recipe_hash'],
+                      'reference_case_role_recipe')
+            evidence,b,a=validate_case(root,base/'transition-case.json',case)
+            h.require(evidence.get('cleanup')=='verified','reference_cleanup_unverified')
+            h.require(entry['kind']==evidence['specification']['condition'] and
+                      (b['focus']!=a['focus'])==(entry['kind']=='scroll_moved'),'reference_transition_relation')
+            controls,runtime=score_pair(b,a,tracker=tracker)
+            total+=len(controls);h.require(total<=512,'reference_control_budget')
+            if runtime not in runtimes:runtimes.append(runtime)
+            row.update(status='diagnostic',controls=controls,beforeFocus=b['focus'],afterFocus=a['focus'],
+                family=case['recipe']['appearance']['referencePack']['screen'],
+                sourceAncestry=dict(renderer=evidence['ancestry_exclusion'],screenFamily=case['independence_group']),
+                sourceRole='calibration',completeEndpoints=False,
+                inputs=[b['image'],a['image'],h.ref(base/'transition-case.json'),h.ref(campaign_path)],
+                exclusions=dict(before=b['exclusions'],after=a['exclusions']),
+                observedSwitch=b['focus']!=a['focus'])
+        except (ValueError,KeyError,TypeError,OSError) as error:row['reason']=str(error)
+    h.require(len(runtimes)<=1 and verify_files(root)==file_count and h.ref(root/'artifact-manifest.json')==manifest,
+              'reference_source_or_runtime_changed')
+    report=dict(version='reference-transition-audit-v1',**h.FLAGS,manifest=manifest,pairs=pairs,
+        tracker=tracker,trackerPolicy=policy,
+        excluded=excluded,filesVerified=file_count,elapsedSeconds=time.monotonic()-start,runtime=runtimes,
+        counts=dict(Counter(p['status'] for p in pairs)),
+        summaries={arm:evaluate.summarize([r['arms'][arm] for p in pairs for r in p.get('controls',[])])
+                   for arm in (*comparison.ARMS,'guardedStability')},
+        limitations=['calibration only; no training admission','shared Fixture renderer ancestry',
+                     'partial visible/control inventories; no full-screen navigation qualification',
+                     'guarded Settings rule is cross-domain diagnostic, not qualified reference UI logic'],
+        implementation=[h.ref(h.ROOT/'scripts'/s) for s in ('focus_corrected_transition_audit.py',
+            'focus_recorded_transition_eval.py','focus_recorded_comparison.py','settings_focus_stability.py',
+            'harvest_sidecar_v2.py','fixture_reference.py','focus_transition_verifier.py')])
+    output.mkdir(parents=True);h.write(output/'audit.json',report,sealed=True)
+    print(report['counts']);print(report['summaries']);return report
+
+
 def run(root,output):
     # Validation is also used by the annotation environment, which needs no cv2.
     import focus_recorded_transition_eval as evaluate
@@ -130,4 +215,9 @@ def run(root,output):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',required=True);p.add_argument('--output',required=True)
-    a=p.parse_args();run(a.root,a.output)
+    p.add_argument('--reference-delivery',action='store_true',help='Explicit rich-reference36 replay; no legacy count override')
+    p.add_argument('--tracker',choices=('template','wide-template-v1','feature-consensus-v1'),default='template')
+    a=p.parse_args()
+    h.require(a.reference_delivery or a.tracker=='template','tracker_requires_reference_delivery')
+    if a.reference_delivery:reference_run(a.root,a.output,tracker=a.tracker)
+    else:run(a.root,a.output)

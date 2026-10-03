@@ -81,10 +81,10 @@ def crop_metrics(before,after,controls,predictions):
     return {k:measure(*(crops[i] for i in ids)) for k,ids in pairs.items()},runtime
 
 
-def run(semantics,output):
+def run(semantics,output,*,tracker='template'):
     output=h.fresh(output);output.mkdir(parents=True);start=time.monotonic()
     # Recompute the existing source-bound comparison through its real caller.
-    baseline=comparison.run(semantics,output/'baseline')
+    baseline=comparison.run(semantics,output/'baseline',tracker=tracker)
     doc=h.sealed(h.local(semantics),'focus-recorded-semantics-v1')
     args={k:str(h.checked(h.ROOT,v)) for k,v in doc['inputs'].items() if k!='events'}
     _,truth,_,_=semantic.inputs(**args)
@@ -119,7 +119,7 @@ def run(semantics,output):
     summaries=dict(baseline=baseline['summaries']['combined'],extended=evaluate.summarize(
         [c['arms']['combined'] for a in rows for c in a['controls']]),guarded=evaluate.summarize(
         [c['arms']['combined'] for a in rows for c in a['guardedControls']]))
-    report=dict(version='settings-stability-v1',**h.FLAGS,policy=POLICY,actions=rows,summaries=summaries,
+    report=dict(version='settings-stability-v1',**h.FLAGS,policy=POLICY,actions=rows,summaries=summaries,tracker=tracker,
         changePolicy=CHANGE_POLICY,baseline=h.ref(output/'baseline/comparison.json'),runtime=runtimes,elapsedSeconds=time.monotonic()-start,
         implementation=h.ref(h.ROOT/'scripts/settings_focus_stability.py'))
     h.write(output/'result.json',report,sealed=True)
@@ -164,10 +164,12 @@ def stress(output):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--semantics');p.add_argument('--output',required=True)
     p.add_argument('--stress',action='store_true')
+    p.add_argument('--tracker',choices=('template','wide-template-v1','feature-consensus-v1'),default='template')
     a=p.parse_args()
     if a.stress:
+        if a.tracker!='template':p.error('--tracker is only available for retained replay')
         if a.semantics:p.error('--stress and --semantics are mutually exclusive')
         stress(a.output)
     else:
         if not a.semantics:p.error('--semantics is required for retained replay')
-        run(a.semantics,a.output)
+        run(a.semantics,a.output,tracker=a.tracker)

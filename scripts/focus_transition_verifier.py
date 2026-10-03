@@ -16,6 +16,16 @@ VERSION='focus-transition-diagnostic-v1'
 POLICY=dict(templateFraction=.7,maxBodyWidth=256,searchX=.25,searchYHeights=3,
             searchYViewport=.1,minCorrelation=.55,minPeakGap=.08,minTexture=.01,
             reciprocal=.15,illumination=.04)
+TRACKERS=('template','wide-template-v1','feature-consensus-v1')
+FEATURE_POLICY=dict(maxWidth=1280,maxFeatures=3000,ratio=.7,maxDistance=48,
+                    minMatches=6,minInlierFraction=.7,residual=3.,heightResidual=.03,
+                    minSpanX=16.,minSpanY=6.)
+
+
+def tracker_policy(tracker):
+    h.require(tracker in TRACKERS,'unsupported_tracker')
+    if tracker=='feature-consensus-v1':return dict(FEATURE_POLICY)
+    return dict(POLICY,templateFraction=.9,maxBodyWidth=512) if tracker=='wide-template-v1' else dict(POLICY)
 
 
 def unavailable(reason,**fields):
@@ -52,9 +62,10 @@ def gradient(image,scale):
     return cv2.magnitude(dx,dy)
 
 
-def locate(a,b,bounds,scale):
+def locate(a,b,bounds,scale,policy=None):
+    policy=POLICY if policy is None else policy
     x,y,w,ht=[v*scale for v in bounds];H,W=a.shape
-    tw=max(3,int(w*.7));th=max(3,int(ht*.7))
+    tw=max(3,int(w*policy['templateFraction']));th=max(3,int(ht*policy['templateFraction']))
     left=int(round(x+(w-tw)/2));top=int(round(y+(ht-th)/2))
     if left<0 or top<0 or left+tw>W or top+th>H:return unavailable('template_outside')
     template=a[top:top+th,left:left+tw]
@@ -75,20 +86,22 @@ def locate(a,b,bounds,scale):
                 correlation=best,peakGap=gap,texture=texture)
 
 
-def track(before,after,bounds,*,common=False):
+def track(before,after,bounds,*,common=False,tracker='template'):
+    policy=tracker_policy(tracker)
     paired.box(bounds);x,y,w,ht=bounds;W,H=before.size
     h.require(W*H<=40_000_000,'image_pixel_limit')
     if before.size!=after.size:return unavailable('viewport_changed')
     if x+w>W or y+ht>H:return unavailable('body_outside')
     if np.array_equal(np.asarray(before),np.asarray(after)):
         return dict(status='identical',dx=0.,dy=0.,afterBounds=list(bounds))
-    scale=min(1.,256/w);a=gradient(before,scale);b=gradient(after,scale)
-    forward=locate(a,b,bounds,scale)
+    if tracker=='feature-consensus-v1':return feature_track(before,after,bounds,common=common)
+    scale=min(1.,policy['maxBodyWidth']/w);a=gradient(before,scale);b=gradient(after,scale)
+    forward=locate(a,b,bounds,scale,policy)
     if forward['status']!='matched':return forward
     translated=[x+forward['dx'],y+forward['dy'],w,ht]
     if translated[0]<0 or translated[1]<0 or translated[0]+w>W or translated[1]+ht>H:
         return unavailable('translated_body_outside',forward=forward)
-    backward=locate(b,a,translated,scale)
+    backward=locate(b,a,translated,scale,policy)
     if backward['status']!='matched':return unavailable('reciprocal_unavailable',forward=forward,backward=backward)
     error=math.hypot(forward['dx']+backward['dx'],forward['dy']+backward['dy'])*scale
     if error>max(2,.15*ht*scale):return unavailable('reciprocal_mismatch',forward=forward,backward=backward)
@@ -100,6 +113,64 @@ def track(before,after,bounds,*,common=False):
                             beforeCropBounds=windows[0],afterCropBounds=windows[1],commonSupport=True)
         return unavailable('clipping_footprint_changed',forward=forward)
     return dict(forward,afterBounds=translated,reciprocalError=error)
+
+
+def feature_matches(before,after,bounds):
+    """Return bounded mutual pixel correspondences, also usable for error diagnosis."""
+    policy=FEATURE_POLICY;x,y,w,ht=bounds;W,H=before.size
+    scale=min(1.,policy['maxWidth']/W)
+    images=[np.uint8(np.clip(gradient(im,scale)*64,0,255)) for im in (before,after)]
+    Hs,Ws=images[0].shape
+    masks=[np.zeros((Hs,Ws),dtype=np.uint8) for _ in images]
+    rx=.25*w;ry=max(3*ht,.1*H)
+    for mask,box in zip(masks,([x,y,w,ht],[x-rx,y-ry,w+2*rx,ht+2*ry])):
+        l,t,bw,bh=box
+        left,top=max(0,int(l*scale)),max(0,int(t*scale))
+        right,bottom=min(Ws,int((l+bw)*scale)),min(Hs,int((t+bh)*scale))
+        mask[top:bottom,left:right]=255
+    orb=cv2.ORB_create(nfeatures=policy['maxFeatures'],edgeThreshold=8,patchSize=31)
+    (ka,da),(kb,db)=[orb.detectAndCompute(im,mask) for im,mask in zip(images,masks)]
+    if da is None or db is None or min(len(da),len(db))<policy['minMatches']:
+        return None,unavailable('insufficient_features')
+    matcher=cv2.BFMatcher(cv2.NORM_HAMMING)
+    def distinct(a,b):
+        return {pair[0].queryIdx:pair[0].trainIdx for pair in matcher.knnMatch(a,b,k=2)
+                if len(pair)==2 and pair[0].distance<=policy['maxDistance'] and
+                pair[0].distance<policy['ratio']*pair[1].distance}
+    forward,backward=distinct(da,db),distinct(db,da)
+    matches=sorted((i,j) for i,j in forward.items() if backward.get(j)==i)
+    if len(matches)<policy['minMatches']:return None,unavailable('insufficient_distinct_matches',matches=len(matches))
+    a=np.array([ka[i].pt for i,j in matches]);b=np.array([kb[j].pt for i,j in matches])
+    return (a,b,scale),None
+
+
+def feature_track(before,after,bounds,*,common=False):
+    """Mutual distinct pixel descriptors; no labels, templates or after boxes."""
+    policy=FEATURE_POLICY;x,y,w,ht=bounds;W,H=before.size
+    matches,error=feature_matches(before,after,bounds)
+    if error:return error
+    a,b,scale=matches
+    delta=b-a;center=np.median(delta,axis=0)
+    tolerance=max(policy['residual'],policy['heightResidual']*ht*scale)
+    inliers=np.linalg.norm(delta-center,axis=1)<=tolerance
+    count=int(inliers.sum());fraction=count/len(a)
+    quality=dict(matches=len(a),inliers=count,inlierFraction=fraction)
+    if count<policy['minMatches'] or fraction<policy['minInlierFraction']:
+        return unavailable('inconsistent_feature_motion',**quality)
+    span=np.ptp(a[inliers],axis=0)
+    if span[0]<policy['minSpanX'] or span[1]<policy['minSpanY']:
+        return unavailable('insufficient_feature_spread',span=span.tolist(),**quality)
+    dx,dy=(np.median(delta[inliers],axis=0)/scale).tolist()
+    translated=[x+dx,y+dy,w,ht]
+    if translated[0]<0 or translated[1]<0 or translated[0]+w>W or translated[1]+ht>H:
+        return unavailable('translated_body_outside',**quality)
+    result=dict(status='matched',dx=dx,dy=dy,afterBounds=translated,featureQuality=quality,
+                trackingMethod='feature-consensus-v1')
+    if max(abs(p-q) for p,q in zip(footprint(bounds,before.size),footprint(translated,after.size)))>1:
+        windows=common_support(bounds,translated,before.size) if common else None
+        if windows is None:return unavailable('clipping_footprint_changed',**quality)
+        result.update(beforeCropBounds=windows[0],afterCropBounds=windows[1],commonSupport=True)
+    return result
 
 
 def compare_crops(before,after,clipped=False):

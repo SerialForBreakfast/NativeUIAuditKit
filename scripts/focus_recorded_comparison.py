@@ -74,7 +74,7 @@ def markdown(result):
     return '\n'.join(lines)+'\n'
 
 
-def run(semantics_path,output):
+def run(semantics_path,output,*,tracker='template'):
     output=h.fresh(output);semantics_path=h.local(semantics_path)
     doc=h.sealed(semantics_path,'focus-recorded-semantics-v1')
     h.require(doc['policy']==semantic.POLICY,'changed_semantic_policy')
@@ -97,14 +97,14 @@ def run(semantics_path,output):
         before,after=[truth[action['endpoints'][k]['sha256']] for k in ('before','after')]
         h.require(all(h.control_label(c) in ('listRow','focus:otherFocusable') for c in before['controls']+after['controls']),
                   'unsupported_settings_row_role')
-        predictions,identity=evaluate.predict(before['image'],after['image'],[dict(id=c['id'],bounds=c['bounds']) for c in before['controls']])
+        predictions,identity=evaluate.predict(before['image'],after['image'],[dict(id=c['id'],bounds=c['bounds']) for c in before['controls']],tracker=tracker)
         if identity and identity not in runtime:runtime.append(identity)
         row.update(status='retrospective-diagnostic',completeEndpoints=before['complete'] and after['complete'],
             controls=compare(predictions,before['controls'],after['controls'],action['matches']))
         row['summaries']={arm:evaluate.summarize([r['arms'][arm] for r in row['controls']]) for arm in ARMS}
     h.require(len(runtime)<=1,'runtime_changed')
     summary={arm:evaluate.summarize([r['arms'][arm] for a in rows for r in a.get('controls',[])]) for arm in ARMS}
-    result=dict(version='focus-recorded-comparison-v1',**h.FLAGS,semantics=h.ref(semantics_path),actions=rows,
+    result=dict(version='focus-recorded-comparison-v1',**h.FLAGS,semantics=h.ref(semantics_path),actions=rows,tracker=tracker,
         summaries=summary,runtime=runtime,qualifiedTransitionAccuracy=None,
         implementation=[h.ref(h.ROOT/'scripts'/s) for s in ('focus_recorded_comparison.py','focus_recorded_transition_eval.py',
             'focus_transition_verifier.py','focus_paired_growth.py','focus_recorded_readiness.py')])

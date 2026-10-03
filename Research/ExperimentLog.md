@@ -1,5 +1,54 @@
 # NativeUIAuditKit — Experiment Log
 
+## Direct Transition53 — October3: implementation and real preflight, no real fit
+
+Reconstructed29paired-image records:24native(12changed/12unchanged),5Settings
+(2changed/3unchanged). No cross-group decoded-pixel overlap. New scratch CNN predicts
+two boxes and semantic change without tracking or annotation inputs. Real trainer
+preflight exits2for absent exact data-role admission/derived execution approval;
+configuration valid. No experiment ID or real checkpoint allocated.30epoch generated
+software-fixture optimization verifies numerical/serialization/CLI behavior only.
+117Python/134Swift checks pass. [Evidence](../reports/work/DIRECT-TRANSITION-53/handoff.md).
+
+## Correspondence52 — October3: pixel-feature diagnostic, no fit
+
+Frozen ORB mutual-ratio/median-consensus policy;24reference actions34.960s and
+5Settings actions23.145s. Native identities86correct/0wrong versus43/5;0/12positive
+controls recovered. Settings guarded37correct/0wrong versus33/0, but both departure
+controls now abstain. Not adopted.12positive motion diagnostics show6mixed-motion
+boxes; no input label leakage, no new data roles, capture or candidate fit.
+[Evidence](../reports/work/CORRESPONDENCE-52/handoff.md).
+
+## Correspondence51 — October3: frozen tracker diagnostic, no training
+
+One90%/512px wide-template comparison versus existing70%/256px, unchanged thresholds.
+24reference actions43.124s versus prior35.884s; Settings24.364s versus18.706s.
+Native correct identities43→89, wrong5→10; scorable arrival/departure0/12in both.
+Guarded reference correct15→30; Settings33→36, zero wrong guarded decisions.
+Do not mistake scoring-time identity rejection for deployment safety. Default remains
+unchanged; experimental measurements rejected by temporal learner. No fit, experiment
+ID allocation, capture or model promotion. [Evidence](../reports/work/CORRESPONDENCE-51/handoff.md).
+
+## Reference Transition50 — October3: real replay/capture attempt, no fit
+
+User explicitly authorized needed TTR generation/training. Replayed24retained native
+transitions in35.884s, not a model-training run: guarded15correct/0wrong/105abstained
+of120scorable controls. Zero usable native arrival/departure correspondence for49head.
+Fresh8case campaign stopped at first case81.069s with cleanupTimedOut,0accepted,
+7unattempted; supported reconcile did not clear ownership. No experiment ID allocated
+and no candidate trained. This is not a request to renew in-scope training permission.
+[Evidence and exact resume conditions](../reports/work/REFERENCE-TRANSITION-50/handoff.md).
+
+## Focus Transition49 — October 3, 2026: preflight only, no training run
+
+Actual trainer preflight returns exit2: missing exact-member data-role admission,
+train/development transition-class coverage and execution record. No experiment ID
+allocated, no candidate fitted, no weights exported. The user assignment covers one
+conditional comparison, not relabeling calibration evidence as training data.
+Software tests fit generated numerical fixtures only. Retained guarded baseline:
+55correct/0wrong/21abstained on76controls; zero eligible full-scene actions.
+Protocol and source hashes: [handoff](../reports/work/FOCUS-TRANSITION-49/handoff.md).
+
 ## FSF003 / FSF004 — assigned augmentation comparison, October2,2026
 
 FOCUS-AUGMENTATION-47 user approved after46. Same original yolo11n initializer,

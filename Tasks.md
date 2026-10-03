@@ -1,5 +1,126 @@
 # NativeUIAuditKit — Tasks
 
+## Review — DIRECT-TRANSITION-53 / Codex (software complete; data-role decision needed)
+
+- [x] Rebuild source-bound paired-image labels without tracker admission dependency.
+- [x] Integrate direct box/change CNN, strict preflight and prediction through existing trainer.
+- [x] Verify real CLIs, data/model tests and offline Swift checks.
+- [ ] Fit one candidate after exact real data-role admission and bound execution record.
+[Contract](Research/Plans/FocusTransitionLearning49.md#direct-paired-image53).
+Preserve calibration roles; live cleanup50 remains separate. No production change.
+29pairs qualify structurally without tracking:24Fixture(12changed/12unchanged),
+5Settings(2changed/3unchanged), zero decoded-pixel overlap across those two groups.
+Unapproved exact proposal: Fixture24train, exposed Settings5development, no final
+evaluation claim. Existing calibration role is not automatically overwritten.
+117Python/134Swift tests pass. [Handoff](reports/work/DIRECT-TRANSITION-53/handoff.md).
+Next substantial tranche after that role decision: one30epoch CPU direct-image run,
+fixed-last paired-box/change evaluation on the5Settings pairs, measured latency,
+comparison with retained measurement decisions and failure diagnosis. No TTR dependency
+for that experiment; future deconfounded capture remains complementary.
+
+## Review — CORRESPONDENCE-52 / Codex (comparison and motion diagnosis complete)
+
+- [x] Integrate bounded opt-in pixel-feature consensus without after-truth inputs.
+- [x] Replay24native/5Settings actions, compare frozen identity and classification,
+      and audit remaining positive-feature readiness.
+- [x] Adversarial and integrated checks; preserve default/data roles; evidence handoff.
+[Contract](Research/Plans/FocusTransitionLearning49.md#feature-correspondence52).
+No capture, new model fit or promotion until their actual prerequisites pass.
+Native correct identity43→86 and wrong5→0, but positive identity remains0/12;
+Settings loses2departure correspondences despite aggregate improvement. Not adopted.
+Six of12native positives contain both stationary and expected scrolling feature
+matches. This is mixed-motion evidence, not proof all failures share one cause.
+108Python/134Swift tests pass. [Handoff](reports/work/CORRESPONDENCE-52/handoff.md).
+
+Next substantial tranche: define a direct paired-image transition baseline that does
+not require successful tracking to admit labeled examples. Pin exact development
+membership and compare with the measurement-head baseline; keep after-boxes as labels,
+never input features. Include no-scroll focus switches and scroll-without-switch
+coverage in the next producer proposal, retaining difficult textured cases. A new
+encoding/backbone and exact training admission must be explicitly in its approved
+experiment scope before launch. Existing50cleanup still gates live target reuse.
+
+## Review — CORRESPONDENCE-51 / Codex (comparison complete; candidate rejected)
+
+- [x] Integrate one opt-in wider/higher-resolution pixel-template tracker, preserving default.
+- [x] Replay24 genuine reference transitions; compare identity errors, abstentions,
+      positive-state availability and runtime against frozen50 evidence.
+- [x] Adversarial regressions, integrated offline checks and evidence-backed decision.
+No live operations while50 cleanup is unresolved; no calibration training or promotion.
+[Contract](Research/Plans/FocusTransitionLearning49.md#correspondence51--retained-pixel-comparison).
+Also replayed5Settings actions. Native correct identity43→89 but wrong5→10 and
+positive correspondence0/12; default unchanged, no training.101Python/134Swift checks
+pass. [Handoff](reports/work/CORRESPONDENCE-51/handoff.md).
+
+Next substantial tranche: establish pixel-only identity correspondence for growing/
+scrolling native controls using one bounded feature-consensus hypothesis, with repeated
+texture, no-op and Settings regression checks. Keep before/after truth scoring-only,
+preserve fixed-size production crops, and require zero added wrong-control matches
+before adoption. In parallel, resume frozen50 acquisition only after diagnosed TTR
+cleanup recovery; then admit exact new membership and fit the authorized temporal head
+if positive features and separated groups pass. No new capture retry or calibration
+relabeling is implicit.
+
+## Review — REFERENCE-TRANSITION-50 / Codex architect (capture/training blocked)
+
+Continue49 with the previously received reference36 corpus, not new device capture.
+- [x] Revalidate and replay all24 genuine reference transitions with the existing
+      pixel tracker/cropper; separate12appearance captures from actual actions.
+- [x] Wire pinned results into the temporal learner; retain native identity labels,
+      exclusions, absolute metrics and whole-renderer grouping.
+- [x] Complete independent split-feasibility/coverage analysis across all retained
+      sources; correct49's incomplete inventory and stale producer blocker.
+- [x] Focused/integrated tests, evidence handoff and exact TTR status reconciliation.
+- [ ] Complete newly authorized8case TTR acquisition and one temporal candidate:
+      first case failed81.069s/cleanupTimedOut,7unattempted,0accepted. One supported
+      reconciliation retained cleanup; no retry/restart. Request transition50-cleanup.
+Calibration roles remain unchanged. Training requires exact admission and eligible
+separated groups. User subsequently authorized generation/training; exact scope is
+in the canonical amendment. No production change or external-repository edit.
+[Canonical extension](Research/Plans/FocusTransitionLearning49.md#reference-transition50-continuation).
+
+24reference pairs include12observed moves;120scorable controls yield15correct unchanged,
+105abstentions,0wrong. All12scorable arrival/departure controls fail pixel identity;
+catalog move endpoints are not both eligible common controls. Native data is present,
+but the measurement head cannot train from unsupported correspondence. All9Settings
+endpoint pixels recovered/hash-verified.106Python/134Swift tests pass.
+[Handoff](reports/work/REFERENCE-TRANSITION-50/handoff.md).
+
+Next substantial tranche: repair/compare pixel correspondence on these retained
+native pairs (repeated row texture, scrolling, growth and clipping) without leaking
+after-truth boxes; retain original guarded baseline. In parallel, TTR resolves this
+owned cleanup and yields safe capture readiness. Resume the frozen capture only
+after diagnosed remedy/verified cleanup; admit exact new training membership and
+fit one30epoch temporal head when all three states have usable features. Existing
+user generation/training approval needs no routine renewal inside this scope.
+
+## Review — FOCUS-TRANSITION-49 / Codex architect (candidate data blocked)
+
+User assigned the Focus Transition Model tranche, separate from single-frame training.
+[Contract](Research/Plans/FocusTransitionLearning49.md).
+- [x] Audit retained genuine pairs, roles, groups and missing actual-switch coverage.
+- [x] Freeze guarded per-control and complete-action baseline without repeated inference.
+- [x] Integrate a learnable two-frame measurement head, strict admission/preflight and real CLI tests.
+- [ ] Run one candidate only with admitted train/development membership; otherwise
+      record exact admission/coverage blockers, not a calibration-trained model.
+- [x] Integrated offline checks, concise handoff and actionable producer requirements.
+
+78 Python tests and 134 Swift tests pass. 17 usable action pairs, four rejected;
+55/76 scorable control comparisons correct,21 abstained,zero wrong. No complete-screen
+action benchmark; two actual switches belong to one exposed Settings journey.
+Existing evidence remains diagnostic/calibration, not newly admitted training data.
+[Handoff](reports/work/FOCUS-TRANSITION-49/handoff.md).
+Scope correction: those counts cover only Settings23/native34;50above also replays
+the already-received repaired reference36 transitions. Do not repeat a blanket
+claim that no native focus movements exist or request the already-qualified repair.
+
+Next substantial tranche: retain existing readiness request34; obtain independently
+grouped genuine switches plus no-op/content-change/scroll negatives, validate full
+endpoint/control accounting, admit exact train/development membership, then execute
+the fixed30-epoch temporal-head comparison. No new backbone, capture, export or
+production change is implicit. Admission and any capture scope need maintainer approval;
+TTR delivery is asynchronous and does not block the separate single-frame48 lane.
+
 ## Review — FAMILY-TRANSFER-48 / Codex (producer integration pending)
 
 Continue47: qualify current TTR source/runtime/export boundary and executable native

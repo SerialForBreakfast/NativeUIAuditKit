@@ -20,7 +20,7 @@ def iou(a,b):
     return area/(aw*ah+bw*bh-area)
 
 
-def predict(before_ref,after_ref,controls):
+def predict(before_ref,after_ref,controls,*,tracker='template'):
     """No state, after geometry, class, or after identity enters the predictor."""
     h.require(0<len(controls)<=POLICY['maxControls'],'control_limit')
     h.require(all(set(c)=={'id','bounds'} for c in controls),'prediction_truth_fields')
@@ -33,7 +33,7 @@ def predict(before_ref,after_ref,controls):
             images.append(im.convert('RGB'))
     rows=[];items=[]
     for n,c in enumerate(controls):
-        t=visual.track(*images,c['bounds'],common=True)
+        t=visual.track(*images,c['bounds'],common=True,tracker=tracker)
         row=dict(id=c['id'],tracking=t,decision='unavailable');rows.append(row)
         if t['status']=='identical':row['decision']='unchanged'
         if t['status']!='matched':continue

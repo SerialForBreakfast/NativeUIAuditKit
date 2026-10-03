@@ -170,6 +170,12 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get('version') == 'focus-direct-transition-v1':
+        from focus_direct_transition import load_protocol as direct_protocol
+        return direct_protocol(path, arm, run_name, approval_path)
+    if doc.get('version') == 'focus-transition-learning-v1':
+        from focus_transition_learning import load_protocol as transition_protocol
+        return transition_protocol(path, arm, run_name, approval_path)
     if doc.get('version')=='native-focus-spike-model-v1':
         from native_focus_spike_model import load_protocol as native26_protocol
         return native26_protocol(path,arm,run_name,approval_path)

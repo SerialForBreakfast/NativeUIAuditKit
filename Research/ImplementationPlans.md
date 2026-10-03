@@ -1,5 +1,24 @@
 # Full backlog implementation packet catalog
 
+[DIRECT-TRANSITION-53](Plans/FocusTransitionLearning49.md#direct-paired-image53):
+direct six-channel box/change baseline,29source-bound pairs, exact role proposal;
+implementation ready, real fit awaits admission.
+
+[CORRESPONDENCE-52](Plans/FocusTransitionLearning49.md#feature-correspondence52):
+feature-consensus replay, mixed-motion diagnosis and direct paired-image next decision.
+
+[CORRESPONDENCE-51](Plans/FocusTransitionLearning49.md#correspondence51--retained-pixel-comparison):
+completed controlled wide-template replay and transfer check; default unchanged,
+native positive correspondence still blocks the measurement learner.
+
+[REFERENCE-TRANSITION-50](Plans/FocusTransitionLearning49.md#reference-transition50-continuation):
+actual retained reference replay, whole-group feasibility and authorized8case acquisition;
+capture cleanup failure and consumer correspondence—not missing authority—block training.
+
+[FOCUS-TRANSITION-49](Plans/FocusTransitionLearning49.md): retained action-level audit,
+paired-measurement learning/prediction adapter and admission-gated candidate. Separate
+from single-frame FocusRing; current training blockers and ownership remain in Tasks.md.
+
 [ACCESSIBILITY-TRACKING-30](Plans/AccessibilityTracking30.md): exact producer failure
 diagnosis, retained alignment comparison and existing Home-reference preparation.
 [Integrated handoff](../reports/work/ACCESSIBILITY-TRACKING-30/handoff.md).

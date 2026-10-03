@@ -1,5 +1,31 @@
 # NativeUIAuditKit — Best Practices
 
+## Separate missing data from unusable correspondence — October3, transition50
+
+Wrong: a two-report inventory concluded native movement evidence was missing while
+the accepted reference36 corpus already contained24transitions/12actual moves.
+Correct: reconcile accepted corpus inventories before requesting new capture. Then
+measure labels, corresponding visible controls and usable pixel features separately.
+Here12scorable arrival/departure controls all failed pixel identity; collecting more
+unchanged examples or fitting the same head cannot resolve that tracking limitation.
+Retain native labels for scoring, never inject after-state geometry into a predictor
+while claiming it inferred the transition. Source: REFERENCE-TRANSITION-50 replay.
+
+## Score focus transitions at action level, not only per control — October 3
+
+Wrong: interpreting55correct/76control comparisons and no wrong predictions as a
+qualified navigation model. Most retained controls were unchanged;21abstentions and
+incomplete endpoints leave zero eligible full-screen action scores.
+
+Correct: report correct departure AND arrival identities together, unchanged actions,
+abstentions and full candidate coverage separately. Keep adjacent actions/shared
+endpoints/journey ancestry together; two moves from one exposed journey cannot provide
+independent train/development support. File hashes check bytes; decoded-pixel hashes
+also guard duplicate pixels across partitions. Missing evidence blocks admission.
+
+Why: plentiful unchanged controls can hide complete failure to recognize actual focus
+movement. Evidence: FOCUS-TRANSITION-49 retained Settings23/native34 audit.
+
 ## Page-dot supervision must measure the dots before layout expansion — October2
 
 Wrong: MediaCardGrid and ProgressActivity applied `.frame(maxWidth: .infinity)`
@@ -3176,3 +3202,36 @@ same effective preprocessing when isolating augmentation changes.
 **Why:** Augmentation47 found historical `rect=true` arguments but an actual square
 `rect=False` read-through dataset. Its first one-epoch run processed250batches but
 made31optimizer updates because of accumulation. These are different measurements.
+
+### Audit correspondence before trusting guarded transition accuracy (2026-10-03)
+
+**Wrong:** Treat zero wrong guarded decisions as proof that a pixel tracker is safe.
+Scoring can discard matches using known after-state identity unavailable at runtime.
+**Correct:** Report correct, wrong, abstained and unscorable pixel correspondences
+separately from classification; report arrival/departure support explicitly. Keep
+experimental tracker features out of a learner whose inference uses another tracker.
+**Why:** Correspondence51 doubled correct unchanged decisions15→30, but also doubled
+wrong native identity matches5→10 and still recovered none of12positive transitions.
+The wider template was therefore not adopted despite zero wrong guarded decisions.
+
+### Preserve layered motion and report transition-class regressions (2026-10-03)
+
+**Wrong:** Assume every feature inside a UI control moves with that control, or
+accept an aggregate accuracy gain when departure/arrival coverage disappears.
+**Correct:** Separate stationary/background and foreground motion diagnostics from
+runtime identity decisions; report each transition class. Keep difficult layered
+examples rather than silently simplifying data to accommodate the tracker.
+**Why:** Correspondence52 finds6/12native positive boxes with both stationary and
+scrolling feature evidence. Zero wrong native matches still recovers0positive
+controls; improved Settings aggregate scores hide losing both departures. Consider
+paired-image learning instead of requiring successful tracking for every label.
+### Do not make label admission depend on a failing baseline (2026-10-03)
+
+**Wrong:** Treat failed pixel correspondence as proof that genuine before/after labels
+are unavailable, or feed native after boxes to inference to work around that failure.
+**Correct:** Reconstruct source-bound labels independently, keeping geometry/identity
+as training targets only; a direct paired-image model may consume those pixels without
+tracking. Data-role permission, source grouping and final evaluation remain separate.
+**Why:** Direct53recovers29valid known-focus pairs, including14changes, while native
+positive tracking remained0/12. This enables a development experiment without new
+capture, but does not itself authorize using calibration data for training.

@@ -1,5 +1,16 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+Direct paired-image53 is an experimental six-channel before/after CNN with two
+focused-box targets and semantic change output. Full-frame preprocessing is versioned
+separately; production FocusRing crops remain unchanged. Native geometry and IDs are
+targets only. Calibration data is not implicitly admitted. No public API/model change.
+
+2026-10-03: [Focus Transition learning49](Plans/FocusTransitionLearning49.md)
+adds an offline learned head over ordered two-frame measurements and strict action-
+level comparison. Distinct from single-frame FocusRing: no after-state truth enters
+features; existing pixel tracking and production cropping remain authoritative.
+No public API/schema/shipped-model change or automatic calibration-data admission.
+
 2026-10-02 full-screen runner v2 (tranche40): an experimental consumer contract,
 not a sidecar/public API change. `storage: read-through` accepts project images or
 verified native26USB originals; all output stays project-local. `evaluationPolicy:

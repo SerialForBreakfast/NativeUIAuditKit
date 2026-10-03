@@ -1,5 +1,28 @@
 # Concurrent delivery roadmap
 
+**Direct53 next execution:** consumer training no longer needs tracker recovery or
+fresh TTR capture for a development proof.29retained pairs have valid known-focus
+labels. Approve exact Fixture24train/Settings5development roles, then execute one
+fixed30epoch direct-image candidate. Five exposed development pairs cannot establish
+generalization; larger deconfounded/independent data remains a separate qualification.
+
+**Correspondence52 supersedes tracker-first priority:** fixed textured artwork and
+scrolling foreground create mixed motion within a box; feature consensus eliminates
+wrong native matches but recovers no positive controls and loses Settings departures.
+Propose direct paired-image learning and deconfounded coverage, retaining difficult
+cases. Do not make additional unchanged-row tracking gains the focus-change milestone.
+
+**Correspondence51 decision:** wider templates improve unchanged-control coverage
+but double native wrong matches and do not recover positive transitions. Keep the
+default. Next consumer tranche: identity-preserving pixel correspondence with explicit
+repeated-row/growth rejection, scored on retained positives and Settings negatives.
+TTR cleanup recovery is independent; do not wait for it to debug retained pixels.
+
+**October 3 temporal lane:** [Focus Transition49](Plans/FocusTransitionLearning49.md)
+adds a trainable paired-measurement baseline alongside single-frame family-transfer48.
+Software is verified; candidate training requires separated admitted groups with
+genuine moves. Current diagnostic/calibration pairs are not a training shortcut.
+
 **2026-09-30 superseding dispatch note:** use the current delivery queue at the top
 of [Tasks.md](../Tasks.md) and [five-tranche contract](Plans/LocalFirstDelivery.md).
 The dated roadmap below is historical dependency context, not current run state or
