@@ -1,4 +1,5 @@
 # Xcode
+/reports/work/CONDITIONED-133/artifacts/
 /reports/work/RETAINED-FEEDBACK-132/artifacts/
 /reports/work/NUISANCE-DIAGNOSTICS-131/artifacts/
 /reports/work/FLOW-CONFORMANCE-124/artifacts/
@@ -328,3 +329,8 @@ reports/work/INTAKE-99/received/
 /reports/work/ASYMMETRIC-ROBUSTNESS-128/artifacts/
 /reports/work/NUISANCE-SEPARATION-129/artifacts/
 /reports/work/DUAL-EVIDENCE-130/artifacts/
+/reports/work/RETENTION-134/artifacts/
+/reports/work/SPATIAL-135/artifacts/
+/reports/work/RETAINED-ADAPT-137/artifacts/
+/reports/work/JOINT-REPLAY-138/artifacts/
+/reports/work/MARGIN-REPAIR-139/artifacts/

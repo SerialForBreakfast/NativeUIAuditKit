@@ -3776,6 +3776,29 @@ contrast made all226confidently changed. The algebraic identity safeguard applie
 to identical tensors, not visually different frames with unchanged focus. Synthetic
 shift clipping must not silently become trustworthy negative training labels.
 
+### Diagnose OCR punctuation and native test concurrency separately (2026-10-04, CONDITIONED133)
+
+**Wrong:** Attribute every post-update failure to Vision service corruption, or
+strip arbitrary punctuation to make a native integration test pass.
+**Correct:** Isolate the Vision suite, run explicit `--no-parallel` for the integrated
+check, and inspect full-frame versus ROI text using identical request options. Keep
+literal matching first; narrowly test standalone separator tolerance, including
+forbidden anchors and punctuation-sensitive negatives. Do not change the test oracle.
+**Why:** Serial execution exposed one actual mismatch: ROI OCR inserted apostrophe/
+bullet tokens into a plain-word phrase. Bounded matching fixed the unchanged test;
+142native checks passed. This does not prove the default-concurrency stall repaired.
+
+### Reproduce retained regressions before recapture (2026-10-04, RETAINED132)
+
+**Wrong:** Treat worse peer native-hint agreement as a transfer defect, request
+recapture, or mix screen changes and within-screen focus movement into one label.
+**Correct:** Verify complete retained archives, reconstruct the original encoded
+tensors, compare exact model identities/outputs, then inspect disputed frames.
+Keep unchanged duplicates and unavailable native hints; receipt is not admission.
+**Why:** All22peer outputs reproduced with<1e-9probability difference. Five DTM030
+misses included real navbar/row moves and whole-screen transitions. They are useful
+exposed regressions, not independent accuracy or trustworthy rendered-body labels.
+
 ### Distinguish safer abstention from corrected predictions (2026-10-04, NUISANCE131)
 
 **Wrong:** Count suppressing a false-positive model output as successful no-change
@@ -3788,6 +3811,31 @@ error with no additional original losses, but220–226/226cases became unknown r
 than correct. It did nothing for after-only translation failures. Synthetic exact
 affine equivalence is not evidence that a native animation preserves focus.
 
+### Falsify photometric guards with quantized and localized changes (2026-10-04, RETENTION134)
+
+**Wrong:** Generalize exact floating-point affine equivalence to captured8bit or
+locally changing images, or call original-training retention robust deployment.
+**Correct:** Preserve separate global/quantized/localized controls and report
+abstention separately from true no-change detection. Test trained retention alongside
+unfitted nuisance and retained-peer results; never enlarge tolerances after inspecting
+failures without a separately frozen experiment.
+**Why:** Quantized global lighting left154/226confident false changes even at1/255;
+localized half-frame lighting left226/226. A constrained fit retained207originals
+but left all five peer misses. Exact arithmetic invariants and fit retention do not
+establish semantic robustness. See RETENTION134 handoff.
+
+### Separate proposal support from temporal evidence interpretation (2026-10-04, SPATIAL135)
+
+**Wrong:** Assume a failed transition prediction means proposals missed its changing
+pixels, or deploy an inside-only mask because most difference energy lies there.
+**Correct:** Measure hash-bound proposal support and inside/outside interventions
+separately; retain whole-context controls and known-positive retention. Report whether
+augmentation reused source proposals or reran the proposal generator.
+**Why:** The five retained misses had94–99%of difference energy inside automatic
+proposals, yet inside-only masking repaired none. An equal-capacity local/global
+head improved synthetic global lighting but left peer misses/local-lighting errors.
+This supports keeping both evidence types, not claiming end-to-end focus robustness.
+
 ### Preserve identifiable fits and JSON-stable seals (2026-10-04, NUISANCE129)
 
 **Wrong:** Reset a robust affine slope when trimming leaves constant pixels, or
@@ -3798,3 +3846,47 @@ support. Use string keys before canonical sealing and test serialize/reload hash
 Separately, displacement keys made the first report fail its seal on reload;
 reuse correctly stopped. Preserve failed evidence and rerun affected diagnostics,
 never weaken hash validation to recover results.
+
+### Audit effective roles and negative support before requesting more data (ADMISSION136)
+
+**Observed:** Summaries emphasized226derived identity controls and overlooked31
+nonidentical negatives already in the207original mixed-label cases. Historical
+Settings rows still said development despite the explicit REFLOW117 training overlay.
+**Correct:** Count exact labels, encoded/source equality and effective admission
+overlays separately. Request the missing domain/lineage coverage, not vaguely more
+negatives. Keep screen changes and within-screen focus moves separately reported.
+**Why:** Aggregate pair counts hide useful existing support and can drive redundant
+collection. Pixel-stability=false also does not itself establish incorrect focus:
+preserve the flag, review endpoint identity, and never turn endpoint supervision
+into a settled-background or transition-completion claim.
+
+### Protect previously learned nuisance behavior during adaptation (RETAINED137)
+
+**Observed:** A native-only fit repaired all five exposed peer misses while preserving
+207original cases/226identities, yet global-lighting negatives regressed214→41/226.
+**Correct:** Evaluate prior nuisance behavior alongside old-case retention. Freeze
+joint replay weights and augmentation roles before the next fit; do not equate a
+successful new-domain fit with a safe replacement or use exposed cases as a holdout.
+**Why:** Original retention constraints do not protect behavior outside their input
+membership. More epochs on the same narrow objective do not address that trade-off.
+
+### Preflight optimization constraints for zero-slack dead zones (JOINT138)
+
+**Observed:** A joint fit returned its entire correction to zero when one protected
+example had zero slack under an extra-margin retention rule. Correctness was retained
+but learning stopped; a unit reproducer shows zero gradients in the collapsed region.
+**Correct:** Inspect minimum slack and gradient flow before full fitting. Preserve
+the actual decision gate without unnecessarily freezing near-boundary margins;
+handle exact-boundary cases explicitly. Retain raw optimizer/radius history and
+distinguish constrained-optimizer failure from representation or data insufficiency.
+**Why:** A scalar radial projection can freeze all weights because of one example.
+An unchanged loss and green retention gate do not establish a useful model update.
+
+### Separate corrected gradients from useful model optimization (MARGIN139)
+
+**Observed:** Correctness-boundary slack repaired the zero-gradient issue but the
+radial factor still shrank the final update to.002362; all five native misses remained.
+**Correct:** Preserve raw/effective weights, gradients and constraint history; test
+feasibility before calling the features insufficient or launching more unchanged fits.
+**Why:** Nonzero gradients and safe retention are necessary diagnostics, not evidence
+that the optimizer can efficiently reach a useful feasible solution.

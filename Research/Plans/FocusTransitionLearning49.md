@@ -1,5 +1,198 @@
 # Focus Transition Model — transition learning49
 
+## MARGIN-REPAIR-139
+
+Preserve984constraints and .85/.15 decisions from138. Replace only the artificial
+floor: gap = signed baseline logit − logit(.85); require gap>1e-6; reserve =
+min(.001,gap/2); slack = gap−reserve. This permits a strictly positive decrease
+without crossing the actual gate. Exact/near-boundary baselines fail preflight;
+do not drop or relabel them. Retain radial interior factor.999 and finite guards.
+Test safe adverse updates, mixed signs, constrained/unconstrained directions,
+identity, gradients and materialization; original134reproducer remains historical.
+
+One DTM039 from DTM036, identical138features,875views/21650weighted rows, five equal
+family means,600epochs Adam.01 seed42 CPU2threads fixed-last,≤2GiB. Pin139source,
+guard, prior138protocol and exact bank hashes. Preflight minimumslack, finite loss,
+gradient and first-step movement without persisting a training update. Capture raw
+head weights, gradients and radius per epoch via observational hooks, not a new
+trainer. Final checkpoint records raw head and effective weights. Optimizer-internal
+slots are not exposed by the existing trainer; do not claim they were saved.
+Compare all priorcases/nuisance/native/excluded groups, checkpoint replay, thresholds.
+No automatic fit retry/sweep, new data role, capture, export or promotion. A learning
+failure after corrected nonzero slack needs a new diagnosis, not another unchanged run.
+
+## JOINT-REPLAY-138
+
+One DTM038 feasibility comparison from DTM036, not DTM037. Reuse ADMISSION136's
+9native intervals and existing135contrast-before/after training views; no quantized
+or localized diagnostics admitted. Freeze encoder, proposals, scales and600epochs
+Adam0.01 seed42 CPU2threads. Existing feature trainer with equal five-family means:
+within-screen5, screen-change2, identity2, contrast-before433, contrast-after433.
+Use deterministic repetition to4330rows/family (21650weighted rows,875source views),
+not independent-sample inflation. No images copied/redecoded for repeated rows.
+This avoids changing sealed trainer contracts; temporary feature bank is<100MiB.
+
+Anchor the radial constraint to207originals plus every DTM036 confidently correct
+contrast example, selected using already-admitted labels before training. Record
+counts and indices. This protects prior fitted behavior; quantized/global/localized
+controls remain unfitted stress diagnostics, not independent final evaluation.
+One zero-initialized1152weight correction, fixed-last;≤2GiB outputs. Prelog run,
+source/cache/role/config pins; reject collisions/changed pins before execution.
+
+Acceptance: all original and selected contrast constraints retained, checkpoint
+replay exact, all9native outcomes reported by family, diagnostic losses/abstentions
+preserved. A failed native fit with protected replay is useful evidence of objective/
+constraint interaction, not permission to reduce gates or launch another fit.
+Tests cover exact loss weighting, labels/constraint membership, mismatches and
+identity. Run offline build/tests once at handoff. Update TTR only with consequences;
+current models remain passive. Next selection must respond to this fixed experiment.
+
+## Retained adaptation after ADMISSION-136
+
+Execution137 refinement: keep135source/trainer immutable so sealed caches remain
+verifiable. A thin adapter calls the existing feature trainer with original cache
+and DTM036 scales, applying a zero correction atop its exact loaded effective logits.
+Protect original207via radial constraints, not repeated training loss. Equal family
+means use within-screen5×2, screen-transition2×5, identity2×5 =30weighted rows from
+nine unique pairs. Remove the trainer's old two-group configuration for this fit.
+No synthetic nuisance views enter this new fit; report their regressions afterward.
+Pin all sources and admission before launch and revalidate at execution. This is a
+bounded adaptation feasibility test, not generalization or a replacement model.
+
+Use `reports/work/ADMISSION-136/admission.json` as the exact consumer role overlay,
+not the historical producer `not_granted` field or predictions. Nine exposed pairs
+are eligible for change-only training; two Balance intervals remain diagnostic-only
+with unknown focus. Preserve one conservative Settings ancestry group and exclude
+related variants from final evaluation. No precise-box or VoiceOver admission.
+
+Implement this through the existing spatial135 preparation/training entrypoints:
+validate source/request hashes, exact IDs, role scope, chronology and exclusions;
+pin the admission hash before fitting. Preserve false pixel-stability flags on
+moving-preview frames and identify them separately in reporting. Do not feed native
+focus or reviewer family labels into inference. Cache features once, freeze encoder
+and image-only proposals; use the existing trainer and retention constraints.
+
+Hypothesis: exposed native transition supervision can correct the five retained
+misses without losing existing 207 mixed-label cases/226 derived identities. One
+DTM036-initialized candidate, 600 epochs Adam0.01 seed42 CPU2threads, fixed-last,
+≤2GiB outputs. Equal reviewed-family weighting must be explicit before launch.
+Log the next unused run ID at execution, not now. Standing local training authority
+applies. No automatic sweep, recapture, export or model replacement in this packet.
+
+Compare old membership, nine admitted cases, two unknown diagnostics and frozen
+global/localized nuisance controls. Original-case retention is mandatory, not proof
+of generalization; quantify positive/negative counts separately. Check exact saved
+checkpoint replay, role-overlay tampering, source mismatch, overlap/exclusion and
+unknown-label rejection. Run focused tests and one integrated offline build/test
+after code changes. Report admission, software, integration and model gates
+separately. A failure gives a diagnosis; a fit pass still needs genuinely independent
+native-motion evidence before navigation-authority qualification.
+
+TTR follow-up reuses `nuiak-20261004-action-negative-coverage`: inventory already
+retained native same-focus/nonidentical motion examples across other journeys.
+Do not claim negatives are entirely absent: current originals include31nonidentical
+negative pairs, of which three are exposed Settings. This follow-up does not block
+the admitted development fit and does not authorize new producer capture.
+
+## SPATIAL-135
+
+Audit outcome selects one equal-capacity comparison: hard inside masking loses3old
+successes and repairs zero peer misses; outside loses111originals but recovers two
+peer screen transitions. Preserve both channels separately rather than selecting a
+mask as a deployment rule. DTM035control repeats whole-frame576residual features;
+DTM036uses inside/outside576features each, with unchanged RGB context and frozen
+DTM031baseline logit. Both heads1152weights, same train-only scaling/radial retention
+constraints from134 and existing fit_change_features. Same1299views/roles,600epochs
+Adam0.01 seed42 CPU2threads/fixed-last each. No extra fitting or checkpoint selection.
+Register both runs before execution. Source proposal masks are fixed across these
+photometric interventions: this measures conditional feature use, not robustness of
+the upstream proposal detector. No new body labels needed for change-only fitting.
+Compute features once per view, then reuse for both fits; bound tensors/output2GiB.
+Compare original433, both contrast variants, quantized global/left/center and retained
+11diagnostics; retain explicit misses/false changes/abstentions. No peer-case fitting.
+Save effective weights/scales/source masks and exact checkpoint replay. Neither fit
+is exported or promoted; fail retention/efficacy gates without an automatic next fit.
+
+Diagnose candidate-supported versus background differences on all207original pairs,
+226exact identity controls and11retained peer intervals. Reuse COLLECTION104's
+hash-bound automatic proposal bank (historical Vision+raster proposals; do not
+reinterpret old outputs as freshly qualified Vision execution). Run existing
+human_auto_boxes.detect only for missing unique originals, no OCR/model/label hints.
+Map rectangles to192x128 using exact encoder rounded dimensions/letterbox offsets;
+union both endpoints, retain empty masks explicitly, never inject target boxes.
+
+Score frozen DTM031 baseline/inside/outside via existing diagnose_focus116.score.
+Only the absolute-difference channels are intervened on: RGB context remains whole.
+This is sensitivity analysis, not a deployable cropper or proof of causality. Test
+complete original replay, identity invariance, proposal geometry/empty support,
+immutability and absence of label fields. Report pair/source membership, mask area,
+difference-energy capture, per-group correct/false/uncertain/lost counts and peer
+decisions. Existing113pair boxes are evaluation-only;11conflicting image identities
+remain explicitly geometry-ineligible, Region/peer bodies have no trusted box recall.
+No threshold/box selection from labels; data roles unchanged.
+
+Conditional next model decision: insufficient proposal support or loss of necessary
+context rules out hard masking; retain a context-preserving local/global architecture
+proposal instead. Do not launch a representation fit merely because code is available.
+Finish audit and source-bound reusable proposal cache, behavioral tests and one
+offline serial Swift build/test. Budget2GiB output; no capture, model export, role
+change, external-repository edits or production promotion. New model experiments
+must be specified/logged before launch after the audit, not adapted invisibly.
+
+## RETENTION-134
+
+Assigned continuation October4. Test objective interference before new encoding:
+DTM034 retains DTM033's scaled1152 dual residual features, frozen DTM031 logit,
+1299 unchanged training views, zero initialization,600epochs Adam0.01 seed42 CPU
+2threads fixed-last. Existing fit_change_features remains the trainer. Parameterize
+the correction as a radial projection onto original-training signed-margin
+constraints: floor=min(original signed logit, logit(0.85)+0.05). Only207 original
+training rows constrain the weights; exact identities still have zero correction.
+The largest feasible scale in[0,1] is computed from all constraints, with0.999
+interior factor when limiting. This is a constrained optimization diagnostic, not
+a generalization guarantee. Preserve original probabilities only for identity
+pairs; original nonidentity decisions must remain confident/correct. Save both raw
+and effective weights, train-only scales, limiting constraints and checkpoint replay.
+No post-fit threshold tuning; no retained case influences scaling, loss or constraints.
+Diagnose gradient alignment and active constraints; unchanged frozen caches and
+source pins required. Failure or stalled projection ends this single experiment.
+
+Evaluate all10 prior nuisance conditions and11 retained peer intervals with exact
+encodings. Report original retention before nuisance gains; peer outcomes remain
+exposed diagnostic evidence separated from training and independent qualification.
+Companion frozen guard test: after-only0.8x+0.1, quantized to8bit, and the same
+transform localized to left-half or central-quarter content; padding unchanged.
+Test433 original/identity pairs, both existing tolerances, no fitted guard thresholds.
+Report confident errors versus abstentions, unique membership, source/tensor hashes,
+and any positive suppression. Synthetic transforms do not create native truth.
+
+2GiB new-output ceiling; standing no-wall-time-limit training amendment applies.
+No capture, new roles, export, promotion or external-repository edits. Focused tests
+must cover constraint feasibility/zero initialization/identity/save reload/invalid
+inputs and quantization/padding/localization. Then one offline explicit-serial Swift
+build/test pass. Reconcile exact TTR consumer-v2 receipt against local delivery pins;
+publish only compatibility/results and remaining owner actions, not local history.
+
+## CONDITIONED-133
+
+DTM033tests conditioning only: same DTM0321299training views, same frozen DTM031
+features/logit, zero correction,600epochs Adam0.01 seed42 CPU2threads fixed-last.
+Scale each of1152residual features by training-only population standard deviation,
+floor0.001, no centering (preserve exact identity zero). Persist scale with checkpoint.
+No fitting scale on probe conditions or retained TTR cases. Require207/207originals
+and226/226identities, report all10unchanged nuisance conditions and original DTM032
+comparison. Then score DTM031/033on the11retained exposed intervals with exact
+encoded hashes; native hints and132visual descriptions remain diagnostic, not fit
+labels or independent accuracy. No sweep, admission, export or promotion;2GiB cap.
+Reuse frozen caches, verifying seals/source/model dependencies before execution.
+
+Companion OCR policy: preserve case-insensitive literal substring first. Additional
+fallback only for multiword all-letter anchors: compare whole whitespace tokens
+after removing standalone apostrophe/curly-apostrophe/bullet separators between
+letter words. Do not remove embedded punctuation, numbers, hyphens, signs, or other
+symbols; punctuation-bearing anchors remain literal. Apply identical policy to
+required/optional/forbidden anchors. No fuzzy matching or OCR backend changes.
+
 ## RETAINED-FEEDBACK-132
 
 Assigned retained archive intake: Survey26 (39544029bytes, SHA256

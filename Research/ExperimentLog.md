@@ -3629,3 +3629,154 @@ Gate failed; no export/promotion. Checkpoint102351bytes,SHA256:
 9de87de3a1660554056559553c7ddd1c51d61754d1ef24bb53e412e5dec57209.
 Warm full feature/scoring CPU median1.565ms (10single-pair calls); not cold-start,
 CoreML, device or end-to-end capture latency. Investigate real motion negatives.
+# Runs DTM035 / DTM036 — SPATIAL-135 — 2026-10-04 (registered before launch)
+
+One controlled two-arm comparison justified by completed135frozen audit, no sweep.
+DTM035uses raw/raw duplicated576features; DTM036inside/outside proposal-masked576
+residuals. Both1152weights zero-initialized, frozen DTM031logit/encoder, train-only
+population std floor0.001, original signed-margin constraints from134. Unchanged
+1299views:207 originals+2contrast433views+226identities; no peer/quantized views in fit.
+600epochs Adam0.01 seed42 CPU2threads fixed-last each,2GiB combined output budget,
+standing no-wall-time-limit authority. Existing fit_change_features, no new trainer.
+Capture/roles/labels unchanged; fixed source proposals reused for interventions,
+not a claim of proposal-generator invariance. Original207/226retention before nuisance
+and11peer diagnostic efficacy; no export/promotion/retry. Outputs
+NativeUITrainer/focus_ring_runs/spatial135-dtm035 and spatial135-dtm036.
+Source/cache/checkpoint hashes,PID,timing and full outcomes recorded before/after fits.
+
+Completed both once,PID24106,exit0. Shared preparation31.340s, combined training/
+evaluation1.243s; fits DTM0350.613140s,DTM0360.111589s. Last losses0.864981/0.358782;
+both final radial multipliers1 and original207/207+226identity controls retained.
+Contrast-before original143→171/207,after136→178/207; negative189/190→214/214of226.
+Quantized global originals121→178/207 and negatives190→214/226. Localized-half
+negatives2→0/226; center16/226both. Retained11decisions match DTM030, all five misses
+remain. Reject replacement: useful conditional representation signal, not robustness
+or independent accuracy. No thresholds/roles changed or extra fit launched.
+DTM035SHA256b9e5c78508431190fb8804ff255d6c17b6dc1cc10df413e96bbdcc257e4d085a;
+DTM036SHA2567ad9a144c382499843e00bc48980969220baba2d08128474a858662362b979bf.
+Exact effective-weight/scale reload passes.22Python/142Swift checks pass; no export.
+
+# Run DTM037 — RETAINED-ADAPT-137 — 2026-10-04 (registered before launch)
+
+Following DTM037's documented trade-off, DTM038 is preregistered below as one fixed
+joint replay comparison; no automatic follow-up run is authorized by its outcome.
+
+# Run DTM038 — JOINT-REPLAY-138 — 2026-10-04 (registered before launch)
+
+## Following controlled comparison: DTM039 — MARGIN-REPAIR-139 (prelaunch)
+
+One corrected-slack run, identical DTM038bank/labels/familyweights/config exceptguard.
+DTM036base,984constraints, gap=margin−logit(.85)>1e-6, reserve=min(.001,gap/2),
+slack=gap−reserve. .85/.15decisions unchanged.600epochsAdam.01seed42CPU2threads,
+fixed-last,≤2GiB,standinglocaltraining. Rawhead/gradient/radiustrace preserved.
+Preflight sourcehashes/nonzero slack and firststepgradient; no newadmission/capture.
+Output NativeUITrainer/focus_ring_runs/margin139-dtm039. No automatic rerun orpromotion.
+
+DTM039completed PID31583,fit2.919073s,total5.223576s. Minimumslack.0428413;
+initialgradient19.8431/firststepradius.011929/nextgradient.367076. Old207/226and777
+contrast successes retained; native4/9correct, samefive misses. Loss124.357849→
+124.223465(min119.264946epoch122);fixed-last remains. Radiusneverzero(min.0010378,
+final.00236198);gradientminimum.0386692/final.233128. CheckpointSHA256
+95cbf751aa70e01314c3d4bf4b64e5497b355c8f2b72490241bfe06e9fc69168.
+Rawhead/gradients600snapshots retained;exact checkpoint replay. Guard bug fixed,
+not model efficacy; next constrained linear feasibility rather than repeatedfits.
+
+## DTM038 original registration
+
+Frozen DTM036 feature/scales/base,9ADMISSION136native intervals+866existing contrast
+views. Five equal-family means: nativewithin5,screen2,identity2,contrastbefore433,
+contrastafter433.21650deterministically repeatedfeature rows represent875views,not
+newindependentdata. Zero1152weightcorrection;600epochs Adam0.01seed42CPU2threads,
+fixed-last checkpoint,2GiB outputs,standing no-wall-time override. Existing trainer;
+constraints cover207originals and DTM036confidently correctcontrast views. Quantized
+andlocalizeddiagnostics excluded from fitting/constraints. Output
+NativeUITrainer/focus_ring_runs/joint138-dtm038. Source/config/selection/cache hashes
+recorded before fit; PID/runtime/results afterward. No capture/export/promotion.
+
+## DTM038 result
+
+DTM038 result:PID29537,fit2.710115s,total4.980705s;984constraints (207old+385/392contrast).
+Loss124.357849→min123.382797(epoch41)→baseline(epoch42 onward);finalradius0.
+Original207/226retained,contrast777retained; native4/9correct, five misses unchanged.
+CheckpointSHA2567a92efd861b5f1eb8a39d312f6a87d4d4ec9190d2396fd0ae4483945a5d9b43c.
+No useful correction, not evidence of impossible joint learning. One contrast0row153
+margin1.778442 has zero slack; toy diagnostic reproduces radial collapse and zero
+gradients. Initial gradient19.8431/first radius.006079 were nonzero. Fix correctness-
+margin guard before another run; no automatic retry.29Python/142Swift pass.
+
+## DTM037 registration and result (continued)
+
+One change-only adaptation from frozen DTM036 effective logits/scales and135spatial
+cache. ADMISSION136 hash4c37065854bd7b0ba76cd83aa0203b3536f2b179cc82116852843e20bef29a37:
+9unique intervals,7positive/2identity; Balance2unknown excluded. Equal family means
+via5within-screen×2,2screen-transition×5,2identity×5 repetitions.30weighted rows,
+not30independent examples. Existing fit_change_features,600epochs Adam0.01 seed42
+CPU2threads,fixed-last;1152new zero-initialized correction weights, frozenDTM036
+scale and featureencoder. Original207constraints,226identity invariance, full retained
+and nuisance diagnosis. No new capture/export/promotion;≤2GiB,standing no-wall-limit.
+Output NativeUITrainer/focus_ring_runs/retained137-dtm037. No automatic second fit.
+Exact hashes/PID/runtime/results written by source-bound adapter before/after launch.
+
+Completed PID27941,exit0. Fit0.505792s/full2.849828s;loss206.675598→0.000147279;
+finalradius1. Nine admitted cases all correct (5within-screen,2screen,2identity),
+old207/226gates retained. Quantized global originals178→151/207 andnegatives214→41/226;
+half-frame0/226unchanged;center16→59/226. UnknownBalance2decisions changed, no accuracy
+label assigned. Reject replacement despite fit success. CheckpointSHA256
+8de7602ee5e65aeead3c5916874f0bf819b78def8aed8b548509f7fcc84860bf.
+26Python/142nativechecks pass; exact checkpoint/scales replay. No extra fit/export.
+Diagnosis: representation fits known native cases, but native-only objective trades
+away nuisance tolerance; next bounded joint replay objective, not unchanged epochs.
+
+# Run DTM034 — RETENTION-134 — 2026-10-04 (registered before launch)
+
+See following comparison: DTM035/036 below preserve134inputs/constraints but change
+the paired spatial representation under135's source-bound proposal audit.
+
+One constrained comparison: unchanged DUAL130ready03 1299 training views, DTM031
+baseline, train-only std floor0.001,1152 bias-free weights initialized zero. Radial
+projection preserves207 original signed margins at min(baseline,logit(.85)+.05),
+0.999 interior factor when limited;226 identity residuals stay exactly zero.
+600epochs Adam0.01 seed42 CPU2threads/equal-group-means, fixed-last,2GiB outputs,
+standing no-wall-time-limit override. Existing fit_change_features trainer; no new
+admission or peer-case fitting. Original207/226 gates precede10 nuisance diagnostics
+and11 retained interval comparisons. Separate frozen quantized/localized guard test.
+Output NativeUITrainer/focus_ring_runs/retention134-dtm034; retain failure evidence.
+PID,timings,source/cache/config hashes and outcomes recorded by runner. No export,
+promotion or automatic retry/sweep. Authority: maintainer continuation/standing training.
+
+Completed PID20003, exit0. Fit0.517770s, fit+peer replay2.802488s, full tranche runner
+including independent guard28.038770s. Original108old+5admittedSettings+94Region and
+226identity controls retained; checkpoint materialization/replay exact. Final radius1,
+loss37.838947→0.889857. Contrast negative199/226both endpoints, but contrast original
+141/131of207; robustness fails despite original retention. Retained11decisions exactly
+match DTM030: five previously reviewed misses remain, DTM031's extra4→5miss removed.
+No independent accuracy or promotion. CheckpointSHA256:
+d4c28facf7e7a4c94908102caf11a3e14a871cedf08b5b9e3b13e3a5dfa7ef9a.
+Original/augmentation gradient norms0.002719/15.502608 initially; final cosine-0.508751
+indicates local objective conflict, not proof that representation is incapable.
+Frozen guard companion: quantized global negative false changes226at1e-5,154at1/255
+(72abstentions); left-half226false changes at both tolerances; central quarter
+17correct/97uncertain/112wrong. No transformed labels admitted.16Python/142Swift pass.
+
+# Run DTM033 — CONDITIONED-133 — 2026-10-04 (registered before launch; rejected)
+
+Hypothesis: unequal frozen-feature scales contributed to DTM032's retention loss.
+One controlled fit; same1299training views and labels from sealed DUAL130ready03,
+DTM031frozen baseline, same600epochs Adam0.01 seed42 CPU2threads/equal-group-means,
+1073nonidentity-group views +226identities, zero correction initialization. Divide
+1152residual features by train-only population std floor0.001; no mean subtraction.
+Keep base logit unchanged. Persist scales, fixed-last checkpoint and frozen source
+pins before fit.2GiB outputs, standing no-wall-time-limit approval. No capture/new
+admission/export/promotion. Exposed Survey26/Navbar29 are post-fit diagnostics only.
+Gates207originals/226identities retained; report10nuisance conditions and peer cases.
+PID/timing/results recorded by `scripts/conditioned133.py` in isolated
+`NativeUITrainer/focus_ring_runs/conditioned133-dtm033/`. No automatic retry/sweep.
+
+Result:PID14929,0.429631sfit/2.570809stotal, loss37.838947→0.359956.
+CheckpointSHA256851dfb86e9c5d0eccb03d1431ad634d21aea6928b5e5e733ce52eb369a5209a8.
+Original202/207(failures3,7,19,23,25),226identitiesexact; contrast before/after
+179/191of207 and214/226negatives. Dim originals110/143; bright107/106.
+Reject original-retention gate. Conditioned features improved the fit objective,
+not deployment fitness; feature scale was not a sufficient fix. Retained11cases:
+DTM031adds one miss(4→5); DTM033recovers5→6screen transition but misses4→5and the
+remaining4prior DTM030misses. No independent metric/admission/export/promotion.

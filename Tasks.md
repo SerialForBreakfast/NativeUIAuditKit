@@ -1,12 +1,165 @@
 # NativeUIAuditKit — Tasks
 
-## Active — RETAINED-FEEDBACK-132 / Codex
+## Review — MARGIN-REPAIR-139 / Codex
+
+Corrected guard has positive slack/gradients; DTM039 retains old/contrast cases but
+same five native misses. Finalradius.002362 indicates strong projection, not proof
+of impossible targets. [Handoff](reports/work/MARGIN-REPAIR-139/handoff.md).
+Next constrained-feature feasibility diagnostic before another unchanged fit.
+
+Repair zero-slack guard while preserving .85/.15 decisions; reject unsupported
+exact-boundary inputs before fitting. Add gradient/retention tests and real preflight,
+then one DTM039 matched joint comparison with immutable138membership/weights.
+Retain raw-head/gradient/radius trace, all failure evidence, no model promotion.
+
+## Review — JOINT-REPLAY-138 / Codex
+
+DTM038 protects prior cases but ends with zero correction and five native misses.
+One near-boundary contrast example has zero allowed margin decrease; diagnostic
+test reproduces whole-head radius/gradient collapse.29Python/142native checks pass.
+[Handoff](reports/work/JOINT-REPLAY-138/handoff.md). Next fix the optimization guard
+and preflight its slack/gradient behavior, then one corrected same-membership fit.
+
+One DTM038 joint native/contrast replay comparison from DTM036, using the9admitted
+intervals and866already-eligible contrast views. Preserve old207and prior confident
+contrast successes through constraints; quantify remaining peer/nuisance failures.
+Reuse source-bound caches/trainer; no capture, new role, export or promotion.
+Complete focused/integrated checks and actionable TTR handoff. No automatic sweep.
+
+## Review — RETAINED-ADAPT-137 / Codex
+
+DTM037 fits9/9reviewed intervals, repairs five exposed misses and retains207originals/
+226identities. Global-lighting negatives regress214→41/226; reject replacement.
+26Python/142native checks pass. [Handoff](reports/work/RETAINED-ADAPT-137/handoff.md).
+Next: one preregistered joint native/nuisance replay comparison, not more native-only
+epochs. Fresh independent native-motion evidence remains complementary.
+
+Integrate ADMISSION136 through a source-bound adapter to the existing spatial feature
+cache and trainer; execute one DTM037 retained-native adaptation, protecting207old
+cases/226identities. Equal three-family means over9reviewed intervals, fixed600epochs,
+no extra collection or promotion. Validate tampered roles/inputs, checkpoint replay,
+and all original/nuisance/excluded diagnostics. Reconcile actionable TTR updates.
+Contract: FocusTransitionLearning49 retained-adaptation section and execution detail below.
+
+## Review — ADMISSION-136 / Codex
+
+Nine retained intervals admitted for the next pinned change-only development fit:
+seven changes/two identical controls; two unknown-focus Balance intervals excluded.
+All 11 interval associations and both manifests verified. Existing negatives include
+31 nonidentical cases (three Settings), correcting the earlier coverage assumption.
+Grouped TTR workflow metadata reviewed; serial export remains default. No model run.
+[Handoff](reports/work/ADMISSION-136/handoff.md) and
+[role decision](reports/work/ADMISSION-136/admission.json).
+
+Complete a source-bound review of all 11 retained Survey26/Navbar29 intervals:
+separate screen transitions, within-screen focus changes, identical controls and
+unknown focus; verify action chronology and journey ancestry before any role change.
+Audit the existing 433-example training membership for actual nonidentical negative
+support rather than infer it from aggregate counts. Companion: review TTR's grouped
+workflow and navigation-feedback metadata for actionable consumer compatibility.
+Deliver an explicit change-only admission decision, missing-coverage matrix and a
+bounded next fit specification. No new capture, body-box admission or promotion;
+no fit until the reviewed role record is consumed by a pinned training protocol.
+Next: [retained-adaptation comparison](Research/Plans/FocusTransitionLearning49.md#retained-adaptation-after-admission-136).
+
+## Review — SPATIAL-135 / Codex (local/global signal improved; not qualified)
+
+Complete291frame proposal audit and two matched600epoch fits. Reused187proposal
+frames/generated104without capture. DTM035/036retain207originals/226identities;
+local/global DTM036 improves quantized global negatives190→214/226 versus control,
+but all five peer misses remain and localized negatives fail. No export/promotion.
+22Python/142native checks pass. [Handoff](reports/work/SPATIAL-135/handoff.md).
+
+Audit paired spatial support across207 original/226 identity pairs and11 exposed
+peer intervals. Reuse retained image-only proposals for187frames; generate only
+missing image-only rectangles with the existing bounded raster detector. Freeze
+proposal/source identities; compare DTM031 baseline versus inside/outside-proposal
+difference interventions and report coverage separately from change classification.
+No oracle-box inference, new labels, capture or promotion. Training is conditional
+on the audit supporting a specific useful representation, not automatic extra epochs.
+Contract: [SPATIAL-135](Research/Plans/FocusTransitionLearning49.md#spatial-135).
+
+Frozen audit supports preserving both channels: inside retains204/207but no peer
+misses repaired; outside retains96/207and recovers two peer screen transitions.
+Execute one equal-capacity DTM035raw/raw versus DTM036inside/outside comparison,
+with134retention constraints and unchanged training membership. No hard-mask adoption.
+
+Next substantial tranche: explicit transition-family diagnosis/admission review on
+retained peer originals, then one targeted comparison using only evidence-backed
+new roles with replay protection. Separate screen changes from within-screen identity
+movement; add real same-focus content-motion support, not more identical negatives.
+Evaluate local/global and retained DTM025/030 controls together. Native body geometry
+remains a distinct blocker; no unchanged global-linear fit or broad recapture.
+
+## Review — RETENTION-134 / Codex (retention passed; robustness rejected)
+
+DTM034 retains207/207 originals and226 exact identities, but all five DTM030 peer
+misses remain. Fit0.518s; full experiment/guard28.039s. Quantized global guard leaves
+154/226 confident false changes; localized half-frame leaves226/226. No replacement.
+16Python/142native checks pass. TTR's exact consumer-v2 receipt reconciled; passive
+retained replay adopted, live subscription still unimplemented. [Handoff](reports/work/RETENTION-134/handoff.md).
+
+One DTM034 retention-constrained, scale-conditioned dual-feature comparison on
+unchanged1299 training views. Reuse frozen caches, preserve all207 original decisions
+and226 exact identities, and diagnose objective conflict without admitting retained
+Survey26/Navbar29 cases. Companion: falsify the existing affine-abstention guard
+with quantized global and localized appearance interventions, including original
+positive controls. Reconcile TTR consumer-v2 receipt and publish actionable results.
+No capture, export, promotion, new data roles or Git writes. Contract:
+[RETENTION-134](Research/Plans/FocusTransitionLearning49.md#retention-134).
+
+Next substantial tranche: paired spatial focus evidence, not another global linear
+correction. Audit original and retained cases' local-vs-global support using existing
+image-only proposals, separating same-screen movement, screen navigation and real
+same-focus content changes. Freeze one matched-capacity local/global representation
+comparison only if coverage supports it; preserve original gates and exposed roles.
+Independently deliver FLOW124 conformance vectors once immutable SMB publication is
+resolved; absent peer repair blocks that delivery only. No unchanged recapture/fit.
+
+## Review / candidate rejected — CONDITIONED-133 / Codex
+
+DTM033retains202/207originals,226/226identities; reject. Scaled fit0.430s, full
+execution2.571s. DTM031also misses an additional retained row move; DTM033recovers
+one screen-change only. OCR standalone-separator fix passes unchanged ROI test;
+6Python and142native tests pass with explicit serial execution.
+[Handoff](reports/work/CONDITIONED-133/handoff.md). No model export/promotion.
+
+One fixed DTM033 scale-conditioned dual-feature fit on unchanged1299training views,
+then original/nuisance gates and DTM031/033retained11interval comparison. No retained
+case training, export or promotion. Companion: narrow OCR separator matching repair
+with original integration test unchanged and adversarial required/forbidden tests.
+Finish focused checks plus integrated offline explicit-serial build/test; publish
+only TTR-relevant results. Preserve dirty132handoff/docs and all prior artifacts.
+
+Next substantial tranche: diagnose representation versus objective on the now-pinned
+retained regression set; use a fixed comparison that preserves baseline decisions
+instead of another unconstrained linear correction. Separate same-screen focus,
+screen navigation and no-op support; no retained-case training without explicit
+evidence-backed admission. Add quantized/localized nuisance guard falsification.
+TTR can adopt the source-only OCR repair after maintainer publication; no rebuild
+handoff or new capture requested.
+
+## Review — RETAINED-FEEDBACK-132 / Codex
+
+Both exact archives received, hashes/38files/9PNGs verified, receipts published and
+read back. All22model decisions reproduce on exact encoded tensors (<1e-9 probability
+delta);5DTM030 regressions confirmed visually as row/navbar focus or screen changes.
+No data-role promotion. Explicit serial native checks finish138/139; isolated ROI
+OCR also fails. No tests weakened. [Handoff](reports/work/RETAINED-FEEDBACK-132/handoff.md).
 
 Receive/hash-verify Survey26 and Navbar29 exact published archives; publish matching
 receipts, safely extract and reconcile original images/model feedback and ancestry.
 Replay supported retained inputs; unknown input parity/labels remain explicit gaps,
 not training admission. Companion: isolate post-Xcode27 Vision test wait using
 focused tests before any runtime/backend changes. No recapture or model replacement.
+
+Next priority: retain these11exposed intervals as a named diagnostic regression set;
+compare DTM031 and one preregistered feature-conditioned candidate against DTM025/030,
+preserving original gates and separating screen transitions from same-screen focus.
+Independently define/test OCR punctuation-tolerant matching: full-frame target
+`toggle slider stepperControl` becomes `toggle ' slider • stepperControl` in ROI.
+Literal substring mismatch reproduced; full native gate remains open. Preserve
+punctuation-sensitive anchors and existing required/forbidden semantics.
 
 ## Experiments complete / native checks pending — NUISANCE-DIAGNOSTICS-131 / Codex
 

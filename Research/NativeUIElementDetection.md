@@ -707,6 +707,43 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+MARGIN139 changes only the experimental retention slack policy: allow finite
+margin decreases while staying above the unchanged .85/.15 decision gate, with
+a positive numerical reserve. Reject baselines too near the boundary explicitly.
+Frozen138membership/objective retained for the comparison; no public model/API change.
+
+JOINT138 tests joint replay rather than native-only adaptation: existing contrast
+views plus9admitted native intervals, equal five-family loss through deterministic
+feature-row repetition. Frozen DTM036/scales, original and previously correct
+contrast margins constrained. No new training labels or public inference change;
+quantized/localized stress cases stay outside loss and constraint selection.
+
+RETAINED137 consumes the explicit ADMISSION136 overlay: nine exposed peer intervals
+enter a change-only fit, not final evaluation. A zero-initialized correction on top
+of frozen DTM036 uses the existing spatial cache/scales, radial retention constraints
+and existing feature trainer. Three semantic families receive equal loss weight via
+fixed repetition (30 weighted rows, nine unique intervals); old207examples constrain
+updates and226identity residuals remain zero. No encoder or public API change.
+
+SPATIAL135 adds an explicitly experimental local/global difference representation:
+inside/outside automatic-proposal differences retain whole RGB context. DTM035/036
+compare equal1152weight residual heads with frozen encoder and original-retention
+constraints. Photometric tests condition on fixed source proposals; do not claim
+end-to-end proposal robustness or precise body localization. See canonical135plan.
+
+RETENTION134 tests a training-only radial margin constraint on DTM033's linear
+correction using the existing trainer. Frozen baseline/features and data roles remain
+unchanged. Inference uses materialized effective weights, not training labels or
+constraint examples. This tests retention/objective interference, not production
+eligibility. See FocusTransitionLearning49.md#retention-134.
+
+CONDITIONED133: DTM033is one training-only feature-scale comparison against failed
+DTM032, not a new backbone. Preserve identity zero by dividing without centering;
+retained TTR cases stay exposed diagnostics outside fit. Exact plan in
+FocusTransitionLearning49.md. OCR companion preserves literal matching and adds
+only the documented whole-word standalone separator fallback; no fuzzy or numeric
+normalization, model/backend change, or new public API.
+
 Experimental transition lane, DUAL130 (October4): one local dual-evidence residual
 head compares frozen raw and photometrically normalized features. It does not
 replace deployed preprocessing, detector taxonomy or FocusRing crop behavior.

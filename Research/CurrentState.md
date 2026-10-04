@@ -1,9 +1,75 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 4, 2026, DTM030v1 receipt accepted and shared duplicate cleaned; TTR retained comparisons mixed; consumer-v2 receipt pending; no production promotion
+**As of:** October 4, 2026, consumer-v2 exact receipt reconciled and retained replay reported by TTR; transition robustness remains unqualified; no production promotion
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**MARGIN139 / DTM039:** zero-slack bug repaired with unchanged .85/.15gates and
+explicit near-boundary rejection. Nonzero gradients/radii throughout600epochs;
+all old/contrast protections retained, but five native misses remain. Final radial
+factor.002362 strongly limits updates. No new model delivered. Next test constrained
+feature feasibility before selecting optimizer versus representation changes.
+
+**JOINT138 / DTM038:** joint fit stalls at zero effective correction; same five
+native misses remain. Original207/226and777contrast successes preserved, but this
+is not model improvement. One protected contrast case has zero slack under the
+extra-margin rule; reproducer shows whole-vector radius/gradient collapse. Fix the
+guard before another fit; do not infer representation impossibility.29Python/142native
+checks pass, no model delivery/promotion. TTR status remains unchanged/expired.
+
+**RETAINED137 / DTM037:**9/9newly admitted intervals fit, including five previous
+misses, with207originals/226identities retained. This is exposed fit, not independent
+accuracy. Quantized global negatives regress214→41/226; candidate not delivered or
+promoted. Cached-head fit0.506s/full2.850s;26Python/142native checks pass. Next joint
+native/nuisance objective with explicit replay protection, not another native-only fit.
+
+**ADMISSION136:** nine source-bound retained intervals now eligible for a scoped
+change-only development fit (seven changes/two identical controls); two Balance
+intervals remain unknown. Agent visual review plus native observations, not precise
+body labels or final evaluation. Frames 8/9 retain pixel_stable=false: reviewed
+endpoint focus is not a settled-background claim. Existing433-example membership
+contains160positives/273negatives, including31nonidentical originals and three
+previously admitted Settings negatives. Next pin the role overlay in the training
+entrypoint; no new run or model replacement yet. TTR grouped-workflow metadata
+reviewed: serial export default, attempts distinct from independent examples.
+
+**SPATIAL135:**291unique frames audited with187retained/104new image-only proposals;
+176unambiguous annotated frames retain proposal recall,11geometry conflicts excluded.
+Hard inside mask loses3original successes; outside loses111and repairs only two peer
+screen changes. Two equal1152weight constrained fits retain207/226original gates.
+Local/global DTM036improves quantized global negatives190→214/226versus raw/raw
+DTM035, but fails localized lighting and leaves five peer misses. No replacement.
+22Python/142native checks pass; no capture/admission/export/promotion. Next review
+transition-family labels and matched real no-ops; original fit is not deployment proof.
+
+**RETENTION134:** DTM034 constrained fit preserves207originals/226identities, but
+does not repair the five retained DTM030 misses; do not replace passive models.
+8bit global lighting falsifies numerical affine-guard coverage: quantization control
+still leaves154/226confident false changes; half-frame lighting leaves226/226.
+16Python/142explicit-serial native checks pass. TTR's consumer-v2 receipt matches
+208121bytes/hash and reports exact retained replay with lower preprocessing time;
+live subscription is not implemented. No capture/admission/export/promotion.
+[Handoff](../reports/work/RETENTION-134/handoff.md). Earlier pending-v2 notes are historical.
+
+**CONDITIONED133:** DTM033feature scaling is insufficient:202/207originals retained,
+226identities intact, candidate rejected. DTM031adds a retained row-move miss;
+DTM033recovers only one of the original five peer regressions. No model replacement.
+Narrow OCR separator matching repairs the unchanged ROI integration test without
+relaxing punctuation-bearing anchors.6Python and142native tests pass on Xcode27
+using explicit `--no-parallel`; default concurrency stall is not claimed fixed.
+Training2.571s total/0.430s fit by reusing pinned frozen caches. Retained cases were
+diagnostic only, never in scale estimation or loss.
+
+**RETAINED132:** Survey26/Navbar29 originals received/hash-verified; exact transfer
+receipts and replay feedback published/read back. All22DTM025/030 decisions reproduced
+with exact encoded inputs and<1e-9 probability delta. Five DTM030misses versus DTM025
+correspond to visible row/navbar focus movement or screen transitions. Exposed
+diagnostics only, no training admission/independent accuracy. Updated native checks
+finish with explicit `--no-parallel`:138/139pass, ROI OCR fails independently too.
+Default full suite stalls; isolated FrameSimilarity8/8pass. No backend or test changes.
+ROI failure reproduced: scoped OCR inserts apostrophe/bullet into the full-frame
+anchor phrase, so literal substring matching fails. Matching-policy fix remains open.
 
 **NUISANCE131:** frozen diagnostic abstention preserves207original transitions and
 226exact identities, replacing all confident lighting-negative errors with

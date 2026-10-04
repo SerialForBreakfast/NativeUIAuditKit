@@ -12,8 +12,9 @@ import Foundation
 
 /// Required/optional/forbidden text anchors for one navigation-state assertion.
 ///
-/// Matching is case-insensitive substring containment against each OCR line — "General"
-/// matches a recognized line of "General" or "› General Settings", not just an exact string.
+/// Matching first uses case-insensitive substring containment. Multiword all-letter
+/// anchors also tolerate standalone apostrophe/bullet OCR separators between words.
+/// Punctuation-bearing anchors remain literal; this is not fuzzy matching.
 public struct TextAnchorRequirements: Sendable, Equatable {
     public let required: [String]
     public let optional: [String]
@@ -88,7 +89,7 @@ public struct TextAnchorVerifier: Sendable {
     ) -> TextAnchorVerificationResult {
         func matches(_ anchor: String) -> [TextAnchorMatch] {
             regions
-                .filter { $0.text.localizedCaseInsensitiveContains(anchor) }
+                .filter { Self.matches(anchor, in: $0.text) }
                 .map { TextAnchorMatch(anchor: anchor, region: $0) }
         }
 
@@ -114,6 +115,31 @@ public struct TextAnchorVerifier: Sendable {
             matchedForbidden: matchedForbidden,
             missingRequired: missingRequired
         )
+    }
+
+    /// Narrow OCR fallback; preserve literal matching and original evidence strings.
+    static func matches(_ anchor: String, in text: String) -> Bool {
+        guard !anchor.isEmpty else { return false }
+        if text.localizedCaseInsensitiveContains(anchor) { return true }
+        let words = anchor.split(whereSeparator: \.isWhitespace).map(String.init)
+        func letters(_ word: String) -> Bool {
+            !word.isEmpty && word.allSatisfy(\.isLetter)
+        }
+        guard words.count >= 2, words.allSatisfy(letters) else { return false }
+        let tokens = text.split(whereSeparator: \.isWhitespace).map(String.init)
+        let separators: Set<String> = ["'", "’", "•"]
+        var cleaned: [String] = []
+        for (index, token) in tokens.enumerated() {
+            if separators.contains(token), index > 0, index + 1 < tokens.count,
+               letters(tokens[index - 1]), letters(tokens[index + 1]) { continue }
+            cleaned.append(token)
+        }
+        guard cleaned.count >= words.count else { return false }
+        return (0...(cleaned.count - words.count)).contains { start in
+            zip(words, cleaned[start..<(start + words.count)]).allSatisfy {
+                $0.compare($1, options: .caseInsensitive) == .orderedSame
+            }
+        }
     }
 
     /// `ChangeRegionLocalizer`'s top-left pixel rect -> Vision's bottom-left normalized rect.
