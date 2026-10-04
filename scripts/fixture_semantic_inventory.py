@@ -99,7 +99,10 @@ def validate(doc, scene=None, *, transition_visibility=False):
             require(all(abs(a-b)<=1e-6 for a,b in zip(normalized,[vx/width,vy/height,(vx+vw)/width,(vy+vh)/height])), 'normalized_disagreement')
             if clip is None:
                 require(all(abs(a-b)<=1 for a,b in zip(visible,[x,y,w,h])), 'missing_clipping_state')
-    if reference is not None:
+    from fixture_native_visibility import kind, visible_membership as native_membership
+    if scene is not None and kind(scene) in ('native_table_v2','native_collection_v1'):
+        native_membership(scene,require)
+    elif reference is not None:
         from fixture_reference import visible_membership
         planned = visible_membership(scene, require)
         visible = doc['visible_control_ids']

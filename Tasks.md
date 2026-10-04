@@ -1,6 +1,157 @@
 # NativeUIAuditKit — Tasks
 
-## Blocked after inspection — NATIVE-INTAKE-83 / Codex
+## Next integrated tranche — focus reliability after RESOLUTION-96
+
+Planning updated October 3, 2026 at maintainer request. Execution is not started.
+[Implementation contract](Research/Plans/FocusTransitionLearning49.md#next-integrated-tranche--focus-reliability).
+This ordering supersedes earlier next-action suggestions, not recorded results.
+
+1. [ ] **False-change repair:** prepare source-bound augmentation from the 122
+   training-only identical-frame pairs. Explicit derived-negative data-use approval
+   remains pending. After approval, execute one fixed comparison against DTM018 and
+   rejected DTM023; retain genuine-change/no-op performance and report identical-frame
+   errors separately. Preserve DTM020 boxes and the existing 68/5 original roles.
+2. [ ] **Independent candidate-selection diagnosis:** use existing frozen scores,
+   candidate banks and pixels to explain why the correct Settings box ranks second.
+   Compare size, containment, visual evidence and score margins across all admitted
+   training and exposed development examples. Produce an actionable ranking hypothesis
+   or a specific missing-evidence finding; no Settings-tuned size filter or threshold.
+   This local diagnostic can proceed while augmentation approval or TTR is pending.
+3. [ ] **Evaluation and intake readiness:** refine EVAL-90's proposed independent
+   journey/branch matrix and ordinary-image label requirements; reserve actual roles
+   only after the required source and maintainer decisions. Reconcile the retained
+   layout28 batch when matching version16 producer source is locally available,
+   using existing strict intake and grouped review. Until then preserve its verified
+   bytes and calibration status; do not recapture. Accept completed Settings branches
+   incrementally rather than requiring the entire Mermaid map.
+
+Completion: one combined report comparing change decisions, candidate selection,
+joint correctness and abstentions; focused regressions and offline Swift build/test
+for implemented code; exact remaining source/role/capture prerequisites. Independent
+diagnosis and evaluation planning continue if the training lane cannot launch.
+No independent-final accuracy or model promotion follows from these development results.
+
+## Review — RESOLUTION-96 / Codex; derived-negative role approval pending
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#resolution96--fixed-higher-resolution-change-head-comparison).
+DTM023joint training67/68 with all20no-ops retained, but constructed identical-frame
+probe finds35confident false changes on122training frames (retainedDTM018zero).
+Reject replacement.14focused Python/134Swift pass; geometry and checkpoint parity
+verified. [Handoff](reports/work/RESOLUTION-96/handoff.md).
+Requested explicit approval to use122training-only self-pairs as derived-negative
+augmentation in one comparison; not yet admitted, development frames excluded.
+TTR matched-native-negative request and version16source remain pending. No capture
+or promotion implied by that proposed augmentation.
+
+## Review — SIGNAL-95 / Codex
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#signal95--resolution-evidence-before-another-experiment).
+All73pairs measured at3resolutions;96×64exact saved-input parity. Higher resolution
+strengthens both true changes and no-op differences; no threshold or accuracy claim.
+Independent coverage audit finds all36native training pairs changed, no matched native
+no-ops. Producer coverage request published/read back.12Python/134Swift pass.
+INTAKE94 source remains50ff7fd8; no version16or peer acknowledgment yet.
+[Handoff](reports/work/SIGNAL-95/handoff.md). Next: one controlled192×128context
+comparison plus source-backed layout28intake when producer source is published.
+
+## Review — CONTEXT-93 / INTAKE-94 / Codex
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#context93-and-intake94--paired-context-comparison-and-layout28-intake).
+DTM022paired-context600epoch comparison complete: raw67/68,confident joint63/68
+versus65/68retained reference; reject replacement. Geometry/replay parity pass.
+Layout28archive copied/hash-verified,312case files and56images valid; all28reject
+unsupported canvas_collection_contract. Exact transfer receipt/status read back;
+source publication, peer receipt acknowledgment and sender cleanup pending.
+15focused Python/134Swift pass. [Handoff](reports/work/CONTEXT-93/handoff.md).
+Next: source-backed version16intake and label-role proposal; locally diagnose the
+remaining sparse-change/no-op tradeoff before selecting another model comparison.
+
+## Review — CHANGE-92 / Codex (candidate rejected; preparation improved)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#change92--admitted-native-action-adaptation-and-preparation-reuse).
+DTM021raw change66/68 but confident joint59/68 versus65/68control; reject replacement.
+Exposed Settings remains2/5joint. Exact73record reconstruction preserved; duplicated
+baseline traversal removed, source checks9031→4661, profiled collection36.75s→24.60s
+(single observations, not a controlled throughput guarantee).86focused Python and
+134Swift tests pass. [Handoff](reports/work/CHANGE-92/handoff.md).
+Next: contextual-change representation comparison plus named layout28transfer and
+source-backed intake. New contract is producer-uncommitted; source reference requested
+and read back. No archive receipt or new data-role approval claimed.
+
+## Review — PREP-91 / Codex
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#prep91--single-decode-preparation-and-remaining-change-error-review).
+Single-decode endpoint validation preserves exact 73-record corpus parity; isolated
+146-endpoint work falls from11.88s to7.02–7.21s. Full collection remains dominated
+by repeated provenance traversal; no end-to-end speedup claim.36distinct Python
+tests and134Swift tests pass. Three change misses involve nearly stationary focus
+boxes despite changed element identity. [Handoff](reports/work/PREP-91/handoff.md).
+Next: batch provenance reuse design and a controlled change-head comparison using
+already admitted68/5membership; no new capture required for that comparison.
+
+## Planned; capture prerequisites missing — EVAL-90 / architect
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#eval90--independent-transition-evidence-acquisition-contract).
+Audit complete:68train/122pixels all oneFixture ancestry;5development/9pixels one
+exposed Settings journey;36unused appearance pairs alsoFixture-related. No independent
+final corpus exists in this audited action lane. Separate producer training coverage
+from new native validation/final sources. Owner must confirm app/screen/journey scope,
+label method and reservation roles before capture. Local TTR coordinator absent in89;
+fresh runtime and cleanup qualification required. [Audit](reports/work/EVAL-90/handoff.md).
+
+## Review — NATIVE-89 / Codex (paired diagnostic rejected; runtime blocked)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#native89--fixed-paired-logit-diagnostic-and-runtime-response).
+Fixed paired-score subtraction regresses Settings5/10→3/10endpoints (2/5→1/5pairs)
+and training136/136→52/136endpoints. Do not adopt.12Python/134Swift pass; no training.
+Fresh host inventory finds no desktop TTR coordinator, only TopShelf extension.
+Recovery request updated/read back; peer acknowledgment pending. Maintainer launch
+of intended TTR build is needed for fresh readiness. [Handoff](reports/work/NATIVE-89/handoff.md).
+
+## Review — NATIVE-88 / Codex (frozen failure decomposition)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#native88--frozen-failure-decomposition).
+All5wrong Settings endpoints have the correct candidate at rank2;4select tiny
+regions,1an enclosing region. FrozenDTM018+DTM020 gives65/68joint train and2/5exposed
+Settings, no abstentions. Remaining3change errors are rich-table p2transitions.
+49encodings reused/24new; no training/tuning.19Python/134Swift checks pass.
+[Handoff](reports/work/NATIVE-88/handoff.md). Next: paired-context rank diagnostic,
+separate change error review and independent cross-source coverage reservation.
+
+## Review — NATIVE-87 / Codex (approved admission and DTM020)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#native87--guarded-admission-integration).
+Maintainer approved24pair role change;68train/5development materialized with old44/5
+preserved. DTM020600epoch size-aware comparison complete: old88/88train endpoints
+retained, new48/48; Settings2/10→5/10endpoints and0/5→2/5paired. Zero crop calls;
+22Python/134Swift pass and checkpoint replay matches. Dependency pins include native
+visibility/semantic/body/intake sources. [Handoff](reports/work/NATIVE-87/handoff.md).
+Next: remaining Settings failure diagnosis plus cross-source evaluation reservation;
+no promotion, tiny exposed development set is not a final benchmark.
+
+## Review; role approval executed in87 — NATIVE-86 / Codex
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#native86--action-membership-and-reusable-calibration-proposals).
+Rebuilt24action pairs; zero RGBA pixel overlap with44train/5development. Exact
+unapproved proposal would produce68train/5exposed development, no final evaluation.
+36appearance pairs remain separate. Vision and raster each cover48/48endpoints;
+732candidate encodings prepared once, warm replay0.135s/zero crop calls with exact
+parity.22Python/134Swift pass. No recapture, training or role change.
+[Handoff](reports/work/NATIVE-86/handoff.md). Next: maintainer24pair role decision,
+then materialize admission and one controlled ranker comparison using cached inputs.
+
+## Review — NATIVE-84 + NATIVE-85 / Codex (compatibility and retained coverage)
+
+Source50ff7fd8 is now local. [Contract](Research/Plans/FocusTransitionLearning49.md#native84--source-backed-rich-and-collection-compatibility).
+Strict retained intake passes all 60 new pairs plus 12 legacy regressions. Coverage
+companion accounts for 36 appearance/24 action pairs, 8 stationary/16 scrolling
+actions, 30 light/30 dark, 120 distinct pixels and zero small focused bodies (<100px
+largest extent). All new roles remain calibration. 67 Python and 134 Swift tests
+pass. [Integrated handoff](reports/work/NATIVE-84/handoff.md). SMB result read back;
+peer acknowledgment of this result unverified. Next: exact role proposal/derivative
+bank, then one justified comparison after role approval. Runtime recovery is separate.
+
+## Runtime blocked; intake superseded by NATIVE-84 — NATIVE-INTAKE-83 / Codex
 
 [Contract](Research/Plans/FocusTransitionLearning49.md#native83--retained-collection-intake-and-local-runtime-diagnosis).
 Receive/verify new36collection pairs; account for bytes, decode and current consumer
@@ -63,7 +214,7 @@ and one missing-coverage session; it does not replace existing evidence or appro
 
 | Slice | State / next action | Acceptance |
 |---|---|---|
-| BATCH-79-A retained rich intake | Blocked on source publication; fresh local HEAD remains f933e299. Reuse76's24bundles, no recapture. | Actual strict intake accounts for every member, observed coverage reconciled with stationary catalog, exact role proposal. |
+| BATCH-79-A retained rich intake | Strict intake and observed coverage complete in84/85 on source50ff7fd8. Exact role proposal remains open; no recapture needed. | Actual strict intake accounts for every member, observed coverage reconciled with stationary catalog, exact role proposal. |
 | BATCH-79-B incremental ranker inputs | Review / Codex: cache software and approved44/5admission plus DTM017comparison complete. All88train endpoints fit; Settings1/10endpoints,0/5paired. Frozen change head misses4new native transitions.62Python/134Swift plus4protocol guards pass. [Software](reports/work/BATCH-79-B/handoff.md), [candidate handoff](reports/work/BATCH-79-B/native-handoff.md). | Real preparer reuses unchanged derivatives; parity/invalidation verified; authorized controlled candidate executed, no model gate passed. |
 | BATCH-79-C live campaign integration | Capture authority granted; blocked on source-backed case binding and exact runtime readiness. Journal alone is not a runtime controller. | One healthy session, bounded serial jobs, missing-only resume, full accounting/freeze and measured lifecycle cost. |
 

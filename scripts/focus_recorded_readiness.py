@@ -95,6 +95,11 @@ def endpoints(audit, events, reviewed, pending):
 
 
 def run(batch_path, baseline_path, pending_path, revision_path=None, completeness_path=None):
+    return run_with_frames(batch_path,baseline_path,pending_path,revision_path,completeness_path)[0]
+
+
+def run_with_frames(batch_path, baseline_path, pending_path, revision_path=None, completeness_path=None):
+    """Return audit and its verified frames together; no cross-invocation cache."""
     batch_path,baseline_path,pending_path=map(h.local,(batch_path,baseline_path,pending_path))
     batch=review.validate(batch_path);pending_batch=h.validate_batch(pending_path)
     h.require(batch['sessionID']==pending_batch['sessionID'] and
@@ -114,7 +119,7 @@ def run(batch_path, baseline_path, pending_path, revision_path=None, completenes
     refs=dict(batch=h.ref(batch_path),baseline=h.ref(baseline_path),pending=h.ref(pending_path),events=h.ref(eventpath))
     if revision_path:refs['revision']=h.ref(h.local(revision_path))
     if completeness_path:refs['completeness']=h.ref(h.local(completeness_path))
-    return dict(version='focus-recorded-readiness-v1',**h.FLAGS,inputs=refs,actions=rows,
+    report=dict(version='focus-recorded-readiness-v1',**h.FLAGS,inputs=refs,actions=rows,
         implementation=[h.ref(h.ROOT/'scripts'/name) for name in
                         ('focus_recorded_readiness.py','human_recording_audit.py','human_recording_review.py')],
         counts=dict(actions=len(rows),originalTimingReady=audit['counts']['associatedReady'],
@@ -126,6 +131,7 @@ def run(batch_path, baseline_path, pending_path, revision_path=None, completenes
         remaining=['Saved human endpoint review','Same-screen/Settings context evidence',
                    'Persistent control correspondence','Unattributed gap reconciliation'],
         warning='Review frontier counts endpoint annotation opportunities only, not qualified transitions or independent journeys.')
+    return report,reviewed
 
 
 def main():

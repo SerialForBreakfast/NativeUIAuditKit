@@ -102,7 +102,7 @@ def appearance_digest_source(recipe):
     if canvas is not None:
         fields = {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"}
         require(isinstance(canvas, dict) and fields <= set(canvas)
-                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "nativeTable", "cardGeometry", "composition", "contrastNeighbors"},
+                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "nativeTable", "collectionStyle", "cardGeometry", "composition", "contrastNeighbors"},
                 "canvas_fields")
         for field, lo, hi in (("version",1,2), ("columns",1,8), ("spacing",16,80),
                               ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
@@ -118,14 +118,24 @@ def appearance_digest_source(recipe):
             suffix += ':' + canvas['pairing']
         presentation = canvas.get('presentation')
         require(presentation is None or (isinstance(presentation, str) and presentation in
-                {'cards', 'buttons', 'settings_rows', 'tabs', 'nested_tabs_v1', 'native_table_v2'}), 'canvas_presentation')
+                {'cards', 'buttons', 'settings_rows', 'tabs', 'nested_tabs_v1', 'native_table_v2', 'native_collection_v1'}), 'canvas_presentation')
         if presentation is not None:
             suffix += ':presentation=' + presentation
+        style=canvas.get('collectionStyle')
+        if presentation=='native_collection_v1':
+            require(style in ('poster','landscape','mixed') and canvas['version']==2 and
+                canvas['columns']==4 and canvas['showLabels'] and canvas.get('cardGeometry') is not None and
+                canvas.get('mixedSizes') is not True and canvas.get('fillViewport') is not True and
+                all(canvas.get(k) is None for k in ('composition','nativeButton','nativeTable','contrastNeighbors')),
+                'canvas_collection_contract')
+            suffix+=':collection='+style
+        else:require(style is None,'canvas_collection_style')
         selected = canvas.get('selectedIndex')
         if selected is not None:
-            require(type(selected) is int and presentation in ('tabs', 'nested_tabs_v1') and
+            rich_table=presentation=='native_table_v2' and (canvas.get('nativeTable') or {}).get('version')==2
+            require(type(selected) is int and (presentation in ('tabs', 'nested_tabs_v1') or rich_table) and
                     0 <= selected < 64 and uint(recipe.get('element_count')) and
-                    selected < recipe['element_count'], 'canvas_selectedIndex')
+                    selected < recipe['element_count'] and (not rich_table or selected<6), 'canvas_selectedIndex')
             suffix += ':selected=' + str(selected)
         mixed = canvas.get('mixedSizes')
         if mixed is not None:
@@ -144,7 +154,7 @@ def appearance_digest_source(recipe):
         if labels is not None:
             require(isinstance(labels, list) and len(labels) == recipe['element_count'] <= 64
                     and canvas['showLabels'] and presentation in
-                    ('buttons', 'settings_rows', 'tabs', 'nested_tabs_v1', 'native_table_v2') and
+                    ('buttons', 'settings_rows', 'tabs', 'nested_tabs_v1', 'native_table_v2', 'native_collection_v1') and
                     all(isinstance(s, str) and 0 < len(s.encode('utf-8')) <= 128 and
                         not any(unicodedata.category(c) in ('Cc', 'Cf') for c in s)
                         for s in labels), 'canvas_labels')
@@ -156,18 +166,24 @@ def appearance_digest_source(recipe):
         # Source-pinned matched-appearance revision2; logical points, not pixel bounds.
         table = canvas.get('nativeTable')
         if presentation == 'native_table_v2':
-            # f933e299 FixtureAppearance.NativeTable v1 only; rich v2 is unreviewed.
-            require(isinstance(table,dict) and set(table)=={'version','width','rowHeight','x','y'}, 'canvas_native_table_fields')
-            require(all(type(table[k]) is int for k in table) and table['version']==1 and
+            # 50ff7fd8 FixtureAppearance.NativeTable; preserve v1 canonical bytes.
+            fields={'version','width','rowHeight','x','y'}
+            require(isinstance(table,dict) and fields<=set(table) and set(table)<=fields|{'viewportHeight','richContent'}, 'canvas_native_table_fields')
+            version=table['version']
+            require((version==1 and table.get('viewportHeight') is None and table.get('richContent') is None) or
+                (version==2 and table.get('richContent') is True and type(table.get('viewportHeight')) is int and
+                 360<=table['viewportHeight']<=860 and type(table['y']) is int and table['y']+table['viewportHeight']<=1040), 'canvas_native_table_version')
+            require(all(type(table[k]) is int for k in fields) and version in (1,2) and
                 600<=table['width']<=1400 and 80<=table['rowHeight']<=120 and
                 80<=table['x']<=400 and 120<=table['y']<=220 and
                 table['x']+table['width']<=1840 and table['y']+table['rowHeight']*6<=980,
                 'canvas_native_table_geometry')
             require(canvas['version']==2 and canvas['showLabels'] and canvas['columns']==1 and
-                recipe['element_count']==6 and selected is None and tabs is None and
+                recipe['element_count']==6 and (selected is None or version==2) and tabs is None and
                 mixed is not True and fill is not True and all(canvas.get(k) is None for k in
                 ('composition','nativeButton','cardGeometry','contrastNeighbors')), 'canvas_native_table_layout')
             suffix += ':native-table@' + ':'.join(str(table[k]) for k in ('version','width','rowHeight','x','y'))
+            if version==2:suffix+=f":viewport={table['viewportHeight']}:rich=true"
         else:
             require(table is None, 'canvas_native_table_presentation')
         button = canvas.get('nativeButton')
@@ -189,7 +205,7 @@ def appearance_digest_source(recipe):
                     type(geometry['width']) is int and 80 <= geometry['width'] <= 1200 and
                     type(geometry['height']) is int and 72 <= geometry['height'] <= 900,
                     'canvas_card_geometry_values')
-            require(canvas['version'] == 2 and presentation in (None, 'cards') and
+            require(canvas['version'] == 2 and presentation in (None, 'cards', 'native_collection_v1') and
                     button is None and mixed is not True and fill is not True,
                     'canvas_card_geometry_combination')
             suffix += f":card-geometry@1:{geometry['width']}:{geometry['height']}"
@@ -217,6 +233,7 @@ def appearance_digest_source(recipe):
         require(focus['kind'] != 'native_button' or canvas['showLabels'], 'focus_button_labels')
     if canvas is not None and canvas.get('presentation') not in (None, 'cards'):
         require(focus is not None and (focus['kind'] == 'native_button' or
+                (canvas.get('presentation') == 'native_collection_v1' and focus['kind'] == 'native_image') or
                 (canvas.get('composition') == 'tab_artwork_v1' and focus['kind'] == 'native_image')) and
                 canvas['showLabels'], 'canvas_presentation_native_button')
     artwork = appearance.get('artwork')
@@ -336,7 +353,8 @@ def scene_check(scene, size, expected, *, transition_visibility=False):
     require(isinstance(observation, dict) and isinstance(diagnostics, dict), "native_observation_missing")
     reference = (scene.get('recipe', {}).get('appearance') or {}).get('referencePack') is not None
     navigation = observation.get('verificationMode') == 'native_navigation'
-    native_table = ((scene.get('recipe',{}).get('appearance') or {}).get('canvas') or {}).get('presentation') == 'native_table_v2'
+    from fixture_native_visibility import kind, visible_membership as native_membership
+    native_table = kind(scene) in ('native_table_v2','native_collection_v1')
     if native_table:
         appearance_digest_source(scene['recipe'])  # exact source-pinned layout, never a string-only bypass
     require(observation.get('verificationMode') is None or navigation and (reference or native_table) and transition_visibility,
@@ -357,6 +375,9 @@ def scene_check(scene, size, expected, *, transition_visibility=False):
         from fixture_reference import visible_membership
         allowed = visible_membership(scene, require)
         require(set(planned or []) == set(allowed), 'reference_planned_membership')
+    elif native_table:
+        allowed=native_membership(scene,require)
+        require(set(planned or [])==set(allowed),'native_planned_membership')
     require(identifiers(allowed) and identifiers(planned) and set(planned) <= set(allowed)
             and (expected is None or expected in planned), "planned_focus")
     generation = observation.get("generation")

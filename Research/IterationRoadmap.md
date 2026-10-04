@@ -1,5 +1,67 @@
 # Concurrent delivery roadmap
 
+**RESOLUTION-96 supersedes resolution speculation:** DTM023fits67/68confident joint
+training but fails35/122identical-frame invariant probes. Do not replace DTM018.
+Priority is matched unchanged-focus data: proposed training-only self-pair augmentation
+awaits explicit approval, while TTR plans genuine boundary/content negatives. No
+additional resolution sweep or unchanged longer run; preserve source isolation and
+independent-native evaluation requirements.
+
+**SIGNAL-95:** consider one192×128paired-context comparison against frozenDTM022,
+with unchanged membership/budget/confidence and explicit no-op retention gates.
+Higher resolution increases distractor differences as well as true change. Native
+training lacks matched unchanged-focus cases; TTR has the bounded coverage request.
+Do not admit layout28until its version16source contract is reconciled.
+
+**CONTEXT-93:** adding ordered appearance to the difference head improved the rejected
+DTM021result, but did not beat retained DTM018confident joint decisions. Preserve
+the original reference. Diagnose sparse-change versus no-op errors before another
+architecture/run; do not use exposed Settings for threshold tuning. INTAKE94 now
+has all layout28bytes locally; next source-backed native-collection-v2 compatibility,
+not recapture. No role admission implied by successful transfer.
+
+**CHANGE-92:** retain DTM018change+DTM020ranking as experimental references. DTM021
+gains one raw training decision but loses six confident no-ops; not a replacement.
+Next compare contextual input for change prediction under fixed membership/budget,
+not an unchanged longer run. Separately ingest TTR layout28after named transfer and
+source-backed version16reconciliation; its new controls remain calibration until
+explicit admission. Baseline traversal reuse improves local preparation without
+weakening checks. [Evidence](../reports/work/CHANGE-92/handoff.md).
+
+**EVAL-90 priority correction:** current68training pairs have oneFixture ancestry;
+the five Settings pairs are already exposed. New native Fixture controls improve
+training coverage, not independent evaluation. Obtain reviewed previously-unused
+native app/journey groups for validation/final roles separately; plan is not a
+reservation. [Acquisition contract](Plans/FocusTransitionLearning49.md#eval90--independent-transition-evidence-acquisition-contract).
+
+**NATIVE-89:** do not deploy fixed cross-frame logit subtraction; it regresses even
+stationary native cases. Preserve DTM020. A next paired model requires a controlled
+representation comparison, not threshold tweaks on Settings. Local TTR coordinator
+is absent; maintainer launch precedes exact-host cleanup diagnostics, not a reset.
+
+**NATIVE-88:** correct Settings boxes exist and rank second in every remaining miss.
+Prioritize a controlled paired-context diagnostic over an unchanged single-frame run.
+FrozenDTM018already removes most change-control misses (65/68joint train withDTM020);
+remaining3rich-table errors should be diagnosed separately. Retain source-separated
+evaluation needs and true-small-control acquisition; no hard minimum-size filter.
+
+**NATIVE-87:** role approval and single candidate comparison are complete. DTM020
+improves exposed Settings to2/5paired while retaining old training fit. Next prioritize
+remaining error diagnosis and independent cross-source evidence; preserve the model
+and cached inputs. Neither more epochs nor promotion follows automatically.
+
+**NATIVE-86 supersedes preparation below:** exact24action proposal and732candidate
+encodings are ready. Next resolve the24pair role decision, materialize68/5membership,
+and run one fixed-budget native-transfer comparison without recapture/re-cropping.
+No independent-final claim;36appearance pairs remain separate from action training.
+
+**NATIVE-84/85:** retained60 now pass strict inspection, no recapture. Next prepare
+exact training-role proposal and reusable automatic-proposal/crop inputs, preserving
+shared ancestry exclusion from final evaluation. Only then run an approved controlled
+comparison. True small controls remain missing; TTR coverage follow-up updated.
+Runtime cleanup remains separate and does not block retained-data work.
+[Evidence](../reports/work/NATIVE-84/handoff.md).
+
 **SIZE-81 supersedes the next-comparison recommendation below:** DTM019 adds size
 context but Settings paired localization stays 0/5 (endpoints 2/10). Preserve models;
 prioritize retained rich24 source-backed intake and grouped coverage with true small

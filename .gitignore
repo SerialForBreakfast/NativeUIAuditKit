@@ -285,6 +285,7 @@ reports/work/FOCUS-ALIGNMENT-12/*.log
 /reports/work/FOCUS-CAMPAIGN-INTAKE-19/artifacts/
 /reports/work/FOCUS-READINESS-20/artifacts/
 /reports/work/NATIVE-INTAKE-83/received/
+/reports/work/INTAKE-94/received/
 /reports/storage/locations.json
 # Local SSD compatibility exports; labels/caches stay local, pixels are linked.
 /NativeUITrainer/yolo_dataset_r7_ssd03/

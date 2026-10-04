@@ -3521,6 +3521,42 @@ the next pass made zero crop calls. Original2141tensors/crop hashes remained exa
 All calibration data stayed training-ineligible. Generated NumPy arrays also need
 artifact ignore coverage; report JSON ignore rules alone do not protect them.
 
+### Native virtualization needs measured exclusions (2026-10-03)
+
+**Wrong:** Require every planned native cell to have a visible wrapper, or treat
+clipped wrappers as conflicting merely because they also have exclusion records.
+**Correct:** Source-pin planned identity, visible measurements and typed exclusions.
+Offscreen virtualized cells may lack wrappers; hidden/clipped exclusions require
+matching wrapper evidence. Focused targets must remain visible and measured.
+**Why:** NATIVE84 qualifies 60 retained rich/collection pairs without dropping
+labels or recapturing. Source presence and passing inspection still do not grant
+training roles or establish runtime health.
+
+### Single-decode validation without changing identity (2026-10-03)
+
+**Appearance-head identity invariant (RESOLUTION96):** paired RGB context increased
+joint training fit to67/68but predicted35confident changes when an identical training
+frame appeared on both sides. Test same-frame pairs before trusting improved aggregate
+fit, especially when a source appears only with one label. Keep constructed probes
+separate from genuine navigation and training admission; they do not test moving
+backgrounds or prove the cause of the shortcut. DTM018difference-only reference passed.
+
+CHANGE92 follow-up: semantic preparation was rebuilding the same reviewed baseline
+immediately after readiness had validated it. Return the audit and validated frames
+together and reuse within that call; do not add a global stale cache. Full73record
+parity holds; baseline traversals2→1 and source checks9031→4661. Keep raw accuracy,
+confidence-gated decisions and joint correctness separate: DTM021's extra raw
+correct decision concealed six new no-op abstentions, so it was rejected.
+
+**Wrong:** Decode an endpoint to get dimensions, then reopen it to compute its
+decoded hash; or optimize by hashing RGB and silently dropping alpha.
+**Correct:** Verify source bytes and decode once, returning dimensions and the
+existing RGBA pixel hash together. Pin the shared helper in new execution protocols;
+preserve historical seals. Profile full preparation separately from this stage.
+**Why:** PREP91 preserved all73 records while reducing146-endpoint validation from
+11.88s to7.02–7.21s. Full source traversal still dominates, so this is not a40%
+end-to-end improvement. Reuse must not remove integrity or role checks.
+
 ### Export byte identity and portable admission tests (2026-10-03)
 
 **Wrong:** Locate a manifest beside a receipt without reading the receipt, or let

@@ -49,8 +49,7 @@ def correspond(before,after):
 
 
 def inputs(batch,baseline,pending,revision,completeness):
-    audit=readiness.run(batch,baseline,pending,revision,completeness)
-    truth=readiness.reviewed_frames(readiness.baseline_reader.baseline(h.local(baseline)),pending,revision,completeness)
+    audit,truth=readiness.run_with_frames(batch,baseline,pending,revision,completeness)
     actions=[a for a in audit['actions'] if a['metadataReady'] and a['annotationsComplete']]
     hashes=sorted({e['sha256'] for a in actions for e in a['endpoints'].values()})
     h.require(0<len(hashes)<=POLICY['maxFrames'],'ocr_frame_limit')

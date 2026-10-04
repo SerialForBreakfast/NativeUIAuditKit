@@ -40,6 +40,11 @@ def finite(value):
 
 
 def decoded_hash(ref):
+    return decoded_identity(ref)[1]
+
+
+def decoded_identity(ref):
+    """Return dimensions and the historical RGBA hash from one validated decode."""
     from PIL import Image
     path = h.checked(h.ROOT, ref)
     with Image.open(path) as image:
@@ -47,7 +52,7 @@ def decoded_hash(ref):
                   'invalid_endpoint_image')
         image.load()
         pixels = image.convert('RGBA')
-        return hashlib.sha256(str(pixels.size).encode() + pixels.tobytes()).hexdigest()
+        return pixels.size, hashlib.sha256(str(pixels.size).encode() + pixels.tobytes()).hexdigest()
 
 
 def features(prediction):

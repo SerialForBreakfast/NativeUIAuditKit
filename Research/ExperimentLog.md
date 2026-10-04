@@ -3247,3 +3247,104 @@ d1058de1e75cd685f4a8fbe4821535b743cef4bc0d60e36c9f4a72337df284a6.
 Frozen-checkpoint zero-size ablation reduces Settings2/10→1/10; diagnostic only,
 not an independent test or deployment mode. Coverage lacks small positive controls.
 See reports/work/SIZE-81/handoff.md; next source/coverage work, not more epochs.
+
+## Run DTM023 — RESOLUTION96 higher-resolution change inputs (2026-10-03)
+
+Registered before launch; standing approved experiment tranche. One192×128input
+comparison against DTM022's96×64paired-context change head. Same architecture and
+DTM018zero-expanded initialization,approved68train/5exposed Settings,600epochs,
+Adam0.0001,seed42,CPU2threads,full68batch,noaugmentation,fixed-last,2GiB/no-wall-time
+override. Only change head trains; geometry remains96×64/frozen,DTM020boxes fixed.
+Verify192initialization parity against original difference head on192inputs and96
+control parity against NATIVE88. Threshold remains0.85. Require no loss of old44/
+no-op confident fit and correction of native p2misses. No capture,roles,promotion,
+export or automatic follow-up. Larger resolution is not independent qualification.
+ProtocolSHA256:a424a4662016e8155128a278e1e12fa7bec3ef34cfae545b0f15f3926b90089b.
+Arm transition-change-adaptation; output resolution96-dtm023. Completed PID56848,exit0.
+Preparation22.549s,43,057,152tensor bytes;fit59.605s,total60.857s. All geometry/replay
+and dual-resolution initialization checks pass. Old44train44/44confident retained;
+new24train23/24confident;joint67/68versus65/68control. All20admitted no-ops retained.
+Settings remains5/5change,2/5joint. Two native p2misses corrected;wide-dark uncertain.
+However, independent constructed self-pair check fails: on122unique training frames
+paired with themselves,36raw/35confident false changes,8abstentions;DTM018has0/0/0.
+All9development self-pairs pass both models. Reject replacement despite headline
+improvement; source/appearance shortcut requires matched-negative work, not promotion.
+No self-pairs admitted to training; maintainer approval requested for derived-negative
+augmentation. CheckpointSHA256:
+ed3ed4ca60864c44c2dfd4139f33d1dcc98bd13b59632c59c0e9acaa07fa0b2b.
+Evidence reports/work/RESOLUTION-96/handoff.md; no automatic follow-up run.
+
+## Run DTM022 — CONTEXT93 paired appearance change head (2026-10-03)
+
+Registered before launch under standing experiment scope. One explicit architecture
+comparison:9channel change input (absolute difference,ordered beforeRGB,afterRGB).
+Initialize DTM018head with six additional first-convolution channels zeroed; require
+initial prediction parity. All downstream/geometry weights load unchanged; only the
+change head trains. Approved68train/5exposed Settings,600epochs,full68batch,Adam0.0001,
+seed42,CPU2threads,noaugmentation,fixed-last,2GiB,no-wall-time override. FrozenDTM020
+boxes and DTM018control; DTM021rejected comparison retained. Correct p2misses without
+losing confident no-op/old44fit. Not independent-final or production qualification.
+No new corpus roles, capture, export, automatic retry or promotion.
+ProtocolSHA256:756af1b9e748cd17c32f0431f2374d180f6705b4d9a59d4011eecc2767e7a236.
+Arm transition-change-adaptation; output context93-dtm022. Completed PID55227,exit0.
+Preparation22.039s,fit15.785s,total16.871s.432additional first-convolution parameters.
+Initialization parity, frozen geometry and saved-checkpoint replay pass. Original44
+raw remains44/44 but3no-ops abstain; added24raw21/24→23/24 with1abstention. Confident
+joint train65/68→63/68, versus59/68for DTM021. Exposed Settings remains5/5change and
+2/5joint. Compact-light p2now confident-correct; wide-light raw-correct but uncertain;
+wide-dark remains confident-wrong. Reject replacement under fixed acceptance criteria.
+No threshold change or automatic second candidate. ModelSHA256:
+b428ba8decbe474cb1bd5aa664b2e699e6ef3440113070366e96c12bffbc427d.
+Evidence reports/work/CONTEXT-93/handoff.md; TTRlayout28 remains separate calibration.
+
+## Run DTM021 — CHANGE92 native action change-head adaptation (2026-10-03)
+
+Registered before launch; standing approved local experiment tranche. DTM018initial
+weights; only existing absolute-difference change submodule updated. Approved68train/
+5exposed Settings membership,600epochs,full68batch,Adam0.0001,seed42,CPU2threads,
+no augmentation,fixed-last,2GiB outputs,no-wall-time override. Geometry frozen;
+DTM020rank predictions frozen. Hypothesis: admitted scrolling identity examples
+correct the three p2misses without losing old44/no-op fit or exposed Settings.
+Primary control is NATIVE88 frozen DTM018scores on all73rows. No independent final
+claim, architecture sweep, new roles, capture, export or promotion.
+ProtocolSHA256:d6f6319ba6292ee5c1f0b93d0adc029360b9d347b3ba0d8a54bbc2a1455896c3.
+Arm transition-change-adaptation; output change92-dtm021. Completed PID54296,exit0.
+Preparation22.715s; fit12.968s; totalrun13.909s. Initializer parity, saved-checkpoint
+replay and all frozen geometry weights pass. Original44train remains44/44raw change
+correct but6no-ops now abstain; added24 improves21/24→22/24raw but3abstain.
+Joint training65/68→59/68; exposed Settings5/5change and2/5joint unchanged.
+All20training no-ops retain raw correctness, but6lose the fixed0.85confidence gate.
+Reject this candidate as replacement; do not tune threshold or automatically retrain.
+Remaining wide p2changes have identical boxes and low nonzero encoded difference;
+no exact difference-tensor collision was found in their nearest training no-ops.
+CheckpointSHA256:4d4e6ca7ed237afb39af4be82da1641f3f367539a83ebbfd67adb38c0dba7c4a.
+Evidence reports/work/CHANGE-92/handoff.md. Next representation/context test needs
+its own frozen hypothesis, not another unchanged epoch extension.
+
+## Run DTM020 — NATIVE87 native action variety (2026-10-03)
+
+Registered before launch. Maintainer approved exact24additional action pairs, giving
+68train/5exposed Settings development; all shared Fixture ancestry excluded from final
+evaluation. One comparison: unchanged DTM019 size-aware architecture/seed42/Adam0.001,
+600epochs,fixed-last,CPU2threads,full122unique-training-frame batch,2GiB outputs,
+no-wall-time override. Fresh initialization, not checkpoint fine-tune. Compare frozen
+DTM019 and candidate on identical131images/3069automatic candidates; use cached
+production crops and normalized size. DTM013change control fixed to isolate ranking.
+Hypothesis: native collection/rich-table variety improves transfer without losing old
+training fit. Report old44,new24andexposed Settings separately, including abstentions.
+No independent-final claim, capture, threshold tuning, export or promotion.
+Arm transition-candidate-ranker; output native87-dtm020. Status: preparation underway,
+training not started. Protocol,PID,timings and outcome recorded after execution.
+ProtocolSHA256:96a2e62ead84578b2d98a9edf1130675349a0728ed74941e2346d0ee6a21df36.
+Initial launcher exited2 before training because this exact digest was not yet in
+the log; preserved .build/native87-training.log. Bound now before launch retry.
+Completed PID51278,exit0. Fit2.373s,total3.738s; preparation33.147s with zero crops
+(fresh source reconstruction and frozen control inference dominate). All131derivative
+entries reused. DTM019→DTM020: old44train88/88endpoints retained; added24train23/48→48/48,
+10/24→24/24paired. Exposed Settings2/10→5/10endpoints,0/5→2/5paired/joint, no Settings
+abstentions. Frozen DTM013control leaves57/68joint training and1training abstention;
+do not misreport ranker success as change-model improvement. Checkpoint replay and
+candidate-order parity pass. CheckpointSHA256:
+3f90ba6bd8161c00057f36a307a205b3e03ba6801ef26e8974db652998184b75.
+No promotion or independent evaluation. Next test cross-source transfer and remaining
+failure modes, not unchanged extra epochs. See reports/work/NATIVE-87/handoff.md.

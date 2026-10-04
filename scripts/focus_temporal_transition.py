@@ -2,7 +2,7 @@
 from focus_spatial_transition import make_model as spatial_model
 
 
-def make_model(torch):
+def make_model(torch,paired_context=False):
     nn=torch.nn
     base=spatial_model(torch,True)
     decode=type(base).forward
@@ -12,16 +12,20 @@ def make_model(torch):
             super().__init__()
             self.encoder=original.encoder;self.cells=original.cells
             self.geometry=original.geometry;self.context=original.context
-            self.change=nn.Sequential(nn.Conv2d(3,8,3,2,1),nn.ReLU(),
+            self.change=nn.Sequential(nn.Conv2d(9 if paired_context else 3,8,3,2,1),nn.ReLU(),
                 nn.Conv2d(8,16,3,2,1),nn.ReLU(),nn.Conv2d(16,24,3,1,1),nn.ReLU(),
                 nn.AdaptiveAvgPool2d((4,6)),nn.Flatten(),nn.Linear(24*4*6,32),nn.ReLU(),nn.Linear(32,1))
+
+        def change_inputs(self,images):
+            difference=(images[:,3:]-images[:,:3]).abs()
+            return torch.cat((difference,images),dim=1) if paired_context else difference
 
         def fields(self,images):
             features=self.encoder(images)
             context=self.context(features).reshape(-1,10,16,24)
             cells=self.cells(features)+context[:,:2]
             geometry=self.geometry(features)+context[:,2:]
-            change=self.change((images[:,3:]-images[:,:3]).abs())
+            change=self.change(self.change_inputs(images))
             return cells,geometry.reshape(-1,2,4,16,24),change
 
         def forward(self,images):return decode(self,images)

@@ -1,5 +1,59 @@
 # Full backlog implementation packet catalog
 
+[Next integrated focus-reliability tranche](Plans/FocusTransitionLearning49.md#next-integrated-tranche--focus-reliability)
+orders three complementary outcomes: test training-only identical-frame negatives
+after data-use approval; independently diagnose incorrect candidate selection; and
+prepare independent evaluation plus source-backed layout28 intake. Tasks.md owns
+execution state. The Settings mapping effort supplies incremental branch evidence,
+not a prerequisite for the local diagnostics. Existing DTM018+DTM020 references remain.
+
+[Changes since a101851](../reports/change-summary-since-a101851.md) summarizes native
+intake, admission, model comparisons, preparation improvements and remaining gaps.
+
+[RESOLUTION-96](Plans/FocusTransitionLearning49.md#resolution96--fixed-higher-resolution-change-head-comparison)
+completed the192×128comparison and a failing identical-frame invariant probe;
+derived-negative augmentation requires the requested maintainer decision.
+
+[SIGNAL-95](Plans/FocusTransitionLearning49.md#signal95--resolution-evidence-before-another-experiment)
+measures resolution signal and matched-negative coverage before another experiment.
+
+[CONTEXT-93 / INTAKE-94](Plans/FocusTransitionLearning49.md#context93-and-intake94--paired-context-comparison-and-layout28-intake)
+records the paired-context comparison and independently verified layout28transfer;
+candidate replacement and new schema eligibility remain unmet.
+
+[CHANGE-92](Plans/FocusTransitionLearning49.md#change92--admitted-native-action-adaptation-and-preparation-reuse)
+completed one rejected change-head adaptation and removed repeated provenance
+traversal; [handoff](../reports/work/CHANGE-92/handoff.md) records the next decision.
+
+[PREP-91](Plans/FocusTransitionLearning49.md#prep91--single-decode-preparation-and-remaining-change-error-review)
+removes duplicate endpoint decoding and diagnoses stationary-box identity changes;
+preserves corpus hashes, labels and old experiment seals.
+
+[EVAL-90](Plans/FocusTransitionLearning49.md#eval90--independent-transition-evidence-acquisition-contract)
+separates useful Fixture training growth from missing independent native validation
+and final sources. Planning only; actual membership and runtime prerequisites open.
+
+[NATIVE-89](Plans/FocusTransitionLearning49.md#native89--fixed-paired-logit-diagnostic-and-runtime-response)
+rejects fixed paired subtraction on retained evidence; runtime response delivered.
+[Handoff](../reports/work/NATIVE-89/handoff.md).
+
+[NATIVE-88](Plans/FocusTransitionLearning49.md#native88--frozen-failure-decomposition)
+separates frozen ranking and change failures; no training. [Handoff](../reports/work/NATIVE-88/handoff.md).
+
+[NATIVE-87](Plans/FocusTransitionLearning49.md#native87--guarded-admission-integration)
+completed approved68/5admission and DTM020comparison. Settings paired0/5→2/5,
+still exposed development rather than qualification. [Handoff](../reports/work/NATIVE-87/handoff.md).
+
+[NATIVE-86](Plans/FocusTransitionLearning49.md#native86--action-membership-and-reusable-calibration-proposals)
+delivers exact24action proposal and batched calibration candidates/encodings; role
+decision remains separate from successful preparation. [Handoff](../reports/work/NATIVE-86/handoff.md).
+
+[NATIVE-84](Plans/FocusTransitionLearning49.md#native84--source-backed-rich-and-collection-compatibility)
+and [NATIVE-85](Plans/FocusTransitionLearning49.md#native85--retained-coverage-before-another-acquisition)
+complete strict retained compatibility and coverage auditing; supersede historical
+source/intake blockers below. New calibration roles and local runtime recovery remain
+separate. [Handoff](../reports/work/NATIVE-84/handoff.md).
+
 [NATIVE-83](Plans/FocusTransitionLearning49.md#native83--retained-collection-intake-and-local-runtime-diagnosis)
 received/inspected36new pairs; strict semantic compatibility awaits source, local
 capture awaits retained-operation recovery. [Handoff](../reports/work/NATIVE-INTAKE-83/handoff.md).

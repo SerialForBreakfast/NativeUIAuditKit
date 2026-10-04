@@ -39,6 +39,13 @@ class CollectionTests(unittest.TestCase):
         self.assertFalse(report['trainingEligible']);self.assertFalse(report['independentEvaluationEligible'])
         with self.assertRaises(ValueError):intake.run_collection(self.root,self.root/'output')
 
+    def test_layout28_cannot_silently_shrink_existing_handoff(self):
+        with self.assertRaisesRegex(ValueError,'selection_membership'):
+            intake.run_collection(self.root,self.root/'layout-output',28)
+        self.assertFalse((self.root/'layout-output').exists())
+        with self.assertRaisesRegex(ValueError,'selection_scope'):
+            intake.collection_selection(self.root,27)
+
     def test_wrong_source_roles_and_missing_case_fail(self):
         path=self.root/'group-0/export-0/campaign-manifest.json';doc=h.read(path)
         doc['cases'][0]['split_group']='train';path.write_text(json.dumps(doc))

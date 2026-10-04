@@ -1,11 +1,78 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 3, 2026, DTM019 size-aware ranking complete; Settings localization still fails
+**As of:** October 3, 2026, DTM023 improves fit but fails identical-frame safety; retain DTM018+DTM020 references
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
-**Latest intake/runtime — NATIVE-INTAKE-83:** received36native collection pairs;
+**RESOLUTION-96:**192×128paired context reaches67/68confident joint training with
+all20admitted no-ops retained, but35confident false changes occur on122constructed
+identical-frame training self-pairs. DTM018has zero. Reject replacement; no new
+data roles or promotion. Training-only derived-negative augmentation approval pending,
+and TTR's genuine matched negatives remain valuable. [Evidence](../reports/work/RESOLUTION-96/handoff.md).
+
+**SIGNAL-95:** full73pair resolution diagnosis preserves96×64input parity. Sparse
+wide-row changes survive encoding but have less difference energy than some no-ops,
+even at384×256. Larger resolution is a testable hypothesis, not an automatic fix.
+All36native training pairs are changed; matching native no-op coverage requested
+from TTR. No new training or model replacement. [Handoff](../reports/work/SIGNAL-95/handoff.md).
+
+**CONTEXT-93 / INTAKE-94:**9channel paired-context DTM022 improves raw train change
+to67/68 but confident joint63/68 still trails DTM018+DTM020's65/68; no replacement.
+Layout28transferred safely,312case files/56PNGs verify; strict intake blocks all28
+on unsupported version16canvas contract. Exact receipt published/read back; no new
+roles, recapture or cleanup by NUIAK. [Handoff](../reports/work/CONTEXT-93/handoff.md).
+
+**CHANGE-92:** DTM021 improves raw training change65/68→66/68 but reduces confident
+joint65/68→59/68; six no-ops become uncertain. Reject replacement, retain all evidence.
+Exposed Settings remains5/5change,2/5joint; no independent-final qualification.
+Preparation now reuses validated frames within a call, removing one full baseline
+traversal with exact73record parity. TTR layout28handoff received as metadata only;
+version16source publication requested before intake reconciliation. [Handoff](../reports/work/CHANGE-92/handoff.md).
+
+**PREP-91:** one decode per endpoint preserves exact73-record reconstruction and
+RGBA identity. Isolated validation is~40%faster; complete source traversal is still
+the larger cost. Three retained change misses all change focused element identity
+with zero or24pixel box displacement on3840×2160screens. Do not substitute box
+movement for focus identity. [Evidence](../reports/work/PREP-91/handoff.md).
+
+**NATIVE-89:** fixed geometry-matched logit subtraction failed: Settings5/10→3/10,
+training136/136→52/136endpoints. Keep DTM020 static ranking; no automatic tuning.
+This rejects the shortcut, not all paired models.12Python/134Swift checks pass.
+Fresh host process inventory: desktop TTR not running; TopShelf extension is not
+readiness. Recovery blocker published/read back. [Handoff](../reports/work/NATIVE-89/handoff.md).
+
+**NATIVE-88 frozen diagnosis:** all5wrong Settings endpoints rank the correct box
+second (4tiny wrong regions,1enclosing region). Frozen DTM018change head +DTM020boxes
+gives65/68joint training and2/5Settings, no abstentions. Three rich-table p2change
+errors remain. This composition is diagnostic, not promoted or independently tested.
+No retraining; reused49encodings and encoded24new pairs. [Handoff](../reports/work/NATIVE-88/handoff.md).
+
+**Latest — NATIVE-87/DTM020:** approved24action pairs added, preserving old44/5.
+Size-aware600epoch comparison retains88/88old training endpoints, learns48/48new,
+and improves exposed Settings2/10→5/10endpoints,0/5→2/5paired. No independent final
+or promotion. Frozen DTM013change control yields57/68joint train; ranking and change
+outcomes remain separate. Fit2.373s; all131image derivatives reused, zero crop calls.
+22Python/134Swift pass; checkpoint replay exact. [Handoff](../reports/work/NATIVE-87/handoff.md).
+Supersedes the pending24pair role decision below.
+
+**NATIVE-86:** exact24action-pair role proposal prepared; zero decoded-pixel overlap
+with current44/5membership. Approval would yield68train/5exposed development, no
+independent final.36appearance pairs excluded from this action proposal. Automatic
+Vision/raster each cover48/48endpoints;732candidate encodings cached with exact warm
+parity,0.135s/zero crop calls.22Python/134Swift pass. No model execution or role
+change. [Handoff](../reports/work/NATIVE-86/handoff.md).
+
+**Latest intake — NATIVE-84/85:** source50ff7fd8 compatibility now passes all60
+retained rich/collection pairs plus12legacy cases. Coverage:36appearance/24recorded
+actions (8stationary/16scrolling),30light/30dark,120distinct images; no small focused
+bodies under100px largest extent. New data stays calibration; no independent-final
+claim or model change.67Python/134Swift checks pass. SMB result published/read back;
+peer acknowledgment pending. Runtime cleanup has not been rechecked this tranche.
+[Handoff](../reports/work/NATIVE-84/handoff.md). This supersedes source/intake blockers
+in the historical entries below, not their preserved failed evidence.
+
+**Prior intake/runtime — NATIVE-INTAKE-83:** received36native collection pairs;
 408receipt-listed files and72distinct decoded images verified. All36 semantic intakes
 blocked by unpublished source contract (24planned_focus,12native_verification_mode).
 Fresh local TTR readiness: infrastructure ready, target can_run=false due to retained

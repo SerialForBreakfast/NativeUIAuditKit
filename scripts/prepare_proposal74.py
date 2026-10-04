@@ -155,8 +155,13 @@ def inspect_calibration(proposal,output,probe):
     from compare_annotation_proposals import validate_boxes
     from PIL import Image
     start=time.monotonic();out=d.h.fresh(output);probe=d.h.local(probe)
-    pending=d.h.read(d.h.local(proposal));validate_proposal(pending)
-    rows=verified_records(d.h.checked(d.h.ROOT,pending['source']))
+    pending=d.h.read(d.h.local(proposal))
+    if pending.get('version')=='native86-role-proposal-v1':
+        from propose_native86 import validate_proposal as validate86, verified_records as records86
+        validate86(pending);rows=records86()
+    else:
+        validate_proposal(pending)
+        rows=verified_records(d.h.checked(d.h.ROOT,pending['source']))
     d.h.require([dict(r,requestedRole='train') for r in rows]==pending['members'],'calibration_membership_changed')
     retained=d.h.read(d.h.ROOT/'reports/work/PROPOSAL-RANK-74/bank/inputs.json')
     d.h.require(d.h.ref(probe)==retained['probe'] and
@@ -164,19 +169,22 @@ def inspect_calibration(proposal,output,probe):
     frames={}
     for row in rows:
         for ref in row['images']:frames.setdefault(ref['sha256'],dict(image=ref,size=row['size']))
-    d.h.require(0<len(frames)<=40,'calibration_batch_limit')
+    d.h.require(0<len(frames)<=120,'calibration_total_limit')
     paths=[d.h.checked(d.h.ROOT,f['image']) for f in frames.values()]
     common=Path(os.path.commonpath([str(p.parent) for p in paths]));d.h.require(str(common)!='/','calibration_root')
-    request=dict(version=1,root=str(common),rectanglesOnly=True,
-        frames=[dict(id=k,path=str(p),sha256=k) for k,p in zip(frames,paths)])
-    out.mkdir(parents=True);d.h.write(out/'request.json',request)
-    before=time.monotonic()
-    result=subprocess.run([str(probe)],input=json.dumps(request),capture_output=True,text=True,timeout=180,
-        env={**os.environ,'TMPDIR':str(d.h.ROOT/'.build/debug-output/focus-launch/tmp')})
-    seconds=time.monotonic()-before
-    d.h.write(out/'execution.json',dict(exitCode=result.returncode,seconds=seconds,stderr=result.stderr))
-    d.h.require(result.returncode==0 and len(result.stdout.encode())<16*1024*1024,'calibration_probe_failed')
-    raw=json.loads(result.stdout);d.h.write(out/'raw.json',raw);native=validate_response(request,raw)
+    requested=[dict(id=k,path=str(p),sha256=k) for k,p in zip(frames,paths)]
+    out.mkdir(parents=True);native=[];seconds=0;raw_refs=[]
+    for index in range(0,len(requested),40):
+        suffix='' if index==0 else '-'+str(index//40)
+        request=dict(version=1,root=str(common),rectanglesOnly=True,frames=requested[index:index+40])
+        d.h.write(out/f'request{suffix}.json',request);before=time.monotonic()
+        result=subprocess.run([str(probe)],input=json.dumps(request),capture_output=True,text=True,timeout=180,
+            env={**os.environ,'TMPDIR':str(d.h.ROOT/'.build/debug-output/focus-launch/tmp')})
+        elapsed=time.monotonic()-before;seconds+=elapsed
+        d.h.write(out/f'execution{suffix}.json',dict(exitCode=result.returncode,seconds=elapsed,stderr=result.stderr))
+        d.h.require(result.returncode==0 and len(result.stdout.encode())<16*1024*1024,'calibration_probe_failed')
+        raw=json.loads(result.stdout);d.h.write(out/f'raw{suffix}.json',raw)
+        native.extend(validate_response(request,raw));raw_refs.append(d.h.ref(out/f'raw{suffix}.json'))
     pools={}
     for (key,frame),record,path in zip(frames.items(),native,paths):
         vision=[dict(id='vision-'+c['id'],bounds=c['bounds']) for c in vision_candidates(record,frame['image'],frame['size'])]
@@ -186,7 +194,7 @@ def inspect_calibration(proposal,output,probe):
         pools[key]=dict(vision=vision,raster=raster,union=vision+raster)
     inputs=dict(version='calibration-proposals-v1',**d.h.FLAGS,source=d.h.ref(d.h.local(proposal)),
         frames=[dict(id=k,**v,candidates=pools[k]['union']) for k,v in frames.items()],
-        probe=d.h.ref(probe),probeSource=retained['probeSource'],raw=d.h.ref(out/'raw.json'))
+        probe=d.h.ref(probe),probeSource=retained['probeSource'],raw=d.h.ref(out/'raw.json'),rawBatches=raw_refs)
     d.h.write(out/'inputs.json',inputs,sealed=True)
     scores=[dict(pairID=r['id'],endpoint=endpoint,frameID=ref['sha256'],
         results={name:targets(pool,box) for name,pool in pools[ref['sha256']].items()})
@@ -194,9 +202,9 @@ def inspect_calibration(proposal,output,probe):
     report=dict(version='native78-proposals-v1',**d.h.FLAGS,inputs=d.h.ref(out/'inputs.json'),
         summary={name:dict(endpoints=len(scores),covered=sum(not s['results'][name]['missingPositive'] for s in scores),
             ambiguous=sum(s['results'][name]['ambiguousPositive'] for s in scores)) for name in ('vision','raster','union')},
-        scores=scores,uniqueImages=len(frames),nativeInvocations=1,nativeSeconds=seconds,
+        scores=scores,uniqueImages=len(frames),nativeInvocations=len(raw_refs),nativeSeconds=seconds,
         elapsedSeconds=time.monotonic()-start,trainingLaunched=False,
-        implementation=[d.h.ref(d.h.ROOT/'scripts'/n) for n in ('prepare_proposal74.py','human_auto_boxes.py','propose_native77.py')])
+        implementation=[d.h.ref(d.h.ROOT/'scripts'/n) for n in ('prepare_proposal74.py','human_auto_boxes.py','propose_native77.py','propose_native86.py')])
     for frame in frames.values():d.h.checked(d.h.ROOT,frame['image'])
     d.h.require(d.h.ref(probe)==retained['probe'],'calibration_probe_changed_after')
     d.h.write(out/'report.json',report,sealed=True);print(report['summary']);return report

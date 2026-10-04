@@ -44,8 +44,9 @@ def verify_selection(root, selection, *, expected_pairs=24):
     return checked
 
 
-def collection_selection(root):
-    """Bind the named 36-case handoff; inspection only, not a producer schema adapter."""
+def collection_selection(root,expected_pairs=36):
+    """Bind named collection handoffs; inspection only, not a producer schema adapter."""
+    h.require(expected_pairs in (28,36),'collection_selection_scope')
     receipts=sorted(root.glob('*/export-0/campaign-receipt.json'))
     h.require(len(receipts)==4,'collection83_campaign_count')
     entries=[]
@@ -62,14 +63,14 @@ def collection_selection(root):
             entries.append(dict(case_id=case['case_id'],campaign_id=manifest['campaign_id'],
                 bundle=str(bundle.relative_to(root)),source_receipt=str(path.relative_to(root)),
                 members=receipt['files'][case['case_id']]))
-    return dict(version=1,pairs=36,endpoint_images=72,source_role='calibration',
+    return dict(version=1,pairs=expected_pairs,endpoint_images=2*expected_pairs,source_role='calibration',
         ancestry='fixture_procedural_renderer_v1',cases=entries)
 
 
-def run_collection(root, output):
+def run_collection(root, output, expected_pairs=36):
     import time
     start=time.monotonic();root=h.local(root);out=h.fresh(output)
-    checked=verify_selection(root,collection_selection(root),expected_pairs=36)
+    checked=verify_selection(root,collection_selection(root,expected_pairs),expected_pairs=expected_pairs)
     rows=[];pixels=set();files=0;byte_count=0
     for entry,bundle,case in checked:
         transition=bundle/'transition-case.json'
@@ -91,18 +92,19 @@ def run_collection(root, output):
             recipeAxes='producer-declared, not consumer-qualified',trainingEligible=False)
         try:
             if kind=='appearance':validate_bundle(bundle)
-            else:validate_case(root,transition,case)
+            else:validate_case(root,transition,case,directional=True)
             row['consumer']='passed-inspection-only'
         except (ValueError,KeyError,TypeError,OSError) as error:
             row.update(consumer='blocked',blocker=str(error))
         rows.append(row);files+=len(entry['members']);byte_count+=sum(m['bytes'] for m in entry['members'])
-    h.require(Counter(r['kind'] for r in rows)=={'appearance':24,'transition':12},'collection83_kind_accounting')
+    h.require(Counter(r['kind'] for r in rows)=={'appearance':24,'transition':expected_pairs-24},'collection83_kind_accounting')
     report=dict(version='native83-inspection-v1',**h.FLAGS,results=rows,pairs=len(rows),
         endpointImages=sum(len(r['images']) for r in rows),uniqueDecodedImages=len(pixels),
         filesVerified=files,memberBytes=byte_count,consumerStates=dict(Counter(r['consumer'] for r in rows)),
         blockers=dict(Counter(r['blocker'] for r in rows if 'blocker' in r)),
         elapsedSeconds=time.monotonic()-start,sourceRole='calibration',
-        sourceContract='Unpublished native-collection-v1 remains unqualified.')
+        sourceContract=('Native source compatibility pinned to 50ff7fd8; inspection is not data admission.' if expected_pairs==36 else
+            'Layout28 version16 producer source not yet published locally; existing strict validators retain rejection. Inspection is not data admission.'))
     out.mkdir(parents=True);h.write(out/'intake.json',report,sealed=True)
     print({k:report[k] for k in ('pairs','endpointImages','uniqueDecodedImages','filesVerified','memberBytes','consumerStates','blockers','elapsedSeconds')})
 
@@ -140,7 +142,7 @@ def run(root,output):
                 record.update(endpointContract='blocked',endpointBlocker=str(error))
             try:
                 validate_case(root,transition,case,stationary=scroll[0] is False,
-                    directional=lane=='table12' and scroll[0] is not False)
+                    directional=case['transition']['condition']=='focus_moved' and scroll[0] is not False)
                 record.update(consumer='passed-inspection-only')
             except (ValueError,KeyError,TypeError,OSError) as error:
                 record.update(consumer='blocked',blocker=str(error))
@@ -174,5 +176,9 @@ def run(root,output):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--root',required=True);p.add_argument('--output',required=True)
-    p.add_argument('--collection36',action='store_true',help='Inspect the named native collection handoff; never admit data')
-    a=p.parse_args();(run_collection if a.collection36 else run)(a.root,a.output)
+    group=p.add_mutually_exclusive_group()
+    group.add_argument('--collection36',action='store_true',help='Inspect the named native collection handoff; never admit data')
+    group.add_argument('--layout28',action='store_true',help='Inspect the named layout-diversity handoff; unsupported schemas stay blocked')
+    a=p.parse_args()
+    if a.collection36 or a.layout28:run_collection(a.root,a.output,28 if a.layout28 else 36)
+    else:run(a.root,a.output)

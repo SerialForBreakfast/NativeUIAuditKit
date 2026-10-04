@@ -18,6 +18,7 @@ def input_pins():
     functions=('geometry','pixels','encode','target_box','admitted','collect','record','baseline_change')
     return dict(functions={name:h.digest(inspect.getsource(getattr(d,name))) for name in functions},
         decodedHash=h.digest(inspect.getsource(d.old.decoded_hash)),
+        decodedIdentity=h.digest(inspect.getsource(d.old.decoded_identity)),
         dimensions={k:d.CONFIG[k] for k in ('width','height')},
         code=[h.ref(h.ROOT/'scripts'/name) for name in (
             'prepare_transition_inputs.py','focus_translation_training.py','focus_pair_translation.py',

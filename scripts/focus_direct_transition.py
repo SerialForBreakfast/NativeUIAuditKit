@@ -32,6 +32,7 @@ FULL_FIT_CONFIG=dict(LOGIT_CONFIG,epochs=120)
 TRANSLATION_CONFIG=dict(FULL_FIT_CONFIG,augmentation='paired-translation-4pct-v1')
 EXPOSURE_CONFIG=dict(TRANSLATION_CONFIG,epochs=600)
 TEMPORAL_CONFIG=dict(EXPOSURE_CONFIG,changeRepresentation='absolute-difference-v1')
+PAIRED_TEMPORAL_CONFIG=dict(TEMPORAL_CONFIG,changeRepresentation='paired-context-difference-v1')
 BROAD_CONFIG=dict(TEMPORAL_CONFIG,augmentation='paired-translation-25x15pct-v1')
 COMPRESSED_CONFIG=dict(TEMPORAL_CONFIG,augmentation='paired-halfwidth-25x15pct-v1')
 COVERAGE_CONFIGURATIONS=(BROAD_CONFIG,COMPRESSED_CONFIG)
@@ -63,7 +64,7 @@ def box_loss(prediction,target,configuration):
 
 def pins():
     return dict(code=[h.ref(h.ROOT/'scripts'/name) for name in
-        ('focus_direct_transition.py','focus_corrected_transition_audit.py','focus_structural_transition_audit.py',
+        ('focus_direct_transition.py','focus_transition_learning.py','focus_corrected_transition_audit.py','focus_structural_transition_audit.py',
          'focus_recorded_semantics.py','focus_recorded_readiness.py','human_annotation_review.py',
          'artifact_storage.py','focus_dataset_contract.py','photos_focus_pilot.py','focus_spatial_transition.py',
          'prepare_spatial56.py','prepare_context57.py','prepare_fit61.py','prepare_robustness63.py',
@@ -73,7 +74,8 @@ def pins():
          'prepare_data67.py','admit_negatives65.py',
          'focus_temporal_transition.py','prepare_temporal68.py',
          'prepare_coverage70.py',
-         'propose_native77.py','harvest_sidecar_v2.py',
+         'propose_native77.py','propose_native86.py','harvest_sidecar_v2.py',
+         'fixture_native_visibility.py','fixture_semantic_inventory.py','fixture_rendered_body.py','intake_native76.py',
          'evaluate_direct_transition.py','train_focus_ring_detector.py')],
         dependencies={name:dependency_version(name) for name in ('torch','numpy','pillow')},python=sys.version)
 
@@ -130,10 +132,10 @@ def record(ident,group,role,before,after,changed,evidence,baseline):
     for frame in (before,after):
         focused=[c for c in frame['controls'] if c['state']=='focused']
         h.require(len(focused)==1,'unique_known_focus_required')
-        ref=frame['image'];im=pixels(ref)
-        h.require(size is None or size==im.size,'viewport_changed');size=im.size
-        target_box(focused[0]['bounds'],im.size)
-        boxes.append(focused[0]['bounds']);refs.append(ref);hashes.append(old.decoded_hash(ref))
+        ref=frame['image'];frame_size,pixel_hash=old.decoded_identity(ref)
+        h.require(size is None or size==frame_size,'viewport_changed');size=frame_size
+        target_box(focused[0]['bounds'],frame_size)
+        boxes.append(focused[0]['bounds']);refs.append(ref);hashes.append(pixel_hash)
     h.require(type(changed)is bool,'change_label_required')
     return dict(id=ident,group=group,sourceRole=role,images=refs,size=list(size),boxes=boxes,
                 changed=changed,decodedPixelHashes=hashes,evidence=evidence,
@@ -152,7 +154,7 @@ def baseline_change(controls,native):
 def collect(sources):
     import focus_corrected_transition_audit as native
     import focus_recorded_semantics as semantic
-    h.require({'reference','settings'} <= set(sources) <= {'reference','settings','negatives','nativeTable'},'source_fields')
+    h.require({'reference','settings'} <= set(sources) <= {'reference','settings','negatives','nativeTable','nativeActions'},'source_fields')
     rows=[];excluded=[]
     path=h.checked(h.ROOT,sources['reference']);doc=h.sealed(path,'reference-transition-audit-v1')
     h.require(doc.get('tracker','template')=='template','baseline_tracker')
@@ -195,6 +197,10 @@ def collect(sources):
         from propose_native77 import verified_records as native_table_records
         additions=native_table_records(h.checked(h.ROOT,sources['nativeTable']))
         rows.extend(dict(r,id=sources['nativeTable']['sha256']+':'+r['id']) for r in additions)
+    if 'nativeActions' in sources:
+        from propose_native86 import source_records
+        additions=source_records(h.checked(h.ROOT,sources['nativeActions']))
+        rows.extend(dict(r,id=sources['nativeActions']['sha256']+':'+r['id']) for r in additions)
     return corpus_document(sources,rows,excluded)
 
 
@@ -295,9 +301,9 @@ def torch_runtime():
 def model(configuration=None):
     torch=torch_runtime();nn=torch.nn
     configuration=CONFIG if configuration is None else configuration
-    if configuration in TEMPORAL_CONFIGURATIONS:
+    if configuration in (*TEMPORAL_CONFIGURATIONS,PAIRED_TEMPORAL_CONFIG):
         from focus_temporal_transition import make_model
-        return make_model(torch)
+        return make_model(torch,configuration==PAIRED_TEMPORAL_CONFIG)
     h.require(valid_configuration(configuration),'direct_configuration')
     if configuration in SPATIAL_CONFIGURATIONS:
         from focus_spatial_transition import make_model
@@ -358,13 +364,14 @@ def fit(rows,configuration=None,prepared_inputs=None):
 def fit_change_head(net, x, labels, configuration):
     """Fine-tune only the existing change submodule; no geometry gradients or updates."""
     torch=torch_runtime();torch.set_num_threads(configuration['threads']);torch.manual_seed(configuration['seed'])
-    h.require(x.ndim==4 and x.shape[1:]==(6,64,96) and labels.shape==(len(x),) and
+    width,height=configuration.get('inputSize',[96,64])
+    h.require((width,height) in ((96,64),(192,128)) and x.ndim==4 and x.shape[1:]==(6,height,width) and labels.shape==(len(x),) and
         torch.isfinite(x).all() and torch.isfinite(labels).all() and
         ((x>=0)&(x<=1)).all() and ((labels==0)|(labels==1)).all(),'change_adaptation_inputs')
     for name,param in net.named_parameters():param.requires_grad_(name.startswith('change.'))
     frozen={name:value.detach().clone() for name,value in net.state_dict().items() if not name.startswith('change.')}
     optimizer=torch.optim.Adam(net.change.parameters(),lr=configuration['lr'])
-    differences=(x[:,3:]-x[:,:3]).abs();history=[];net.train()
+    differences=net.change_inputs(x);history=[];net.train()
     for epoch in range(configuration['epochs']):
         optimizer.zero_grad();logits=net.change(differences).flatten()
         loss=torch.nn.functional.binary_cross_entropy_with_logits(logits,labels)

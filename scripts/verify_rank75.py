@@ -13,7 +13,7 @@ def run(result_path,output):
     torch=r.d.torch_runtime();torch.set_num_threads(2)
     state=torch.load(r.d.h.checked(r.d.h.ROOT,result['model']),map_location='cpu',weights_only=True)
     r.d.h.require(state['version']==r.VERSION and state['configuration']==doc['configuration'] and
-        state['configuration'] in (r.CONFIG,r.NATIVE_CONFIG,r.SIZE_CONFIG),'ranking_checkpoint_configuration')
+        state['configuration'] in (r.CONFIG,r.NATIVE_CONFIG,r.SIZE_CONFIG,r.ACTION_CONFIG),'ranking_checkpoint_configuration')
     x=r.features(x,inputs,state['configuration'])
     net=r.model(torch,state['configuration']);net.load_state_dict(state['state'],strict=True);net.eval()
     offset=0;predictions={};timings=[];ranked={}

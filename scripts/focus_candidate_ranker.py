@@ -23,6 +23,7 @@ CONFIG = dict(model=ARM, epochs=600, batch=50, lr=.001, seed=42,
               encoding='production-crop256-rgb16-bilinear-v1')
 NATIVE_CONFIG = dict(CONFIG,batch=74)
 SIZE_CONFIG = dict(NATIVE_CONFIG,geometryFeatures='normalized-size-v1')
+ACTION_CONFIG = dict(SIZE_CONFIG,batch=122)
 
 
 def sealed(path, version):
@@ -223,7 +224,7 @@ def seal_protocol(out, prepared):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = d.h.read(d.h.local(path))
-    d.h.require(doc['version'] == VERSION and doc['configuration'] in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG) and arm == ARM, 'ranking_configuration')
+    d.h.require(doc['version'] == VERSION and doc['configuration'] in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG) and arm == ARM, 'ranking_configuration')
     d.h.require(doc['protocolSHA256'] == d.h.digest({k:v for k,v in doc.items() if k != 'protocolSHA256'}), 'ranking_protocol_hash')
     d.h.require(doc['pins'] == pins(), 'ranking_code_or_dependencies_changed')
     _, inputs, data = bank(d.h.checked(d.h.ROOT, doc['bank']))
@@ -232,6 +233,7 @@ def load_protocol(path, arm, run_name, approval_path=None):
     corpus = d.h.read(d.h.checked(d.h.ROOT,label['corpus']))
     rows = d.admitted(corpus, d.h.read(d.h.checked(d.h.ROOT,label['admission'])))
     expected_counts={'train':32,'development':5} if doc['configuration']==CONFIG else {'train':44,'development':5}
+    if doc['configuration']==ACTION_CONFIG:expected_counts={'train':68,'development':5}
     d.h.require(Counter(r['split'] for r in rows)==expected_counts, 'ranking_membership')
     positives = supervision(inputs,label['labels'],rows)
     d.h.require(sum(f['split']=='train' for f in inputs['frames'])==doc['configuration']['batch'], 'ranking_unique_training_frames')
@@ -242,7 +244,7 @@ def load_protocol(path, arm, run_name, approval_path=None):
     d.h.require(len(scores)==len(rows) and {r['id'] for r in scores}=={r['id'] for r in rows}, 'ranking_control_membership')
     d.h.require(all(type(r['prediction']['changeProbability']) in (int,float) and
         np.isfinite(r['prediction']['changeProbability']) and 0<=r['prediction']['changeProbability']<=1 for r in scores),'ranking_control_probabilities')
-    if doc['configuration'] in (NATIVE_CONFIG,SIZE_CONFIG):
+    if doc['configuration'] in (NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG):
         reference=sealed(d.h.checked(d.h.ROOT,doc['reference']),'native-ranking-reference-v1')
         d.h.require(reference['inputs']==label['inputs'] and len(reference['results'])==len(rows) and
             {r['id'] for r in reference['results']}=={r['id'] for r in rows}, 'ranking_reference_membership')
@@ -262,9 +264,9 @@ def load_protocol(path, arm, run_name, approval_path=None):
 
 def model(torch,configuration=None):
     configuration=CONFIG if configuration is None else configuration
-    d.h.require(configuration in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG),'ranking_model_configuration')
+    d.h.require(configuration in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG),'ranking_model_configuration')
     net=torch.nn.Sequential(torch.nn.Linear(768,32),torch.nn.ReLU(),torch.nn.Linear(32,1))
-    if configuration==SIZE_CONFIG:
+    if configuration in (SIZE_CONFIG,ACTION_CONFIG):
         first=torch.nn.Linear(770,32)
         with torch.no_grad():
             first.weight[:,:768].copy_(net[0].weight);first.weight[:,768:].zero_();first.bias.copy_(net[0].bias)
@@ -274,8 +276,8 @@ def model(torch,configuration=None):
 
 def features(data,inputs,configuration):
     """Candidate scale only, never location, labels or source identity."""
-    d.h.require(configuration in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG),'ranking_feature_configuration')
-    if configuration!=SIZE_CONFIG:return data
+    d.h.require(configuration in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG),'ranking_feature_configuration')
+    if configuration not in (SIZE_CONFIG,ACTION_CONFIG):return data
     sizes=[]
     for frame in inputs['frames']:
         w,h=frame['size']
@@ -356,7 +358,9 @@ def prepare_native(output, admission_root, derivatives):
     corpus=d.h.read(root/'corpus.json');admission=d.h.read(root/'admission.json')
     d.h.require(corpus==d.collect(corpus['sources']), 'native_ranking_source_changed')
     rows=d.admitted(corpus,admission)
-    d.h.require(Counter(r['split'] for r in rows)=={'train':44,'development':5},'native_ranking_roles')
+    actions='nativeActions' in corpus['sources']
+    configuration=ACTION_CONFIG if actions else NATIVE_CONFIG
+    d.h.require(Counter(r['split'] for r in rows)=={'train':68 if actions else 44,'development':5},'native_ranking_roles')
     deriv_path=d.h.local(derivatives);deriv=sealed(deriv_path,'ranking-inspection-derivatives-v1')
     d.h.require(deriv['identity']==derivative_identity() and deriv['trainingEligible'] is False,'native_ranking_derivatives')
     inspection=sealed(d.h.checked(d.h.ROOT,deriv['inputs']),'calibration-proposals-v1')
@@ -401,24 +405,24 @@ def prepare_native(output, admission_root, derivatives):
     prior=d.h.read(d.h.ROOT/'reports/work/COVERAGE-70/comparison.json')
     old={r['id']:r['prediction']['changeProbability'] for r in prior['results'] if r['model']=='DTM013' and r['condition']=='baseline'}
     d.h.require(len(old)==37 and all(abs(r['prediction']['changeProbability']-old[r['id']])<=1e-6 for r in scores if r['id'] in old),'native_ranking_control_parity')
-    reference=d.h.ROOT/'NativeUITrainer/focus_ring_runs/rank75-dtm016/last.pt';reference_ref=d.h.ref(reference)
+    reference=d.h.ROOT/('NativeUITrainer/focus_ring_runs/size81-dtm019/last.pt' if actions else 'NativeUITrainer/focus_ring_runs/rank75-dtm016/last.pt');reference_ref=d.h.ref(reference)
     original=torch.load(reference,map_location='cpu',weights_only=True)
-    d.h.require(original['version']==VERSION and original['configuration']==CONFIG,'native_ranking_reference_configuration')
-    reference_net=model(torch);reference_net.load_state_dict(original['state'],strict=True);reference_net.eval()
-    with torch.inference_mode():values=reference_net(torch.from_numpy(data)).flatten().numpy()
+    d.h.require(original['version']==VERSION and original['configuration']==(SIZE_CONFIG if actions else CONFIG),'native_ranking_reference_configuration')
+    reference_net=model(torch,original['configuration']);reference_net.load_state_dict(original['state'],strict=True);reference_net.eval()
+    with torch.inference_mode():values=reference_net(torch.from_numpy(features(data,inputs,original['configuration']))).flatten().numpy()
     selected={};cursor=0
     for f in bound_frames:
         n=len(f['candidates']);selected[f['id']]=choose(f['candidates'],values[cursor:cursor+n]);cursor+=n
-    baseline=[dict(id=r['id'],split=r['split'],newNative=r['id'] not in old,
+    baseline=[dict(id=r['id'],split=r['split'],newNative=r['id'].startswith(corpus['sources']['nativeActions']['sha256']+':') if actions else r['id'] not in old,
         selected=[selected[v['sha256']] for v in r['images']],boxIoUs=[iou(selected[v['sha256']]['bounds'],box) for v,box in zip(r['images'],r['boxes'])]) for r in rows]
     d.h.write(out/'reference.json',dict(version='native-ranking-reference-v1',model=reference_ref,
         inputs=d.h.ref(out/'inputs.json'),results=baseline),sealed=True)
     d.h.require(control_ref==d.h.ref(control_path) and reference_ref==d.h.ref(reference),'native_ranking_model_changed')
-    doc=dict(version=VERSION,configuration=NATIVE_CONFIG,pins=pins(),bank=d.h.ref(out/'bank.json'),
+    doc=dict(version=VERSION,configuration=configuration,pins=pins(),bank=d.h.ref(out/'bank.json'),
         supervision=d.h.ref(out/'supervision.json'),control=d.h.ref(out/'control.json'),reference=d.h.ref(out/'reference.json'))
     doc['protocolSHA256']=d.h.digest(doc);d.h.write(out/'protocol.json',doc)
     d.h.write(out/'approval.json',dict(version='ranking-approval-v1',approved=True,protocolSHA256=doc['protocolSHA256'],
-        arm=ARM,runName='native79-dtm017',decisionReference='Maintainer explicitly approved capture/training/promotion subject to gates after approving the exact12pair role change; scoped BATCH79 comparison,600epochs,44/5roles,2GiB,no wall-time cap. No capture needed or promotion authorized without passed gates.'))
+        arm=ARM,runName='native87-dtm020' if actions else 'native79-dtm017',decisionReference=('Maintainer approved exact24pair admission and controlled comparison; NATIVE87,600epochs,68/5roles,size-aware model,2GiB,no-wall-time override,no promotion.' if actions else 'Maintainer explicitly approved BATCH79 comparison,600epochs,44/5roles,2GiB,no wall-time cap; no promotion.')))
     d.h.write(out/'preparation.json',dict(elapsedSeconds=time.monotonic()-start,images=len(bound_frames),
         nativeCropInvocations=0,controlOriginal37Parity=True,trainingLaunched=False),sealed=True)
     print(doc['protocolSHA256'])

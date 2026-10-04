@@ -1399,4 +1399,305 @@ from independently validated geometry. Keep same Fixture ancestry out of final e
 Companion: fresh matching-helper exact-target readiness, without capture over unknown
 cleanup. Preserve operation identity and request source/recovery action via owned SMB
 metadata. No automatic restart, repeated reconciliation or physical fallback.
+
+### NATIVE84 — source-backed rich and collection compatibility
+
+Source50ff7fd8216182edb218147141851a24ca50e461 is now local. Extend existing
+recipe hashing and native scene/semantic validation for NativeTable version2 and
+native_collection_v1. Mirror FixtureAppearance validation/canonical order and measured
+visible/excluded membership from ProceduralSceneView; requested focus never supplies
+labels. Preserve nativeTable v1 and all historical hashes. Offscreen/clipped siblings
+are exclusions, not invented boxes; focused targets must remain visible and measured.
+Run existing intake entrypoints on retained24rich/36collection cases plus12legacy
+table cases. Add negative contract tests and full offline checks. Qualify only actual
+passing contracts; retain all remaining typed failures. No capture, admission, training
+or model promotion in this compatibility tranche. Reuse raw bundles and crop tools.
 One focused Python suite and integrated offline Swift pass; no training/capture.
+
+### NATIVE85 — retained coverage before another acquisition
+
+Companion to NATIVE84: audit all 60 newly inspectable pairs using sealed intake
+reports and unchanged source bytes. Report appearance versus action-recorded pairs,
+observed scroll states, declared themes, measured focused-body sizes, exact pixel
+overlap and shared ancestry. Preserve calibration roles. Do not count appearance
+pairs as recorded directional actions or infer no-scroll from missing telemetry.
+Deliver exact candidate membership and remaining coverage gaps before proposing
+admission or further capture. No model execution, capture or role change.
+
+### NATIVE86 — action membership and reusable calibration proposals
+
+Rebuild the24recorded-action pairs through existing strict transition validators.
+Keep36appearance pairs in their visual-focus lane: they are not action-recorded
+examples. Compare decoded pixels with current44train/5development using the same
+RGBA convention; preserve old records and roles. Propose exact new train membership,
+never publish an approved admission. Shared Fixture ancestry excludes final use.
+Batch automatic Vision/raster proposals on48frames via the existing inspector,
+bounded40images per call; separate scoring labels and image-only candidates. Reuse
+native probe/crop architecture; no new trainer, simulator setup, training or promotion.
+Report candidate recall, missing positives, batch cost and the exact consent needed.
+
+### NATIVE87 — guarded admission integration
+
+Complete the existing86CLI admission path while the exact24pair decision is pending.
+Bind old corpus/admission file identities, exact new member digest and fresh source
+reconstruction. Preserve44/5records, exclusions and assignments; reject any new role
+other than train and all group/pixel leakage. Extend the existing collector with an
+optional source, not a parallel trainer. Generated approvals are in-memory tests only.
+Verify the real CLI rejects the retained unapproved decision before creating output.
+Include newly used native validators in future experiment dependency pins; preserve
+old experiment seals. No real admission, training or capture without pending authority.
+
+Maintainer approved the exact24pair role change during NATIVE87. Materialize68/5,
+merge retained image-only banks, reuse all crops, then one DTM020comparison against
+DTM019 on identical131images/3069candidates. Same size-aware architecture, seed42,
+600epochs, Adam0.001, full122unique-training-frame batch, CPU2threads, fixed-last,
+2GiB/no-wall-time override. New source variety is the changed factor; no tuning on
+Settings. DTM013change control remains fixed and separately reported. No promotion.
+
+### NATIVE88 — frozen failure decomposition
+
+Diagnose DTM020's remaining exposed Settings rankings from retained replay; report
+correct-candidate rank and selected geometry without tuning thresholds. Independently
+replay frozen DTM018change head on the73admitted pairs using49retained encodings plus
+24new encodings. Verify old prediction parity; pair with frozen DTM020boxes only as
+a labeled diagnostic combination. No training or final-evaluation claim. Preserve
+model/input hashes and report joint correctness only after confidence abstention.
+
+### NATIVE89 — fixed paired-logit diagnostic and runtime response
+
+FrozenDTM020scores only. For predicted changes from frozenDTM018, match automatic
+candidates across frames by maximal IoU (minimum0.5, stable ID tie-break) and rank
+current-minus-counterpart logit. Predicted no-change retains static ranking; unknown
+change abstains. Unmatched candidates cannot invent an opposite score. This tests
+stationary-distractor cancellation, not robust optical correspondence. Predeclare
+the rule before results; no threshold tuning or training. Report old/new/Settings,
+stationary/scrolling where verified, unmatched support and failures. Runtime companion
+is read-only matching-helper readiness if coordinator exists; never restart from
+stale markers. Publish actionable exact-host outcome to existing TTR request.
+
+### Next integrated tranche — focus reliability
+
+Planning revision October 3, 2026. Keep change detection and candidate selection
+separate: the retained DTM018+DTM020 composition gives 65/68 confident joint training
+decisions and 2/5 exposed Settings pairs. DTM023 gives 67/68 training decisions but
+35/122 confident false changes on identical-frame probes; it remains rejected.
+This contract defines the next substantial tranche, not a new data-use approval.
+
+#### A. Controlled false-change repair
+
+Question: does explicitly teaching unchanged native appearance remove DTM023's
+appearance shortcut without sacrificing genuine focus changes?
+
+- Reuse existing adaptation/training entrypoints and source-verified endpoint bank.
+  Prepare exactly 122 deduplicated training-frame self-pairs, each with both inputs
+  identical and derived label unchanged. Exclude all nine development frames and
+  any connected cross-split conflict. Keep derivation and original membership explicit.
+- Training admission of these derived examples requires the outstanding maintainer
+  decision. Preparation and guard tests can proceed independently. Genuine animated
+  or boundary no-ops are not established by these constructed examples.
+- After approval, predeclare one comparison: DTM023's 192×128 nine-channel architecture,
+  DTM018 zero-expanded initialization, 600 epochs, Adam 0.0001, seed42, CPU two threads,
+  fixed-last selection, existing 0.85 confidence threshold, frozen geometry/DTM020
+  ranking, 2GiB new-output cap and standing no-wall-time override. Original 68 pairs
+  and 122 derived pairs form one full batch; compute each group's mean loss separately
+  and combine with equal group weight, fixed before launch. No sweep or retry by default.
+- Report original44, added24, all20 genuine admitted no-ops, three difficult native
+  transitions, 122 self-pairs and five exposed Settings pairs separately. Original
+  pairs retain their existing roles. Compare both DTM018 and rejected DTM023.
+- Advancement requires zero confident false changes on training self-pairs, retention
+  of all20 admitted no-ops, at least 65/68 original confident joint decisions, and
+  no regression on exposed Settings. Report raw errors and abstentions as well;
+  passing self-pairs after training on them is fit/consistency evidence, not independent
+  robustness. Genuine matched native negatives remain necessary for broader confidence.
+- If the comparison fails, preserve evidence and identify which subgroup regressed
+  before proposing another run. Do not mask the failure with an equality override.
+
+#### B. Independent candidate-selection diagnosis
+
+Question: why does DTM020 choose the wrong region when the correct region is available?
+
+Use frozen candidate scores and existing original pixels, with no new capture or
+training. Reproduce the five wrong Settings endpoint occurrences and account for
+shared frames. Extend the analysis to all admitted training/development frames:
+correct-candidate rank, score margin, normalized size, containment/overlap and visible
+content. Truth boxes are used for grading only, never as prediction inputs. Produce
+one grouped Markdown review with focused examples and machine-readable measurements.
+
+Distinguish insufficient proposal coverage from ranking failure and correlated
+examples from independent support. Confirm whether small true controls exist before
+proposing size-based interventions. Fixed paired-logit subtraction already failed
+NATIVE89; do not rerun it unchanged. Deliver a specific, testable ranking hypothesis
+with its supported counterexamples or an explicit missing-coverage requirement.
+Any subsequent trained ranker comparison needs its own predeclared experiment scope.
+This work is independent of A's role decision and producer availability.
+
+#### C. Independent evaluation and retained intake
+
+Extend EVAL90 rather than create another evaluation protocol. Define proposed native
+app/screen-family/journey groups, action matrix, label sources and intended validation
+versus final roles. New filenames or new Settings branches alone do not establish
+independence; group shared journeys, layouts and duplicate-connected content before
+role assignment. Actual capture and membership reservation retain their prerequisites.
+
+For TTR's Settings mapping, consume verified branch-sized batches: ordinary before/after
+screenshots, action/settling evidence, observed focus, visible-body boxes, profile and
+restoration provenance, completeness, OS/device configuration and ancestry. High
+Contrast may support identity but its outline is not ordinary rendered-body geometry.
+Include boundary no-ops, same-focus changing content, scrolling identity changes,
+entry/back and small positive controls where reachable. Reserve unexposed groups
+before model selection; the five existing Settings pairs remain exposed development.
+
+Retained layout28 already has verified bytes (312 case files, 56 PNGs). When version16
+producer source becomes available locally, reconcile canonical fields/hashes and typed
+visibility against that exact source, extend existing validators and run positive and
+malformed-contract regressions. Account for all28 cases and use existing grouped review
+for uncertainty. Passing intake preserves calibration roles until a separate decision.
+Request source commit/branch when needed, never a producer build or recapture for this
+compatibility issue. Missing source blocks this intake only.
+
+#### Integrated acceptance
+
+One concise handoff covers A/B/C, references executable results, and names unfinished
+role/source/capture boundaries. Code changes require focused behavioral regressions,
+actual existing-entrypoint verification and one integrated offline Swift build/test.
+Documentation-only planning uses content/link/diff review. Preserve the current
+experimental references until replacement criteria pass; final qualification and
+export/promotion remain separate. Do not hold local diagnosis for TTR's complete map.
+
+### RESOLUTION96 — fixed higher-resolution change-head comparison
+
+One DTM023comparison: identical DTM022paired-context head,192×128change inputs
+instead of96×64. Same DTM018initializer with six zero-added channels,68train/5exposed
+development,600epochs,Adam0.0001,seed42,CPU2threads,fullbatch,fixed-last,no augmentation,
+2GiB/no-wall-time override. Geometry stays frozen at its original96×64contract;
+DTM020boxes stay fixed. The checkpoint must declare the change input size separately;
+do not feed192inputs to the old full geometry forward pass. Verify initializer parity
+against the original difference head at192, and frozen control at96. Reuse saved96
+arrays only after corpus/row binding; freshly encode192with source hashes checked.
+Require old44/no-op confident retention and native p2correction; report Settings
+separately, no final generalization or automatic sweep. Add shape/serialization
+regressions and one integrated offline check. Independent companion: compare frozen
+DTM018/DTM023on deduplicated self-pairs of the existing endpoint encodings (same
+frame twice), reporting false changes/abstentions without admitting these constructed
+examples to training or calling them genuine navigation evidence. TTR source/acknowledgment check remains
+read-only unless a fresh response unblocks retained layout28intake.
+
+### SIGNAL95 — resolution evidence before another experiment
+
+Diagnose all73existing admitted pairs at96×64,192×128,384×256 using the same
+letterbox/bilinear convention. Verify96×64arrays exactly against CONTEXT93saved
+inputs. Decode each pair once; retain numeric metrics only, not another screenshot
+tree. Report whole-frame and known-focus-region absolute difference, nonzero support,
+and exact before/after equality. Truth regions are diagnostic, never prediction
+inputs. Compare failed p2cases and uncertain no-ops with complete grouped summaries;
+no classifier threshold selection or independent-evaluation claim. Independently audit
+changed/unchanged support by source and report missing matched native negatives to
+TTR without granting capture or data roles. Add generated
+tests for sparse details, viewport mismatch and bounds. No training/capture.
+Source-backed INTAKE94 remains blocked until version16source arrives; do not poll
+unchanged status or invent its canonical hash contract. Next experiment selection
+must follow this evidence, not an automatic resolution sweep.
+
+### CONTEXT93 and INTAKE94 — paired-context comparison and layout28 intake
+
+DTM022 tests one architecture change: change-head input is absolute RGB difference
+plus ordered before/after RGB (9channels). Start from DTM018; copy its first3channel
+weights to the difference channels and zero the6new channels. Verify initial
+prediction parity. Keep downstream head, geometry, ranker, approved68/5membership,
+96×64encoding,600epochs,Adam0.0001,seed42,fullbatch,CPU2threads,fixed-last,2GiB cap
+and no-wall-time override unchanged from CHANGE92. Compare against DTM018 and the
+rejected DTM021; no threshold tuning, automatic second candidate or promotion.
+Require no regression in old44/no-op confident correctness, correction of the three
+native misses, and report exposed Settings separately. This remains a fit diagnostic,
+not independent generalization. Extend existing model/adapter and test exact initial
+and saved-checkpoint parity, frozen geometry and rejection of incompatible shapes.
+
+Independently receive the named native-layout-diversity28 archive via existing
+bounded receiver; verify mount, space, bytes/hash and safe extraction, publish an
+exact receipt. Reuse intake accounting to report every24appearance/4transition
+case with strict existing validators; unknown version16/native-collection-v2 must
+remain rejected until source-backed reconciliation. Preserve producer originals,
+calibration roles and ancestry. No capture, producer edits or new training admission.
+If producer source remains unpublished, return exact incompatibility and retain
+bytes for the next source update. Run focused tests and integrated offline checks
+once; one combined handoff records both lanes and next action.
+
+### CHANGE92 — admitted native-action adaptation and preparation reuse
+
+One local experiment: DTM021 continues DTM018's existing change head using the
+approved NATIVE87 corpus,68train/5exposed development.600epochs,Adam0.0001,
+seed42,CPU2threads,full68pair batch,no augmentation,fixed-last,2GiB output cap and
+standing no-wall-time override. Geometry weights and DTM020rank predictions remain
+frozen. Compare against NATIVE88's exact DTM018 predictions on identical membership.
+Report original44,added24,all20no-op retention,the three p2misses,abstentions and
+joint decisions. No independent generalization or promotion claim, automatic retry,
+new architecture, role changes, capture or export.
+
+Extend the existing adaptation dispatcher, not another trainer. Verify initialization
+and saved checkpoint prediction parity, unchanged geometry, protocol/source binding,
+missing approval and incompatible membership. Record exact protocol before launch.
+As the independent optimization, return already validated reviewed frames with the
+readiness audit so semantic preparation does not traverse the same baseline twice.
+Reuse only within that call; no global or persistent validation cache. Preserve old
+entrypoint output shape and compare full73record reconstruction. Also pin the new
+decoded-identity helper in model-independent prepared input signatures.
+Run focused tests then one integrated offline build/test. TTR's new layout28data
+remains calibration; independent intake is subsequent work, not experiment input.
+
+### PREP91 — single-decode preparation and remaining change-error review
+
+Optimize endpoint record construction only: reuse one validated PNG decode for
+dimensions and the existing RGBA decoded-pixel hash. Preserve source byte checks,
+20-million-pixel limit, alpha, geometry, membership and historical seals. No persistent
+cache or skipped validation. Compare the full 73-record reconstruction with the
+retained NATIVE87 corpus and profile before/after; report instrumentation overhead.
+Test transparent images, corruption, altered bytes and viewport mismatch. Run focused
+tests and integrated offline Swift checks. Independently inspect NATIVE88's three
+remaining change errors and document the next discriminating test without tuning,
+training, new data roles or capture. One handoff records both outcomes.
+
+### EVAL90 — independent transition evidence acquisition contract
+
+Audit current admitted membership and retained calibration lineage before further
+evaluation claims. The current68train/122unique pixels form one Fixture-renderer
+group;5development/9pixels form one exposed Settings journey. The unused36appearance
+pairs remain Fixture-related and lack action evidence. Neither a new seed, native
+table/collection adapter, nor new file hash creates an independent final group.
+
+Two separate data lanes remain necessary:
+1. **Training coverage:** small genuinely focusable controls, bright unfocused
+   distractors, enclosing regions, stationary moves, no-ops and scrolling examples.
+   Existing Fixture capabilities can supply these, subject to source qualification
+   and exact membership admission. Keep all renderer-connected data out of final.
+2. **Independent native evaluation:** previously unused app/screen-family/journey
+   groups, not copies of exposed Settings or Fixture lookalikes. Propose one native
+   source for validation and another for final challenge; Home and actual Photos
+   are candidates only after availability, safe-navigation scope and independence
+   review. Do not call prospective slots reservations or silently relabel old data.
+
+Before capture, record app/version, screen family, journey boundary, role, ancestry,
+supported action matrix and label method in the existing reservation-v2 format.
+Group related frames, repeats and duplicate-connected sources before assigning roles.
+Freeze counts from the source's actual reachable matrix, not an invented universal
+quota. Include moved/unchanged focus crossed with stationary/scrolling where supported;
+unreachable cells remain coverage gaps. Native observed focus or human-confirmed
+boxes supply labels; requested focus and model predictions never do. For external
+native UI without reliable telemetry, capture only approved read-only paths and use
+the established human review workflow before quantitative acceptance.
+
+Use one healthy, bounded serial capture session after exact-target readiness and
+cleanup recovery. Retain action-linked before/after frames, timing, observed focus,
+source bytes and postflight health. Do not execute from this planning contract.
+Exact execution/role decisions remain separate. Unknown dialogs or settings mutation
+stop that path; no Office fallback. TTR confirms capability gaps under its own scope.
+
+At intake, verify all bytes, labels, temporal order, geometry and connected-group
+isolation. Freeze validation and final membership before model/threshold selection.
+Use validation for model choice. Score final once after the candidate/protocol freeze;
+report pair-level correctness, wrong/no-focus/abstentions, candidate recall and full
+pipeline latency. Repeated development findings cannot become final evidence.
+Sample counts and source count bound the claim; no universal accuracy promise.
+
+Acceptance: actual versioned eligible membership with no connected-group leakage,
+complete action accounting, reviewed labels and declared use. Until those exist,
+the deliverable is an acquisition plan with concrete blockers—not a frozen corpus.
