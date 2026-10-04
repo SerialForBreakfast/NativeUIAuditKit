@@ -25,7 +25,14 @@ def endpoint(root, evidence, record, role):
     return result
 
 
-def validate_case(root,evidence,case):
+def stationary_condition(condition):
+    """Semantic normalization only; preserve original source specification bytes."""
+    return {'focus_moved':'interior_switch','boundary_unchanged':'boundary_noop',
+        'interior_switch':'interior_switch','boundary_noop':'boundary_noop'}.get(condition)
+
+
+def validate_case(root,evidence,case, *, stationary=False, directional=False):
+    h.require(not (stationary and directional),'conflicting_transition_modes')
     d=h.read(evidence)
     reference = (case['recipe'].get('appearance') or {}).get('referencePack')
     ancestry = case['independence_group']
@@ -53,8 +60,36 @@ def validate_case(root,evidence,case):
     seq=[r['sequence'] for r in receipts]
     h.require(all(type(n)is int and n>0 for n in seq) and seq==sorted(set(seq)),'case_action_sequence')
     condition=d['specification']['condition']
-    h.require(condition in ('boundary_unchanged','content_only','scroll_unchanged','scroll_moved'),'case_condition')
-    if condition!='boundary_unchanged':
+    allowed=('boundary_unchanged','content_only','scroll_unchanged','scroll_moved')
+    normalized=stationary_condition(condition) if stationary else None
+    h.require(normalized is not None if stationary else condition=='focus_moved' if directional else condition in allowed,'case_condition')
+    if stationary:
+        from inventory_transition_sources import observed_scroll
+        h.require(d.get('cleanup')=='verified','stationary_cleanup')
+        h.require('action_receipt' in d and 'mutation_receipt' not in d,'stationary_action_only')
+        h.require(all((item.get('scroll_container_id') is None)==(item.get('scroll_offset_points') is None)
+            for e in d['endpoints'] for k in ('before_scene','after_scene')
+            for item in e['capture_endpoint'][k].get('semantic_inventory',{}).get('elements',[])),
+            'stationary_partial_offset_evidence')
+        h.require(observed_scroll(d)[0] is False,'stationary_offsets_unverified_or_changed')
+        h.require((b['focus']!=a['focus'])==(normalized=='interior_switch'),'stationary_focus_relation')
+        h.require(b['focus']==case['transition']['initial_focus'] and
+                  a['focus']==case['transition']['expected_focus'],'stationary_focus_intent_mismatch')
+        owners={b['focus'],a['focus']}
+        h.require(all(owners<={c['id'] for c in e['controls']} for e in (b,a)),
+                  'stationary_owners_not_visible_in_both_frames')
+        h.require(all(e['capture_endpoint'][k].get('fixture_run_id')==d['run_id']
+            for e in d['endpoints'] for k in ('before_scene','after_scene')),'stationary_bracket_instance')
+    elif directional:
+        # NativeTable v1 source f933e299: a focus move is not a no-scroll assertion.
+        canvas=(case['recipe'].get('appearance') or {}).get('canvas') or {}
+        h.require(canvas.get('presentation')=='native_table_v2' and
+            (canvas.get('nativeTable') or {}).get('version')==1,'directional_source_contract')
+        h.require(d.get('cleanup')=='verified' and 'action_receipt' in d and
+            'mutation_receipt' not in d,'directional_action_cleanup')
+        h.require(b['focus']!=a['focus'] and b['focus']==case['transition']['initial_focus'] and
+            a['focus']==case['transition']['expected_focus'],'directional_focus_relation')
+    elif condition!='boundary_unchanged':
         m=d['mutation_receipt'];c=m['command']
         h.require(m['state']=='observed' and c['run_id']==d['run_id'] and c['event_id']==d['event_id'] and
                   c['generation']==b['scene']['focus_observation']['generation'] and

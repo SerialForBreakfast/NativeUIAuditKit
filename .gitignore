@@ -145,6 +145,8 @@ reports/work/OS-FOCUS-03/**/*.mp4
 /reports/work/**/*.stdout
 /reports/work/**/*.json
 /reports/work/**/*.jsonl
+/reports/work/**/*.npy
+/reports/work/**/*.npz
 /reports/work/**/*.csv
 /reports/work/**/*.tsv
 /reports/work/**/*.png
@@ -282,6 +284,7 @@ reports/work/FOCUS-ALIGNMENT-12/*.log
 /reports/work/FOCUS-LOCAL-PLAN-18/artifacts/
 /reports/work/FOCUS-CAMPAIGN-INTAKE-19/artifacts/
 /reports/work/FOCUS-READINESS-20/artifacts/
+/reports/work/NATIVE-INTAKE-83/received/
 /reports/storage/locations.json
 # Local SSD compatibility exports; labels/caches stay local, pixels are linked.
 /NativeUITrainer/yolo_dataset_r7_ssd03/

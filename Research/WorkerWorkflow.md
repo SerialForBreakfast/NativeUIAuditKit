@@ -150,6 +150,11 @@ Ignored artifacts are retained locally, never automatically deleted; a hash inde
 does not replace an independently verified backup. Tests must not depend on prior
 reports/work output. Keep reusable test inputs generated or under deliberate fixtures.
 
+Use the [campaign-sized acquisition policy](IterationEfficiency.md#campaign-sized-acquisition-experiment-sized-learning--october-3)
+to group acquisition and experiments. Reuse existing journal and prepared-input
+entrypoints, not another lifecycle manager. A changed model does not itself justify
+new capture. Data roles and execution retain explicit approval boundaries.
+
 Use [IterationEfficiency.md](IterationEfficiency.md) for change-scoped verification:
 focused behavioral checks during edits, required full offline checks at integrated
 code handoff, and full data/model gates only at their qualification boundaries.

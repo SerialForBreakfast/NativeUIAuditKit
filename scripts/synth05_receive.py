@@ -30,15 +30,21 @@ def bounded_members(archive):
     return safe_members(members)
 
 
-def receive(share, root):
+def receive(share, root, entries=None):
+    # Explicit assigned handoffs may reuse this receiver; historical CLI unchanged.
+    entries = ENTRIES if entries is None else entries
+    require(entries and len(entries) <= 16 and len({e[0] for e in entries}) == len(entries), 'transfer_entries')
+    for name, size, expected in entries:
+        require(Path(name).name == name and name.endswith('.tar.gz') and size > 0 and
+                len(expected) == 64 and all(c in '0123456789abcdef' for c in expected), 'transfer_entry')
     require(not any(p.is_symlink() for p in (root, *root.parents)), 'symlink_output')
     root = root.resolve()
     require(root.is_relative_to(ROOT) and not root.is_symlink(), 'output_boundary')
-    require(shutil.disk_usage(ROOT).free > sum(e[1] for e in ENTRIES) + 5_000_000_000,
+    require(shutil.disk_usage(ROOT).free > sum(e[1] for e in entries) + 5_000_000_000,
             'insufficient_storage_reserve')
     root.mkdir(parents=True, exist_ok=True)
     receipts = []
-    for name, size, expected in ENTRIES:
+    for name, size, expected in entries:
         source, target = share / name, root / name
         require(source.is_file() and not source.is_symlink() and source.stat().st_size == size,
                 'source_size')

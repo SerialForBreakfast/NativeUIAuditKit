@@ -41,6 +41,18 @@ def endpoint_summary(rows):
     return result
 
 
+def fitted_summary(scores,training_ids):
+    if training_ids is None:
+        return dict(available=False,reason='legacy_result_missing_fitted_membership')
+    d.h.require(isinstance(training_ids,list) and training_ids and
+        all(isinstance(v,str) for v in training_ids) and len(set(training_ids))==len(training_ids),'invalid_fitted_ids')
+    fitted=[r for r in scores if r['id'] in training_ids]
+    d.h.require(len(fitted)==len(training_ids) and all(r['split']=='train' for r in fitted),'fitted_membership_mismatch')
+    unfitted=[r for r in scores if r['split']=='train' and r['id'] not in training_ids]
+    return dict(available=True,ids=training_ids,fitted=d.summarize(fitted),
+        otherTrainRole=d.summarize(unfitted),limitation='Fitted-set accuracy is optimization evidence, not generalization.')
+
+
 def run(result_path,output):
     path=d.h.local(result_path);out=d.h.fresh(output);result=d.h.read(path)
     d.h.require(result['version']=='focus-direct-result-v1','result_version')
@@ -69,7 +81,7 @@ def run(result_path,output):
             rawChangeCorrect=(p['changeProbability']>=.5)==r['changed'],bothBoxesCorrect=min(overlaps)>=.5,baseline=r['baseline']))
     report=dict(version='direct-checkpoint-evaluation-v1',**d.h.FLAGS,source=d.h.ref(path),model=result['model'],
         summary={split:d.summarize([r for r in scores if r['split']==split]) for split in ('train','development')},
-        results=scores,checkpointParityPassed=True,
+        results=scores,checkpointParityPassed=True,fittedMembership=fitted_summary(scores,result.get('trainingIDs')),
         localization={split:endpoint_summary([r for r in scores if r['split']==split]) for split in ('train','development')},
         timing=dict(loadSeconds=load_seconds,firstPairSeconds=first,warmSamples=len(warm),
             warmMedianSeconds=statistics.median(warm),warmP95Seconds=float(np.quantile(warm,.95)),

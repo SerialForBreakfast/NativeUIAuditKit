@@ -63,10 +63,17 @@ func run(output: FileHandle) throws {
           imageRoot.path != "/",
           FileManager.default.fileExists(atPath: imageRoot.path) else { throw ToolError.outsideRoot }
     var inputs: [(Item, CGImage)] = []
+    // One immutable snapshot per path for this request only; never reuse across jobs.
+    var decoded: [String: (hash: String, image: CGImage)] = [:]
     var totalPixels = 0
     for item in r.items {
         guard !item.id.isEmpty, item.bounds.count == 4, item.bounds.allSatisfy(\.isFinite) else { throw ToolError.invalidRequest }
         let url = try checked(item.path, root: imageRoot)
+        let image: CGImage
+        if let cached = decoded[url.path] {
+            guard cached.hash == item.sha256 else { throw ToolError.changedImage }
+            image = cached.image
+        } else {
         let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
         guard size > 0, size <= 32 * 1024 * 1024 else { throw ToolError.invalidImage }
         let bytes = try Data(contentsOf: url)
@@ -77,10 +84,14 @@ func run(output: FileHandle) throws {
               let width = props[kCGImagePropertyPixelWidth as String] as? Int,
               let height = props[kCGImagePropertyPixelHeight as String] as? Int,
               width > 0, height > 0, width <= 40_000_000 / height,
-              let image = CGImageSourceCreateImageAtIndex(src, 0, nil) else { throw ToolError.invalidImage }
-        let b = item.bounds
+              let loaded = CGImageSourceCreateImageAtIndex(src, 0, nil) else { throw ToolError.invalidImage }
         totalPixels += width * height
         guard totalPixels <= 80_000_000 else { throw ToolError.invalidImage }
+        image = loaded
+        decoded[url.path] = (item.sha256, image)
+        }
+        let width = image.width, height = image.height
+        let b = item.bounds
         let contained = b[0] >= 0 && b[1] >= 0 && b[0]+b[2] <= Double(width) && b[1]+b[3] <= Double(height)
         let intersects = b[0]-b[2]*0.16 < Double(width) && b[1]-b[3]*0.16 < Double(height) && b[0]+b[2]*1.16 > 0 && b[1]+b[3]*1.16 > 0
         guard b[2] > 0, b[3] > 0, b.allSatisfy({ abs($0) <= 80_000 }),

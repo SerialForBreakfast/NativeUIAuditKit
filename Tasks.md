@@ -1,5 +1,119 @@
 # NativeUIAuditKit — Tasks
 
+## Blocked after inspection — NATIVE-INTAKE-83 / Codex
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#native83--retained-collection-intake-and-local-runtime-diagnosis).
+Receive/verify new36collection pairs; account for bytes, decode and current consumer
+rejections without unpublished-source admission. Companion: exact local runtime
+readiness and retained cleanup diagnosis. No capture over unresolved operation.
+Receipt published/read back for41,011,908-byte archive and8,143-byte report. Actual
+consumer verifies408members/72unique images, but24appearance cases reject planned_focus
+and12transition cases reject native_verification_mode. Matching source unavailable.
+15Python/134Swift pass. Local simulator9026... remains blocked on persisted operation
+63CC9F0D-E2D1-4262-85E0-5E407CD34804; infrastructure ready, no new capture attempted.
+[Handoff](reports/work/NATIVE-INTAKE-83/handoff.md). Resume after source publication
+and supported local cleanup recovery. Sender cleanup/peer acknowledgment unverified.
+
+## Review — INTAKE-82 / Codex (portable intake and admission guards)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#intake82--portable-intake-and-admission-regression-boundary).
+Bind retained selection to completed export receipts and original manifest bytes;
+test malformed/missing evidence without private corpora. Companion: make exact-role
+admission regressions generated and portable. Re-run actual retained intake with
+complete accounting, no rich-v2 admission, capture or training. Source still f933e299.
+Complete: nine portable tests plus three retained integration checks pass; actual
+CLI accounts for36pairs/72unique images,12inspection passes/24unsupported-rich
+rejections unchanged. Offline Swift build/134tests pass. No new data admission.
+[Handoff](reports/work/INTAKE-82/handoff.md). Rich intake resumes when the matching
+rich-v2 source contract is available locally; no binary handoff or recapture needed.
+
+## Review — SIZE-81 / Codex (size-aware ranker and coverage audit)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#size81--restore-candidate-scale-to-visual-ranking).
+One DTM019comparison adds normalized candidate width/height to unchanged crop inputs
+and44/5membership. Same600epoch budget, matched visual initialization, zero new crops.
+Audit small-control support independently; no hard size filter or promotion.
+Completed: DTM019 preserves 88/88 training endpoints; exposed Settings improves
+1/10 → 2/10 endpoints but remains 0/5 complete pairs. Reused all crops; preparation
+0.387s, fit 1.415s. 21 Python and 134 Swift tests pass; checkpoint replay matches.
+Small true controls are absent despite small negative proposals. Published this
+coverage consequence to TTR with readback; peer acknowledgment remains unverified.
+[Handoff](reports/work/SIZE-81/handoff.md). Next: source-backed retained rich24
+intake, grouped missing-coverage acquisition and independent evaluation reservation,
+not another unchanged training run. Capture/training/promotion authority is granted;
+exact runtime readiness, data-role decisions and qualification gates still apply.
+
+## Review — CHANGE-80 / Codex (native change adaptation and ranking diagnosis)
+
+[Contract](Research/Plans/FocusTransitionLearning49.md#change80--native-change-adaptation-and-ranking-diagnosis).
+One approved DTM018change-head-only fine-tune on44train/5exposed development, with
+DTM013geometry and DTM017box decisions frozen. Diagnose retained Settings ranks as
+the independent companion. No capture, new data roles, automatic sweep or promotion.
+DTM018complete: native change8/12→12/12,original32/32andSettings5/5retained.
+Geometry bit-exact; Settings joint remains0/5due to ranking. Diagnostic8/9wrong
+Settings endpoints select<100pxregions.21Python/134Swift pass.
+[Handoff](reports/work/CHANGE-80/handoff.md). Next size-aware ranker comparison,
+not an unchanged change-head rerun; independent model gates remain unmet.
+
+## Batch delivery — BATCH-79 / architect scoped; implementation unassigned
+
+[Canonical contract](Research/Plans/FocusTransitionLearning49.md#batch79--retained-data-to-reusable-experiment-campaign).
+Replaces repeated per-experiment setup with retained-source intake, incremental inputs
+and one missing-coverage session; it does not replace existing evidence or approvals.
+
+| Slice | State / next action | Acceptance |
+|---|---|---|
+| BATCH-79-A retained rich intake | Blocked on source publication; fresh local HEAD remains f933e299. Reuse76's24bundles, no recapture. | Actual strict intake accounts for every member, observed coverage reconciled with stationary catalog, exact role proposal. |
+| BATCH-79-B incremental ranker inputs | Review / Codex: cache software and approved44/5admission plus DTM017comparison complete. All88train endpoints fit; Settings1/10endpoints,0/5paired. Frozen change head misses4new native transitions.62Python/134Swift plus4protocol guards pass. [Software](reports/work/BATCH-79-B/handoff.md), [candidate handoff](reports/work/BATCH-79-B/native-handoff.md). | Real preparer reuses unchanged derivatives; parity/invalidation verified; authorized controlled candidate executed, no model gate passed. |
+| BATCH-79-C live campaign integration | Capture authority granted; blocked on source-backed case binding and exact runtime readiness. Journal alone is not a runtime controller. | One healthy session, bounded serial jobs, missing-only resume, full accounting/freeze and measured lifecycle cost. |
+
+Workflow review delivered into IterationEfficiency/WorkerWorkflow; A/B/C are not
+claimed implemented by documentation. No role change or model/device execution.
+
+## Review — NATIVE-PROPOSALS-78 / Codex (calibration candidate coverage)
+
+Batch automatic Vision/raster proposals on the12native-table calibration pairs while
+77role approval is pending. Reuse existing probe/proposers, no parameter tuning or
+truth-injected candidates. Account for all24endpoints and preserve label-free outputs
+separately from scoring. No admission, training, capture or model promotion.
+[Contract](Research/Plans/FocusTransitionLearning49.md#native-proposals78--calibration-coverage-before-training).
+Vision24/24,raster24/24coverage; union196candidates across24images, all24endpoints
+multi-positive. One successful native batch0.862s,total4.109s; source-only calibration
+bank reusable after a separately approved role binding. Restricted CVPixelBuffer
+failure preserved; scoped host execution passed.49Python/134Swift checks pass.
+[Handoff](reports/work/NATIVE-PROPOSALS-78/handoff.md).77role decision still pending.
+
+## Review — NATIVE-ADMISSION-77 / Codex (approved admission materialized)
+
+Rebuild12qualified native-table pairs from raw evidence, audit overlap/ancestry and
+coverage against32train/5development, and prepare exact44/5role proposal. Integrate
+optional collector/admission support with fail-closed explicit-decision tests; no
+admission, model launch, capture or independent-evaluation claim.
+[Contract](Research/Plans/FocusTransitionLearning49.md#native-admission77--exact-native-role-proposal).
+Proposal complete:12native table pairs,6light/6dark recipe themes, all changed,
+unknown scroll, no decoded overlap with existing32train/5development. Prospective
+44train(24changed/20unchanged)/5development, no independent final. Original37records
+and roles preserved.13Python/134Swift checks pass; collector rebuild49records exactly.
+No admission/training performed. [Proposal](reports/work/NATIVE-ADMISSION-77/proposal/proposal.json)
+and [handoff](reports/work/NATIVE-ADMISSION-77/handoff.md).
+
+Superseding continuation: maintainer approved the exact12pair role change and explicitly
+authorized capture/training/promotion subject to gates.44/5admission materialized and
+registered DTM017comparison completed. No new capture or promotion; transfer still
+fails. BATCH79owns integrated results in the native handoff above.
+
+## Review — NATIVE-INTAKE-76 / Codex (retained native coverage and throughput)
+
+Receive named TTR native-table-directional12/native-rich24 and throughput/grouped-r2
+handoffs through the approved receipt flow. Reuse bounded extraction and strict
+consumer entrypoints; account for all pairs and quarantine unsupported contracts.
+Review measured grouped throughput as the independent workflow companion. No capture,
+new data admission, training or producer edits. [Contract](Research/Plans/FocusTransitionLearning49.md#native-intake76--retained-native-coverage-and-throughput).
+36pairs/72distinct images copied/verified.12NativeTable-v1 directional pairs pass
+inspection;24rich-v2pairs blocked on missing published source contract. Unknown old
+table offsets remain unknown.57Python/134Swift tests pass. Exact four-artifact receipt
+published/read back; peer cleanup acknowledgment pending. [Handoff](reports/work/NATIVE-INTAKE-76/handoff.md).
+
 ## Review — SPATIAL-TRANSITION-56 / Codex (diagnostic complete; candidate gate failed)
 
 Implement and qualify spatial paired-frame localization, audit encoded-input ambiguity
@@ -28,13 +142,220 @@ specification below; no new capture or data admission is implied.
 - [x] 29Python/134Swift tests pass. No capture/export/promotion.
 [Handoff](reports/work/GLOBAL-CONTEXT-57/handoff.md).
 
-## Proposed — GEOMETRY-58 (next controlled model tranche)
+## Review — GEOMETRY-58 / Codex (diagnostic improved; full fit gate failed)
 
 Keep the context cell decoder and exact four-pair diagnostic; test non-saturating
 supervised geometry logits before any larger candidate. Same pixels, roles and
 gates; no threshold tuning or automatic retry. Pair with retained-source observation
 inventory for missing scroll/change fields.
 [Contract](Research/Plans/FocusTransitionLearning49.md#next-proposal--geometry58).
+- [x] DTM005120epoch diagnostic: change4/4,cells8/8,paired boxes2/4 (was0/4).
+- [x] DTM006 preparation rejects failed4/4gate; no larger run launched.
+- [x] Actual prediction CLI parity forDTM005/004/003/002;34Python/134Swift checks.
+- [x] Retained-source inventory:24Fixture pairs all observed scrolling;5Settings scroll unknown.
+- [x] Shared preparation/parity tools, centralized config lists, dynamic cell-count loss and PID receipts.
+[Handoff](reports/work/GEOMETRY-58/handoff.md). No capture, new admission or promotion.
+
+## Review — GEOMETRY-59 / Codex (paired fit3/4; candidate blocked)
+
+Test relative box-overlap supervision on the now-working context/cell/logit model;
+retain same4pairs/120epochs and conditional24/5candidate gate. Prepare a bounded
+no-scroll acquisition contract independently, without executing capture.
+[Plan](Research/Plans/FocusTransitionLearning49.md#next-proposal--geometry59).
+- [x] DTM006:3/4paired boxes,8/8cells,4/4change; one height remains collapsed.
+- [x] Conditional DTM007 refused by4/4gate; no larger run or promotion.
+- [x] Frozen24case no-scroll acquisition matrix; capture remains unauthorized.
+- [x] Focused38Python and134Swift checks pass; actual inference/legacy parity verified.
+[Handoff](reports/work/GEOMETRY-59/handoff.md).
+
+## Review — GEOMETRY-60 / Codex (diagnostic passed; full candidate underfits)
+
+Isolate geometry logit SmoothL1 versus BCE, retaining context/GIoU and fixed inputs.
+Same four-pair gate before any larger fit. Add per-coordinate gradient diagnostics
+to explain remaining thin-box failures, not another unchanged training run.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-proposal--geometry60).
+- [x] DTM007diagnostic4/4paired boxes,8/8cells,4/4change; exact gate passed.
+- [x] DTM008all24/5at30epochs: train paired8/24,change12/24; Settings paired0/5.
+- [x] Per-coordinate retained-checkpoint gradients explain stronger collapsed-height correction.
+- [x] Actual CLI parity for7checkpoints;40Python/134Swift checks pass. No promotion.
+[Handoff](reports/work/GEOMETRY-60/handoff.md).
+
+## Review — FIT-61 / Codex (full training fit passed; transfer fails)
+
+Test whether the unchanged logit/GIoU model can fit all24admitted pairs at120epochs
+versusDTM00830epochs. One fresh fixed-last run, no automatic follow-up. Integrate
+explicit fitted-subset summaries and separate fit/intake timing in evidence.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-proposal--fit61).
+- [x] DTM009120epochs: train24/24paired+change,48/48cells; minimum endpointIoU0.7596.
+- [x] Settings0/5paired,2/5change;3false changes. No transfer/production qualification.
+- [x] Historical gate compatibility, fitted-membership summaries and phase timing integrated.
+- [x]43Python/134Swift checks; actual CLI parity across8checkpoints.
+[Handoff](reports/work/FIT-61/handoff.md).
+
+## Review — TRANSFER-62 / Codex (sensitivity and stationary intake complete)
+
+FreezeDTM009; evaluate paired-frame order and bounded translations without training.
+Implement fixture-backed no-scroll consumer admission extension and prepare the
+specific producer request. Actual capture/new-data admission remain separately gated.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--transfer62).
+- [x]169frozen evaluations;5off-frame cases rejected. Reversal24/24training boxes;
+  translations11–12/24, Settings0/5where eligible. Baseline parity preserved.
+- [x]Explicit no-scroll CLI, native-offset/focus/cleanup rejection tests; no new admission.
+- [x]Producer compatibility request published/read back; acknowledgment pending.
+- [x]Retired two stale whole-file SMB publishers; no replacement bulk writer.
+[Handoff](reports/work/TRANSFER-62/handoff.md).
+
+## Review — ROBUSTNESS-63 / Codex (robustness gain, original-fit regression)
+
+One paired-translation training comparison on the existing24pairs, unchanged
+architecture/loss/120epochs; deterministic bounded training-only augmentation.
+Evaluate baseline/reversal/shifts and exposed Settings without tuning against them.
+Companion: reconcile retained source coverage against stationary intake, without
+new transfer/capture/admission. Producer compatibility response is asynchronous.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--robustness63).
+- [x]DTM010120epochs: shifts47/96→82/96; original24/24→18/24,Settings0/5.
+- [x]Exact schedule/geometry, full-fit gate, fixed-last and9checkpoint CLI parity.
+- [x]Retained audit40native cases:4no-scroll boundary+4content-only, no admission.
+- [x]82Python/134Swift checks; producer-facing coverage correction published/read back.
+[Handoff](reports/work/ROBUSTNESS-63/handoff.md).
+
+## Review — EXPOSURE-64 / Codex (trained-view fit restored; transfer unqualified)
+
+One fixed600epoch augmented fit tests equal average per-view exposure versus
+DTM009120unaugmented epochs. No new architecture/data roles; no additional run.
+Companion: evaluate frozen DTM009/010 on the8retained native no-scroll negative
+pairs as calibration-only evidence, preserving their legacy conditions and grouping.
+New training admission or capture remains separately gated.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--exposure64).
+- [x]DTM011600epochs: original24/24, trained shifts96/96, reversal23/24; Settings0/5.
+- [x]ExactDTM010120epoch prefix preserved; exposure92–146per variant,5×updates.
+- [x]8retained negatives evaluated on3frozen models:0/8boxes each,4connected groups.
+- [x]10checkpoint CLI parity;85Python/134Swift checks. No promotion/additional run.
+[Handoff](reports/work/EXPOSURE-64/handoff.md).
+
+## Review — GENERALIZATION-65 / PREPARED-66 / Codex
+
+No training. Probe frozenDTM009/010/011on unseen translation magnitudes/diagonals
+and duplicated-frame visual-change counterfactuals. Prepare exact role/admission
+proposal for the8retained native negatives, now explicitly approved for training,
+and rank missing positive no-scroll/style coverage for the existing TTR request.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--generalization65).
+Complete the 32/5 admission and reusable prepared-input integration with cold/warm
+parity and timing. No model launch in this tranche. Existing model gates remain.
+[Prepared-input contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--prepared66).
+- [x] 1,086 unseen-transform evaluations and 174 zero-difference probes, no training.
+- [x] Exact approved eight-pair admission: 32 train / 5 development; original 29 unchanged.
+- [x] Reusable 160-entry bank and real trainer integration; exact tensors/schedule.
+- [x] Cold preparation 30.08s; verified warm load 0.214s; old model gate remains closed.
+[Integrated handoff](reports/work/PREPARED-66/handoff.md).
+
+## Review — DATA-67 / Codex (controlled expanded-data comparison)
+
+Bind the original 24-pair fit evidence to its unchanged subset of the approved
+32/5 corpus. One DTM011-configuration 600-epoch candidate with prepared input reuse,
+fixed-last selection and separate original/new-pair diagnostics; no new architecture,
+capture, data-role change, export or promotion. Execution requires the applicable
+local experiment tranche authority, not the eight-pair data-role decision alone.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--data67).
+- [x] Expanded admission gate and actual CLI preflight; original/new data drift rejected.
+- [x] DTM012600epochs:32/32training pairs,128/128trained shifts; Settings0/5.
+- [x] Batched reference/candidate evaluation and image-only CLI parity;78Python/134Swift tests.
+- [x] Warm run intake0.386s; unchanged-frame shortcut persists. No promotion.
+[Handoff](reports/work/DATA-67/handoff.md).
+
+## Review — TEMPORAL-68 / Codex (explicit temporal-evidence comparison)
+
+One fixed-budget change-head architecture experiment, keeping the admitted32/5roles,
+geometry architecture and preprocessing fixed. Compare with DTM012 using the cached
+input/evaluation flow. Include an acquisition campaign plan for missing genuine
+no-scroll positives, but no Simulator/TTR execution. No automatic training loop.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--temporal68).
+- [x] DTM013600epochs:32/32fit; Settings raw change5/5, localization0/5.
+- [x] Identical-frame raw false changes eliminated;2Settings moves still abstain on invalid boxes.
+- [x] Legacy/new CLI parity,81Python/134Swift checks;315,235parameters.
+- [x] Offline24case acquisition plan:6bounded batches/one proposed session, no capture.
+[Handoff](reports/work/TEMPORAL-68/handoff.md).
+
+## Review — LOCALIZE-69 / Codex (localization diagnosis and batch efficiency)
+
+Freeze DTM012/013. Diagnose center/extent, border validity and target resolution on
+all37admitted pairs, separating fitting from exposed Settings. Reuse encoded inputs
+across frozen models with measured parity, instead of resizing twice per condition.
+Produce one evidence-backed next localization experiment and quantify remaining
+acquisition gaps; no new training/capture/role change in this diagnostic tranche.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--localize69).
+- [x] Frozen replay reproduces all1,366stored predictions and20rejections; both real CLI paths match.
+- [x] All37pairs/148model-endpoints diagnosed; Settings fails center and extent, not just borders.
+- [x] Three training box shapes; right-side half-width Settings rows absent from training support.
+- [x] Shared encoding:16.12safter intake versus prior25.59sreported replay;84Python/134Swift checks.
+[Handoff](reports/work/LOCALIZE-69/handoff.md).
+
+## Review — COVERAGE-70 / Codex (batched geometry-coverage comparison)
+
+Two predeclared600epoch training-augmentation comparisons on the same32/5roles:
+broad translation versus horizontal compression plus broad translation, preserving
+DTM013architecture. Prepare both banks from one validated corpus, then batch model
+evaluation. No new labels, capture, inference resolution, export or promotion.
+[Contract](Research/Plans/FocusTransitionLearning49.md#next-tranche--coverage70).
+Both600epoch arms completed: own-bank fit120/120 and152/152; Settings localization
+still0/5 for both. One preparation, shared three-model evaluation,88Python/134Swift
+checks and actual prediction CLI parity pass. [Handoff](reports/work/COVERAGE-70/handoff.md).
+
+## Review — PROPOSALS-73 / Codex
+
+Audit retained Settings proposal coverage and frozen-model candidate-snapping
+sensitivity. Separate producer proposals from human-box oracle pools; no model
+execution, new labels or training. Deliver source-bound endpoint accounting and
+an actionable candidate-interface decision, not oracle accuracy as model performance.
+[Contract](Research/Plans/FocusTransitionLearning49.md#proposals73--candidate-coverage-diagnostic).
+Retained Vision rectangles cover10/10focus endpoints (nine images), bestIoU0.851–0.939;
+coordinate snapping remains poor. No fresh inference/training. [Handoff](reports/work/PROPOSALS-73/handoff.md).
+
+## Review — RANK-75 / Codex (visual ranking and shared-image crop batching)
+
+One scoped600epoch ranker over unchanged automatic candidate bank, multi-positive
+frame loss, DTM013change branch frozen. Reuse production crops, batch shared source
+decodes, verify crop parity and actual trainer/prediction paths. No capture/new roles,
+downloads/export/promotion. [Contract](Research/Plans/FocusTransitionLearning49.md#rank75--visual-ranking-and-crop-batching).
+DTM016600epochs complete:64/64training endpoints,0/10exposed Settings endpoints;
+correct Settings boxes rank20–27. No model gate passed.2,141crops/59images prepared
+once29.64s,fit1.014s,warm verified bank0.130s. Shared crop parity verified;59Python
+and134Swift tests pass. [Handoff](reports/work/RANK-75/handoff.md).
+
+## Review — PROPOSAL-RANK-74 / Codex (candidate-bank feasibility)
+
+Audit automatic proposal coverage for unchanged32training pairs, construct source-bound
+candidate geometry inputs separately from labels, and preserve actual/oracle distinction.
+No automatic admission, capture or new model training. Deliver ranker-ready bank contract,
+missing-proposal/ambiguity tests and a bounded next-experiment decision.
+[Contract](Research/Plans/FocusTransitionLearning49.md#proposals73--candidate-coverage-diagnostic).
+Automatic Vision+raster union covers64/64training and10/10development endpoints.
+Frozen59-image/2,141candidate bank with separate multi-positive supervision; no ranker
+training. [Handoff](reports/work/PROPOSAL-RANK-74/handoff.md). Next scoped ranker experiment
+must report domain/source effects and retain DTM013 change branch as a fixed control.
+
+## Review — COMPATIBILITY-72 / Codex
+
+Source-pin TTR stationary condition/session contracts, adapt existing strict consumer
+to producer wire names without relabeling scroll examples, and retain exact unsupported
+matrix cells. No producer edits or runtime execution. Extend regressions and provide
+one follow-up to TRANSFER-62, not a duplicate feature request.
+[Contract](Research/Plans/FocusTransitionLearning49.md#compatibility72--producer-contract-binding).
+Consumer wire mapping verified; producer already owns invocation-scoped session reuse.
+Rich-reference stationary planner binding remains unresolved; TRANSFER-62 follow-up
+published/read back.74Python/134Swift tests pass. [Handoff](reports/work/COMPATIBILITY-72/handoff.md).
+
+## Review — CAMPAIGN-71 / Codex (batch acquisition and reusable experiment inputs)
+
+Implement offline campaign journal/resume and incremental intake around existing
+entrypoints; separate preprocessing dependencies from model-only cache invalidation.
+No runtime execution implied. Preserve exact label/role/hash checks and current
+workers. Deliver deterministic interrupted-batch tests and measured cold/warm reuse.
+[Contract](Research/Plans/FocusTransitionLearning49.md#campaign71--campaign-to-corpus-batching).
+Delivered append-only campaign CLI, strict incremental stationary intake/freeze,
+v3 model-independent preprocessing cache, two-batch resume tests and actual32-pair
+tensor parity/reuse. Runtime execution remains separately gated by exact producer
+bindings and current target/capture authority. [Handoff](reports/work/CAMPAIGN-71/handoff.md).
 
 ## Review — STORAGE-LIVE-02 / Codex (r5 retention migration complete)
 

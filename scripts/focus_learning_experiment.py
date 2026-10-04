@@ -170,6 +170,12 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get('version') == 'focus-change-adaptation-v1':
+        from focus_change_adaptation import load_protocol as change_protocol
+        return change_protocol(path,arm,run_name,approval_path)
+    if doc.get('version') == 'focus-candidate-ranking-v1':
+        from focus_candidate_ranker import load_protocol as ranking_protocol
+        return ranking_protocol(path, arm, run_name, approval_path)
     if doc.get('version') == 'focus-direct-transition-v1':
         from focus_direct_transition import load_protocol as direct_protocol
         return direct_protocol(path, arm, run_name, approval_path)

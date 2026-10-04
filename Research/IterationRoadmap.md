@@ -1,5 +1,134 @@
 # Concurrent delivery roadmap
 
+**SIZE-81 supersedes the next-comparison recommendation below:** DTM019 adds size
+context but Settings paired localization stays 0/5 (endpoints 2/10). Preserve models;
+prioritize retained rich24 source-backed intake and grouped coverage with true small
+controls, decorative distractors and independent evaluation groups. Capture/training/
+promotion are authorized subject to scoped runtime/data/quality gates; authorization
+does not make these failing development results production-ready.
+See [handoff](../reports/work/SIZE-81/handoff.md).
+
+**CHANGE-80 supersedes the change-head diagnosis below:** DTM018fixes native training
+change misses with geometry frozen; original and exposed Settings change decisions
+retained. Settings ranking still0/5paired. Next test size-aware ranking with unchanged
+crop bytes/data roles; do not train the change branch again unchanged. Independent
+evaluation and small-control coverage remain gaps, no promotion.
+
+**Latest DTM017:**44/5admission approved/materialized; native-table ranker fits all
+44training pairs but Settings paired localization remains0/5. Diagnose rank transfer
+and frozen change-control misses separately before the next controlled hypothesis.
+No new capture needed for this completed comparison; rich-v2source remains pending.
+See [native handoff](../reports/work/BATCH-79-B/native-handoff.md).
+
+**Batch delivery priority:** [BATCH-79](Plans/FocusTransitionLearning49.md#batch79--retained-data-to-reusable-experiment-campaign)
+connects retained-source qualification, incremental reusable inputs and one authorized
+missing-coverage session. Incremental-cache integration is verified by BATCH-79-B; rich intake
+waits for its published source, and actual admission waits for77approval. Small learning
+experiments should consume corpus versions, not each trigger new simulator setup.
+
+**NATIVE-INTAKE-76 supersedes recapture-first scheduling:**36retained native pairs
+are now local.12NativeTable-v1directional pairs pass inspection;24rich-v2pairs wait
+for source publication and strict consumer support, not new screenshots. Finish this
+intake, reconcile same-renderer calibration roles and ask for any exact data-role
+change before training. Producer throughput favors shared runner/verified persistent
+export; keep export overlap opt-in because the small measured comparison was slower.
+
+**RANK-75 complete:** candidate visual ranker fits64/64training endpoints but0/10
+Settings. Prepared input and request-local crop reuse work; do not confuse this
+efficiency win with model transfer. Next bind the existing native campaign and
+collect qualified appearance coverage only under capture/data-role authority.
+Independent final groups must be reserved before failure-driven data selection.
+See [handoff](../reports/work/RANK-75/handoff.md).
+
+**PROPOSAL-RANK-74 historical experiment input:** fixed automatic Vision+raster union
+covers64/64training and10/10development endpoints. Train a scoped visual ranking
+hypothesis only after architecture/budget logging and production preprocessing checks;
+retain DTM013 change branch and report multi-positive/source effects. No new capture
+is needed to test this formulation; independent evaluation remains a separate gap.
+
+**PROPOSALS-73:** retained Vision rectangles cover all10exposed Settings endpoints;
+selection, not proposal existence, remains unresolved there. Prioritize automatic
+training-side candidate-bank feasibility (PROPOSAL-RANK-74) before a visual-ranking
+experiment. Independent final evaluation and native stationary capture remain open.
+
+**COMPATIBILITY-72:** reuse producer CampaignRunnerSession; consumer accepts actual
+focus_moved/boundary_unchanged names with unchanged strict stationary checks. Resolve
+reference planner gap through existing TRANSFER-62, not another session-manager request.
+Continue independent retained-data localization diagnosis while capture binding waits.
+
+**CAMPAIGN-71 review-ready:** offline journal/resume, incremental strict intake and
+scoped reusable inputs delivered. Next resolve source-backed native campaign bindings
+and unsupported coverage before authorized runtime execution. Do not reopen model
+training merely because input reuse is faster; Settings localization remains unsolved.
+
+**COVERAGE-70 supersedes the recommendation below:** both augmentation arms fit
+their training banks but Settings localization remains0/5. Next implement
+[CAMPAIGN-71](Plans/FocusTransitionLearning49.md#campaign71--campaign-to-corpus-batching)
+to amortize acquisition/intake across experiments. Runtime qualification/authority
+remains separate. Do not repeat the failed arms unchanged.
+
+**LOCALIZE-69 review-ready:** actual label support has only three size combinations
+and no right-third centers; exposed Settings combines right-side position with a
+half-width thin row. Prioritize COVERAGE-70's two batched augmentation comparisons
+before assuming more pixels/epochs solve localization. Keep native no-scroll capture
+planning separate; no new runtime authority is implied. Encoded inputs now share
+across frozen models with full historical prediction parity.
+
+**TEMPORAL-68 review-ready:** DTM013 fixes exposed change decisions/zero-difference
+shortcut, but Settings localization0/5still prevents navigation use. Prioritize
+LOCALIZE-69 frozen geometry diagnosis and shared encoded evaluation, not more
+unchanged training. The24case no-scroll qualification campaign is batched for one
+future session; actual producer capability/runtime/capture approval remains open.
+
+**DATA-67 review-ready:** DTM012fits32/32and128/128trained translations, but Settings
+remains0/5and original identical-frame shortcuts persist. Runtime preparation reuse
+and two-model batched evaluation are exercised. Next TEMPORAL-68 explicitly changes
+the temporal decision representation in one bounded experiment; separately plan a
+batched acquisition matrix. No new runtime/capture or promotion authority implied.
+
+**GENERALIZATION-65 / PREPARED-66 review-ready:** 32/5 admission is implemented;
+zero-difference probes expose temporal shortcuts. Reusable 160-entry prepared bank
+passes exact parity and warm verification (~0.214s versus 30.08s cold preparation).
+Next DATA-67 compares the expanded data with the same DTM011 architecture/config,
+not another unchanged epoch extension. Batch producer acquisition separately; no
+runtime/capture authority is inferred from the caching work.
+
+**EXPOSURE-64 complete:** DTM011fits original24/24and trained shifts96/96but Settings
+0/5and retained negatives0/8localization. Stop extending this training bank's epochs.
+Next GENERALIZATION-65 probes unseen transforms and zero visual difference while
+preparing a precise negative-data admission decision and positive-coverage request.
+
+**ROBUSTNESS-63 complete:** DTM010shifts47/96→82/96, original24/24→18/24,
+Settings0/5. Next EXPOSURE-64 separates per-view exposure from augmentation effects
+and evaluates8retained native no-scroll negatives without new training admission.
+Keep TTR compatibility/capture asynchronous; no new capture is needed for these8.
+
+**TRANSFER-62 complete:** reversal retains24/24training boxes,4%translations reduce
+that to11–12/24. No-scroll consumer is verified offline and compatibility request
+published/read back. Next ROBUSTNESS-63 tests training-only paired translation
+augmentation once while auditing retained source coverage. No live capture is implied.
+
+**FIT-61 complete:** DTM009fits all24pairs/48cells at120epochs but fails all5Settings
+localizations and falsely calls3unchanged pairs changed. Prioritize transfer/coverage
+diagnosis and stationary-case intake. More unchanged training is not the next step.
+Measured run wrapper:15.73sintake,4.86sfit,0.13sscoring; initial CLI preflight additional.
+
+**Geometry60 complete:** tiny-fit gate finally passes4/4; full24pair30epoch fit
+does not (paired8/24,change12/24). Do not call this solely domain transfer. Next
+test full-corpus convergence at120epochs, same architecture/loss/data and fixed-last;
+then separate remaining training-fit from exposed Settings transfer failure.
+
+**Geometry59 complete:** overlap-aware objective raises paired fit2/4→3/4. One tiny
+height remains; candidate gate stays closed. Next test geometry-logit regression
+with coordinate-gradient evidence.24case no-scroll specification is ready for a
+separate capture assignment; no model/data gates are waived by planning.
+
+**Geometry58 complete:** geometry-logit loss improves fitted paired boxes0/4→2/4,
+retains8/8cells and4/4change; candidate gate still fails. Next isolate relative extent
+error with overlap supervision. Retained native offsets show all24Fixture pairs scroll,
+so genuine no-scroll/change and no-scroll/no-change coverage needs a separate capture
+assignment; do not relabel stationary boxes as stationary screens.
+
 **Context57 complete:** global context fixes diagnostic center-cell selection0/8→8/8,
 but heights collapse and paired localization remains0/4. Larger candidate blocked.
 Next: controlled geometry-gradient experiment plus retained-source coverage intake.

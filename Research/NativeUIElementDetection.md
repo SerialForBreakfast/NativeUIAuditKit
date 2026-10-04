@@ -707,6 +707,22 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+2026-10-03 COVERAGE-70: two bounded training-only augmentation arms retain DTM013
+architecture and32/5roles. Broad paired translations versus horizontal0.5compression
+plus the same translations test the measured joint geometry gap. Exact rounded
+raster transforms apply to both images and labels; off-frame targets reject the view.
+These transformed examples are not native renderer qualification or new ground truth.
+See [the experiment contract](Plans/FocusTransitionLearning49.md#next-tranche--coverage70).
+
+2026-10-03 experimental Focus Transition lane (not shipped FocusRing/YOLO):
+TEMPORAL-68 tests a separate absolute-difference change branch while retaining the
+ordered-RGB geometry encoder/heads and their seeded initialization. Same admitted
+32train/5development pairs,96×64aspect-fit input and600epoch fixed-last budget.
+No new labels, crops or public API. Change-loss gradients no longer reach geometry;
+this tradeoff must be reported. See [the bounded contract](Plans/FocusTransitionLearning49.md#next-tranche--temporal68).
+Legacy model loading and production models remain unchanged. Fitted-set success
+does not qualify real-domain localization or native no-scroll positive transitions.
+
 **Tranche37 experimental full-screen focus entrypoint:** use an isolated one-class
 `focusedControl` research target, not a public taxonomy change. Validation-only must
 verify local checkpoint/image/annotation hashes, explicit admission of exact membership,

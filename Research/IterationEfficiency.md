@@ -92,6 +92,65 @@ intentional defects. Group related variants in one split; protect final evaluati
 groups from failure-driven tuning. Report coverage gaps separately from milestone
 requirements: exhaustive visual variation does not block today's valid baseline.
 
+## Campaign-sized acquisition, experiment-sized learning — October 3
+
+Small fitting experiments remain useful; they must not each trigger simulator setup,
+capture, transfer and preprocessing. Use one acquisition campaign to support several
+predeclared questions, followed by experiments on frozen membership. The next contract
+is [batch delivery](Plans/FocusTransitionLearning49.md#batch79--retained-data-to-reusable-experiment-campaign).
+
+Measured starting points: [CAMPAIGN-71](../reports/work/CAMPAIGN-71/handoff.md),
+[RANK-75](../reports/work/RANK-75/handoff.md) and
+[producer timing evidence](../reports/work/NATIVE-INTAKE-76/handoff.md).
+Model-independent input reuse is implemented offline; live session integration is
+not established by that software. TTR reported collection732.1→272.7s for48attempts;
+NUA measured29.639s crop preparation versus1.014s fit and0.130s warm load. These are
+different workloads, not a combined speedup. The small producer overlap trial was
+slower than serial; retain serial execution/export as the initial default.
+
+### Operational boundaries
+
+1. Inventory retained examples before requesting captures. Map missing semantic
+   cells, not just a target pair count. Do not recapture completed exports because
+   consumer schema support or a data-role decision is pending.
+2. Freeze hypotheses, source families, cases, role proposal, output budget and failure
+   policy together. Seek one bounded execution/data-use decision covering that scope;
+   future unknown data is not implicitly admitted.
+3. Verify exact runtime/endpoint/ownership at session start. Canary a changed capture
+   contract, then reuse the healthy runtime across supported bounded jobs. Keep
+   per-frame evidence and per-job cleanup checks. Reuse cannot carry a session across
+   a crash, changed instance/build, external input or uncertain resource state.
+4. Export and validate immutable batches incrementally through existing entrypoints.
+   Resume missing cases only after reconciliation. Preserve rejected attempts and
+   reconcile expected/captured/accepted counts; no silent shrink.
+5. Freeze data independently of model experiments. Prepare shared pixels, proposals,
+   crops and encodings once per relevant dependency identity. Keep labels/splits
+   separately bound; automatic candidate generation must not consume scoring labels.
+6. Train authorized hypotheses from the snapshot, compare compatible models in one
+   evaluation batch, and return one integrated report. No mandatory human handoff
+   after each helper, subset test or internally completed acquisition batch.
+
+### Dependency-scoped reuse
+
+| Change | Recheck/recompute | Do not repeat solely for this change |
+|---|---|---|
+| Model head, optimizer or loss | Model pins, protocol, affected tests and authorized fit/evaluation | Capture, unchanged image proposals or production crops |
+| Data-role decision | Exact membership, consent, ancestry/leakage, role-bearing manifests and supervised inputs | Unchanged raw pixels or image-only feature extraction |
+| Crop transform, decoder or preprocessing dependency | Affected derivatives and parity tests | Original capture if still valid |
+| Consumer schema/validator | Affected raw evidence validation and dependent seals | Producer capture unless evidence is insufficient |
+| Runtime/build/endpoint change | Fresh readiness and affected end-to-end canary before collection | Unrelated retained corpus processing |
+| Prose/status edit | Content/link/diff checks | Training, native smoke, package build |
+
+This is a dependency policy, not permission to rewrite historical cache seals. Where
+existing formats couple roles or model pins to immutable derivatives, implement a
+versioned reuse path with negative tests first; never ignore a mismatched pin. Cached
+features cannot cross changed frozen-backbone weights unnoticed.
+
+Report caller wall time for setup, capture, export, intake, preprocessing, training,
+evaluation and human/peer waits. Nested timings may overlap; do not add them blindly.
+Report attempts, accepted distinct pairs, unique images, recipes and ancestry groups
+separately. Pair-per-minute gains do not establish model improvement or independence.
+
 ## Check whether the loop improves
 
 For the next three actual repair/capture iterations, record timestamps and time spent

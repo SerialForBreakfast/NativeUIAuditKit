@@ -64,7 +64,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-id", help="Exact logged run ID required for execution")
     p.add_argument("--experiment-protocol", type=Path, help="Separately reviewed small learning experiment; never release qualification")
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
-    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit", "context-local", "context-geometry", "context-scene", "visual-local-frozen", "visual-context-frozen", "visual-local-partial", "visual-context-partial", "artwork-readiness", "artwork-control-partial", "artwork-added-partial", "transfer-emphasis-partial", "transfer-aspect-partial", "native26-normalized", "native26-common", "transition-measurements", "transition-direct-pixels"])
+    p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit", "context-local", "context-geometry", "context-scene", "visual-local-frozen", "visual-context-frozen", "visual-local-partial", "visual-context-partial", "artwork-readiness", "artwork-control-partial", "artwork-added-partial", "transfer-emphasis-partial", "transfer-aspect-partial", "native26-normalized", "native26-common", "transition-measurements", "transition-direct-pixels", "transition-candidate-ranker"])
+    p._option_string_actions['--experiment-arm'].choices.append('transition-change-adaptation')
     return p.parse_args()
 
 
@@ -161,7 +162,7 @@ def main() -> int:
             report, experiment_rows = load_protocol(args.experiment_protocol, args.experiment_arm, args.name, args.experiment_approval)
         except (OSError, ValueError, KeyError, TypeError) as error:
             print(json.dumps({"launchEligible": False, "blockers": [str(error)]})); return 2
-        if report.get("formatVersion") in {"focus-appearance-preflight-v1", "focus-retention-preflight-v1", "focus-representative-preflight-v1", "focus-transition-preflight-v1", "focus-direct-preflight-v1"}:
+        if report.get("formatVersion") in {"focus-change-preflight-v1", "focus-ranking-preflight-v1", "focus-appearance-preflight-v1", "focus-retention-preflight-v1", "focus-representative-preflight-v1", "focus-transition-preflight-v1", "focus-direct-preflight-v1"}:
             for flag, field in (("--epochs","epochs"),("--batch","batch"),("--lr","lr"),("--model","model")):
                 if any(x == flag or x.startswith(flag+"=") for x in sys.argv[1:]) and getattr(args,field) != report["configuration"][field]:
                     print(json.dumps({"launchEligible":False,"blockers":["protocol_configuration_override"]})); return 2
@@ -198,6 +199,12 @@ def main() -> int:
         if digest(json.loads((dataset/"focus_dataset_manifest.json").read_text())) != report["manifestSHA256"]:
             print("ERROR: assembly changed after preflight",file=sys.stderr); return 2
     started = time.monotonic()
+    if report.get('protocolVersion') == 'focus-change-adaptation-v1':
+        from focus_change_adaptation import run as run_change
+        return run_change(report,args.experiment_id)
+    if report.get('protocolVersion') == 'focus-candidate-ranking-v1':
+        from focus_candidate_ranker import run as run_ranking
+        return run_ranking(report,args.experiment_id)
     if report.get('protocolVersion') == 'focus-direct-transition-v1':
         from focus_direct_transition import run as run_direct
         return run_direct(report,args.experiment_id)

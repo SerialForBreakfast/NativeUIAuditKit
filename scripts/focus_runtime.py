@@ -72,20 +72,31 @@ def items_for(document):
     return items
 
 
-def bounded_batches(items):
+def bounded_batches(items, *, shared_images=False):
     """Keep existing16-item batching while respecting the helper's decoded budget."""
     from PIL import Image
-    batch, pixels = [], 0
+    batch, pixels, seen, metadata = [], 0, set(), {}
     for item in items:
-        with Image.open(item["path"]) as source:
-            area = source.width * source.height
-        if area <= 0 or area > 80_000_000:
+        key = str(Path(item['path']).absolute())
+        if shared_images and key in metadata:
+            prior_hash, area = metadata[key]
+            if prior_hash != item['sha256']:
+                raise FocusDataError('runtime_conflicting_image_hash')
+        else:
+            with Image.open(item["path"]) as source:
+                area = source.width * source.height
+            if shared_images:
+                metadata[key] = (item['sha256'], area)
+        if area <= 0 or area > 40_000_000:
             raise FocusDataError("runtime_pixel_limit")
-        if batch and (len(batch) == 16 or pixels + area > 80_000_000):
+        cost = 0 if shared_images and key in seen else area
+        if batch and (len(batch) == (128 if shared_images else 16) or pixels + cost > 80_000_000):
             yield batch
-            batch, pixels = [], 0
+            batch, pixels, seen = [], 0, set()
+            cost = area
         batch.append(item)
-        pixels += area
+        pixels += cost
+        seen.add(key)
     if batch:
         yield batch
 

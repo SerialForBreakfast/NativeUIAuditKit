@@ -3301,3 +3301,235 @@ the full-box gate and separately evaluate abstention/localization reliability.
 **Why:** DTM004 learned8/8center cells but0/4paired boxes; heights collapsed while
 change remained4/4. All5Settings pairs emitted decisions despite0/5paired boxes.
 More context solved one fitted-subset error, not the task.
+
+### Inventory native scroll telemetry before requesting recapture (2026-10-03)
+
+**Wrong:** Label scrolling from box displacement, or assume an earlier coverage
+summary exhausts retained evidence. A focused control can stay fixed while content scrolls.
+**Correct:** Inspect hash-bound native semantic inventories for consistent per-container
+offsets across both capture brackets. Missing or conflicting offsets stay unknown.
+Record mutation receipts separately from optional navigation-action receipts.
+**Why:** GEOMETRY-58 found observed scrolling in all24Fixture pairs, including pairs
+whose focus boxes did not move. Settings5lacks equivalent bound scroll telemetry.
+The inventory avoided both fabricated no-scroll labels and unnecessary recapture.
+
+### Pass tiny fit before scale, then measure full fit separately (2026-10-03)
+
+**Wrong:** Treat a4pair diagnostic pass as proof the full training corpus fits, or
+attribute every later development failure to domain shift.
+**Correct:** Evaluate the exact fitted membership, full-corpus change/localization and
+abstention separately. Diagnose training failure before concluding transfer failure.
+**Why:** DTM007fit4/4pairs at120epochs, butDTM00830epoch24pair candidate fit only8/24
+paired boxes and12/24change labels. All24abstained. Capacity on a tiny set removed
+one blocker, not the full optimization/data-coverage problem.
+
+Follow-up: DTM009120epochs fits24/24paired boxes/change but Settings remains0/5
+localization with3false changes. Once fit is established, prioritize transfer/coverage
+diagnostics instead of treating more epochs as evidence of generalization.
+
+### Retire stale whole-file status writers (2026-10-03)
+
+**Wrong:** Run a historical sync helper containing hardcoded run metrics and a
+whole-file status replacement. Directory existence alone does not verify an SMB mount.
+**Correct:** The old update/sync entrypoints now fail without writes. Follow the
+shared-status guide: verified mount, fresh bounded unique-key YAML read, one owned
+packet patch, validation/readback and preservation of unrelated entries.
+**Why:** TRANSFER-62 found both helpers could republish September24facts and erase
+concurrent packets. Retaining an executable stale snapshot is not useful compatibility.
+
+### Fit is not position robustness (2026-10-03)
+
+**Wrong:** Treat24/24training localization as proof the model follows visual targets.
+**Correct:** Freeze the checkpoint and test paired translations with analytically
+transformed boxes; reject off-frame truth rather than clipping it. Report rejected
+cells separately and keep transformed examples diagnostic-only.
+**Why:** DTM009retained24/24boxes on reversal but only11–12/24under4%translations.
+This suggests position sensitivity; black-fill/domain changes prevent causal certainty.
+
+### Equal epochs can hide unequal view exposure (2026-10-03)
+
+**Wrong:** Compare120epochs with and without5-way augmentation as equal memorization
+opportunity for each view, or call improved synthetic-shift accuracy real-UI transfer.
+**Correct:** Record sampled variant counts, model updates and original/shifted/domain
+results separately. Test an explicit fixed matched-exposure hypothesis if fit regresses.
+**Why:** DTM010saw~24samples per variant versusDTM009120per original. Shifts improved
+47/96→82/96while original24/24→18/24 and Settings stayed0/5. Exposure is a hypothesis,
+not a proven explanation or permission for an automatic convergence loop.
+
+Follow-up: DTM011600epochs restored24/24original and96/96trained-shift fit, while
+Settings stayed0/5and all3frozen models localized0/8retained native negatives. The
+matched-exposure test resolves the fitting question, not the transfer question.
+Do not repeatedly extend epochs after this gate; test unseen transformations,
+appearance shortcuts and missing data coverage instead.
+
+### Reuse verified preparation, not unchecked cached labels (2026-10-03)
+
+**Wrong:** Rebuild native intake and decode the same pixels before every tiny model
+comparison, or skip validation entirely to save that overhead.
+**Correct:** Cold-validate an admitted corpus once and cache deterministic encoded
+inputs. Bind content, labels, roles, preprocessing, code/dependencies and array hashes;
+warm use checks those bindings without re-decoding every case. Retain execution gates
+and fail closed on changes or missing cache. Measure cold and warm stages separately.
+**Why:** DTM011 spent17.4s on intake versus11.5s fit/setup. PREPARED-66 measured30.08s
+cold preparation versus0.214s warm verification with exact tensors, without training.
+This measures preparation savings, not a claimed end-to-end training speedup.
+
+### Zero-difference probes expose appearance shortcuts (2026-10-03)
+
+**Wrong:** Treat successful training change classification as proof of temporal
+reasoning, or treat a duplicated-frame probe as a genuine no-op action label.
+**Correct:** Probe identical-frame inputs separately and preserve semantic uncertainty.
+Count true native no-ops and content mutations as distinct source conditions. Derive
+theme coverage from resolved native recipes, not case names or light-colored artwork.
+**Why:** All three frozen models called18/48 duplicated training inputs and10/10
+Settings inputs changed. All eight retained negative cases use native dark theme,
+even when a case ID includes a light composition palette.
+
+Follow-up DATA-67: admitting those eight native negatives yields32/32training fit
+but leaves original duplicated-frame raw change18/48 and Settings10/10. Always pair
+fitting improvements with retained counterfactual/domain diagnostics; improved fit
+on additions alone does not establish better temporal reasoning. Batch those probes
+over shared decoded inputs instead of repeating intake for each model.
+
+Follow-up TEMPORAL-68: an explicit difference-only change branch raises exposed
+Settings raw change2/5→5/5 and removes duplicated-frame raw false changes, but boxes
+remain0/5. Both true moves still abstain on invalid geometry. Report raw classification,
+geometry and usable combined decisions separately; a correct scalar score is not a
+usable focus target.315kversus882kparameters did not materially reduce observed
+~15mspair latency, so measure preprocessing/forward separately before claiming speed.
+
+### Inspect joint geometry support, not only marginal ranges (2026-10-03)
+
+**Wrong:** Conclude that Settings boxes are represented because their widths and
+heights individually lie near the training min/max, or immediately increase resolution.
+**Correct:** Inspect actual width×height combinations, position support and error
+decomposition. Keep oracle substitutions explicitly scoring-only and reject invalid
+predictions rather than clipping them into apparent success.
+**Why:** LOCALIZE-69 found only three training shapes and no center pastx48.23on a
+96pixel input, versus Settings39×~4boxes atx72.5. Center and extent both fail; marginal
+ranges hide that gap. Shared encoding also showed resize9.49s versus forward/decode
+0.68s in a two-model replay, explaining why smaller weights did not improve pair latency.
+
+### Batch preparation without equating coverage with transfer (2026-10-03)
+
+**Wrong:** Revalidate/decode the same corpus for every augmentation arm, or assume
+covering missing box shapes guarantees native transfer.
+**Correct:** Validate once, construct separately identified policy banks from shared
+decoded sources, then compare models on identical encoded evaluation inputs. Keep
+rejected views and unequal per-view exposure explicit. Measure transfer separately.
+**Why:** COVERAGE-70 prepared two banks in32.76s, warm-loaded in~0.2s and fit both
+completely, yet both still localized0/5Settings pairs. Batched input reuse is useful;
+repeating successful fitting is not evidence that the real detection problem is solved.
+
+### Separate reusable input identity from model identity (2026-10-03)
+
+**Wrong:** Invalidate decoded/encoded inputs whenever unrelated model layers change,
+or treat a lost running-job observation as permission to recapture a case.
+**Correct:** Pin preprocessing, labels, membership and relevant source-validation code
+separately from full training-code pins. Maintain append-only campaign state with
+expected revision, immutable evidence and explicit interrupted-job reconciliation.
+Rehash reused source members; do not repeatedly decode unchanged accepted captures.
+**Why:** CAMPAIGN-71 reuses exact160-view tensors across two model configurations
+in~0.17s each. Its interrupted-batch tests preserve accepted work and refuse stale
+writers, mismatched recipes, uncertain cleanup and changed pixels. Runtime identity
+checks and final full audits remain necessary; journal receipts are not authority.
+
+### Reconcile semantic names before requesting producer features (2026-10-03)
+
+**Wrong:** Assume a feature is absent because the producer does not use our local
+condition name, or build another lifecycle controller without checking current source.
+**Correct:** Map source-backed wire names explicitly, preserve original bytes and
+retain the stronger consumer evidence requirements. Inspect actual planner and runtime
+paths separately; model a capability gap at the boundary that actually lacks support.
+**Why:** COMPATIBILITY-72 found existing focus_moved and campaign-scoped session reuse.
+The real remaining gap is stationary reference planning/qualification, not generic
+directional transitions. A focus_moved receipt still needs unchanged-offset checks
+to qualify as no-scroll evidence; a light backdrop is not a native light theme.
+
+### Audit retained raw outputs before rerunning proposal generation (2026-10-03)
+
+**Wrong:** Treat empty editor proposal lists as evidence that no automatic geometry
+exists, or treat high candidate recall as solved focus selection.
+**Correct:** Follow pinned raw artifacts and identify every retained output field.
+Measure geometry recall, candidate ambiguity and ranking accuracy separately; keep
+human-box pools explicitly oracle-only.
+**Why:** PROPOSALS-73 recovered rectangle proposals from an existing native-ocr.json:
+10/10focus endpoints were covered, despite empty/missing editor lists. No fresh
+Vision run was necessary. Coordinate snapping still failed paired localization,
+supporting a visual-ranking test rather than more coordinate-regression epochs.
+
+### Test proposal coverage on both sides of the domain boundary (2026-10-03)
+
+**Wrong:** Choose a proposal generator because it covers all training examples, or
+force a single positive when several overlapping boxes satisfy the geometry target.
+**Correct:** Measure automatic recall by source/domain before training a ranker, keep
+multi-positive supervision, and preserve missing examples. Reuse fixed alternatives
+without feeding them human boxes or tuning against exposed development labels.
+**Why:** PROPOSAL-RANK-74 raster covered64/64Fixture endpoints but0/10Settings;
+Vision covered40/64Fixture and10/10Settings. Their union covers all74 but has40
+multi-positive training endpoints. Recall establishes feasibility, not focus accuracy.
+One deduplicated batch and retained development outputs avoided repeated native setup.
+
+### Batch by source image, not by candidate box (2026-10-03)
+
+**Wrong:** Decode the same screenshot for every box or invalidate all input work
+after a dispatcher/model-only edit. Treat successful training fit as transfer proof.
+**Correct:** Cache decoded sources within one bounded crop request, reject conflicting
+hashes for a path, retain per-box validation, and budget distinct decoded images.
+Keep prepared image encodings separate from labels and model pins; reuse only with
+matching source hashes, encoding/runtime and original preparation dependencies.
+**Why:** RANK75prepared2,141crops from59images once in29.64s; warm verification took
+0.130s and600epoch fit1.014s. Dispatcher repair reused the bank without recropping.
+Despite64/64training endpoint fit, all10Settings endpoints failed. Faster preparation
+supports controlled experiments; it does not remove the need for native domain data.
+
+### Consume retained improvements before scheduling another acquisition (2026-10-03)
+
+**Wrong:** Treat a stale local producer capability inventory as proof no usable
+data exists, or infer no scrolling from an observed focus move. Assume overlapping
+export is faster because it is concurrent.
+**Correct:** Check named peer handoffs, receive exact immutable artifacts and audit
+new source contracts. Preserve unknown offset evidence. Reuse campaign runners and
+measure complete wall time; export only terminal checkpoints and keep serial default
+until overlap has a workload-specific measured benefit.
+**Why:** NATIVE-INTAKE76 recovered36pairs without simulator setup;12older native-table
+pairs pass inspection but cannot prove no scroll, while newer rich data reports8
+stationary moves and needs source uptake. TTR's reported reuse trial cut collection
+time62.8%; its separate small grouped trial found overlap25.8%slower than serial.
+These are producer-reported scopes, not NUIAK runtime measurements or multiplicative gains.
+
+### Pixel identity requires a pinned decoding convention (2026-10-03)
+
+**Wrong:** Compare two fields called decoded hash without checking RGB/RGBA, size
+prefix and separators. A mismatch need not indicate changed pixels; a comparison
+across conventions cannot establish duplicate exclusion.
+**Correct:** Bind original file SHA256 first, then recompute all compared pixel IDs
+under the existing corpus convention. Preserve original intake hashes separately.
+**Why:** NATIVE77caught RGB-with-separator intake hashes versus RGBA training hashes
+before admission. Rebuilding12pairs with the training convention established zero
+overlap against existing train/development without rewriting source evidence.
+
+### Image derivative reuse must not imply data admission (2026-10-03)
+
+**Wrong:** Recompute unchanged crops for each model/role change, or treat a cached
+tensor as permission to train on the associated calibration image.
+**Correct:** Bind immutable image derivatives to byte identity, geometry and actual
+preprocessing/runtime/dependencies. Bind supervision, roles and model authorization
+separately. Reject corrupt/partial entries; never rewrite old seals to obtain reuse.
+**Why:** BATCH79's actual83image inspection reused59entries while preparing24new ones;
+the next pass made zero crop calls. Original2141tensors/crop hashes remained exact.
+All calibration data stayed training-ineligible. Generated NumPy arrays also need
+artifact ignore coverage; report JSON ignore rules alone do not protect them.
+
+### Export byte identity and portable admission tests (2026-10-03)
+
+**Wrong:** Locate a manifest beside a receipt without reading the receipt, or let
+admission regression tests skip entirely when a developer lacks private corpora.
+**Correct:** Bind completed receipt/case identity, exact selected inventory and the
+original manifest's input_manifest_sha256/byte count. Do not confuse the producer's
+semantic manifest_sha256 with its byte hash. Generate small regression fixtures;
+retain real corpus replay as separate integration evidence.
+**Why:** INTAKE82 found selection validation never read source_receipt, despite
+using its directory. The strengthened check passes all24 retained selections and
+rejects missing/partial/mismatched evidence. Five admission tests now run without
+retained files; this does not make generated tests proof of real-data eligibility.

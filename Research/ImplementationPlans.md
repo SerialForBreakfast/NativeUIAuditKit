@@ -1,11 +1,96 @@
 # Full backlog implementation packet catalog
 
+[NATIVE-83](Plans/FocusTransitionLearning49.md#native83--retained-collection-intake-and-local-runtime-diagnosis)
+received/inspected36new pairs; strict semantic compatibility awaits source, local
+capture awaits retained-operation recovery. [Handoff](../reports/work/NATIVE-INTAKE-83/handoff.md).
+
+[INTAKE-82](Plans/FocusTransitionLearning49.md#intake82--portable-intake-and-admission-regression-boundary)
+completes portable receipt/admission regression coverage and retained intake recheck;
+rich-v2 source compatibility remains a separate blocker.
+[Handoff](../reports/work/INTAKE-82/handoff.md).
+
+[SIZE-81](Plans/FocusTransitionLearning49.md#size81--restore-candidate-scale-to-visual-ranking)
+complete: training fit preserved, Settings endpoints 1/10 → 2/10 but pairs 0/5.
+Small true controls remain missing; follow up through grouped coverage and retained
+rich24 intake, not an unchanged model rerun. [Handoff](../reports/work/SIZE-81/handoff.md).
+
+[CHANGE-80](Plans/FocusTransitionLearning49.md#change80--native-change-adaptation-and-ranking-diagnosis)
+completed one change-only adaptation; native training misses fixed, Settings ranking
+remains unqualified. [Handoff](../reports/work/CHANGE-80/handoff.md).
+
+Latest BATCH79candidate:77role approval materialized44/5, DTM017completed with failing
+Settings transfer. [Native handoff](../reports/work/BATCH-79-B/native-handoff.md).
+This supersedes older pending-role/candidate statements below; no promotion.
+
+[BATCH-79](Plans/FocusTransitionLearning49.md#batch79--retained-data-to-reusable-experiment-campaign)
+is the integrated retained-data/cache/campaign contract. Reuse accepted tools rather
+than another journal or trainer. Offline incremental-cache software is verified;
+[B handoff](../reports/work/BATCH-79-B/handoff.md). Rich source publication, explicit
+data-role/capture decisions and expanded candidate protocol remain pending.
+
+[NATIVE-PROPOSALS-78](Plans/FocusTransitionLearning49.md#native-proposals78--calibration-coverage-before-training)
+complete:24/24native endpoints covered by both unchanged proposers. Calibration
+inputs retained for reuse,77data-role decision remains separate.
+
+[NATIVE-ADMISSION-77](Plans/FocusTransitionLearning49.md#native-admission77--exact-native-role-proposal):
+12native-table calibration→train proposal awaits explicit maintainer role decision.
+Software guards/collector verified; no admission or training launched.
+
+[NATIVE-INTAKE-76](Plans/FocusTransitionLearning49.md#native-intake76--retained-native-coverage-and-throughput)
+received36native pairs and reviewed throughput reports.12directional pairs pass
+inspection;24rich-v2pairs require source publication/consumer support. Training roles
+unchanged. [Evidence](../reports/work/NATIVE-INTAKE-76/handoff.md).
+
+[RANK-75](Plans/FocusTransitionLearning49.md#rank75--visual-ranking-and-crop-batching)
+completed; [evidence](../reports/work/RANK-75/handoff.md). Visual ranking still fails
+Settings transfer; batching/crop reuse verified. Native coverage remains next, not
+another unchanged training run.
+
+PROPOSAL-RANK-74 automatic union bank complete; [evidence](../reports/work/PROPOSAL-RANK-74/handoff.md).
+Its planned visual-ranking comparison is now completed in RANK-75; native appearance
+coverage is the remaining gap, not another unchanged box-regression run.
+
+[PROPOSALS-73 / PROPOSAL-RANK-74](Plans/FocusTransitionLearning49.md#proposals73--candidate-coverage-diagnostic):
+retained proposal coverage diagnosed; next build source-bound actual/oracle candidate
+banks before training a visual ranker.
+
+[COMPATIBILITY-72](Plans/FocusTransitionLearning49.md#compatibility72--producer-contract-binding):
+wire-name mapping/source audit complete; stationary reference planning gap remains.
+
+[CAMPAIGN-71](Plans/FocusTransitionLearning49.md#campaign71--campaign-to-corpus-batching):
+offline campaign journal, incremental intake and dependency-scoped prepared reuse.
+COVERAGE-70 completed both comparisons; native transfer remains unsolved.
+
 [SPATIAL-TRANSITION-56](Plans/FocusTransitionLearning49.md#spatial56--spatial-fit-diagnostic-and-deconfounded-coverage-audit):
 spatial fit diagnostic and coverage audit complete; DTM003 fails the4pair gate.
 [GLOBAL-CONTEXT-57](Plans/FocusTransitionLearning49.md#next-proposal--global-context57-and-deconfounded-intake):
 context diagnostic complete: cells8/8, boxes0/4; metadata intake CLI delivered.
-[GEOMETRY-58 proposal](Plans/FocusTransitionLearning49.md#next-proposal--geometry58):
-geometry-logit diagnostic and retained-source inventory; not yet executed.
+[GEOMETRY-58](Plans/FocusTransitionLearning49.md#next-proposal--geometry58):
+geometry-logit diagnostic2/4paired boxes; source inventory/debt cleanup complete.
+[GEOMETRY-59](Plans/FocusTransitionLearning49.md#next-proposal--geometry59):
+overlap diagnostic3/4paired boxes; no-scroll24case matrix delivered.
+[GEOMETRY-60](Plans/FocusTransitionLearning49.md#next-proposal--geometry60):
+tiny-fit gate passes4/4; full30epoch candidate underfits. Gradient evidence delivered.
+[FIT-61](Plans/FocusTransitionLearning49.md#next-proposal--fit61):
+full24/24training fit passed; Settings transfer fails; reporting improvements delivered.
+[TRANSFER-62](Plans/FocusTransitionLearning49.md#next-tranche--transfer62):
+completed169evaluations, no-scroll CLI and published producer compatibility request.
+[ROBUSTNESS-63](Plans/FocusTransitionLearning49.md#next-tranche--robustness63):
+completed translation comparison and source audit; robustness gain with fit regression.
+[EXPOSURE-64](Plans/FocusTransitionLearning49.md#next-tranche--exposure64):
+completed; trained-view fit restored, real-domain transfer still fails.
+[GENERALIZATION-65](Plans/FocusTransitionLearning49.md#next-tranche--generalization65):
+completed frozen probes and explicitly approved 32/5 admission.
+[PREPARED-66](Plans/FocusTransitionLearning49.md#next-tranche--prepared66):
+verified reusable training inputs integrated into existing trainer; no launch.
+[DATA-67](Plans/FocusTransitionLearning49.md#next-tranche--data67):
+completed controlled32pair candidate: perfect training fit, Settings transfer fails.
+[TEMPORAL-68](Plans/FocusTransitionLearning49.md#next-tranche--temporal68):
+completed: change decisions improve, localization remains unqualified; batch plan delivered.
+[LOCALIZE-69](Plans/FocusTransitionLearning49.md#next-tranche--localize69):
+completed; three-shape/position coverage gap measured and shared-encoding parity verified.
+[COVERAGE-70](Plans/FocusTransitionLearning49.md#next-tranche--coverage70):
+next two controlled geometry-coverage augmentation comparisons with one intake/batched evaluation.
 
 [STORAGE-LIVE-01](Plans/ArtifactStorage.md): explicit read-only SSD mappings,
 verified bulk migration, real-consumer compatibility and recovery instructions.

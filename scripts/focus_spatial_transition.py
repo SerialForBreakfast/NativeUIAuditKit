@@ -47,10 +47,37 @@ def targets(torch, boxes, height=16, width=24):
     return indices, geometry
 
 
-def loss(torch, net, images, labels):
+def geometry_loss(torch, logits, truth, use_logits=False,logit_regression=False):
+    if logit_regression:
+        return torch.nn.functional.smooth_l1_loss(logits,torch.logit(truth.clamp(1e-4,1-1e-4)),beta=1.)
+    if use_logits:
+        return torch.nn.functional.binary_cross_entropy_with_logits(logits,truth)
+    return torch.nn.functional.l1_loss(logits.sigmoid(),truth)
+
+
+def decode_geometry(torch,indices,values,height,width):
+    centers=torch.stack(((indices%width+values[:,:,0])/width,
+                         (indices//width+values[:,:,1])/height),dim=2)
+    return torch.cat((centers,values[:,:,2:]),dim=2)
+
+
+def giou_loss(torch,predicted,truth):
+    p,t=predicted.reshape(-1,4),truth.reshape(-1,4)
+    plo,phi=p[:,:2]-p[:,2:]/2,p[:,:2]+p[:,2:]/2
+    tlo,thi=t[:,:2]-t[:,2:]/2,t[:,:2]+t[:,2:]/2
+    intersection=(torch.minimum(phi,thi)-torch.maximum(plo,tlo)).clamp(min=0).prod(1)
+    union=p[:,2:].prod(1)+t[:,2:].prod(1)-intersection
+    enclosure=(torch.maximum(phi,thi)-torch.minimum(plo,tlo)).clamp(min=0).prod(1)
+    return (1-intersection/union.clamp(min=1e-8)+(enclosure-union)/enclosure.clamp(min=1e-8)).mean()
+
+
+def loss(torch, net, images, labels, geometry_logits=False,overlap=False,logit_regression=False):
     cells, geometry, change = net.fields(images)
     indices, truth = targets(torch,labels[:,:8],cells.shape[2],cells.shape[3])
-    predicted = geometry.flatten(3).gather(3,indices[:,:,None,None].expand(-1,-1,4,1)).squeeze(3).sigmoid()
-    return (torch.nn.functional.cross_entropy(cells.flatten(2).reshape(-1,384),indices.reshape(-1))
-            + torch.nn.functional.l1_loss(predicted,truth)
+    predicted = geometry.flatten(3).gather(3,indices[:,:,None,None].expand(-1,-1,4,1)).squeeze(3)
+    total=(torch.nn.functional.cross_entropy(cells.flatten(2).reshape(-1,cells.shape[2]*cells.shape[3]),indices.reshape(-1))
+            + geometry_loss(torch,predicted,truth,geometry_logits,logit_regression)
             + torch.nn.functional.binary_cross_entropy_with_logits(change[:,0],labels[:,8]))
+    if overlap:
+        total=total+giou_loss(torch,decode_geometry(torch,indices,predicted.sigmoid(),cells.shape[2],cells.shape[3]),labels[:,:8])
+    return total

@@ -5,7 +5,7 @@ import ImageIO
 import CryptoKit
 
 struct Frame: Codable, Sendable { let id: String; let path: String; let sha256: String }
-struct Input: Codable, Sendable { let version: Int; let root: String; let frames: [Frame] }
+struct Input: Codable, Sendable { let version: Int; let root: String; let frames: [Frame]; let rectanglesOnly: Bool? }
 struct Proposal: Codable, Sendable { let bounds: [Double]; let confidence: Float; let text: String? }
 struct Output: Codable, Sendable {
     let id: String; let sha256: String; let width: Int; let height: Int
@@ -48,8 +48,10 @@ for frame in input.frames {
     text.recognitionLanguages = ["en-US"]
     text.usesLanguageCorrection = false
     let ocrStart = ProcessInfo.processInfo.systemUptime
-    do { try VNImageRequestHandler(cgImage: image, orientation: .up).perform([text]) }
-    catch { errors.append("ocr: \(error)") }
+    if input.rectanglesOnly != true {
+        do { try VNImageRequestHandler(cgImage: image, orientation: .up).perform([text]) }
+        catch { errors.append("ocr: \(error)") }
+    }
     outputs.append(Output(id: frame.id, sha256: hash, width: image.width, height: image.height,
         rectangles: (rectangles.results ?? []).map { Proposal(bounds: box($0.boundingBox,image.width,image.height), confidence: $0.confidence, text: nil) },
         text: (text.results ?? []).map { Proposal(bounds: box($0.boundingBox,image.width,image.height), confidence: $0.confidence, text: $0.topCandidates(1).first?.string) },

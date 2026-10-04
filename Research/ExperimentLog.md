@@ -1,5 +1,266 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run DTM014 — COVERAGE-70 broad translations (2026-10-03, before launch)
+
+Standing approved local experiment tranche: two fresh 600-epoch comparisons,
+32 admitted training pairs / five development-only Settings pairs, fixed-last,
+seed42, Adam0.001, batch8, CPU two threads, combined2GiB output ceiling and
+recorded no-wall-time-cap override. No capture, new admission, export or promotion.
+DTM013 architecture unchanged. DTM014 uses paired translations ±25%x/±15%y;
+DTM015 adds half-width compression before those translations. Baseline views remain.
+Off-frame views are rejected:120 accepted/40 rejected versus152/8. One intake and
+shared preparation took32.757s; warm loads0.198s/0.183s. Unequal view exposure is
+explicit, not equivalent augmentation coverage. Compare both with frozen DTM013
+on the same fitting/development/counterfactual membership in one batched evaluation.
+
+Protocol hashes: DTM014 `b8ce99b4be0d3a9333fb936de6a5cf0146451b81b02d1e7ea8d0d0ed14023b82`;
+DTM015 `8548878083a5874b39326095c65ed866f230ddac637ddc84faa6983007825e42`.
+Inputs: reports/work/COVERAGE-70/ready/{broad,compressed}/protocol.json.
+Outputs: NativeUITrainer/focus_ring_runs/coverage70-{dtm014,dtm015}.
+DTM014 exact arm `transition-direct-pixels`, output `coverage70-dtm014`.
+Completed exit0,PID31728,600epochs. Wrapper11.513s, intake0.384s,fit10.988s.
+Checkpoint SHA256 `14fe5c2baf99af70fa0fdbd92933e7b668cb8c4b4301f92e2cee3388c2444cb9`.
+Own-bank120/120 joint fit; original32/32; Settings change5/5,boxes0/5.
+
+## Run DTM015 — COVERAGE-70 compressed translations (2026-10-03, before launch)
+
+Second of the two comparisons scoped above: same32/5 membership, DTM013 model,
+600epochs, seed42, Adam0.001, batch8, CPU2threads, fixed-last. Half-width compression
+plus ±25%x/±15%y translations,152 admitted views/eight rejected. Combined tranche
+2GiB ceiling, no-wall-time-cap override. No capture/admission/export/promotion.
+Arm `transition-direct-pixels`, output `coverage70-dtm015`, protocol
+`8548878083a5874b39326095c65ed866f230ddac637ddc84faa6983007825e42`.
+Completed exit0,PID31727,600epochs. Wrapper11.668s,intake0.387s,fit11.146s.
+Checkpoint SHA256 `808e33807138c5df8c4319579bb3eb883fd530ca1e21331136de4f924be415f6`.
+Own-bank152/152 joint fit; original32/32; Settings change4/5,boxes0/5.
+Development transfer remains unsolved; no automatic third experiment or promotion.
+First launch attempt for DTM014 stopped before training because
+the combined heading did not satisfy the per-run log check; corrected to separate
+entries, retaining the failed launch log and unchanged protocols.
+
+## Run DTM013 — explicit temporal-difference change head (2026-10-03)
+
+Registered before launch under goal-selected TEMPORAL-68 and standing local
+experiment envelope. Explicit new architecture scope: replace change head with
+3→8→16→24convolutions over absolute RGB frame differences, pooled4×6,Linear576→32→1.
+Ordered RGB geometry encoder/heads and seeded weights identical toDTM012; change
+loss no longer backpropagates through geometry, which is an explicit confound.
+Same32train/5development,600epochs,2,400updates,19,200samples,Adam0.001,batch8,
+seed42,96×64aspect-fit,paired±4%translations,CPU2threads,fixed-last.2GiB/no-wall-time
+cap; one candidate only. No capture/new data labels/export/promotion.
+Arm `transition-direct-pixels`, output `temporal68-dtm013`, protocol
+`acb9424c641d880a837992609997b545e1168ba73500e211b57fb6c22b85e6ae`.
+Null-difference and reversal are structural properties, not hardcoded semantic
+labels. Native content-only negatives remain distinct from focus moves. Compare
+with frozenDTM012 in one batched evaluation, retaining exposed-data limitations.
+Completed exit0,PID28916,600epochs/2,400updates/19,200samples,final loss0.151916.
+Checkpoint `8b0d652b9dc11cce10dd1fe6511de7e9fa777acc985acb0e89462b96de5422ae`.
+315,235parameters versus881,819;1,268,673checkpoint bytes versus3,533,413.
+Run wrapper11.294s:intake0.405s,fit/setup10.748s,checkpoint0.003s,scoring0.138s;
+cold bank26.306s separate. Same augmentation schedule and600epoch budget asDTM012.
+Original24+added8fit32/32,trained translations128/128. Settings raw change2/5→5/5,
+false-change decisions3→0; localization remains0/5. Both genuine Settings moves
+abstain due to invalid boxes, despite change probability1.0. The3no-op probabilities
+are below7.1e-7, not a claim of calibration. Zero-difference raw changes original
+18/48→0/48,Settings10/10→0/10,added0/16retained. This is exposed development evidence,
+not independent final qualification.1,218shift scores/20rejected cells/148duplicate
+probes in25.592s (3.016sPNG decode). Observed baseline CPU medians15.42ms→15.34ms;
+parameter reduction is not a measured latency win. Actual CLI parity passed for both
+models. No second run or production promotion. Evidence: reports/work/TEMPORAL-68/.
+
+## Run DTM012 — approved native negative additions (2026-10-03)
+
+Registered before launch under goal-selected DATA-67 and standing local experiment
+tranche authority, distinct from the maintainer's eight-pair data-role approval.
+Arm `transition-direct-pixels`, output `data67-dtm012`, protocol
+`f81aeae70a200516dcdee265c0aeea1aaea3960507f76a3eb44f93c111059aa4`.
+One fresh600epoch fixed-last candidate, same DTM011 architecture/encoding/loss/Adam
+0.001/batch8/seed42/CPU2threads and paired±4%augmentation.32training/5development;
+original29records unchanged,8native negative pairs explicitly admitted.12changed/
+20unchanged training;2,400updates/19,200samples versus1,800/14,400previously.
+This is not equal compute.2GiB output cap, no-wall-time-limit override. Reuse pinned
+160entry input bank; explicit expanded-membership gate verifies original fit evidence
+and exact new admission. No new architecture, captures, labels, export or promotion.
+Compare both frozen models together on original24, added8, exposed Settings, shifts
+and duplicated-frame counterfactuals. No independent final evaluation or threshold
+selection. Completed exit0,PID27092,600epochs/2,400updates/19,200samples.
+Checkpoint `ea23627ad8c42d851dcc4ed4ae935479d0469c53bbe8429aa2e7e8182271c447`.
+Final loss0.110567. Run wrapper13.501s: intake0.386s,fit/setup12.971s,
+checkpoint0.007s,scoring0.137s; initial CLI preflight excluded. Cold prepared bank
+26.991s is separate amortizable cost, not omitted from total campaign accounting.
+Original24paired/change24/24 retained; added8paired/change8/8 versusDTM0110/8boxes
+and4/8raw change. Trained translations128/128fit. Settings remains0/5localization,
+2/5raw change,3false changes,1abstention. Duplicated original inputs still18/48raw
+change predictions; Settings10/10. Added negative duplicates improve8/16→0/16raw
+change predictions. Fitting improved, temporal/real-domain transfer not established.
+Batch comparison1,218shift evaluations,20rejected cells,148duplicated probes,
+25.509s including2.953sPNG decode. Reference37baseline and candidate5development
+prediction parity verified. Actual image-only CLI parity passed. No second run.
+Evidence: reports/work/DATA-67/{comparison.json,cli-parity.json,handoff.md}.
+
+## Run DTM011 — matched augmented-view exposure (2026-10-03)
+
+Registered before launch under goal-selected EXPOSURE-64 and standing local
+experiment authority. Arm `transition-direct-pixels`, output `exposure64-dtm011`,
+protocol `b101d83c982322e39c3b573402d2db4b8dc237d70d70519c46061e288cf3728c`.
+One fresh600epoch run, sameDTM01024train/5development, paired±4%translations,
+context/logitSmoothL1+GIoU,96×64,Adam0.001,batch8,seed42,CPU2threads,fixed-last.
+Only epochs120→600:1800updates/14400samples/~120exposures per variant. NumPy
+schedule preservesDTM010's120epoch prefix. Explicit5×update cost, not equal compute.
+2GiB/no-wall-time-limit override; no additional run, new data admission, capture,
+export or promotion. FrozenDTM009/010negative-pair evaluation is calibration only.
+Completed exit0,PID22387,600epochs/1800updates/14400samples. First120epoch history
+exactly matchesDTM010(zero loss difference), same120variant bank and training IDs.
+Per-variant exposure92–146(mean120). ScheduleSHA
+`92a5fdecd86462c2e8cd0709c2aefce6d4dec33df15fc6d95b2f4a27debcff4d`.
+Checkpoint `2fa1b8d8d47f8700256997ef61263ad9c4f5a69897c1bd517d744a008d9570b6`.
+Run29.071s:intake17.398s,fit11.532s,checkpoint0.006s,scoring0.134s; initial
+CLI preflight excluded.3,692,168run bytes. Final loss0.12283.
+Original train paired/change24/24; four trained shifts96/96; reversal23/24paired.
+Settings remains0/5paired,2/5change with3false changes. Warm median4.347ms,p954.498ms.
+Frozen retained8negative calibration:DTM009/010/011paired0/8each; raw unchanged
+correct4/8,8/8,4/8; decided false changes4,0,2; abstentions0,2,2. Cases form4decoded-
+pixel connected groups, same renderer ancestry, not independent evidence.
+Conclusion: matched exposure repairs original-fit regression and trained-shift fit,
+not transfer. More unchanged training is not the next experiment.10checkpoint CLI
+parity,85Python/134Swift checks pass. No promotion or second run.
+[Handoff](../reports/work/EXPOSURE-64/handoff.md).
+
+## Run DTM010 — paired-translation robustness comparison (2026-10-03)
+
+Registered before launch under goal-selected ROBUSTNESS-63 and the standing local
+experiment envelope. Arm `transition-direct-pixels`, output `robustness63-dtm010`,
+protocol `04755955f7d95cb0c628b8dbdfafc2177f189157ef62ad601250c0472b871e9b`.
+Fresh120epoch model,24Fixture train/5exposed Settings development, unchanged
+context/logitSmoothL1+GIoU architecture,96×64encoder,Adam0.001,batch8,seed42,
+CPU2threads,fixed-last,≤2GiB,no-wall-time-limit override. Only training augmentation
+changes: uniform seeded baseline/±4%axis paired translations, analytic boxes,
+off-frame variants rejected before sampling. NumPy RNG separate from Torch shuffle.
+DTM009full24/24fit gate bound to original model/protocol/evaluation and spatial source.
+Evaluate original/reversed/shifted pairs without threshold or checkpoint selection.
+No capture, new source admission, export, production change or automatic second run.
+Completed exit0,PID21291,120epochs/360updates. Run wrapper22.533s: intake15.771s,
+fit6.622s(includes bank preparation),checkpoint0.006s,scoring0.133s.3,591,266bytes.
+Checkpoint `b88b645761cc12042ab53e02db2f6928cee0a881c99d31f3fc96ee0298c28e92`.
+120valid bank variants,zero rejected train variants;2880samples across120epochs.
+Counts baseline595/left546/right599/up553/down587; scheduleSHA
+`b3ed86a555adc0510da6045d5aaade4df07e4922bc9f5d165401c79325a4efda`.
+Original train paired18/24 versusDTM00924/24, raw change24/24;47/48cells.
+All6paired failures are guide after-frame geometry, even at the correct cell.
+Four shifted conditions improve47/96→82/96paired; reversal24/24→17/24.
+Settings unchanged0/5paired,2/5change,3false changes. Reversal abstains1/24;
+all other eligible conditions decide. No evidence of safe calibration. Final loss0.95847; falling loss may indicate
+insufficient augmented-view exposure, but no extra run launched in this tranche.
+Warm CPU median4.222ms,p954.310ms;9checkpoint actual CLI parity passed.
+This trades original-fit accuracy for synthetic robustness; not an accepted model.
+[Handoff](../reports/work/ROBUSTNESS-63/handoff.md).
+
+## Run DTM009 — full-corpus120epoch convergence test (2026-10-03)
+
+Registered before launch under goal-selected FIT-61. Arm `transition-direct-pixels`,
+output `fit61-dtm009`, protocol
+`60ada4a814f1667e091596b3fef80fe9105c5841a08194a8feccfc9b4b54aa0a`.
+SameDTM00824train/5exposed-development membership, context/logitSmoothL1+GIoU,
+96×64,Adam0.001,batch8,seed42,CPU2threads,fixed-last; only epochs30→120.
+Fresh state, one run/2GiB/no wall-time cap. HistoricalDTM0074/4gate bound through
+sealed original pins, unchanged numerical-function ASTs/spatial source/dependencies
+and original result/model/evaluation hashes. No capture, admission change or promotion.
+
+Completed exit0,PID19047,120epochs/360updates,20.726s wrapper time. Intake15.728s,
+fit4.860s(including tensors/optimizer init),checkpoint0.006s,scoring0.133s; initial
+CLI preflight excluded. Checkpoint6838c641b17931b5b896e5c886e29714b1f39d4f15313b8c42c98a95cdaac85b;
+3,551,878run bytes. Final loss0.14447. Actual24train: paired/change/joint24/24,
+48/48cells,minimum endpointIoU0.75963; geometry L10.008204,cell CE0.035083,
+change BCE0.000920. Settings5: paired0/5,change2/5,all5decided(allchanged),3false
+changes. Training-fit success is not transfer or production success. Warm CPU median
+4.540ms,p954.671ms;8checkpoint CLI parity passes. No extra fit/export/promotion.
+[Handoff](../reports/work/FIT-61/handoff.md).
+
+## Run DTM008 — full admitted-corpus logit candidate (2026-10-03)
+
+Registered before launch, conditional second run ofGEOMETRY-60. DTM007 passed
+exact4/4paired IoU≥0.5 and change; bound evaluation/protocol/checkpoint verified.
+Arm `transition-direct-pixels`, output `geometry60-dtm008`, protocol
+`2092794573ce7fdb2014851c387695781011f9fa203d066aae148f083df64c0a`.
+All24Fixture train/5Settings exposed development; unchanged admission, sameDTM007
+architecture/logit SmoothL1+GIoU/cell/change objectives,96×64,Adam0.001,batch8,seed42,
+CPU2threads,30epochs,fixed-last. Combined tranche2GiB/no wall-time cap. Fresh state,
+not resumed diagnostic. No capture/export/promotion or independent evaluation claim.
+
+Completed exit0,PID17972,30epochs/90updates,18.806s including intake/fit/scoring.
+Checkpointe98d26bc045690311fafb55d7959a4606080798c2bcdee0af465e42ebdc09bd4.
+Loss9.22405→1.95349; last5epochs~1.95–1.97. Actual24train: paired8/24,raw change
+12/24(allunchanged),24abstain. Settings5: paired0/5,raw change3/5,5abstain.
+The successful4pair capacity diagnostic does not establish full-corpus fit or transfer.
+Warm CPU median4.321ms,p954.518ms; reload parity passes. No promotion/extra fit.
+[Handoff](../reports/work/GEOMETRY-60/handoff.md).
+
+## Run DTM007 — target-logit geometry diagnostic (2026-10-03)
+
+Registered before launch under goal-selected GEOMETRY-60. Arm
+`transition-direct-pixels`, output `geometry60-dtm007`, protocol
+`953287eaf4393e7ff30876ac1cc41ce27652c8c2d355647c0673aaecdcc6988d`.
+Same4IDs/120epochs/context architecture/96×64/Adam0.001/batch8/seed42/CPU2threads,
+fixed-last. Replace geometry BCE with SmoothL1(beta1) on target logits clamped at
+1e-4/1-1e-4; keep unit GIoU,cell/change objectives and decode. ConditionalDTM008
+30epoch24/5candidate only after4/4paired IoU≥0.5/raw change. Two runs/2GiB/no wall
+time cap,42GiB available. No data-role change/capture/download/export/promotion.
+
+DTM007 completed exit0,PID17847,120updates,16.877s including intake/fit/scoring.
+Checkpoint4f6c4bab5152d6901e5d3ac5b388ad1fbfdca2f5de77af90b297def6ef0ead7d.
+Exact fitted4pass: paired4/4,cells8/8,change4/4; endpoint IoUs0.8882–0.9738.
+Mean geometry L10.006123,cell CE0.44150. All24train-role rescored (only4fitted):
+paired12/24,change18/24. Settings5: paired0/5,change5/5,3decided2abstain.
+Warm CPU median4.259ms,p954.359ms. Exact gated candidate preparation passed.
+RetainedDTM006collapsed-height derivatives (mean objective): sigmoidL1−0.000124,
+BCE−0.007786,logitSmoothL1−0.125,GIoU−0.007930. Stronger correcting signal is
+observed, not evidence of generalization or an optimizer-update magnitude.
+
+## Run DTM006 — overlap-aware geometry diagnostic (2026-10-03)
+
+Registered before launch under goal-selected GEOMETRY-59. Arm
+`transition-direct-pixels`, output `geometry59-dtm006`, protocol
+`5162da824a8bccf1ecb9d62b13b2e1b10d78cd1fc6b4d5c8b4053b35b6432280`.
+Same4IDs/120epochs/context architecture/96×64/Adam0.001/batch8/seed42/CPU2threads.
+Add unit GIoU on decoded target-cell geometry toDTM005loss; retain all other terms
+and inference behavior. Fixed-last, unchanged24/5admission, conditional30epochDTM007
+only after4/4paired IoU≥0.5and raw change. Two runs/2GiB/no wall-time cap.
+No capture, downloads, export or promotion. Historical conditional DTM006 never ran.
+
+Completed exit0,PID16677,120updates,20.150s including intake/fit/scoring.
+Checkpoint389136af0fd7b837559d724dc17022c088a9f5f5ce86cf70801987ec2dfad8f0;
+run3,548,976bytes. Loss8.55842→0.83467. Exact fitted4: paired3/4,cells8/8,change4/4;
+geometry L10.03065,cell CE0.16762. Light unchanged before-frame height~0.001 versus
+0.06328truth,IoU0.0157; all other fitted endpoint IoUs≥0.6884. DTM007 gate fails;
+no candidate. All24train-role rescored (only4fitted): paired9/24,change19/24.
+Settings5: paired0/5,change5/5,all5decided; no generalization or calibrated geometry
+confidence. Warm CPU median4.274ms,p954.368ms. No further fit in this tranche.
+[Handoff](../reports/work/GEOMETRY-59/handoff.md).
+
+## Run DTM005 — geometry-logit four-pair diagnostic (2026-10-03)
+
+Registered before launch, assigned GEOMETRY-58. Arm `transition-direct-pixels`,
+output `geometry58-dtm005`, protocol
+`f311d1fcbe9f70a0843568783f5e04c444103085cb6b9a8d3e61b84679714a7b`.
+Same4train IDs, context architecture,96×64,120epochs/Adam0.001/batch8/seed42,
+CPU2threads/fixed-last. Only geometry loss changes: BCE-with-logits on existing
+fractional coordinate targets, replacing sigmoid L1; cell/change losses unchanged.
+Two runs maximum including conditional DTM00630epoch24/5candidate;2GiB combined,
+no wall-time cap,42GiB available. Require exact4/4paired IoU≥0.5 and raw change
+before candidate. No new data admission/capture/export/promotion.
+
+Completed exit0,PID15007,120updates,20.219s including intake/fit/scoring. Loss
+7.36103→0.389476 (different objective, not directly comparable toDTM004total loss).
+Checkpoint `ba278dff323048098c16226572074b394b24b6c824843527132eae6beda54e0b`;
+3,549,047run bytes. Exact fitted4: paired boxes2/4,cells8/8,change4/4. Mean geometry
+L10.03843 versusDTM0040.08116; cell CE0.03967. Light pairs pass; dark before IoUs
+0.4458/0.4766 fail, with heights~0.14/0.129 against0.06328targets. Saturation repaired,
+extent accuracy still insufficient. DTM006 preparation exits1 `memorization_gate_failed`.
+All24train-role rescored (only4fitted): paired9/24,change17/24. Settings5: paired0/5,
+change5/5,all5decided; not reliable localization/confidence. Warm CPU median4.453ms,
+p954.779ms; no controlled throughput claim. Actual CLI parity passes new and three
+legacy models. No second fit/export/promotion. [Handoff](../reports/work/GEOMETRY-58/handoff.md).
+
 ## Run DTM004 — global-context spatial fit diagnostic (2026-10-03)
 
 Registered before launch under assigned GLOBAL-CONTEXT-57. Arm
@@ -2871,3 +3132,118 @@ Source metadata audit verifies1,250pairs including1,000train; all train layout=r
 body-aspect range1.084–1.761. Five new wide controls are outside that range.
 Action: test wide native controls and matched Home appearance, not unchanged scale-up.
 Evidence: reports/work/REAL-TRANSFER-DIAGNOSIS-32/{scored-clipping-aware,coverage-verified}.
+
+## Run DTM016 — RANK75 visual proposal ranking (2026-10-03)
+
+Registered before execution. Arm `transition-candidate-ranker`, output
+`rank75-dtm016`, protocol
+`6d47c759a9b907c949c8ce3abfa47a196c6ff58b27a9996b17ce2e7217c714bc`
+at reports/work/RANK-75/ready-r2/protocol.json with adjacent tranche approval.
+One600epoch/600update candidate,seed42,CPU2threads,Adam0.001,fixed-last;
+production16%/256crop → RGB16×16bilinear →768/32/ReLU/1. Equal50training-frame
+multi-positive ranking loss; unchanged32train/5exposed-development pair roles.
+DTM013change probabilities frozen.2GiB,no wall-time cap. No capture/export/promotion.
+Question: can visual selection from automatic boxes avoid failed coordinate transfer?
+Bank2,141candidates/59images prepared once in29.639s/59native calls. Initial CLI
+preflight rejected missing arm enumeration before execution; repaired dispatcher and
+re-pinned protocol with the same encodings, no recapture/recrop. PID, runtime,
+checkpoint and endpoint/paired results follow.
+
+Completed exit0,PID35773,fit1.013625s,total2.356579s,600updates. Checkpoint SHA256
+`4d6886c4f0bf567e1e5ddd32bf722b72a8600200ff54a8c7231ef3fe0ed8d7a7`.
+Training64/64endpoints,32/32paired/joint; exposed Settings0/10endpoints,0/5paired/joint.
+Correct Settings proposal ranks20–27; DTM013raw change decisions remain5/5.
+No abstentions at this intentionally uncalibrated top-one ranking boundary; this is
+not safe deployment behavior. Checkpoint replay/candidate-order parity passes.
+Resident ranker cold0.130ms,warm median0.0186ms excludes crop/proposals/change model.
+Post-run cache hardening checks retained preparation numpy/pillow versions; historical
+protocol/pins/checkpoint/evidence unchanged and no model rerun. No model gate passed.
+Evidence: reports/work/RANK-75/{ready,ready-r2,replay.json,handoff.md} and
+NativeUITrainer/focus_ring_runs/rank75-dtm016/result.json.
+
+## Run DTM017 — native-table admission / fixed ranker comparison (2026-10-03)
+
+Registered before execution. Maintainer explicitly approved12calibration→train pairs
+and subsequent capture/training/promotion subject to gates. This assigned comparison
+does not need new capture and cannot promote without independent model qualification.
+
+Hypothesis:12native UITableView pairs improve transfer relative to DTM016's32pair
+synthetic-only fitting. Keep768→32→1ReLU ranker,production16%/256crop→RGB16bilinear,
+600epochs/full-batch74unique training frames,Adam0.001,seed42,CPU2threads,fixed-last.
+44train(24changed/20unchanged),5exposed Settings development. No new independent final
+set; native12scroll state unknown. Original37roles and source bytes preserved.
+DTM013change control is frozen/recomputed on all49pairs, with original37probability
+parity. DTM016and candidate compare identical83images/2337automatic proposals.
+Report original32/new12fitting separately from Settings5, paired/endpoint/joint results,
+abstentions and preparation/fit timing.2GiB outputs,no-wall-time override. One run only;
+no automatic retraining. New run: native79-dtm017. Arm: transition-candidate-ranker.
+ProtocolSHA256: fbcf14d46e439504ee45614d45947d62da8f8957d3e466cc9a912f22be8bd738.
+First launch refused before execution because registration heading lacked the required
+Run prefix/exact protocol binding; corrected without changing model/data/protocol.
+PID/elapsed/outcome pending.
+
+Completed DTM017: PID42957,exit0,600epochs. Fit1.349s,total model execution2.551s.
+Admission source revalidation21.096s; candidate preparation25.880s including source
+checks and fixed-model evaluation, zero crop invocations. Original37DTM013change
+probabilities match within1e-6. All83image derivatives reused; no capture.
+
+Matched DTM016→DTM017 box results: original32train64/64→64/64endpoints,
+32/32→32/32paired; newly admitted12train5/24→24/24endpoints,2/12→12/12paired;
+exposed Settings0/10→1/10endpoints,0/5→0/5paired. These native gains are fitting on
+newly admitted labels, not independent transfer evidence. Frozen DTM013change head
+misses4/12native transitions, making new-native joint success8/12. No abstentions:
+uncalibrated ranking/change confidence can still be confidently wrong.
+
+Checkpoint f772463766c4226ec09644050295f83aa9bcd21d140725d9161f34635e8bcbe0.
+Replay and candidate-order parity pass. No gate passed, no promotion, no automatic
+second run. Diagnose unseen Settings ranking separately from native change failure.
+Evidence: reports/work/BATCH-79-B/native-{replay,completion,contract-checks}.json,
+native-ready/ and NativeUITrainer/focus_ring_runs/native79-dtm017/result.json.
+
+## Run DTM018 — CHANGE80 fixed-geometry change-head adaptation (2026-10-03)
+
+Registered before execution under explicit maintainer training approval. Hypothesis:
+adapting only DTM013change weights on admitted44pairs addresses4native misses while
+retaining original32training and5exposed Settings change decisions. No new data roles,
+capture, ranker update, new architecture, export or promotion. All geometry weights
+frozen/bit-exact; initialized from DTM013.600epochs/full-batch44,Adam0.0001,seed42,
+CPU2threads,baseline96×64paired encodings,no augmentation,BCE-with-logits,fixed-last,
+2GiB,no-wall-time override. DTM017boxes fixed for joint reporting. Native12scroll
+unknown; Settings5are exposed development, not independent final evaluation.
+Arm transition-change-adaptation; output change80-dtm018. Protocol/PID/outcome pending.
+ProtocolSHA256: eadbde625134279aed9f32a581ba75a4d27f78ebd4087da60d2ebb28b3079378.
+
+DTM018completed,PID43862,exit0.600epochs,fit9.501s,total10.574s; one-time source
+validation/encoding26.260s,7,225,344tensor bytes. Original32change32/32→32/32;
+native12change8/12→12/12; exposed Settings5/5→5/5. Joint with frozen DTM017boxes:
+original32/32,native12/12,Settings0/5. Zero abstentions; no independent final test.
+All non-change weights bit-identical; checkpoint replay exact. Missing-approval CLI
+preflight refused correctly.21focused Python and134Swift tests pass.
+Checkpoint08c0f6feb27035cbc56d9dbd85b45cd8b623348f81583bbdba3b2b62e1192039.
+No promotion: correcting training misses is optimization evidence, not native held-out
+qualification. Settings ranking remains bottleneck. Diagnostic8/9wrong endpoints
+select regions with max extent<100px; this is descriptive, not a deployment filter.
+Evidence reports/work/CHANGE-80/ and NativeUITrainer/focus_ring_runs/change80-dtm018/.
+
+## Run DTM019 — SIZE81 normalized candidate scale (2026-10-03)
+
+Registered before execution under explicit maintainer training approval. One bounded
+architecture comparison: add normalized candidate width/height to768RGB features,
+770→32→1network. Copy common seed42visual initialization and zero the new columns;
+no x/y,label,source identity or hard minimum-size rule. Same44train/5exposed Settings,
+74unique train frames,600epochs/full batch,Adam0.001,CPU2threads,fixed-last,2GiB,
+no-wall-time override. Original crops/2337encodings reused, no capture or recropping.
+Compare DTM017on identical candidates; DTM013change control fixed for the primary
+comparison, DTM018joint results separately identified. Small positive controls remain
+missing, so this cannot qualify production. No automatic follow-up or promotion.
+Arm transition-candidate-ranker; output size81-dtm019. Completed PID44805, exit0.
+ProtocolSHA256: 369eb295a5dce5a8be4b3cfbc00bd5f8bad6c1f7f4805c27ab5a2ae128ac63f3.
+Preparation0.387s, fit1.415s, run2.592s; zero crop invocations. Original32train
+64/64endpoints and native12train24/24 preserved. Exposed Settings1/10→2/10endpoints,
+0/5paired unchanged. Primary fixed DTM013change control joint40/44train; separate
+DTM018combination44/44train,0/5Settings. No abstentions or promotion. Checkpoint
+replay/candidate-order parity passed. Checkpoint SHA256:
+d1058de1e75cd685f4a8fbe4821535b743cef4bc0d60e36c9f4a72337df284a6.
+Frozen-checkpoint zero-size ablation reduces Settings2/10→1/10; diagnostic only,
+not an independent test or deployment mode. Coverage lacks small positive controls.
+See reports/work/SIZE-81/handoff.md; next source/coverage work, not more epochs.

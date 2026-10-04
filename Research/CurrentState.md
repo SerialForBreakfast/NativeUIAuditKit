@@ -1,9 +1,213 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 3, 2026, DTM004 context diagnostic completed (underlying results retain observation dates)
+**As of:** October 3, 2026, DTM019 size-aware ranking complete; Settings localization still fails
 **Audience:** maintainers and agents  
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**Latest intake/runtime — NATIVE-INTAKE-83:** received36native collection pairs;
+408receipt-listed files and72distinct decoded images verified. All36 semantic intakes
+blocked by unpublished source contract (24planned_focus,12native_verification_mode).
+Fresh local TTR readiness: infrastructure ready, target can_run=false due to retained
+cleanup operation63CC9F0D; no capture or restart. Exact transfer receipt and blocker
+follow-up published/read back. [Handoff](../reports/work/NATIVE-INTAKE-83/handoff.md).
+
+**INTAKE-82:** receipt-to-manifest/case binding hardened; nine portable intake and
+admission regressions plus three retained integration checks pass. Actual retained
+CLI still accounts for36pairs/72images:12inspection passes,24rich-v2 rejections.
+Local TTR source remains f933e299; no new training/capture or role changes.
+[Handoff](../reports/work/INTAKE-82/handoff.md).
+
+**Latest — SIZE-81 / DTM019:** normalized candidate size improves exposed Settings
+endpoint accuracy from 1/10 to 2/10, but paired accuracy remains 0/5. Training stays
+88/88 endpoints. No independent qualification or promotion. Preparation reused all
+crops (0.387s); fit 1.415s. 21 Python / 134 Swift tests pass. Coverage audit finds no
+small true controls; TTR coverage follow-up published/read back, acknowledgment
+unverified. [Handoff](../reports/work/SIZE-81/handoff.md).
+
+**Prior — CHANGE-80 / DTM018:** native training change8/12→12/12; original32/32and
+exposed Settings5/5retained. Geometry weights unchanged, DTM017boxes frozen; Settings
+joint remains0/5.8/9wrong Settings box selections are<100pxregions, suggesting lost
+scale/context after crop resizing. No hard filter or production claim.21Python/
+134Swift checks pass. [Handoff](../reports/work/CHANGE-80/handoff.md).
+
+**Latest — DTM017:** approved12native pairs now added to training, preserving original
+32train/5development.44/44train pairs localized, but exposed Settings1/10endpoints,
+0/5paired. Fixed DTM013change control misses4/12native transitions. Zero new crop calls;
+600epoch fit1.349s. No capture/promotion or independent evaluation claim.62Python/
+134Swift and four additional protocol guards pass. Historical pending-role statements
+below are superseded. [Handoff](../reports/work/BATCH-79-B/native-handoff.md).
+
+**BATCH-79-B software complete:** incremental image cache integrated with the existing
+ranker preparer. Actual59old+24new inspection images: appended preparation2.113s,
+warm83image pass0.344s/zero crop calls. All original2141encodings/crop hashes preserved.
+62Python/134Swift tests pass; no role change or model run.77decision and explicit
+expanded-model protocol remain pending. [Handoff](../reports/work/BATCH-79-B/handoff.md).
+
+**Workflow review:** campaign-sized acquisition and dependency-scoped reuse now have
+an integrated [BATCH-79 contract](Plans/FocusTransitionLearning49.md#batch79--retained-data-to-reusable-experiment-campaign)
+and worker guidance. Offline incremental ranker-cache software is now verified;
+rich source,77role approval and live authorization remain distinct gates. Fresh TTR
+source check remains f933e299; no new capture, admission or training occurred.
+
+**NATIVE-PROPOSALS-78:** native-table automatic proposal coverage24/24for both Vision
+and raster.196union candidates/24images retained in calibration-only inputs; no role
+change or ranker accuracy claim. Successful one-batch native0.862s,total4.109s;49Python/
+134Swift checks pass. Reuse outputs after approval, no new native extraction needed.
+[Handoff](../reports/work/NATIVE-PROPOSALS-78/handoff.md).
+
+**NATIVE-ADMISSION-77:** exact12pair calibration→train proposal prepared, not approved.
+Prospective44train(24changed/20unchanged)/5exposed development;6light/6dark native-table
+cases, no decoded-pixel overlap with existing data. Scroll remains unknown and shared
+Fixture ancestry excludes independent-final claims. Source collector/admission guards
+verified;13Python/134Swift checks pass. No new model execution or role change.
+[Handoff](../reports/work/NATIVE-ADMISSION-77/handoff.md).
+
+**NATIVE-INTAKE-76:** retained TTR native-table12/rich24 downloaded and accounted:
+36pairs/72distinct images. Source-backed NativeTable-v1 consumer extension qualifies
+12directional pairs for inspection; no scroll assertion or training admission.
+24rich-v2pairs remain blocked pending source publication; their retained offsets show
+8stationary/4scrolling moves among12directional cases. Exact receipts published/read
+back, sender cleanup/acknowledgment separate. Producer reports favor runner reuse and
+serial export; overlapping export was slower in its small trial. No fresh capture.
+[Handoff](../reports/work/NATIVE-INTAKE-76/handoff.md).
+
+**RANK-75 / DTM016:** automatic-box visual ranking fits64/64training endpoints but
+0/10Settings; best positive rank20–27. DTM013change probabilities unchanged. This
+does not establish transfer or production readiness. Request-local crop decoding
+now reused:2,141crops/59images prepared once29.64s,600epoch fit1.014s,warm bank0.130s.
+Checkpoint/candidate-order parity and59Python+134Swift checks pass. Next prioritize
+native appearance coverage and campaign binding, not another unchanged run.
+[Handoff](../reports/work/RANK-75/handoff.md).
+
+**PROPOSAL-RANK-74:** automatic Vision+raster union covers all74endpoints across
+59images;2,141candidates,max59/image,40training endpoints with multiple IoU positives.
+Vision alone40/64train+10/10dev; raster64/64train+0/10dev. Separate label-free inputs
+and supervision frozen, roles unchanged. Native training-image extraction3.15s for
+50images in two calls; retained development Vision reused. Subsequent RANK-75 above.
+[Handoff](../reports/work/PROPOSAL-RANK-74/handoff.md).
+
+**PROPOSALS-73:** retained automatic Vision rectangles cover all10Settings focus
+endpoints across nine images (bestIoU0.851–0.939), despite empty/missing annotation
+proposal lists. Ranking remains unsolved: coordinate snapping does not rescue newer
+models. Next prepare source-bound candidate banks before a visual ranker experiment.
+No fresh inference/capture/training. [Handoff](../reports/work/PROPOSALS-73/handoff.md).
+
+**COMPATIBILITY-72:** source f933e299 already has campaign runner reuse and
+focus_moved/boundary_unchanged wire contracts. Consumer now maps those names while
+retaining strict stationary evidence checks. Reference planner exposes scroll cases,
+not the requested stationary matrix; native table capture remains feasibility-only.
+Existing TRANSFER-62 follow-up published/read back, no acknowledgment established.
+[Handoff](../reports/work/COMPATIBILITY-72/handoff.md). No live capture/training.
+
+**CAMPAIGN-71:** offline append-only batch journal/intake/freeze and opt-in scoped
+input caches delivered. Two-batch resume preserves accepted evidence; actual32-pair
+160-view inputs match legacy tensors and warm-load across model configurations in
+0.171/0.169s. No simulator capture or model launch. Live campaign needs exact producer
+case bindings, runtime readiness and capture authority. [Handoff](../reports/work/CAMPAIGN-71/handoff.md).
+
+**COVERAGE-70:** DTM014/015 fit120/120 and152/152 augmentation views, but neither
+localizes the five exposed Settings pairs; DTM015 also introduces one raw change
+error. No promotion. Shared preparation32.76s, warm loads~0.2s, runs11.51/11.67s,
+three-model evaluation16.86s. Next: campaign-to-corpus batching, then genuine native
+coverage and controlled transfer diagnosis, not another unchanged training run.
+[Handoff](../reports/work/COVERAGE-70/handoff.md).
+
+**LOCALIZE-69:** frozen replay preserves all1,366predictions. Settings geometry is
+out of observed training support: target centersx72.35–72.61 versus training15.78–48.23;
+only three training size combinations exist (11.08×20.5,76.05×4.05,16.49×16.49).
+Settings is39×3.45–4.12. DTM013mean absolute center error20.61px horizontal and
+extent-height error12.40px on the96×64input. Fixing only center/extent/grid cell
+with scoring-only truth still yields0/10passing endpoints. This supports a geometry
+coverage hypothesis, not proof that resolution is irrelevant. Next COVERAGE-70
+isolates broader placement from half-width placement with two declared comparisons.
+Shared encoding replay16.12safter fresh19.11sintake; prior total25.59sincluded warm
+intake, so not an exact controlled speed benchmark. [Handoff](../reports/work/LOCALIZE-69/handoff.md).
+
+**TEMPORAL-68 / DTM013:** explicit difference-only change branch improves exposed
+Settings raw change2/5→5/5 and eliminates identical-frame raw false changes. Still
+0/5Settings localization; both true moves abstain because boxes are invalid. Fits
+all32training pairs/128trained translations.315,235parameters (previous881,819),
+but observed end-to-end pair latency stays about15ms. This is not production-ready
+or independent final evidence. Next LOCALIZE-69 diagnoses geometry failure and
+shares encoded inputs across frozen models. Offline acquisition plan has24cases in
+6bounded batches/one proposed session, no runtime authority or capture.
+[Handoff](../reports/work/TEMPORAL-68/handoff.md).
+
+**DATA-67 / DTM012:** 32/32training paired boxes and change decisions; the eight
+new negatives fit8/8and original24remain24/24. Trained shifts128/128. Settings stays
+0/5localization with3false changes. Identical-frame shortcut persists on original
+training inputs18/48raw change predictions and Settings10/10. No production advance
+claimed. Next TEMPORAL-68 tests explicit temporal evidence in the change head rather
+than more epochs; genuine no-scroll positive acquisition remains a separate need.
+Warm intake0.386s versus17.398s previously; batched comparison25.509s. Cold bank
+preparation26.991s is separate and reusable. [Handoff](../reports/work/DATA-67/handoff.md).
+
+**PREPARED-66 historical result:** approved negative admission is now 32 training / 5 exposed
+development pairs, with the original 29 unchanged. No candidate launched in that tranche.
+Prepared translation inputs are reusable: 30.08s cold preparation versus 0.214s
+verified warm load, exact tensor parity, 160 entries / 23.6MB. Real warm preflight
+retains the original fit gate and rejects expanded membership until a specific
+compatibility gate is implemented. DATA-67 subsequently implemented that explicit gate.
+[Handoff](../reports/work/PREPARED-66/handoff.md).
+
+**GENERALIZATION-65:** DTM011 scores 76/96 at 2% axis shifts, 65/96 at 6%, 75/96
+at 4% diagonals on training scenes; Settings localization remains 0 throughout.
+All three frozen models predict change on 18/48 duplicated training-frame inputs
+and 10/10 duplicated Settings inputs. These are synthetic zero-difference probes,
+not genuine action labels: they reveal appearance-driven change predictions.
+Eight newly admitted negatives are four connected groups, all native dark theme;
+light-colored palettes do not establish light-theme coverage. Related groups remain
+excluded from final evaluation. Production model gates are unchanged.
+
+**EXPOSURE-64 / DTM011:**600epochs restores24/24original training and96/96trained
+shift pairs; Settings remains0/5. Three frozen models all localize0/8retained
+no-scroll negatives. DTM011has2decided false changes/2abstentions there. Fitting is
+solved on this small bank, transfer is not. Next: unseen-transform and duplicated-
+frame diagnostics, plus exact negative-data admission proposal; no more unchanged
+epochs or production promotion. [Handoff](../reports/work/EXPOSURE-64/handoff.md).
+
+**ROBUSTNESS-63 / DTM010:** translation augmentation improves shifted localization
+47/96→82/96but original24/24→18/24; Settings0/5unchanged. All6original failures
+are guide after-frame geometry. No promotion. Retained audit found4boundary no-ops
+and4content-only no-scroll cases; no new training admission. Next: matched per-view
+exposure comparison plus frozen-model calibration on those8negative pairs.
+[Handoff](../reports/work/ROBUSTNESS-63/handoff.md).
+
+**TRANSFER-62:** frozenDTM009retains24/24training box pairs on frame reversal but
+only11–12/24under4%translations. Settings remains0/5where eligible;5off-frame
+right shifts rejected,169evaluations total. Strict no-scroll intake is verified
+offline; producer compatibility request published/read back, no acknowledgment yet.
+No new training/capture/admission. Next: one controlled training-augmentation comparison
+plus retained-source coverage audit. [Handoff](../reports/work/TRANSFER-62/handoff.md).
+
+**FIT-61 / DTM009:** all24training pairs now pass paired boxes and change;48/48cells,
+minimum endpointIoU0.7596. Settings remains0/5paired,2/5change with3false changes.
+Optimization capacity established on this tiny corpus, not generalization. No model
+promotion. Next: frozen-model transfer diagnostics and no-scroll consumer/intake
+preparation, not more epochs on the same fitted data.43Python/134Swift checks pass.
+[Handoff](../reports/work/FIT-61/handoff.md).
+
+**Geometry60:** DTM007passes tiny fit4/4paired boxes (IoUs0.888–0.974), allowing
+DTM00830epoch24/5candidate. Full training still underfits: paired8/24,change12/24,
+all24abstain; Settings paired0/5,change3/5,all5abstain. No usable transition model
+or promotion. Next proposed: one120epoch full-corpus convergence test with unchanged
+architecture/loss, plus clearer fitted-set/timing reports. Overall goal remains active.
+[Handoff](../reports/work/GEOMETRY-60/handoff.md).
+
+**Geometry59 / DTM006:** fitted paired boxes improve2/4→3/4; cells8/8/change4/4.
+One light no-switch before-frame height remains~0.001 versus0.06328target.
+Full candidate still gated.24case no-scroll plan frozen, no runtime operations.
+Overall training goal remains active; no usable transition model yet. Next: isolate
+saturation-resistant geometry-logit regression and gradient diagnostics.
+[Handoff](../reports/work/GEOMETRY-59/handoff.md).
+
+**Geometry58 / DTM005:** geometry-logit loss raises fitted paired localization0/4→2/4;
+cells8/8 and change4/4. Heights no longer collapse, but dark cases remain oversized
+and fail IoU. DTM006 gate refuses execution.24Fixture pairs all have observed scroll;
+5Settings scroll labels remain unknown.34Python/134Swift checks pass, legacy parity
+preserved. No capture/export/promotion. Next proposed: overlap-aware geometry test
+and no-scroll acquisition specification. [Handoff](../reports/work/GEOMETRY-58/handoff.md).
 
 **Context57 / DTM004:** same4pair120epoch test now selects8/8correct center cells
 (DTM0030/8), but still0/4paired boxes. Heights collapse toward zero; cell CE falls
