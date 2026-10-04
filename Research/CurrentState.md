@@ -5,6 +5,19 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**CONTENT127 / DTM031:** padding-only interventions preserve all433decisions;
+content-only contrast causes13losses. One frozen-base residual fit on original+
+contrast views restores207/207contrast while retaining207originals and226identities.
+Unfitted bright207/207,dim205/207(two abstentions).12Python/139Swift checks pass.
+Exposed-data robustness only; DTM030remains delivered passive model. No promotion.
+
+**LOCAL126:** TTR-independent frozen experiments expose appearance sensitivity:
+DTM030 original transition agreement207/207 falls to190/207(dim),189/207(contrast),
+193/207(bright); all226identity negatives stay correct. These transformations also
+change letterbox padding, so they do not establish native-theme robustness. Scaling
+down the residual loses Region gains. No fit, threshold selection or promotion.
+Next isolate padding/content effects before choosing robustness augmentation.
+
 **FLOW125:** read-only operational digest and exact Git handoff now available in
 `scripts/workflow_review.py`; no shared-board rewrite or Git mutation. 33 Python /
 139 Swift checks pass. Conformance tests now generate their own inputs. New pack

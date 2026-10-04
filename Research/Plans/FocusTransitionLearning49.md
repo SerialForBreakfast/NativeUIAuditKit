@@ -1,5 +1,36 @@
 # Focus Transition Model — transition learning49
 
+## CONTENT-ROBUSTNESS-127 — padding control and one conditional fit
+
+Verify every unique source endpoint with production192×128encoding and recover
+its letterboxed content bounds. Separate content-only/padding-only LOCAL126 affine
+interventions. If content-only contrast loses original successes, run DTM031:
+warm-start DTM030, frozen encoder/base,600epochs Adam0.01 seed42 CPU2threads,
+existing fit_change_head. Train original207 plus207common contrast(0.8x+0.1) views,
+and226original plus226contrast identities with equal original/identity-group loss.
+These are explicitly same-role training augmentations under this continued tranche;
+no new capture, changed ground truth, final membership or model promotion.
+Fixed-last checkpoint; no loop. Require all207originals and226identities retained,
+improvement on contrast and report dim/bright probes separately (not independent).
+Pin inputs/source/model, log before launch,2GiB output cap, no wall-time override
+change. Preserve all earlier results even if a gate fails.
+
+## LOCAL-ROBUSTNESS-126 — independent frozen-model diagnostics
+
+Use sealed REFLOW117 tensors/checkpoints and all433 admitted original/identity
+examples. Compare base DTM025 and residual DTM030. Experiment A applies fixed
+common affine intensity transforms (gain,offset)=(0.8,0),(0.8,0.1),(0.8,0.2)
+to both encoded frames, including padding. These are encoded-space interventions,
+not native theme rendering or admitted new training examples. Report decision
+stability/label agreement by old training, admitted Settings, Region and identities.
+Experiment B evaluates fixed residual multipliers0,0.25,0.5,0.75,1 and records
+base/correction logits, saturation and signed decision margins. Do not select a
+deployment multiplier on these exposed data. Preserve thresholds0.15/0.85.
+Pin source/input/checkpoint hashes, reproduce unchanged DTM030 first, batch once,
+retain all case scores and failure indices. No fit, role change, export or promotion.
+Acceptance: reproducible baseline, finite/bounded interventions, exact identity
+residual zero, full membership accounting, tests and offline package verification.
+
 Assigned October3,2026: audit retained genuine before/after evidence, freeze the
 guarded-rule baseline at action level, integrate a learnable temporal candidate and
 execute one comparison only if exact training membership is already admitted.

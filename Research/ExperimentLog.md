@@ -3556,6 +3556,30 @@ candidate-order parity pass. CheckpointSHA256:
 3f90ba6bd8161c00057f36a307a205b3e03ba6801ef26e8974db652998184b75.
 No promotion or independent evaluation. Next test cross-source transfer and remaining
 failure modes, not unchanged extra epochs. See reports/work/NATIVE-87/handoff.md.
+# Run DTM031 — CONTENT-ROBUSTNESS-127 — 2026-10-04
+
+Registered before launch. User continued explicitly conditional robustness tranche;
+standing local training authority. Warm-start DTM030, frozen encoder/base,576residual
+weights,600epochs Adam0.01 seed42 CPU2threads, fixed-last. Original207 transitions
+plus207common content-contrast(0.8x+0.1) views;226original plus226contrast identities.
+Equal transition/identity group means; source roles/labels/ancestry unchanged,
+augmented views training-only. No independent evaluation or changed thresholds.
+CONTENT127 diagnosis verifies282source encodings; padding-only controls preserve
+433/433decisions while content-contrast gives194/207original successes. Frozen
+diagnosis seal/source/model/tensor/mask checked before fit.2GiB outputs; no wall-time
+cap under standing amendment. Output NativeUITrainer/focus_ring_runs/content127-dtm031.
+Gate: retain207/207originals and226/226identities; improve content-contrast; report
+unfitted dim/bright probes separately. No export, promotion or repeated fit.
+
+Completed PID15292,exit0. Fit3.204s,total30.138s;loss0.0135764→0.00252463.
+Original207/207 and226identities retained exactly in decision (identity probabilities
+bit-exact). Contrast194→207/207, unfitted bright196→207/207, dim190→205/207.
+Dim failures rows48/60 are positive abstentions p0.642374/0.825492, no confident
+wrong outcomes. Frozen parameters and saved-checkpoint replay pass. Development
+retention/contrast gate passes; independent/native-theme/production gates unassessed.
+CheckpointSHA2561fabf563f32ae2fc651cdb5819e1f4e864d7cfbc0185194fc6caa518046ee467.
+12focused Python and139Swift tests pass. Preserve DTM030delivery; no export/promotion.
+
 # Run DTM029 — IDENTITY-RESIDUAL-114 — 2026-10-04
 
 Registered before launch. One frozen-DTM025 feature/readout residual:576 zero-initialized

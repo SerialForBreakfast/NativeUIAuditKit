@@ -1,5 +1,30 @@
 # NativeUIAuditKit — Tasks
 
+## Review — CONTENT-ROBUSTNESS-127 / Codex
+
+Source encoding/padding control verified. DTM031600epoch residual fit retains
+207/207originals and226identities; contrast194→207, bright196→207, dim190→205.
+Two dim abstentions remain; no confident wrong probe outputs.12Python/139Swift
+checks pass. No independent qualification/export/promotion. [Handoff](reports/work/CONTENT-ROBUSTNESS-127/handoff.md).
+
+Resolve LOCAL126 padding confound using actual source dimensions/production encoding,
+then one fixed600epoch residual-only contrast-augmentation fit if content losses
+persist. Original+common content contrast only; preserve label/ancestry and all
+original/identity gates. Other transforms diagnostic only; no promotion or TTR dependency.
+
+## Review — LOCAL-ROBUSTNESS-126 / Codex
+
+Frozen experiments complete: common intensity changes reduce DTM030 original
+transition agreement207/207→189–193/207; all226identity negatives retained. Reducing
+residual strength loses Region coverage. No fit or promotion; distinguish content
+from transformed padding before augmentation. [Handoff](reports/work/LOCAL-ROBUSTNESS-126/handoff.md).
+
+Two frozen-model experiments independent of TTR: common affine intensity
+interventions on admitted encoded pairs, and residual-strength/margin attribution.
+Compare DTM025/030 on original membership with fixed thresholds; preserve input
+bytes/models/roles. No augmentation admission, training, threshold selection or
+promotion. Deliver groupwise failures and one evidence-based next hypothesis.
+
 ## Review — FLOW-REVIEW-125 / Codex
 
 Read-only status/Git CLI implemented and exercised: 129 packets / 180 actionable
