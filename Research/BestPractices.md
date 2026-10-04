@@ -3776,6 +3776,18 @@ contrast made all226confidently changed. The algebraic identity safeguard applie
 to identical tensors, not visually different frames with unchanged focus. Synthetic
 shift clipping must not silently become trustworthy negative training labels.
 
+### Distinguish safer abstention from corrected predictions (2026-10-04, NUISANCE131)
+
+**Wrong:** Count suppressing a false-positive model output as successful no-change
+recognition, or test affine equivalence only on the trimmed pixels used to fit it.
+**Correct:** Score residuals over all content pixels; preserve exact identities and
+report correct decisions, confident errors and abstentions separately. Retain fixed
+thresholds and native qualification before deployment.
+**Why:** A full-content guard removed every confident synthetic lighting-negative
+error with no additional original losses, but220–226/226cases became unknown rather
+than correct. It did nothing for after-only translation failures. Synthetic exact
+affine equivalence is not evidence that a native animation preserves focus.
+
 ### Preserve identifiable fits and JSON-stable seals (2026-10-04, NUISANCE129)
 
 **Wrong:** Reset a robust affine slope when trimming leaves constant pixels, or

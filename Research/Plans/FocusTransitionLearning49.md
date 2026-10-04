@@ -1,5 +1,41 @@
 # Focus Transition Model — transition learning49
 
+## RETAINED-FEEDBACK-132
+
+Assigned retained archive intake: Survey26 (39544029bytes, SHA256
+30f264e6122f2506a192d477c58f4a313c8bfac936e14fd7bc2e50bde6a9e56b) and Navbar29
+(11375272bytes, SHA2567c9e74a7b457baa97f1dae1d15ed856bfafaadfd39be935e29e5540d9fac95b2).
+Use existing shared_transfer receiver and bounded extraction; immutable new local
+destinations, exact receipts, sender-owned cleanup. Reconcile image hashes, interval
+identity, scores, missing availability and exposed ancestry; native hints are not
+reviewed labels. Compare available retained input/model contracts before replay;
+do not infer tensor equivalence from matching screenshot names. Preserve original
+evidence and no training role change. Independent companion: focused Vision tests
+under updated toolchain, bounded observation/sample if stalled; no service resets,
+automatic repeated trials or silent production backend changes.
+
+## NUISANCE-DIAGNOSTICS-131
+
+Experiment A: reuse all433 original encoded pairs and10 fixed ASYMMETRIC128
+conditions. Fit the existing robust per-channel affine mapping, but score residuals
+over **all** content pixels, not its trimmed fitting support. A nonidentical pair
+with maximum residual ≤1e-5 is an affine-equivalence ambiguity signal; also report
+the predeclared 1/255 sensitivity control, never select a threshold from outcomes.
+Only replace confident changed decisions with abstention in this diagnostic;
+never assert unchanged from equivalence. Exact identities keep their model output.
+Report original retention, negative false alarms/abstentions and positive losses
+for each condition, plus residual spatial support. No production integration.
+
+Experiment B: verify DUAL130 seals and all cached feature hashes; inspect feature
+variance/scale and cross-label nearest neighbors in raw and normalized residual
+blocks separately and together. Report distances relative to median within-class
+nearest distances, exact conflicting duplicates and singular-value conditioning.
+These exposed training diagnostics distinguish numerical conditioning from missing
+evidence; neither nearest neighbors nor synthetic probes qualify generalization.
+No parameter search, new candidate, data-role changes or TTR dependency. Inputs and
+models stay unchanged; output cap2GiB. Python integration tests now; offline Swift
+checks explicitly pending while the maintainer's Xcode update is in progress.
+
 ## DUAL-EVIDENCE-130 — one raw-plus-normalized residual comparison
 
 Frozen DTM031encoder/readout. Input features: raw DTM031logit plus576raw residual

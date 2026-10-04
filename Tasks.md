@@ -1,5 +1,37 @@
 # NativeUIAuditKit — Tasks
 
+## Active — RETAINED-FEEDBACK-132 / Codex
+
+Receive/hash-verify Survey26 and Navbar29 exact published archives; publish matching
+receipts, safely extract and reconcile original images/model feedback and ancestry.
+Replay supported retained inputs; unknown input parity/labels remain explicit gaps,
+not training admission. Companion: isolate post-Xcode27 Vision test wait using
+focused tests before any runtime/backend changes. No recapture or model replacement.
+
+## Experiments complete / native checks pending — NUISANCE-DIAGNOSTICS-131 / Codex
+
+Fixed affine-equivalence guard retains207originals/226identities; removes all
+confident lighting false alarms by abstaining (220–226/226), not by correctly
+predicting unchanged. Motion errors persist. No exact opposing-feature collisions;
+feature scales span~7million-fold.14Python tests pass. Updated Xcode27 build passes;
+14XCTest pass, full Swift Testing run stalls in Vision request queues (stack sample
+retained; only owned runner stopped). Native qualification remains open.
+[Handoff](reports/work/NUISANCE-DIAGNOSTICS-131/handoff.md).
+
+Two local frozen experiments: full-content affine-equivalence abstention feasibility
+with fixed numerical tolerances, and DTM032 cached-feature scale/opposing-label
+separation diagnostics. Retain original decisions as a hard gate; no new training,
+capture, admission, export or promotion. Reuse pinned evidence. Xcode is updating:
+native build/test deferred pending toolchain availability; Python work proceeds.
+See [contract](Research/Plans/FocusTransitionLearning49.md#nuisance-diagnostics-131).
+
+Next substantial tranche: one fixed train-only feature-scale-conditioned comparison
+against DTM032 using cached membership and strict original retention, plus quantized
+and localized-appearance falsification of the diagnostic abstention guard. Freeze
+configuration/log before training; do not promote from exposed/synthetic success.
+Finish pending native checks after Xcode update. TTR retained evidence remains
+independent work when its share returns; no recapture request or external dependency.
+
 ## Review / candidate rejected — DUAL-EVIDENCE-130 / Codex
 
 DTM032fit complete: cached fit0.603s after48.673s preparation. Contrast negatives

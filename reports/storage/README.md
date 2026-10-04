@@ -13,7 +13,10 @@ Resolve an input for a shell tool or visual inspection:
 ```
 
 Mount must be local APFS at `/Volumes/training-drive`; registry currently pins
-`/dev/disk25s1`. Device numbers can change after reconnect/reboot: inspect the actual
+`/dev/disk7s1` after the October4 OS update (previously `/dev/disk25s1`). Verified
+USB/APFS volume UUID `FD8D8E36-FAAC-4205-87ED-86134C3582B1`; archived campaign
+receipt matches the local SHA256 `33e7e41bfdd0aa53648a1b97f0d0f0eee55953fecf3fc86f535a2208ec706742`.
+Device numbers can change after reconnect/reboot: inspect the actual
 mount and confirm the intended SSD before explicitly rebinding the registry. Do not
 accept any device or create a substitute folder when disconnected. No automatic
 mounting, fallback to stale local copies or remote access is implemented.

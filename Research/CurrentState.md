@@ -5,6 +5,17 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**NUISANCE131:** frozen diagnostic abstention preserves207original transitions and
+226exact identities, replacing all confident lighting-negative errors with
+abstention (220–226cases per condition). This is safer uncertainty, not recovered
+no-change accuracy; motion errors remain. Raw/normalized feature diagnostics find
+no exact opposing-label duplicates but~7million-fold scale variation. Next test
+conditioning and guard falsification, not extra unchanged epochs.14Python tests
+pass; updated Xcode27 build/14XCTest pass, full Swift Testing stalls in Vision queues
+(owned run stopped, diagnostics retained; cause unproven). SMB reconnected and status
+published/read back. Peer Survey26/Navbar29 originals now available; intake pending.
+USB mapping revalidated/rebound after OS disk renumbering.
+
 **DUAL130 / DTM032 rejected:** dual raw/normalized frozen-feature correction improves
 contrast negatives but loses6original successes (201/207), despite226identities
 preserved. Dim-positive performance deteriorates. No export/replacement. Features
