@@ -11,7 +11,7 @@ from focus_corrected_transition_audit import validate_case, endpoint
 from inventory_transition_sources import observed_scroll
 
 
-def verify_selection(root, selection, *, expected_pairs=24):
+def verify_selection(root, selection, *, expected_pairs=24, allow_completed_cases=False):
     h.require(type(expected_pairs) is int and 1<=expected_pairs<=128,'native76_selection_bound')
     h.require(selection.get('version')==1 and selection.get('pairs')==expected_pairs and
         selection.get('endpoint_images')==2*expected_pairs and selection.get('source_role')=='calibration' and
@@ -28,7 +28,8 @@ def verify_selection(root, selection, *, expected_pairs=24):
         h.require(actual==names,'native76_unlisted_member')
         receipt=member(root,case['source_receipt']);manifest=receipt.parent/'campaign-manifest.json'
         export=h.read(receipt)
-        h.require(export.get('schema_version')==1 and export.get('outcome')=='completed' and
+        h.require(export.get('schema_version')==1 and (export.get('outcome')=='completed' or
+            allow_completed_cases and export.get('outcome')=='completed_with_failures') and
             export.get('campaign_id','').lower()==case['campaign_id'].lower(), 'native76_source_receipt')
         h.require(type(export.get('input_manifest_bytes')) is int and
             export['input_manifest_bytes']==manifest.stat().st_size and
@@ -46,32 +47,42 @@ def verify_selection(root, selection, *, expected_pairs=24):
 
 def collection_selection(root,expected_pairs=36):
     """Bind named collection handoffs; inspection only, not a producer schema adapter."""
-    h.require(expected_pairs in (28,36),'collection_selection_scope')
+    h.require(expected_pairs in (28,36,60),'collection_selection_scope')
     receipts=sorted(root.glob('*/export-0/campaign-receipt.json'))
-    h.require(len(receipts)==4,'collection83_campaign_count')
-    entries=[]
+    h.require(len(receipts)==(5 if expected_pairs==60 else 4),'collection83_campaign_count')
+    entries=[];rejected=[]
     for path in receipts:
         receipt=h.read(path);manifest=h.read(path.parent/'campaign-manifest.json')
         cases=manifest['cases']
+        accounts=receipt['case_accounting']
+        completed={k for k,v in accounts.items() if v.get('state')=='completed'}
         h.require(receipt['cases_count']==len(cases) and
-            set(receipt['case_accounting'])==set(receipt['files'])=={c['case_id'] for c in cases},
+            set(accounts)=={c['case_id'] for c in cases} and
+            set(receipt['files'])==completed and
+            (len(completed)==len(cases) or expected_pairs==60 and receipt.get('outcome')=='completed_with_failures'),
             'collection83_receipt_accounting')
         for case in cases:
             h.require(case['split_group']=='validation' and
                 case['independence_group']=='fixture_procedural_renderer_v1','collection83_source_role')
+            if case['case_id'] not in completed:
+                h.require(accounts[case['case_id']].get('state')=='failed','collection101_failed_state')
+                rejected.append(dict(caseID=case['case_id'],receipt=str(path.relative_to(root)),
+                    accounting=accounts[case['case_id']]))
+                continue
             bundle=member(path.parent,'splits/validation/'+case['case_id'])
             entries.append(dict(case_id=case['case_id'],campaign_id=manifest['campaign_id'],
                 bundle=str(bundle.relative_to(root)),source_receipt=str(path.relative_to(root)),
                 members=receipt['files'][case['case_id']]))
     return dict(version=1,pairs=expected_pairs,endpoint_images=2*expected_pairs,source_role='calibration',
-        ancestry='fixture_procedural_renderer_v1',cases=entries)
+        ancestry='fixture_procedural_renderer_v1',cases=entries,rejectedAttempts=rejected)
 
 
 def run_collection(root, output, expected_pairs=36):
     import time
     start=time.monotonic();root=h.local(root);out=h.fresh(output)
-    checked=verify_selection(root,collection_selection(root,expected_pairs),expected_pairs=expected_pairs)
-    rows=[];pixels=set();files=0;byte_count=0
+    selection=collection_selection(root,expected_pairs)
+    checked=verify_selection(root,selection,expected_pairs=expected_pairs,allow_completed_cases=expected_pairs==60)
+    rows=[];pixels={};files=0;byte_count=0
     for entry,bundle,case in checked:
         transition=bundle/'transition-case.json'
         kind='transition' if transition.exists() else 'appearance'
@@ -87,12 +98,14 @@ def run_collection(root, output, expected_pairs=36):
                 h.require(im.format=='PNG' and 0<im.width*im.height<=20_000_000,'collection83_image_bounds')
                 im.load();rgb=im.convert('RGB')
                 digest=hashlib.sha256(str(rgb.size).encode()+b'\0'+rgb.tobytes()).hexdigest()
-                images.append(dict(**h.ref(path),size=list(rgb.size),decodedSHA256=digest));pixels.add(digest)
+                images.append(dict(**h.ref(path),size=list(rgb.size),decodedSHA256=digest))
+                pixels.setdefault(digest,[]).append(dict(caseID=case['case_id'],image=str(path.relative_to(root))))
         row=dict(caseID=case['case_id'],kind=kind,images=images,recipe=case['recipe'],
             recipeAxes='producer-declared, not consumer-qualified',trainingEligible=False)
+        row['condition']=case.get('transition',{}).get('condition','appearance' if kind=='appearance' else 'unknown')
         try:
             if kind=='appearance':validate_bundle(bundle)
-            else:validate_case(root,transition,case,directional=True)
+            else:validate_case(root,transition,case,directional=case.get('transition',{}).get('condition')=='focus_moved')
             row['consumer']='passed-inspection-only'
         except (ValueError,KeyError,TypeError,OSError) as error:
             row.update(consumer='blocked',blocker=str(error))
@@ -102,9 +115,13 @@ def run_collection(root, output, expected_pairs=36):
         endpointImages=sum(len(r['images']) for r in rows),uniqueDecodedImages=len(pixels),
         filesVerified=files,memberBytes=byte_count,consumerStates=dict(Counter(r['consumer'] for r in rows)),
         blockers=dict(Counter(r['blocker'] for r in rows if 'blocker' in r)),
-        elapsedSeconds=time.monotonic()-start,sourceRole='calibration',
+        elapsedSeconds=time.monotonic()-start,sourceRole='calibration',rejectedAttempts=selection['rejectedAttempts'],
+        conditions=dict(Counter(r['condition'] for r in rows)),
+        duplicateGroups=[v for v in pixels.values() if len(v)>1],
+        splitGroups=['validation'],ancestryGroups=['fixture_procedural_renderer_v1'],
+        independence='All renderer-connected examples are calibration; no independent final membership admitted.',
         sourceContract=('Native source compatibility pinned to 50ff7fd8; inspection is not data admission.' if expected_pairs==36 else
-            'Layout28 version16 producer source not yet published locally; existing strict validators retain rejection. Inspection is not data admission.'))
+            'Native collection v16/v17 source compatibility pinned to 4f9273cc; completed cases retain original campaign outcomes. Inspection is not data admission.'))
     out.mkdir(parents=True);h.write(out/'intake.json',report,sealed=True)
     print({k:report[k] for k in ('pairs','endpointImages','uniqueDecodedImages','filesVerified','memberBytes','consumerStates','blockers','elapsedSeconds')})
 
@@ -179,6 +196,7 @@ if __name__=='__main__':
     group=p.add_mutually_exclusive_group()
     group.add_argument('--collection36',action='store_true',help='Inspect the named native collection handoff; never admit data')
     group.add_argument('--layout28',action='store_true',help='Inspect the named layout-diversity handoff; unsupported schemas stay blocked')
+    group.add_argument('--context60',action='store_true',help='Inspect completed context cases; retain failed attempts separately')
     a=p.parse_args()
-    if a.collection36 or a.layout28:run_collection(a.root,a.output,28 if a.layout28 else 36)
+    if a.collection36 or a.layout28 or a.context60:run_collection(a.root,a.output,60 if a.context60 else 28 if a.layout28 else 36)
     else:run(a.root,a.output)

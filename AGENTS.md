@@ -70,6 +70,30 @@ Operational selection and completion checks live in
 
 ### Local experiment tranche approval — 2026-10-01
 
+**Maintainer amendment, 2026-10-04:** agents may independently decide data admission,
+evaluation and model promotion as they validate, and may use simulators and train
+within the current model-improvement goal. Record evidence-backed decisions and
+exact data roles; approval does not make uncertain labels true, remove independent
+holdout requirements, lower existing quality gates, authorize physical-device use,
+external-repository edits, Git writes or private-data egress. Failed gates require
+diagnosis, not promotion. Preserve rollback artifacts and report efficacy to TTR.
+
+**Standing training approval — maintainer,2026-10-03:** “I give you a standing
+approval for training now that we have the USB storage.” Local, goal-aligned
+training from the approved backlog no longer needs repeated per-run permission.
+Record the bounded hypothesis, exact eligible membership, initialization, epochs,
+storage budget and acceptance evidence before each run; preserve failure evidence
+and shipped models. PREP103's controlled comparisons may execute once their data
+admission prerequisites are satisfied. Training authority does not itself approve
+the pending CALIBRATION102 calibration-to-training role change. Existing Settings
+development and final holdout restrictions are unchanged. This is not authority
+to relabel evaluation data, trust unverified labels, capture, transfer externally,
+spend money, install/download dependencies, export or promote models. Use verified
+local USB storage for authorized bulk artifacts under the existing storage policy;
+check actual mount/capacity, never create an unmounted lookalike. Keep compact
+evidence/code local and follow sandbox approvals. No repetitive permission requests
+for routine training within these boundaries.
+
 **Maintainer amendment2026-10-02:** “You are no longer bound by time constraints
 until further notice continue training.” Local approved training experiments may
 use a recorded no-wall-time-limit override. This supersedes the training/tranche

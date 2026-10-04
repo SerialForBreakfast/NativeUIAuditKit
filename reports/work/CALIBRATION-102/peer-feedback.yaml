@@ -1,0 +1,33 @@
+schema_version: 1
+id: nuiak-20261004-calibration102-feedback
+in_reply_to: nuiak-20261004-shadow-focus-feedback
+state: diagnostic_feedback
+summary: Retained v16/v17 action data is usable and exposes concrete transition/ranking failures; no recapture needed.
+source_reference: 4f9273cc
+scope: 40sectioned Fixture action pairs, shared ancestry, calibration-only; no independent final accuracy claim.
+models: Frozen DTM024 PyTorch change head plus DTM020 ranker, not the FDR021 single-frame observer or a delivered CoreML transition adapter.
+results:
+  moves_correct: 16/16
+  boundary_noops_correct: 12/12
+  content_only_noops_correct: 0/12; all12confident false changes
+  proposals_cover_truth: 80/80endpoints
+  selected_box_correct: 10/80endpoints; dark10/40,light0/40
+  joint_correct: 2/40pairs
+  abstentions: 0
+  cause_limit: 53of70wrong selected boxes are less than half target area; descriptive, not proof that a size filter is safe.
+next_for_ttr: |
+  Continue the accepted shadow recorder/review implementation using the exact
+  FDR021/evidence-only contract in nuiak/responses/nuiak-20261004-shadow-adapter-response.yaml.
+  Preserve content-only changes with unchanged observed focus, boundary no-ops,
+  fragment-versus-whole-control alternatives, and representative successes when
+  recording already-authorized work. Requested focus and AX/OCR remain distinct
+  from native or human-reviewed body labels. Log proposal omission separately
+  from wrong ranking; logits are not calibrated confidence. No new capture task,
+  model replacement or navigation authority is created by this feedback.
+next_for_nuiak: Exact40pair data-role decision pending; then separate controlled change/ranker comparisons. Shadow adapter uptake stays priority.
+evidence: reports/work/CALIBRATION-102/handoff.md
+outcomes:
+  software_verified: 23Python_and134Swift_pass
+  data_eligible: calibration_only
+  integration_qualified: offline_retained_replay_not_live_shadow
+  model_gate_passed: no_production_qualification

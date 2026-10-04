@@ -1,29 +1,529 @@
 # NativeUIAuditKit — Tasks
 
+## Review — FLOW-REVIEW-125 / Codex
+
+Read-only status/Git CLI implemented and exercised: 129 packets / 180 actionable
+collections retained, exact 134-path observed Git inventory. 33 Python / 139 Swift
+checks pass. Companion conformance tests now self-contained; new source-pinned pack
+retained separately, delivery still pending. [Handoff](reports/work/FLOW-REVIEW-125/handoff.md).
+
+Complete FLOW-STATUS's read-only operational digest and exact Git handoff. Preserve
+all unresolved requests regardless of age, unknown-field references and per-entry
+freshness; never rewrite shared status or archive automatically. Include exact
+tracked/untracked inventory, explicit intended paths, base/head, supplied test
+evidence and consumer uptake without Git writes. Companion: remove FLOW124 tests'
+dependence on retained reports by generating isolated fixtures/exposure input.
+Use deterministic offline tests plus actual local/shared read-only entrypoints.
+
+## Software review / delivery pending — FLOW-CONFORMANCE-124 / Codex
+
+11 synthetic cases replay expected outcomes; 282 exposure hashes sanitized and
+archive verified (54,764 bytes / 103 members). 27 Python and 139 Swift tests pass.
+TTR workflow request acknowledged; status published/read back preserving other entries.
+Archive remains local because strict SMB publication is unsupported; no peer replay
+or training admission claimed. [Handoff](reports/work/FLOW-CONFORMANCE-124/handoff.md).
+
+Respond to TTR's workflow-alignment request with reproducible synthetic consumer
+conformance fixtures and sanitized current transition exposure inventory. Reuse
+existing H1/v2 fixture constructors and actual harvest validator, preserving
+unverified/test-only provenance. Include valid, partial, unsupported, altered,
+corrupt, missing, duplicate, geometry/focus-binding and cross-split cases; require
+expected acceptance/rejection and source-file pins. Export282known exposed image
+hashes/ancestry without private pixels/paths, mark absent hashes unknown—not clean.
+Package exact membership/hashes and verify read-only replay. Delivery stays pending
+if current strict SMB publication semantics are unavailable; no fallback or capture.
+
+## Software review / SMB publication blocked — FLOW-TRANSFER-123 / Codex
+
+27Python/139Swift checks pass. Real CLI inspection verifies completedv1receipt and
+pendingv2bytes, without cleanup. Actual assigned metadata publication failed safely:
+SMB returns errno45for exclusive rename and atomic hard links. Verified2426byte
+stage retained; no final file, no overwriting fallback. Compatibility gap published
+in own SMB status; next qualify a reviewed supported immutable publication protocol.
+[Usage](reports/work/FLOW-TRANSFER-123/usage.md) and [handoff](reports/work/FLOW-TRANSFER-123/handoff.md).
+
+Implement NUIAK's scoped deterministic transfer CLI from WORKFLOW122: inspect by
+default, explicit publish/receive/cleanup, verified mount and namespace, immutable
+transaction ID/path/size/hash, local-original preservation, exact receiver receipts,
+collision-safe publication and resumable completed staging. No expiry cleanup,
+automatic mounting, remote execution or extraction. Test real file operations in
+project-local fixtures with mount checks mocked only in tests; run read-only live
+inspection on consumer-v2 and the completedv1transaction. Never clean v2 without
+its exact receipt. Provide usage/docs and cross-project compatibility note.
+
+## Aligned / producer validation pending — WORKFLOW-ALIGN-122 / NUIAK architect
+
+Alignment request published/read back at nuiak/requests/nuiak-20261004-workflow-alignment.yaml;
+TTR acknowledged via tvtestrig-20261004-workflow-alignment and requested consumer
+vectors/exposure inventory (FLOW124). Producer reports implementations; actual caller
+qualification remains pending. Precise exposure, model-preprocessing, resume, receipt and Git
+constraints supplied to avoid incompatible parallel solutions.
+
+Adopt [producer/consumer workflow contracts](Research/Plans/ProducerConsumerWorkflow.md):
+FLOW-VALIDATE shared versioned checks; FLOW-GENERATE existing campaign/job orchestration;
+FLOW-TRANSFER deterministic exact-receipt reconciliation; FLOW-STATUS compact owned
+status and read-only Git handoff. Contracts include inputs, failure cases, acceptance
+and next action. TTR implementation is proposed under its own instructions, not
+completed by this plan. NUIAK owns consumer parity vectors, admission/exposure registry
+and namespace-local transfer tooling. First align actual current APIs/source revisions,
+then execute substantial integrated validation/generation/resume/reconciliation proof.
+No invented command, blanket capture authorization or claimed speed/token savings.
+
+## Review — SHADOW-FEEDBACK-121 / Codex
+
+Completed exactv1receipt/cleanup reconciliation with local original preserved;
+consumer-v2 unchanged. Producer-report inspector validates both published reports,
+exact artifact identities/counts/case hashes without claiming reviewed accuracy.
+16Python/139Swift tests pass. Three survey26decision differences identified;
+requested all8reported intervals/7unique originals plus raw inference/hints/review
+through existing handoff, no recapture. [Handoff](reports/work/SHADOW-FEEDBACK-121/handoff.md).
+
+Reconcile exact DTM030v1 receipt and retained survey24/26 feedback. Extend existing
+feedback validation with bounded producer-report inspection: strict duplicate-key
+parsing, exact model/artifact allowlist, compatible source identity, count accounting,
+case/hash consistency and explicit unreviewed provenance. Exercise actual published
+reports plus rejection tests. Request the smallest complete retained case export
+needed to distinguish regression from native-hint error; no recapture or automatic
+training admission. Remove only the exact receipted sharedv1copy after verifying
+local original; preserve consumer-v2 until its separate receipt. Publish one
+case-bound response, separate acknowledgment/integration/model-quality outcomes.
+
+## Review — SHADOW-THROUGHPUT-120 / Codex
+
+Completed:438/438exact tensors/decisions on both delivered and optimized native
+consumers. Median preprocessing183.869→120.219ms; full replay86.159→53.436s
+(consecutive local CPU runs, not universal timing).139Swift/24CLI/2Python tests
+pass; independent portable build/synthetic score pass. Consumer-v2 archive208121bytes
+published/read back with same DTM030model/contract, original118preserved. TTR
+copy receipt/adoption remains pending. [Handoff](reports/work/SHADOW-THROUGHPUT-120/handoff.md).
+
+Complete SHADOW-FEEDBACK-01's measured resource-overhead support: reduce native
+transition preprocessing without changing weights, thresholds or encoded bytes.
+Use bounded request-owned encoded-frame reuse, revalidate path/bytes/hash on every
+access, and optimize integer resize loops. No retained full-resolution pixel cache.
+Compare the delivered118consumer against the new release on identical438pairs;
+require exact tensor hashes/decisions and existing probability tolerance. Test
+cache eviction, mutation rejection, off/error paths and no cross-request state.
+Deliver measured cold/repeated throughput, memory bound, verified source update
+and TTR compatibility consequence. Preserve immutable118archive and model hashes.
+No capture, training, data-role change or model promotion. TTR receipt reconciliation
+proceeds only if a concrete receipt arrives; its active runtime remains untouched.
+
+## Review — TRANSITION-COVERAGE-119 / Codex
+
+While export approval is pending, audit DTM030on every unique admitted endpoint
+as an identical pair, reverse all433retained pairs, and produce current exposure
+closure for independent-evaluation planning. Existing226self-pairs do not cover
+all new collection endpoints. No export, capture, role change or training in this
+audit. Reject mismatched image/tensor identity; preserve checkpoints and thresholds.
+Completed:282/282unique endpoints confidently unchanged;433/433reversed pairs
+confidently correct with zero decision changes. Exposure closure:178Fixture and104
+Settings images, all training/exposed; no independent final membership reserved.
+23Python/138Swift tests pass. [Handoff](reports/work/TRANSITION-COVERAGE-119/handoff.md).
+SHADOW118export/parity/delivery now passed after explicit export approval.
+Independent native evaluation additionally needs new source membership;
+neither more unchanged fitting nor relabeling existing ancestry resolves that gap.
+
+## Review — TRANSITION-SHADOW-118 / Codex
+
+October4 maintainer explicitly approved experimental export, native parity and
+isolated TTR delivery. Completed:438/438exact native encodings and decisions,
+max probability error5.364e-7;413470byte FP32model.24new-model CLI,31Python and
+138Swift tests pass. Portable source independently builds/scores its synthetic
+sample.207304byte archive and detailed request published/read back on verified SMB.
+DTM025 and production models unchanged. Receiver receipt/live adoption pending.
+
+Export DTM030experimentally via existing trace/CoreML exporter, extend isolated
+consumer allowlist without replacing DTM025, verify433retained plus synthetic pairs
+for exact encoding/decision parity and≤1e-4probability error. Build portable source
+package with synthetic-only samples, exercise off/error paths and publish verified
+artifact through SMB receipt flow. No private captures shipped or production claim.
+Software includes exact dual-model allowlist, loaded identity reporting and strict
+model/tree feedback normalization. Historical authority rejection and sandboxed
+CoreML-cache test failure retained; approved export and cache-scoped rerun passed.
+Next: reconcile exact TTR copy receipt and optional on/off evidence, then qualify
+prospectively reserved new journey groups. Do not reuse exposed Settings/Fixture
+ancestry as independent evaluation or infer model readiness from compatibility.
+[Checkpoint](reports/work/TRANSITION-SHADOW-118/handoff.md).
+
+## Review — FOCUS-LOCAL-116 + REFLOW-ADAPT-117 / Codex
+
+Compare baseline, focused-region-only differences and outside-region-only differences
+with frozen DTM029 on the73legacy pairs. Use declared body boxes as an idealized
+diagnostic and retained DTM020 automatic selections separately. Exclude the newer40
+pairs with unresolved source geometry conflicts and Region94without admitted body
+boxes from localization claims. Report positive/negative retention, abstentions,
+proposal IoUs and the reflow failure; no tuned thresholds, new crops or training.
+This is an information-path diagnostic, not a deployable masking policy.
+Locality audit complete: masking fixes reflow but loses13positive successes. Extend
+this tranche with explicit admission of the five already-exposed Settings pairs
+and nine endpoint identity derivatives, all training-only. One DTM030warm-start
+from DTM029,600epochs/Adam0.01,existing trainer,207original+226identity examples.
+No independent-final claim; no export unless separate qualification is established.
+Completed DTM030:207/207original training transitions confidently correct,226/226
+identical probabilities exactly preserved, frozen baseline/replay pass. Fit1.614s.
+38Python/137Swift tests pass. [Handoff](reports/work/REFLOW-ADAPT-117/handoff.md).
+Next substantial tranche: experimental CoreML export/parity and portable TTR shadow
+package using existing exporter/adapter boundaries; separately reserve genuinely
+new evaluation families/journeys before consuming their labels. DTM030 is not promoted.
+
+## Review — REFLOW-DIAGNOSIS-115 / Codex
+
+Audit DTM029's real Settings false change against all202admitted originals and
+217identity controls. Verify the failed frame pair/source label, quantify pooled
+feature contributions and nearest positive/negative training support, and test
+frame-order consistency on all424retained examples. Preserve roles, models and
+thresholds; diagnostic localization windows never become inference inputs.
+Deliver a reproducible frozen-model report, negative coverage inventory and one
+evidence-backed next design/collection decision. No new capture or training sweep.
+Completed: all44original training negatives/158positives accounted for;424pair
+reverse-order replay has zero categorical disagreements. Failed same-focus reflow
+has0.9455cosine to a Region positive versus0.6686to its nearest training negative;
+68.65of68.70added logits arise in lower-right pooled cells. This is support/sensitivity,
+not causal proof.33Python/137Swift tests pass. [Handoff](reports/work/REFLOW-DIAGNOSIS-115/handoff.md).
+Next: test focus-local evidence against whole-list movement on retained data using
+verified boxes only as an explicitly idealized diagnostic, then actual proposal
+boxes; align matched native reflow/scrolling negatives with TTR's existing request.
+Do not introduce a global pixel-difference threshold or tune on the failed case.
+
+## Review — IDENTITY-RESIDUAL-114 / Codex
+
+Implement and qualify one baseline-preserving residual using frozen DTM025 features
+and readout. Zero-initialized576weight correction on pair features minus mean
+identical-endpoint features; exact identity cancellation, no native hint/oracle input.
+Reuse REGION112admitted202transitions/217derived checks and existing trainer;
+600epochs,Adam0.01for the new linear layer only,CPU2threads,fixed-last. Validate
+initialization, frozen weights, checkpoint replay, old/new/no-op retention and actual
+output collisions. No capture, new roles, export or promotion in this comparison.
+Completed DTM029: Region0→92/94confident correct; old training106→107/108,
+all217identity predictions exactly retained. One related Settings negative becomes
+a confident false change, so advancement gate fails.576weights fit in1.522s;
+30Python/137Swift tests pass. [Handoff](reports/work/IDENTITY-RESIDUAL-114/handoff.md).
+Next substantial tranche: diagnose the failed real-negative transition against the
+94Region changes and already retained native motion controls; audit independent
+negative coverage and freeze one justified follow-up comparison. Do not silently
+move the failed diagnostic into training or substitute identical pairs for motion.
+
+## Review — REGION-SIGNAL-113 / Codex
+
+Diagnose frozen DTM025/028 on all424existing encoded examples: original, reversed
+order, zeroed difference channels and zeroed context channels. These are controlled
+input interventions, not new labeled training data or valid accuracy benchmarks.
+Measure per-group prediction shifts, no-op false changes, gradient sensitivity and
+Region-local versus outside-region difference contributions. Preserve checkpoints,
+labels and thresholds. Use evidence to select one next bounded hypothesis, and
+send TTR only actionable negative-coverage/integration consequences.
+Completed:424examples×six interventions×two models with gradient summaries;
+baseline replay passes. DTM028outside-strip motion retains20/26positive responses;
+removing context yields79Region responses but makes all217identical checks uncertain.
+No deployment shortcut or training change accepted.26Python/137Swift tests pass.
+[Handoff](reports/work/REGION-SIGNAL-113/handoff.md).
+
+Next approved local selection: one identity-preserving residual change-head design
+and bounded comparison. Keep DTM025 frozen, make new correction exactly zero for
+identical frames, retain old real-negative replay and current thresholds; first
+prove initialization/frozen-weight invariants, then log a single fixed fit. Do not
+use the Region inspection window, native focus identity or model labels as inference
+inputs. Independent real motion negatives and final evaluation remain outstanding.
+
+## Review — REGION-REVIEW-112 / Codex
+
+Review all95 Region12 focus strips against full-frame context; bind observations
+to exact image hashes and native identity hints. Decide change-only supervised
+admission under standing authority, preserving whole Settings ancestry exclusions
+and no geometry-label upgrade. Completed one fixed600epoch DTM028comparison using
+existing trainer: Region0→26/94confident successes, but nine old successes lost;
+all95Region-derived negatives uncertain. Candidate rejected;DTM025unchanged.
+94change pairs/95derived negatives admitted for training only; all95labels reviewed.
+34Python/137Swift tests pass. [Handoff](reports/work/REGION-REVIEW-112/handoff.md).
+
+## Review — SHADOW-REGION-111 / Codex
+
+Receive the named Region12 v2 archive through the existing bounded receiver,
+verify all producer manifest members, preserve a verified durable USB copy and
+demonstrate one-member retrieval. Audit prediction/action/image bindings and
+stationary-highlight disagreements without training admission or new capture.
+Publish exact receipt plus actionable intake findings. Settings ancestry remains
+development/diagnostic-only. Resume candidate work only with eligible inputs;
+source geometry109 conflicts and optional-module source publication remain separate.
+[Contract](Research/Plans/TransitionShadowDelivery106.md#shadow-region111--retained-settings-feedback-intake).
+Completed integrity, durable copy/retrieval, full94-interval model replay and exact
+SMB receipt. DTM025 predicts94unchanged versus94native identity changes; eight
+peer tensors/decisions match. Review labels before training; no final independence
+claim.20Python/137Swift tests pass. [Handoff](reports/work/SHADOW-REGION-111/handoff.md).
+
+Next substantial tranche: visually review Region12 identity transitions and boundary
+examples; freeze an evidence-backed admission and whole-journey split policy, then
+run one scrolling-sensitive candidate with old/no-op retention gates if eligible.
+Maintainer now authorizes independent admission/evaluation/promotion decisions;
+quality and independence gates remain binding. No further permission prompt needed
+for those decisions, but missing evidence must not be silently accepted.
+
+## Review — SHADOW-CONTRACT-110 / Codex
+
+Reconcile TTR's copied DTM025 receipt and eight stationary-highlight/scrolling
+identity-change disagreements. Deliver source-backed target semantics plus a
+portable, tested optional-module acceptance matrix and prediction/label evaluation
+contract. Validate actual retained NUIAK CLI off/error/scoring paths; do not replace
+the producer's wire format or edit TTR. Publish actionable addendum and keep receipt,
+retained replay, live hook and model quality separate. No new capture/training,
+private-image transfer, export or promotion. Geometry109 remains independently blocked.
+[Contract](Research/Plans/TransitionShadowDelivery106.md#shadow-contract110--optional-integration-and-transition-semantics).
+Delivered: exact DTM025 receipt accepted; identity-change semantics answered;
+portable conformance archive published/read back,12tests and three real CLI cases
+pass; offline Swift build/137tests pass. TTR's new artifact acknowledgment remains
+pending. [Handoff](reports/work/SHADOW-CONTRACT-110/handoff.md).
+
+## Delivered / peer retained replay reported — TRANSITION-SHADOW-106 / Codex
+
+Maintainer approves DTM025 change-only export and delivery for TTR consumption.
+[Canonical plan](Research/Plans/TransitionShadowDelivery106.md): native preprocessing,
+Core ML CPU parity, portable isolated adapter, fail-closed/off tests, versioned
+package and SMB receipt handoff. No new training, device work or promotion.
+NUIAK delivery complete:240pair exact preprocessing/decision parity,36Python and
+137Swift tests, independent portable source build/prediction.198,134byte archive
+published/read back through SMB; exact receiver receipt accepted October4 at07:44UTC.
+Peer reports source compilation, synthetic parity and eight retained transitions;
+live hook and independently reviewed accuracy remain unqualified.
+[Handoff](reports/work/TRANSITION-SHADOW-106/handoff.md). TTR owns bounded passive
+integration; no new device authority or production claim. RANK-RETENTION-105 and
+RANK-REPRESENTATION-107 are completed below; existing roles/workers remain unchanged.
+
+## Standing training approval — current execution
+
+COLLECTION-104 / Codex — review: exact40 role approval applied to a fresh108/5
+admission. Both600epoch comparisons and combined diagnostic complete. DTM025 fixes
+12/12content-only false changes; old68joint66/68,Settings2/5,derived122all retained.
+DTM026 fits80/80new endpoints but Settings regresses5/10→0/10 (joint2/5→0/5).
+Retain DTM025 as experimental change challenger with DTM020; reject DTM026 and
+combined deployment. No independent-final or production gates passed.
+See [execution contract](Research/Plans/FocusTransitionLearning49.md#execution-continuation--collection-104).
+[Handoff](reports/work/COLLECTION-104/handoff.md).59Python/134Swift tests pass.
+
+Maintainer's October3 standing approval removes repeated local training permission
+requests, not data-role boundaries. PREP103 comparisons are now completed. Use prepared inputs,
+fresh protocols and run logs. USB mount verified with ~1.7TiB available; internal
+~65GiB. Shadow source/sample publication remains separate. An admission generated
+by overinterpreting the earlier approval stays invalidated; see
+[correction](reports/work/PREP-103/approval-correction.md). The later explicit reply
+has its own decision and fresh admission, not a replacement of failed evidence.
+
+## Remaining data and producer prerequisites
+
+### Review — RANK-RETENTION-105 / Codex
+
+Completed: exact replay/unique-frame diagnosis and one frozen-readout DTM027 fit.
+Correct proposals exist on all187frames; DTM027 retains122old and fits56new, but
+Settings5/9→1/9 and all5previous successes lost. Reject candidate; preserve DTM020
+and delivered DTM025change. No export or promotion. [Handoff](reports/work/RANK-RETENTION-105/handoff.md).
+
+Original assigned tranche (completed): explain DTM026's Settings regression with a batched
+old/new candidate-logit, geometry and feature comparison; distinguish proposal
+recall from ranking drift and count unique frames rather than endpoint repetitions.
+Use only retained COLLECTION104/DTM020/DTM026 evidence; no capture or role change.
+Then freeze a specific retention-aware same-architecture hypothesis, fixed budget
+and old68/new40/Settings5 gates before using standing training authority. Keep
+Settings out of fitting, preserve DTM020, and stop after the bounded comparison
+and diagnosis rather than sweeping. Deliver reproducible diagnosis, model/evidence
+comparison and a deployment decision; no export/promotion without their authority.
+[Execution contract](Research/Plans/FocusTransitionLearning49.md#rank-retention-105--frozen-diagnosis-and-one-retention-comparison).
+SHADOW-FEEDBACK-01 uptake supersedes this priority when exact source and permitted
+sample are delivered; missing peer delivery does not block the local diagnosis.
+
+Exact40 role decision and RANK-RETENTION105 diagnosis/comparison are resolved.
+Representation audit and bounded metric comparison are now complete; proposed next
+local work is RANK-GEOMETRY109, not unchanged retraining or moving Settings into
+training. Historical TTR check: local HEAD4f9273cc; shared05:10:53Z
+snapshot acknowledges the adapter response, reports127retained intervals, but source
+is uncommitted and the tiny screenshot sample awaits egress approval. Resume shadow
+uptake on published source and permitted immutable sample. FDR021 contract delivered;
+do not request redundant builds. No new capture is authorized by these statuses.
+EVAL90 remains blocked on actual independent journey/role/label scope; broader
+capture, export and promotion retain their separate gates. Avoid arbitrary model
+sweeps on the old data or repetitive unchanged checks while these decisions remain.
+
+### Review — RANK-REPRESENTATION-107 / Codex
+
+Completed5022candidate/187frame audit; no opposite-label exact encoded collisions.
+Exploratory training-reference distance contrast:old121/122,new56/56,Settings9/9;
+Settings old-reference-only9/9 versus new-only0/9. Not independent evaluation or
+retention qualification (one old success lost). Evidence does not establish that
+16×16compression is the blocker; prioritize a reference-based scoring experiment
+before enlarging representations.17Python/137Swift tests pass.
+[Handoff](reports/work/RANK-REPRESENTATION-107/handoff.md).
+
+Use retained187frame candidate bank to measure feature collisions/nearest opposing
+examples and source-specific margin errors; inspect native crop evidence where
+needed. Separate low-resolution information loss from insufficient training-domain
+coverage. No new capture, labels or role changes. Produce one fixed richer-context
+representation proposal with paired control, cache/crop reuse, parameter/latency
+budget and old/new/Settings retention gates before any new-encoding/backbone fit.
+This diagnostic is unblocked; a new representation experiment needs its explicit
+scope recorded under the local experiment envelope. TTR feedback intake remains
+independent and requires actual permitted receipt/data-role evidence.
+[Contract](Research/Plans/FocusTransitionLearning49.md#rank-representation-107--information-and-domain-audit-before-new-architecture).
+
+### Review — RANK-METRIC-108 / Codex
+
+Completed bounded bank/scorer and paired comparison. Same-frame-excluded results:
+old121/122,new56/56,Settings9/9; under DTM025joint65/68,40/40,5/5 respectively.
+Reject replacement: one old row-extent success lost. Self-allowed122/122 is replay,
+not retention evidence. Full bank14.78MB plus metadata; no export/promotion.
+[Handoff](reports/work/RANK-METRIC-108/handoff.md).
+
+Implement a bounded, versioned training-reference scorer using the existing770feature
+encoding, strict prototype provenance/role exclusions and chunked inference. Reuse
+the RANK107 fixed positive/negative distance contrast without tuning on Settings.
+Compare all pairs under DTM025 change, count same-frame-free training results
+separately from exact training replay, diagnose the one lost old frame, and measure
+memory/size/latency. This is one fixed candidate/control comparison, not a search.
+No Settings prototypes, new capture, role changes, export or promotion. Preserve
+DTM020 until all retention gates pass. Richer-context/backbone work stays proposed,
+not the default response to a failed head. [Contract](Research/Plans/FocusTransitionLearning49.md#rank-metric-108--bounded-reference-scoring-before-a-larger-model).
+
+### Software review / candidate blocked — RANK-GEOMETRY-109 / Codex
+
+Whole187frame extent audit, source tracing, continuous-loss trainer integration
+and strict preflight implemented. Eleven new-training PNG identities (33endpoint
+occurrences/22pairs) have conflicting producer body bounds. Binary positive sets
+agree; continuous training is blocked, not silently averaged or subsetted. No new
+candidate launched. Published exact retained-evidence request to TTR with readback;
+peer acknowledgment pending. [Handoff](reports/work/RANK-GEOMETRY-109/handoff.md).
+Resume with reviewed, versioned geometry correction and compatible admission;
+then execute one prepared hypothesis and full retention evaluation.
+
+Batch-audit whole-row extent and proposal ordering across all187frames, then freeze
+one justified geometry-aware ranking-loss comparison on the same architecture and
+approved training rows. Keep metric108 as diagnostic control, DTM025change frozen,
+Settings development-only. Integrate permitted TTR feedback if actually delivered;
+do not wait on it for local work. Deliver one tested candidate/retention decision,
+not a sweep. No new capture, encoding/backbone, export or promotion.
+[Contract](Research/Plans/FocusTransitionLearning49.md#proposed-next-tranche--rank-geometry-109).
+
+## Review — PREP-103 / Codex
+
+Implement explicit40pair admission guard and prepare reusable113pair/187frame
+inputs while role approval is pending. New data stays calibration; no launch or
+approved protocol. Reuse existing proposals/crop caches rather than native setup.
+[Contract](Research/Plans/FocusTransitionLearning49.md#prep-103--guarded-admission-and-reusable-combined-inputs).
+TTR04:35:39Zreports shadow validator25checks and96interval local evidence-only
+bundle, but source uncommitted/sample egress approval pending. No artifact on share.
+Completed: actual collector113records, old73/exclusions unchanged;187/187derivative
+cache hits,zero native crop calls,26.21spreparation.19Python/134Swift tests pass.
+[Handoff](reports/work/PREP-103/handoff.md). No admission or training protocol created.
+Continuation: role decision, fresh admission and both comparisons completed in
+COLLECTION104. TTR shadow source/export uptake remains priority when gates clear.
+
+## Review — CALIBRATION-102 / Codex
+
+Replay frozen DTM024+DTM020 on40retained action pairs, diagnose proposal/ranking/
+change failures and prepare exact unapproved training membership. Batch native
+proposal/crop work; no Simulator or capture. Shadow delivery uptake remains priority.
+[Contract](Research/Plans/FocusTransitionLearning49.md#calibration-102--retained-actions-frozen-predictions-exact-role-proposal).
+Completed:40pairs replayed,28/40change decisions correct,12/12content-only false
+changes;80/80proposal coverage but10/80correct selected boxes and2/40joint.
+23Python/134Swift tests pass. [Evidence](reports/work/CALIBRATION-102/handoff.md).
+Exact40pair admission subsequently approved and applied in COLLECTION104,68→108real
+training pairs with5Settings unchanged. Original CALIBRATION102 results remain
+pre-adaptation evidence; these40pairs are no longer evaluation-only data.
+
+## Review — INTAKE-101 / Codex
+
+Reconcile published TTR `4f9273cc` v16/v17 source and validate retained layout28 /
+context60 without changing calibration roles. Answer TTR's acknowledged shadow
+adapter request, including exact observer identity and case-linked evidence
+contract. [Scope](Research/Plans/FocusTransitionLearning49.md#intake-101--published-native-collection-contracts-and-shadow-response).
+All88pairs pass source-backed intake;1failed context attempt preserved,142unique
+decoded images across176endpoints. Calibration roles unchanged; no independent
+final or training admission. [Handoff](reports/work/INTAKE-101/handoff.md).
+No new capture/training/promotion; existing worker changes preserved.
+
+## Priority — SHADOW-FEEDBACK-01 / NUIAK architect; TTR implementation accepted
+
+October4UTC clarification: [actual inference acceptance](reports/work/SHADOW-FEEDBACK-01/inference-acceptance.yaml)
+attached to the existing request, not a duplicate task. Requires real FDR021 model
+hash/backend/scores bound into shadow observation/prediction/review/export records;
+evidence-only recording cannot close model integration. Reuse peer05:31:53Z reported
+95candidate/8frame retained replay with exact receipts; no repeated capture/test.
+Milestones distinguish recorder, retained replay, shadow/review wiring, live passive
+qualification and NUIAK intake. Bounded worker/queue, fault handling, no label leakage,
+on/off noninterference and measured resource overhead required. Current source
+publication/privacy-approved tiny handoff still needed. Peer07:25:55Z reports
+optional manager10tests/input18checks and retained FDR021103/104native-hint agreements
+(one ambiguous), plus DTM025eight scrolling disagreements. These are producer reports,
+not independently reviewed accuracy. Exact DTM025 copied receipt is accepted;
+[SHADOW110](reports/work/SHADOW-CONTRACT-110/handoff.md) supplies semantics and
+portable validation. FDR021 is single-frame; DTM025 is change-only, not localization.
+
+Maintainer requested TTR shadow-mode feedback during normal authorized development.
+[Explicit request](reports/work/SHADOW-FEEDBACK-01/request.yaml) published/read back
+under NUA's SMB namespace, ID `nuiak-20261004-shadow-focus-feedback`.
+TTR owns capability audit, task assignment, recorder/review/export implementation;
+NUIAK consumer adapter scope follows reviewed contract. No capture/training/promotion
+or new public API authorized by request publication. Existing v16/v17 source handoff
+remains independent. TTR acknowledged accepted_planned at2026-10-04T04:08:54Z,
+owner observation/runtime maintainer, tasks SHADOW-FEEDBACK-01/02/03.
+[Adapter response](reports/work/SHADOW-FEEDBACK-01/adapter-response.yaml) supplies
+exact FDR021 identities, semantics, diagnostic positive/invalid examples, case-linked
+feedback and truthful journey status. Next: TTR publishes observer contract/source
+and tiny immutable export; NUIAK implements the byte-bound adapter and replays the
+same evidence. DTM025 delivery supersedes historical DTM024-export waiting; do not
+block recorder/integration work on further model improvement.
+
+## Review — REPAIR-100 / Codex
+
+Maintainer approves122training-only derived negatives and one DTM024comparison.
+Equal-group600epoch DTM024 completed:66/68joint training,all20no-ops retained,
+0/122derived false changes/abstentions;Settings2/5joint unchanged. Development
+advancement criteria pass,not production qualification.16Python/134Swift tests pass.
+68/5original roles and geometry/ranker frozen. [Handoff](reports/work/REPAIR-100/handoff.md).
+Next: source-backed context60/layout28 qualification and genuine-negative coverage,
+then separately scoped generalization comparison; no automatic further run.
+
+## Review — PREP-98 / INTAKE-99 / Codex
+
+Preparation-only CLI integrated:122training-frame self-pair derivations,9development
+frames excluded, no admission/approval/launch.15Python/134Swift tests pass; actual
+preparation16.19s. [Integrated handoff](reports/work/PREP-98/handoff.md).
+Context60 archive copied/hash-verified/safely extracted;835inventory files verified.
+Exact receipt and owned SMB packet published/read back. Peer acknowledged receipt
+and cleaned its shared copy, originals retained. Source4f9273cc now published;
+INTAKE101 completes semantic inspection. Derived-negative decision was approved
+and executed in REPAIR100; this historical preparation itself did not train/promote.
+
 ## Next integrated tranche — focus reliability after RESOLUTION-96
 
-Planning updated October 3, 2026 at maintainer request. Execution is not started.
+Planning updated October 3, 2026 at maintainer request. RANKING-97 diagnosis and
+EVAL90 planning refinement are review-ready; training and source-backed intake remain gated.
 [Implementation contract](Research/Plans/FocusTransitionLearning49.md#next-integrated-tranche--focus-reliability).
 This ordering supersedes earlier next-action suggestions, not recorded results.
 
-1. [ ] **False-change repair:** prepare source-bound augmentation from the 122
+1. [x] **False-change repair (REPAIR100, review-ready):** prepare source-bound augmentation from the 122
    training-only identical-frame pairs. Explicit derived-negative data-use approval
-   remains pending. After approval, execute one fixed comparison against DTM018 and
+   was granted for REPAIR100. Execute one fixed comparison against DTM018 and
    rejected DTM023; retain genuine-change/no-op performance and report identical-frame
    errors separately. Preserve DTM020 boxes and the existing 68/5 original roles.
-2. [ ] **Independent candidate-selection diagnosis:** use existing frozen scores,
+2. [x] **Independent candidate-selection diagnosis (RANKING-97, Codex; review-ready):** use existing frozen scores,
    candidate banks and pixels to explain why the correct Settings box ranks second.
    Compare size, containment, visual evidence and score margins across all admitted
    training and exposed development examples. Produce an actionable ranking hypothesis
    or a specific missing-evidence finding; no Settings-tuned size filter or threshold.
    This local diagnostic can proceed while augmentation approval or TTR is pending.
+   Completed: all146endpoint occurrences analyzed, all131image hashes verified,
+   four distinct erroneous frames visually reviewed. Missing small-positive coverage
+   and fragment/enclosing-region confusion documented; no threshold or role changes.
+   [Evidence](reports/work/RANKING-97/handoff.md).
 3. [ ] **Evaluation and intake readiness:** refine EVAL-90's proposed independent
    journey/branch matrix and ordinary-image label requirements; reserve actual roles
-   only after the required source and maintainer decisions. Reconcile the retained
-   layout28 batch when matching version16 producer source is locally available,
-   using existing strict intake and grouped review. Until then preserve its verified
-   bytes and calibration status; do not recapture. Accept completed Settings branches
+   only after the required source and maintainer decisions. INTAKE101 reconciled
+   retained layout28/context60 against published source4f9273cc; all88pass inspection,
+   preserving calibration roles. Do not recapture. Accept completed Settings branches
    incrementally rather than requiring the entire Mermaid map.
+   EVAL90 branch/action/label proposal refined; actual reservations remain open.
+   Context60 contributes24appearance,12boundary,12content-only,12scrolling pairs.
+   Receipts acknowledged; sender cleaned both shared copies and retains originals.
+   Next gate is exact data-role admission/independent journey reservation, not
+   source publication or missing producer negatives. Historical notes below are superseded.
 
 Completion: one combined report comparing change decisions, candidate selection,
 joint correctness and abstentions; focused regressions and offline Swift build/test

@@ -1,0 +1,44 @@
+schema_version: 1
+id: nuiak-20261004-dtm030-consumer-throughput
+request_id: nuiak-20261004-dtm030-shadow-delivery
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-04T16:45:00Z'
+expires_at: '2026-10-05T16:45:00Z'
+state: completed
+message: >-
+  Consumer-only throughput follow-up to the existing DTM030 delivery request, not
+  a new model or capture assignment. New standalone package retains the exact
+  DTM030 model/contract/tree but optimizes integer resizing and adds request-owned
+  bounded encoded-frame reuse. Original v1 remains available and unchanged.
+artifact:
+  path: nuiak/nuiak-transition-shadow-dtm030-consumer-v2.zip
+  bytes: 208121
+  sha256: 33aeee7b85e7bb851d53c3caaf22e8ba3ff0eda886bf9fe66f692b6ee7d3d5c4
+  members: 19
+  expanded_bytes: 866723
+  contract_sha256: 44c6a8dfbc5c4dd3e954295f6e355a6b416a5e8838788a8a0fad706fe9942cd5
+  model_tree_sha256: 59d5d5f528ab0da57f6af89a977f5490f4886d7e32422238aaee0e4e31aab567
+  scope: Portable Swift source, unchanged DTM030 models, manifest, parity summary and synthetic vectors; no raw weights, binaries or private captures.
+verified:
+  native_parity: Both consumers438/438exact encodings and decisions; max probability error5.364e-7
+  total_replay_seconds: {delivered: 86.159, optimized: 53.436}
+  preprocessing_median_ms: {delivered: 183.869, optimized: 120.219}
+  cold_pair_median_ms: {delivered: 206.251, optimized: 174.775}
+  scope: Consecutive local CPU replays on identical order and membership; filesystem may be warm. Not universal latency or model-quality evidence.
+  tests: 24native CLI,139offline Swift,2cache-accounting Python; portable source independently built and synthetic score verified
+  cache: At most8encoded frames,2359296tensor payload bytes; no full-resolution frame or persistent cache
+  integrity: Path, size and current bytes SHA256 revalidated even on hits; mutation/symlink/eviction tests pass
+adoption:
+  - Under the existing shadow-integration task, prefer consumer-v2 source for explicit DTM030 selection; no re-export/retraining/recompile of the model required.
+  - Own one TransitionEncoder per bounded worker or request and discard it at completion. Keep pixel work off navigation/UI; off/module-absent reads nothing.
+  - Preserve existing queue8/drop-and-report behavior and real loaded model identity. Do not interrupt a live survey to adopt this source update.
+  - Return exact archive receipt for this version separately from v1. Then report local on/off integration and preprocessing/inference timings independently.
+  - Existing request remains open for independent reviewed evaluation membership and feedback. Current training/exposed Settings ancestry is not a held-out benchmark.
+outcomes:
+  software_verified: passed
+  data_eligible: not_applicable
+  integration_qualified: passed
+  model_gate_passed: not_assessed
+integration_scope: NUIAK CPU and portable synthetic execution only; TTR adoption pending
+receiver_receipt: pending

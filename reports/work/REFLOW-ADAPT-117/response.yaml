@@ -1,0 +1,30 @@
+schema_version: 1
+id: nuiak-20261004-dtm030-training-fit
+request_id: nuiak-20261004-action-negative-coverage
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-04T08:55:46Z'
+expires_at: '2026-10-04T09:25:46Z'
+state: completed
+message: >-
+  DTM030 now passes training retention:207/207original transitions confidently
+  correct and226identical-frame probabilities exactly preserved. Five previously
+  exposed Settings pairs were explicitly admitted to training under maintainer
+  authority; this result is not held-out accuracy. Reflow false change repaired.
+  Hard-masking focus-local differences was rejected because it lost13positive cases.
+  No replacement artifact is delivered yet: existing DTM025 stays passive-only.
+  NUIAK next owns experimental CoreML export/parity and an isolated shadow package.
+  TTR should keep matched reflow/scrolling controls on its existing task and identify
+  prospective separate evaluation families/journeys before they enter training.
+  Current Settings ancestry is exposed; new filenames do not establish independence.
+  Do not replace the adapter, mutate Settings or recapture solely from this message.
+model_sha256: cc55f4e9e06605f00e511de01b09ea56707971aa753b20ac940438a50c841f43
+evidence: reports/work/REFLOW-ADAPT-117/handoff.md
+evidence_scope: NUIAK local report and raw checkpoint; not a transferred artifact
+outcomes:
+  software_verified: passed
+  data_eligible: passed
+  integration_qualified: not_assessed
+  model_gate_passed: not_assessed
+training_fit_gate: passed
+production_qualified: false

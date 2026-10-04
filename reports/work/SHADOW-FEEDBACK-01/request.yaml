@@ -1,0 +1,116 @@
+schema_version: 1
+id: nuiak-20261004-shadow-focus-feedback
+from: nuiak
+to: TVTestRig implementation owner
+created_at: '2026-10-04T03:40:55Z'
+expires_at: '2026-10-04T04:10:55Z'
+state: pending
+message: |
+  Maintainer asks TTR to add and own a substantial shadow-mode NUIAK feedback task
+  during its normal, separately authorized development/navigation work. Please
+  acknowledge this exact request ID, identify the TTR task/owner, map existing
+  capabilities to these requirements, and implement only actual gaps under TTR's
+  repository instructions. Return scope, dependencies and acceptance evidence.
+  Expiry concerns snapshot freshness, not automatic cancellation of the backlog task.
+purpose: |
+  Turn real navigation failures and representative successes into reviewable,
+  action-linked evidence without allowing experimental NUIAK predictions to control
+  navigation, supply truth, or slow unrelated TTR work.
+current_evidence: |
+  Experimental DTM024+DTM020:66/68joint training,20/20original no-ops retained,
+  0/122training-derived identity false changes; exposed Settings change5/5 but
+  joint localization2/5. Correct boxes exist but fragments/enclosing regions win.
+  These are not independent accuracy metrics. DTM024 is a PyTorch research artifact,
+  not an available qualified CoreML integration. Do not assume it can load today.
+  Use an explicitly identified compatible existing observer artifact if available;
+  otherwise record model_unavailable and retain reviewable evidence without scores.
+requested_delivery:
+  - |
+    Capability/source audit and versioned observation/export contract, followed by
+    bounded opt-in shadow recording, correction/review handoff, deterministic tests
+    and one separately authorized integration qualification. Reuse current recorder,
+    action IDs, native scene brackets, hashes, retained-job export, review tools and
+    model-selection interfaces; do not build a second capture stack.
+  - |
+    Hook already-authorized observations before/after normal actions. Shadow results
+    must never change target choice, issue/retry actions, approve Select, dismiss
+    dialogs, or override reservations/safety policies. Record model prediction before
+    revealing independent truth to any scoring component. No fixture truth input
+    into the inference decision. Capture failures, uncertainty and no-ops explicitly.
+  - |
+    A versioned record binds session/journey/branch/action IDs; exact target/runtime,
+    app/build and TTR/source identities; action type and result; monotonic capture,
+    dispatch/completion/inference times and clock domain; requested versus observed
+    focus; before/after image hashes, dimensions and coordinate convention; settled
+    evidence or unknown/timeout; source recipe/seed/ancestry where applicable.
+    Keep capture-interval correlation explicit; never invent atomic frame identity.
+  - |
+    Prediction evidence identifies task (single-frame focus versus transition),
+    exact loaded artifact hash/version, preprocessing/crop contract, backend,
+    thresholds and score semantics. Record candidate boxes/IDs and scores, selected
+    before/after boxes, change/no-change probability where available, abstentions,
+    errors and cold/warm inference time. Non-probabilistic ranking logits must not
+    be presented as calibrated confidence. Missing/failed inference is not an empty
+    successful prediction. Preserve proposal misses separately from ranking failures.
+  - |
+    Labels are separate records with provenance: native observed focus callbacks
+    and visible body geometry, or explicit human review/correction with reviewer,
+    time and revision. Requested focus, OCR, accessibility hints and model predictions
+    are not automatically authoritative visual truth. Allow missing-candidate box
+    drawing, none, multiple/ambiguous and unreviewable states; never force a box.
+    Without trustworthy labels retain unlabeled diagnostic evidence only.
+  - |
+    Prioritize reviewed wrong selections, missed controls, false changes and
+    abstentions, with small true controls, text fragments, enclosing regions,
+    bright unfocused artwork, stationary switches, boundary no-ops, changing-content
+    no-ops and scrolling. Record observed conditions; do not infer labels from action.
+    Keep a deterministic representative success sample and ALL event counters so
+    error-enriched collections cannot be reported as normal accuracy.
+  - |
+    Bounded opt-in collection, off by default. Proposed initial limits for review:
+    200retained action pairs OR1GiB OR20minutes per session, whichever occurs first;
+    configurable explicit limits, one background inference worker and bounded queue,
+    dropped/skipped counters. Stop recording on limit/full disk/cancel, not navigation;
+    do not silently evict unreceipted evidence. Reuse existing screenshots when safe,
+    no continuous video or per-action Simulator setup/teardown. Report recording-off
+    versus on timing/memory overhead in a controlled comparison before broader use.
+  - |
+    Keep images in approved TTR-local storage; no images in status YAML, no automatic
+    cloud upload, no account/credential material. User chooses eligible app/session;
+    provide exclusion/redaction policy. Mark transformed/redacted pixels and treat
+    them as different evidence. Preserve originals only under approved retention.
+  - |
+    Export immutable branch/session batches with source/build references, manifests,
+    byte hashes, expected/retained/dropped/failed/unlabeled/reviewed counts, completion
+    state, and model/label separation. Group whole journeys, related layouts/recipes
+    and duplicate-connected frames; no per-frame random train/test split. Roles remain
+    unassigned/diagnostic until NUIAK admission; reserve genuinely independent final
+    groups before model selection. Changed files/labels require new versions.
+  - |
+    Publish metadata handoffs through SMB with named archive, exact size/SHA and scope.
+    Transfer only under the established assigned receipt flow; receiver verification,
+    semantic intake, training admission and sender cleanup are separate. Deliver
+    useful completed branches incrementally; do not wait for a full navigation map.
+acceptance:
+  - Deterministic fake-backed tests for compatible artifact, missing model, inference failure, abstention and delayed/out-of-order action/frame association.
+  - Byte tampering, partial exports, unsupported versions, invalid geometry, conflicting labels and missing independent truth reject or remain explicitly ineligible.
+  - Shadow on/off tests prove identical navigation decisions/actions; replaying or exporting evidence issues no device commands.
+  - Cancellation, queue saturation, byte/count/time caps and low disk preserve accounting and leave navigation unaffected; no silent loss or retry.
+  - A reviewed positive and negative tiny export demonstrates model/label separation, grouping and repeatable receiver validation before scaling.
+  - Real qualification requires separately authorized target/session; report genuine integration separately from mock tests and model quality.
+ownership_and_boundaries: |
+  TTR owns observer hooks, collection, human-correction workflow and bounded export.
+  NUIAK owns consumer validation, grouped admission, model/evaluation reports and
+  separately approved training. This is a maintainer-requested feature proposal,
+  not a command to run hardware, install/restart apps, broaden capture scope, alter
+  Office permissions, train, promote, upload or perform Git writes. No public API
+  expansion is assumed. Source publication follows the maintainer Git workflow;
+  NUIAK builds locally rather than requesting binaries.
+  Existing v16/v17 intake/source publication remains separate and should not wait
+  for this feature. Existing compatible FDR021 observer/crop work should be audited
+  for reuse, not discarded or mistaken for qualification of DTM024.
+requested_response: |
+  Acknowledge with request ID, TTR task IDs/owner, existing versus missing capabilities,
+  proposed contract revision and limits, exact NUIAK adapter/model dependencies, and
+  implementation/test plan. Report meaningful milestone changes in your own status;
+  no per-action chatter, heartbeat, or claim of execution from this message alone.

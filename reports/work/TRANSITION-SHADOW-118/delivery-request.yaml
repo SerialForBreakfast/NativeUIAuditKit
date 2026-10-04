@@ -1,0 +1,54 @@
+schema_version: 1
+id: nuiak-20261004-dtm030-shadow-delivery
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-04T15:33:00Z'
+expires_at: '2026-10-05T15:33:00Z'
+state: available
+message: >-
+  Explicitly approved DTM030 experimental change-only CoreML delivery is ready.
+  Copy and independently verify this separate candidate; retain DTM025 for comparisons.
+  NUIAK native parity and standalone source smoke passed. This is not production
+  promotion, localization, navigation authority, or independent accuracy evidence.
+artifact:
+  path: nuiak/nuiak-transition-shadow-dtm030-v1.zip
+  bytes: 207304
+  sha256: 977c938617007eec8f6caf5c2d122241a5717c13e6d3bfc0d0dfdf2dae7f8d65
+  model_id: focus-transition-experimental-dtm030-change-v1
+  checkpoint_sha256: cc55f4e9e06605f00e511de01b09ea56707971aa753b20ac940438a50c841f43
+  contract_sha256: 44c6a8dfbc5c4dd3e954295f6e355a6b416a5e8838788a8a0fad706fe9942cd5
+  compiled_tree_sha256: 59d5d5f528ab0da57f6af89a977f5490f4886d7e32422238aaee0e4e31aab567
+  members: 19
+  expanded_bytes: 863776
+  contents: Swift consumer source, compiled/source CoreML model, manifest, aggregate parity, synthetic-only vectors
+  private_captures: false
+  raw_weights: false
+  executable_binaries: false
+checks:
+  exact_tensor_and_decision_parity: 438/438
+  max_probability_error: 0.0000005364418029785156
+  native_cli_tests: 24
+  python_tests: 31
+  swift_tests: 138
+  standalone_build_and_synthetic_score: passed
+  local_cpu_inference_median_ms: 0.504
+  local_cpu_inference_p95_ms: 0.601
+  local_preprocessing_median_ms: 181.046
+  latency_scope: This NUIAK Mac and retained frames only; preprocessing dominates and must remain off the navigation-critical path.
+requested_actions:
+  - Return exact request ID, copied archive bytes/hash, destination, and intake result. Sender owns shared-copy cleanup after matching receipt.
+  - Build the portable Swift source locally; verify every manifest member and synthetic expected result. No request for a producer binary.
+  - Under TTR's assigned integration authority, allow optional explicit DTM030 selection alongside DTM025; never silently replace the bundled/default model.
+  - Record actual loaded model/contract/tree, backend, local source/build revision, and preprocessing/inference/load times separately.
+  - Keep module-absent/off paths free of model and pixel access. Enabled passive work uses bounded queue8, drops/reports overflow, never waits in navigation, and preserves typed failures/cancellation/stale results.
+  - Compare both models on identical retained intervals where authorized. Preserve action/observation/frame hashes; labels are joined afterward, never input to inference.
+  - Keep FDR021 single-frame scoring separate. DTM030 predicts focused-identity change only, not focus boxes or safe actions.
+  - Return on/off and unchanged-navigation evidence separately from artifact receipt; report disagreements/abstentions without treating native hints as reviewed truth.
+  - Propose prospective independent journeys with exact source membership and role before tuning. Current Fixture and Settings ancestry is training/exposed, not final evaluation.
+boundaries:
+  training_fit: 207/207 original and 226/226 identical-frame training examples; not held-out accuracy
+  capture_authorization: No new capture or device operation is authorized by this message.
+  production_gate: not_assessed
+  receiver_acknowledged: false
+  source_original_retained: true
+  geometry109: Conflicting source body boxes remain a separate blocker; this change-only delivery does not repair them.

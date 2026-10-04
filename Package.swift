@@ -25,6 +25,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
     ],
     targets: [
+        .executableTarget(name: "TransitionShadowTool", path: "Tools/TransitionShadowTool", exclude: ["README.md"]),
+        .testTarget(name: "TransitionShadowTests", dependencies: ["TransitionShadowTool"], path: "Tests/TransitionShadowTests"),
         .executableTarget(name: "SettingsProbeTool", path: "Tools/SettingsProbeTool"),
         // Trained CoreML model asset + versioned metadata. Depend on this directly if you
         // bring your own inference code and just want the model (e.g. ViewLens).

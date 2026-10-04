@@ -1,5 +1,183 @@
 # NativeUIAuditKit — Experiment Log
 
+## Run DTM030 — REFLOW117 explicitly admitted exposed Settings (2026-10-04)
+
+Registered before launch. Under autonomous admission/training authority, five
+already-exposed Settings pairs and nine identity endpoints added to training via
+reports/work/REFLOW-ADAPT-117/admission.md and sealed exact membership.207original
+plus226identical pairs; no independent final examples. Warm-start DTM029residual,
+baseline frozen,576trainable weights,existing fit_change_head,600epochs,Adam0.01,
+seed42,CPU2threads,equal-group-means,fixed-last,no-wall-time override,2GiB output.
+Hypothesis: explicit same-focus layout-reflow supervision repairs the observed
+negative without losing Region/old successes. No hard masking or threshold changes.
+Gate: all207originals confident correct,226identity scores exact, frozen/replay pass.
+ProtocolSHA256:23ea1e8524eb9c861f2b0e51a8b7733df2e08c55c2db7c5403f50f1ef6a1e623.
+Output NativeUITrainer/focus_ring_runs/reflow117-dtm030. Registered; no export or
+promotion from this training-fit experiment.
+Preflight stopped before output/optimizer: adding nine examples changed the final
+inference batch shape; six original probabilities differed by at most6.12e-10.
+Original424-sized replay remains bit-exact. Preserve historical424batching and
+score the nine additions separately; no tolerance or gate relaxed. First log and
+ready protocol retained. Corrected ready02protocol before first actual training:
+d7694f8920dd2d673c06f5df0dd7b0afc91aaf24f676ddfc2888db8454746597.
+Completed PID89865,exit0. Fit1.614s,total5.122s;loss0.166127→0.004492.
+Original old108:107→108confident correct; newly admitted Settings5:4→5; Region94:
+92→94. All226identity predictions exact; zero lost successes/abstentions. Reflow
+probability1.0→0.049216. Frozen baseline and checkpoint replay pass. Training gate
+passes, independent qualification absent. CheckpointSHA256:
+cc55f4e9e06605f00e511de01b09ea56707971aa753b20ac940438a50c841f43.
+No new consumer artifact, export or promotion in this tranche.
+
+## Run DTM028 — REGION112 reviewed stationary-highlight scrolling (2026-10-04)
+
+Registered before launch under standing training and autonomous admission authority.
+All95 selected labels visually reviewed in four hash-bound stripsheets against
+native hints;94adjacent changes admitted as one training-only Settings ancestry.
+No body-box truth inferred. Existing108training pairs retained,94Region positives
+added;122old and95new identical-frame derived negatives. Five existing Settings
+cases remain related/exposed diagnostics, not independent evaluation.
+Warm start DTM025; unchanged paired-context192×128change head, all geometry frozen.
+Existing `fit_change_head`:600epochs,Adam0.0001,seed42,CPU2threads,fixed-last,
+equal original202/derived217group means,2GiB output cap,no-wall-time override.
+Hypothesis: reviewed scrolling examples repair the observed94/94misses without
+losing previously confident old/no-op behavior. No sweep or threshold adjustment.
+Gates:94/94new confident changes;zero lost confident old/related-Settings successes;
+all217derived negatives confident unchanged. Even a pass is training retention,
+not production/generalization qualification. No export or promotion in this run.
+Protocol SHA256:3cab1b0d46035b3e114460c4020a76a9130116552a6c963a2690e61aa6fe7d92.
+Prepared: `reports/work/REGION-REVIEW-112/artifacts/ready/protocol.json`.
+Output: `NativeUITrainer/focus_ring_runs/region112-dtm028`. Status: registered;
+execution PID and measured outcome to follow. Initial preparation rejected the
+existing66MBtensor at the helper's32MBdefault; explicit64MiB read bound repaired
+without changing inputs. No training occurred during that failed preparation.
+
+First launch exited1 before output creation/optimizer: diagnostic-only fresh-path
+helper rejected a model-run directory. Fixed orchestration to use the existing
+model-run allocator, preserved failed log and original prepared inputs. Reprepared
+unchanged membership/configuration with source pins in `artifacts/ready02`;
+replacement protocol SHA256:
+0915f76ef6c1547e3bd8894c57d521c306a7b0f63072dfe9e7a4bb9c93a5a386.
+No candidate or training occurred in the first attempt; retry is the same registered
+experiment after this explicit preflight repair, not an automatic failed-fit loop.
+
+Completed PID86026,exit0:fit319.139s,total321.286s;600epochs. DTM028 is rejected:
+Region0/94→26/94confident correct (79raw correct,68abstentions);old108confident
+successes106→97 (nine lost);related Settings5→4. Old122derived negatives retain
+raw correctness but five abstain;all95Region-derived negatives are raw-correct
+but uncertain (p0.2330–0.2557). Eight of nine old losses were negatives. The model
+has not learned a safely separated decision despite lower loss2.7797→0.2131.
+Geometry weights unchanged; exact saved checkpoint replay passes. Initial old113
+scores match DTM025 within4.48e-8. No export/promotion/automatic fit repeat.
+CheckpointSHA256:84708ff404a57c282a744431735ce0f6b06e1eca6cfb9748dcb792db6e41b55b.
+Evidence: `reports/work/REGION-REVIEW-112/handoff.md`. Retain DTM025 passive-only;
+next test must distinguish weak focus-local difference evidence from image-context
+shortcuts and preserve no-op retention, not just extend epochs or tune thresholds.
+
+## RANK-GEOMETRY109 preflight — no model run allocated (2026-10-04)
+
+Approved continuation audited187frames before the planned600epoch comparison.
+New positive-set-plus-best-IoU-hinge objective is software-tested through the real
+trainer with deterministic synthetic data only. Real preflight rejects11training
+PNG identities with conflicting precise annotations. No candidate checkpoint,
+DTM028 run, actual-data fit or approval receipt created; DTM020/025 unchanged.
+Source trace confirms33endpoint occurrences/22cases already disagree in original
+TTR telemetry. No source pixels/labels altered, frames removed, roles changed or
+new capture requested. Resume only after reviewed/versioned geometry correction,
+updated admission and fresh protocol pins; then register the next run before launch.
+[Handoff](../reports/work/RANK-GEOMETRY-109/handoff.md).
+
+## Run DTM027 — RANK-RETENTION105 frozen scoring layer (2026-10-03local/04UTC)
+
+Registered before launch. Maintainer continued the tranche under standing local
+training approval. Exactly108train/5exposed Settings development,178unique training
+frames,9unique development frames, unchanged approved corpus/cached candidates.
+Initialize DTM020; freeze final32→1 readout weights/bias, train only770→32 hidden
+layer. No new feature/backbone/labels/role changes. Same frame-softmax positive-set
+loss,Adam0.001,600epochs,seed42,CPU2threads,fixed-last checkpoint,2GiBoutput cap,
+no-wall-time override. Hypothesis: preserve the scoring rule while adapting hidden
+features needed for new examples, reducing destructive feature/readout co-adaptation.
+Weight-swap diagnostics motivate this; they are not independent quality evidence.
+Gate: retain all122old correct frames and all5previously correct Settings frames;
+improve new56frame selection and new40joint under frozen DTM025 change. No Settings
+optimization, epoch selection, teacher loss or threshold tuning. One fit only;
+failure preserves DTM020, no automatic retry/export/promotion.
+Arm transition-candidate-ranker; output retention105-dtm027.
+ProtocolSHA256:57d9a75984a537afb3a15e6f545937efd5088e0f82923b123e55c87b66ee745a.
+13focused tests pass; exact dispatcher preflight passed during preparation.
+Completed PID75357,exit0. Fit3.146s,total4.517s,258,881output bytes; preparation0.595s,
+zero native crop calls. Exact saved-checkpoint replay passes. Candidate preserves
+122/122old and fits56/56new unique frames, but Settings5/9→1/9 with all5previous
+successes lost. Under fixed DTM025change:old68joint66/68,new40joint4/40→40/40,
+Settings2/5→0/5. Retention gate FAIL; preserve DTM020 and delivered change-only DTM025.
+CheckpointSHA256:b391087237e84499d82c5824602ddfd305c38ad4fc7863b321991a26837a5e4b.
+Both final-layer tensors independently verify byte-identical to DTM020. The initial
+trainer receipt incorrectly listed control-row IDs as frozen parameter names due
+to a reused variable, although the equality assertion had passed before reuse.
+Original result preserved; source corrected and an actual synthetic trainer-run
+regression added. Independent final evaluation checks checkpoint tensors rather
+than that erroneous field; no retraining or historical evidence overwrite.
+27focused/regression Python tests pass. Final integrated checks/handoff:
+reports/work/RANK-RETENTION-105/handoff.md. No export, capture or promotion.
+
+## DTM025 export/consumer qualification — TRANSITION-SHADOW106 (2026-10-03local/04UTC)
+
+Maintainer explicitly approved change-only export and TTR consumption. No new fit,
+run ID, capture, data role, localization replacement or promotion. Traced existing
+change branch only, FP32 Core ML CPU,192×128 paired full-frame encoding. Package
+105,663bytes; compiled108,365.240/240native encodings/decisions match retained Python
+reference; max probability error2.868e-7. Local inference median0.326ms,p950.672ms;
+preprocessing median169.407ms. Portable source build/synthetic prediction pass,
+36Python/137Swift tests pass. Versioned198,134byte consumer archive delivered via
+SMB; peer receipt/live hook separate. [Handoff](../reports/work/TRANSITION-SHADOW-106/handoff.md).
+
+## Run DTM025 — COLLECTION104 change adaptation (2026-10-03, registered before launch)
+
+Maintainer approved exact40 calibration-to-training admission by "Yea continue"
+after the explicit remaining-role prerequisite; standing local training authority.
+108real training pairs, unchanged5Settings development, original122approved
+same-frame negatives only. No final-evaluation use. Fresh optimizer from DTM024,
+unchanged paired9channel192x128 encoding,600epochs,seed42,Adam0.0001,CPU2threads,
+full230example update with equal real/derived group means, fixed-last checkpoint.
+DTM020ranking/geometry and0.85confidence/0.5IoU fixed. Hypothesis: real content-only
+no-ops remove false change decisions without losing old fit/self-pair consistency.
+Two-fit tranche output cap2GiB,no-wall-time override; no capture/export/promotion.
+ProtocolSHA256:545d6ee9c48173171dde46234481006ace3d3a5f3c03e3415a694c1d224ab6b8.
+Arm transition-change-adaptation; output collection104-dtm025. Both real dispatcher
+preflights pass. Cache binding preparation1.935s,zero native calls;20Python tests pass.
+Status: registered, execution pending. Report old68/new40/Settings5 and derived122;
+advancement requires new40 joint improvement with no old/Settings joint regression
+and zero derived false changes/abstentions. All are development, not final gates.
+Completed PID69089,exit0. Fit177.573s,total178.771s;600epochs,loss0.398832→0.022581.
+New40raw/confident change28/40→40/40;12/12content-only false alarms removed.
+Frozen-ranker joint new2/40→4/40; old66/68 and Settings2/5 retained; original122
+derived zero false changes/abstentions. All declared development advancement checks
+pass. Geometry unchanged; saved checkpoint replay exact. ModelSHA256:
+28f10dc5ac2c6a0fb324cabeb778b2acad2539c97f7f9cc48a20c8ff534a9409.
+Retain as experimental change challenger; no independent-final qualification.
+
+## Run DTM026 — COLLECTION104 ranker adaptation (2026-10-03, registered before launch)
+
+Second controlled comparison under the same approved tranche/membership. Initialize
+from DTM020 (not random), fresh Adam0.001,600epochs,seed42,CPU2threads,fixed-last,
+178unique training frames/9exposed development frames. Reuse production16%/256crop
+derivatives withRGB16x16 plus normalized width/height features. DTM024change fixed
+to isolate ranker effects; no architecture or threshold changes. Hypothesis: labeled
+sectioned-list variety corrects small-fragment ranking failures while retaining old
+fit. Report old68/new40/Settings5 including0.85abstention gate in joint accuracy.
+ProtocolSHA256:ba57b2e3af3631f4b83480f4bb1e0a0fa218e12c53247763cc2bb55a2d8e585c.
+Arm transition-candidate-ranker; output collection104-dtm026. Status: registered,
+execution pending. No additional fitting for the combined-candidate diagnostic.
+No independent final claim, capture, export or promotion. Same2GiB tranche cap.
+Completed PID69088,exit0. Fit3.424s,total4.799s;600epochs,loss2.754325→0.008915.
+New40endpoints10/80→80/80;old136/136retained. Settings5/10→0/10endpoints and
+2/5→0/5joint: retention gate FAILED. FixedDTM024 change yields28/40new joint;
+DTM025+DTM026 diagnostic yields40/40new joint but still0/5Settings. Do not replace
+DTM020 or promote combined model. Saved-checkpoint parity exact. ModelSHA256:
+bb5ab7f21eb860ebff6a98f08c92a6327fb70fdc53dbcefb7bd4c19db1d20f9e.
+Observed regression includes multi-row regions and text fragments; a minimum-size
+rule is not justified. Training fit is not cross-domain transfer. Both fits plus
+evaluation complete; no automatic extra experiment. Evidence COLLECTION104 handoff.
+
 ## Run DTM014 — COVERAGE-70 broad translations (2026-10-03, before launch)
 
 Standing approved local experiment tranche: two fresh 600-epoch comparisons,
@@ -3248,6 +3426,36 @@ Frozen-checkpoint zero-size ablation reduces Settings2/10→1/10; diagnostic onl
 not an independent test or deployment mode. Coverage lacks small positive controls.
 See reports/work/SIZE-81/handoff.md; next source/coverage work, not more epochs.
 
+## Run DTM024 — REPAIR100 identical-frame negative repair (2026-10-03)
+
+Registered before launch. Explicit maintainer approval: “Training is approved.
+Ttr will update git next.” Admits122derived training-only self-pairs from PREP98;
+68original pairs and5exposed Settings roles unchanged. No development self-pairs
+enter training. One600epoch fixed-last comparison,192×128paired9channel context,
+DTM018initializer with added channels zeroed,Adam0.0001,seed42,CPU2threads.
+Full190example batch; loss is0.5mean(original68)+0.5mean(derived122).
+Geometry and DTM020ranking frozen; confidence0.85 unchanged;2GiB output cap,
+standing no-wall-time-limit override. No capture, TTR-data admission, export or promotion.
+Hypothesis: explicit identity negatives remove appearance-based false changes while
+retaining genuine change/no-op fit. Advancement: zero confident self-pair false changes,
+all20original no-ops retained, at least65/68confident joint original decisions, no
+exposed Settings regression. Self-pair results are fit, not independent evaluation.
+ProtocolSHA256:5785b6b4125b8838ebdcbe641955785e13fc32c43b0bd97d219148b48b9488e5.
+Arm transition-change-adaptation; output repair100-dtm024. Status: registered;
+Completed PID61874,exit0. Fit145.450s,total146.641s. Equal-group loss0.162520→0.032901.
+Original44train44/44joint; added24train22/24joint with2abstentions; combined66/68
+versus retainedDTM018+DTM02065/68. All20admitted no-ops correct/confident. Derived122:
+zero raw/confident false changes,zero abstentions (DTM023 had35confident errors).
+Exposed Settings5/5change,2/5joint unchanged. Nine development self-pairs (excluded
+from training) also zero errors/abstentions,maximum change probability0.00232918.
+All predeclared development advancement gates pass. Not independent-final or
+production qualification; derived consistency is now training fit. Wide-dark/light
+p2genuine transitions remain uncertain at0.169763/0.323501. No threshold tuning.
+Initializer parity,frozengeometry and saved checkpoint replay pass. ModelSHA256:
+7a482e8b651f2b1354a4dd47f39fbcaa21fee4b0515ee0f56e0fa9d0ed0edf07.
+Retain DTM024 as an experimental challenger; shipped models unchanged. No automatic
+retraining. See reports/work/REPAIR-100/handoff.md for comparison and next tranche.
+
 ## Run DTM023 — RESOLUTION96 higher-resolution change inputs (2026-10-03)
 
 Registered before launch; standing approved experiment tranche. One192×128input
@@ -3348,3 +3556,22 @@ candidate-order parity pass. CheckpointSHA256:
 3f90ba6bd8161c00057f36a307a205b3e03ba6801ef26e8974db652998184b75.
 No promotion or independent evaluation. Next test cross-source transfer and remaining
 failure modes, not unchanged extra epochs. See reports/work/NATIVE-87/handoff.md.
+# Run DTM029 — IDENTITY-RESIDUAL-114 — 2026-10-04
+
+Registered before launch. One frozen-DTM025 feature/readout residual:576 zero-initialized
+weights; paired features minus mean self-pair features. Existing419 admitted training
+examples (202 original/217 derived),424 retention/development examples; no new roles.
+600epochs,Adam0.01,seed42,CPU2threads,equal-group-means,fixed-last; no wall-time cap,
+2GiB output cap. Existing fit_change_head trainer. Baseline weights frozen; identity
+probabilities must remain exact. Gate:94/94Region confident changed and no prior
+confident success lost. No independent qualification, export or promotion.
+ProtocolSHA256:412a44fa2d4f21284419db89cc4c5eadcaa28f48ac3812dd6e3589e56cbf30fe.
+Output:NativeUITrainer/focus_ring_runs/identity114-dtm029. Completed PID87624,exit0.
+Fit1.522s,total6.322s;loss2.77970→0.008413. Region92/94confident correct,94/94raw;
+two abstentions at0.71418/0.81991. Old108training106→107confident correct without
+lost successes. Related Settings5→4: row25unchanged flips0.03511→1.0changed.
+All217derived probabilities exactly preserved; frozen weights/checkpoint replay pass.
+Gate failed; no export/promotion. Checkpoint102351bytes,SHA256:
+9de87de3a1660554056559553c7ddd1c51d61754d1ef24bb53e412e5dec57209.
+Warm full feature/scoring CPU median1.565ms (10single-pair calls); not cold-start,
+CoreML, device or end-to-end capture latency. Investigate real motion negatives.

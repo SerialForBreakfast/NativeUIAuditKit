@@ -15,7 +15,10 @@ CONFIG=dict(model=ARM,epochs=600,batch=44,lr=.0001,seed=42,threads=2,backend='cp
 NATIVE_CONFIG=dict(CONFIG,batch=68)
 CONTEXT_CONFIG=dict(NATIVE_CONFIG,inputRepresentation='paired-context-difference-v1')
 RESOLUTION_CONFIG=dict(CONTEXT_CONFIG,inputSize=[192,128])
-CONTEXT_CONFIGS=(CONTEXT_CONFIG,RESOLUTION_CONFIG)
+REPAIR_CONFIG=dict(RESOLUTION_CONFIG,originalGroupCount=68,derivedGroupCount=122,
+    augmentation='identical-training-frames-v1',lossWeighting='equal-group-means')
+COLLECTION_CONFIG=dict(REPAIR_CONFIG,batch=108,originalGroupCount=108,initializer='DTM024')
+CONTEXT_CONFIGS=(CONTEXT_CONFIG,RESOLUTION_CONFIG,REPAIR_CONFIG,COLLECTION_CONFIG)
 NATIVE_CONFIGS=(NATIVE_CONFIG,*CONTEXT_CONFIGS)
 
 
@@ -30,7 +33,10 @@ def initialize(state,config):
     torch=d.torch_runtime()
     model_config=d.PAIRED_TEMPORAL_CONFIG if config in CONTEXT_CONFIGS else state['configuration']
     net=d.model(model_config);weights=dict(state['state'])
-    if config in CONTEXT_CONFIGS:
+    if config==COLLECTION_CONFIG:
+        d.h.require(state['configuration']==d.PAIRED_TEMPORAL_CONFIG and state.get('adaptation')==REPAIR_CONFIG,
+            'collection_change_initializer')
+    elif config in CONTEXT_CONFIGS:
         source=weights['change.0.weight']
         d.h.require(tuple(source.shape)==(8,3,3,3),'change_context_initializer_shape')
         expanded=torch.zeros((8,9,3,3),dtype=source.dtype,device=source.device)
@@ -139,6 +145,76 @@ def evaluate_self_pairs(protocol_path,result_path,output):
     out.mkdir(parents=True);h.write(out/'diagnostic.json',report,sealed=True);return report
 
 
+def self_pair_proposal(rows, x):
+    """Source-indexed derivations only; never admission or a training protocol."""
+    h=d.h
+    h.require(x.dtype==np.float32 and x.shape==(len(rows),6,128,192) and
+        np.isfinite(x).all() and ((x>=0)&(x<=1)).all(),'derived_tensor')
+    h.require(len({r['id'] for r in rows})==len(rows),'derived_duplicate_rows')
+    unique={};byte_roles={}
+    for i,row in enumerate(rows):
+        h.require(row['split'] in ('train','development') and len(row['images'])==2 and
+            len(row['decodedPixelHashes'])==2,'derived_membership')
+        for j,ref in enumerate(row['images']):
+            pixel=row['decodedPixelHashes'][j];sha=ref['sha256']
+            h.require(all(isinstance(v,str) and len(v)==64 and all(c in '0123456789abcdef' for c in v)
+                for v in (pixel,sha)),'derived_hash')
+            h.require(sha not in byte_roles or byte_roles[sha]==(row['split'],pixel),'derived_byte_conflict')
+            byte_roles[sha]=(row['split'],pixel)
+            item=dict(rowID=row['id'],rowIndex=i,endpoint=j,image=ref,sourceGroup=row['group'])
+            image=x[i,3*j:3*j+3]
+            if pixel in unique:
+                old=unique[pixel]
+                h.require(old['split']==row['split'],'derived_cross_split')
+                h.require(np.array_equal(old['tensor'],image),'derived_tensor_conflict')
+                old['origins'].append(item)
+            else:unique[pixel]=dict(split=row['split'],tensor=image,origins=[item])
+    entries=[dict(id='self:'+key,decodedPixelHash=key,changed=False,
+        derivation='identical-source-frame-twice',origins=value['origins'])
+        for key,value in sorted(unique.items()) if value['split']=='train']
+    return dict(version='change-derived-negatives-proposal-v1',trainingEligible=False,
+        launchEligible=False,approvalRequired='explicit-derived-negative-data-role-decision',
+        entries=entries,excludedDevelopmentFrames=sum(v['split']=='development' for v in unique.values()),
+        originalPairs=len(rows),trainingLaunched=False)
+
+
+def prepare_self_pairs(protocol_path,output):
+    h=d.h;out=h.fresh(output);start=time.monotonic();path=h.local(protocol_path);p=h.read(path)
+    h.require(p.get('version')==VERSION and p.get('configuration')==RESOLUTION_CONFIG and
+        p.get('protocolSHA256')==h.digest({k:v for k,v in p.items() if k!='protocolSHA256'}),'derived_protocol')
+    corpus=h.read(h.checked(h.ROOT,p['corpus']))
+    h.require(corpus==d.collect(corpus['sources']),'derived_source_changed')
+    rows=d.admitted(corpus,h.read(h.checked(h.ROOT,p['admission'])))
+    h.require(p['rowIDs']==[r['id'] for r in rows] and
+        Counter(r['split'] for r in rows)=={'train':68,'development':5},'derived_membership')
+    x=np.load(h.checked(h.ROOT,p['x'],64*1024**2),allow_pickle=False)
+    report=self_pair_proposal(rows,x)
+    h.require(len(report['entries'])==122 and report['excludedDevelopmentFrames']==9,'derived_expected_counts')
+    report.update(parentProtocol=h.ref(path),corpus=p['corpus'],admission=p['admission'],
+        encodedInputs=p['x'],implementation=h.ref(Path(__file__)),elapsedSeconds=time.monotonic()-start)
+    out.mkdir(parents=True);h.write(out/'proposal.json',report,sealed=True)
+    print('Prepared122training derivations;9development frames excluded;not admitted')
+    return report
+
+
+def prepare_repair(proposal_path,output):
+    h=d.h;out=h.fresh(output);proposal=h.read(h.local(proposal_path))
+    h.require(proposal.get('seal')==h.digest({k:v for k,v in proposal.items() if k!='seal'}) and
+        proposal.get('version')=='change-derived-negatives-proposal-v1','repair_proposal')
+    parent=h.read(h.checked(h.ROOT,proposal['parentProtocol']))
+    h.require(parent['configuration']==RESOLUTION_CONFIG and parent['protocolSHA256']==h.digest(
+        {k:v for k,v in parent.items() if k!='protocolSHA256'}),'repair_parent')
+    corpus=h.read(h.checked(h.ROOT,parent['corpus']))
+    h.require(corpus==d.collect(corpus['sources']),'repair_source_changed')
+    doc={k:v for k,v in parent.items() if k!='protocolSHA256'}
+    doc.update(configuration=REPAIR_CONFIG,pins=pins(),derivedProposal=h.ref(h.local(proposal_path)))
+    doc['protocolSHA256']=h.digest(doc);out.mkdir(parents=True);h.write(out/'protocol.json',doc)
+    h.write(out/'approval.json',dict(version='change-adaptation-approval-v1',approved=True,
+        protocolSHA256=doc['protocolSHA256'],runName='repair100-dtm024',arm=ARM,
+        decisionReference='Maintainer October3: Training is approved. Admits122training-only self-pairs for one600epoch REPAIR100 equal-group-loss comparison; no capture/export/promotion.'))
+    print(doc['protocolSHA256'])
+
+
 def load_protocol(path,arm,run_name,approval_path=None):
     path=d.h.local(path);doc=d.h.read(path)
     d.h.require(doc.get('version')==VERSION and doc.get('configuration') in (CONFIG,*NATIVE_CONFIGS) and arm==ARM,'change_configuration')
@@ -154,10 +230,21 @@ def load_protocol(path,arm,run_name,approval_path=None):
     x=np.load(d.h.checked(d.h.ROOT,doc['x'],64*1024**2),allow_pickle=False)
     d.h.require(x.dtype==np.float32 and x.shape==(count+5,6,height,width) and np.isfinite(x).all() and
         ((x>=0)&(x<=1)).all(),'change_tensor')
-    if config==RESOLUTION_CONFIG:
+    if config in (RESOLUTION_CONFIG,REPAIR_CONFIG):
         base=np.load(d.h.checked(d.h.ROOT,doc['baseInputs']),allow_pickle=False)
         d.h.require(base.dtype==np.float32 and base.shape==(count+5,6,64,96) and
             np.isfinite(base).all() and ((base>=0)&(base<=1)).all(),'resolution_base_tensor')
+    if config==REPAIR_CONFIG:
+        proposal=d.h.read(d.h.checked(d.h.ROOT,doc['derivedProposal']))
+        derived=self_pair_proposal(rows,x)
+        d.h.require(proposal.get('seal')==d.h.digest({k:v for k,v in proposal.items() if k!='seal'}) and
+            all(proposal.get(k)==v for k,v in derived.items()) and len(derived['entries'])==122 and
+            derived['excludedDevelopmentFrames']==9 and proposal['corpus']==doc['corpus'] and
+            proposal['admission']==doc['admission'] and proposal['encodedInputs']==doc['x'],'repair_derivation_binding')
+    if config==COLLECTION_CONFIG:
+        from prepare_collection103 import validate_training_binding, original_negatives
+        validate_training_binding(doc,rows,x)
+        original_negatives(doc,rows,x)
     control=d.h.read(d.h.checked(d.h.ROOT,doc['control']))
     d.h.checked(d.h.ROOT,doc['initializer'])
     scores=control_scores(control,doc,corpus)
@@ -191,12 +278,13 @@ def run(report,experiment_id):
     native_prefix=sources['nativeActions' if config in NATIVE_CONFIGS else 'nativeTable']['sha256']+':'
     torch=d.torch_runtime();torch.set_num_threads(2)
     state=torch.load(d.h.checked(d.h.ROOT,doc['initializer']),map_location='cpu',weights_only=True)
-    d.h.require(state['version']==d.VERSION and state['configuration']==d.TEMPORAL_CONFIG,'change_initializer_configuration')
-    if config in NATIVE_CONFIGS:d.h.require(state.get('adaptation')==CONFIG,'change_initializer_adaptation')
+    d.h.require(state['version']==d.VERSION and state['configuration']==
+        (d.PAIRED_TEMPORAL_CONFIG if config==COLLECTION_CONFIG else d.TEMPORAL_CONFIG),'change_initializer_configuration')
+    if config in NATIVE_CONFIGS and config!=COLLECTION_CONFIG:d.h.require(state.get('adaptation')==CONFIG,'change_initializer_adaptation')
     net,model_config=initialize(state,config)
     tx=torch.from_numpy(x)
     with torch.inference_mode():
-        if config==RESOLUTION_CONFIG:
+        if config in (RESOLUTION_CONFIG,REPAIR_CONFIG):
             original,_=initialize(state,NATIVE_CONFIG)
             d.h.require(torch.allclose(score_change(net,tx,config),score_change(original,tx,config),atol=1e-6,rtol=0),'resolution_initializer_parity')
             base=torch.from_numpy(np.load(d.h.checked(d.h.ROOT,doc['baseInputs']),allow_pickle=False))
@@ -207,7 +295,18 @@ def run(report,experiment_id):
     ids=[i for i,r in enumerate(rows) if r['split']=='train'];labels=torch.tensor([float(rows[i]['changed']) for i in ids])
     out=d.old.fresh_run(Path(report['output']).name);out.mkdir(parents=True)
     d.h.write(out/'execution.json',dict(status='started',experimentID=experiment_id,pid=os.getpid(),protocol=report['protocolFile']))
-    fit_start=time.monotonic();net,history=d.fit_change_head(net,tx[ids],labels,config);fit_seconds=time.monotonic()-fit_start
+    train_x=tx[ids];self_x=None
+    if config in (REPAIR_CONFIG,COLLECTION_CONFIG):
+        if config==COLLECTION_CONFIG:
+            from prepare_collection103 import original_negatives
+            entries=original_negatives(doc,rows,x)
+        else:entries=self_pair_proposal(rows,x)['entries']
+        frames=[]
+        for entry in entries:
+            origin=entry['origins'][0];i,j=origin['rowIndex'],origin['endpoint']
+            frame=tx[i,3*j:3*j+3];frames.append(torch.cat((frame,frame)))
+        self_x=torch.stack(frames);train_x=torch.cat((train_x,self_x));labels=torch.cat((labels,torch.zeros(len(self_x))))
+    fit_start=time.monotonic();net,history=d.fit_change_head(net,train_x,labels,config);fit_seconds=time.monotonic()-fit_start
     d.h.require(all(torch.equal(value,net.state_dict()[name]) for name,value in state['state'].items() if not name.startswith('change.')),'change_geometry_parity')
     torch.save(dict(version=d.VERSION,configuration=model_config,adaptation=config,state=net.state_dict()),out/'last.pt')
     with torch.inference_mode():after=score_change(net,tx,config).numpy()
@@ -229,6 +328,11 @@ def run(report,experiment_id):
     result=dict(version=VERSION,protocol=report['protocolFile'],model=d.h.ref(out/'last.pt'),
         results=results,summary=summary,history=history,fitSeconds=fit_seconds,elapsedSeconds=time.monotonic()-start,
         geometryWeightsUnchanged=True,checkpointReplay=True,releaseEligible=False)
+    if self_x is not None:
+        with torch.inference_mode():scores=score_change(net,self_x,config).tolist()
+        result['derivedNegatives']=dict(count=len(scores),probabilities=scores,
+            rawFalseChanges=sum(p>=.5 for p in scores),confidentFalseChanges=sum(p>=.85 for p in scores),
+            abstentions=sum(max(p,1-p)<.85 for p in scores),independentEvaluation=False)
     d.h.write(out/'result.json',result,sealed=True)
     d.h.require(sum(p.stat().st_size for p in out.iterdir())<config['maxOutputBytes'],'change_output_budget')
     d.h.write(out/'completion.json',dict(status='completed',exitCode=0,pid=os.getpid(),result=d.h.ref(out/'result.json')),sealed=True)
@@ -237,9 +341,15 @@ def run(report,experiment_id):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--prepare',required=True);p.add_argument('--approve',action='store_true')
+    p.add_argument('--self-pair-proposal',metavar='PARENT_PROTOCOL',help='Preparation only; no data admission or training approval')
     p.add_argument('--native-actions',action='store_true',help='Prepare the separately scoped CHANGE92 admitted68/5 comparison')
     p.add_argument('--paired-context',action='store_true',help='Prepare the CONTEXT93 paired appearance architecture comparison')
     p.add_argument('--higher-resolution',action='store_true',help='Prepare the RESOLUTION96 change-only192x128 comparison')
     args=p.parse_args()
-    if not args.approve:p.error('explicit experiment authorization required')
-    prepare(args.prepare,args.native_actions,args.paired_context,args.higher_resolution)
+    if args.self_pair_proposal:
+        if args.approve or args.native_actions or args.paired_context or args.higher_resolution:
+            p.error('self-pair proposal cannot carry experiment approval or training options')
+        prepare_self_pairs(args.self_pair_proposal,args.prepare)
+    else:
+        if not args.approve:p.error('explicit experiment authorization required')
+        prepare(args.prepare,args.native_actions,args.paired_context,args.higher_resolution)

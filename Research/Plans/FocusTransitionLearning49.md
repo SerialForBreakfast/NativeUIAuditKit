@@ -1485,6 +1485,21 @@ This contract defines the next substantial tranche, not a new data-use approval.
 
 #### A. Controlled false-change repair
 
+Maintainer approval received October3: “Training is approved. Ttr will update git
+next.” This admits the122training-only derived negatives for one DTM024/REPAIR100
+comparison under the fixed settings below. Development remains excluded; no TTR
+calibration admission, capture, export or promotion is authorized by this decision.
+
+PREP98 implementation boundary: extend the existing change-adaptation CLI with a
+preparation-only self-pair proposal from the sealed RESOLUTION96 inputs. Revalidate
+source membership, byte hashes, encoded-input identity and train/development grouping;
+deduplicate by decoded pixels and reject cross-role duplicates or conflicting tensors.
+Bind each derived unchanged label to its original row/endpoint, source bytes and
+decoded hash. Emit a compact sealed derivation proposal referencing the existing
+tensor, not another copy of image data. No approval file, training protocol, run ID
+or launched model is produced. Existing training dispatcher must reject this proposal.
+Real122train/9development accounting and negative fixture tests are required.
+
 Question: does explicitly teaching unchanged native appearance remove DTM023's
 appearance shortcut without sacrificing genuine focus changes?
 
@@ -1658,11 +1673,48 @@ training, new data roles or capture. One handoff records both outcomes.
 
 ### EVAL90 — independent transition evidence acquisition contract
 
+#### October 3 refinement — proposed branch-sized acquisition matrix
+
+This is a source/role proposal, not reserved membership or capture authority.
+
+| Proposed source | Intended role after review | Required evidence / diagnostic value |
+|---|---|---|
+| Previously unused Home journey, including grid and dock where supported | Validation candidate | Directional moves, boundary no-ops, same-focus artwork changes, entry/back; distinguish image salience from focus |
+| Actual Photos journey, including real buttons where available | Final-challenge candidate | Small positive controls, enclosing artwork, transitions and no-ops; ordinary rendered-body boxes and human review if native truth unavailable |
+| Additional Settings branches | Development unless independence review establishes otherwise | Row/text-fragment and enclosing-region distractors; never relabel the five exposed pairs as final |
+| TTR context60 and retained layout28 | Retained producer calibration/validation only, pending consumer admission | Fixture coverage, not independent real-app evidence; source v16/v17 must be published and reconciled |
+
+Before execution, the source owner must identify actual app/build, reachable branches,
+journey start/end, action IDs, focus-label method, ordinary-image box review, and
+profile/restoration evidence. Maintainer assigns connected groups to roles before
+scoring. If Home/Photos are unavailable or connected to already exposed evidence,
+propose a different independent source; do not substitute Fixture ancestry.
+Enumerate reachable action cells and expected counts once per branch. Include
+small-positive versus text-fragment-negative controls, enclosing regions versus
+focused children, same-focus content changes, stationary focus moves and scrolling
+identity changes. Unsupported cells remain explicit gaps. Completed branches may
+be admitted independently after byte/label/group checks, without waiting for an
+entire navigation map. No universal quota or final-accuracy claim is implied.
+
+Candidate diagnostics must report proposal recall, ranking conditional on proposal
+availability, pair-level joint correctness, abstentions and latency separately.
+Stratify size by image-normalized extent as well as raw pixels; differing capture
+resolutions otherwise confound the analysis. Never derive a size cutoff from the
+exposed Settings errors. See the frozen [ranking review](../../reports/work/RANKING-97/handoff.md).
+
 Audit current admitted membership and retained calibration lineage before further
 evaluation claims. The current68train/122unique pixels form one Fixture-renderer
 group;5development/9pixels form one exposed Settings journey. The unused36appearance
 pairs remain Fixture-related and lack action evidence. Neither a new seed, native
 table/collection adapter, nor new file hash creates an independent final group.
+
+October4 COVERAGE119 supersedes those historical counts for DTM030:207original
+training pairs span282unique images (178Fixture-renderer and104Settings ancestry).
+The formerly five development pairs are explicitly training now under REFLOW117;
+no current experiment member is independent final evidence. Exact image hashes and
+origins: reports/work/TRANSITION-COVERAGE-119/artifacts/audit/report.json, linked from
+its handoff. Prospective source/group reservation still precedes model-driven review;
+Home/Photos are proposals, not existing reserved or qualified membership.
 
 Two separate data lanes remain necessary:
 1. **Training coverage:** small genuinely focusable controls, bright unfocused
@@ -1701,3 +1753,236 @@ Sample counts and source count bound the claim; no universal accuracy promise.
 Acceptance: actual versioned eligible membership with no connected-group leakage,
 complete action accounting, reviewed labels and declared use. Until those exist,
 the deliverable is an acquisition plan with concrete blockers—not a frozen corpus.
+# INTAKE-101 — published native collection contracts and shadow response
+
+## CALIBRATION-102 — retained actions, frozen predictions, exact role proposal
+
+### PREP-103 — guarded admission and reusable combined inputs
+
+#### Execution continuation — COLLECTION-104
+
+Maintainer approved the exact40 role change by replying "Yea continue" to that
+specific prerequisite. Use a fresh admission destination; retain the invalidated
+earlier admission as rejected evidence. Complete both comparisons through the
+existing training dispatcher, not a parallel trainer. Change adaptation starts
+from DTM024, Adam0.0001,600epochs,108 real pairs plus only the original122approved
+same-frame negatives, equal group mean loss. Ranker adaptation starts from DTM020,
+Adam0.001,600epochs,178training/9development frames, normalized-size features and
+fixed DTM024 change predictions. Both use fixed-last selection and CPU2threads.
+Prepared tensor/crop reuse must verify immutable references, encoder identity,
+membership and source bytes. Historical provenance is not silently resealed.
+Report old68/new40/Settings5 separately, new condition/theme slices, original122
+negative retention, saved-checkpoint parity and frozen geometry parity. Joint
+success requires both box IoU>=0.5 and correct change at confidence>=0.85.
+Compare each isolated candidate and their combined diagnostic without more fitting.
+Advancement requires no loss in old/exposed joint counts, improvement on new40,
+and retention of zero false changes/abstentions on the122derived negatives for
+the change candidate. Failure is a diagnosis, not an automatic retry or promotion.
+Budget remains two fits,2GiB new outputs, no wall-time cap; no capture/export.
+
+While exact40pair role approval is pending, implement the fail-closed admission
+adapter and prepare113real-pair encodings plus187distinct-frame ranking derivatives
+using existing encoders/crop caches. Existing68training/5development roles remain
+unchanged; new40records remain calibration. No approved training protocol, launch
+receipt or admission is emitted in preparation mode. Explicit matching role decision
+is required by admission mode; preserve old corpus records, assignments, exclusions
+and connected-group checks. Test missing/false/stale approval, old-record mutation,
+role leakage and output collision. Integrate into existing corpus collector.
+
+Next after approval: fixed600epoch change-only comparison fromDTM024, unchanged
+192x128encoding and0.85confidence,108real pairs plus original122approved derived
+negatives with equal group means; separately compare size-aware ranker adaptation
+fromDTM020 on178training frames/9exposed development frames with fixed change
+predictions. Neither is launched by this preparation task. Keep both comparisons
+within the standing local envelope, log fresh exact configurations before execution,
+and report original/new/exposed groups separately. No new synthetic negatives,
+new architecture, capture, model export or promotion is implied.
+
+Evaluate all40action pairs from the accepted layout28/context60 sources with frozen
+DTM024 change and DTM020 ranking. Use original production proposals/crops and fixed
+0.85 change confidence /0.5boxIoU; no model, threshold or input tuning. Generate
+automatic proposals once per distinct frame, cache production crop derivatives,
+commit predictions before joining native labels, and retain proposal misses instead
+of inserting truth boxes. Report condition/theme/style support, change errors,
+abstentions, proposal coverage, ranking/geometry and joint correctness, with stage
+timings distinguished from end-user latency. Compare source pixels/ancestry against
+existing68train/5development membership. Produce an exact unapproved role proposal
+for40action pairs; keep48appearance pairs out of action training and all related
+Fixture groups out of final evaluation. No capture, new training or export.
+
+Tests cover condition membership, source/role tampering, missing proposals, nonfinite
+scores and separated failure types. Actual entrypoints must produce sealed outputs;
+focused checks and integrated offline Swift checks precede handoff. Shadow source/
+export uptake has priority when available; peer implementation delay does not block
+this local evaluation. Next training requires exact role approval, not just this
+passing replay or the standing training execution envelope.
+
+Source reference: TVTestRig `4f9273cc`. Reconcile the retained layout28 v16 and
+context60 v17 handoffs against source-defined canvas canonicalization, native
+observations and completed case receipts. Preserve failed attempts separately;
+never manufacture completed receipts or strip unfamiliar fields. Run actual intake
+on all 88 selected pairs, reporting bytes, condition coverage, duplicates and
+calibration-only eligibility. No capture, training, export or promotion is included.
+Focused tests must cover old hash stability, new context/style identity, invalid
+combinations, partial receipts, corrupt members and output collisions; finish with
+one integrated offline Swift check. A consumer failure stays an explicit blocker.
+
+In parallel, answer TTR's acknowledged SHADOW-FEEDBACK-01/02/03 contract questions:
+identify the compatible FDR021 observer, keep DTM024 research-only, specify separate
+prediction/label/evaluation records and truthful evaluation-group status. Publish
+only actionable metadata with readback; acknowledgment is separate. Prioritize
+unblocking this feedback integration over another unmotivated training run.
+## RANK-RETENTION-105 — frozen diagnosis and one retention comparison
+
+October4UTC continuation under standing local training approval. First replay
+DTM020 and DTM026 on the same COLLECTION104 bank; verify historical selections,
+count unique development frames, positive-proposal recall, score margins, geometry
+and hidden-feature/weight drift. No new labels, capture, data roles or architecture.
+Settings stays exposed development and never enters optimizer/teacher losses.
+Then record one specific same-architecture retention hypothesis before launch,
+using108train/5development and178unique training frames, cached crops,600epochs,
+seed42,fixed-last,CPU2threads,2GiB cap,no-wall-time override. Existing trainer and
+evaluator remain authoritative; no parallel training implementation. Freeze DTM025
+change scores for final component comparison; retain all old/new/Settings gates.
+Do not sweep coefficients or select epochs against the five Settings examples.
+Return one diagnosis/comparison/deployment decision with actual entrypoint tests,
+one integrated offline Swift pass and a concise handoff. No export or promotion.
+
+Pre-fit diagnosis:122old/56new/9Settings unique frames all have positive proposals.
+DTM020→DTM026 selected correctness122→122,6→56,5→0. Fixed weight-swaps (diagnostics,
+not candidates) retain4Settings with old hidden/new readout but only4new frames;
+new hidden/old readout retains3Settings while fitting56new frames. Both layers'
+changes contribute; this does not prove a single causal explanation.
+
+One DTM027 hypothesis: freeze DTM020's final32→1 scoring layer and adapt only its
+770→32 hidden layer on all178approved training frames. New hidden features appear
+needed for the new collection; a stable readout may reduce destructive co-adaptation.
+Unchanged architecture/features, initialization, loss,600epochs,Adam0.001,seed42,
+fixed-last selection. No extra regularizer, teacher/development fitting, coefficient
+sweep or selection by Settings. Report exactly frozen parameter equality and saved
+checkpoint replay. Compare with DTM020 and rejected DTM026 using DTM025 change.
+Advancement requires all previously correct Settings frames retained (5/9), old
+122/122unique frames retained, and new unique-frame/joint improvement over DTM020.
+Failure retains DTM020 and supplies a diagnosis, not a second automatic fit.
+
+Outcome: DTM027 retains122/122old and fits56/56new but Settings5/9→1/9, losing all5
+previous successes. Reject replacement. Both frozen tensors independently verify
+exact despite a preserved first-receipt field bug.27Python/137Swift tests pass.
+[Handoff](../../reports/work/RANK-RETENTION-105/handoff.md).
+
+## RANK-REPRESENTATION-107 — information and domain audit before new architecture
+
+Inputs: COLLECTION104's187frame/178train candidate bank, DTM020/026/027 checkpoints,
+RANK105 frame logits/positive proposals and retained source PNGs. Diagnose only:
+measure exact/near-colliding opposite-label crop features within training separately
+from exposed development, candidate geometry and nearest-source support. Inspect
+production-crop details for flagged examples without declaring model predictions
+labels or generating new screenshots. Batch and cache by image/crop identity.
+Report whether evidence supports irreversible16×16compression loss, missing scene
+context, or merely unresolved model/domain effects; do not assume any explanation.
+
+Deliver one reproducible audit and one frozen proposed representation comparison:
+same membership/roles/selection gates, fixed DTM025change, matched training budget,
+parameter/memory/latency targets and production-crop parity. Prefer one changed
+information path over simultaneous backbone/optimizer/data changes. New-encoding
+or backbone training is a separately scoped experiment, not authorized by this
+diagnostic. No final-test tuning, capture, producer changes, export or promotion.
+Acceptance: reconciled candidate/frame counts, deterministic feature diagnostics,
+isolated train/development evidence, actionable hypothesis and focused tests.
+
+RANK107 outcome:5022candidates/187frames, zero opposite-label exact collisions in
+pixels or pixels+size. No proof of irreversible downsampling loss. Fixed descriptive
+distance contrast selects121/122old,56/56new,9/9Settings; Settings old-only reference
+9/9 versus new-only0/9. All training shares Fixture ancestry; Settings is already
+exposed. One old error prevents retention, and the diagnostic was chosen after
+examining development failures. Do not call it a qualified model. A larger-context
+experiment remains a fallback proposal; these results instead motivate the bounded
+same-feature reference-scoring comparison below. This is an evidence-driven plan
+revision, not an assumption that more resolution is always better.
+
+## RANK-METRIC-108 — bounded reference scoring before a larger model
+
+Inputs: exact COLLECTION104 bank/supervision/admission, RANK107 audit, DTM020/027
+rank references and frozen DTM025change results. Construct positive/negative
+reference membership from178training frames only; never Settings, requested-focus
+fields or evaluation labels. Preserve original recipe/journey ancestry in references.
+Use existing770features and fixed RMS contrast d(nearestNegative)-d(nearestPositive),
+stable candidate-ID ties. Version and hash bank, encoding and scorer; label-bound
+prototype construction happens offline, not via ground truth at inference.
+
+Implement chunked batch inference with explicit candidate/reference/memory bounds,
+no repeated image processing. Test exact equivalence to RANK107 direct subtraction
+(including tiny distances), permutation/tie behavior, missing-role/provenance errors,
+changed bytes, same-frame exclusion and no development leakage. Full uncompressed
+float32training reference bank is approximately14.8MB; report actual storage and RAM
+rather than assuming compliance with deployment package limits. Do not quantize,
+prune, download or export as an unassigned optimization.
+
+Evaluate one frozen reference candidate against DTM020 and DTM027 on identical
+pair membership under DTM025 change. Exact-training self-matches are trivial: report
+them separately from the same-frame-excluded diagnostic and require old122/122
+and all5previously correct Settings frames retained plus new56improvement. Investigate
+the one RANK107old failure using retained source/geometry, not a threshold sweep.
+Report all five Settings pair outcomes, candidate support, abstentions and cost.
+No independent quality claim until genuinely separate reviewed journeys exist.
+No new capture/role change, prototype publication, export or promotion. Return one
+acceptance decision and a deployability/next-evidence plan; stop after this comparison.
+
+Execution: CPU NumPy direct float64 subtraction with in-place squaring; at most
+512 references per distance block and 80 queries per caller batch, evaluated one
+query at a time. Maximum bank8192×770 float32; reject oversized/nonfinite inputs.
+Freeze the full bank, no fitting or threshold selection. Measure first-frame and
+per-frame timing for both self-allowed replay and same-frame-excluded diagnostics.
+Record tensor bytes and analytical distance workspace separately from process RSS.
+
+Outcome October4: implemented and rejected for replacement; old121/122,new56/56,
+Settings9/9 with same-frame references excluded. Full paired result and geometry
+diagnosis: [handoff](../../reports/work/RANK-METRIC-108/handoff.md). No trained
+weights, new data, export or promotion. Reference matching remains a diagnostic
+control, not the default deployed ranker.
+
+### Proposed next tranche — RANK-GEOMETRY-109
+
+Execution assigned October4 by maintainer continuation. Audit computes per-frame
+maximum/selected IoU and normalized extent errors from unchanged annotations,
+including all candidates and retained model selections. Derive continuous overlap
+labels offline from existing training truth only; do not add truth to inference.
+Freeze the loss after this audit and before protocol sealing/training.
+
+Audit finding:11new-training PNG identities have two exact extent annotations,
+[208,376,784,976] and[200,385,800,958], despite identical bytes. Binary-positive
+candidate sets agree. Keep per-annotation ranges in diagnostics; do not average,
+choose one truth or silently discard these frames. Continuous-loss preflight must
+reject this ambiguity until source evidence/review supplies a versioned correction.
+No DTM028 launch or approval receipt while this guard fails.
+
+Frozen candidate objective (software-ready only until correction): original
+positive-set log-softmax loss plus the mean hinge over each maximum-IoU candidate
+and each strictly lower-IoU candidate, margin equal to their IoU difference.
+This retains focus/nonfocus supervision while explicitly preferring better extent.
+Equal coefficient1; all equal-IoU pairs excluded; no hyperparameter sweep. Same
+770→32→1 architecture and original600epoch settings. Continuous targets are
+reconstructed only from unique, mutually consistent TRAIN frame boxes at preflight
+and again before fitting; inference remains label-free. Prototype references and
+Settings labels never enter this objective. All other specified retention gates hold.
+
+Inputs: frozen108/5corpus,187frame proposals, DTM020/027 and metric108 results,
+unchanged production crops and770features. First audit box extent, proposal IoU
+support and scorer ordering across all frames, not only the observed guide miss.
+Then predeclare one same-architecture geometry-aware ranking-loss comparison using
+continuous IoU from existing training annotations; no new annotation/data role.
+Use DTM020 initialization,600epochs, fixed last checkpoint, existing CPU/2threads
+and2GiB output cap under standing local training authority. Freeze the exact loss
+and protocol before launch after the diagnostic establishes a useful hypothesis;
+do not sweep settings or tune on Settings. If evidence does not support the fit,
+report that decision rather than launching for activity alone.
+
+Acceptance: real trainer integration and offline tests; old122frames and all five
+retained Settings successes preserved, new56support/results reported under fixed
+DTM025change. Report extent errors, all pair outcomes, model size and scoring cost.
+One candidate only; failed gates retain DTM020. Settings remains exposed development.
+In parallel, ingest any actually delivered and permitted TTR shadow sample using
+its existing receipt/role protocol; absent delivery blocks only peer intake.
+No capture, new encoding/backbone, export, publication of private images or promotion.
+Return one candidate decision and independent-evidence gaps; no automatic follow-up
+fits. This proposal is the next tranche, not execution within RANK108.

@@ -1,0 +1,39 @@
+schema_version: 1
+id: nuiak-20261004-region111-receipt
+request_id: tvtestrig-20261004-settings-region12-archive
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-04T08:00:50Z'
+state: copied_and_verified
+artifact:
+  file: tvtestrig/ttr-settings-region12-20261004-v2.tar.gz
+  bytes: 532823401
+  sha256: dbc1439b529e7647437b1f6914af7a4fa6f0f8fa62e1315634b0aed49ce80e8d
+  transfer_id: tvtestrig-20261004-settings-region12
+  verified_payload_files: 107
+  manifest_sha256: e683b1b77a4774d2510f73818f4470ef318d088d7f5a60cc8073af1cd30c5616
+durable_storage:
+  volume: training-drive
+  relative_path: data/NUIAK/archive/tvtestrig/tvtestrig-20261004-settings-region12/dbc1439b529e7647437b1f6914af7a4fa6f0f8fa62e1315634b0aed49ce80e8d/ttr-settings-region12-20261004-v2.tar.gz
+  verified_at: '2026-10-04T07:58:26Z'
+  retrieved_member: README.md
+  retrieved_sha256: c95dfad07ccaeb9d019f05e17c83c098feacc61b94bdafad008f58dcf88a9e57
+  independent_backup: false
+intake:
+  state: diagnostic_integrity_and_association_passed
+  frames: 95
+  intervals: 94
+  distinct_png_hashes: 95
+  findings: All files verify; all PNGs decode; all94 single-input temporal brackets and native endpoint associations pass. Native geometry remains proposal-only and profile persistence is not render verification.
+  model_replay: NUIAK independently scored all94 intervals using existing DTM025.94unchanged decisions versus94changed native identity hints; zero abstentions/failures. Not reviewed accuracy.
+  peer_parity: All8matching peer cases have identical encoded hashes and decisions; maximum probability delta1.10e-11. No evidence of consumer preprocessing mismatch.
+  prediction_sha256: 89b8c39d6d95b76899db72e2532aec28c31a4018b00f06131a763bda50e7aa6e
+  elapsed_seconds: 24.64535
+  training_admission: withheld_pending_visual_label_review_and_group_plan
+  final_evaluation: excluded_whole_settings_ancestry
+next:
+  - Preserve optional passive use only; DTM025 is not qualified for stationary-highlight scrolling or navigation authority.
+  - NUIAK owns visual review and one controlled training proposal; no producer recapture requested for this journey.
+  - TTR should preserve independent focus evidence, action/frame hashes and both model successes and failures in existing feedback workflow.
+cleanup: Exact shared duplicate is sender-owned under the receipt protocol. No original or active-checkpoint deletion requested; receiver deleted nothing.
+evidence: reports/work/SHADOW-REGION-111/handoff.md

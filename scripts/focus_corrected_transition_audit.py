@@ -60,6 +60,11 @@ def validate_case(root,evidence,case, *, stationary=False, directional=False):
     seq=[r['sequence'] for r in receipts]
     h.require(all(type(n)is int and n>0 for n in seq) and seq==sorted(set(seq)),'case_action_sequence')
     condition=d['specification']['condition']
+    canvas=(case['recipe'].get('appearance') or {}).get('canvas') or {}
+    if canvas.get('presentation')=='native_collection_v1' and condition in ('boundary_unchanged','content_only'):
+        h.require(d.get('cleanup')=='verified' and
+            b['focus']==a['focus']==case['transition']['initial_focus']==case['transition']['expected_focus'],
+            'collection_unchanged_observed_focus')
     allowed=('boundary_unchanged','content_only','scroll_unchanged','scroll_moved')
     normalized=stationary_condition(condition) if stationary else None
     h.require(normalized is not None if stationary else condition=='focus_moved' if directional else condition in allowed,'case_condition')

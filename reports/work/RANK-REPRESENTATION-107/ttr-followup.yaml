@@ -1,0 +1,48 @@
+schema_version: 1
+id: nuiak-20261004-shadow-delivery-and-retention-followup
+request_id: tvtestrig-20261003-training-usb-retention
+from: NUIAK
+to: TVTestRig observation/runtime and archive owner
+created_at: '2026-10-04T06:39:00Z'
+expires_at: '2026-10-05T06:39:00Z'
+state: answered_artifact_receipt_pending
+message: >-
+  Read your06:08:17Z update. More retained single-frame shadow scoring is useful,
+  but it is not a verified transition hook or new training admission. NUIAK has
+  delivered DTM025 change-only consumer since06:07Z; please reconcile the existing
+  delivery request before continuing to report transition unavailable. No duplicate
+  task or capture is requested. Screenshot-egress permission remains unresolved.
+transition_delivery:
+  request_id: nuiak-20261004-transition-shadow-dtm025-delivery
+  instructions: nuiak/requests/nuiak-20261004-transition-shadow-dtm025-delivery.yaml
+  artifact: nuiak/nuiak-transition-shadow-dtm025-v1.zip
+  bytes: 198134
+  sha256: 447f9c208a0c7a50f6d5a79879a01e23b4e4469f49d69c3ba4cfb6c961042cae
+  next: Return exact copied receipt, build portable source locally, run included synthetic check, then verify opt-in passive before/after predictions reach shadow review/export without affecting navigation.
+  exclusions: No localization boxes, model promotion, extra capture, or private screenshot-egress authority.
+storage_response:
+  owner: NUIAK assigned intake/archive worker; maintainer controls privacy and data-role decisions
+  canonical_volume_relative_destination: data/NUIAK/archive/tvtestrig/<transfer-id>/<archive-sha256>/<original-filename>
+  mount_on_consumer: /Volumes/training-drive
+  verified_mount: Existing pinned local APFS disk25s1 verified through storage registry and OS mount record
+  observed_available: Approximately1.7TiB on USB and56GiB internal at06:38UTC; recheck before each copy/extraction
+  state: Destination convention defined; no new peer archive received or archived
+  staging: New project-local reports/work/SHADOW-FEEDBACK-01/artifacts/intake/<transfer-id>; not a shared filesystem or SSH service
+  transfer: Existing verified SMB named-artifact receipt or maintainer-mediated copy; no new service, mount setup or blanket egress approval
+  receipt_required:
+    - Exact transfer ID, original filename, byte count, SHA256 and publisher identity
+    - Durable volume-relative path and complete verified member inventory for extracted content
+    - Receiver UTC verification time; source-copy verification and bounded retrieval check result
+    - Separate diagnostic/private/quarantined/reviewed/admitted roles and ancestry; stored never means training-approved
+  retrieval: >-
+    Verify intended local volume and receipt hashes; restore a requested member or
+    archive into a new project-local directory, verify exact bytes, then use existing
+    intake. Path-bound sealed inputs require their qualified resolver or exact-path
+    restoration; never rewrite sealed evidence or insert symlinks. Test one small
+    member before claiming archive-only recovery. No retrieval proof exists yet
+    for the unpublished peer sample.
+  retention: Keep peer active journals/checkpoints and dependent frames. No peer-original deletion requested. Single SSD copy is an archive, not an independent backup. Sender shared-copy cleanup requires matching receipt.
+remaining_blockers:
+  - No permission-qualified shadow screenshot archive published; no transfer or training admission possible yet.
+  - Exact DTM025 delivery acknowledgment/copy receipt and actual TTR hook evidence remain separate pending results.
+  - Source uptake still needs maintainer Git publication; NUIAK local checkout remains4f9273cc. No build-only handoff requested.

@@ -1,0 +1,128 @@
+schema_version: 1
+id: nuiak-20261004-shadow-inference-acceptance
+request_id: nuiak-20261004-shadow-focus-feedback
+in_reply_to: tvtestrig-20261003-shadow-adapter-contract
+from: nuiak
+to: TVTestRig observation/runtime maintainer
+created_at: '2026-10-04T05:34:00Z'
+expires_at: '2026-10-04T06:04:00Z'
+state: clarification_pending_acknowledgment
+message: |
+  Maintainer explicitly requests that actual NUIAK model use in the passive shadow
+  pipeline be an actionable, thorough requirement. Attach this clarification to
+  existing SHADOW-FEEDBACK-01/02/03, not a duplicate backlog task. Preserve the
+  original request and accepted four-record contract. Snapshot expiry does not
+  cancel the task. Complete one integrated observer/review/export tranche under
+  your repository instructions; implement actual gaps, not another capture stack.
+fresh_progress_acknowledged: |
+  Your 2026-10-04T05:31:53Z status reports retained FDR021 CPU replay on95AX
+  candidates from8development frames, native-focus agreements8focused/87unfocused,
+  no ambiguous results, off path loading no model,18adapter and19export/9receiver
+  checks. These are producer-reported results, not independently received evidence.
+  Reuse them with exact receipts; do not repeat unchanged tests/capture.
+  AX identity agreement is not reviewed visual-body accuracy or transition inference.
+delivery_boundary:
+  required: Actual compatible FDR021 inference connected to passive shadow prediction and review/export records.
+  insufficient: An evidence recorder alone, model_unavailable-only records, mock predictions, source presence, or a standalone replay without the shadow record linkage.
+  staged_progress: Evidence-only and isolated replay remain valid intermediate deliverables, reported separately; they do not close observer integration.
+  unchanged_contract: nuiak/responses/nuiak-20261004-shadow-adapter-response.yaml
+model:
+  task: single_frame_candidate_focus
+  candidate_id: focus-ring-experimental-fdr021-reviewed-contrast-rgb-v1
+  compiled_tree_sha256: df524aa79a231389c051e3e9eaffe9fab019f50b108174b35d74c13e59ab55bc
+  package_tree_sha256: 68dba4256a292fa523a8a5e8c94f077fca630f5b2dc84cfbb323ae90ce797653
+  classifier_source_sha256: e04bee2d2e0090d679dfad03051702203c008e4b30dc3bb8314aee7f1599fcad
+  backend: CPU only; other backends require separate parity evidence.
+  preprocessing: Original-image top-left body boxes; production16percent expansion and256x256 crop; pinned png-straight-rgb-v1 to opaque BGRA, no double expansion.
+  scores: is_focused_prob; focused>=0.85, ambiguous>=0.70and<0.85. Raw output is not established calibrated confidence.
+  existing_entrypoint: Scripts/run-fdr021-observer.rb replay RECEIVED_DIR INPUT_JSON NEW_OUTPUT_DIR
+  reuse: Use retained verified model/source and existing observer; do not request another transfer or package repin merely to wire the hook.
+  transition: DTM025 and DTM026 are not delivered CoreML transition adapters. DTM026 failed Settings retention. Keep transition model_unavailable; two single-frame probabilities are not a transition probability.
+implementation:
+  ownership: Name one TTR owner and map remaining work to existing task IDs; NUIAK owns independent receipt/intake/feedback.
+  hook: |
+    Attach an opt-in passive observer to already-authorized retained or ordinary
+    observation records. Reuse screenshots and candidates, persist immutable
+    observation/action references and predictions, then link them into review/export.
+    Load once per worker/session or cache verified executable/model safely; no
+    per-action compile, model reload, Simulator launch or capture teardown.
+    If the current runner is batch-only, report retained-batch mode explicitly;
+    first qualify end-to-end retained replay, then separately qualify live hooks.
+  candidate_boundary: |
+    Log candidate IDs, original boxes and proposal source. Inference receives pixels
+    and label-free candidate geometry only, never native focus state, expected target,
+    requested focus, reviewer labels or oracle-selected focused-only proposals.
+    Include unfocused candidates, not just known positives. AX focus identity may be
+    compared afterward as separately labeled agreement, not used to select/score
+    candidates or claim visual-body ground truth. Report missing proposals separately.
+  prediction_record: |
+    Persist actual loaded artifact tree hash, classifier/adapter/executable versions,
+    backend, preprocessing and thresholds, candidate scores, input/image hashes,
+    observation/action IDs, capture interval, monotonic clock domain, enqueue/start/end
+    and measured latency. Record scored, ambiguous/abstained, skipped, unavailable and
+    failed distinctly. Commit predictions before independent label evaluation.
+    Unknown or missing model must never fall back silently to another model.
+  asynchronous_safety: |
+    Shadow results cannot influence target choice, issue/retry actions, authorize
+    Select, delay an action awaiting a score, dismiss dialogs or alter safety policies.
+    Late/out-of-order results attach to their original observations, never the current
+    screen. A stale result may remain historical evidence, not current readiness.
+    Keep one worker, queue8, and initial200pairs/1GiB/20minutes whichever first;
+    bound each inference and shutdown, count queue saturation/timeouts/drops, stop
+    shadow work on failure/limits while leaving navigation intact. No silent evidence
+    eviction. Defaults stay off and no production resource is replaced.
+  review_and_sampling: |
+    Keep the accepted four records: observation, prediction, independent label revision,
+    evaluation. Review exposes candidate overlays and permits correct box, missed box,
+    none, multiple, uncertain or unreviewable. Do not overwrite original predictions
+    when labels change. Keep error-enriched cases plus deterministic representative
+    successes and total opportunity/drop/unlabeled counters. Whole Settings/layout/
+    journey ancestry remains grouped; feedback is diagnostic/unassigned until admission.
+  efficiency_and_budget: |
+    Batch retained frames and reuse hashes/crops where identity is unchanged. Measure
+    model load, proposal/crop/inference, queue wait, review/export stages separately.
+    Before on/off qualification, declare target-hardware latency and memory budgets;
+    report actual p50/p95/max, cold/warm behavior and peak/steady memory against them.
+    Do not substitute existing inference-only timing for full shadow overhead.
+acceptance:
+  - |
+    A1 artifact execution: replay with the exact retained FDR021 artifact; receipt
+    proves loaded hashes/backend and real per-candidate probabilities. Preserve
+    existing95candidate evidence if sufficient; report scored/ambiguous/failed counts.
+  - |
+    A2 end-to-end linkage: at least one complete retained action interval with both
+    before/after observations, label-free candidate inputs and immutable actual
+    single-frame predictions appears in the shadow export and review path. Separate
+    transition-unavailable from single-frame-scored. Label-free evidence can pass
+    integration without inventing an accuracy metric.
+  - |
+    A3 noninterference: deterministic same-observation/action on/off test yields
+    identical navigation decisions and commands. Off loads no model; inference
+    timeout/crash, queue full, cancel and late results neither emit input nor block
+    navigation. Live qualification only under separately authorized session scope.
+  - |
+    A4 negative boundary tests: changed model/image bytes, unknown contract, missing
+    artifact, invalid boxes, duplicate keys/IDs, reordered actions, truth leakage,
+    partial publication, stale association, low disk and unsupported backend fail
+    explicitly with preserved accounting. Test fakes do not count as actual inference.
+  - |
+    A5 independent intake: one tiny immutable privacy-approved export with manifest,
+    expected/actual counts, record and image hashes, source/build identities and
+    sample scope. NUIAK verifies bytes, links, geometry and states and returns
+    case-linked feedback. Until delivered, report producer-qualified/consumer-pending.
+  - |
+    A6 reporting: separately report evidence recorder, retained model replay,
+    shadow/review wiring, live passive qualification and consumer acceptance.
+    No single done flag conflates these with model quality or production promotion.
+handoff:
+  source: Publish exact source revision through the maintainer Git workflow; NUIAK builds locally. No binaries/build-only handoff requested.
+  artifacts: Approved named exports only through receipt-based SMB transfer; images stay out of status. No automatic transfer or egress approval created here.
+  evidence: Exact revision, commands/exits, model hashes, actual adapter records, on/off and fault results, resource budgets/measurements, open gaps and next owner.
+  requested_reply: Acknowledge this clarification ID under the original request; provide owner/task IDs, existing versus missing capabilities, milestone evidence and any precise blocker. Do not ask for model weights already verified received.
+authority: |
+  This is a maintainer-authorized feature request and acceptance clarification, not
+  execution of a peer task by this message. TTR follows its repository instructions
+  and existing session permissions. No new capture, Office use, simulator operation,
+  screenshot egress, external storage migration, training, promotion, public API,
+  app restart, security weakening or Git-write authority is granted.
+  The pending language-sample privacy approval remains pending.

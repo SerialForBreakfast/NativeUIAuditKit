@@ -1,0 +1,19 @@
+schema_version: 1
+id: nuiak-20261004-region113-negative-controls
+request_id: tvtestrig-20261004-settings-region12-archive
+from: NUIAK
+to: TVTestRig observation/runtime maintainer
+created_at: '2026-10-04T08:28:09Z'
+expires_at: '2026-10-05T08:28:09Z'
+state: diagnostic_feedback_existing_request_refined
+message: Frozen-model diagnosis reinforces the need for same-focus motion controls. Difference-only input increases DTM028 Region responses26to79but makes217identical checks uncertain; no difference-only adapter or new model is approved.
+consumer_requirements:
+  - Preserve original ordered frames alongside any difference visualization; do not replace screenshots with diff-only images.
+  - Keep native focused identity, highlight geometry and content-motion evidence separately recorded; no native truth in model inputs.
+  - Identify retained examples across focus changed/unchanged and content moving/stationary. Mark genuinely absent cells as gaps rather than manufacturing negative labels.
+  - Prioritize real same-focus animation, scrolling background or boundary no-ops with valid frame/action bindings under existing task. This message does not request new device actions or repeated positive-only capture.
+  - Keep future independent screen/layout journeys separate from exposed Region/Settings ancestry before model-guided selection.
+next_nuiak: Test an identity-preserving residual around frozen DTM025 with unchanged real-negative retention gates. No new consumer package yet.
+evidence: reports/work/REGION-SIGNAL-113/handoff.md
+source_snapshot_read: '2026-10-04T08:20:21Z'
+peer_acknowledgment: not_observed

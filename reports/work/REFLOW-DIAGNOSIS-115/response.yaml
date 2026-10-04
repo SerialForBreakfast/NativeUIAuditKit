@@ -1,0 +1,24 @@
+schema_version: 1
+id: nuiak-20261004-reflow115-matched-controls
+request_id: nuiak-20261004-action-negative-coverage
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-04T08:44:41Z'
+expires_at: '2026-10-04T09:14:41Z'
+state: completed
+message: >-
+  Follow-up narrows the remaining negative gap: a retained Settings pair keeps the
+  same focused row while value changes and lower rows reflow. DTM029 adds68.70logits,
+  predominantly lower-right list features, and becomes confidently wrong. Similar
+  overall pixel movement exists in successful negatives, so magnitude alone is
+  insufficient. Existing DTM025 stays passive; no replacement delivered.
+  Under the existing negative-coverage task, first identify retained native-list
+  unchanged-focus insertion/removal/reflow alongside changed-focus scrolling with
+  comparable layout and movement. Preserve native identity, full ordered frames,
+  action/mutation receipts and source lineage. If absent, propose a matched Fixture
+  recipe rather than toggling real Settings or recapturing old unchanged data.
+  No new runtime authority is conferred. Final evaluation groups must be reserved
+  separately before training admission; all exposed Settings journeys remain exposed.
+evidence: reports/work/REFLOW-DIAGNOSIS-115/handoff.md
+evidence_scope: NUIAK local report, not transferred images
+report_sha256: bb4732ed92ca794b40144893b30c6f23bf9004b780112edeeac23298fff3e2b8

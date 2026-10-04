@@ -1,0 +1,39 @@
+schema_version: 1
+id: nuiak-20261004-workflow-alignment
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-04T16:55:00Z'
+expires_at: '2026-10-05T16:55:00Z'
+state: proposed
+message: Maintainer requests adoption of shared validation, self-service generation, deterministic handoff reconciliation, compact status and review-ready Git handoff. NUIAK agrees with the following compatibility boundaries; identify existing source-backed capabilities and only implement genuine gaps under TTR ownership.
+shared_validation:
+  - Pin producer/consumer source and validator/schema versions; reuse existing validators/conformance vectors instead of a permissive second implementation.
+  - Report integrity, geometry/provenance, coverage/split scope and training admission independently. Compatibility pass is not training or model approval.
+  - Global ancestry leakage cannot pass without NUIAK exposure inventory; unknown is not clean. Freeze expected coverage, retain precise failing cases.
+  - Compare same-pixel geometry for the same element, viewport, coordinates and annotation kind/version; body and focus outline are distinct. Preserve conflicting evidence, never average away geometry109.
+  - FocusRing uses16percent expansion and256x256production crops; change-only DTM uses paired full-frame192x128letterboxing. Validate the actual target model path.
+generation:
+  - Reuse existing Fixture jobs and campaign plan/generate/resume. The illustrative synthetic generate command is not assumed available.
+  - Prepare once for compatible grouped campaigns; exact target/endpoint/build/workspace, bounded jobs and postflight health remain required.
+  - Resume missing immutable planned groups only after current job/cleanup reconciliation; never recapture completed members or retry ambiguous mutations automatically.
+  - Headless is not sandbox/coordinator bypass. Local generation complements physical/failure/backup transfers and does not eliminate them.
+reconciliation:
+  - Versioned deterministic tool with inspect/dry-run and explicit owned publish/receive/cleanup; no broad synchronizer or mounting/SSH fallback.
+  - Cleanup only exact transaction/path/bytes/hash after matching receiver receipt, current shared-byte verification and retained-original verification. Never delete by expiry.
+  - Test receipt mismatch, partial publication, duplicate retry, changed shared file, missing mount, unsafe archive paths and insufficient space; preserve ambiguous outcomes.
+status_and_git:
+  - Compact current work/blockers/next owner/outstanding requests/changed evidence; archive resolved history with references, never unresolved work by arbitrary age or line cap.
+  - Preserve namespaces, unknown fields and concurrent unrelated entries. SMB is not a transaction lock or authoritative queue.
+  - Read-only source handoff includes exact revisions, intended changed/untracked file inventory, test commands/results and NUIAK uptake need; human performs Git writes. No broad git add suggestion.
+shadow_feedback:
+  - Keep automatic case-linked feedback optional/passive and nonblocking, including actual model identity, hashes, failures/drops and timing; join reviewed labels afterward.
+  - DTM030 mixed survey24/26 native-hint comparisons do not authorize navigation or replacement. Existing case export request remains distinct from workflow changes.
+acceptance:
+  - Shared positive vectors and deliberately invalid corpus produce matching versioned case-bound reasons.
+  - One authorized real generation and interrupted resume demonstrate retained completed members and healthy cleanup.
+  - Exact receipt mismatch/failure tests plus status concurrency/unresolved-history preservation and complete source handoff.
+  - Measure compatible versus training-admitted examples/hour separately, setup/capture/audit/transfer/wait time, operator interventions, rejection/recapture counts and first/warm/resume conditions. No unmeasured time/token savings claims.
+ownership:
+  NUIAK: consumer contract/parity vectors, exposure/admission decisions, namespace-local reconciliation and intake evidence
+  TVTestRig: coordinator/Fixture/job/workspace integration, producer pre-export checks and namespace-local publication
+requested_response: Acknowledge alignment or list conflicts and existing API/source revisions before duplicating features. Runtime operations retain their separate assigned authority.

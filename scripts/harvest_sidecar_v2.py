@@ -102,7 +102,7 @@ def appearance_digest_source(recipe):
     if canvas is not None:
         fields = {"version", "columns", "spacing", "inset", "backgroundRGB", "showLabels"}
         require(isinstance(canvas, dict) and fields <= set(canvas)
-                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "nativeTable", "collectionStyle", "cardGeometry", "composition", "contrastNeighbors"},
+                and set(canvas) <= fields | {"pairing", "presentation", "selectedIndex", "mixedSizes", "tabCount", "labels", "fillViewport", "nativeButton", "nativeTable", "collectionStyle", "collectionContext", "cardGeometry", "composition", "contrastNeighbors"},
                 "canvas_fields")
         for field, lo, hi in (("version",1,2), ("columns",1,8), ("spacing",16,80),
                               ("inset",40,160), ("backgroundRGB",0,0xFFFFFF)):
@@ -123,13 +123,21 @@ def appearance_digest_source(recipe):
             suffix += ':presentation=' + presentation
         style=canvas.get('collectionStyle')
         if presentation=='native_collection_v1':
-            require(style in ('poster','landscape','mixed') and canvas['version']==2 and
+            require(style in ('poster','landscape','mixed','mixed_items','sectioned','small_controls') and canvas['version']==2 and
                 canvas['columns']==4 and canvas['showLabels'] and canvas.get('cardGeometry') is not None and
                 canvas.get('mixedSizes') is not True and canvas.get('fillViewport') is not True and
-                all(canvas.get(k) is None for k in ('composition','nativeButton','nativeTable','contrastNeighbors')),
+                all(canvas.get(k) is None for k in ('composition','nativeButton','nativeTable')) and
+                (canvas.get('contrastNeighbors') is None or style in ('mixed_items','sectioned','small_controls')),
                 'canvas_collection_contract')
             suffix+=':collection='+style
         else:require(style is None,'canvas_collection_style')
+        context=canvas.get('collectionContext')
+        if context is not None:
+            # 4f9273cc FixtureCanvas.canonical; preserve absent/null legacy hashes.
+            require(context in ('city','orbit','collage','checkerboard') and
+                presentation=='native_collection_v1' and style=='sectioned' and
+                canvas.get('contrastNeighbors') is not True, 'canvas_collection_context')
+            suffix+=':collectionContext='+context
         selected = canvas.get('selectedIndex')
         if selected is not None:
             rich_table=presentation=='native_table_v2' and (canvas.get('nativeTable') or {}).get('version')==2
@@ -221,7 +229,9 @@ def appearance_digest_source(recipe):
             suffix += ':composition=' + composition
         contrast = canvas.get('contrastNeighbors')
         if contrast is not None:
-            require(type(contrast) is bool and canvas['version'] == 2 and presentation in (None, 'cards'),
+            require(type(contrast) is bool and canvas['version'] == 2 and
+                    (presentation in (None, 'cards') or (presentation=='native_collection_v1' and
+                     style in ('mixed_items','sectioned','small_controls'))),
                     'canvas_contrast_neighbors')
             suffix += ':contrast=' + str(contrast).lower()
     focus = appearance.get('focus')
@@ -351,7 +361,11 @@ def scene_check(scene, size, expected, *, transition_visibility=False):
     observation = scene.get("focus_observation")
     diagnostics = scene.get("observation_diagnostics")
     require(isinstance(observation, dict) and isinstance(diagnostics, dict), "native_observation_missing")
-    reference = (scene.get('recipe', {}).get('appearance') or {}).get('referencePack') is not None
+    scene_recipe=scene.get('recipe')
+    require(isinstance(scene_recipe,dict),'scene_recipe')
+    scene_appearance=scene_recipe.get('appearance')
+    require(scene_appearance is None or isinstance(scene_appearance,dict),'appearance_fields')
+    reference = (scene_appearance or {}).get('referencePack') is not None
     navigation = observation.get('verificationMode') == 'native_navigation'
     from fixture_native_visibility import kind, visible_membership as native_membership
     native_table = kind(scene) in ('native_table_v2','native_collection_v1')

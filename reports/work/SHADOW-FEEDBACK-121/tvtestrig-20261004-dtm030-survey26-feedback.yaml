@@ -1,0 +1,93 @@
+---
+schema_version: 1
+id: tvtestrig-20261004-dtm030-survey26-feedback
+request_id: nuiak-20261004-dtm030-shadow-delivery
+from: TVTestRig
+to: NUIAK
+created_at: '2026-10-04T16:40:16Z'
+state: feedback
+operation: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0
+scope: same8intervals, exposed Settings ancestry, native identity hints only
+dtm025:
+  state: completed
+  model_id: focus-transition-experimental-dtm025-change-v1
+  backend: cpuOnly
+  compiled_tree_sha256: 194a84672325e6016828bd57c4baa5d7dfda720b8a553631d31c6af5d3951c32
+  contract_sha256: 31837a325f0fcfabba7a30c07018e18c5acf36418bedb69d3b9c0970583c9e31
+  source_manifest_sha256: 117530ef7f901ec901ffee178dc6381d833261f37d4ca84e3f47514ca7b6e872
+  binary_sha256: a48245e677a095a51e00e63daae5843c0ecb636c3d3815a758817f7bf85cb1f1
+  source_survey_sha256: 0aefe00500d35b1b07b6774d5bcad5da6867e052be9c7e6034e3e7fbe84a2ea1
+  prediction_sha256: c91f605f64c4fd1adfe4322eb403de00a2867a71b2449ebe1925ce6a9885bcc9
+  counts:
+    native_hint_agreement: 6
+    native_focus_unavailable: 2
+  synthetic_parity: passed
+  navigation_authority: false
+  mode: retained_iteration
+  scope: sampled change-only native-hint comparison; not accuracy, localization or
+    training admission
+dtm030:
+  state: completed
+  model_id: focus-transition-experimental-dtm030-change-v1
+  backend: cpuOnly
+  compiled_tree_sha256: 59d5d5f528ab0da57f6af89a977f5490f4886d7e32422238aaee0e4e31aab567
+  contract_sha256: 44c6a8dfbc5c4dd3e954295f6e355a6b416a5e8838788a8a0fad706fe9942cd5
+  source_manifest_sha256: 991100acdfbeb66ee0f229a1ee21467b105eca686da323be5e0172ccf3ff4182
+  binary_sha256: 99690cff12ccac373938475bb0e229401f9efb897021d57ec2b55cf2eef58be3
+  source_survey_sha256: 0aefe00500d35b1b07b6774d5bcad5da6867e052be9c7e6034e3e7fbe84a2ea1
+  prediction_sha256: 04e8650fefc8085a4e278596799f24e2d08f68b3ccd64ad0a9941eca2f7fb306
+  counts:
+    native_hint_agreement: 3
+    native_focus_unavailable: 2
+    native_hint_disagreement: 3
+  synthetic_parity: passed
+  navigation_authority: false
+  mode: retained_iteration
+  scope: sampled change-only native-hint comparison; not accuracy, localization or
+    training admission
+cases:
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:1:2
+  before_sha256: 12db1fc17320d897cb034178e7fcb93e90c028f34737ac5ae27ebedfcd096f59
+  after_sha256: 60b2c56bf132175a4645cb8b0fb73c3e34884547ca621f163cfacedc589c9101
+  dtm025: changed
+  dtm030: changed
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:2:3
+  before_sha256: 60b2c56bf132175a4645cb8b0fb73c3e34884547ca621f163cfacedc589c9101
+  after_sha256: '08fa9bca80edcab6cacb665ed4293c96cfecb87d0d871c77e7cc9bc6e6dd37b3'
+  dtm025: changed
+  dtm030: changed
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:3:4
+  before_sha256: '08fa9bca80edcab6cacb665ed4293c96cfecb87d0d871c77e7cc9bc6e6dd37b3'
+  after_sha256: 60b2c56bf132175a4645cb8b0fb73c3e34884547ca621f163cfacedc589c9101
+  dtm025: changed
+  dtm030: changed
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:4:5
+  before_sha256: 60b2c56bf132175a4645cb8b0fb73c3e34884547ca621f163cfacedc589c9101
+  after_sha256: 962b3dd5766e264b6b62f5259c06bbadf719a3aeaf841831af2478dd22815693
+  dtm025: changed
+  dtm030: changed
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:5:6
+  before_sha256: 962b3dd5766e264b6b62f5259c06bbadf719a3aeaf841831af2478dd22815693
+  after_sha256: 934a661ce41069b08427d0aa57ab8b1d1445eeac786ab633d10cfae4beeaa5e6
+  dtm025: changed
+  dtm030: unchanged
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:6:7
+  before_sha256: 934a661ce41069b08427d0aa57ab8b1d1445eeac786ab633d10cfae4beeaa5e6
+  after_sha256: 934a661ce41069b08427d0aa57ab8b1d1445eeac786ab633d10cfae4beeaa5e6
+  dtm025: unchanged
+  dtm030: unchanged
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:7:8
+  before_sha256: 934a661ce41069b08427d0aa57ab8b1d1445eeac786ab633d10cfae4beeaa5e6
+  after_sha256: 7b1c8412d215321cd0b1aedb57225c2c72a35a2992b97d6d5ed7f2d6c4626b4f
+  dtm025: changed
+  dtm030: unchanged
+- id: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0:8:9
+  before_sha256: 7b1c8412d215321cd0b1aedb57225c2c72a35a2992b97d6d5ed7f2d6c4626b4f
+  after_sha256: e140793a7cc0c94850b5a8626e4bd03f2259d09162cd4abe07ae2b40b88d4b35
+  dtm025: changed
+  dtm030: unchanged
+question: DTM030 disagrees on3of6available native focus identities here versus0for
+  DTM025. Please assess against survey24 mixed result before any replacement. Captures
+  retained privately; exact case export available through normal intake.
+images_transferred: false
+navigation_authority: false

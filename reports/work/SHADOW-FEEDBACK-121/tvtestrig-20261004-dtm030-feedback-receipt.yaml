@@ -1,0 +1,59 @@
+---
+schema_version: 1
+id: tvtestrig-20261004-dtm030-feedback-receipt
+request_id: nuiak-20261004-dtm030-shadow-delivery
+from: TVTestRig
+to: NUIAK
+created_at: '2026-10-04T16:35:00Z'
+state: copied_and_verified
+artifact:
+  file: nuiak/nuiak-transition-shadow-dtm030-v1.zip
+  verified_bytes: 207304
+  verified_sha256: 977c938617007eec8f6caf5c2d122241a5717c13e6d3bfc0d0dfdf2dae7f8d65
+local_copy: ".local-work/shadow-feedback-20261003/received-dtm030/nuiak-transition-shadow-dtm030-v1.zip"
+intake: 18manifest members verified; local Swift consumer compilation and supplied
+  synthetic parity passed. Explicit optional DTM030 adapter; DTM025 retained.
+feedback:
+  scope: same8retained survey24intervals; native identity hints only, not reviewed
+    accuracy or independent holdout
+  operation: 53BDF215-8D7C-4E59-B176-B393D8CDF656
+  dtm025:
+    state: completed
+    model_id: focus-transition-experimental-dtm025-change-v1
+    backend: cpuOnly
+    compiled_tree_sha256: 194a84672325e6016828bd57c4baa5d7dfda720b8a553631d31c6af5d3951c32
+    contract_sha256: 31837a325f0fcfabba7a30c07018e18c5acf36418bedb69d3b9c0970583c9e31
+    source_manifest_sha256: 117530ef7f901ec901ffee178dc6381d833261f37d4ca84e3f47514ca7b6e872
+    binary_sha256: a48245e677a095a51e00e63daae5843c0ecb636c3d3815a758817f7bf85cb1f1
+    source_survey_sha256: f78f5c83d5dae2b7f2160a12edd43493018d94d754c77a5d1c9aaab08eb77e1b
+    prediction_sha256: 3b841f3d95a6772ba7b4057009f129e8b819a4e7b0cfe8bca3de6f66cd83556e
+    counts:
+      native_hint_disagreement: 4
+      native_hint_agreement: 4
+    synthetic_parity: passed
+    navigation_authority: false
+    mode: retained_iteration
+    scope: sampled change-only native-hint comparison; not accuracy, localization
+      or training admission
+  dtm030:
+    state: completed
+    model_id: focus-transition-experimental-dtm030-change-v1
+    backend: cpuOnly
+    compiled_tree_sha256: 59d5d5f528ab0da57f6af89a977f5490f4886d7e32422238aaee0e4e31aab567
+    contract_sha256: 44c6a8dfbc5c4dd3e954295f6e355a6b416a5e8838788a8a0fad706fe9942cd5
+    source_manifest_sha256: 991100acdfbeb66ee0f229a1ee21467b105eca686da323be5e0172ccf3ff4182
+    binary_sha256: 99690cff12ccac373938475bb0e229401f9efb897021d57ec2b55cf2eef58be3
+    source_survey_sha256: f78f5c83d5dae2b7f2160a12edd43493018d94d754c77a5d1c9aaab08eb77e1b
+    prediction_sha256: 5f14b3b61abaf1c7f21d581feecbab82ec54a5078068c47924aabd6aa795a73f
+    counts:
+      native_hint_agreement: 5
+      native_hint_disagreement: 3
+    synthetic_parity: passed
+    navigation_authority: false
+    mode: retained_iteration
+    scope: sampled change-only native-hint comparison; not accuracy, localization
+      or training admission
+  live_queue: not_implemented
+  images_transferred: false
+navigation_authority: false
+training_admission: not_granted

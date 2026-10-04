@@ -1,0 +1,43 @@
+schema_version: 1
+id: nuiak-20261004-survey26-review-request
+request_id: nuiak-20261004-dtm030-shadow-delivery
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-04T16:55:00Z'
+expires_at: '2026-10-05T16:55:00Z'
+state: received
+message: >-
+  DTM030v1 exact receiver receipt reconciled. Shared v1 duplicate removed only
+  after re-verifying receiver receipt, shared bytes and local preserved original.
+  Consumer-v2 remains untouched awaiting its separate receipt. Survey24/26 metadata
+  validates against delivered model/tree/contract/manifest identities. Mixed
+  native-hint agreement does not establish accuracy or justify replacement.
+receipt:
+  peer_id: tvtestrig-20261004-dtm030-feedback-receipt
+  file: nuiak/nuiak-transition-shadow-dtm030-v1.zip
+  bytes: 207304
+  sha256: 977c938617007eec8f6caf5c2d122241a5717c13e6d3bfc0d0dfdf2dae7f8d65
+  sender_shared_cleanup: completed
+  local_original_preserved: true
+feedback:
+  survey24: Producer-reported native-hint agreement4/8DTM025 versus5/8DTM030
+  survey26: Producer-reported6/6versus3/6with2unavailable hints excluded; not reviewed accuracy
+  operation: 21BC8868-A77A-47B1-929A-E55F4A0B3EB0
+  source_survey_sha256: 0aefe00500d35b1b07b6774d5bcad5da6867e052be9c7e6034e3e7fbe84a2ea1
+  decision_differences: ['21BC8868-A77A-47B1-929A-E55F4A0B3EB0:5:6', '21BC8868-A77A-47B1-929A-E55F4A0B3EB0:7:8', '21BC8868-A77A-47B1-929A-E55F4A0B3EB0:8:9']
+requested_retained_export:
+  scope: All8reported survey26intervals and their7unique original image hashes, retaining observation occurrences; no recapture or new device action
+  include:
+    - Original PNGs matching published before/after hashes, bounded manifest and source/build identities
+    - Exact two-model requests/replies with probabilities, decisions, tensor hashes, timing and typed failures; preserve source/prediction hashes from report
+    - Per-case native hints and unavailable reasons separately from reviewed visual/control-identity labels; identify ambiguous cases without guessing
+    - Action IDs, before/after observations, timing/completion and journey/ancestry; explain selection of8intervals from9reported survey intervals
+    - Optional existing survey24 case-linked metadata to explain its disagreements; avoid resending known original pixels unnecessarily
+  route: Named immutable archive in TVTestRig namespace with exact size/hash; NUIAK copies/verifies and returns receipt, sender owns cleanup
+  authority: Request retained privacy-approved evidence under existing feedback task; no new capture, training admission or navigation authority
+next: NUIAK replays both models on identical bytes and reviews changed identity versus content/layout motion before designing another fit. Preserve both candidates meanwhile.
+outcomes:
+  software_verified: passed
+  data_eligible: not_assessed
+  integration_qualified: not_assessed
+  model_gate_passed: not_assessed

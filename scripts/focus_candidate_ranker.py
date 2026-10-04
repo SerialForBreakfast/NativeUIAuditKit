@@ -24,6 +24,11 @@ CONFIG = dict(model=ARM, epochs=600, batch=50, lr=.001, seed=42,
 NATIVE_CONFIG = dict(CONFIG,batch=74)
 SIZE_CONFIG = dict(NATIVE_CONFIG,geometryFeatures='normalized-size-v1')
 ACTION_CONFIG = dict(SIZE_CONFIG,batch=122)
+COLLECTION_CONFIG = dict(ACTION_CONFIG,batch=178,initializer='DTM020')
+RETENTION_CONFIG = dict(COLLECTION_CONFIG,trainableParameters='hidden-only-v1')
+GEOMETRY_CONFIG = dict(COLLECTION_CONFIG,rankingLoss='positive-set-plus-best-iou-hinge-v1')
+CONFIGURATIONS = (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG,COLLECTION_CONFIG,RETENTION_CONFIG,GEOMETRY_CONFIG)
+SIZE_CONFIGURATIONS = (SIZE_CONFIG,ACTION_CONFIG,COLLECTION_CONFIG,RETENTION_CONFIG,GEOMETRY_CONFIG)
 
 
 def sealed(path, version):
@@ -224,7 +229,7 @@ def seal_protocol(out, prepared):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = d.h.read(d.h.local(path))
-    d.h.require(doc['version'] == VERSION and doc['configuration'] in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG) and arm == ARM, 'ranking_configuration')
+    d.h.require(doc['version'] == VERSION and doc['configuration'] in CONFIGURATIONS and arm == ARM, 'ranking_configuration')
     d.h.require(doc['protocolSHA256'] == d.h.digest({k:v for k,v in doc.items() if k != 'protocolSHA256'}), 'ranking_protocol_hash')
     d.h.require(doc['pins'] == pins(), 'ranking_code_or_dependencies_changed')
     _, inputs, data = bank(d.h.checked(d.h.ROOT, doc['bank']))
@@ -234,21 +239,30 @@ def load_protocol(path, arm, run_name, approval_path=None):
     rows = d.admitted(corpus, d.h.read(d.h.checked(d.h.ROOT,label['admission'])))
     expected_counts={'train':32,'development':5} if doc['configuration']==CONFIG else {'train':44,'development':5}
     if doc['configuration']==ACTION_CONFIG:expected_counts={'train':68,'development':5}
+    collection=doc['configuration'] in (COLLECTION_CONFIG,RETENTION_CONFIG,GEOMETRY_CONFIG)
+    if collection:expected_counts={'train':108,'development':5}
     d.h.require(Counter(r['split'] for r in rows)==expected_counts, 'ranking_membership')
     positives = supervision(inputs,label['labels'],rows)
+    if doc['configuration']==GEOMETRY_CONFIG:geometry_targets(inputs,rows)
     d.h.require(sum(f['split']=='train' for f in inputs['frames'])==doc['configuration']['batch'], 'ranking_unique_training_frames')
-    control = d.h.sealed(d.h.checked(d.h.ROOT,doc['control']), 'data67-batched-comparison-v1')
+    control = d.h.sealed(d.h.checked(d.h.ROOT,doc['control']),
+        'collection104-frozen-change-v1' if collection else 'data67-batched-comparison-v1')
     d.h.require(control['corpusSHA256'] == corpus['corpusSHA256'], 'ranking_control_corpus')
-    d.h.checked(d.h.ROOT,control['models']['DTM013'])
-    scores = [r for r in control['results'] if r['model']=='DTM013' and r['condition']=='baseline']
+    control_id='DTM024' if collection else 'DTM013'
+    d.h.checked(d.h.ROOT,control['models'][control_id])
+    scores = [r for r in control['results'] if r['model']==control_id and r['condition']=='baseline']
     d.h.require(len(scores)==len(rows) and {r['id'] for r in scores}=={r['id'] for r in rows}, 'ranking_control_membership')
     d.h.require(all(type(r['prediction']['changeProbability']) in (int,float) and
         np.isfinite(r['prediction']['changeProbability']) and 0<=r['prediction']['changeProbability']<=1 for r in scores),'ranking_control_probabilities')
-    if doc['configuration'] in (NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG):
+    if doc['configuration'] in (NATIVE_CONFIG,*SIZE_CONFIGURATIONS):
         reference=sealed(d.h.checked(d.h.ROOT,doc['reference']),'native-ranking-reference-v1')
         d.h.require(reference['inputs']==label['inputs'] and len(reference['results'])==len(rows) and
             {r['id'] for r in reference['results']}=={r['id'] for r in rows}, 'ranking_reference_membership')
         d.h.checked(d.h.ROOT,reference['model'])
+    if collection:
+        from prepare_collection103 import validate_training_binding
+        validate_training_binding(doc,rows)
+        d.h.require(doc['initializer']==reference['model'],'collection_rank_initializer_binding')
     approved = None
     if approval_path:
         approved = d.h.ref(d.h.local(approval_path)); a=d.h.read(d.h.checked(d.h.ROOT,approved))
@@ -264,9 +278,9 @@ def load_protocol(path, arm, run_name, approval_path=None):
 
 def model(torch,configuration=None):
     configuration=CONFIG if configuration is None else configuration
-    d.h.require(configuration in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG),'ranking_model_configuration')
+    d.h.require(configuration in CONFIGURATIONS,'ranking_model_configuration')
     net=torch.nn.Sequential(torch.nn.Linear(768,32),torch.nn.ReLU(),torch.nn.Linear(32,1))
-    if configuration in (SIZE_CONFIG,ACTION_CONFIG):
+    if configuration in SIZE_CONFIGURATIONS:
         first=torch.nn.Linear(770,32)
         with torch.no_grad():
             first.weight[:,:768].copy_(net[0].weight);first.weight[:,768:].zero_();first.bias.copy_(net[0].bias)
@@ -276,8 +290,8 @@ def model(torch,configuration=None):
 
 def features(data,inputs,configuration):
     """Candidate scale only, never location, labels or source identity."""
-    d.h.require(configuration in (CONFIG,NATIVE_CONFIG,SIZE_CONFIG,ACTION_CONFIG),'ranking_feature_configuration')
-    if configuration not in (SIZE_CONFIG,ACTION_CONFIG):return data
+    d.h.require(configuration in CONFIGURATIONS,'ranking_feature_configuration')
+    if configuration not in SIZE_CONFIGURATIONS:return data
     sizes=[]
     for frame in inputs['frames']:
         w,h=frame['size']
@@ -295,11 +309,48 @@ def frame_loss(torch, scores, positive_indices):
     return torch.logsumexp(scores,0)-torch.logsumexp(scores[positive_indices],0)
 
 
+def geometry_targets(inputs,rows):
+    """Reject ambiguous continuous truth, including conflicts binary labels hide."""
+    frames={f['id']:f for f in inputs['frames'] if f['split']=='train'}
+    boxes={}
+    for row in rows:
+        if row['split']!='train':continue
+        for image,box in zip(row['images'],row['boxes']):
+            key=image['sha256']
+            d.h.require(key in frames,'geometry_frame_role')
+            d.h.require(len(box)==4 and np.isfinite(box).all() and box[2]>0 and box[3]>0,'geometry_box')
+            d.h.require(boxes.setdefault(key,box)==box,'geometry_truth_conflict:'+key)
+    d.h.require(set(boxes)==set(frames),'geometry_training_membership')
+    result={key:[iou(c['bounds'],boxes[key]) for c in f['candidates']] for key,f in frames.items()}
+    d.h.require(all(values and max(values)>=.5 for values in result.values()),'geometry_missing_positive')
+    return result
+
+
+def geometry_frame_loss(torch,scores,positive_indices,quality):
+    d.h.require(quality.shape==scores.shape and bool(torch.isfinite(quality).all()) and
+                bool(((quality>=0)&(quality<=1)).all()),'geometry_quality')
+    d.h.require(set(positive_indices)==set(torch.nonzero(quality>=.5).flatten().tolist()),'geometry_positive_binding')
+    base=frame_loss(torch,scores,positive_indices)
+    best=quality==quality.max(); lower=~best
+    if not bool(lower.any()):return base
+    margins=quality[best,None]-quality[None,lower]
+    differences=scores[best,None]-scores[None,lower]
+    return base+torch.relu(margins-differences).mean()
+
+
 def choose(candidates, scores):
     """Label-free deterministic selector; scores are not calibrated confidence."""
     if not candidates:return None
     d.h.require(len(scores)==len(candidates) and np.isfinite(scores).all(), 'ranking_invalid_scores')
     return min(zip(candidates,scores),key=lambda v:(-float(v[1]),v[0]['id']))[0]
+
+
+def trainable_parameters(net,configuration):
+    """Freeze the original scoring rule for the one retention comparison."""
+    d.h.require(configuration in CONFIGURATIONS,'ranking_trainable_configuration')
+    for name,p in net.named_parameters():
+        p.requires_grad_(configuration!=RETENTION_CONFIG or name.startswith('0.'))
+    return [p for p in net.parameters() if p.requires_grad]
 
 
 def run(report, experiment_id):
@@ -310,11 +361,20 @@ def run(report, experiment_id):
     inputs,data,positives,rows,control=payload
     configuration=report['configuration']
     torch=d.torch_runtime();torch.set_num_threads(2);torch.manual_seed(configuration['seed'])
-    net=model(torch,configuration);optimizer=torch.optim.Adam(net.parameters(),lr=configuration['lr'])
+    net=model(torch,configuration)
+    if configuration in (COLLECTION_CONFIG,RETENTION_CONFIG,GEOMETRY_CONFIG):
+        doc=d.h.read(d.h.checked(d.h.ROOT,report['protocolFile']))
+        state=torch.load(d.h.checked(d.h.ROOT,doc['initializer']),map_location='cpu',weights_only=True)
+        d.h.require(state['version']==VERSION and state['configuration']==ACTION_CONFIG,'collection_rank_initializer')
+        net.load_state_dict(state['state'],strict=True)
+    frozen_parameters={k:v.detach().clone() for k,v in net.state_dict().items() if configuration==RETENTION_CONFIG and k.startswith('2.')}
+    optimizer=torch.optim.Adam(trainable_parameters(net,configuration),lr=configuration['lr'])
     x=torch.from_numpy(features(data,inputs,configuration));offset=0;groups=[]
     for f in inputs['frames']:
         n=len(f['candidates']); groups.append((f,offset,offset+n));offset+=n
     train=[(f,a,b) for f,a,b in groups if f['split']=='train']
+    qualities=geometry_targets(inputs,rows) if configuration==GEOMETRY_CONFIG else None
+    quality_tensors={key:torch.tensor(value,dtype=torch.float32) for key,value in qualities.items()} if qualities else None
     d.h.require(len(train)==configuration['batch'],'ranking_training_frames')
     train_indices=[i for _,a,b in train for i in range(a,b)]
     train_x=x[train_indices];train_groups=[];cursor=0
@@ -325,12 +385,23 @@ def run(report, experiment_id):
     history=[];fit_start=time.monotonic()
     for epoch in range(configuration['epochs']):
         optimizer.zero_grad();scores=net(train_x).flatten()
-        loss=torch.stack([frame_loss(torch,scores[a:b],[i for i,c in enumerate(f['candidates']) if c['id'] in positives[f['id']]]) for f,a,b in train_groups]).mean()
+        losses=[]
+        for f,a,b in train_groups:
+            positive_indices=[i for i,c in enumerate(f['candidates']) if c['id'] in positives[f['id']]]
+            losses.append(geometry_frame_loss(torch,scores[a:b],positive_indices,quality_tensors[f['id']])
+                if quality_tensors is not None else frame_loss(torch,scores[a:b],positive_indices))
+        loss=torch.stack(losses).mean()
         d.h.require(bool(torch.isfinite(loss)),'ranking_nonfinite_loss');loss.backward();optimizer.step()
         history.append(dict(epoch=epoch+1,loss=float(loss.detach())))
     fit_seconds=time.monotonic()-fit_start;net.eval()
+    d.h.require(all(torch.equal(v,net.state_dict()[k]) for k,v in frozen_parameters.items()),'ranking_frozen_readout_changed')
     torch.save(dict(version=VERSION,configuration=configuration,state=net.state_dict()),out/'last.pt')
     with torch.inference_mode():scores=net(x).flatten().numpy()
+    restored=model(torch,configuration)
+    restored.load_state_dict(torch.load(out/'last.pt',map_location='cpu',weights_only=True)['state'],strict=True)
+    restored.eval()
+    with torch.inference_mode():again=restored(x).flatten().numpy()
+    d.h.require(np.array_equal(scores,again),'ranking_checkpoint_replay')
     selections={f['id']:choose(f['candidates'],scores[a:b]) for f,a,b in groups}
     frozen={r['id']:r for r in control};results=[]
     for r in rows:
@@ -342,12 +413,13 @@ def run(report, experiment_id):
             bothBoxesCorrect=min(overlaps)>=.5,changeProbability=prob,rawChangeCorrect=(prob>=.5)==r['changed'],
             decision=('changed' if prob>=.5 else 'unchanged') if decided else 'unknown'))
     summary={split:dict(pairs=len(rs),correctEndpoints=sum(v>=.5 for r in rs for v in r['boxIoUs']),
-        pairedBoxes=sum(r['bothBoxesCorrect'] for r in rs),joint=sum(r['bothBoxesCorrect'] and r['rawChangeCorrect'] for r in rs),
+        pairedBoxes=sum(r['bothBoxesCorrect'] for r in rs),joint=sum(r['bothBoxesCorrect'] and r['rawChangeCorrect'] and r['decision']!='unknown' for r in rs),
         abstentions=sum(r['decision']=='unknown' for r in rs))
         for split in ('train','development') for rs in ([r for r in results if r['split']==split],)}
     d.h.write(out/'result.json',dict(version=VERSION,protocol=report['protocolFile'],model=d.h.ref(out/'last.pt'),
         history=history,results=results,summary=summary,fitSeconds=fit_seconds,elapsedSeconds=time.monotonic()-start,
-        developmentExposed=True,releaseEligible=False),sealed=True)
+        checkpointReplay=True,frozenParameterNames=sorted(frozen_parameters),frozenParametersUnchanged=True,
+        trainingFrameIDs=[f['id'] for f,_,_ in train],developmentExposed=True,releaseEligible=False),sealed=True)
     d.h.require(sum(p.stat().st_size for p in out.iterdir())<CONFIG['maxOutputBytes'],'ranking_output_budget')
     print(summary);return 0
 
@@ -428,6 +500,30 @@ def prepare_native(output, admission_root, derivatives):
     print(doc['protocolSHA256'])
 
 
+def prepare_retention(output,source,diagnosis):
+    """Rebind the existing admitted bank to one frozen-readout comparison."""
+    start=time.monotonic();out=d.h.fresh(output);path=d.h.local(source)
+    previous=d.h.read(path)
+    d.h.require(previous['protocolSHA256']==d.h.digest({k:v for k,v in previous.items() if k!='protocolSHA256'}) and
+        previous['configuration']==COLLECTION_CONFIG,'retention_source_protocol')
+    diagnostic=d.h.sealed(d.h.local(diagnosis),'rank-retention105-diagnosis-v1')
+    d.h.require(diagnostic['bank']==previous['bank'] and diagnostic['models']['DTM020']==previous['initializer'] and
+        diagnostic['replaySelectionsExact'] is True,'retention_diagnosis_binding')
+    bank(d.h.checked(d.h.ROOT,previous['bank']))
+    doc={k:v for k,v in previous.items() if k not in ('protocolSHA256','pins','configuration')}
+    doc.update(configuration=RETENTION_CONFIG,pins=pins(),diagnosis=d.h.ref(d.h.local(diagnosis)),
+        sourceProtocol=d.h.ref(path))
+    doc['protocolSHA256']=d.h.digest(doc);out.mkdir(parents=True)
+    d.h.write(out/'protocol.json',doc)
+    d.h.write(out/'approval.json',dict(version='ranking-approval-v1',approved=True,
+        protocolSHA256=doc['protocolSHA256'],arm=ARM,runName='retention105-dtm027',
+        decisionReference='Maintainer continue iterating plus standing training approval; RANK-RETENTION105 one600epoch hidden-only comparison,108train/5development unchanged,2GiB,no wall-time limit,no capture/export/promotion.'))
+    report,_=load_protocol(out/'protocol.json',ARM,'retention105-dtm027',out/'approval.json')
+    d.h.write(out/'preparation.json',dict(protocolSHA256=doc['protocolSHA256'],nativeCropInvocations=0,
+        elapsedSeconds=time.monotonic()-start,trainingLaunched=False,launchEligible=report['launchEligible']),sealed=True)
+    print(doc['protocolSHA256'])
+
+
 def prepare_size(output):
     """Rebind immutable pixels to one approved size-aware model; no recropping."""
     from prepare_transition_inputs import references
@@ -468,8 +564,13 @@ if __name__=='__main__':
     p.add_argument('--cache-root');p.add_argument('--inputs');p.add_argument('--derivatives-only',action='store_true')
     p.add_argument('--native-admission');p.add_argument('--inspection-derivatives');p.add_argument('--approve-native-comparison',action='store_true')
     p.add_argument('--size-comparison',action='store_true')
+    p.add_argument('--retention-source');p.add_argument('--retention-diagnosis')
     a=p.parse_args()
-    if a.size_comparison:
+    if a.retention_source or a.retention_diagnosis:
+        if not (a.retention_source and a.retention_diagnosis) or any((a.size_comparison,a.native_admission,a.inspection_derivatives,a.derivatives_only,a.reuse_bank,a.inputs,a.cache_root,a.approve_native_comparison)):
+            p.error('retention preparation requires only source and diagnosis')
+        prepare_retention(a.prepare,a.retention_source,a.retention_diagnosis)
+    elif a.size_comparison:
         if not a.approve_native_comparison or any((a.native_admission,a.inspection_derivatives,a.derivatives_only,a.reuse_bank,a.inputs,a.cache_root)):
             p.error('size comparison requires explicit approval and no other preparation modes')
         prepare_size(a.prepare)

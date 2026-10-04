@@ -40,6 +40,7 @@ def utc_now() -> str:
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Export FocusRingDetector model to CoreML")
     p.add_argument("--weights", required=True, help="Path to best.pt checkpoint")
+    p.add_argument('--task',choices=['single-frame-focus','transition-change'],default='single-frame-focus')
     p.add_argument("--output-dir", default=None,
                    help="Export directory (default: <weights>/../export/)")
     p.add_argument("--model", default="mobilenetv4_conv_small")
@@ -93,6 +94,9 @@ def main() -> int:
     except (ValueError, OSError) as error:
         print(f"ERROR: {error}"); return 2
     weights_hash = hashlib.sha256(weights.read_bytes()).hexdigest()
+    if args.task=='transition-change':
+        from transition_shadow_export import export
+        return export(args,weights,weights_hash,export_dir)
 
     # --- imports ---
     print("stage=import-torch", flush=True)

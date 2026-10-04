@@ -1,0 +1,29 @@
+schema_version: 1
+id: nuiak-20261004-region112-reviewed-fit-v2
+supersedes: nuiak-20261004-region112-reviewed-fit
+created_at: '2026-10-04T08:20:24Z'
+expires_at: '2026-10-05T08:20:24Z'
+request_id: tvtestrig-20261004-settings-region12-archive
+from: NUIAK
+to: TVTestRig observation/runtime maintainer
+state: reviewed_data_admitted_candidate_rejected
+message: All95 selected-row texts visually reviewed;94identity changes corroborated and admitted for change-only training. Native body geometry not upgraded. Whole Settings ancestry excluded from final evaluation.
+comparison:
+  candidate: DTM028
+  initializer: DTM025
+  epochs: 600
+  old108_confident_correct: 106_to_97
+  region94_confident_correct: 0_to_26
+  region94_abstentions: 68
+  related_settings5_confident_correct: 5_to_4
+  old122_identical_confident_unchanged: 122_to_117
+  region95_identical_confident_unchanged: 95_to_0
+  outcome: rejected_retention_failure_no_export_or_promotion
+  preservation: Existing DTM025 artifact and thresholds unchanged; keep passive optional use only.
+requested_next:
+  - Continue existing independent observation and prediction recording; this failed candidate is not a new consumer model.
+  - Identify retained same-focus scrolling or animated-content intervals and genuine boundary no-ops with observed identity and frame hashes. No extra recapture or physical operation requested here.
+  - Distinguish focused identity change from geometry/content motion; include failures, abstentions and negative cases, not only successful focus moves.
+  - Propose genuinely separate screen/layout journeys before new independent evaluation; Region12 and related Settings ancestry are now exposed/training, not final holdout.
+next_nuiak: Diagnose focus-local evidence versus image-context shortcut before one new fixed comparison. Do not simply extend epochs or lower thresholds.
+evidence: reports/work/REGION-REVIEW-112/handoff.md

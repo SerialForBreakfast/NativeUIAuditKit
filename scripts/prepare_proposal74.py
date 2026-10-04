@@ -156,7 +156,10 @@ def inspect_calibration(proposal,output,probe):
     from PIL import Image
     start=time.monotonic();out=d.h.fresh(output);probe=d.h.local(probe)
     pending=d.h.read(d.h.local(proposal))
-    if pending.get('version')=='native86-role-proposal-v1':
+    if pending.get('version')=='collection102-role-proposal-v1':
+        from evaluate_collection102 import validate_proposal as validate102, verified_records as records102
+        validate102(pending);rows=records102()
+    elif pending.get('version')=='native86-role-proposal-v1':
         from propose_native86 import validate_proposal as validate86, verified_records as records86
         validate86(pending);rows=records86()
     else:

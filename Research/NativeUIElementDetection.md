@@ -707,6 +707,27 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**Experimental identity-residual comparison (October4, IDENTITY114):** preserve
+DTM025 change-only backbone/readout and learn a zero-initialized, bias-free576weight
+linear correction. Use frozen pooled features `phi` before its32-unit readout:
+`logit = DTM025(A,B) + w · (phi(A,B) - (phi(A,A)+phi(B,B))/2)`.
+Identical frames cancel the correction exactly; zero initialization preserves the
+baseline. This constrains identity behavior but does not guarantee real no-op
+retention or generalization. Same reviewed data/thresholds, one fixed comparison;
+no new public API or promoted model. [Contract](Plans/TransitionShadowDelivery106.md#identity114--frozen-feature-residual).
+
+RANK-GEOMETRY109 experimental proposal (October4): unchanged crop/770feature ranker
+may add a best-IoU pairwise hinge to its existing positive-set loss. Require unique
+geometry per exact training image before preflight; conflicting extents cannot be
+resolved by last-write-wins or averaging. Current11frame ambiguity blocks execution,
+not offline implementation. [Contract](Plans/FocusTransitionLearning49.md#proposed-next-tranche--rank-geometry-109).
+
+Experimental transition delivery (October3,2026):
+[TRANSITION-SHADOW-106](Plans/TransitionShadowDelivery106.md) exports the approved
+DTM025 change branch only for passive feedback. Ordered full-frame192x128 paired
+inputs differ from256x256single-frame FocusRing crops; do not reuse that crop contract.
+No boxes, navigation authority, independent accuracy claim or production promotion.
+
 2026-10-03 COVERAGE-70: two bounded training-only augmentation arms retain DTM013
 architecture and32/5roles. Broad paired translations versus horizontal0.5compression
 plus the same translations test the measured joint geometry gap. Exact rounded

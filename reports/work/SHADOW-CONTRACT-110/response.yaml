@@ -1,0 +1,49 @@
+schema_version: 1
+id: nuiak-20261004-shadow-contract110
+request_id: tvtestrig-20261004-dtm025-copied-receipt
+parent_request_id: nuiak-20261004-shadow-focus-feedback
+from: NUIAK
+to: TVTestRig observation/runtime maintainer
+created_at: '2026-10-04T07:44:51Z'
+state: semantics_answered_validation_artifact_supplied
+receipt:
+  state: matching_copied_receipt_accepted
+  document: tvtestrig/responses/tvtestrig-20261004-dtm025-copied-receipt.yaml
+  document_sha256: abc8286349011a7c7e82fdbf40351d19242a80013e3e2adbcbf03d3316ae86a1
+  artifact_bytes: 198134
+  artifact_sha256: 447f9c208a0c7a50f6d5a79879a01e23b4e4469f49d69c3ba4cfb6c961042cae
+  sender_cleanup: deferred_original_retained_for_validation_no_deletion
+semantics:
+  target: Focused control identity change inferred from ordered pixels; not highlight displacement or arbitrary visual change.
+  stationary_highlight_scrolling_changed_identity: changed
+  same_identity_animated_content: unchanged
+  uncertain_identity: unknown_label
+  source: NUIAK focus_direct_transition.py collector and reviewed Settings matching; evaluate_collection102.py verified_records.
+  peer_eight_cases: Eight native-hint disagreements, not yet eight independently reviewed misses. If association and semantic identities are confirmed, unchanged predictions are misses. Do not relabel to make the model pass.
+  limitation: Stationary-highlight scrolling is not qualified. Recycled or transient AX identity and visually ambiguous changes need review.
+  inference_labels: Prohibited; join independent labels after prediction by action, observations and both image hashes.
+artifact:
+  file: nuiak/nuiak-shadow-contract110-v1.zip
+  bytes: 10677
+  sha256: 946c354efa7adc95df68fdf37dd3ddd0a7b13f892b72d0b85b14878f601e98b5
+  scope: Named source/test/guide/synthetic-JSON conformance artifact; no images, model weights or private captures.
+  wire_schema: No producer wire-format replacement; normalize existing records for testing only.
+  requested_receipt: Return exact copied bytes/hash and test/source evidence under existing shadow task; no new task needed.
+verification:
+  portable_tests: 12 passing; six archive members verified; synthetic CLI result matches expected JSON.
+  real_nuiak_cli: Off with absent model/pixels passes; synthetic scored parity passes; wrong image hash fails with changedBytes. Exact request/reply label join passes in all three cases.
+  swift: Offline build and 137 tests passed; final resource-exclusion check recorded locally.
+requested_next:
+  - Keep FDR021 and DTM025 independently optional, default off and lazily loaded; missing explicit capability is typed unavailable, not unchanged.
+  - Exercise actual no-module build, off access spies, separate capability states, bounded queue8, failed/stale/dropped/cancelled handling and unchanged navigation traces. Harness observations do not attest runtime execution.
+  - Preserve raw predictions and native hints separately; report abstentions and failures outside selective accuracy.
+  - Publish source branch/commit through maintainer Git so NUIAK builds locally; no binary/build-only handoff requested.
+  - Return a tiny byte-bound feedback sample only with existing explicit egress permission. No screenshot transfer is authorized here.
+outcomes:
+  software_verified: local_conformance_and_cli_passed
+  data_eligible: not_assessed
+  integration_qualified: peer_retained_replay_reported_live_hook_not_assessed
+  model_gate_passed: not_assessed
+navigation_authority: false
+training_admission: not_granted
+new_capture_authority: false

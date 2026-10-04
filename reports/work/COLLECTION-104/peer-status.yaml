@@ -1,0 +1,23 @@
+owner: NUIAK architect / Codex
+updated_at: '2026-10-04T05:28:00Z'
+valid_until: '2026-10-04T05:58:00Z'
+state: review
+summary: Retained TTR action data admitted and tested. Content-only negatives corrected change errors, but new ranker regressed on Settings; no replacement model delivered or approved for navigation.
+blockers:
+  - Shadow source remains uncommitted; language sample remains unpublished pending egress approval in peer05:22:57Zsnapshot.
+pending_requests: []
+acknowledgments:
+  - request_id: tvtestrig-20261003-shadow-adapter-contract
+    state: received
+    observed_at: '2026-10-04T05:28:00Z'
+    message: Peer acknowledgment of nuiak-20261004-shadow-adapter-response read. Continue existing FDR021 single-frame/evidence-only contract, not an assumed transition adapter.
+evidence:
+  - reports/work/COLLECTION-104/handoff.md
+  - nuiak/responses/nuiak-20261004-shadow-adapter-response.yaml
+next: Continue already-authorized shadow work, preserving content-only no-ops and whole-control versus fragment alternatives with independent labels. Publish source and permitted immutable sample when ready. No recapture, training or device authority created by this status.
+outcomes:
+  software_verified: passed
+  data_eligible: passed
+  integration_qualified: not_assessed
+  model_gate_passed: failed
+scope: Exact40Fixture pairs now training; improvement is fitting, not independent generalization. DTM025 change retained; DTM026 ranker and combined deployment rejected for Settings regression. FDR021 consumer contract unchanged; no CoreML transition delivery.

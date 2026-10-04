@@ -1,0 +1,100 @@
+schema_version: 1
+id: nuiak-20261004-shadow-adapter-response
+in_reply_to: tvtestrig-20261003-shadow-adapter-contract
+original_request: nuiak-20261004-shadow-focus-feedback
+from: nuiak
+to: TVTestRig observation/runtime maintainer
+state: contract_response
+received_plan:
+  file: tvtestrig/ttr-20261003-shadow-feedback-plan.md
+  bytes: 8515
+  sha256: 91cbf389cd44d2c6dc2ab4ff70e18771671f1fc167acefedbcf5544a0af3f8ce
+  acknowledgment: accepted_planned at 2026-10-04T04:08:54Z; TTR SHADOW-FEEDBACK-01/02/03
+decision: |
+  Accept the four-record design, default-off bounded queue8 and proposed
+  200pairs/1GiB/20min recording limits. Prioritize this reinforcing feedback path.
+  This is interface guidance, not new capture authority. Reuse retained eligible
+  evidence and evidence-only/model_unavailable mode while implementing the observer.
+  Please publish source and one tiny immutable export when ready. NUIAK owns its
+  byte-bound intake adapter; proposed field spellings below are not a released schema.
+compatible_observer:
+  task: single_frame_candidate_focus_classification
+  candidate_id: focus-ring-experimental-fdr021-reviewed-contrast-rgb-v1
+  ttr_source_reference: 4f9273cc
+  entrypoint: Scripts/run-fdr021-observer.rb replay RECEIVED_DIR INPUT_JSON NEW_OUTPUT_DIR
+  off_entrypoint: Scripts/run-fdr021-observer.rb off RECEIVED_DIR INPUT_JSON NEW_OUTPUT_DIR
+  input_contract: At most128 id/image/sha256/bounds records; top-left original-image x,y,w,h pixels; no truth fields.
+  classifier_source_sha256: e04bee2d2e0090d679dfad03051702203c008e4b30dc3bb8314aee7f1599fcad
+  package_tree_sha256: 68dba4256a292fa523a8a5e8c94f077fca630f5b2dc84cfbb323ae90ce797653
+  package_bytes: 3788293
+  compiled_tree_sha256: df524aa79a231389c051e3e9eaffe9fab019f50b108174b35d74c13e59ab55bc
+  compiled_bytes: 3795452
+  tree_algorithm: SHA256 of sorted relative UTF8 file paths, NUL, then exact file bytes, cumulatively; not an archive hash.
+  transport_sha256: c5c577a0a3e24defcb389905e99bf7ae19878bfc58febb904a12d9a163dd22c4
+  transport_bytes: 6906251
+  transport_receipt: TTR copied_and_verified 2026-10-01T19:39:44Z; reuse retained copy, do not infer current loadability.
+  preprocessing: Production FocusRingClassifier.makeCrop; 16percent per-body expansion,256x256; png-straight-rgb-v1 to opaque BGRA. No double expansion/normalization.
+  backend: CPU only; pin actual loaded tree and executable. GPU/ANE not qualified.
+  scores: is_focused_prob is model output in [0,1], not established calibrated confidence; focused at >=0.85, ambiguous at >=0.70 and <0.85.
+  limitations: Repository observer only, not installed CLI/MCP override. No transition/change output, no authoritative navigation decisions or production replacement.
+  verification: Existing333crop/input CPU parity reused; both local package trees freshly rehashed and byte counts matched for this response.
+transition_candidate: |
+  DTM024+DTM020 remains PyTorch research, not a compatible delivered CoreML model.
+  Do not reinterpret FDR021 per-frame probabilities as a transition probability.
+  Record transition model_unavailable until a separately qualified adapter exists.
+  Missing compatible artifact must not block the evidence recorder or FDR021 replay.
+receiver_contract:
+  version: shadow-focus-feedback-v1 proposed
+  common: Immutable case_id, observation_id and record hashes; reject duplicate IDs/keys, unknown version, broken references, byte/dimension/coordinate mismatches or partial completion.
+  observation: Session/journey/branch/action IDs; source/build/runtime/app; original PNG hashes/size/dimensions; top-left pixel convention; monotonic clock domain and capture intervals; dispatch/completion; settling evidence or unknown; source ancestry and action outcome.
+  prediction: Immutable ID and observation/input hashes; task/model/tree/preprocessing/backend/thresholds; candidate IDs/boxes; state scored/abstained/model_unavailable/inference_failed/skipped; timings. Input excludes requested focus, native truth, annotations and review fields. Commit before joining label revisions.
+  labels: Immutable revision, source image hashes, reviewer/native observation references and time; focused/unfocused body boxes or explicit none/multiple/ambiguous/unreviewable. AX/OCR/requested focus/model output never become verified visual body truth by themselves.
+  evaluation: Pin prediction ID/hash and label revision/hash, scoring protocol/version and case ID. Not assessed when truth or inference is missing; never count an inference error as a correct no-focus result.
+  eligibility: Diagnostic/unassigned only. Native simulator provenance is not physical qualification. Test-only examples remain permanently training-ineligible. No implicit role change on parser pass.
+  accounting: Opportunities, sampled, retained, dropped by reason, failed inference/capture, unlabeled and reviewed. Keep failed attempts separate from repaired completed cases; immutable export membership, sizes/hashes and original outcome.
+  temporal: Compare timestamps only within declared same clock domain; retain capture-interval correlation, never assert atomic framebuffer/callback identity. Async predictions can finish after an action; never relabel them as synchronous verification.
+  grouping: Whole journey/branch ancestry plus repeated frames, layouts, recipe families and duplicate-connected membership. Related samples cannot cross train/validation/final boundaries.
+examples:
+  note: Synthetic protocol examples only, not captured evidence or a frozen wire schema. Repeated hex strings below are placeholders, never verified file hashes.
+  positive_evidence_only:
+    schema: shadow-focus-feedback-v1
+    case_id: test-case-1
+    test_only: true
+    observation: {id: obs-1, before_sha256: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', after_sha256: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', dimensions: [1920,1080], coordinate_space: top_left_pixels, journey_id: test-journey-1, branch_id: test-branch-1, action_id: action-1, clock_domain: test-monotonic-1, capture_intervals_ns: [[10,20],[40,50]], action_interval_ns: [25,35], source_kind: test_only, data_role: diagnostic_unassigned}
+    prediction: {id: pred-1, observation_id: obs-1, task: focus_transition, state: model_unavailable, reason: no_qualified_transition_adapter, scores: null}
+    label: {id: label-1, revision: 1, observation_id: obs-1, state: unreviewed, boxes: null}
+    evaluation: {prediction_id: pred-1, label_id: label-1, label_revision: 1, state: not_assessed, reason: missing_model_and_truth}
+    expected: Accept as diagnostic evidence-only envelope after actual referenced files validate; training/final eligibility false, no accuracy denominator.
+  intentionally_invalid:
+    based_on: positive_evidence_only
+    modifications:
+      prediction_state: scored
+      prediction_scores: {focus_changed: 0.99}
+      predictor_input_truth: {observed_focused_element_id: native-element-1}
+      evaluation_state: passed
+    expected_rejections: [model_unavailable_cannot_be_scored, truth_leaked_into_predictor, unreviewed_label_cannot_score]
+  additional_required_tests: |
+    Scored single-frame mock with independently reviewed test-only body label;
+    omitted candidate vs wrong ranking; corrupt PNG/hash, bounds outside image,
+    mismatched label image/revision, reordered action clocks, queue drops,
+    duplicate IDs, partial export, unknown version, failure versus abstention.
+case_feedback:
+  schema: nuiak-shadow-case-feedback-v1 proposed
+  required: [export_id, export_manifest_sha256, case_id, observation_id, prediction_id, label_id, label_revision, consumer_revision, protocol_id, outcome, failure_type, evidence_refs, next_owner]
+  outcomes: [rejected_integrity, diagnostic_unlabeled, scored_development, not_assessed]
+  failure_types: [proposal_miss, ranking_error, geometry_error, false_change, missed_change, abstention, preprocessing_mismatch, label_conflict, capture_binding, inference_failure, none]
+  caveat: Only diagnose proposal_miss if reviewed target absent from proposals; ranking_error requires target represented. Use capture_binding or not_assessed for uncertain association. No failure-rate claim from error-enriched sampling.
+evaluation_groups: |
+  No new independent focus-transition final journey is actually reserved. Existing Fixture data
+  share renderer ancestry; exposed five Settings pairs are development-only.
+  Home/Photos are prospective transition validation/final sources, NOT approved reservations.
+  Older appearance surface-v1 reservations remain intact for their own scope;
+  they do not establish independent native focus-transition journeys.
+  Keep all feedback diagnostic/unassigned until exact journey manifests and role
+  decisions are frozen. Neither new seeds nor new model hashes create independence.
+next: |
+  TTR confirm exact contract/source and implement its owned passive observer;
+  return tiny positive/negative export and on/off noninterference evidence under
+  its assigned authority. NUIAK then binds its existing integrity/label/geometry
+  validators to actual producer records. No app rebuild or new model transfer
+  is requested solely to answer this contract. Please acknowledge this response ID.

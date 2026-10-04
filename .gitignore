@@ -1,4 +1,6 @@
 # Xcode
+/reports/work/FLOW-CONFORMANCE-124/artifacts/
+/reports/work/SHADOW-THROUGHPUT-120/artifacts/
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
@@ -290,3 +292,32 @@ reports/work/FOCUS-ALIGNMENT-12/*.log
 # Local SSD compatibility exports; labels/caches stay local, pixels are linked.
 /NativeUITrainer/yolo_dataset_r7_ssd03/
 /NativeUITrainer/yolo_dataset_r7_ssd03_frozen/
+reports/work/INTAKE-99/received/
+/reports/work/INTAKE-101/layout28/
+/reports/work/INTAKE-101/context60/
+/reports/work/INTAKE-101/layout28-final/
+/reports/work/INTAKE-101/context60-final/
+/reports/work/CALIBRATION-102/proposal/
+/reports/work/CALIBRATION-102/candidates/
+/reports/work/CALIBRATION-102/replay/
+/reports/work/CALIBRATION-102/replay-final/
+/reports/work/PREP-103/pending/
+/reports/work/PREP-103/admitted/
+/reports/work/COLLECTION-104/admitted/
+/reports/work/COLLECTION-104/ready/
+/reports/work/COLLECTION-104/evaluation/
+/reports/work/TRANSITION-SHADOW-106/artifacts/
+/reports/work/RANK-RETENTION-105/artifacts/
+/reports/work/RANK-REPRESENTATION-107/artifacts/
+/reports/work/RANK-METRIC-108/artifacts/
+/reports/work/RANK-GEOMETRY-109/artifacts/
+/reports/work/SHADOW-CONTRACT-110/artifacts/
+/reports/work/SHADOW-REGION-111/artifacts/
+/reports/work/REGION-REVIEW-112/artifacts/
+/reports/work/REGION-SIGNAL-113/artifacts/
+/reports/work/IDENTITY-RESIDUAL-114/artifacts/
+/reports/work/REFLOW-DIAGNOSIS-115/artifacts/
+/reports/work/FOCUS-LOCAL-116/artifacts/
+/reports/work/REFLOW-ADAPT-117/artifacts/
+/reports/work/TRANSITION-SHADOW-118/artifacts/
+/reports/work/TRANSITION-COVERAGE-119/artifacts/

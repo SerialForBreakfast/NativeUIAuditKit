@@ -3569,3 +3569,197 @@ retain real corpus replay as separate integration evidence.
 using its directory. The strengthened check passes all24 retained selections and
 rejects missing/partial/mismatched evidence. Five admission tests now run without
 retained files; this does not make generated tests proof of real-data eligibility.
+
+### Candidate scale is not control identity (2026-10-03, RANKING-97)
+
+**Wrong:** Treat five erroneous endpoint occurrences as five independent scenes,
+or propose a minimum-size rule because exposed Settings errors select text fragments.
+**Correct:** Group by source image, normalize geometry by actual image dimensions,
+inspect both small-fragment and enclosing-region failures, and audit small positive
+support before any size intervention. Check whether normalized size is already an
+input before proposing it as a new feature. Logit margins are not probabilities.
+**Why:** RANKING-97's five errors are four images; the frozen ranker already receives
+size. Training has no sub100px positive candidates, and errors include both tiny
+disjoint fragments and a large multi-row region. A size cutoff could conceal missing
+coverage instead of teaching complete-control selection. See
+[review](../reports/work/RANKING-97/handoff.md); no causal feature attribution is claimed.
+
+### Inspect completed cases without rewriting failed campaign history (2026-10-03, INTAKE101)
+
+**Wrong:** Reject every completed case in a mixed-outcome campaign, or rename the
+campaign completed to reuse them. Count PNG byte hashes as unique visual examples.
+**Correct:** An explicit case-level intake may select only completed cases with
+original receipt/manifest/member byte binding. Preserve the failed accounting and
+separate repair receipt; require complete expected membership and reject duplicate
+selected IDs. Report decoded-pixel duplicates separately and retain intentional
+no-change endpoints, linking their ancestry for all later split decisions.
+**Why:** Context60 contains61attempts,60completed cases,96unique PNG byte hashes
+but86decoded images. Discarding no-change duplicates would erase useful negative
+evidence; treating them as independent examples would overstate support. No parser
+pass changes calibration membership into training or final evaluation authority.
+
+### Identity negatives are a sanity check, not real no-op coverage (2026-10-03, CALIBRATION102)
+
+**Wrong:** Interpret zero errors on constructed same-frame pairs as robustness to
+content animation, artwork changes or other visual changes without focus movement.
+**Correct:** Evaluate observed focus moves, boundary no-ops and content-only no-ops
+separately; retain confidence errors and candidate coverage versus selection metrics.
+Use real action-linked negatives before claiming transition reliability.
+**Why:** DTM024 passed122identical-frame negatives but falsely reported focus changes
+on all12new content-only negatives. In the same40pair replay, proposals covered
+80/80targets while the ranker selected only10correct endpoints. These are distinct
+learning failures, not a reason to recapture already verified evidence or inject
+ground-truth boxes into inference. [Evidence](../reports/work/CALIBRATION-102/handoff.md).
+
+### Keep component and domain retention gates when adding data (2026-10-03, COLLECTION104)
+
+**Wrong:** Call a combined model improved solely because it fits newly admitted data,
+or count a low-confidence correct class as a successful joint decision.
+**Correct:** Compare each changed component against the frozen other component;
+report old training, new training and exposed development separately. Joint success
+requires correct change, confidence admission and both correct boxes. Preserve
+failed candidates and the prior component; do not train on the development set to
+erase its regression. Reuse byte-bound tensors/crops, not new native capture.
+**Why:** DTM025 removed12content-only false changes without retention loss; DTM026
+fit80/80new endpoints yet regressed Settings5/10→0/10. The combination's40/40new
+joint score therefore did not justify deployment. Cached binding took1.94s with
+zero native calls. [Evidence](../reports/work/COLLECTION-104/handoff.md).
+
+### Native transition delivery needs input parity and whole-path timing (2026-10-03, TRANSITION-SHADOW106)
+
+**Wrong:** Treat successful Core ML conversion as native inference qualification,
+or substitute an approximate resize and report model-only latency as caller cost.
+**Correct:** Independently verify conversion, load, exact native encoded tensors,
+scores/decisions, and a clean portable consumer. Pin resampling/color/letterbox
+semantics; preserve unsupported-image failures and a true no-model off mode.
+Measure preprocessing separately and keep passive inference off navigation's path.
+**Why:** DTM025's model runs at0.326ms median locally but validated full-frame
+preprocessing takes169ms.240pair byte/decision parity and a separate extracted
+source build establish compatibility, not unseen-app accuracy. A sandbox-cache
+load denial was distinct from successful package conversion. Deliver the qualified
+change component without bundling the regressed localization ranker.
+
+### Retention means preserving previous successes, not just an aggregate count (2026-10-03, RANK-RETENTION105)
+
+**Wrong:** Count repeated endpoints as independent scenes, infer missing proposals
+from ranking errors, or assume freezing the final layer preserves the decision rule
+when upstream features can change.
+**Correct:** Deduplicate source frames, measure proposal coverage separately, and
+track exactly which formerly correct frames were lost. Verify frozen tensors from
+the saved checkpoint as well as in-loop assertions; receipt fields can have bugs.
+**Why:** All9Settings frames had correct proposals; DTM027 kept its final layer
+exact but lost all5previous correct selections. Its1new success did not constitute
+retention.108training pairs fitting correctly did not establish transfer. A reused
+variable corrupted frozen-parameter names in the first receipt; independent tensor
+comparison caught the reporting discrepancy without rerunning training.
+
+### Diagnose the scoring rule before blaming representation resolution (2026-10-03, RANK107)
+
+**Wrong:** Infer that small encoded crops cannot represent focus solely because a
+trained head fails, or declare a post-hoc distance rule generalized because it fits
+the same exposed development failures that motivated it.
+**Correct:** Check opposite-label collisions, training-only reference neighborhoods,
+query-frame exclusions and reference-cohort sensitivity. Separate information-loss
+evidence from a poor learned decision boundary and inadequate source coverage.
+**Why:** No exact conflicts appeared among5022candidate encodings. A fixed distance
+contrast selected9/9Settings controls using older training references but0/9using
+new-only references. It still lost one old training-frame success; this supports
+another bounded scoring hypothesis, not production readiness or proof that16×16
+is universally sufficient. Full training references share Fixture ancestry.
+
+### Separate reference replay from extent retention (2026-10-04, RANK108)
+
+**Wrong:** Count nearest-neighbor self-matches as generalization, or call a correct
+row location a correct box when its extent misses the IoU gate.
+**Correct:** Exclude same-frame references for the diagnostic, report self-allowed
+replay separately, and inspect extent/IoU against unchanged labels. Use direct
+float64 differences with bounded blocks; verify all scores against the naive
+oracle before optimizing distance arithmetic. Keep related recipes labeled as
+training diagnostics, not independent tests.
+**Why:** Self replay122/122old became121/122without self references. The failing
+guide row had a correct available proposal at0.516IoU, but the chosen sub-row was
+0.419. Successful Settings replay did not waive that regression. The full bank
+also costs14.78MB before metadata and preprocessing, unlike the small learned head.
+
+### Binary supervision can hide inconsistent precise geometry (2026-10-04, RANK109)
+
+**Wrong:** Assume that consistent positive proposal IDs imply one valid continuous
+box target per image, or use last-write-wins when deduplicating supervision.
+**Correct:** Before geometry regression/ranking, group exact image identities,
+retain all endpoint annotations, and reject conflicting precise targets. Trace
+back to original bracket telemetry, not only derived manifests. Diagnostic IoU
+ranges may describe uncertainty but are not automatic relabeling authority.
+**Why:** Eleven context60 images had two extents with identical binary-positive
+sets. Each before/after bracket was internally consistent, but separate captures
+of identical bytes differed. Existing binary metrics remain reproducible while
+the new continuous objective requires source correction/review. Settled bracket
+telemetry alone does not prove consistent image-to-geometry binding across runs.
+
+### Name the transition target before scoring peer feedback (2026-10-04, SHADOW110)
+
+**Wrong:** Treat "focus changed" as interchangeable with moving highlight geometry,
+or count native-ID disagreements as reviewed model accuracy.
+**Correct:** Keep focus-owner identity, highlight geometry and content motion as
+separate fields. Join independent labels after inference through exact action,
+observation and image hashes. Report native-hint disagreements separately; reviewed
+abstentions and execution failures must remain visible outside selective accuracy.
+**Why:** TTR reported eight identity-changing scrolling pairs with stationary focus
+boxes and unchanged DTM025 decisions. The intended identity target makes these
+potential misses, not successes; source/review evidence is still required to confirm
+them. Changing the target post hoc would conceal a real coverage limitation.
+
+### Review the complete journey without turning strips into training crops (2026-10-04)
+
+**Wrong:** Admit native focus hints from a few representative screenshots, or treat
+a focus-strip review as precise body-box ground truth and independent evaluation.
+**Correct:** Review every candidate label in sequence with hash-bound visual context;
+use fixed inspection strips only for identity confirmation. Keep original full frames
+for the existing encoder, separately record reviewer type, and exclude the entire
+related journey/layout ancestry from final evaluation after failure-driven selection.
+**Why:** Region12's95selected row texts corroborated94identity changes despite a
+stationary highlight. This enables change-only training without pretending AX bounds
+are rendered-body labels. Its all-positive traversal still lacks genuine same-focus
+motion negatives; derived identical pairs do not fill that coverage gap.
+
+### Counterfactual improvements need negative controls (2026-10-04, REGION113)
+
+FOCUS116: restricting differences to even oracle focus boxes repaired reflow but
+lost13previous positive successes. Do not deploy an input mask solely because it
+fixes one reviewed failure; evaluate positive retention and label-free localization
+separately. Explicit supervised admission of exposed cases is distinct from an
+inference shortcut and cannot supply independent evaluation evidence.
+
+REFLOW115 further showed similar pixel-difference magnitude for a failed real
+unchanged-focus reflow and successful existing negatives. Match negative examples
+by renderer/layout and semantic event, not just aggregate change magnitude. A
+focused item's identity can remain unchanged while many other rows are inserted,
+removed or moved; those are important separate negative controls.
+
+Follow-up IDENTITY114: exact identity cancellation preserved217identical negatives
+while a real unchanged-focus Settings transition became confidently wrong. An
+algebraic no-op guarantee does not protect scrolling, animated content or other
+nonidentical-frame negatives. Evaluate genuine motion negatives separately; never
+use the perfect identical-frame score as evidence of real-world no-change safety.
+
+**Wrong:** Remove context at deployment because a difference-only intervention
+increased responses on positive scrolling examples.
+**Correct:** Compare identical and real negative cases, retain original baseline
+replay, and label channel/spatial ablations as sensitivity experiments rather than
+accuracy or proof of causality. Gradients alone also do not establish semantic use.
+**Why:** DTM028's difference-only Region responses rose26→79, but all217identical
+checks became uncertain at~0.645. Outside-focus motion retained20of26responses.
+Positive-only improvement concealed a worse no-change decision surface.
+
+### Optimize the measured inference pipeline, not only the network (2026-10-04, SHADOW120)
+
+**Wrong:** Treat0.5ms network inference as end-to-end cost, or cache pixels by a
+filename/timestamp and skip integrity checks on later accesses.
+**Correct:** Measure decode/resize/hash preprocessing separately. Use bounded
+request-owned encoded-frame reuse only after freshly validating path/size/current
+bytes hash; retain no full-resolution cache. Preserve integer filter coefficients,
+rounding order and exact tensor hashes when optimizing resize loops.
+**Why:** DTM030preprocessing dominated. Combined integer-loop optimization and
+8frame encoded reuse reduced identical438pair replay86.159→53.436s and median
+preprocessing183.869→120.219ms without changing any input tensor or decision.
+Consecutive local measurements are not a universal throughput guarantee, and
+2359296cached tensor bytes is a payload bound—not total process peak memory.

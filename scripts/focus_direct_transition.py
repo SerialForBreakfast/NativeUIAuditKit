@@ -74,7 +74,7 @@ def pins():
          'prepare_data67.py','admit_negatives65.py',
          'focus_temporal_transition.py','prepare_temporal68.py',
          'prepare_coverage70.py',
-         'propose_native77.py','propose_native86.py','harvest_sidecar_v2.py',
+         'propose_native77.py','propose_native86.py','prepare_collection103.py','evaluate_collection102.py','harvest_sidecar_v2.py',
          'fixture_native_visibility.py','fixture_semantic_inventory.py','fixture_rendered_body.py','intake_native76.py',
          'evaluate_direct_transition.py','train_focus_ring_detector.py')],
         dependencies={name:dependency_version(name) for name in ('torch','numpy','pillow')},python=sys.version)
@@ -154,7 +154,7 @@ def baseline_change(controls,native):
 def collect(sources):
     import focus_corrected_transition_audit as native
     import focus_recorded_semantics as semantic
-    h.require({'reference','settings'} <= set(sources) <= {'reference','settings','negatives','nativeTable','nativeActions'},'source_fields')
+    h.require({'reference','settings'} <= set(sources) <= {'reference','settings','negatives','nativeTable','nativeActions','nativeCollection'},'source_fields')
     rows=[];excluded=[]
     path=h.checked(h.ROOT,sources['reference']);doc=h.sealed(path,'reference-transition-audit-v1')
     h.require(doc.get('tracker','template')=='template','baseline_tracker')
@@ -201,6 +201,10 @@ def collect(sources):
         from propose_native86 import source_records
         additions=source_records(h.checked(h.ROOT,sources['nativeActions']))
         rows.extend(dict(r,id=sources['nativeActions']['sha256']+':'+r['id']) for r in additions)
+    if 'nativeCollection' in sources:
+        from prepare_collection103 import source_records as collection_records
+        additions=collection_records(h.checked(h.ROOT,sources['nativeCollection']))
+        rows.extend(dict(r,id=sources['nativeCollection']['sha256']+':'+r['id']) for r in additions)
     return corpus_document(sources,rows,excluded)
 
 
@@ -372,9 +376,16 @@ def fit_change_head(net, x, labels, configuration):
     frozen={name:value.detach().clone() for name,value in net.state_dict().items() if not name.startswith('change.')}
     optimizer=torch.optim.Adam(net.change.parameters(),lr=configuration['lr'])
     differences=net.change_inputs(x);history=[];net.train()
+    group=configuration.get('originalGroupCount')
+    if group is not None:
+        h.require(type(group)is int and 0<group<len(x) and
+            configuration.get('lossWeighting')=='equal-group-means' and
+            len(x)-group==configuration.get('derivedGroupCount') and
+            (labels[group:]==0).all() and torch.equal(x[group:,:3],x[group:,3:]),'change_derived_group')
     for epoch in range(configuration['epochs']):
         optimizer.zero_grad();logits=net.change(differences).flatten()
-        loss=torch.nn.functional.binary_cross_entropy_with_logits(logits,labels)
+        losses=torch.nn.functional.binary_cross_entropy_with_logits(logits,labels,reduction='none')
+        loss=losses.mean() if group is None else .5*(losses[:group].mean()+losses[group:].mean())
         h.require(bool(torch.isfinite(loss)),'change_adaptation_nonfinite_loss')
         loss.backward();optimizer.step();history.append(dict(epoch=epoch+1,loss=float(loss.detach())))
     h.require(all(torch.equal(value,net.state_dict()[name]) for name,value in frozen.items()),'change_adaptation_geometry_changed')

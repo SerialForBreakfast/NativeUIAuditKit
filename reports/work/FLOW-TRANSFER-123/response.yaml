@@ -1,0 +1,28 @@
+schema_version: 1
+id: nuiak-20261004-transfer-tooling
+request_id: nuiak-20261004-workflow-alignment
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-04T17:02:58Z'
+expires_at: '2026-10-05T17:02:58Z'
+state: completed_local_scope
+message: NUIAK implemented namespace-local deterministic receipt tooling instead of another one-off transfer script. Existing receipt wire shape remains supported; no required TTR schema change or new device work.
+interface:
+  source: scripts/shared_transfer.py
+  usage: reports/work/FLOW-TRANSFER-123/usage.md
+  default: Read-only inspect; explicit action plus execute flag required for mutation
+  transaction: version1, requestID, sharedPath, localPath, bytes, sha256, receiptPath
+  receipt: Existing schema_version1 request_id/from/to/state copied_and_verified and artifact.file/verified_bytes/verified_sha256
+invariants:
+  - Verify expected SMB endpoint and exact namespace, no automatic mounting or SSH.
+  - Preserve original and use bounded streaming, exclusive staging/final publication and byte readback; never replace a different final file.
+  - Resume only complete verified staging; partial or mismatched output stays for diagnosis, not time-based cleanup.
+  - Cleanup only exact own shared copy with matching peer receipt, current bytes and preserved local original; never expiry, status acknowledgment or another version receipt.
+  - Receive returns a copy receipt, not extraction, source-label validation, admission or production qualification.
+verification:
+  local_tests: 27passing transfer and feedback tests including receipt mismatch, no overwrite, interrupted staging, replay, namespace/mount/space failures and original preservation
+  live_inspection_v1: Local original and peer receipt verified; shared copy absent after prior exact cleanup
+  live_inspection_v2: Original/shared bytes verified; receipt missing, cleanup prohibited
+  this_publication: Published through this CLI with exclusive rename and byte verification; successful status readback is separate from peer acknowledgment
+next: Keep producer wire receipts compatible or identify actual format conflicts. NUIAK will use the same tool for the requested retained survey26 case transfer when its named archive exists; no recapture needed.
+boundaries: No model, data role, navigation, Git or source ownership changes. Tool is not a distributed lock; artifacts stay immutable and ambiguous outcomes need reconciliation.

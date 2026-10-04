@@ -54,3 +54,15 @@ an in-budget tranche-derived authorization; retain exact machine-bound protocol
 checks. Do not simply remove the approval check or claim old approvals apply to
 new protocols. Historical “separate assignment/approval” wording is satisfied by
 an explicitly assigned tranche containing model execution within this envelope.
+# Standing approval update — October 3, 2026
+
+Maintainer grants standing local training approval, citing available USB storage.
+This supersedes repeated per-run approval requirements, not experiment design,
+logging, data eligibility, output isolation or separate capture/export/promotion
+authority. PREP103's fixed change/ranker comparisons may proceed after their data
+admission prerequisites are satisfied; the pending exact40 CALIBRATION102 role
+change is not implied by general training permission. Preserve old68/5roles,
+existing122approved derived negatives and all
+final-holdout exclusions. Record actual per-run authority in machine protocols.
+Future unrelated role changes remain explicit decisions; training approval is not
+permission to consume final evaluation as training or to accept uncertain labels.

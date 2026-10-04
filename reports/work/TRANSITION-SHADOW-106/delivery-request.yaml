@@ -1,0 +1,72 @@
+schema_version: 1
+id: nuiak-20261004-transition-shadow-dtm025-delivery
+request_id: nuiak-20261004-shadow-focus-feedback
+from: NUIAK
+to: TVTestRig observation/runtime maintainer
+created_at: '2026-10-04T06:07:19Z'
+expires_at: '2026-10-04T07:07:19Z'
+state: available_for_verified_intake
+message: >-
+  DTM025 change-only Core ML consumer is available for passive shadow feedback.
+  This supersedes transition-unavailable in the earlier adapter response only for
+  change classification. No endpoint boxes, navigation policy, localization ranker,
+  production promotion or new capture authority are included. Extend the already
+  accepted SHADOW-FEEDBACK task; no duplicate feature project is needed.
+artifact:
+  file: nuiak/nuiak-transition-shadow-dtm025-v1.zip
+  bytes: 198134
+  sha256: 447f9c208a0c7a50f6d5a79879a01e23b4e4469f49d69c3ba4cfb6c961042cae
+  members: 19
+  expanded_bytes: 246248
+  manifest_sha256: 117530ef7f901ec901ffee178dc6381d833261f37d4ca84e3f47514ca7b6e872
+  contract_sha256: 31837a325f0fcfabba7a30c07018e18c5acf36418bedb69d3b9c0970583c9e31
+  compiled_tree_sha256: 194a84672325e6016828bd57c4baa5d7dfda720b8a553631d31c6af5d3951c32
+  content: Swift6 source package, Core ML source/compiled model, README, manifest, aggregate parity evidence and synthetic test images only
+  excluded: Private screenshots, raw checkpoints, executables, ranker weights
+  retained_original: NUIAK reports/work/TRANSITION-SHADOW-106/artifacts/nuiak-transition-shadow-dtm025-v1.zip
+consumer_contract:
+  model_id: focus-transition-experimental-dtm025-change-v1
+  task: ordered_before_after_visual_focus_change_only
+  platform: Apple Silicon macOS15_or_later; verified_on_macOS26.4.1_25E253
+  backend: cpuOnly_FP32
+  encoding: paired-rgb-letterbox192x128-pillow-bilinear-v1
+  input: Full opaque RGB PNG frames; no labels, boxes or focus telemetry
+  decisions: changed_at_ge_0.85_unchanged_at_le_0.15_else_uncertain
+  confidence: Raw sigmoid score; not calibrated probability
+  use: Passive experimental shadow only; keep FDR021 single-frame scoring separate
+  bounded: At_most128pairs_per_CLI_batch_32MiB_and20million_pixels_per_image
+  off: No model or image loading and no predictions
+  failures: Typed failures remain unavailable; never turn them into unchanged decisions
+  preprocessing: Do not substitute FocusRing16percent_256crop_or_CoreGraphics_resize
+verification:
+  swift_preprocessing: 240_of240_byte_identical_to_Python
+  coreml_decisions: 240_of240_equal_to_PyTorch
+  max_score_error: 0.0000002868473529815674
+  membership: 113retained_real_pairs_122derived_identity_negatives_5synthetic_pairs
+  unique_real_frames: 187
+  cli_contract_tests: 24_pass
+  offline_swift_tests: 137_pass
+  portable_extracted_source: Build_and_synthetic_prediction_passed
+  timings_local_only:
+    inference_median_ms: 0.3264
+    inference_p95_ms: 0.6721
+    preprocessing_median_ms: 169.407
+    load_ms_range: [9.989, 15.444]
+  interpretation: Compatibility proof, not independent accuracy or production qualification
+requested_steps:
+  - Copy and verify exact archive into TTR-owned storage; bound extraction, verify all manifest members; return exact byte/hash receipt.
+  - Build Swift source locally and run synthetic sample against expected tensor hash, score tolerance1e-4 and decision. No binary/build-only request to NUIAK.
+  - Wire an opt-in passive observer into already authorized action intervals, off the navigation path. Reuse one loaded model, queue8, report overflow and failures; do not block actions.
+  - Record model/contract hashes, actual backend, source/build revision, before/after/action IDs, frame hashes, score/decision, preprocessing and inference latency, scored/failed/dropped counts.
+  - Keep labels in a separate independently reviewed record; include genuine moves, no-ops, content-only changes, scrolling, delayed transitions and uncertain cases. Predictions never become labels.
+  - Return on/off proof that navigation behavior is unchanged and predictions reach review/export; report any exact integration blocker. Artifact receipt alone does not close live integration.
+  - Preserve journey ancestry, privacy and data-role restrictions. Do not publish private screenshots without existing applicable egress approval or train automatically on feedback.
+cleanup:
+  owner: NUIAK_sender
+  rule: NUIAK retains project original and may remove only the exact shared archive after verifying matching copied-and-hash-verified TTR receipt. No automatic cleanup or peer-file deletion.
+outcomes:
+  software_verified: passed
+  data_eligible: not_applicable
+  integration_qualified: passed_portable_local_consumer_only_live_TTR_pending
+  model_gate_passed: not_assessed
+evidence: reports/work/TRANSITION-SHADOW-106/handoff.md

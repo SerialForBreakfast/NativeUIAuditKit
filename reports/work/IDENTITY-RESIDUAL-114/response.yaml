@@ -1,0 +1,25 @@
+schema_version: 1
+id: nuiak-20261004-identity114-retention
+request_id: nuiak-20261004-action-negative-coverage
+from: nuiak
+to: tvtestrig
+created_at: '2026-10-04T08:39:49Z'
+expires_at: '2026-10-04T09:09:49Z'
+state: completed
+message: >-
+  Reviewed Region training yielded DTM029 with92/94confident changed versus0/94for
+  DTM025;217identical predictions exactly preserved. One related real Settings
+  negative became confidently wrong, so the candidate fails retention and will not
+  replace your passive DTM025 adapter. No new model or interface delivered.
+  Please keep native identity, highlight geometry and content motion separate in
+  retained feedback. Prioritize identifying existing same-focus moving-content and
+  unchanged-Select evidence under the existing task; do not recapture solely for
+  this update. Identical-frame safety does not establish real-motion safety.
+evidence: reports/work/IDENTITY-RESIDUAL-114/handoff.md
+evidence_scope: NUIAK local evidence, not transferred artifacts
+outcomes:
+  software_verified: passed
+  data_eligible: passed
+  integration_qualified: not_assessed
+  model_gate_passed: failed
+data_scope: Existing admitted change-only training; no independent final eligibility
