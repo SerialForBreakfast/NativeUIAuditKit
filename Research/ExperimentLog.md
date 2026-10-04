@@ -3556,6 +3556,36 @@ candidate-order parity pass. CheckpointSHA256:
 3f90ba6bd8161c00057f36a307a205b3e03ba6801ef26e8974db652998184b75.
 No promotion or independent evaluation. Next test cross-source transfer and remaining
 failure modes, not unchanged extra epochs. See reports/work/NATIVE-87/handoff.md.
+# Run DTM032 — DUAL-EVIDENCE-130 — 2026-10-04
+
+Registered before training. One1152weight zero-initialized correction over frozen
+DTM031raw/normalized residual features, retaining raw logit. New feature scope is
+explicit in DUAL130plan.600epochs Adam0.01 seed42 CPU2threads,fixed-last,no wall cap,
+2GiB output cap.1073transition/augmented entries plus226exact identities, equal
+group means. Original roles preserved; before/after-only monotonic content contrast
+is training augmentation, translated/clipped views remain diagnostic only.
+Preparation must pass exact original and10condition replay. Failed ready/ready02
+preserved: batch boundaries then strided sigmoid caused rounding differences;
+contiguous historical batching fixes exact replay without tolerance relaxation.
+Prepare ready03protocol pins source/trainer/normalizer/checkpoint/cache. All source
+pixels verified once per attempt; features reused for fit/evaluation. Gate requires
+207/207originals/226identities and nuisance gains; no export or promotion.
+Output NativeUITrainer/focus_ring_runs/dual130-dtm032. Authority: current autonomous
+experiment tranche and standing local training/admission scope, not peer status.
+
+Completed PID18943,exit0. Valid preparation48.673s, cached fit0.603s,execution1.120s.
+Loss37.83895→0.514775. Original201/207 (six lost:3,7,17,21,23,25);226identity
+probabilities retained exactly. Contrast before/after identity negatives0→211/209,
+but corresponding originals160→169/175 with substantial other regressions. Dim
+original agreement172→93(before),169→102(after). Reject DTM032: original retention
+and robust-positive gates fail. No extra epochs/export/promotion. CheckpointSHA256
+842eafe22ba9638e052c843794436ffe9b843e412113b7cd2f2e276b5de5748f.
+14focused Python/139Swift pass; trainer factoring has exact gradient-history parity.
+Failed preparation attempts made zero updates and remain preserved. Strided cached
+logit sigmoid differed≤3.73e-9; contiguous historical batching restores bit-exact
+baseline. Next investigate selective nuisance abstention, not unconditional feature
+correction or repeating the same fit.
+
 # Run DTM031 — CONTENT-ROBUSTNESS-127 — 2026-10-04
 
 Registered before launch. User continued explicitly conditional robustness tranche;

@@ -3763,3 +3763,26 @@ rounding order and exact tensor hashes when optimizing resize loops.
 preprocessing183.869→120.219ms without changing any input tensor or decision.
 Consecutive local measurements are not a universal throughput guarantee, and
 2359296cached tensor bytes is a payload bound—not total process peak memory.
+
+### Shared-appearance robustness is not temporal nuisance robustness (2026-10-04, ASYMMETRIC128)
+
+**Wrong:** Infer reliable no-change detection from exact identical-frame invariance
+and gains when both frames receive the same appearance transform.
+**Correct:** Test one-sided illumination and image-motion controls separately,
+preserve padding/source geometry, and report constructed-label assumptions. Check
+all original positive transitions before adding normalization or alignment.
+**Why:** DTM031retained226exact identities and fit common contrast, yet one-frame
+contrast made all226confidently changed. The algebraic identity safeguard applies
+to identical tensors, not visually different frames with unchanged focus. Synthetic
+shift clipping must not silently become trustworthy negative training labels.
+
+### Preserve identifiable fits and JSON-stable seals (2026-10-04, NUISANCE129)
+
+**Wrong:** Reset a robust affine slope when trimming leaves constant pixels, or
+seal nested integer-key maps before JSON changes their key type/order.
+**Correct:** Retain the previous identifiable slope for rank-deficient trimmed
+support. Use string keys before canonical sealing and test serialize/reload hashes.
+**Why:** A mostly-flat regression reproduced0.08pixel-value error from the reset.
+Separately, displacement keys made the first report fail its seal on reload;
+reuse correctly stopped. Preserve failed evidence and rerun affected diagnostics,
+never weaken hash validation to recover results.

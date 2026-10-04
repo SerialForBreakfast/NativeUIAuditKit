@@ -374,14 +374,32 @@ def fit_change_head(net, x, labels, configuration):
         ((x>=0)&(x<=1)).all() and ((labels==0)|(labels==1)).all(),'change_adaptation_inputs')
     for name,param in net.named_parameters():param.requires_grad_(name.startswith('change.'))
     frozen={name:value.detach().clone() for name,value in net.state_dict().items() if not name.startswith('change.')}
-    optimizer=torch.optim.Adam(net.change.parameters(),lr=configuration['lr'])
-    differences=net.change_inputs(x);history=[];net.train()
+    differences=net.change_inputs(x)
     group=configuration.get('originalGroupCount')
     if group is not None:
         h.require(type(group)is int and 0<group<len(x) and
             configuration.get('lossWeighting')=='equal-group-means' and
             len(x)-group==configuration.get('derivedGroupCount') and
             (labels[group:]==0).all() and torch.equal(x[group:,:3],x[group:,3:]),'change_derived_group')
+    net,history=fit_change_features(net,differences,labels,configuration)
+    h.require(all(torch.equal(value,net.state_dict()[name]) for name,value in frozen.items()),'change_adaptation_geometry_changed')
+    return net,history
+
+
+def fit_change_features(net,differences,labels,configuration):
+    """Fit a head on caller-pinned frozen features; caller verifies image/role binding."""
+    torch=torch_runtime();torch.set_num_threads(configuration['threads']);torch.manual_seed(configuration['seed'])
+    h.require(differences.ndim==2 and len(differences)==len(labels) and len(labels)>0 and
+              torch.isfinite(differences).all() and torch.isfinite(labels).all() and
+              ((labels==0)|(labels==1)).all() and not differences.requires_grad,'change_features')
+    for name,param in net.named_parameters():param.requires_grad_(name.startswith('change.'))
+    frozen={name:value.detach().clone() for name,value in net.state_dict().items() if not name.startswith('change.')}
+    group=configuration.get('originalGroupCount')
+    if group is not None:
+        h.require(type(group)is int and 0<group<len(labels) and
+                  configuration.get('lossWeighting')=='equal-group-means' and
+                  len(labels)-group==configuration.get('derivedGroupCount') and (labels[group:]==0).all(),'feature_groups')
+    optimizer=torch.optim.Adam(net.change.parameters(),lr=configuration['lr']);history=[];net.train()
     for epoch in range(configuration['epochs']):
         optimizer.zero_grad();logits=net.change(differences).flatten()
         losses=torch.nn.functional.binary_cross_entropy_with_logits(logits,labels,reduction='none')

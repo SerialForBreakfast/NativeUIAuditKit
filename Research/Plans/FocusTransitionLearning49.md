@@ -1,5 +1,47 @@
 # Focus Transition Model — transition learning49
 
+## DUAL-EVIDENCE-130 — one raw-plus-normalized residual comparison
+
+Frozen DTM031encoder/readout. Input features: raw DTM031logit plus576raw residual
+features and576affine-normalized residual features, using corrected NUISANCE129.
+One zero-initialized linear correction without bias; original identical pairs are
+explicitly left unchanged by normalization so correction features remain zero.
+No geometry, threshold, capture or production changes. Cache features with exact
+source/model/tensor/mask/config hashes; reuse existing gradient loop via a factored
+feature trainer. Freeze before launch:600epochs Adam0.01 seed42 CPU2threads,
+fixed-last,2GiB new output budget. Train1073nonidentity-group examples (207originals
+plus2×433before-only/after-only content-contrast views) and226exact identities.
+Contrast transformations are monotonic/no-clipping/no-geometry same-role training
+augmentation under autonomous admission authority; no final membership or new
+source label claims. Shift views remain diagnostics, never training negatives.
+Require207originals/226identities retained; report every nuisance condition versus
+DTM031 and normalized-only control. A failed gate ends this comparison, not a sweep.
+
+## NUISANCE-SEPARATION-129 — frozen preprocessing falsification
+
+Three fixed interventions on DTM031: robust per-channel after→before affine mapping
+(3iterations, lowest80%residual pixels, gain0.5–2, offset±0.3); horizontal overlap
+alignment search[-2,2]pixels using lowest80%absolute residual mean and≥20%improvement
+over zero; combined alignment then affine correction. Keep padding fixed; no wrap;
+translation fill is zero. No fit on labels or confidence-based transform selection.
+Evaluate unchanged433inputs and all10ASYMMETRIC128conditions, recording actual
+chosen shifts, parameters, clipping, runtime and predictions. Original label losses
+reject blind preprocessing even if constructed-negative recovery is strong.
+These are counterfactual diagnostics, not native preprocessing rollout or training.
+
+## ASYMMETRIC-ROBUSTNESS-128 — frozen temporal nuisance stress
+
+Reuse CONTENT127 verified source encodings/masks and original433membership once.
+Compare pinned DTM030/031, require exact baseline replay. Six photometric conditions:
+dim/contrast/bright applied only before or only after (content only, padding fixed).
+Four motion conditions: ±2pixels horizontally, same shift both frames or after-only;
+zero fill inside the original content rectangle, no wrap and no padding mutation.
+Clipped-edge synthetic shifts are label-agreement diagnostics, not admitted focus
+ground truth. Report original207 and derived226separately, decision changes, lost
+successes, abstentions, confidence errors and case indices. Count distinct endpoint
+identities rather than claiming repeated self-pairs add independent data. Preserve
+all scores/config/source hashes. No parameter/threshold search or new training.
+
 ## CONTENT-ROBUSTNESS-127 — padding control and one conditional fit
 
 Verify every unique source endpoint with production192×128encoding and recover

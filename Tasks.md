@@ -1,5 +1,44 @@
 # NativeUIAuditKit — Tasks
 
+## Review / candidate rejected — DUAL-EVIDENCE-130 / Codex
+
+DTM032fit complete: cached fit0.603s after48.673s preparation. Contrast negatives
+improve0→211/209of226, but original201/207loses6successes and dim positives regress.
+Reject; preserve DTM030/031.14Python/139Swift pass; exact trainer factoring and
+baseline replay. [Handoff](reports/work/DUAL-EVIDENCE-130/handoff.md).
+
+One DTM032comparison: frozen DTM031raw logit + zero-initialized1152weight correction
+over raw/affine-normalized residual features. Train originals plus two contrast
+endpoint variants; shifts excluded. Cache frozen features, preserve original and
+identity retention, evaluate unfitted lighting/motion probes. No export/promotion.
+
+## Review — NUISANCE-SEPARATION-129 / Codex
+
+Corrected affine normalization recovers226/226identity-source negatives across all
+six one-sided lighting conditions, but loses3original transitions (207→204).
+Alignment retains originals but is direction-dependent under shifts. Reject blind
+preprocessing.10Python/139Swift pass; failed initial seal/reuse preserved and repaired.
+[Handoff](reports/work/NUISANCE-SEPARATION-129/handoff.md).
+
+Frozen DTM031 diagnostics: robust per-channel affine correction, bounded horizontal
+alignment and combination. Reuse original433and10ASYMMETRIC128conditions, require
+baseline replay, report original losses before recommending any preprocessing.
+No thresholds/model training or production changes. Support TTR boundary feedback
+without requiring its pending retained images or operating its active session.
+
+## Review — ASYMMETRIC-ROBUSTNESS-128 / Codex
+
+10conditions×433pairs×2frozen models complete; exact original replay. One-frame
+contrast/bright makes both models confidently changed on226/226identity-source
+negatives. After-only shifts also fragile; DTM031not a general robustness fix.
+9Python/139Swift tests pass. No training/promotion. [Handoff](reports/work/ASYMMETRIC-ROBUSTNESS-128/handoff.md).
+
+Frozen DTM030/031 comparison on original433inputs: before/after-only content
+intensity and paired/after-only2pixel horizontal shifts. Preserve source membership,
+thresholds and models; report label agreement as stress diagnostics, not new truth.
+Include unique-endpoint accounting, lost successes, abstentions and source-bound
+failure indices. No fit/admission/capture/export/promotion in this tranche.
+
 ## Review — CONTENT-ROBUSTNESS-127 / Codex
 
 Source encoding/padding control verified. DTM031600epoch residual fit retains

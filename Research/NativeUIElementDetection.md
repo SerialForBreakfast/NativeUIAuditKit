@@ -707,6 +707,14 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+Experimental transition lane, DUAL130 (October4): one local dual-evidence residual
+head compares frozen raw and photometrically normalized features. It does not
+replace deployed preprocessing, detector taxonomy or FocusRing crop behavior.
+The fixed experiment/cache/admission/retention contract lives in
+`Research/Plans/FocusTransitionLearning49.md`, DUAL-EVIDENCE-130. Independent native
+qualification and export remain separate; normalized-only preprocessing already
+failed original retention in NUISANCE129.
+
 **Experimental identity-residual comparison (October4, IDENTITY114):** preserve
 DTM025 change-only backbone/readout and learn a zero-initialized, bias-free576weight
 linear correction. Use frozen pooled features `phi` before its32-unit readout:

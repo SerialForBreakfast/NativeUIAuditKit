@@ -5,6 +5,24 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**DUAL130 / DTM032 rejected:** dual raw/normalized frozen-feature correction improves
+contrast negatives but loses6original successes (201/207), despite226identities
+preserved. Dim-positive performance deteriorates. No export/replacement. Features
+cached once: valid prep48.673s, fit0.603s. Next test narrow nuisance abstention while
+preserving ordinary predictions, rather than another unconditional correction.
+
+**NUISANCE129:** fixed affine fitting recovers226/226unchanged-source lighting probes,
+but loses3original transitions. Horizontal alignment retains original207/207yet
+remains fragile on synthetic shifts. Neither adopted; next preserve raw evidence
+alongside normalized evidence rather than blindly replacing pixels.10Python/139Swift
+pass. No new model training or production change.
+
+**ASYMMETRIC128:** frozen DTM030/031 temporal nuisance stress exposes a major gap:
+one-frame contrast/brightness makes both confidently changed on226/226identical-
+source examples. Asymmetric2pixel shifts also fail broadly. These are constructed
+diagnostics, not native capture accuracy, but rule out calling DTM031generally robust.
+Shared-brightness gains do not justify replacement; keep passive TTR usage only.
+
 **CONTENT127 / DTM031:** padding-only interventions preserve all433decisions;
 content-only contrast causes13losses. One frozen-base residual fit on original+
 contrast views restores207/207contrast while retaining207originals and226identities.
