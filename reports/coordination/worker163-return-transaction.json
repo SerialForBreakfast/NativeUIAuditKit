@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "peer": "joe-big-dog/NUIAK",
+  "requestID": "nuiak-20261004-worker-spatial163",
+  "sharedPath": "joe-big-dog/spatial163-return-52863f94f70e4c29a4ada0e7fab8498a.tar.gz",
+  "localPath": "reports/work/WORKER-SPATIAL-163/artifacts/return01/return.tar.gz",
+  "bytes": 164743,
+  "sha256": "2dfc113c2bdf3e4a7858779b7c291933ae02f02b836131112e27524bad696e82",
+  "receiptPath": null
+}

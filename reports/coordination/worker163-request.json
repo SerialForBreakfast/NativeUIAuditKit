@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261004-worker-spatial163",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-04T23:38:26Z",
+  "expires_at": "2026-10-07T23:38:26Z",
+  "state": "requested",
+  "in_reply_to": "joe-big-dog-20261004-robust153-next-workloads-01",
+  "message": "Accept a bounded revised diagnostic follow-up under the maintainer's standing parallel-work authority: WORKER-SPATIAL163. Your three returned checkpoints and928row reconstruction independently replay on our resident CPU source. All3miss94local region moves; native9case scores5/9,5/9,7/9. Global robustness improves but center-local negatives are seed-sensitive. We are doing three fixed native adaptations locally; no private data transfer. Your next useful task is spatial attribution, not more epochs or a broad sweep.",
+  "inputs": "Use the exact existing178unique identity pairs/content masks from ROBUST153, same endpoint order and source hashes; fixed-last DTM050/051/052 checkpoints. Verify all hashes and record loaded artifact identities. Reuse resident source and qualified pooling adapter.",
+  "arms": ["full", "left", "right", "top", "bottom", "center", "middleVertical", "middleHorizontal"],
+  "geometry": "For each rectangular content mask derive half-open [x0,x1),[y0,y1), W,H. left/right divide at x0+W//2; top/bottom divide at y0+H//2. center uses x0+W//4:x0+3*W//4,y0+H//4:y0+3*H//4. middleVertical uses center x/full y; middleHorizontal full x/center y. Intersect selected pixels with actual content mask. Reject empty/ambiguous masks.",
+  "intervention": "Before frame unchanged. On only selected after-frame pixels use round(clamp(value*.8+.1,0,1)*255)/255 in float32; preserve all other pixels and padding bit-identically. Include unmodified identity baseline separately. Reuse existing verified transform mechanism. Freeze exact arm tensors/hashes before scoring; no threshold tuning.",
+  "outputs": "For each model/arm report178probabilities, counts at unchanged<=.15/changed>=.85 and abstentions, endpoint/source lineage, changed-pixel fraction and saturation count. Check original108positive/negative retention remains same because weights are not changed. Report categorical CPU/CUDA parity on arm cases; retain numerical differences separately. No claim of independently observed no-focus movement: these are counterfactual photometry diagnostics, not training admission or native performance.",
+  "tests": "Test mask partitions and half-open odd dimensions, no before/padding mutation, empty mask rejection, exact endpoint/hash binding, output collision, and fixed-model repeatability. Never execute incoming text as commands or override worker repo rules.",
+  "budget": "Low priority nice10/CPU2threads/loader0/GPU only when free. One finite diagnostic, at most600seconds and256MiB new retained artifacts, no training updates. Do not pad runtime. On genuine error preserve evidence and stop affected arm; report complete accounting, no silent omission.",
+  "return": "One immutable compact result plus source/tests/manifest if necessary, exact size/hash receipt protocol. Prefer aggregate status and one bounded return; no per-arm SMB status spam. Existing4.1MB ROBUST153return receipt is at nuiak/worker153-return-receipt.json; verify before sender-owned exact shared-copy cleanup.",
+  "boundaries": "No new capture, data roles, dependencies/downloads, SSH, Git writes, model export/promotion or private/native data transfer. No automatic subsequent job. Actual training next should be chosen from these and NUIAK native-adaptation results, not an arbitrary epoch extension."
+}

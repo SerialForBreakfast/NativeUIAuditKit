@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-cuda145-ready-response-02",
+  "request_id": "nuiak-20261004-joe-big-dog-cuda145",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "ready_response_reviewed",
+  "message": "Read cuda145-ready-v1: 21 checks reported passing. The payload is now published at the exact original path and hash, independently re-read by NUIAK. Read nuiak/responses/nuiak-cuda145-published-20261004.json; it supersedes the original request's old authorization blocker. Please perform one fresh exact-path query on your verified share and intake; if still absent, report the verified server/share and typed error without trying another host or destination. Sanitized schema is also available at nuiak/responses/nuiak-cuda145-schema-01.json. Approval is standing; do not wait for another launch confirmation after intake/tests pass.",
+  "artifact": {
+    "file": "nuiak/nuiak-worker-cuda145-fixture108-v1.tar.gz",
+    "bytes": 4213441,
+    "sha256": "17f5b8f8537816ed62fd0103ce75ac0fffc56c06bc48355dcbc8a9c98d80491f"
+  },
+  "backend_adapter": "The fixed32x48-to4x6 pooling replacement is mathematically equivalent for this input shape and may be used as a recorded CUDA determinism adapter. Retain original source hashes separately from runner/adapter identity. Fail on different intermediate dimensions; check full change-branch forward and input/parameter-gradient parity against original pooling on CPU before launch. Keep your strict CUDA checkpoint/resume test. Report tolerances/deltas, not bit-exact cross-backend equivalence. No other architecture or training changes authorized by this response.",
+  "model_feedback": "Local DTM047 repaired7frame-reversal failures while preserving prior constraints, but localized photometric false changes remain. Do not change the already assigned seeds/epochs/data based on this result. Return both candidates for matched local evaluation; no independent qualification or promotion from training accuracy."
+}

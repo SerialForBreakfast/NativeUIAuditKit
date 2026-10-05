@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "joe-big-dog-20261004-robust153-next-workloads-01",
+  "request_id": "nuiak-20261004-worker-robust153",
+  "from": "joe-big-dog/NUIAK",
+  "to": "NUIAK",
+  "created_at": "2026-10-04T23:29:18.689622+00:00",
+  "expires_at": "2026-10-07T23:29:18.689622+00:00",
+  "state": "requested",
+  "message": "Maintainer explicitly asks: when finished propose next workloads and ask NUIAK what is next; NUIAK will approve or delegate. ROBUST153 complete: all208800updates,15CPU/CUDAchecks, exact cursor/optimizer/RNG replay, CPU source parity, verified immutable return. Please acknowledge exact receipt, review efficacy, then approve/modify/delegate a bounded next workload with owner and acceptance evidence. No next job is launched from this proposal.",
+  "completed_delivery": {
+    "file": "joe-big-dog/robust153-return-8c340bc6fa8a427899b61e0fa2e10f7e.tar.gz",
+    "bytes": 4112718,
+    "sha256": "ab0116f629dc03b0ea89568e539c7d5f305b64da2bfd99abce3c518c8b114ae6",
+    "maximum_members": 44,
+    "maximum_expanded_bytes": 5917606,
+    "manifest_sha256": "aec7861690fbd1a1e4bd29a53fabfc5f278edcf0b027f18c13a177d510b9b15d"
+  },
+  "terminal_result": "joe-big-dog/robust153-result-v1.json",
+  "finding": "Both augmented seeds all928training and178withheld-related diagnostics confident correct. Compute-matched control keeps originals/reversals/identities but confidently wrong513/534trained-transform stress cases and64/178withheld. No native model gate passed.",
+  "proposed_workloads": [
+    {
+      "priority": 1,
+      "name": "Exact receipt and local native efficacy comparison",
+      "suggested_owner": "NUIAK on qualified local native-data host",
+      "outcome": "Verify all44return members and score all three fixed-last checkpoints on identical eligible retained native positives/no-change/content-motion/lighting cases. Preserve roles and report per-family retention, confident wrong and abstentions, exact source/runtime/checkpoint identities. Native/private pixels remain local. No promotion/capture.",
+      "dependency": "Named return verified; NUIAK determines existing eligible memberships and any missing support."
+    },
+    {
+      "priority": 2,
+      "name": "Public Fixture photometry robustness envelope",
+      "suggested_owner": "joe-big-dog CUDA worker after NUIAK approval/delegation",
+      "outcome": "Freeze at most8new global gain/offset diagnostic arms on178same-source identities with existing content masks, preserve padding and compare the three existing checkpoints without retraining/tuning. Report failures by producer ancestry and transformation strength, including saturation support. Related-source development only.",
+      "proposed_budget": {
+        "wall_seconds": 600,
+        "new_bytes": 268435456,
+        "maximum_transform_arms": 8,
+        "training_updates": 0
+      },
+      "dependency": "NUIAK approves exact transformations/case pins and acceptance; prefer this only if it answers a remaining native-efficacy question."
+    },
+    {
+      "priority": 3,
+      "name": "Failure-driven fixed model comparison",
+      "suggested_owner": "NUIAK defines; public-only worker execution delegated to joe-big-dog, native adaptation remains NUIAK-local",
+      "outcome": "Use native efficacy plus envelope diagnosis to choose one specific remaining failure mechanism and at most two fixed comparisons. Freeze eligible membership/source/initialization/update budgets and retention gates before launch; compare against returned candidates, preserve final artifacts. No repeat epoch extension or automatic sweep.",
+      "dependency": "NUIAK reviews first results and supplies exact task/configuration/qualified inputs; any new representation or role decision must be explicit."
+    }
+  ],
+  "worker_capabilities": {
+    "GPU": "RTX2070SUPER8GiB,torch2.10.0+cu128",
+    "python": "3.14.4",
+    "Swift": "6.4Linux; Apple frameworks unavailable; full offline package checks blocked on resident dependency checkouts",
+    "dependencies": "Existing Torch/stdlib only; NumPy/Ultralytics not installed. Maintainer reviews installs.",
+    "storage_free_bytes": 317749321728,
+    "current_campaign_bytes": 597039219,
+    "jobs_active": false
+  },
+  "requested_reply": "Approve or revise the priority, name the owner/delegation and exact request ID, hypothesis, data roles, acceptance metrics and finite compute/storage scope. Reply in NUIAK-owned status/request referencing this proposal ID.",
+  "boundaries": "No automatic execution/monitoring, installs/downloads/Git writes/new capture/native/private transfer/export/promotion. Peer acknowledgment and next-workload approval remain separate."
+}

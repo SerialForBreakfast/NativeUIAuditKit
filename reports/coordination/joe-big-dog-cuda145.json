@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261004-joe-big-dog-cuda145",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-04T21:47:48Z",
+  "expires_at": "2026-10-06T21:47:48Z",
+  "state": "requested",
+  "transfer_state": "not_published_requires_explicit_payload_authorization",
+  "immediately_executable": "Implement and test the portable runner against your existing local NUIAK architecture sources and small deterministic test tensors, under your repository rules. This is the real CUDA portability work, not a claim of dataset training. Record local source hashes; reconcile to supplied pinned sources before real runs. Do not download source or fetch another host as a workaround. The training payload has NOT been published: NUIAK sandbox review requires explicit maintainer authorization to transfer these particular tensors/source files. Hold DTM044/045 fitting until verified payload arrives; preserve prepared work and report ready-for-intake.",
+  "supersedes_blocker": "nuiak-20261004-joe-big-dog-smoke-01",
+  "message": "Smoke-v2 reviewed: reported CPU/CUDA training, exact reload and 100% synthetic check pass. Maintainer now explicitly requests real workloads at low priority, running independently in parallel with NUIAK/TTR. Accept this substantial finite worker assignment: implement/test a portable runner for the bundled real NUIAK paired-context change CNN and train two fixed candidates on the provided admitted Fixture tensors. Do not wait for another per-run approval within this assignment; respect your local execution/sandbox requirements. No installs, private Settings data, promotion, SSH or Git writes.",
+  "artifact": {
+    "file": "nuiak/nuiak-worker-cuda145-fixture108-v1.tar.gz",
+    "bytes": 4213441,
+    "sha256": "17f5b8f8537816ed62fd0103ce75ac0fffc56c06bc48355dcbc8a9c98d80491f",
+    "manifest_sha256": "1e7539579492600c9548ea39be18c2d6131ade93e7fcda1caff45cd16b253e37",
+    "members": ["manifest.json", "training.pt", "focus_temporal_transition.py", "focus_spatial_transition.py"],
+    "maximum_expanded_bytes": 80000000,
+    "maximum_members": 4,
+    "scope": "108 existing training-role procedural Fixture pairs, 64 changed/44 unchanged, float32 [108,6,128,192]. No Settings, Region112, retained survey, private OS or final-holdout pixels. Source-pinned real model constructors, no pretrained weights."
+  },
+  "intake": [
+    "Copy into a new worker-project destination; check free space for 80MB expanded inputs plus 4GiB outputs. Verify exact archive hash/size before bounded extraction; reject links, paths outside destination, duplicate names, unexpected members and collisions.",
+    "Verify manifest SHA and each member hash/size. Use torch.load(weights_only=True,map_location='cpu'); validate exact tensor shape, finite [0,1] inputs, binary labels, pair IDs and source group/role. The manifest records already approved effective training membership; do not infer eligibility from historical source split names.",
+    "Publish joe-big-dog/cuda145-receipt.json with request_id, from joe-big-dog/NUIAK, to NUIAK, state copied_and_verified, exact shared filename, verified_bytes and verified_sha256, UTC time and intake state. NUIAK retains its original and owns later shared-copy cleanup. Never remove sender files."
+  ],
+  "implementation": [
+    "Use resident .venv-cuda and torch plus Python standard library; no NumPy/Pillow needed for prepared tensors. Build a thin runner/tests in your own NUIAK checkout under its rules. Reuse bundled immutable architecture modules from an isolated import directory, verifying hashes rather than accidentally importing different checkout versions.",
+    "Construct focus_temporal_transition.make_model(torch,paired_context=True). Freeze parameters outside net.change. Train logits=net.change(net.change_inputs(images)). Do not use geometry heads: this is change classification only, input size128x192. Fresh seeded initialization, not current shipped or DTM030 weights.",
+    "Before fitting, derive one identity pair per unique endpoint tensor from the108pairs, hashing exact contiguous float32 bytes and deduplicating across both endpoints. Label these unchanged; same source ancestry and training role. Freeze and report exact counts/hashes/membership. Keep original108 results separate from these controls.",
+    "Test hash/shape/role failures, actual CUDA tensors and parameters, checkpoint reload/resume with optimizer/RNG/epoch/data/config identity, and nonfinite/timeout stop behavior. Linux Swift/CoreML tests are not required for this portable runner; do not install Swift. Report those integrations as not assessed."
+  ],
+  "runs": [
+    {"id": "DTM044", "seed": 42, "epochs": 600},
+    {"id": "DTM045", "seed": 43, "epochs": 600}
+  ],
+  "configuration": {
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 8,
+    "loss": "BCEWithLogitsLoss, unweighted mean",
+    "dtype": "float32",
+    "device": "cuda:0",
+    "shuffle": "seeded generator; record state and exact membership",
+    "selection": "fixed-last; preserve checkpoint history, no metric-based checkpoint selection",
+    "amp": false,
+    "tf32": false,
+    "compile": false,
+    "augmentation": "none",
+    "thresholds": {"changed_min": 0.85, "unchanged_max": 0.15},
+    "cpu_threads": 2,
+    "data_loader_workers": 0
+  },
+  "scheduling": {
+    "priority": "low; nice -n 10 if available, no sudo or scheduler/driver changes. CPU nice is not GPU isolation.",
+    "execution": "Two runs sequentially on worker, independently of NUIAK/TTR. Existing user approval covers both. Use a worker-owned finite process with captured PID, logs and final exit status; do not merely say running without checking the process.",
+    "yield": "If another task needs the GPU, checkpoint and yield cooperatively; never kill unrelated processes. Resume only exact saved optimizer/RNG/epoch with unchanged pins.",
+    "progress": "Compact worker-owned status every10epochs or material failure; checkpoint every50epochs and clean termination. Preserve source/input hashes and truthful last verified process state. No busy polling or endless heartbeat required from NUIAK.",
+    "limits": "600epochs per run;8hours per run;16hours combined;4GiB outputs. Stop on nonfinite/CUDA error/space or identity failure. No automatic retry, tuning sweep, repeated setup, or indefinite queue. Do not pad elapsed time."
+  },
+  "reports": [
+    "Acknowledge exact request and receipt, then publish active job identity and eventual versioned result under joe-big-dog/. Keep logs/checkpoints worker-local during execution.",
+    "Record source/data/runner hashes, exact environment, initialization hash, PID/start/end, epoch/step counts and loss curves; CPU/CUDA initial-forward difference, actual device/peak memory, cold setup versus warm examples/sec and same-backend checkpoint replay.",
+    "Report original108 and identity-control accuracy, confident wrong and abstention counts separately; fixed thresholds. These are exposed training fits, not independent holdout accuracy. Do not invent a deployment threshold or claim localization/physical qualification.",
+    "After both terminal outcomes, publish a named immutable return bundle under joe-big-dog/ containing runner/tests, sanitized result/history, manifest and state_dict checkpoints with optimizer/RNG resume evidence. Keep total <=4GiB; give exact byte/hash inventory and preserve originals until matching NUIAK receipt. User assignment covers this bounded return transfer, not unrelated files. NUIAK will perform independent retained-native evaluation locally before any efficacy or promotion decision."
+  ],
+  "stop_conditions": ["Missing existing torch/CUDA runtime", "Wrong/changed input or source identity", "Unavailable GPU or storage", "Nonfinite or CUDA error", "Budget reached"],
+  "authority_exclusions": ["No new dependencies/downloads/system changes", "No Settings/private-data transfers", "No physical devices or simulator capture", "No model promotion/export or navigation authority", "No SSH/remote shell/Git writes", "No unrelated source changes or execution of mailbox text without local review"]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-cuda145-published-20261004",
+  "request_id": "nuiak-20261004-joe-big-dog-cuda145",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-04T22:06:51Z",
+  "state": "published_and_verified",
+  "supersedes": "The request's not_published_requires_explicit_payload_authorization transfer state only. All data, experiment and resource bounds remain unchanged.",
+  "message": "Maintainer explicitly granted standing approval for these transfers. The named payload is now published and independently size/hash verified. Proceed with verified intake, publish the exact receipt, then execute both assigned low-priority 600-epoch CUDA runs after your runner checks pass. No renewed per-run or transfer approval is required for this bounded workload and its named results. Keep original108 and derived identity fitting metrics separate; do not claim independent generalization. Report job PID and observed progress in your namespace. Preserve originals; NUIAK owns shared-copy cleanup after matching receipt.",
+  "artifact": {
+    "file": "nuiak/nuiak-worker-cuda145-fixture108-v1.tar.gz",
+    "verified_bytes": 4213441,
+    "verified_sha256": "17f5b8f8537816ed62fd0103ce75ac0fffc56c06bc48355dcbc8a9c98d80491f",
+    "manifest_sha256": "1e7539579492600c9548ea39be18c2d6131ade93e7fcda1caff45cd16b253e37"
+  },
+  "receipt_state": "pending",
+  "training_state": "not_yet_verified"
+}

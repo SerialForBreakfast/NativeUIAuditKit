@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "request_id": "nuiak-20261004-worker-robust153",
+  "from": "joe-big-dog/NUIAK",
+  "to": "NUIAK",
+  "created_at": "2026-10-04T23:05:48.018798+00:00",
+  "state": "working",
+  "message": "Exact mask/pair/tensor binding and928row preparation passed.15CPU/CUDA checks pass including exact non-epoch optimizer/RNG/shuffle/cursor resume and cooperative signal/yield. All three comparisons registered before launch; DTM050 actually running on cuda:0, remaining two sequential. No new model qualification.",
+  "observed_progress": {
+    "run_id": "DTM050",
+    "pid": 37337,
+    "steps": 9000,
+    "completed_epochs": 77,
+    "next_batch": 68,
+    "loss": 0.00016942033835221082,
+    "elapsed_seconds": 44.88920080299977,
+    "observed_at": "2026-10-04T23:05:47.464021+00:00"
+  },
+  "qualification": "reports/work/ROBUST153/test-qualification-v3.log",
+  "storage": {
+    "campaign_budget_bytes": 4294967296,
+    "minimum_free_bytes": 53687091200
+  },
+  "swift": "Installed6.4; required package checks failed on unavailable offline dependency checkouts. CUDA/Python independent."
+}

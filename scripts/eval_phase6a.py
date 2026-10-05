@@ -441,13 +441,43 @@ def run_predict(model_path: Path, source: Path, name: str, device: str | None, c
     return labels
 
 
-def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: str | None) -> None:
+DEGENERATE_POLICY = "discard-zero-area-after-native-clipping-v1"
+
+
+def filter_degenerate_predictions(image, class_count, detections):
+    """Discard only valid edge/line boxes; retain an auditable raw rejection list."""
+    kept, rejected = [], []
+    for detection in detections:
+        box = detection.get("xyxyPixels", [])
+        if len(box) != 4:
+            raise PredictionArtifactError("invalid coordinate count")
+        x1, y1, x2, y2 = box
+        if not all(math.isfinite(v) for v in box) or not (
+            0 <= x1 <= x2 <= image.width and 0 <= y1 <= y2 <= image.height
+        ):
+            raise PredictionArtifactError("invalid raw prediction geometry")
+        # Validate class and score through the unchanged artifact validator even
+        # when the original box has no area. The probe is never exported/scored.
+        make_result(image, class_count, detections=[dict(detection, xyxyPixels=[0, 0, 1, 1])])
+        (rejected if x1 == x2 or y1 == y2 else kept).append(detection)
+    return kept, {"inputCount": len(detections), "acceptedCount": len(kept),
+                  "rejectedCount": len(rejected), "rejectedDetections": rejected}
+
+
+def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: str | None, *, imgsz: int = 640, discard_degenerate: bool = False) -> None:
     """Write one prediction-artifact-v1 record per explicit manifest member.
 
     All corpus validation happens before the model is constructed. Unlike the
     legacy ``save_txt`` path, this reads Result boxes directly so empty outputs
     are explicit and cannot be mistaken for absent/stale label files.
     """
+    if type(imgsz) is not int or imgsz not in (640, 1280):
+        raise PredictionArtifactError("unsupported explicit inference resolution")
+    settings = dict(PREDICTION_SETTINGS, imgsz=imgsz)
+    if type(discard_degenerate) is not bool:
+        raise PredictionArtifactError("invalid degenerate policy option")
+    if discard_degenerate:
+        settings["postprocessing"] = DEGENERATE_POLICY
     names = load_names()
     request = load_request(manifest, len(names))
     target = ensure_new_output(output, PROJECT_ROOT)
@@ -467,7 +497,7 @@ def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: s
         try:
             kwargs = dict(
                 source=str(image.image_path),
-                imgsz=PREDICTION_SETTINGS["imgsz"],
+                imgsz=settings["imgsz"],
                 conf=PREDICTION_SETTINGS["confidence"],
                 iou=PREDICTION_SETTINGS["iou"],
                 max_det=PREDICTION_SETTINGS["maxDetections"],
@@ -489,7 +519,13 @@ def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: s
                     detections.append(
                         {"classID": int(class_id), "score": float(score), "xyxyPixels": [float(v) for v in xyxy]}
                     )
-            records.append(make_result(image, len(names), detections=detections))
+            audit = None
+            if discard_degenerate:
+                detections, audit = filter_degenerate_predictions(image, len(names), detections)
+            record = make_result(image, len(names), detections=detections)
+            if audit is not None:
+                record["postprocessingAudit"] = audit
+            records.append(record)
         except Exception as exc:
             records.append(make_result(image, len(names), failure={"code": "inference_failed", "message": str(exc)}))
         if index % 100 == 0 or index == len(request.images):
@@ -501,7 +537,7 @@ def export_predictions(manifest: Path, checkpoint: Path, output: Path, device: s
         checkpoint=resolved_checkpoint,
         category_map=CATEGORY_MAP,
         category_map_version=category_map_version(),
-        settings=PREDICTION_SETTINGS,
+        settings=settings,
         results=records,
     )
     write_artifact(target, artifact)

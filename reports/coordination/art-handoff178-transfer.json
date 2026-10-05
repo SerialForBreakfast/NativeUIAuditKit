@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "requestID": "nuiak-20261005-art-handoff178",
+  "sharedPath": "nuiak/ttr-artwork-handoff178.zip",
+  "localPath": "reports/work/UI-SOURCE-177/artifacts/ttr-artwork-handoff178.zip",
+  "bytes": 2571634,
+  "sha256": "2ab382ed82cb804bd9dbb0ea08c9a488c87a184c503b9971cae3d1cffc4401f4",
+  "receiptPath": "tvtestrig/responses/nuiak-20261005-art-handoff178-receipt.yaml"
+}

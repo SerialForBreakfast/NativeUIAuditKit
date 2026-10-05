@@ -22,12 +22,427 @@ import XCTest
 import SwiftUI
 import CryptoKit
 
+/// Development-only geometry qualification. Never changes existing corpus bytes.
+@MainActor
+final class NativePageGeometry150Test: XCTestCase {
+    func testNativeContext157() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_NATIVE_PAGE150"] == "approved-context157" else { throw XCTSkip("Explicit native context qualification required") }
+        guard let target = env["NUA_NATIVE_PAGE150_TARGET"], target == env["SIMULATOR_UDID"] else { throw CocoaError(.fileReadCorruptFile) }
+        let output = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("native-page157-frozen")
+        guard !FileManager.default.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false)
+        var rows: [[String: Any]] = []; var failures: [[String: Any]] = []; var bytes = 0
+        let started = ProcessInfo.processInfo.systemUptime
+        for family in ["UIKitControls", "KitchenSink"] {
+            for modern in [false, true] {
+                for dark in [false, true] {
+                    for seed: UInt64 in [7, 19, 31] {
+                        let id = "\(family)-\(modern)-\(dark)-\(seed)"
+                        guard ProcessInfo.processInfo.systemUptime - started < 180 else { throw CocoaError(.userCancelled) }
+                        let config = GeneratorRunConfig(seed: seed, templateFamily: family, osProfile: modern ? .ios26 : .ios17,
+                            simulatorOverride: SimulatorStateOverride(time: "09:41", batteryLevel: 100, batteryState: "charging", cellularBars: 5,
+                                wifiBars: 3, cellularMode: "active", operatorName: ""), colorScheme: dark ? .dark : .light,
+                            dynamicTypeSize: .large, deviceName: "iPhone 17 Pro", pixelScale: modern ? 3 : 2, locale: "en_US", layoutDirection: .ltr)
+                        var reference: Data?; var container = CGRect.zero; var body = CGRect.zero
+                        let evidence: (Data, CGRect, CGRect) -> Void = { reference = $0; container = $1; body = $2 }
+                        do {
+                            let result: CaptureResult
+                            if family == "UIKitControls" {
+                                let vc = UIKitControlsViewController(seed: seed, config: config)
+                                result = try await ScreenshotCapture.captureUIKit(vc, config: config, nativePageEvidence: evidence)
+                                XCTAssertNil(vc.view.window, "Owned window must detach its controller")
+                                XCTAssertEqual(vc.view.layer.speed, 1)
+                                XCTAssertEqual(vc.view.layer.timeOffset, 0)
+                                let page = try XCTUnwrap(vc.annotatedViews.first { $0.elementType == "pageControl" }?.view as? UIPageControl)
+                                XCTAssertFalse(page.isHidden, "Controlled removal must restore visibility")
+                            } else {
+                                var corpus = ContentCorpus(seed: seed)
+                                var template = KitchenSinkConfig.make(seed: seed, corpus: &corpus)
+                                template.colorScheme = dark ? .dark : .light
+                                result = try await ScreenshotCapture.capture(KitchenSinkTemplate(config: template),
+                                    windowSize: CGSize(width: modern ? 393 : 375, height: 1100), config: config, nativePageEvidence: evidence)
+                            }
+                            let hidden = try XCTUnwrap(reference)
+                            let page = try XCTUnwrap(result.elements.first { $0.elementType == "pageControl" })
+                            XCTAssertEqual(page.frame, body)
+                            bytes += result.png.count + hidden.count
+                            guard bytes < 256 * 1024 * 1024 else { throw CocoaError(.fileWriteOutOfSpace) }
+                            try result.png.write(to: output.appendingPathComponent(id + ".png"), options: .withoutOverwriting)
+                            try hidden.write(to: output.appendingPathComponent(id + "-hidden.png"), options: .withoutOverwriting)
+                            try AnnotationWriter.write(result: result, config: config, imageFileName: id + ".png", templateFamily: family,
+                                generatorVersion: "native-context157-v1", to: output.appendingPathComponent(id + ".json"))
+                            rows.append(["id": id, "family": family, "seed": seed, "dark": dark, "modern": modern, "scale": result.scale,
+                                "sha256": result.sha256, "hiddenSHA256": SHA256.hash(data: hidden).map { String(format: "%02x", $0) }.joined(),
+                                "frame": [container.minX, container.minY, container.width, container.height],
+                                "body": [body.minX, body.minY, body.width, body.height]])
+                        } catch {
+                            let error = error as NSError
+                            for (key, suffix) in [("visiblePNG", "-failed.png"), ("hiddenPNG", "-failed-hidden.png")] {
+                                if let data = error.userInfo[key] as? Data {
+                                    bytes += data.count
+                                    guard bytes < 256 * 1024 * 1024 else { throw CocoaError(.fileWriteOutOfSpace) }
+                                    try data.write(to: output.appendingPathComponent(id + suffix), options: .withoutOverwriting)
+                                }
+                            }
+                            failures.append(["id": id, "error": error.localizedDescription, "domain": error.domain, "code": error.code])
+                        }
+                    }
+                }
+            }
+        }
+        try JSONSerialization.data(withJSONObject: ["version": "native-context157-v1", "target": target, "rows": rows, "failures": failures,
+            "seconds": ProcessInfo.processInfo.systemUptime - started], options: [.prettyPrinted, .sortedKeys])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("NATIVE_CONTEXT157_COMPLETE \(output.path)")
+        XCTAssertEqual(rows.count, 24); XCTAssertTrue(failures.isEmpty, "Rejected cases remain unqualified")
+    }
+
+    func testPageCompositions155() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_NATIVE_PAGE150"] == "approved-compositions155" else { throw XCTSkip("Explicit composition capture required") }
+        guard let target = env["NUA_NATIVE_PAGE150_TARGET"], target == env["SIMULATOR_UDID"] else { throw CocoaError(.fileReadCorruptFile) }
+        let output = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("native-page155-compositions")
+        guard !FileManager.default.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false)
+        let started = ProcessInfo.processInfo.systemUptime
+        var rows: [[String: Any]] = []; var bytes = 0
+        for family in ["reader-footer", "gallery-inspector"] {
+            for native in [false, true] {
+                for dark in [false, true] {
+                    for pages in [3, 5, 7] {
+                        for left in [false, true] {
+                            for seed in [7, 19] {
+                                guard ProcessInfo.processInfo.systemUptime - started < 180 else { throw CocoaError(.userCancelled) }
+                                let id = "\(family)-\(native)-\(dark)-\(pages)-\(left)-\(seed)"
+                                let config = GeneratorRunConfig(seed: UInt64(seed), templateFamily: "PageComposition155",
+                                    osProfile: .ios26, simulatorOverride: SimulatorStateOverride(time: "09:41", batteryLevel: 100,
+                                    batteryState: "charging", cellularBars: 5, wifiBars: 3, cellularMode: "active", operatorName: ""),
+                                    colorScheme: dark ? .dark : .light, dynamicTypeSize: .large, deviceName: "iPhone 17 Pro",
+                                    pixelScale: 3, locale: "en_US", layoutDirection: .ltr)
+                                let vc = PageComposition155Controller(family: family, native: native, dark: dark, pages: pages, left: left, seed: seed)
+                                let visible = try await ScreenshotCapture.captureUIKit(vc, config: config)
+                                let frame = vc.indicator.convert(vc.indicator.bounds, to: vc.view)
+                                vc.indicator.isHidden = true
+                                let hidden = try await ScreenshotCapture.captureUIKit(vc, config: config)
+                                bytes += visible.png.count + hidden.png.count
+                                guard bytes < 256 * 1024 * 1024 else { throw CocoaError(.fileWriteOutOfSpace) }
+                                try visible.png.write(to: output.appendingPathComponent(id + ".png"), options: .withoutOverwriting)
+                                try hidden.png.write(to: output.appendingPathComponent(id + "-hidden.png"), options: .withoutOverwriting)
+                                rows.append(["id": id, "family": family, "native": native, "dark": dark, "pages": pages,
+                                    "left": left, "seed": seed, "selection": seed % pages, "prominent": native && seed == 19,
+                                    "scale": visible.scale, "width": visible.pixelSize.width, "height": visible.pixelSize.height,
+                                    "frame": [frame.minX, frame.minY, frame.width, frame.height],
+                                    "sha256": visible.sha256, "hiddenSHA256": hidden.sha256])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        try JSONSerialization.data(withJSONObject: ["version": "page-composition155-v1", "target": target,
+            "runtime": ProcessInfo.processInfo.operatingSystemVersionString, "rows": rows,
+            "seconds": ProcessInfo.processInfo.systemUptime - started], options: [.sortedKeys, .prettyPrinted])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("PAGE_COMPOSITION155_COMPLETE \(output.path)")
+    }
+
+    func testNativePageAlphaBounds() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_NATIVE_PAGE150"] == "approved-alpha-development" else {
+            throw XCTSkip("Explicit alpha qualification required")
+        }
+        guard let target = env["NUA_NATIVE_PAGE150_TARGET"], !target.isEmpty,
+              target == env["SIMULATOR_UDID"] else { throw CocoaError(.fileReadCorruptFile) }
+        let fm = FileManager.default
+        let output = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("native-page150-alpha")
+        guard !fm.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try fm.createDirectory(at: output, withIntermediateDirectories: false)
+        let started = ProcessInfo.processInfo.systemUptime
+        var rows: [[String: Any]] = []; var bytes = 0
+        for modern in [false, true] {
+            for count in [3, 5, 7] {
+                for selected in [0, count / 2, count - 1] {
+                    for dark in [false, true] {
+                        for prominent in [false, true] {
+                            guard ProcessInfo.processInfo.systemUptime - started < 120 else { throw CocoaError(.userCancelled) }
+                            let id = "alpha-\(modern)-\(count)-\(selected)-\(dark)-\(prominent)"
+                            let config = GeneratorRunConfig(seed: 150, templateFamily: "NativePageAlpha150", osProfile: modern ? .ios26 : .ios17,
+                                simulatorOverride: SimulatorStateOverride(time: "09:41", batteryLevel: 100, batteryState: "charging", cellularBars: 5,
+                                    wifiBars: 3, cellularMode: "active", operatorName: ""), colorScheme: dark ? .dark : .light,
+                                dynamicTypeSize: .large, deviceName: "iPhone 17 Pro", pixelScale: modern ? 3 : 2, locale: "en_US", layoutDirection: .ltr)
+                            let vc = NativePageAlphaController(count: count, selected: selected, dark: dark, prominent: prominent, scale: CGFloat(config.pixelScale))
+                            let result = try await ScreenshotCapture.captureUIKit(vc, config: config)
+                            try result.png.write(to: output.appendingPathComponent(id + ".png"), options: .withoutOverwriting)
+                            bytes += result.png.count
+                            guard bytes < 256 * 1024 * 1024, let bounds = vc.measured else { throw CocoaError(.fileReadCorruptFile) }
+                            let frame = vc.control.convert(bounds, to: vc.view)
+                            rows.append(["id": id, "sha256": result.sha256, "scale": result.scale,
+                                "dark": dark, "prominent": prominent, "pages": count, "selection": selected,
+                                "frame": [frame.minX, frame.minY, frame.width, frame.height]])
+                        }
+                    }
+                }
+            }
+        }
+        try JSONSerialization.data(withJSONObject: ["version": "native-page150-alpha-v1", "target": target, "rows": rows,
+            "seconds": ProcessInfo.processInfo.systemUptime - started], options: [.sortedKeys, .prettyPrinted])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("NATIVE_PAGE150_ALPHA_COMPLETE \(output.path)")
+    }
+
+    func testNativePageGeometry() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_NATIVE_PAGE150"] == "approved-development" else {
+            throw XCTSkip("Explicit native page geometry execution required")
+        }
+        guard let target = env["NUA_NATIVE_PAGE150_TARGET"], !target.isEmpty,
+              target == env["SIMULATOR_UDID"] else { throw CocoaError(.fileReadCorruptFile) }
+        let fm = FileManager.default
+        let output = fm.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("native-page150")
+        guard !fm.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try fm.createDirectory(at: output, withIntermediateDirectories: false)
+        let started = ProcessInfo.processInfo.systemUptime
+        var rows: [[String: Any]] = []
+        var bytes = 0
+        for width in [375.0, 430.0] {
+            for count in [3, 5, 7] {
+                for selection in [0, count / 2, count - 1] {
+                    for dark in [false, true] {
+                        guard ProcessInfo.processInfo.systemUptime - started < 120 else {
+                            throw CocoaError(.userCancelled)
+                        }
+                        let id = "native-\(Int(width))-\(count)-\(selection)-\(dark ? "dark" : "light")"
+                        let config = GeneratorRunConfig(seed: 150, templateFamily: "NativePageGeometry150",
+                            osProfile: .ios26,
+                            simulatorOverride: SimulatorStateOverride(time: "09:41", batteryLevel: 100,
+                                batteryState: "charging", cellularBars: 5, wifiBars: 3,
+                                cellularMode: "active", operatorName: ""),
+                            colorScheme: dark ? .dark : .light, dynamicTypeSize: .large,
+                            deviceName: "iPhone 17 Pro", pixelScale: 3, locale: "en_US", layoutDirection: .ltr)
+                        let view = ZStack {
+                            (dark ? Color.black : Color.white)
+                            NativeUIPageControlView(numberOfPages: count, currentPage: selection)
+                                .fixedSize().captureFrame(id: "pageControl_0")
+                        }.ignoresSafeArea().environment(\.colorScheme, dark ? .dark : .light)
+                        let result = try await ScreenshotCapture.capture(view,
+                            windowSize: CGSize(width: width, height: 180), config: config)
+                        let frame = try XCTUnwrap(result.elements.first { $0.id == "pageControl_0" }).frame
+                        let control = UIPageControl()
+                        control.numberOfPages = count
+                        control.currentPage = selection
+                        let publicSize = control.size(forNumberOfPages: count)
+                        guard frame.width > 0, frame.height > 0, frame.width < width / 2,
+                              frame.minX >= 0, frame.maxX <= width,
+                              frame.minY >= 0, frame.maxY <= 180 else {
+                            throw CocoaError(.fileReadCorruptFile)
+                        }
+                        bytes += result.png.count
+                        guard bytes < 256 * 1024 * 1024 else { throw CocoaError(.fileWriteOutOfSpace) }
+                        try result.png.write(to: output.appendingPathComponent(id + ".png"), options: .withoutOverwriting)
+                        try AnnotationWriter.write(result: result, config: config, imageFileName: id + ".png",
+                            templateFamily: "NativePageGeometry150", generatorVersion: "native-page150-probe-v1",
+                            to: output.appendingPathComponent(id + ".json"))
+                        rows.append(["id": id, "width": width, "pages": count, "selection": selection,
+                            "theme": dark ? "dark" : "light", "sha256": result.sha256,
+                            "frame": [frame.minX, frame.minY, frame.width, frame.height],
+                            "publicSize": [publicSize.width, publicSize.height]])
+                    }
+                }
+            }
+        }
+        let receipt: [String: Any] = ["version": "native-page150-probe-v1", "target": target,
+            "runtime": ProcessInfo.processInfo.operatingSystemVersionString,
+            "rows": rows, "count": rows.count, "seconds": ProcessInfo.processInfo.systemUptime - started]
+        try JSONSerialization.data(withJSONObject: receipt, options: [.sortedKeys, .prettyPrinted])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("NATIVE_PAGE150_COMPLETE \(output.path)")
+    }
+}
+
+@MainActor
+private final class PageComposition155Controller: UIViewController, UIKitAnnotatable {
+    let indicator: UIView
+    private var hosting: UIHostingController<NativeUIPageDotsView>?
+    let family: String, left: Bool
+    let size: CGSize
+    init(family: String, native: Bool, dark: Bool, pages: Int, left: Bool, seed: Int) {
+        self.family = family; self.left = left
+        if native {
+            let control = UIPageControl()
+            control.numberOfPages = pages; control.currentPage = seed % pages
+            control.currentPageIndicatorTintColor = .label; control.pageIndicatorTintColor = .tertiaryLabel
+            control.backgroundStyle = seed == 19 ? .prominent : .automatic
+            control.isUserInteractionEnabled = seed == 19
+            indicator = control; size = control.size(forNumberOfPages: pages)
+        } else {
+            let host = UIHostingController(rootView: NativeUIPageDotsView(pageCount: pages, currentPage: seed % pages))
+            hosting = host; indicator = host.view; host.view.backgroundColor = .clear
+            size = host.sizeThatFits(in: CGSize(width: 350, height: 60))
+        }
+        super.init(nibName: nil, bundle: nil)
+        overrideUserInterfaceStyle = dark ? .dark : .light
+        view.backgroundColor = .systemBackground
+        if let host = hosting { addChild(host); host.didMove(toParent: self) }
+        view.addSubview(indicator)
+        let title = UILabel(frame: CGRect(x: 24, y: 65, width: 340, height: 40))
+        title.text = family == "reader-footer" ? "Reading collection \(seed)" : "Gallery inspector \(seed)"
+        title.font = .systemFont(ofSize: 23, weight: .bold); view.addSubview(title)
+        let card = UIView(frame: CGRect(x: 24, y: 125, width: 345, height: family == "reader-footer" ? 385 : 240))
+        card.backgroundColor = .secondarySystemBackground; card.layer.cornerRadius = 14; view.addSubview(card)
+        let text = UILabel(frame: card.bounds.insetBy(dx: 20, dy: 20)); text.numberOfLines = 0
+        text.text = family == "reader-footer" ? "A quiet afternoon\n\nChapter \(seed)\n\nExplore the collection one page at a time.\n\nYour place is saved." : "Collection \(seed)\n\nImage details\n\nCaptured locally\n\nBrowse related items below."
+        text.textColor = .label; text.font = .systemFont(ofSize: 18); card.addSubview(text)
+        let button = UIButton(type: .system); button.frame = CGRect(x: 24, y: 680, width: 345, height: 44)
+        button.setTitle("Continue", for: .normal); view.addSubview(button)
+    }
+    required init?(coder: NSCoder) { fatalError("Not used") }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        indicator.frame = CGRect(x: left ? 28 : (view.bounds.width-size.width)/2,
+                                 y: family == "reader-footer" ? 550 : 410, width: size.width, height: size.height)
+    }
+    var annotatedViews: [UIKitAnnotatedView] {
+        indicator.isHidden ? [] : [UIKitAnnotatedView(id: "pageControl_0", elementType: "pageControl", view: indicator)]
+    }
+}
+
+@MainActor
+private final class NativePageAlphaController: UIViewController, UIKitAnnotatable {
+    let control = UIPageControl()
+    let scale: CGFloat
+    var measured: CGRect?
+    init(count: Int, selected: Int, dark: Bool, prominent: Bool, scale: CGFloat) {
+        self.scale = scale
+        super.init(nibName: nil, bundle: nil)
+        overrideUserInterfaceStyle = dark ? .dark : .light
+        view.backgroundColor = dark ? .black : .white
+        control.numberOfPages = count; control.currentPage = selected
+        control.currentPageIndicatorTintColor = .label
+        control.pageIndicatorTintColor = .tertiaryLabel
+        control.isUserInteractionEnabled = prominent
+        control.backgroundStyle = prominent ? .prominent : .automatic
+        view.addSubview(control)
+    }
+    required init?(coder: NSCoder) { fatalError("Not used") }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let size = control.size(forNumberOfPages: control.numberOfPages)
+        control.frame = CGRect(x: (view.bounds.width - size.width) / 2, y: 151,
+                               width: size.width, height: size.height)
+    }
+    var annotatedViews: [UIKitAnnotatedView] {
+        measured = try? NativePageVisualBounds.measure(control, scale: scale)
+        return [UIKitAnnotatedView(id: "pageControl_0", elementType: "pageControl", view: control)]
+    }
+}
+
 /// Explicit corpus repair, separate from the normal offline unit suite.
 @MainActor
 final class PageDotRegenerationTest: XCTestCase {
+    /// Exact training-only native repair. Existing manual regeneration stays separate.
+    func testNativePageRepair159() async throws {
+        let env = ProcessInfo.processInfo.environment
+        let variation = env["NUA_PAGE_REGEN_EXECUTE"] == "approved-172"
+        guard variation || env["NUA_PAGE_REGEN_EXECUTE"] == "approved-159" else { throw XCTSkip("Explicit native repair required") }
+        let target = try XCTUnwrap(env["NUA_PAGE_REGEN_TARGET"])
+        guard target == env["SIMULATOR_UDID"] else { throw CocoaError(.fileReadCorruptFile) }
+        let url = URL(fileURLWithPath: try XCTUnwrap(env["NUA_PAGE_REGEN_CATALOG"]))
+        guard url.resolvingSymlinksInPath() == url else { throw CocoaError(.fileReadInvalidFileName) }
+        let data = try Data(contentsOf: url)
+        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        guard data.count < 4_000_000, digest == env["NUA_PAGE_REGEN_SHA256"] else { throw CocoaError(.fileReadCorruptFile) }
+        let catalog = try JSONDecoder().decode(Catalog.self, from: data)
+        if variation {
+            guard catalog.version == "native-placement-capture-v1", catalog.target == target,
+                  catalog.split == "train", [24,264].contains(catalog.members.count),
+                  Set(catalog.members.map(\.id)).count == catalog.members.count,
+                  catalog.members.allSatisfy({ ["UIKitControls","KitchenSink"].contains($0.family) &&
+                    ["leading","center","trailing"].contains($0.placement ?? "") &&
+                    ["system-blue","semantic-label"].contains($0.tint ?? "") }) else { throw CocoaError(.fileReadCorruptFile) }
+        } else {
+          guard catalog.version == "native-page-repair-v1", catalog.members.count == 900,
+              Set(catalog.members.map(\.id)).count == 900,
+              catalog.members.filter({ $0.family == "UIKitControls" }).count == 700,
+              catalog.members.filter({ $0.family == "KitchenSink" }).count == 200 else { throw CocoaError(.fileReadCorruptFile) }
+        }
+        let fm = FileManager.default
+        let outputName = variation ? (catalog.members.count == 24 ? "native-placement172-qualification-r4" : "native-placement172-batch-r4") : "native-page159"
+        let output = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(outputName)
+        guard !fm.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try fm.createDirectory(at: output, withIntermediateDirectories: false)
+        let started = ProcessInfo.processInfo.systemUptime
+        var bytes = 0; var rows: [[String: Any]] = []
+        for member in catalog.members {
+            do {
+                guard ProcessInfo.processInfo.systemUptime - started < 1800,
+                      member.id.range(of: variation ? "^placement171-img_[0-9]{6}-(leading|center|trailing)-(system-blue|semantic-label)$" : "^img_[0-9]{6}$", options: .regularExpression) != nil,
+                      [2, 3].contains(member.scale) else { throw CocoaError(.userCancelled) }
+                let config = GeneratorRunConfig(seed: member.seed, templateFamily: member.family,
+                    osProfile: member.scale == 3 ? .ios26 : .ios17, simulatorOverride: member.simulatorState,
+                    colorScheme: member.colorScheme, dynamicTypeSize: member.dynamicTypeSize,
+                    deviceName: member.deviceName, pixelScale: member.scale, locale: member.locale,
+                    layoutDirection: member.layoutDirection, accessibilityFlags: member.accessibilityFlags)
+                var hidden: Data?; var frame = CGRect.zero; var body = CGRect.zero
+                var resolved: [String: Any] = [:]
+                let style = variation ? try NativePageTrainingStyle(placement: member.placement!, tint: member.tint!, rtl: member.layoutDirection == .rtl,
+                    sceneWidth: CGFloat(member.width) / CGFloat(member.scale)) : nil
+                let configure: ((UIView) throws -> Void)? = variation ? { scene in
+                    resolved = try NativePageVisualBounds.configure(scene, placement: member.placement!,
+                        tint: member.tint!, rtl: member.layoutDirection == .rtl)
+                } : nil
+                let evidence: (Data, CGRect, CGRect) -> Void = { hidden = $0; frame = $1; body = $2 }
+                let result: CaptureResult
+                if member.family == "UIKitControls" {
+                    result = try await ScreenshotCapture.captureUIKit(UIKitControlsViewController(seed: member.seed, config: config, pageTrainingStyle: style),
+                        config: config, nativePageEvidence: evidence, nativePageConfiguration: configure)
+                } else {
+                    var corpus = ContentCorpus(seed: member.seed)
+                    result = try await ScreenshotCapture.capture(KitchenSinkTemplate(config: .make(seed: member.seed, corpus: &corpus), pageTrainingStyle: style),
+                        windowSize: CGSize(width: 393, height: 1100), config: config, nativePageEvidence: evidence, nativePageConfiguration: configure)
+                }
+                let reference = try XCTUnwrap(hidden)
+                guard Int(result.pixelSize.width) == member.width, Int(result.pixelSize.height) == member.height else {
+                    throw CocoaError(.fileReadCorruptFile)
+                }
+                bytes += result.png.count + reference.count
+                guard bytes < 2 * 1024 * 1024 * 1024 else { throw CocoaError(.fileWriteOutOfSpace) }
+                try result.png.write(to: output.appendingPathComponent(member.id + ".png"), options: .withoutOverwriting)
+                try reference.write(to: output.appendingPathComponent(member.id + "-hidden.png"), options: .withoutOverwriting)
+                try AnnotationWriter.write(result: result, config: config, imageFileName: member.id + ".png",
+                    templateFamily: member.family, generatorVersion: variation ? "native-placement172-v1" : "native-page-repair159-v1",
+                    to: output.appendingPathComponent(member.id + ".json"))
+                rows.append(["id": member.id, "scale": member.scale, "sha256": result.sha256,
+                    "hiddenSHA256": SHA256.hash(data: reference).map { String(format: "%02x", $0) }.joined(),
+                    "frame": [frame.minX, frame.minY, frame.width, frame.height],
+                    "body": [body.minX, body.minY, body.width, body.height], "resolvedVariation": resolved])
+                if rows.count % 50 == 0 { print("NATIVE159_PROGRESS \(rows.count)/900 bytes=\(bytes)") }
+            } catch {
+                let error = error as NSError
+                for (key, suffix) in [("visiblePNG", "-failed.png"), ("hiddenPNG", "-failed-hidden.png")] {
+                    if let png = error.userInfo[key] as? Data { try png.write(to: output.appendingPathComponent(member.id + suffix), options: .withoutOverwriting) }
+                }
+                try JSONSerialization.data(withJSONObject: ["version": "native-page-repair-failure-v1", "failed": member.id,
+                    "error": error.localizedDescription, "rows": rows, "catalogSHA256": digest], options: [.sortedKeys, .prettyPrinted])
+                    .write(to: output.appendingPathComponent("failure.json"), options: .withoutOverwriting)
+                print("NATIVE159_FAILED \(output.path)")
+                throw error
+            }
+        }
+        try JSONSerialization.data(withJSONObject: ["version": variation ? "native-placement-receipt-v1" : "native-page-repair-receipt-v1", "target": target,
+            "catalogSHA256": digest, "rows": rows, "bytes": bytes,
+            "runtimeOS": ProcessInfo.processInfo.operatingSystemVersionString,
+            "seconds": ProcessInfo.processInfo.systemUptime - started], options: [.sortedKeys, .prettyPrinted])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("NATIVE159_COMPLETE \(output.path)")
+    }
+
     private struct Catalog: Decodable, Sendable {
         let version: String
         let members: [Member]
+        let target: String?
+        let split: String?
     }
     private struct Member: Decodable, Sendable {
         let id: String
@@ -43,6 +458,8 @@ final class PageDotRegenerationTest: XCTestCase {
         let deviceName: String
         let simulatorState: SimulatorStateOverride
         let accessibilityFlags: AccessibilityFlags
+        let placement: String?
+        let tint: String?
     }
 
     func testApprovedPageDotRegeneration() async throws {

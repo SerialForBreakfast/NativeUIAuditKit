@@ -1,5 +1,18 @@
 # Concurrent delivery roadmap
 
+**UI-SOURCE177 research completed:** [source intake](Plans/UIComponentIntake.md)
+ranks Apple media sample first for full screens, SwiftUI-Kit for cheap native controls,
+ParallaxView for custom focus; whole Swiftfin import deferred due dependency coupling.
+Low-priority follow-ons remain below active model/intake work. One poster sheet is
+review-only after dimensional/grid deviations; no native import or training claim.
+
+**Low-priority opportunistic lane — ART-A–D (2026-10-05):**
+[Generated media artwork](Plans/GeneratedMediaAssets.md) provides fictional posters,
+episode art, avatars and backdrops for native compositions. Start with contract/crop
+tooling, then a7-request development pilot before scaling. Preserve model/intake
+priorities; no capture, training or generation was launched by this plan. Rich artwork
+alone does not establish layout diversity, unseen-app transfer or focus ground truth.
+
 **RESOLUTION-96 supersedes resolution speculation:** DTM023fits67/68confident joint
 training but fails35/122identical-frame invariant probes. Do not replace DTM018.
 Priority is matched unchanged-focus data: proposed training-only self-pair augmentation

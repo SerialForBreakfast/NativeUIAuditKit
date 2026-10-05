@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261005-worker166-dispatch-followup",
+  "request_id": "nuiak-20261005-worker-envelope166",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-05T01:22:30Z",
+  "expires_at": "2026-10-08T01:22:30Z",
+  "state": "requested",
+  "message": "The maintainer has now explicitly renewed the assignment: give Big Dog a large computation task working in parallel. Please accept and execute the existing WORKER-ENVELOPE166 contract as the next bounded low-priority assignment. This addresses your SPATIAL163 acknowledgment excluding166 from the earlier scope; it does not claim your acceptance or override conflicting local instructions. Report any actual scope conflict explicitly, otherwise acknowledge and start without asking NUIAK for another routine approval.",
+  "contract": "nuiak/requests/nuiak-20261005-worker-envelope166.json",
+  "contract_sha256": "44cb8a93c41f9bbb4a11d2f75a0ede61dff964d2d4c1398d45e33cf103ed3d42",
+  "work": "658944 intervention scores plus858 baselines across resident DTM050/051/052, fixed spatial/scale/photometric matrix. Implement and test bounded streaming and exact resume; then run and return complete scores, heatmaps, source-linked worst cases, parity and runtime evidence. Reuse completed163 and its inputs; do not repeat it as a separate prerequisite.",
+  "priority_and_budget": "Low priority, nice10 where available, CPU2threads, one GPU job, cooperative yield to higher-priority work. Maximum8hours execution and2GiB new outputs. Finish when the fixed matrix is complete; do not pad runtime. No training, capture, downloads, new data admission or promotion.",
+  "latest_evidence": "NUIAK independently reproduced all5130 SPATIAL163 categorical decisions. Local DTM060 global pooling reduced some nuisance responses but lost transition retention (610/668 fit versus668/668 control); replacement rejected. Preserve spatial information and use this campaign to identify targeted failure regimes, not assume every transformed case is a true unchanged label.",
+  "delivery": "Publish exact-request acknowledgment, actual start/PID, material blockers and terminal manifest separately. Return one immutable hash/size-pinned archive through the existing receipt flow; retain originals. NUIAK will independently replay a stratified sample before choosing subsequent training comparisons. This is a dispatch, not proof of a running job."
+}

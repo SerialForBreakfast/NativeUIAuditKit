@@ -55,9 +55,11 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
 
     // MARK: - Init
 
-    public init(seed: UInt64, config: GeneratorRunConfig) {
+    private let pageTrainingStyle: NativePageTrainingStyle?
+    public init(seed: UInt64, config: GeneratorRunConfig, pageTrainingStyle: NativePageTrainingStyle? = nil) {
         self.seed = seed
         self.runConfig = config
+        self.pageTrainingStyle = pageTrainingStyle
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -232,6 +234,12 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
         pageLabel.frame = CGRect(x: hPad, y: y, width: controlWidth, height: labelHeight)
         y += labelHeight + controlSpacing
         pageControl.frame = CGRect(x: hPad, y: y, width: controlWidth, height: 26)
+        if let style = pageTrainingStyle {
+            let width = pageControl.size(forNumberOfPages: pageControl.numberOfPages).width
+            pageControl.frame = CGRect(x: style.center(width: view.bounds.width, controlWidth: width) - width / 2,
+                y: y, width: width, height: 26)
+            style.applyTint(pageControl)
+        }
         y += 26 + rowSpacing
 
         // Toggle

@@ -35,7 +35,7 @@ def prepare():
     print(h.sha(BASE/'page-recipes.json'))
 
 
-def checked_annotation(recipe,image,ann):
+def checked_annotation(recipe,image,ann,native_body=None):
     a=h.read(ann);meta=a['image'];scale=meta['scale']
     h.require(a['imageSHA256']==h.sha(image) and a['generatorProfile']['seed']==recipe['seed'] and
         a['generatorProfile']['templateFamily']==recipe['family'],'regenerated_identity')
@@ -44,10 +44,15 @@ def checked_annotation(recipe,image,ann):
     with Image.open(image) as im:
         h.require(im.format=='PNG' and im.size==(recipe['width'],recipe['height']),'regenerated_dimensions')
         pixel=hashlib.sha256(im.convert('RGB').tobytes()).hexdigest()
-    dots=[e for e in a['elements'] if e['id']=='pageControl_0']
+    dots=[e for e in a['elements'] if (e['elementType']=='pageControl' if native_body is not None else e['id']=='pageControl_0')]
     h.require(len(dots)==1,'page_dot_missing')
-    box=dots[0]['boundsPoints'];h.require(any(abs(box['width']-w)<1 for w in (25,40,55,70)) and
-        abs(box['height']-10)<1,'page_dot_not_intrinsic')
+    box=dots[0]['boundsPoints']
+    if native_body is None:
+        h.require(any(abs(box['width']-w)<1 for w in (25,40,55,70)) and abs(box['height']-10)<1,'page_dot_not_intrinsic')
+    else:
+        h.require(len(native_body)==4 and all(math.isfinite(v) for v in native_body) and
+            native_body[2]>0 and native_body[3]>0 and
+            all(abs(box[k]-v)<=1e-6 for k,v in zip(('x','y','width','height'),native_body)), 'native_body_mismatch')
     h.require(box['x']>=0 and box['y']>=0 and (box['x']+box['width'])*scale<=recipe['width']+.5 and
         (box['y']+box['height'])*scale<=recipe['height']+.5,'page_dot_outside_image')
     h.require(len({e['id'] for e in a['elements']})==len(a['elements']),'duplicate_elements')

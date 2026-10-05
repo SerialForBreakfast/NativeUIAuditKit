@@ -1,5 +1,13 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+October5 experimental POOL167 tests position-dependent change readout: replace
+4×6adaptive pooling with a global spatial mean broadcast to4×6, retaining all
+parameter shapes and existing RGB/difference encoding. Same668admitted examples,
+DTM049initializer and120epoch trainer as retained DTM054control. This reduces
+functional spatial capacity, not guaranteed image-translation invariance:
+convolution/padding/content effects remain. No production API or weights change;
+checkpoint metadata must declare this nondefault pooling operation.
+
 Direct paired-image53 is an experimental six-channel before/after CNN with two
 focused-box targets and semantic change output. Full-frame preprocessing is versioned
 separately; production FocusRing crops remain unchanged. Native geometry and IDs are
@@ -706,6 +714,12 @@ Hard negatives train the model to avoid false positives on visually similar but 
 ---
 
 ## 8. Training
+
+FEASIBILITY140 is a fitted diagnostic linear-program witness, not a new encoder or
+production model. Minimize correction infinity norm subject to fixed old/native
+margin gates on existing scaled spatial features, then independently check the
+float32 scoring path. It distinguishes finding a feasible head from reaching one
+with radial Adam; no independent accuracy or physical-device qualification follows.
 
 MARGIN139 changes only the experimental retention slack policy: allow finite
 margin decreases while staying above the unchanged .85/.15 decision gate, with

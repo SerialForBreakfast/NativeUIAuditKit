@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261005-residual160-supported-artwork",
+  "request_id": "nuiak-20261004-residual160-native-appearance",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-05T04:03:14Z",
+  "expires_at": "2026-10-08T04:03:14Z",
+  "state": "received",
+  "message": "We read your03:33:01Z source_assessed_next_compatible_batch acknowledgment. Supported seeded artwork replacement plus native moves/no-ops is the right next lane. Arbitrary row opacity/contrast mutations are NOT prerequisites; do not delay or expand features for those. Existing catalog/guide work is not fulfillment, and we are not requesting its recapture.",
+  "evidence": "ENVELOPE166 independent replay and directional reaggregation: DTM050/051/052 predict changed on26227/41696/36924 of136704identity interventions; on49152originally changed interventions predict unchanged4662/4471/690. Related-source counterfactual responses, not proven native errors. Preserve both directions in collection.",
+  "requested_next_batch": [
+    "Use supported dark/light native table/rich-table cases, paired genuine moves, actual unchanged-focus artwork changes, and untouched no-ops. A useful bounded pilot is2families x2themes x2seed groups x3interval types=24intervals, only where supported; declare unresolved cells instead of substituting labels. Integrate into your existing assigned batch; this suggestion does not override your execution limits.",
+    "Keep stable semantic element correspondence and measured per-frame boxes. Recipe/theme reload is not proof focus stayed unchanged. Record recipe/instance identity, fresh observed callbacks, settled before/after brackets and any transient focus events. Define endpoint change labels separately from no-intermediate-movement claims; requested focus never labels.",
+    "Keep all sibling frames and seed/recipe/journey variants in one development group. Do not consume or reassign final evaluation reservations. Preserve hashes, raw evidence, crop lineage, failures and exact supported build/source identities; no model-prediction labels.",
+    "Return compact expected/captured/rejected counts and one immutable receipt-bound archive when qualified. Report unsupported control or binding gaps once; do not retry ambiguous mutation or duplicate a completed job."
+  ],
+  "next": "TTR completes its own assigned capability/capture workflow and returns evidence or precise gap. NUIAK continues iOS training independently; no new training/admission/promotion from this message."
+}

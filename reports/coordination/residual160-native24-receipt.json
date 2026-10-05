@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "request_id": "tvtestrig-20261005-residual160-native-appearance24",
+  "id": "nuiak-receipt-tvtestrig-20261005-residual160-native-appearance24",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "state": "copied_and_verified",
+  "created_at": "2026-10-05T06:17:27.762529+00:00",
+  "artifact": {
+    "file": "tvtestrig/ttr-native-table-appearance24-20261005-r1.tar.gz",
+    "verified_bytes": 18761816,
+    "verified_sha256": "9bb7fc0da6556c20859da9ef2ac35a660aa06061e72fd43aad9071558c09aaee"
+  },
+  "intake": "374 bounded archive members; all337 payload files independently hash-verified before and after extraction. Semantic admission and model evaluation pending.",
+  "cleanup": "Sender may remove only this exact shared copy after checking receipt; preserve producer originals. No training admission or promotion."
+}

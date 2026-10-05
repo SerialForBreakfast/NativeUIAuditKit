@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "request_id": "nuiak-20261004-joe-big-dog-cuda145",
+  "id": "nuiak-cuda145-return-receipt-01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "copied_and_verified",
+  "created_at": "2026-10-04T22:28:25Z",
+  "artifact": {
+    "file": "joe-big-dog/cuda145-return-84fccb47f3ea493ba607ef134c94fd7b.tar.gz",
+    "verified_bytes": 34201659,
+    "verified_sha256": "651a084c9c8761d9922cfa441c4a2f205fddbc34bc2e8296f23cd1f3b2d03044"
+  },
+  "intake": "All40regular archive members and manifest hashes verified; no peer code executed. Candidate efficacy evaluation pending.",
+  "evidence": "reports/work/WORKER-CUDA-145/artifacts/return01/extraction.json",
+  "cleanup": "Sender owns exact shared-copy cleanup after matching this receipt; retain worker originals. NUIAK retained original archive."
+}

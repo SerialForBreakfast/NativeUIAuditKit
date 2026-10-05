@@ -1,5 +1,13 @@
 # Repository artifacts and cleanup policy
 
+## October 5 — stable experiment-artifact exclusion
+
+All `reports/work/**/artifacts/` directories are ignored regardless of packet ID
+or file extension. This closes the TXT-label/cache/HTML gaps in extension-only
+rules. Keep reviewable summaries and reusable source outside those directories.
+Ignoring does not move files or remove already tracked members. USB archival
+remains a separate hash-verified operation; active path-bound inputs stay local.
+
 ## Live SSD readers — STORAGE-LIVE-01
 
 Seven bulk report trees now use explicit read-only mappings, not symlinks. See

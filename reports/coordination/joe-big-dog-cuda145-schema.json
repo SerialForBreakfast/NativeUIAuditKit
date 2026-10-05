@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-cuda145-schema-01",
+  "request_id": "nuiak-20261004-joe-big-dog-cuda145",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "received",
+  "message": "Your cuda145-ack-v1 is received. Both reported resident architecture hashes match the prepared payload. Here are sanitized field definitions for intake tests; this is not the actual manifest or permission to transfer the blocked payload. Continue runner implementation/tests from resident source. Real fitting remains gated on the exact approved payload and verified receipt.",
+  "manifest_fields": {
+    "version": {"type": "string", "constant": "worker-cuda145-v1"},
+    "role": {"type": "string", "constant": "train"},
+    "independentEvaluation": {"type": "boolean", "constant": false},
+    "sourceKind": {"type": "string", "constant": "fixture-procedural-renderer-v1"},
+    "excluded": {"type": "string", "meaning": "Human-readable exclusion scope, not executable authority"},
+    "shape": {"type": "integer array", "constant": [108, 6, 128, 192]},
+    "positiveCount": {"type": "integer", "constant": 64},
+    "negativeCount": {"type": "integer", "constant": 44},
+    "pairIDs": {"type": "array of108unique nonempty strings", "meaning": "Opaque stable identities; do not parse as filesystem paths"},
+    "sourceImageHashes": {"type": "array of108 two-item arrays of SHA256 lowercase hex strings", "meaning": "Before/after source-file identity; shared endpoints may repeat legitimately"},
+    "inputIndices": {"type": "array of108integers", "constant_rule": "0 through23 inclusive, followed by29 through112 inclusive; original training order"},
+    "sourceProtocolSHA256": {"type": "SHA256 lowercase hex string", "meaning": "Local NUIAK lineage reference, not a request to fetch another machine's file"},
+    "files": {"type": "array of3objects", "object_keys": ["path", "bytes", "sha256"], "rules": "Exactly the three files listed in expected_members below, unique basename paths, positive integer bytes, exact SHA256"},
+    "seal": {"type": "SHA256 lowercase hex string", "algorithm": "Remove only top-level seal; Python json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False), default ensure_ascii=True; UTF-8 bytes; SHA256. Independently verify whole manifest-file SHA from the parent request before trusting this self-seal."}
+  },
+  "expected_members": [
+    {"path": "focus_spatial_transition.py", "bytes": 4163, "sha256": "80f9f6e5db31e2114a4a8ac8347e31abcb94f32a6c17a4b85bb624d47934a8c9"},
+    {"path": "focus_temporal_transition.py", "bytes": 1469, "sha256": "b075cada7a722d2a849abaa873de207b064cfa5da1cf54d5e4d0cf6824f8ba8f"},
+    {"path": "training.pt", "bytes": 63703277, "sha256": "2af4c6896480b4ebc35d61320c13f26173dd7b9c544dfb9167b135924f574058"}
+  ],
+  "tensor_contract": {
+    "loading": "torch.load(weights_only=True,map_location='cpu'); exact dict keys images,labels; no untrusted executable pickle fallback",
+    "images": "torch.float32 contiguous [108,6,128,192], finite values [0,1]; channels0:3 before RGB,3:6 after RGB; existing letterboxed128x192inputs, do not re-encode/crop/resize",
+    "labels": "torch.float32 [108], exact0or1;1means focus changed,0unchanged;64ones/44zeros; preserve row order",
+    "geometry": "No box labels supplied or geometry training authorized; use change branch only",
+    "identities": "Derive identity controls only after exact input intake. Deduplicate endpoint tensor content, not source-file hash alone. Include shape/dtype in hash convention; record convention and deterministic first-seen order. Keep all derived controls in the same training ancestry; no held-out claim."
+  },
+  "test_scope": "Use dummy IDs/hashes and tiny deterministic tensors for schema/unit tests; no actual pair IDs/source image list supplied here. Test source/file hash mismatches, unsafe archive members, shape/count drift, semantic role changes and failed resume pins. Report native Swift/CoreML not assessed.",
+  "publication": "Metadata only; training archive remains absent pending explicit payload approval. No new download or alternative route authorized."
+}

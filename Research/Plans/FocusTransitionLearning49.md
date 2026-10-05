@@ -1,5 +1,90 @@
 # Focus Transition Model — transition learning49
 
+## GLOBAL-REPLAY-146
+
+Standing agent admission authority is exercised only for226existing global8identity
+derivatives (indices207–432). Source before/after endpoints are identical and
+already eligible for training; uniform content-only transform round((.8*x+.1)*255)/255
+changes photometry, not focus identity or geometry. No predictions supply labels.
+This is synthetic robustness supervision, not observed physical background motion.
+Preserve source ancestry/development exposure; exclude from independent evaluation.
+left8/center8remain diagnostic-only because spatially selective changes can resemble
+focus treatments. Bind admission to the existing source/cache/tensor hashes.
+
+DTM046: same frozenDTM036features and original993constraints plus226global negative
+constraints. One coefficient-preserving LP,60seconds,<=2GiB. Train target
+logit(.85)+.01, retaining the stricter existing runtime check logit(.85)+.001 rather
+than lowering it. The extra.009is a preregistered numerical cushion informed by
+observed batch-size error<=1.22e-4 on exposed data; not a universal error bound.
+Original residual<=1e-6, exact checkpoint replay, unchanged identity/old/native/
+contrast gates and all nuisance reporting required. No extra fit, capture, export
+or promotion; feasibility and training fit alone do not pass production gates.
+
+## COEFFICIENT-REPLAY-144
+
+One DTM043 equivalent solve retaining the same 993 constraints and original norm
+objective. From143 scaled rows, multiply each row and rhs by
+max(1,1e-8/minimumNonzeroAbsoluteCoefficient). Verify every nonzero solver coefficient
+is > resident HiGHS small_matrix_value=1e-9; include norm bounds in that audit.
+Reject nonfinite/amplification>1e8 or absolute matrix/rhs>1e12 before solving.
+Preflight observed max amplification458300.55, max coefficient480.76, max rhs458300.55.
+Keep143's1e-10solver tolerances,60seconds,1e-6original residual gate and float32
+extra-margin/runtime checks. Preserve all diagnostic vectors; reuse same entrypoint,
+new output/protocol, prior-source snapshot,<=2GiB. No changed labels, new data,
+SVD truncation, extra fits, export or promotion. Evaluate all stress views when
+original feasibility permits. Solver success does not waive runtime/model gates.
+
+## NUMERICAL-REPLAY-143
+
+One DTM042 comparison, identical DTM041 problem/objective/scales, changing solver
+primal/dual/IPM tolerances from 1e-8 to 1e-10. Keep the 60-second solve bound and
+1e-6 original-space acceptance gate. Preserve finite returned vectors and row-wise
+original/scaled residuals even if rejected; distinguish optimal status, feasible
+double witness, float32 extra-margin gate, actual .85/.15 decisions and nuisance
+quality. No runtime failure becomes a pass because double precision worked.
+Reuse the existing source-bound entrypoint with explicit strict mode, isolated
+protocol/output, <=2GiB, same 993 cases. Snapshot its prior source for replay before
+editing. Run runtime checkpoint replay and all stress views only if the original
+witness gate passes. No additional fit, new data, capture, export or promotion.
+
+## CONDITIONED-FEASIBILITY-142
+
+One DTM041 comparison of the unchanged FEASIBILITY140 problem: remove exactly
+zero columns and already-satisfied exactly zero rows; reject violated zero rows.
+Set u_j = columnL2_j * w_j, preserve |u_j| / columnL2_j <= t, and minimize t.
+Row-normalize resulting inequalities; use resident HiGHS interior point, 60 seconds,
+1e-8 primal/dual tolerances. No SVD truncation, changed labels or weakened gates.
+Reconstruct all 1152 original weights and verify every original constraint with
+max violation <=1e-6, then the real float32 scoring/reload path on all retained
+stress cases. Same 993 constraints, source/admission/cache identities and <=2GiB
+output budget. A float64 witness that fails runtime gates is not a qualified model.
+Log before solve, retain terminal result, no automatic retry or promotion. Tests
+cover unequal scales with original norm objective, zero rows/columns, contradictions,
+invalid inputs and comparison against the unscaled analytic case. Full offline
+checks once at integrated handoff. Worker onboarding remains independently blocked
+on environment authority; this local experiment neither waits for nor authorizes it.
+
+## FEASIBILITY-140
+
+Resolve radial-optimizer versus feature feasibility before another neural fit.
+ResidentSciPy1.18.1HiGHS dualsimplex, one60secondbounded LP: minimize t subject to
+|w_j|≤t, t≥0, s_i(base_i+features_i·w)≥logit(.85)+.001 for984protected examples plus
+9ADMISSION136pairs. No arbitrary weight upper bound; norm is minimized, not swept.
+Identical controls use unchanged baseline residualzero. UnknownBalance and all
+quantized/localized controls remain outside constraint construction.
+
+Scale each inequality by max(1,max|coefficients|,|rhs|); record original residuals
+and solverstatus/iterations. Accept a feasible witness only with finite solution,
+original-space maxviolation≤1e-6 and gate preservation through the actual float32
+feature head. Numerical infeasible/time-limit outcomes are diagnostic, not a proof
+of global model impossibility. Keep configured .85/.15decision thresholds unchanged.
+Pin source,138parent,136admission and all cache hashes before solve; preregisterDTM040
+as a fitted diagnostic artifact, not a deployment candidate. Save weights/checkpoint
+and condition metrics, exact replay, cost. No extra solver objective or fit afterward.
+Tests: known feasible/infeasible, zero-feature identity, finite inputs, rescaling,
+normbounds. Full offline verification at handoff; TTR receives only meaningful
+consequences. Feasibility alone never grants navigation authority.
+
 ## MARGIN-REPAIR-139
 
 Preserve984constraints and .85/.15 decisions from138. Replace only the artificial
@@ -2288,3 +2373,28 @@ its existing receipt/role protocol; absent delivery blocks only peer intake.
 No capture, new encoding/backbone, export, publication of private images or promotion.
 Return one candidate decision and independent-evidence gaps; no automatic follow-up
 fits. This proposal is the next tranche, not execution within RANK108.
+
+### REVERSAL147 — binary temporal-order invariance
+
+Assigned October4 under standing local experiment/admission authority. Before/after
+reversal preserves the binary equality/inequality of the two observed focus states;
+it does not establish an executable inverse navigation route or swap geometry labels.
+Admit reversed views only of433already-admitted originals/identity derivatives and
+the9ADMISSION136intervals, retaining ancestry and exposed train role. Unknown Balance
+stays excluded. No new independent examples, captures or localized lighting labels.
+
+Recompute original/reversed features with existing train_spatial135.features,
+frozenDTM031encoder, same union-of-endpoint proposal masks, DTM036scale and readout.
+Verify original features against retained cache before scoring DTM046. If reversed
+decisions fail, perform exactly one DTM047 coefficient-preserving solve including
+all1219GLOBAL146constraints plus442reversed views. Same original-coordinate objective,
+60second solver bound, logit(.85)+.01training margin, unchanged .85/.15decisions and
+extra runtime margin. CPU2threads,2GiB output cap, isolated directory; no sweep.
+Source/data/cache/checkpoint pins and admission rationale recorded before fit.
+
+Acceptance: directional diagnostic with correct/wrong/abstention counts, source
+replay, finite original-coordinate residual, actual float32 margins, saved-checkpoint
+replay and all prior/native/nuisance results. Failed solver/runtime gate preserves
+evidence and current models. Successful fit is exposed retention, not deployment.
+Focused tests include invalid tensor shape/range, swap involution, unknown-label
+exclusion, output collision and real runner behavior; integrated offline Swift checks.

@@ -1,6 +1,7 @@
 """Exact NUIAK SMB transactions. Default is read-only; never mounts or extracts."""
 import argparse
 import ctypes
+import errno
 from datetime import datetime,timezone
 import hashlib
 import json
@@ -15,6 +16,7 @@ import yaml
 
 ROOT=Path(__file__).resolve().parents[1]
 SHARE=Path('/Volumes/SharedStatusFile')
+PEERS={'TVTestRig':'tvtestrig','joe-big-dog/NUIAK':'joe-big-dog'}
 
 
 def require(ok,reason):
@@ -76,12 +78,25 @@ def verified(path,tx):
     require(digest.hexdigest()==tx['sha256'],'hash_mismatch')
 
 
+def foundation_move(source,dest):
+    """SMB fallback; Foundation refuses an existing destination, unlike rename()."""
+    env=dict(os.environ,TMPDIR=str(ROOT/'.build'),CLANG_MODULE_CACHE_PATH=str(ROOT/'.build/ModuleCache'))
+    subprocess.run(['/usr/bin/swift','-module-cache-path',str(ROOT/'.build/ModuleCache'),
+                    str(ROOT/'scripts/shared_transfer_move.swift'),str(source),str(dest)],
+                   env=env,check=True,capture_output=True,text=True,timeout=60)
+
+
 def exclusive_rename(source,dest):
     require(sys.platform=='darwin','exclusive_rename_platform')
     lib=ctypes.CDLL(None,use_errno=True)
     rename=lib.renamex_np;rename.argtypes=[ctypes.c_char_p,ctypes.c_char_p,ctypes.c_uint];rename.restype=ctypes.c_int
     if rename(os.fsencode(source),os.fsencode(dest),0x4)!=0:
-        code=ctypes.get_errno();raise OSError(code,os.strerror(code))
+        code=ctypes.get_errno()
+        if code==errno.ENOTSUP and source.parent==dest.parent and source.is_relative_to(SHARE):
+            mounted()
+            require(source.resolve()==source and dest.resolve()==dest and not dest.exists(),'publication_destination')
+            foundation_move(source,dest)
+        else:raise OSError(code,os.strerror(code))
 
 
 def staging_path(dest,tx):
@@ -111,27 +126,37 @@ def copy_verified(source,dest,tx):
     return 'copied_and_verified'
 
 
+def peer_for(tx):
+    """Version1 is deliberately not widened by adding the worker protocol."""
+    if tx['version']==1:return 'TVTestRig','tvtestrig'
+    peer=tx.get('peer');require(type(peer) is str and peer in PEERS,'unsupported_peer')
+    return peer,PEERS[peer]
+
+
 def transaction(path):
     require(path.resolve()==path and path.is_relative_to(ROOT),'transaction_boundary')
     tx=document(path)
-    require(type(tx) is dict and set(tx)=={'version','requestID','sharedPath','localPath','bytes','sha256','receiptPath'} and
-            type(tx['version']) is int and tx['version']==1,'transaction_contract')
+    fields={'version','requestID','sharedPath','localPath','bytes','sha256','receiptPath'}
+    require(type(tx) is dict and type(tx.get('version')) is int and tx['version'] in (1,2) and
+            set(tx)==fields|({'peer'} if tx['version']==2 else set()),'transaction_contract')
+    _,namespace=peer_for(tx)
     require(type(tx['requestID']) is str and re.fullmatch('[A-Za-z0-9._-]{1,160}',tx['requestID']),'request_id')
     require(type(tx['bytes']) is int and tx['bytes']>0,'byte_count')
     require(type(tx['sha256']) is str and re.fullmatch('[0-9a-f]{64}',tx['sha256']),'hash')
     shared=path_under(SHARE,tx['sharedPath']);local=path_under(ROOT,tx['localPath'])
-    require(tx['sharedPath'].split('/')[0] in ('nuiak','tvtestrig'),'namespace')
+    require(tx['sharedPath'].split('/')[0] in ('nuiak',namespace),'namespace')
     require(Path(tx['sharedPath']).name not in ('status.yaml','reservations.yaml','Instructions.md','SharedStatusSkill.md'),'protected_coordination_file')
     if tx['receiptPath'] is not None:
-        require(tx['receiptPath'].startswith('tvtestrig/'),'receipt_owner')
+        require(type(tx['receiptPath']) is str and tx['receiptPath'].startswith(namespace+'/'),'receipt_owner')
         path_under(SHARE,tx['receiptPath'])
     return tx,shared,local
 
 
 def receipt_matches(path,tx):
     r=document(path)
+    peer,_=peer_for(tx)
     require(type(r) is dict and type(r.get('schema_version')) is int and r['schema_version']==1 and
-            r.get('request_id')==tx['requestID'] and r.get('from')=='TVTestRig' and r.get('to')=='NUIAK' and
+            r.get('request_id')==tx['requestID'] and r.get('from')==peer and r.get('to')=='NUIAK' and
             r.get('state')=='copied_and_verified','receipt_identity')
     a=r.get('artifact',{})
     require(a.get('file')==tx['sharedPath'] and type(a.get('verified_bytes')) is int and
@@ -140,10 +165,12 @@ def receipt_matches(path,tx):
 
 def run(path,action='inspect',execute=False):
     mounted();tx,shared,local=transaction(path)
-    result=dict(version=1,requestID=tx['requestID'],action=action,executed=False,
+    require(action in ('inspect','publish','receive','cleanup') and type(execute) is bool,'operation_contract')
+    peer,namespace=peer_for(tx)
+    result=dict(version=tx['version'],requestID=tx['requestID'],action=action,executed=False,
                 sharedPath=tx['sharedPath'],bytes=tx['bytes'],sha256=tx['sha256'],trainingEligible=False)
     if action in ('publish','cleanup'):require(tx['sharedPath'].startswith('nuiak/'),'write_namespace')
-    if action=='receive':require(tx['sharedPath'].startswith('tvtestrig/'),'read_namespace')
+    if action=='receive':require(tx['sharedPath'].startswith(namespace+'/'),'read_namespace')
     for name,p in [('local',local),('shared',shared)]:
         if p.exists():verified(p,tx);result[name]='verified'
         else:result[name]='absent'
@@ -166,7 +193,7 @@ def run(path,action='inspect',execute=False):
     elif action=='receive':
         result['state']=copy_verified(shared,local,tx)
         result['receiverReceipt']=dict(schema_version=1,request_id=tx['requestID'],
-            id='nuiak-receipt-'+tx['requestID'],**{'from':'NUIAK','to':'TVTestRig'},state='copied_and_verified',
+            id='nuiak-receipt-'+tx['requestID'],**{'from':'NUIAK','to':peer},state='copied_and_verified',
             created_at=datetime.now(timezone.utc).isoformat(),
             artifact=dict(file=tx['sharedPath'],verified_bytes=tx['bytes'],verified_sha256=tx['sha256']),intake='not_assessed')
     elif shared.exists():
@@ -182,5 +209,5 @@ if __name__=='__main__':
     p.add_argument('--action',choices=['inspect','publish','receive','cleanup'],default='inspect')
     p.add_argument('--execute',action='store_true');args=p.parse_args()
     try:print(json.dumps(run(args.transaction.absolute(),args.action,args.execute),indent=2))
-    except (ValueError,OSError,KeyError,TypeError,yaml.YAMLError) as e:
+    except (ValueError,OSError,KeyError,TypeError,yaml.YAMLError,subprocess.SubprocessError) as e:
         print(json.dumps(dict(rejected=True,reason=str(e))));raise SystemExit(2)

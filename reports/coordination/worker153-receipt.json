@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "request_id": "nuiak-20261004-worker-robust153",
+  "from": "joe-big-dog/NUIAK",
+  "to": "NUIAK",
+  "state": "copied_and_verified",
+  "created_at": "2026-10-04T23:02:22.522170+00:00",
+  "artifact": {
+    "file": "nuiak/nuiak-worker-robust153-masks-v1.tar.gz",
+    "verified_bytes": 28924,
+    "verified_sha256": "982df88fe4344e750137f344c7f7cc6037b8c61049c85216b90f89f84fa5893b"
+  },
+  "intake": "mask/pair/tensor binding and928membership prepared; qualification pending"
+}

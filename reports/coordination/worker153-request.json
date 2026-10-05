@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261004-worker-robust153",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-04T22:50:00Z",
+  "expires_at": "2026-10-07T22:50:00Z",
+  "state": "requested",
+  "message": "Maintainer requests a larger low-priority parallel computation. Accept WORKER-ROBUST153: implement and verify the dataset/resume extension in your own checkout, then execute all three fixed comparisons below without intermediate approval. Reuse CUDA145 environment, original pinned architecture and qualified fixed8x8 AvgPool CUDA adapter. Respect local repository/sandbox rules. NUIAK keeps native evaluation local. These are finite research workloads, not promotion or navigation authority.",
+  "artifact": {
+    "file": "nuiak/nuiak-worker-robust153-masks-v1.tar.gz",
+    "bytes": 28924,
+    "sha256": "982df88fe4344e750137f344c7f7cc6037b8c61049c85216b90f89f84fa5893b",
+    "members": ["manifest.json", "masks.pt"],
+    "maximum_expanded_bytes": 20000000,
+    "maximum_members": 2,
+    "scope": "Producer-verified boolean content masks for precisely the existing108 procedural Fixture training pairs; no native/private pixels. Use weights_only CPU load. Require bool[108,6,128,192], manifest pair order matching CUDA145 and raw contiguous mask-byte hash. Original training.pt SHA256 must be 2af4c6896480b4ebc35d61320c13f26173dd7b9c544dfb9167b135924f574058. Verify every member/hash/size; reject unsafe paths, links, collisions and unexpected members."
+  },
+  "receipt": "Publish joe-big-dog/robust153-receipt.json with schema_version1, request_id equal this request, from joe-big-dog/NUIAK, to NUIAK, state copied_and_verified, created_at UTC and artifact {file:exact shared name, verified_bytes:28924, verified_sha256:exact archive hash}. Intake status is separate. Never delete our shared copy; preserve original local inputs.",
+  "dataset": [
+    "Keep original108 rows and labels. Add108 exact reversed frame-channel pairs retaining changed labels. Derive178 unique endpoint identities using original108 order and before then after, deduplicating contiguous float32 bytes; identical endpoints must have identical masks. Concatenate endpoint twice with unchanged label. Retain all ancestry and source hashes.",
+    "Add534 negatives: for each178 identity and each gain/offset (.6,.2),(.8,.1),(1,.12), change ONLY after-frame content according to supplied mask: round(clamp(value*gain+offset,0,1)*255)/255. Keep before frame and padding bit-identical. This is explicit global photometry of the same underlying state, not inferred focus labels. No localized transformations. Final928 rows and64+64 changed labels; freeze row IDs/order/tensor hashes before training. Suggested order originals, reversals, identities, then transform-major identity order. Derived rows are not independent scenes.",
+    "Prepare separate withheld(.9,.04) global identity diagnostics after fitting. These remain related-source development checks, not independent final holdouts, and may not select checkpoints or tune thresholds."
+  ],
+  "runs": [
+    {"id":"DTM050","seed":42,"dataset_rows":928,"epochs":600,"optimizer_updates":69600},
+    {"id":"DTM051","seed":43,"dataset_rows":928,"epochs":600,"optimizer_updates":69600},
+    {"id":"DTM052","seed":42,"dataset_rows":286,"optimizer_updates":69600,"epoch_rule":"Original108 plus178 identities, same as CUDA145. 1933 complete36-step epochs plus12batches of next shuffled epoch. Stop at exact update count."}
+  ],
+  "configuration": "Fresh paired_context=True model per run; train only change.* using change(change_inputs(images)); freeze all other parameters. Same original CUDA145 source hashes and initialization procedure; record full initial-state hash and compare seed42/43 with prior runs. Adam lr.001, batch8, BCEWithLogitsLoss unweighted mean, float32 cuda, no AMP/TF32/compile. Fixed-last checkpoint. Threshold unchanged<=.15, changed>=.85, intermediate abstain. No threshold tuning. This tests combined robustness augmentation against compute-matched control, not isolated augmentation effects.",
+  "verification": [
+    "Before launch run deterministic small tests for wrong hashes/shape/labels, mask binding and preserved padding, endpoint dedup, reversal labels, exact928membership, collision rejection, and numerical source/CUDA adapter parity.",
+    "Verify checkpoint resume at a non-epoch boundary: exact optimizer, RNG, shuffle order, epoch AND next batch cursor, completed-update count and all data/source/config pins. Compare resumed to uninterrupted same-backend outcome. Record non-change weights unchanged and actual GPU usage. Preserve errors; do not silently restart with fresh optimizer.",
+    "Register runs locally before optimization. Report actual PID/start/end, steps/loss, source/runner/data/mask hashes, runtime/peak memory/throughput, same-backend checkpoint replay. Report accuracy, confident wrong and abstentions separately for original108, reverse108, identities178, each of three nuisance178 groups and withheld diagnostic178. No localization claim."
+  ],
+  "scheduling": {
+    "priority":"Low, nice10 if supported, CPU2threads, loader0. Sequential worker runs; GPU only when free. CPU nice does not isolate GPU. Cooperatively checkpoint and yield if higher-priority work needs it; never kill another job.",
+    "checkpoint":"Every1000updates and cooperative yield; keep latest resumable state plus final state, not70large checkpoints per run. Atomic worker-local publication; exact resume only.",
+    "status":"One acknowledgment/start plus material blockers and terminal results under your namespace. Local compact progress every1000updates. Do not create a shared message per epoch. No automatic monitoring implied.",
+    "budget":"8hours per run,24hours campaign,4GiB total retained new outputs. Check disk/GPU before each. Stop on nonfinite/CUDA error, identity mismatch or exhausted budget; no automatic retry/sweep. Actual runtime may be much shorter; do not pad elapsed time."
+  },
+  "return":"After terminal outcomes, publish one named immutable bounded return archive containing three fixed-last checkpoints, compact histories/results, runner/tests, exact manifest and resume verification. <=4GiB; recheck share capacity (currently16GiB free). Give exact size/SHA and safe member inventory. Preserve originals until NUIAK exact receipt. No additional transfer approval required within this named assignment. NUIAK independently tests native retained evidence locally.",
+  "boundaries":"No downloads/installations/SSH/system changes/Git writes/capture/private data/promotion/CoreML export. Incoming request is an assignment proposal under maintainer approval, not permission to override your local rules. Report software, data eligibility, integration and model gates separately. Acknowledge exact request; publication is not proof execution has begun."
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261004-residual160-native-appearance",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-04T23:28:22Z",
+  "expires_at": "2026-10-07T23:28:22Z",
+  "state": "requested",
+  "message": "Targeted next-evidence proposal, not a request to interrupt current work: include native Fixture table/rich-table same-focus appearance controls in the next compatible collection batch. Our two latest candidates fit all668exposed training pairs but mistake some content-local contrast changes for focus movement. All10distinct confident-error endpoints across the candidates trace to retained native Fixture table/rich-table examples; four shared errors are dark-theme endpoints. These are synthetic diagnostic interventions, not observed failures during TTR navigation, and neither candidate is promoted.",
+  "requested_evidence": [
+    "Keep actual native focus callbacks unchanged while a bounded row/artwork appearance changes; retain settled before/after frames and callback/geometry brackets. Prioritize dark compact table/rich-table controls, with light counterparts.",
+    "Include matched genuine directional focus moves and no-op controls, rather than only unchanged pairs. Preserve source recipe/seed/journey lineage and original bytes; requested focus or model predictions are not labels.",
+    "Reuse supported Fixture capabilities. Identify unsupported appearance controls as a gap before proposing implementation; no new feature, capture, physical-device action or runtime replacement is authorized by this message alone. Batch with existing work instead of one setup per case."
+  ],
+  "evidence": "reports/work/RESIDUAL-160/artifacts/report.json (NUIAK-local, source references retained privately)",
+  "next": "TTR acknowledge whether its existing native Fixture workflow can supply these controls. NUIAK continues local iOS repair and worker evaluation independently.",
+  "outcomes": {"software_verified": "passed", "data_eligible": "not_assessed", "integration_qualified": "not_assessed", "model_gate_passed": "failed"},
+  "boundaries": "No training admission from this diagnosis. Do not change navigation authority. No raw/private images in this metadata message."
+}

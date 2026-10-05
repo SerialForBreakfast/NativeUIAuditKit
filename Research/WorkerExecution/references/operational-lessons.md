@@ -6,6 +6,13 @@ Tasks.md supplies ownership; dated reports supply evidence, not current readines
 
 ## Build, test and permission diagnosis
 
+- For the observed FROZEN164 Vision/OCR suite stall, preserve a sample of the owned
+  test process; one isolated existing Vision test and explicit `--no-parallel`
+  full-suite run passed without service changes. Bound diagnostics, stop only
+  owned processes, and retain failed evidence. This is an observed recovery, not
+  proof every Vision wait has the same cause; don't delete tests or assume weights
+  are broken. Full142test evidence: reports/work/FROZEN-ADAPT-164/handoff.md.
+
 - Use [SandboxOperations](../../SandboxOperations.md) to identify the actual writer,
   path, launch context and underlying error. Agent sandbox, app bookmark, signing,
   privacy consent, CoreSimulator service and missing native labels are different

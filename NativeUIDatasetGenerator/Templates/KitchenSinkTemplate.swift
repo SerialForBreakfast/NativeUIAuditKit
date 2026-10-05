@@ -96,9 +96,11 @@ public struct KitchenSinkConfig: Sendable {
 /// `windowSize: CGSize(width: 393, height: 1100)`.
 public struct KitchenSinkTemplate: View {
     public let config: KitchenSinkConfig
+    public let pageTrainingStyle: NativePageTrainingStyle?
 
-    public init(config: KitchenSinkConfig) {
+    public init(config: KitchenSinkConfig, pageTrainingStyle: NativePageTrainingStyle? = nil) {
         self.config = config
+        self.pageTrainingStyle = pageTrainingStyle
     }
 
     public var body: some View {
@@ -286,7 +288,19 @@ public struct KitchenSinkTemplate: View {
                             // Isolated UIPageControl at onboarding scale — packed 7pt
                             // circles here were the only SwiftUI pageControl in train,
                             // and holdout Onboarding/Gallery dots were missed (97.5%).
-                            NativeUIPageControlView(
+                            if let style = pageTrainingStyle {
+                                let pages = 3 + (config.segmentIndex % 3)
+                                let width = UIPageControl().size(forNumberOfPages: pages).width
+                                let left = style.placement == "leading" ? !style.rtl : style.rtl
+                                NativeUIPageControlView(numberOfPages: pages, currentPage: config.segmentIndex % 3, trainingStyle: style)
+                                    .frame(width: width, height: 28)
+                                    .frame(width: style.sceneWidth - 48, alignment: style.placement == "center" ? .center : left ? .leading : .trailing)
+                                    .padding(.horizontal, 24)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .captureFrame(id: "pageControl_0")
+                                    .padding(.top, 10)
+                            } else {
+                              NativeUIPageControlView(
                                 numberOfPages: 3 + (config.segmentIndex % 3),
                                 currentPage: config.segmentIndex % 3
                             )
@@ -294,6 +308,7 @@ public struct KitchenSinkTemplate: View {
                             .frame(maxWidth: .infinity)
                             .captureFrame(id: "pageControl_0")
                             .padding(.top, 10)
+                            }
 
                             divider()
 

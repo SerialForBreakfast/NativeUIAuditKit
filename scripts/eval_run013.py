@@ -204,14 +204,15 @@ def verify_freeze(out):
     return freeze
 
 
-def validated_artifact(document, request, checkpoint_hash):
+def validated_artifact(document, request, checkpoint_hash, *, expected_settings=None):
     """Validate retained bytes, settings, completeness and detection payloads."""
     compare(document, document)
     if document["model"]["checkpointSHA256"] != checkpoint_hash:
         raise ComparisonError("checkpoint mismatch")
     if document["categoryMap"]["sha256"] != sha256_file(CATEGORY_MAP):
         raise ComparisonError("category map mismatch")
-    if document["settings"] != PREDICTION_SETTINGS or document["settingsSHA256"] != canonical_sha256(PREDICTION_SETTINGS):
+    settings = PREDICTION_SETTINGS if expected_settings is None else expected_settings
+    if document["settings"] != settings or document["settingsSHA256"] != canonical_sha256(settings):
         raise ComparisonError("settings mismatch")
     if document["corpus"]["contentSHA256"] != request.content_sha256:
         raise ComparisonError("corpus mismatch")
@@ -220,6 +221,15 @@ def validated_artifact(document, request, checkpoint_hash):
         raise ComparisonError("membership mismatch")
     for image in request.images:
         row = by_id[image.image_id]
+        if settings.get("postprocessing") is not None:
+            from eval_phase6a import DEGENERATE_POLICY, filter_degenerate_predictions
+            if settings["postprocessing"] != DEGENERATE_POLICY:
+                raise ComparisonError("unsupported postprocessing")
+            audit = row.get("postprocessingAudit", {})
+            raw = row["detections"] + audit.get("rejectedDetections", [])
+            accepted, expected = filter_degenerate_predictions(image, len(load_names()), raw)
+            if accepted != row["detections"] or audit != expected:
+                raise ComparisonError("postprocessing accounting mismatch")
         normalized = make_result(image, len(load_names()), detections=row["detections"])
         if any(normalized[k] != row.get(k) for k in normalized):
             raise ComparisonError(f"result identity/status mismatch: {image.image_id}")

@@ -1,4 +1,5 @@
 import copy
+import errno
 import hashlib
 import json
 from pathlib import Path
@@ -115,6 +116,94 @@ class TransferTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'transaction_contract'):self.run_action()
         self.path.write_text('version: 1\nversion: 1\n')
         with self.assertRaisesRegex(ValueError,'duplicate_key'):self.run_action()
+
+
+class WorkerTransferTests(TransferTests):
+    def setUp(self):
+        super().setUp()
+        (self.share/'joe-big-dog').mkdir()
+
+    def worker(self):
+        self.tx.update(version=2,peer='joe-big-dog/NUIAK',receiptPath='joe-big-dog/receipt.json')
+        self.save()
+
+    def worker_receipt(self,peer='joe-big-dog/NUIAK'):
+        r=dict(schema_version=1,request_id=self.tx['requestID'],state='copied_and_verified',
+               artifact=dict(file=self.tx['sharedPath'],verified_bytes=4,verified_sha256=self.tx['sha256']))
+        r.update({'from':peer,'to':'NUIAK'})
+        (self.share/'joe-big-dog/receipt.json').write_text(json.dumps(r))
+
+    def test_worker_publish_receipt_cleanup(self):
+        self.worker();self.run_action('publish',True)
+        self.worker_receipt('TVTestRig')
+        with self.assertRaisesRegex(ValueError,'receipt_identity'):self.run_action('cleanup',True)
+        self.assertTrue((self.share/'nuiak/artifact.zip').exists())
+        self.worker_receipt()
+        self.assertEqual(self.run_action('inspect')['receipt'],'verified')
+        self.assertEqual(self.run_action('cleanup',True)['state'],'shared_copy_removed_original_retained')
+        self.assertTrue((self.local/'original.zip').exists())
+        self.assertTrue((self.share/'joe-big-dog/receipt.json').exists())
+
+    def test_worker_receive_addresses_correct_peer_and_never_cleans_peer(self):
+        self.worker();self.tx.update(sharedPath='joe-big-dog/result.zip',localPath='received.zip',receiptPath=None);self.save()
+        (self.share/'joe-big-dog/result.zip').write_bytes(b'data')
+        self.run_action('receive');self.assertFalse((self.local/'received.zip').exists())
+        result=self.run_action('receive',True)
+        self.assertEqual(result['receiverReceipt']['to'],'joe-big-dog/NUIAK')
+        self.assertFalse(result['trainingEligible']);self.assertEqual(result['version'],2)
+        for action in ('cleanup','publish'):
+            with self.assertRaisesRegex(ValueError,'write_namespace'):self.run_action(action,True)
+        self.assertEqual((self.share/'joe-big-dog/result.zip').read_bytes(),b'data')
+
+    def test_versions_and_peers_fail_closed(self):
+        self.worker()
+        for changes in ({'peer':'other'},{'peer':['TVTestRig']},{'version':3},{'version':True},
+                        {'receiptPath':'tvtestrig/receipt.yaml'},{'sharedPath':'tvtestrig/artifact.zip'}):
+            saved=self.tx.copy();self.tx.update(changes);self.save()
+            with self.assertRaises(ValueError):self.run_action()
+            self.tx=saved
+        self.tx.update(version=1);self.tx.pop('peer');self.save()
+        with self.assertRaisesRegex(ValueError,'receipt_owner'):self.run_action()
+
+    def test_v2_tvtestrig_compatibility_and_invalid_operation(self):
+        self.tx.update(version=2,peer='TVTestRig');self.save()
+        self.run_action('publish',True);self.receipt()
+        self.assertEqual(self.run_action('cleanup')['receipt'],'verified')
+        with self.assertRaisesRegex(ValueError,'operation_contract'):self.run_action('delete',True)
+        with self.assertRaisesRegex(ValueError,'operation_contract'):self.run_action('cleanup',1)
+
+    def test_worker_receipt_hash_and_original_required(self):
+        self.worker();self.run_action('publish',True);self.worker_receipt()
+        receipt=self.share/'joe-big-dog/receipt.json';data=json.loads(receipt.read_text())
+        data['artifact']['verified_sha256']='0'*64;receipt.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'receipt_artifact'):self.run_action('cleanup',True)
+        self.worker_receipt();(self.local/'original.zip').unlink()
+        with self.assertRaisesRegex(ValueError,'original_missing'):self.run_action('cleanup',True)
+        self.assertTrue((self.share/'nuiak/artifact.zip').exists())
+
+    def test_fallback_only_unsupported_verified_share(self):
+        class Rename:
+            def __call__(self,*args):return -1
+        library=type('Library',(),{'renamex_np':Rename()})()
+        a=self.share/'nuiak/stage';b=self.share/'nuiak/final';a.write_bytes(b'data')
+        with patch.object(t.ctypes,'CDLL',return_value=library),patch.object(t.ctypes,'get_errno',return_value=errno.ENOTSUP),patch.object(t,'foundation_move') as move:
+            t.exclusive_rename(a,b);move.assert_called_once_with(a,b)
+            move.reset_mock()
+            with self.assertRaises(OSError):t.exclusive_rename(self.local/'stage',self.local/'final')
+            move.assert_not_called()
+        with patch.object(t.ctypes,'CDLL',return_value=library),patch.object(t.ctypes,'get_errno',return_value=errno.EACCES),patch.object(t,'foundation_move') as move:
+            with self.assertRaises(OSError):t.exclusive_rename(a,b)
+            move.assert_not_called()
+
+    def test_foundation_actual_move_and_collision_preserves_bytes(self):
+        source=self.local/'stage';dest=self.local/'final'
+        source.write_bytes(b'first')
+        with patch.object(t,'ROOT',Path(__file__).resolve().parents[1]):
+            t.foundation_move(source,dest)
+            self.assertFalse(source.exists());self.assertEqual(dest.read_bytes(),b'first')
+            source.write_bytes(b'second')
+            with self.assertRaises(t.subprocess.CalledProcessError):t.foundation_move(source,dest)
+        self.assertEqual(source.read_bytes(),b'second');self.assertEqual(dest.read_bytes(),b'first')
 
 
 if __name__=='__main__':unittest.main()

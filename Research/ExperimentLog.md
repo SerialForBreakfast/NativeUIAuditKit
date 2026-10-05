@@ -1,5 +1,190 @@
 # NativeUIAuditKit — Experiment Log
 
+### Run020 — IOS-FIT175 (registered before execution)
+
+Hypothesis: concentrated balanced exposure fits native off-center page geometry.
+216unique already-admitted training images:72complete group/tint triads,72images
+per placement. Fresh optimizer from Run019last,20epochs,640,batch8,MPS,workers0,
+seed42,AdamWlr1e-4,lrf.1,cosine,warmup.5,biaswarmup1e-4,AMPoff,full-frame/no
+augmentation/OHEM. Training membership is also the explicitly in-sample monitoring
+set; no independent validation or split-role claim. Fixed-last,2GiBoutputs,
+standing no-wall-time-limit. No new labels/capture/promotion/automatic extraepochs.
+Before launch pin exact membership/bytes/sources/config and verify MPS/space.
+Success:≥90%recall per placement at.25/.5 on training subset; then separately
+report retained2400/probe96and cancelAction tradeoffs. No architecture-cause claim
+or model gate follows from training fit. Status: preparing; PID/elapsed pending.
+
+Launched PID34431/driver84525 after exact216-member byte/label verification.
+Protocol seal070979f2194017e6eb5fc8c832728fb6f752def7b5ebc71b27e2ce6ea66a39e2.
+Actual saved arguments match the declared treatment, including20epochs,batch8,640,
+AdamW1e-4,biaswarmup1e-4,translate0,resumeFalse. First training pass completed;
+in-sample monitoring running.10focused tests and offline Swift build/test passed.
+No terminal metrics or learnability claim yet; preserve live process.
+
+### Run019 — IOS-PLACEMENT173 (registered before execution)
+
+Hypothesis: native page placement/tint coverage improves left/native development
+hits without the false-positive growth from translation170. Fresh Run013best,
+14804train (repaired14540+264unique172frames), unchanged2800val/2400test and96exposed
+development probes.24exact repeated controls and all rejected capture trials excluded.
+Fixed5epochs,640,batch8,MPS,workers0,seed42,AdamW1e-4,biaswarmup1e-4,cosine,
+warmup.5,AMPoff; matched017full-frame settings including translate0 and no color,
+scale,flip,mosaic augmentation or OHEM. Only membership and output/data identity
+change. Fixed-last checkpoint, no automatic retry/extension or promotion;2GiBoutputs,
+>8GiBfree preflight, standing no-wall-time-limit override. Status: export/preflight
+pending; no training process launched yet. All input bytes and resolved args must
+validate. Reuse017positive-area-filtered comparison artifacts, report class/stratum
+AP and false positives separately from official trainer validation. DS-G8 unproven.
+
+Run019 launched PID20948, driver51642, after complete20004-member staged-byte
+verification. Protocol SHA256d85f6226ae52926eaae605ade453eff6b012169e9d534d14c2e398ee5ae80b11.
+Saved args differ from017only data/name/save_dir. Epoch1 updates finite,5.59GBMPS;
+1851batches/epoch.13focused tests and offline Swift build/test passed. No completed
+epoch/terminal metrics at that launch checkpoint.
+
+Terminal: driver51642 exit0,11455.514seconds. Five finite epochs; final trainer
+validation P.92151,R.82122,mAP50.86622,mAP50:95.83498. Fixed last.pt SHA256
+ecfb0195250e65d9bbbc0954e9e1714af60685d5e1123d5dd0e0784dcdadb378.
+Matched infer43363/report53559 exit0; all2496records validate, no rejected boxes.
+Combined custom AP50/.50:95 .882978/.841897 versus017 .887166/.846356;
+withheld .643083/.546074 versus .642493/.554267. Page development AP50
+.291148→.343791, operating hits18→19, but left/native remain0/48each.
+CancelAction FP171→73 while TP80→76; mapView FP1→0 with100/100TP retained.
+Development acceptance failed: no promotion, automatic retry or epoch extension.
+Export wall time143.546s combined/5.390s probes includes validation/model loading,
+not model-only latency. Evaluation SHA256
+e350f07970b58cd9de0a00d6b8a8874bcfe2c13e5ed697cada6822b2bd373a45.
+Next:264-image training-fit/96-probe geometry diagnosis and retention case audit,
+not blind corpus scaling. [Handoff](../reports/work/IOS-PLACEMENT-173/handoff.md).
+
+### Run018 — IOS-TRANSLATION170 (registered before execution)
+
+Hypothesis: spatial translation improves centered-only page training generalization.
+Run013best initialization; repaired14540train,2800val,2400retained test; fiveepochs,
+640,batch8,MPS,workers0,seed42,AdamW1e-4,biaswarmup1e-4,cosine,warmup.5,AMPoff,
+all165settings unchanged except translate=.35 on x/y. Existing017fixed-last control.
+No probe admission, no color/scale/flip/mosaic. Resident clipping/filter behavior
+tested before launch. One run,2GiBbudget,>8GiBfree,no-wall-cap. Fixed-last only;
+report all retained/page outcomes, no automatic promotion or retry. Pending preflight.
+
+Launched PID4888 in driver91179 after complete19740member staged byte verification.
+Actual saved arguments differ from017only translate0→.35 and output identity.
+Finite epoch1updates,5.59GBMPS. Protocol SHA256
+901ca62950dab1058170c8f9c0ac7c44dbf529837e31d7cab054a346da74a511.
+Initial driver attempt failed before child launch on string-versus-Path source
+hash handling; evidence retained, corrected attempt02 has a new destination.
+No failed training weights reused. Terminal metrics remain pending.
+Epoch1 completed2245.66seconds: validation P.90256,R.84896,mAP50.88123,
+mAP50:95.84397. Epoch2 live. Validation alone does not answer page-position
+generalization; retain the frozen terminal comparison.
+Epoch2 completed at4370.69cumulative seconds: validation P.90750,R.84077,
+mAP50.88100,mAP50:95.84240. Epoch3live; no configuration/selection change.
+Epoch3 completed at6587.10 cumulative seconds (2216.41 seconds this epoch):
+validation P.92886,R.82601,mAP50.88068,mAP50:95.84371. Epoch4 confirmed live
+in driver91179. These validation results do not establish page-position improvement.
+Epoch4 completed at8989.45 cumulative seconds (2402.35 seconds this epoch):
+validation P.91558,R.84127,mAP50.88137,mAP50:95.84340. Epoch5 confirmed live
+in driver91179; fixed-last comparison remains pending, with no scope change.
+Run018 completed exit0 in11412.904 seconds. Epoch5 validation P.91735,R.83682,
+mAP50.88196,mAP50:95.84610; cumulative epoch time11258.40 seconds. Fixed-last
+SHA256 3ab45129317e988626c6581196701b074c3d4c72dfd8c5fbd923096e81f50be4.
+Matched export completed but report rejected974/2400 retained records;96/96probes
+passed. One same-checkpoint/image diagnostic showed native Ultralytics output with
+zero-width boxes at x=0 (not dimension mismatch or an out-of-range coordinate).
+Strict artifact validation correctly rejected these degenerate boxes. Preserve both
+exports and diagnose an explicit, consistently applied postprocessing contract before
+claiming matched metrics; do not drop failed images or silently clamp/relax validation.
+Completed matched evaluation with explicit audited positive-area policy for botharms:
+2496/2496successful records each.018rejected1719zero-area boxes across974images;
+017and bothprobe sets rejected0. Withheld custom AP50 .642493→.687904,AP50:95
+.554267→.609954;page AP50 .291148→.399426,TP18→34,FP0→4. Native hits0→10/48,
+left hits0/48both. cancelAction−15.416pp/mapView−5.406pp combined AP50. No promotion.
+22focused tests andoffline Swift build/test pass; final inference/report exit0.
+See `reports/work/IOS-TRANSLATION-170/handoff.md` for complete evidence and next action.
+
+### IOS-PAGE168 — controlled inference resolution, no training
+
+Predeclared in Run013Evaluation/Tasks after165diagnosis: same017fixed checkpoint,
+96frozen development images, one1280long-edge inference arm versus retained640.
+Completed exit0,96/96successful,12.317seconds including setup. AP50 .291148→.039247;
+AP50:95 .177810→.007154; operating TP18→0,FP0both,FN78→96. Native0/48both.
+No promotion or additional run. This rejects simple higher-resolution inference,
+not resolution-aware retraining. Protocol/result source and input pins retained.
+First sandbox attempt stopped pre-inference on MPS access; preserved. Scoped host
+execution succeeded.24focused tests and offline Swift build/test terminal0.
+
+### IOS165 — both fixed runs and matched evaluation complete
+
+2026-10-05: Run017 PID92431 completed five epochs, exit0; driver71394 terminal0.
+Final validation P=.90055,R=.86044,mAP50=.88066,mAP50:95=.84343.
+Fixed-last SHA25624b53eee1a383038d0b3c4ffbb60ee30340d6b810c53adf6bb9d601a867c7bd5.
+Both arms pass eval_repair165.ready: terminal receipt seals, checkpoint bytes,
+saved settings, five finite epoch records and six frozen evaluation references.
+The017 receipt seconds22823.323 is cumulative campaign elapsed (timer outside
+the arm loop), not standalone017 duration. Its epoch CSV time is11294.10seconds;
+preserve original receipts rather than silently relabeling timing.
+Serial matched evaluation launched session54635: infer/report016 then017,
+2400retained images plus96page-development images each. No checkpoint selection,
+training extension, CoreML export or promotion. Session54635 completed exit0:
+2496 successful image results per arm, no failed inference. Withheld custom AP50
+Run013=.632161,016=.630745,017=.642493; AP50:95=.570738/.547064/.554267.
+Page96 operating hits0/7/18, false positives48/0/0, misses96/89/78.
+Repair improves the matched prior arm but stricter localization trails Run013;
+no DS-G8 or production qualification. Full accounting and limitations:
+[handoff](../reports/work/IOS-REPAIR-165/handoff.md).
+
+### IOS165 milestone — Run016 terminal, Run017 started
+
+2026-10-05:016prior arm completed five epochs,exit0,11330.112seconds. Terminal
+receipt, fixed-last checkpoint and saved configuration verified by eval_repair165.ready.
+Final validation P=.89829,R=.86918,mAP50=.88124,mAP50:95=.84491. Fixed-last SHA256
+22482e54b73a1bf0006f4a9985583e7a72b8d17a9ce322ada7a8e3fe725af077.
+Same preregistered campaign launched017repaired PID92431 automatically; not a new
+experiment or scope extension. Held-out comparison pending; no promotion.
+
+### DTM060 — POOL167 (registered before launch)
+
+October5: one120epoch CPU2thread change-branch fit,DTM049initializer, identical
+668admitted membership/Adam1e-4/batch16/seed42/uniform weights as retainedDTM054.
+Only pooling changes: spatial mean broadcast4×6 instead of adaptive4×6. Same
+parameter shapes/count, reduced functional positional capacity. Fixed-last,<=2GiB,
+standing no-wall-cap. No new roles/capture/GPU use/export/promotion. Compare complete
+fit/reversal and native/public localized diagnostics; archive failures, no sweep.
+Exact inputs/config/checkpoint pins required before optimization. Result pending.
+
+Completed PID82148:120epochs147.237training seconds,181.968seconds including
+evaluation. Retained054replayed exactly, new checkpoint replay exact, geometry
+weights preserved.060fit610/668, reversal601/668 versus054668/668both. Old108
+retention61/108,Region84/94,admittedSettings4/5,native9/9. Global226/226 retained;
+local center39/226with187abstentions (054207/226,6changed,13abstain).
+Public bottom151/178unchanged,0changed,27abstain versus0540/176/2. Fewer confident
+alarms do not establish better detection: underfit/abstention tradeoff rejects
+replacement. No promotion or further run. Evidence pool167-dtm060/result.json.
+
+## Conditional DTM047 — REVERSAL-147 (2026-10-04, registered before execution)
+
+Hypothesis: ordered RGB context may create an unintended directional dependency in
+binary change classification. Score433existing train/identity views and9admitted
+native intervals with frames reversed. Preserve focus-change label and ancestry;
+no claim that reversed navigation is operationally possible. Unknown2Balance excluded.
+Reuse frozenDTM031encoder, masks, DTM036scale/readout and DTM046reference. If any
+reversed admitted decision fails, one coefficient-preserving LP repair with1219prior
+constraints plus442reversed rows, original infinity-norm objective,60second solver,
+training margin logit(.85)+.01/runtime logit(.85)+.001,CPU2threads,2GiB outputs.
+Output NativeUITrainer/focus_ring_runs/reversal147-dtm047; no repeated attempts,
+new backbone, capture, export or promotion. Exact source/data/PID/result pins by runner.
+
+Completed PID42126,exit0. DTM046reverse originals427/433correct (1wrong/5abstain),
+retained8/9correct (1abstain). One39iteration solve7.843305s/full36.804742s;
+original residual5.6173e-12, minimum float32margin1.74458313 passes unchangedgate.
+DTM047reversed433/433+9/9; original433/433+9/9retained,global negatives226/226.
+Localizedleft192/226falsechanges,center207/226falsechanges: notrobust; no promotion.
+52Python/142native checks pass, exact checkpoint replay and original feature-cache
+replay. CheckpointSHA25689a2510346ae9e91253ed74e6d92502104bfa0cd8af766118c4104103eabf48c.
+ProtocolSHA256d599f795572d59120bf69fbaa8f5fe83ba317ae7a01781e85690db9e874c7edd.
+Retained artifact total637563bytes before concise handoff. All views exposed training;
+same-source reversal adds no independent evaluation evidence.
+
 ## Run DTM030 — REFLOW117 explicitly admitted exposed Settings (2026-10-04)
 
 Registered before launch. Under autonomous admission/training authority, five
@@ -3202,6 +3387,52 @@ more epochs on existing members. Evidence `../reports/work/FOCUS-VISUAL-03/hando
 
 ## Run 013 — Phase 6a iOS YOLO11m 41-Class Addon Training (2026-09-24–27)
 
+## Runs 014 / 015 — IOS-REPAIR165 (registered before launch, October4)
+
+Run014prior r8 versus015native159overlay,14540train/2800val/2400test, fresh
+Run013best initialization SHA88c3cffb51b0b29dd71672fb64f6e60be56757e6de507886ef2f5c2ff86dd9b7.
+Five epochs each,640,batch8,MPS,workers0,seed42,AdamW1e-4,lrf.1,cosine,warmup.5,
+patience0,rectTrue,AMPfalse,all image augmentations disabled,OHEMoff,cachefalse,
+fixed-last comparison.<=4GiBoutputs,no wall cap,standing local training authority.
+No model downloads/export/promotion.900repair includes rendering and labels;
+no label-only causal claim. Exact source/config/data/PID/history pins in
+reports/work/IOS-REPAIR-165. Run014then015sequentially; failures stop affected arm.
+Evaluate2400retained cases and96page diagnostic using existing contracts. No DS-G8.
+
+Run014launch verified2026-10-05T00:02UTC(October4local),PID75555,MPSavailableTorch2.13.0.
+All649/649initializer items transferred; full14540train loader accounting, no corrupt
+members. Epoch1/batch35finite losses,reportedMPS5.68GB/~1.2s/batch. Saved args.yaml
+matches frozen profile, resumeFalse. Run015queued sequentially, not launched yet.
+Launch contract SHA256b7b7fdf9a1a42c4450c2054cc04c00c217cd1e7bcdb442dae41caf3b72298fcd.
+Preparation evidence retained separately; launch freeze adds runtime/evaluator pins
+without rewriting the initial staging record. Exact command/PID in r014-prior-execution.json.
+
+### Run013 historical record
+
+### Runs014/015 configuration rejection; corrected016/017 preregistered
+
+Corrected016 launched PID78043, driver session71394; epoch1/batch12 observed with
+finite losses and5.59GBMPS. Saved args verify lr0=warmup_bias_lr=.0001.017queued
+in the same driver, contingent on successful016 completion. Corrected launch SHA
+2c3ed451cbc69a5a95d834d738b7f8e49e19f4faa4e6c2373ebf4336b2a28d45.
+32focused checks and offline Swift build/host serialized tests pass. Results pending.
+
+First016epoch/validation complete:2279.06s cumulative, precision.91119,recall.83606,
+validation mAP50.87628,mAP50:95.83209; all3optimizer-group rates approximately1e-4.
+Epoch2started. These are Ultralytics validation metrics over2800images, not custom
+retained-test metrics or the repair-arm comparison. Fixed5epoch selection unchanged.
+
+October4local:014interrupted before first epoch/validation, process exit-2, driver
+elapsed945.538s(including hash preflight).015never launched. Audit found inherited
+warmup_bias_lr=.1 versus declared base .0001; biases start1000×higher. No model
+quality inference or useful checkpoint accepted. Original logs/config/receipt kept.
+016prior-r8 and017native159reuse exact same frozen staging, fresh Run013best,
+five epochs each; sole correction explicitwarmup_bias_lr=.0001. Fixed-last, no
+wall limit,4GiBoutput cap, existing standing training authority. No partial resume,
+new data, threshold tuning, export or promotion. Register before corrected launch.
+
+### Run013 historical details (unchanged)
+
 **Trigger:**
 Run 009 achieved historical original-corpus holdout test mAP@0.5 = 0.586 (58.6%),
 but only13 of41 classes had test support. The replacement r6 baseline is0.5549
@@ -3658,10 +3889,263 @@ Exact effective-weight/scale reload passes.22Python/142Swift checks pass; no exp
 
 # Run DTM037 — RETAINED-ADAPT-137 — 2026-10-04 (registered before launch)
 
+## Reserved worker runs DTM044 / DTM045 — WORKER-CUDA-145
+
+### DTM053 — RESIDUAL154 (registered before launch)
+
+### DTM054 — RESIDUAL158 (registered before launch)
+
+### DTM055 / DTM056 / DTM057 — WORKER-ADAPT162 (registered before launch)
+
+### DTM058 / DTM059 — FROZEN-ADAPT164 (registered before launch)
+
+October4: fixed050/051initializers, existing668training rows,120epochs,Adam1e-4,
+batch16,seed42,CPU2threads. Train only change Sequential linear layers8/10; all
+convolutions and geometry frozen bit-exact. Same162budget/thresholds/fixed-last
+selection, sole experimental difference trainable scope.<=2GiB,standing no-wall
+limit. No new roles/capture/export/promotion; report fit/reversal and nuisance
+groups, failure does not trigger more runs. Evidence frozen164/artifacts/result.json.
+
+Completed120epochs both, PID74073. Per-run totals63.760/60.289seconds. Training
+655/668,659/668; reversal654/668,659/668. Native9/9each; region83/94,89/94;
+Settings4/5each; global/left226/226each. Center142/226(51false,33abstain) and
+20/226(70false,136abstain). Matched full-branch055/056center34/226and19/226:
+first correct count improves but confident false changes increase25→51, while
+second barely changes. Neither passes combined fit/robustness; frozen features
+alone are not a sufficient remedy. All non-linear-layer tensors unchanged and
+checkpoint reload decisions exact. No independent qualification or promotion.
+Hashes058172a9259e9a1fbb178d1a963277233fd452c3a69b8fa7154b784ed2d13f2edb3;
+059db8c8de0aee97f72b0ca52e8b0fb30ac18fb2418bc40e627248a6015b1bf4e66.
+Exact report index: reports/work/FROZEN-ADAPT-164/artifacts/result.json.
+
+### DTM055 / DTM056 / DTM057 execution record
+
+October4: one matched initialization comparison from returned DTM050/051/052,
+respectively. Existing native152668admitted rows,120epochs,Adam1e-4,batch16,seed42,
+CPU2threads,fixed-last,change-only weights,unchanged.15/.85thresholds. <=2GiB total
+new artifacts,standing no-wall-cap override. Test whether global-robustness pretraining
+survives fitting retained region/native signals. No new roles/private egress/export
+or promotion. Three runs only, no adaptive retry/sweep.
+
+Completed all120epochs each, PID70701; fit times132.605/133.685/131.480seconds,
+total per-run135.609/136.041/133.908seconds. Training correct661/668,667/668,646/668;
+reversed661/668,667/668,643/668. All global negatives226/226; left226/226,226/226,
+193/226; center34/226,19/226,37/226. Parent center226/226,180/226,158/226:
+ordinary local fine-tuning does not preserve the worker's learned robustness.
+This is a failed combined-fit/robustness result, not a reason to extend epochs.
+All results exposed development evidence, no independent qualification/promotion.
+Checkpoint hashes respectively583226b2bdc365566e06b72f2259929925ef6f2a4621a453725e62e8075ca8fb,
+3c6bceadaf6a44d58cf1ddf710830284954fd018c08f4554176cb642a90bfb3b,
+fe71456f4c8e8f79c15e8ec24bfb366ca3a40fc82104c067f4bc333008d64717.
+Sealed result index: reports/work/WORKER-ADAPT-162/artifacts/result.json
+(SHA256d4ae138604a9bd5197b8aaa6dfba869390194f2c44cc47de450917c7b413387e).
+
+### DTM054 execution details
+
+October4: matched unweighted control forDTM053. ExactDTM049initializer,668existing
+rows,120epochs,Adam1e-4,batch16,seed42,CPU2threads,fixed-last. Only loss weights
+change to uniform; non-change weights frozen.<=2GiB,no-wall-cap standing override.
+One comparison, no tuning/retry; all four outcomes separately reported.
+Completed120epochs,152.073s fit/175.784s total,exit0. All668training and reversed
+decisions pass; checkpoint replay exact. Global/left nuisance226/226; center207/226,
+6false changes/13abstentions versus balancedDTM053207/226,8false changes/11abstentions.
+The fit repair does not establish benefit from balancing over additional training.
+No independent qualification or promotion. Checkpoint SHA256
+a866ad4e0efc9ba341ae05d77f106751ecec131894c06e50c135d6f0d8b16dd3.
+Evidence: NativeUITrainer/focus_ring_runs/residual158-dtm054/result.json.
+
+### DTM053 execution details
+
+Conditional on zero exact encoded label conflicts, one group-balanced adaptation
+from fixedDTM049: same668admitted rows, six source/control groups with equal total
+loss mass, per-example weights mean1,120epochs,Adam1e-4,batch16,seed42,CPU2threads.
+Fixed-last, non-change weights frozen, unchanged.15/.85 thresholds,<=2GiB new
+outputs, no-wall-time-limit override. No new labels or private transfer. Diagnose
+whether minority-group underweighting explains residual errors; not a holdout test.
+Pending audit and launch; one run only, no automatic tuning/retry.
+First preflight retained under `residual154-dtm053`: no training launched;
+combined batch layout did not bit-reproduce parent's separate scoring calls.
+Attempt2preserves original inference batch boundaries for initializer verification;
+same data/model/training hypothesis, no tolerance relaxation.
+Completed October4,PID55716,exit0;120epochs126.389s fit,149.840s total.
+All six groups668/668and reversed668/668pass; original Settings5/5and Region94/94
+repaired without losing108Fixture/226identity/9native/226global outcomes.
+Global/left nuisance226/226; center207/226,8false changes/11abstentions
+(DTM049center93/226,6false changes/127abstentions). Increased center confident
+errors prevent a blanket robustness-improvement claim. No promotion/holdout claim.
+Checkpoint505b5e6a3fc28c7b01279baa63ed1acb16ba5f428d8e0ccafdfd0936f51a94b3.
+Protocol/audit/result/completion retained in `residual154-dtm053-attempt2`.
+
+### DTM050 / DTM051 / DTM052 — WORKER-ROBUST153 (registered before dispatch)
+
+Terminal worker return independently accepted for research October4: all3completed
+69600updates each, summed worker fit1027.623s.44archive members verified; independent
+928row reconstruction matches tensor/label pins. Resident CPU source decisions match
+all worker original/reverse/identity/three trained global transforms/withheld transform
+groups. Augmented050/051pass928/928and178related withheld; control052fails513/534
+global transform negatives confidently and64/178withheld. Not independent accuracy.
+Local161: all3oldTrain108/108,Settings5/5,identity226/226,region0/94(all missed).
+Reviewed native050/0515/9 versus0527/9. Global/left/center negatives:050226/226all;
+051226/226,226/226,180/226(center24FP22abstentions);05224/226,20/226,158/226.
+Seed sensitivity and native false negatives remain. No export/promotion. Exact
+checkpoint refs and replay in reports/work/WORKER-ROBUST-153/artifacts/return01/evaluation.json.
+
+October4 maintainer requests larger low-priority parallel GPU work. Two fresh
+600epoch928row augmented fits seeds42/43, plus seed42original286row control with
+matched69,600optimizer steps. Adam.001,batch8,float32,noAMP/TF32/compile. Only
+previous108Fixture originals,178identity endpoints, exact reversals and3uniform
+identity photometric transforms;928rows retain source ancestry, not new independent
+screens. Worker source/mask/data/config identities required before optimization.
+8h/run,24h total,4GiBoutputs,nice10/CPU2threads/cooperativeyield. Fixedlast;
+no native transfer, finaldata changes, automatic retry or promotion. Request and
+28,924byte mask bundle published/read back; worker acknowledgment/start pending.
+
+### DTM048 / DTM049 — NATIVE-ADAPT152 (registered before launch)
+
+2026-10-04: two matched local full-change-branch adaptations. Initializers exact
+returned DTM044SHA5e45da5a146fbf69914be1393ce1782a9f5664d2e42df8d345fc9dcc6e83df06
+andDTM045SHAa27882a6122be1d692abc2d8f5bbefb2df0f4272b27071847b977379cdc1db91.
+Existing668admitted rows:433original/identities,9reviewednative,226uniformnegative.
+120epochs,Adam1e-4,batch16,seed42,unweightedBCE,CPUfloat32,two threads,fixedlast.
+Non-change weights frozen. Standing training authority/no-wall-limit override;
+<=2GiB outputs. Hypothesis: native data adaptation repairs coverage absent from
+worker fitting while retaining Fixture/identity outcomes. No localized-label
+admission, private transfer or promotion; bothunknownnative remain unscored.
+Per-run exact source/data/config hashes andPID recorded before optimization.
+Completed both120epoch runs,303.691s combined. DTM048:Fixture103/108,
+Settings4/5,Region80/94,native8/9. DTM049:Fixture108/108,Settings4/5(onefalsechange),
+Region93/94(oneabstention),native9/9. Both identity226/226. Both fit gates fail;
+no promotion. Full replay/nuisance evidence in NATIVE-ADAPT-152/artifacts/result.json
+and linked per-run results; these are exposed development fits, not holdout gains.
+
+### DTM046 — GLOBAL-REPLAY-146 (registered before launch)
+
+2026-10-04: one frozen-feature constrained fit using original993constraints plus
+226explicitly admitted global8identity negatives. Existing same-source train
+ancestry, no final-role changes. HiGHS-IPM coefficient preservation,1e-10solver
+tolerances,60seconds,<=2GiB. Training targetlogit(.85)+.01; runtime target remains
+logit(.85)+.001 and actual decisions remain.85/.15. No localized-label admission,
+new capture, external transfer or promotion. Output global146-dtm046; outcome pending.
+
+Terminal DTM046:PID37650,41iterations,6.816553s solve/9.776110s total. Original
+maxviolation1.74829e-11; float32minimum1.74456787passes unchanged runtimeextra
+margin.9/9native,207originals/226identities and protectedcontrast retained.
+Contrastnegative correct223/225of226 (0falsechanges,3/1abstentions); global8226/226.
+Localizedleft34correct/192falsechanges/0abstentions;center9/204/13. All exposed
+development evidence; localized failures prohibit promotion.47Python/142native pass.
+CheckpointSHA256a7ed069525cc215f00bbd11d72fea4527031a3c17055ba145f6bc9ef9fea9ad0.
+
+### Worker DTM044 / DTM045 registration
+
+2026-10-04, requested by maintainer: low-priority real GPU workload on joe-big-dog.
+Two fresh paired-context change-CNN600epoch fits seeds42/43,Adam.001,batch8,float32,
+108existing train-role procedural Fixture pairs plus same-source endpoint identities.
+No Settings/Region/retained private pixels or final evaluation transferred. CPU2threads,
+nice10when supported,8hours/run,4GiB output total, no sweep/retry/download/promotion.
+Exact worker PID/start/checkpoints/metrics pending. Contract WorkerCUDA145; input
+hashes and runner/source pins must be logged by worker before execution. Requested,
+not running until process evidence is returned. Candidates require local evaluation.
+
+2026-10-04T22:24Z update: exact receiver receipt verified against prepared payload.
+Peer progress reports DTM044 PID24885 at600epochs/21600steps,155.722566s,
+last batch loss2.24689e-9; DTM045 PID29334 at600epochs/21600steps,154.796918s,
+last batch loss.0168457. Both preserve source/data hashes. These snapshots are
+not terminal reports or comparable full-dataset metrics. Await completion artifact,
+reload evidence and local native/nuisance evaluation before accepting candidates.
+
+Terminal worker report received and independently replayed in WORKER-EVAL151:
+DTM044156.5781s,DTM045155.6557s; CUDA peak allocated94,725,120bytes each.
+Mac CPU float32 batch8 reproduces108/108and107/108Fixture decisions and178/178
+training identities each. Full retained433data: both0/94Region changes; fiveSettings
+3/5and5/5;226/226identities. Reviewed9native intervals4/9and5/9. DTM030fits all433
+but was trained on those native groups, so this is not an equal-training comparison.
+Uniform identity-nuisance false changes189/226(DTM044) vs0/226(DTM045,oneabstention).
+Both fail efficacy; no promotion or extended epochs. Candidate hashes and full
+case-linked diagnostics in reports/work/WORKER-CUDA-145/artifacts/return01/evaluation.json.
+Local intake/evaluation24.22seconds excluding transfer; returned worker code never
+executed. Strong training fit alone did not establish native transfer.
+
 Following DTM037's documented trade-off, DTM038 is preregistered below as one fixed
 joint replay comparison; no automatic follow-up run is authorized by its outcome.
 
 # Run DTM038 — JOINT-REPLAY-138 — 2026-10-04 (registered before launch)
+
+## DTM041 — CONDITIONED-FEASIBILITY-142 (registered before launch)
+
+### DTM042 — NUMERICAL-REPLAY-143 (registered before launch)
+
+#### DTM043 — COEFFICIENT-REPLAY-144 (registered before launch)
+
+2026-10-04: one coefficient-preserving equivalent LP; original fixed993constraints,
+DTM036 initialization/features,143tolerances/objective. Row/rhs amplification keeps
+nonzero coefficients>=1e-8 above resident1e-9filter; bound amplification1e8 and
+matrix/rhs1e12.60seconds,<=2GiB, standing local experiment authority. No new data,
+capture or promotion. Actual float32/head stress evaluation only after original
+residual<=1e-6. Destination `NativeUITrainer/focus_ring_runs/coefficient144-dtm043`;
+outcome pending, no automatic follow-up fit.
+
+DTM043 terminal:PID35829,41iterations,5.037130s solve/7.239766s total. All nonzero
+solver coefficients>=~1e-8; original maxviolation1.36424e-12. Actual float32 minimum
+signedmargin1.73558044 misses extra TARGET margin but passes actual .85/.15decisions.
+9/9native cases fit;207originals/226identities retained; both contrast-protection
+subsets retained. Contrast negatives219/226both, global8220/226, left834/226,
+center89/226; localized false changes191and207respectively. Reject promotion.
+CheckpointSHA25615e57c83a8da8973ed9c972a31d72474bf1f84de76efcb53935091b71f156ca3.
+43Python/142native checks pass. No additional fit or independent accuracy claim.
+
+#### DTM042 registration and outcome
+
+2026-10-04: one stricter numerical solve with unchanged DTM041 membership, frozen
+DTM036 features/base and original infinity-norm objective. HiGHS-IPM primal/dual/IPM
+tolerances1e-10 rather than1e-8;60seconds,<=2GiB, no new data or capture. Retain all
+finite solver vectors and per-row residuals. Independent original1e-6 gate and
+runtime extra-margin/decision tests unchanged. Existing actual-head replay/stress
+evaluation after accepted double witness; no promotion or additional fits.
+Destination `NativeUITrainer/focus_ring_runs/numerical143-dtm042`. Standing training
+authority; outcome pending. DTM041 source snapshot retained with its old protocol.
+
+DTM042 terminal PID35090:33iterations,3.995358s solve, status0 but original violation
+2.8524338688e-5 unchanged; no checkpoint. Retained rejected vector and all residuals.
+Row990/native7 is the only >1e-6 violation. Read-only reproduction: resident HiGHS
+small_matrix_value=1e-9;2,234of942,188nonzero scaled entries are <=threshold. Their
+contribution to row990 is2.8524338473e-5; dropping them leaves max residual1.19485e-12.
+Long-double original max2.8524339314e-5 rules out ordinary dot-product precision as
+the explanation. Coefficient dropping, not tighter primal tolerance, is next target.
+41Python/142native checks pass. No extra solve, runtime qualification or promotion.
+
+### DTM041 registration and outcome
+
+2026-10-04. One equivalent column/row-scaled HiGHS-IPM solve, 60-second solver
+limit, <=2GiB output, resident SciPy. Frozen DTM036 baseline and same 993 constraints
+as DTM040; norm objective stays in original weight coordinates. Exact zero reduction
+only. Verify float64 original residuals, float32 decision gates and checkpoint replay.
+No new data roles/capture/export/promotion. Standing local experiment authority.
+Destination `NativeUITrainer/focus_ring_runs/conditioned142-dtm041`; pins and result
+under `reports/work/CONDITIONED-FEASIBILITY-142/artifacts/ready`.
+
+Terminal: PID34362, solver status0 / 33 iterations / 3.976226s, total6.214883s.
+Original max violation2.85243387e-5 exceeds1e-6: witness rejected, no checkpoint.
+Reported infinity norm.8104235273. No float32 replay/stress scoring because no
+accepted double-precision witness. 40 Python / 142 native checks pass. Solver
+status alone is not feasibility proof; preserve this failed gate and do not loosen
+it. Next diagnostic should retain rejected vectors to localize original residuals.
+
+## Following diagnostic: DTM040 — FEASIBILITY-140 (prelaunch)
+
+One fitted linear witness, not epoch training: residentSciPy1.18.1HiGHS-ds,60seconds,
+primal/dual tolerance1e-8, minimize||correction||infinity with no uppernormbound.
+984protected+9ADMISSION136constraints,marginlogit(.85)+.001,frozenDTM036/features/
+scales. UnknownBalance andquantized/localizeddiagnostics outside solve. Existing
+source-role authority,≤2GiB, newoutputNativeUITrainer/focus_ring_runs/feasible140-dtm040.
+Recordpins/solverstatus/residuals then actualfloat32headparity and diagnosticmetrics.
+Numericalfailure inconclusive; no automaticretry,modelpromotion ornewcapture.
+
+DTM040terminal:PID32816,status1timelimit,82746iterations,solve60.080997s,total62.250013s.
+No witness/checkpoint, no feasibility conclusion. Signed993×1152matrix:18zero rows,
+82zero columns;nonzerocoefficients4.72197e-11to21.84359. Rowscaledrank967at7.46538e-11,
+683singularvaluesabove1e-6relative. Near-dependence warrants numerical investigation,
+not labelconflict claim or unchanged retry. User-directed worker onboarding proceeded
+independently; integrated software verification finished afterward.
 
 ## Following controlled comparison: DTM039 — MARGIN-REPAIR-139 (prelaunch)
 

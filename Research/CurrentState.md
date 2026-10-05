@@ -5,6 +5,233 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**IOS-FIT175 / Run020 live:** one balanced216-image training-fit diagnostic,
+72per placement,20fixed epochs from019with fresh optimizer state. Monitoring uses
+the same training images and is explicitly not independent validation. PID34431,
+driver84525; no new data roles, capture or promotion. Terminal comparison pending.
+[Continuation](../reports/work/IOS-FIT-175/continuation.md).
+
+**IOS174 diagnosis complete:** Run019still fails on its own placement additions:
+leading0/96, trailing11/96, centered62/72operating page hits; total73/264 versus
+017's43/264. Off-center oracle boxes have median height ratios2.45/2.61 versus
+ground truth, despite near-correct horizontal centers. Do not attribute all failure
+to probe domain shift. Four lost cancelAction hits are case-accounted; three retain
+correctly placed low-confidence boxes and one lacks a retained cancel prediction.
+Next: a bounded balanced training-fit experiment, not scale capture or promotion.
+[Evidence](../reports/work/IOS-DIAG-174/handoff.md).
+
+**IOS173 / Run019 complete, not promoted:** five fixed epochs from Run013best,
+14804train including264qualified native placement/tint additions; unchanged evaluation.
+All2496matched records validate. Combined AP50 .887166→.882978; withheld
+.642493→.643083; development page AP50 .291148→.343791. Left/native operating
+hits remain0/48each. CancelAction FP171→73 but recall80/80→76/80; no clean retention
+win. Development acceptance failed; DS-G8 remains unmet. Next IOS-DIAG-174 tests
+training fit versus probe generalization, without automatic extra epochs.
+[Handoff](../reports/work/IOS-PLACEMENT-173/handoff.md).
+
+**IOS172 native placement corpus qualified:**288planned captures complete,
+264new unique training frames and24exact same-parent controls reused without
+duplication. All24family/scale-theme/placement/tint cells captured; full annotation
+parity and measured page bounds verified. Existing5200evaluation memberships stay
+unchanged. Its admitted additions were evaluated in Run019 above; no promotion.
+[Evidence](../reports/work/IOS-NATIVE-172/handoff.md).
+
+**IOS171 diagnosis complete:** Run018's cancelAction/mapView operational recall is
+unchanged; false positives increase171→304and1→30. Left page probes remain0/48hits
+(38absent,5localization misses,5low-confidence matches). A sealed288-frame native
+placement/tint plan retains48training-only ancestry groups; not captured/admitted.
+Scale/theme coupling is documented, not claimed as independent coverage. Next:
+IOS-NATIVE-172 renderer qualification and one batched acquisition, then controlled
+training with false-positive retention gates. [Handoff](../reports/work/IOS-DIAG-171/handoff.md).
+
+**IOS170 completed, not promoted:** five-epoch Run018 translation treatment improves
+matched withheld AP50 .642493→.687904 and AP50:95 .554267→.609954. Page development
+AP50 .291148→.399426, native operating hits0→10/48, but left hits remain0/48;
+cancelAction/mapView regress. Both arms fully re-exported with audited zero-area
+filtering after strict first-export rejection. All2496records/arm validate; failed
+evidence preserved. No DS-G8, independent qualification or production promotion.
+[Evidence and next tranche](../reports/work/IOS-TRANSLATION-170/handoff.md).
+
+**IOS169 coverage audit complete:** all14540training labels verified.1566page-control
+boxes have cx .499333–.502, zero left/right-third examples.900source-backed native
+examples exist, but probe styles differ; native failure is not missing UIKit alone.
+Next address spatial coverage with a controlled experiment, not more centered-data
+epochs. [Evidence](../reports/work/IOS-COVERAGE-169/handoff.md).
+
+**IOS-PAGE168 resolution test complete:** identical96development images and017
+checkpoint at1280long edge reduce page AP50 .29115→.03925 and operating hits18→0.
+No simple inference-resolution fix. Native/left-position coverage audit is next;
+do not automatically extend training or change production preprocessing.
+[Handoff](../reports/work/IOS-PAGE-168/handoff.md).
+
+**Native24 delivery received October5:**337 payload hashes,24 case inventories and
+48 endpoint PNG/sidecar bindings pass. Consumer semantic validation rejects new
+nativeTable v3 (`canvas_selectedIndex`); exact producer source publication is needed
+before a source-pinned adapter. No recapture, training admission or model claim.
+Receipt/source request published and read back; peer acknowledgment/cleanup unknown.
+See [intake](../reports/work/RESIDUAL-160/native24-intake.md). IOS165 is complete.
+
+**POOL167 complete/rejected:** one position-averaged readout comparison060fits
+610/668versus054668/668and loses original transitions. Bottom appearance alarms
+decrease but abstentions increase; no production gain. Spatial163's5130worker
+decisions independently replayed. Larger166completed658944scores; consumer verified
+all counts/totals and3147sample decisions+858baselines. Spatial sensitivity persists;
+no model promoted. See WORKER-ENVELOPE-166/intake.md.
+IOS165training complete:016and017finished five epochs,exit0. Final2800-image
+validation016mAP50=.88124,mAP50:95=.84491;017=.88066/.84343.
+Both fixed-last terminal/config/hash contracts pass. Matched evaluation completed:
+repair withheld AP50=64.25% versus prior63.07% and Run01363.22%; stricter AP50:95
+55.43% still trails Run01357.07%. Page hits18/96 versus prior7/96;78misses remain.
+Custom AP, reused development/retained evidence, not independent qualification.
+[IOS165 handoff](../reports/work/IOS-REPAIR-165/handoff.md); no promotion.
+
+IOS-REPAIR165 is review-ready. Worker163completed and independently
+replayed;166completed, independently received and sample-replayed. Sender cleanup
+acknowledgment remains unknown; no further worker execution assigned automatically.
+Worker145/153and native150are review-ready, not active/awaiting intake. Dated lower
+entries retain historical observations; use the current queue and newest evidence,
+not their superseded next-action prose, to avoid repeating completed experiments.
+
+**IOS165 corrected campaign launched:** Run014 stopped with exit-2 before its first
+epoch completed because inherited bias warmup .1 was1000×base rate;015 never ran.
+Fresh016prior/017repair explicitly use .0001 bias warmup, same five-epoch full-corpus
+comparison and Run013 initializer. Driver session71394 verifies inputs before
+training. Contract reports/work/IOS-REPAIR-165/artifacts/launch-corrected.json.
+32 focused checks pass; actual optimizer rates verified and first validation above.
+Terminal comparison now complete as summarized above; no promotion.
+
+**Frozen164 complete:** DTM058/059freeze worker050/051convolutions during matched
+120epoch local adaptation. Training655/668,659/668; center142/226,20/226correct,
+51/70false changes. No combined gate pass; preserving features alone is insufficient.
+iOS900repair labels reduce median page-box area12.1×/24.2× versus originals;
+controlled training comparison is the next useful detector experiment, not a
+presumed need for larger input resolution. No production change.
+
+**Native159 complete:**900/900exact-recipe native page repairs captured/audited,
+new19740member overlay14540train/2800val/2400test; zero decoded duplicates, unchanged
+5200evaluation members and666manual repairs. Original corpus untouched.59Python
+checks and offline Swift build/142tests pass; no new YOLO training or model gate.
+**Worker161:** all3ROBUST153returns verified and independently replayed on CPU.
+Global augmentation helps lighting but all3miss94region changes; native9case scores
+5/9,5/9,7/9. Three local adaptations162complete:661/668,667/668,646/668training
+correct, but center appearance robustness falls to34/226,19/226,37/226. No promotion.
+Worker163eight-mask diagnostic request published/read back; acknowledgment pending.
+**Residual160:**10distinct confident local-appearance errors in053/054trace to
+native Fixture table/rich-table endpoints; four shared dark-theme cases. Metadata
+proposal published/read back to TTR for matched same-focus appearance/move controls.
+
+**NATIVE157 qualified:** both actual capture entrypoints pass24/24cases with
+independent pixel/hash/sidecar audit and representative overlay review. Pausing
+the owned render layer clock prevents activity-indicator drift during controlled
+removal; original clock properties are restored. Outside-control guard unchanged.
+The900repair is now separately qualified as an overlay; no default annotation switch.
+**RESIDUAL158:** unweighted DTM054 also fits668/668and reversals; balancing is not
+proven necessary. Center nuisance207/226,6false changes/13abstentions remains a
+robustness gap. These exposed-data results do not qualify production use.
+**WORKER153update:** exact receipt/ack verified; peer reports DTM050CUDAprocess
+at9000steps23:05:47UTC and15runner checks passed. Native launch issue is independent.
+
+**PAGE156:** Run013page-only96composition baseline completed: customAP50=0,
+0operational hits/48unmatched predictions atconfidence.25,IoU.5. Of36images with
+any page candidate,32have correctly placed centers but median4.53×wide boxes.
+Exact900native r8training repair records verified. Existing UIKitControls uses
+automatic-interactive styling not yet qualified by disabled-automatic probes;
+do not rewrite using an assumed style equivalence. Old data/models unchanged.
+
+**COMPOSE155:**96new reader-footer/gallery-inspector development compositions,
+each with controlled indicator-hidden counterpart, captured in48.371s. All192PNG
+hashes/dimensions verified;96bounded visual labels,zero visible decoded duplicates.
+Manual/native automatic/native prominent geometries visibly differ as expected.
+This unblocks composition-based pageControl diagnostics, not a full-class corpus
+or production qualification. Exact900native training repair remains open.
+
+**RESIDUAL154 / DTM053:** group-balanced adaptation repairs both residual cases:
+668/668exposed training decisions and reversals pass; global/left nuisance controls
+226/226each. Center nuisance207/226correct,8false changes/11abstentions; no
+production promotion. Exact label-conflict audit clear. PAGE150style-specific
+proposal matches72retained probes within0.5pt but real compositions remain pending.
+
+**WORKER153:** three low-priority CUDA comparisons requested via verified SMB,
+208,800total updates; compact producer masks delivered. Worker acknowledgment and
+start are not yet verified. Two augmented seeds plus matched-compute control test
+robustness versus extra optimization, not production qualification.
+**NATIVE152:** both local120epoch adaptations completed. DTM049fits108/108Fixture,
+93/94Region and9/9reviewed native cases; oneSettings false change and oneRegion
+abstention still fail acceptance. Neither candidate promoted. PAGE150's72native
+alpha probes also exposed omitted prominent backing; production labels unchanged.
+
+**WORKER151:** both actual CUDA600epoch fits returned and independently replayed on
+Mac CPU. DTM044/045Fixture correctness108/108and107/108; both0/94Region changes,
+retained reviewed native4/9and5/9. Neither qualifies for promotion. DTM045is more
+conservative on nuisance changes, not demonstrably a reliable focus transition model.
+Return receipt published/read back; no returned Python executed. NativePAGE150probe
+also rejects intrinsic size as a tight visual annotation:36verified renders show
+substantial blank padding. No900member label rewrite or corrected-corpus fit yet.
+
+**IOS149:** latest r8 export verified against retained lineage:666manual-dot repairs
+remain valid,5200evaluation labels unchanged. Do not repeat completed38–42work.
+Remaining native page controls900wide containers; page validation absent. All100
+retained test scroll indicators project below3pixels at640. Full41class coverage
+matrix and native-geometry/development-corpus150contract now current. No new fit.
+
+**REVERSAL147 / DTM047:** before/after reversal exposed7binary-change failures in
+DTM046. One fixed constrained solve repairs all442reversed admitted views, retains
+433original/9native outcomes and prior1219constraints; float32 extra-margin passes.
+Localized negative false changes remain192/226left,207/226center. No promotion or
+deployment claim.52Python/142native checks pass. Worker145 reports21runner checks;
+payload publication notice and bounded CUDA pooling-parity guidance delivered.
+
+**GLOBAL146 / DTM046:** uniform photometric identity negatives admitted only for
+local exposed robustness training.1219constraints now pass original residual and
+unchanged float32 extra-margin gates.9/9native and prior protection retained;
+global8negatives226/226correct. Localized-left192/226andcenter204/226false changes
+remain; no replacement/export.47Python/142native checks pass. Worker145 metadata
+dispatched; named4.2MBpayload published/hash-verified after standing transfer approval.
+
+**WORKER145:** joe-big-dog smoke-v2 reviewed; reported CPU/CUDA100steps and checkpoint
+replay pass. Maintainer assigned low-priority longer real workloads. Metadata request
+published/read back for portable actual-CNN runner plus two600epoch CUDA fits on
+108admitted Fixture pairs. Maintainer granted standing transfer approval October4;
+payload4,213,441bytes now published and independently hash-verified. Worker notice
+published/read back at22:06:51Z. Exact worker receipt22:16:37Z matches size/hash.
+Both runs report600epochs/21600steps: DTM044155.72s, DTM045154.80s. Progress
+records still label the process active; terminal outcomes/checkpoints await return
+and local evaluation. No model-quality claim from loss or epoch completion.
+The approval/delivery blockers are resolved; unrelated local work is independent.
+
+**COEFFICIENT144 / DTM043:** coefficient preservation fixes LP residual (1.36e-12).
+Actual float32 .85/.15decisions pass all993constraints:9/9admitted native,207original
+cases/226identities and prior contrast protection retained. This is exposed fit,
+not generalization. Extra margin gate fails narrowly; global8negative correctness
+220/226, localized-left34/226 and center9/226. No deployment/promotion.43Python/
+142native checks pass. Next precision-safe margins and explicitly admitted nuisance
+replay, with independent native-motion evidence still needed for qualification.
+Read-only batch1/8/16/32/993replay retains993/993decisions but logits differ by up to
+1.22e-4 between batch sizes. Extra-margin failures persist; no cross-backend exact
+numeric parity or unseen-case guarantee follows from same-backend checkpoint replay.
+
+**NUMERICAL143 / DTM042:** stricter tolerances return the same rejected witness.
+Retained-vector diagnosis identifies coefficient dropping: resident HiGHS threshold
+1e-9, 2,234 small entries; removing them reproduces the sole failing original row's
+2.8524e-5 residual. Truncated system residual ~1.2e-12. Fix coefficient preservation,
+not label admission or decision gates. 41 Python / 142 native checks pass; no model
+accepted or sent to TTR. Worker environment approval remains pending.
+
+**CONDITIONED142 / DTM041:** equivalent scaled interior-point solve converges in
+3.976s, but original-coordinate violation 2.8524e-5 fails the 1e-6 witness gate.
+No checkpoint accepted or float32 model result. This narrows the numerical issue;
+it neither proves infeasibility nor qualifies a replacement. 40 Python / 142 native
+checks pass. Next preserve rejected numerical vectors and test stricter original-
+space accuracy before another neural architecture or data-collection decision.
+
+**FEASIBILITY140:** fixed993constraint linear witness solve timed out60seconds
+(82746iterations), no verified witness; result is inconclusive. Matrix has18zero
+rows/82zero columns and strong near-dependence. Next equivalent numerical formulation,
+not an unsupported infeasibility claim. **WORKER141:** joe-big-dog synthetic CPU/CUDA
+smoke acknowledged; peer reports PyTorch absent and zero steps executed. SMB
+round trip verified, CUDA training not qualified. Environment provisioning needs
+scoped approval or an existing approved interpreter.
+
 **MARGIN139 / DTM039:** zero-slack bug repaired with unchanged .85/.15gates and
 explicit near-boundary rejection. Nonzero gradients/radii throughout600epochs;
 all old/contrast protections retained, but five native misses remain. Final radial

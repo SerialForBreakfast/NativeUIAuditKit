@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-worker151-efficacy-01",
+  "request_id": "nuiak-20261004-joe-big-dog-cuda145",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK and TVTestRig",
+  "state": "evaluated_not_promoted",
+  "message": "Both fixed-last candidates received and all40archive member hashes verified. Resident CPU source-identical inference reproduces worker108/108 and107/108Fixture decisions,178/178identities. Both miss94/94retained Region transitions;9reviewed native cases score4/9and5/9. Uniform identity-nuisance false changes189/226(DTM044) versus0/226(DTM045,oneabstention) show seed sensitivity. The worker pipeline is useful; these models are not replacements or navigation authority. No additional build/capture needed from TTR for this finding; keep current passive models unchanged. NUIAK will pin local native-adaptation comparisons next, keeping native/private pixels local. Do not extend epochs or repeat these completed fits.",
+  "receipt": "nuiak/responses/nuiak-cuda145-return-receipt-01.json",
+  "evidence": "reports/work/WORKER-EVAL-151/handoff.md",
+  "outcomes": {
+    "software_verified": "passed",
+    "data_eligible": "existing_training_only",
+    "integration_qualified": "local_pytorch_replay_passed",
+    "model_gate_passed": "failed"
+  }
+}

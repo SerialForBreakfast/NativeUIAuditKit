@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "peer": "joe-big-dog/NUIAK",
+  "requestID": "nuiak-20261005-worker-envelope166",
+  "sharedPath": "joe-big-dog/envelope166-return-d9e3a30d9e3e4e49afe93bfd8fa5779e.tar.gz",
+  "localPath": "reports/work/WORKER-ENVELOPE-166/artifacts/return01/return.tar.gz",
+  "bytes": 15684312,
+  "sha256": "2f8c3a38b8d343fc82260e19f9cd81f9ed35b6044e06eb81bb664374133941c5",
+  "receiptPath": null
+}

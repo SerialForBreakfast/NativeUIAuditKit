@@ -1,5 +1,563 @@
 # NativeUIAuditKit — Tasks
 
+## Active — IOS-FIT-175 / Codex
+
+One balanced training-fit diagnostic from Run019 with fresh optimizer state:
+216already-admitted images (72complete group/tint triads ×three placements),
+20fixed epochs; unchanged640preprocessing and full-frame fine-tune settings.
+Training images also supply explicitly labeled training-fit monitoring, never
+validation/holdout evidence. Score fixed last against019on the same216members,
+96development probes and2400retained inputs. No new capture/admission/promotion.
+[Contract](Research/Plans/Run013Evaluation.md#ios-fit-175--balanced-training-fit-diagnostic).
+Prepared216hash-verified members; Run020live PID34431/exec84525. Actual saved args
+confirm20epochs,640,batch8,lr/biaswarmup1e-4,translate0,resumeFalse; training and
+monitoring both point to explicitly diagnostic training membership.10focused tests
+and offline Swift build/test passed. Final fixed-last evaluation still pending.
+[Continuation](reports/work/IOS-FIT-175/continuation.md).
+
+## Review — IOS-DIAG-171 / Codex
+
+Complete residual page-position/renderer and cancelAction/mapView case audits from
+the170matched artifacts, plus a deterministic288-frame full-annotation native
+coverage plan from48existing training-only groups. No inference/capture/training;
+new data admission waits for renderer qualification and complete byte/label audit.
+[Contract](Research/Plans/Run013Evaluation.md#ios-diag-171--explain-residual-failures-and-freeze-one-native-coverage-batch).
+Completed96probe dispositions and2400-image regression accounting for both arms.
+CancelAction/mapView recall remains80/80and100/100 at.25/.5; false positives rise
+171→304and1→30. Left48:38absent,5wrong geometry,5low-confidence matches,0hits.
+Frozen288-frame plan from48training groups; source scale/theme correlation recorded.
+13focused tests and offline Swift build/test pass. No capture or admission.
+[Handoff](reports/work/IOS-DIAG-171/handoff.md).
+
+## Review — IOS-NATIVE-172 / Codex
+
+Implement and qualify the full-annotation placement/tint generator extension, then
+produce/audit the frozen288-frame training-only batch in one runtime session.
+Reuse native159 measurement; preserve prefix pixels and all evaluation memberships.
+No training launch until complete source/geometry/duplicate/split audit passes.
+[Contract](Research/Plans/Run013Evaluation.md#ios-native-172--one-qualified-placementstyle-generation-batch).
+Completed288/288captures with full annotations and measured indicator pixels.
+264unique new training examples;24exact same-parent controls retained but not added
+twice. No cross-partition overlap or conflicting duplicate labels. All24coverage
+cells contain12planned captures. Qualified runtime: iOS26.5/Xcode27, final capture
+33.963+372.918seconds; restored owned simulator to initial Shutdown afterward.
+Three rejected geometry batches and one pre-test launch failure preserved.
+41focused tests, final native build/capture and offline Swift build/test pass.
+[Handoff](reports/work/IOS-NATIVE-172/handoff.md).
+
+## Review — IOS-PLACEMENT-173 / Codex
+
+One five-epoch native-placement candidate: repaired165corpus plus172unique eligible
+frames; unchanged evaluation, fresh Run013 initialization, matched Run017 settings.
+Compare left/native hits and cancelAction/mapView false positives as well as AP.
+Requires172complete audit; no rejected captures or duplicate controls in new inputs.
+172audit now admits264new examples: resolved train target14804, validation2800,
+test2400. Export/complete byte verification and experiment logging still precede launch.
+[Contract](Research/Plans/Run013Evaluation.md#ios-placement-173--one-matched-native-placement-training-candidate).
+Export/staging completed20004members; all bytes verified. Run019 completed exit0,
+11455.514seconds; matched settings except dataset/output identity.14focused tests
+and offline Swift checks pass. Both evaluation entrypoints exited0; all2496records
+validate, zero rejected boxes. Combined AP50 .887166→.882978; page development
+AP50 .291148→.343791, but left/native hits remain0/48each. CancelAction FP171→73
+with recall80/80→76/80. Development success failed; no promotion or extra epochs.
+[Handoff](reports/work/IOS-PLACEMENT-173/handoff.md).
+
+## Review — IOS-DIAG-174 / Codex
+
+Diagnose Run019's training-to-probe gap before another candidate: batch-score all
+264new admitted training images with017/019, reuse existing96probe/2400retained
+predictions, audit page scale/geometry/confidence by placement/tint/family, and
+explain the four lost cancelAction hits alongside reduced false positives.
+Training-fit scores are diagnostics, never held-out qualification. No capture,
+training, threshold change, data-role change or promotion in this packet.
+[Contract](Research/Plans/Run013Evaluation.md#ios-diag-174--training-fit-and-retention-diagnosis).
+Completed both264-image training-fit exports,96probe dispositions and2400-image
+retention reconciliation. Run019page training hits73/264 versus43/264control;
+leading0/96, trailing11/96, centered62/72. Off-center oracle boxes are too tall,
+so failure is present on training inputs, not only unfamiliar probes. All four
+cancelAction lost hits identified;102FP removed and4new.13focused tests and
+offline Swift build/test pass. No new training/capture/admission/promotion.
+[Handoff](reports/work/IOS-DIAG-174/handoff.md).
+
+## Review — IOS-TRANSLATION-170 / Codex
+
+One five-epoch translation.35 treatment, fresh Run013 initialization, unchanged
+repaired165membership/settings; completed017 is no-translation control. Verify
+actual augmentation geometry/clipping before launch, pin all inputs, then complete
+matched evaluation. No capture, new data roles or promotion.
+[Contract](Research/Plans/Run013Evaluation.md#ios-translation-170--one-matched-spatial-augmentation-arm).
+Run018 launched PID4888, driver session91179; actual saved args differ from017
+only translate.35 and output name/path. Epoch1 updates finite,~5.59GBMPS.
+All staged bytes verified;10focused augmentation/terminal checks and offline Swift
+build/tests pass. First source-hash type error occurred before child launch and is
+preserved; corrected protocol901ca62950dab1058170c8f9c0ac7c44dbf529837e31d7cab054a346da74a511.
+Training completed exit0,11412.904s; fixed-last3ab45129317e988626c6581196701b074c3d4c72dfd8c5fbd923096e81f50be4.
+First evaluation rejected974images containing zero-area post-clipping predictions;
+failed exports preserved. Explicit positive-area policy and22focused tests pass.
+Matched re-export/report session80224 exit0:2496/2496records each, audited rejections.
+Withheld AP50 .642493→.687904;page AP50 .291148→.399426 andnative hits0→10/48,
+but left hits remain0/48; cancelAction/mapView regress. No promotion or epoch extension.
+[Handoff and next tranche](reports/work/IOS-TRANSLATION-170/handoff.md).
+
+## Review — IOS-COVERAGE-169 / Codex
+
+Hash-bound training page-control support audit after rejected resolution change.
+Account for14540members, class boxes, horizontal position/size and family/repair
+lineage; compare development probes without changing roles. Select one justified
+next comparison, not another blind epoch run.
+[Contract](Research/Plans/Run013Evaluation.md#ios-coverage-169--page-support-audit-before-another-training-campaign).
+Completed14540label hashes/geometry checks:1566page boxes, all centered
+(cx .499333–.502).900native repaired examples exist; native failure is not absence
+of UIKit training.96probes include48left and wider/taller native treatments.
+Three focused tests plus offline Swift build/tests pass.
+[Handoff](reports/work/IOS-COVERAGE-169/handoff.md).
+
+## Review / resolution intervention rejected — IOS-PAGE-168 / Codex
+
+Diagnose repaired detector position/renderer failures with one controlled1280
+inference arm against retained640results on the frozen96development probes.
+No training/capture/role changes; pin distinct preprocessing, preserve coordinates,
+report all strata plus latency and complete accounting. Outcome guides targeted
+coverage versus resolution work, not automatic promotion.
+[Contract](Research/Plans/Run013Evaluation.md#ios-page-168--isolate-position-and-renderer-sensitivity).
+[Diagnosis](reports/work/IOS-REPAIR-165/page-strata.md).
+Completed96/96 at1280: AP50 .03925 versus .29115 at640; operating TP0 versus18.
+Native UIKit remains0/48hits. Reject inference-resolution increase, not a claim
+that resolution-aware retraining cannot help.24focused tests and offline Swift
+build/tests pass. [Handoff](reports/work/IOS-PAGE-168/handoff.md).
+
+## Review / candidate rejected — POOL-167 / Codex
+
+One CPU-only DTM060global-broadcast pooling comparison against retainedDTM054,
+same668training examples/initializer/120epochs/config. Test positional-readout
+hypothesis from163without admitting synthetic localized negatives. Full fit/reversal
+and8spatial-arm comparison; reject robustness improvements that lose real transitions.
+[Contract](Research/Plans/WorkerCUDA145.md#pool167--one-local-spatial-readout-comparison).
+No production changes; iOS165 continues independently on MPS.
+DTM060completed120epochs:610/668fit versus054668/668; reversal601/668.
+Public bottom diagnostics151/178unchanged,0changed,27abstain versus0540/176/2,
+but local center39/226correct with187abstentions. Lost transition retention rejects
+replacement; no promotion or automatic epoch extension. Seven tests and offline
+Swift build/tests pass. [Handoff](reports/work/POOL-167/handoff.md).
+
+## Review — WORKER-ENVELOPE-166 / joe-big-dog; intake Codex
+
+Completed and independently received:658944scores, all counts/totals verified;
+3147sample decisions plus858baselines match resident CPU replay. Five focused tests
+and offline Swift build/tests pass. Confident counterfactual flips16.13–24.27%; no
+native efficacy or promotion claim. Receipt published/read back; sender cleanup
+acknowledgment unknown. [Intake](reports/work/WORKER-ENVELOPE-166/intake.md).
+The dispatch chronology below is historical; peer acceptance/completion now established.
+
+Large low-priority parallel spatial-sensitivity campaign:658,944 intervention
+scores across three resident checkpoints plus858 baselines. Existing public Fixture
+inputs only; no transfer prerequisite, training admission or promotion. Complete/reuse
+163 first; stream batches, preserve exact resume and fixed thresholds.8h/2GiB cap.
+[Contract](Research/Plans/WorkerCUDA145.md#worker-envelope166--dense-spatial-sensitivity-campaign).
+Request nuiak-20261005-worker-envelope166 published to NUIAK-owned SMB requests
+and byte-identical JSON readback verified; peer acknowledgment/start not yet verified.
+Peer163ack subsequently states166outside its current bounded scope: larger campaign
+is requested but not accepted. Do not infer automatic execution after163; resolve
+worker scope alignment using its returned diagnostic before any expanded execution.
+Consumer next: bounded independent replay and choose failure-driven training arms.
+Maintainer renewed the large parallel assignment on2026-10-05T01:22:30Z;
+follow-up references the unchanged166contract and completed163evidence. Requested
+acceptance/start explicitly, without assuming peer execution. Dispatch evidence:
+[follow-up](reports/coordination/worker166-dispatch-followup.json).
+
+## Review — IOS-REPAIR-165 / Codex
+
+Full14540training-member matched five-epoch Run016prior-r8 versus Run017native159
+repair-overlay comparison, both initialized fresh from Run013. Existing trainer
+opt-in full-frame profile, fixed-last, unchanged2800val/2400test and96page diagnostic.
+Plan Run013Evaluation; all hashes/configuration frozen before launch. No promotion.
+Both fixed runs and matched evaluations are terminal; worker163 completed independently.
+Run014 stopped before epoch1 completion: inherited bias warmup .1 contradicted
+the conservative .0001 base rate. Exit-2 preserved; Run015 never launched.
+Corrected launch explicitly pins bias warmup .0001; fresh016/017, never resume014.
+Driver session71394 owns sequential training.016completed exit0 in11330.112seconds;
+five-epoch terminal contract/checkpoint verified. Final validation mAP50=.88124,
+mAP50:95=.84491, not held-out qualification.017completed exit0; final validation
+mAP50=.88066,mAP50:95=.84343. Both fixed checkpoints pass terminal/config/hash
+checks. Serial matched infer/report session54635 completed exit0:2400retained and
+96page-development images per arm, all successful. No production change.
+32 focused tests pass; evaluator rejects old arms, incomplete runs and wrong bias
+warmup. Withheld AP50 repair64.25% versus prior63.07%, but AP50:95 remains below
+Run013. Page operating hits18/96 versus7/96;78 misses remain. No new shipped model.
+[Handoff](reports/work/IOS-REPAIR-165/handoff.md). Never restart from stale logs.
+
+## Review — FROZEN-ADAPT-164 / Codex
+
+Two fixed adaptations DTM058/059 from worker050/051. Freeze change convolutions,
+train only existing linear decision layers; same668admitted rows/120epochs/config
+as162. Compare retention and global/left/center diagnostics with matched055/056.
+No new labels or architecture, no extra epoch sweep. Plan WorkerCUDA145.
+Completed: training655/668,659/668; center142/226,20/226correct. First improves
+correct count versus full adaptation but has51confident false changes; neither
+passes combined fit/robustness. [Handoff](reports/work/FROZEN-ADAPT-164/handoff.md).
+
+## Review — WORKER-SPATIAL-163 / joe-big-dog; consumer Codex
+
+Eight fixed spatial-photometry diagnostic masks on existing178Fixture identities,
+all3worker candidates, no training. Distinguish location-sensitive robustness before
+choosing a new representation; low priority600s/256MiB. Revised worker proposal
+scope, no new private input. Plan WorkerCUDA145; publication/ack separate.
+Peer acknowledged and reports start2026-10-05T00:39:52.720036Z,PID46724, exact
+178×8×3diagnostic with600s/256MiB cap. This is peer-reported start, not locally
+verified process liveness or completed intake.
+Subsequent terminal return accepted:18members/hash-verified, exact receipt published,
+all5130decisions independently reproduced on resident CPU source. Bottom appearance
+changed decisions134/178,166/178,162/178 for050/051/052. Related-source diagnostics,
+not native accuracy or admitted training labels. No model promotion.
+[Handoff](reports/work/WORKER-SPATIAL-163/handoff.md).
+
+## Review — WORKER-ADAPT-162 / Codex
+
+Three matched local120epoch adaptations DTM055/056/057 from returned DTM050/051/052,
+same admitted668membership/config as native152. Test retention of worker global
+robustness while fitting retained region/native cases; fixed-last, no new roles.
+Plan WorkerCUDA145, exact initializers/evidence pinned before each launch. No
+promotion. Completed all three fixed runs: training correct661/668,667/668,646/668;
+center appearance diagnostics34/226,19/226,37/226. Adaptation loses parent robustness;
+no epoch extension or promotion. [Handoff](reports/work/WORKER-ADAPT-162/handoff.md).
+
+## Review — WORKER-EVAL-161 / Codex
+
+Verified all44return members; independently reconstructed928rows and replayed all
+worker categorical decisions with resident CPU source. All3models miss94region
+changes; augmented models5/9reviewed native versus control7/9. No production gate.
+Evidence reports/work/WORKER-ROBUST-153/artifacts/return01/evaluation.json.
+
+## Review — RESIDUAL-160 / Codex
+
+Trace cached DTM053/054localized-appearance failures to original endpoint/source
+groups; distinguish shared confident errors from abstentions and nearest training
+examples. No new fitting or diagnostic-label admission. Companion to native159
+capture; use results to target future genuine evidence requests.
+Completed:29affected endpoints,10distinct confident errors all linked to native
+Fixture table/rich-table captures;4shared dark-theme failures. No exact encoded
+positive alias. [Handoff](reports/work/RESIDUAL-160/handoff.md).
+October5peer acknowledgment: supported seeded artwork replacement, native moves
+and no-ops scheduled in next dark/light table/rich-table batch; arbitrary contrast
+controls absent and not required. NUIAK published/read back balanced24interval
+pilot suggestion under the same request. Native24 now received:337 payload files
+hash-verified, both campaign receipts and48 endpoint PNGs pass. Real consumer
+rejects all24 new table-v3 recipes at canvas_selectedIndex; local TTR source
+predates the uncommitted producer contract. Await exact maintainer-published source,
+then targeted adapter/negative tests, callback/crop audit and matched model scoring.
+No recapture or new build-only handoff; no new labels admitted.
+[Native24 intake](reports/work/RESIDUAL-160/native24-intake.md).
+[Directional analysis](reports/work/WORKER-ENVELOPE-166/directional-analysis.md)
+and [response](reports/coordination/residual160-supported-artwork.json).
+
+## Review — NATIVE-159 / Codex
+
+Regenerate exact900native training members using qualified contextual page bounds;
+retain visible/hidden evidence and original recipes. Audit all membership, hashes,
+geometry and duplicates before a new corpus overlay; preserve666manual repairs and
+5200evaluation records. No candidate launch in this capture tranche. Companion:
+independent worker153return intake if published; peer generation is asynchronous.
+Canonical contract: Research/Plans/Run013Evaluation.md, NATIVE159.
+Completed900/900native captures and independent byte/geometry audit; full19740
+overlay14540/2800/2400has zero decoded duplicates, unchanged5200evaluation and
+666manual repairs.59Python tests and offline Swift build/142tests pass.
+[Handoff](reports/work/NATIVE-159/handoff.md). No YOLO run launched.
+
+## Review — RESIDUAL-158 / Codex
+
+One compute-matched DTM054unweighted continuation fromDTM049to isolate whether
+DTM053's group balancing helps beyond additional training. Same668rows/settings;
+no data-role changes or promotion. Parallel companion to native157diagnostics.
+Completed120epochs: all668training and reversed decisions pass. Center nuisance
+207/226correct,6false changes/13abstentions. Balanced DTM053 has the same correct
+count but8false changes; balancing is not established as the cause of fit repair.
+[Handoff](reports/work/RESIDUAL-158/handoff.md).
+
+## Review — NATIVE-157 / Codex
+
+Integrate opt-in backing-aware page bounds in UIKit/SwiftUI capture; qualify actual
+two training renderers across24configurations, retain original/reference pixels
+and reject scene drift. Default annotations unchanged; exact900repair gated by result.
+Diagnostic matrix accounted for24cases;20rejected due to changes outside the
+page control, including animated activity indicators. Freezing the owned render
+layer clock across both captures, then restoring it, passes24/24native cases and
+independent hash/pixel/sidecar audit. Eight representative overlays reviewed.
+Exact900training repair is now the next implementation; no corpus rewritten yet.
+[Handoff](reports/work/NATIVE-157/handoff.md). Worker153runs independently.
+
+## Review — PAGE-156 / Codex
+
+Freeze/run/report page-only Run013baseline on96development compositions, plus exact
+900native r8repair inventory and rendering-config gaps. Preserve old corpora and
+5200evaluation members. Plan Run013Evaluation PAGE156; automatic-interactive UIKit
+style requires qualification before regeneration, not guessed alpha/intrinsic boxes.
+Run013page-only baseline completed96/96in8.6s:customAP50=0,zeroIoU.5hits at.25,
+48unmatched operational predictions.36images have any page candidate;32best-overlap
+centers lie inside truth but median width ratio4.53. Verified exact900r8native
+records/recipes/hashes; no rewrite. [Handoff](reports/work/PAGE-156/handoff.md).
+
+## Review — COMPOSE-155 / Codex
+
+Capture/validate96development compositions with controlled indicator-hidden
+counterfactuals in one exact-target native batch. Actual style/frame/scale evidence,
+bounded differential labels, immutable raw membership. Plan: Run013Evaluation150/
+COMPOSE155. No existing900training repair until geometry qualifies.
+Completed96paired compositions/192PNGs in48.371s. All hashes/dimensions and
+controlled-removal bounds pass; zero decoded visible duplicates. Representative
+overlays reviewed. Development-only pageControl evidence; other classes not labeled.
+Next integrate style-aware annotations, repair exact900training members, and run
+page-only baseline on this development corpus. [Handoff](reports/work/COMPOSE-155/handoff.md).
+
+## Review — RESIDUAL-154 / Codex
+
+Audit668encoded training rows for contradictory labels and diagnose remaining
+DTM049errors. If conflict-free, execute one group-balanced DTM053adaptation under
+WorkerCUDA145local follow-on contract. Companion: retained PAGE150style-bound
+assessment; no production label rewrite or new native capture.
+DTM053completed:668/668original and reversed exposed fit; global/left negatives
+226/226each, center207/226 with8false changes/11abstentions. No promotion.
+Ten focused tests and offline Swift checks pass. PAGE150style proposal matches
+72/72retained probes within0.5pt, not production qualified.
+[Handoff](reports/work/RESIDUAL-154/handoff.md).
+
+## Review — WORKER-ROBUST-153 / joe-big-dog; intake Codex
+
+Terminal peer return received October4: three69600-update runs,4,112,718-byte
+archive copied and SHA verified. Independent44member intake/native evaluation
+completed in WORKER-EVAL161; local adaptations162/164also complete. No model
+promotion. Only separate163diagnostic acknowledgment and sender cleanup remain
+pending; neither is a reason to repeat completed training or intake.
+
+User approved larger parallel computation. Published/read back compact exact-source
+masks; three low-priority CUDA comparisons DTM050/051augmented928rows and DTM052
+matched69,600step control. Existing108Fixture only, no native/private transfer.
+Complete protocol: WorkerCUDA145plan153section. Receipt/start/terminal results verified.
+Request `nuiak-20261004-worker-robust153`
+and29KBmask bundle delivered; [handoff](reports/work/WORKER-ROBUST-153/handoff.md).
+Update23:08UTC: exact receipt and acknowledgment verified. Worker reports DTM050
+PID37337,cuda:0,9000updates at23:05:47UTC;15runner/resume tests pass. Other runs
+sequential at that historical observation; all three have since completed. Local
+Swift checkouts unavailable there, not a CUDA dependency; no download requested.
+[Terminal intake/evaluation](reports/work/WORKER-EVAL-161/handoff.md).
+
+## Review — NATIVE-ADAPT-152 / Codex
+
+Matched DTM048/049adaptation of both returned CNN change branches on existing668
+admitted rows; fixed120epochs/Adam1e-4/batch16/seed42, no new data roles or transfer.
+Reproduce initializer results, freeze geometry, verify replay and test native,
+identity/global nuisance/reversal retention. Canonical WorkerCUDA145plan152section.
+Companion: continue IOS-NATIVE-PAGE150visual-body qualification while fits execute.
+Both120epoch fits completed in303.69s combined. DTM049achieves108/108Fixture,
+93/94Region,9/9reviewed native, but one Settings false change and one Region
+abstention fail fit acceptance. DTM048also fails. No promotion; retain both.
+Companion72native alpha probes expose omitted prominent backing; no label rewrite.
+
+## Review — WORKER-EVAL-151 / Codex
+
+Both600epoch CUDA candidates returned; archive40members/hash-verified and receiver
+receipt published. Local replay reproduces108/108 and107/108Fixture decisions.
+Both miss94/94Region transitions; reviewed native correctness4/9and5/9. Global
+identity nuisance false changes189/226vs0/226(one abstention): major seed instability.
+No promotion. [Handoff](reports/work/WORKER-EVAL-151/handoff.md).
+
+## Review — IOS-LABEL-AUDIT-149 / Codex
+
+Verified19740r7labels/6267button sidecars and current19740r8labels. Exactly666manual
+dot repairs remain integrated;5200evaluation labels unchanged. Current unresolved
+native page controls:900wide containers, zero validation. All100test scroll indicators
+are2.25–2.88pixels at640. Existing38resolution/39–42repair work preserved, not repeated.
+Four focused tests/142native checks pass. [Handoff](reports/work/IOS-LABEL-AUDIT-149/handoff.md).
+
+## Review — IOS-NATIVE-PAGE-150 / Codex
+
+Implement/qualify intrinsic native page-indicator geometry and new development
+coverage, then prepare one matched corrected-data candidate. Reuse completed666
+repairs; preserve old evaluation and versions. Exact execution/acceptance contract:
+[next tranche](Research/Plans/Run013Evaluation.md#ios-native-page150--next-model-improvement-tranche).
+
+Begin with one36-case native geometry qualification on exact installed iOS26.5
+simulator F3EF9DB8-0B0F-4757-B653-D1628269F6FF. No production label changes until
+public sizing is compared with pixels. Worker candidate intake proceeds separately.
+
+Native36-case capture/hash/dimension/ink-containment checks pass; intrinsic-frame
+target hypothesis fails:25.67pt frames contain7.67pt dots, widths exceed visible ink
+by about30pt. Preserve900old native labels. Next qualify control-local rendered-alpha
+measurement against composed pixels (including visible backing) before96development
+cases or900member regeneration. [Evidence](reports/work/IOS-NATIVE-PAGE-150/handoff.md).
+
+The preceding next action is historical and completed by155/157/159:96composition
+cases captured/scored,24actual-template cases qualified,900native repairs captured
+and independently audited. Originals remain preserved; new overlay qualified.
+IOS-REPAIR165now owns the active full-corpus candidate comparison. Do not repeat
+geometry qualification or treat the failed intrinsic-size hypothesis as a blocker.
+
+Execute the approved IOS-COV follow-up locally: verify frozen r7 labels/selected
+source sidecars, quantify class/family/split support and pageControl/scrollIndicator
+geometry at640/1280, inspect button-role text evidence and container policy.
+Deliver an evidence-backed correction/coverage specification before any new fit.
+No relabeling of frozen tests, renderer launch, taxonomy change or model promotion.
+Standing backlog selection supersedes the old unassigned-dispatch wording below.
+
+## Review — PEER-TRANSFER-148 / Codex
+
+Version2explicit-peer transactions implemented; original v1TTR contract preserved.
+Actual145payload passes read-only CLI size/hash verification; missing worker receipt
+correctly blocks cleanup. Foundation fallback is restricted to verified-SMB ENOTSUP;
+actual helper collision test preserves both files.36focused checks (including inherited
+regression cases) and142native checks pass. [Handoff](reports/work/PEER-TRANSFER-148/handoff.md).
+
+Extend the tested shared transaction tool with explicit version2 peer binding,
+preserve strict v1TVTestRig compatibility, integrate Big Dog intake/receipt/cleanup
+directions and inspect actual145delivery. Adversarial/CLI tests and required offline
+checks; never delete peer files or infer training admission. Canonical WorkerCUDA145
+plan, PEER-TRANSFER148 section. Returned candidates await actual peer publication;
+this software task does not. No blind archive extraction or model execution.
+
+## Review — REVERSAL-147 / Codex
+
+Completed DTM047: reversal correctness435/442→442/442 (427/433 originals plus
+8/9retained before; all correct afterward).
+All1661constraints pass float32 extra margin; prior433original/9native and226global
+negative retention preserved. Localized false changes remain192left/207center of226;
+no promotion.52Python/142native checks pass. [Handoff](reports/work/REVERSAL-147/handoff.md).
+
+Test binary focus-change invariance to before/after reversal on existing433 examples
+and9 admitted retained intervals. Reuse frozen encoder/proposals/scales; unknown
+Balance remains diagnostic only. If reversal fails, one constrained DTM047 solve
+adds these exact reversed training views while preserving all1219GLOBAL146constraints.
+No invented localized-lighting labels, capture, final-data role changes or promotion.
+Integrate real-entrypoint/rejection tests, checkpoint replay and prior nuisance report.
+Worker145 proceeds independently; do not wait for its receipt to execute this task.
+Contract: Research/Plans/FocusTransitionLearning49.md, REVERSAL147 section.
+
+## Review — GLOBAL-REPLAY-146 / Codex
+
+DTM046 passes original1e-6residual and unchanged float32 extra-margin gate on1219
+constraints.9/9admitted native/207original/226identity retention passes; global
+negatives226/226correct. Localized-left192/226andcenter204/226false changes remain;
+no promotion.47Python/142native checks pass. Next independent family robustness
+review, not automatic admission of localized lookalike-focus transformations.
+Overlap audit:122identity endpoints have unambiguous Fixture body geometry;
+left patch overlaps122/122,center120/122.104others lack this eligible geometry.
+Keep localized variants diagnostic-only; body overlap is not a causal conclusion.
+[Handoff](reports/work/GLOBAL-REPLAY-146/handoff.md).
+
+Admit only226uniform photometric identity negatives for a local exposed robustness
+fit; keep localized transformations diagnostic-only. One DTM046 coefficient-preserving
+solve on1219constraints with training margin logit(.85)+.01 and unchanged runtime
+extra-margin gate logit(.85)+.001. Preserve native/old/contrast protection, score
+all stress views, test and hand off. No private transfer, capture or promotion.
+
+## Review — WORKER-CUDA-145 / joe-big-dog; NUIAK intake owner Codex
+
+Worker receipt22:16:37Z matches exact4,213,441bytes/SHA256. Both CUDA runs
+reported epoch600/21600steps: DTM044155.72seconds, DTM045154.80seconds.
+These historical progress records have now been superseded by independently
+verified terminal return and matched local evaluation in WORKER-EVAL151. Both
+models failed native-transfer qualification; training/transfer/software work passed.
+No candidate-return, transfer-approval or data-delivery blocker remains.
+
+Maintainer standing transfer approval received October4. Named4,213,441-byte payload
+published on verified SMB and independently size/hash checked at22:06:51Z. POSIX
+exclusive rename and hard link were unsupported; Foundation non-overwriting move
+completed publication of the verified stage. Worker intake, candidate return and
+local efficacy checks completed; no further maintainer approval is pending.
+[Evidence](reports/work/WORKER-EVAL-151/handoff.md).
+
+User requests real, low-priority long-running parallel workloads. Review smoke-v2,
+transfer the108already-admitted procedural Fixture pairs only, then dispatch actual
+paired-context CNN change-branch CUDA training: two fixed600epoch seeds42/43.
+No Settings/personal images, role changes to final holdouts, new downloads, promotion
+or navigation authority. Source-pinned pure-Torch architecture and immutable input
+bundle; checkpoint/resume/progress and receipt protocol. Canonical contract:
+[worker plan](Research/Plans/WorkerCUDA145.md). Worker results return for local native
+evaluation; training metrics are not independent model qualification.
+
+## Review — COEFFICIENT-REPLAY-144 / Codex
+
+DTM043 original LP residual1.36e-12 passes; actual runtime repairs9/9admitted native
+cases and preserves207originals/226identities plus prior contrast protections.
+Extra float32 margin fails narrowly; localized negatives still191/226and207/226
+false changes. No promotion. 43Python/142native checks pass. Next qualified nuisance
+replay and precision-safe runtime margins, not another architecture guess.
+[Handoff](reports/work/COEFFICIENT-REPLAY-144/handoff.md).
+
+One equivalent coefficient-preserving DTM043 solve, original/runtime witness gates,
+checkpoint replay and nuisance report when feasible. Amplify rows to retain every
+nonzero coefficient above resident solver threshold; no labels or gates changed.
+Contract: FocusTransitionLearning49. No extra fit, promotion or capture.
+
+## Review — NUMERICAL-REPLAY-143 / Codex
+
+DTM042 unchanged violation despite tighter tolerances. Retained vector isolates one
+native row; resident HiGHS small_matrix_value=1e-9 drops 2,234 coefficients, whose
+contribution reproduces the entire failing residual. No accepted checkpoint.
+41 Python / 142 native checks pass. Next coefficient-preserving solve then actual
+runtime/stress validation, without changing labels or gates.
+[Handoff](reports/work/NUMERICAL-REPLAY-143/handoff.md).
+
+One stricter equivalent solve with retained diagnostic vectors/residuals, actual
+float32 replay/stress evaluation when eligible, tests and handoff. Same 993 cases,
+no relaxed gates/new data/promotion. Contract in FocusTransitionLearning49.
+
+## Review — CONDITIONED-FEASIBILITY-142 / Codex
+
+DTM041 solver converged in 33 iterations / 3.976 seconds, but original-space
+violation 2.8524e-5 exceeds 1e-6. Witness rejected; no checkpoint or runtime/model
+qualification. 40 Python and 142 offline native checks pass. Next diagnose original
+residuals with retained rejected vectors and one explicitly preregistered numerical
+comparison, not a looser gate. [Handoff](reports/work/CONDITIONED-FEASIBILITY-142/handoff.md).
+
+Complete one equivalent scaled interior-point comparison on the fixed 993 retained
+constraints, original-space and actual float32 witness checks, stress report and
+offline verification. No new admission/capture/promotion or repeated solver loop.
+Contract: FocusTransitionLearning49 CONDITIONED-FEASIBILITY-142. Worker141 setup
+is independently awaiting authority; do not turn its delay into a local-model block.
+
+## Review — WORKER-SMOKE-141 / joe-big-dog; NUIAK consumer coordinator
+
+Completed result-v2 received: torch2.10.0+cu128, both100steps,100%synthetic held-out,
+checkpoint replay and CPU/CUDA prediction agreement pass by peer report. Earlier
+missing-environment blocker superseded. Real workload qualification proceeds145;
+this report does not independently verify performance on NUIAK data.
+
+Peer acknowledged and returned a preflight blocker at 21:21:43Z: Python 3.14.4,
+no discovered approved PyTorch environment. Zero optimizer steps, no training
+or serialization result. SMB request/response works; CUDA training remains
+unqualified. Next: maintainer supplies an existing interpreter or authorizes
+project-local environment provisioning, then worker resumes the unchanged smoke
+with a new versioned result. No dependency install is authorized by this entry.
+
+Maintainer explicitly requested one worker experiment through SMB. Acknowledge
+joe-big-dog's connectivity hello and dispatch a synthetic CPU/CUDA training smoke:
+fixed tiny classifier,100steps/backend,held-out correctness/checkpoint replay,
+sanitized environment/timing/hash report. No installation/private-data transfer,
+SSH,Git write orpromotion. [Request](reports/coordination/joe-big-dog-smoke-01.json).
+Publication/readback, peer acknowledgment, execution and consumer verification
+remain separate. Next accept returned metrics, then qualify a small representative
+NUIAK workload before migrating actual experiments.
+
+FEASIBILITY140 continuation completed after worker dispatch; solver timeout remains
+inconclusive and no solve was retried. See its separate review entry below.
+
+## Review — FEASIBILITY-140 / Codex
+
+One solve reached60secondlimit/status1,82746iterations; no verified witness or model.
+Conditioning audit found18zero rows/82zero columns and strong near-dependence,
+not proof of incompatible labels. [Handoff](reports/work/FEASIBILITY-140/handoff.md).
+Next equivalent conditioned formulation before another optimizer/model change;
+independently review joe-big-dog's synthetic smoke when a response arrives.
+Read-only follow-up excludes exact repeated-feature contradictions and violated
+zero rows; five native misses need signed corrections of roughly 314–460 logits.
+Next solve must retain original-coordinate norm bounds under column scaling and
+verify all original constraints. Worker response now received: environment blocked.
+
+One minimum-infinity-norm linear witness solve for984protected+9admitted native
+constraints on frozenDTM036features. Validate residuals and float32 real-scoring
+parity; evaluate all prior stress conditions without adding their labels to solving.
+Use residentSciPy only,60secondsolverbound,≤2GiB. No new data/capture/promotion;
+diagnostic fitted witness must not be described as independent performance.
+
 ## Review — MARGIN-REPAIR-139 / Codex
 
 Corrected guard has positive slack/gradients; DTM039 retains old/contrast cases but
@@ -2222,6 +2780,63 @@ not blocked by that capacity issue. No NUIAK storage workaround initiated.
 
 ## Deferred backlog — DIVERSE-UI-CORPUS (not current critical path)
 
+### Review — UI-SOURCE-177 / Codex (2026-10-05)
+
+**ART-HANDOFF178 scope update:** maintainer requests producer artwork-generation and
+native UI adapter work move to TTR. Minimal image/prompt/findings bundle published;
+peer receipt/task ownership acceptance pending. Do not independently dispatch those
+producer portions here. NUIAK retains consumer validation, admission, lineage/splits,
+evaluation and model work. ART-A/B/C and UI-IMPORT-A/B/C descriptions below are
+historical proposals pending TTR adoption, not duplicate local implementation orders.
+[Handoff](reports/work/UI-SOURCE-177/ttr-minimal-handoff.md).
+
+Executed source/dependency/license feasibility spike on all five named UI candidates,
+three discovery indexes and RICO/Ferret dataset suitability. Apple actual sample and
+four pinned GitHub source trees inspected; no builds/imports or complete transitive
+license clearance claimed. One12-poster sheet generated for review; actual1672×941
+grid deviates from prescribed crop geometry, so not admitted/extracted. Exact findings,
+pins, prompts and follow-on contracts: [UI component intake](Research/Plans/UIComponentIntake.md).
+
+Low-priority follow-ons, implementation owners unassigned:
+
+- [ ] UI-IMPORT-A — first Apple media screen + SwiftUI-Kit control adapter; exact
+  source/notices, deterministic content, offline build and observed geometry/intake.
+- [ ] UI-IMPORT-B — ParallaxView custom-focus cell; resource/license review, transformed
+  body/glow/clipping audit, native before/after intake; depends baseline adapter.
+- [ ] UI-IMPORT-C — minimal Swiftfin/dependency closure or isolated shelf/picker,
+  plus separately scoped iOS Catalog styles; no player/server import by default.
+- [ ] UI-IMPORT-D — source-separated batched corpus and matched data-only utility
+  comparison after adapter acceptance; immutable lineage/holdouts and retention gates.
+
+This refines DUC-A/B: spike evidence is reviewable, exact imported-file clearance and
+runtime qualification remain prerequisites. None of these is a current model blocker.
+
+### Low-priority companion — generated media artwork (2026-10-05)
+
+Planning approved; no image-generation requests executed by this planning tranche.
+Update2026-10-05: UI-SOURCE177 executed one explicitly requested review sheet, not
+the entire ART-B pilot. ART-A tooling/import and remaining generation remain open.
+[Canonical contracts, sheet budgets, exact crop rules and prompts](Research/Plans/GeneratedMediaAssets.md).
+Pick up bounded units when higher-priority work is blocked; not a dependency for
+current training or TTR compatibility. Owners unassigned until selected.
+
+- [ ] ART-A — NUIAK: freeze sheet/asset manifest and inspect existing TTR import
+  contract; implement deterministic crop/validation CLI with real entrypoint and
+  collision/geometry/ancestry tests. No generation or producer edits.
+- [ ] ART-B — NUIAK: reviewed development-only pilot, at most7requests/64assets:
+  12posters,16thumbnails,32avatars,4backdrops. Validate every cell, retain originals,
+  report yield/cost/time; no automatic retries. Depends ART-A.
+- [ ] ART-C — TTR/NUIAK: source-backed asset intake and native browsing/detail
+  compositions, matched procedural/generated-artwork pilot and separate layout
+  comparison. Producer gaps require its own task. Depends accepted ART-B/runtime.
+- [ ] ART-D — NUIAK: expand in small frozen sheet units toward provisional ceiling
+  368assets/36totalrequests only after pilot utility review; reserve ancestry groups,
+  then one logged data-only evaluation. No implied production promotion or recurring
+  generation. Depends ART-C; price/budget recorded at execution.
+
+These assets supplement DUC screen diversity; they do not reproduce Swiftfin or
+replace source/asset rights review, native annotations or independent real-app tests.
+
 Maintainer requested planning on2026-10-01; planning owner Codex, implementation
 owners unassigned. [Canonical plan](Research/Plans/DiverseNativeUICorpus.md).
 Reuse existing Fixture/export/import/review; no acquisition, capture or training
@@ -3238,7 +3853,7 @@ All19,740 r7 pairs audited,2,000 withheld +400 addon predictions complete, Run00
 artifact reused only after compatibility validation. DS-G8 remains open. Training
 finished106 epochs (best91); no new training, export, promotion or device work.
 
-**Next iOS proposal — IOS-COV follow-up, unassigned; requires maintainer assignment:**
+**Historical iOS proposal — superseded by completed38–42 and current149/150:**
 [Ranked failure/coverage contract](reports/work/IOS-R013-EVAL/error_analysis.md):
 source-label/geometry audit for secondaryButton/pageControl/listRow/imageView,
 toggle regression and thin scrollIndicator; independent family/class coverage and

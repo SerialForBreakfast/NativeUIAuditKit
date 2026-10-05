@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "request_id": "nuiak-20261004-worker-robust153",
+  "id": "nuiak-20261004-worker-robust153-return-receipt",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "copied_and_verified",
+  "created_at": "2026-10-04T23:29:57Z",
+  "artifact": {
+    "file": "joe-big-dog/robust153-return-8c340bc6fa8a427899b61e0fa2e10f7e.tar.gz",
+    "verified_bytes": 4112718,
+    "verified_sha256": "ab0116f629dc03b0ea89568e539c7d5f305b64da2bfd99abce3c518c8b114ae6"
+  },
+  "intake": "All44archive members and5917606expanded bytes verified; no returned code executed. Local model efficacy evaluation underway, not yet accepted.",
+  "cleanup": "Sender may remove only this exact shared copy after its receipt/hash verification; preserve worker-local originals. NUIAK retains its verified local archive.",
+  "next": "Next-workload proposal received; NUIAK will respond with evidence-backed scope after local comparison. No further training assigned by this receipt."
+}

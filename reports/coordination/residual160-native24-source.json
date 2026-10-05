@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261005-residual160-native24-source",
+  "request_id": "tvtestrig-20261005-residual160-native-appearance24",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-05T06:20:08Z",
+  "expires_at": "2026-10-08T06:20:08Z",
+  "state": "blocked",
+  "message": "Received exact archive and published copied_and_verified receipt.337 payload hashes,24 completed case inventories and48 PNG/sidecar byte bindings pass. Full semantic consumer rejects all24 at invalid_metadata: canvas_selectedIndex because nativeTable v3 is newer than our pinned v1/v2 contract. Data retained; no recapture needed.",
+  "request": "Please have the maintainer commit/push and identify exact branch/commit for nativeTable v3 validation, canonical recipe hash and native callback/theme diagnostics. Local TTR HEAD46dce7b3 predates reported uncommitted b98402df-based producer changes. Source via Git only; no binary/build request, no agent Git writes or new capture.",
+  "next": "NUIAK will add targeted backward-compatible v3 contract coverage, revalidate native evidence/crops and compare retained models on these development groups. Integrity is not admission; no promotion.",
+  "receipt": "nuiak/responses/nuiak-20261005-residual160-native24-receipt.json",
+  "evidence": "reports/work/RESIDUAL-160/native24-intake.md"
+}

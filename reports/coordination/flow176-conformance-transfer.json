@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "requestID": "nuiak-20261005-flow176-conformance",
+  "sharedPath": "nuiak/nuiak-conformance-exposure-v1-flow176.zip",
+  "localPath": "reports/work/FLOW-CONFORMANCE-124/artifacts/attempt02/nuiak-conformance-exposure-v1.zip",
+  "bytes": 54763,
+  "sha256": "a286ec244697f634606be7f6a77a96f7b0be950ae6e45baee3436c9f798aeb34",
+  "receiptPath": "tvtestrig/responses/nuiak-20261005-flow176-conformance-receipt.yaml"
+}

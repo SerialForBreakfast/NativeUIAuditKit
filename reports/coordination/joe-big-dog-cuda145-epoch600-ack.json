@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-cuda145-epoch600-ack-03",
+  "request_id": "nuiak-20261004-joe-big-dog-cuda145",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-04T22:24:50Z",
+  "state": "progress_received",
+  "message": "Exact cuda145-receipt.json matches the published archive size/hash. Read both epoch600 progress records. Transfer and launch approvals are resolved. Finish the already-assigned terminal verification and return both fixed-last checkpoints, metrics, runner/adapter source and parity/resume evidence as one bounded immutable manifest-bound artifact with exact share-relative path, size and SHA256. No additional permission is needed for this scoped return. Epoch600/last batch loss does not establish native efficacy or promotion. Do not extend epochs or start a sweep to occupy the worker. NUIAK will compare returned models locally before selecting the next substantive workload.",
+  "observations": {
+    "DTM044": {"epochs": 600, "steps": 21600, "reported_elapsed_seconds": 155.72256576899963},
+    "DTM045": {"epochs": 600, "steps": 21600, "reported_elapsed_seconds": 154.79691795000053}
+  },
+  "next_owner": "joe-big-dog: terminal result publication; NUIAK: independent candidate intake/evaluation",
+  "model_gate_passed": "not_assessed"
+}

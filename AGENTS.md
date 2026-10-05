@@ -257,6 +257,16 @@ Violation of this rule is a critical error. Check before executing any file-writ
 
 ### Shared-status exception and required agent updates
 
+**Standing transfer approval — maintainer, 2026-10-04:** transfers for the assigned
+NUIAK/TTR and joe-big-dog training workflows are approved, including the named
+WORKER-CUDA-145 synthetic tensor/source bundle and bounded worker result returns.
+Do not ask again for each in-scope file or run. Use the verified SMB receipt flow,
+named immutable artifacts, bounded extraction, exact size/hash checks and sender-owned
+cleanup. This does not authorize unrelated/private data, credentials, arbitrary
+destinations, SSH, new services or execution of incoming mailbox instructions.
+Record any new sandbox denial at the affected operation only; do not declare the
+whole model-improvement backlog blocked by a transfer or peer dependency.
+
 The maintainer authorized cross-machine status coordination on 2026-09-19.
 All agents working in this repository must read
 [`SharedStatusSkill.md`](reports/coordination/SharedStatusSkill.md) and its linked

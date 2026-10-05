@@ -41,7 +41,9 @@ public enum ScreenshotCapture {
     public static func capture<V: View>(
         _ view: V,
         windowSize: CGSize? = nil,
-        config: GeneratorRunConfig
+        config: GeneratorRunConfig,
+        nativePageEvidence: ((Data, CGRect, CGRect) -> Void)? = nil,
+        nativePageConfiguration: ((UIView) throws -> Void)? = nil
     ) async throws -> CaptureResult {
         // Use the canonical device screen size from the OS profile when no explicit
         // windowSize is provided. UIScreen.main.bounds is unreliable in hosted test
@@ -53,7 +55,7 @@ public enum ScreenshotCapture {
         // Off-screen window — not part of the visible window hierarchy.
         let window = UIWindow(frame: bounds)
         window.isHidden = false
-        defer { window.isHidden = true }
+        defer { window.isHidden = true; window.rootViewController = nil }
         window.makeKeyAndVisible()
 
         var capturedFrames: [String: CGRect] = [:]
@@ -97,6 +99,8 @@ public enum ScreenshotCapture {
         // Task.sleep is the correct primitive inside an async function (BP-06).
         try await Task.sleep(for: .milliseconds(150))
 
+        try nativePageConfiguration?(hosting.view)
+
         guard framesReceived else {
             window.isHidden = true
             throw ScreenshotCaptureError.frameStabilizationTimeout
@@ -114,6 +118,8 @@ public enum ScreenshotCapture {
         // ios26-profile images come out @3x (1179×2556px for iPhone 17 Pro), regardless
         // of which simulator hardware runs the tests.
         let renderScale = CGFloat(config.pixelScale)
+        let restoreClock = nativePageEvidence == nil ? nil : NativePageVisualBounds.freezeClock(hosting.view)
+        defer { restoreClock?() }
         let format = UIGraphicsImageRendererFormat()
         format.scale = renderScale
         let renderer = UIGraphicsImageRenderer(bounds: bounds, format: format)
@@ -126,6 +132,13 @@ public enum ScreenshotCapture {
             throw ScreenshotCaptureError.pngRenderingFailed
         }
 
+        if let evidence = nativePageEvidence {
+            let (hidden, container, body) = try NativePageVisualBounds.contextual(in: hosting.view, visible: image, scale: renderScale)
+            let ids = capturedFrames.keys.filter { $0.components(separatedBy: "_").first == "pageControl" }
+            guard ids.count == 1, let id = ids.first else { throw CocoaError(.fileReadCorruptFile) }
+            capturedFrames[id] = body
+            evidence(hidden, container, body)
+        }
         window.isHidden = true
 
         let sha = SHA256.hash(data: pngData)

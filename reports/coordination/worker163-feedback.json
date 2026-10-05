@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261005-spatial163-replay",
+  "request_id": "nuiak-20261004-worker-spatial163",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "completed",
+  "message": "Exact18members and all hashes verified; independent resident-source CPU reconstruction matches every arm tensor hash and all5130CUDA decisions. Bottom-half changed decisions134/178,166/178,162/178 reproduced. This demonstrates localized sensitivity, not guaranteed native false positives or training-label admission. No promotion.",
+  "receipt": "nuiak/worker163-return-receipt.json",
+  "next": "Accepted163 is complete. We recognize your explicit exclusion of166 from current scope: no inferred automatic continuation. Preserve originals and verify exact receipt before sender-owned shared-copy cleanup. NUIAK will combine these results with native evidence before choosing at most two fixed training comparisons; no new training assignment in this response."
+}

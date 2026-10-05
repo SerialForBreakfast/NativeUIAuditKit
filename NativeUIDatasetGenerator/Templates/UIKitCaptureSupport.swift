@@ -90,7 +90,9 @@ extension ScreenshotCapture {
     @MainActor
     public static func captureUIKit(
         _ viewController: some UIKitAnnotatable,
-        config: GeneratorRunConfig
+        config: GeneratorRunConfig,
+        nativePageEvidence: ((Data, CGRect, CGRect) -> Void)? = nil,
+        nativePageConfiguration: ((UIView) throws -> Void)? = nil
     ) async throws -> CaptureResult {
         let canonicalSize = config.osProfile.screenSize
         let bounds = CGRect(origin: .zero, size: canonicalSize)
@@ -98,7 +100,7 @@ extension ScreenshotCapture {
         let window = UIWindow(frame: bounds)
         window.rootViewController = viewController
         window.isHidden = false
-        defer { window.isHidden = true }
+        defer { window.isHidden = true; window.rootViewController = nil }
         window.makeKeyAndVisible()
 
         window.setNeedsLayout()
@@ -108,6 +110,8 @@ extension ScreenshotCapture {
 
         // 150 ms stabilisation — same budget used for SwiftUI path (BP-04).
         try await Task.sleep(for: .milliseconds(150))
+
+        try nativePageConfiguration?(viewController.view)
 
         // Collect non-chrome element frames.
         var elements: [AnnotatedElement] = []
@@ -151,6 +155,8 @@ extension ScreenshotCapture {
 
         // Render at the profile's intended pixel scale (same as SwiftUI path, BP-19).
         let renderScale = CGFloat(config.pixelScale)
+        let restoreClock = nativePageEvidence == nil ? nil : NativePageVisualBounds.freezeClock(viewController.view)
+        defer { restoreClock?() }
         let format = UIGraphicsImageRendererFormat()
         format.scale = renderScale
         let renderer = UIGraphicsImageRenderer(bounds: bounds, format: format)
@@ -163,6 +169,16 @@ extension ScreenshotCapture {
             throw ScreenshotCaptureError.pngRenderingFailed
         }
 
+        if let evidence = nativePageEvidence {
+            let (hidden, container, body) = try NativePageVisualBounds.contextual(in: viewController.view, visible: image, scale: renderScale)
+            guard elements.filter({ $0.elementType == "pageControl" }).count == 1 else { throw CocoaError(.fileReadCorruptFile) }
+            elements = elements.map { e in
+                guard e.elementType == "pageControl" else { return e }
+                return AnnotatedElement(id: e.id, elementType: e.elementType, framework: e.framework, frame: body,
+                    visibleText: e.visibleText, knownIssues: e.knownIssues, isFocused: e.isFocused, isEnabled: e.isEnabled, isSelected: e.isSelected)
+            }
+            evidence(hidden, container, body)
+        }
         window.isHidden = true
 
         let sha = SHA256.hash(data: pngData)

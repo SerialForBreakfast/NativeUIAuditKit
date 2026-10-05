@@ -58,6 +58,32 @@ class Run013Tests(unittest.TestCase):
         self.assertEqual((result["perClass"][0]["fn"],result["perClass"][0]["ap50"]),(1,0))
         with self.assertRaises(ComparisonError): self.validate(self.artifact(failed=True))
 
+    def test_resolution_export_preserves_coordinates_and_settings(self):
+        import eval_phase6a as exporter
+        from unittest.mock import Mock
+        settings=dict(ev.PREDICTION_SETTINGS,imgsz=1280)
+        boxes=SimpleNamespace(cls=SimpleNamespace(tolist=lambda:[0]),
+            conf=SimpleNamespace(tolist=lambda:[.9]),
+            xyxy=SimpleNamespace(tolist=lambda:[[40,80,60,120]]))
+        model=Mock(names=dict(enumerate(ev.load_names())))
+        model.predict.return_value=[SimpleNamespace(boxes=boxes)]
+        fake=SimpleNamespace(YOLO=Mock(return_value=model))
+        output=self.work/'1280.json'
+        with patch.dict(sys.modules,{'ultralytics':fake}):
+            exporter.export_predictions(self.manifest,self.work/'model.pt',output,'cpu',imgsz=1280)
+            with self.assertRaises(PredictionArtifactError):
+                exporter.export_predictions(self.manifest,self.work/'model.pt',output,'cpu',imgsz=1280)
+        doc=json.loads(output.read_text())
+        self.assertEqual(model.predict.call_args.kwargs['imgsz'],1280)
+        self.assertEqual(doc['results'][0]['detections'][0]['xyxyPixels'],[40,80,60,120])
+        self.assertEqual(doc['settings'],settings)
+        self.assertEqual(ev.PREDICTION_SETTINGS['imgsz'],640)
+        with self.assertRaises(ComparisonError):self.validate(doc)
+        ev.validated_artifact(doc,self.request,sha256_file(self.work/'model.pt'),expected_settings=settings)
+        for size in (True,1280.0,320,0):
+            with self.assertRaises(PredictionArtifactError):
+                exporter.export_predictions(self.manifest,self.work/'model.pt',self.work/'bad.json','cpu',imgsz=size)
+
     def test_strict_baseline_reuse_and_comparison(self):
         doc = self.artifact()
         self.validate(doc)
@@ -78,6 +104,38 @@ class Run013Tests(unittest.TestCase):
         with self.assertRaises(ComparisonError): self.validate(bad)
         bad=copy.deepcopy(doc); bad["results"]=[]
         with self.assertRaises(ComparisonError): self.validate(bad)
+
+    def test_explicit_degenerate_policy_and_accounting(self):
+        import eval_phase6a as exporter
+        from unittest.mock import Mock
+        raw=[[0,10,0,20],[40,80,60,120],[20,200,30,200]]
+        boxes=SimpleNamespace(cls=SimpleNamespace(tolist=lambda:[0]*3),
+            conf=SimpleNamespace(tolist=lambda:[.9]*3),xyxy=SimpleNamespace(tolist=lambda:raw))
+        model=Mock(names=dict(enumerate(ev.load_names())))
+        model.predict.return_value=[SimpleNamespace(boxes=boxes)]
+        with patch.dict(sys.modules,{'ultralytics':SimpleNamespace(YOLO=Mock(return_value=model))}):
+            exporter.export_predictions(self.manifest,self.work/'model.pt',self.work/'strict.json','cpu')
+            exporter.export_predictions(self.manifest,self.work/'model.pt',self.work/'filtered.json','cpu',discard_degenerate=True)
+        strict=json.loads((self.work/'strict.json').read_text())
+        self.assertEqual(strict['results'][0]['status'],'failed')
+        doc=json.loads((self.work/'filtered.json').read_text())
+        settings=dict(ev.PREDICTION_SETTINGS,postprocessing=exporter.DEGENERATE_POLICY)
+        validate=lambda d:ev.validated_artifact(d,self.request,sha256_file(self.work/'model.pt'),expected_settings=settings)
+        validate(doc)
+        row=doc['results'][0]
+        self.assertEqual(row['postprocessingAudit']['rejectedCount'],2)
+        self.assertEqual(row['detections'][0]['xyxyPixels'],raw[1])
+        with self.assertRaises(ComparisonError):self.validate(doc)
+        bad=copy.deepcopy(doc);bad['results'][0]['postprocessingAudit']['inputCount']=99
+        with self.assertRaises(ComparisonError):validate(bad)
+        for coords in ([-1,0,0,1],[1,0,0,1],[0,0,float('nan'),1],[0,201,0,201]):
+            with self.assertRaises(PredictionArtifactError):
+                exporter.filter_degenerate_predictions(self.request.images[0],41,[dict(classID=0,score=.9,xyxyPixels=coords)])
+        for fields in ({'classID':99},{'score':float('nan')},{'score':2}):
+            with self.assertRaises(PredictionArtifactError):
+                exporter.filter_degenerate_predictions(self.request.images[0],41,[dict(dict(classID=0,score=.9,xyxyPixels=[0,0,0,1]),**fields)])
+        kept,audit=exporter.filter_degenerate_predictions(self.request.images[0],41,[dict(classID=0,score=.9,xyxyPixels=raw[0])])
+        self.assertEqual(kept,[]);self.assertEqual(audit['rejectedCount'],1)
 
     def test_frozen_changed_bytes_and_corruption(self):
         (self.work/"a.txt").write_text("")

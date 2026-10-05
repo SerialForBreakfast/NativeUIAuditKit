@@ -1,5 +1,99 @@
 # NativeUIAuditKit — Best Practices
 
+## Native variation must survive rendering, not merely set properties — IOS172
+
+A post-layout UIPageControl transform recorded the requested left/right positions,
+but rendered pixels remained centered. Template-owned UIKit layout and SwiftUI
+alignment fixed actual movement. KitchenSink then exposed405-point content inside
+a393-point screenshot: size the opt-in row to the recorded scene width and center
+it within the parent. Do not repair this with a magic six-point offset or loosen
+the geometry gate. Independent visible/hidden differencing and complete non-page
+annotation parity rejected three bad-layout trials before the24-cell pilot passed.
+Actual pixels remain authoritative; preserve requested versus observed geometry.
+
+XCTest also shut down the initially shutdown target after its owned test session.
+For retrieval, a freshly emitted, hash-bound terminal log plus exact target/path and
+container-owner metadata can identify that completed output without booting merely
+to read it. Never reuse an old container UUID. For a multi-phase campaign, explicit
+exact-target boot readiness permits reuse; a SpringBoard Busy launch failure is not
+permission to reset services, re-sign, or repeat an unchanged operation blindly.
+
+UIColor resolved white was1.0000001192092896. Preserve the raw value and use a
+documented1e-6boundary-roundoff tolerance for reported RGBA, rejecting nonfinite or
+materially out-of-range values. This is not a geometry/label tolerance change.
+
+## Audit joint coverage, not just marginal counts — IOS171
+
+The first batch planner assumed native159 contained every family×scale×theme
+combination. Actual recipes couple scale2/light and scale3/dark: each marginal is
+present, but half the assumed joint cells do not exist. Fail closed, enumerate the
+observed cells, and explicitly retain the confounding in the plan and conclusions.
+Do not fabricate missing source recipes or claim independent theme/scale evidence.
+This prevents a balanced-looking summary from concealing systematic coverage gaps.
+
+## Preserve Vision stall evidence; qualify explicit serialized tests — October4
+
+FROZEN164's fresh default Swift suite stalled in Vision feature-print/OCR waits
+while the Python experiments completed. Sample the owned process before cleanup;
+do not infer unavailable CoreML weights or reset services. One existing Vision test
+passed alone, and the full existing suite passed142tests with explicit
+`swift test --skip-build --skip-update --no-parallel`. No test assertions changed.
+Use the observed bounded isolated/serialized check when this failure recurs; retain
+the failed log and sample. This supports a concurrency-sensitive recovery, not a
+proven framework deadlock or permission diagnosis. Tool help advertised serial as
+default, but observed default execution had concurrent waits—record actual behavior.
+
+## Controlled-removal labels require a stable animation clock — NATIVE157
+
+Twenty of24actual-template comparisons failed because pixels outside the hidden
+page control changed, including activity-indicator animation. Disabling UIView
+animations did not freeze existing Core Animation activity. Pause the owned render
+root layer clock before both captures and restore its original speed, timeOffset
+and beginTime afterward. Keep the full-scene outside-control difference rejection;
+do not mask away unrelated changes. This passed24/24with independent pixel/sidecar
+verification. It qualifies these controlled generator scenes, not arbitrary live UI.
+
+## Preserve diagnostic frames before relaxing a geometry guard — October4, NATIVE157
+
+The contextual page measurement passed three light actual-template cases but
+rejected the first dark case with a generic Cocoa error. That error did not prove
+which guard failed. Add precise stage/location and retained visible/reference
+bytes for outside-control changes; never infer a benign rendering cause and drop
+the guard. A follow-up launch-service Busy denial is a separate runtime failure,
+not new evidence about geometry. End only the verified owned failed command;
+do not reset shared simulator services or treat its waiting process as a live test.
+
+## Separate localization size from recognition failure — October4, PAGE156
+
+Run013scored AP50=0 on96new page-control compositions, yet32of36images with any
+candidate had a candidate center inside truth; median best-overlap width was4.53×
+ground truth. Report overlap, center and size diagnostics together before blaming
+resolution or collecting more identical data. Existing container-sized training
+labels are a plausible contributor, not a proven sole cause:60images had no page
+candidate. Also qualify actual interaction/background style, not just class name;
+interactive automatic UIPageControl is not covered by noninteractive probes.
+
+## Controlled removal isolates native visual geometry — October4, COMPOSE155
+
+Container size and transparent alpha were insufficient for backed native controls.
+For96fixed development scenes, capture the known indicator visible and hidden with
+the same recipe, then require all changed pixels to lie inside its observed frame.
+This exposed actual backing-inclusive bounds without OCR/model labels. It is valid
+only with controlled removal and stable surrounding pixels; never generalize this
+to arbitrary screen differences. Preserve both captures and rejection evidence.
+UIKit controller reuse emitted appearance-transition warnings: bounds passed, but
+future capture lifecycle work should detach owned windows cleanly and test that
+separately. A passing pixel audit does not prove warning-free lifecycle behavior.
+
+## Transparent control rendering can omit native backing — October4, PAGE150
+
+Control-local alpha measurement matched36disabled automatic UIPageControls but
+missed prominent backing in all36interactive prominent probes (up to15.333pt edge
+error). A transparent drawHierarchy image is not proof of the composed visual body.
+Qualify each supported style against full composed pixels before annotation use;
+keep this helper development-only until backing-inclusive geometry is verified.
+This prevents systematic tight-box errors even when capture and hashes pass.
+
 ## Separate missing data from unusable correspondence — October3, transition50
 
 Wrong: a two-report inventory concluded native movement evidence was missing while
@@ -3890,3 +3984,132 @@ radial factor still shrank the final update to.002362; all five native misses re
 feasibility before calling the features insufficient or launching more unchanged fits.
 **Why:** Nonzero gradients and safe retention are necessary diagnostics, not evidence
 that the optimizer can efficiently reach a useful feasible solution.
+
+### Validate original constraints after numerical scaling (CONDITIONED142)
+
+**Observed:** HiGHS returned optimal status after 33 interior-point iterations,
+but reconstructed original constraints violated the 1e-6 gate by 2.8524e-5.
+**Correct:** Preserve the original-coordinate objective when transforming variables,
+independently check unscaled residuals, and require runtime float32 gates afterward.
+Retain rejected solver vectors in future diagnostics to locate the failing rows;
+do not treat status0 as admission or weaken tolerance to obtain a pass.
+**Why:** Scaled numerical tolerances do not guarantee original-space or deployment
+precision. Fast convergence is useful but not a model-quality result.
+
+### Audit solver coefficient filtering before tightening tolerances (NUMERICAL143)
+
+**Observed:** Reducing primal/dual/IPM tolerance from1e-8 to1e-10 left the original
+residual unchanged. Resident HiGHS discards coefficients <=1e-9. Reproducing that
+filter on the retained vector explained the whole failing row; the truncated
+system satisfied constraints to about1e-12 while the original did not.
+**Correct:** Record the installed solver's coefficient threshold, preserve finite
+rejected vectors and row-wise residuals, and check how scaling interacts with that
+threshold. Use a coefficient-preserving formulation/configuration before another
+solve; verify every original constraint afterward. Do not weaken admission gates.
+**Why:** Tighter feasibility tolerances cannot restore information removed before
+solving. Apparent precision failure can be a changed numerical problem instead.
+
+### Test temporal-order invariance for binary focus change (REVERSAL147)
+
+**Observed:** DTM046 correctly scored all442admitted forward views but failed7when
+the exact endpoint order was reversed. Absolute pixel differences alone do not
+make a model symmetric when it also consumes ordered RGB context.
+**Correct:** Check reversal on source-pinned pairs, preserving label and ancestry
+for binary state equality only. Keep unknown labels excluded. An inverse navigation
+route, action success and swapped geometry are different claims, not automatic labels.
+**Why:** This finds a genuine invariance defect without collecting new screens or
+inventing photometric ground truth. DTM047fixed the exposed failures, but still
+failed localized nuisance tests; fitting this property is not generalization proof.
+
+### SMB publication capabilities and explicit peer identity (PEER148)
+
+**Observed:** This SMB mount supports Foundation moves but rejects POSIX exclusive
+rename and hard links with ENOTSUP. The original transfer tool also hardcoded
+TVTestRig, so a genuine worker receipt could not safely authorize cleanup.
+**Correct:** Preserve verified staging bytes; use the tested Foundation non-overwrite
+fallback only for ENOTSUP on the verified share. Keep exact post-publication hashes.
+Version transactions with explicit allowed peer/namespace mapping; preserve v1
+behavior and reject a different peer's otherwise matching receipt. Never infer
+cleanup permission from elapsed time, a missing file or training success.
+**Why:** Backend incompatibility is not missing user authority. Typed recovery avoids
+recopying data or repeating permission requests; peer binding prevents wrong-recipient
+cleanup and keeps worker-produced checkpoints separate from model admission.
+
+### Qualify native intrinsic size against actual ink (IOS-NATIVE-PAGE150)
+
+**Observed:**36iOS26.5UIPageControl probes across counts3/5/7,selections,themes and
+canvas widths had public intrinsic height25.67pt but visible dots7.67pt tall;
+intrinsic widths exceeded visible ink by about30pt. Fixed-size layout removes a
+full-width container error but does not itself produce tight visual labels.
+**Correct:** Measure/check the rendered control body and any visible native backing
+against composed pixels. Keep public layout size distinct from visual annotation
+and hit target. Qualify a control-local rendering measurement before applying it to
+real templates; never copy the measured margins as a universal hardcoded formula.
+**Why:** A smaller but still oversized box preserves the learning mismatch. Native
+runtime-dependent appearance must be observed, not inferred from an API's name.
+
+### Separate remote fitting success from native transfer (WORKER151)
+
+**Observed:**Two600epoch CUDA seeds fit108/108and107/108Fixture examples but both
+missed94/94retained native Region transitions. Their global-nuisance false changes
+differed189versus0of226. Receiver-side checkpoint replay reproduced the results.
+**Correct:** Return fixed-last checkpoints, exact data/source pins and same-backend
+replay evidence; independently test native and nuisance groups locally. Report seed
+variation, misses and abstentions. Do not claim a hardware speedup against an unrelated
+model or extend epochs merely to fill the remote worker's available time.
+**Why:** Fast reliable worker execution unblocks experiments, not model qualification.
+Near-perfect exposed fitting can coexist with unstable out-of-distribution behavior.
+
+## Native decoded-bound audit follow-up — 2026-10-04
+
+NATIVE159's independent checker initially demanded exact equality between native
+CoreGraphics and Python PNG differential bounds, although NATIVE157qualified a
+one-decoded-pixel tolerance. The first discrepancy was one left-edge pixel, not
+scene drift. Reuse the explicit qualified edge tolerance, record every delta, and
+keep native sidecar-to-receipt geometry exact. Larger discrepancies still reject.
+This avoids both false audit failures and silently loosening annotation integrity;
+17/900members differed at an edge by at most one pixel in this batch.
+# Fine-tuning optimizer-group warmup — observed October4/5,2026
+
+IOS-REPAIR165's initial attempt specified AdamW lr0=.0001 but inherited
+Ultralytics warmup_bias_lr=.1. Bias parameters therefore started1000×higher than
+the intended conservative rate. Base learning rate alone does not describe startup.
+Pin and inspect every parameter-group warmup rate in actual saved arguments;
+include them in terminal configuration validation. The attempt was stopped before
+epoch1 completed, its evidence retained, and replacement arms initialized fresh
+from the original checkpoint with explicit warmup_bias_lr=.0001. Do not resume
+partially trained weights or treat their losses as a controlled comparison.
+
+## Zero-area predictions after native clipping — observed October5,2026
+
+Run018's first export failed974/2400images because resident Ultralytics returned
+zero-width boxes at the image edge after clipping. An in-bounds coordinate is not
+necessarily a positive-area detection. Preserve failed artifacts and inspect raw
+predictions before changing validators. Keep strict artifact geometry unchanged;
+an explicit versioned postprocessing option may discard only finite, ordered,
+in-bounds zero-area boxes, retaining raw rejections and per-image accounting.
+Apply identical settings to both models and preserve every image in the comparison.
+Report these as filtered-pipeline metrics, not unchanged historical or CoreML parity
+results. This prevents numerical/geometry failures from silently shrinking evaluation
+or turning unknown inference into a successful empty image.
+
+## Check training fit before attributing failure to domain shift — IOS174
+
+What went wrong: Run019's qualified placement additions did not fix off-center
+development probes. More unfamiliar-screen data looked like the obvious next step,
+but a matched diagnostic on the actual264added training images found0/96leading
+hits,11/96trailing and62/72centered. The model had not learned the desired placement
+behavior even on those inputs. Oracle-best boxes were typically too tall (median
+height ratios2.45leading/2.61trailing), despite near-correct horizontal centers.
+
+Correct approach: before scaling capture or attributing misses to generalization,
+batch-score exact training additions and retained probes under identical settings;
+separate absent, low-confidence and geometry failures. Label training-fit evidence
+as diagnostic, not qualification. Keep oracle boxes separate from model decisions.
+Also reconcile TP/FN when FP decreases: Run019 removed102cancelAction FP, added4,
+but lost4true positives. Lower FP alone is not preserved recall or improved AP.
+
+Why it matters: this directs the next controlled experiment toward learning and
+small-box geometry instead of an unsupported larger-corpus or longer-run remedy.
+Evidence: [IOS174](../reports/work/IOS-DIAG-174/handoff.md). No causal architecture
+or loss diagnosis has yet been established; all gates remain unchanged.

@@ -26,6 +26,14 @@ DEFAULT_RUNS = PROJECT_ROOT / "NativeUITrainer" / "yolo_runs"
 WEIGHTS_DIR = PROJECT_ROOT / "NativeUITrainer" / "weights"
 CLASS_WEIGHTS = PROJECT_ROOT / "scripts" / "class_weights.json"
 
+def full_frame_finetune_kwargs():
+    """Opt-in repair comparison; preserve full-frame geometry and color evidence."""
+    return dict(lr0=0.0001,lrf=0.1,warmup_epochs=0.5,warmup_bias_lr=0.0001,patience=0,amp=False,
+                hsv_h=0.0,hsv_s=0.0,hsv_v=0.0,translate=0.0,scale=0.0,
+                fliplr=0.0,flipud=0.0,degrees=0.0,shear=0.0,perspective=0.0,
+                mosaic=0.0,close_mosaic=0,mixup=0.0,copy_paste=0.0,
+                rect=True,fraction=1.0,cache=False,exist_ok=False)
+
 # Keep Ultralytics caches inside the package (filesystem-boundary rule).
 os_env_defaults = {
     "YOLO_CONFIG_DIR": str(PROJECT_ROOT / "NativeUITrainer" / ".ultralytics"),
@@ -81,6 +89,8 @@ def parse_args():
         help="2 epochs, batch=4, 5%% of images — smoke-test the pipeline",
     )
     p.add_argument("--no-ohem", action="store_true", help="Disable OHEM callback")
+    p.add_argument("--full-frame-finetune",action="store_true",help="Explicit local initializer; full-frame/color-preserving, no OHEM or AMP")
+    p.add_argument("--translation-ablation",action="store_true",help="Explicit170 experiment: translate.35 with full-frame-finetune base; clipped training views")
     p.add_argument("--timing", action="store_true", help="Write aggregate host-wall timing JSONL; no GPU synchronization")
     return p.parse_args()
 
@@ -102,6 +112,15 @@ def main():
     import os
 
     args = parse_args()
+    if args.translation_ablation and not args.full_frame_finetune:
+        raise ValueError('translation_requires_finetune_base')
+    if args.full_frame_finetune:
+        if args.resume or args.dry_run or not args.initial_weights:
+            raise ValueError('finetune_requires_fresh_explicit_weights')
+        initial=Path(args.initial_weights).expanduser().resolve()
+        if not initial.is_file() or initial.suffix!='.pt':
+            raise ValueError('finetune_weights_missing')
+        args.initial_weights=str(initial);args.no_ohem=True
     dataset_dir = Path(args.dataset).expanduser().resolve()
     try:
         output_dir = require_in_project(Path(args.output_dir), "training output")
@@ -109,6 +128,8 @@ def main():
         print(f"ERROR: {error}")
         sys.exit(1)
     run_name = args.name or f"phase6a_{args.model}_e{args.epochs}"
+    if args.full_frame_finetune and (output_dir/run_name).exists():
+        raise ValueError('output_collision')
     if args.validate_only:
         from training_preflight import PreflightError, validate
         initial = Path(args.initial_weights).expanduser().resolve() if args.initial_weights else None
@@ -272,6 +293,10 @@ def main():
     )
     if args.resume:
         train_kwargs["resume"] = True
+    if args.full_frame_finetune:
+        train_kwargs.update(full_frame_finetune_kwargs())
+    if args.translation_ablation:
+        train_kwargs['translate']=0.35
 
     print("Starting model.train()…", flush=True)
     try:

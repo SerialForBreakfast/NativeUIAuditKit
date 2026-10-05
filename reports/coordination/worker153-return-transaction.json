@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "peer": "joe-big-dog/NUIAK",
+  "requestID": "nuiak-20261004-worker-robust153",
+  "sharedPath": "joe-big-dog/robust153-return-8c340bc6fa8a427899b61e0fa2e10f7e.tar.gz",
+  "localPath": "reports/work/WORKER-ROBUST-153/artifacts/return01/return.tar.gz",
+  "bytes": 4112718,
+  "sha256": "ab0116f629dc03b0ea89568e539c7d5f305b64da2bfd99abce3c518c8b114ae6",
+  "receiptPath": null
+}

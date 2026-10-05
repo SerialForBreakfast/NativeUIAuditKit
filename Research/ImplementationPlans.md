@@ -1,5 +1,14 @@
 # Full backlog implementation packet catalog
 
+[UI-SOURCE177 findings and UI-IMPORT-A–D](Plans/UIComponentIntake.md): source-pinned
+native component/media-screen intake strategy, licensing/dependency findings and
+one generated-sheet geometry trial; low-priority adapters, not automatic imports.
+
+[Generated media assets ART-A–D](Plans/GeneratedMediaAssets.md): low-priority
+poster/thumbnail/avatar/backdrop library, bounded sheet prompts, deterministic crops,
+native Fixture import and matched utility evaluation. Planning only; no generation
+executed. Complements, does not replace, the deferred diverse native UI corpus.
+
 [Next integrated focus-reliability tranche](Plans/FocusTransitionLearning49.md#next-integrated-tranche--focus-reliability)
 orders three complementary outcomes: test training-only identical-frame negatives
 after data-use approval; independently diagnose incorrect candidate selection; and

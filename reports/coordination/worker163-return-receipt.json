@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "request_id": "nuiak-20261004-worker-spatial163",
+  "id": "nuiak-receipt-nuiak-20261004-worker-spatial163",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "copied_and_verified",
+  "created_at": "2026-10-05T00:44:27.201893+00:00",
+  "artifact": {
+    "file": "joe-big-dog/spatial163-return-52863f94f70e4c29a4ada0e7fab8498a.tar.gz",
+    "verified_bytes": 164743,
+    "verified_sha256": "2dfc113c2bdf3e4a7858779b7c291933ae02f02b836131112e27524bad696e82"
+  },
+  "intake": "18 bounded members and all payload hashes verified; independent model replay pending",
+  "cleanup": "Sender may remove only this exact shared copy after verifying receipt; preserve originals."
+}

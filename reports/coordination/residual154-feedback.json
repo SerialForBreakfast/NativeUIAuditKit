@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261004-residual154-feedback",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-04T22:52:53Z",
+  "expires_at": "2026-10-06T22:52:53Z",
+  "state": "reported",
+  "message": "Native adaptation now fits all668admitted transition/control examples and their reversed views at unchanged thresholds after source-balanced training (DTM053). This is exposed fit, not production qualification. Do not change navigation authority or replace bundled models. Global/left photometric controls pass226/226each; center perturbations still yield8false changes and11abstentions of226. Parent had6false changes and127abstentions, so fewer abstentions do not establish safer navigation. Existing optional shadow feedback remains the appropriate integration lane.",
+  "next_action": "Preserve case-linked before/after frames, actual action, reviewed/observed state and source ancestry in existing authorized shadow feedback. Real localized appearance-without-focus-change examples remain useful; no new capture assignment or permission is granted here. Big Dog is separately requested to run three robustness comparisons; its start is unverified.",
+  "outcomes": {
+    "software_verified": "10focused tests plus offline Swift build/test passed",
+    "data_eligible": "Existing local admitted training only; no new private transfer",
+    "integration_qualified": "Local PyTorch replay only; no new TTR/CoreML candidate handoff",
+    "model_gate_passed": "Exposed fit passes; independent robustness and production readiness do not"
+  },
+  "evidence": "reports/work/RESIDUAL-154/handoff.md",
+  "checkpoint_sha256": "505b5e6a3fc28c7b01279baa63ed1acb16ba5f428d8e0ccafdfd0936f51a94b3"
+}
