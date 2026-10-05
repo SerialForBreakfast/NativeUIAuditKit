@@ -1,5 +1,40 @@
 # NativeUIAuditKit — Best Practices
 
+## Do not cancel introduced and resolved errors using aggregate counts — IOS181
+
+021sheet FP grew235→459 versus020, but the complete spatial audit found268new
+errors and44resolved, not merely224new errors. Retained page TP rose43net while
+17previous hits disappeared. Use all saved predictions, reconcile per-image/class
+TP/FP/FN, and report introduced/resolved/retained cases separately. Associate boxes
+with an explicit diagnostic IoU policy; do not claim stable object identity from
+spatial overlap. The scorer's first100error examples are not a full failure corpus.
+This prevents aggregate gains concealing regressions and avoids unnecessary repeat
+inference. See IOS181for complete matching/count evidence.
+
+## Compute-matched replay needs optimizer-event accounting — 2026-10-05
+
+**Observed:** IOS179's draft equated540minibatches with540optimizer updates.
+Resident Ultralytics accumulates gradients (nbs64,batch8); actual planned updates
+are69. Doubling membership also doubles warmup batches if warmup epochs stay fixed.
+**Correct approach:** inspect the pinned trainer, simulate optimizer-event indices,
+bind batch count and accumulation settings, then verify events during execution.
+Record learning-rate schedules separately: equal batches/updates do not imply an
+identical epoch-based cosine schedule. Preserve fixed-last evaluation and report
+this as a compute-matched comparison, not a perfectly isolated sampling experiment.
+**Why:** otherwise a replay experiment changes optimization unknowingly and attributes
+the outcome solely to data balance. This check replaces guesswork, not the trainer.
+
+## Separate AP ranking from operating recall in retention diagnoses — IOS176
+
+Run020's sheet AP50 fell1.0→.2102, yet operating hits only fell24→23 while false
+positives rose218→235. Scroll AP also fell, but neither model had an operating hit.
+Calling either AP delta alone “lost detections” misstates the failure. Report fixed
+threshold TP/FP/FN and per-case absent/geometry/low-confidence transitions alongside
+AP before choosing more data, a new architecture or calibration. Audit training
+class support too: both classes had zero positives in the concentrated175fit set.
+This identifies replay as a hypothesis, not proof of forgetting or permission to
+lower thresholds. See IOS-FIT-176 for complete124-case accounting and evidence.
+
 ## Native variation must survive rendering, not merely set properties — IOS172
 
 A post-layout UIPageControl transform recorded the requested left/right positions,
@@ -4113,3 +4148,64 @@ Why it matters: this directs the next controlled experiment toward learning and
 small-box geometry instead of an unsupported larger-corpus or longer-run remedy.
 Evidence: [IOS174](../reports/work/IOS-DIAG-174/handoff.md). No causal architecture
 or loss diagnosis has yet been established; all gates remain unchanged.
+
+## Count target exposure and actual batch pixels in replay comparisons — IOS185
+
+Wrong: describe equal432images/10epochs/69updates as identical exposure or compute
+when80images have been replaced.021→022increased page target presentations2160→2550
+and changed rectangular grouping, reducing epoch input pixels91095040→87818240.
+
+Correct: count complete labels across every co-occurring class and reconstruct batch
+shapes using the pinned resident dataset implementation and exact image dimensions.
+Report both input-pixel work and class presentations, preserving all data roles.
+Do not infer GPU speed from pixels alone or claim the composition change isolated
+the effect of negatives. Evidence: [IOS185](../reports/work/IOS-DIAG-185/handoff.md).
+
+Why: this distinguishes actual learning changes from altered exposure/geometry and
+prevents repeated extraepochs or unsupported sampling conclusions after a partial win.
+
+## Reject the targeted hypothesis even when aggregate AP improves — IOS186
+
+What went wrong: doubling box loss raised retained AP50 .899967→.902388 but fixed
+none of31prior fit misses and lost13previous hits. Aggregate improvement alone would
+misrepresent the intended geometry correction.
+
+Correct: freeze exact failure IDs and report recovered, persistent and newly broken
+cases alongside all original gates. Reject the geometry remedy when case evidence
+fails, while preserving genuine unrelated gains (here scroll AP). Do not automatically
+add epochs or promote. [Evidence](../reports/work/IOS-GEOMETRY-186/handoff.md).
+
+Why: a useful controlled negative result prevents repeating the same ineffective
+change, and makes the next resolution hypothesis testable rather than assumed.
+
+## Memory probes must exercise the actual training gradients — IOS187
+
+Wrong: `YOLO(checkpoint).model.train()` was assumed to enable weight gradients.
+The loaded checkpoint remained frozen; backward failed before testing the intended
+training-memory path. A later successful step's report assumed tensor loss details,
+but this resident model returned a dictionary.
+
+Correct: inspect the pinned trainer's freeze policy, explicitly enable floating
+trainable weights while retaining its frozen DFL layer, and verify finite gradients
+plus disposable optimizer-state allocation. Serialize the actual loss structure.
+Keep failed probes and new source pins separate; never count a forward-only pass
+as batch-training capacity or use disposable probe weights for a candidate.
+
+Why: memory qualification must match the work it claims to support, and reporting
+failures must not be mistaken for hardware limits. Evidence: IOS187attempts01–04.
+
+## Separate training-scale adaptation from inference-scale sensitivity — IOS189
+
+What went wrong: the1280candidate recovered21old fit failures, but its retained
+AP collapsed. Comparing only022@640with024@1280cannot identify which factor drives
+the loss, and counting only repaired examples hides new regressions.
+
+Correct: freeze and complete the two missing fixed-checkpoint inference cells,
+reusing prior predictions.022@1280AP .190626 versus .899967at640shows strong scale
+sensitivity without any weight change.024@640AP .886342 versus .343954at1280
+shows that the large aggregate collapse is not simply erased knowledge. Preserve
+per-class/old-and-new failures:022@1280repairs22old misses but loses108old hits.
+
+Why: this avoids treating a larger input or longer training as an automatic win.
+It directs the next bounded test toward using geometry without importing high-resolution
+false positives. Evidence: [IOS189](../reports/work/IOS-CROSSOVER-189/handoff.md).

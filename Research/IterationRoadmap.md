@@ -1,5 +1,34 @@
 # Concurrent delivery roadmap
 
+**Next diagnostic — IOS-REFINE-190:**187higher-resolution training recovered
+21/31fit failures but retainedAP collapsed to.343954 and pageFP rose14→158.
+189completed four cells:022@1280retainedAP .190626,024@640 .886342. Keep022@640
+reference. Test one fixed unambiguous coordinate-only page-refinement rule using
+cached1280proposals, without extra detections, confidence changes, threshold fitting
+or new inference. No promotion. [189evidence](../reports/work/IOS-CROSSOVER-189/handoff.md).
+In parallel, use independently reproduced180B/C findings to plan a label-preserving
+common-mode/asymmetric contrast. Counterfactual consensus is not navigation-qualified.
+188source-connected analysis now complete; exact retained24native contrast specified,
+no duplicate capture needed.187Run024 and its full matched evaluation are complete.
+TTR source/schema compatibility still gates only its own intake, not local experiments.
+
+**Prior completed — IOS184/185:**184/Run022completed10epochs and all2712comparisons.
+Positive replay improves retainedAP to.899967 and reduces sheet/cancel FP versus021,
+but eight development gates fail. Reuse predictions for complete geometry/operating
+error accounting and one justified next proposal, not automatic extraepochs.
+ART183structural intake passes; source/schema4/v5 compatibility awaits exact TTR
+source publication, with feedback delivered. Big Dog180A diagnostic return verified;
+180B/C now received and independently checked; no local critical-path dependency.
+[184evidence](../reports/work/IOS-REPLAY-184/handoff.md).
+
+**Prior completed local tranche — IOS-REPLAY-181:**179completed the432-member replay run
+and full comparison. Aggregate AP improved, but operating FP and placement gates
+failed. Reuse all predictions for case-level error/exposure diagnosis and freeze one
+revised comparison; no automatic extraepochs. TTR native24 source synchronization remains
+an independent dependency, not a prerequisite for this local work.
+[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). Big Dog180A/B/C independently
+evaluates transition-model sensitivity and consensus at low priority.
+
 **UI-SOURCE177 research completed:** [source intake](Plans/UIComponentIntake.md)
 ranks Apple media sample first for full screens, SwiftUI-Kit for cheap native controls,
 ParallaxView for custom focus; whole Swiftfin import deferred due dependency coupling.

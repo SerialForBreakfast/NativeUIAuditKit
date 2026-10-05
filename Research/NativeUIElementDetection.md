@@ -715,6 +715,21 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+**October5 IOS187:**186failed the targeted geometry remedy. Test1280training and
+inference using resident supported exporter, box7.5 and022membership/schedule.
+Original960proposal amended before execution after inspecting explicit640/1280
+exporter contract. Record larger input-pixel work and memory; do not call this
+training-only causality or change sealed historical sources. No default adoption.
+
+**October5 controlled follow-up (IOS185→186):** Run022's remaining KitchenSink
+page-control fit errors are predominantly over-tall boxes, not absent detections.
+Test one localization-loss weighting change (`box:7.5→15`) at identical432-image
+membership,019initialization,10epochs and preprocessing before considering another
+replay-composition change. This is a hypothesis, not an adopted production default;
+all operating FP/retention/placement gates remain unchanged. No blanket increase
+in epochs or resolution follows from aggregate AP improvements. Canonical contract:
+[Run013Evaluation](Plans/Run013Evaluation.md#ios-geometry-186--one-localization-loss-comparison).
+
 FEASIBILITY140 is a fitted diagnostic linear-program witness, not a new encoder or
 production model. Minimize correction infinity norm subject to fixed old/native
 margin gates on existing scaled spatial features, then independently check the

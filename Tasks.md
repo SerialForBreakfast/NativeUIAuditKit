@@ -1,6 +1,25 @@
 # NativeUIAuditKit — Tasks
 
-## Active — IOS-FIT-175 / Codex
+## Review — WORKER-180A/B/C / joe-big-dog; NUIAK intake complete
+
+Low-priority finite nonblocking backlog: source-balanced166analysis, before/both-frame
+sensitivity experiment, then fixed consensus/latency comparison. Resident inputs;
+no capture/training/new data or local dependency.24h/6GiB total maximum, stop when
+done. Published/hash-read-back in NUA requests and owned status packet; peer
+acknowledgment received: exact request accepted; worker reports180Acomplete and180B
+started in worker180bc-start-01.json.180A received:21members,20inventory hashes,
+original166pins/totals and paired bootstrap calculations verified locally.
+Only five connected source groups; diagnostic acceptance, no native accuracy claim.
+[180A intake](reports/work/WORKER-180A/handoff.md).180B/C returns copied and verified.
+B accounts1,317,888scores;6,294sampled scores plus858swaps match independent CPU
+replay. C aggregate consensus independently recomputed; asymmetric changes still
+cause many confident flips. Diagnostic-only, not native accuracy or admission.
+Exact B/C receipts/status published/read back; sender cleanup acknowledgment pending.
+[Consumer evidence](reports/work/WORKER-180/consumer.md).
+No local task waits on these results.
+[Contract](Research/Plans/WorkerBacklog180.md).
+
+## Review / fit gate failed — IOS-FIT-175 / Codex
 
 One balanced training-fit diagnostic from Run019 with fresh optimizer state:
 216already-admitted images (72complete group/tint triads ×three placements),
@@ -9,11 +28,156 @@ Training images also supply explicitly labeled training-fit monitoring, never
 validation/holdout evidence. Score fixed last against019on the same216members,
 96development probes and2400retained inputs. No new capture/admission/promotion.
 [Contract](Research/Plans/Run013Evaluation.md#ios-fit-175--balanced-training-fit-diagnostic).
-Prepared216hash-verified members; Run020live PID34431/exec84525. Actual saved args
-confirm20epochs,640,batch8,lr/biaswarmup1e-4,translate0,resumeFalse; training and
-monitoring both point to explicitly diagnostic training membership.10focused tests
-and offline Swift build/test passed. Final fixed-last evaluation still pending.
-[Continuation](reports/work/IOS-FIT-175/continuation.md).
+Run020 completed20epochs, terminal0; full matched evaluation completed2712records,
+zero degenerate rejections. Fit leading/center/trailing70/72,72/72,56/72; trailing
+fails≥90%gate, all18misses now low-confidence matches. Page development hits19→59/96,
+AP50 .343791→.627804, but retained mAP50 .882978→.871533. Sheet/scrollIndicator
+regress; no promotion or extraepochs. Existing10tests/Swift checks reused unchanged.
+[Handoff](reports/work/IOS-FIT-175/handoff.md).
+
+### Review — IOS-FIT-176 diagnosis / Codex
+
+Reuse175predictions: case-account18low-confidence fit misses and retained sheet/
+scrollIndicator losses, audit existing training support, then freeze one justified
+mixed-replay comparison proposal with unchanged thresholds, annotations and data roles.
+Deliver strata/support and replay-sampling rationale before any new training launch;
+no new capture or test-to-training transfer. Canonical next contract is the175
+[handoff decision](reports/work/IOS-FIT-175/handoff.md#diagnosis-and-decision).
+Completed: all124sheet/scroll cases accounted; sheet TP24→23 butFP218→235 and
+AP1.0→.2102; scroll operatingTP0→0,25low-confidence matches become geometry misses.
+13/16trailing fit misses are KitchenSink. Selected216training-only replay images
+cover all15supported omitted classes; zero pixel overlap with evaluation/fit.
+Sealed432-total proposal is not launch-ready: audit80hard-negative fillers, ancestry
+and schedule before training. No new inference or training.
+[Handoff](reports/work/IOS-FIT-176/handoff.md).
+
+### Review / development gates failed — IOS-REPLAY-179 / Codex
+
+Implement and verify existing-workflow replay preparation from176proposal; confirm
+training-only ancestry, filler balance, exact540-minibatch/69-update schedule and unchanged
+evaluation roles. Freeze a new proposal if composition changes. Then register one
+comparison under standing training authority and complete216fit/96probe/2400retained
+evaluation, with no autoextension/promotion. Bound output2GiB; preserve originals.
+Completed Run02110epochs,1036.055s;69actual optimizer events match the plan.
+Retained mAP50 .896409 improves019 .882978, but page49/96TP/17FP fails02059TP/≤4FP.
+Fit60/72leading,72/72center,35/72trailing; sheetFP459,cancelFP259. No promotion.
+All2712records scored;8focused tests and142offline Swift tests pass.
+[Handoff](reports/work/IOS-REPLAY-179/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-fit-176--retention-diagnosis-and-mixed-replay-proposal).
+
+### Review — IOS-REPLAY-181 / Codex
+
+Reuse019/020/021predictions to case-account page geometry regression and sheet/
+cancel FP growth; distinguish score ranking from operating-point quality. Audit
+exposure and retained-class sampling, then freeze one justified revised comparison
+through existing179entrypoints. No recapture, threshold tuning or blind extraepochs.
+Complete: all retained class/image counts reconcile;021introduced268sheet FP and
+174cancel FP versus020, while resolving44/0. Frozen432-member proposal replaces
+only80empty fillers with80existing train positives, no evaluation admission.
+[Handoff](reports/work/IOS-REPLAY-181/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-replay-181--exposure-and-operating-error-diagnosis).
+
+### Review / development gates failed — IOS-REPLAY-184 / Codex
+
+Qualify181's exact432-member positive-replay proposal in isolated outputs; reuse
+the179trainer/evaluator without changing sealed179code/outputs. Same019initializer,
+10epochs/540minibatches/69updates, original gates. Log one run after preflight,
+complete216fit/96development/2400retained comparison. No automatic extraepochs.
+Run022complete943.503s/10epochs/69verified updates; all2712records evaluated.
+RetainedAP .899967; page58TP/14FP; fit68/72/45hits per72. SheetFP336,cancelFP111,
+mapFP11; eight of14gates fail. No promotion.17focused/142Swift tests pass.
+[Handoff](reports/work/IOS-REPLAY-184/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-replay-184--positive-context-comparison).
+
+### Review — IOS-DIAG-185 / Codex
+
+Reuse019–022predictions to case-account residual page geometry and sheet/cancel/map
+FP transitions; audit exposure, then freeze one justified next comparison or a stop
+decision. No new inference/capture/training or evaluation-role change in this task.
+Complete: all class counts reconcile;022resolves148cancelFP and140sheetFP versus021,
+adds11mapFP.26KitchenSink fit boxes remain poorly localized (24trailing,median
+height1.853×truth). Exact target/pixel exposure audited. One same-data box-loss
+comparison frozen;11focused/142Swift tests pass, no training launched.
+[Handoff](reports/work/IOS-DIAG-185/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-diag-185--residual-geometry-and-operating-errors).
+
+### Review / geometry remedy rejected — IOS-GEOMETRY-186 / Codex
+
+Qualify185proposal and execute one fresh019-initialized candidate with022's exact
+432members/10epochs and box-loss7.5→15only. Complete all2712matched comparisons,
+original14gates and prior31fit-case accounting; no extraepoch loop or promotion.
+Standing training authority applies after preflight/logging;2GiBoutput budget.
+Completed10epochs/2712comparisons. RetainedAP .902388, but no31prior fit misses
+recover and13hits regress; eight gates fail. No promotion.32focused/142Swift tests
+pass. [Handoff](reports/work/IOS-GEOMETRY-186/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-geometry-186--one-localization-loss-comparison).
+
+### Review / model gates failed — IOS-RESOLUTION-187 / Codex
+
+One same432-member Run022-control comparison at1280instead of640, restoring box7.5.
+Source inspection: resident sealed exporter supports640/1280, not960. Use its
+existing1280contract, not a source-pin bypass; explicitly measure larger compute.
+Preflight actual batch geometry/memory/storage and freeze resolved protocol; keep
+10epochs,batch8,69updates,fresh019initializer and original gates. Report extra pixel
+work/time explicitly, not equal-compute superiority. Complete2712matched evaluations
+and prior31case accounting; no automatic sweep or promotion. If batch8cannot fit,
+stop before training and revise design rather than silently changing batch.
+Complete10epochs/69updates/2712evaluations,3185.2s. Geometry improves21/31prior
+misses, but retainedAP .343954 and page70TP/158FP fail11/14gates. No promotion.
+189fixed-checkpoint crossover diagnoses resolution versus weight adaptation.
+[Handoff](reports/work/IOS-RESOLUTION-187/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-resolution-187--controlled-input-resolution).
+
+### Review — IOS-CROSSOVER-189 / Codex
+
+Complete missing Run022@1280andRun024@640 inference arms; reuse022@640/024@1280.
+Same216fit/96development/2400retained membership, no training/threshold changes.
+Account all four arms, per-class gates and prior31fit failures.512MiBoutput cap.
+Complete: retainedAP022@640 .899967,022@1280 .190626,024@640 .886342,
+024@1280 .343954. Resolution sensitivity dominates; all cells fail gates.
+[Handoff](reports/work/IOS-CROSSOVER-189/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#ios-crossover-189--resolution-factor-accounting).
+
+### Ready — IOS-REFINE-190 / unassigned
+
+One cached-proposal geometry-only diagnostic: retain022@640classes/confidences,
+refine pageControl coordinates only from024@1280unambiguous one-to-one matches.
+No extra detections, threshold fitting, labels, inference, training or public API.
+Test full216/96/2400membership and original14gates; preserve ambiguous originals.
+[Contract](Research/Plans/Run013Evaluation.md#ios-refine-190--geometry-only-proposal-diagnostic).
+
+### Review — TRANSITION-CONTRAST-188 / Codex
+
+Independent companion: reaggregate verified166/180B scores by actual endpoint-
+connected source and changed/unchanged/identity population. Quantify fixed consensus
+versus individual-model asymmetric/common-mode sensitivity; rank10source-case
+priorities without pretending transformed labels are native truth. Prepare a bounded
+native contrast using the already requested24cases, not new capture. No training,
+threshold selection, label admission or incoming worker code execution.
+Complete:five connected groups; consensus equal-source flip rate12.27%after,
+12.16%before,.021%both. Top10identity cases trace to native table/rich-table.
+Reuse retained24native intervals after exact v3source qualification; no recapture.
+[Handoff](reports/work/TRANSITION-CONTRAST-188/handoff.md).
+[Contract](Research/Plans/WorkerBacklog180.md#transition-contrast-188).
+
+### Review — ART-INTAKE-182 / Codex
+
+TTR artwork pilot235590279bytes copied/hash-verified; exact receiver receipt and
+crop/role guidance published/read back. No extraction, semantic admission or training.
+[Receipt handoff](reports/work/ART-INTAKE-182/handoff.md).
+
+### Blocked on exact source / structural checks passed — ART-INTAKE-183 / Codex
+
+Bounded archive intake of182retained original; source-pinned schema4/composition-v5
+review, four calibration-pair body/artwork/clipping/focus/crop checks and ancestry
+inventory. No training or independent-evaluation admission; unsupported measurements
+stay unavailable. Use source via maintainer Git; no producer binaries or recapture.
+Scope/acceptance: [182handoff](reports/work/ART-INTAKE-182/handoff.md).
+Safe143-member extraction;36indexed hashes,4source-reference hashes and8decoded
+4Kframes pass. Actual validator rejects all4schema4bundles unsupported_version.
+Producer4b9b57e+uncommitted changes absent locally; exact source publication required
+before versioned hydration/crop qualification. Feedback published/read back; no recapture.
+[Evidence](reports/work/ART-INTAKE-183/handoff.md).
 
 ## Review — IOS-DIAG-171 / Codex
 
@@ -671,8 +835,8 @@ correction. Audit original and retained cases' local-vs-global support using exi
 image-only proposals, separating same-screen movement, screen navigation and real
 same-focus content changes. Freeze one matched-capacity local/global representation
 comparison only if coverage supports it; preserve original gates and exposed roles.
-Independently deliver FLOW124 conformance vectors once immutable SMB publication is
-resolved; absent peer repair blocks that delivery only. No unchanged recapture/fit.
+FLOW176 delivered FLOW124 conformance vectors with verified SMB readback;
+peer receipt/replay remains pending. No unchanged recapture/fit.
 
 ## Review / candidate rejected — CONDITIONED-133 / Codex
 
@@ -822,13 +986,15 @@ evidence and consumer uptake without Git writes. Companion: remove FLOW124 tests
 dependence on retained reports by generating isolated fixtures/exposure input.
 Use deterministic offline tests plus actual local/shared read-only entrypoints.
 
-## Software review / delivery pending — FLOW-CONFORMANCE-124 / Codex
+## Software review / delivered, peer replay pending — FLOW-CONFORMANCE-124 / Codex
 
 11 synthetic cases replay expected outcomes; 282 exposure hashes sanitized and
 archive verified (54,764 bytes / 103 members). 27 Python and 139 Swift tests pass.
 TTR workflow request acknowledged; status published/read back preserving other entries.
-Archive remains local because strict SMB publication is unsupported; no peer replay
-or training admission claimed. [Handoff](reports/work/FLOW-CONFORMANCE-124/handoff.md).
+Historical publication blocker superseded: FLOW176 attempt02 archive (54,763 bytes,
+103 members) published and freshly hash-verified October5. Exact peer receipt and
+11-case replay remain absent; no training admission claimed.
+[Handoff](reports/work/FLOW-CONFORMANCE-124/handoff.md).
 
 Respond to TTR's workflow-alignment request with reproducible synthetic consumer
 conformance fixtures and sanitized current transition exposure inventory. Reuse
@@ -840,13 +1006,14 @@ hashes/ancestry without private pixels/paths, mark absent hashes unknown—not c
 Package exact membership/hashes and verify read-only replay. Delivery stays pending
 if current strict SMB publication semantics are unavailable; no fallback or capture.
 
-## Software review / SMB publication blocked — FLOW-TRANSFER-123 / Codex
+## Software review / SMB publication repaired — FLOW-TRANSFER-123 / Codex
 
 27Python/139Swift checks pass. Real CLI inspection verifies completedv1receipt and
 pendingv2bytes, without cleanup. Actual assigned metadata publication failed safely:
 SMB returns errno45for exclusive rename and atomic hard links. Verified2426byte
-stage retained; no final file, no overwriting fallback. Compatibility gap published
-in own SMB status; next qualify a reviewed supported immutable publication protocol.
+stage retained. This historical failure is superseded by PEER148's scoped Foundation
+no-overwrite fallback and successful FLOW176 archive publication/readback. No further
+transfer repair is needed for that archive; receipt-gated cleanup remains pending.
 [Usage](reports/work/FLOW-TRANSFER-123/usage.md) and [handoff](reports/work/FLOW-TRANSFER-123/handoff.md).
 
 Implement NUIAK's scoped deterministic transfer CLI from WORKFLOW122: inspect by
@@ -2784,11 +2951,21 @@ not blocked by that capacity issue. No NUIAK storage workaround initiated.
 
 **ART-HANDOFF178 scope update:** maintainer requests producer artwork-generation and
 native UI adapter work move to TTR. Minimal image/prompt/findings bundle published;
-peer receipt/task ownership acceptance pending. Do not independently dispatch those
+peer receipt verified and producer ownership accepted as ART-INTAKE-01,
+UI-SOURCE-01 and UI-SOURCE-02. Do not independently dispatch those
 producer portions here. NUIAK retains consumer validation, admission, lineage/splits,
 evaluation and model work. ART-A/B/C and UI-IMPORT-A/B/C descriptions below are
 historical proposals pending TTR adoption, not duplicate local implementation orders.
 [Handoff](reports/work/UI-SOURCE-177/ttr-minimal-handoff.md).
+Detailed seven-tranche coordination request published/read back at
+`nuiak/requests/nuiak-20261005-art-handoff178-tranches.yaml`; includes ranked source
+findings, dependency/license limits and per-tranche acceptance. Mapping all seven
+tranches received in `tvtestrig/responses/nuiak-20261005-art-tranches-mapped.yaml`:
+ART-A first; ART-B after import; UI-IMPORT-A after selected-file review;
+UI-IMPORT-B deferred until adapters; UI-IMPORT-C feasibility only; composition
+after assets/adapters; ART-D after NUIAK utility review. No downloads or generation
+performed by this acknowledgment.
+[Request](reports/coordination/art-handoff178-tranches.yaml).
 
 Executed source/dependency/license feasibility spike on all five named UI candidates,
 three discovery indexes and RICO/Ferret dataset suitability. Apple actual sample and
@@ -2820,16 +2997,16 @@ the entire ART-B pilot. ART-A tooling/import and remaining generation remain ope
 Pick up bounded units when higher-priority work is blocked; not a dependency for
 current training or TTR compatibility. Owners unassigned until selected.
 
-- [ ] ART-A — NUIAK: freeze sheet/asset manifest and inspect existing TTR import
+- [ ] ART-A — proposed TTR producer ownership; NUIAK reviews interchange: freeze sheet/asset manifest and inspect existing TTR import
   contract; implement deterministic crop/validation CLI with real entrypoint and
   collision/geometry/ancestry tests. No generation or producer edits.
-- [ ] ART-B — NUIAK: reviewed development-only pilot, at most7requests/64assets:
+- [ ] ART-B — proposed TTR producer ownership: reviewed development-only pilot, at most7requests/64assets:
   12posters,16thumbnails,32avatars,4backdrops. Validate every cell, retain originals,
   report yield/cost/time; no automatic retries. Depends ART-A.
 - [ ] ART-C — TTR/NUIAK: source-backed asset intake and native browsing/detail
   compositions, matched procedural/generated-artwork pilot and separate layout
   comparison. Producer gaps require its own task. Depends accepted ART-B/runtime.
-- [ ] ART-D — NUIAK: expand in small frozen sheet units toward provisional ceiling
+- [ ] ART-D — proposed TTR asset expansion / NUIAK utility evaluation: expand in small frozen sheet units toward provisional ceiling
   368assets/36totalrequests only after pilot utility review; reserve ancestry groups,
   then one logged data-only evaluation. No implied production promotion or recurring
   generation. Depends ART-C; price/budget recorded at execution.

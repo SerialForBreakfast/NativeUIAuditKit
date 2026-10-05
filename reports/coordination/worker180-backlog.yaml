@@ -1,0 +1,79 @@
+schema_version: 1
+id: nuiak-20261005-worker180-backlog
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-05T18:14:21Z'
+expires_at: '2026-10-08T18:14:21Z'
+state: requested
+message: >-
+  Maintainer explicitly assigns a low-priority parallel backlog. Complete the
+  following finite tasks sequentially using resident verified ROBUST153/ENVELOPE166
+  inputs and DTM050/051/052; no wait for our iOS work or TTR. Honor your repo rules
+  and any currently running owned job first. Report actual start separately from
+  acknowledgment. These are useful diagnostics, not a mandate to consume the budget.
+inputs: >-
+  Same source/manifest/checkpoint pins as completed166; training.pt SHA256
+  2af4c6896480b4ebc35d61320c13f26173dd7b9c544dfb9167b135924f574058.
+  108 original pairs plus178 endpoint identities, qualified masks/pooling adapter,
+  658944 retained166 scores and858 baselines. No new private/native captures needed.
+tasks:
+  - id: WORKER-180A
+    priority: 1
+    outcome: Complete source-balanced failure taxonomy without rerunning166
+    work: >-
+      Stream existing scores, aggregate by original source/endpoint-connected group,
+      spatial region, intervention size/gain, changed-pixel fraction and saturation.
+      Report every condition and ten worst categories with deterministic exemplar IDs.
+      Distinguish unique tensors from repeated transforms and sources from variants.
+      Compare models pairwise on identical membership; include source-group bootstrap
+      intervals using2000 resamples seed180. If connected groups are too few, report
+      uncertainty unavailable rather than resample correlated frames as independent.
+    acceptance: Counts reproduce166 exactly; no second inference; source grouping and bootstrap tests; original retained baselines unchanged; reports are counterfactual agreement not native accuracy
+  - id: WORKER-180B
+    priority: 2
+    outcome: Frame-order and common-mode sensitivity map
+    work: >-
+      Reuse exactly286 cases and768 transforms/case from166. For each of three fixed
+      models score two additional placements: transform BEFORE only and apply the
+      identical mask/transform to BOTH frames. Also score swapped original frame order
+      for all286 cases. Exactly1317888 transformed scores plus858 swapped baselines.
+      Reuse existing AFTER-only results as control. Same half-open masks, clipping,
+      float32 quantization and unchanged pixels as166. Stream batch<=32, cache exact
+      tensor/model duplicates with complete accounting, never materialize a corpus.
+    acceptance: >-
+      Original/source/model hashes frozen; tests verify channels, padding, common-mode
+      identity equality, swap involution, duplicate accounting and resume; compare256
+      fixed IDs/model CPU/CUDA. Report asymmetry, common-mode versus differential
+      sensitivity and changed/unchanged/abstain at existing .15/.85 thresholds.
+      No transformed-label truth or independent holdout claim; no calibration.
+  - id: WORKER-180C
+    priority: 3
+    outcome: Fixed-model consensus feasibility and bounded throughput benchmark
+    work: >-
+      Reuse180B/166scores to evaluate unanimous confident consensus of050/051/052:
+      all<=.15 unchanged, all>=.85 changed, otherwise abstain. Compare coverage,
+      original-label accuracy only where labels are eligible, and counterfactual
+      disagreement/flip rates separately. No fitted weights or chosen thresholds.
+      Benchmark resident actual model inference at batches1,8,32 using pinned286
+      baseline inputs: one warmup and five timed passes/config/model, synchronized
+      GPU timing, peak memory and cold-load separately. Do not infer CoreML latency
+      from CUDA. Include stacked-three versus sequential cost only if supported.
+    acceptance: Complete original retention and abstention tradeoff; no best-case-only report; outputs identify all models; batching matches single-case values/categories within recorded tolerances; fixed finite benchmark
+budget: >-
+  At most24hours total,6GiB retained outputs across this finite backlog; per task
+  at most8hours. nice10, CPU2threads, loader0; GPU only when free and cooperative
+  yield to higher-priority work. nice does not isolate GPU. Sequential execution,
+  bounded chunks/cursor and exact resume after verified interruption; no takeover,
+  kill, arbitrary sweep, runtime padding or automatic restart after data/CUDA error.
+handoff: >-
+  Acknowledge exact request and which task is running. Publish only start, material
+  blocker and terminal metadata in your namespace. Return one immutable archive
+  per completed task, <=2GiB each, with source/tests, config/input hashes, aggregates,
+  compact scores and inventory/size/SHA256. Reuse180B scores in180C. Receiver verifies
+  before sender cleans exact shared copy; retain originals. No dependency on local
+  NUIAK acknowledgment between these three tasks if each prerequisite passes.
+boundaries: >-
+  No training updates, new data admission, capture, installs/downloads, SSH, Git
+  writes, physical devices, external services, CoreML export or promotion. Nothing
+  on NUIAK's local critical path depends on these jobs. Report unavailable resident
+  inputs precisely; skip dependent task rather than fabricate or fetch new data.

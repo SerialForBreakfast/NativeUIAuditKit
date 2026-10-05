@@ -1,15 +1,73 @@
 # NativeUIAuditKit — Current State
 
 **As of:** October 4, 2026, consumer-v2 exact receipt reconciled and retained replay reported by TTR; transition robustness remains unqualified; no production promotion
-**Audience:** maintainers and agents  
+**Audience:** maintainers and agents
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
-**IOS-FIT175 / Run020 live:** one balanced216-image training-fit diagnostic,
-72per placement,20fixed epochs from019with fresh optimizer state. Monitoring uses
-the same training images and is explicitly not independent validation. PID34431,
-driver84525; no new data roles, capture or promotion. Terminal comparison pending.
-[Continuation](../reports/work/IOS-FIT-175/continuation.md).
+**October5 — IOS187/Run024 and IOS189 diagnosis complete:**1280candidate
+completed10epochs/69updates and2712matched evaluations.21/31prior fit failures
+recover, but retainedAP .343954 and page70TP/158FP fail11/14gates. No promotion.
+189completed missing cells: retainedAP022@1280 .190626,024@640 .886342;
+both still fail gates. Keep022@640reference; next190cached geometry-only diagnostic,
+not another training loop. [189evidence](../reports/work/IOS-CROSSOVER-189/handoff.md).
+188source-connected
+transition analysis complete: fivegroups; highest sensitivity traces to table/rich-table
+identity endpoints. Reuse retained24native contrast once exact v3source qualifies.
+[187checkpoint](../reports/work/IOS-RESOLUTION-187/handoff.md),
+[188handoff](../reports/work/TRANSITION-CONTRAST-188/handoff.md).
+
+**Latest completed tranche, October5 — IOS186/Run023 and WORKER180B/C:**
+Run023 completed10epochs and2712matched evaluations. Box-loss7.5→15raises retained
+customAP50 .899967→.902388 but recovers none of31prior fit misses and regresses13hits;
+fit60/72/40per72leading/center/trailing, eight gates fail. No promotion. Next187tests
+input resolution with fixed membership and explicit extra pixel-work accounting.
+Big Dog180B numerical replay passes (1,317,888scores accounted,6,294sampled scores
+plus858swaps).180C fixed-consensus totals reproduced; asymmetric perturbations still
+cause26,022after-only/25,864before-only confident flips, versus38both-frame.
+Diagnostic findings, not native accuracy or new labels. B/C SMB receipts published
+and read back; peer receipt/cleanup acknowledgment pending.32focused/142Swift tests
+pass. [186handoff](../reports/work/IOS-GEOMETRY-186/handoff.md),
+[worker intake](../reports/work/WORKER-180/consumer.md).
+
+**Latest continuation, October5:** IOS184/Run022completed10epochs and2712-image
+matched evaluation. Retained custom AP50 .899967, page58/96TP/14FP, fit68/72/45hits
+per72leading/center/trailing. SheetFP336and cancelFP111 improve021but eight of14
+development gates fail; no promotion/DS-G8 claim. Next185case-accounts remaining
+geometry and operating errors before another comparison.
+[184handoff](../reports/work/IOS-REPLAY-184/handoff.md).
+**IOS185 completed:** full019–022count reconciliation, per-case FP/fit audit and
+source-defined batch exposure.022resolves148cancel/140sheet FP but adds11map FP;
+24trailing KitchenSink geometry failures remain over-tall (median1.853×truth).
+Freeze186one-variable box-loss7.5→15 comparison; same432members/10epochs and gates.
+No new training/inference/admission in185. [Evidence](../reports/work/IOS-DIAG-185/handoff.md).
+TTR artwork183safe extraction/hash/PNG checks pass; all4bundles reject unsupported
+schema4 and exact producer source is unavailable. Actionable feedback published.
+Big Dog180Areturn independently verified, five source groups only.180B/C now
+independently accepted for diagnostics as recorded above.
+
+**2026-10-05:** Big Dog180A/B/C nonblocking resident-input diagnostic backlog
+published/read back (acknowledgment/180A intake now recorded above). IOS179/Run021completed10epochs and
+matched2712-image evaluation. Retained AP50 .896409 improves019 .882978, but page
+49/96TP/17FP and sheet459FP/cancel259FP fail frozen gates. No promotion.181case audit
+and184comparison are now completed above. No new roles.
+
+**IOS-FIT175 / Run020 evaluated, not promoted:**20epochs completed. Fit hits
+leading70/72,center72/72,trailing56/72 fail the per-placement90%gate; all18misses
+are low-confidence matches, not missing/poorly localized boxes. Exposed development
+page hits19→59/96 and AP50 .343791→.627804, but retained mAP50 .882978→.871533,
+with major sheet/scrollIndicator losses. No extraepochs or threshold adjustment.
+Next case-account confidence and retention before a mixed-replay proposal.
+[Handoff](../reports/work/IOS-FIT-175/handoff.md).
+
+**IOS-FIT176 diagnosis complete:** sheet AP collapse is primarily ranking/false
+positive degradation (TP24→23,FP218→235), not wholesale loss of localization.
+Scroll operating hits remain0;25low-confidence matches become geometry misses.
+Both classes absent from175training; full admitted corpus has569/700images.
+Frozen216replay+216fit proposal covers all15supported omitted classes without
+evaluation pixels. Its audit and execution are now complete under179above; the
+diagnosis itself did not authorize changing evaluation roles.
+[Diagnosis and next replay tranche](../reports/work/IOS-FIT-176/handoff.md).
 
 **IOS174 diagnosis complete:** Run019still fails on its own placement additions:
 leading0/96, trailing11/96, centered62/72operating page hits; total73/264 versus

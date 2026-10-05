@@ -1,5 +1,143 @@
 # NativeUIAuditKit — Experiment Log
 
+### IOS-CROSSOVER189 — fixed-checkpoint resolution diagnostic (registered)
+
+No training. Run024@1280recovers21/31prior fit misses but retainedAP .343954 and
+page70TP/158FP fail gates. Execute missing022@1280and024@640 inference arms on the
+same216/96/2400manifests; reuse verified022@640 and024@1280. Frozen settings except
+declared resolution, no threshold selection, admissions or promotion.512MiBcap,
+serial MPS, unchanged source/checkpoint pins; complete all four matched reports.
+Completed both new arms in483.057seconds; four-arm scoring exit0, all2712members each.
+RetainedAP:022@640 .899967,022@1280 .190626,024@640 .886342,024@1280 .343954.
+Page TP/FP respectively58/14,19/28,35/21,70/158. Fit69/69/59only for024@1280;
+024@64029/66/14. All cells fail original gates. Resolution sensitivity dominates
+aggregate collapse;1280adaptation improves its own scale but is insufficient.
+No automatic extraepochs or promotion. Result seal
+083aaadb372b01bbcaf9c3b073e662cbf5cb111f6e3dd7e451a1fbe052a3f8bf.
+
+### Run024 — IOS-RESOLUTION187 (registered before memory probe and training)
+
+Hypothesis: resolution-aware training improves persistent tiny page-control geometry.
+Same432train members, fresh019last initialization and optimizer,10epochs/batch8,
+69updates,AdamW1e-4,nbs64,warmup.25,cosine,seed42,AMPoff,rect/full-frame/noaug as022.
+Only resolution640→1280; box7.5restored.960draft amended before execution because
+resident exporter explicitly supports640/1280. No sealed historical source edits.
+Preflight: one disposable maximum-rectangle batch8 forward/backward/AdamW step,
+synthetic targets bounded by largest real annotation count; no saved probe weights.
+Actual candidate initializes again from019. Abort on failed preflight, no batch fallback.
+2GiBoutputs,≥8GiBfree,no-wall-limit; no external capture, new roles or promotion.
+Score216fit/96development/2400retained with explicit1280inference contract and
+all14original gates,31prior failure IDs and new regressions. Report actual pixel-work
+and elapsed time; this is not equal-compute or a training-only causal comparison.
+Prepared sources/inputs/exposure verified. Three preflight failures preserved:
+checkpoint size bound, frozen loaded gradients, and tensor-only loss serialization.
+Corrected attempt04probe passed one maximum batch8×3×1280×736 with32labels/image,
+finite loss/gradients and disposable AdamW step in6.109s. MPS driver allocation
+19,471,007,744bytes (recommended19,069,665,280); operation succeeds but little
+headroom, so no concurrent MPS work. No candidate weights derived from probes.
+Protocol SHA b64f7028c909f1b38cc3d3d1d429bfbc2ab6fdb4df9cf6f03f98d16d5c5d8838.
+Candidate PID65093 completed10epochs/69updates, exit0,3185.207seconds.
+Input pixels/epoch87,818,240→333,578,240 (3.7985×), same2550page presentations/run.
+Saved1280train/val configuration observed at startup; no concurrent MPS inference.
+Terminal checkpoint SHA ec41e3796a08a96d19e80114e667c9ef66eef93a9729431a50871a940f4e4a81.
+All2712images inferred/scored; retained customAP50 .343954 versus022 .899967.
+Page70TP/158FP/AP.388387 versus58TP/14FP/AP.619261. Fit69/69/59per72placements;
+21of31prior misses recover,10remain low-confidence;9prior hits become low-confidence.
+No fit geometry misses remain.24prior trailing geometry cases medianheight1.0684,
+IoU.77045 versus1.853/.4704. Sheet20TP/353FP;cancel17/198;map34/165;scroll34/112.
+Eleven of14gates fail: localization improves but retention/operating precision
+collapse. No promotion or extraepochs. Evaluation seal
+5d8074399a9913728328e7de2fa1a737030e9e2fe157e3daa700fc78ebcaf596.
+Next189fixed-checkpoint resolution crossover; separate size effects from adaptation.
+
+### Run023 — IOS-GEOMETRY186 (registered before execution)
+
+Hypothesis: increased localization loss helps persistent over-tall native page boxes.
+One fresh019last initialization and optimizer, same432train members as022,10epochs,
+640,batch8,MPS,workers0,AdamW1e-4,nbs64,warmup.25,cosine,seed42,AMPoff,rect/full-frame
+noaugmentation. Only box loss7.5→15; cls.5,dfl1.5unchanged.540minibatches/69updates,
+fixed-last; in-sample monitoring, no independent-val claim.2GiBcap/no-wall-limit.
+Preserve original14gates and2712matched evaluations; no automatic extraepochs,
+export or promotion. Proposal b650a66d8da3c715c70bb2a017cf2e8006d0d86cfe9cfabc90238df689b85b88.
+First preparation rejected absolute manifest paths before training; preserved.
+Corrected attempt02keeps relative paths through project-local dataset link, not a
+weakened validator. New sealed protocol derives from preserved preparation protocol.
+Launched PID61627; protocol seal24a54f1465b864dd2c3a5f69344e55e50040e0366fce95b2cb4ee10e2b4b2384.
+Saved arguments exactly match protocol; only box and isolated data/name differ
+from022. Completed10epochs/69updates,898.461seconds,exit0.
+Fixed-last SHA256 ecb8d39bd6b07902f0a894a73fbeb5e165802829d61bc57e20b6c3f86c964d7f.
+All2712matched inputs scored. Retained customAP50 .9023879233 (022 .8999666691),
+page58TP/14FP unchanged; AP .615833. Fit60/72/40hits per72leading/center/trailing,
+versus68/72/45. None of31old misses recovered;13old hits regressed (11geometry,
+2confidence).24prior trailing geometry failures medianheight1.892×truth,IoU.4566.
+Sheet24TP/300FP;cancel80/115;map100/11;scroll42/33 AP.401374.
+Eight of14gates fail. Higher box weight is rejected as the geometry remedy;
+slightly higher aggregate AP is not promotion. No automatic retraining/export.
+Evaluation seal a1788ebf6d53a99fe3f4e4e3da876fc247bb6f9321c66d498c7783d14ec7dead.
+Next: controlled resolution comparison after memory/exposure preflight, baseline
+box7.5 restored; no threshold tuning or new data roles.
+
+### Run022 — IOS-REPLAY184 (registered before execution)
+
+Hypothesis: replace80empty replay fillers with80diverse labeled training frames
+while preserving216fit +136positive replay. Exact181proposal validated432members,
+all pixel/label/annotation hashes, decoding and ancestry; no evaluation admission.
+Fresh Run019last optimizer; fixed10epochs,640,batch8,workers0,MPS,seed42,AdamW1e-4,
+nbs64,warmup.25,cosine,AMPoff,full-frame/noaugmentation.540minibatches/69optimizer
+events; saved arguments match021except dataset/output identity. New positives alter
+co-occurring target exposure and rectangular batch shapes; not equal pixel work.
+Fixed-last checkpoint, in-sample monitoring only;2GiBcap,≥8GiBfree,no-wall-limit.
+Existing019/020/021prediction evidence reused; score216fit/96development/2400retained
+under original184/179gates. No automatic retry, extraepochs, export or promotion.
+Launch binding reports/work/IOS-REPLAY-184/artifacts/binding.json pins adapter,
+canonical proposal, control and resolved protocol. Status: preflight passed, ready;
+Launched PID55885; resolved protocol seal
+61feff4f6ae8c45615357246d5869858f331078ebd5f6e2cbcf8df7dd20587e8.
+Training completed exit0,943.503seconds;10finite epochs,69actual optimizer events
+match the sealed schedule. Saved args match every declared field. MPS warned about
+nondeterministic operations in deterministic-warn mode; no bitwise claim.
+Fixed-last matched infer/report exit0;2712records validated/scored.
+Retained custom AP50 .899967 (021 .896409); page58/96TP/14FP/AP.619261;
+fit leading/center/trailing68/72,72/72,45/72. Sheet24TP/336FP,AP.985784;
+cancel80TP/111FP;map100TP/11FP;scroll26TP/33FP,AP.301087. Eight of14gates fail.
+26KitchenSink fit geometry misses and5UIKitControls low-confidence matches remain.
+No promotion/extraepochs. Next185case-audits exposure/geometry and residual errors.
+CheckpointSHA256 d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d.
+Evaluation seal58d0f7baff8bdc1a760c9bc657c716b22933603b60c05f49e4d53ce2f95d7f84.
+[Handoff](../reports/work/IOS-REPLAY-184/handoff.md).
+
+### Run021 — IOS-REPLAY179 (registered before execution)
+
+Hypothesis: replay of216already-admitted training images retains omitted classes
+while216balanced placement images improve page geometry/confidence.432unique train
+members, no evaluation admission;80negative replay fillers retained deliberately
+for false-positive control, not claimed optimal. Fresh optimizer fromRun019last,
+fixed10epochs,640,batch8,MPS,workers0,AdamW1e-4,nbs64,seed42,cosine,AMPoff,
+full-frame/no augmentation,patience0. Warmup.25 gives14batches;540minibatches and
+69optimizer events match020's simulated event schedule. Cosine epoch staircase
+differs: compute-matched pragmatic comparison, not isolated identical-LR proof.
+Fixed-last selection; in-sample monitoring only.2GiBoutputs,>8GiBfree,no-wall-cap.
+Protocol reports/work/IOS-REPLAY-179/attempt02/artifacts/protocol.json pins all
+432images/labels, annotations through admitted membership, source and trainer.
+First preparation failed on string/Path hashing before model execution; preserved
+partial staging under original artifacts. Corrected attempt02 passed full input,
+ancestry, duplicate and coverage checks. Compare216fit/96development/2400retained
+against019/020 at frozen thresholds; no automatic extension, export or promotion.
+Launched PID48746, protocol seal
+2f562bcff3b984e64459c7165b517c0ee3490868e481a6d16ae73707c8c70b07.
+Saved arguments match every declared field. MPS warns some operations are
+nondeterministic despite seeded deterministic-warn mode; no exact bitwise claim.
+Training terminal exit0,1036.055seconds; all69optimizer-event indices match protocol,
+10finite epochs and saved settings verified. Fixed-last SHA256
+550ea6fb3823f4b4d0a23249bd28dcd459f8565f65484307bbd41395f83b337a.
+Matched infer/report exit0,2712images scored. Retained AP50 .896409 versus019 .882978;
+fit leading/center/trailing60/72,72/72,35/72; page49/96TP/17FP (02059/96).
+Sheet AP1.0restored butFP459; cancelTP80/FP259; scrollAP.25,TP50/FP58.
+Seven of14frozen development gates fail. No promotion/extraepochs. Next181audits
+complete operating errors and exposure confounds using existing predictions.
+Evaluation seal24b7fe0807bbfd70c9b7981fb43dfa6a41ba5c4f6079d7a3319f7b7b20907b51.
+[Handoff](../reports/work/IOS-REPLAY-179/handoff.md).
+
 ### Run020 — IOS-FIT175 (registered before execution)
 
 Hypothesis: concentrated balanced exposure fits native off-center page geometry.
@@ -19,7 +157,14 @@ Protocol seal070979f2194017e6eb5fc8c832728fb6f752def7b5ebc71b27e2ce6ea66a39e2.
 Actual saved arguments match the declared treatment, including20epochs,batch8,640,
 AdamW1e-4,biaswarmup1e-4,translate0,resumeFalse. First training pass completed;
 in-sample monitoring running.10focused tests and offline Swift build/test passed.
-No terminal metrics or learnability claim yet; preserve live process.
+Terminal update2026-10-05: exit0,875.142s wall;20finite epochs and fixed-last
+checkpoint/settings/source pins validated. Infer/report exit0 on216/96/2400images,
+zero degenerate rejections. Fit placement70/72,72/72,56/72: fails≥90%each gate.
+Development page AP50 .343791→.627804, hits19→59/96; retained mAP50 .882978→.871533.
+Sheet AP50 loses.789844, scrollIndicator.231953. All18fit misses low-confidence
+matches; no localization misses remain. No promotion, threshold change or extraepochs.
+Checkpoint6b4e22ba5971d26566f213c43d43ea81dce909c61cddd8da390e464cc6f1944c.
+[Full matched evidence and next diagnosis](../reports/work/IOS-FIT-175/handoff.md).
 
 ### Run019 — IOS-PLACEMENT173 (registered before execution)
 

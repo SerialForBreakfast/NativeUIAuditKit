@@ -1,0 +1,90 @@
+schema_version: 1
+id: nuiak-20261005-art-handoff178-tranches
+request_id: nuiak-20261005-art-handoff178-minimal
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-05T16:56:31Z'
+expires_at: '2026-10-05T17:26:31Z'
+state: proposed
+message: >-
+  Please consider these low-priority producer tranches in your own task queue and
+  return accepted task IDs, ordering, changes or explicit deferrals. This supplements
+  the existing artwork handoff, not a new duplicate assignment. It is sanitized
+  coordination metadata, not a transfer of internal plans/source. Do not displace
+  current integration repairs. Downloads, builds, generation and capture follow
+  your repository's assigned execution authority; this message executes none.
+ownership:
+  proposed_tvtestrig: artwork prompts/generation QA, slicing/import/cache, source adapters, rights review, native composition, observed focus/geometry and capture/export
+  retained_nuiak: consumer contracts/validation, data admission, ancestry and split checks, evaluation and models
+existing_artifact:
+  file: nuiak/ttr-artwork-handoff178-minimal.zip
+  bytes: 2548291
+  sha256: e14afc2676c9547ba015156a396d529982b774d3c76c93968737d58e8b35ca85
+  contains: original 12-poster sheet, exact generation prompt, compact source-spike memo
+  receipt: tvtestrig/responses/nuiak-20261005-art-handoff178-minimal-receipt.yaml
+  qualification: visually reviewed only; actual 1672x941 grid does not match requested 1920x1080 crop geometry
+source_findings:
+  - source: Apple tvOS media catalog sample
+    url: https://developer.apple.com/documentation/swiftui/creating-a-tvos-media-catalog-app-in-swiftui
+    archive_sha256: b234e9bb4a15a29a6b0cd254243750e5872ff753ae3a88acaa76c9ec85b134e9
+    finding: tvOS18; MovieShelf/Hero/Description local composition; no external package references found; replace randomElement with deterministic data; retain Apple permissive notice and use owned artwork
+  - source: jordansinger/SwiftUI-Kit
+    revision: 1211aa6b1aee07a3860e4f45d5cd5efcfec64509
+    finding: MIT; tvOS17 native groups; no external package references found; sliders and steppers excluded on tvOS; omit network maps and nondeterministic dates
+  - source: PGSSoft/ParallaxView
+    revision: a4165b0edd9c9c923a1d6e3e4c9a807302a1a475
+    finding: MIT; zero external package dependencies; native focus callbacks; distinguish transformed visible body from glow, nominal frame and clipping
+  - source: barbaramartina/swiftuicatalog
+    revision: 56ba26829a9cb06facec9b8fb1dff1962cf77b4f
+    finding: MIT iOS examples; no build manifest found in inspected tree; requires an iOS shell, not a drop-in tvOS component library
+  - source: jellyfin/Swiftfin
+    revision: 81c0a2e0afec74414b928aa1371357eae6aaafd1
+    finding: MPL2.0; 41 direct/transitive lock pins; poster views depend on image/environment/app types; defer whole-app import and inspect minimal shelf closure first
+  - source: alternatives from Swiftfin dependency inventory
+    finding: CollectionHStack/CollectionVGrid are MIT tvOS18 candidates with DifferenceKit dependency; TVOSPicker is Apache2.0 tvOS13 with no external package dependencies found; selected closure still needs review
+  - source: Awesome indexes and screenshot datasets
+    finding: indexes are discovery only, not blanket licenses; RICO is Android with unresolved inspected artifact terms; Ferret datasets have research/noncommercial restrictions; neither admitted for this model lane
+source_limits: Source inspection only; no local build or full transitive/media-rights clearance. Reverify selected files, resources, dependency closure and notices before importing.
+tranches:
+  - id: ART-A
+    outcome: Qualify one sheet-to-Fixture asset contract before more generation
+    work: Inspect existing importer; freeze asset IDs, actual dimensions, hashes, explicit reviewed crop rectangles, fit/fill and whole-sheet ancestry; reuse existing importer rather than invent an API
+    acceptance: Every crop passes seam/aspect checks; no silent stretching; reject missing/unknown assets, hash changes, traversal, escaping links and oversized decode; deterministic cached local import with bounded memory
+  - id: ART-B
+    depends_on: ART-A
+    outcome: Small reviewed artwork pilot, with reusable role prompts
+    work: Provisional pilot ceiling seven requests including the existing sheet, up to 12 posters, 16 thumbnails, 32 avatars and four individual backdrops; rejection reduces yield, no automatic retries
+    acceptance: Exact prompt/available generator metadata retained; genre/style and brightness diversity; native Fixture draws text/controls/focus, never painted labels; accepted/rejected inventory and measured cost/time/yield; one contact-sheet review plus anomalies
+  - id: UI-IMPORT-A
+    outcome: One rich Apple media screen and one small SwiftUI-Kit control group
+    work: Retrieve only selected pinned sources after rights/dependency review; retain notices; deterministic local data/owned art; omit player/account/server/network stacks
+    acceptance: Offline build; stable IDs; repeated-seed determinism; cold launch and missing-asset tests; native focus callbacks, growth/clipping geometry and complete before/after accounting; NUIAK independently validates intake
+  - id: UI-IMPORT-B
+    depends_on: UI-IMPORT-A
+    outcome: One custom ParallaxView cell through the same adapter
+    work: Review selected code/resources and notices; test focused, unfocused and pressed states with owned artwork
+    acceptance: Measured transformed body/glow/clipping and settled observations; unknown geometry rejected; simulator evidence does not establish physical-device parallax fidelity
+  - id: UI-IMPORT-C
+    outcome: Minimal richer-source proposal, not wholesale application import
+    work: Choose one Swiftfin shelf OR CollectionHStack/TVOSPicker based on new coverage and exact file/dependency/license closure; separately consider two iOS Catalog layouts only if TTR accepts that platform scope
+    acceptance: No unresolved media rights; notices/covered-source obligations recorded; no player/server dependency creep; isolated offline build and one intake proof; explicit no-go if closure is disproportionate
+  - id: ART-C / UI-IMPORT-D producer portion
+    depends_on: accepted assets and adapters
+    outcome: Batched browsing/detail compositions with source-diverse native focus evidence
+    work: Reuse current jobs/resume/export; compare procedural versus generated art at fixed geometry separately from sparse versus rich layout; cover focus-only, content-only, no-op, scrolling and overlays; freeze related seed/layout/asset ancestry before capture
+    acceptance: Full expected/accepted/rejected accounting, measured focus/geometry, bounded decode/cache use, native render and inference-resolution review; no duplicate-source claim of independent apps; repeatable completed bundle and NUIAK intake
+  - id: ART-D producer portion
+    depends_on: pilot intake and NUIAK utility review
+    outcome: Opportunistic library expansion only for demonstrated coverage needs
+    work: One budgeted sheet at a time; provisional ceiling 368 assets/36 total requests is a planning cap, not a quota or spending authorization; NUIAK owns the fixed-budget model/data comparison
+    acceptance: Preserve raw sheets/crop lineage; holdout assets AND layouts reserved before failure-driven selection; report useful accepted examples/hour and retention; no claim of model benefit from visual richness alone
+response_requested:
+  - Verify the existing image archive and return its exact receiver receipt; keep receipt distinct from ownership acceptance
+  - Return TTR task IDs mapped to each proposed tranche, with accepted/deferred/declined scope and dependencies
+  - Identify existing asset import/adapters that can be reused and only actual missing API/metadata capabilities
+  - State any contract decisions NUIAK must supply; no private artifacts or new captures needed merely to acknowledge this request
+outcomes:
+  software_verified: not_assessed
+  data_eligible: not_assessed
+  integration_qualified: not_assessed
+  model_gate_passed: not_assessed

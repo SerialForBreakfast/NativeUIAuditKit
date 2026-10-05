@@ -1,5 +1,217 @@
 # IOS-R013-EVAL — approved local evaluation tranche
 
+## IOS-DIAG-185 — residual geometry and operating errors
+
+Inputs:184sealed evaluation/predictions, unchanged019/020/021reference predictions,
+181proposal and184protocol, original full annotations and training ancestry.
+Scope: local read-only evidence analysis plus isolated compact reports/code. No
+capture, inference, new training, label edits, role changes or promotion.
+
+Implementation: new diagnosis entrypoint calls181's tested box matching/count
+reconciliation helpers and the resident Ultralytics `BaseDataset.set_rectangle`
+on an in-memory header/label inventory. No loader/cache/trainer is launched.
+This reconstructs source-defined batch shapes without modifying sealed experiments;
+record resident source hash and configured stride/pad. Report all class counts but
+retain full per-image detail only for the targeted operating-error classes.
+
+1. Verify pins/compatible membership/settings; reuse existing full scorer and181
+   case-accounting helpers without changing sealed prior code or metrics.
+2. Reconcile all38supported class operating counts against the frozen reports.
+   Spatially associate sheet/cancel/map FP at IoU.5 across021/022, recording new,
+   retained and resolved cases, confidence and source-family support. Associations
+   are not authenticated object identity. Keep absent classes unavailable.
+3. Account all31remaining fit misses and96development page outcomes against020/021;
+   inspect target center/size error by family/placement and train co-occurrence.
+   Distinguish geometry from low confidence; do not prescribe thresholds or more
+   epochs merely because aggregate AP rose.
+4. Audit actual per-class presentations and rectangular input dimensions under both
+   sealed proposals. Decide whether a further replay comparison is justified, or
+   whether the unresolved geometry requires a different bounded hypothesis.
+5. If justified, freeze one proposal from existing train-only support, preserving
+   final evaluation roles and the original gates. Do not launch it in this task.
+
+Tests: deterministic count reconciliation, incompatible artifacts, missing classes,
+spatial matching duplicates and proposal role/leakage failures if code is added;
+one integrated offline Swift pass only when code changes. Acceptance: exact count
+reconciliation and complete case lists, explicit confounds, one evidence-backed
+next decision with fixed hypothesis/membership/budget. Handoff four outcomes and
+next execution prerequisite. Pair with independent180B/C intake if available;
+producer delays do not block this local analysis.
+
+## IOS-GEOMETRY-186 — one localization-loss comparison
+
+185accounting found26KitchenSink localization misses; the24trailing misses have
+median height ratio1.853 andIoU.4704 at about4.46resized target pixels. Positive
+replay reduced some FP but did not solve fit. Test whether increased localization
+loss weight improves box geometry without losing operating precision. This does
+not prove loss weighting is the cause; preserve an explicit failed outcome.
+
+Inputs:185sealed proposal,022protocol and evaluated fixed-last reference, same432
+existing train members and019initializer. One fresh candidate only: change `box`
+from7.5to15; leave cls.5,dfl1.5,10epochs/69updates,batch8,640,MPS,AdamW1e-4,
+warmup.25,seed42,rect/full-frame/noaugmentation unchanged. Same2GiBoutput cap and
+standing no-wall-limit. No fitting of thresholds, new admission or holdout access.
+
+Implementation: extend existing isolated replay adapter; do not change sealed184
+code/inputs. Verify exact data, base config and one-field treatment; new paths and
+corpus identifier must never collide with prior artifacts. Log next run ID before
+launch, retain fixed-last and actual optimizer-event audit. Reuse022predictions
+and unchanged019/020gates; score all216fit/96development/2400retained images.
+
+186binding creates a preserved preparation protocol through179, then derives a
+new execution protocol without overwriting the prepared one. Only box loss and
+isolated paths/corpus identity differ from022. New execution sources bind185proposal,
+186adapter and022reference; recheck each before train/infer/report.
+
+Acceptance: real preparation/training/export/scoring succeed with focused rejection
+tests and integrated offline checks; report the original14gates,31prior fit-case
+changes and all supported-class deltas plus FP counts. Success requires all original
+gates, not simply improved medianIoU. Failed gates yield diagnosis, no automatic
+weight sweep or longer run. No export/CoreML/device comparison/promotion in scope.
+Software/data/integration/model outcomes remain independent. Training execution uses
+standing local authorization once proposal/preflight/logging pass;185itself does
+not launch this run. Next after success: independently scoped qualification, not DS-G8.
+
+## IOS-REPLAY-184 — positive-context comparison
+
+Implementation binding: a thin184adapter creates the179-compatible proposal from
+sealed181membership, redirects only owned output/config paths in memory, and pins
+the adapter/canonical proposal/control protocol in an additional launch binding.
+Reuse179prepare/train/infer/report verbatim; no edits to sealed179files or outputs.
+
+Input:181sealed proposal e1f0b6a4dfddd4ecd42ebf499db0ecc8ef25867bbbd8949021078f401dc5882c.
+One comparison,432train members:216fit +136unchanged positive replay +80new train
+positives replacing empty fillers. New positives:39KitchenSink,24RichContentFeed,
+17SystemNavigationShell. Selection used training labels/support and source family
+only, never evaluation failure ranking. All full labels and original roles retained.
+
+Extend the existing replay workflow through a new bound configuration/entrypoint,
+not edits to sealed179sources or artifacts. Freeze local staging/output, verify all
+image/annotation/label hashes, decode images, check coordinate validity, ancestry,
+pixel leakage, initial weights, source pins and≥8GiBfree. Proposal config still
+references old output/data and is deliberately not executable; resolve fresh paths.
+
+Fresh019last optimizer,10epochs,640,batch8,workers0,seed42,AdamW1e-4,nbs64,warmup.25,
+cosine,AMPoff,noaugmentation;540minibatches/69events. Preserve fixed-last and all179
+gates. Extra page/button occurrences in added full annotations are an intentional
+composition change, not identical total target exposure. Rectangular batch shapes
+can differ.2GiBoutputs, standing no-wall-cap. Record next run ID before launch;
+do not reuse021weights or launch an automatic retry. Preserve failed candidates.
+
+Tests: source/role/geometry/hash/collision/schedule failures and actual entrypoint
+integration. Full offline Swift checks once final code is integrated. Complete
+216fit/96exposed-development/2400retained evaluation, reusing control predictions.
+Acceptance is the unchanged179development gate vector plus all-class deltas and
+case accounting; success alone does not establish DS-G8 or permit production claims.
+Failed gates yield a diagnosis/next proposal, not an automatic epoch extension.
+
+## IOS-REPLAY-181 — exposure and operating-error diagnosis
+
+Execution refinement: reconcile every retained image/class against the existing
+scorer. Match false-positive boxes spatially at IoU.5 between arms, reporting this
+as spatial association, not object identity. Preserve full case lists rather than
+the scorer's truncated examples. Pair this local diagnosis with receipt-only intake
+of TTR's new artwork pilot; its schema4/v5 semantic qualification is a separate task.
+
+Post-audit decision: do not prescribe more epochs when new false positives already
+have high confidence. Freeze a same432/10epoch comparison replacing only80empty-label
+replay fillers with80nonempty existing-training images. Keep216fit and136positive
+replay members, all labels, initializer, thresholds, schedule and gates unchanged.
+Select from train only, excluding original432IDs and pixel duplicates/cross-role
+overlap. Greedily maximize summed inverse current per-class image support over all
+available classes, then minimize selected family support, then imageID. Never rank
+by evaluation errors or select held-out families from their failure counts. This
+tests broader labeled context versus empty fillers, not proof that negatives are bad.
+Output one sealed exact-membership proposal; launch requires its normal preflight.
+
+Inputs: sealed019/020/021prediction artifacts, unchanged432-member179proposal,
+original173training membership and fixed .25/.5 operating thresholds. Reuse all
+existing inference. Evidence:179retained AP improves to.896409, yet operating sheet
+FP459and cancelFP259 regress, and all33fit geometry misses occur in KitchenSink.
+
+Implement one batch case comparison: verify identical image/settings/category
+identities; enumerate introduced/resolved/retained FP and misses for sheet/cancel,
+page and scroll; include confidence/IoU/size and family/placement support. Do not
+infer all-case behavior from the first100error examples. Reuse complete predictions.
+Audit train-only replay class balance,80negative filler contribution and exposure:
+021halved placement presentations relative020 and changed LR staircase. Do not
+attribute the result exclusively to negative fillers or learning rate without evidence.
+
+Deliver a ranked diagnosis and at most one revised experiment proposal with exact
+existing-training membership, target exposures, complete saved optimizer/schedule
+settings, fixed-last selection and original retention gates. Decide whether to
+preserve exposure or change sampling based on the case audit; record confounds.
+No new capture, labels, downloads, public API or evaluation-to-training admission.
+Standing training authority applies after qualifying the concrete proposal, not an
+automatic repeat of021. Output≤2GiB, no speculative sweep; model promotion requires
+all applicable gates. Tests cover incompatible artifacts, incomplete predictions,
+case-count conservation and missing class support. Required offline Swift checks
+only for integrated code changes; reuse unchanged prediction evidence.
+
+Acceptance: complete case accounting reconciles exact aggregate counts, unsupported
+metrics stay unavailable, and the next proposal tests a stated hypothesis rather
+than merely increasing epochs. Next action is one qualified logged comparison;
+worker180results remain an independent transition-model diagnostic lane.
+
+## IOS-FIT-176 — retention diagnosis and mixed-replay proposal
+
+### IOS-REPLAY-179 execution refinement
+
+Resident trainer inspection found nbs64/batch8 accumulation:540mini-batches do not
+mean540optimizer updates. Replay179 uses432images/10epochs and warmup.25epochs,
+matching020's14warmup batches and total540mini-batches; compare simulated optimizer
+event indices and record actual step events. Preserve the current native cosine
+epoch schedule, but report its10-versus20epoch stair-step difference explicitly:
+this is a pragmatic compute-matched mixture candidate, not exact schedule isolation.
+Keep the176sealed membership unchanged;80hard-negative family images represent
+explicit negative evidence for a false-positive problem, not an optimal or unbiased
+sample. Full positive class coverage and all annotations remain included. Validate
+ancestry using original173split/family/parent lineage before launch; inherited
+train overlap among related variants is allowed only within train, never evaluation.
+Reuse resident Ultralytics YOLO trainer and eval exporter; do not modify pinned175
+sources. One179driver handles prepare/train/infer/report and records callbacks;
+live optimizer steps must match the pinned simulation. Existing gates stay fixed.
+
+Use sealed175predictions and173training membership only; no fresh inference,
+capture, threshold changes or training in this diagnosis. Verify current seals and
+all selected label/image hashes. Case-account sheets and scroll indicators rather
+than infer operational recall from AP. Audit omitted training support and placement/
+family confidence; scale2/light and scale3/dark remain coupled.
+
+Proposed next comparison: retain all216balanced175training examples and select216
+distinct replay images from173's existing train partition, preserving full labels.
+Selection uses training labels only, never retained-test errors or scores: target
+16images per supported class absent from175; greedily cover largest remaining
+deficit sums, then smallest aggregate current class support, then image-ID tie
+break. This same ordering fills remaining slots when deficits reach zero. Cap216;
+if deficits remain, report them and block
+launch rather than silently change the quota. Unsupported webContent stays absent.
+Exclude175IDs and duplicate pixel identities, retain ancestry and original roles.
+Freeze IDs/refs/selection version as a proposal, not a new corpus admission.
+
+Before any future run, verify full membership, no cross-role pixel/ancestry leakage,
+resident data and output isolation through the existing prepare/train/eval entrypoints.
+Use Run019fixed-last, fresh AdamW,640,batch8,seed42, existing full-frame settings;
+432images for10epochs gives540minibatches, matching020's216×20 (69optimizer updates).
+This is a compute-matched mixture comparison, NOT equal target-example exposure:
+placement examples appear half as often; batch composition/rectangular grouping and
+epoch-based LR/warmup details must be recorded and reconciled before claiming a
+single-variable causal ablation. If matching schedule requires code changes, test
+and pin them first. Do not retroactively call an unmatched schedule equivalent.
+One candidate,2GiB output cap, no automated extension; no run ID until execution.
+
+Development acceptance:≥90%page recall in each training placement; retain at least
+Run020's59/96development page hits with≤4FP; retained overall AP50≥Run019 .882978,
+sheet AP50≥1.0 and sheet operating TP≥24 withFP≤218, scroll AP50≥.3481,
+cancelAction TP≥76/FP≤73 and mapView TP≥100/FP≤0. Report every class delta, not
+only gates; use numeric tolerance1e-6 for exact metric comparisons. These stringent
+development criteria may reject the candidate and are not production/DS-G8 gates.
+If no mixture supports these goals, diagnose before another comparison. Existing
+evaluation populations remain exposed diagnostics, never newly independent holdouts.
+
+Deliver complete case/coverage accounting, frozen replay proposal and exact blockers.
+No automatic training launch follows this planning/diagnosis packet.
+
 ## IOS-FIT-175 — balanced training-fit diagnostic
 
 Hypothesis: concentrated exposure to admitted native placement examples can fit
@@ -545,3 +757,77 @@ of confident errors versus abstentions, changed-pixel fraction and nearest oppos
 training example distance (descriptive, not a semantic equivalence test). No new
 training, synthetic-label admission or final-holdout access. Keep private source
 references local; share only an actionable aggregate finding if it changes TTR work.
+# IOS-RESOLUTION-187 — controlled input resolution
+
+Bounded follow-on to186: doubled box weight did not recover any31prior fit failures.
+Test whether tiny resized page targets benefit from1280input, rather than another
+loss/epoch sweep. Same432eligible training members and019initializer as022; fresh
+optimizer,10epochs,batch8,69updates,box7.5and all022remaining settings. Only input
+resolution changes. Source inspection amended initial960proposal to resident-supported
+1280: exporter only supports640/1280; preserve sealed historical code and explicit
+preprocessing contracts. Larger compute is measured, not concealed. No new labels,
+capture, eval admission or threshold tuning. Memory probe uses one disposable
+forward/backward/AdamW step on maximum-size batch8 with synthetic targets bounded
+by maximum training-label count; no persisted weights or candidate initialization.
+
+Before launch: verify022inputs/checkpoints/source pins; calculate exact rectangle
+batch shapes, per-class presentations and resized target dimensions. Preflight
+MPS memory for batch8 with bounded representative forward/backward diagnostics,
+without publishing those weights as the candidate. Record local/verifiedUSB capacity,
+2GiB output ceiling and no-wall-limit; no downloads or other-repository edits.
+Log sequential run ID and resolved protocol before training. If memory prevents
+fixed batch8, retain diagnostics and revise the comparison explicitly.
+
+Use unchanged trainer/evaluator with a reviewed isolated adapter. Verify saved
+arguments, all10epochs/69updates and fixed-last checkpoint. Score216fit,96development,
+2400retained members with candidate-native1280preprocessing explicitly declared;
+compare to retained022control, acknowledging both train/inference resolution change.
+Do not claim an isolated training-only effect or equal computational work.
+Keep all14original gates; report all38supported class deltas and unavailable classes,
+prior31misses, newly lost hits, exact pixels/epoch, elapsed time and storage.
+
+Tests: changed roles/membership/initializer/settings, preprocessing provenance,
+output collision, incomplete run and explicit memory failure. Focused tests followed
+by one offline Swift build/test. Handoff: software/data/integration/model outcomes
+separate, concise experiment result and diagnosis. A failed gate does not trigger
+another run. Success still requires independent qualification, not automatic shipping.
+
+## IOS-CROSSOVER-189 — resolution factor accounting
+
+Run024recovers21/31prior fit failures but1280retainedAP falls to.343954. Before
+another training proposal, complete two missing inference arms:022@1280and024@640,
+using exactly the216fit/96development/2400retained manifests. Reuse verified022@640
+and024@1280 predictions. Same frozen thresholds/metric/taxonomy/postprocessing;
+explicit size in each artifact. No weights, labels, admissions or thresholds change.
+Pin both checkpoints, terminal evaluations and source before inference; project-local
+new outputs capped512MiB. Serial MPS inference, no concurrent training. Existing
+exporter/scorer only; report preprocessing difference, not a falsely compatible
+same-settings comparison. Reconcile all four arms' membership, original14gates,
+per-class AP and TP/FP/FN, and exact prior31fit-case transitions. Source/role/geometry
+checks remain strict. Diagnostic evidence may inform one later reviewed experiment,
+never trigger automatic training or promotion. Test settings and pair completeness,
+then required offline build/test once at integrated handoff.
+
+## IOS-REFINE-190 — geometry-only proposal diagnostic
+
+189shows useful1280page geometry but poor class retention and many extra page
+predictions. Reuse pinned022@640 and024@1280artifacts only. Preserve every022record,
+class and confidence; no new predictions. For pageControl only, form same-image
+candidate edges atIoU≥.25and high-resolution confidence≥.25. Change coordinates only
+when both original and candidate have exactly one eligible edge; leave ambiguous,
+missing or many-to-one matches unchanged. Freeze these rules before execution;
+no threshold sweep or outcome-driven rule tuning. No truth enters association.
+
+Produce a versioned diagnostic derivation and audit per prediction, linking both
+source hashes. Do not pretend derived coordinates came from022single-pass inference.
+Use existing scoring with explicit derivation validation rather than weakening
+the prediction contract. All non-page detections must remain byte-identical; exact
+membership/order, confidence and total count preserved. Test ambiguous/duplicate,
+boundaryIoU, missing proposals, corrupt inputs, partial membership and collisions.
+
+Score216fit/96development/2400retained with original14gates, per-class metrics,
+old31failures and newly broken cases. No independent qualification or deployment
+claim. Report reliance on two inference paths and their measured costs; no assumed
+CoreML parity.≤128MiBnew local output, no training/capture/inference. A failed
+diagnostic stops this rule; do not automate new matching rules. Finish integrated
+offline build/tests and one evidence handoff with next decision.

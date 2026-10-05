@@ -1,4 +1,8 @@
-# IOS-FIT-175 — running, not complete
+# IOS-FIT-175 — historical launch checkpoint, superseded
+
+Completed and evaluated2026-10-05; do not poll/restart the historical process or
+rerun collision-protected inference. See [handoff](handoff.md). Fit gate failed;
+development improved but retained classes regressed. Remaining text is historical.
 
 Run020 PID34431, live exec84525. Do not restart. First training pass completed,
 in-sample monitoring began. Fixed20epochs on216eligible training images,72per
