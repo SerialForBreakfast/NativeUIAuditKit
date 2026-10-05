@@ -831,3 +831,132 @@ claim. Report reliance on two inference paths and their measured costs; no assum
 CoreML parity.≤128MiBnew local output, no training/capture/inference. A failed
 diagnostic stops this rule; do not automate new matching rules. Finish integrated
 offline build/tests and one evidence handoff with next decision.
+
+Implementation contract: `geometry-refinement-v1` is a separate derived artifact,
+not a prediction-export version. Validate both original exports with their original
+settings/checkpoint bindings, verify ordered membership and image/label identities,
+then reproduce every derived result and per-detection audit before existing scoring.
+All page proposals, including low-confidence original detections, participate in
+the association graph; only donor proposals have the frozen confidence filter.
+This conservative rule can preserve duplicate originals rather than picking a
+winner by confidence or ground truth. Source references and rule are sealed;
+no model identity or single-pass preprocessing claim is attached to derived results.
+
+Outcome:190completed; reject the fixed rule, not automatically its thresholds.
+Seven old fit failures recover but one old hit regresses; retained page performance
+worsens despite development AP improvement. Preserve022single-pass reference.
+Before another candidate, require a representation/label-resolution feasibility
+proposal using existing eligible training sources and explicit small-control pixel
+support; no automatic extra epochs, matching-rule sweep or new collection.
+Native24 source reconciliation remains the independent transition-model lane.
+
+## IOS-ROI-192 — training-only representation feasibility
+
+After190's failed full-frame geometry substitution, inspect the existing216balanced
+admitted training-fit images only. Compare box support at full-frame640/1280with a
+fixed square window of half the original image width, centered on the training
+pageControl truth and translated inside image bounds. Plan only: no crops generated,
+labels changed, training, inference or evaluation selection. Training truth is
+permitted for this representation upper-bound, never deployment crop selection.
+
+Freeze window coordinates/source hashes and report target width/height and stride8
+support, full containment and incidental annotation clipping for every image.
+This is annotation-box support, not measured glyph information or predicted accuracy.
+No outcome-driven window search. Tests cover edge clamping, coordinate scaling,
+invalid boxes and unsupported image aspect ratios. Proposal must explicitly solve
+inference proposal recall, crop jitter, clipping/all-class annotations, false
+positives, two-pass latency and group isolation before any subsequent candidate.
+≤8MiB outputs; reuse resident source and unchanged prior membership/role evidence.
+
+192result: full640median target box height5.75872pixels, full128011.51744,
+ROI64024.9714.162/216full640targets are below8pixels; none are below8in ROI.
+All targets fit but every window clips other annotations. This supports a crop-label
+qualification step, not a claim that crops will improve detection.
+
+## IOS-ROI-193 — crop-label and proposal qualification
+
+Inputs:192sealed216training-window rows and source labels,022@640cached proposals,
+original216fit/96development/2400retained manifests and14gates. Reuse existing image/
+annotation export machinery. Keep fixed half-image-width square windows, no window
+search. Training crops may use training truth; evaluation crop centers must come
+only from022page proposals at the existing operating confidence≥.25, never truth.
+
+Deliver validated all-class crop annotations with explicit per-object retained,
+clipped and excluded dispositions. Preserve enclosing/child taxonomy rules; select
+and document a conservative visibility policy before generating labels. Deterministic
+training-only center jitter must include localization errors without reading held-out
+truth; keep all descendants with their existing source group. Do not assume box
+resampling equals visually verified page glyphs. Audit representative boundary cases.
+
+Evaluation retains every original image, including missing/false page proposals.
+No new classes/detections or non-page changes; specify mapping, ambiguous donor
+handling and untouched-score behavior before execution. Use synthetic tests for
+fractional/off-image clipping, multiple/no proposals, empty images, source identity,
+leakage and reversible coordinate transforms. Gate complete exports before model use.
+
+Freeze one candidate configuration using resident YOLO with isolated≤2GiB outputs
+and fixed epochs/initializer recorded in ExperimentLog before any launch. This task
+ends with a launch-ready proposal or exact data/representation blocker; no automatic
+training in the preparation task. Next assigned candidate compares full end-to-end
+results with022on identical membership and all14gates, including false-positive cost,
+plus measured added latency. Development evidence only; no DS-G8/promotion claim.
+
+193 frozen implementation policy: round half-image-width up to an integer square,
+translate its integer origin inside source bounds; never pad or resize while
+materializing PNGs. Five training views: center and four diagonal shifts of10%
+window width, independently clamped. Preserve every intersecting class annotation
+as visible clipped bounds when both dimensions are≥2source pixels; smaller slivers
+are explicitly excluded. Preserve container/child overlaps. pageControl training
+target must remain fully contained. Record each disposition and retained fraction.
+This policy does not redefine production full-frame or FocusRing crop semantics.
+
+Evaluation windows use only022@640page detections≥.25, with no jitter, retaining
+all original-image records even without a proposal. Cropped labels are evaluation
+annotations only; they never select a window or enter training. Separate paths and
+content-hash leakage checks enforce roles. Identical clamped training windows
+deduplicate within an image; related descendants share the original group.
+
+Freeze candidate initialization022last, fresh state,10epochs,batch8,imgsz640,
+established full-frame-finetune settings except crop dataset/output and warmup.25.
+No automatic augmentation downloads or model launch. End-to-end mapping only
+replaces a base page proposal's box when one same-class crop prediction≥.25matches
+it at IoU≥.25; preserve base scores/counts and reject ambiguous shared replacements.
+Candidate preparation must expose unrecoverable base proposal misses, not count
+oracle crop results as complete detector accuracy. Dataset and candidate each≤2GiB.
+
+193 preparation amendment: the first materialization stopped at pixel-identical
+training crops from different source groups. Their label line order differed,
+but geometry and classes agreed. Deduplicate training crops by decoded pixels
+and sorted annotation rows, retaining every parent/group alias. Reject conflicting
+labels on identical pixels; never move aliases across roles. Preserve the failed
+prefix separately. Shared replacement boxes at IoU≥.5 abstain. Preparation records
+configuration readiness separately from the required pre-launch experiment log.
+
+193 accepted preparation:802unique crops plus94aliases,216source images.184of1080
+planned windows collapse through integer edge clamping. All2712original evaluation
+records retained, with223/72/273crop proposals in fit/development/retained respectively.
+No-proposal originals17/38/2148stay in the end-to-end denominator. See193handoff.
+
+## IOS-ROI-194 — one candidate and end-to-end comparison
+
+Inputs: sealed193proposal and verification, checked source/membership/model refs,
+resident YOLO, existing022reference and14gate implementation. Reverify pins and
+capacity; register the next sequential run in ExperimentLog before training.
+Standing training authority covers this local bounded candidate, not a sweep.
+Use frozen args (10epochs,8batch,640,022last,fresh AdamW,.25warmup) and a new isolated
+destination with≤2GiB candidate output. Training monitor is in-sample only; use the
+fixed terminal checkpoint rather than selecting against development/retained sets.
+
+Run the existing exporter on each proposal-crop manifest; require complete successful
+inference and exact checkpoint/preprocessing pins. Connect roi193.refine to the real
+artifact consumer: strict crop/window identity, inverse mapping, no/multiple donor
+fallback, shared-box ambiguity. Preserve every original image and unchanged non-page
+predictions/scores/counts. Compare against022with the same14gates, separately reporting
+fit, development and retained evidence. Measure preparation, crop inference and merge
+latency separately plus end-to-end overhead; cached base inference is not free latency.
+
+Test malformed/missing crop outputs and conservation at the actual merge entrypoint;
+focused checks plus one integrated offline build/test. Acceptance is a complete
+evidence-backed candidate decision, not necessarily improved metrics. No gate lowering,
+automatic retraining or final-holdout tuning. Preserve failed artifacts and shipped
+models. Publish to TTR only if there is an actionable model/interface consequence.

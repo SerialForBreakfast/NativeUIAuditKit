@@ -1,5 +1,58 @@
 # NativeUIAuditKit — Tasks
 
+## Review — IOS-ROI-192 / Codex
+
+Independent companion to191: training-only fixed-window representation feasibility
+on216admitted balanced frames; source-bound crop plan, effective box/stride support
+and incidental clipping. No generated crops, inference, training or evaluation-role
+changes. [Contract](Research/Plans/Run013Evaluation.md#ios-roi-192--training-only-representation-feasibility).
+Complete216: median box height5.75872full640,11.51744full1280,24.9714ROI640.
+All216targets contained; all216windows clip other annotations. Four tests and
+real planner pass. Feasible pixel support is not accuracy;193owns complete crop
+labels and non-oracle proposal evaluation before any candidate.
+[Integrated handoff](reports/work/ART-INTAKE-191/handoff.md).
+
+## Review — IOS-ROI-193 / Codex
+
+Qualify one fixed-window crop dataset and proposal-driven evaluation contract from
+192, including all-class clipping/jitter and missing/false proposals, then freeze a
+single candidate launch configuration. No training before verified transformed
+membership/labels and registered run; preserve022/shipped models and all14gates.
+[Contract](Research/Plans/Run013Evaluation.md#ios-roi-193--crop-label-and-proposal-qualification).
+Complete:802 unique crops from216 existing training images,94 identical-crop
+aliases retained; full2712-image evaluation accounting with prediction-only windows.
+Twelve focused tests, real preparation/readback and142 offline Swift tests pass.
+No training/model result. [Handoff](reports/work/IOS-ROI-193/handoff.md).
+
+## Ready — IOS-ROI-194 / unassigned
+
+Execute the one193prepared candidate under standing training authority after
+registering its run. Fixed022last initialization,10epochs,batch8,640,fresh state;
+no tuning/sweep. Integrate prediction-driven second-pass mapping, compare all2712
+originals against022 and all14existing gates, and measure added end-to-end latency.
+Keep no-proposal/ambiguous cases, original confidence/counts and non-page classes.
+Report fit versus development/retained separately; failed gates mean diagnosis,
+not promotion. No TTR dependency. [Contract](Research/Plans/Run013Evaluation.md#ios-roi-194--one-candidate-and-end-to-end-comparison).
+
+## Review / extraction and semantics blocked — ART-INTAKE-191 / Codex
+
+Receive named qualified-artwork feedback archive (849392816bytes), verify immutable
+receipt, bounded extraction and indexed bytes; reconcile15new+5retained selected
+pairs and8superseded originals, schema4compatibility vectors and exact-source gaps.
+Run existing consumer entrypoint without weakening version/geometry admission.
+Archive original to verified USB with hash receipt; preserve active extracted inputs.
+Update TTR with exact receipt and actionable semantic blockers. No capture, training,
+producer edits or execution of incoming code. Native24 scoring proceeds only if
+matching producer source becomes available. Contract: current user tranche plus
+standing transfer/storage permissions and existing ART183admission boundaries.
+Transfer complete, USB archive verified/local redundant849392816bytes reclaimed.
+Read-only audit943headers:543regular,245hardlinks,155directories.542manifest-listed
+regular files hash-match; links never followed.15new+5retained+8superseded reconciled.
+Extraction blocked on links/36MBgeneration library; exact producer3e9e05dsource
+also absent. Consolidated receipt/request and owned status published/read back.
+6new+12existing intake tests/142Swift tests pass. No semantic admission or inference.
+[Handoff](reports/work/ART-INTAKE-191/handoff.md).
+
 ## Review — WORKER-180A/B/C / joe-big-dog; NUIAK intake complete
 
 Low-priority finite nonblocking backlog: source-balanced166analysis, before/both-frame
@@ -138,12 +191,20 @@ Complete: retainedAP022@640 .899967,022@1280 .190626,024@640 .886342,
 [Handoff](reports/work/IOS-CROSSOVER-189/handoff.md).
 [Contract](Research/Plans/Run013Evaluation.md#ios-crossover-189--resolution-factor-accounting).
 
-### Ready — IOS-REFINE-190 / unassigned
+### Review / fixed geometry rule rejected — IOS-REFINE-190 / Codex
 
 One cached-proposal geometry-only diagnostic: retain022@640classes/confidences,
 refine pageControl coordinates only from024@1280unambiguous one-to-one matches.
 No extra detections, threshold fitting, labels, inference, training or public API.
 Test full216/96/2400membership and original14gates; preserve ambiguous originals.
+Assigned with native24 source reconciliation as the independent lane. Producer
+checkout remains46dce7b; no capture or model training is needed for190.
+Complete2712records:7prior fit misses recovered,1old hit regressed; trailing45→52/72.
+Page development58TP/14FP unchanged; retained page249TP/24FP→245TP/28FP.
+Eight of14gates fail. No promotion or association-rule sweep.7focused/142Swift
+tests pass. Native24 comparison still blocked on exact producer source; source
+hash/object checks repeated, owned SMB follow-up published/read back. No recapture.
+[Integrated handoff](reports/work/IOS-REFINE-190/handoff.md).
 [Contract](Research/Plans/Run013Evaluation.md#ios-refine-190--geometry-only-proposal-diagnostic).
 
 ### Review — TRANSITION-CONTRAST-188 / Codex

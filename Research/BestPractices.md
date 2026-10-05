@@ -4209,3 +4209,47 @@ per-class/old-and-new failures:022@1280repairs22old misses but loses108old hits.
 Why: this avoids treating a larger input or longer training as an automatic win.
 It directs the next bounded test toward using geometry without importing high-resolution
 false positives. Evidence: [IOS189](../reports/work/IOS-CROSSOVER-189/handoff.md).
+
+## Geometry-only substitution can create false positives — IOS190
+
+Wrong assumption: preserving detection classes, scores and counts is sufficient
+to preserve operating-point quality.190kept all three, but moving page boxes changed
+retained page249TP/24FP into245TP/28FP. Development AP improved while TP/FP did not.
+
+Correct: validate the two original exports independently and record a distinct
+derived-result contract, never misattribute two-model geometry to single-model
+inference. Freeze association without ground truth, preserve ambiguous proposals,
+and measure old/new failures and all gates, including classes left unchanged.
+Successful empty inference remains valid even when the other model finds proposals;
+failed inference must still reject. Neither mixed geometry nor unchanged confidence
+establishes CoreML parity or deployment latency.
+
+Why: geometry participates in true/false-positive matching; unchanged counts are
+not unchanged correctness. Evidence: [190handoff](../reports/work/IOS-REFINE-190/handoff.md).
+
+## Preflight the actual tar encoding, not just the source inventory — ART191
+
+What went wrong: producer788payload-member accounting matched543regular+245hardlink
+headers, but hardlink optimization made the archive incompatible with the consumer's
+no-links extraction policy. A36MBgeneration library also exceeded the32MiBmember
+limit. Whole-archive SHA correctness did not imply extractability.
+
+Correct: preflight final archive headers against the receiving contract. Publish a
+minimal regular-file-only consumer subset with source references, selection/ancestry
+and hashes, excluding unneeded generation libraries/review duplicates. Do not
+blindly increase limits or follow links. Receiver may audit bounded regular streams
+without extracting, but unresolved links remain unverified and no data is admitted.
+Archive verified originals on designated storage; a new package needs a new receipt.
+
+Why: this catches format friction before expensive transfers, while preserving
+integrity/admission separation. Evidence: [ART191](../reports/work/ART-INTAKE-191/handoff.md).
+
+## Recheck identity after cropping — IOS193
+
+What went wrong: distinct admitted source groups produced identical cropped pixels;
+annotation text differed only in row order. Source uniqueness did not survive the
+representation transform. Correct: compare decoded crop pixels and canonical label
+rows, reject conflicting labels, and retain all ancestry when deduplicating within
+the already admitted training role. Never merge roles merely because pixels match.
+Why: otherwise duplicated views overweight training, or valid ordering differences
+look like label corruption. [Evidence](../reports/work/IOS-ROI-193/handoff.md).

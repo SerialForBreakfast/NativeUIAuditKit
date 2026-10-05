@@ -5,11 +5,37 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**October5 — IOS193 preparation complete:**802unique all-class crops from216train
+sources;94pixel/label-identical aliases retain ancestry. First failed prefix preserved.
+All2712original evaluation images retained; windows come only from022predictions.
+Six boundary examples reviewed;12focused tests and142Swift tests pass. One10epoch
+candidate configuration frozen, not launched. Next194owns actual model comparison
+and added latency; no new accuracy or DS-G8claim. [Handoff](../reports/work/IOS-ROI-193/handoff.md).
+
+**October5 — ART191/IOS192 completed:** new TTR archive received and preserved on
+USB; redundant849MBlocal copy reclaimed.542manifest-listed regular files verify,
+15new+5retained+8superseded selection reconciles.245tar hardlinks and36MBgeneration
+library block extraction; exact producer3e9e05dsource absent locally. Consolidated
+receipt/request/status published/read back; no recapture or admission.
+Independent192audit: median page box height5.76full640 versus24.97ROI640;216/216targets
+fit but all windows clip other annotations.193qualifies all-class crop labels and
+proposal-driven evaluation before a candidate, not automatic training.
+[191/192handoff](../reports/work/ART-INTAKE-191/handoff.md).
+
+**October5 — IOS190 complete, geometry-only rule rejected:** all2712cached records
+evaluated without inference/training.7old fit misses recover and1hit regresses;
+trailing45→52/72. Development page58TP/14FP unchanged despite AP50 .6193→.6532;
+retained page249TP/24FP→245TP/28FP. Eight gates still fail. Preserve022reference
+and shipped models. Native24 scoring remains source-blocked: local TTR46dce7b,
+unchanged recipe hash, required producer objects absent. Precise existing-request
+follow-up published/read back; no new model delivery or recapture.
+[190handoff](../reports/work/IOS-REFINE-190/handoff.md).
+
 **October5 — IOS187/Run024 and IOS189 diagnosis complete:**1280candidate
 completed10epochs/69updates and2712matched evaluations.21/31prior fit failures
 recover, but retainedAP .343954 and page70TP/158FP fail11/14gates. No promotion.
 189completed missing cells: retainedAP022@1280 .190626,024@640 .886342;
-both still fail gates. Keep022@640reference; next190cached geometry-only diagnostic,
+both still fail gates. Keep022@640reference;190cached geometry-only diagnostic completed above,
 not another training loop. [189evidence](../reports/work/IOS-CROSSOVER-189/handoff.md).
 188source-connected
 transition analysis complete: fivegroups; highest sensitivity traces to table/rich-table

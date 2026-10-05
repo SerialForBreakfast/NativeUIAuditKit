@@ -1,11 +1,28 @@
 # Concurrent delivery roadmap
 
-**Next diagnostic — IOS-REFINE-190:**187higher-resolution training recovered
+**Next — IOS-ROI-194:**193completed preparation/readback of802unique training crops
+and proposal-only evaluation manifests retaining all2712originals. Execute one
+registered10epoch candidate, map geometry without changing scores/counts, and
+evaluate all14gates plus added latency. No candidate has launched yet.
+[193handoff](../reports/work/IOS-ROI-193/handoff.md).
+
+**Completed preparation — IOS-ROI-193:**192fixed-window audit shows usable
+box support but every window clips incidental labels. Qualify all-class crop
+annotation and non-oracle proposal/evaluation inputs before freezing one candidate.
+No accuracy claim from truth-centered crops. Independent TTR191archive received,
+regular hashes/selection audited, original preserved on USB; semantic intake awaits
+regular-file-only consumer packaging and exact producer source. No recapture.
+[Tranche evidence](../reports/work/ART-INTAKE-191/handoff.md).
+
+**Completed diagnostic — IOS-REFINE-190:**187higher-resolution training recovered
 21/31fit failures but retainedAP collapsed to.343954 and pageFP rose14→158.
 189completed four cells:022@1280retainedAP .190626,024@640 .886342. Keep022@640
-reference. Test one fixed unambiguous coordinate-only page-refinement rule using
-cached1280proposals, without extra detections, confidence changes, threshold fitting
-or new inference. No promotion. [189evidence](../reports/work/IOS-CROSSOVER-189/handoff.md).
+reference.190tested the fixed unambiguous coordinate-only rule on2712cached records:
+7old fit misses recovered/1old hit lost, but development58TP/14FP unchanged and
+retained page TP249→245/FP24→28. Eight gates fail; reject rule, no threshold sweep
+or promotion. Next local direction is a bounded small-control representation
+feasibility proposal rather than more epochs on this failed rule.
+[190evidence](../reports/work/IOS-REFINE-190/handoff.md).
 In parallel, use independently reproduced180B/C findings to plan a label-preserving
 common-mode/asymmetric contrast. Counterfactual consensus is not navigation-qualified.
 188source-connected analysis now complete; exact retained24native contrast specified,
