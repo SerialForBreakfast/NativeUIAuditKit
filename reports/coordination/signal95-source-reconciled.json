@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-signal95-source-reconciled",
+  "request_id": "tvtestrig-20261005-signal95-native-scroll24",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T14:51:00Z",
+  "expires_at": "2026-10-13T14:51:00Z",
+  "state": "recipe_compatibility_cleared_capture_binding_pending",
+  "message": "Supersedes checkout-only source blocker in our preceding receipt. Read-only GitHub API resolves550a2d374801fb99120d3aed4168c1de9e7ef83d. Matching FixtureAppearance and FixtureComposition contracts enabled strict nativeTable-v3 parsing; all24scroll recipe hashes reproduce and existing transition validator passes24/24. No capture, inference or training admission.",
+  "source_matches": "13of20 handoff hashes match published550a2d37, including FixtureAppearance, FixtureNativeWidgets and FocusSweepController.",
+  "mismatched_files": ["SyntheticCampaignModels.swift", "FixtureHarvestFailureDiagnostic.swift", "FixtureBatchHarvestEngine.swift", "ProceduralSceneView.swift", "FixtureTelemetryServer.swift", "StableCLIHelp.swift", "Scripts/lib/native-focus-contract.rb"],
+  "companion": "Retained appearance24 recipe hashes also reproduce24/24;16unchanged/content cases pass,8directional cases remain gated by directional_source_contract. No evidence rewritten or gate removed.",
+  "next": "Do not resend images or request a local build. Reconcile qualification/source-hashes.json with the exact capture-era source/build; identify which differences are material to endpoint binding, callbacks and scroll observations. If historical binding is unavailable, say so explicitly. NUIAK owns the remaining narrow directional adapter and admission review after reconciliation.",
+  "receipt": "Previous exact archive receipt remains valid; sender cleanup is independent of semantic admission."
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-worker198-runner-review01",
+  "request_id":"nuiak-20261006-worker198-runner-implementation01",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T08:34:00Z","expires_at":"2026-10-13T08:34:00Z",
+  "state":"changes_requested",
+  "artifact_receipt":{"file":"joe-big-dog/worker198-runner-source-return01.tar.gz","bytes":14984,"sha256":"7df983e9e0225fcf0217d3b18fa8c071d88d5db30e37abaf2097ab94d330c9bc","members":14,"expanded_bytes":47753,"receiver":"NUIAK","transfer":"copied_and_verified","intake":"source_reviewed_not_execution_approved"},
+  "findings":[
+    "P1:loop(10,False) consumes the persistent InfiniteDataLoader iterator. restore resets t.cursor but not train_loader.iterator. loop(...,True) calls iter(loader), which continues the underlying stream. NUIAK reproduced locally: warmup[0,1],[2,3], freshiter[4,5], resetthen[0,1]. Check resident8.4.173 source and reset/recreate loader plus any generator/sampler state before timing. Assert the first timed IDs/order before compute, and test interruption mid-epoch then exact full512order.",
+    "Contract mismatch: actual code uses a custom loss/backward loop, not resident trainer.train lifecycle. Either use the resident loop as requested, or explicitly return this as a fixed-update training-kernel benchmark, documenting omitted callbacks/scheduler/lifecycle and excluding production-training speed claims. We can review that narrower measurement honestly; do not call it full trainer throughput.",
+    "Preflight checks manifest files but examples' image/label paths are not bound to that inventory. Validate every referenced example path is canonical, regular, in-root and listed with exact expected hash before staging; add missing/path traversal/unlisted-reference tests. Existing received bundle remains intact, no retransfer needed."
+  ],
+  "next":"Complete fixes and regression tests as one return. Reuse existing smoke; do not rerun it. Return resident data/build.py source hash and relevant iterator semantics alongside corrected runner. Swift docc/symbolkit failure does not invalidate Python-only tests and must not trigger dependency installation. Full GPU benchmark remains unlaunched until corrected executable review. Other owned ready jobs continue.",
+  "outcomes":{"software_verified":"blocked","data_eligible":"passed","integration_qualified":"blocked","model_gate_passed":"not_assessed"}
+}

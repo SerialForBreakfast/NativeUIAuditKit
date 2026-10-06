@@ -68,6 +68,9 @@ public struct ModelManifest: Sendable, Codable, Equatable {
     public let expectedInputs: [ModelTensorShapeContract]
     public let expectedOutputs: [ModelTensorShapeContract]
     public let tensorChannelMapping: [TensorChannelAssignment]
+    public let taxonomyProfile: String?
+    public let taxonomyVersion: String?
+    public let categoryMapSHA256: String?
 
     public init(
         modelId: String,
@@ -77,7 +80,9 @@ public struct ModelManifest: Sendable, Codable, Equatable {
         inputHeight: Int = 640,
         expectedInputs: [ModelTensorShapeContract] = [],
         expectedOutputs: [ModelTensorShapeContract] = [],
-        tensorChannelMapping: [TensorChannelAssignment]
+        tensorChannelMapping: [TensorChannelAssignment],
+        taxonomyProfile: String? = nil, taxonomyVersion: String? = nil,
+        categoryMapSHA256: String? = nil
     ) {
         self.modelId = modelId
         self.modelSHA256 = modelSHA256
@@ -87,6 +92,44 @@ public struct ModelManifest: Sendable, Codable, Equatable {
         self.expectedInputs = expectedInputs
         self.expectedOutputs = expectedOutputs
         self.tensorChannelMapping = tensorChannelMapping
+        self.taxonomyProfile = taxonomyProfile
+        self.taxonomyVersion = taxonomyVersion
+        self.categoryMapSHA256 = categoryMapSHA256
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case modelId, modelSHA256, architecture, inputWidth, inputHeight
+        case expectedInputs, expectedOutputs, tensorChannelMapping
+        case taxonomyProfile, taxonomyVersion, categoryMapSHA256
+    }
+    private struct RawAssignment: Decodable {
+        let type: String
+        let label: String?
+    }
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let profile = try c.decodeIfPresent(String.self, forKey: .taxonomyProfile)
+        if profile != nil {
+            // Validate before TensorChannelAssignment's legacy decoder erases unknown kinds.
+            for entry in try c.decode([RawAssignment].self, forKey: .tensorChannelMapping) {
+                guard ["class", "taxonomyClass", "padding"].contains(entry.type),
+                      (entry.type == "padding" ? entry.label == nil : entry.label != nil) else {
+                    throw ModelContractError("Unknown explicit channel kind or missing label")
+                }
+            }
+        }
+        self.init(modelId: try c.decode(String.self, forKey: .modelId),
+            modelSHA256: try c.decodeIfPresent(String.self, forKey: .modelSHA256),
+            architecture: try c.decode(String.self, forKey: .architecture),
+            inputWidth: try c.decode(Int.self, forKey: .inputWidth),
+            inputHeight: try c.decode(Int.self, forKey: .inputHeight),
+            expectedInputs: try c.decode([ModelTensorShapeContract].self, forKey: .expectedInputs),
+            expectedOutputs: try c.decode([ModelTensorShapeContract].self, forKey: .expectedOutputs),
+            tensorChannelMapping: try c.decode([TensorChannelAssignment].self, forKey: .tensorChannelMapping),
+            taxonomyProfile: profile,
+            taxonomyVersion: try c.decodeIfPresent(String.self, forKey: .taxonomyVersion),
+            categoryMapSHA256: try c.decodeIfPresent(String.self, forKey: .categoryMapSHA256))
+        try validateTaxonomyBinding()
     }
 
     public func label(forChannel channel: Int) -> String? {
@@ -116,6 +159,7 @@ public struct ModelContractError: Error, Sendable, Equatable {
 /// Validates loaded MLModel instances against a declared ModelManifest.
 public enum ModelManifestValidator {
     public static func validate(model: MLModel, against manifest: ModelManifest) throws {
+        try manifest.validateTaxonomyBinding()
         let desc = model.modelDescription
         let outputs = desc.outputDescriptionsByName
 

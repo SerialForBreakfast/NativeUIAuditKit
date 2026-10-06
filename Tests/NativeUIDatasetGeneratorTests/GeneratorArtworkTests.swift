@@ -6,6 +6,39 @@ import ImageIO
 @testable import NativeUIDatasetGenerator
 
 struct GeneratorArtworkTests {
+    @Test func splitCampaignContract() throws {
+        try fixture { root, _, original in
+            #expect(throws: (any Error).self) { try GeneratorArtworkCatalog.validatePair(catalogData: encoded([original]), campaignVersion: "ios-artwork-campaign-v2") }
+            try GeneratorArtworkCatalog.validatePair(catalogData: encoded([original]), campaignVersion: "ios-artwork-campaign-v1")
+            var row = original; row["dataRole"] = "train"
+            let loaded = try GeneratorArtworkCatalog.load(encoded([row], version: "ios-generator-artwork-v2"), root: root)
+            let image = try #require(loaded["a"])
+            let recipes = GeneratorArtworkSplitCampaign.plannedRecipes()
+            #expect(recipes.count == 96)
+            #expect(recipes.filter { $0.dataRole == "train" }.count == 60)
+            var assets: [String: GeneratorArtwork] = [:]
+            for recipe in recipes {
+                if let id = recipe.assetID {
+                    row["id"] = id; row["ancestryGroup"] = recipe.family; row["dataRole"] = recipe.dataRole
+                    let entry = try JSONDecoder().decode(GeneratorArtworkCatalog.Entry.self,
+                        from: JSONSerialization.data(withJSONObject: row))
+                    assets[id] = GeneratorArtwork(entry: entry, image: image.image)
+                }
+            }
+            let target = "F3EF9DB8-0B0F-4757-B653-D1628269F6FF"
+            let plan = GeneratorArtworkSplitCampaign(schemaVersion: "ios-artwork-campaign-v2",
+                target: target, catalogSHA256: "abc", recipes: recipes)
+            let data = try JSONEncoder().encode(plan)
+            #expect(try GeneratorArtworkSplitCampaign.load(data, catalogHash: "abc", assets: assets, target: target).recipes == recipes)
+            #expect(throws: (any Error).self) { try GeneratorArtworkSplitCampaign.load(data, catalogHash: "abc", assets: assets, target: "booted") }
+            #expect(throws: (any Error).self) { try GeneratorArtworkSplitCampaign.load(data, catalogHash: "changed", assets: assets, target: target) }
+            assets.removeValue(forKey: recipes[1].assetID!)
+            #expect(throws: (any Error).self) { try GeneratorArtworkSplitCampaign.load(data, catalogHash: "abc", assets: assets, target: target) }
+            row = original; row["dataRole"] = "unassigned"
+            #expect(throws: (any Error).self) { try GeneratorArtworkCatalog.load(encoded([row], version: "ios-generator-artwork-v2"), root: root) }
+        }
+    }
+
     @Test func campaignPlanIsFrozenAndTargetBound() throws {
         let target = "F3EF9DB8-0B0F-4757-B653-D1628269F6FF"
         let rows = GeneratorArtworkCampaign.plannedRecipes()

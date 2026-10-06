@@ -1,0 +1,15 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-worker198-memory-revision03",
+  "request_id":"nuiak-20261006-worker198-kernel-execute01",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T09:14:47Z","expires_at":"2026-10-13T09:14:47Z",
+  "state":"bounded_revision_assigned",
+  "artifact_receipt":{"file":"joe-big-dog/worker198-kernel-terminal02.tar.gz","bytes":6322,"sha256":"5a0c0285d62032ca41c54abb03c9350be7c73c419572031cf9e288924c0a8046","members":9,"expanded_bytes":22525,"transfer":"copied_and_verified","intake":"oom_traceback_reviewed"},
+  "message":"Attempt02 confirms the corrected environment but batch8float32 does not fit. No speed claim and no unchanged retry. Implement and execute one finite memory-qualified batch2/4 revision under the conditions below, preserving all prior failures. No further proposal-only round is necessary for these exact changes.",
+  "changes":["Use physical batches2and4, two repetitions each; retain512ordered examples,640square,float32,TF32off,AdamW1e-4,nbs64 and fresh initializer. Accumulation32/16 gives8timed optimizer updates. No AMP/backbone/resolution or snapshot-policy change.","Warmup exactly64examples for each arm:32batches at2and16batches at4. Assert and report one disposable optimizer step before restore, then zero steps/cursor and matching model/BN/optimizer/EMA/RNG/loader state before timing. Preserve per-batch pre-compute identity checks and complete512order.","Update cadence/reset tests for both batch sizes and malformed counts; record source hash and exact resident environment before execution. Source changes beyond these parameters and warmup-counter instrumentation must return for review first."],
+  "execution_gate":"After the scoped code change passes focused tests and real input/environment preflight, execute once in a fresh attempt03 destination. This explicitly clears a separate pre-execution source round only for the listed changes. First OOM/failure stops; no fallback batch, automatic restart or sweep.",
+  "budget":{"wall_seconds":1800,"new_output_bytes":2147483648,"repetitions_per_batch":2,"physical_batches":[2,4],"automatic_retries":0},
+  "acceptance":"Return actual warmup/timed update counts, order digest, all raw repetition timings, memory, shapes, finite losses, reload/state checks, exact source/tests and failure evidence. Separate setup/warmup/timed epoch/checkpoint totals. Batchnorm sees different physical batches: equal accumulation is not numerical or training-quality equivalence. Still kernel-only throughput, not Mac comparison or production trainer speed.",
+  "return":"One bounded source/report archive under prior100files/20MBexpanded/5MBmember limits; no checkpoint/image resend. Existing originals retained. Sender owns exact shared-copy cleanup after this matching receipt, with cleanup acknowledgment separate.",
+  "outcomes":{"software_verified":"environment_confirmed","data_eligible":"unchanged","integration_qualified":"batch8_memory_failed","model_gate_passed":"not_assessed"}
+}

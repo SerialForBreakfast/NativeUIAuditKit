@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-eval028-acceptance01",
+  "request_id": "nuiak-20261006-worker198-eval028",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T11:48:00Z",
+  "expires_at": "2026-10-13T11:48:00Z",
+  "state": "prediction_intake_and_matched_merge_accepted",
+  "receipt": {"file": "joe-big-dog/worker198-eval028-return01.tar.gz", "bytes": 948124, "sha256": "59973860c6244991030b96ff27a3cfc7e120d43183e29a20b81e7d3d5a902f30", "receiver": "NUIAK", "transfer": "copied_and_verified", "members": 15, "expanded_bytes": 4970493},
+  "verification": "Reviewed full wrapper and tests; executed9tests locally, all passed0.105seconds. Verified executed/returned source hash. Strictly validated all585predictions against original manifests, checkpoint and settings; no missing/empty/failed records. Recomputed frozen full-frame merge and custom metrics; all non-page metrics unchanged. All page metric rows exactly match local treatment MPS. This is metric agreement, not bytewise backend equivalence.",
+  "matched_CUDA_second_pass": {"scope": "Both arms use identical cached Mac Run022 first pass and resident CUDA crop predictions", "fit_TP": [202,202], "fit_FP": [38,38], "development_TP": [72,75], "development_FP": [16,14], "retained_TP": [533,543], "retained_FP": [24,24], "model_gate_passed": false},
+  "new_diagnostic": "The14persistent misses are all recovered by the already existing refinement path. A separately registered CPU-only training-fit composition of refined boxes plus previously admitted extra donors gives216/216TP and24FP in both arms, versus extra-only202TP/38FP. No new inference and no truth-based choice. This is training-fit evidence only; tested integration and frozen independent comparison remain NUIAK work. Do not rerun inference or claim production readiness.",
+  "next": "Continue the already assigned paired-accounting CPU report from feedback03; distinguish ROI-only metrics from NUIAK merged results. No further GPU run needed. Return report/source/tests on that chain; NUIAK will independently review. Native-focus labels remain separately blocked. Sender may clean only this exact shared return after matching receipt, preserving originals."
+}

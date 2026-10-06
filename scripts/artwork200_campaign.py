@@ -56,26 +56,32 @@ def prepare(source, out, reviewed=REVIEWED):
 def validate(root, inputs):
     root, inputs = Path(root), Path(inputs)
     plan = document(inputs/'campaign.json'); catalog = document(inputs/'catalog.json')
-    require(plan['schemaVersion']=='ios-artwork-campaign-v1' and plan['target']==TARGET and
-            plan['recipes']==recipes() and plan['catalogSHA256']==sha(inputs/'catalog.json'), 'plan')
+    split = plan['schemaVersion']=='ios-artwork-campaign-v2'
+    if split:
+        from artwork204_campaign import check
+        check(plan,catalog,inputs)
+    else:
+        require(catalog['schemaVersion']=='ios-generator-artwork-v1' and plan['schemaVersion']=='ios-artwork-campaign-v1' and plan['target']==TARGET and
+                plan['recipes']==recipes() and plan['catalogSHA256']==sha(inputs/'catalog.json'), 'plan')
+    planned=plan['recipes']
     assets={a['id']:a for a in catalog['assets']}
-    for a in assets.values():
+    for a in ([] if split else assets.values()):
         require(a['path'] in ('thumbnail-03.png','thumbnail-04.png') and sha(inputs/a['path'])==a['sha256'], 'asset_hash')
         require(a['dataRole']=='development' and a['rightsStatus']==a['reviewStatus']=='verified', 'asset_role')
-    expected={f'shard-{s}.json' for s in (0,1)} | {r['id']+s for r in recipes() for s in ('.png','.json','.record.json')}
+    expected={f'shard-{s}.json' for s in (0,1)} | {r['id']+s for r in planned for s in ('.png','.json','.record.json')}
     require({p.name for p in root.iterdir()}==expected, 'membership')
     require(all(p.is_file() and not p.is_symlink() for p in root.iterdir()), 'file_type')
     rows=[]; seconds=0; pixel_hashes={}; groups={}
     for shard in (0,1):
         receipt=document(root/f'shard-{shard}.json')
-        require(receipt.get('complete') is True and receipt.get('schemaVersion')=='ios-artwork-shard-v1' and
+        require(receipt.get('complete') is True and receipt.get('schemaVersion')==('ios-artwork-shard-v2' if split else 'ios-artwork-shard-v1') and
                 receipt.get('shard')==shard and receipt.get('planSHA256')==sha(inputs/'campaign.json') and
                 len(receipt['frames'])==48, 'completion')
         seconds+=receipt['seconds']
-        for recipe,record in zip(recipes()[48*shard:48*(shard+1)],receipt['frames']):
+        for recipe,record in zip(planned[48*shard:48*(shard+1)],receipt['frames']):
             key=recipe['id']; png=root/(key+'.png'); ann=root/(key+'.json')
             require(record==document(root/(key+'.record.json')) and record['recipe']==recipe and
-                record['planSHA256']==sha(inputs/'campaign.json') and record['dataRole']=='development', 'record')
+                record['planSHA256']==sha(inputs/'campaign.json') and record['dataRole']==recipe.get('dataRole','development'), 'record')
             require(record['imageSHA256']==sha(png) and record['sidecarSHA256']==sha(ann), 'hash')
             a=document(ann)
             require(a['imageSHA256']==sha(png) and a['image']['colorScheme']==recipe['theme'], 'annotation_metadata')
@@ -104,7 +110,7 @@ def validate(root, inputs):
                 mask=np.zeros(pixels.shape[:2],dtype=bool)
                 diff=np.any(pixels!=baseline,axis=2)
                 for b in record['bindings']:
-                    asset=assets[plan['lowAsset'] if recipe['condition']=='low' else plan['busyAsset']]
+                    asset=assets[recipe['assetID'] if split else (plan['lowAsset'] if recipe['condition']=='low' else plan['busyAsset'])]
                     require(b['assetID']==asset['id'] and b['sha256']==asset['sha256'] and
                             b['ancestryGroup']==asset['ancestryGroup'] and b['placement']=='fill', 'asset_binding')
                     e=targets[b['elementID']]; v=[e['boundsPoints'][k] for k in ('x','y','width','height')]
@@ -116,13 +122,16 @@ def validate(root, inputs):
                     require(np.any(diff[y:y+h,x:x+w]), 'unchanged_artwork')
                 outside=int(np.count_nonzero(diff & ~mask)); changed=int(diff.sum())
                 require(outside==0, 'outside_artwork_change')
-                if recipe['condition']=='busy':del groups[group]
+                if recipe['condition'] in ('busy','t2'):del groups[group]
             rows.append(dict(**recipe,imageSHA256=sha(png),sidecarSHA256=sha(ann),pixelSHA256=digest,
                              changedPixels=changed,outsideChanges=outside,elementCount=len(elements)))
-    return dict(schemaVersion='ios-artwork-validation-v1',frames=len(rows),captureSeconds=seconds,
+    if split:
+        roles={r['id']:r['dataRole'] for r in planned}
+        require(all(len({roles[k] for k in members})==1 for members in pixel_hashes.values()), 'cross_role_pixels')
+    return dict(schemaVersion='ios-artwork-validation-v2' if split else 'ios-artwork-validation-v1',frames=len(rows),captureSeconds=seconds,
         scenesPerCaptureHour=len(rows)*3600/seconds,rows=rows,
         duplicateGroups=[v for v in pixel_hashes.values() if len(v)>1],
-        dataRole='development',ancestryGroups=sorted({a['ancestryGroup'] for a in assets.values()}),
+        dataRole='recipe_bound' if split else 'development',ancestryGroups=sorted({a['ancestryGroup'] for a in assets.values()}),
         trainingAdmission='not_assessed',modelGate='not_assessed')
 
 
@@ -134,6 +143,7 @@ def evaluate(root, inputs, out):
     root,inputs,out=Path(root),Path(inputs),Path(out)
     require(not out.exists(), 'output_collision')
     accepted=validate(root,inputs)
+    require(accepted['dataRole']=='development','split_campaign_requires_assigned_evaluation')
     checkpoint=Path(__file__).resolve().parents[1]/'NativeUITrainer/yolo_runs/replay184-r022/weights/last.pt'
     checkpoint_hash='d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d'
     require(sha(checkpoint)==checkpoint_hash,'checkpoint')
@@ -185,11 +195,12 @@ def report(root, inputs, out, inference_seconds=None):
         productionEligible=False,interpretation='Matched development appearance sensitivity, not unseen-app evaluation; only two related artworks.'))
 
 
-def review_sheet(root, out):
+def review_sheet(root, out, selected=None):
     from PIL import ImageDraw
     root,out=Path(root),Path(out)
     require(not out.exists(),'output_collision')
-    selected=[r for r in recipes() if r['seed']==200 and r['condition']=='busy']
+    if selected is None:selected=[r for r in recipes() if r['seed']==200 and r['condition']=='busy']
+    require(len(selected)==8,'review_sheet_count')
     canvas=Image.new('RGB',(4*354,2*800),'#222222')
     for index,r in enumerate(selected):
         with Image.open(root/(r['id']+'.png')) as original:im=original.convert('RGB')

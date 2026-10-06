@@ -1,5 +1,254 @@
 # NativeUIAuditKit — Tasks
 
+## Review — REPLAY-216 complete; retention gates failed
+
+Both031/032returned and independently reviewed:1242predictions, native imageView
+TP42→87/120, but fit progressView34→25 and composed retained page528/9→530/15TP/FP
+versus reference543/7. No promotion. Source/config/count/order/size-strata checks
+complete; sender cleanup and acknowledgment separate. Next: matched full-frame replay
+design from the189-frame inventory, not an automatic rerun. Earlier launch details
+below are retained history, not a running assignment.
+[Independent results](reports/work/REPLAY-216/results.md).
+
+Diagnose213class/scale retention losses and verify reusable full1509ROI training
+membership from acceptedSTYLE210. Prepare one matched full-replay comparison with
+the same60native training frames and unchanged36native/585ROI evaluation inputs.
+Pin exact roles/slots/checkpoint/update count and budget before assigning worker
+execution; incremental transfer only, no new artwork or capture. Independently
+review all-class retention and native gains before any broader qualification.
+This completed tranche is retained history, not permission to repeat213unchanged.
+[Evidence motivating it](reports/work/WORKER-213/handoff.md).
+Full1509ROI audited;997missing pairs transferred in9,708,971bytes, reusing512
+resident pairs,213native frames and022weights. Runs031/032 preregistered:
+1569slots/arm,10epochs,393batches/epoch,245updates/run,7200seconds/6GiB.
+No true-reserve pixel overlap;5fit overlaps explicitly remain training diagnostics.
+Request and artifact published/read back. Superseding receipt14:14:48UTC verifies
+the exact archive/inventory and reports8preflight tests; start14:15:20UTC reports
+PID164961 on CUDA. Corrected start metadata binds the canonical216replay request
+without restart. These are peer observations, not locally verified live-process facts.
+27focused tests and offline Swift build/140+14tests pass. Next independent acceptance
+uses unchanged paired evaluator plus worker source/count review; no promotion implied.
+Control terminal14:36:23UTC reports10epochs/3930batches/245updates,1179.433seconds;
+treatment was then running (historical peer report). Existing reviewer
+now supports explicit216 pins/runs/counts and rejects malformed evaluation cells.
+Deterministic216 positive/negative fixtures plus retained real213 replay pass;
+actual216 return/source semantics and metrics are now independently reviewed above.
+[Contract](Research/Plans/ArtworkModelImprovement204.md#replay-216--full-admitted-replay-with-native-artwork),
+[handoff](reports/work/REPLAY-216/handoff.md).
+Retained213diagnosis now complete: all10partition/arm reports reproduce exactly
+after sharing the operating matcher. Large-label(>=64px) lost128/gained88 of715;
+thin progressView(<16px) lost24/gained0 of124fit targets. Distinct failure patterns,
+not evidence that all retention loss is a tiny-target problem. No new inference.
+Completed216acceptance includes these strata; worker contract/membership unchanged.
+Full-frame donor check complete: fixed022base/028refinement/211aliases; vary extra
+donor only. Reference028vs029vs030 retained pageTP543/513/437 of600,FP7all;
+development75/72/69 of96,FP4/5/8. Fit216TP/4FPall. Reject030donor replacement;
+non-page outputs unchanged. No inference or promotion.216must recover consumer
+behavior, not just rawROIAP. [Composition evidence](reports/work/REPLAY-216/composition-handoff.md).
+Worker requested evaluation parent/window lineage;585hash-bound rows now published
+and read back. All parents/windows verified;37page-development higher groups remain
+explicitly unknown. No new pixels or scoring run. Mapping receipt14:22:43UTC verifies
+all585rows. Worker progress14:27:22UTC reports six control epochs completed;
+original two-run assignment unchanged. Protocol-conforming input receipt02, observed
+2026-10-06T15:01:05Z, now matches the exact9,708,971-byte archive/hash. Receipt-format
+blocker cleared; exact sender cleanup has not been performed. Return acceptance
+published/read back; peer acknowledgment and return-copy cleanup remain unconfirmed.
+[Lineage and independent coverage audit](reports/work/REPLAY-216/coverage-handoff.md).
+
+## Prepared follow-on — full-frame retention replay / NUIAK
+
+Existing1509ROI pool has no positives for scrollIndicator/sheet/cancelAction/mapView.
+Audit of14804already-admitted training fullframes yields a deterministic189-frame
+proposal covering all40supported classes with>=16original groups/class;webContent
+unavailable. Selected pixels/annotations/labels hash-verified, original roles and
+reserved exclusions preserved. This is not another run or a216schedule change.
+Run022baseline on189training frames now complete in13.142s, existing MPS exporter.
+All source annotation-to-YOLO labels reconcile. ScrollIndicator3/24TP,3FP is the
+clearest gap;12/24have IoU>=.5 candidates at export floor, nine below0.25confidence.
+Minimum side after640resize2.25–6.72pixels. Most other classes fit strongly; no
+independent generalization claim. Fixed24scroll-source resolution diagnostic complete:
+1280 reduces TP3/24 at640 to0/24; reject blanket inference-resolution increase.
+No threshold change or new training.216worker results are reviewed above.
+Case audit reconciles both metrics:640 has12missing geometric proposals and9low-score
+matches;1280 has24missing geometric proposals even at retained export floor. No
+overlapping alternative-class predictions. Confidence-only remediation is insufficient;
+use this evidence when choosing the next coverage/scale-exposure experiment.
+After216acceptance, design a separately bounded whole-model replay comparison using
+this coverage inventory rather than pretending page-only crops repair other classes.
+[Plan](Research/Plans/ArtworkModelImprovement204.md#full-frame-replay-coverage-audit--preparation-not-another-run),
+[evidence](reports/work/REPLAY-216/coverage-handoff.md).
+
+## Experiment accepted; retention failed — WORKER-213 / Big Dog; acceptance NUIAK
+
+Runs029/030: matched572-slot10epoch CUDA comparison, old512in both arms plus
+60old repeats versus60qualified native artwork frames. Reuse Run022initializer
+and accepted resident full-trainer; worker extends/tests counts then executes,
+3600seconds/4GiB/oneGPU. Freeze fixed-last and separately score36native reserve
+frames and585existing ROI windows. No promotion, tuning or native-focus claims.
+Supplement85,431,904bytes/193members verified; old inputs/weights not retransmitted.
+NUIAK training export60images/1020annotations verified with existing exporter;
+36reserved frames excluded. [Contract](Research/Plans/ArtworkModelImprovement204.md#worker-213--bounded-native-artwork-replay-comparison).
+Supplement/request published/read back. Worker receipt01 at13:18:01UTC matches exact
+archive and parent hashes; seven preflight tests reported passed. Start01 at13:18:30UTC
+reports PID162456 on RTX2070SUPER, with adapter/source identities. This is peer-reported
+start evidence, not a locally observable live process or completed/accepted run.
+Progress01 at13:23:47UTC reports six completed control epochs and one owned GPU
+job; expected89optimizer-update verification remains pending terminal evidence.
+Control terminal01 at13:27:15UTC reports10epochs/1430batches/89updates in470.526s,
+11validation passes; treatment reported running. Return/source verification still pending.
+Independent evaluator now prepares/checks native36 and all585 retained ROI inputs,
+scores five partitions using the existing metrics and rejects incompatible predictions.
+Local acceptance tooling is ready; actual worker results and configuration/count review
+remain pending. [Evaluation readiness](reports/work/ARTWORK-204/evaluation213-handoff.md).
+Paired CLI now validates both arms against one membership and emits all-class
+operating/AP deltas, preserving regressions/null metrics.21focused tests and full
+offline Swift checks pass; no additional worker run or transfer required.
+[Export, acceptance and dispatch evidence](reports/work/ARTWORK-204/worker213-handoff.md).
+Superseding terminal intake: both10epoch/89update runs and1242predictions independently
+verified. Native imageViewTP83→110/120validation,25→51/60abstractdiagnostic. RetainedROI
+TP624→583; label−40TP and pageControl+99FP. No promotion. Next: fuller replay exposure
+audit and one bounded retention-preserving comparison, not extra213epochs.
+[Accepted return/decision](reports/work/WORKER-213/handoff.md).
+Independent baseline complete: unchanged022on36native reserve,MPS5.294s,
+imageViewTP50/120validation and20/60abstractdiagnostic,FP0both. No threshold or
+role changes; not a matched CUDA comparison. [Baseline](reports/work/ARTWORK-204/initializer213-handoff.md).
+
+## Evaluated — IOS-COST-214 / NUIAK
+
+Actual composition audit: maximum4extra crops/frame, not historical44-window dense
+oracle. Retained2400frames need686crops;1781need none. Exact-window dedup saves0on
+retained and development,9on fit only. Do not implement a cap/cache based on the
+obsolete cost assumption. Native per-screen cold/warm latency remains unmeasured;
+recorded batch times are not a production speed guarantee.
+[Plan](Research/Plans/Run013Evaluation.md#ios-cost-214--actual-composed-path-cost-audit),
+[evidence](reports/work/IOS-COST-214/handoff.md).
+
+## Complete diagnostic — OPERATING-FEEDBACK-215 / NUIAK
+
+Corrected legacy worker198top-ten ranking to fixed0.25 operating cases;585case
+and class/partition counts reconcile, all ROI cases link to original frames/windows.
+Exclude already-matched targets from low-confidence miss queue; expose class-specific
+regressions despite aggregate gains. No GPU rerun, promotion or native shadow closure.
+[Contract](Research/Plans/WorkerBacklog198.md#operating-feedback-215--usable-retained-case-ranking),
+[report](reports/work/OPERATING-FEEDBACK-215/handoff.md).
+
+## Accepted within scope — WORKER-198-E / Big Dog; acceptance NUIAK
+
+Close the conditioning guard review and consolidate existing ARTWORK204/BD13
+inventory into a reusable metadata return. No new generation, GPU work or bulk
+transfer. Two CPU hours/64MiB; reuse existing checks/embeddings. Guard must bind
+generation to the exact validated catalog and fail closed on missing encoders or
+empty tokens. Return tested source plus reconciled counts, evidence references,
+duplicate groups and up to ten artwork coverage gaps; do not call those model
+failures. [Contract](Research/Plans/WorkerBacklog198.md#e--close-the-generation-guard-and-reuse-retained-artwork-october-6).
+NUIAK independently reproduced empty-encoder/empty-token false passes; three callers
+also reread the catalog after checking it. Actual callers construct two encoders,
+so this does not invalidate previously reviewed artwork. Worker198-D acceptance
+is now acknowledged by closure1226; no further D run. Sender retains shared copy.
+Native focus198-C still needs qualified source-bound captures; local ARTWORK204
+96-frame campaign remains NUIAK-owned and independent. No wait on E is introduced.
+Request `nuiak-20261006-worker198-feedback-next06` published/read back,3847bytes,
+SHA256 `caf4c17472858207172b11079286520dc554b5730f85ae2728450a6b3d4a6335`.
+[Independent review and next ownership](reports/work/WORKER-198/conditioning-review.md).
+Superseding observation: terminal01 at12:46:51UTC acknowledges this request and
+offers a684255-byte return,8peer tests and5256verified originals. Source/report
+intake remains pending; receipt/publication is not independent acceptance.
+Superseding intake:24regular files/4,715,844expanded bytes copied/hash-verified.
+Guard source/pins reviewed,2fake tests and3actualcaller-prefix checks independently
+pass; inventory5256unique IDs and exact16reviewed admissions reconcile. Accepted
+for bounded source/inventory scope; source-pixel/embedding verification remains peer
+evidence, sixgaps are review/process gaps, not model errors. No E rerun; next213.
+
+## Native96 qualified — ARTWORK-204 / NUIAK
+
+Split-aware catalog/campaign implemented without weakening development-v1. Two
+native shards captured96/96 on the exact iOS26.5 simulator;26.856capture seconds.
+All image/sidecar/receipt hashes, schemas, geometry, artwork changes and membership
+validated. Zero decoded duplicates/cross-role leakage or overlap with previous96
+development frames. Reviewed eight representative overlays. Admit60train-role,
+reserve24content-validation and12abstract diagnostic frames; no final holdout claim.
+140Swift tests and14Python checks pass; native build passes. First shard's container
+migration stop was repaired with fresh resolution and sealed completion verification;
+no successful frames recaptured. [Handoff](reports/work/ARTWORK-204/native-handoff.md).
+Next: export through existing41-class infrastructure; design one matched replay
+comparison preserving old training/evaluation membership and separately assess
+imageView gains, non-page regressions and runtime. No training occurred this tranche.
+October6additional artwork review:16cached posters accepted for internal research;
+combined32poster/thumbnail planner verifies32cached objects and requests0bytes.
+Subject roles aligned across both types; native213membership unchanged; no new
+frame/capture admission. [Review](reports/work/ARTWORK-204/poster-thumbnail-review.md).
+
+## Implemented and evaluated — IOS-PRECISION-211 / NUIAK
+
+Implement and test one corroborated-alias resolution rule atop the frozen STYLE210
+composition; replay both fixed-last candidates using retained predictions, with
+full case accounting and existing gates. No new capture/training/inference. Preserve
+uncertain proposals, non-page outputs and original scores; no label-based routing.
+First verify fit and negative tests, then one frozen retained comparison. Deliver
+source/tests, complete report and cost/qualification limits. Worker paired-report
+intake remains independent; native focus resumes when producer binding arrives.
+[Contract](Research/Plans/Run013Evaluation.md#ios-precision-211--corroborated-proposal-aliases).
+Result: treatment pageFP14→4development and24→7retained, TP75/543unchanged.
+PageFP gate now passes; five inherited non-page gates fail.22focused tests and
+139Swift tests pass. No new inference/training or production promotion. Next:
+corrected worker operating-error report intake and one absolute-performance candidate
+design; retain frozen rule. Retention212 examined whole019non-page preservation and
+rejected it: zero scroll hits/100,218sheetFP, four lost cancel hits and three-model
+runtime cost. No shortcut promotion or redundant diagnosis rerun.
+[Retention decision](reports/work/IOS-PRECISION-211/retention212.md).
+[Evidence](reports/work/IOS-PRECISION-211/handoff.md).
+
+## Matched comparison complete; proposal diagnosis — IOS-STYLE-210 / NUIAK
+
+Implement197's explicit page-control style coverage while native tvOS admission
+waits on producer source.144recipes/18connected groups cross two new layouts,
+light/dark, automatic/prominent, interaction off/on,3/5/9pages and three positions.
+Planner and opt-in native capture path implemented; native build passed on exact
+F3EF9DB8-0B0F-4757-B653-D1628269F6FF(iOS26.5). Capture started with600s native/720s
+host bounds,512MiBpixel budget, no retries and per-case evidence. Completed144/144;
+577retrieved files hash-match originals,96unique visible images, no cross-group
+duplicates. Ordinary bodies23pixels/high and prominent77pixels/high across all cases.
+Superseding admission:96unique training images accepted,48equivalent aliases retained;
+all18groups excluded from future final evaluation. Full-frame visible/hidden difference
+checks pass144/144; no overlap with sealed173membership or155development pixels.
+Native source and representative images reviewed, not a real-world fidelity claim.
+Existing155development untouched. Existing exporter integration completed:96images,
+480annotations, unchanged41class map, no val/test additions; all labels independently
+checked against annotations. ROI assembly now complete:336unique new crops,48clipped
+jitter windows rejected; all96parents represented. Equal1509slots per arm preserve
+1173old crops, with336balanced old repeats in control versus336new crops in treatment.
+Old evaluation membership unchanged. Native-precision intermediate labels avoid
+six-decimal rounding conflicts; original exports and failed attempts retained.
+Runs027/028registered;1509slots/189batches each,10epochs,Run022initialization,
+fixed-last and identical optimizer schedule. Control027completed exit0 in4691.52s;
+10epochs,245updates and final checkpoint verified. Treatment028completed exit0 in
+4596.36seconds; ten epochs,245updates,source/settings and fixed-last hash verified.
+Matched results: all-MPS comparison complete,2,306crop predictions,
+zero failures. Extra-proposal page development TP72→75,FP16→14; retainedTP533→543,
+FP24unchanged. Seven gates remain failed; no promotion. Refinement-only adds no
+detections. Next: worker028intake and diagnose14persistent trailing fit misses before
+the next hypothesis. [Comparison](reports/work/IOS-STYLE-210/comparison-handoff.md).
+Both frozen inference paths are now covered: roi194refinement and roi197extra
+proposal. Extra-path135fit/37page/413combined crops verified; new driver/tests
+complete, candidate scoring completed in both arms. No threshold changes.
+October6 diagnosis: the same14misses in both extra arms are KitchenSink/dark/trailing;
+actual extra windows clip13targets and exclude1. All14best boxes are unchanged
+Run022 first-pass predictions, not new candidate failures. Fixed-grid oracle
+containment covers14/14 but is not detection evidence. Next experiment should test
+truth-independent proposal coverage before more style training; no gate relaxed.
+[Diagnostic](reports/work/IOS-STYLE-210/trailing-diagnosis.md).
+Superseding next hypothesis: refinement already recovers all14. Fixed training-fit
+composition of existing paths yields216TP/24FP in both arms (extra-only202TP/38FP),
+zero new inference. Integrate/test this rule before more tiling or training; then
+freeze and evaluate retained membership once. Fit results are not qualification.
+Composition now integrated/frozen/evaluated:23focused tests,139Swift tests pass.
+Treatment developmentAP50:95 .46503→.60415; retained .62505→.65586,TP/FPunchanged.
+Six gates still fail; model remains experimental. Next: page false-positive diagnosis
+on train/development, plus worker CPU report intake; measure added inference cost
+before proposing production routing. [Composition](reports/work/IOS-STYLE-210/composition-handoff.md).
+[Capture handoff](reports/work/IOS-STYLE-210/handoff.md).
+[Contract](Research/Plans/Run013Evaluation.md#native-style-coverage-implementation-210).
+
 ## Artwork-first delivery priority — five substantial tranches
 
 October5 priority refinement: diverse artwork plus native labels precedes mock-UI
@@ -9,7 +258,7 @@ Order:199+204 asset plumbing/campaign →200/202 native integration →205transi
 IOS-PROPOSAL-197 remains an independent high-priority model blocker. Subsequent199/204
 execution below completed the planner and published the bounded artwork assignment.
 
-## Acknowledged; GPU queued — ARTWORK-204 / Big Dog; NUIAK intake
+## Selected originals verified; native admission next — ARTWORK-204 / NUIAK
 
 Together with ready GEN-PARITY-199, deliver a verified reusable artwork inventory and
 256-slot diversity campaign (four roles/eight subjects/two compositions/four treatments).
@@ -19,9 +268,21 @@ cells and observed appearance. Native labels/training eligibility not implied.
 199planner/CLI/tests complete for review. Exact worker assignment and artwork-first
 priority published/read back under `nuiak/requests/nuiak-20261006-artwork204-campaign.yaml`.
 Request SHA2562bee946d76db0fd982cdd5745f753030c36a4fb52f253eaaa3892772923b528e;
-204acknowledged at2026-10-06T05:11:35Z;256-slot catalog prepared, GPU queued after
-owned work releases capacity. Results pending; no new generation claimed here. Existing203active
-CPU work is not interrupted. [Dispatch](reports/coordination/artwork204-request.yaml),
+204generation completed:256slots, worker-reported1211seconds. NUIAK copied/hash-verified
+metadata and reconciled all256IDs/recipe fields. Worker retained originals and returned
+32exact-hash posters/thumbnails (45,082,644imagebytes), zero new generation.
+Preserve proposed family roles and pending rights/admission; reserved siblings must
+not drift into training. Consumer now prepares reviewed native focus
+coverage first, with iOS grid diagnosis in parallel. [Feedback and receipts](reports/work/ARTWORK-204/feedback-handoff.md).
+Return02received:32hashes/decodes/dimensions match, no within-return pixel duplicates;
+receipt published/read back. NUIAK reviewed16thumbnails:10training-content,4validation,
+2reserved diagnostic; unreviewed siblings stay pending with consistent family roles.
+Existing planner now normalizes204and verifies32cached originals;16render-eligible,
+zero requested bytes.30Python/139Swift tests pass. Native v1is development-only;
+next implement explicit v2for the frozen96-frame60/24/12campaign, then qualify labels.
+[Admission](reports/work/ARTWORK-204/admission-handoff.md). Sender cleanup
+acknowledgment remains separate; no more generation requested.
+[Dispatch](reports/coordination/artwork204-request.yaml),
 [integrated handoff](reports/work/ARTWORK-204/handoff.md).
 [Tranche1](Research/Plans/ArtworkModelImprovement204.md#tranche-1--gen-parity-199--artwork-204-reusable-diverse-asset-library).
 
@@ -36,6 +297,19 @@ architecture or automatic promotion. Exact membership/run settings required befo
 [Tranche3](Research/Plans/ArtworkModelImprovement204.md#tranche-3--transition-205-content-change-versus-actual-focus-change).
 
 ## Pending eligible pairs — FOCUSRING-206 / NUIAK
+
+Consumer companion complete: schema4 inspection now invokes the existing body
+validator, rejecting contradictory clipping/availability while preserving stricter
+coordinate checks.16focused tests and132offline Swift tests pass; retained20pairs
+still structurally valid, not training-admitted. Historical capture-build binding
+request remains pending; no new capture or duplicate peer request needed.
+[Source/validation evidence](reports/work/ART-INTAKE-191/source-semantics.md).
+
+October6 independent diagnostic: shipped CoreML scored40retained ART191frames;
+8/20pairs have higher reported-focused probability. Inspection-only, not accuracy
+or admission;18pairs involve clipping and source semantics remain pending. Exact
+worst cases sent to TTR for retained-evidence review, not more artwork/capture.
+[Diagnostic](reports/work/ART-INTAKE-191/shipped-diagnostic.md).
 
 Reuse205native frames/crops for artwork-hard-negative and native focus coverage; no
 duplicate acquisition by default. Freeze one control/treatment30epoch baseline comparison
@@ -55,12 +329,17 @@ IOS200now supplies96qualified development frames and cached022predictions. Small
 imageView TP80→12→3/80versus hero16/16allconditions identifies scale/content sensitivity;
 busy misses include21lowconfidence/56without exportedIoUmatch. This benchmark slice
 is complete, not the candidate comparison. Preserve IMAGE201development ancestry and
-CardDetail withheld family. Next:197proposal diagnosis plus newly reviewed asset-family
-coverage before freezing an eligible grid-only training intervention; tvOS still waits202.
+CardDetail withheld family. Additional207support audit:40/56busy missing imageView
+targets overlap operating collectionItem boxes; median grid target72×54input pixels.
+Fixed card-crop diagnostic now complete:236crops/34.703s recover33imageView targets,
+lose0 and add7FP. Lower-detail TP12→28;busy3→20; other classes unchanged. Not promoted.
+Next:204connected-family review and eligible nested-image training campaign, preserving
+reserved roles and this fixed diagnostic. No new artwork generation needed; tvOS
+still waits202. [Results](reports/work/IOS-ASSET-200/card207-handoff.md).
 [Evidence](reports/work/IOS-ASSET-200/campaign-handoff.md).
 [Tranche5](Research/Plans/ArtworkModelImprovement204.md#tranche-5--detector-207-platform-specific-clutter-and-negative-coverage).
 
-## Requested / stretch priority — FOCUS-RENDER-203 / Big Dog execution, NUIAK independent review
+## Spike reviewed; prompt-label route rejected — FOCUS-RENDER-203 / Big Dog diagnosis, NUIAK native follow-up
 
 User-authorized two-arm feasibility spike: prompt-only Swift-like descriptions versus
 deterministic artwork composition, six configurations/four states plus two repeats
@@ -71,10 +350,17 @@ admission. Existing resident tools only,2GPU+2CPU hours/1GiB outputs.
 [dispatch](reports/coordination/focus-render203-request.yaml). Request and companion
 contract published and exact-byte read back under `nuiak/requests/` as
 `nuiak-20261006-focus-render203-feasibility.yaml` and `nuiak-20261006-focus-render203-contract.md`.
-Peer acknowledged exact request hash and reported working_CPU_compositor at04:56:15UTC
-October6; completion and independent review remain pending.204request now publishes
-artwork-first pending-job priority without interrupting active203work; acknowledgment
-of that priority update remains pending.
+Both arms returned and safely extracted.26compositor frame hashes match;26prompt PNGs
+decode, but only6distinct rasters: every scene's four requested states are identical.
+Do not scale prompt-generated focus labels. Compositor effects are authored, not native.
+Retained-log diagnosis received and reconciled: both encoders truncated all26prompts
+at77tokens (actual326–430); state literals were absent and each scene/seed retained
+one conditioning sequence. Diagnosis follow-up complete; no generation retry.
+Worker reports a dual-tokenizer guard in all three callers, seven checks passing,
+and0/256ARTWORK204prompts over limit. Guard execution remains peer-reported; request
+source/tests with the next source return, not another GPU run or transfer of artwork.
+Native transfer/utility remains unqualified; no training or model promotion from203.
+[Independent findings](reports/work/ARTWORK-204/feedback-handoff.md).
 
 ## Intake complete; native qualification blocked — RENDER-202 / NUIAK
 
@@ -99,9 +385,14 @@ SHA256 f34cb933b8671e7c8b0e3d700d3a91096dc3cc20d98db372e78cbb3bf047d78a;
 All24PNG hashes/dimensions/pixel hashes and24scene references pass; zero exact
 duplicates, eight scene proposals explicitly missing accepted backdrops. Inspection
 only; four subject families are not broad media coverage. Native source550a2d37 absent
-locally; dirty46dce7b checkout preserved. Exact tvOS26.5 target available but shutdown;
-no launch of stale build. Maintainer source synchronization and current asset contract
-needed. [Intake and resume evidence](reports/work/RENDER-202/handoff.md).
+from the dirty46dce7b checkout, but now readable at its exact GitHub ref through gh;
+source inspection is unblocked without changing that checkout. Runtime readiness
+is separate and not freshly verified here; do not launch a stale build.
+[Source semantics and remaining admission](reports/work/ART-INTAKE-191/source-semantics.md).
+All40retained production crops now visually reviewed; only2fullframes reviewed.
+Catalog-light remains visually subtle, and full-frame geometry/build binding still
+gate admission. [Pixel findings](reports/work/ART-INTAKE-191/pixel-review.md).
+[Intake and resume evidence](reports/work/RENDER-202/handoff.md).
 
 ## High priority / peer pilot review pending — LOCAL-IMAGE-201-BD and 201-MAC
 
@@ -172,7 +463,121 @@ verified SMB share. October6UTC update: peer acknowledged exact request hash;
 198-A reported complete (five runs audited, seven tests), 12613-byte return offered
 at `joe-big-dog/worker198a-return01.tar.gz`, SHA256
 19034dcb7aa4c62fbecf7ebe0afa862436ab45a1de561c50e1ad8b73610f5dde.
-NUIAK intake/acceptance pending; B/C/D explicitly not launched pending listed inputs.
+B/C/D explicitly not launched pending listed inputs; A intake is reconciled below.
+October6 follow-up: A archive received,11members/50533expanded bytes; all10inventory
+entries verified. Audit reviewed; no speedup inferred from mixed timer residuals.
+A-review prerequisite cleared; B's exact512-example workload/config remains NUIAK-owned.
+C/D unchanged; no redundant worker re-audit. [Intake](reports/work/WORKER-198/intake-handoff.md).
+Superseding B input state:512admitted detector crops/93groups plus Run022initializer
+packed and SMB-published/hash-verified. Worker receipt verified:512images/labels pass;
+initializer intake correctly stopped on NUIAK's undersized member bound and unspecified
+pixel-hash prefix. Immutable correction01 published/read back (SHA2334a8986fbe7d123da307380911b1ff8541708372179a1ccae002415d11a25e):
+exact initializer exception, pixel test vector, and one bounded resident CPU/CUDA
+inference smoke; no retransfer/install. Corrected-intake/smoke response received:
+1025files/512pixel hashes verified; resident CPU/CUDA allclose and detection counts/classes
+passed as reported.8.4.173approved for worker-only comparisons, not Mac parity.
+Runner-v3 remains design, not implementation. New implementation request clears
+version/cadence policy and asks for source/tests plus retained smoke evidence.
+Superseding return:14-file/47753-byte executable-source archive received/hash-verified.
+Review found persistent loader not rewound after warmup (locally reproduced), unbound
+example paths, and custom-loop versus trainer-throughput mismatch. Exact receipt/fixes
+published/read back under `nuiak/responses/nuiak-20261006-worker198-runner-review01.json`.
+Superseding return02:13files/47098expanded bytes verified; corrected iterator/order,
+inventory binding and kernel-only scope reviewed. Pinned source31bedc7143ad1d826a41e510a68b04d2a5a84d30356d3c9e9b8b40f9527e618f;
+worker reports8tests and actual512preflight passing. Registered four bounded kernel
+repetitions and published execution clearance `nuiak-20261006-worker198-kernel-execute01`.
+Worker owns execution/terminal return; no measured throughput result yet. Swift-doc dependency absence
+does not justify installing dependencies for this Python-only benchmark.
+Attempt01 failed before model load: launch wrapper resolved venv Python to system
+Python, losing torch; returned command/traceback verify zero updates. One corrected
+attempt02 authorized with unchanged runner/input/budget and environment preflight,
+published/read back `nuiak-20261006-worker198-launch-correction02`. No installation.
+Conditioning guard source reviewed across all3callers; token tests remain peer-run.
+Attempt02 returned terminal OOM during batch8warmup; environment correct,0timed
+repetitions, warmup step count unknown. Traceback/9-file return verified. Bounded
+batch2/4revision03 published/read back: same512inputs and8timed updates,64example
+warmup then restore,1800seconds/2GiB, no AMP/resolution changes or automatic retry.
+Worker may execute listed changes after tests/preflight, returning source and results
+together; no additional proposal-only gate for these exact parameter changes.
+Current dispatch at09:23UTC: revision03 is published/read back; acknowledgment and
+terminal results are not yet observed. Earlier runner-repair/source-review requests
+are superseded by the accepted return02 and scoped revision03 execution contract.
+Do not repeat those repairs, resend inputs, or start an unchanged batch8 attempt.
+Worker owns batch2/4 execution and one consolidated source/results return; NUIAK
+owns acceptance of measured update counts, reset/order evidence and throughput.
+Resident8.4.173 remains a worker-only comparison, not local8.4.124 parity.
+198-C/D and BD12/13 retain their named input/admission prerequisites; available
+artwork does not unlock focus training. No local-only focus tensors exported.
+No successful timed worker repetition or model-quality result established yet.
+09:28UTC superseding observation: worker start03 acknowledges revision03, PID152909,
+source dc935da1fe0003e033408ff362a1ef5a9c1ee40864b9baba49849f90e9d1c053.
+Launch is peer-reported; terminal results and independent acceptance remain pending.
+Terminal03 supersedes pending state: all4repetitions completed, archive independently
+received and result/source assertions passed. Batch4 kernel17.329images/s versus
+batch2 15.803(+9.66percent), peak5.273GB. Bounded kernel benchmark accepted; no
+production-speed/model-quality claim. Next NUIAK-owned dependency is eligible C/D
+inputs/full-trainer contract, not another worker setup/benchmark loop.
+Full-trainer B continuation now specified: retained512inputs, batch4, two fresh
+two-epoch repetitions through resident trainer with normal validation/checkpoint
+lifecycle; expected16updates/run and diagnostic-only training-set validation.
+1800seconds/2GiB, no new transfer or installation. Worker owns implementation/test/
+execution return; NUIAK accepts lifecycle evidence. C/D remain separately gated.
+Peer accepted and reports full-trainer start09:47:25UTC, PID153864, adapter
+ef267d7de21d4d07f2314156d3262d9162922e697a7ee6acd2fddaa9f11a8f90.
+Terminal return now received and accepted for the bounded lifecycle: two fresh
+two-epoch runs,32total updates,95.225/93.779seconds; end-to-end10.753/10.919training
+images/s. Complete adapter reviewed and independent result-accounting assertions
+passed;12tests/reload remain peer-run evidence. Not held-out quality or Mac parity.
+No further setup benchmark needed. NUIAK owns eligible C/D inputs; worker continues
+other independently ready owned jobs. Receipt/acceptance draft is
+`reports/coordination/worker198-lifecycle-review01.json`; published/read back under
+`nuiak/responses/nuiak-20261006-worker198-lifecycle-review01.json`.
+Peer acknowledgment/cleanup remain separate. [Review](reports/work/WORKER-198/lifecycle-review.md).
+198-D input dependency partially cleared: frozen585ROI197windows and verified
+Run027fixed-last checkpoint published/read back with existing prediction exporter.
+Worker can execute bounded CUDA inference now; treatment checkpoint follows only
+after local completion. No worker training/evaluation-role change. NUIAK owns
+merged reports and backend checks; not silently replacing MPS results. Exact receiver
+receipt matches; worker reports start10:29:29UTC/PID155914 with pinned checkpoint
+and unchanged exporter. Terminal results/review pending; shared cleanup separate.
+Superseding terminal:585predictions received and locally strict-validated against
+original manifests;0empty/failed,peer15.98seconds. Inference slice accepted, not
+merged quality or CUDA/MPS parity. Future028reuses inputs; outer timeout and distinct
+terminal metadata requested without rerunning successful027. Receipt/cleanup separate.
+Timeout repair now received/reviewed; seven tests independently pass locally,
+including real stalled-child termination. Acceptance published/read back as
+`nuiak-20261006-worker198-deadline-acceptance01`; future028 invocation still waits
+on verified checkpoint completion and must use new request/output identities.
+Checkpoint-only continuation implemented: parent inventory/settings and registered
+treatment completion/schedule are verified before packaging just weights+manifest.
+Nine focused checks and 132 offline Swift tests pass; real CLI rejects still-active
+Run028 without output. [Handoff](reports/work/WORKER-198/supplement-handoff.md).
+Superseding completion:028exited0 and fixed checkpoint verified; two-member37.43MB
+supplement and `nuiak-20261006-worker198-eval028` request published/read back. Worker
+receipt/start pending. Local matched all-MPS evaluation completed exit0/session41011:
+modest page gain, seven gates still fail. Parent inputs and control results are reused.
+Feedback03published/read back: worker receives local matched findings and a bounded
+CPU-only paired error-accounting continuation after028. Reuse585inputs/predictions;
+no additional inference or training. Return per-partition metrics and up to10case-linked
+failure categories; NUIAK owns independent merge/acceptance. Latest peer status1112UTC
+still waits for028; no acknowledgment of dispatched028orfeedback03observed.
+[Current loop](reports/work/WORKER-198/feedback-loop.md#current-loop--1142-utc).
+Superseding028intake: receiver/start/terminal arrived;948124-byte return independently
+verified,585predictions valid,9wrapper tests passed. Matched hybrid CUDA page metrics
+equal MPS outcomes; no promotion. Acceptance/receipt published/read back. CPU paired
+accounting report returned; transfer verified, three metric corrections required:
+fixed0.25 counts, assignment competition and unavailable unsupported-class AP.
+Superseding return04: all three corrections accepted after independent all41class
+counts/AP replay for both models/all585windows and two local correction tests.
+No GPU rerun. Receiver receipt/acceptance published separately from sender cleanup.
+[Report review](reports/work/WORKER-198/paired-review.md).
+[Acceptance](reports/work/WORKER-198/eval028-handoff.md).
+CPU-only frozen merge diagnostic completed: page-development TP58→72,FP14→16;
+combined page TP249→533,FP24unchanged, versus cached first pass. Hybrid CUDA-second-
+pass diagnostic only, not matched027/028efficacy. [Results](reports/work/WORKER-198/eval027-diagnostic.md).
+[Delivery](reports/work/WORKER-198/eval027-handoff.md).
+[Handoff](reports/work/WORKER-198/detector512-handoff.md),
+[bounded plan](Research/Plans/Worker198Benchmark.md).
 [Plan](Research/Plans/WorkerBacklog198.md),
 [portable dispatch](reports/coordination/worker198-backlog.yaml).
 
@@ -228,13 +633,33 @@ retained.461604→.529515. TP/FP unchanged; eight gates fail, no promotion.
 Gallery improves118new refinements+54fallbacks; Onboarding loses8fallback cases.
 29focused/142Swift pass. [Integrated handoff](reports/work/IOS-ROI-196/handoff.md).
 
-## Ready — IOS-PROPOSAL-197 / unassigned
+## Geometry diagnosis complete; native-style coverage next — IOS-PROPOSAL-197 / Codex
 
 Audit capped low-confidence ROI proposals and an independent deterministic-window
 coverage alternative using training-only design evidence. Freeze one feasible
 scoring/duplicate/latency contract before new inference; no blanket threshold lowering
 or oracle crops. Initial support audit needs no training/capture and does not make
 an experimental model production-ready. [Contract](Research/Plans/Run013Evaluation.md#ios-proposal-197--bounded-proposal-support-before-another-trainer).
+
+Support02:135single-candidate windows contain17of31missing training-fit targets;
+10true negative and52partial-target windows require separate scoring. Dense alternative
+needs up to44crops/frame and is not the first candidate.31focused tests/offline Swift
+checks pass. Next: materialize exact135windows and falsify the frozen022/026rule on
+negatives before retained evaluation; no new training needed. [Evidence](reports/work/IOS-PROPOSAL-197/handoff.md).
+
+Superseding comparison: fit185→202TP/38FPunchanged; development58→72TPbut14→15FP;
+retained249→519TP/24FPunchanged. Candidate fails no-new-FP condition and seven existing
+gates; no promotion. Added FP is narrow geometry (IoU.3166,score.909), not an empty-region
+hallucination. Diagnosis: all1,173actual training page crops have labeled heights<=30pixels;
+the development failure has a visible77pixel native prominent capsule, while the model
+boxes only its dots. Preserve the visible-body label. Next: training-only native-style
+inventory and fresh-family coverage proposal under the canonical plan; no evaluation
+case admission, threshold tuning or automatic extra epochs.
+Style inventory complete:289hash-verified parent annotations/four families, all1,173
+profiles have unrecorded background style. Next is explicit native-style generator
+coverage and the144recipe training-only pilot, not another inventory pass.
+[Counts and implementation contract](reports/work/IOS-PROPOSAL-197/style-inventory.md).
+[Full comparison](reports/work/IOS-PROPOSAL-197/comparison-handoff.md).
 
 ## Review — IOS-ROI-195 / Codex
 
@@ -249,7 +674,7 @@ median height ratio1.107→.780. Training-only audit finds1830page-positive fram
 96additional sources proposed across four families,74groups. No inference/training
 or data-role changes.23focused/142Swift tests pass. [Handoff](reports/work/IOS-ROI-195/handoff.md).
 
-## Review / extraction and semantics blocked — ART-INTAKE-191 / Codex
+## Replacement intake verified; schema4 and semantics pending — ART-INTAKE-191 / Codex
 
 Receive named qualified-artwork feedback archive (849392816bytes), verify immutable
 receipt, bounded extraction and indexed bytes; reconcile15new+5retained selected
@@ -267,6 +692,47 @@ Extraction blocked on links/36MBgeneration library; exact producer3e9e05dsource
 also absent. Consolidated receipt/request and owned status published/read back.
 6new+12existing intake tests/142Swift tests pass. No semantic admission or inference.
 [Handoff](reports/work/ART-INTAKE-191/handoff.md).
+
+October6 supersedes the extraction blocker: regular-subset replacement558,661,384bytes
+received;287regular members safely extracted;286manifest files hash/size verified;
+42PNGs decode;20selected sidecars and40endpoint references verified. Receipt published
+and read back; sender cleanup acknowledgment separate. No recapture/repack needed.
+Next NUIAK-owned work: targeted schema4 selected-sidecar validation, source/geometry
+reconciliation and explicit admission report. Do not fabricate a completed bundle or
+weaken existing v2/v3 checks. Producer source synchronization remains maintainer-owned;
+new uncommitted journey code does not replace historical provenance.
+[Replacement evidence and responsibilities](reports/work/ART-INTAKE-191/subset-handoff.md).
+Target-geometry audit complete:40consistent endpoints,38nominal/body differences,
+18clipped focused endpoints,28frames with unavailable tab bodies. Keep all review roles;
+only two pairs are unclipped at both endpoints, neither automatically admitted.
+[Geometry review](reports/work/ART-INTAKE-191/geometry-review.md).
+Schema4 inspection path now integrated into `ttr_focus_manifest.py`;20/20actual selected
+pairs structurally reviewed,15focused tests pass. It intentionally cannot emit training
+manifests. Exact-source composition-v5 semantics, pixel/crop parity and role admission
+remain pending; do not report the full consumer task complete.
+[Implementation/evidence](reports/work/ART-INTAKE-191/schema4-handoff.md).
+Review-crops now executes the production helper:40crops, exact producer source-pin
+match, all20pairs nonidentical. Source/crop-runtime compatibility improves, but producer
+crop-pixel parity and full source semantics remain unqualified.18Python tests pass;
+Swift124tests pass excluding FrameSimilarity. Full suite was stopped after confirmed
+Vision waits; preserve diagnostic evidence and do not count excluded tests as passing.
+
+## Review — VISION-OFFLINE-209 / NUIAK
+
+Diagnose macOS27.0.1 FrameSimilarity feature-print tests waiting in Vision's controlled
+capacity queue. Existing full-suite attempt ended143after owned-process cleanup;
+sample is `.build/schema4-test-helper-sample.txt`. Other124Swift tests pass. First
+isolate one existing test with bounded observation and retain the exact runtime/source;
+do not change thresholds, skip tests as acceptance, restart system services or alter
+production inference merely to make CI green. Deliver cause evidence and a tested
+scoped fix/workaround, or exact platform blocker. No protected test edits without
+appropriate authority. This blocks full offline verification, not independent model
+input packaging or native crop inspection.
+Superseding verification: isolated test1pass, FrameSimilarity8pass, then entire
+suite132tests/17suites pass with explicit `--no-parallel` and native SwiftPM engine,
+no exclusions. Full verification blocker cleared for this tranche; root cause is not
+proven because serialization/initialization/cache effects are confounded.
+[Commands and evidence](reports/work/VISION-OFFLINE-209/handoff.md).
 
 ## Review — WORKER-180A/B/C / joe-big-dog; NUIAK intake complete
 
@@ -682,9 +1148,10 @@ and no-ops scheduled in next dark/light table/rich-table batch; arbitrary contra
 controls absent and not required. NUIAK published/read back balanced24interval
 pilot suggestion under the same request. Native24 now received:337 payload files
 hash-verified, both campaign receipts and48 endpoint PNGs pass. Real consumer
-rejects all24 new table-v3 recipes at canvas_selectedIndex; local TTR source
-predates the uncommitted producer contract. Await exact maintainer-published source,
-then targeted adapter/negative tests, callback/crop audit and matched model scoring.
+initially rejected table-v3 recipes. October6 published-source review and targeted
+recipe/directional adapters now pass all24cases without weakening endpoint/action
+checks. Seven historical capture/helper source differences remain to reconcile before
+admission and matched model scoring; source availability itself is no longer blocked.
 No recapture or new build-only handoff; no new labels admitted.
 [Native24 intake](reports/work/RESIDUAL-160/native24-intake.md).
 [Directional analysis](reports/work/WORKER-ENVELOPE-166/directional-analysis.md)
@@ -1794,6 +2261,28 @@ TTR matched-native-negative request and version16source remain pending. No captu
 or promotion implied by that proposed augmentation.
 
 ## Review — SIGNAL-95 / Codex
+
+October6 companion intake: TTR native-scroll24 received,395files/48PNGs and both
+completed campaign receipts verified.8scroll_moved/8scroll_unchanged/8content_only;
+calibration ancestry preserved. GitHub550a2d37 available;13/20source hashes match.
+Strict v3 recipe and directional source review completed: matching native-widget implementation
+supports v3 with identical UIKit callback/scroll mechanisms. Targeted version adapter
+now passes48/48combined cases with20focused tests; cleanup/action guards retained.
+Recorded contrasts:8focus-only,8focus+scroll,8scroll-only,16content-only,8boundary-noop.
+Historical build binding remains the only identified admission blocker for this intake.
+Independent192×128input diagnostic complete: all40non-no-op pairs retain signal,
+8boundary no-ops are identical, no exact pair collisions. Same-focus scroll has
+~14.5× greater median pixel difference than changed-focus scroll, which keeps equal
+focus boxes. Preserve these separate strata in the eventual matched model evaluation;
+no difference threshold chosen and no model/label qualification claimed.
+Inspection-only DTM053/054pass now complete: both predict no-change on all8reported
+focus-changing scroll cases and change on all8unchanged-focus scroll cases; no
+abstentions. Simple appearance/content/no-op predictions follow reported conditions.
+Not accuracy while historical binding remains unresolved. Prioritize that existing
+binding request, then a matched motion-versus-identity correction with retained gates.
+No new capture needed; receipt and source-contract follow-up published/read back.
+Peer acknowledgment and sender cleanup remain separate/pending.
+[Intake evidence](reports/work/SIGNAL-95/native-scroll24-intake.md).
 
 [Contract](Research/Plans/FocusTransitionLearning49.md#signal95--resolution-evidence-before-another-experiment).
 All73pairs measured at3resolutions;96×64exact saved-input parity. Higher resolution
@@ -4870,6 +5359,22 @@ TVTestRig owns producer implementation and its queue; this task owns NUA consume
 
 Separate next model milestone; the current 41-class release does not wait on it.
 Contracts: BADGE-A / BADGE-B in [model packets](Research/Plans/ModelsAndHardware.md).
+
+October6 worker compatibility decision: preserve legacy custom manifests/unknown-kind
+padding and unsupported-label filtering; strict binding belongs to explicit new
+profiles only. No retrospective model-ID allowlist or silent badge activation on
+legacy manifests. Detailed decoder/caller test requirements added to BADGE-A;
+Big Dog owns its existing software proposal, NUIAK owns integration review.
+Decision published/read back at `nuiak/responses/nuiak-20261006-badge-legacy-decision01.json`;
+peer correction02 integrated: explicit model binding/legacy label guard and
+annotation1.3 writer pass139rebuilt Swift tests/19suites and10Python checks.
+Old maps/schemas/shipped weights unchanged. BADGE-A software verified; actual badge
+model inference, minor release and BADGE-B remain separate/gated.
+[Integration](reports/work/BADGE-A/runtime-integration02.md).
+Peer acknowledged correction02 acceptance at11:12:42UTC; software request closed,
+sender cleanup separate. Worker next input is verified Run028, not BADGE-B training.
+Existing198-D delivery cleared the earlier missing-input observation without
+duplicating its assignment.
 
 - [ ] Define notification/status dot/count badge semantics and append category ID 41 without changing IDs 0–40
 - [ ] Version taxonomy/library/dataset and make decoding use each model's declared category map

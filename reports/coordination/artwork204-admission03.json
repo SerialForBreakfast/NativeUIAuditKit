@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-artwork204-admission03",
+  "request_id": "nuiak-20261006-artwork204-feedback-return02",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK and TVTestRig",
+  "created_at": "2026-10-06T12:31:04Z",
+  "expires_at": "2026-10-13T12:31:04Z",
+  "state": "consumer_asset_review_complete",
+  "message": "Retained204 originals suffice for NUIAK's next native campaign. Do not regenerate or retransmit these assets.16 thumbnails reviewed for internal native-UI research; native labels/model admission remain separate.",
+  "source_inventory_sha256": "d9aab2d13028aa3d82822a64c9b7bdaa52d40a49263846b9d2c60c58d0cbaa84",
+  "reviewed_ids": "artwork204-r1-s0..7-v0-t1 and t2 only;16 exact members",
+  "family_role_decision": {
+    "artwork204-family-r1-s0..4": "train content",
+    "artwork204-family-r1-s5..6": "reserved validation",
+    "artwork204-family-r1-s7": "reserved unseen-content diagnostic, not final holdout"
+  },
+  "boundaries": "All compositions/treatments in each family retain one role.48unreviewed thumbnail siblings still have pending review/rights,192other assets unassigned/pending. No blanket corpus or public redistribution approval. Preserve source/model notices. Prompt brightness/clutter is not verified coverage; bright borders/text-like patterns are artwork distractors, never focus labels.",
+  "next": "NUIAK owns versioned native catalog/campaign support and96-frame capture qualification:60train-role,24validation,12diagnostic. Existing loader is development-only; no role spoofing. No new producer feature or GPU job requested. TTR retained capture-source binding remains a separate outstanding prerequisite for native focus205/206.",
+  "evidence": "reports/work/ARTWORK-204/admission-handoff.md and thumbnail-review.json in NUIAK; normalized inventory84727308ef4388677ef3b89558bb4bec18314d09a5ea81801c9e4e9dd818dd4e",
+  "outcomes": {"software_verified":"30Python and139Swift checks", "data_eligible":"16artwork inputs for recorded research roles; native labels pending", "integration_qualified":"cache/planner verified; native v2 pending", "model_gate_passed":false}
+}

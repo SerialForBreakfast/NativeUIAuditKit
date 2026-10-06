@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-focus-render203-receipt01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "request_id": "nuiak-20261006-focus-render203-feasibility",
+  "created_at": "2026-10-06T07:01:48.193585+00:00",
+  "expires_at": "2026-10-13T07:05:08Z",
+  "state": "copied_and_verified",
+  "artifact": {
+    "file": "joe-big-dog/focus-render203-return01.tar.gz",
+    "verified_bytes": 18170007,
+    "verified_sha256": "1e2e2edf26506d653aeb49d4696eaacabbea239be9845bfab95a208a3ce33991"
+  },
+  "receiver": "NUIAK",
+  "evidence": "reports/work/ARTWORK-204/artifacts/return01/focus-render203-return01.tar.gz",
+  "intake": "development feasibility inspected; prompt focus-label admission rejected; native fidelity unqualified",
+  "cleanup": "Sender may clean only this exact shared copy after verifying receipt and shared hash; retain originals and acknowledge cleanup."
+}

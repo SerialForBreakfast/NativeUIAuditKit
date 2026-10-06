@@ -1,0 +1,19 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-worker198-runner-implementation01",
+  "request_id":"nuiak-20261006-worker198-detector512",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T08:16:56Z","expires_at":"2026-10-20T08:16:56Z",
+  "state":"ready","priority":"low; preserve owned TTR work",
+  "acknowledges":"joe-big-dog-20261006-worker198-correction01-result",
+  "message":"Corrected intake and resident smoke report reviewed. Approve8.4.173for CUDA-only batch8vs16 comparisons, not Mac8.4.124 equivalence. Version-policy blocker cleared. Implement the complete runner and tests now; return source plus retained smoke evidence together. No repeat smoke, retransfer or installation. Full timing-training awaits executable source review, not another design proposal.",
+  "contract":[
+    "Use resident DetectionTrainer subclass, existing verified512-example archive and exact Run022initializer. One512-example timed epoch per repetition, batch8and16, two repetitions,10disposable warmup batches. Set warmup_epochs=0during timing with fixed round(64/batch)accumulation. Measure and assert8actual optimizer updates per full epoch; reject omitted/duplicated tails. This is a throughput configuration, not production-warmup equivalence.",
+    "Freeze manifest order, augmentation-off settings,640letterbox,AdamW/lr0=.0001,nbs64,float32/noAMP,TF32off,workers0,rectTrue,seed42. Record actual tensor shapes: rectangular batching can confound a pure batch-size claim. Demonstrate matching shapes or label the result batch-plus-padding. Pin effective weight decay/scaler/scheduler/EMA and source hashes.",
+    "Restore parameters AND batchnorm buffers, optimizer/scaler, gradients, scheduler/EMA, CPU/CUDA RNG, data cursor and accumulation counters after disposable warmup. Assert restored state equals reference before timing. Test deliberately changed buffer/state rejection.",
+    "Create/verify project-local config/cache/temp directories before library imports; verify effective Ultralytics path and reject fallback. Preserve previous/tmpincident evidence, no deletion or permission changes.",
+    "Synchronize CUDA at phase boundaries; avoid hot-loop per-element host reads. Report raw two-repetition setup/decode/preprocess/H2D/compute/checkpoint/reload/total timing and peak memory. No hidden validation. Test changed input, collision, nonfinite loss, missing input, restore failure and OOM. Batch16conditional on headroom; first OOM stops that arm without automatic sweep."
+  ],
+  "return":{"required":"Runnable source, hashes, unit/preflight commands/results, exact launch configuration, and retained compatibility-smoke source/report. No full benchmark execution yet. Continue other ready jobs after delivery.","max_members":100,"max_expanded_bytes":20000000,"max_member_bytes":5000000,"contents":"Regular source/JSON/text only; no weights/images/caches/credentials. Named immutable archive with size/hash via existing receipt flow."},
+  "outcomes":{"software_verified":"not_assessed","data_eligible":"passed","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

@@ -5,6 +5,151 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**October6 REPLAY216 completed:** independent source/config/order and1242prediction
+review accepts execution, rejects promotion. Native imageView hits42→87/120;
+fit progress hits34→25. Composed retained page528/9→530/15TP/FP remains below
+reference543/7. Both candidates retained; next full-frame replay design, no automatic
+retrain. [Accepted evidence](../reports/work/REPLAY-216/results.md).
+
+**REPLAY216 dispatch history (superseded by completed result above):** fuller1509ROI replay audited and997missing pairs
+published to Big Dog in9.7MB; existing512pairs/native96/weights reused. Matched
+Runs031/032 preregistered,1569slots each,10epochs/245updates, fixed evaluation.
+Worker receipt14:14:48UTC confirms inputs and reports8preflight passes; corrected
+start reports PID164961/CUDA, without restart. Terminal/source acceptance pending;
+no new model result or promotion. Five fit-set
+training overlaps are explicitly diagnostic, actual reserved partitions have none.
+[Transfer, tests and next acceptance](../reports/work/REPLAY-216/handoff.md).
+Consumer-level213check now rejects030extra-donor replacement: retained page hits
+437/600 versus matched029513 and reference028543,FP7each; non-page outputs unchanged.
+No new inference. Full replay216remains pending, not promoted.
+[Composition diagnosis](../reports/work/REPLAY-216/composition-handoff.md).
+Requested585ROI parent/window mapping delivered;37development higher groups remain
+unknown. Independent full-frame audit prepares189existing train frames covering
+40classes, addressing classes absent from page-focused replay; no additional run.
+[Coverage and handoff](../reports/work/REPLAY-216/coverage-handoff.md).
+
+**October6 WORKER213 result:** both CUDA10epoch/89update runs accepted after independent
+source/config/hash/prediction review. New artwork raises imageViewTP83→110/120native
+validation and25→51/60abstract diagnostics, but retainedROI loses41TP (40labels) and
+adds99pageControlFP. No promotion. Next is fuller replay exposure/retention work, not
+more213epochs. [Decision](../reports/work/WORKER-213/handoff.md). Older start/pending
+notes below are superseded.32retained poster/thumbnail assets now reviewed for internal
+rendering; no new pixels transferred or native data roles changed.
+
+**October6 native artwork milestone:** ARTWORK204 now supplies96qualified iOS
+MediaCardGrid frames (60train-role,24content-validation,12abstract diagnostics),
+using16reviewed Big Dog thumbnails. No duplicates or pixel overlap with the prior96
+development frames; source/build/recipe/crop geometry and sidecar schemas retained.
+These are content-separated same-template examples, not DS-G8 or tvOS focus labels.
+Native capture26.856seconds;140Swift/14Python checks and native build pass.
+[Evidence](../reports/work/ARTWORK-204/native-handoff.md). Next is matched model
+comparison after existing exporter integration; shipped models unchanged. Big Dog's
+198-E source/inventory intake accepted within scope: guard checks and5256-row
+metadata reconciliation passed;5000BDoriginal hashes remain peer evidence.
+Native60training export supplies1020annotations. Registered Runs029/030 compare
+512old+60repeats versus512old+60native frames,10epochs each on CUDA;85.43MB
+supplement/request published/read back. Worker receipt/start pending, no new model
+results or promotion. Superseding receipt/start: worker reports accepted inputs,
+seven preflight tests and jobstart13:18:30UTC(PID162456); exact supplement/parent
+hashes match. Terminal/source/config/count and prediction acceptance remain pending.
+[Dispatch](../reports/work/ARTWORK-204/worker213-handoff.md).
+
+**October6 continuation:** style210 native capture/admission completed96unique
+training images and336ROIcrops; equal1509-slot control/treatment registered as
+Runs027/028. Both completed10epochs/245verified updates, control4691.52s and
+treatment4596.36s, with fixed-last checkpoints verified. Matched MPS extra-proposal
+developmentTP72→75/FP16→14, retained pageTP533→543/FP24unchanged;7gates still fail.
+Refinement-only adds no detections. No promotion; worker028checkpoint-only scoring
+accepted:585records independently verified, matched hybrid metrics agree with MPS.
+Frozen composition of refinement and extra proposals now improves treatment page
+AP50:95 .46503→.60415development and .62505→.65586retained, without changingTP/FP.
+Fit216/216targets recovered; six gates still fail, no promotion.23focused tests
+and139offlineSwift tests pass. Extra runtime crop cost remains a deployment concern.
+[Composition](../reports/work/IOS-STYLE-210/composition-handoff.md),
+[comparison](../reports/work/IOS-STYLE-210/comparison-handoff.md).
+**Precision211 supersedes the six-gate count:** corroborated-alias resolution
+reduces treatment developmentFP14→4and retainedFP24→7without losingTP75/543.
+The pageFP gate passes; five other-class gates remain failed.22focused/139Swift
+tests pass. No production promotion; same cached predictions, no retraining.
+[Evidence](../reports/work/IOS-PRECISION-211/handoff.md).
+Retention212 rejects substituting019non-page outputs as a production shortcut:
+zero operating scroll hits/100 and218sheetFP remain despite retention equality.
+Worker paired return04 accepted: independent all41class counts/AP agree across585
+windows/both models; two correction tests pass locally. Exact receipt/acceptance
+published/read back; acknowledgment/cleanup separate. No GPU rerun needed.
+[Review](../reports/work/WORKER-198/paired-review.md),
+[retention decision](../reports/work/IOS-PRECISION-211/retention212.md).
+DETECTOR207 fixed card-crop diagnostic recovers33nested image views, loses0 and adds7FP
+on existing artwork development data;236crops/34.703s. Other class metrics unchanged.
+Not promoted: next qualify existing204families for native nested-label training rather
+than tune this exposed set. [Report](../reports/work/IOS-ASSET-200/card207-handoff.md).
+204asset review now complete for16retained thumbnails:10train-content,4validation,
+2reserved diagnostic. Planner verifies32cached originals and requests0bytes; unreviewed
+siblings remain pending.30Python/139Swift checks pass. Native v1remains development-only;
+next is explicit v2support and96-frame native qualification, not immediate training.
+[Admission](../reports/work/ARTWORK-204/admission-handoff.md).
+Big Dog's four kernel
+repetitions completed and passed evidence review: batch4 17.329images/s versus
+batch2 15.803, peak allocated5.273GB. This is kernel feasibility, not full-trainer
+or Mac speed or model quality. The subsequent bounded full-trainer lifecycle also
+passed review: two two-epoch runs,32updates,10.753/10.919training images/s including
+validation/save/reload overhead. Training-only diagnostics, not held-out accuracy.
+TTR recipe compatibility passes8/8consumer vectors.
+Exact producer source is accessible; historical capture-build binding remains
+unresolved. All40retained focus crops and4fullframes visually reviewed; native
+data admission remains separate. Existing review/calibration roles preserved.
+[ROI evidence](../reports/work/IOS-STYLE-210/handoff.md),
+[worker loop](../reports/work/WORKER-198/feedback-loop.md),
+[recipe replay](../reports/work/GEN-PARITY-199/recipe-compatibility.md).
+Older dated entries below are historical and superseded where noted here.
+
+**October6 — offline verification recovered:** all132Swift tests/17suites pass with
+explicit non-parallel native SwiftPM execution; no exclusions or library/test changes.
+Prior Vision wait cause remains unproven. Separately, page-style inventory accounts
+for1,173training crops/289parents and defines144fresh native-style recipes as next
+coverage work; no capture/training has started for that proposal.
+[Verification](../reports/work/VISION-OFFLINE-209/handoff.md),
+[coverage contract](../reports/work/IOS-PROPOSAL-197/style-inventory.md).
+
+**October6 — worker benchmark input delivered:**512unique admitted detector training
+crops/93groups and Run022initializer published/hash-verified to Big Dog. Backend
+version/optimizer-cadence reconciliation and receiver acknowledgment remain pending;
+no timing or model improvement claimed. Local-only GLOBAL146focus tensors not exported.
+[Evidence](../reports/work/WORKER-198/detector512-handoff.md).
+
+**October6 — native geometry / worker loop:** ART191 selected-target structural audit
+passes40endpoints, but18focused targets are clipped and28frames lack tab-body telemetry;
+schema4/source and semantic admission remain open. WORKER198-A received and reviewed;
+its audit-review dependency is cleared, while the representative benchmark still needs
+NUIAK's exact workload. Both feedback messages published/read back, acknowledgment pending.
+[Geometry](../reports/work/ART-INTAKE-191/geometry-review.md),
+[worker review](../reports/work/WORKER-198/intake-handoff.md).
+
+**October6 — ART191 transfer blocker cleared:** replacement subset safely extracted;
+20selected schema4 sidecars,40image references and all286manifest files verified.
+Receipt published/read back; cleanup acknowledgment remains separate. Next is NUIAK
+schema4/source/geometry admission, not more producer repacking or artwork generation.
+[Responsibilities and evidence](../reports/work/ART-INTAKE-191/subset-handoff.md).
+
+**October6 — ROI197 comparison:** page TP249→519of600retained targets, FP24unchanged;
+development58→72of96but FP14→15. Seven existing gates fail; no promotion.32Big Dog
+originals received/hash/decode verified; native admission remains separate.
+[Comparison](../reports/work/IOS-PROPOSAL-197/comparison-handoff.md).
+
+**October6 — IOS-PROPOSAL197 support audit:** one extra low-confidence ROI can contain
+17of31missing training-fit page targets;135windows include10negative and52partial-target
+regions. Dense coverage costs up to44crops/frame. Negative-region qualification precedes
+any recall claim or additional training.31focused tests and offline Swift checks pass.
+[Evidence and next comparison](../reports/work/IOS-PROPOSAL-197/handoff.md).
+
+**October6 UTC — Big Dog feedback intake:**256artwork records independently reconciled;
+32original posters/thumbnails requested by hash, with no new generation. Focus training
+still requires native labels.203mock-UI spike returned52frames: prompt arm has identical
+pixels across all four states per scene and is rejected for focus labels; compositor is
+development-only authored rendering. Receipts and next-owner feedback are recorded in
+[the feedback handoff](../reports/work/ARTWORK-204/feedback-handoff.md). No model gain or
+promotion is established by this intake.
+
 **October6 UTC — IOS-ASSET200 complete:**96native grid/detail development scenes
 captured in27.18seconds, fully byte/label/pixel validated; zero duplicates. Resume
 verified48sealed scenes/zero captures.146Swift/10campaign tests pass. Fixed022

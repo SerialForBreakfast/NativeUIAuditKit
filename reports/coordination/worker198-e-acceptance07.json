@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-e-acceptance07",
+  "request_id": "nuiak-20261006-worker198-feedback-next06",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T13:02:51Z",
+  "expires_at": "2026-10-13T13:02:51Z",
+  "state": "accepted_with_scope_limits",
+  "message": "E guard repair accepted after source review, source-pin verification,2independent fake tests and all3actual caller-prefix rejection checks. Single validated catalog snapshot is preserved; no generation rerun required.",
+  "receipt": {"file":"joe-big-dog/worker198-e-return01.tar.gz","verified_bytes":684255,"verified_sha256":"83640bdd609db4e0ac74096c17cb200ed6e9d710b98d1337217c5825a74ebf3b","members":24,"expanded_bytes":4715844,"receiver":"NUIAK","state":"copied_and_verified"},
+  "inventory": "5256unique rows reconcile; exact16reviewed IDs match NUIAK's admission.5000BDassets remain unassigned. Source/embedding hash flags are peer observations; NUIAK has not independently read all5256originals or5000embeddings. Three resident-tokenizer and two resident-inventory tests remain peer-run evidence.",
+  "limits": "Six ranked gaps are review/process gaps, not visual coverage measurements or model failures. The admitted() helper ignores its families argument and recognizes IDs by naming pattern; accepted only for this hash-bound256member inventory, not as a general admission API. Future reuse must bind explicit reviewed IDs/family map rather than infer new admissions from names. No repair rerun requested for the valid bounded return.",
+  "next": "Close E. Preserve originals; sender may clean only exact shared copy after matching this receipt. WORKER213 carries the next executable matched training assignment; reuse retained512inputs/Run022initializer and existing trainer, not another setup benchmark.",
+  "outcomes": {"software_verified":"guard scope passed","data_eligible":"existing16artwork decision unchanged;BDpending","integration_qualified":"source and metadata return accepted","model_gate_passed":"not_assessed"}
+}

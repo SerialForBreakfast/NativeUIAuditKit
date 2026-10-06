@@ -22,6 +22,113 @@ import XCTest
 import SwiftUI
 import CryptoKit
 
+/// New training-candidate layouts; never reuse the155development compositions.
+@MainActor
+final class NativePageStyle210Test: XCTestCase {
+    struct Catalog: Decodable {
+        let version: String, target: String, role: String
+        let trainingEligible: Bool
+        let members: [Row]
+    }
+    struct Row: Decodable {
+        let id: String, family: String, theme: String, backgroundStyle: String, position: String, group: String
+        let interaction: Bool
+        let pages: Int
+        let seed: UInt64
+    }
+    func testCaptureStyle210() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard env["NUA_STYLE210"] == "capture" else { throw XCTSkip("Opt-in style210 capture") }
+        let target = try XCTUnwrap(env["NUA_STYLE210_TARGET"])
+        guard UUID(uuidString: target) != nil, target == env["SIMULATOR_UDID"] else { throw CocoaError(.fileReadCorruptFile) }
+        let url = URL(fileURLWithPath: try XCTUnwrap(env["NUA_STYLE210_CATALOG"]))
+        guard url.resolvingSymlinksInPath() == url else { throw CocoaError(.fileReadCorruptFile) }
+        let raw = try Data(contentsOf: url)
+        let sha = SHA256.hash(data: raw).map { String(format: "%02x", $0) }.joined()
+        guard raw.count < 1_000_000, sha == env["NUA_STYLE210_SHA256"] else { throw CocoaError(.fileReadCorruptFile) }
+        let catalog = try JSONDecoder().decode(Catalog.self, from: raw)
+        guard catalog.version == "native-style210-v1", catalog.target == target,
+              catalog.role == "training_candidate", !catalog.trainingEligible, catalog.members.count == 144,
+              Set(catalog.members.map(\.id)).count == 144 else { throw CocoaError(.fileReadCorruptFile) }
+        var axes = Set<String>()
+        for (index, r) in catalog.members.enumerated() {
+            guard ["account-summary210", "document-stack210"].contains(r.family),
+                  ["light", "dark"].contains(r.theme), ["automatic", "prominent"].contains(r.backgroundStyle),
+                  [3,5,9].contains(r.pages), ["leading","center","trailing"].contains(r.position),
+                  r.id == String(format: "style210-%03d", index), r.seed == UInt64(210000+index),
+                  r.group == "\(r.family):pages\(r.pages):position\(r.position)" else { throw CocoaError(.fileReadCorruptFile) }
+            axes.insert("\(r.family):\(r.theme):\(r.backgroundStyle):\(r.interaction):\(r.pages):\(r.position)")
+        }
+        guard axes.count == 144 else { throw CocoaError(.fileReadCorruptFile) }
+        let output = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("native-style210-v1")
+        guard !FileManager.default.fileExists(atPath: output.path) else { throw CocoaError(.fileWriteFileExists) }
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: false)
+        var rows: [[String: Any]] = []; var bytes = 0
+        let start = ProcessInfo.processInfo.systemUptime
+        for r in catalog.members {
+            guard ProcessInfo.processInfo.systemUptime-start < 600 else { throw CocoaError(.userCancelled) }
+            let config = GeneratorRunConfig(seed: r.seed, templateFamily: r.family, osProfile: .ios26,
+                simulatorOverride: SimulatorStateOverride(time: "09:41", batteryLevel: 100, batteryState: "charging", cellularBars: 5, wifiBars: 3, cellularMode: "active", operatorName: ""),
+                colorScheme: r.theme == "dark" ? .dark : .light, dynamicTypeSize: .large,
+                deviceName: "iPhone 17 Pro", pixelScale: 3, locale: "en_US", layoutDirection: .ltr)
+            let vc = Style210Controller(row: r)
+            var hidden: Data?; var body = CGRect.zero; var frame = CGRect.zero
+            let result = try await ScreenshotCapture.captureUIKit(vc, config: config, nativePageEvidence: { hidden=$0; frame=$1; body=$2 })
+            let reference = try XCTUnwrap(hidden)
+            bytes += result.png.count + reference.count
+            guard bytes < 512*1024*1024, !body.isEmpty else { throw CocoaError(.fileReadCorruptFile) }
+            try result.png.write(to: output.appendingPathComponent(r.id+".png"), options: .withoutOverwriting)
+            try reference.write(to: output.appendingPathComponent(r.id+"-hidden.png"), options: .withoutOverwriting)
+            try AnnotationWriter.write(result: result, config: config, imageFileName: r.id+".png", templateFamily: r.family,
+                generatorVersion: "native-style210-v1", to: output.appendingPathComponent(r.id+".json"))
+            let row: [String: Any] = ["id":r.id,"group":r.group,"sha256":result.sha256,
+                "hiddenSHA256":SHA256.hash(data: reference).map { String(format: "%02x", $0) }.joined(),
+                "body":[body.minX,body.minY,body.width,body.height],"frame":[frame.minX,frame.minY,frame.width,frame.height],
+                "scale":result.scale,"requestedBackgroundStyle":r.backgroundStyle,
+                "resolvedBackgroundStyle":vc.control.backgroundStyle.rawValue,"interaction":vc.control.isUserInteractionEnabled]
+            rows.append(row)
+            try JSONSerialization.data(withJSONObject: row, options: [.sortedKeys]).write(to: output.appendingPathComponent(r.id+"-evidence.json"), options: .withoutOverwriting)
+        }
+        try JSONSerialization.data(withJSONObject: ["catalogSHA256":sha,"target":target,"rows":rows,"trainingEligible":false,
+            "runtime":ProcessInfo.processInfo.operatingSystemVersionString], options: [.sortedKeys])
+            .write(to: output.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+    }
+}
+
+@MainActor
+private final class Style210Controller: UIViewController, UIKitAnnotatable {
+    let control = UIPageControl()
+    var labels: [UILabel] = []
+    let row: NativePageStyle210Test.Row
+    init(row: NativePageStyle210Test.Row) {
+        self.row = row; super.init(nibName: nil, bundle: nil)
+        overrideUserInterfaceStyle = row.theme == "dark" ? .dark : .light
+        view.backgroundColor = .systemBackground
+        control.numberOfPages = row.pages; control.currentPage = Int(row.seed % UInt64(row.pages))
+        control.backgroundStyle = row.backgroundStyle == "prominent" ? .prominent : .automatic
+        control.isUserInteractionEnabled = row.interaction
+        control.currentPageIndicatorTintColor = .label; control.pageIndicatorTintColor = .tertiaryLabel
+        view.addSubview(control)
+        for n in 0..<4 {
+            let label = UILabel(frame: CGRect(x: 30+CGFloat(n%2)*160, y: 140+CGFloat(n/2)*160, width: 145, height: 130))
+            label.backgroundColor = .secondarySystemBackground; label.numberOfLines = 0
+            label.text = row.family == "account-summary210" ? "Account \(n+1)\nAvailable balance\n\(120+n*73) credits" : "Document \(n+1)\nLocal drafts\n\(n+2) pages"
+            label.textAlignment = .center; view.addSubview(label); labels.append(label)
+        }
+    }
+    required init?(coder: NSCoder) { fatalError("Not used") }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let size = control.size(forNumberOfPages: row.pages)
+        let x = row.position == "leading" ? 24 : row.position == "trailing" ? view.bounds.width-24-size.width : (view.bounds.width-size.width)/2
+        control.frame = CGRect(x: x, y: row.family == "account-summary210" ? 525 : 625, width: size.width, height: size.height)
+    }
+    var annotatedViews: [UIKitAnnotatedView] {
+        [UIKitAnnotatedView(id: "pageControl_0", elementType: "pageControl", view: control)] +
+            labels.enumerated().map { UIKitAnnotatedView(id: "label_\($0.offset)", elementType: "label", view: $0.element) }
+    }
+}
+
 /// Development-only geometry qualification. Never changes existing corpus bytes.
 @MainActor
 final class NativePageGeometry150Test: XCTestCase {

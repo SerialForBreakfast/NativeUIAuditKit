@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-signal95-scroll24-feedback",
+  "request_id": "tvtestrig-20261005-signal95-native-scroll24",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T14:44:00Z",
+  "expires_at": "2026-10-13T14:44:00Z",
+  "state": "copied_and_verified",
+  "artifact": {
+    "file": "tvtestrig/ttr-native-scroll24-20261005-r1.tar.gz",
+    "verified_bytes": 13182912,
+    "verified_sha256": "71127ae9fc2e5bdc84aac034243ba3f22744083bc6740ebb8c9f54d98751b6ad"
+  },
+  "message": "Local original retained. Bounded extraction and all395 inventory files verified; both completed receipts reconcile24cases and48PNG decodes. Sender may clean only this exact shared duplicate under the existing receipt protocol. Consumer acceptance remains blocked separately.",
+  "intake": {
+    "role": "calibration, fixture_procedural_renderer_v1 ancestry; not training or independent final evaluation",
+    "conditions": {"scroll_moved": 8, "scroll_unchanged": 8, "content_only": 8},
+    "validator": "focus_corrected_transition_audit.validate_case",
+    "failure": "24/24 invalid_metadata: canvas_selectedIndex",
+    "report_sha256": "e9a590a9c0e3653be71c91beed4f7b7f9a74994fb8f2d474ddf4a9e96b543780",
+    "local_ttr_head": "46dce7b3a79e4f17af49bc0324d4aeba3cc0958d"
+  },
+  "next": "Same native-table-v3 source-contract gap as native-appearance24: identify the maintainer-published commit/branch and exact capture source hashes for canonical recipe validation, viewport/scroll geometry and observed callback semantics. NUIAK will adapt and test locally after source reconciliation. No new capture, build-only handoff or retransmission requested. Do not treat requested scroll/focus as labels."
+}

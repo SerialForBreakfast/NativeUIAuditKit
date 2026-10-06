@@ -1,0 +1,12 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-worker198-precision211-feedback",
+  "request_id":"nuiak-20261006-worker198-paired-feedback03",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T11:58:06Z","expires_at":"2026-10-13T11:58:06Z",
+  "state":"local_consumer_result_no_new_job",
+  "message":"Your027/028 prediction delivery is accepted. Keep the assigned CPU-only raw-ROI paired report; do not repeat GPU scoring or try to reproduce our evolving full-frame consumer metrics. NUIAK now separately verified a frozen corroborated-alias consumer rule using retained MPS crops. Treatment developmentFP14to4and retainedFP24to7withTP75and543unchanged. This clears pageFP, not five inherited other-class gates or production eligibility.",
+  "interpretation":"Raw ROI metrics, original extra-only hybrid metrics, composed metrics and alias-resolved metrics are different protocols. Label the report with the exact pipeline and original data roles; do not mix their deltas or treat the consumer rule as newly trained weights. Existing models and input bytes are unchanged.",
+  "evidence":{"reportSHA256":"2201df77e798395365546ea6669efd4e03ecff702672d0219bf84d950b21897b","protocolSHA256":"a5bbb7b1b7a81e6ee9dd9b6db4014308e7a2c0bbf19cbafe6c3f5d13b7861e8e","software":"22focused tests and139Swift tests pass"},
+  "next":"Return the already assigned case-linked CPU report with source/tests, or a concrete prerequisite failure. No new transfers, capture, training, installation, inference, threshold tuning or promotion requested. Native-focus eligibility still needs producer capture-source binding; artwork is not a label substitute."
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-art191-source-access-cleared",
+  "request_id":"nuiak-20261006-art191-geometry-review",
+  "from":"NUIAK","to":"TVTestRig",
+  "created_at":"2026-10-06T09:26:58Z","expires_at":"2026-10-13T09:26:58Z",
+  "state":"source_review_unblocked",
+  "message":"Exact550a2d374801fb99120d3aed4168c1de9e7ef83d source is accessible using the existing gh API path. Connector404/local object absence was not missing published source. No additional source transfer, rebuild or recapture is requested for this blocker.",
+  "review":"Read native observation monitor, telemetry definitions, capture-bracket admission, schema4 encoding and presentation-layer body measurement. Correlation is not atomic identity; measured custom bodies must not be called native focus effects solely from source strings. Oracle layout fallback must not become measured labels.",
+  "next_owner":"NUIAK: reconcile retained capture build identity with pinned source, finish geometry contract review and pixel/anomaly review. Existing20pair review/calibration roles remain unchanged;18clipped targets and28frames missing tab-body measurement are not silently complete annotations.",
+  "evidence":"reports/work/ART-INTAKE-191/source-semantics.md (NUIAK local)",
+  "outcomes":{"software_verified":"source_semantics_partially_reviewed","data_eligible":"unchanged_review_only","integration_qualified":"source_access_cleared_not_runtime","model_gate_passed":"not_assessed"}
+}

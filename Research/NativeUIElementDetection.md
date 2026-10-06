@@ -1,5 +1,17 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+ART191 schema4 review intake (October6): the existing TTR intake CLI gains an explicit
+selected-subset inspection mode. Resolve exact bounded recipe-source references and
+verify capture brackets, PNG identity, target native observations and rendered-body
+geometry without changing producer schemas or downgrading to schema3. Report each
+failed pair and retain all membership. Output is inspection evidence only, never a
+focus dataset manifest or training admission. Composition-v5 semantics/source parity
+and native crop qualification remain separate gates. Existing v2/v3 behavior is unchanged.
+An opt-in review-crops flag may materialize each structurally reviewed endpoint's
+visible body through the existing production runtime adapter, preserving clipped/full
+geometry in the review report. These remain inspection derivatives, not a training
+dataset; record helper/source and crop hashes and fail on partial intake before cropping.
+
 IOS-ASSET-200 adds an opt-in generator-only artwork catalogue and MediaCardGrid binding.
 Native control annotations remain authoritative; asset hashes, fit/fill geometry and
 development ancestry live in a separate receipt. No detector taxonomy, production
@@ -246,6 +258,14 @@ exist verbatim in this package. Decision: **do not add either as a new type.**
 
 ## 5. Element Taxonomy v1
 
+**October6 additive runtime extension:** `badge` is available only to explicitly
+bound new model manifests; existing nil-profile decoding retains its frozen label
+set. Taxonomy1.1 appends ID41 without changing the frozen IDs0–40. The strict
+`nativeui-category-binding-v1` profile declares taxonomy version and a digest of
+canonical resolved category records; tensor channel order remains model-specific.
+Nonempty unique subsets and padding are valid, not claims of full taxonomy coverage.
+No existing detector weights or shipped manifests are upgraded by this API extension.
+
 **Accepted delivery decision (2026-09-19):** finish the frozen 41-class milestone first.
 The later BADGE-A/B milestone adds a notification/status dot/count badge at category ID 41,
 preserving IDs 0–40, existing raw values and legacy model decoding. It requires versioned
@@ -337,6 +357,12 @@ These are derived by audit rules and post-processing, not by the pixel detector:
 ---
 
 ## 6. Dataset Strategy
+
+**October6 annotation extension:** opt-in annotation1.3 retains every1.2 constraint
+and adds required `taxonomyVersion: "1.1"` plus the badge label. Old schemas stay
+unchanged. The public writer rejects badge under old schemas before writing; it
+never drops the badge or silently upgrades the version. Enclosing annotations remain.
+This software contract does not admit a badge corpus or bypass the41-class gate.
 
 **Lifecycle amendment, October 2, 2026:** follow
 [ADR-0017](ADR-0017-Corpus-Lifecycle-and-OS-Support.md) for OS support, immutable
@@ -620,6 +646,15 @@ automatic admission or evidence of independent source diversity. See
 
 **October5 GEN-PARITY199:** share source-pinned recipes, artwork manifests and
 validation lessons across platforms, not painted UI labels or tvOS focus geometry.
+The opt-in `ios-generator-artwork-v2` catalog extends v1 with explicit train,
+validation and diagnostic-test artwork roles, consistent across ancestry groups.
+V1 remains development-only. `ios-artwork-campaign-v2` freezes the ARTWORK204
+MediaCardGrid96-frame recipe list, exact target/catalog hash and per-recipe asset,
+family and role. Native capture reuses the v1 lifecycle; completion records preserve
+these roles. Role assignment to artwork is not admission of generated annotations.
+Diagnostic-test content is not the final model holdout. Host intake checks full
+membership, geometry, hashes and cross-role decoded-pixel leakage before admission.
+
 The offline asset reuse planner separates artwork, mockups, native captures and
 source code; byte integrity and reported rights checks do not confer training
 eligibility. Existing iOS generator defaults remain unchanged. See

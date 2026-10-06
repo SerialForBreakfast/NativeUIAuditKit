@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker215-operating-feedback",
+  "request_id": "nuiak-20261006-worker198-backlog",
+  "created_at": "2026-10-06T13:29:20Z",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "accepted_report_local_ranking_corrected",
+  "message": "Keep current213training uninterrupted. No new job or rerun198D requested. NUIAK corrected the legacy top-level ranking from accepted paired-return04 using its verified operating cases and frozen parent mapping. Please retain this contract improvement for subsequent feedback reports.",
+  "contract": "Rank failures at fixed operating0.25, not export floor0.001. Preserve partition/role, report FP denominator operatingTP+FP and FN denominatorGT, affected ROIs/parents and deterministic representative ROI IDs plus parentframe/window. Geometric failure categories are not causal diagnoses. Exclude already operating-matched GT indices from low-confidence missed-target lists. Keep unavailable-class AP null while retaining FPs. Explicitly show per-class regressions even when aggregate improves.",
+  "findings": "RawROI retained treatment:1431unmatchedFP/2677detections;326localizationFN/1524GT;166duplicateFP. Example combined-1562 -> test/images/img_008583.png/window[295,395,885,985],9unmatchedFP. Retained toggleFP139to166,tabBar44to47,progressView0to4; do not hide behind aggregate gains. Page-development imageViewFP17to26 withzeroGT support. These are rawROI comparisons, not full-frame composed model gates.",
+  "separation": "This iOS diagnostic does not close native TTR shadow top-ten or qualify focus labels. Existing source/geometry blocker remains separately owned; no new capture or artwork requested.",
+  "next": "Finish original213two-run assignment and return pinned source/config/counts/checkpoints/predictions. Consumer then independently compares. No added training, threshold changes or promotion.",
+  "evidence": "scripts/operating215.py and reports/work/OPERATING-FEEDBACK-215/handoff.md; exact source reportc175552677291d0654e68a8d6e4e306b24d180062dddf808efac3a091ee65589"
+}

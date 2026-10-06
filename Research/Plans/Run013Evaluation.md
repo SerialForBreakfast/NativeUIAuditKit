@@ -1092,6 +1092,24 @@ recall at75/96. Missing exported hypotheses need a different proposal path.
 
 ## IOS-PROPOSAL-197 — bounded proposal support before another trainer
 
+### Native style coverage implementation (210)
+
+Admission decision: retain one lexicographically first member per decoded-pixel
+identity only when all aliases have identical annotation geometry and recipe group.
+Check against sealed20004-member173membership and retained155development pixel audit.
+New families remain training-only, with all18groups excluded from future final
+evaluation. Validate full-frame visible/hidden differences against the native body
+boxes, not merely metadata aliases. Source and representative visual review support
+this narrowly defined native-style intervention; no real-world fidelity claim.
+
+Prepare144recipes with explicit independent style/interaction axes using two new
+training-candidate layouts, `account-summary210` and `document-stack210`. This is a
+new generator path, not a rename of155development layouts. Planning is non-mutating;
+capture is opt-in on an exact target, catalog hash and new container destination.
+Use existing captureUIKit/nativePageEvidence for visible/hidden bounds. Admission
+requires native execution, byte/geometry and ancestry review; catalog role alone
+does not admit pixels. Preserve all existing generator defaults and evidence.
+
 After196comparison, use its terminal evidence and cached022proposals to choose a
 bounded diagnostic, not another epoch extension. No new training/capture is needed
 for the initial support audit. Keep all original image denominators, model artifacts,
@@ -1120,3 +1138,184 @@ Deliver ranked proposal gaps, exact proposed membership, duplicate/negative poli
 latency budget and one source-pinned comparison contract. Missing-label or ancestry
 failures stay blocked rather than silently excluded. Focused tests plus offline
 Swift checks if code changes; no TTR dependency, new data roles, export or promotion.
+
+October6 execution: audit existing fit membership only for design. Select the single
+highest page proposal in[.001,.25), stable export-order ties, then reject overlap IoU>=.5
+with any operating page proposal (no fallback to another candidate). Independently use
+half-width square windows with50%overlap, edge-aligned coverage, generated from image
+dimensions only. Reuse193all-class label clipping for audit; truth never chooses windows.
+Count full/clipped targets and negative crops, keep exact proposed windows without
+copying pixels or inference. This coverage alternative is diagnostic, not a deployable
+latency claim. Freeze any follow-on scoring rule only after this support evidence.
+
+Support02 outcome:216training images/216page targets,185operating-covered.
+135additional windows survive the cap/duplicate rule;17of31missing targets are fully
+contained.10windows retain no page label;52more contain only partial targets. Dense
+windows require6714crops (maximum44/frame),5658without a retained page label. This
+rejects dense windows as the first latency-efficient candidate, not their diagnostic
+value. Counts are containment support, not measured recovery.
+
+Follow-on comparison contract: use frozen022base and026ROI checkpoint; no new training.
+Materialize the135exact support02windows first with193all-class clipping, preserving
+train roles and original pixels. Evaluate all regions, including10negatives and52partial
+targets. Candidate may add at most one unique page donor with ROI score>=.25, original
+proposal IoU>=.25 and no IoU>=.5 duplicate of any operating page box; preserve all existing
+boxes/scores. Use the ROI score alone for a new proposal, never multiply evidence votes.
+No threshold tuning: reject this rule before retained evaluation if it creates any
+false positive on the10training negative regions; partial targets are separately scored,
+not declared negatives. Record this as an initial narrow safety screen, not calibration.
+If it passes, freeze the same rule for existing development/retained full-image membership,
+including every no-proposal image. Report addedTP/FP, missed targets, all14existing gates
+and per-family results. Useful only with additionalTP and no additionalFP on each evaluated
+partition. Measure cold/warm latency; target<=100msmedian/200msp95 added latency, maximum
+one extra crop/frame, on the existing MPS path. This budget is a proposed constraint,
+not an observed speed. Failed screen produces diagnosis; no automatic rule search.
+This remains an experimental comparison, not production promotion or CoreML qualification.
+
+### Post-comparison native-style coverage contract
+
+The frozen rule failed the development no-new-FP condition. Before another candidate,
+inventory existing training-only native UIPageControl styles, interaction state,
+visible-body bounds and size support. Inputs are sealed026membership, generator source
+and existing annotations; development failures are diagnostic only. Report absent and
+unknown style metadata rather than infer it from filenames. Keep manual dot-group and
+native visible-body conventions distinct; resolve any policy ambiguity in architecture
+documentation before changing annotations.
+
+Deliver a deterministic fresh-family capture proposal covering automatic/prominent
+native backgrounds, supported themes and control sizes. Preserve all related groups
+within one data role; exclude prior development/evaluation ancestry. Tests must cover
+missing style metadata, split leakage and visible-body versus dot-only geometry. Reuse
+the qualified generator and batched workflow; do not implement a second cropper. Scope
+of this next assignment is the inventory and executable coverage contract, not automatic
+capture or another training run. Its acceptance is complete accounting, explicit gaps,
+source-backed label semantics and frozen next comparison inputs/budget. Follow with one
+bounded candidate only after fresh data validates; retain the unchanged197comparison
+as diagnostic evidence, not an untouched final holdout.
+Inventory completed October6:1,173crops/289parent annotations/four source families;
+explicit background style absent from all profiles. The next144recipe native-style
+coverage contract is detailed in [the inventory](../../reports/work/IOS-PROPOSAL-197/style-inventory.md).
+Keep requested style and observed body geometry separate; no development-case admission.
+
+Execution budget for the initial197screen:135fit-only crops, Run026
+`de3ffdeec3c4767edc2d4bea0059294a26d87b6c9fc03b9d684de769ed3dd638`,
+640letterbox/MPS with the existing .001export floor and frozen.25admission rule;
+512MiBnew outputs, no training. Preserve cached predictions for any reporting repair.
+Stop retained inference if the negative screen fails or no missing target is recovered
+on fit; this is falsification, not fitting scores to development failures.
+
+The screen passed:17additional truth matches,0negative false admissions. Execute the
+unchanged rule on existing page/combined membership, reuse fit predictions, and preserve
+all original022detections. Budget2GiBderived crops/reports, one026inference per selected
+image maximum, no training. Retained results are diagnostic, not a new untouched holdout.
+# Style210 matched ROI comparison
+
+Reuse roi193's exact window, label transformation and crop writer. Admit no new
+roles: exported96members remain training, all18groups excluded from final evaluation.
+Reject crop pixel overlap with any retained non-fit ROI evaluation; exact duplicates
+within training alias only when labels agree. Preserve all1173 ROI196 crops.
+
+Prepare equal-length control/treatment schedules: both contain all1173 original
+crops once; treatment adds every unique style210 crop once; control adds the same
+number of deterministic balanced repeats of original crops. Repeat choice is by
+SHA256(id), cycling only when needed, independent of outcomes. These are explicit
+sampling slots, not additional unique examples. Equal batch/epoch/accumulation
+settings then give equal optimizer exposure, while measuring new coverage versus
+spending the same compute on existing coverage. Pin slots and parent lineage.
+Do not compare the treatment directly to a shorter historical Run026 as a causal
+data-only effect. Original evaluation membership and deployment rules remain fixed.
+Preparation does not launch training; register exact counts/config/runs afterward.
+
+Execution continuation: Run027control and Run028treatment initialize independently
+from Run022 with fresh state,10epochs each,batch8,nbs64,640square ROI,MPS,float32,
+seed42,AdamW1e-4,cosine,warmup0.25epochs and all augmentation disabled. Reuse the
+roi196 trainer and roi194 evaluation/refinement paths. Both arms have1509slots,
+189batches/epoch; record identical actual optimizer event indices. Fixed-last only.
+At most2GiB per arm, no wall-time cap under standing authority; no automatic retry.
+Training-set validation is diagnostic, not independent validation or selection.
+Run arms serially to preserve memory headroom; old retained evaluations are unchanged.
+
+Evaluate both existing deployment experiments without changing their rules:
+roi194 refinement and roi197_compare's frozen one-extra-proposal path. The motivating
+77pixel prominent-body miss occurred in the latter, so refinement alone is not a
+sufficient comparison. Reuse the exact saved fit/page/combined crop plans; replace
+only the candidate checkpoint and its exported predictions. Old negative-screen
+evidence defines the historical rule, not a negative-screen pass for either new
+candidate. New per-arm false positives and all existing gates still decide fitness.
+No threshold or membership tuning from these results.
+
+Preparation exposed two source-specific issues: jitter can clip wide prominent
+bodies, so exclude and account for those windows before writing crops. Six-decimal
+full-frame YOLO serialization also produces different crop labels for identical
+translated pixels (observed0.000276pixel center discrepancy). For these new inputs
+only, reuse export_coco's conversion on the admitted exact native annotations with
+15decimal intermediate serialization; retain original exported labels unchanged.
+Verify correspondence with their six-decimal export. This corrects intermediate
+rounding, not native geometry; strict identical-pixel/label checks remain enabled.
+# STYLE210 retained-output composition diagnostic — October 6
+
+## IOS-PRECISION-211 — corroborated proposal aliases
+
+### Retention feasibility212 — fixed whole-baseline preservation
+
+Before another replay run, use cached019and022predictions and the fixed028/211page
+path for a CPU-only multi-model feasibility bound. Keep **all** non-page019outputs,
+not per-class winners selected on evaluation. Keep the entire211page output, with
+no thresholds/labels affecting routing. Compare original image IDs/hashes/settings
+before merging. Report all-class metrics and absolute FP/support as well as historical
+retention gates. Retention equality is guaranteed by this construction and is not
+newly learned performance or independent qualification. This would require019full
+frame +022proposal full frame +028crop models: report that cost and do not integrate
+or promote it as a shortcut around the single-model goal. No new inference/training.
+Use results to decide whether a frozen-generalist/specialist architecture warrants
+an explicit cost/quality study, rather than repeat previously failed replay blindly.
+
+Completed212: reject production shortcut. Retention equality restores zero operating
+scroll hits/100,218sheet FP and loses four cancel hits versus022; fresh execution
+needs three models. [Evidence](../../reports/work/IOS-PRECISION-211/retention212.md).
+Next candidate must address absolute operating failures, not just historical gates.
+
+Source diagnosis found all24fit/14development treatment page false positives are
+inherited first-pass proposals. Unique crop donors conflict for38proposals across
+18fit frames and17proposals across7development frames. The old safety rule retains
+both original boxes rather than electing one. Test exactly one alternative, no sweep:
+reuse unique-donor admission (confidence>=.25,original overlap>=.25), sort donors by
+original score descending then original index, and suppress a donor alias when its
+restored box overlaps a previously retained donor atIoU>=.5. Refine each survivor;
+leave all non-corroborated predictions untouched. Then use the frozen composition's
+extra-donor rule unchanged. Never use ground truth to choose the survivor.
+
+Both fixed-last027/028arms use their current cached predictions, original memberships
+and settings. Pin implementation and evidence before one retained evaluation; first
+verify full training-fit accounting and negative/synthetic alias tests. Include two
+genuinely separate nearby controls and overlap-chain behavior to expose over-merging.
+No new inference, training, role changes or production integration. Preserve old
+reports. Evaluate recall/FP/box AP and all existing gates; failed recall or gates
+produce diagnosis, not threshold tuning. These are research/development/retained
+sets, not newly independent final data. No timing claim from CPU-only replay.
+
+Before another proposal/capture/training run, test a CPU-only composition on the
+216training-fit sources. Both current refinement arms already recover all fourteen
+extra-path trailing misses. Hypothesis: the paths are complementary, not evidence
+that a larger crop grid is required. Preserve all existing outputs and pins.
+
+Fixed diagnostic rule: start with the existing refined full-frame predictions;
+append only the extra donor already admitted against the original frozen first
+pass, unless it overlaps a refined operating page prediction at IoU>=0.5. Preserve
+all non-page detections and existing thresholds. No truth-based selection. Reuse
+validated predictions and their existing transforms; do not run another model.
+Report all216cases, negatives/FP, inherited low-confidence misses and overlap
+suppression. Training-fit success is not qualification. Retained evaluation is
+not consulted for choosing this rule; a tested integration and frozen protocol
+are required before broader evaluation. No promotion or parameter sweep.
+# IOS-COST-214 — actual composed-path cost audit
+
+Audit frozen STYLE210/Precision211 refinement-plus-extra plans, not the older
+dense-grid oracle. Reuse all cached predictions, existing merge validation and
+recorded inference timings. Count per-frame crop calls, zero/one/multiple-crop
+frames, decoded pixel volume and exact same-frame window duplicates. Keep roles
+and both checkpoints separate. Verify plans against actual request dimensions and
+validated prediction membership; reject missing/duplicate records or changed inputs.
+No capture, inference, training, threshold/selection change or promotion. Report
+recorded batch cost separately from unmeasured live cold/warm latency. Select a
+follow-on runtime change only if measured duplication or excess cost supports it.

@@ -1,0 +1,14 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-badge-runtime-acceptance02",
+  "request_id":"nuiak-20261006-badge-runtime-review01",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T11:03:20Z","expires_at":"2026-10-13T11:03:20Z",
+  "state":"software_integrated_verified",
+  "receipt":{"file":"joe-big-dog/badge-a-runtime-return02.tar.gz","bytes":43924,"sha256":"bf665d87af821db1870a38fc55a8cb61540dfbd5a5c78d8d3e75c9b6530e615e","receiver":"NUIAK","transfer":"copied_and_verified","members":23,"expanded_bytes":179938},
+  "message":"All three correction topics reviewed and integrated into clean affected Apple source files without overwriting unrelated changes. Native offline build passed; rebuilt full test suite passed139tests/19suites in6.899s, including actual caller/writer and strict/legacy manifest cases. Ten Python checks pass; NUIAK added full-schema parity and ID/label/order digest sensitivity tests. No Apple dependency installation needed on worker.",
+  "next":"Close your BADGE-A software correction request as accepted, retaining originals and evidence. Do not start BADGE-B training or recast existing41-class weights. Run028 checkpoint remains in progress; reuse retained585inputs only when its explicit supplement arrives. Continue other ready owned backlog rather than duplicate accepted benchmarks.",
+  "limits":"Software/API extension only. Existing maps/schema1.0-1.2/shipped models unchanged. Subset binding is not full42-class coverage. Real badge model inference, corpus admission, minor release and model gates remain separate.",
+  "cleanup":"Sender may reconcile receipt and remove only named shared return; retain original. Ack and cleanup are separate from local publication.",
+  "outcomes":{"software_verified":"passed","data_eligible":"unchanged_no_new_corpus","integration_qualified":"Apple_offline_software_only","model_gate_passed":"not_assessed"}
+}

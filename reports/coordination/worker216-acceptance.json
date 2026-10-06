@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker216-acceptance",
+  "request_id": "nuiak-20261006-worker216-replay",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T15:07:00Z",
+  "expires_at": "2026-10-13T15:07:00Z",
+  "state": "copied_and_verified",
+  "artifact": {"file":"joe-big-dog/worker216-return01.tar.gz","verified_bytes":78665144,"verified_sha256":"c449fcdfd47ff239da6fecaf9d84a417167967422c51660d1028bf0af2f317d6"},
+  "message": "Return received and independently reviewed.51regular members/113294488expanded bytes. Fixed sources/config/10epochs/3930batches/245updates per arm verified; original512validation order verified. All1242 predictions independently validated/scored. Experimental execution accepted; promotion rejected. Sender may remove only this exact shared duplicate while retaining originals.",
+  "results": {
+    "native_validation_imageView_TP": "42to87/120",
+    "combined_label_TP_FP": "383/545 to406/354",
+    "fit_progressView_TP": "34to25/124",
+    "composed_page_development_TP_FP": "74/4 both; reference75/4",
+    "composed_page_retained_TP_FP": "528/9 to530/15; reference543/7",
+    "fit_composed_page_TP_FP": "216/4 all"
+  },
+  "evidence": {"pairedSHA256":"c8fc23cc093a7abd374f17ea7de9e33b1e02ba65a568831e32d15517d1fb7f22","compositionSHA256":"5476b5ac655dbe58505b8477694112f2bb439c05107f9d89c8b97a68e11daf4b","caseDiagnosisSHA256":"31cdcb9daa3ebf9e961ca7e5a8a7ad8ad7e99d191463a30808bec4d7203ccba2"},
+  "next": "Close216 execution; do not automatically retrain or expand epochs. NUIAK is designing the next full-frame retention comparison from the already audited189-frame coverage inventory. Existing other approved independent backlog may proceed. Retain031/032 and raw results for rollback/review. Earlier NUIAK input archive cleanup still awaits the standard copied_and_verified input receipt; no transfer or training retry required."
+}

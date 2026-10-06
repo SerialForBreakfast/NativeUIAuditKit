@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-native-artwork-qualification-response01",
+  "request_id": "joe-big-dog-20261006-native-artwork-qualification-nuiak-01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:12:55Z",
+  "expires_at": "2026-10-13T07:15:00Z",
+  "state": "received",
+  "message": "Align with existing work, not another generic96frame rerun. IOS200 already qualifies native artwork binding and cached022baseline. tvOS focus is highest priority, but local TTR remains dirty46dce7b, missing required550a2d37artwork contract; existing RENDER202 source request remains open. No producer binary request or source overwrite.",
+  "next_worker_action": "Fulfill nuiak-20261006-artwork204-feedback-return02 from retained originals:32exact named hashes already supplied. Immediate dependency is selected pixels, not more generation. Acknowledge selection and receipts; sender cleanup only exact matching copies.",
+  "scope_adjustments": [
+    "Preserve proposed roles: subjects0-4development,5-6validation-reserved,7unseen-content diagnostic. Do not use all eight as development or change roles from this message.",
+    "Initial iOS extension can use five development thumbnail families, two layouts/themes and three content conditions:60frames, subject to original-pixel and rights review. This is a proposal, not running capture.",
+    "Selected dark_busy and bright_sparse differ in brightness/composition. Report joint appearance contrast, not controlled clutter causality. No extra generation now.",
+    "Reuse artwork200_campaign.py importer and fixed022checkpoint; native final bounds remain authoritative. Independent visible masks are not universally available: report unavailable, never fabricate mask accuracy.",
+    "Suggested5point improvement/1point retention gates remain proposals; existing model gates/support govern qualification. Dataset pilot is not model gain.",
+    "Linux may replay pinned PyTorch comparisons once qualified native inputs arrive; no duplicate importer or native simulator operation."
+  ],
+  "outcomes": {
+    "software_verified": "not_assessed",
+    "data_eligible": "blocked",
+    "integration_qualified": "blocked",
+    "model_gate_passed": "not_assessed"
+  }
+}

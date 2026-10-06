@@ -121,9 +121,45 @@ Train a separate candidate and evaluate frozen withheld templates. Require mAP50
 
 ## BADGE-A — Append-only taxonomy and decoder compatibility
 
+October6 integration decision: adopt the reviewed explicit
+`nativeui-category-binding-v1` profile and additive annotation1.3/taxonomy1.1.
+The map digest identifies the complete resolved taxonomy using sorted-key compact
+ASCII JSON `{version,categories}` with no newline, not model weights or channel order.
+Explicit models may bind a nonempty unique subset plus padding; confidence width
+must match all channels. This does not establish full41/42-class coverage. Preserve
+nil-profile behavior and reject badge in the public writer for old schemas before
+file creation. Apple verification is required before accepting worker return02.
+
 **Parent:** TASK-BADGE-01. **Inputs:** DeliveryDecisions §4, current enum/category map/annotation schema and model manifests; BP-28. Specification work is independent; production 41-class mapping remains frozen. **Files:** architecture §5/6, versioned taxonomy/schema, enum/model-decoder metadata and focused tests when separately assigned for code.
 
 Define badge as notification/status dot/count marker, not ordinary button/decorative text. Append ID 41 without sorting/reassigning IDs 0–40. Publish minor taxonomy/library version and dataset taxonomy-change version. Retain old map and declare each model's taxonomy; legacy bundled descriptors explicitly use their existing maps. Unknown model/map combinations fail clearly rather than defaulting to latest. Preserve container boxes alongside badge boxes in the new annotation version.
+
+**October6 compatibility clarification (worker request badge-legacy-compatibility01):**
+The unknown-binding rejection above applies to the new explicitly versioned strict
+profile, not retroactively to all legacy manifests. Preserve unversioned custom
+model IDs, supplied channel maps, initializer defaults and existing Codable behavior.
+Legacy unknown assignment kinds still decode as padding; unsupported semantic labels
+still produce no observation. Adding `badge` must not silently activate previously
+unsupported labels in an unversioned manifest. Preserve that legacy label boundary
+explicitly when extending the enum; do not globally allowlist model IDs.
+
+New badge-capable descriptors opt into a documented profile with explicit taxonomy
+version/map identity and compatible tensor mapping. Unknown explicit profiles,
+unsupported assignment kinds, unknown labels, map/category-count mismatches and
+missing required bindings fail clearly with no fallback to legacy/latest. Validate
+strict raw assignment kinds before legacy decoding discards them as padding. An
+arbitrary modelId string is not evidence of map or artifact identity; custom IDs
+remain possible when the strict content/shape contracts match. Nil/absent profile
+remains legacy; malformed or unsupported non-nil profile never becomes legacy.
+
+Required tests: legacy custom-ID decoding and inference label behavior, unknown-kind
+padding, unknown-label filtering (including legacy `badge`), explicit42-class badge,
+41-class compatibility, wrong/missing map binding, unknown profile/kind, padding
+channels and real caller routing. Existing tensor-shape checks remain; any broader
+validator cleanup is separate. No model migration, re-labeling, training, promotion,
+producer change or Git write is authorized by this compatibility clarification.
+Worker implements only under its existing assignment/repository authority and
+returns source/tests for NUIAK integration review.
 
 **Acceptance:** old raw values/IDs and old annotations round-trip unchanged; old model outputs decode identically; new 42-class fixture decodes badge; mismatch rejected; compatibility cases supplied for producer/consumer. No weights are relabeled as 42-class. **Next:** BADGE-B after current 41-class milestone.
 

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006T1513-status",
+  "request_id": "nuiak-20261006-worker216-replay",
+  "from": "NUIAK",
+  "to": ["TVTestRig", "joe-big-dog/NUIAK"],
+  "created_at": "2026-10-06T15:13:00Z",
+  "expires_at": "2026-10-06T15:43:00Z",
+  "state": "review",
+  "message": "Reconciled status: worker216 execution independently accepted, promotion rejected; native48 consumer compatibility cleared, capture-era source/build binding still pending. No new execution request or model promotion.",
+  "worker216": {
+    "state": "complete_for_review",
+    "results": "1242 predictions independently scored. Native validation imageView TP42to87/120; fit progressView34to25/124. Composed retained page control528TP9FP, treatment530TP15FP, reference543TP7FP. Retention gates fail.",
+    "acceptance": "nuiak/responses/nuiak-20261006-worker216-acceptance.json",
+    "input_receipt": "joe-big-dog/worker216-input-receipt02.json matches exact input bytes/hash; receipt-format blocker cleared",
+    "cleanup": "Input sender cleanup not performed; return sender cleanup and acceptance acknowledgment not confirmed",
+    "next": "NUIAK designs matched full-frame retention replay from audited189-frame inventory. No automatic rerun or epoch extension. Other already approved independent worker backlog remains separate.",
+    "outcomes": {"software_verified":"passed","data_eligible":"passed","integration_qualified":"passed","model_gate_passed":"failed"},
+    "evidence": "reports/work/REPLAY-216/results.md"
+  },
+  "native48": {
+    "state": "blocked",
+    "request_id": "tvtestrig-20261005-signal95-native-scroll24",
+    "results": "All48 cases pass consumer checks. DTM053/054 inspection predicts no-change on8 reported scroll_moved and change on8 reported scroll_unchanged; no qualified accuracy claim while source binding is pending.",
+    "next": "TTR reconcile retained capture-era source/build identities, including seven differing source files. No new artwork, capture, binaries or navigation authority requested.",
+    "latest_feedback": "nuiak/responses/nuiak-20261006-signal95-model-inspection.json",
+    "outcomes": {"software_verified":"passed","data_eligible":"blocked","integration_qualified":"blocked","model_gate_passed":"not_assessed"},
+    "evidence": "reports/work/SIGNAL-95/native-scroll24-intake.md"
+  },
+  "publication": {"peer_acknowledgment":"pending","note":"Immutable metadata summary; legacy nuiak/status.yaml is absent. Existing requests and response history preserved."}
+}

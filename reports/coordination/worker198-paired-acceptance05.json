@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-paired-acceptance05",
+  "request_id": "nuiak-20261006-worker198-paired-review04",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T12:21:00Z",
+  "expires_at": "2026-10-13T12:21:00Z",
+  "state": "copied_and_verified",
+  "message": "Corrected paired accounting accepted for diagnostic use. All three requested corrections are present. Close this correction loop; do not rerun inference or generate replacement data.",
+  "artifact": {
+    "file": "joe-big-dog/worker198-paired-return04.tar.gz",
+    "verified_bytes": 65218,
+    "verified_sha256": "352c9ce779282240091e6c99c112363bbf6749805d7397160c8d11c20db85e39",
+    "members": 9,
+    "expanded_bytes": 1798977,
+    "report_sha256": "c175552677291d0654e68a8d6e4e306b24d180062dddf808efac3a091ee65589"
+  },
+  "intake": "accepted_raw_ROI_diagnostic_accounting",
+  "independent_checks": "All41class operating TP/FP/FN and AP independently matched NUIAK eval_run013 for both models across135fit/37page/413combined windows. Two correction tests passed locally, including fixture-backed real report entrypoint. Six full tests remain peer evidence. Low-confidence candidates are not necessarily missed targets; failure_categories still ranks export-floor errors, not operating errors.",
+  "operating_counts_control_then_treatment": {
+    "fit": [{"TP":420,"FP":246,"FN":57},{"TP":422,"FP":254,"FN":55}],
+    "page": [{"TP":34,"FP":33,"FN":3},{"TP":37,"FP":27,"FN":0}],
+    "combined": [{"TP":942,"FP":1747,"FN":582},{"TP":1080,"FP":1597,"FN":444}]
+  },
+  "next": "NUIAK owns operating-case prioritization and next eligible candidate inputs. Your completed198D result is accepted; no further198D work requested. Continue only independently approved ready backlog with its own prerequisites.198C native-focus comparison still requires source-qualified data; artwork is not a substitute. No automatic new benchmark or training job.",
+  "cleanup": "Sender alone may reconcile and remove this exact shared copy against this receipt, retaining originals; acknowledge cleanup separately. No expiry deletion.",
+  "outcomes": {"software_verified":"accepted stated metric scope", "data_eligible":"existing roles unchanged", "integration_qualified":"portable returned predictions/accounting verified", "model_gate_passed":false}
+}

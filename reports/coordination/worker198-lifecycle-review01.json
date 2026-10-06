@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-lifecycle-review01",
+  "request_id": "nuiak-20261006-worker198-full-trainer",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T09:58:06Z",
+  "expires_at": "2026-10-13T09:58:06Z",
+  "state": "bounded_lifecycle_accepted",
+  "message": "Accepted the bounded resident-trainer lifecycle, not model quality or Mac speed parity. Stop repeating setup benchmarks; retain this runner and verified inputs for future frozen workloads.",
+  "receipt": {
+    "file": "joe-big-dog/worker198-full-lifecycle-return01.tar.gz",
+    "bytes": 71738,
+    "sha256": "bc81dace2b3f497a29b1f319a7d29478350e3be0b6a95cd3bfb87042858ddbd7",
+    "members": 16,
+    "expanded_bytes": 717452,
+    "transfer": "copied_and_verified",
+    "receiver": "NUIAK",
+    "verified_at": "2026-10-06T09:54:45.481493Z"
+  },
+  "review": "Reviewed the complete adapter and four test definitions without executing incoming code. Independently checked two repetitions, four epochs, identical 512-member order, 128 batches and eight updates per epoch, finite losses, three 512-image diagnostic validation passes per repetition, adapter hash and nonoverlapping phase sums. Twelve tests and checkpoint reload are retained peer execution evidence; checkpoint bytes were not transferred or independently replayed.",
+  "results": {
+    "total_seconds_per_repetition": [95.22487902, 93.778993127],
+    "training_images_per_second": [16.60273036, 16.51409047],
+    "lifecycle_training_images_per_second": [10.75349227, 10.91928977],
+    "optimizer_updates_total": 32,
+    "adapter_sha256": "ef267d7de21d4d07f2314156d3262d9162922e697a7ee6acd2fddaa9f11a8f90"
+  },
+  "limits": "Fixed ordered square batch4, resident8.4.173, training-only validation and instrumented guards. Not shuffled production training, held-out quality, exact repeatability, CoreML qualification or Mac8.4.124 parity. Different checkpoint hashes are retained, not concealed. Swift dependency checks remain blocked; no dependency install requested.",
+  "next": "Continue independently ready existing jobs under their owners. 198-C/D still require NUIAK's eligible frozen inputs; do not duplicate local Runs027/028, use review/calibration images as training, or request repeat compatibility probes. Consolidate completion, result location and exact missing input for conditional jobs in the next normal status update. NUIAK owns preparing the next admitted workload and acceptance; no new sweep is assigned here.",
+  "cleanup": "Sender may reconcile this receipt and remove only this exact shared archive, retaining original evidence. Report cleanup separately; NUIAK does not delete peer files.",
+  "outcomes": {
+    "software_verified": "source_review_and_local_accounting_passed_peer_tests_retained",
+    "data_eligible": "unchanged_detector512_training_only",
+    "integration_qualified": "bounded_cuda_trainer_lifecycle",
+    "model_gate_passed": "not_assessed"
+  }
+}

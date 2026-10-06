@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker216-composition-feedback",
+  "request_id": "nuiak-20261006-worker216-replay",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T14:12:00Z",
+  "expires_at": "2026-10-13T14:12:00Z",
+  "state": "consumer_retention_rejection_no_job_change",
+  "message": "NUIAK completed213full-frame composition using retained predictions; no new inference.031/032training contract unchanged. Preserve complete prediction artifacts; NUIAK will repeat this consumer-level acceptance on216returns. Do not substitute raw ROI AP for this check.",
+  "scope": "Fixed022fullframe +028refinement +211alias rule; vary only extra-page donor. Reference028 is not a matched training/backend control;029vs030 is the matched pair. Not standalone detector or tvOS focus qualification.",
+  "results": {
+    "fit216": {"reference028":{"tp":216,"fp":4},"control029":{"tp":216,"fp":4},"treatment030":{"tp":216,"fp":4}},
+    "development96": {"reference028":{"tp":75,"fp":4},"control029":{"tp":72,"fp":5},"treatment030":{"tp":69,"fp":8}},
+    "retained600targets2400frames": {"reference028":{"tp":543,"fp":7},"control029":{"tp":513,"fp":7},"treatment030":{"tp":437,"fp":7}}
+  },
+  "decision": "Reject030as replacement extra donor:106fewer retained hits versus reference,76fewer versus matched029control. Non-page outputs unchanged. Native-artwork benefit remains real within its scope but is insufficient for replacement. Existing reference still fails other inherited gates; no promotion of any model.",
+  "evidenceSHA256": "5c0b7855cb64bc4ae7c20188b0ed8d8867aa1a3d70799f951dc52481820e52f5",
+  "next": "Continue only the already assigned216pair after local preflight; report acknowledgment/start/terminal. No extra run, generation, threshold tuning or source installation requested."
+}

@@ -140,7 +140,7 @@ def appearance_digest_source(recipe):
             suffix+=':collectionContext='+context
         selected = canvas.get('selectedIndex')
         if selected is not None:
-            rich_table=presentation=='native_table_v2' and (canvas.get('nativeTable') or {}).get('version')==2
+            rich_table=presentation=='native_table_v2' and (canvas.get('nativeTable') or {}).get('version') in (2,3)
             require(type(selected) is int and (presentation in ('tabs', 'nested_tabs_v1') or rich_table) and
                     0 <= selected < 64 and uint(recipe.get('element_count')) and
                     selected < recipe['element_count'] and (not rich_table or selected<6), 'canvas_selectedIndex')
@@ -176,22 +176,28 @@ def appearance_digest_source(recipe):
         if presentation == 'native_table_v2':
             # 50ff7fd8 FixtureAppearance.NativeTable; preserve v1 canonical bytes.
             fields={'version','width','rowHeight','x','y'}
-            require(isinstance(table,dict) and fields<=set(table) and set(table)<=fields|{'viewportHeight','richContent'}, 'canvas_native_table_fields')
+            require(isinstance(table,dict) and fields<=set(table) and set(table)<=fields|{'viewportHeight','richContent','artwork'}, 'canvas_native_table_fields')
             version=table['version']
+            # 550a2d37 FixtureAppearance.NativeTable: v3 adds owned artwork,
+            # not authenticated capture identity or training admission.
+            require((version==3 and table.get('artwork') in ('city','orbit','collage','checkerboard')
+                     and type(table.get('richContent')) is bool) or
+                    (version in (1,2) and table.get('artwork') is None), 'canvas_native_table_artwork')
             require((version==1 and table.get('viewportHeight') is None and table.get('richContent') is None) or
-                (version==2 and table.get('richContent') is True and type(table.get('viewportHeight')) is int and
+                (version in (2,3) and (version==3 or table.get('richContent') is True) and type(table.get('viewportHeight')) is int and
                  360<=table['viewportHeight']<=860 and type(table['y']) is int and table['y']+table['viewportHeight']<=1040), 'canvas_native_table_version')
-            require(all(type(table[k]) is int for k in fields) and version in (1,2) and
+            require(all(type(table[k]) is int for k in fields) and version in (1,2,3) and
                 600<=table['width']<=1400 and 80<=table['rowHeight']<=120 and
                 80<=table['x']<=400 and 120<=table['y']<=220 and
                 table['x']+table['width']<=1840 and table['y']+table['rowHeight']*6<=980,
                 'canvas_native_table_geometry')
             require(canvas['version']==2 and canvas['showLabels'] and canvas['columns']==1 and
-                recipe['element_count']==6 and (selected is None or version==2) and tabs is None and
+                recipe['element_count']==6 and (selected is None or version in (2,3)) and tabs is None and
                 mixed is not True and fill is not True and all(canvas.get(k) is None for k in
                 ('composition','nativeButton','cardGeometry','contrastNeighbors')), 'canvas_native_table_layout')
             suffix += ':native-table@' + ':'.join(str(table[k]) for k in ('version','width','rowHeight','x','y'))
-            if version==2:suffix+=f":viewport={table['viewportHeight']}:rich=true"
+            if version in (2,3):suffix+=f":viewport={table['viewportHeight']}:rich={str(table['richContent']).lower()}"
+            if version==3:suffix+=':artwork='+table['artwork']
         else:
             require(table is None, 'canvas_native_table_presentation')
         button = canvas.get('nativeButton')

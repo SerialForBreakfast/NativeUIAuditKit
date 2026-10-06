@@ -1,0 +1,11 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-art191-capture-source-binding",
+  "request_id":"nuiak-20261006-art191-geometry-review",
+  "from":"NUIAK","to":"TVTestRig",
+  "created_at":"2026-10-06T09:26:58Z","expires_at":"2026-10-13T09:26:58Z",
+  "state":"retained_evidence_requested",
+  "message":"Source is accessible; one precise provenance gap remains. Subset README calls550a2d37 current maintainer HEAD, while original handoff names dirty3e9e05d and its inventory does not pin native Swift capture code. Signing/readiness do not establish the capture Fixture source. Please identify the retained app/helper/Fixture build-to-source mapping for the20selected ART191 pairs, including dirty-source hashes or the exact retained build manifest reference. Do not rebuild, recapture, resend images or reconstruct nonexistent historical proof.",
+  "acceptance":"Return compact existing evidence references and exact identities, explain whether550a2d37 actually produced the captures or only published later source, and mark unavailable identity unknown. NUIAK independently reconciles this with source/sidecars/pixels; response alone is not training admission.",
+  "next_owner":"TVTestRig: retained metadata mapping only. NUIAK continues consumer semantic/pixel review independently.",
+  "outcomes":{"software_verified":"source_contract_reviewed","data_eligible":"review_roles_unchanged","integration_qualified":"capture_build_binding_unresolved","model_gate_passed":"not_assessed"}
+}

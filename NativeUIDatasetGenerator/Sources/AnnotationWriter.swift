@@ -29,6 +29,7 @@ public enum AnnotationWriter {
     public enum Schema: String, Sendable {
         case legacy = "1.0"
         case measuredState = "1.2"
+        case badgeTaxonomy = "1.3"
     }
 
     // MARK: - Public API
@@ -52,6 +53,9 @@ public enum AnnotationWriter {
         to outputURL: URL,
         schema: Schema = .legacy
     ) throws {
+        if schema != .badgeTaxonomy, result.elements.contains(where: { $0.elementType == "badge" }) {
+            throw AnnotationWriterError.badgeRequiresTaxonomySchema
+        }
         let json = buildJSON(
             result: result,
             config: config,
@@ -182,6 +186,7 @@ public enum AnnotationWriter {
 
         return AnnotationJSON(
             schemaVersion: schema.rawValue,
+            taxonomyVersion: schema == .badgeTaxonomy ? "1.1" : nil,
             imageSHA256: result.sha256,
             image: imageInfo,
             generatorProfile: generatorProfile,
@@ -194,11 +199,16 @@ public enum AnnotationWriter {
 
 /// Errors surfaced by `AnnotationWriter`.
 public enum AnnotationWriterError: Error, CustomStringConvertible {
+    /// Badge annotations require explicit schema1.3; no silent filtering or upgrade.
+    case badgeRequiresTaxonomySchema
+
     /// A Vision-normalized coordinate fell outside [0, 1].
     case coordinateOutOfBounds(elementID: String, coord: String, value: Double)
 
     public var description: String {
         switch self {
+        case .badgeRequiresTaxonomySchema:
+            return "Badge requires explicit badgeTaxonomy schema1.3."
         case .coordinateOutOfBounds(let id, let coord, let val):
             return "Element '\(id)': \(coord) = \(val) is outside [0, 1]."
         }
@@ -212,6 +222,7 @@ public enum AnnotationWriterError: Error, CustomStringConvertible {
 struct AnnotationJSON: Codable {
 
     let schemaVersion: String
+    let taxonomyVersion: String?
     let imageSHA256: String
     let image: ImageInfo
     let generatorProfile: GeneratorProfile

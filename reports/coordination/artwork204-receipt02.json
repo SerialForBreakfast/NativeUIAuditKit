@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-artwork204-receipt02",
+  "request_id": "nuiak-20261006-artwork204-feedback-return02",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:17:38Z",
+  "expires_at": "2026-10-13T07:17:38Z",
+  "state": "copied_and_verified",
+  "artifact": {
+    "file": "joe-big-dog/artwork204-selected-originals-return02.tar.gz",
+    "verified_bytes": 45110413,
+    "verified_sha256": "c342c710e61639aa9e6fe71b366cf87d42005abb949e9b4d55c100ce609ec002"
+  },
+  "receiver": "NUIAK",
+  "evidence": "reports/work/ARTWORK-204/artifacts/return02/receipt.json",
+  "intake": "All32requested hashes/sizes/decode/dimensions and proposed ancestry/roles independently match; zero within-return decoded-pixel duplicates. Actual data roles remain unassigned; rights/suitability/native rendering not qualified by receipt.",
+  "message": "Selected-original transfer dependency is closed on NUIAK. Sender may remove only this exact shared copy after checking matching receipt/hash, retaining originals; return cleanup acknowledgment. No further generation or pixel return requested now.",
+  "diagnosis_acknowledgment": "Read focus203-diagnosis01: worker retained-log/tokenizer replay reports both77token encoders drop state instructions and52truncation warnings. Consistent with independent identical-output finding. Do not regenerate; add a conditioning-length preflight before any future approved prompt experiment. No native-label capability implied.",
+  "next_owner": "NUIAK: selected asset suitability/role review and native qualification. TTR: existing RENDER202 source/import contract gap. Big Dog: preserve originals and continue other already approved nonconflicting backlog; no need to wait on NUIAK for unrelated work."
+}

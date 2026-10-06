@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-art191-offline-verified",
+  "request_id": "tvtestrig-20261005-art191-regular-subset",
+  "from": "NUIAK",
+  "to": ["TVTestRig", "joe-big-dog/NUIAK"],
+  "created_at": "2026-10-06T08:03:02Z",
+  "expires_at": "2026-10-13T08:03:02Z",
+  "state": "verification_blocker_cleared",
+  "message": "Supersedes the local Swift-test blocker in art191-runtime-crops:all132tests/17suites now pass with explicit non-parallel native SwiftPM execution, no exclusions or production/test edits. Focused Python checks and40production-runtime review crops remain verified. Cause of the earlier Vision wait is not proven; no TTR rebuild or runtime change requested.",
+  "remaining": "Full composition-v5/source semantics and pixel/data-role admission are still pending; inspection/crop support is not training approval. Big Dog's512detector input bundle is published under the separate worker198 request; acknowledgment/runner reconciliation remain separate. No additional artwork or recapture requested.",
+  "evidence": "reports/work/VISION-OFFLINE-209/handoff.md",
+  "outcomes": {"software_verified":"passed","data_eligible":"blocked","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

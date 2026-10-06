@@ -201,10 +201,68 @@ def output(value, target):
         f.write(text)
 
 
+def normalize_artwork204(value, review, source_hash):
+    """Explicit local review, bound to source bytes; unreviewed siblings stay pending."""
+    require(type(value) is dict and value.get('schema') == 'generator-resource-inventory-v1', 'artwork204_schema')
+    keys(review, {'schemaVersion', 'sourceSHA256', 'evidence', 'familyRoles', 'reviewedIDs', 'useScope'})
+    require(review['schemaVersion']=='artwork204-review-v1' and
+            sha(review['sourceSHA256'])==source_hash, 'review_source_mismatch')
+    evidence=string(review['evidence']);string(review['useScope'])
+    families=review['familyRoles'];require(type(families) is dict and families,'family_roles')
+    for family,role in families.items():
+        identity(family);require(role in ROLES-{'unassigned'},'family_role')
+    selected=records(review['reviewedIDs']);require(len(selected)==len(set(selected)),'duplicate_review')
+    for item in selected:identity(item)
+    seen=set();found=set();out=[]
+    for r in records(value.get('resources')):
+        require(type(r) is dict and r.get('dataRole')=='unassigned' and
+                r.get('kind') in ('poster','thumbnail','avatar','backdrop'),'producer_role')
+        groups=records(r.get('ancestryGroups'));require(groups,'ancestry')
+        role_set={families[g] for g in groups if g in families}
+        require(len(role_set)<=1,'cross_role_ancestry');found.update(set(groups)&families.keys())
+        reviewed=r['id'] in selected;seen.add(r['id'])
+        require(not reviewed or role_set,'review_without_role')
+        out.append(dict(id=r['id'],kind='artwork',sha256=r['sha256'],bytes=r['bytes'],
+            source=r['source'],sourceRevision=r['sourceRevision'],ancestryGroups=groups,
+            dataRole=next(iter(role_set),'unassigned'),rightsStatus='verified' if reviewed else 'pending',
+            reviewStatus='verified' if reviewed else 'pending',rightsEvidence=[evidence] if reviewed else [],
+            reviewEvidence=[evidence] if reviewed else [],sourceRecord=dict(producer=r,
+                assessmentScope=review['useScope'],reviewSourceSHA256=source_hash)))
+    require(set(selected)<=seen and found==set(families),'unknown_review_member_or_family')
+    inventory=dict(schemaVersion='generator-resource-inventory-v1',resources=out)
+    validate_inventory(inventory);components(out)
+    return inventory
+
+
 def metadata(path):
     path = Path(os.path.abspath(path))
     require(path.resolve() == path and stat.S_ISREG(path.lstat().st_mode), 'metadata_file_type')
     return document(path)
+
+
+def inventory_metadata(path, expected_sha256=None, *, max_bytes=4*1024**2, max_nodes=100000):
+    """Larger JSON inventory budget, never relax the coordination parser."""
+    require(type(max_bytes) is int and 0<max_bytes<=8*1024**2,'inventory_budget')
+    require(type(max_nodes) is int and 0<max_nodes<=150000,'inventory_node_budget')
+    path=Path(os.path.abspath(path))
+    require(path.resolve()==path and stat.S_ISREG(path.lstat().st_mode),'metadata_file_type')
+    require(path.stat().st_size<=max_bytes,'inventory_size')
+    raw=path.read_bytes();require(len(raw)<=max_bytes,'inventory_size')
+    require(expected_sha256 is None or hashlib.sha256(raw).hexdigest()==sha(expected_sha256),'review_source_mismatch')
+    def unique(pairs):
+        result={}
+        for key,value in pairs:
+            require(key not in result,'duplicate_key');result[key]=value
+        return result
+    def invalid(value):raise ValueError('nonfinite_json')
+    value=json.loads(raw,object_pairs_hook=unique,parse_constant=invalid)
+    stack=[(value,0)];count=0
+    while stack:
+        item,depth=stack.pop();count+=1
+        require(depth<=32 and count<=max_nodes,'inventory_complexity')
+        if isinstance(item,dict):stack.extend((v,depth+1) for v in item.values())
+        elif isinstance(item,list):stack.extend((v,depth+1) for v in item)
+    return value
 
 
 def main():
@@ -218,11 +276,18 @@ def main():
     n = sub.add_parser('normalize-image201')
     n.add_argument('--inventory', type=Path, required=True)
     n.add_argument('--output', type=Path)
+    a = sub.add_parser('normalize-artwork204')
+    a.add_argument('--inventory', type=Path, required=True)
+    a.add_argument('--review', type=Path, required=True)
+    a.add_argument('--output', type=Path)
     args = parser.parse_args()
     try:
-        value = metadata(args.inventory)
-        result = normalize_image201(value) if args.command == 'normalize-image201' else plan(
-            value, metadata(args.cache_index), args.cache_root)
+        if args.command == 'normalize-artwork204':
+            review=metadata(args.review)
+            value=inventory_metadata(args.inventory,review['sourceSHA256'])
+            result=normalize_artwork204(value,review,review['sourceSHA256'])
+        elif args.command == 'normalize-image201':result=normalize_image201(metadata(args.inventory))
+        else:result=plan(inventory_metadata(args.inventory), metadata(args.cache_index), args.cache_root)
         output(result, args.output)
         return 0
     except (ValueError, OSError, KeyError, TypeError) as exc:

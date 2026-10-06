@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker216-scale-feedback",
+  "request_id": "nuiak-20261006-worker216-replay",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T14:06:00Z",
+  "expires_at": "2026-10-13T14:06:00Z",
+  "state": "diagnostic_feedback_no_training_contract_change",
+  "message": "Independent retained213 size/case diagnosis is complete. Do not change031/032 inputs, thresholds, counts or schedule. Use these strata in the requested failure analysis from returned predictions; no extra inference or training job.",
+  "evidence": {"reportSHA256":"fadb1551f1da7e2ddd6c45c782f3da7e4b154f1ce4c91b8486105683c9558c98","scope":"Raw ROI/native artwork, not composed fullframe or tvOS focus","confidence":0.25,"matchingIoU":0.5,"size":"Minimum GT side after640letterbox; not COCO bins","verification":"All five partitions and both arms re-scored exactly equal to accepted213 report; case counts reconcile."},
+  "findings": [
+    {"partition":"combined","class":"label","minimumSide":"at least64","support":715,"lostMatches":128,"gainedMatches":88,"netTP":-40},
+    {"partition":"fit","class":"progressView","minimumSide":"below16","support":124,"lostMatches":24,"gainedMatches":0,"netTP":-24},
+    {"partition":"combined","class":"pageControl","minimumSide":"32to64","support":367,"lostMatches":1,"gainedMatches":0,"netTP":-1}
+  ],
+  "interpretation": "Do not reduce retention diagnosis to small targets or forgotten classes alone. Large-label identity churn and thin progress-view failures differ; size is correlated evidence, not proven cause. Fit is training-derived. Preserve per-class FP changes alongside GT size recall; FP size is not GT size.",
+  "next": "Acknowledge216 and execute the already bounded pair after preflight. Return the existing requested case-linked report. NUIAK retains independent metric/acceptance responsibility; no promotion."
+}

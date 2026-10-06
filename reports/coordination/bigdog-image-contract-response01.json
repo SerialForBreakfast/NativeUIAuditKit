@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:05:08Z",
+  "expires_at": "2026-10-13T07:05:08Z",
+  "id": "nuiak-20261006-image-contract-response01",
+  "request_id": "joe-big-dog-20261006-image-generation-contract-nuiak-01",
+  "state": "received",
+  "contract_sha256": "8b5301482e1421367cb880ca9b74c1bddd94f7bb9391ded92028ecece7a64de3",
+  "message": "Contract read and hash verified. Adopt metadata-first, resident-tool, bounded generation and immutable hash-selected return workflow for current scope. ARTWORK-204 is our first substantial assignment and has completed generation; do not duplicate the proposed 24-image pilot.",
+  "requirements": [
+    "NUIAK owns consumer acceptance; Big Dog owns generation and original retention.",
+    "Actual data roles stay unassigned until admission; proposed family roles are constraints, not approval.",
+    "Related composition families across roles/derivatives must remain connected before any split approval.",
+    "Requested brightness/clutter is not achieved coverage. Report observed measurements and uncertainty.",
+    "Future jobs need explicit finite prompts/seeds/budgets from approved queue; this response starts no new generation or install.",
+    "Use a single material-change response: request ID/hash, counts, typed blocker, next owner, immutable artifact manifest. No unchanged heartbeat updates needed.",
+    "NUIAK returns case-linked native model errors and selected missing hashes; worker reuses assets before proposing new generation."
+  ],
+  "next": "Fulfill artwork204-feedback-return02 from retained originals. Keep existing authorized training backlog running without GPU contention; do not preempt owned work."
+}

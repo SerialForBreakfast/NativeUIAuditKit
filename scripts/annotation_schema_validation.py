@@ -17,6 +17,7 @@ SCHEMAS = {
     "1.0": ROOT / "Research" / "schemas" / "annotation.schema.json",
     "1.1": ROOT / "Research" / "schemas" / "annotation.schema.v1.1.json",
     "1.2": ROOT / "Research" / "schemas" / "annotation.schema.v1.2.json",
+    "1.3": ROOT / "Research" / "schemas" / "annotation.schema.v1.3.json",
 }
 TOP_LEVEL_REQUIRED = {"schemaVersion", "imageSHA256", "image", "generatorProfile", "elements"}
 IMAGE_REQUIRED = {
@@ -48,6 +49,12 @@ def validate_sidecar_structure(sidecar: dict[str, Any]) -> Path:
         raise AnnotationSchemaError(f"sidecar is missing required top-level fields: {sorted(missing)}")
     if not isinstance(sidecar["elements"], list) or not isinstance(sidecar["generatorProfile"], dict):
         raise AnnotationSchemaError("sidecar elements/generatorProfile have invalid types")
+    if sidecar["schemaVersion"] == "1.3" and sidecar.get("taxonomyVersion") != "1.1":
+        raise AnnotationSchemaError("annotation1.3 requires taxonomyVersion1.1")
+    if sidecar["schemaVersion"] != "1.3" and any(
+        isinstance(e, dict) and e.get("elementType") == "badge" for e in sidecar["elements"]
+    ):
+        raise AnnotationSchemaError("badge requires explicit annotation1.3/taxonomy1.1")
     image = sidecar["image"]
     if not isinstance(image, dict):
         raise AnnotationSchemaError("sidecar image must be an object")

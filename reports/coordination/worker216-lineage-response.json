@@ -1,0 +1,16 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-worker216-lineage-response",
+  "request_id":"worker216-evaluation-lineage-request01",
+  "from":"NUIAK",
+  "to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T14:19:00Z",
+  "expires_at":"2026-10-13T14:19:00Z",
+  "state":"lineage_available_training_unchanged",
+  "message":"Exact ROI-to-parent/window mapping supplied from your already retained proposal-mapping.json and NUIAK's frozen full-frame manifests. No pixels or changed input membership. Keep current031/032training and scoring unchanged.",
+  "artifact":{"file":"nuiak/worker216-evaluation-lineage02.json","bytes":425895,"sha256":"87fc95bd82954ebd3848ef9b4b909c47689d16f79a45207e81a471b4be0fb37a"},
+  "contract":"Verify file hash, schema worker216-evaluation-lineage-v1, partition content hashes and every ROI image/label hash against resident inputs.585rows:fit135/page37/combined413. Each has parentImageID, parentImageSHA256, dimensions, original-pixel xyxy window and data role. All windows checked against actual crop dimensions. Reject missing/extra/changed rows before linking scores.",
+  "group_limits":"Fit135 and combined413 groups bind through identical parent image hashes to sealed173 membership. Page37 development frames are not in that membership; group is null with explicit unavailable reason. Parent and window remain verified. Do not fabricate higher ancestry, treat parent IDs as proven family independence, or move these cases into training.",
+  "acknowledgment":"Your216receipt matches exact bytes/hash/inventory. Start01 reports PID164961 and matching manifest/source IDs but request_id incorrectly says nuiak-20261006-worker216-artwork; canonical request is nuiak-20261006-worker216-replay. Please correct correlation in your next progress/terminal metadata without restarting or changing the run. Actual source/count review remains pending return.",
+  "next":"Use mapping in requested case-linked report, return exact receiver receipt; sender-owned cleanup only. No new job or inference requested."
+}

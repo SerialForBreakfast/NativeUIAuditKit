@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-feedback-next06",
+  "request_id": "nuiak-20261006-bigdog-feedback-loop01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK and TVTestRig",
+  "created_at": "2026-10-06T12:38:01Z",
+  "expires_at": "2026-10-13T12:38:01Z",
+  "state": "ready_bounded_continuation",
+  "message": "198-D is closed: read worker198-d-closure1226 acknowledging acceptance05. No further GPU rerun. Continue with WORKER-198-E below, behind active owned TTR work but before speculative new artwork generation. This does not block NUIAK local work.",
+  "task_id": "WORKER-198-E",
+  "inputs": ["Retained conditioning-return01 source and three generation callers", "Retained ARTWORK204 inventory/originals", "Existing BD13 QA, ten completed BD batch inventories and embeddings", "nuiak/responses/nuiak-20261006-artwork204-admission03.json"],
+  "work": [
+    "Harden SDXL entrypoint to require both expected encoders and valid nonempty token results. Generic helper may retain deliberate one-encoder support. NUIAK independently reproduced empty-encoder and zero-token false passes in source84982465732de7c4194d8ac7b884bbf7f4c7595374d8a4c26c5bacc4a7277662. Real callers construct two encoders; do not misreport prior artwork as invalid.",
+    "All three returned callers check pilot.json then reread it before generation. Load once, validate and consume the same object; record exact catalog hash. Test replacement, missing encoder, empty tokens, boundary77/overflow78 in either encoder, malformed limits and duplicate IDs. Prove rejection before model/output with fakes; retain resident offline tokenizer tests. No generation rerun.",
+    "Reuse BD13 and existing processing for one metadata-only inventory covering256ARTWORK204 and5000BD originals. Reconcile actual available membership, source/license/review evidence, file hashes and existing decoded-pixel duplicate groups/embedding clusters. Report unavailable fields; do not recompute embeddings or rescore completed batches. Preserve lineage and admission03 family roles; other assets remain pending/unknown.",
+    "Rank at most ten actionable artwork coverage gaps with denominators, representative IDs and reusable retained candidates. These are not model-error rates or focus labels. Propose a bounded selected return; do not send5000images. If equivalent BD13 output exists, reference/adapt it instead of duplicate work."
+  ],
+  "budget": "2CPU threads/nice10 where supported;2hours total;64MiB new reports;0GPU jobs. Missing prerequisite stops only affected item. No installs/downloads/new generation/training/data-role changes/deletion/Git writes.",
+  "return": "One immutable source/tests/metadata archive: <=100regular files,20MiB expanded,5MiB each. Existing SMB receipt route only, not HTTP. Publish exact name/size/SHA256, tests/exit codes, original evidence identities, reconciled counts, timing and next owner. No weights or images needed. Preserve originals; sender cleanup only after matching receiver receipt.",
+  "feedback_loop": "Acknowledge this ID and actual start separately; publish one concrete blocker or terminal return. NUIAK verifies source/metrics, accepts or supplies case-linked corrections on this chain. No repeated setup smoke, acknowledgment polling or monitoring service requested.",
+  "nuiak_next": "Implement native v2 catalog and96-frame campaign from16reviewed thumbnails (60train-role/24validation/12diagnostic), independent of E. Then qualify native labels and prepare matched training.198-C/205/206remain blocked only on qualified source-bound focus inputs; do not substitute generated artwork labels.",
+  "outcomes": {"software_verified":"guard review findings;D report accepted", "data_eligible":"admission03 unchanged", "integration_qualified":"D acknowledgment verified;E pending", "model_gate_passed":"not_assessed"}
+}

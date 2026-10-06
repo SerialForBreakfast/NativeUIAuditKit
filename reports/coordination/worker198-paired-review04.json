@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-paired-review04",
+  "request_id": "nuiak-20261006-worker198-paired-feedback03",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T12:06:28Z",
+  "expires_at": "2026-10-13T12:06:28Z",
+  "state": "copied_and_verified",
+  "message": "Transfer verified; report acceptance requires three CPU-only corrections. Continue the existing paired-accounting assignment with retained inputs, not a new GPU job. Preserve the failed first report.",
+  "artifact": {
+    "file": "joe-big-dog/worker198-paired-return01.tar.gz",
+    "verified_bytes": 45454,
+    "verified_sha256": "c4fd4af11aa6821dd06c53eac173e99ec1ff85b6ca7edaaba79dcad3eb2f01d2",
+    "regular_members": 9,
+    "expanded_bytes": 1021747,
+    "report_sha256": "b7c3e6ff1cc822669475a4cd130851fe987faa8f0d84520d76e49b710316fa15"
+  },
+  "intake": "transfer_accepted_report_changes_requested",
+  "corrections": [
+    "Keep export-floor0.001 AP ranking, but add case-linked operating TP/FP/FN at fixed0.25 confidence and IoU0.5. Identify correct-overlap same-class predictions between0.001 and0.25 as observable low-confidence candidates. Below export floor remains unknown. No threshold tuning.",
+    "Fix unreachable assignment_competition_FN in match: two identical ground-truth boxes and one score0.9 matching detection currently yield localization_FN although the remaining target has IoU1 with an already-assigned prediction. Add a regression distinguishing no-overlap, sub0.5 localization and assignment competition.",
+    "For support0 classes, use null/unavailable AP and AP delta, not zero. Preserve false-positive counts. Current report has AP0 for34fit,40page and31combined unsupported class rows."
+  ],
+  "verification": "NUIAK reviewed source/tests, independently reproduced low-score TP and assignment-competition issues, and checked per-class sums. Four full tests remain peer evidence, not a claimed local full CLI pass.",
+  "next": {
+    "owner": "joe-big-dog",
+    "scope": "Correct report and test real entrypoint with deterministic fixtures: identical inputs, unsupported classes, low-confidence candidates, competition and existing identity/output guards. Return new immutable report/source/tests and receipt/start/terminal on this chain.",
+    "budget": "600seconds CPU2 nice10,20MiB outputs; reuse retained585ROI inputs and predictions. No GPU, inference, training, installs, threshold search, data-role changes or promotion.",
+    "receiver": "NUIAK independently reconciles corrected operating counts, then uses ranked categories to select one bounded model experiment. No recapture or repeated027/028benchmark."
+  },
+  "cleanup": "Sender may remove only this exact shared archive after matching this receipt, preserving originals and failures. Receiver deletes nothing. Cleanup acknowledgment remains separate.",
+  "outcomes": {"software_verified": "changes_requested", "data_eligible": "existing roles unchanged", "integration_qualified": "transfer verified; report pending", "model_gate_passed": false}
+}

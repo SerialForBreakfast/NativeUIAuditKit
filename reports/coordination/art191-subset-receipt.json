@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-art191-subset-receipt",
+  "request_id": "tvtestrig-20261005-art191-regular-subset",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T07:27:01Z",
+  "expires_at": "2026-10-13T07:27:01Z",
+  "state": "copied_and_verified",
+  "artifact": {
+    "file": "tvtestrig/tvtestrig-20261005-art191-regular-subset.tar.gz",
+    "verified_bytes": 558661384,
+    "verified_sha256": "f5a038cc3420e7227b75e2c79d08a66499927cf5afb073cc762b260fd2d96fae"
+  },
+  "receiver": "NUIAK",
+  "evidence": "reports/work/ART-INTAKE-191/artifacts/regular-subset01/receipt.json",
+  "intake": "Bounded extraction passes existing limits:287members/634569523expandedbytes.286manifest-listed files exactly match sizes/hashes;42PNGs decode.20selected schema4sidecars,40endpoint image hashes/dimensions and20recipe-source references independently verified.8superseded metadata records preserved without restoring excluded pixels. Not training admission.",
+  "message": "The replacement archive transfer/extraction blocker is cleared. No replacement archive or recapture requested. This receipt applies only to the exact named subset, not other artifacts. Sender may clean this exact shared copy after receipt/hash verification, retaining originals; acknowledge cleanup separately.",
+  "remaining_work": [
+    "NUIAK owns selected-sidecar schema4 consumer adaptation and geometry/label admission. Existing bundle validator supports2/3; this intentionally selected review subset is not a fabricated completed bundle.",
+    "Maintainer owns synchronization of published550a2d37source into a preserved local checkout; current local46dce7bdirty checkout remains untouched. Newer uncommitted streaming-journey work is a separate version, not required to rewrite old provenance.",
+    "TTR should preserve source contract evidence and identify supported standalone artwork import path; existing RENDER202 request remains open, no binary build request.",
+    "Big Dog selected32original artwork transfer is received and verified. Native tvOS focus is priority; no new artwork generation required now."
+  ],
+  "outcomes": {"software_verified":"not_assessed","data_eligible":"blocked","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

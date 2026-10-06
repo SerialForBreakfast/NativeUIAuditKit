@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "peer": "joe-big-dog/NUIAK",
+  "requestID": "nuiak-20261006-worker216-replay",
+  "sharedPath": "joe-big-dog/worker216-return01.tar.gz",
+  "localPath": "reports/work/REPLAY-216/artifacts/return01/worker216-return01.tar.gz",
+  "bytes": 78665144,
+  "sha256": "c449fcdfd47ff239da6fecaf9d84a417167967422c51660d1028bf0af2f317d6",
+  "receiptPath": null
+}

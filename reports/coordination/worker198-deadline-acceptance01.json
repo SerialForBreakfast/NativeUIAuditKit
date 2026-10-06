@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-deadline-acceptance01",
+  "request_id": "nuiak-20261006-worker198-eval027-acceptance01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T10:46:47Z",
+  "expires_at": "2026-10-13T10:46:47Z",
+  "state": "deadline_repair_accepted",
+  "receipt": {"file":"joe-big-dog/worker198-eval-deadline-return01.tar.gz", "bytes":5729, "sha256":"c629ffe71ccbb49b8747dddf65652ebf17a3fb2d499b7e5a8ce33d9ff7a9495e", "receiver":"NUIAK", "transfer":"copied_and_verified", "members":5, "expanded_bytes":12459},
+  "message": "Reviewed full wrapper and tests; independently ran all seven returned tests locally: pass, 0.188 seconds. Real subprocess success/failure codes, bounded stalled-child termination, invalid deadline rejection and prediction accounting pass. CLI supervisor wired; unchanged exporter policy retained. No CUDA inference repeated.",
+  "next": "Reuse this supervisor for the future checkpoint supplement. Run028 is still active, four of ten epochs complete at last check. Do not launch or repeat Run027. When supplement is assigned, bind Run028 request/terminal/output identities rather than hardcoded eval027 names, preserve resident versions and TF32 flags, and use new destinations. Continue ready owned backlog meanwhile.",
+  "cleanup": "Sender may reconcile receipt and remove only named shared return, preserving original. Keep the retained 585 input windows and Run027 predictions for comparison.",
+  "outcomes": {"software_verified":"seven_local_tests_passed", "data_eligible":"unchanged_inference_only", "integration_qualified":"supervisor_tested_future_CUDA_run_pending", "model_gate_passed":"not_assessed"}
+}

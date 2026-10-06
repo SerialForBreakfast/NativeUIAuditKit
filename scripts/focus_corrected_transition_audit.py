@@ -86,10 +86,11 @@ def validate_case(root,evidence,case, *, stationary=False, directional=False):
         h.require(all(e['capture_endpoint'][k].get('fixture_run_id')==d['run_id']
             for e in d['endpoints'] for k in ('before_scene','after_scene')),'stationary_bracket_instance')
     elif directional:
-        # Native table/collection source 50ff7fd8: focus movement does not prove no scroll.
+        # 50ff7fd8 plus matching550a2d37 NativeWidgets v3 artwork/theme extension:
+        # same UIKit callbacks; focus movement does not prove no scroll or build identity.
         canvas=(case['recipe'].get('appearance') or {}).get('canvas') or {}
         h.require((canvas.get('presentation')=='native_table_v2' and
-            (canvas.get('nativeTable') or {}).get('version') in (1,2)) or
+            (canvas.get('nativeTable') or {}).get('version') in (1,2,3)) or
             canvas.get('presentation')=='native_collection_v1','directional_source_contract')
         h.require(d.get('cleanup')=='verified' and 'action_receipt' in d and
             'mutation_receipt' not in d,'directional_action_cleanup')

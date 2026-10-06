@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "requestID": "tvtestrig-20261005-signal95-native-scroll24",
+  "peer": "TVTestRig",
+  "sharedPath": "tvtestrig/ttr-native-scroll24-20261005-r1.tar.gz",
+  "localPath": "reports/work/SIGNAL-95/artifacts/native-scroll24-r1.tar.gz",
+  "bytes": 13182912,
+  "sha256": "71127ae9fc2e5bdc84aac034243ba3f22744083bc6740ebb8c9f54d98751b6ad",
+  "receiptPath": null
+}

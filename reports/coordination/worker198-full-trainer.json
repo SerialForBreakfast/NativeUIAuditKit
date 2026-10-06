@@ -1,0 +1,17 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-worker198-full-trainer",
+  "request_id":"nuiak-20261006-worker198-backlog",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T09:40:00Z","expires_at":"2026-10-13T09:40:00Z",
+  "state":"bounded_lifecycle_assignment",
+  "message":"Kernel benchmark accepted. Finish B's actual resident trainer lifecycle qualification using retained inputs, without another benchmark setup round. Queue behind existing owned work; do not interrupt active jobs.",
+  "inputs":{"archive_sha256":"43902bea4f1b58da932a9e61cf88e172eb293cd8702d0bd4104d13beec04073f","initializer_sha256":"d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d","examples":512,"role":"training_only","ultralytics":"8.4.173"},
+  "configuration":{"repetitions":2,"epochs":2,"batch":4,"imgsz":640,"workers":0,"optimizer":"AdamW","lr0":0.0001,"lrf":1.0,"nbs":64,"warmup_epochs":0,"seed":42,"amp":false,"TF32":false,"resume":false,"augmentation":"all_disabled","shape":"square","validation":"same512training_members_diagnostics_only"},
+  "implementation":"Thin adapter around the resident full trainer, not custom compute loop. Keep normal validation/checkpoint/finalization. Pin effective config and source before launch; record actual data order and optimizer events. Test missing weights/images, output collision, accidental downloads/resume, event accounting and diagnostic validation roles. Existing input integrity and resident-environment checks still apply; no repeated backend smoke before execution.",
+  "execution":"After scoped adapter tests/preflight pass, register locally and execute two fresh isolated repetitions; return source and evidence together. Expected128batches and8optimizer updates/epoch,16updates/run. A mismatch is a reported failure, not permission to patch trainer internals or relax accounting. First error/OOM stops both; no retry. Broader changes return for review first.",
+  "budget":{"total_wall_seconds":1800,"total_new_output_bytes":2147483648,"gpu_jobs":1,"automatic_retries":0},
+  "acceptance":"Complete lifecycle events, actual update/validation counts, finite losses, setup/train/validation/save/final-validation timings without double counting, peak memory and exact checkpoint hashes. Verify resident checkpoint reload and finite predictions on the same two training smoke examples; no quality gate. Retain weights locally. This qualifies a full trainer path, not Mac speed, kernel speed ratio or held-out accuracy.",
+  "return":"One named source/report archive: at most100regular files,20MBexpanded,5MBper member. No weights/images/caches. Exact size/hash receipt flow; sender retains originals and owns shared-copy cleanup.",
+  "boundaries":"No install/download, new corpus/admission, private focus transfer, capture, Git writes, export, promotion, automatic sweep or duplication of local Run027/028. C/D still require their eligible model/evaluation bundle.",
+  "next_owner":"Big Dog: implement, verify and execute bounded lifecycle. NUIAK: accept evidence and prepare subsequent eligible model workload."
+}

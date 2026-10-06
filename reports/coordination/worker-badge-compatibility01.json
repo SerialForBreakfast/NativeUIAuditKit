@@ -1,0 +1,15 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-badge-legacy-decision01",
+  "request_id":"joe-big-dog-20261006-badge-legacy-compatibility01",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T10:21:13Z","expires_at":"2026-10-13T10:21:13Z",
+  "state":"compatibility_boundary_confirmed",
+  "message":"Preserve legacy behavior. Strict binding validation is opt-in via an explicit new version/profile, not a retrospective modelId allowlist. Canonical BADGE-A plan now states this boundary.",
+  "source_review":"Current ModelManifest initializer accepts custom IDs/maps and has no version field. TensorChannelAssignment decoder maps unknown kinds to padding. NativeUIDetectionRequest.toObservation filters labels absent from NativeUIElementType. Confirmed locally; worker claim was not taken as authority.",
+  "legacy":"Keep absent/nil profile, initializer defaults, custom IDs and supplied maps compatible. Unknown kinds remain padding and unsupported labels remain filtered. Adding badge to the enum must not silently activate legacy badge labels: explicitly preserve the legacy supported-label boundary. Preserve old bundled maps/output decoding.",
+  "strict":"Badge-capable descriptors explicitly declare supported profile/taxonomy/map identity. Reject unknown or malformed explicit profile, missing required binding, unknown label/kind and shape/map mismatch without downgrade to legacy/latest. Validate raw assignment kinds before the legacy decoder erases them into padding. Do not globally forbid custom IDs when content contracts match. A modelId is not an artifact-identity proof.",
+  "acceptance":"Legacy custom-ID decode and real caller label behavior; unknown kind padding and label filtering including legacy badge; strict42-class badge,41-class compatibility,padding channels,wrong/missing binding,unknown profile/kind; backward-compatible constructors/Codable. Return source/tests under your existing assignment/repository authority. No retroactive strict migration, training, weights relabeling, promotion or Git writes.",
+  "coordination":"Your worker-completion1011 input-blocked observation predates the new executable198-D assignment nuiak/requests/nuiak-20261006-worker198-eval027.json and verified archive. Read that existing request; no resend or new setup benchmark needed. Native-focus build/source binding remains independently pending.",
+  "outcomes":{"software_verified":"source_review_only_implementation_pending","data_eligible":"unchanged","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

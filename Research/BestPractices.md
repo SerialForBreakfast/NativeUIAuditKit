@@ -1,5 +1,28 @@
 # NativeUIAuditKit — Best Practices
 
+## Isolate Vision test waits without changing inference — VISION209
+
+Observed: the full Swift suite waited inside Vision feature-print requests; a single
+existing test then passed, followed by all8FrameSimilarity tests and all132tests with
+explicit `--no-parallel` on the native SwiftPM engine. Correct response: preserve the
+wait sample, stop only owned processes, verify one request and then the unchanged
+whole suite. Do not skip the suite as final acceptance, reset services or change
+production compute units. Serialization versus initialization/cache effects are not
+isolated by these runs, so the root cause remains unproven. This matters because a
+verified operational workaround is not evidence for a model or library change.
+[Evidence](../reports/work/VISION-OFFLINE-209/handoff.md).
+
+## Carry optimizer semantics across worker benchmarks — WORKER198
+
+Wrong: transferring the tiny-head benchmark assumption that512examples at batch8/16
+means64/32optimizer updates to the Ultralytics detector. The actual detector configuration
+uses `nbs=64` and accumulation; installed trainer versions also differ across hosts.
+Correct: pin framework/source versions and instrument batches, accumulation and actual
+optimizer steps separately. Reconcile warmup, checkpoint and timing boundaries before
+comparing throughput; do not silently remove finite checks. Why: otherwise a claimed
+hardware speedup can instead be a different update budget or implementation.
+Evidence: [representative workload handoff](../reports/work/WORKER-198/detector512-handoff.md).
+
 ## Qualify artwork at its UI display scale — IOS-ASSET200
 
 Observed: the same busy artwork retained16/16hero detections but grid imageView
@@ -9,6 +32,15 @@ TP/FP/FN plus low-confidence versus no-IoU-match diagnostics, not aggregate AP a
 Do not infer a pure clutter effect from two artworks with different color/composition.
 Why: attractive content and high aggregate AP can conceal nearly unusable thumbnail
 detection. Keep each artwork's shared lineage, including cross-platform derivatives.
+
+DETECTOR207 follow-up: fixed prediction-derived card crops recover33imageView
+matches without losing prior matches, but add7FP; lower-detail AP decreases despite
+higher operating recall. Wrong: treat crop recovery as a free accuracy gain or tune
+against the exposed development set. Correct: retain per-class/case losses, added
+inference cost and confidence-ranking changes; keep parent/child labels distinct.
+An enclosing collectionItem detection is not an imageView label. Why: context can
+help recognition while composition introduces new false positives/ranking errors.
+[Evidence](../reports/work/IOS-ASSET-200/card207-handoff.md).
 
 Campaign reporting also exceeded the small coordination parser's event budget after
 successful inference. Use the existing prediction schema validator with an explicit
@@ -77,6 +109,14 @@ container-owner metadata can identify that completed output without booting mere
 to read it. Never reuse an old container UUID. For a multi-phase campaign, explicit
 exact-target boot readiness permits reuse; a SpringBoard Busy launch failure is not
 permission to reset services, re-sign, or repeat an unchanged operation blindly.
+
+ARTWORK204 also showed container migration between two successful XCTest shards.
+Wrong: treat UUID stability as corpus identity and stop an otherwise valid batch.
+Correct: resolve the exact target's container again, verify installed build and
+staged hashes, then verify prior terminal log/receipt and every sealed output before
+skipping completed work. Failed or ambiguous attempts still cannot auto-resume.
+Why: Xcode's container relocation need not change the evidence; this avoided
+recapturing48successful images while preserving split/data integrity.
 
 UIColor resolved white was1.0000001192092896. Preserve the raw value and use a
 documented1e-6boundary-roundoff tolerance for reported RGBA, rejecting nonfinite or
@@ -4334,3 +4374,130 @@ resolved template, test it independently, and retain the rejected trial. Seal si
 as well as images: an image-only receipt can remain unchanged after metadata repair.
 Why it matters: inaccurate theme labels undermine coverage and targeted experiments
 even when every image is intact and its boxes are correct.
+
+## Check state differentiation before scaling generated UI — FOCUS-RENDER203
+
+What went wrong:26prompt-generated frames decoded successfully, yet every scene's
+reference/focusA/focusB/content-change quartet was pixel-identical (six unique rasters).
+Repeatability alone would have hidden failure to obey the requested state. Correct:
+compare intended changed states as well as repeated states, then inspect actual layout;
+never admit requested boxes/focus as observed labels. Diagnose conditioning from retained
+logs before proposing any new generation. Why: deterministic wrong output is not a
+qualified renderer; keep diffusion artwork separate from native labeled UI.
+
+Worker retained-log diagnosis subsequently found both77-token encoders truncated before
+state/effect instructions (52warnings). Before any later approved prompt experiment,
+verify effective conditioning retains the variables being tested. Moving words alone
+does not prove geometry or native fidelity; this failed arm remains excluded.
+
+## Preserve annotation precision through crop transforms — STYLE210
+
+What went wrong: six-decimal full-frame YOLO labels transformed into identical
+translated crop pixels with center coordinates differing0.000276pixels; strict
+duplicate-label checks rejected them. Correct: for newly prepared ROI inputs,
+reuse the existing exporter conversion from exact native annotations with sufficient
+intermediate precision, verifying agreement with original exported labels. Keep
+the source exports and failures; do not weaken duplicate checks or round away real
+geometry conflicts. Also reject and count jitter windows that clip wide target
+bodies before writing crops. Why: intermediate quantization and invalid jitter
+must not be mistaken for new visual diversity or conflicting native ground truth.
+
+## Negative-region pass is not box-geometry qualification — ROI197
+
+What went wrong: the one-extra-ROI rule passed10training negatives, yet added a
+development box at.909confidence with IoU.3166 because height was24.4versus77pixels.
+Correct: retain full-image geometry/duplicate checks and partial-target strata after
+the negative screen; do not treat partial targets as empty regions or high confidence
+as correct bounds. Why: recall improved substantially while the no-new-FP gate still
+failed, so the safe response is diagnosis, not promotion or evaluation-driven tuning.
+
+## Validate receiver bounds and pixel-hash encoding before dispatch — WORKER198
+
+What went wrong: a valid40.5MBcheckpoint was dispatched with a32MBmember limit;
+shape-prefixed RGB hashes were documented only as pixel hashes. The receiver safely
+stopped, causing an avoidable handoff. Correct: validate actual member/total sizes
+against the published extraction contract, record hash byte encoding with a fixed
+test vector, and bind any larger-member exception to its exact path/size/hash.
+Why: byte-integrity success does not resolve semantic encoding or extraction policy.
+Correct a metadata defect with an immutable supplement, not an identical retransfer.
+# Preserve virtual-environment interpreter paths — WORKER198
+
+What went wrong: the worker launcher resolved `.venv-cuda/bin/python` to
+`/usr/bin/python3.14`; that invocation lost the environment's site-packages and
+failed importing torch before model load. Correct: make the environment path
+absolute without resolving its final symlink. Before launching compute, verify
+sys.executable, sys.prefix versus sys.base_prefix, resident package versions and
+backend through that exact invocation. Record both the invocation and resolved
+binary identity, but do not substitute the latter into the command. Why: pinning
+the underlying executable alone does not pin the Python runtime environment.
+No dependency installation is needed for this launch-path error.
+
+## Validate body status as well as coordinates — ART191
+
+What went wrong: schema4 inspection checked projected rectangles but omitted the
+existing body validator, allowing contradictory clipping/availability fields.
+Correct: reuse the shared body contract alongside version-specific checks; mutate
+all bracket aliases consistently in negative tests to reach the intended check.
+Why: plausible coordinates cannot establish valid measured evidence, and an early
+alias rejection does not prove the body consistency rule was exercised.
+# Versioned annotation producers must reject unsupported labels before writing — October 6
+
+BADGE-A review found a consumer rejecting badges under old schemas while the public
+writer could still emit exactly those invalid documents. Parser-only tests missed
+the producer mismatch. Guard the public write boundary before file creation and test
+both old-version failure/no-output and new-version parent/child preservation. Do not
+silently drop the label or select a newer schema. When Swift tests change, rebuild
+them: `swift build` plus `swift test --skip-build` alone does not compile new tests.
+
+## Attribute cascaded detector errors to the exercised stage — October 6
+
+What went wrong: unchanged end-to-end misses after crop training looked like a
+failure to learn a style. Replaying the fourteen persistent STYLE210 cases showed
+their extra windows clipped thirteen targets and excluded one; the reported boxes
+were unchanged first-pass predictions. Correct: audit proposal containment, crop
+predictions and donor admission separately before another training run. Use labels
+for diagnosis only, not inference window selection. Why: training cannot recover
+pixels never supplied to that stage; oracle coverage is not measured detection.
+
+## Separate alias conflicts from uncertain detections — precision211
+
+What went wrong: refusing all geometry refinements when unique crop donors agreed
+on one object preserved overlapping original boxes as false positives. Correct:
+test deterministic score-ordered alias resolution only among uniquely corroborated
+donors, preserving uncertain boxes and separate controls; never choose via labels.
+Why: conflict avoidance can retain known duplication. Frozen replay reduced treatment
+developmentFP14→4without TP loss, but this is not evidence that arbitrary overlapping
+UI elements should be merged or that all remaining model gates pass.
+
+## Rank deployed-threshold failures, not exported candidates — operating215
+
+What went wrong: the worker's corrected operating counts coexisted with a legacy
+top-ten list ranked at the0.001export floor, and low-confidence lists included
+targets already matched above0.25. Correct: retain low-floor predictions for AP,
+but rank actionable misses/FPs at the fixed operating threshold; exclude already
+matched GT indices from low-confidence miss queues. Reconcile case/class totals,
+retain parent-frame links and partition roles, and expose class-specific regressions.
+Why: candidate abundance is not user-visible error frequency; an aggregate win can
+hide regressions. Raw ROI failures also must not be called composed full-frame errors.
+
+## Preserve hash domains and evaluation roles — REPLAY216
+
+What went wrong: the initial full-replay audit compared legacy raw-RGB digests
+with worker dimension-prefixed RGB digests, and treated the training-derived fit
+diagnostic as a reserved holdout. Both produced false failures before publication.
+Correct: verify each original hash using its recorded encoding, then normalize a
+separate digest for cross-corpus checks. Keep fit overlaps visible (five here),
+while requiring no overlap with genuinely reserved partitions; never change roles
+to bypass a failed check. Why: equal field names do not mean equal hash contracts,
+and a diagnostic score is not evidence of independent generalization.
+
+## Preserve source-pinned evaluator compatibility
+
+What went wrong: extracting an unchanged operating matcher from eval_run013 improved
+code reuse but changed a source hash required by historical sealed composition plans.
+Correct: keep that evaluator byte-identical unless a versioned migration is part of
+the assignment. A separate diagnostic matcher must reconcile every class total to
+the original scorer and preserve tie ordering. Why: numerical parity alone does not
+make a sealed caller executable. Do not reseal old evidence or bypass its source checks
+to accommodate a convenience refactor. REPLAY216restored the original file and verified
+the actual45-reference composition collector before executing the comparison.

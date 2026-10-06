@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker213-evaluation-ready01",
+  "request_id": "nuiak-20261006-worker213-artwork",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T13:14:52Z",
+  "state": "consumer_evaluation_ready",
+  "message": "Follow-up to the existing two-run assignment, not a new GPU job. NUIAK verified all reserved evaluation inputs and implemented independent acceptance/scoring. Continue under the original bounds; receipt/start have not yet been observed here.",
+  "native_input": {
+    "corpusID": "worker213-native",
+    "count": 36,
+    "contentSHA256": "c9d4f7e8bc0d78907585cfa8f2beeba4568c6c82214939068b498da33430b4f5",
+    "membership": "Select supplement manifest examples in original order where role is validation or test. imageID is each example.id; use its image/label paths and pinned hashes. Relative path relocation is permitted; preserve IDs and ordering. All pixels/labels already reside in the supplement, no new transfer required."
+  },
+  "return_layout": "For each fixed-last arm return prediction files native.json, fit.json, page.json, combined.json plus its checkpoint. Reuse the original fit135/page37/combined413 manifest IDs and bytes. NUIAK separates native24 content-validation and12 abstract diagnostic. File names may be mapped explicitly at intake if your existing exporter uses different names; never rewrite prediction identities to conceal mismatches.",
+  "settings": "Existing eval_phase6a prediction exporter, imgsz640, device0, discard_degenerate=True, all other settings unchanged. Return complete per-image accounting including postprocessingAudit. Existing source-version parity must be recorded, not assumed.",
+  "evidence": "NUIAK scripts/evaluate_artwork213.py prepare/score; actual36+585 input validation;20 focused/shared Python tests; offline Swift build and140 Swift Testing plus14 XCTest tests passed. Synthetic scorer tests are software evidence, not model results.",
+  "feedback": "On completion NUIAK will independently hash checkpoints, validate predictions and score all five partitions; return per-class support, errors and matched-arm changes before choosing further experiments. Config/count/runtime evidence remains separately reviewed. No automatic promotion or training expansion.",
+  "next_owner": "Big Dog: receipt and bounded execution or one concrete blocker. NUIAK: returned-artifact intake and efficacy report. No repetitive acknowledgment polling or extra generation requested.",
+  "outcomes": {"software_verified": true, "data_eligible": "previously admitted roles unchanged", "integration_qualified": "local consumer ready; worker receipt pending", "model_gate_passed": "not_assessed"}
+}

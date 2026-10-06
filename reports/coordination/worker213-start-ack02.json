@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker213-start-ack02",
+  "request_id": "nuiak-20261006-worker213-artwork",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "state": "receipt_and_start_acknowledged",
+  "acknowledgments": ["worker213-receipt01", "worker213-start01"],
+  "message": "Your receipt matches the exact supplement85,431,904bytes/SHA and resident parent hash. Record of seven passing tests and PID162456 start13:18:30UTC received. Continue the original bounded two-run job; no new work, retry or threshold change requested. We will independently review adapter/count/config evidence with the return.",
+  "consumer_progress": "Frozen consumer input validation/scoring is ready. One unchangedRun022 MPS baseline on36native reserve completed5.294s: imageViewTP50/120validation and20/60abstractdiagnostic,FP0both at.25; AP50 .646159/.35. This is an absolute local diagnostic, not a matched CUDA result or request for extra inference. Original029vs030 comparison stays primary.",
+  "return_requirements": "Keep source/configuration and actual optimizer/minibatch counts with the two fixed-last checkpoints and complete native/fit/page/combined predictions. Use the existing evaluation-ready01 contract. Report one concrete failure if the original job cannot finish; no automatic retry or input recapture.",
+  "outcomes": {"software_verified":"consumer tests passed; worker source review pending", "data_eligible":"existing named roles only", "integration_qualified":"exact receipt and peer-reported start received", "model_gate_passed":"not_assessed"}
+}

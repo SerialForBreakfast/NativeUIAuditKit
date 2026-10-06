@@ -24,6 +24,18 @@ and their derivatives remain development-only.
 
 ## Common contract and execution boundaries
 
+October6 pixel-review constraint: retained ART191 detail/news crops expose focused
+neighbor content and repeated artwork, while per-endpoint resizing reduces visible
+growth differences. [Case-linked review](../../reports/work/ART-INTAKE-191/pixel-review.md)
+records two inverted shipped-score pairs without claiming causality or admission.
+After source/data qualification, prioritize a controlled target/neighbor-context
+comparison over more generic artwork. Preserve the production-crop baseline and
+current review/calibration roles; no silent preprocessing or final-evaluation change.
+The reviewed detail light/dark contrast has identical reported target geometry but
+opposite probability ordering. Theme and surrounding artwork vary together, so
+the next native campaign should separate those factors instead of attributing the
+failure to clipping, growth or theme alone. Reuse retained qualified siblings first.
+
 - Big Dog owns artwork generation and portable scoring under its own assignment.
   NUIAK owns asset admission, native adapters, dataset roles and model acceptance.
   TTR owns producer changes; request exact source/API gaps, not build-only deliveries.
@@ -99,6 +111,105 @@ and review effort. No blanket claim that all256 are accepted or independently no
 
 **Next:** accepted artwork unlocks native campaigns; gaps become a measured future
 request. If worker unavailable, finish planner and existing24 review without blocking199.
+
+### Retained204 resource admission
+
+Adapt the actual256-record producer inventory through the existing asset planner,
+not another transfer tool. Require a source-hash-bound NUIAK review document, exact
+reviewed IDs and whole-family role decisions. Preserve the entire raw source record,
+unknown producer fields and all unreviewed siblings as pending. Do not promote a
+family's rights/visual review merely because two members were inspected. Verify
+selected32 cached bytes through the existing planner; no missing-byte requests for
+unreviewed resources. Reserved nature/architecture and abstract thumbnail families
+must not enter training. Model training still requires native labels and its own
+dataset admission. Keep IMAGE201 and existing development-frame exclusions intact.
+Native artwork-v1 remains development-only: extend it explicitly before any assigned
+train/validation asset is rendered, never rewrite those roles to satisfy v1.
+
+Next acquisition: eight thumbnail families × two themes × two grid densities × three
+conditions (procedural,t1,t2) =96frames. MediaCardGrid only, no CardDetail. Five train
+families yield60frames, validation24, abstract diagnostic12. Family-specific fixed
+seeds keep both variants and procedural controls in one role. Densities4cards/2columns
+and6cards/3columns. Preserve v1loader; v2binds roles, catalog bytes and recipe IDs and
+checks ancestry/review scope before mutation. Native labels remain separately verified.
+One setup/two48-frame shards,20GiB cap, fresh exact-target/source/build preflight.
+Zero cross-role duplicates, measured artwork/annotation geometry; no shrinking or
+moving duplicate groups to satisfy counts. Abstract diagnostics are not final holdout.
+
+Delivered October6: native96 qualified, with60/24/12roles preserved. Execution uses
+`artwork204_campaign.py prepare|execute|qualify|review`, sharing200intake/rendering
+and r6 copy/log/test helpers. Explicit `execute --resume` verifies completed shard
+logs/receipts/bytes and skips them; failed or ambiguous shards are not retried.
+Resolve containers freshly between tests, accepting migration only after verifying
+build, staged inputs and sealed outputs. V1/v2catalog/campaign cross-pairing rejects
+before mutation. Source/build before the final pairing hardening is retained for
+the actual capture; final code builds/tests pass without redundant recapture.
+
+Next preparation contract: export only the60admitted train-role frames via the
+existing `export_coco.py`, preserving41class IDs and validating every output label
+against native annotations. Pin the qualification and campaign identities; all96raw
+hashes must still agree before role selection. Keep24validation and12diagnostic
+frames outside this training export. Produce an immutable membership with source
+references for later ROI/replay assembly. No automatic training from an export.
+
+### WORKER-213 — bounded native-artwork replay comparison
+
+Use the worker's already qualified512training-only ROI examples and Run022
+initializer. Compare two fresh CUDA runs: control512old+60deterministic old repeats;
+treatment512old+60new native full frames. Both572slots,10epochs,batch4,nbs64,
+AdamW1e-4,constant schedule,warmup0,seed42,float32,no augmentation. Use the
+resident8.4.173 trainer and existing full-lifecycle adapter with count/role parameters,
+not a new training loop. Preserve matched ordering/initial state and square640
+letterboxing. Expected143minibatches/epoch; instrument actual optimizer events
+(89total under the retained accumulation policy), no dropped last minibatch or
+silent cadence changes. Training diagnostics may use old512only; all36reserved
+native frames stay outside training/checkpoint selection. Select fixed-last.
+
+Hypothesis: adding qualified full-frame native artwork examples improves imageView
+recognition under artwork without worsening existing detector behavior. This varies
+both content and full-frame context; it is NOT an isolated causal clutter experiment.
+The512subset is a finite diagnostic comparison, not a replacement for full-corpus
+qualification. No promotion from these results.
+
+After both runs, reuse the existing prediction exporter for36reserved native frames
+and585retained ROI windows per arm. Keep24content-validation,12abstractdiagnostic,
+fit/page/combined ROI roles and reports separate. No new thresholds/windows/best-seed
+selection; include per-class support/TP/FP/FN/AP, original-image coordinates and
+failures. Return both fixed checkpoints and predictions for independent NUIAK review.
+No effect is assumed before that review; compare within CUDA, not against unqualified
+MPS timing/metric substitutions.
+
+NUIAK prepares immutable native36/validation24/diagnostic12 input manifests before
+results arrive. The local acceptance CLI verifies pinned supplement membership and
+bytes, actual checkpoint hashes, complete predictions and unchanged exporter settings
+using the existing evaluation implementation. It reports each native partition and
+the three retained ROI partitions independently; unavailable class metrics remain null.
+This is software readiness, not acceptance of training configuration or promotion.
+Worker configuration/count evidence must still be reviewed against this contract.
+The paired CLI uses one prepared membership for both arms, recomputes scores from
+validated predictions and reports per-class TP/FP/FN/AP deltas. A changed checkpoint
+is required; neither higher aggregate AP nor a positive imageView delta is automatic
+promotion. Preserve all regression rows and unavailable metrics. Backend/trainer
+equivalence remains a separate source/config review, not inferred from file names.
+Return extraction uses the existing path/type validator with an explicit scoped
+100MiB member limit for checkpoints (legacy32MiB default unchanged),300regular
+members and1GiB total. A size-limit rejection preserves the verified archive; adjust
+only to this already registered envelope, never an inferred unlimited fallback.
+
+Independent companion: score the unchanged Run022 initializer on native36 using the
+existing exporter at640/MPS/discard-degenerate. Pin checkpoint
+`d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d` and prepared
+native corpus `c9d4f7e8bc0d78907585cfa8f2beeba4568c6c82214939068b498da33430b4f5`.
+One inference pass,120seconds/16MiB output bound, no retry or tuning. Report24/12
+separately. This is an absolute initializer diagnostic, not a cross-backend matched
+CUDA comparison, final holdout or new training run. Preserve fixed evaluation roles.
+
+Worker owns adapter extension/tests and may execute after exact input/config and
+count/role/timeout/download-guard tests pass. Two runs maximum,3600seconds/4GiB
+outputs,oneGPU job, no automatic retry after errors. Reuse resident sources/models
+and512inputs; transfer only new96images/labels and a pinned manifest. Preserve all
+raw originals. Native focus work can take scheduling priority but cannot reuse
+unqualified labels. NUIAK owns returned result acceptance and Apple qualification.
 
 ## Tranche 2 — IOS-ASSET-200 + RENDER-202: native scenes, one setup per campaign
 
@@ -213,6 +324,14 @@ CardDetail remains an existing withheld-template family, not new training materi
 Any follow-on training uses separately eligible artwork and training-compatible native
 families; this diagnostic does not authorize moving its samples into training.
 
+207support audit now distinguishes missing class from geometry: busy grid has20targets
+with no imageView predictions,34with zero-overlap predictions elsewhere,2with only
+sub0.5overlap,21low-confidence matches and3operating matches.40/56unmatched targets
+overlap operating collectionItem boxes. Next compare one fixed prediction-derived
+card crop against full-frame inference before choosing data versus context intervention.
+No truth-based crop selection or window sweep. Existing204thumbnail families suffice
+for subsequent review; no new artwork request. [Evidence](../../reports/work/IOS-ASSET-200/proposal-support207.md).
+
 **Outcome:** fixed-model detector benchmark first, then one justified data-only candidate
 comparison on the platform with demonstrated benefit potential. iOS and tvOS results
 stay separate. IOS-PROPOSAL-197 proceeds independently throughout.
@@ -239,6 +358,28 @@ unsupported classes remain unavailable and artwork counts do not establish DS-G8
 No aggregate cross-platform score hides regressions. Report evaluated candidates even
 when rejected, without automatic retraining, model replacement or invented gains.
 
+### DETECTOR207 fixed card-crop diagnostic — October6
+
+Execute one development-only Run022 inference comparison on IOS200's frozen96frames.
+Use collectionItem predictions at0.25 as proposals; reuse roi193's half-image-width
+square window, integer clipping, annotation transform and original-image restoration.
+Deduplicate identical windows within each frame. No labels select windows. Same022
+checkpoint/640letterbox/MPS/settings; <=512crops,1GiB outputs, no new training/capture.
+Keep all parent and other-class outputs unchanged. Candidate imageView donors require
+score>=0.25, center inside a parent proposal andIoU>=0.25with that parent. Merge only
+imageView using score-orderedIoU0.5suppression, retaining original low-score outputs
+for AP. Report any loss of original operating matches as well as recoveries/FP.
+This fixed diagnostic is not a promoted decoder or evidence of crop latency parity.
+Require fresh source/input/model pins, all-frame accounting, crop binding/completeness,
+failed-inference rejection, geometry/dedup tests, real CLI collision rejection and one
+integrated offline build/test. Compare conditions/layouts and all-class retention.
+Crop success motivates context study; failure motivates native nested-label data.
+Never move IOS200/IMAGE201 or CardDetail evidence into training.
+
+Execution complete:236crops recover33imageView matches, lose0, add7FP; no promotion.
+Other-class metrics unchanged. Existing204family review and nested-label training
+proposal remain next, without new generation. [Handoff](../../reports/work/IOS-ASSET-200/card207-handoff.md).
+
 ## Delivery ordering and efficiency
 
 Start199 locally and204 worker preparation in parallel; remote generation begins only
@@ -259,3 +400,161 @@ review;204bounded artwork-first assignment is published/read back. Peer acknowle
 of204 remains pending; active203CPU work is preserved. No native frames or model runs
 were launched in this tranche. [Handoff](../../reports/work/ARTWORK-204/handoff.md).
 No automatic monitoring is established; Tasks.md remains the execution queue.
+
+### October6 return and feedback decision
+
+The earlier dispatch checkpoint is superseded by completed204generation and independent
+metadata intake.32hash-selected posters/thumbnails are requested from retained originals,
+not a new pilot. Preserve the producer's proposed family roles; all actual admission
+remains pending. Related cross-role subject/composition variants must be reconciled before
+splitting. NUIAK returns asset/scene/model-linked failures, Big Dog returns immutable
+missing hashes, and native Apple rendering provides labels. This is a finite feedback
+exchange, not an automatic monitor or permission for unlimited generation.
+
+Prioritize205/206native focus labels and hard negatives;207small-grid artwork sensitivity
+can proceed independently.203prompt-only output failed state differentiation (four states
+identical within each scene); retain as failed evidence, not focus training examples.
+Procedural masks do not establish native rendering fidelity.
+[Receipt, findings and exact next ownership](../../reports/work/ARTWORK-204/feedback-handoff.md).
+# Retained schema4 diagnostic — October 6
+
+Before full source-semantic admission, allow a development-only shipped FocusRing
+score report on the20structurally reviewed ART191pairs. Use existing production
+`focus_runtime.invoke`, each endpoint's visible-body box and unchanged16%/256crop.
+Pin model/runtime/input hashes before and after execution; maximum40frames,10minutes,
+64MiB new outputs. No training, threshold tuning, dataset admission or gate claim.
+Report probabilities and differences against **producer-reported**, not independently
+qualified, focus roles; stratify clipping and retain negative/equal score differences.
+This distinguishes a model-response diagnostic from a trustworthy accuracy benchmark.
+Do not reuse the inspected cases as a future final holdout. Stop on changed inputs,
+partial membership, nonfinite probabilities or runtime failure without retry.
+# October6 producer recipe compatibility continuation
+
+Replay TTR's eight recipe-layer vectors using NUIAK's actual schema4 recipe
+resolver, factored out without changing sidecar admission. Standalone inline
+hydration is compatibility-only; full schema4 review retains its compact-source
+requirement. Verify all vector files, expected acceptance and typed rejection
+categories; producer strings are mapped explicitly, never used as validation code.
+Canonical recipe identifier agreement is distinct from serialized source SHA256;
+neither proves native geometry. Keep training eligibility false. No producer code
+execution, new capture, or storage offload implied by this packet.
+
+## REPLAY-216 — full admitted replay with native artwork
+
+Owner: NUIAK packages and independently evaluates; Big Dog executes under its
+repository rules. Standing training/transfer authority covers this bounded pair.
+Hypothesis: replace WORKER213's512-example replay subset with the accepted1509
+STYLE210 training members to protect older classes while retaining artwork gains.
+This is not a pure context ablation versus213: exposure and native fraction change.
+
+Freeze1509 unique admitted ROI examples (1173ROI196 plus336STYLE210), retaining
+their source groups and hashes. Reuse512 resident inputs, the213 native supplement,
+Run022 initializer and all621 reserved evaluation inputs. Transfer only997 missing
+ROI pairs and a manifest with exact roles, provenance and slot order. Reject changed
+sources, duplicate pixels, missing lineage, reserve overlap and output collisions.
+Do not change any data roles, crop rules or thresholds.
+
+Runs031/032: control1509 plus60 hash-ranked old repeats; treatment1509 plus60
+native training frames. Each1569 slots,10epochs,batch4,nbs64,640 square letterbox,
+AdamW1e-4,constant LR,warmup0,seed42,float32,AMP/TF32off,augmentationoff,workers0,
+fixed ordering and fresh Run022 weights. Reuse the accepted resident trainer and
+exporter, extending counts with tests.393 batches/epoch and245 updates/run expected
+(continuous accumulation16; no extra end-of-epoch flush). Verify actual events.
+Training-only diagnostic validation uses the unchanged resident512. Fixed-last
+checkpoint only. One GPU, two runs maximum,7200 seconds total and6GiB outputs;
+no automatic retry, downloads, generation, capture, export-to-CoreML or promotion.
+
+Return predictions on unchanged24 content-validation,12 abstract diagnostic and
+135/37/413 ROI partitions, plus both checkpoints, source/configuration/count/timing
+evidence. NUIAK uses evaluate_artwork213's actual paired scorer. Report all classes
+at0.25 operating confidence, misses/FP/AP and denominators, not favorable means only.
+Success requires native gains without material retention regression; any lost TP
+or added FP remains visible and triggers diagnosis, not automatic promotion.
+These are development results, not DS-G8 or independent app qualification.
+
+Acceptance: verified incremental transfer and receipt; worker source/count tests;
+complete matched runs; independently accepted predictions and class-level comparison.
+Publication is not acknowledgment, and completion is not model acceptance. Next:
+compose promising predictions through the existing full-frame path and evaluate
+retention; if losses persist, diagnose sampling/scale before another experiment.
+
+### Retained-prediction scale diagnosis
+
+While216 executes asynchronously, NUIAK diagnoses accepted213 predictions without
+new inference. Reuse the evaluator's confidence0.25/IoU0.5 class-aware greedy
+matching, including its tie order. Reconcile all class TP/FP/FN against the accepted
+paired report before reporting any size breakdown. Bin ground truths by their
+minimum side after640letterboxing: <16,16–32,32–64,>=64 pixels. These diagnostic bins
+are not COCO AP bins. Report gained/lost matches and recall support by partition,
+class and size, plus bounded representative IDs; preserve fit versus reserve roles.
+Size correlations are not causal evidence. Pin original predictions and checkpoints;
+missing/corrupt inputs or metric disagreement fail closed. No threshold tuning,
+training admission, promotion or extra worker run is introduced.
+
+### Retained full-frame composition check
+
+Evaluate213fixed-last CUDA candidates as the **extra page-control donor only**,
+holding Run022 full-frame detections and accepted028refinement/211alias rule fixed.
+Use existing compose/merge/scoring entrypoints and frozen window memberships; no
+new inference, routing, thresholds or training. Compare against the exact028extra
+donor reference, retaining non-page predictions byte-for-byte. First require fit
+pageTP216 andFP<=24; if either candidate fails, stop before further retained scoring.
+If fit passes, report96development/2400retained full-frame metrics and inherited
+gates. Mixed fixed-model routing is a diagnostic, not standalone model quality;
+existing whole-model retention failures and runtime qualification still apply.
+Preserve source-pinned historical evaluator bytes: diagnostics may mirror matching
+only with exact per-class reconciliation, not invalidate sealed inputs by refactoring.
+
+## Full-frame replay coverage audit — preparation, not another run
+
+Audit the already admitted IOS-PLACEMENT173 membership to find training-only full
+frames for classes absent from the page-focused1509ROI replay. Hash-verify labels
+and retain family/group/pixel ancestry. Report per-class image and instance support;
+unsupported classes remain gaps. Select a bounded deterministic coverage proposal
+using only training labels, with at most one frame per original group and a target
+of16distinct supporting groups per supported class. Do not use evaluation outcomes
+to select individual examples. Cap at512frames; report unsatisfied coverage rather
+than enlarging automatically. Verify selected original images/annotations/labels
+and exclude reserved group/pixel overlap before publishing the proposal.
+No data-role changes, capture, training, transfer or model promotion in this audit.
+After216results, use this inventory to design a separate whole-model retention
+comparison; do not pretend the ROI donor experiment trains missing whole-frame classes.
+
+### Full-frame proposal baseline
+
+Before proposing a whole-model run, verify selected189source annotations against
+image hashes/dimensions and the existing export label converter. Freeze a portable
+prediction input with exact hashes, then run Run022 with the existing prediction
+exporter/640letterbox/MPS and fixed0.25 operating metrics. Bound inference to300seconds
+and32MiB outputs; fresh output directory, no automatic retry/download/fallback. Preserve
+checkpoint SHA d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d.
+Report per-class support/TP/FP/FN/AP, unsupported classes and model/input identities.
+This uses existing training groups and is explicitly in-sample diagnostic evidence,
+not held-out improvement. No new training, threshold tuning or promotion.
+
+### Scroll-resolution diagnostic
+
+216returned training records contain6.8MB of repeated per-epoch slot paths. Use an
+explicit8MiB budget for that verified archive member only, keeping the general4MiB
+inventory default unchanged;114431nodes need an explicit150000node cap for this
+member, preserving the default100000nodes and depth32. Coordinator messages
+retain their separate1MiB bound. Returned216 checkpoints live at control/last.pt
+and treatment/last.pt; preserve raw archive layout instead of rewriting evidence.
+
+Return acceptance preparation: extend the existing213 evidence reviewer with an
+explicit216 profile rather than inventing another scorer. Verify393batches/epoch,
+1569ordered slots and continuous accumulation16 (245updates across ten epochs),
+fixed source pins and run identities. Reject incomplete/duplicate evaluation cells.
+This checks returned records and bytes, not truth of remote execution or source
+semantics; inspect returned source separately before model acceptance. Reuse the
+existing five-partition evaluator and consumer composition path unchanged.
+
+Select all24scroll-positive frames from the frozen189training proposal by labels,
+not prediction successes. Reuse validated640predictions and perform exactly one1280
+Run022 MPS export with existing letterbox/NMS/thresholds. No crop/oracle boxes feed
+inference.180seconds/32MiB, exact input/output hashes, no retry/fallback. Compare
+scroll operating TP/FP/FN and AP as well as other classes on identical membership;
+report missing classes as unavailable. This is in-sample sensitivity, not qualification
+or a mandate to double production resolution. Fresh1280batch time is not directly
+comparable to the prior189-frame640batch time. Decide whether to pursue a separately
+bounded resolution-aware training hypothesis; do not launch it from this diagnostic.

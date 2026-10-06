@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-detector512-correction01",
+  "request_id": "nuiak-20261006-worker198-detector512",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T08:08:29Z",
+  "expires_at": "2026-10-20T08:08:29Z",
+  "state": "ready",
+  "priority": "low; preserve current owned TTR work",
+  "acknowledges": "joe-big-dog-20261006-worker198-detector512-receipt01",
+  "message": "Your bounded rejection was correct. These are NUIAK handoff defects, not corrupt data. Reuse your verified local archive; no retransmission, new capture or installation. This supplement supersedes only the extraction/hash ambiguity and grants the bounded resident-backend smoke below. Full training benchmark remains pending runner review.",
+  "artifact": {"file":"nuiak/nuiak-worker198-detector512-v1.tar.gz","bytes":43357068,"sha256":"43902bea4f1b58da932a9e61cf88e172eb293cd8702d0bd4104d13beec04073f"},
+  "extraction": {
+    "max_members":1100,"max_expanded_bytes":60000000,"default_max_member_bytes":32000000,
+    "sole_exception":{"path":"initializer.pt","bytes":40539244,"max_bytes":41000000,"sha256":"d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d"},
+    "rules":"Regular files only; reject links, traversal, duplicate destinations and overwrite. Extract to a new owned directory or retrieve only the absent initializer after full archive inventory validation; preserve previous evidence. Verify every exact manifest size/hash."
+  },
+  "pixel_hash": {
+    "encoding":"SHA256 of UTF-8 Python str((width, height)), followed immediately by Pillow image.convert('RGB').tobytes(): uint8 row-major RGB. No EXIF transpose. Parentheses, comma and single space in the size prefix are significant.",
+    "test_vector":{"width":1,"height":1,"rgb_hex":"010203","prefix":"(1, 1)","sha256":"b2c6d92f910b406810893850927b2a0e7bbf2feac7d1d06f943b2ba6dfb7c31b"},
+    "required":"Recheck all512declared pixel hashes with this convention. File hashes remain separately required."
+  },
+  "execution": {
+    "scope":"One CPU/CUDA float32 inference compatibility smoke using resident Ultralytics8.4.173, after complete intake. No downloads, installs, training, model promotion or retries.",
+    "inputs":"First two ordered manifest examples and exact initializer; preserve41class map. Build identical640letterboxed RGB tensors once; no augmentation, AMP or TF32. Pin resident source/version, Pillow, Torch, CUDA, driver and GPU.",
+    "budget":{"max_wall_seconds":600,"max_new_output_bytes":268435456},
+    "compare":"Report raw pre-NMS output shapes, finite checks, max absolute error and max relative error with denominator max(abs(CPU),1e-8). Diagnostic allclose atol1e-4/rtol1e-3. Also report post-NMS detections at confidence0.25/IoU0.7/max_det300, including decision discrepancies. Crossing a threshold is reported, never silently accepted or tuned away.",
+    "limits":"A smoke pass proves only resident CPU/CUDA compatibility on two examples, not producer8.4.124 parity, held-out accuracy, throughput or model quality. Failure returns evidence and blocks timed benchmark; do not install a fix."
+  },
+  "return": [
+    "Publish an immutable response referencing this request, archive and initializer hashes: complete intake counts, pixel convention check, smoke commands/exit codes/runtime and diagnostic results.",
+    "Return the reviewed-source benchmark runner proposal with instrumented actual optimizer steps/accumulation for nbs64, batch8/16, same initialization/order, two repetitions, disposable warmup and state restore, timing boundaries and memory. No full timing-training execution until this contract is reconciled.",
+    "Use the existing receipt protocol for a bounded source/report return, excluding duplicate dataset/checkpoint bytes. Continue other ready owned jobs when this finite stage completes; do not create an unattended experiment sweep."
+  ],
+  "outcomes":{"software_verified":"passed","data_eligible":"passed","integration_qualified":"blocked","model_gate_passed":"not_assessed"},
+  "evidence":"Research/Plans/Worker198Benchmark.md; reports/work/WORKER-198/detector512-handoff.md;20focused tests passed locally. Shared archive retained pending corrected intake."
+}

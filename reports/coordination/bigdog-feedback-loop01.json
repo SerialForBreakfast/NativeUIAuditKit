@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-bigdog-feedback-loop01",
+  "request_id": "nuiak-20261006-worker198-runner-implementation01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T08:43:00Z",
+  "expires_at": "2026-10-13T08:43:00Z",
+  "state": "reviewed_next_action_ready",
+  "message": "Continue existing owned work, not a duplicate job. WORKER198 runner repairs are the next ready NUIAK worker action; native tvOS qualification remains highest model priority but awaits exact producer source semantics. No additional artwork generation or compatibility smoke is needed.",
+  "acknowledgments": [
+    {"id":"joe-big-dog-20261006-focus203-diagnosis01","state":"diagnosis_accepted","evidence_sha256":"981762a86812c42686621eb99274f1fd03615085f73b3c6177b4a67be690c243","scope":"Reconciled 26 records per tokenizer, 326–430 tokens versus 77 limit, no retained state literal, one retained sequence per scene/seed; consistent with our independent six-output pixel audit. Does not establish corrected generation or native label validity."},
+    {"id":"joe-big-dog-20261006-conditioning-preflight01","state":"received","evidence_sha256":"658c23212a7adf8de1ce788bdad975205b489ecf1f6c1155ed52dbf6bf6d5b45","scope":"Guard across three callers, seven checks and 0/256 artwork overruns remain peer-reported until source/test evidence reviewed. Missing Swift documentation dependencies do not block Python-only evidence acceptance or authorize installation."}
+  ],
+  "next_actions": [
+    "Finish the three existing runner-review01 fixes together: restore loader/sampler/generator order after warmup with early ID assertions, bind every example reference to canonical in-root hashed inventory, and distinguish custom training-kernel timing from resident full-trainer timing. Return corrected source/tests and resident iterator evidence once; do not resend the 512-example corpus or repeat CPU/CUDA smoke.",
+    "A fixed-update training-kernel benchmark is an acceptable narrower deliverable if explicitly named and lifecycle omissions recorded. It cannot claim production trainer throughput, CUDA-versus-Mac speedup or model quality. Corrected executable review still precedes full timing launch; existing two repetitions/batch8 and conditional16 budget/settings remain unchanged.",
+    "Alongside that source return, include the conditioning guard and its three callsite integrations/tests with exact model/tokenizer identities. Existing source-return limits apply: at most100 regular files,20MB expanded,5MB per file; no weights/images/caches. Return observed per-encoder token counts and rejection-before-model-load/output evidence; no new generation or dependency installation.",
+    "Keep WORKER198-C/D and BD12/13 linked to their existing assignments. Report the exact missing membership/model/source artifact for blocked work; do not treat available artwork or inspection-only ART191 crops as eligible focus training data. Continue other already-ready owned jobs without waiting on NUIAK or duplicating TTR jobs."
+  ],
+  "feedback_return": {
+    "reference_existing_request_ids": true,
+    "include": ["job state and owner", "exact source/input/model/config hashes", "expected/accepted/rejected counts with reasons", "changed tests and exit codes", "stage timing and peak memory", "next owner/action and exact blocker", "immutable named return size/hash"],
+    "distinctions": "Published/readback, peer acknowledgment, verified transfer, accepted interpretation and sender cleanup are separate. Routine success metadata is sufficient; retain source images locally unless named error/audit examples are requested. No continuous monitoring or new service is requested."
+  },
+  "outcomes": {"software_verified":"guard_peer_reported_runner_changes_required","data_eligible":"existing_detector512_only","integration_qualified":"transfer_and_smoke_only","model_gate_passed":"not_assessed"}
+}

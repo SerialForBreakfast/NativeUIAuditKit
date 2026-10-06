@@ -99,6 +99,7 @@ public enum NativeUIElementType: String, Codable, Sendable, CaseIterable {
     // Indicators
     case activityIndicator
     case progressView
+    case badge
     case pageControl
     case scrollIndicator
     case refreshControl

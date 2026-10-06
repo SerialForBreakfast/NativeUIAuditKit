@@ -3,12 +3,13 @@ import Testing
 @testable import NativeUIDatasetGenerator
 
 struct AnnotationStateTests: Sendable {
-    private func document(_ schema: AnnotationWriter.Schema, enabled: Bool?, selected: Bool?) throws -> AnnotationJSON {
+    private func document(_ schema: AnnotationWriter.Schema, enabled: Bool?, selected: Bool?, withBadge: Bool = false, outputURL: URL? = nil) throws -> AnnotationJSON {
         let element = AnnotatedElement(id: "button", elementType: "primaryButton",
             frame: CGRect(x: -2, y: 10, width: 20, height: 10),
             isEnabled: enabled, isSelected: selected)
         let result = CaptureResult(png: Data(), sha256: String(repeating: "0", count: 64),
-            elements: [element], pixelSize: CGSize(width: 100, height: 200),
+            elements: [element] + (withBadge ? [AnnotatedElement(id: "badge", elementType: "badge",
+                frame: CGRect(x: 3, y: 11, width: 4, height: 4))] : []), pixelSize: CGSize(width: 100, height: 200),
             pointSize: CGSize(width: 50, height: 100), scale: 2)
         let state = SimulatorStateOverride(time: "09:41", batteryLevel: 100,
             batteryState: "charging", cellularBars: 5, wifiBars: 3,
@@ -20,7 +21,7 @@ struct AnnotationStateTests: Sendable {
             .deletingLastPathComponent().deletingLastPathComponent()
         let directory = root.appendingPathComponent(".build/annotation-state-tests")
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        let output = directory.appendingPathComponent(UUID().uuidString + ".json")
+        let output = outputURL ?? directory.appendingPathComponent(UUID().uuidString + ".json")
         try AnnotationWriter.write(result: result, config: config,
             imageFileName: "test.png", templateFamily: "test", generatorVersion: "test",
             to: output, schema: schema)
@@ -58,6 +59,32 @@ struct AnnotationStateTests: Sendable {
         #expect(legacy.elements[0].state.isSelected == false)
         let data = try JSONEncoder().encode(legacy)
         #expect(try JSONDecoder().decode(AnnotationJSON.self, from: data).elements[0].state.isEnabled == true)
+    }
+
+    @Test func explicitBadgeSchemaRetainsEnclosingElementAndOldDefaults() throws {
+        let new = try document(.badgeTaxonomy, enabled: nil, selected: false, withBadge: true)
+        #expect(new.schemaVersion == "1.3")
+        #expect(new.taxonomyVersion == "1.1")
+        #expect(new.elements.map { $0.elementType } == ["primaryButton", "badge"])
+        #expect(new.elements[0].boundsPixels.x == -4)
+        #expect(new.elements[1].boundsPixels.width == 8)
+        let old = try document(.legacy, enabled: nil, selected: nil)
+        #expect(old.taxonomyVersion == nil)
+        let json = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(old)) as? [String: Any])
+        #expect(json["taxonomyVersion"] == nil)
+        #expect(try JSONDecoder().decode(AnnotationJSON.self, from: JSONEncoder().encode(new)).taxonomyVersion == "1.1")
+    }
+
+    @Test func publicWriteRejectsBadgeUnderOldSchemasWithoutOutput() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .deletingLastPathComponent().deletingLastPathComponent()
+        for schema in [AnnotationWriter.Schema.legacy, .measuredState] {
+            let output = root.appendingPathComponent(".build/badge-rejected-" + UUID().uuidString + ".json")
+            #expect(throws: AnnotationWriterError.self) {
+                try document(schema, enabled: true, selected: false, withBadge: true, outputURL: output)
+            }
+            #expect(!FileManager.default.fileExists(atPath: output.path))
+        }
     }
 
     @Test func missingRequiredStateIsNotUnknown() throws {

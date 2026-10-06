@@ -192,9 +192,9 @@ struct NativeUIAuditKitTests {
         #expect(decoded.confidenceSource == NativeUIConfidenceSource.pixelModel)
     }
 
-    @Test("All 41 element type rawValues survive Codable round-trip")
+    @Test("All 42 element type rawValues survive Codable round-trip")
     func allElementTypesRoundTrip() throws {
-        #expect(NativeUIElementType.allCases.count == 41)
+        #expect(NativeUIElementType.allCases.count == 42)
         for type_ in NativeUIElementType.allCases {
             let encoded = try JSONEncoder().encode(type_)
             let decoded = try JSONDecoder().decode(NativeUIElementType.self, from: encoded)

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-eval027",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T10:18:40Z",
+  "expires_at": "2026-10-13T10:18:40Z",
+  "state": "requested",
+  "message": "198-D now has an executable inference slice. Reuse qualified resident CUDA tooling and run frozen Run027 proposal predictions, not another training benchmark. Apply your repository authority and preserve other owned jobs.",
+  "artifact": {
+    "file": "nuiak/nuiak-worker198-eval027-v1.tar.gz",
+    "bytes": 45130794,
+    "sha256": "9c4bc722cbb74c80646eb03b5412123e12560979212d26ded7be66b8b40a6070",
+    "limits": {"maxMembers":1300,"maxExpandedBytes":209715200,"maxMemberBytes":52428800}
+  },
+  "inputs": "All 585 frozen ROI197 crops:135 fit diagnostics,37 page development,413 combined retained evaluation; category map; existing exporter and dependencies; fixed-last Run027 checkpoint. Verify manifest inventory and all content hashes before loading. Evaluation-only; never use for training or tuning. Preserve original membership and proposal mappings.",
+  "implementation": "Extract regular files with bounded/path-safe intake into a new project-local root. Keep root layout intact: eval_phase6a.PROJECT_ROOT is derived from its script. Set Python bytecode, YOLO_CONFIG_DIR, MPLCONFIGDIR,TORCH_HOME,TMPDIR to owned local paths before import. Use resident8.4.173/CUDA environment; no downloads. For each manifest call the included eval_phase6a.export_predictions(manifest, checkpoint, unique_output, '0', imgsz=640, discard_degenerate=True). This API preserves existing confidence/IoU/NMS/coordinate policy; CLI alone lacks the required discard option. No alternate cropper/exporter, batching-policy change or source modification. A thin budget/accounting wrapper is permitted with retained source/tests.",
+  "acceptance": "Verify source/checkpoint/category/input hashes before and after, all585 output records, successful-empty versus failed counts, finite valid boxes, runtime/device/package versions, stage timing and peak GPU memory. Any failed record is reported as failure, not omitted. Stop after a failed manifest; no automatic retry. Return the3prediction artifacts plus source/config/terminal evidence. NUIAK performs local merged metrics and fixed-sample backend checks; do not compare CUDA against MPS as though equivalent or claim quality gain.",
+  "budget": "1800seconds total,1GiB new outputs,one GPU job,CPU2threads,nice10 where supported. No training, installation, network model lookup, capture, data-role change, export/promotion or duplicate local training. Passing your preflight permits this bounded execution without a second proposal exchange.",
+  "handoff": "Publish receipt identifying exact archive hash/size, then actual start and terminal status separately. Return one immutable predictions/evidence archive <=64MiB,<=256regular files,<=128MiB expanded,<=64MiB per member; no images or checkpoints in return. Preserve source originals and failures. Receiver receipt precedes sender cleanup. Acknowledge request once; no polling chatter.",
+  "next": "Retain these inputs for a small Run028 checkpoint supplement after local completion. Do not infer its weights from any intermediate file or rescore Run027 unchanged. NUIAK owns the supplement and paired-evaluation acceptance. Broader198-D is not complete merely from prediction export; source/build qualification for native focus remains separate."
+}

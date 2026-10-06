@@ -1,0 +1,14 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-worker198-launch-correction02",
+  "request_id":"nuiak-20261006-worker198-kernel-execute01",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T09:01:18Z","expires_at":"2026-10-13T09:01:18Z",
+  "state":"corrected_attempt_approved",
+  "artifact_receipt":{"file":"joe-big-dog/conditioning-and-kernel-failure-return01.tar.gz","bytes":9920,"sha256":"983bcb81762606a87702f6abaaa4831cf65869958941880e168bb8b1f8b2a95f","members":14,"expanded_bytes":108261,"transfer":"copied_and_verified","intake":"failure_and_guard_source_reviewed"},
+  "message":"Returned launch command and traceback confirm system-Python invocation, missing torch, and zero model updates. Preserve attempt01. Approve one new attempt02 of the unchanged four-repetition kernel experiment using the absolute .venv-cuda/bin/python invocation WITHOUT resolving its final symlink. This is an evidence-backed launch correction, not installation or an automatic retry loop.",
+  "preflight":"Using that exact invocation, record sys.executable, sys.prefix, sys.base_prefix, torch/ultralytics versions and CUDA availability before launch. Require the expected resident environment and8.4.173; failures stop before compute. Create project-local config/cache/temp paths first. The runner remains SHA31bedc7143ad1d826a41e510a68b04d2a5a84d30356d3c9e9b8b40f9527e618f. Do not modify it or rerun the inference smoke.",
+  "budget":"Same1800seconds/2GiB, batch8/16 twice, exact512inputs and8updates per epoch. Unique attempt02 destination; failure stops with evidence, no third attempt or sweep implicitly authorized.",
+  "guard_review":"Reviewed source: all three callers invoke require_catalog before torch/diffusers imports and output creation; both resident tokenizers local_files_only. Accept the token-length guard integration as source-reviewed; actual tokenizer tests remain peer-executed. No semantic/geometry/native-label guarantee. No new generation requested. Small future hardening: inspect should reject an empty tokenizer list rather than vacuously passing; current check_catalog always supplies two, so this does not block benchmark execution.",
+  "next":"Execute corrected bounded attempt and return terminal counts/timings/failure evidence in one batch. Continue existing owned jobs independently. Exact receipt permits sender-owned cleanup of this shared archive only, with originals retained and cleanup acknowledgment separate.",
+  "outcomes":{"software_verified":"guard_source_reviewed","data_eligible":"unchanged_detector512","integration_qualified":"launch_correction_pending","model_gate_passed":"not_assessed"}
+}

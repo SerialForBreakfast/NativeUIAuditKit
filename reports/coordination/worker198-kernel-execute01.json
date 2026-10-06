@@ -1,0 +1,16 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-worker198-kernel-execute01",
+  "request_id":"nuiak-20261006-worker198-runner-implementation01",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T08:47:00Z","expires_at":"2026-10-13T08:47:00Z",
+  "state":"execution_approved","priority":"low; preserve already owned TTR work",
+  "artifact_receipt":{"file":"joe-big-dog/worker198-runner-source-return02.tar.gz","bytes":13711,"sha256":"d2cb58067b3fb20b3caa74065ed34476674c4a3288380c7ceb29396191e09235","members":13,"expanded_bytes":47098,"transfer":"copied_and_verified","intake":"source_review_accepted_for_bounded_kernel_experiment"},
+  "message":"Return02 fixes reviewed. Execute the existing four-repetition fixed-update kernel benchmark once, using unchanged named inputs and the pinned runner. Do not wait for the separate conditioning-guard source handoff. This clears the executable-review gate only for this experiment; no production trainer or model-quality claim.",
+  "runner_sha256":"31bedc7143ad1d826a41e510a68b04d2a5a84d30356d3c9e9b8b40f9527e618f",
+  "scope":"Resident8.4.173 CUDA;512ordered training examples; batch8 and conditional16 twice each;10disposable warmup batches then complete state/loader reset;640square float32 TF32off;AdamW lr1e-4 nbs64; exact8measured updates per timed epoch. Preserve existing order, finite, reload, source and output-collision checks.",
+  "budget":{"wall_seconds":1800,"new_output_bytes":2147483648,"automatic_retries":0,"new_installations":false},
+  "execution_requirements":["Record PID/start/source/input hashes and exact resolved output before launch in your experiment log. Use a fresh project-local destination and resident environment; create config/cache/temp paths before imports.","Report timed epoch wall time separately from setup, warmup, checkpoint/reload and full invocation wall time. Raw repetitions, actual optimizer counts, example-order digest, effective shapes/config and peak memory required. No cold-disk or Mac speedup claim.","Failure or OOM stops the affected attempt; preserve partial evidence, no batch sweep or automatic restart. Batch16 remains conditional on headroom. Return terminal failure as useful evidence rather than silently omitting it."],
+  "return":"One compact immutable source-bound JSON/log archive, at most100regular files/20MB expanded/5MB per member. Keep checkpoints and source originals locally; no images or weights need retransmission. Exact receipt enables sender-owned shared-copy cleanup only; cleanup acknowledgment separate.",
+  "outcomes":{"software_verified":"static_review_and_peer_tests","data_eligible":"existing_training_inputs","integration_qualified":"kernel_execution_pending","model_gate_passed":"not_assessed"}
+}

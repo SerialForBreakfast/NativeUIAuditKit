@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:05:08Z",
+  "expires_at": "2026-10-13T07:05:08Z",
+  "id": "nuiak-20261006-artwork204-feedback-return02",
+  "request_id": "nuiak-20261006-artwork204-campaign",
+  "state": "requested",
+  "priority": "high",
+  "message": "Metadata received and independently reconciled: 256 distinct IDs, all planned recipe fields and nested hashes/sizes agree. Reuse the completed campaign: publish only the 32 selected originals below (45,082,644 bytes) with their manifest, actual observed coverage and licensing notices. No new generation. tvOS focus is highest priority; these posters/thumbnails support native focus and parallel iOS detection diagnosis.",
+  "selection": [
+    {
+      "id": "artwork204-r0-s0-v0-t1",
+      "kind": "poster",
+      "sha256": "7c178934eddd4aabfcd5107ee5b929d9dd94147bf2f0be3ae4f23a54808e5f37",
+      "bytes": 1341271,
+      "ancestryGroups": [
+        "artwork204-family-r0-s0"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s0-v0-t2",
+      "kind": "poster",
+      "sha256": "f4ed8242b6bfa1ea961f21697e04a3d805b2500225c844fd2ea804fff3598e80",
+      "bytes": 1285257,
+      "ancestryGroups": [
+        "artwork204-family-r0-s0"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s1-v0-t1",
+      "kind": "poster",
+      "sha256": "23b03b1d47c55e252dda200b0de78bc9f9c501413929792ed07563cab78fa992",
+      "bytes": 1664266,
+      "ancestryGroups": [
+        "artwork204-family-r0-s1"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s1-v0-t2",
+      "kind": "poster",
+      "sha256": "b70214a2580f9416c89fb32bcd8b270bc0742643ff7e72d8eaade0b6d184f5d9",
+      "bytes": 1120544,
+      "ancestryGroups": [
+        "artwork204-family-r0-s1"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s2-v0-t1",
+      "kind": "poster",
+      "sha256": "f8b4def4b7d430bdb236b8d740eac1e6b2ab27e2d82746c2355a3754ff6a4295",
+      "bytes": 1496644,
+      "ancestryGroups": [
+        "artwork204-family-r0-s2"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s2-v0-t2",
+      "kind": "poster",
+      "sha256": "a42f980ab036dee1e11b5a3a9f73c55aea5e0998c88096040fb2d5e550b802df",
+      "bytes": 1602311,
+      "ancestryGroups": [
+        "artwork204-family-r0-s2"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s3-v0-t1",
+      "kind": "poster",
+      "sha256": "dc1a4123d79c19d659c0d9bfafdf18880ed67e6deb3a27747368bbd82d7d53d1",
+      "bytes": 1412806,
+      "ancestryGroups": [
+        "artwork204-family-r0-s3"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s3-v0-t2",
+      "kind": "poster",
+      "sha256": "d551d4d9fbb0889c0d01f37748696578e1ddcc5ce74ba2633b15474edfbc1fd7",
+      "bytes": 1414991,
+      "ancestryGroups": [
+        "artwork204-family-r0-s3"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s4-v0-t1",
+      "kind": "poster",
+      "sha256": "676a9eaea40cfd516828fdbe421c3f75053031a3996759d44cdf03b5e64a1ab4",
+      "bytes": 1773348,
+      "ancestryGroups": [
+        "artwork204-family-r0-s4"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s4-v0-t2",
+      "kind": "poster",
+      "sha256": "69eb2a895c9522d18115a0154d8d68161b320360777709fa6910b0ee0aa596f0",
+      "bytes": 1464646,
+      "ancestryGroups": [
+        "artwork204-family-r0-s4"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r0-s5-v0-t1",
+      "kind": "poster",
+      "sha256": "fb7d610e65395142b23090cae384ac0009aa264a769c854dc3f6bc479f565215",
+      "bytes": 1576127,
+      "ancestryGroups": [
+        "artwork204-family-r0-s5"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r0-s5-v0-t2",
+      "kind": "poster",
+      "sha256": "b5760587b9c71bfe98c7043dbfa9089e5739f431445f91f36c2e4672a67c2fdd",
+      "bytes": 1345735,
+      "ancestryGroups": [
+        "artwork204-family-r0-s5"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r0-s6-v0-t1",
+      "kind": "poster",
+      "sha256": "d6efcb84733c74fcb1ddf1f36c35d73d2b15dfc98ef0e0d8f8394fd0576430cd",
+      "bytes": 1423795,
+      "ancestryGroups": [
+        "artwork204-family-r0-s6"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r0-s6-v0-t2",
+      "kind": "poster",
+      "sha256": "8184cfe63409db5b4c8430f271a36e60229ed82e4556f606d456e69487ddff16",
+      "bytes": 1280828,
+      "ancestryGroups": [
+        "artwork204-family-r0-s6"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r0-s7-v0-t1",
+      "kind": "poster",
+      "sha256": "c962e0c6c293ab19f86fb8eb04a17b5a5e1c94cfa3e4b8f773eca8628f7fbeb8",
+      "bytes": 1160304,
+      "ancestryGroups": [
+        "artwork204-family-r0-s7"
+      ],
+      "proposedDataRole": "unseen_content_diagnostic_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r0-s7-v0-t2",
+      "kind": "poster",
+      "sha256": "00df3acd7c5f18fb1da03d4b9575fa913457b0c6103521214c5cbba3fa38053a",
+      "bytes": 1164063,
+      "ancestryGroups": [
+        "artwork204-family-r0-s7"
+      ],
+      "proposedDataRole": "unseen_content_diagnostic_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r1-s0-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "4d0dcecd0bdc0859af0abd7d419216c3d71fbb35ff85da8bcfe89d64b18429b9",
+      "bytes": 1288249,
+      "ancestryGroups": [
+        "artwork204-family-r1-s0"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s0-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "4e69445c146a507de0dea6dfe4220a36794a1001d067c740eba4e866c68fb1c6",
+      "bytes": 1469618,
+      "ancestryGroups": [
+        "artwork204-family-r1-s0"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s1-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "17aaa0c9acce1074091091d0a48c530bfea43c739b5a47a96d65d3111643b80f",
+      "bytes": 1433979,
+      "ancestryGroups": [
+        "artwork204-family-r1-s1"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s1-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "4be1c5368ecca576b82f81df993f9d6fb936450fbf48d48c331b60992d3faf50",
+      "bytes": 1304834,
+      "ancestryGroups": [
+        "artwork204-family-r1-s1"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s2-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "d108fa11b655feac2797adffb7ffd546b4a9399ab35461cb0c3da966ba576e72",
+      "bytes": 1618725,
+      "ancestryGroups": [
+        "artwork204-family-r1-s2"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s2-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "0a1201eea5c735ea50ccbcf95b9eae1eea4f8391d3925d5f7562d934551c6456",
+      "bytes": 1140516,
+      "ancestryGroups": [
+        "artwork204-family-r1-s2"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s3-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "247a14aec770f0d20bfd95e62e078782f597e38bd9084ca1260554cc2ee0d929",
+      "bytes": 1413581,
+      "ancestryGroups": [
+        "artwork204-family-r1-s3"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s3-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "7a25ae32bf963058c76b863170ec3310e9322b46f81d545e3beeea4668020225",
+      "bytes": 1365058,
+      "ancestryGroups": [
+        "artwork204-family-r1-s3"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s4-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "b333972e4dd4d221e1264a6be44fd5ae8927eb96040d99b209ed4169456bae76",
+      "bytes": 1636744,
+      "ancestryGroups": [
+        "artwork204-family-r1-s4"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s4-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "e655986060340d391f834eceb283795b9fecc0c4461a30f89045a19622409020",
+      "bytes": 1452091,
+      "ancestryGroups": [
+        "artwork204-family-r1-s4"
+      ],
+      "proposedDataRole": "development"
+    },
+    {
+      "id": "artwork204-r1-s5-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "e22a4b67297b750f315be18ad2c5f7e6048a67545cd424ffc64bc5cdd2b80f24",
+      "bytes": 1556410,
+      "ancestryGroups": [
+        "artwork204-family-r1-s5"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r1-s5-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "09687e33ba2df605bc224509095def579855d1c2b19d5c0cd3660e4c58dc706f",
+      "bytes": 1615519,
+      "ancestryGroups": [
+        "artwork204-family-r1-s5"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r1-s6-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "e191e52b3cdf1f8b730ef60e9de8986f55c5d027b3b6c81aff4a3d6bd5d738bf",
+      "bytes": 1528091,
+      "ancestryGroups": [
+        "artwork204-family-r1-s6"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r1-s6-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "a934a2fc39cfff6d304c00ff430803d622b2b53851b8616f9841eac60801b9a6",
+      "bytes": 1073239,
+      "ancestryGroups": [
+        "artwork204-family-r1-s6"
+      ],
+      "proposedDataRole": "validation_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r1-s7-v0-t1",
+      "kind": "thumbnail",
+      "sha256": "44b37a4fd74c024c4218596ea38b4f8189061b7b2c8192c12bc95d074ebff53c",
+      "bytes": 1342198,
+      "ancestryGroups": [
+        "artwork204-family-r1-s7"
+      ],
+      "proposedDataRole": "unseen_content_diagnostic_reserved_pending_review"
+    },
+    {
+      "id": "artwork204-r1-s7-v0-t2",
+      "kind": "thumbnail",
+      "sha256": "41c853b127e5ad22450077f7f4d04f29a0dcb0dfaa6c2bbcd1774ba421567d7d",
+      "bytes": 1316856,
+      "ancestryGroups": [
+        "artwork204-family-r1-s7"
+      ],
+      "proposedDataRole": "unseen_content_diagnostic_reserved_pending_review"
+    }
+  ],
+  "bounds": {
+    "compressed_bytes_max": 64000000,
+    "expanded_bytes_max": 64000000,
+    "members_max": 100,
+    "new_generation_calls": 0
+  },
+  "format": "One uniquely named immutable regular-files-only tar.gz; selected PNGs named by ID, manifest binding exact paths/bytes/SHA256/dimensions/ancestry, retained model/config/licensing references. Return exact archive bytes/SHA256/member count. Preserve originals; cleanup only matching receipt.",
+  "data_roles": "All actual roles remain unassigned pending review. Preserve existing proposed development/validation/reserved-diagnostic family roles, including unselected siblings and cross-role related compositions. Do not recategorize exposed development assets as train or final evaluation. No UI labels in artwork; native observed labels required downstream.",
+  "feedback": {
+    "ios": "Run022 fixed operating point: grid imageView TP80/80 procedural,12/80 low-clutter artwork,3/80 busy artwork; hero16/16 across conditions. Two development artwork samples only, not causal proof or final evaluation. Need broader content/scale coverage, not just more resolution.",
+    "focus": "Prioritize content that could resemble focus (embedded borders, white panels, bright texture), retaining original challenge tags and observed reviews. Consumer performs native focused/unfocused capture; artwork is never focus ground truth.",
+    "next_consumer": "Verify returned bytes/decode/rights/suitability, freeze asset-family membership, then native artwork/focus comparisons and parallel grid detection tests. Return failures keyed to asset+scene+checkpoint hashes and distinguish missing pixels from model errors."
+  },
+  "acknowledgment": "Reply referencing this exact ID/hash with local task ID and archive availability or typed blocker; do not wait for repeated per-file approval."
+}

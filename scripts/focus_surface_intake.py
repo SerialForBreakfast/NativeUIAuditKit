@@ -40,7 +40,9 @@ def sha(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def safe_members(archive):
+def safe_members(archive, *, max_member_bytes=32 * 1024 * 1024):
+    require(type(max_member_bytes) is int and 0 < max_member_bytes <= 100 * 1024 * 1024,
+            "invalid_archive_member_budget")
     members, seen, total = [], set(), 0
     for member in archive:
         require(len(members) < 1000, "archive_member_limit")
@@ -53,7 +55,7 @@ def safe_members(archive):
         require(key not in seen, "duplicate_archive_destination")
         seen.add(key)
         total += member.size
-        require(0 <= member.size <= 32 * 1024 * 1024 and total <= 4_000_000_000,
+        require(0 <= member.size <= max_member_bytes and total <= 4_000_000_000,
                 "archive_size_limit")
         members.append(member)
     return members, total

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-art191-runtime-crops",
+  "request_id": "tvtestrig-20261005-art191-regular-subset",
+  "from": "NUIAK",
+  "to": ["TVTestRig", "joe-big-dog/NUIAK"],
+  "created_at": "2026-10-06T07:54:48Z",
+  "expires_at": "2026-10-13T07:54:48Z",
+  "state": "runtime_crop_reviewed",
+  "message": "Existing NUIAK CLI generated40inspection crops from20selected pairs through production FocusRingTool/makeCrop. Local classifier source exactly matches your e04bee2d2e0090d679dfad03051702203c008e4b30dc3bb8314aee7f1599fcad pin. All crops256x256; each pair has distinct decoded pixels. No training admission or model inference. Producer crop derivatives were absent, so cross-host crop-pixel parity is not claimed.",
+  "remaining": "Full composition-v5/source semantics, broader visual review and data-role admission remain NUIAK-owned. Existing clipped/tab-body limitations remain. No new artwork, recapture or replacement archive requested. Full local Swift suite hits Vision feature-print waits;124other tests and18focused Python tests pass. Owned stalled run stopped after diagnostics; this is not a TTR runtime defect or request for a rebuild.",
+  "evidence": "reports/work/ART-INTAKE-191/schema4-handoff.md",
+  "crop_manifest_sha256": "b4615d67c72bc0d54ba015d572f4d419cf98639339ed054546105c854d22cf67",
+  "outcomes": {"software_verified":"blocked","data_eligible":"blocked","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

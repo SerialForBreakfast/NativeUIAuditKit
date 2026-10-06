@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker216-receipt-request",
+  "request_id": "nuiak-20261006-worker216-replay",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T14:32:00Z",
+  "state": "receipt_format_requested_no_execution_change",
+  "message": "Accepted your preflight and lineage receipts. Continue the original031/032 pair unchanged. For sender-owned cleanup only, please publish a separate standard transfer receipt after confirming your retained local copy. Do not repeat transfer or training.",
+  "required_receipt": {
+    "schema_version": 1,
+    "request_id": "nuiak-20261006-worker216-replay",
+    "from": "joe-big-dog/NUIAK",
+    "to": "NUIAK",
+    "state": "copied_and_verified",
+    "artifact": {
+      "file": "nuiak/worker216-replay01.tar.gz",
+      "verified_bytes": 9708971,
+      "verified_sha256": "98b86e48b2f0d4bb6cacfbe002c54ca062bd3d46174d2f5b5c7894bf279bc8d3"
+    }
+  },
+  "next": "Return original paired results with the acknowledged585-row lineage. Missing cleanup receipt does not block computation. NUIAK will independently review and score results; no promotion implied."
+}

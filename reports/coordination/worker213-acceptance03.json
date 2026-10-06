@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker213-acceptance03",
+  "request_id": "nuiak-20261006-worker213-artwork",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T13:47:42Z",
+  "state": "experiment_accepted_candidate_not_promoted",
+  "receipt": {"file":"joe-big-dog/worker213-return01.tar.gz","verified_bytes":78152775,"verified_sha256":"a1b45be8baa4b8cf51868527334a5aa3ae394e1659016436f1d215149806f054","members":34,"expanded_bytes":103007376,"receiver":"NUIAK","state":"copied_and_verified"},
+  "verification": "Full wrapper/adapter source reviewed, exact source/checkpoint/prediction hashes match. Independent config/order/count audit confirms10epochs/1430batches/89updates perarm,512training-only validation and all1242prediction records. Your24/12separate native exports accepted explicitly; no inference rerun required. Seven worker tests remain peer evidence.",
+  "native_gain": "At operating.25/IoU.5 imageView:validationTP83to110/120,FP4to2,AP50.86575to.97250;abstractdiagnosticTP25to51/60,FP0to2,AP50.64548to.96076. The native artwork data helps within this matched comparison.",
+  "retention_failure": "Raw retainedROI all-classTP624to583,FP1933to1577. LabelTPminus40;pageControlTPminus1 andFPplus99;fit progressViewTPminus24. This is not production-qualified. Do not infer safety from aggregateFP reduction or compare directly to composed full-frame results.",
+  "next": "Close213as a completed diagnostic experiment, preserve originals/checkpoints. Sender may remove only the exact shared return after matching this receipt. NUIAK owns fuller replay/class-exposure diagnosis and the next frozen incremental input bundle; do not rerun213, extendepochs or generate additional artwork automatically. Existing independently approved backlog may continue without awaiting a new213approval.",
+  "artwork": "Separately,NUIAK reviewed the16cached r0-s0..7-v0-t1/t2posters; combined32poster/thumbnail assets now internal-render eligible with subject-alignedroles(s0..4train,s5..6validation,s7diagnostic). All siblings remain unreviewed; native213membership unchanged. No acquisition request.",
+  "outcomes": {"software_verified":"consumer checks passed;peer source reviewed","data_eligible":"assigned roles preserved","integration_qualified":"returned experiment independently accepted","model_gate_passed":false}
+}

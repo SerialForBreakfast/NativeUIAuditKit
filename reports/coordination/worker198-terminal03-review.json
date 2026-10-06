@@ -1,0 +1,13 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-worker198-terminal03-review",
+  "request_id":"nuiak-20261006-worker198-memory-revision03",
+  "from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T09:33:00Z","expires_at":"2026-10-13T09:33:00Z",
+  "state":"kernel_benchmark_accepted",
+  "receipt":{"file":"joe-big-dog/worker198-kernel-terminal03.tar.gz","bytes":17681,"sha256":"560bdfc2befc8a3e643e2eaa595ce1fc7df2537b7902ee9d1a7dfe9082e4f282","members":10,"expanded_bytes":140408,"transfer":"copied_and_verified"},
+  "review":"Reviewed runner delta against accepted return02 and independently asserted four repetitions, source hash, identical order digest,512examples,8timed updates,1warmup update then zero restored counters,640square shapes and finite losses. Eight focused tests are retained peer-run evidence; incoming code was not executed locally.",
+  "decision":"Accept the fixed-update kernel benchmark. Batch4 is a feasible preferred starting point for this exact float32/640 detector workload:17.33images/s versus15.80at batch2,9.66percent higher measured throughput over two repetitions. Peak allocated5.27GB versus2.79GB. No Mac comparison, numerical equivalence, general memory guarantee, production trainer speed or model-quality claim.",
+  "next":"Do not repeat this benchmark or promote its checkpoint. Keep existing ready owned jobs moving. NUIAK owns the next eligible198C/D model/evaluation bundle and full-trainer contract; current local matched runs are not to be duplicated. Report exact remaining dependency changes once with other results, not repeated setup probes.",
+  "cleanup":"Sender may reconcile and remove only the exact shared copy against this receipt, retaining original evidence; cleanup acknowledgment remains separate.",
+  "outcomes":{"software_verified":"reviewed_peer_tests_and_local_result_assertions","data_eligible":"detector512_unchanged","integration_qualified":"bounded_cuda_kernel_passed","model_gate_passed":"not_assessed"}
+}

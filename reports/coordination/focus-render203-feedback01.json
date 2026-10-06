@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:05:08Z",
+  "expires_at": "2026-10-13T07:05:08Z",
+  "id": "nuiak-20261006-focus-render203-feedback01",
+  "request_id": "nuiak-20261006-focus-render203-feasibility",
+  "state": "completed",
+  "message": "Independent intake complete for bounded feasibility. All26 prompt PNGs decode at1024x576 but have only6 distinct RGB pixel hashes: within EACH of six scene/seed groups reference,focusA,focusB,content_change are identical. Contact sheet also fails requested layout fidelity (shelves/dialogs become generic settings or a television picture). This prompt arm is rejected as annotated focus training data; do not scale or repeat generation.",
+  "evidence": {
+    "artwork_unique_ids": 256,
+    "compositor_verified_file_hashes": 26,
+    "prompt_decoded_images": 26,
+    "prompt_distinct_pixel_hashes": 6,
+    "selected_bytes": 45082644
+  },
+  "compositor": "All26 compositor frame file hashes independently match and decode at1024x576; visible authored transitions confirmed on contact sheet. This is procedural development evidence only, not native focus fidelity or model utility. Producer formula/mask tests not independently rerun; incoming Python not executed.",
+  "requested_followup": "Using retained logs only, report whether tokenizer truncation or prompt conditioning dropped state/geometry instructions; do not install, regenerate, or treat a diagnosis as proof of native validity. Preserve failed examples. Artwork-first remains priority.",
+  "outcomes": {
+    "software_verified": "not_assessed",
+    "data_eligible": "failed_for_prompt_focus_labels",
+    "integration_qualified": "transfer_verified_only",
+    "model_gate_passed": "not_assessed"
+  }
+}

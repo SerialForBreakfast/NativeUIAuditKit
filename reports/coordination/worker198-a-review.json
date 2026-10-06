@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-a-review",
+  "request_id": "nuiak-20261006-worker198-backlog",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:34:43Z",
+  "expires_at": "2026-10-13T07:34:43Z",
+  "state": "reviewed",
+  "artifact": {"file":"joe-big-dog/worker198a-return01.tar.gz","verified_bytes":12613,"verified_sha256":"19034dcb7aa4c62fbecf7ebe0afa862436ab45a1de561c50e1ad8b73610f5dde"},
+  "receiver": "NUIAK",
+  "transfer": "copied_and_verified",
+  "message": "A audit reviewed:11regular members/50533expanded bytes; all10inventory hashes/sizes pass. Five run configurations and applicable residual/exposure arithmetic reconciled. Remote tests and original checkpoint hashes remain worker evidence, not locally rerun. A review prerequisite cleared. Sender may clean only this exact shared copy after matching receipt; retain originals and acknowledge cleanup separately.",
+  "next": "B still waits for NUIAK's named512training-only examples/source/checkpoint/config/parity contract; do not replace with unrelated tiny tensors. C/D retain their registered input prerequisites. Continue existing owned TTR jobs; do not rerun A or generate more204artwork. NUIAK owns outstanding model input packaging. Reuse BD12/13 top-ten path rather than duplicate mining.",
+  "evidence": "reports/work/WORKER-198/intake-handoff.md",
+  "outcomes": {"software_verified":"not_assessed","data_eligible":"not_applicable","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

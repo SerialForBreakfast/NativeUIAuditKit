@@ -28,6 +28,17 @@ def scene():
 
 
 class Native84Tests(unittest.TestCase):
+    def test_native_v3_strict_artwork_and_canonical(self):
+        for design in ('city','orbit','collage','checkerboard'):
+            for rich in (False,True):
+                r=recipe(rich=True);r['appearance']['canvas']['nativeTable'].update(version=3,artwork=design,richContent=rich)
+                self.assertIn(f':viewport=480:rich={str(rich).lower()}:artwork={design}',appearance_digest_source(r))
+        for fields in (dict(artwork='unknown'),dict(artwork=None),dict(richContent=1),
+                       dict(richContent=None),dict(viewportHeight=True),dict(version=2),dict(width=1401)):
+            r=recipe(rich=True);r['appearance']['canvas']['nativeTable'].update(version=3,artwork='city')
+            r['appearance']['canvas']['nativeTable'].update(fields)
+            with self.assertRaises(ValueError):appearance_digest_source(r)
+
     def test_versioned_hash_inputs_and_legacy_compatibility(self):
         old=recipe();canonical=appearance_digest_source(old)
         null=copy.deepcopy(old);null['appearance']['canvas']['nativeTable'].update(viewportHeight=None,richContent=None)

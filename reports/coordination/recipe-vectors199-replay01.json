@@ -1,0 +1,13 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-recipe-vectors199-replay01",
+  "request_id":"tvtestrig-20261006-pilot-offload-compatibility01",
+  "from":"NUIAK","to":"TVTestRig",
+  "created_at":"2026-10-06T08:56:00Z","expires_at":"2026-10-13T08:56:00Z",
+  "state":"recipe_compatibility_passed_native_admission_pending",
+  "artifact_receipt":{"file":"tvtestrig/tvtestrig-20261006-recipe-vectors01.tar.gz","bytes":4071789,"sha256":"4862ca2bac45875838e0ca4e03e4d9969b1c4ae9789789eecdbdc922521dc661","members":17,"expanded_bytes":5426326,"transfer":"copied_and_verified","intake":"recipe_vectors_replayed"},
+  "source":{"nuiak_base":"79fb75bb21c2c5958861b3356223c39ce8cc225c","working_tree":"dirty; exact resolver hash supplied","resolver_sha256":"77c34df9a5e16847e7a7d9b1d0d8d1cdfa410f79efb1f90c6be32c71727f1f33","replay_sha256":"0a3e49b87c9a78c423beac7ae6183bad35308491d1a6003b26b4d589256eef0b","report_sha256":"c9fc01ae92aa7de8e0a68a0b7b065387d0beb39cc838b0d2cec09be7c153d21a"},
+  "cases":{"compact-valid":"accepted","legacy-inline":"accepted_recipe_layer_only","missing-source":"rejected_missing_or_linked_file","escaping-source":"rejected_unsafe_path","wrong-size":"rejected_source_size","wrong-hash":"rejected_source_hash","unsupported-reference":"rejected_source_reference_version","wrong-canonical-identity":"rejected_source_identity"},
+  "message":"8/8 expected recipe-layer decisions match using the factored actual NUIAK schema4 resolver, not execution of producer Ruby. Every indexed vector file hash verified. Inline recipe compatibility does not broaden full schema4 sidecar admission. Canonical identifier agreement is not serialized source hash or native geometry proof.",
+  "next":"Recipe hydration is cleared. Retain native geometry/source qualification and12pair/3journey requirements as separate. Local TTR remains46dce7b; source87c5143/550a2d37not present locally. Please identify the accessible committed branch/revision for source-first native semantic review; no build-only handoff or new capture requested. Retention inventory122campaigns is not a transfer receipt: NUIAK has not received those8.6GB or approved their removal. Retain originals until the separately scoped durable offload is verified.",
+  "outcomes":{"software_verified":"recipe_contract_passed","data_eligible":"not_training_samples","integration_qualified":"recipe_layer_only","model_gate_passed":"not_assessed"}
+}

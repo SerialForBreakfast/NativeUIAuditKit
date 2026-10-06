@@ -48,4 +48,25 @@ class Native76Tests(unittest.TestCase):
                 self.assertFalse(root.exists())
 
 
+class NativeV3RetainedTests(unittest.TestCase):
+    def test_v3_directional_preserves_cleanup_and_focus_checks(self):
+        root=h.ROOT/'reports/work/RESIDUAL-160/artifacts/native24-r1/extracted/ttr-native-table-appearance24-20261005-r1'
+        if not root.exists():self.skipTest('retained native v3 corpus absent')
+        count=0
+        for folder in ('pilot','remaining'):
+            for case in h.read(root/folder/'campaign-manifest.json')['cases']:
+                if case['transition']['condition']!='focus_moved':continue
+                evidence=root/folder/'splits/validation'/case['case_id']/'transition-case.json'
+                raw,b,a=validate_case(root,evidence,case,directional=True)
+                self.assertNotEqual(b['focus'],a['focus']);count+=1
+                original=h.read
+                for field,value in [('cleanup','unknown'),('mutation_receipt',{})]:
+                    bad=copy.deepcopy(raw);bad[field]=value
+                    def read(path):return bad if Path(path)==evidence else original(path)
+                    with patch.object(h,'read',side_effect=read):
+                        with self.assertRaisesRegex(ValueError,'directional_action_cleanup'):
+                            validate_case(root,evidence,case,directional=True)
+        self.assertEqual(count,8)
+
+
 if __name__=='__main__':unittest.main()

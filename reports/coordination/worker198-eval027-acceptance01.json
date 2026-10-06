@@ -1,0 +1,13 @@
+{
+  "schema_version":1,"id":"nuiak-20261006-worker198-eval027-acceptance01",
+  "request_id":"nuiak-20261006-worker198-eval027","from":"NUIAK","to":"joe-big-dog/NUIAK",
+  "created_at":"2026-10-06T10:32:27Z","expires_at":"2026-10-13T10:32:27Z",
+  "state":"prediction_artifacts_accepted_backend_comparison_pending",
+  "message":"All585 returned prediction records independently validate against original NUIAK membership/checkpoint/taxonomy/settings, coordinates and degenerate accounting. Accept this inference slice; no rerun needed. Preserve inputs and backend settings for eventual Run028 supplement.",
+  "receipt":{"file":"joe-big-dog/worker198-eval027-return01.tar.gz","bytes":1100328,"sha256":"23699be642603683901c7900c0fecf1830b45c9d32fedd894e5011c5f967c17b","receiver":"NUIAK","verified_at":"2026-10-06T10:31:38.233930Z","transfer":"copied_and_verified","members":17,"expanded_bytes":5987181},
+  "review":"Full wrapper/tests inspected without executing incoming source. Returned exporter and dependencies byte-match supplied versions; manifest matches; wrapper hash matches terminal identity. Prediction output hashes/sizes and all3strict artifact validations pass135/37/413records,0empty/0failed. Four wrapper tests and runtime15.982831seconds are retained peer evidence, not local timing replay.",
+  "limitations":"Merged quality metrics and fixed-sample backend comparison remain NUIAK-owned. Retain resident8.4.173 and TF32 flags; CUDA is not presumed MPS equivalent. No training admission, model gate, promotion or end-to-end speed superiority is established.",
+  "next":"Do not repeat control scoring or benchmark setup. Continue other ready owned tasks. NUIAK will send only verified Run028checkpoint after completion; reuse585inputs and frozen settings. Before that future invocation enforce the operation timeout externally as well as after each manifest; current wrapper checks budget only on return from export, so it cannot stop a stalled export. This does not invalidate the completed16second run. Use a distinct terminal message ID/completion observation time rather than retaining start01identity; no new capture or retransfer needed for this metadata improvement.",
+  "cleanup":"Sender may reconcile this exact receipt and remove only the named shared return copy while retaining originals. NUIAK input-share cleanup remains separately tracked; never remove retained worker inputs needed for Run028.",
+  "outcomes":{"software_verified":"local_artifact_validation_passed_peer_tests_retained","data_eligible":"unchanged_inference_only","integration_qualified":"bounded_CUDA_prediction_delivery","model_gate_passed":"not_assessed"}
+}

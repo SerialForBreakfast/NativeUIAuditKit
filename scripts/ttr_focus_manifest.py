@@ -130,13 +130,37 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--bundle", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
-    p.add_argument("--corpus-id", required=True)
-    p.add_argument("--producer-reference", required=True)
+    p.add_argument("--corpus-id")
+    p.add_argument("--producer-reference")
+    p.add_argument("--review-crops", action="store_true")
+    p.add_argument("--review-model", type=Path, help="Inspection-only scoring; no admission or accuracy qualification")
     group = p.add_mutually_exclusive_group(required=True)
+    group.add_argument("--review-schema4-subset", action="store_true")
     group.add_argument("--visual-review", type=Path)
     group.add_argument("--test-only", action="store_true")
     args = p.parse_args()
     try:
+        if args.review_schema4_subset:
+            from harvest_schema4_review import review, render_review, score_review
+            root, output = local(args.bundle), local(args.output)
+            require(not output.exists(), 'output_collision')
+            result = review(root)
+            output.mkdir(parents=True, exist_ok=False)
+            with (output/'schema4-review.json').open('x') as stream:
+                json.dump(result, stream, indent=2, allow_nan=False)
+            if args.review_crops:
+                crops=render_review(root,output,result)
+                with (output/'review-crops.json').open('x') as stream:
+                    json.dump(crops,stream,indent=2,allow_nan=False)
+            if args.review_model:
+                scores=score_review(root,local(args.review_model),result)
+                with (output/'review-scores.json').open('x') as stream:
+                    json.dump(scores,stream,indent=2,allow_nan=False)
+            print(json.dumps({k:v for k,v in result.items() if k != 'rows'}))
+            return 0 if result['reviewed'] == result['expected'] else 2
+        require(not args.review_crops, 'review_crops_requires_schema4_inspection')
+        require(not args.review_model, 'review_model_requires_schema4_inspection')
+        require(args.corpus_id and args.producer_reference, 'corpus_and_producer_required')
         result = derive(args.bundle, args.output, args.corpus_id, args.producer_reference,
                         review=json.loads(args.visual_review.read_text()) if args.visual_review else None,
                         test_only=args.test_only)

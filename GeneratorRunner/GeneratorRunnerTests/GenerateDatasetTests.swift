@@ -665,8 +665,19 @@ final class GenerateDatasetTests: XCTestCase {
         let catalogData = try read(root.appendingPathComponent("catalog.json"))
         let assets = try GeneratorArtworkCatalog.load(catalogData, root: root)
         let planData = try read(root.appendingPathComponent("campaign.json"))
-        let plan = try GeneratorArtworkCampaign.load(planData, catalogHash: hash(catalogData),
-            assetIDs: Set(assets.keys), target: env["SIMULATOR_UDID"] ?? "")
+        let version = (try JSONSerialization.jsonObject(with: planData) as? [String: Any])?["schemaVersion"] as? String
+        try GeneratorArtworkCatalog.validatePair(catalogData: catalogData, campaignVersion: version)
+        let recipes: [GeneratorArtworkCampaign.Recipe]
+        var lowAsset = "", busyAsset = ""
+        if version == "ios-artwork-campaign-v2" {
+            let plan = try GeneratorArtworkSplitCampaign.load(planData, catalogHash: hash(catalogData),
+                assets: assets, target: env["SIMULATOR_UDID"] ?? "")
+            recipes = plan.recipes
+        } else {
+            let plan = try GeneratorArtworkCampaign.load(planData, catalogHash: hash(catalogData),
+                assetIDs: Set(assets.keys), target: env["SIMULATOR_UDID"] ?? "")
+            recipes = plan.recipes; lowAsset = plan.lowAsset; busyAsset = plan.busyAsset
+        }
         let out = documents.appendingPathComponent(output)
         guard out.path == out.resolvingSymlinksInPath().path else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
         let fm = FileManager.default
@@ -676,7 +687,7 @@ final class GenerateDatasetTests: XCTestCase {
         let start = Date()
         var records: [[String: Any]] = []
         var resumed = 0
-        for recipe in plan.recipes[(shard*48)..<((shard+1)*48)] {
+        for recipe in recipes[(shard*48)..<((shard+1)*48)] {
             guard Date().timeIntervalSince(start) < 120 else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
             let stem = out.appendingPathComponent(recipe.id)
             let png = stem.appendingPathExtension("png"), json = stem.appendingPathExtension("json")
@@ -699,7 +710,7 @@ final class GenerateDatasetTests: XCTestCase {
             var config = makeConfig(seed: recipe.seed, index: 0,
                 templateFamily: recipe.layout == "grid" ? "MediaCardGrid" : "CardDetail", state: simulatorStates[0])
             config.colorScheme = recipe.theme == "dark" ? .dark : .light
-            let asset = recipe.condition == "procedural" ? nil : assets[recipe.condition == "low" ? plan.lowAsset : plan.busyAsset]
+            let asset = recipe.condition == "procedural" ? nil : assets[recipe.assetID ?? (recipe.condition == "low" ? lowAsset : busyAsset)]
             var bound: [String: GeneratorArtwork] = [:]
             let capture: CaptureResult
             if recipe.layout == "grid" {
@@ -725,7 +736,7 @@ final class GenerateDatasetTests: XCTestCase {
             try capture.png.write(to: png, options: .withoutOverwriting)
             try AnnotationWriter.write(result: capture, config: config, imageFileName: png.lastPathComponent,
                 templateFamily: recipe.layout == "grid" ? "MediaCardGrid" : "CardDetail",
-                generatorVersion: "asset200-campaign-v1", to: json)
+                generatorVersion: version == "ios-artwork-campaign-v2" ? "asset204-campaign-v2" : "asset200-campaign-v1", to: json)
             var bindings: [[String: Any]] = []
             for id in bound.keys.sorted() {
                 let asset = bound[id]!
@@ -737,12 +748,12 @@ final class GenerateDatasetTests: XCTestCase {
             }
             let record: [String: Any] = ["recipe": recipeObject, "planSHA256": hash(planData),
                 "imageSHA256": capture.sha256, "sidecarSHA256": hash(try Data(contentsOf: json)),
-                "dataRole": "development", "bindings": bindings]
+                "dataRole": recipe.dataRole ?? "development", "bindings": bindings]
             try JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]).write(to: seal, options: .withoutOverwriting)
             records.append(record)
         }
         guard Date().timeIntervalSince(start) < 120 else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
-        try JSONSerialization.data(withJSONObject: ["schemaVersion": "ios-artwork-shard-v1", "complete": true,
+        try JSONSerialization.data(withJSONObject: ["schemaVersion": version == "ios-artwork-campaign-v2" ? "ios-artwork-shard-v2" : "ios-artwork-shard-v1", "complete": true,
             "planSHA256": hash(planData), "shard": shard, "frames": records, "resumed": resumed,
             "captured": records.count-resumed, "seconds": Date().timeIntervalSince(start)],
             options: [.sortedKeys]).write(to: completion, options: .withoutOverwriting)

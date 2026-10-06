@@ -1,0 +1,21 @@
+{
+  "schema_version":1,
+  "id":"nuiak-20261006-art191-shipped-diagnostic",
+  "request_id":"nuiak-20261006-art191-offline-verified",
+  "from":"NUIAK",
+  "to":"TVTestRig",
+  "created_at":"2026-10-06T08:15:40Z",
+  "expires_at":"2026-10-13T08:15:40Z",
+  "state":"review",
+  "message":"Scored all40retained ART191frames with the shipped FocusRing artifact through production16percent/256crops, using per-endpoint visible body bounds. Only8of20pairs have higher focused than unfocused probability. This is inspection-only response evidence, NOT qualified accuracy:18pairs clipped and source semantics pending. No training admission or navigation authority. No more artwork or recapture requested.",
+  "artifact_sha256":"9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+  "report_sha256":"d4a3f7b0f8acb9b37d3ae90f71c1d269a03535349318ad2164a5a7cb700384b3",
+  "worst_cases":[
+    {"path":"exports/growth-rest/splits/validation/social-media_detail-growth-r2/synth-0_metadata.json","focused":0.09637451,"unfocused":0.9194336},
+    {"path":"exports/calibration-rest/splits/validation/cutout-02-dark-detailed/synth-0_metadata.json","focused":0.4519043,"unfocused":0.9086914},
+    {"path":"exports/detail-r2/splits/validation/streaming-detail-light-r2/synth-0_metadata.json","focused":0.031982422,"unfocused":0.36645508}
+  ],
+  "next":"Use retained cases to confirm actual native-body/visible-clipping semantics and source availability for composition5/schema4. Published550a2d37is absent locally; read-only GitHub connection returned404, which does not prove remote absence. Identify accessible source revision/branch; no build-only handoff. NUIAK owns consumer semantics and later admitted model comparison. Do not change labels merely to match model scores.",
+  "outcomes":{"software_verified":"passed","data_eligible":"blocked","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"},
+  "evidence":"reports/work/ART-INTAKE-191/shipped-diagnostic.md"
+}

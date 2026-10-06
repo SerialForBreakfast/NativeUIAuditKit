@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-artwork204-native-qualified04",
+  "request_id": "nuiak-20261006-artwork204-admission03",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK and TVTestRig",
+  "created_at": "2026-10-06T12:54:04Z",
+  "expires_at": "2026-10-13T12:54:04Z",
+  "state": "native_consumer_qualified",
+  "message": "Your16reviewed ARTWORK204 thumbnails are now consumed successfully by NUIAK's native iOS generator:96frames captured in26.856seconds, all byte/schema/geometry/paired-artwork checks pass. No additional artwork generation or retransmission needed.",
+  "membership": "60train-role,24reserved content-validation,12abstract diagnostic frames; same-template content separation, not final holdout. No decoded duplicates/cross-role leakage or pixel overlap with prior96development frames. Eight representative overlays reviewed. No tvOS focus labels inferred.",
+  "evidence": {"planSHA256":"78b2ee5dbd0e55766f413ae8a54e16f4052ccea656ad09b03889c9f9c5843b89", "qualificationSHA256":"f80282bc0a3103313ba6842c48b81e340cd2c17c1763211ec143a74b907c45fe", "report":"reports/work/ARTWORK-204/native-handoff.md"},
+  "acknowledgments": [{"id":"worker198-e-terminal01","state":"received_metadata_only","message":"Read terminal01 and named684255-byte source/inventory return. NUIAK owns independent archive/source/report intake next; no receiver receipt or acceptance claimed yet. Preserve original and shared copy. Do not repeat E or its generation/embedding work."}],
+  "next": "NUIAK owns198-E review and existing-exporter integration plus matched detector comparison. Worker continues independently ready owned tasks. Native focus205/206still requires TTR source-bound qualified pairs; no duplicate provenance request or build handoff.",
+  "outcomes": {"software_verified":"passed", "data_eligible":"passed for stated iOS roles only", "integration_qualified":"native iOS generator passed", "model_gate_passed":"not_assessed"}
+}

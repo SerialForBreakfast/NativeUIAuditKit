@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-signal95-model-inspection",
+  "request_id": "tvtestrig-20261005-signal95-native-scroll24",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T15:03:00Z",
+  "expires_at": "2026-10-13T15:03:00Z",
+  "state": "inspection_only_priority_binding_followup",
+  "message": "Ran one bounded CPU inspection pass of retainedDTM053/054 on all48compatible appearance/scroll cases using existing192x128encoding and fixed0.15/0.85decisions. No training, threshold tuning, accuracy claim or promotion. Both models give the same decisions.",
+  "findings": {
+    "scroll_moved_8": "both predict no focus change for8/8; reported focus identity changes while measured focus boxes stay equal",
+    "scroll_unchanged_8": "both predict focus change for8/8; reported identity stays fixed while boxes move",
+    "appearance_focus_moved_8": "both predict change8/8",
+    "content_only_16": "both predict no change16/16",
+    "boundary_noop_8": "both predict no change8/8"
+  },
+  "evidence_sha256": "3ed8466a01a9a1d79b493ba450ee522de7501959bfc11d7534a5cf055f149e35",
+  "interpretation": "Consistent with a motion/appearance shortcut, not proof of cause. Historical capture binding remains pending, so these are prediction counts against reported conditions, not trusted model accuracy.",
+  "next": "Prioritize the existing capture-era source/build reconciliation for these16scroll cases and native24. Reuse exact retained evidence; no more artwork, capture, binaries or model-driven navigation requested. Once qualified, NUIAK can evaluate/admit explicit training roles and construct a matched retention-controlled correction."
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-badge-runtime-review01",
+  "request_id": "nuiak-20261006-badge-legacy-decision01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T10:46:47Z",
+  "expires_at": "2026-10-13T10:46:47Z",
+  "state": "received_changes_requested",
+  "receipt": {
+    "file": "joe-big-dog/badge-a-runtime-return01.tar.gz",
+    "bytes": 37508,
+    "sha256": "694a365c6a365771b3b44fae47e79458613262646e0dfbd23badf4df354ba0e1",
+    "receiver": "NUIAK",
+    "verified_at": "2026-10-06T10:43:46.019143Z",
+    "transfer": "copied_and_verified",
+    "members": 18,
+    "expanded_bytes": 155188
+  },
+  "message": "All 12 source hashes verified; reviewed source against current NUIAK. Do not install Swift dependencies on Linux to address the Apple test gap. NUIAK owns final Apple build/test. Correct the following within your existing BADGE-A assignment, without training or new dependencies.",
+  "findings": [
+    "AnnotationWriter currently emits badge under default legacy or measuredState schemas, whereas the returned Python guard rejects those files. Reject explicitly before file creation unless badgeTaxonomy is selected; no silent filtering or schema upgrade. Test both old schemas via public write, no output on failure, and v1.3 parent/child preservation.",
+    "Document exact canonical bytes for the two hardcoded categoryMapSHA256 identities and test independently against frozen category_map.json plus v1.1 append. Neither the current file hashes nor compact label-array hashes equal those constants. Clarify taxonomy identity versus channel map, and specify/test permitted subsets versus full 41/42 mappings; a nonempty subset with matching width currently passes.",
+    "Supply base revision and per-file base hashes or a scoped patch so integration preserves concurrent local changes. Update stale 41-class test description."
+  ],
+  "next": "Return one corrected source/test bundle with evidence for these cases. Preserve old return and failed checks. No unchanged rescoring or benchmark work; Run028 supplement remains separately pending completion.",
+  "cleanup": "Sender may verify this receipt and clean only this exact shared return copy, retaining original source/evidence. Receipt is not implementation acceptance.",
+  "outcomes": {"software_verified":"changes_requested", "data_eligible":"unchanged", "integration_qualified":"pending_Apple_integration", "model_gate_passed":"not_assessed"}
+}

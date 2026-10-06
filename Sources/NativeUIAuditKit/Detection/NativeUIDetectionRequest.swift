@@ -246,6 +246,8 @@ public struct NativeUIDetectionRequest: Sendable {
             modelLoadMs = Self.durationToMs(startLoad.duration(to: .now))
         }
 
+        try activeModel.manifest.validateTaxonomyBinding()
+
         let confThreshold = Float(configuration.minimumConfidence)
         let nmsIoU = Double(activeModel.metadata.recommendedNMSIoUThreshold)
 
@@ -261,7 +263,7 @@ public struct NativeUIDetectionRequest: Sendable {
         let h = screenshot.height
         let rawObservations = kept
             .sorted { $0.confidence > $1.confidence }
-            .compactMap { Self.toObservation($0, imageWidth: w, imageHeight: h) }
+            .compactMap { Self.toObservation($0, imageWidth: w, imageHeight: h, manifest: modelRef.manifest) }
 
         let inferMs = Self.durationToMs(startInfer.duration(to: .now))
 
@@ -650,12 +652,18 @@ extension NativeUIDetectionRequest {
 
 extension NativeUIDetectionRequest {
 
+    internal static func modelElementType(for label: String, manifest: ModelManifest) -> NativeUIElementType? {
+        guard manifest.permitsObservationLabel(label) else { return nil }
+        return NativeUIElementType(rawValue: label)
+    }
+
     private static func toObservation(
         _ pred: RawPrediction,
         imageWidth: Int,
-        imageHeight: Int
+        imageHeight: Int,
+        manifest: ModelManifest
     ) -> NativeUIElementObservation? {
-        guard let elementType = NativeUIElementType(rawValue: pred.label) else { return nil }
+        guard let elementType = modelElementType(for: pred.label, manifest: manifest) else { return nil }
 
         // pred.{cx,cy,w,h} are top-left-origin, center-form, normalized [0,1].
         let topLeftX = pred.cx - pred.w / 2

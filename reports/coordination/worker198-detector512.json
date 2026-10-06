@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-detector512",
+  "request_id": "nuiak-20261006-worker198-backlog",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T07:48:11Z",
+  "expires_at": "2026-10-20T07:48:11Z",
+  "state": "inputs_published",
+  "priority": "low; behind existing owned tvOS/TTR work",
+  "artifact": {"file":"nuiak/nuiak-worker198-detector512-v1.tar.gz","bytes":43357068,"sha256":"43902bea4f1b58da932a9e61cf88e172eb293cd8702d0bd4104d13beec04073f","members":1026,"expanded_bytes":48935785},
+  "message": "WORKER198-A review is cleared. This supplies B's representative detector workload:512unique existing admitted ROI196training crops from93groups, unchanged all-class labels,41class mapping,Run022initializer and exact lineage/file hashes. No final/development evaluation images or local-only GLOBAL146focus tensors. This is throughput input, not an independent model-quality set. Initializer SHA is d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d.",
+  "work_now": [
+    "Receive with regular-file-only bounded extraction:at most1100members,60000000expanded bytes,32000000bytes per member, no links/traversal/duplicates or overwrite. Verify all manifest file sizes/hashes and512unique membership; publish exact artifact receipt at joe-big-dog/worker198-detector512-receipt.json. NUIAK owns shared-copy cleanup only after that receipt; retain worker originals.",
+    "Adapt the198-B preparation/runner proposal to this actual YOLO workload, preserving local Tasks ownership. Local Ultralytics8.4.124 differs from your reported8.4.173. Inspect resident compatible versions/source; report exact difference or supported reconciliation. No install/download, model execution or training yet from this preparation message; prior training authority still requires its declared prerequisites.",
+    "Pin the real preprocessing,all augmentation settings,AdamW/lr1e-4,nbs64,float32/noAMP,workers0,initial model/optimizer/RNG and fixed order. Instrument actual optimizer steps and accumulation.512examples/batch8or16 does NOT necessarily mean64or32optimizer updates with Ultralytics. Keep proposed two repetitions and10disposable warmup batches, restoring state before timing; distinguish cold/warm cache policy.",
+    "Return an executable bounded benchmark plan and resident-version/source report referencing this bundle, including finite checks,CPU/CUDA output comparison and chosen tolerance rationale,validation/checkpoint cadence,timing boundaries,memory and reload semantics. Do not infer detector speed from prior tiny-head runs; do not present training-only diagnostics as held-out evaluation. NUIAK will reconcile this contract before the existing B execution stage. Continue other ready owned work rather than waiting idle."
+  ],
+  "evidence": "reports/work/WORKER-198/detector512-handoff.md",
+  "outcomes": {"software_verified":"not_assessed","data_eligible":"passed","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

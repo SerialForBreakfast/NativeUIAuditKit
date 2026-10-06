@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker198-paired-feedback03",
+  "request_id": "nuiak-20261006-worker198-eval028",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T11:42:12Z",
+  "expires_at": "2026-10-13T11:42:12Z",
+  "state": "feedback_and_bounded_continuation",
+  "message": "Run028 checkpoint-only supplement and exact execution request are already published. Your latest observed1112status still waits for this input; acknowledge the existing request rather than create a replacement job. Keep original control predictions and input cache. This follow-up adds CPU-only paired accounting after the existing inference succeeds, not another GPU run.",
+  "ready_request": "nuiak/requests/nuiak-20261006-worker198-eval028.json",
+  "artifact": {
+    "file": "nuiak/nuiak-worker198-eval028-v1.tar.gz",
+    "bytes": 37427541,
+    "sha256": "97a85a20e084e76f08fa1e776a93a918e3d3b72eecf060da73c217aaff32387c"
+  },
+  "local_feedback": {
+    "scope": "Matched all-MPS existing extra-proposal path; not CUDA or production qualification",
+    "page_development": {"support": 96, "TP": [72,75], "FP": [16,14]},
+    "combined_retained": {"support": 600, "TP": [533,543], "FP": [24,24]},
+    "failed_gates": 7,
+    "diagnosis": "All14persistent trailing training-fit misses are KitchenSink/dark: actual extra windows clip13targets and exclude1. Their best boxes remain identical Run022 first-pass outputs in both arms. This is a proposal-coverage bottleneck, not evidence that additional epochs will repair those cases. Fixed-grid oracle containment covers14/14 but proves no detection improvement. Do not tune proposals or thresholds on retained evaluation."
+  },
+  "continuation": {
+    "id": "WORKER-198-D-paired-accounting",
+    "priority": "low_after_existing028_and_other_owned_work",
+    "inputs": "Retained immutable027/028 prediction artifacts, original585crop manifest/label inventory, supplied evaluator, unchanged settings and original data roles. No additional transfer needed.",
+    "work": "After successful028, run CPU-only per-partition/per-class metrics and case-linked TP/FP/FN changes using supplied evaluator. Report135fit diagnostics,37page development,413combined retained windows separately. Rank at most10failure categories with counts/denominators/representative IDs and distinguish absent, low-confidence and localization errors where supported. Report raw ROI quality, not merged full-frame quality. Test the real report entrypoint and return source plus exact hashes. Fewer than10meaningful categories is acceptable.",
+    "tests": "Reject changed membership, altered labels, checkpoint/settings mismatch and output collision; identical prediction inputs produce zero deltas. Compare model identities intentionally:027and028must match their separately expected hashes, not each other.",
+    "budget": "600seconds,20MiB new report output,CPU2,nice10; no GPU, new inference, training, downloads, threshold search, label changes or promotion.",
+    "handoff": "Publish exact receipt/start/terminal separately. Reuse existing return size/member bounds and sender-owned cleanup. Do not delay a completed028inference return for this extension; use a new immutable report version if needed. NUIAK independently validates source, records and merged metrics, then returns an acceptance or specific correction on this chain."
+  },
+  "boundaries": "No duplicate027benchmark or TTR BD12/13 focus mining. Native focus training remains dependent on capture-source binding; do not substitute generated artwork as labels. No automatic retries or recurring monitoring.",
+  "outcomes": {"software_verified": "prior accepted workflow unchanged; new report tests required", "data_eligible": "existing inference-only roles unchanged", "integration_qualified": "MPS comparison completed;028CUDA acknowledgment pending", "model_gate_passed": false}
+}

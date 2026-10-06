@@ -1,5 +1,13 @@
 # NativeUIAuditKit — Experiment Log
 
+### IOS-PROPOSAL197 — capped ROI recall comparison, October6 UTC
+
+No training/new run ID. Frozen022base plus026ROI;135fit crops pass negative screen,
+then37development/413retained crops scored with unchanged rule. Page TP185→202fit,
+58→72development,249→519retained; FP38→38,14→15,24→24. Development geometry adds oneFP;
+no-new-FP condition and seven existing gates fail. No promotion. Inference10.32+26.13s;
+all2712originals preserved. [Pins/tests/next diagnosis](../reports/work/IOS-PROPOSAL-197/comparison-handoff.md).
+
 ### IOS-ASSET200 — fixed Run022 artwork sensitivity, October6 UTC
 
 No training/new run ID.96development frames: grid/detail × light/dark × low/high
@@ -4504,3 +4512,225 @@ Reject original-retention gate. Conditioned features improved the fit objective,
 not deployment fitness; feature scale was not a sufficient fix. Retained11cases:
 DTM031adds one miss(4→5); DTM033recovers5→6screen transition but misses4→5and the
 remaining4prior DTM030misses. No independent metric/admission/export/promotion.
+# WORKER198-B — fixed-update CUDA kernel timing — 2026-10-06 (registered before launch)
+
+**Full-trainer continuation (registered before launch; now complete):** two repetitions ×
+two epochs, existing512train-only examples/Run022 initializer, resident8.4.173,
+batch4/640square/workers0,AdamW1e-4,nbs64,warmup0,constantlr,seed42,float32,
+TF32off,no augmentation/resume/download. Normal trainer lifecycle and diagnostic
+same-training-membership validation. Expected128batches/8updates per epoch;
+source/config/event tests gate launch.1800seconds/2GiB total, first failure stops.
+Hypothesis is execution feasibility and correct lifecycle accounting, not quality
+or speed superiority. Worker records PID/source/config before launch; terminal
+evidence reviewed below. See Worker198Benchmark plan; kernel results below remain separate.
+
+Result: worker PID153864,191.144seconds total reported,169853071output bytes.
+Two fresh repetitions95.224879/93.778993seconds;32optimizer updates total.
+Training throughput16.602730/16.514090images/s; lifecycle throughput10.753492/
+10.919290training images/s. Peak allocated4.146/4.554GB. Each run includes three
+512-image training-only validation passes and reported finite last-checkpoint reload.
+Adapter SHA256ef267d7de21d4d07f2314156d3262d9162922e697a7ee6acd2fddaa9f11a8f90.
+Full adapter/four tests reviewed; local assertions verify ordering, update counts,
+finite losses, validation accounting and phase sums.12tests are peer-run evidence;
+no local checkpoint replay or Mac parity. Accept bounded lifecycle feasibility,
+not model quality. Next frozen eligible workload, not repeat setup benchmarks.
+
+**Terminal revision03 accepted:** PID152909,exit0,151.121seconds total; source
+dc935da1fe0003e033408ff362a1ef5a9c1ee40864b9baba49849f90e9d1c053.
+Four completed repetitions on unchanged512inputs/Run022initializer; inspected
+source delta and independently checked result counters/shapes/finite losses/order.
+Batch2 timed epochs32.19594/32.60204s; batch4 29.48966/29.60214s. Mean throughput
+15.803/17.329images/s, batch4+9.66percent; peak allocated2.793/5.273GB respectively.
+All repetitions report8timed steps,1disposable64-example warmup step,zero restored
+counters and exact state/reload checks. Worker8tests pass1.842s; not rerun locally.
+Returned10-file archive17681bytes SHA256
+560bdfc2befc8a3e643e2eaa595ce1fc7df2537b7902ee9d1a7dfe9082e4f282 verified.
+Accept batch4 feasibility for this fixed-update kernel, not full trainer or Mac
+speed, numerical equivalence or accuracy. No benchmark checkpoint promoted.
+Next: eligible model/evaluation workload and full-trainer lifecycle qualification,
+not another unchanged benchmark. Earlier attempts/settings below are history.
+
+Attempt02 terminal:PID152420,exit1,5.582seconds; batch8warmup forward OOM at6.94GiB
+Torch allocated on7.60GiB device.0timed repetitions; warmup update count unknown.
+New finite memory-qualified revision registered: batch2/4 twice, accumulation32/16,
+512examples and8timed steps each. Warmup64examples/one step each, then full restore.
+All other kernel settings/input/initializer unchanged.1800seconds/2GiB; firstfailure
+stops, no AMP/resolution change or third physical batch. Worker must record new
+source hash and passing per-batch counter/order/restore tests before launch.
+No model-quality or numerical-equivalence claim from accumulation matching.
+
+Attempt01 terminal: worker PID151971,exit1,0.415seconds,0/4repetitions;
+verified returned launch command used `/usr/bin/python3.14`, then ModuleNotFoundError
+for torch before model/checkpoint load. No training updates. Approve exactly one
+corrected attempt02 with unchanged pinned runner/config/input/budget, preserving
+virtual-environment invocation path; no dependency installation or automatic retry.
+Record exact environment readiness before compute. Attempt01 evidence retained.
+
+Corrected return02 runner reviewed and hash-bound:
+31bedc7143ad1d826a41e510a68b04d2a5a84d30356d3c9e9b8b40f9527e618f.
+Worker resident Ultralytics8.4.173; existing512 admitted ROI196 crops/93groups and
+Run022 initializer; no new admission or evaluation use. Two repetitions each at
+batch8 and conditional16, one512-example epoch plus10disposable warmup batches per
+repetition; AdamW lr1e-4, nbs64, float32, TF32off, fixed640square, augmentationoff,
+seed42. Restore model/buffers/optimizer/EMA/RNG/loader before timing; assert exact
+512order and8optimizer updates. At most1800seconds/2GiB outputs; stop failure/OOM,
+no automatic retry. Worker logs PID/start and exact input/config hashes before run.
+
+Hypothesis: batch16 improves resident CUDA kernel throughput without changing
+optimizer exposure. This is not Mac/CUDA comparison, production trainer speed,
+held-out evaluation or a promotion candidate. Source reviewed; worker reports8tests
+and real preflight passing. CUDA execution remains pending worker acknowledgment.
+Return phase timing, both repetitions, finite losses, actual steps/order, peak memory,
+checkpoint reload checks and failures. Preserve checkpoints locally; metadata return
+only by default. Existing standing worker/model-improvement authority applies.
+### Runs027/028 — IOS-STYLE210 matched coverage (registered before launch)
+
+Control027 and treatment028 independently initialize Run022
+`d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d`.
+Each1509slots/189batches: original1173crops plus336balanced original repeats(control)
+or336new qualified native style crops(treatment).96new parents,18training-only groups;
+all old retained evaluation remains frozen. Compare data coverage at matched optimizer
+exposure, not against shorter historical026. Exact sampling/source/crop seal
+`ef5592873f5c2f17acc557d8b7114e2cb8d2b1f8e1c23c051adcad54633db3f1`.
+
+10epochs each, batch8,nbs64,640ROI,float32MPS,AdamW lr1e-4,cosine lrf0.1,
+warmup0.25epochs,seed42,augmentation-off; existing roi196 trainer with actual optimizer
+event assertions, fresh optimizer state, fixed-last. Training-set validation is
+diagnostic only. At most2GiB outputs per arm,8GiB free-space launch guard, standing
+no-wall-time-limit override. Serial execution, no automatic retries/sweep/promotion.
+Protocols under reports/work/IOS-STYLE-210/artifacts/training01/<arm>/candidate;
+outputs NativeUITrainer/yolo_runs/style210-r027 and style210-r028.
+PID/start/timing/final hash recorded by existing trainer. Native focus remains priority;
+this independent comparison uses admitted data while source qualification is pending.
+Status: control027launched PID36156; protocolSHA256
+806bd102ad51c2e2e98e2c37c8acbcc458db0ee234da1e1d6e879da4d61065df.
+Live session92840 confirms ongoing execution; epoch1 batch122/189 observed.
+MPS reports nondeterministic index_put_with_accumulate despite warn-only deterministic
+configuration; fixed seed is not bitwise repeatability.
+
+Control027 completed exit0 in4691.520550seconds, all10epochs and245optimizer events
+verified against its sealed protocol. Fixed-last SHA256
+`0cd43172ba947576e30d48007b1da939dee51c713b63dd40cb1cb9828d323243`.
+Final training-membership diagnostic mAP50=.70075; not held-out efficacy.
+After process exit/checkpoint verification, treatment028launched PID48341,
+session98307, protocolSHA256
+`3030a2aca8c7808dbd55ec64d55490b809375787e8d23010b6a586a4b5226405`.
+Same registered settings and isolated outputs; no overlap with control. Treatment
+completed exit0 in4596.362605seconds with all10epochs/245updates and source/settings
+verified. Fixed-last SHA256
+`df8e8f18a2d124ebc6207e5c482c81c37c9aed22e7bd87e60fba20f314af8db8`.
+Both fixed-checkpoint retained evaluations now proceed; training-membership mAP50
+.71455 is diagnostic only, not held-out efficacy.
+
+Matched all-MPS retained evaluation completed: extra-proposal development pageTP
+72→75of96,FP16→14,AP50 .73818→.76448; retained pageTP533→543of600,FP24unchanged,
+AP50 .93196→.93877. Refinement-only gains no detections and retained AP50:95
+.54160→.52962. Extra path still fails7gates; no promotion or automatic retraining.
+[Full comparison](../reports/work/IOS-STYLE-210/comparison-handoff.md).
+
+### Runs029/030 — WORKER213 native-artwork replay (registered before dispatch)
+
+October6; approved model-improvement scope. Planned on Big Dog, not launched locally;
+PID/elapsed/results pending. Two matched10epoch CUDA runs,512resident admitted ROI
+examples plus60slots: deterministic old repeats in029,60qualified native artwork
+frames in030.572slots/batch4/nbs64/640square/AdamW1e-4/constantLR/warmup0/seed42,
+float32,augmentationoff; fresh Run022initialization/fixed-last. Resident8.4.173
+backend, not interchangeable with local8.4.124. Max3600seconds/4GiB together.
+Preserve native24validation+12diagnostics and all prior evaluation roles; no role
+changes, checkpoint selection or promotion. Evaluate separately on36native frames
+and585resident ROI windows. Expected143batches/epoch and89instrumented optimizer
+updates/run; mismatches stop with evidence, not hidden overrides. Hypothesis and
+limitations: [WORKER213](Plans/ArtworkModelImprovement204.md#worker-213--bounded-native-artwork-replay-comparison).
+
+Completed October6UTC, workerPID162456. Independent return review confirms both
+10epochs/1430minibatches/89updates,11training-only validation passes each, matched
+effective configs and ordered572slots.029470.526s;030484.215s. Whole worker job
+1009.302s including inference;1242predictions validated independently, no failures.
+Fixed-last029SHA9b47181af6c241c60792875d7a61d26a08c4e31cf116970c7c56bb07e48147d3;
+030SHA684ed20a2fd0dcd542eb083e0bb318d2b24918e394512536da0de3364546aa83.
+Native validation imageViewTP83→110/120,FP4→2,AP50.86575→.97250;
+abstract diagnosticTP25→51/60,FP0→2,AP50.64548→.96076.
+Retention fails: combined ROI all-classTP624→583,FP1933→1577; labelTP−40,
+pageControlTP−1/FP+99. Fit progressViewTP−24. No promotion. Artwork utility is
+supported on these same-template groups, not unseen-app/DS-G8/tvOSfocus quality.
+Next diagnose replay coverage and prepare a fuller retention-preserving comparison,
+not additional epochs or repeated213. [Acceptance](../reports/work/WORKER-213/handoff.md).
+
+### Runs031/032 — REPLAY216 full replay, preregistered 2026-10-06
+
+Completed and independently accepted October6:10epochs/3930batches/245updates each,
+1179.433/1191.432training seconds.1242predictions validated/scored. Native imageView
+TP42→87/120; retained raw labels383→406TP,545→354FP; fit progress34→25TP.
+Composed retained page528/9→530/15TP/FP versus reference543/7. Reject promotion;
+full replay does not remove all retention losses. [Results](../reports/work/REPLAY-216/results.md).
+
+Status: Big Dog receipt reports8preflight passes and start14:15:20UTC,PID164961;
+corrected start correlation verifies the216replay request. Source hashes
+966c1dd311e0f26477a0fe44c05dde49a277fb72d6126267e3e79ddc448ffec6(wrapper)
+and07f226e011278d03640d65eab2778af5ca472260b625e70b2440524a307ad11f(adapter).
+Peer-reported CUDA start, not local live-process verification; elapsed/results and
+independent source/count acceptance pending. Hypothesis:
+full admitted replay protects older classes while60native artwork frames improve
+imageView detection. Control1509ROI+60old repeats; treatment1509ROI+60native,
+1569slots each. Exact manifest SHA
+`f85849b93293c7535d076488e500efa15de32ac761195c313fcf9f3cc26225ba`.
+Fresh Run022 initializer `d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d`.
+Both10epochs,batch4,nbs64,640square,AdamW1e-4,lrf1,warmup0,seed42,float32,
+AMP/TF32off,augmentationoff,workers0,ordered samples.393batches/epoch,
+245optimizer updates each expected. Existing accepted CUDA trainer; fixed-last
+selection. Two runs/oneGPU/7200seconds total/6GiB new outputs; no automatic retry.
+Evaluate unchanged24native content-validation+12abstract diagnostic and135fit,
+37page,413retainedROI. Fit has5exact training overlaps and is explicitly not
+independent. Remaining reserved partitions have zero decoded-pixel overlap.
+Training source roles/groups unchanged; no final-evaluation admission or promotion.
+Audit: label support135→427,progressView398→883,menuButton135→340 compared
+with512subset. This is exposure/context data change, not proof of the cause of213
+regressions. Independent class-level comparison required before any next candidate.
+[Contract](Plans/ArtworkModelImprovement204.md#replay-216--full-admitted-replay-with-native-artwork).
+
+### Full-frame replay proposal diagnostic — 2026-10-06, no training
+
+Before execution: Run022 fixed initializer on189existing training-only fullframes
+selected for group/class coverage. Source proposal SHA
+4f9d0cd0eb448f7b6f564185b5857c36c648536a742642c67aff09afa05face0.
+Existing exporter,640letterbox,MPS,unchanged confidence export floor and0.25operating
+scorer.300seconds/32MiB output limit,no fallback/retry/threshold selection. Preparation
+verifies original annotations and exported labels, exact image binding and membership.
+Output fullframe-baseline02;01preserves failed absolute-path manifest preparation.
+No model training/selection/promotion. Results and elapsed pending; PID recorded by
+execution session, source/config/checkpoint pins retained in preflight.json.
+Completed: execution exit0,13.142491s;189predictions accepted through existing
+contract. ScrollIndicatorTP3/24,FP3;cancelAction56/60,FP2;sheet16/16,FP1;
+mapView16/16,FP0;pageControl17/19,FP0;imageView102/102,FP0. Training-fit evidence,
+not model improvement. Scroll narrow-side2.25–6.72pixels at640;12have geometric
+matches at export floor,9of those below0.25. Next compare resolution on these
+training sources, not tune thresholds on retained evaluation. Restricted context
+failed MPS preflight before launch; scoped Metal execution succeeded. No CPU fallback.
+Report SHA9e6d592891ad6fabab38c969447248d1db1be5df110d3577780f98ddf0f175ca.
+
+### Scroll resolution diagnostic — 2026-10-06, no training
+
+Preregistered: all24scroll-positive training frames from the frozen189proposal;
+unchanged Run022/thresholds, reuse640predictions and one1280MPS inference. Existing
+exporter, no oracle crops,180seconds/32MiB, no retry/fallback or promotion.
+Output REPLAY216/artifacts/scroll-resolution01; completed exit0 in5.087081seconds.
+Same24training frames:640 TP3/24,FP3,AP50 .326656;1280 TP0/24,FP0,AP50 0.
+Reject blanket inference-resolution increase; this does not test resolution-aware
+training. Report SHA a14f1dc7858b8e69bd649ae4bafc2decb43bb74a0210aa4a2470673c6d21ce08.
+Tests whether input resolution changes the observed low recall, not proof of its
+cause or independent generalization. Do not compare runtime against189-frame baseline.
+
+### Native48 retained-model inspection — 2026-10-06, no training
+
+Preregistered one CPU-only pass of DTM053/054 on all48consumer-compatible native
+appearance/scroll pairs, existing192×128encoder, batch8, two threads, unchanged
+0.15/0.85decisions.120seconds/16MiB, no retry, tuning, new labels or promotion.
+These are unadmitted calibration inputs with unresolved historical executable
+binding: report probabilities/decisions by producer condition, not accuracy or
+quality-gate results. Preserve exact input/model/source hashes and prior outputs.
+Output `reports/work/SIGNAL-95/artifacts/native48-model-inspection05/`.
+Completed exit0 in4.661seconds. Both models predict no-change on8scroll_moved,
+change on8scroll_unchanged; change on8appearance focus_moved, no-change on16content
+and8boundary cases. No abstentions. These are reported-condition prediction counts,
+not qualified accuracy. Hypothesis: motion/appearance shortcut; cause not established.
+Result SHA3ed8466a01a9a1d79b493ba450ee522de7501959bfc11d7534a5cf055f149e35.

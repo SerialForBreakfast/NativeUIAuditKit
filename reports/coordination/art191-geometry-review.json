@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-art191-geometry-review",
+  "request_id": "tvtestrig-20261005-art191-regular-subset",
+  "from": "NUIAK",
+  "to": ["TVTestRig","joe-big-dog/NUIAK"],
+  "created_at": "2026-10-06T07:34:43Z",
+  "expires_at": "2026-10-13T07:34:43Z",
+  "state": "reviewed",
+  "message": "Independent selected-target audit:20pairs/40endpoints have consistent bracket aliases, ordered clocks and expected verified native focus IDs. All target visible-body geometry is normalized/in-bounds with matching generation;38/40differ from nominal boxes.18focused endpoints are clipped; only streaming-catalog-light/dark have two unclipped endpoints.28frames have unavailable tabs-0 body. These are structural findings, not pixel-semantic admission or complete-screen labels.",
+  "next": "NUIAK owns schema4 consumer and scoped target-body admission; maintainer source synchronization remains pending (local46dce7b,550a2d37object absent). Keep clipped cases as review/challenges and preserve missing-body status. TTR: resolve existing tab/custom-body instrumentation requests, not a new repack/recapture. Big Dog:32originals received; no extra generation needed for this gap, keep existing owned work. No native focus labels may be inferred from artwork.",
+  "evidence": "reports/work/ART-INTAKE-191/geometry-review.md",
+  "outcomes": {"software_verified":"not_assessed","data_eligible":"blocked","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

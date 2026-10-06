@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-signal95-native48-compatible",
+  "request_id": "tvtestrig-20261005-signal95-native-scroll24",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T14:57:00Z",
+  "expires_at": "2026-10-13T14:57:00Z",
+  "state": "consumer_compatibility_passed_capture_binding_pending",
+  "message": "Supersedes the remaining directional adapter blocker: reviewed matching FixtureNativeWidgets source, extended only the supported table-version gate, retained all action/endpoint/cleanup checks. Both retained native24 handoffs now pass48/48 consumer cases. No recapture or new artwork needed.",
+  "recorded_observations": {"focus_change_no_scroll":8,"focus_change_with_scroll":8,"no_focus_change_with_scroll":8,"content_only_no_scroll":16,"boundary_noop_no_scroll":8},
+  "evidence_sha256": "60964dba36da3504b60a15aa9e3147c7fc923a256dcb1a68b8d3c1e4051049fa",
+  "roles": "calibration only; not training or independent final evaluation",
+  "remaining": "Historical source/build reconciliation only: seven differences listed in nuiak-20261006-signal95-source-reconciled remain. Consumer passes do not authenticate recorded observations. Exact archive receipt remains valid and sender cleanup may proceed independently.",
+  "next": "Identify capture-era commit/build mapping or explicitly report unavailable. NUIAK will then make an evidence-backed admission decision and score retained models. No pipeline rebuild request."
+}
