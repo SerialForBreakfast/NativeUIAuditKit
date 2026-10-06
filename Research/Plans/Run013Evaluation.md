@@ -960,3 +960,105 @@ focused checks plus one integrated offline build/test. Acceptance is a complete
 evidence-backed candidate decision, not necessarily improved metrics. No gate lowering,
 automatic retraining or final-holdout tuning. Preserve failed artifacts and shipped
 models. Publish to TTR only if there is an actionable model/interface consequence.
+
+194execution: Run025uses101batches/epoch after193deduplication; record actual
+optimizer events and explicitly non-equal compute. Benchmark serial batch-one online
+processing on a fixed source-ordered sample of eight proposal and eight no-proposal
+retained frames, selected without labels. Include base inference, in-memory crop
+construction, second-pass inference and merge; report cold versus warm separately.
+This small MPS diagnostic is not CoreML/device deployment qualification.
+
+194pre-evaluation count audit: at the fixed operating threshold, base proposal
+counts cap development TP at58 and FP at≥14 (required59/≤4); retained page ceiling
+249TP/≥24FP. Five non-page gates already fail and cannot change through this rule.
+Thus this candidate tests geometry repair, not a feasible complete promotion path.
+Finish the registered comparison without changing its decision rule. A later proposal
+mechanism would require an independently frozen design; do not tune it on these results.
+
+## IOS-ROI-195 — transfer and proposal diagnosis
+
+Inputs:194sealed evaluation/derived artifacts,022original predictions,025crop
+predictions,193crop/source lineage, existing admitted training manifests. No new
+inference or training is required for the initial diagnosis; no final-holdout tuning.
+
+Account for every improved/regressed/unchanged page box on the original216/96/2400
+members at the already reported IoU thresholds. Attribute by available generator
+family, control dimensions, clipping and proposal support; missing source metadata
+stays unknown. Separate unmodified low-confidence detections from actual substituted
+boxes and same-image duplicate proposals. Quantify width/height/center bias without
+choosing thresholds or a correction rule from evaluation truth.
+
+Audit training-only support for the affected styles and native geometry conventions.
+Use original source labels, not candidate boxes as training truth. Propose any
+additional crop membership from already eligible training groups, with exact hashes,
+group isolation, deduplication, visible-object clipping and coverage counts. Do not
+admit development/retained images or related variants to improve the report.
+
+Deliver one canonical source-bound diagnosis and a bounded next comparison proposal
+that distinguishes geometry transfer from proposal recall. Precompute achievable
+gates and per-image compute burden before suggesting a launch. If proposing another
+model comparison, freeze initialization, membership, operating rule, epochs, budget
+and unchanged14gates before execution; a proposal alone does not start a sweep.
+Pure metadata changes need link/diff review; new code needs focused tests and one
+offline Swift build/test. Acceptance is complete accounting plus an actionable
+training-only proposal or exact source/representation blocker. No TTR dependency,
+capture, production change or new model export in this diagnosis tranche.
+
+195 audit policy: reuse all frozen predictions, never launch inference. Bind family
+metadata by image and label hashes, not filenames; unmatched source stays unknown.
+For each page prediction retain the original nearest-overlapping truth association
+and compare geometry before/after. Report changed versus unchanged, operating versus
+low-confidence, and crossings at existing IoU .5/.7/.9; these diagnostic associations
+are not AP matching. Preserve an image record even when no prediction exists.
+Inspect all admitted training labels for page support. Propose at most24source-ID-
+ordered additional training frames per family, excluding existing193parents and all
+evaluation-connected hashes/groups; validate selected image/annotation bytes. This
+selection is coverage-driven, not evaluation-case admission. Materialization and any
+new candidate await the resulting contract. Diagnostic outputs≤64MiB; no pixel copies.
+
+195 result: retained GalleryPage changed-box height ratio falls1.107→.780, with
+148regressions/8improvements; Onboarding improves56/57. This is transfer evidence,
+not proof of a sole cause. Existing802crops use KitchenSink/UIKitControls only.
+Admitted MediaCardGrid/ProgressActivity supply larger SwiftUI dot groups without
+importing GalleryPage/Onboarding evaluation images. Current renderer sources measure
+dot groups before padding, not their enclosing full-width rows; source inspection
+does not retroactively authenticate historical rendering. Original labels remain
+authoritative.96proposed frames cover74groups; frame counts are not independent groups.
+
+## IOS-ROI-196 — coverage comparison and proposal recall
+
+Inputs:195sealed diagnosis/coverage-proposal/geometry reports,193qualified crop
+implementation,022/025checkpoints and unchanged evaluation manifests. Local standing
+training authority applies only after verified membership and prelaunch registration.
+No capture, external repository edits, new architecture or CoreML export required.
+
+First materialize the96source-bound training frames using193's fixed-window and
+jitter rules plus complete all-class labels. Combine with802existing crops; deduplicate
+decoded pixels and labels, preserve aliases and parent groups. Verify source labels,
+annotation dimensions, clipping dispositions and all evaluation ancestry—including
+native96reservations, not merely exact image hashes. Unknown ancestry blocks affected
+membership, not permission to assume eligibility. Freeze resulting exact counts/hashes
+and source-family support; preserve original802inputs. Budget≤2GiB new artifacts on
+verified authorized storage; never overwrite195proposal or past runs.
+
+One proposed comparison: initialize fresh from022last,10epochs,batch8,imgsz640,
+AdamW1e-4,warmup.25,workers0,seed42,AMPoff,rect,noaugmentation,nbs64; same terminal
+checkpoint choice and193proposal/merge rule as025. Record actual batches/optimizer
+updates before launch; larger membership means this is not equal-compute attribution.
+Compare025and expanded candidate on identical216fit/96development/2400retained
+membership and unchanged14gates, including all-class regressions. No geometry rule
+or confidence tuning from retained truth. Register the sequential run only when
+launch-ready; one failed comparison yields diagnosis, not a sweep.
+
+Independent companion: use cached022predictions to account for missing/low-confidence,
+duplicate and unmatched proposals at existing thresholds; distinguish recall gaps
+from fixed-count geometry repair. Specify one future proposal mechanism using
+training-only design evidence, with compute and achievable-gate analysis, before
+any implementation/training. Do not add oracle evaluation windows. Existing immutable
+non-page gate failures mean the geometry candidate alone cannot be promoted.
+
+Tests: crop/source collisions, changed hashes, ancestry leakage, all-class clipping,
+duplicate aliases, score/count conservation and real CLI integration. Focused tests
+then one integrated offline Swift build/test; reuse unchanged source evidence.
+Deliver exact membership, comparison/latency evidence and a separately actionable
+recall contract. Model success is not required for completion; honest results are.

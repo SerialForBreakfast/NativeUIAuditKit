@@ -5,6 +5,21 @@
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
 
+**October5 — IOS195 diagnosis complete:** cached accounting of all2712originals
+isolates GalleryPage height shrinkage:148/156changed predictions regress, median
+height ratio1.107→.780. Proposed96additional admitted training sources include48
+larger SwiftUI-dot examples; no evaluation images admitted or model launched.
+Next196qualifies expanded crops and one comparison, alongside separate proposal-recall
+diagnosis.23focused/142Swift checks pass. [Evidence](../reports/work/IOS-ROI-195/handoff.md).
+
+**October5 — IOS194/Run025 completed:**10epochs/130updates,45.5minutes. Geometry-only
+ROI integration repairs14fit misses with no lost hits:185→199/216, trailing45→59/72.
+It reaches the fixed-proposal ceiling, not full detection qualification. Development
+AP50:95 .321576→.380124, but58TP/14FP unchanged. Retained page AP50:95 regresses
+.494261→.461604; aggregate AP50 stays.899967. Eight gates fail. Keep022/shipped
+models; no export/promotion. Next195diagnoses transfer and proposal coverage before
+another candidate. [Evidence](../reports/work/IOS-ROI-194/handoff.md).
+
 **October5 — IOS193 preparation complete:**802unique all-class crops from216train
 sources;94pixel/label-identical aliases retain ancestry. First failed prefix preserved.
 All2712original evaluation images retained; windows come only from022predictions.

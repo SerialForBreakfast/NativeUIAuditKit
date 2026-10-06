@@ -4244,6 +4244,19 @@ Archive verified originals on designated storage; a new package needs a new rece
 Why: this catches format friction before expensive transfers, while preserving
 integrity/admission separation. Evidence: [ART191](../reports/work/ART-INTAKE-191/handoff.md).
 
+## Bound a geometry-only experiment's achievable gates before launch — IOS194
+
+What went wrong: candidate preparation retained all original denominators but did
+not quantify the ceiling imposed by unchanged proposal scores/counts. Development
+has at most58TP and at least14FP even with perfect replacement geometry, while
+the gates require59TP/≤4FP. Five unchanged non-page gates also cannot improve.
+
+Correct: compute optimistic per-image min(truth-count, eligible-proposal-count)
+and immutable-class gates before scheduling training. Geometry experiments can
+still diagnose localization, but must not be framed as sufficient qualification.
+Why: this distinguishes an informative partial remedy from an impossible promotion
+goal without loosening gates. Evidence: IOS194 artifacts/attempt02/ceiling.json.
+
 ## Recheck identity after cropping — IOS193
 
 What went wrong: distinct admitted source groups produced identical cropped pixels;
@@ -4253,3 +4266,15 @@ rows, reject conflicting labels, and retain all ancestry when deduplicating with
 the already admitted training role. Never merge roles merely because pixels match.
 Why: otherwise duplicated views overweight training, or valid ordering differences
 look like label corruption. [Evidence](../reports/work/IOS-ROI-193/handoff.md).
+
+## Diagnose geometric transfer by family before collecting more data — IOS195
+
+What went wrong: ROI025 improved native fit/development geometry but shortened
+GalleryPage boxes (median height/truth1.107→.780); aggregate AP50 hid the regression.
+Correct: reuse cached predictions, preserve original truth associations for paired
+diagnostics, and report family, size, width/height/center errors separately from AP.
+Join source metadata by verified image/label identity; unknown remains unknown.
+Audit admitted training support first:195found larger SwiftUI-dot examples already
+available, avoiding new capture or evaluation-image admission. Why: this separates
+representation transfer from proposal recall and avoids expensive unfocused collection.
+It identifies a hypothesis, not a proven causal fix. [Evidence](../reports/work/IOS-ROI-195/handoff.md).

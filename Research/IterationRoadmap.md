@@ -1,9 +1,21 @@
 # Concurrent delivery roadmap
 
-**Next — IOS-ROI-194:**193completed preparation/readback of802unique training crops
+**Next — IOS-ROI-196:**195isolates retained GalleryPage height shrinkage and proposes
+96training-only sources across four families. Qualify expanded all-class crops,
+then one registered comparison; independently design the proposal-recall follow-up.
+Do not confuse geometry gains with fixing the count ceiling or production readiness.
+[195handoff](../reports/work/IOS-ROI-195/handoff.md).
+
+**Completed — IOS-ROI-195:**194Run025completed and reaches its199/216fit proposal
+ceiling, recovering14misses with no losses. Development fine geometry improves,
+but retained page AP50:95 regresses; eight gates still fail. Diagnose source/size
+transfer and train-only coverage before another candidate; additionalepochs cannot
+remove the fixed-proposal ceiling. Keep022reference. [194handoff](../reports/work/IOS-ROI-194/handoff.md).
+
+**Completed — IOS-ROI-194:**193completed preparation/readback of802unique training crops
 and proposal-only evaluation manifests retaining all2712originals. Execute one
 registered10epoch candidate, map geometry without changing scores/counts, and
-evaluate all14gates plus added latency. No candidate has launched yet.
+evaluate all14gates plus added latency. Run025is complete; results above supersede preparation status.
 [193handoff](../reports/work/IOS-ROI-193/handoff.md).
 
 **Completed preparation — IOS-ROI-193:**192fixed-window audit shows usable

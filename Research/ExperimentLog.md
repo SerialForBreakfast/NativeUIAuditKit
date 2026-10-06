@@ -1,5 +1,45 @@
 # NativeUIAuditKit — Experiment Log
 
+### Run025 — IOS-ROI194 (registered before launch)
+
+Hypothesis: a proposal-driven ROI specialist improves tiny page-control geometry
+without importing new detections or confidences. Frozen193configuration,802unique
+training crops from216admitted sources;94duplicate aliases preserve ancestry.
+Fresh022last initialization/optimizer,10epochs,batch8,640,MPS,workers0,AdamW1e-4,
+nbs64,warmup.25,seed42,AMPoff,cosine/noaugmentation.101minibatches/epoch; record
+actual optimizer events, not equal-compute to022. Fixed terminal checkpoint;
+in-sample monitor only.2GiBcandidate budget,≥8GiBfree,no-wall-time-limit override.
+Output NativeUITrainer/yolo_runs/roi194-r025. No sweep or automatic retry.
+Reuse022base predictions on216fit/96development/2400retained originals; infer the
+223/72/273frozen proposal crops and apply193geometry-only rule. All14gates, old/new
+misses and unchanged non-page metrics must be reported. No final-holdout tuning,
+CoreML export, production promotion or TTR/device operation. Runtime PID, resolved
+pins, finite terminal epochs and timings are recorded by scripts/roi194.py.
+Launched PID76719; protocol SHA256
+b846b6115e834b2f06b91b9db4fa10a13ffc272aeab35ab3f1c7326f846b0c6c.
+Planned130optimizer updates (versus022's69); unequal data/compute explicitly retained.
+Initial preparation protocol preserved; attempt02corrected an unexecuted scoring
+adapter call before any training. Resident versions torch2.13.0/ultralytics8.4.124.
+Completed exit0,2731.612seconds,10epochs and130exact planned optimizer updates.
+Terminal checkpoint SHA256
+bf26cec4daf2f194066a832f1ffc7601d5fe6639102a77ca241decf4c83aff3b.
+In-sample monitoring is not generalization; matched full-frame evaluation follows.
+Completed all568crop predictions in33.268s, complete2712original-image scoring,
+fixed-rule diagnosis and16frame batch-one MPS latency sample. All14fit recoveries
+are old localization misses;185prior hits preserved. Fit leading/center/trailing
+68/72/59per72;199/216hits reaches the count-based proposal ceiling. Page fit AP50
+.856008→.915703 and AP50:95 .474462→.763265. Development58TP/14FP/AP50 .619261
+unchanged, AP50:95 .321576→.380124. Retained249TP/24FP/AP50 .858402 unchanged,
+page AP50:95 .494261→.461604; aggregate AP50 .899967 unchanged and AP50:95
+.858373→.857513. Eight gates fail; reject promotion, preserve022reference.
+Warm proposal-frame median total105.46ms (added56.33ms); no-proposal47.02ms.
+Balanced8/8sample, not population-weighted or CoreML qualification; CPU scoring
+ran concurrently, so these are local diagnostic timings, not controlled benchmarks.
+First pipeline frame1.194s; model loading separately65.6ms.17focused/142Swift pass.
+Evaluation seal cfd6577bf85a81a5640f0ba6793cd2cbbdd5caa61b4647821ecf4582fe8b95a5.
+Next: source-stratified geometry regression/proposal-ceiling diagnosis and a
+training-only coverage proposal; no automatic retraining or threshold sweep.
+
 ### IOS-CROSSOVER189 — fixed-checkpoint resolution diagnostic (registered)
 
 No training. Run024@1280recovers21/31prior fit misses but retainedAP .343954 and

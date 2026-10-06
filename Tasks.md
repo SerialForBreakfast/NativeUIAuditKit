@@ -24,7 +24,7 @@ aliases retained; full2712-image evaluation accounting with prediction-only wind
 Twelve focused tests, real preparation/readback and142 offline Swift tests pass.
 No training/model result. [Handoff](reports/work/IOS-ROI-193/handoff.md).
 
-## Ready — IOS-ROI-194 / unassigned
+## Review — IOS-ROI-194 / Codex
 
 Execute the one193prepared candidate under standing training authority after
 registering its run. Fixed022last initialization,10epochs,batch8,640,fresh state;
@@ -33,6 +33,31 @@ originals against022 and all14existing gates, and measure added end-to-end laten
 Keep no-proposal/ambiguous cases, original confidence/counts and non-page classes.
 Report fit versus development/retained separately; failed gates mean diagnosis,
 not promotion. No TTR dependency. [Contract](Research/Plans/Run013Evaluation.md#ios-roi-194--one-candidate-and-end-to-end-comparison).
+Complete Run025:10epochs/130updates,2731.612s. All568crop outputs and2712originals
+validated/scored. Fit185→199hits,14recovered/no lost; development58TP/14FP unchanged
+but AP50:95 .321576→.380124. Retained page AP50:95 .494261→.461604regresses.
+Eight gates fail, no promotion.17focused/142Swift pass. [Handoff](reports/work/IOS-ROI-194/handoff.md).
+
+## Ready — IOS-ROI-196 / unassigned
+
+Materialize the frozen195training-only96-frame proposal with193all-class crop and
+ancestry checks; qualify actual membership before registering one expanded-coverage
+comparison. Independently diagnose missing/false base proposals on existing cached
+evidence; geometry refinement cannot fix their count ceiling. No evaluation-case
+admission or promotion through an impossible gate. [Contract](Research/Plans/Run013Evaluation.md#ios-roi-196--coverage-comparison-and-proposal-recall).
+
+## Review — IOS-ROI-195 / Codex
+
+Diagnose194's retained fine-geometry regression and frozen-proposal ceiling by
+source/family/control size; keep development versus fit evidence separate. Audit
+eligible training-only crop coverage for the affected styles, preserving all groups
+and annotation semantics. Deliver a bounded coverage/replay proposal and one next
+comparison contract, or a concrete representation blocker; no threshold sweep or
+automatic extraepochs. [Contract](Research/Plans/Run013Evaluation.md#ios-roi-195--transfer-and-proposal-diagnosis).
+Complete:2712originals accounted for; GalleryPage148/156changed boxes lose IoU,
+median height ratio1.107→.780. Training-only audit finds1830page-positive frames;
+96additional sources proposed across four families,74groups. No inference/training
+or data-role changes.23focused/142Swift tests pass. [Handoff](reports/work/IOS-ROI-195/handoff.md).
 
 ## Review / extraction and semantics blocked — ART-INTAKE-191 / Codex
 
