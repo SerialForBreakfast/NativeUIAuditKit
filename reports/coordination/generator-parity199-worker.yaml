@@ -1,0 +1,38 @@
+schema_version: 1
+id: nuiak-20261006-generator-parity199-worker
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T03:03:01Z'
+expires_at: '2026-10-13T03:03:01Z'
+state: requested
+related_requests:
+  - nuiak-20261006-generator-parity199-ttr
+  - tvtestrig-20261006-big-dog-offload
+  - tvtestrig-20261006-big-dog-backlog-02
+message: >-
+  Low-priority metadata-only companion to existing BD asset work. Do not rerun
+  acquisition, screening, embeddings or captions. NUIAK is adapting relevant tvOS
+  generation practices to iOS; source-separated realistic artwork and hard negatives
+  may help persistent small-control misses, but model usefulness is not established.
+request: >-
+  Return one compact cumulative inventory of completed batches with immutable IDs,
+  source/derivative byte and pixel hashes when available, bytes/dimensions, aspect/
+  intended roles, brightness/detail coverage, rights evidence/conditions, screening
+  and human-review status, exact methods/models, ancestry/duplicate groups and
+  current data roles. Preserve source captions; generated captions remain advisory.
+  Mark unknowns and reported-versus-verified facts. Tell us which <=24reviewed assets
+  cover poster/thumbnail/hero/avatar and bright/dark/busy/quiet needs without claiming
+  absent role coverage. NUIAK will select by metadata and return missing hashes.
+  Existing machine-readable manifests are preferred; no mandatory new producer schema.
+delivery: >-
+  Small sanitized metadata in your own SMB namespace with exact request reference,
+  bytes/SHA256 and tier/batch completeness. No raw artwork return yet. NUIAK's batch
+  route remains the approved SMB receipt flow, not the HTTP endpoint reported for
+  TTR. Confirm available bounded packaging without service changes. No new downloads
+  or sensitive evidence; preserve existing BD ownership and worker198 scheduling.
+acceptance: >-
+  Complete inventory counts reconcile to reported batches, duplicate/derivative
+  lineage and review gaps explicit, reusable original manifests referenced. No
+  fake reviewed labels, training admission or complete-corpus claim from partial
+  batches. Publish acknowledgment separately from inventory completion.
+budget: Metadata reuse only, at most2CPU hours and2MiB compact returned metadata; no GPU.

@@ -1,0 +1,22 @@
+schema_version: 1
+id: nuiak-20261006-render202-native-prerequisites
+request_id: nuiak-20261006-generator-parity199-ttr
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-06T04:40:23Z'
+expires_at: '2026-10-13T04:40:23Z'
+state: requested
+message: >-
+  RENDER-202 artwork intake passed:24images/zero exact duplicates,16review candidates
+  and8flagged. We intend existing standalone Fixture plus direct scripts, one persistent
+  native session, no desktop coordinator dependency. Please identify the exact published
+  source revision and supported artwork import/recipe/observed-body contracts for this
+  reuse, including known standalone gaps. Reuse GEN-PARITY199 response; no duplicate
+  implementation request or producer build/binary delivery. Native labels remain required.
+consumer_blocker: >-
+  Our local checkout is46dce7b and dirty;550a2d37 object absent. Maintainer synchronization
+  is needed locally, not TTR rebuilding for us. Exact tvOS26.5 target remains available
+  but Shutdown. No runtime operations attempted and no physical-device use requested.
+next: >-
+  Return source paths/revisions and current contract evidence only. NUIAK owns local
+  build/capture/intake after reconciliation; artwork and template ancestry stay development-only.

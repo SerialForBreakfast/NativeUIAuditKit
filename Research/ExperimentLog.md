@@ -1,5 +1,60 @@
 # NativeUIAuditKit — Experiment Log
 
+### IOS-ASSET200 — fixed Run022 artwork sensitivity, October6 UTC
+
+No training/new run ID.96development frames: grid/detail × light/dark × low/high
+density × seeds200–203 × procedural/thumbnail04/thumbnail03. Two artworks, one
+development ancestry family; no causal clutter or unseen-app claim. Frozen022last
+SHA256d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d,
+640letterbox/MPS, existing export settings, conf0.25/IoU0.5operating counts.
+Grid imageView TP80/80procedural,12/80low-detail,3/80busy. Detail16/16allconditions.
+Grid busy best-candidate diagnosis:21lowconfidence,56without exportedIoU>=.5match,
+3operatingmatches. Low-detail28lowconfidence,40withoutmatch,12operatingmatches.
+Aggregate grid custom mAP50 1.0/.89954/.85563 obscures operating recall collapse.
+Detail secondaryButton0/16inallconditions is an existing separate weakness.
+Inference completed once; report hit coordination parser's20000-event budget.
+Retained predictions recovered with existing evaluator schema checks and32MiBbound;
+no inference rerun. Exact inference duration unavailable after failed report; do not
+invent it. No threshold tuning, admission, export or promotion. TTR informed.
+[Evidence](../reports/work/IOS-ASSET-200/campaign-handoff.md).
+
+### Run026 — IOS-ROI196 (registered before launch)
+
+Hypothesis: broadening ROI training to already admitted larger SwiftUI-dot controls
+improves transfer without modifying the025prediction/merge rule.1173unique crops:
+802preserved plus371new from96source-qualified frames/74groups. Same fresh022last
+initializer,10epochs,batch8,640,MPS,workers0,AdamW1e-4,nbs64,warmup.25,seed42,
+AMPoff,cosine,rect,noaugmentation.147minibatches/epoch;190planned optimizer steps
+versus025's130: not equal-compute causal attribution. Fixed terminal checkpoint;
+training-fit monitor only.2GiBoutput cap,≥8GiBfree; standing no-wall-time-limit.
+Output NativeUITrainer/yolo_runs/roi196-r026. No sweep, capture, export or promotion.
+All14gates retained; fixed-proposal ceiling already prevents complete promotion.
+Protocol SHA2565417ca1c6f0d6be799e2f64a33f7a445c966d5c77ed67591bc902e3561079f0a.
+Preparation rejects unknown ancestry; native96catalog/receipt and pixel overlap
+checked, all-class clipping/dedup reused from193. Failed absolute-path manifest
+preparation preserved separately; attempt02passes actual loader and26focused tests.
+Completion, PID, checkpoint and actual optimizer events follow after execution.
+Launched PID81934. MPS reports nondeterministic scatter/index accumulation kernels
+under warn-only deterministic mode; seed/config are reproducible inputs, not a claim
+of bit-identical MPS training. Completed exit0 in3729.533seconds (62.16minutes),
+exactly10epochs/190planned optimizer updates. Terminal checkpoint SHA256
+de3ffdeec3c4767edc2d4bea0059294a26d87b6c9fc03b9d684de769ed3dd638.
+Completed568crop predictions in34.536s and matched all2712original records against
+022/025. Page AP50:95 fit.763265→.792093,development.380124→.453840,
+retained.461604→.529515 (also above022's.494261). AP50and operating TP/FP remain
+unchanged:199/24fit,58/14development,249/24retained. Retained aggregate AP50:95
+.857513→.859300; non-page predictions/metrics unchanged. All14existing gates
+evaluated, eight fail; no promotion or automatic additional training.
+Gallery paired changes:172improvements/4regressions;118improvements from new
+refinements and54from base fallback. Ambiguous retained donors rise7→64, so gains
+are not exclusively better specialist geometry. Onboarding49refinements improve,
+8fallbacks regress. Fit KitchenSink median IoU slightly regresses.9471→.9447.
+Warm proposal-frame median104.66ms total/+56.06ms; no-proposal46.68ms. Fixed16frame
+MPS diagnostic, CPU scoring finished first, not CoreML/platform qualification.
+Evaluation seal d7a795fa869d115ed6188a10041bad563069f86cbef08a8bff0161bab7832c6d.
+29focused/142offline Swift checks pass. Next197is proposal/negative support, not
+more epochs; keep shipped models and022reference unchanged.
+
 ### Run025 — IOS-ROI194 (registered before launch)
 
 Hypothesis: a proposal-driven ROI specialist improves tiny page-control geometry

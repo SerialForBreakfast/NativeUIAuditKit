@@ -1,0 +1,67 @@
+schema_version: 1
+id: nuiak-20261006-local-image201-preparation
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T03:08:21Z'
+expires_at: '2026-10-13T03:08:21Z'
+state: requested
+priority: high
+message: >-
+  Maintainer explicitly requests a HIGH-PRIORITY local text-to-image feasibility
+  preparation spike. Add this to your own task queue/backlog and report its taskID.
+  Prioritize the read-only preparation now without interrupting an active GPU job;
+  schedule any future GPU trial at a safe boundary. IMPORTANT: maintainer must
+  approve installation on Big Dog. Do not install, download weights/dependencies,
+  alter environments or start generation on the strength of this request.
+task: LOCAL-IMAGE-201-BD
+prepare:
+  - >-
+    Verify current GPU/VRAM, driver, CPU/RAM, free local disk, ongoing workload and
+    resident generation packages/models using read-only checks; avoid GPU allocation
+    while another job owns it. RTX2070SUPER8GiB is the earlier qualified hardware,
+    not proof a chosen image pipeline fits.
+  - >-
+    Propose ONE pinned text-to-image pipeline and exact model files. First candidate
+    to assess is SDXL-Lightning four-step with matching base/scheduler in Diffusers
+    or ComfyUI; not a requirement to force that choice if unsupported. Record model,
+    base and software licences, provenance, SHA/revisions, driver/dtype support,
+    peak VRAM expectation and unknowns. Use FP16 only if supported; do not assume
+    BF16/FP8 or that fewer inference steps reduce model-weight memory requirements.
+  - >-
+    Return an explicit approval checklist: installation commands as proposed text,
+    dependencies/pins, model-download URLs/bytes/licences, local paths, cache/temp
+    expansion and minimum free-space reserve, network use, rollback and uninstall
+    scope. Prefer a separate environment and offline inference after setup; no
+    public server, custom-node execution or opaque install script by default.
+  - >-
+    Freeze a proposed24-output pilot: six fictional posters, six landscape episode
+    thumbnails, six avatars and six backdrops. Diverse bright/dark/busy/quiet styles,
+    art only; no brands, focus borders or painted UI labels. Individual images, not
+    generated grids; deterministic contact-sheet assembly later. Use supported
+    aspect/resolution buckets and retain actual dimensions, prompt/seed/model hashes.
+    No training/fine-tuning. Do not begin this pilot until setup and execution scope
+    are approved and the chosen environment/model passes preflight.
+acceptance: >-
+  Local taskID, resident/missing inventory, exact setup/storage/licence proposal and
+  concise maintainer approval question; mark installation awaiting_maintainer_approval.
+  Proposed pilot metrics: cold-load and warm generation time, accepted assets/hour,
+  peak VRAM/RAM, disk/temp use, rejected images, review effort and prompt adherence
+  by role. Separate measured values from estimates and unknown model licensing.
+  No token/cost or Mac-versus-CUDA speedup claim without a comparable measurement.
+budget: >-
+  Preparation only: at most2CPU hours and10MiB metadata, no GPU generation/download.
+  Proposed later pilot ceiling24images,2GPU hours,1GiB outputs, one chosen model;
+  model/cache storage must be itemized separately in the approval proposal.
+coordination: >-
+  Respond in your own SMB namespace with acknowledgment and taskID, then the
+  preparation report. Link TTR's existing artwork workflow for future intake, but
+  do not duplicate its image harvesting. NUIAK separately prepares LOCAL-IMAGE-201-MAC
+  on M4Macmini24GB; another Mac's capabilities remain unknown. Share common prompts
+  after selection; do not deliver raw images until approved pilot/receipt scope exists.
+boundaries: >-
+  No installations/downloads, generation, training, model promotion, account changes,
+  new services, SSH, Git writes, automatic retries or destructive cleanup. A peer
+  request or existing training approval does not override this installation gate.
+references:
+  - https://huggingface.co/ByteDance/SDXL-Lightning
+  - https://huggingface.co/docs/diffusers/main/optimization/memory

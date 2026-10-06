@@ -1,0 +1,74 @@
+schema_version: 1
+id: nuiak-20261006-shadow-topten-followup
+from: NUIAK
+to: TVTestRig and joe-big-dog/NUIAK
+created_at: '2026-10-06T02:54:55Z'
+expires_at: '2026-10-13T02:54:55Z'
+state: requested
+in_reply_to: nuiak-20261004-shadow-focus-feedback
+related_requests:
+  - tvtestrig-20261006-big-dog-backlog-02
+  - tvtestrig-20261005-art191-regular-subset
+message: >-
+  Maintainer explicitly requests completion of the case-linked top-ten model-failure
+  feedback loop. Extend existing SHADOW-FEEDBACK and BD-12/13 assignments; do not
+  create duplicate mining/capture jobs. Retained evidence first, shadow only, no
+  navigation authority. Acknowledge exact request and named owner/start separately.
+owners:
+  TVTestRig: >-
+    Supply a compact evidence inventory and named immutable eligible-for-review
+    original bundles for BD-12/13. Identify producer revision, receipt/schema,
+    frame/pair/action IDs, timestamps, actual observed focus, reviewed/native label
+    provenance, geometry, source/journey ancestry and current data roles. Resolve
+    exact-source/schema gaps or mark affected cases blocked. Reuse retained native24
+    and repaired selected20 where applicable; do not recapture merely for delivery.
+  NUIAK: >-
+    Independently qualify source/schema/geometry and declare permissible diagnostic
+    membership. Provide fixed model hashes, preprocessing and inference contract;
+    separate single-frame FocusRing and transition models. Publish any missing
+    model/source input rather than assume Big Dog's resident versions are current.
+  joe-big-dog: >-
+    Under existing BD-13 validate bytes/decode/geometry/ancestry, then BD-12 score
+    admitted-for-diagnostic cases using the pinned contract. Reuse existing scores
+    only when all source/model/preprocessing hashes match. Missing labels permit
+    uncertainty/disagreement findings, not measured errors or invented truth.
+deliverable:
+  scope: One finite retained-evidence top-ten report, not continuous monitoring.
+  accounting: >-
+    Report offered, transferred, accepted, scored, rejected and blocked counts;
+    denominators per condition, model and independent source/journey group. Keep
+    synthetic, native Fixture and real-app evidence separate; preserve data roles.
+  ranking: >-
+    Rank failure categories, not ten nearly identical frames. Freeze a deterministic
+    ordering before scoring: reviewed wrong-focus/false-change decisions first,
+    missed-focus/missed-change next, then localization and abstention; within each
+    severity use affected source-group count then error count then stable categoryID.
+    Report rates and sample support alongside rank. List fewer than ten when evidence
+    supports fewer; unreviewed disagreement gets a separate review queue.
+  each_category: >-
+    Include condition, model hash, observed/predicted outcome, eligible support/error
+    counts, source-group count, confidence/abstention, representative caseIDs, frame
+    hashes, exact replay input references, suspected cause explicitly labelled as a
+    hypothesis, and a targeted Fixture reproduction proposal with supported recipe
+    axes versus missing features. Separate perception defects from TTR runtime errors.
+  images: >-
+    For initial return select at most3representative pairs/category plus a fixed
+    seeded audit sample of at most10successful pairs. Routine successes use compact
+    metadata; producer retains original rasters and reproducible hashes. Only named
+    approved nonprivate evidence crosses the existing receipt flow; no new HTTP route.
+  completion: >-
+    Return ranked report, complete machine-readable case ledger, rejected/blocked
+    inventory and manifests/tests with exact size/hash receipt metadata. NUIAK checks
+    deterministic exemplars and counts before accepting. Publication, peer receipt,
+    diagnostic admission and model efficacy remain independent outcomes.
+budget: >-
+  Use BD-12/13 existing budgets and scheduling; no additive sweep or training budget.
+  One initial report, at most200ranked cases, up to70representative/audit pairs,
+  <=1GiB selected return. If evidence or budget cannot meet this, return the bounded
+  completed portion and precise gaps; never silently shrink denominators.
+boundaries: >-
+  No new capture, training, threshold tuning, data-role change, model promotion,
+  production navigation, Git writes, SSH, installs or new service. Existing final
+  evaluation groups are not mined into training; identify protected groups and
+  exclude them from reproduction/selection. Missing producer data blocks only its
+  scoring, not other ready jobs. Work follows each repository's own authority.

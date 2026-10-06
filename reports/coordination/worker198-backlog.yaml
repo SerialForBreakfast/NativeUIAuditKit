@@ -1,0 +1,117 @@
+schema_version: 1
+id: nuiak-20261006-worker198-backlog
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T02:33:06Z'
+expires_at: '2026-10-27T02:30:00Z'
+state: requested
+message: >-
+  Maintainer explicitly approves additional low-priority backlog and reports the
+  worker runs24/7. Queue these behind current owned work; acknowledge exact request
+  and actual starts separately. Use idle capacity, not artificial long runtimes.
+  Skip unmet prerequisites and continue ready items. No local NUIAK task waits on
+  this backlog. Do not duplicate completed180 or TTR BD11/12/13 assignments.
+tasks:
+  - id: WORKER-198-A
+    readiness: executable_with_verified_resident_sources
+    outcome: Resident training-path and portability audit
+    inputs: >-
+      Retained CUDA145/ROBUST153 runner, configs, checkpoints and completed logs;
+      preserve their existing manifest hashes. Read installed Python/PyTorch/CUDA
+      metadata and resident Ultralytics source if present; absence is a reported gap.
+    work: >-
+      Account training, validation, synchronization, serialization and data-loading
+      costs from existing evidence. Distinguish measured timings from source-derived
+      hypotheses. Identify per-step GPU synchronization and redundant validation or
+      tensor copies; do not alter original runners or run new model inference.
+      Produce a tested offline effective-config/report tool with missing-source,
+      missing-field, conflicting-config and no-model-import fixtures. Propose one
+      bounded representative CUDA throughput protocol, including effective batch,
+      optimizer-update count and checkpoint/validation semantics.
+    acceptance: >-
+      Exact inspected versions/source hashes, measured versus inferred fields,
+      offline entrypoint tests, ranked bottlenecks and executable benchmark proposal.
+      Do not extrapolate the tiny141smoke to YOLO or claim Mac speedup.
+    next: NUIAK reviews proposal and supplies B's immutable workload bundle.
+  - id: WORKER-198-B
+    readiness: conditional_on_A_review_and_named_workload_bundle
+    outcome: Representative CUDA efficiency qualification
+    inputs: >-
+      NUIAK-published immutable source/checkpoint and512training-only examples,
+      preprocessing/taxonomy/data-role manifest and exact benchmark configuration.
+      Not currently supplied by this metadata request; report that precise dependency.
+    work: >-
+      At most3predeclared configurations, batch8control and16if memory permits,
+      plus one evidence-justified validation-cadence arm. Two repetitions each,
+      10warmup batches then512timed examples, identical initial state/order per arm.
+      Account effective batch/optimizer updates, cold load, decode/transfers,
+      compute, validation and checkpoints separately; synchronize timing boundaries.
+      Compare fixed CPU/CUDA predictions within declared tolerances. No automatic
+      OOM retries or configuration search. Preserve failed evidence.
+    acceptance: >-
+      Complete arm accounting, finite losses, memory/headroom, timing distributions,
+      reload/parity checks and recommendation. A faster arm changing optimization
+      semantics is diagnostic, not a transparent replacement or accuracy improvement.
+    next: NUIAK compares against Mac evidence; no automatic candidate launch.
+  - id: WORKER-198-C
+    readiness: conditional_on_registered_focus_comparison_bundle
+    outcome: Focus-transition reproducibility and candidate comparison
+    inputs: >-
+      NUIAK must provide one registered hypothesis, frozen eligible training and
+      source-separated evaluation membership, baseline/candidate code and checkpoint,
+      fixed epochs and metrics. Do not infer native labels from procedural tensors.
+    work: >-
+      Compare baseline versus one candidate across seeds42,43,44, six runs maximum,
+      fixed membership/epochs and matched optimizer budget. Report change decision,
+      localization where supported, abstention, condition/source support and failure
+      exemplars. Preserve all seeds, failures and resume state; no best-seed selection.
+    acceptance: >-
+      Independently reproducible manifests, six terminal outcomes or explicit
+      missing runs, paired effects with source-group uncertainty and compute cost.
+      Training fit and counterfactual agreement are not native held-out accuracy.
+    next: NUIAK reviews efficacy and performs Apple/CoreML qualification locally.
+  - id: WORKER-198-D
+    readiness: conditional_on_frozen_IOS_PROPOSAL_197_contract_and_bundle
+    outcome: Batched proposal and negative-case scoring
+    inputs: >-
+      197frozen proposal/scoring/duplicate rules and immutable images, labels,
+      checkpoints, cached reference predictions and data-role manifest.
+    work: >-
+      Score each frozen window once in bounded batches; retain no-proposal cases,
+      missed targets, duplicate detections and negative crops. Report complete
+      per-family support, TP/FP, recall ceiling and inference cost. Do not tune
+      thresholds on development/retained evidence or add evaluation cases to training.
+    acceptance: >-
+      Count reconciliation, coordinate/collision/missing-image tests, deterministic
+      sample replay and fixed-contract comparison against cached reference; no
+      production-quality claim from oracle crops or training-only negatives.
+    next: NUIAK integrates or rejects the frozen proposal rule using unchanged gates.
+coordination:
+  in_reply_to: tvtestrig-20261006-big-dog-backlog-02
+  BD12_BD13: Reuse your existing TTR mining/QA jobs; no duplicate dispatch here.
+  BD14: >-
+    Not yet executable for NUIAK. Need defined stability/modal outputs, corresponding
+    model and eligible sequence labels; transition classifier is not a modal detector.
+  BD15: >-
+    Keep conditional. Need qualified rendered focus pairs, exact train/evaluation
+    memberships and source ancestry before confirming arms. Artwork alone is not
+    focus-labelled data. Publish missing-input inventory; do not infer admission.
+budget: >-
+  Finite total96h execution and12GiB new retained outputs for198only: A8h/1GiB,
+  B8h/2GiB,C72h/8GiB,D8h/1GiB. Stop earlier when complete; no budget padding.
+  CPU2threads, nice10 where supported, one GPU job at a time; cooperate with existing
+  TTR workloads, no process takeover. nice does not isolate GPU. Record safe resume
+  cursors/checkpoints; no automatic restart after CUDA/data-integrity errors.
+handoff: >-
+  Publish acknowledgment, actual start, material blocker and terminal metadata in
+  your namespace. Return one named immutable archive per job <=2GiB via approved
+  SharedStatusFile receipt flow; preserve larger originals locally and propose a
+  bounded selected return. Include exact bytes/SHA256, source/config/data roles,
+  tests, counts, timings, failures and four independent outcomes. Receiver receipt
+  precedes sender-only exact shared-copy cleanup. Publication is not admission.
+boundaries: >-
+  Worker applies its own repository authority. No downloads/installs, SSH, new
+  services, HTTP-route adoption, private data egress, Apple capture, physical devices,
+  data-role changes, Git writes, export/promotion or repeated sweeps. Queued B/C/D
+  cannot run until exact prerequisites arrive and are verified; do not substitute
+  unrelated workloads. Request needed source/artifacts once; continue ready work.

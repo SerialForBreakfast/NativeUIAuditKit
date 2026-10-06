@@ -25,6 +25,9 @@ public struct MediaCardConfig: Sendable {
     public var title: String
     public var hue: Double         // 0–1, drives thumbnail tint
     public var symbolName: String  // SF Symbol for placeholder thumbnail
+    // Explicit opt-in only; the seeded factory never populates these fields.
+    var artwork: GeneratorArtwork? = nil
+    var artworkPlacement: GeneratorArtwork.Placement = .fill
 
     public init(title: String, hue: Double, symbolName: String) {
         self.title = title
@@ -71,6 +74,21 @@ public struct MediaCardGridConfig: Sendable {
         "doc.richtext", "map", "camera", "waveform",
         "newspaper", "star.fill",
     ]
+
+    /// Preloaded/validated bytes only. Resolve every ID before returning a new config.
+    func applyingArtwork(_ catalog: [String: GeneratorArtwork], ids: [String],
+                         placement: GeneratorArtwork.Placement) throws -> Self {
+        guard ids.count == cards.count else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+        var copy = self
+        for index in cards.indices {
+            guard let asset = catalog[ids[index]] else {
+                throw GeneratorArtworkCatalog.Failure.unknownID(ids[index])
+            }
+            copy.cards[index].artwork = asset
+            copy.cards[index].artworkPlacement = placement
+        }
+        return copy
+    }
 
     /// Deterministic factory — same `seed` always produces the same config.
     public static func make(seed: UInt64, corpus: inout ContentCorpus) -> MediaCardGridConfig {
@@ -131,11 +149,24 @@ public struct MediaCardGridTemplate: View {
                                     // Thumbnail image
                                     ZStack {
                                         Color(hue: card.hue, saturation: 0.55, brightness: 0.75)
-                                        Image(systemName: card.symbolName)
-                                            .font(.system(size: 28))
-                                            .foregroundStyle(.white.opacity(0.9))
+                                        if card.artwork == nil {
+                                            Image(systemName: card.symbolName)
+                                                .font(.system(size: 28))
+                                                .foregroundStyle(.white.opacity(0.9))
+                                        }
                                     }
                                     .aspectRatio(4/3, contentMode: .fit)
+                                    .overlay {
+                                        if let asset = card.artwork {
+                                            GeometryReader { geometry in
+                                                Image(decorative: asset.image, scale: 1)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: card.artworkPlacement == .fit ? .fit : .fill)
+                                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                                    .clipped()
+                                            }
+                                        }
+                                    }
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
                                     .captureFrame(id: "imageView_thumb_\(idx)")
 

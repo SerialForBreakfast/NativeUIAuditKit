@@ -1,5 +1,182 @@
 # NativeUIAuditKit — Tasks
 
+## Artwork-first delivery priority — five substantial tranches
+
+October5 priority refinement: diverse artwork plus native labels precedes mock-UI
+focus rendering. [Canonical contracts](Research/Plans/ArtworkModelImprovement204.md).
+Order:199+204 asset plumbing/campaign →200/202 native integration →205transition
+→206FocusRing →207detector utility. Existing owners and running work are preserved;
+IOS-PROPOSAL-197 remains an independent high-priority model blocker. Subsequent199/204
+execution below completed the planner and published the bounded artwork assignment.
+
+## Acknowledged; GPU queued — ARTWORK-204 / Big Dog; NUIAK intake
+
+Together with ready GEN-PARITY-199, deliver a verified reusable artwork inventory and
+256-slot diversity campaign (four roles/eight subjects/two compositions/four treatments).
+Reuse existing matching assets; <=256new calls, <=32per shard,4GPU hours/4GiB outputs,
+resident tools only. Freeze prompts/seeds/ancestry/roles; account for rejected/missing
+cells and observed appearance. Native labels/training eligibility not implied.
+199planner/CLI/tests complete for review. Exact worker assignment and artwork-first
+priority published/read back under `nuiak/requests/nuiak-20261006-artwork204-campaign.yaml`.
+Request SHA2562bee946d76db0fd982cdd5745f753030c36a4fb52f253eaaa3892772923b528e;
+204acknowledged at2026-10-06T05:11:35Z;256-slot catalog prepared, GPU queued after
+owned work releases capacity. Results pending; no new generation claimed here. Existing203active
+CPU work is not interrupted. [Dispatch](reports/coordination/artwork204-request.yaml),
+[integrated handoff](reports/work/ARTWORK-204/handoff.md).
+[Tranche1](Research/Plans/ArtworkModelImprovement204.md#tranche-1--gen-parity-199--artwork-204-reusable-diverse-asset-library).
+
+## Pending qualified native inputs — TRANSITION-205 / NUIAK; portable worker optional
+
+After200/202 renderer qualification, freeze96new connected recipe groups and four
+content/focus contrasts each (<=384pairs),64train/16validation/16reserved diagnostic.
+Native observed labels only; existing development ancestry excluded from reserved groups.
+Register at most matched control/treatment with fixed update budget and replay; report
+false changes, missed changes, abstentions and joint localization/retention. No new
+architecture or automatic promotion. Exact membership/run settings required before launch.
+[Tranche3](Research/Plans/ArtworkModelImprovement204.md#tranche-3--transition-205-content-change-versus-actual-focus-change).
+
+## Pending eligible pairs — FOCUSRING-206 / NUIAK
+
+Reuse205native frames/crops for artwork-hard-negative and native focus coverage; no
+duplicate acquisition by default. Freeze one control/treatment30epoch baseline comparison
+with fair exposure, retained holdouts and six existing gates. Report recall and FPR
+together; simulator results do not close physical FR-B/FR-C. No training until roles,
+native labels, exact configuration and output budget qualify.
+[Tranche4](Research/Plans/ArtworkModelImprovement204.md#tranche-4--focusring-206-native-focus-amid-distracting-artwork).
+
+## iOS benchmark complete; targeted comparison pending — DETECTOR-207 / NUIAK
+
+Benchmark simple/busy native scenes per platform using fixed detectors; distinguish
+proposal misses, confidence, geometry and artwork false positives. Only then select
+one data-only comparison (<=96new recipes if necessary); preserve category maps,
+all-class retention, existing gates and latency. Skip training if197shows the proposed
+data cannot address the bottleneck. macOS remains DS-G8-gated.
+IOS200now supplies96qualified development frames and cached022predictions. Small-grid
+imageView TP80→12→3/80versus hero16/16allconditions identifies scale/content sensitivity;
+busy misses include21lowconfidence/56without exportedIoUmatch. This benchmark slice
+is complete, not the candidate comparison. Preserve IMAGE201development ancestry and
+CardDetail withheld family. Next:197proposal diagnosis plus newly reviewed asset-family
+coverage before freezing an eligible grid-only training intervention; tvOS still waits202.
+[Evidence](reports/work/IOS-ASSET-200/campaign-handoff.md).
+[Tranche5](Research/Plans/ArtworkModelImprovement204.md#tranche-5--detector-207-platform-specific-clutter-and-negative-coverage).
+
+## Requested / stretch priority — FOCUS-RENDER-203 / Big Dog execution, NUIAK independent review
+
+User-authorized two-arm feasibility spike: prompt-only Swift-like descriptions versus
+deterministic artwork composition, six configurations/four states plus two repeats
+per arm (52frames total,26diffusion calls maximum). Compare actual raster geometry,
+focus-state fidelity, repeatability and cost; no assumed native labels or training
+admission. Existing resident tools only,2GPU+2CPU hours/1GiB outputs.
+[ADR and exact test](Research/ADR-0020-Procedural-Focus-Rendering-Feasibility.md),
+[dispatch](reports/coordination/focus-render203-request.yaml). Request and companion
+contract published and exact-byte read back under `nuiak/requests/` as
+`nuiak-20261006-focus-render203-feasibility.yaml` and `nuiak-20261006-focus-render203-contract.md`.
+Peer acknowledged exact request hash and reported working_CPU_compositor at04:56:15UTC
+October6; completion and independent review remain pending.204request now publishes
+artwork-first pending-job priority without interrupting active203work; acknowledgment
+of that priority update remains pending.
+
+## Intake complete; native qualification blocked — RENDER-202 / NUIAK
+
+Qualify artwork-backed direct native batch rendering without the TTR desktop runtime.
+This is the tvOS arm of [tranche2](Research/Plans/ArtworkModelImprovement204.md#tranche-2--ios-asset-200--render-202-native-scenes-one-setup-per-campaign);
+independently executable from iOS when its prerequisites pass.
+Reuse GEN-PARITY199, IOS-ASSET200 and LOCAL-IMAGE201 inputs; reconcile current producer
+source before extending the historically pinned direct runner. Deliver a frozen24-scene
+development campaign, persistent-session/resume tests, complete native frame/label
+accounting and measured throughput/storage report. Artwork review, current source,
+exact-target/runtime and USB output qualification are prerequisites for capture;
+offline planning/software can proceed independently. No new generic rig, procedural
+training admission or model-quality claim. [ADR and bounded contract](Research/ADR-0019-Batched-Renderer-and-Asset-Pipeline.md).
+Maintainer approved Big Dog dispatch: RENDER-202-BD reuses24existing pilot images,
+returns verified artwork inventory, coverage/gaps and deterministic development-scene
+proposal (2CPU hours/16MiB metadata; no generation or native operation).
+[Request](reports/coordination/render202-worker-request.yaml) published with exact-byte
+and YAML readback at `nuiak/requests/nuiak-20261006-render202-assets.yaml`.
+Peer completed; both metadata and image return independently received and verified.
+LOCAL-IMAGE201 review archive now offered:33,462,377bytes/41members,
+SHA256 f34cb933b8671e7c8b0e3d700d3a91096dc3cc20d98db372e78cbb3bf047d78a;
+All24PNG hashes/dimensions/pixel hashes and24scene references pass; zero exact
+duplicates, eight scene proposals explicitly missing accepted backdrops. Inspection
+only; four subject families are not broad media coverage. Native source550a2d37 absent
+locally; dirty46dce7b checkout preserved. Exact tvOS26.5 target available but shutdown;
+no launch of stale build. Maintainer source synchronization and current asset contract
+needed. [Intake and resume evidence](reports/work/RENDER-202/handoff.md).
+
+## High priority / peer pilot review pending — LOCAL-IMAGE-201-BD and 201-MAC
+
+Big Dog owns read-only preparation for local text-to-image artwork; NUIAK owns the
+matching Mac mini spike. Adopt exact local taskIDs, inspect resident tools/storage,
+select one pinned pipeline and return installation/licence/storage proposals before
+any downloads or installation. October5 evening update: Big Dog reports setup and
+24-image pilot completed at03:38:51UTC October6; NUIAK independently received and
+verified all24images and associated metadata in RENDER-202.
+Reported142.5s elapsed,4.44s warm median,5.05GiB peak CUDA allocated,
+16agent-review candidates/8flags. Integrity intake passed; human acceptance and
+training admission remain pending. Original installation approval gate remains;
+peer execution reports are not evidence of authority or retrospective approval.
+High-priority request published/readback verified as
+`nuiak/requests/nuiak-20261006-local-image201-preparation.yaml`; peer responded.
+Follow-up requests a bounded review pack through existing SMB, not more generation.
+Mac observed M4/24GB,17GiB internal free at03:47UTC and1.7TiB on verified training-drive;
+reserve/headroom and cache placement must be checked at execution.
+[Plan](Research/Plans/LocalImageGeneration201.md),
+[worker request](reports/coordination/local-image201-request.yaml).
+
+Storage update: approximately10GiB of historical prefix/transfer files archived and
+verified before local removal; no measured net free-space improvement. Current
+corpora/environments preserved. Diagnose ongoing local space consumption and finish
+the existing STORAGE-LIVE-03 dependency step before further corpus reclamation.
+[Recovery and evidence](reports/work/STORAGE-20261005/handoff.md).
+
+
+## Review — GEN-PARITY-199 / Codex
+
+Audit TTR/iOS generator capability and asset/source inventories, publish one grouped
+handoff request and implement an offline content-addressed reuse/batch planner.
+Preserve current iOS seeds and TTR ownership; no runtime or training claims from
+artwork/code inventory. [Contract](Research/Plans/GeneratorParity199.md).
+Source-backed gap audit and tiered TTR/Big Dog requests published/read back at
+`nuiak/requests/nuiak-20261006-generator-parity199-{ttr,worker}.yaml`.
+Implemented strict offline planner plus explicit image201adapter; actual24images all
+hash-verified in cache across four ancestry groups, zero redundant transfers, zero
+render-eligible until rights/review decisions.25focused tests and142offline Swift
+tests pass; build passes after scoped sandbox approval. Separate broader native/source
+qualification remains open, not a software blocker. [Evidence and CLI](reports/work/ARTWORK-204/handoff.md).
+
+## Requested — SHADOW-TOPTEN / TTR evidence, Big Dog BD-12/13, NUIAK acceptance
+
+Close the existing shadow-feedback loop with one retained-evidence top-ten failure
+category report. TTR supplies exact-source, role-labelled original evidence; NUIAK
+qualifies diagnostic membership/model contract; Big Dog reuses BD-13 QA and BD-12
+scoring. Require complete denominators/source groups, deterministic representative
+cases, separate uncertainty queue and targeted Fixture reproduction proposals.
+No new capture/training or model-driven navigation; missing inputs block only their
+cases. [Dispatch and acceptance contract](reports/coordination/shadow-topten-followup.yaml).
+Published/readback verified under NUA shared requests as
+`nuiak-20261006-shadow-topten-followup.yaml`; peer acknowledgment pending.
+No diagnostic result or model efficacy claimed.
+
+## Requested / low priority — WORKER-198-A/B/C/D / joe-big-dog; intake NUIAK
+
+Maintainer approves a finite background backlog on the24/7worker, behind existing
+owned TTR jobs. A: resident training-path/effective-config audit can start after
+input verification. B: representative CUDA benchmark waits for A review and named
+512-example bundle. C: baseline/candidate three-seed focus comparison waits for a
+registered eligible-data experiment. D: batched proposal/negative scoring waits for
+IOS-PROPOSAL-197 frozen contract/bundle. No local critical-path dependency.
+Reuse TTR BD12/13 mining/QA; BD14/15 remain conditional on NUIAK label/evaluation
+contracts, not admitted by artwork availability. Request published and byte/YAML
+readback verified at `nuiak/requests/nuiak-20261006-worker198-backlog.yaml` on the
+verified SMB share. October6UTC update: peer acknowledged exact request hash;
+198-A reported complete (five runs audited, seven tests), 12613-byte return offered
+at `joe-big-dog/worker198a-return01.tar.gz`, SHA256
+19034dcb7aa4c62fbecf7ebe0afa862436ab45a1de561c50e1ad8b73610f5dde.
+NUIAK intake/acceptance pending; B/C/D explicitly not launched pending listed inputs.
+[Plan](Research/Plans/WorkerBacklog198.md),
+[portable dispatch](reports/coordination/worker198-backlog.yaml).
+
+
 ## Review — IOS-ROI-192 / Codex
 
 Independent companion to191: training-only fixed-window representation feasibility
@@ -38,13 +215,26 @@ validated/scored. Fit185→199hits,14recovered/no lost; development58TP/14FP unc
 but AP50:95 .321576→.380124. Retained page AP50:95 .494261→.461604regresses.
 Eight gates fail, no promotion.17focused/142Swift pass. [Handoff](reports/work/IOS-ROI-194/handoff.md).
 
-## Ready — IOS-ROI-196 / unassigned
+## Review — IOS-ROI-196 / Codex
 
 Materialize the frozen195training-only96-frame proposal with193all-class crop and
 ancestry checks; qualify actual membership before registering one expanded-coverage
 comparison. Independently diagnose missing/false base proposals on existing cached
 evidence; geometry refinement cannot fix their count ceiling. No evaluation-case
 admission or promotion through an impossible gate. [Contract](Research/Plans/Run013Evaluation.md#ios-roi-196--coverage-comparison-and-proposal-recall).
+Complete Run026:1173crops/312sources/96groups,10epochs/190updates,62.16minutes.
+Page AP50:95 versus025: fit.763265→.792093,development.380124→.453840,
+retained.461604→.529515. TP/FP unchanged; eight gates fail, no promotion.
+Gallery improves118new refinements+54fallbacks; Onboarding loses8fallback cases.
+29focused/142Swift pass. [Integrated handoff](reports/work/IOS-ROI-196/handoff.md).
+
+## Ready — IOS-PROPOSAL-197 / unassigned
+
+Audit capped low-confidence ROI proposals and an independent deterministic-window
+coverage alternative using training-only design evidence. Freeze one feasible
+scoring/duplicate/latency contract before new inference; no blanket threshold lowering
+or oracle crops. Initial support audit needs no training/capture and does not make
+an experimental model production-ready. [Contract](Research/Plans/Run013Evaluation.md#ios-proposal-197--bounded-proposal-support-before-another-trainer).
 
 ## Review — IOS-ROI-195 / Codex
 

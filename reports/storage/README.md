@@ -1,5 +1,10 @@
 # Local SSD artifact storage
 
+October 5 cold archive: the historical `.build/debug-output/p0c-resume/r6-verified-prefix`
+is retained at `/Volumes/training-drive/data/NUIAK/archive-20261005-r6-prefix/r6-verified-prefix`.
+It is not a live mapping; restore before replaying historical retention drills.
+[Inventory and recovery](../work/STORAGE-20261005/handoff.md).
+
 `locations.json` is an ignored machine-local registry, not a dataset/eligibility
 manifest. Canonical references and hashes remain repo-relative and unchanged.
 Supported input readers resolve registered prefixes to the verified local SSD.

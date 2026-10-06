@@ -44,6 +44,7 @@
 		CC000010000000000000CC10 /* GenerateDatasetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000001000000000000CC01 /* GenerateDatasetTests.swift */; };
 		CC000011000000000000CC11 /* CaptureTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000002000000000000BB02 /* CaptureTypes.swift */; };
 		CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003000000000000BB03 /* GeneratorConfig.swift */; };
+		A20000000000000000000001 /* GeneratorArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* GeneratorArtwork.swift */; };
 		CC000013000000000000CC13 /* ContentCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000004000000000000BB04 /* ContentCorpus.swift */; };
 		CC000014000000000000CC14 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000005000000000000BB05 /* SeededRNG.swift */; };
 		CC000015000000000000CC15 /* ScreenshotCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000006000000000000BB06 /* ScreenshotCapture.swift */; };
@@ -141,6 +142,7 @@
 		BB000001000000000000BB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB000002000000000000BB02 /* CaptureTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CaptureTypes.swift; path = ../NativeUIDatasetGenerator/Sources/CaptureTypes.swift; sourceTree = SOURCE_ROOT; };
 		BB000003000000000000BB03 /* GeneratorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneratorConfig.swift; path = ../NativeUIDatasetGenerator/Sources/GeneratorConfig.swift; sourceTree = SOURCE_ROOT; };
+		A20000000000000000000002 /* GeneratorArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneratorArtwork.swift; path = ../NativeUIDatasetGenerator/Sources/GeneratorArtwork.swift; sourceTree = SOURCE_ROOT; };
 		BB000004000000000000BB04 /* ContentCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentCorpus.swift; path = ../NativeUIDatasetGenerator/Sources/ContentCorpus.swift; sourceTree = SOURCE_ROOT; };
 		BB000005000000000000BB05 /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeededRNG.swift; path = ../NativeUIDatasetGenerator/Sources/SeededRNG.swift; sourceTree = SOURCE_ROOT; };
 		BB000006000000000000BB06 /* ScreenshotCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScreenshotCapture.swift; path = ../NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift; sourceTree = SOURCE_ROOT; };
@@ -249,6 +251,7 @@
 			children = (
 				BB000002000000000000BB02 /* CaptureTypes.swift */,
 				BB000003000000000000BB03 /* GeneratorConfig.swift */,
+				A20000000000000000000002 /* GeneratorArtwork.swift */,
 				BB000004000000000000BB04 /* ContentCorpus.swift */,
 				BB000005000000000000BB05 /* SeededRNG.swift */,
 				BB00001A000000000000BB1A /* AnnotationWriter.swift */,
@@ -477,6 +480,7 @@
 			files = (
 				CC000011000000000000CC11 /* CaptureTypes.swift in Sources */,
 				CC000012000000000000CC12 /* GeneratorConfig.swift in Sources */,
+				A20000000000000000000001 /* GeneratorArtwork.swift in Sources */,
 				CC000013000000000000CC13 /* ContentCorpus.swift in Sources */,
 				CC000014000000000000CC14 /* SeededRNG.swift in Sources */,
 				CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */,

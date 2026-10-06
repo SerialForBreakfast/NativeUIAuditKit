@@ -1,0 +1,18 @@
+schema_version: 1
+id: nuiak-20261006-render202-receipt
+request_id: nuiak-20261006-render202-assets
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T04:40:23Z'
+state: copied_and_verified
+artifact:
+  file: joe-big-dog/render202-metadata-return01.tar.gz
+  verified_bytes: 771230
+  verified_sha256: 91fdee4b9f688d7b5bd3cbb12bb4c4a574c46caab7278d0ea7a2ab8d388a8c10
+intake: metadata_references_verified_planning_only
+evidence: reports/work/RENDER-202/handoff.md
+message: >-
+  All24asset references reconcile with independently verified image pack; no exact
+  pixel duplicates.24development proposals accounted for; eight remain blocked on
+  backdrop review.2000acquired-image inventory remains metadata only. Do not rerun
+  generation or transfer duplicate pixels. Sender may clean exact receipted copy.

@@ -1,9 +1,40 @@
 # NativeUIAuditKit — Current State
 
-**As of:** October 4, 2026, consumer-v2 exact receipt reconciled and retained replay reported by TTR; transition robustness remains unqualified; no production promotion
+**As of:** October 5, 2026, Run026 geometry comparison complete; TTR receipt/replay evidence remains as previously reported; transition robustness remains unqualified; no production promotion
 **Audience:** maintainers and agents
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**October6 UTC — IOS-ASSET200 complete:**96native grid/detail development scenes
+captured in27.18seconds, fully byte/label/pixel validated; zero duplicates. Resume
+verified48sealed scenes/zero captures.146Swift/10campaign tests pass. Fixed022
+grid imageView TP80/80procedural →12/80low-detail →3/80busy; detail16/16each.
+Not a model improvement; a measured artwork sensitivity. TTR received metadata
+via verified SMB publication; no peer acknowledgment yet. Next207uses this diagnosis
+with newly eligible artwork/training families;197proposal work remains independent.
+[Evidence](../reports/work/IOS-ASSET-200/campaign-handoff.md).
+
+**October5 — IOS-ASSET200 native grid qualified:** strict opt-in artwork loader and
+default/fit/fill capture passed145offline Swift tests, six probe-validation tests and
+the native integration test. Two reviewed artwork assets are development-only; corrected
+probe02 changes pixels only within four image viewports and preserves annotations.
+Probe01 retained/rejected for theme metadata. Full96-scene campaign remains open.
+ARTWORK204 peer acknowledged and prepared256-slot catalog; GPU queued, results pending.
+No model training or promotion. [Handoff](../reports/work/IOS-ASSET-200/handoff.md).
+
+**October5 — GEN-PARITY199/ARTWORK204:** offline content-addressed planner and explicit
+producer adapter implemented;25focused/142Swift tests pass. Actual24pilot images all
+byte-verified, zero redundant requests, zero render-eligible pending review/rights.
+Big Dog256-slot artwork campaign published/read back; acknowledgment/results pending.
+No native capture/training/model change. [Handoff](../reports/work/ARTWORK-204/handoff.md).
+
+**October5 — IOS196/Run026 complete:**1173qualified crops from312source frames/
+96groups;10epochs/190updates in62.16minutes. Page AP50:95 versus025 improves
+.380124→.453840development and.461604→.529515retained, with unchanged TP/FP.
+Gallery gains include118new refinements and54safer fallbacks; not uniform model
+improvement. Eight gates still fail: retain experimental only, no promotion.
+29focused/142Swift checks pass. Next197addresses proposal support and negative
+cases before further training. [Evidence](../reports/work/IOS-ROI-196/handoff.md).
 
 **October5 — IOS195 diagnosis complete:** cached accounting of all2712originals
 isolates GalleryPage height shrinkage:148/156changed predictions regress, median

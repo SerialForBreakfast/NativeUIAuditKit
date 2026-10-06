@@ -1,0 +1,79 @@
+schema_version: 1
+id: nuiak-20261006-generator-parity199-ttr
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-06T03:03:01Z'
+expires_at: '2026-10-13T03:03:01Z'
+state: requested
+related_requests:
+  - nuiak-20261005-art-handoff178-tranches
+  - nuiak-20261006-shadow-topten-followup
+  - tvtestrig-20261005-art191-regular-subset
+message: >-
+  Maintainer requests incremental cross-platform reuse of TTR synthetic-generation
+  knowledge, assets and UI source. Return as much compact inventory up front as
+  possible, deliver tiers independently, and map to existing ART/UI-SOURCE/SYNTH
+  work rather than duplicate jobs. NUIAK owns iOS adaptation. This is a handoff and
+  capability-gap request, not a new capture/generation assignment.
+consumer_status: >-
+  iOS Run026 improved page-control AP50:95 from38.0to45.4percent development and
+  46.2to53.0percent retained versus025, but operating TP/FP remain58/14development
+  and249/24retained. Eight gates fail; no promotion. Missing/weak proposals and false
+  positives remain, not simply box precision. Current iOS media grid uses seeded
+  color/SF-Symbol placeholders and native bounds; no external-artwork binding in its
+  inspected config. Need realistic compositions, controlled negatives and proven
+  rendered-state checks, not just more screenshots or posters.
+tiers:
+  - priority: P0
+    outcome: Source-backed capability and failure-lesson handoff
+    request: >-
+      Identify published Git revision, exact implementation/test/doc paths for
+      recipe resolution, asset binding, theme/density/layout/typography axes,
+      observation/settling and clipping geometry, batch/resume, validation and
+      retention. For each mark planned, implemented, offline-tested, pixel-qualified
+      or consumer-qualified with exact evidence/build scope. Include unavailable
+      axes, known failures and regression cases. Return existing source contracts;
+      distinguish550a2d37retained-capture source from newer uncommitted changes.
+      No binaries/build request; maintainer publishes source, NUIAK builds locally.
+  - priority: P1
+    outcome: Reusable asset inventory and one bounded pilot batch
+    request: >-
+      Inventory generated artwork, screened licensed imagery, mockup screenshots,
+      native captures and rejected/pending assets as separate categories. Include
+      IDs, original/derivative hashes, bytes/dimensions/colorspace, source/licence
+      evidence and conditions, review state/evidence, ancestry/sheet/crop links,
+      roles, coverage tags, existing storage and manifest format. Do not present
+      automated clean as independently licensed or training-admitted. Reuse Big
+      Dog's batches through the related inventory request. Metadata first; NUIAK
+      will return missing hashes, then request <=24reviewed diverse artwork objects
+      in one <=128MiB regular-file-only batch with exact member inventory. Keep
+      original sources. No whole-library transfer, duplicate review rasters, links,
+      new HTTP route or automatic download; existing SMB receipt/cleanup protocol.
+  - priority: P2
+    outcome: Minimal reusable native UI source closure
+    request: >-
+      For Apple media sample, SwiftUI-Kit, SwiftUI Catalog, ParallaxView and Swiftfin
+      slices report actual implementation versus feasibility-only status, selected
+      files, dependency/lock/license notices, platform minimums, network/account/media
+      assumptions, deterministic injection hooks and tested render/annotation seams.
+      Keep code licensing separate from embedded art. Identify smallest independent
+      iOS-compatible control/layout slice and platform-specific replacements. No
+      wholesale app/player import or source archive where Git suffices.
+  - priority: P3
+    outcome: Cross-platform extension map
+    request: >-
+      Identify reusable content/catalog/coverage/lineage contracts versus UIKit,
+      SwiftUI-tvOS and future AppKit rendering adapters. Report how matching controls
+      can be composed into sparse, realistic and distracting screens without label
+      shortcuts. macOS remains behind its existing DS-G8phase gate; no macOS build
+      or model qualification requested by this message.
+acceptance: >-
+  Acknowledge exact request, name owners and return completed tiers separately.
+  Supply inventory, compatibility/unknown matrix and exact next producer/consumer
+  actions, not an assertion of overall parity. Source presence, asset screening,
+  capture qualification and training admission remain distinct. Missing information
+  should be explicit so NUIAK can continue local implementation on known contracts.
+boundaries: >-
+  No new capture/training/generation, data-role changes, promotion, Git writes,
+  private-data transfer, new services or runtime takeover. Existing top-ten and
+  repaired-native-bundle work continue independently. Preserve other ownership.

@@ -1,5 +1,29 @@
 # Full backlog implementation packet catalog
 
+[Artwork-backed model improvement / 199–207](Plans/ArtworkModelImprovement204.md):
+five integrated tranches:199+204 reusable diverse artwork;200/202 native campaigns;
+205transition contrasts;206FocusRing hard negatives;207detector clutter utility.
+Reuses existing contracts, keeps203 stretch/nonblocking and197 independent. Tasks.md
+owns execution state; this plan is not a peer dispatch or model result.
+
+[ADR-0020 / FOCUS-RENDER-203](ADR-0020-Procedural-Focus-Rendering-Feasibility.md):
+bounded Big Dog prompt-only versus deterministic procedural focus-rendering spike;
+geometry/repeatability checks, not native fidelity or training admission.
+
+[ADR-0019 / RENDER-202](ADR-0019-Batched-Renderer-and-Asset-Pipeline.md): proposed
+desktop-independent persistent native batching, Big Dog artwork reuse and explicitly
+separate procedural augmentation; bounded qualification contract, not runtime evidence.
+
+[LOCAL-IMAGE201](Plans/LocalImageGeneration201.md): high-priority Big Dog local
+artwork preparation and Mac mini feasibility; installation approval gated, no generation yet.
+
+[GEN-PARITY199 / IOS-ASSET200](Plans/GeneratorParity199.md): source-backed tvOS/iOS
+generation gap audit, shared-artwork reuse/batch planning and bounded native adapter.
+
+[Big Dog background backlog198](Plans/WorkerBacklog198.md): low-priority resident
+audit, conditional CUDA benchmark, focus comparison and proposal scoring; reuse
+existing TTR mining/QA assignments, preserve native admission and Apple qualification.
+
 [UI-SOURCE177 findings and UI-IMPORT-A–D](Plans/UIComponentIntake.md): source-pinned
 native component/media-screen intake strategy, licensing/dependency findings and
 one generated-sheet geometry trial; low-priority adapters, not automatic imports.

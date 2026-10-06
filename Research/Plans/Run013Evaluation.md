@@ -1062,3 +1062,61 @@ duplicate aliases, score/count conservation and real CLI integration. Focused te
 then one integrated offline Swift build/test; reuse unchanged source evidence.
 Deliver exact membership, comparison/latency evidence and a separately actionable
 recall contract. Model success is not required for completion; honest results are.
+
+196 execution policy: reuse193crop/label/duplicate functions and194merge/evaluation
+unchanged through an isolated command wrapper; do not edit their pinned source.
+Retain802original crops by verified links, materialize only additional distinct crops.
+Check native96catalog/receipt ancestry explicitly: reader-footer/gallery-inspector
+development families and their seed variants remain excluded. Repeated numeric seeds
+in unrelated generators alone are not ancestry. Preserve96source selection unchanged;
+any failed label/crop check stops admission rather than silently dropping a frame.
+Run026 is reserved for this single comparison; register exact membership/schedule
+after successful preparation, before execution. No additional model sweep.
+
+196 completed:1173unique crops,312source frames/96groups,190updates in62.16minutes.
+Development/retained page AP50:95 .453840/.529515 versus025 .380124/.461604.
+Operating counts remain fixed; eight gates fail. Gallery gains split118new
+refinements/54base fallbacks; retained ambiguous donors7→64. Onboarding's8fallback
+regressions remain visible. This supports a bounded geometry improvement, not a
+data-only causal attribution or production qualification.197addresses proposal
+support before another trainer. [Evidence](../../reports/work/IOS-ROI-196/handoff.md).
+
+196 independent recall evidence:022fit185TP/38FP, with26geometry and5low-confidence
+misses. The five low-confidence misses each have a matching rank-one subthreshold
+page proposal. Development58TP/14FP has21targets without any overlapping exported
+proposal,5low-confidence misses and12geometry misses. Retained249TP/24FP has
+324low-confidence misses and27without overlapping exported proposals. These are
+fixed .25/.5 greedy diagnostics, not newly tuned thresholds or proof of recovery.
+Even allowing arbitrary geometry at the .001export floor caps development count
+recall at75/96. Missing exported hypotheses need a different proposal path.
+
+## IOS-PROPOSAL-197 — bounded proposal support before another trainer
+
+After196comparison, use its terminal evidence and cached022proposals to choose a
+bounded diagnostic, not another epoch extension. No new training/capture is needed
+for the initial support audit. Keep all original image denominators, model artifacts,
+evaluation roles and14gates. Record chosen model hash and operating rule before any
+new inference. Failed196gates do not permit shipping its weights.
+
+Primary training-derived hypothesis: at most one additional ROI per image from the
+highest-scoring page proposal below .25 and at/above the frozen .001export floor.
+The fit-only rank audit supports this cap; do not choose it from development metrics.
+Audit duplicate overlap with existing proposals and quantify missing coverage before
+materialization. Do not simply lower production confidence or count source proposal
+confidence as a second independent vote. A scoring/admission rule requires a frozen
+explicit contract, negative-case tests and retained-regression evaluation first.
+The ROI training crops deliberately contain page targets; do not assume their
+confidence is calibrated on empty/false proposal regions. Qualify negative-region
+behavior before using crop scores to admit a new detection or raise confidence.
+
+Companion: on existing training images only, measure coverage and worst-case crop
+count for a deterministic overlapping-window proposal alternative that does not
+depend on page detections. Reuse193window/label geometry; report boundary truncation
+and negatives, not oracle boxes as inference proposals. Select a fixed layout only
+from training support and measured compute constraints. This addresses absent
+hypotheses; the capped low-confidence path cannot. No arbitrary sweep or collection.
+
+Deliver ranked proposal gaps, exact proposed membership, duplicate/negative policies,
+latency budget and one source-pinned comparison contract. Missing-label or ancestry
+failures stay blocked rather than silently excluded. Focused tests plus offline
+Swift checks if code changes; no TTR dependency, new data roles, export or promotion.

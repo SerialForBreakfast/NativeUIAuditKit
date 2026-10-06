@@ -1,5 +1,11 @@
 # NativeUIAuditKit: Native Apple UI Element Detection
 
+IOS-ASSET-200 adds an opt-in generator-only artwork catalogue and MediaCardGrid binding.
+Native control annotations remain authoritative; asset hashes, fit/fill geometry and
+development ancestry live in a separate receipt. No detector taxonomy, production
+preprocessing, public detector API or existing sidecar change. See
+[generator contract](Plans/GeneratorParity199.md#follow-on-ios-asset-200--one-opt-in-native-adapter-and-campaign).
+
 October5 experimental POOL167 tests position-dependent change readout: replace
 4×6adaptive pooling with a global spatial mean broadcast to4×6, retaining all
 parameter shapes and existing RGB/difference encoding. Same668admitted examples,
@@ -611,6 +617,13 @@ automatic admission or evidence of independent source diversity. See
 [campaign workflow](Plans/FocusCampaignIntake19.md) for limits and actual CLI usage.
 
 ## 7. Native UI Generator Architecture
+
+**October5 GEN-PARITY199:** share source-pinned recipes, artwork manifests and
+validation lessons across platforms, not painted UI labels or tvOS focus geometry.
+The offline asset reuse planner separates artwork, mockups, native captures and
+source code; byte integrity and reported rights checks do not confer training
+eligibility. Existing iOS generator defaults remain unchanged. See
+[generator parity and bounded adapter plan](Plans/GeneratorParity199.md).
 
 ### 7.1 `NativeUIDatasetGenerator` (shipped)
 

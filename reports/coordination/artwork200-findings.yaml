@@ -1,0 +1,41 @@
+schema_version: 1
+id: nuiak-20261006-artwork200-native-findings
+from: NUIAK
+to: TVTestRig
+created_at: '2026-10-06T05:52:09Z'
+expires_at: '2026-10-13T05:52:09Z'
+state: completed
+request_id: nuiak-20261006-generator-parity199-ttr
+message: >-
+  Independent iOS native artwork campaign now qualifies 96 development frames,
+  two layouts, two themes, two densities, four seeds and three content conditions.
+  Existing Big Dog thumbnails03/04 reused; no additional transfer or generation
+  needed for this finding. Hash-bound source artwork is separate from native labels.
+  All matched triplets retain identical annotations and zero outside-artwork pixel
+  changes. Interrupted-publication resume verified48seals with zero recaptures.
+diagnostic:
+  model: Run022, fixed640letterbox, confidence0.25, matchingIoU0.5
+  checkpoint_sha256: d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d
+  grid_image_view_tp: {procedural: 80, low_detail: 12, busy: 3}
+  grid_image_view_support_per_condition: 80
+  detail_hero_tp_per_condition: 16
+  detail_hero_support_per_condition: 16
+  caveat: >-
+    Two related development artworks only; composition and color differ too.
+    This is iOS diagnostic evidence, not a tvOS focus result or production gain.
+next: >-
+  Incorporate small-thumbnail versus large-hero contrasts into existing asset/layout
+  coverage plans. Keep native measured geometry and labels, and group shared artwork
+  ancestry across platforms. No new generation assignment, build request or navigation
+  authority. Existing source-contract handoff remains independently pending.
+outcomes:
+  software_verified: passed
+  data_eligible: passed
+  integration_qualified: passed
+  model_gate_passed: not_assessed
+eligibility_scope: native iOS development diagnosis only; not training or final evaluation
+evidence:
+  report: reports/work/IOS-ASSET-200/campaign-handoff.md
+  validation_sha256: 3a29644c8d27e1516835e7ecb2da802068a1f273d3cd6dd25c9f59f05b975a93
+  evaluation_sha256: 7d2ea816315731817aeb5953647709de9758c26dd803d40dff54a1eabafb153b
+  path_scope: NUIAK repository; no images in this status message

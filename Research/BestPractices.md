@@ -1,5 +1,30 @@
 # NativeUIAuditKit — Best Practices
 
+## Qualify artwork at its UI display scale — IOS-ASSET200
+
+Observed: the same busy artwork retained16/16hero detections but grid imageView
+operating recall fell80/80procedural→3/80artwork. Aggregate grid AP50 remained.8556.
+Correct: compare matched native geometry at card/hero scales and report operating
+TP/FP/FN plus low-confidence versus no-IoU-match diagnostics, not aggregate AP alone.
+Do not infer a pure clutter effect from two artworks with different color/composition.
+Why: attractive content and high aggregate AP can conceal nearly unusable thumbnail
+detection. Keep each artwork's shared lineage, including cross-platform derivatives.
+
+Campaign reporting also exceeded the small coordination parser's event budget after
+successful inference. Use the existing prediction schema validator with an explicit
+prediction-size bound; recover retained predictions instead of rerunning inference
+or weakening coordination limits globally.
+
+## Validate campaign cardinality before dispatch — ARTWORK204
+
+**Observed:** the proposed256-slot campaign listed4roles×8subjects×4treatments,
+which is128, not256. Before dispatch we explicitly added two content compositions
+per cell, retained their shared ancestry and checked the expanded count/seeds.
+**Correct approach:** derive counts and budgets from frozen axes; report intended
+versus observed coverage separately. Extra seeds do not establish new independent
+families. **Why:** otherwise workers disagree on completion, quotas and allowed
+generation cost. This correction changes content planning, not training admission.
+
 ## Do not cancel introduced and resolved errors using aggregate counts — IOS181
 
 021sheet FP grew235→459 versus020, but the complete spatial audit found268new
@@ -4278,3 +4303,34 @@ Audit admitted training support first:195found larger SwiftUI-dot examples alrea
 available, avoiding new capture or evaluation-image admission. Why: this separates
 representation transfer from proposal recall and avoids expensive unfocused collection.
 It identifies a hypothesis, not a proven causal fix. [Evidence](../reports/work/IOS-ROI-195/handoff.md).
+
+## Reconcile descriptive metadata when extending a sealed experiment — IOS196
+
+What went wrong: copying193's proposal preserved a trainAdmission sentence about
+216sources even though196's exact manifest correctly contained312sources. Correct:
+copy reusable configuration deliberately, recompute membership descriptions/counts,
+and verify parent/alias accounting through the actual manifest loader. If found after
+launch, preserve frozen inputs and add a source-bound clarification receipt; never
+rewrite the launch evidence in place. Why: correct tensors do not excuse misleading
+admission metadata that later workers may consume.196's admission.json verifies
+1173crops/312source frames/96groups and explicitly identifies the legacy description.
+
+## Attribute two-pass gains to refinements versus fallbacks — IOS196
+
+What happened:026raised retained page AP50:95 .461604→.529515, but ambiguous donors
+rose7→64.54Gallery improvements came from rejecting025's refinement and returning
+to the base box;118came from new refinements. Correct: retain paired reason-coded
+decisions and fixed truth associations alongside full-image metrics; report both
+mechanisms and regressions (including8Onboarding fallback regressions). Why: an
+improved pipeline score does not establish uniformly improved specialist predictions
+or justify promoting its confidence to navigation/detection authority.
+
+## Bind capture metadata to the rendered template — IOS-ASSET200
+
+What went wrong: a generic capture configuration reported dark mode while the seeded
+MediaCardGrid rendered light. Image hashes and geometry passed, so those checks alone
+did not detect the semantic mismatch. Correct approach: derive capture theme from the
+resolved template, test it independently, and retain the rejected trial. Seal sidecars
+as well as images: an image-only receipt can remain unchanged after metadata repair.
+Why it matters: inaccurate theme labels undermine coverage and targeted experiments
+even when every image is intact and its boxes are correct.

@@ -1,0 +1,17 @@
+schema_version: 1
+id: nuiak-20261006-image201-receipt
+request_id: nuiak-20261006-local-image201-review-followup
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T04:40:23Z'
+state: copied_and_verified
+artifact:
+  file: joe-big-dog/local-image201-review-return01.tar.gz
+  verified_bytes: 33462377
+  verified_sha256: f34cb933b8671e7c8b0e3d700d3a91096dc3cc20d98db372e78cbb3bf047d78a
+intake: integrity_and_decode_passed_inspection_only
+evidence: reports/work/RENDER-202/handoff.md
+message: >-
+  All24PNG hashes/dimensions/RGB hashes and40manifest files verified independently.
+  Exact shared copy may follow sender-owned cleanup; retain original and receipt.
+  Six backdrop prompt gaps and two avatar flags remain open. No training admission.

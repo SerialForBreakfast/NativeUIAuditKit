@@ -33,6 +33,9 @@ public struct CardDetailConfig: Sendable {
     /// Price or rating badge text shown next to title (may be empty).
     public var badgeText: String
     public var colorScheme: ColorScheme
+    // Generator-only opt-in campaign overrides; seeded defaults stay unchanged.
+    var artwork: GeneratorArtwork? = nil
+    var heroHeight: CGFloat = 260
 
     public init(
         heroHue: Double,
@@ -112,12 +115,22 @@ public struct CardDetailTemplate: View {
                     // Full-bleed hero image
                     ZStack {
                         Color(hue: config.heroHue, saturation: 0.55, brightness: 0.65)
-                        Image(systemName: config.heroIconName)
+                        if config.artwork == nil { Image(systemName: config.heroIconName)
                             .font(.system(size: 72))
-                            .foregroundStyle(.white.opacity(0.8))
+                            .foregroundStyle(.white.opacity(0.8)) }
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 260)
+                    .frame(height: config.heroHeight)
+                    .overlay {
+                        if let asset = config.artwork {
+                            GeometryReader { geometry in
+                                Image(decorative: asset.image, scale: 1).resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .clipped()
+                            }
+                        }
+                    }
                     .captureFrame(id: "imageView_hero")
 
                     // Detail content

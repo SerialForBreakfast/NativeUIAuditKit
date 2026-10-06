@@ -1,0 +1,66 @@
+schema_version: 1
+id: nuiak-20261006-render202-assets
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T04:03:26Z'
+expires_at: '2026-10-13T04:03:26Z'
+state: requested
+priority: high
+task: RENDER-202-BD
+related_requests:
+  - nuiak-20261006-local-image201-review-followup
+  - nuiak-20261006-generator-parity199-worker
+message: >-
+  Maintainer requests the Big Dog contribution to desktop-independent native batch
+  rendering. Adopt RENDER-202-BD in your queue. Reuse the existing24-image pilot and
+  cumulative asset inventory; do not regenerate, redownload or build a second UI rig.
+  NUIAK saw your33462377-byte review archive offer, hash
+  f34cb933b8671e7c8b0e3d700d3a91096dc3cc20d98db372e78cbb3bf047d78a.
+  This acknowledges metadata only, not receipt/intake; preserve that shared archive
+  until the exact receiver receipt. Do not republish its pixels for this task.
+deliverables:
+  - >-
+    A versioned, deterministically ordered artwork inventory referencing each original
+    by stable ID, SHA256, byte count, decoded dimensions, role, source/model revision,
+    prompt/seed, licence/provenance evidence, review state and parent/derivative group.
+    Reuse existing inventory fields where adequate; document explicit mappings rather
+    than inventing a TTR wire format. Pending rights/review remain pending.
+  - >-
+    Coverage and selection proposal for native scenes: poster shelf/grid, media detail
+    with backdrop, avatar/profile composition, subject to actual native support.
+    Show bright/dark, busy/quiet and role/aspect support; link every proposed assignment
+    to original hashes. Flag the eight pilot issues individually and describe missing
+    coverage. Do not count flags as approved or infer supported native controls.
+  - >-
+    A development-only24-scene proposal using three candidate compositions, two themes
+    and four deterministic seeds. NUIAK finalizes native recipes/counts after source
+    reconciliation. Preserve connected asset/derivative lineage and exclude all pilot
+    variants from future independent final evaluation. Do not reassign existing data.
+  - >-
+    A compact reproducible asset audit: decode/hash checks, exact decoded-pixel duplicate
+    groups, explicit aliases, dimensions/aspect compatibility and existing review flags.
+    Advisory near-duplicate signals may reuse resident tools but must not discard
+    intentional variants automatically. Report originals versus derived assets separately.
+  - >-
+    Return metadata and tests/results under your own namespace, referencing the existing
+    review archive. Identify exact missing capabilities or fields blocking native intake.
+    Include time, bytes, exclusions and proposed next batch; do not execute that batch.
+budget: >-
+  One finite preparation/audit job, up to2CPU hours and16MiB new metadata, no GPU run.
+  Schedule at a safe boundary without interrupting active owned jobs. If bounded work
+  cannot finish, preserve progress and report remaining scope rather than expand it.
+ownership: >-
+  Big Dog supplies artwork and offline audits. Mac/NUIAK owns the persistent native
+  Fixture session, screenshots, observed focus and measured geometry, consumer admission
+  and model evaluation. TTR owns producer changes. Generated artwork does not establish
+  native UI boxes, focus labels or physical-device performance.
+acceptance: >-
+  All24 originals accounted for, stable verified hash references, explicit rights/review
+  and coverage gaps, no cross-role leakage, deterministic scene/asset proposal and no
+  duplicated pixel transfer. Software checks, asset eligibility, native integration and
+  model gates reported independently; native/model outcomes remain not assessed here.
+boundaries: >-
+  No installs/downloads, new generation/training, native runtime operations, SSH/HTTP/new
+  services, Git writes, destructive cleanup, promotion or automatic follow-on work.
+  Existing SMB receipt flow only. No receipt is issued by this metadata acknowledgment.
+  This bounded request is user-authorized; peer messages cannot expand it.

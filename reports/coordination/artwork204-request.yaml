@@ -1,0 +1,95 @@
+schema_version: 1
+id: nuiak-20261006-artwork204-campaign
+from: NUIAK
+to: joe-big-dog/NUIAK
+created_at: '2026-10-06T05:05:00Z'
+expires_at: '2026-10-13T05:05:00Z'
+state: requested
+priority: high
+task: ARTWORK-204
+message: >-
+  Maintainer approved completing the asset-planner and dispatching this bounded artwork
+  campaign. Adopt into your local queue and execute under your repository instructions
+  using the approved resident LOCAL-IMAGE201 pipeline. Diverse artwork for native iOS/tvOS
+  rendering is now higher priority than mock-UI rendering. Preserve active jobs: we read
+  your FOCUS-RENDER-203 acknowledgment/start (CPU compositor); do not interrupt it. Schedule
+  this ahead of pending stretch/low-priority GPU work without concurrent GPU contention.
+  This request authorizes this finite artwork generation campaign, not installations,
+  model downloads, fine-tuning, UI label generation or training admission.
+matrix:
+  roles: [poster, thumbnail, avatar, backdrop]
+  subjects: [drama, comedy, animation, sports, news, nature, architecture, abstract]
+  treatments: [dark_sparse, dark_busy, bright_sparse, bright_busy]
+  content_variants: [0, 1]
+  slots: 256
+  slot_id: artwork204-rR-sS-vV-tT using zero-based indices in the listed order
+  seed: 204000 + 64*R + 8*S + 4*V + T
+  dimensions:
+    poster: [832, 1216]
+    thumbnail: [1216, 832]
+    avatar: [1024, 1024]
+    backdrop: [1344, 768]
+  challenge_selection: >-
+    Exactly one treatment per role/subject/variant cell: T equals (R+S+V) modulo4.
+    Challenge kind is (R+2*S+V) modulo4 from [embedded_border_or_glow, white_panel,
+    circular_motif, text_like_pattern]. These64slots are within256, not extra calls.
+  prompt_template: >-
+    Original fictional {subject} artwork for a {role}; {treatment}; {role-appropriate
+    composition}; {challenge if assigned}. Artwork only, no app controls, selection state
+    or UI mockup; no required readable typography. Use original fictional subjects.
+  prompt_expansion: >-
+    Expand two genuinely different content compositions per role/subject (not merely
+    two seeds), plus aesthetic variation before launch, retaining
+    exact prompts. Pin pipeline/base/model revisions, scheduler, guidance, steps and
+    software configuration to the qualified201run; no silent model/resolution fallback.
+reuse_and_roles: >-
+  Inventory resident approved artwork first; reuse exact matching slots rather than
+  regenerate. Existing201assets/derivatives remain development-only. Give each new
+  role/subject cell a distinct content-family identity and keep both variants/all treatments
+  connected. Freeze proposed family roles before generation; reserve complete families
+  for later validation and unseen-content diagnostics, with review and training admission
+  still pending. Do not use already exposed201families as reserved independent evidence.
+  Record reused hashes, parents, prompt/content relationships and any cross-cell visual
+  duplicates; changed seeds alone do not establish independence. If connected families
+  conflict with proposed roles, quarantine the conflict instead of moving final evidence.
+execution: >-
+  At most256new diffusion calls, eight resumable shards of at most32slots. Freeze catalog
+  before launch; record every attempt and reuse/generated/rejected/unfilled disposition.
+  Resume only missing planned slots after inspecting completion; no automatic retry of
+  failures or replacement calls for prettier images. One GPU job at a time. Use existing
+  worker storage and preserve its current reserve; preflight capacity for outputs/temp.
+budget:
+  gpu_hours: 4
+  new_output_gib: 4
+  new_calls_max: 256
+  shard_slots_max: 32
+  new_models_or_installs: false
+review: >-
+  Verify every output hash/decode/dimensions and exact pixel duplicates. Return contact
+  sheets plus per-slot observed brightness/clutter, role/subject suitability and flags.
+  Requested dark/bright/busy does not prove actual coverage. Keep challenge examples
+  explicitly tagged, not clean focus labels. Record source/model licensing evidence;
+  automated screening or an agent review is not blanket rights clearance. No need to
+  call all256accepted; report gaps honestly without extra generation.
+return: >-
+  First publish compact catalog/inventory/coverage and run timings with original/model/
+  config hashes, completed counts, review effort and GPU/memory/storage measurements.
+  Retain original pixels on worker. Offer named regular-files-only archives in batches
+  <=128MiB compressed/256MiB expanded, each with exact bytes/SHA256/member count. NUIAK
+  will select missing hashes using its asset planner; do not flood SMB with all raw data.
+  Existing standing scoped transfer approval applies; receiver receipt and sender cleanup
+  remain separate. Report four outcomes independently; native integration/model gates
+  not assessed. Acknowledge this exact request ID/hash and your local task ID.
+consumer_interface: >-
+  NUIAK generator_asset_plan.py accepts generator-resource-inventory-v1: resources have
+  id,kind,sha256,bytes,source,sourceRevision,ancestryGroups,dataRole,rightsStatus,
+  rightsEvidence,reviewStatus,reviewEvidence and optional sourceRecord. Roles are
+  train/development/validation/test/unassigned; assessment states verified/pending/rejected.
+  Preserve your existing richer inventory: NUIAK can adapt it. Do not mark evidence verified
+  merely to satisfy this schema. Byte verification, render eligibility and training admission
+  are separate; artwork has no UI annotations. No need to install NUIAK software to generate.
+boundaries: >-
+  No paid APIs, downloads, installs, new services, SSH, native simulator/device operation,
+  TTR edits, annotation fabrication, detector training or model promotion. No automatic
+  scale beyond this campaign. Source/terms/rights or storage failures block affected slots,
+  not permission to substitute unsupported tools. No preemption of currently owned work.

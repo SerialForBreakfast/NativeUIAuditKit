@@ -576,6 +576,179 @@ final class GenerateDatasetTests: XCTestCase {
         print("All-family probe: \(output.path)")
     }
 
+    /// Explicit development-only integration probe. Never runs in a normal test sweep.
+    /// Caller stages an approved catalogue in Documents/<simple name>/catalog.json.
+    func testArtworkDevelopmentCapture() async throws {
+        guard let folder = ProcessInfo.processInfo.environment["NUIAK_ARTWORK200_INPUT"] else {
+            throw XCTSkip("Opt-in artwork input not assigned")
+        }
+        guard folder.range(of: "^[A-Za-z0-9_-]+$", options: .regularExpression) != nil else {
+            throw GeneratorArtworkCatalog.Failure.invalidCatalog
+        }
+        let documents = defaultDatasetDir.deletingLastPathComponent()
+        let root = documents.appendingPathComponent(folder)
+        let catalogURL = root.appendingPathComponent("catalog.json")
+        let size = try catalogURL.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? Int.max
+        guard size <= 1_048_576, catalogURL.resolvingSymlinksInPath().path == catalogURL.path else {
+            throw GeneratorArtworkCatalog.Failure.invalidCatalog
+        }
+        let data = try Data(contentsOf: catalogURL)
+        let assets = try GeneratorArtworkCatalog.load(data, root: root)
+        var corpus = ContentCorpus(seed: 200)
+        var base = MediaCardGridConfig.make(seed: 200, corpus: &corpus)
+        base.cards = Array(base.cards.prefix(4))
+        let sortedIDs = assets.keys.sorted()
+        let ids = base.cards.indices.map { sortedIDs[$0 % sortedIDs.count] }
+        // Resolve before creating output or rendering; never silently substitute placeholders.
+        let fit = try base.applyingArtwork(assets, ids: ids, placement: .fit)
+        let fill = try base.applyingArtwork(assets, ids: ids, placement: .fill)
+        let out = documents.appendingPathComponent("artwork200-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: out, withIntermediateDirectories: false)
+        let start = Date()
+        var receipts: [[String: Any]] = []
+        for (name, configured) in [("default", base), ("fit", fit), ("fill", fill)] {
+            guard Date().timeIntervalSince(start) < 120 else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+            var config = makeConfig(seed: 200, index: 0, templateFamily: "MediaCardGrid", state: simulatorStates[0])
+            // The seeded template owns its theme; do not label its light pixels as dark
+            // merely because the generic profile factory alternates by image index.
+            config.colorScheme = configured.colorScheme == .dark ? .dark : .light
+            let capture = try await ScreenshotCapture.capture(MediaCardGridTemplate(config: configured), config: config)
+            try capture.png.write(to: out.appendingPathComponent(name + ".png"), options: .withoutOverwriting)
+            try AnnotationWriter.write(result: capture, config: config, imageFileName: name + ".png",
+                templateFamily: "MediaCardGrid", generatorVersion: "asset200-development",
+                to: out.appendingPathComponent(name + ".json"))
+            var bindings: [[String: Any]] = []
+            for (index, card) in configured.cards.enumerated() {
+                let elementID = "imageView_thumb_\(index)"
+                let element = try XCTUnwrap(capture.elements.first { $0.id == elementID })
+                if let asset = card.artwork {
+                    let rect = try asset.contentRect(in: element.frame, placement: card.artworkPlacement)
+                    func coordinates(_ r: CGRect) -> [Double] { [r.minX, r.minY, r.width, r.height].map(Double.init) }
+                    bindings.append(["elementID": elementID, "assetID": asset.entry.id,
+                        "sha256": asset.entry.sha256, "ancestryGroup": asset.entry.ancestryGroup,
+                        "placement": card.artworkPlacement.rawValue, "viewportPoints": coordinates(element.frame),
+                        "contentExtentPoints": coordinates(rect),
+                        "rectangularVisibleExtentPoints": coordinates(rect.intersection(element.frame)),
+                        "roundedClipRadiusPoints": 8])
+                }
+            }
+            receipts.append(["file": name + ".png", "sha256": capture.sha256,
+                             "dataRole": "development", "bindings": bindings])
+        }
+        guard Date().timeIntervalSince(start) < 120 else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+        let receipt: [String: Any] = ["schemaVersion": "ios-artwork-probe-v1", "complete": true,
+            "catalogSHA256": SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined(),
+            "frames": receipts, "nativePixelReview": "pending", "trainingAdmission": "not_assessed"]
+        try JSONSerialization.data(withJSONObject: receipt, options: [.prettyPrinted, .sortedKeys])
+            .write(to: out.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("ARTWORK200_OUTPUT \(out.path)")
+    }
+
+    /// Frozen two-shard development campaign. Completed scene seals support explicit resume.
+    func testArtworkCampaign() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard let folder = env["NUIAK_ARTWORK200_CAMPAIGN"] else { throw XCTSkip("Campaign not assigned") }
+        guard folder.range(of: "^[A-Za-z0-9_-]+$", options: .regularExpression) != nil,
+              let shardText = env["NUIAK_ARTWORK200_SHARD"], let shard = Int(shardText), (0...1).contains(shard),
+              let output = env["NUIAK_ARTWORK200_OUTPUT"], output.range(of: "^[A-Za-z0-9_-]+$", options: .regularExpression) != nil,
+              output != folder else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+        let documents = defaultDatasetDir.deletingLastPathComponent()
+        let root = documents.appendingPathComponent(folder)
+        func read(_ url: URL) throws -> Data {
+            guard url.path == url.resolvingSymlinksInPath().path,
+                  try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? Int.max <= 1_048_576 else {
+                throw GeneratorArtworkCatalog.Failure.invalidCatalog
+            }
+            return try Data(contentsOf: url)
+        }
+        func hash(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
+        let catalogData = try read(root.appendingPathComponent("catalog.json"))
+        let assets = try GeneratorArtworkCatalog.load(catalogData, root: root)
+        let planData = try read(root.appendingPathComponent("campaign.json"))
+        let plan = try GeneratorArtworkCampaign.load(planData, catalogHash: hash(catalogData),
+            assetIDs: Set(assets.keys), target: env["SIMULATOR_UDID"] ?? "")
+        let out = documents.appendingPathComponent(output)
+        guard out.path == out.resolvingSymlinksInPath().path else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+        let fm = FileManager.default
+        if !fm.fileExists(atPath: out.path) { try fm.createDirectory(at: out, withIntermediateDirectories: false) }
+        let completion = out.appendingPathComponent("shard-\(shard).json")
+        guard !fm.fileExists(atPath: completion.path) else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+        let start = Date()
+        var records: [[String: Any]] = []
+        var resumed = 0
+        for recipe in plan.recipes[(shard*48)..<((shard+1)*48)] {
+            guard Date().timeIntervalSince(start) < 120 else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+            let stem = out.appendingPathComponent(recipe.id)
+            let png = stem.appendingPathExtension("png"), json = stem.appendingPathExtension("json")
+            let seal = out.appendingPathComponent(recipe.id + ".record.json")
+            let recipeObject = try JSONSerialization.jsonObject(with: JSONEncoder().encode(recipe)) as! NSDictionary
+            if fm.fileExists(atPath: seal.path) {
+                let saved = try JSONSerialization.jsonObject(with: read(seal)) as! [String: Any]
+                guard saved["recipe"] as? NSDictionary == recipeObject,
+                      saved["planSHA256"] as? String == hash(planData),
+                      try png.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? Int.max <= 32*1024*1024,
+                      saved["imageSHA256"] as? String == hash(try Data(contentsOf: png)),
+                      saved["sidecarSHA256"] as? String == hash(try read(json)),
+                      png.path == png.resolvingSymlinksInPath().path else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+                records.append(saved); resumed += 1; continue
+            }
+            guard !fm.fileExists(atPath: png.path), !fm.fileExists(atPath: json.path) else {
+                throw GeneratorArtworkCatalog.Failure.invalidCatalog
+            }
+            var corpus = ContentCorpus(seed: recipe.seed)
+            var config = makeConfig(seed: recipe.seed, index: 0,
+                templateFamily: recipe.layout == "grid" ? "MediaCardGrid" : "CardDetail", state: simulatorStates[0])
+            config.colorScheme = recipe.theme == "dark" ? .dark : .light
+            let asset = recipe.condition == "procedural" ? nil : assets[recipe.condition == "low" ? plan.lowAsset : plan.busyAsset]
+            var bound: [String: GeneratorArtwork] = [:]
+            let capture: CaptureResult
+            if recipe.layout == "grid" {
+                var grid = MediaCardGridConfig.make(seed: recipe.seed, corpus: &corpus)
+                let count = recipe.density == "low" ? 4 : 6
+                grid.cards = (0..<count).map { grid.cards[$0 % grid.cards.count] }
+                grid.columnCount = recipe.density == "low" ? 2 : 3
+                grid.colorScheme = recipe.theme == "dark" ? .dark : .light
+                if let asset {
+                    grid = try grid.applyingArtwork(assets, ids: Array(repeating: asset.entry.id, count: count), placement: .fill)
+                    for i in 0..<count { bound["imageView_thumb_\(i)"] = asset }
+                }
+                capture = try await ScreenshotCapture.capture(MediaCardGridTemplate(config: grid), config: config)
+            } else {
+                var detail = CardDetailConfig.make(seed: recipe.seed, corpus: &corpus)
+                detail.colorScheme = recipe.theme == "dark" ? .dark : .light
+                detail.heroHeight = recipe.density == "low" ? 220 : 300
+                if recipe.density == "low" { detail.bodyText = "Explore this collection." }
+                detail.artwork = asset
+                if let asset { bound["imageView_hero"] = asset }
+                capture = try await ScreenshotCapture.capture(CardDetailTemplate(config: detail), config: config)
+            }
+            try capture.png.write(to: png, options: .withoutOverwriting)
+            try AnnotationWriter.write(result: capture, config: config, imageFileName: png.lastPathComponent,
+                templateFamily: recipe.layout == "grid" ? "MediaCardGrid" : "CardDetail",
+                generatorVersion: "asset200-campaign-v1", to: json)
+            var bindings: [[String: Any]] = []
+            for id in bound.keys.sorted() {
+                let asset = bound[id]!
+                let element = try XCTUnwrap(capture.elements.first { $0.id == id })
+                func rect(_ r: CGRect) -> [Double] { [r.minX, r.minY, r.width, r.height].map(Double.init) }
+                bindings.append(["elementID": id, "assetID": asset.entry.id, "sha256": asset.entry.sha256,
+                    "ancestryGroup": asset.entry.ancestryGroup, "placement": "fill",
+                    "viewportPoints": rect(element.frame), "contentExtentPoints": rect(try asset.contentRect(in: element.frame, placement: .fill))])
+            }
+            let record: [String: Any] = ["recipe": recipeObject, "planSHA256": hash(planData),
+                "imageSHA256": capture.sha256, "sidecarSHA256": hash(try Data(contentsOf: json)),
+                "dataRole": "development", "bindings": bindings]
+            try JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]).write(to: seal, options: .withoutOverwriting)
+            records.append(record)
+        }
+        guard Date().timeIntervalSince(start) < 120 else { throw GeneratorArtworkCatalog.Failure.invalidCatalog }
+        try JSONSerialization.data(withJSONObject: ["schemaVersion": "ios-artwork-shard-v1", "complete": true,
+            "planSHA256": hash(planData), "shard": shard, "frames": records, "resumed": resumed,
+            "captured": records.count-resumed, "seconds": Date().timeIntervalSince(start)],
+            options: [.sortedKeys]).write(to: completion, options: .withoutOverwriting)
+        print("ARTWORK200_CAMPAIGN \(out.path) shard=\(shard) frames=\(records.count)")
+    }
+
     // MARK: - Capture dispatch
 
     /// Calls the correct template's `ScreenshotCapture.capture` for the given family.

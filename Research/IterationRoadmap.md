@@ -1,10 +1,43 @@
 # Concurrent delivery roadmap
 
-**Next — IOS-ROI-196:**195isolates retained GalleryPage height shrinkage and proposes
-96training-only sources across four families. Qualify expanded all-class crops,
-then one registered comparison; independently design the proposal-recall follow-up.
-Do not confuse geometry gains with fixing the count ceiling or production readiness.
-[195handoff](../reports/work/IOS-ROI-195/handoff.md).
+**200 complete, October6 UTC:**96native development scenes plus fixed022comparison
+expose small artwork thumbnail failures; detail heroes retain16/16hits.146Swift and
+10campaign tests pass;48sealed-frame resume needs no recapture. Next207should target
+small-image content/scale using new eligible training ancestry, not recycle these
+development scenes or CardDetail holdout family.202tvOS source reconciliation and
+197proposal work stay independent. [Handoff](../reports/work/IOS-ASSET-200/campaign-handoff.md).
+
+**200 grid milestone qualified, October5:** actual native default/fit/fill import,
+two development-reviewed assets, stable annotations and isolated pixel changes.
+Next complete second composition and reviewed low/busy appearance coverage before
+the96-scene campaign.204acknowledged/catalog prepared; GPU queued.202still needs
+source reconciliation, independently. [Evidence](../reports/work/IOS-ASSET-200/handoff.md).
+
+**199/204 delivered locally, October5:** strict asset planner plus actual24-image
+inventory integration pass25focused/142Swift tests.204bounded artwork campaign request
+published/read back; peer acknowledgment/results pending. No training admission.
+Next200native asset adapter/review, with202source reconciliation independent.
+[Handoff](../reports/work/ARTWORK-204/handoff.md).
+
+**Artwork-first priority, October5:** [five delivery tranches](Plans/ArtworkModelImprovement204.md)
+put reusable artwork ahead of mock-UI focus generation. Start199asset planner and204
+bounded Big Dog campaign preparation independently; qualify200iOS/202tvOS native
+adapters with an accepted subset, not the entire artwork library. Then205content/focus
+contrasts and206FocusRing share acquisition;207measures detector clutter benefit per
+platform. Keep197proposal work independent/high priority.203remains a bounded stretch
+request, not a prerequisite;204dispatch now publishes artwork-first pending-job priority.
+No generation/capture/training result is implied. Existing final evaluation and native
+label gates remain; full contracts include budgets, failure tests and handoffs.
+
+**Next — IOS-PROPOSAL-197:**196completed Run026and improved geometry without
+changing detection counts. Audit bounded low-confidence proposals and training-only
+deterministic-window coverage/negatives before another trainer. Eight gates still
+fail; no production change. [196handoff](../reports/work/IOS-ROI-196/handoff.md).
+
+**Completed — IOS-ROI-196:** qualified1173crops, trained/evaluated Run026and completed
+the independent proposal-recall diagnosis. Development/retained page AP50:95 improve
+to.453840/.529515; TP/FP unchanged. Gains include both improved refinements and
+base fallbacks. Keep experimental;197is ready. [196handoff](../reports/work/IOS-ROI-196/handoff.md).
 
 **Completed — IOS-ROI-195:**194Run025completed and reaches its199/216fit proposal
 ceiling, recovering14misses with no losses. Development fine geometry improves,
@@ -65,6 +98,9 @@ Low-priority follow-ons remain below active model/intake work. One poster sheet 
 review-only after dimensional/grid deviations; no native import or training claim.
 
 **Low-priority opportunistic lane — ART-A–D (2026-10-05):**
+Priority clarification: the older sheet-generation approach below remains opportunistic;
+resident Big Dog individual-artwork generation is now covered by204above. Do not
+dispatch both as duplicate acquisition campaigns.
 [Generated media artwork](Plans/GeneratedMediaAssets.md) provides fictional posters,
 episode art, avatars and backdrops for native compositions. Start with contract/crop
 tooling, then a7-request development pilot before scaling. Preserve model/intake

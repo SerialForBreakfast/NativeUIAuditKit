@@ -4,6 +4,16 @@ Canonical contracts for TRAIN-EFF-A/B/C. [ADR-0011](../ADR-0011-Measured-Trainin
 records rationale; [Tasks](../../Tasks.md) alone records state and ownership.
 This plan authorizes no training, pause/resume, profiling, simulator or external action.
 
+October5 input for A/B, not completion: Run026's first epoch took382.914seconds,
+with approximately100seconds of in-sample validation visible in its progress log.
+The installed trainer's validation branch runs when `args.val` or final epoch or
+stop conditions require it. For fixed-epoch, terminal-checkpoint experiments only,
+benchmark final-only validation as a future arm after auditing stopping/fitness,
+checkpoint and callback dependencies. This is an estimated overhead opportunity,
+not a measured end-to-end speedup or permission to change an active run. It does not
+apply unchanged to validation-selected/early-stopped experiments. Run026 keeps its
+registered per-epoch validation for comparability; no benchmark ran concurrently.
+
 ## Integrated delivery and common boundaries
 
 The deliverable is a reproducible effective-configuration audit, a bounded measured

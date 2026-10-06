@@ -1,5 +1,12 @@
 # Repository artifacts and cleanup policy
 
+## October 5 — inactive r6 prefix archive
+
+The historical r6 verified prefix now has a content-verified USB archive, with
+32,832 members and recovery inventory. Historical references require restoration;
+current corpus paths and active caches are unchanged. See
+[cleanup evidence](../reports/work/STORAGE-20261005/handoff.md).
+
 ## October 5 — stable experiment-artifact exclusion
 
 All `reports/work/**/artifacts/` directories are ignored regardless of packet ID
