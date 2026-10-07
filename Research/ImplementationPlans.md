@@ -14,8 +14,12 @@ Prioritize genuine native captures for the next controlled model comparison.
 TRANSITION264 rejects position reweighting that preserves class totals but reduces unchanged content-change influence.
 TRANSITION265 completes that position comparison with preserved condition weights. It improves left disturbances but loses artwork correctness.
 TRANSITION266 completes balanced fitting and condition weighting. Targeted training improves, but retained regressions prevent promotion.
-Next, compare initialization with matched optimizer-update budgets, then conditionally run the full regression comparison.
-Use admitted native data before further capture. [Evidence and planned tranche](../reports/work/TRANSITION-266/handoff.md).
+TRANSITION270 completes that initialization comparison. Small fitting reaches 64/64 and full replay reaches 668/668.
+Disturbance regressions still block promotion. Next, audit training influence and compare retention-aware loss using admitted examples.
+STATUS271 refines the decision: measure group weights, loss, gradients, and decision margins before choosing a training change.
+Use admitted labels for retention. Do not preserve an old model's mistakes through unverified target scores.
+Keep challenge images outside training and report their repeated development use separately from independent evaluation.
+Use admitted native data before further capture. [Evidence and next tranche](../reports/work/TRANSITION-270/handoff.md).
 Repair 1 measured visual failure through local generation, controlled training and reserved evaluation.
 NUIAK owns the complete cycle. TTR supplies missing capabilities asynchronously.
 Big Dog supplies assigned analysis and training. Tasks.md records execution state.

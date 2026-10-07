@@ -4743,3 +4743,13 @@ Why this matters: temporary masks no longer grow with corpus size. Exact fitting
 This change does not establish a new peak memory limit for the full training job.
 Do not change an input package while a worker uses it.
 [Evidence](../reports/work/TRANSITION-251/handoff.md).
+
+### Compare optimizer updates before rejecting learnability — TRANSITION270
+
+What went wrong: a 300-epoch fitting test receives only 1,200 updates and appears unable to learn 64 examples.
+Correct approach: match optimizer-update budgets and inspect starting logits before changing labels or model architecture.
+With 12,480 updates, the same initializer improves from 33/64 to 59/64 confident fitting decisions.
+The first 300 epoch losses match exactly. A native-adapted initializer gets 64/64 with the same longer budget.
+Why this matters: a failed short fit does not prove an annotation or representation defect.
+Training fit remains separate from held-out performance and regression acceptance.
+[Registered comparison](../reports/work/TRANSITION-270/plan.md).

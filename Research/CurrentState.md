@@ -1,5 +1,45 @@
 # NativeUIAuditKit — Current State
 
+**October 7 COORD-CORE277:** r40 passes 8 local suites and 32 independent usage checks.
+NUIAK verifies 21 new files and 93 integrated source members. Unknown accounting no longer requires retaining execution claims after verified cleanup.
+Big Dog's actual original-attempt release remains pending. The accounting and dashboard companion review defines the next consumer tests.
+[Consolidated operator handoff](../reports/work/COORD-CORE-277/handoff.md).
+
+**October 7 COORD-FINAL276:** NUIAK confirms the r39 authority fix with 6 passing local suites and 117 verified files.
+The original interrupted terminal is reconciled by Big Dog report; unknown token usage leaves finalization and 1 worker claim pending.
+[Consolidated operator handoff and remaining acceptance](../reports/work/COORD-FINAL-276/operator-handoff.md).
+
+**October 7 COORD-REVIEW275:** 28 supplied adapter tests pass locally; 7 additional cases expose a stale-authority approval gap.
+NUIAK publishes the reproduction and verifies supporting runtime artifacts. TTR owns the correction and original-attempt recovery path.
+[Independent consumer review](../reports/work/COORD-REVIEW-275/handoff.md).
+
+**October 7 STATUS274:** Big Dog reports its first useful review in 38.105 s, with release and same-result restart.
+NUIAK verifies the status report. Supporting runtime files are not yet published; COORD279 remains unresolved.
+This is coordination progress, not a model accuracy result or full production acceptance. [Status](../reports/work/STATUS-274/status.md).
+
+**October 7 STATUS273:** Big Dog reports real worker startup, task delivery, interruption, and original-result recovery/release for COORD278.
+Useful reviews remain 0. COORD279 fails at the consumer adapter and retains unresolved terminal/cleanup state.
+Big Dog reports a tested correction and pending retry authority. [Evidence and exact next actions](../reports/work/STATUS-273/status.md).
+
+**October 7 COORD-SUPPORT272:** Big Dog reports 7 passing r33 consumer suites and closes the earlier source blockers.
+COORD278 supplies exact launch scope and reports maintainer approval. NUIAK acknowledges the handoff and specifies result acceptance evidence.
+NUIAK verifies 103 source, documentation, and status files. A consolidated handoff requests the exact remaining launch scope.
+NUIAK then verifies 7 r35 files and closes the historical manifest mismatch through 83 matching source identities.
+Real worker execution and full coordination remain unverified. [Acceptance and owner actions](../reports/work/COORD-SUPPORT-272/status.md).
+
+**October 7 STATUS271:** NUIAK verifies sizes and hashes for 11 r32 files. Its source-manifest reference differs from delivered r31.
+TTR needs to clarify that reference. Prior local r31 tests remain valid.
+Exact receipts and a follow-up are published. Big Dog's latest runtime report is expired; actual execution remains unverified.
+Next, measure training-group influence before choosing a retention change. Use admitted labels and unchanged development challenges.
+[Status and decision criteria](../reports/work/STATUS-271/status.md).
+
+**October 7 TRANSITION270:** matched fitting confirms the 64-example task is learnable.
+Longer training raises DTM054-initialized fitting correctness from 33/64 to 59/64. DTM067 initialization reaches 64/64 with equal updates.
+The full DTM077 comparison restores replay to 668/668 and artwork to 18/24, but left disturbances fall to 142/226.
+Reject promotion. Next, isolate full-corpus training influence and test retention-aware training on admitted examples.
+Latest TTR r31 passes all 4 scoped NUIAK consumer suites. Big Dog real-worker qualification remains pending.
+[Results and next substantial tranche](../reports/work/TRANSITION-270/handoff.md).
+
 **October 7 TRANSITION266:** both fixed comparisons complete. Condition weighting improves new unchanged-focus training correctness from 0/68 to 32/68.
 Replay falls to 629/668 and center-disturbance correctness falls to 12/226. Reject DTM074.
 The small fitting test gets 33/64 correct and exposes extreme starting scores without establishing convergence.

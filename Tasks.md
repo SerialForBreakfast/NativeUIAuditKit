@@ -1,16 +1,93 @@
 # NativeUIAuditKit — Tasks
 
-Status checked October 7 at 17:24 UTC. No new model result or file offer follows TRANSITION266.
-TTR's shared snapshot is stale. Big Dog reports first-useful-worker integration as its current priority.
-NUIAK's next local experiment remains unblocked. [Status and receipt check](reports/work/STATUS-267/status.md).
+## Active goal — complete Big Dog coordination support / NUIAK
 
-## Next — matched initialization and convergence / NUIAK
+October 7 COORD-CORE277: r40 unknown-usage review completes with 8 passing suites and 32 independent counter checks.
+NUIAK verifies 21 files and all 93 integrated source members. Unknown reservations remain explicit during execution-claim release.
+The original Big Dog runtime settlement remains pending. The source repair is no longer the blocker.
+The companion review defines cumulative-usage cases and dashboard freshness requirements for Big Dog's implementation.
+[Current consolidated handoff](reports/work/COORD-CORE-277/handoff.md) supersedes COORD-FINAL276 source-readiness notes.
+Next: verify original release/restart evidence, then independently test the supplied accounting implementation.
 
-Compare original and native-adapted starting weights on the same admitted balanced set with equal optimizer-update budgets.
-Record fitting convergence and raw score ranges. Distinguish optimization failure from a representation limit.
-Register one conditional full comparison if fitting qualifies. Preserve replay, protected roles, fixed thresholds, and all regression gates.
-Use existing local inputs. Further capture needs a measured coverage gap.
-[Evidence and next substantial tranche](reports/work/TRANSITION-266/handoff.md).
+October 7 13:10 PDT: COORD-FINAL276 verifies 117 files and confirms the integrated r39 F1 fix through 6 local suites.
+Read-permission checks pass 38 cases; terminal import passes 19. All 90 source members remain unchanged after tests.
+Big Dog reports the original COORD279 interrupted terminal reconciled. Missing token usage still blocks finalization; 1 worker claim remains.
+Next: TTR supplies explicit unknown-usage disposition, Big Dog qualifies original-attempt settlement, and NUIAK verifies final evidence.
+[Consolidated operator handoff](reports/work/COORD-FINAL-276/operator-handoff.md) supersedes earlier launch/source blockers.
+
+October 7 12:40 PDT: local consumer review is complete. Support waits for the source-owned repair and recovery delivery.
+Big Dog also needs to publish its evidence in TTR's supported flat layout. Exact mapping and test findings are delivered.
+The support goal is blocked after repeated external dependency checks; coordination is not complete.
+
+October 7 COORD-REVIEW275: NUIAK receives 16 evidence files and runs the portable adapter against 86 verified r33 source members.
+All 28 supplied tests pass. Seven additional cases reproduce acceptance after authority changes to revoked during validation.
+TTR receives exact receipts and the F1 correction request. COORD279 terminal evidence is received; actual recovery remains pending.
+TTR r37 rejects nested evidence paths. NUIAK sends Big Dog an exact 14-file flat-name mapping for its supported intake layout.
+The reoffer changes paths only. Existing tests and provider results remain applicable to unchanged bytes.
+[Independent results and reproduction](reports/work/COORD-REVIEW-275/handoff.md).
+
+October 7 12:19 PDT: COORD280 reports the first useful review, completed in 38.105 s; the full run takes 45.119 s.
+Big Dog reports cleanup, claim release, same-result restart, and all owned processes stopped.
+NUIAK receives the exact report and acknowledges scoped peer success. Its 5 supporting files are named but not published.
+COORD279 remains unresolved. Next: receive supporting evidence, integrate the scoped read adapter, and qualify audited original-attempt recovery.
+[Current results and remaining gates](reports/work/STATUS-274/status.md). Earlier zero-useful-review notes are historical.
+
+October 7 12:12 PDT: STATUS273 receives 3 real-trial reports. Earlier missing-runtime-evidence notes are superseded.
+COORD278 reports real startup, send, interruption, recovery, and release; it produces no useful review.
+COORD279 then fails at Big Dog's environment adapter. Its original journal remains running with cleanup unknown.
+Big Dog reports a tested adapter correction and pending approval for another bounded launch.
+NUIAK requests compact recovery evidence and the corrected adapter for inspection. [Current status](reports/work/STATUS-273/status.md).
+
+October 7 18:46 UTC: NUIAK support is blocked on Big Dog runtime evidence after 3 consecutive goal turns retain that dependency.
+All current handoffs and receipts are complete. Resume on a trial result, concrete consumer failure, or accessible live handle.
+This does not establish whether Big Dog is currently running; full coordination remains incomplete.
+
+COORD-SUPPORT272 receives 103 files and verifies 592,076 bytes. Big Dog COORD277 reports all 7 r33 consumer suites pass.
+An additional 7 r35 files resolve the historical manifest mismatch; all 83 source identities match independently.
+Previous fixture, recovery, answer, startup, and control source blockers are closed by Big Dog's current report.
+Big Dog owns the exact executor/schema/storage preflight and concrete real-provider launch proposal.
+COORD278 now supplies that proposal and reports maintainer approval, successful initialization, and compatible schema/model checks.
+NUIAK verifies its receipt and the 16 input entries. Actual provider inference, useful results, and cleanup remain unverified.
+TTR r36 acknowledges the launch scope. NUIAK verifies both new files and confirms all 96 r33 shared members are removed.
+All 96 local originals still pass hash checks. Big Dog's runtime result remains the next dependency.
+NUIAK publishes the consolidated handoff and exact receipts. First useful execution and full coordination remain incomplete.
+
+- [x] Review the concrete COORD278 launch proposal. Big Dog reports its local maintainer grant; NUIAK introduces no new approval gate.
+- [ ] Review useful findings, final answer, stop/recovery, usage, cleanup, and original-attempt release evidence.
+- [ ] Support connected operator controls, two-host qualification, independent restore, and explicit cutover after the first useful delivery.
+- [ ] Complete exact transfer receipts and sender-owned cleanup through each handoff.
+
+[Current evidence and acceptance boundaries](reports/work/COORD-SUPPORT-272/status.md).
+
+Status follow-up October 7: STATUS271 verifies 11 new TTR r32 files and publishes exact receipts.
+TTR reports 5 passing source validation suites. Big Dog's latest COORD276 report remains expired; current execution state is unknown.
+The r32 source-manifest reference differs from delivered r31. TTR clarification is pending; previous local r31 tests remain valid.
+NUIAK sends the resolved source blockers and remaining runtime requirements to the watched request folder.
+[Review and next experiment criteria](reports/work/STATUS-271/status.md).
+
+Status checked October 7: NUIAK verifies 183 new r29/r30/r31 coordination files and passes the scoped consumer tests.
+Latest r31 includes tested final-answer recovery. Big Dog owns its exact runtime grant and real worker qualification.
+TRANSITION270 completes 3 model runs. Small fitting reaches 64/64; full replay reaches 668/668, but disturbance regressions prevent promotion.
+[Results, receipts, and remaining owner actions](reports/work/TRANSITION-270/handoff.md).
+
+## Next — training influence and retention / NUIAK
+
+Audit full-fit condition influence and decision margins using existing admitted data.
+Then register a retention-aware loss comparison against DTM077. Keep challenge examples outside training.
+First measure group counts, effective weights, loss, and gradients on admitted training examples.
+Distinguish insufficient training from conflicting training signals before selecting the loss change.
+Use true labels for retention examples. Treat the old model as a reference, not ground truth.
+Preserve exact thresholds, independent roles, and individual regression checks. Additional capture needs a measured coverage gap.
+[Measured outcome and next substantial tranche](reports/work/TRANSITION-270/handoff.md).
+
+## Completed — TRANSITION270: matched initialization and convergence / NUIAK
+
+DTM075 gets 59/64 and DTM076 gets 64/64 fitting decisions with 12,480 updates each.
+The first 300 DTM075 epoch losses match DTM073 exactly. The previous short fit does not establish a representation failure.
+Conditional DTM077 restores replay to 668/668, but left disturbances fall to 142/226. Reject promotion.
+All 58 focused Python tests, offline Swift build, and offline Swift tests pass.
+The coordination companion verifies r29/r30/r31 source and publishes exact receipts with passing consumer tests.
+[Fixed protocol](reports/work/TRANSITION-270/plan.md). [Results](reports/work/TRANSITION-270/handoff.md).
 
 ## Completed — TRANSITION-266: condition learnability and weighting / NUIAK
 

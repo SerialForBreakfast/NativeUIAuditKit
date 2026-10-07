@@ -1,5 +1,20 @@
 # NativeUIAuditKit — Experiment Log
 
+## TRANSITION270 — October 7, registered initialization comparison
+
+DTM075 and DTM076 compare DTM054 and DTM067 initialization on the same 64 admitted fitting rows.
+Each uses 12,480 optimizer updates, seed 42, batch 16, Adam 0.0001, and frozen geometry.
+DTM077 conditionally tests native-adapted initialization on DTM074's full membership and weights.
+The fitting gate and all regression requirements are fixed before execution.
+[Registered protocol](../reports/work/TRANSITION-270/plan.md).
+
+All 3 runs complete. DTM075 gets 59/64 fitting decisions; DTM076 gets 64/64 with mean binary loss 0.000116.
+DTM075's first 300 epoch losses match the earlier run exactly. Longer training resolves most of that fitting failure.
+The conditional DTM077 fit restores replay from DTM074's 629/668 to 668/668. Artwork correctness rises from 14/24 to 18/24.
+Left disturbances regress to 142/226, including 80 false changes. Individual-case regression gates fail; reject promotion.
+Training takes 292.73 s, 289.60 s, and 323.82 s. All checkpoint parity and frozen-geometry checks pass.
+[Full results, limitations, and next comparison](../reports/work/TRANSITION-270/handoff.md).
+
 ## TRANSITION266 — October 7, balanced fitting and condition weights
 
 Register DTM073 and DTM074 before execution. Both use DTM054 initialization and seed 42.
