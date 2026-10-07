@@ -11,6 +11,96 @@ from fixture_rendered_body import validate as validate_rendered_body
 
 LIMIT = 32 * 1024 * 1024
 
+# This adapter admits only a reviewed, fixed experiment. Inspection stays separate.
+REPAIR_VERSION = 'schema4-focus-repair-v1'
+REPAIR_CONFIG = dict(epochs=30, batch=64, lr=0.0003, seed=42,
+    maxSeconds=86400, model='mobilenetv4_conv_small', augmentation='none',
+    selection='fixed-last-epoch', testDuringTraining=False)
+RETENTION_VERSION = 'schema4-focus-retention-v1'
+RETENTION_CONFIG = {**REPAIR_CONFIG, 'lr': 0.00003}
+
+
+def repair_protocol(path, arm, run_name, approval_path=None):
+    """Check native pairs before the existing trainer reads their crops."""
+    import re
+    from focus_dataset_contract import ROOT, digest as seal, image, pixel_digest, member
+    from focus_learning_experiment import checked
+    from focus_runtime import identity
+    doc = decode(Path(path).read_bytes())
+    retention = doc.get('version') == RETENTION_VERSION
+    require(doc.get('version') in (REPAIR_VERSION, RETENTION_VERSION) and arm == 'schema4-repair', 'repair_version')
+    config = RETENTION_CONFIG if retention else REPAIR_CONFIG
+    require(approval_path is None, 'repair_uses_bound_admission')
+    require(doc.get('protocolSHA256') == seal({k:v for k,v in doc.items() if k != 'protocolSHA256'}), 'repair_seal')
+    require(doc.get('configuration') == config and doc.get('releaseEligible') is False, 'repair_configuration')
+    require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,63}', run_name or '') is not None, 'repair_run_name')
+    output = ROOT/'NativeUITrainer/focus_ring_runs'/run_name
+    require(not output.exists(), 'output_collision')
+    require(doc.get('runtime') == identity(), 'repair_runtime_changed')
+    checked(doc['warmCheckpoint'])
+    admission = decode(checked(doc['admission']).read_bytes())
+    require(admission.get('approved') is True and admission.get('samplesSHA256') == seal(doc['samples']), 'repair_admission')
+    require(admission.get('purpose') == 'development-only' and admission.get('visualReview'), 'repair_review')
+    checked(admission['campaign'])
+    seen=set(); groups={}; pixels={}; pairs={}; train=[]
+    for row in doc['samples']:
+        require(row['id'] not in seen and row['role'] in ('train','reserved'), 'repair_membership')
+        seen.add(row['id'])
+        require(type(row['label']) is int and row['label'] in (0,1), 'repair_label')
+        group=row['group']; require(isinstance(group,str) and group, 'repair_group')
+        require(groups.setdefault(group,row['role']) == row['role'], 'repair_group_leakage')
+        root=ROOT/row['root']; key=(row['root'],row['metadata'])
+        require(root.resolve().is_relative_to(ROOT) and root.resolve()==root, 'repair_source_boundary')
+        if key not in pairs:
+            pairs[key]=pair(root,row['metadata'],expected_version=row.get('sidecarVersion',4))
+        inspected=pairs[key]
+        require(inspected['metadataSHA256'] == row['metadataSHA256'], 'repair_metadata_changed')
+        endpoint=inspected['endpoints'][row['label']]
+        meta=decode(read(root,row['metadata']))
+        role='focused' if row['label'] else 'unfocused'
+        require(endpoint['role']==role and endpoint['visibleBody']==row['bounds'], 'repair_geometry')
+        frame=dict(path=str((root/meta[role+'_png']).relative_to(ROOT)),sha256=meta[role+'_sha256'])
+        image(ROOT,row['crop'],(256,256))
+        for ref in (row['crop'],frame):
+            value=pixel_digest(ROOT,ref)
+            require(pixels.setdefault(value,row['role']) == row['role'], 'repair_pixel_leakage')
+        if row['role']=='train':
+            train.append(dict(id=row['id'],path=member(ROOT,row['crop']['path']),label=float(row['label']),split='train'))
+    for root,name in pairs:
+        require(sorted(r['label'] for r in doc['samples'] if r['root']==root and r['metadata']==name)==[0,1], 'repair_partial_pair')
+    require(train and any(r['role']=='reserved' for r in doc['samples']), 'repair_missing_role')
+    if retention:
+        require(admission.get('replaySHA256') == seal(doc['replay']) and
+                admission.get('legacyReplayDiagnosticOnly') is True, 'replay_admission')
+        source = decode(checked(doc['replayManifest']).read_bytes())
+        protected = set()
+        by_id = {r['pair_id']:r for r in source['pairs']}
+        require(len(by_id)==len(source['pairs']), 'replay_duplicate_manifest_id')
+        for row in source['pairs']:
+            if row['split'] != 'train':
+                for key in ('focused_crop','unfocused_crop'):
+                    path = member(ROOT/'dataset/focus_ring', row[key])
+                    protected.add(pixel_digest(ROOT,dict(path=str(path.relative_to(ROOT)),sha256=digest(path.read_bytes()))))
+        selected=set(); replay_labels={}
+        for row in doc['replay']:
+            require(row['pairID'] in by_id and row['id'] not in seen, 'replay_membership')
+            seen.add(row['id']); source_row=by_id[row['pairID']]
+            require(source_row['split']=='train' and type(row['label']) is int and row['label'] in (0,1), 'replay_role')
+            key='focused_crop' if row['label'] else 'unfocused_crop'
+            require(row['crop']['path']=='dataset/focus_ring/'+source_row[key], 'replay_source')
+            image(ROOT,row['crop'],(256,256)); value=pixel_digest(ROOT,row['crop'])
+            require(value not in protected and pixels.get(value,'train')=='train', 'replay_pixel_leakage')
+            require(replay_labels.setdefault(value,row['label'])==row['label'], 'replay_label_conflict')
+            require((row['pairID'],row['label']) not in selected, 'replay_duplicate')
+            selected.add((row['pairID'],row['label']))
+            train.append(dict(id=row['id'],path=member(ROOT,row['crop']['path']),label=float(row['label']),split='train'))
+        require(selected and all((p,1-l) in selected for p,l in selected), 'replay_partial_pair')
+    return dict(formatVersion='schema4-focus-repair-preflight-v1', protocolVersion=doc['version'],
+        launchEligible=True, releaseEligible=False, configurationValid=True,
+        configuration=config, protocolSHA256=doc['protocolSHA256'],
+        warmCheckpoint=doc['warmCheckpoint'], output=str(output.relative_to(ROOT)),
+        terminalOnly=True), train
+
 
 def require(ok, reason):
     if not ok:
@@ -75,10 +165,10 @@ def hydrate_recipe(directory, compact, allow_inline=True):
     return source,digest(source_raw)
 
 
-def pair(root, name):
+def pair(root, name, *, expected_version=4):
     raw = read(root, name)
     meta = decode(raw)
-    require(type(meta.get('schema_version')) is int and meta['schema_version'] == 4,
+    require(expected_version in (3,4) and type(meta.get('schema_version')) is int and meta['schema_version'] == expected_version,
             'unsupported_version')
     require(meta.get('bounds_semantics') == 'measured_view_bounds; not_focus_effect_segmentation',
             'bounds_semantics')
@@ -87,7 +177,7 @@ def pair(root, name):
             and isinstance(competitor, str) and competitor and target != competitor, 'pair_identity')
     directory = (root / name).parent
     compact = meta['recipe']
-    source,source_hash=hydrate_recipe(directory,compact,allow_inline=False)
+    source,source_hash=hydrate_recipe(directory,compact,allow_inline=expected_version==3)
     endpoints = []; generations = []; intervals = []
     for role, capture_key, scene_key, expected in (
             ('unfocused', 'reference_capture', 'baseline_scene', competitor),

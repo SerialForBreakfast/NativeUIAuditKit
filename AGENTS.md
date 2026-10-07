@@ -34,6 +34,11 @@ For example, write “TTR needs to show which app and Fixture versions made thes
 Do not write “The source-binding request remains outstanding.”
 Explain what is missing, who supplies it, and which work needs it.
 
+Use “local TTR” for the app on the current NUIAK Mac.
+Use “Sillycon TTR” for the app or worker on Sillycon.
+Name the host when reporting a missing build, capture request, or runtime problem.
+Do not describe a Sillycon dependency as a local TTR problem.
+
 These instructions preserve the maintainer's language preference for future agents in this repository.
 
 ## What This Package Is

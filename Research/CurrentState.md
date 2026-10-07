@@ -1,5 +1,153 @@
 # NativeUIAuditKit — Current State
 
+**October 7 TRANSITION266:** both fixed comparisons complete. Condition weighting improves new unchanged-focus training correctness from 0/68 to 32/68.
+Replay falls to 629/668 and center-disturbance correctness falls to 12/226. Reject DTM074.
+The small fitting test gets 33/64 correct and exposes extreme starting scores without establishing convergence.
+Next, compare starting weights with matched optimizer-update budgets before more generation. [Results](../reports/work/TRANSITION-266/handoff.md).
+
+**October 7 TRANSITION265:** local capture supplies 32 native pairs. All 152 files and 64 production crops pass intake.
+DTM072 completes the condition-preserving position comparison. Left-side correctness rises from 158/226 to 218/226; artwork correctness falls from 17/24 to 7/24.
+Reject promotion. Training examples with unchanged focus and changed content remain poorly learned, even at a diagnostic 0.5 threshold.
+Next, test condition learnability and training influence before more generation. [Results and next tranche](../reports/work/TRANSITION-265/handoff.md).
+
+**October 7 TRANSITION264:** complete 16,272 returned-model diagnostic decisions, a 640-pair position audit, and the fixed DTM071 training comparison.
+Selected native training endpoints strongly favor 2 left-side cells. Reweighting improves reserved correctness but damages artwork and center-disturbance results.
+Reject DTM071. The weight audit identifies an 80.8% reduction in unchanged content-change influence despite preserved binary class totals.
+Next, preserve condition totals and fill verified position gaps with native captures. [Results](../reports/work/TRANSITION-264/handoff.md).
+
+**October 7 HCF-COLOR263:** the 40-pair color comparison completes in 9.80 s. Linear-light blending increases every group's pixel error.
+Native captures remain preferred. The suggested local TTR folder picker cannot grant NUIAK input access in app-managed mode.
+TTR's r24 offline qualification passes by producer report; NUIAK verifies all 5 delivered files.
+[Results, access correction, and next work](../reports/work/HCF-COLOR-263/handoff.md).
+
+**October 7 HCF-LOCAL262:** Big Dog reports 10/10 local metadata jobs complete; original failed attempts still need recovery qualification.
+Local retained HCF replay fails at image access with Cocoa513, including after a successful app-managed grant refresh.
+The inspected source lacks a qualified automatic OS Focus Style lifecycle. A 48-screen grouped development comparison is specified pending those prerequisites.
+[Evidence and next work](../reports/work/HCF-LOCAL-262/handoff.md).
+
+**October 7 HCF-NATIVE261:** NUIAK verifies 8 High Contrast review images, with 7 unique screenshots in 1 journey.
+Saved rule proposals increase from 3/6 to 5/6 after the producer repair. Independent accuracy and no-focus specificity remain unavailable.
+A 24-pair native diagnostic retains 66.6% of wide-artwork error energy after smoothing. Fine filtering alone does not explain the mismatch.
+All 23 measurement tests and 10 annotation tests pass. [Results and priorities](../reports/work/HCF-NATIVE-261/handoff.md).
+
+**October 7 TRANSITION253 r4/r5:** local TTR captures 16 controlled native pairs. All 76 files and 32 production crops pass intake.
+Seven of 8 focused interiors match exactly across backgrounds; the remaining mean error is 0.0222 on a 0–255 scale.
+Native growth changes from 17.49% to 13.00% with control size. Source-artwork and coordinate alternatives do not resolve the lighting error.
+The measurement tools, local build, 25 focused tests, and 140 Swift tests pass. The approximate renderer remains outside training.
+[Results and next work](../reports/work/TRANSITION-253/mapping-r4-and-controlled-r5.md).
+
+**October 7 STATUS257:** NUIAK verifies 125 new TTR source and review files, totaling 738,620 bytes.
+Big Dog reports compatibility and compilation complete. The latest TTR source retains its reported invalid-calendar defect.
+TTR owns the correction. Current model decisions remain unchanged; local focus work continues independently.
+[Status and next work](../reports/work/STATUS-257/status.md).
+
+**October 7 TRANSITION253 border and artwork checks:** the compositor improves native borders and nearby shadows without changing unaffected pixels.
+Fixed growth transfers poorly to taller artwork controls. Size-based growth lowers one group's interior error from 15.80 to 5.14.
+Another artwork group remains near 11.3. The approximation does not qualify for large-scale training generation.
+Big Dog reports installation complete; a live coordination test still needs explicit approval.
+[Renderer results](../reports/work/TRANSITION-253/edges-r3.md). [Coordination preparation](../reports/work/COORD-REVIEW-241/preparation-r15.md).
+
+**October 7 TRANSITION253 formula test:** a white elliptical highlight improves matching on 12 retained native development pairs.
+Mean interior error falls from 3.6255 to 0.7430 against the quadratic correction, on a 0–255 scale.
+The command takes 5.56 s across 16 pairs, including 4 fitting pairs. No new capture or model training occurs.
+Shadows, borders, and broader native fidelity remain unqualified. [Research and results](../reports/work/TRANSITION-253/research-and-formulas.md).
+
+**October 7 TRANSITION249 results:** all 3 worker fits pass independent checkpoint and prediction checks.
+DTM068/069 get 21/24 and 18/24 artwork decisions correct. The matched class control gets 4/24.
+All candidates lose prior distraction successes. No promotion occurs. [Review](../reports/work/TRANSITION-249/review.md).
+
+**October 6 TRANSITION250:** retained tests expose failures at weaker disturbance strengths.
+DTM054 makes 101 false changes at quarter-strength center disturbances, versus 6 at full strength.
+DTM067 abstains on 137 quarter-strength cases, with no false changes there.
+These authored diagnostics do not measure independent real-app performance. No model changes occur.
+Big Dog reports a maintainer-approved 4 GiB retry after its first attempt exceeds 2 GiB.
+[Evidence and next comparison](../reports/work/TRANSITION-250/handoff.md).
+
+**October 6 TRANSITION249:** NUIAK publishes one verified package for 3 fixed Big Dog comparisons.
+Two seeds test replication. A matched class-weight control tests a competing explanation for DTM067's gain.
+Package verification and baseline parity pass locally. The worker acknowledges receipt; completed results remain pending.
+[Handoff](../reports/work/TRANSITION-249/handoff.md). No model change occurs.
+
+**October 6 TRANSITION248:** matched group weighting improves artwork decisions from 4/24 to 17/24.
+Artwork false changes fall from 16 to 0, with 7 abstentions remaining.
+Reserved decisions improve from 39/52 to 51/52. Replay improves from 638/668 to 660/668.
+Both fits retain 52/52 excluded training-role comparisons. Distraction failures remain substantial.
+Retain DTM067 for replication, not production replacement. [Results](../reports/work/TRANSITION-248/handoff.md).
+
+**October 6 TRANSITION247:** 3 matched diagnostic probes complete in 40.40 s without new capture.
+The audit finds that 2 groups supply 279/548 native training comparisons.
+DTM054 features support 20/24 forced artwork decisions, but their fitted probe fails left-distraction checks.
+Explicit spatial differences preserve forced distraction decisions but get only 8/24 artwork decisions correct.
+No candidate qualifies for deployment. Next, compare group-balanced sampling with a matched control.
+[Results](../reports/work/TRANSITION-247/handoff.md).
+
+**October 6 TRANSITION246:** DTM065 finishes the fixed-feature comparison in 154.41 s of training.
+It preserves 52/52 reserved cases and 226/226 left-side distraction cases.
+Artwork results remain 0/24. Replay falls to 636/668, and center distraction results fall to 20/226.
+Reject DTM065. Frozen features alone do not prevent regressions. No model replacement occurs.
+[Results](../reports/work/TRANSITION-246/handoff.md). Next, test feature separation using cached inputs and bounded linear probes.
+
+**October 6 TRANSITION245:** 2 matched 120-epoch fits finish using retained native inputs and old replay.
+DTM064 uses known control regions. It improves original native decisions from 39/60 to 60/60, including training examples.
+Artwork-only correct decisions rise from 0/24 to 8/24. However, reserved decisions fall to 40/52 and distraction checks regress severely.
+Reject both DTM063 and DTM064. Region shifts also expose input sensitivity. Preserve current models.
+Next, test the existing frozen-feature training option before adding more capture volume.
+[Results](../reports/work/TRANSITION-245/handoff.md). The companion TTR review returns 10 concrete coordination cases.
+
+**October 6 TRANSITION244:** 6 fixed difference baselines compare 2 resolutions on 640 supported native comparisons.
+The full inventory contains 702 comparisons. The report excludes 62 with changing candidate bounds or membership.
+Higher resolution does not solve artwork confusion. Whole-frame scores misclassify all 24 artwork-only comparisons at both resolutions.
+No changed pair becomes identical after resizing. Keep existing models and test learned control-region features next.
+[Results](../reports/work/TRANSITION-244/handoff.md). No capture, neural training, or promotion occurs.
+
+**October 6 TRANSITION243:** local TTR captures 32 matched pairs in 363.32 s, including export.
+All 152 indexed files and 64 production crops pass checks. Native observations support 279 development-training comparisons.
+DTM062 improves original native pairs to 75/76, but replay falls to 643/668 and distraction checks regress severely.
+Reject the candidate. Existing models remain unchanged. The next diagnostic checks input detail and verified control regions before more capture.
+Verified job archiving leaves 8 available TTR slots without deleting evidence.
+[Results](../reports/work/TRANSITION-243/handoff.md).
+
+**October 6 TRANSITION242:** DTM061 improves original native pairs from 49/76 to 72/76, including training examples.
+It preserves 52/52 reserved comparisons and 668/668 replay decisions. These counts do not establish independent real-app performance.
+Reject the candidate because distraction checks regress substantially. Center distraction decisions fall from 207/226 to 42/226.
+Artwork-only false changes remain 20/24. Training takes 239.73 s with 2 CPU threads.
+Reuse cached inputs for the next controlled comparison. Keep calibration artwork outside training.
+[Results](../reports/work/TRANSITION-242/handoff.md). No export, promotion, or TTR model replacement occurs.
+
+**October 6 FOCUS239:** cached comparisons separate pair ordering from correct absolute focus decisions.
+FDR041 orders 3/4 original poster pairs correctly, but has 0/4 correct complete pairs.
+NUIAK receives and reviews 10 Settings originals. They support 5 complete development pairs, not settling or training claims.
+All 8 controlled recipes complete native capture. All 80 indexed files and 16 production crops pass checks.
+Each fixed model gets 0/8 complete pairs correct. FDR041 still depends on surrounding artwork.
+Big Dog returns its feature comparison. NUIAK verifies the returned calculations, but does not independently repeat feature extraction.
+[Report](../reports/work/FOCUS-ARTWORK-239/handoff.md). No model changes or promotion occur.
+
+**October 6 FOCUS-STYLE-237:** FDR041 completes the targeted cycle but fails the repair.
+Original poster false positives remain 4/4. Focused misses increase from 0/4 to 1/4 versus FDR040.
+Previous test errors remain 0/270. Reserved errors remain 2/16. All 176 training rows are correct.
+Training takes 6.80 s; independent local scoring takes 10.78 s. Worker pickup takes about 13 min.
+The failure is transfer beyond the selected artwork, not inability to fit the training examples. Keep the shipped model.
+[Results](../reports/work/FOCUS-STYLE-237/handoff.md). Diagnose artwork and context separately before another fit.
+
+**October 6 FOCUS-REVIEW-236:** fixed BatchNorm statistics restore 270/270 previous decisions in FDR040, versus 259/270 in FDR039.
+Both models retain 14/16 reserved decisions. Both still make all 4 original poster false positives. No promotion occurs.
+Big Dog completes 2 matched fits. NUIAK checks all 892 returned predictions locally with no decision changes.
+The Office prediction experiment also fails: persistence gives lower error than either trained model.
+[Results](../reports/work/FOCUS-REVIEW-236/handoff.md). Local TTR also captures 12 style-matched pairs with different owned artwork.
+All pairs pass review. FDR040 gets 12/24 development decisions correct. These images remain outside training until a versioned admission decision.
+
+**October 6 FOCUS-RETENTION-234:** FDR-038 uses realistic artwork and reviewed replay. Training completes 30 epochs in 33.68 s.
+Previous correct decisions reach 259/270, versus FDR-037 at 155/270 and FDR-001 at 270/270.
+Reserved procedural decisions reach 14/16. All 4 original poster false positives remain. Reject the candidate.
+Local TTR capture and export work. No Sillycon operation is needed.
+[Results](../reports/work/FOCUS-RETENTION-234/handoff.md).
+
+**October 6 FOCUS-REPAIR-233:** local TTR produces 32 verified pairs. FDR-037 completes 30 epochs in 14.81 s.
+Reserved decisions improve from 8/16 to 16/16. Previous correct decisions fall from 270/270 to 155/270.
+All 4 poster false positives remain. Reject this candidate and preserve the shipped model.
+These reserved cases share procedural motifs. They do not establish real-app performance.
+[Results](../reports/work/FOCUS-REPAIR-233/handoff.md).
+
 **October6 REVIEW228 (supersedes earlier035-pending notes):** Run035 was received
 and independently evaluated on2400 retained frames: mAP50 .901047 vs022 .899967,
 but FP6623 vs4346; no promotion. Cached diagnosis and249-source training audit now

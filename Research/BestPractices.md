@@ -1,5 +1,30 @@
 # NativeUIAuditKit — Best Practices
 
+## Resolve paired endpoints by image identity — TRANSITION253
+
+Wrong: assume the second image in a comparison always uses the sidecar's `focused_scene` field.
+Correct: match its exact hash to the sidecar endpoint, then read the observed scene and focus identity.
+A comparison can use another capture's baseline scene as its second endpoint.
+Reject missing or ambiguous matches. Preserve this distinction in source-artwork and native-effect measurements.
+[Evidence](../reports/work/TRANSITION-253/mapping-r4-and-controlled-r5.md).
+
+## Review replay labels before using old training data — FOCUS-RETENTION-234
+
+The legacy corpus contains duplicate pixels across splits and unclear crop pairs. A previous training assignment does not prove label quality.
+Filter protected pixel overlap and label conflicts before review. Keep unclear examples out of new training.
+The review accepts 28 of 128 selected pairs. Preserve exclusions and keep legacy results separate from modern native qualification.
+FDR-038 fits the admitted data but still fails the original poster test. Do not equate training fit with a repaired failure.
+[Evidence](../reports/work/FOCUS-RETENTION-234/handoff.md).
+
+## Check previous successes after narrow training — FOCUS-REPAIR-233
+
+FDR-037 fits 48 new native crops and improves reserved decisions from 8/16 to 16/16.
+However, previous correct decisions fall from 270/270 to 155/270. All 4 original poster false positives remain.
+Use representative artwork and approved previous training examples in the next comparison. Do not move test examples into training.
+Keep the original failure test and retention test separate from new training accuracy.
+This prevents a narrow procedural improvement from becoming a false claim of useful model improvement.
+[Evidence](../reports/work/FOCUS-REPAIR-233/handoff.md).
+
 ## Isolate Vision test waits without changing inference — VISION209
 
 Observed: the full Swift suite waited inside Vision feature-print requests; a single
@@ -4587,3 +4612,134 @@ both evaluations and qualify the intended deployment context; do not replace ful
 frame evidence with ROI performance or vice versa. Why: context and object scale
 change the task distribution. More fixed-threshold detections can coexist with
 worse class AP. Evidence: reports/work/VERIFY-226/handoff.md.
+
+## FOCUS236 — check normalization when fine-tuning small datasets
+
+What went wrong: FDR038 improves targeted examples but loses 11 previous correct decisions.
+Small-dataset fine-tuning changes both weights and BatchNorm statistics. A weight-only explanation misses this second change.
+Correct approach: compare fixed and changing statistics with identical inputs, initialization, epoch order, and optimizer settings.
+Keep affine parameters trainable when testing fixed statistics. Check the returned buffers directly.
+Why this matters: FDR040 restores 270/270 previous decisions while preserving 14/16 reserved decisions.
+Both models still fail all 4 poster negatives. Fixed statistics do not replace representative training data.
+This result applies to the recorded experiment. Do not assume it improves every training run.
+Evidence: [FOCUS-REVIEW-236](../reports/work/FOCUS-REVIEW-236/handoff.md).
+
+## FOCUS237 — distinguish fitting from transfer to new artwork
+
+What went wrong: FDR041 fits all 176 training rows, but all 4 original poster false positives remain.
+One original focused example also regresses. Matching the layout with 2 artwork images does not solve the held-back artwork errors.
+Correct approach: compare training fit, protected failures, and previous successes separately. Diagnose artwork and context before adding volume.
+Why this matters: perfect training classification cannot show that the model learns a reusable focus cue.
+The exact shortcut remains unproven. Keep the failed result rather than reporting training accuracy as a repair.
+
+## FOCUS237 — measure worker pickup separately from computation
+
+What went wrong: the 6.80 s fit waits about 13 min for worker pickup.
+Correct approach: use local execution for short sequential experiments unless the worker is ready. Send long independent jobs to the worker.
+Why this matters: faster GPU computation does not guarantee faster experiment results.
+Reuse cached predictions and transfer only new crops. Do not add a new scheduling service without measured need.
+Evidence for both lessons: [FOCUS-STYLE-237](../reports/work/FOCUS-STYLE-237/handoff.md).
+
+## FOCUS239 — separate artwork from background and focus style
+
+What went wrong: previous style comparisons change artwork and surrounding content together.
+Those results cannot show which change causes an error. A seed can also change several visual features.
+Correct approach: compare baseline, target-artwork-only, backdrop-only, and combined variants with identical styles, geometry, text, and focus effects.
+Check recipe differences before native capture. Keep the asset pack identical across cells.
+Why this matters: controlled differences can guide the next fit without another broad collection or architecture change.
+Pair ordering also differs from absolute classification. FDR041 orders 3/4 poster pairs correctly while making 0/4 correct complete decisions.
+Do not treat a higher paired score as reliable focus detection or assume every runtime pair contains a focus change.
+Evidence: [FOCUS239](../reports/work/FOCUS-ARTWORK-239/handoff.md).
+
+## FOCUS239 — check artwork roles before recipe preparation
+
+What went wrong: the first controlled recipe combines calibration artwork with artwork already used for training.
+TTR rejects preparation before capture. The asset pack carries ancestry, even when only some assets appear onscreen.
+Correct approach: use assets with compatible roles. Keep calibration derivatives outside training.
+Do not rename families or archive jobs to bypass this check. Archiving releases job capacity, not ancestry restrictions.
+Why this matters: visual variation must not move related images across data roles.
+
+## TRANSITION242 — preserve distraction checks during native adaptation
+
+What went wrong: a candidate improves native focus changes while losing resistance to unrelated content changes.
+Its narrow repair check passes because that check omits the broader distraction tests.
+Correct approach: compare every retained distraction condition before accepting a candidate. Keep the narrow check distinct from deployment acceptance.
+Add training-only unchanged-focus controls. Do not train on protected diagnostic artwork to hide the regression.
+Why this matters: more correct focus changes can conceal a large increase in false changes.
+[Evidence](../reports/work/TRANSITION-242/handoff.md) records the matched results and unchanged thresholds.
+
+## TRANSITION243 — finish each capture batch with verified job archiving
+
+What went wrong: TTR returns a successful capacity response, but `canPrepare` is false at the 64-job limit.
+Ignoring that field causes the next preparation to fail without collecting data.
+Correct approach: check available slots before preparation. Verify local exports before archiving completed, owned jobs.
+After intake, archive those jobs through TTR's supported command. Keep raw captures, receipts, and labels.
+Why this matters: archiving frees job slots without deleting evidence or repeating capture.
+NUIAK verifies 152 exported files before archiving this batch. TTR then reports 8 available slots.
+[Evidence](../reports/work/TRANSITION-243/handoff.md).
+
+### Stable regions for focus diagnostics — TRANSITION244
+
+What went wrong: some historical artwork bounds include focus scaling despite appearing suitable for stable region selection.
+Correct approach: compare candidate membership and nominal bounds across both frames before using regions as model inputs.
+Report incompatible comparisons separately. Do not infer stable bounds from focused presentation geometry.
+Why this matters: focus-dependent input bounds can reveal the target label and produce misleading diagnostic scores.
+[Evidence](../reports/work/TRANSITION-244/handoff.md).
+
+### Concurrent Vision tests — TRANSITION244
+
+What went wrong: the native Swift test run stalls while several tests wait inside Vision task queues.
+Correct approach: save a process sample, stop only owned test processes, and run the offline suite with `--no-parallel`.
+The serial run passes all 140 tests in 4.150 s. Do not change system services or signing settings.
+Why this matters: a test scheduling problem must not trigger runtime resets or changes to model evidence.
+
+### Region sensitivity — TRANSITION245
+
+What went wrong: known control masks improve native focus results but hide dependence on exact region edges.
+A 2-pixel shift causes many new errors. Removing masks improves one subset while damaging another.
+Correct approach: preregister region-shift and missing-region checks before choosing a representation.
+Report all subsets. Keep privileged-region diagnostics separate from deployable image-only models.
+Why this matters: a favorable subset cannot justify a model that loses previous correct decisions.
+[Evidence](../reports/work/TRANSITION-245/handoff.md).
+
+### Frozen features do not guarantee preserved decisions — TRANSITION246
+
+What went wrong: freezing convolution features preserves left-side distraction results but loses replay and center-distraction successes.
+Correct approach: verify frozen tensors and compare every retained condition after changing decision layers.
+Why this matters: fixed features still permit different decision boundaries. Feature freezing is not a regression guarantee.
+[Evidence](../reports/work/TRANSITION-246/handoff.md).
+
+### Audit pair expansion before adaptation — TRANSITION247
+
+What went wrong: pair expansion gives 2 related families 50.9% of native training rows.
+Row counts conceal the small number of scenes and the unequal contribution of their combinations.
+Correct approach: report counts by connected group and condition before training. Compare controlled group weighting before gathering more combinations.
+Why this matters: many related pairs do not provide equivalent independent evidence or balanced training influence.
+Group weighting remains a hypothesis until the matched experiment measures its effect.
+[Evidence](../reports/work/TRANSITION-247/handoff.md).
+
+### Group weighting changes class influence — TRANSITION248
+
+What went wrong: a group-weighted comparison can also change class influence when groups contain different label proportions.
+Correct approach: record effective class weights alongside group weights. Use a matched class-weighted control before assigning the cause of improvement.
+Why this matters: DTM067 improves several conditions, but one run cannot separate group balance from increased unchanged-focus weight.
+[Evidence](../reports/work/TRANSITION-248/handoff.md).
+
+### Strong disturbances do not cover weak disturbances — TRANSITION250
+
+What went wrong: a strong center disturbance hides failures that appear at weaker strengths.
+Correct approach: keep fixed strength and frame-order comparisons. Report false changes and abstentions separately.
+Do not select a threshold from these reviewed challenge cases.
+Why this matters: DTM054 produces 101 false changes at quarter strength, versus 6 at full strength.
+These related authored cases do not supply independent real-app evidence.
+[Evidence](../reports/work/TRANSITION-250/handoff.md).
+
+### Bound image validation allocations — TRANSITION251
+
+What went wrong: the trainer creates validation masks for the entire image tensor before fitting.
+Big Dog exceeds its 2 GiB limit before epoch 1. Full-array validation is a suspected contributor, not a measured sole cause.
+Correct approach: validate 8 images at a time. Reject invalid values before creating the optimizer.
+Why this matters: temporary masks no longer grow with corpus size. Exact fitting parity passes on a fixed software test.
+This change does not establish a new peak memory limit for the full training job.
+Do not change an input package while a worker uses it.
+[Evidence](../reports/work/TRANSITION-251/handoff.md).

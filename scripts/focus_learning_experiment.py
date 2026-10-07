@@ -170,6 +170,9 @@ def validate_document(doc):
 
 def load_protocol(path, arm, run_name, approval_path=None):
     doc = json.loads(local(path).read_text())
+    if doc.get('version') in ('schema4-focus-repair-v1', 'schema4-focus-retention-v1'):
+        from harvest_schema4_review import repair_protocol
+        return repair_protocol(path, arm, run_name, approval_path)
     if doc.get('version') == 'focus-change-adaptation-v1':
         from focus_change_adaptation import load_protocol as change_protocol
         return change_protocol(path,arm,run_name,approval_path)

@@ -15,6 +15,24 @@ from test_ttr_sidecar_v2 import ROOT, write_bundle
 
 
 class Schema4ReviewTests(unittest.TestCase):
+    def test_inline_version3_requires_explicit_dispatch(self):
+        from harvest_schema4_review import pair
+        meta=copy.deepcopy(self.meta)
+        source,_=hydrate_recipe(self.bundle,meta['recipe'])
+        source['recipe_hash']=meta['recipe']['recipe_hash']
+        def replace(value):
+            if isinstance(value,dict):
+                for key,child in list(value.items()):
+                    if key=='recipe':value[key]=copy.deepcopy(source)
+                    else:replace(child)
+            elif isinstance(value,list):
+                for child in value:replace(child)
+        replace(meta);meta['schema_version']=3;self.save(meta)
+        with self.assertRaisesRegex(ValueError,'unsupported_version'):pair(self.bundle,'m.json')
+        self.assertEqual(pair(self.bundle,'m.json',expected_version=3)['state'],'structurally_reviewed')
+        meta['focused_scene']['focus_observation']['verified']=False;self.save(meta)
+        with self.assertRaises(ValueError):pair(self.bundle,'m.json',expected_version=3)
+
     def test_union_and_comparison_fail_closed(self):
         report=review(self.bundle)
         captured=[]

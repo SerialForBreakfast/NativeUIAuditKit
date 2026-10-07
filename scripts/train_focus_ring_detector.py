@@ -66,6 +66,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--experiment-approval", type=Path, help="Maintainer decision bound to mixed-development protocol, arm and output")
     p.add_argument("--experiment-arm", choices=["scratch-stretch", "warm-stretch", "scratch-aspect-fit", "warm-aspect-fit", "pretrained-stretch", "paired-stretch", "static-baseline", "static-human", "fit-diagnostic", "full-corpus-fit", "reviewed-full-fit", "native-body-dry-run", "native-body-full-fit", "context-local", "context-geometry", "context-scene", "visual-local-frozen", "visual-context-frozen", "visual-local-partial", "visual-context-partial", "artwork-readiness", "artwork-control-partial", "artwork-added-partial", "transfer-emphasis-partial", "transfer-aspect-partial", "native26-normalized", "native26-common", "transition-measurements", "transition-direct-pixels", "transition-candidate-ranker"])
     p._option_string_actions['--experiment-arm'].choices.append('transition-change-adaptation')
+    p._option_string_actions['--experiment-arm'].choices.append('schema4-repair')
     return p.parse_args()
 
 
@@ -375,7 +376,8 @@ def main() -> int:
             result.update(experiment_selection(predictions, rows, report))
         return result
     history = []
-    initial = evaluate() if experimental else None
+    terminal_only = report.get('terminalOnly', False)
+    initial = evaluate() if experimental and not terminal_only else None
     initial_fit = evaluate(train_loader, train, True) if report.get("fitDiagnostic") else None
     consecutive_fit = 0
     for epoch in range(1, epochs + 1):
@@ -421,13 +423,14 @@ def main() -> int:
                     checkpointKind="fit-diagnostic-not-selected",representation=report["representation"]),weights_dir/"last.pt")
                 break
             continue
-        validation = evaluate()
+        validation = evaluate() if not terminal_only else {"loss": None, "predictions": [], "notAssessed": True}
         val_loss = validation.get("selectionLoss", validation["loss"])
         history.append({"epoch": epoch, "trainLoss": train_loss, "validation": validation})
         if report.get("staticHuman"):
             # Preserve each completed budget even if a subsequent deadline interrupts.
             (out/"progress.json").write_text(json.dumps(dict(history=history,initial=initial),allow_nan=False))
-        print(f"epoch {epoch}/{epochs}  train_loss={train_loss:.4f}  val_loss={val_loss:.4f}")
+        validation_text = 'not assessed' if terminal_only else f'{val_loss:.4f}'
+        print(f"epoch {epoch}/{epochs}  train_loss={train_loss:.4f}  val_loss={validation_text}", flush=True)
         ckpt = {
             "epoch": epoch,
             "model_name": args.model,
@@ -438,7 +441,7 @@ def main() -> int:
             ckpt["representation"] = report["representation"]
             ckpt["checkpointKind"] = "frozen-pretrained-linear-head-v1"
         torch.save(ckpt, weights_dir / "last.pt")
-        if validation.get("checkpointEligible", True) and checkpoint_improved(val_loss, best_val, report["configuration"]):
+        if (epoch == epochs if terminal_only else validation.get("checkpointEligible", True) and checkpoint_improved(val_loss, best_val, report["configuration"])):
             best_val = val_loss
             torch.save(ckpt, best_path)
 
@@ -466,7 +469,7 @@ def main() -> int:
             print("ERROR: no checkpoint met the frozen retention floor; last.pt is not selected",file=sys.stderr)
             return 2
         model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True)["state_dict"], strict=True)
-        selected = evaluate()
+        selected = evaluate() if not terminal_only else {"notAssessed": True, "selection": "fixed-last-epoch"}
         result = {"status": "completed", "releaseEligible": False, "protocolSHA256": report["protocolSHA256"],
                   "arm": args.experiment_arm, "experimentID": args.experiment_id, "pid": os.getpid(),
                   "endedAt": utc_now(), "elapsedSeconds": time.monotonic()-started,

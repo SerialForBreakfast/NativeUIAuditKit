@@ -1,31 +1,424 @@
 # NativeUIAuditKit — Tasks
 
+Status checked October 7 at 17:24 UTC. No new model result or file offer follows TRANSITION266.
+TTR's shared snapshot is stale. Big Dog reports first-useful-worker integration as its current priority.
+NUIAK's next local experiment remains unblocked. [Status and receipt check](reports/work/STATUS-267/status.md).
+
+## Next — matched initialization and convergence / NUIAK
+
+Compare original and native-adapted starting weights on the same admitted balanced set with equal optimizer-update budgets.
+Record fitting convergence and raw score ranges. Distinguish optimization failure from a representation limit.
+Register one conditional full comparison if fitting qualifies. Preserve replay, protected roles, fixed thresholds, and all regression gates.
+Use existing local inputs. Further capture needs a measured coverage gap.
+[Evidence and next substantial tranche](reports/work/TRANSITION-266/handoff.md).
+
+## Completed — TRANSITION-266: condition learnability and weighting / NUIAK
+
+Both fixed comparisons complete. DTM073 gets 33/64 fitting decisions correct and has not established convergence.
+DTM074 improves new unchanged-focus training decisions from 0/68 to 32/68, but replay falls from 660/668 to 629/668.
+Center-disturbance correctness falls from 53/226 to 12/226. Reject promotion and retain current models.
+All 28 focused tests pass. NUIAK verifies 2 new Big Dog reports and publishes exact receipts with the final status.
+
+The maintainer assigns both fixed comparisons. DTM073 tests balanced fitting; DTM074 tests condition weights with native class totals preserved.
+[Registered scope](reports/work/TRANSITION-266/plan.md).
+
+TRANSITION265's admitted native examples supply both comparisons. Registration fixes each run before execution.
+Fitting errors and retained evaluation remain separate. Individual regressions prevent promotion.
+[Measured failure and next substantial tranche](reports/work/TRANSITION-265/handoff.md).
+
+## Completed — TRANSITION-265 / NUIAK
+
+Capture, intake, the DTM072 fit, regression evaluation, and training-fit diagnosis finish.
+Left-side correctness rises from 158/226 to 218/226. Artwork correctness falls from 17/24 to 7/24.
+Reject promotion. New unchanged-focus content examples score 0/68 across both orders at fixed thresholds, including training examples.
+The 27 focused tests pass. All 8 completed owned jobs are archived; USB evidence remains intact.
+NUIAK verifies 157 new coordination files and publishes exact receipts.
+
+The condition audit confirms that content-change examples occupy only 2 left-side cells.
+Local TTR passes readiness, version, ownership, capacity, and ordinary-profile checks.
+Local TTR captures 8 corrected recipes with 32 native pairs on the verified USB drive.
+The first preparation fails because 2 recipe regions overlap. Preserve it and use corrected non-overlapping row spacing.
+Intake admits 138 replacement rows with observed-focus-matched new-position counterparts.
+The fixed DTM072 fit preserves exact weights, class totals, condition totals, replay rows, and training count.
+[Protocol](reports/work/TRANSITION-265/plan.md).
+
+## Completed comparison — TRANSITION-264 / NUIAK
+
+Complete the 3 returned models' strength/order diagnostic and the native position inventory.
+Both finish. The audit verifies 640 native pairs and identifies strong left-side concentration in selected training examples.
+DTM071 completes 120 epochs. Reserved correctness rises to 52/52, but artwork-only correctness falls to 0/24.
+Reject promotion. Reweighting cuts unchanged content-change weight by 80.8%, despite preserving binary class totals.
+Next, preserve condition totals and check missing position/condition combinations before native capture and a matched fit.
+[Results and next substantial experiment](reports/work/TRANSITION-264/handoff.md).
+[Registered scope](reports/work/TRANSITION-264/plan.md). Existing HCF access issues do not block this experiment.
+
+## Proposed — screen context for focus and navigation / NUIAK
+
+[ADR-0022](Research/ADR-0022-Screen-Context-for-Focus-and-Navigation.md) defines the proposed scope and delivery sequence.
+Keep surface identity, layout, overlay state, overlay ownership, and active input region separate.
+This work supports the focus improvement cycle. It does not replace the active native-effect investigation.
+
+- [ ] Inventory trustworthy context labels in retained images. Identify missing classes and related evaluation groups.
+- [ ] Check whether correct context improves an existing focus failure before training a classifier.
+- [ ] Compare fixed OCR/layout rules with one bounded learned candidate when data supports the comparison.
+- [ ] Measure downstream focus errors, regressions, unknown results, and runtime cost on matched inputs.
+- [ ] If qualification passes, verify Apple inference and propose a TTR observer integration.
+
+Implementation remains pending. This documentation task starts no training, capture, or peer work.
+
+## High priority investigation — TRANSITION-253 / NUIAK
+
+HCF-COLOR263 completes the 40-pair color-space comparison. Linear-light blending increases every group's error.
+Use native captures for model work. Further approximation work needs a distinct hypothesis with supporting evidence.
+[Measured results](reports/work/HCF-COLOR-263/handoff.md).
+
+HCF-NATIVE261 completes the 24-pair residual comparison. Wide-artwork error retains 66.6% of its energy after 8-pixel smoothing.
+Posters retain 10.4%. Fine filtering alone does not explain the wide-artwork mismatch.
+Use native training pixels next. Broader lighting/color diagnosis remains separate from model qualification.
+[Measured results and next substantial work](reports/work/HCF-NATIVE-261/handoff.md).
+
+Completed r4/r5: source mapping and coordinate changes do not resolve the artwork error.
+Local TTR supplies 16 controlled pairs. All 76 files and 32 production crops pass intake.
+Seven of 8 matched focused interiors are identical across backgrounds. The remaining error is 0.0222 on a 0–255 scale.
+Native growth changes from 17.49% to 13.00% across the tested widths. The CPU lighting approximation remains unqualified.
+All 25 focused tests, the offline build, and 140 Swift tests pass. Four verified owned jobs are archived; originals remain intact.
+[Results, commands, limits, and next work](reports/work/TRANSITION-253/mapping-r4-and-controlled-r5.md).
+
+Border and shadow checks complete on 16 pairs. Fixed and diagnostic artwork checks cover 8 more pairs.
+The compositor preserves unaffected pixels. Size-based growth improves one artwork group from 15.80 to 5.14 interior error.
+The other group remains near 11.3. Full renderer qualification and training admission do not pass.
+[Latest results and next experiment](reports/work/TRANSITION-253/edges-r3.md).
+
+The follow-up formula test completes on 16 retained pairs. Observed native growth is 17.2083% around the control center.
+A white elliptical highlight reduces interior error from 3.6255 to 0.7430 across 12 development checks.
+The full comparison takes 5.56 s. [Research and formulas](reports/work/TRANSITION-253/research-and-formulas.md).
+No exact native match, shadow qualification, or model improvement is claimed. Existing worker training remains unchanged.
+[Measured results and next experiment](reports/work/TRANSITION-253/handoff.md).
+
+Measure native growth, shadow, tint, and animation before generating a large focus-effect corpus.
+Audit existing references and local Fixture controls. Fit a bounded renderer and test it against separately reserved native images.
+Preserve scale changes through aligned coordinates. Use sequences for animation curves; keep stationary and motion-driven effects separate.
+Pixel equality remains a test outcome. Do not assume one formula covers every OS, control, or device.
+Deliver a measured parameter report, renderer fidelity tests, and one matched training proposal.
+Owner: current NUIAK agent. Next, isolate lighting and filtering with controlled reference artwork; use native generation for native training pixels.
+[Implementation plan](Research/Plans/NativeFocusEffectMeasurement.md). Reuse FOCUS-RENDER-203 and coordinate position coverage with TRANSITION-252.
+
+## Completed experiment — TRANSITION-242 / NUIAK
+
+DTM061 improves original native pairs from 49/76 to 72/76. It preserves 52/52 reserved comparisons and 668/668 replay decisions.
+Reject the candidate: left-side distraction decisions fall from 226/226 to 174/226; center distraction decisions fall from 207/226 to 42/226.
+Artwork-only false changes remain 20/24. Preserve the deployed models.
+[Results](reports/work/TRANSITION-242/handoff.md). The next bounded experiment needs training-only content changes with unchanged observed focus.
+
+Complete one focus-change comparison using retained native full frames and existing DTM054 replay.
+Validate observed endpoint labels, preserve reserved groups, cache inputs, and train at most one fixed DTM061 candidate.
+Compare previous successes, reserved recipes, and controlled artwork changes. Do not change localization or production models.
+This reuses local evidence before new capture and advances TRANSITION205 without claiming its full campaign is complete.
+[Fixed plan](reports/work/TRANSITION-242/plan.md). Owner: current NUIAK agent.
+
+### Completed experiment — TRANSITION-243 / NUIAK
+
+All 32 pairs pass native intake. DTM062 completes 120 epochs in 301.86 s.
+Original native decisions reach 75/76, but replay falls to 643/668 and left-side distraction decisions fall to 28/226.
+Reject the candidate. New content controls produce 130/279 abstentions. Do not collect more volume before the next diagnostic.
+NUIAK archives only verified owned jobs. Evidence remains intact, and TTR has 8 available slots.
+[Results](reports/work/TRANSITION-243/handoff.md). Owner: current NUIAK agent.
+[Execution plan](reports/work/TRANSITION-243/plan.md).
+
+Run the matched content-and-focus experiment defined in the [next experiment](reports/work/TRANSITION-242/handoff.md#next-substantial-experiment).
+Use local TTR and training-only artwork. Preserve calibration and reserved groups.
+Freeze the capture matrix, validate the batch, and train 1 fixed candidate with old replay and unchanged-focus controls.
+Acceptance requires native improvement without distraction regressions. Keep existing models if any required check fails.
+Start with fresh local runtime checks. This task does not need Sillycon capture or a new coordination service.
+
+### Completed diagnostic — TRANSITION-244 / NUIAK
+
+Owner: current NUIAK agent. Compare 2 resolutions and 3 fixed difference scores on 702 retained comparisons.
+Select thresholds from training rows only. No new capture or neural training occurs.
+[Fixed diagnostic plan](reports/work/TRANSITION-244/plan.md).
+All 702 comparisons are accounted for. Stable-region checks admit 640 comparisons and exclude 62 with explicit reasons.
+Higher resolution does not change whole-frame decisions. All 24 artwork-only cases still cause false changes.
+Region scores remain unreliable. No model changes occur. [Results](reports/work/TRANSITION-244/handoff.md).
+
+Use the [matched input diagnostic](reports/work/TRANSITION-243/handoff.md#outcomes-and-next-work) on the frozen TRANSITION243 corpus.
+Measure focus detail at the current input size. Compare full-frame inputs with verified control regions as an idealized diagnostic.
+Keep protected roles unchanged. Record exact inputs, baseline, budgets, and acceptance before any new fit.
+Deliver a representation decision with prior-failure checks. Do not claim verified regions are available during deployment.
+No new capture or TTR service is required. Broader architecture work remains outside this diagnostic until explicitly scoped.
+
+### Completed experiment — TRANSITION-245 / NUIAK
+
+DTM063 and DTM064 complete 120 epochs each. Known regions improve original native decisions to 60/60, including training examples.
+Artwork-only correct decisions reach 8/24. Both candidates lose previous successes and fail promotion requirements.
+Complete regression, reversal, region-shift, and checkpoint checks pass as software checks, not model gates.
+[Results](reports/work/TRANSITION-245/handoff.md). Preserve the current model.
+
+Compare learned control-region features against a matched whole-frame control on the stable 640-comparison subset.
+Use all nominal controls, not the observed focused identity, as model inputs. Keep labels separate from region selection.
+Freeze 2 diagnostic fits with the same epochs, training membership, seed, and loss before execution.
+Preserve development and reserved roles. Report native-region dependence and previous failures separately.
+Acceptance requires complete per-condition results and a decision about whether deployable region proposals justify further work.
+Do not promote either diagnostic. No new capture is required.
+Owner: current NUIAK agent. Complete DTM063/064 plus prior regression checks and a case-linked failure report for TTR.
+[Fixed plan](reports/work/TRANSITION-245/plan.md). No new capture or promotion occurs.
+
+### Completed experiment — TRANSITION-246 / NUIAK
+
+DTM065 finishes 120 epochs. Reserved results remain 52/52, and left-side distraction results remain 226/226.
+Artwork results remain 0/24. Replay falls to 636/668, and center distraction results fall to 20/226.
+Reject this candidate. Frozen features do not prevent all losses from changing the final decision layers.
+[Results](reports/work/TRANSITION-246/handoff.md). No model replacement occurs.
+
+Test whether frozen convolution features preserve distraction behavior during native adaptation.
+Use the existing trainer's `linearOnly` option, DTM054 initialization, and TRANSITION245's exact whole-frame training membership.
+Freeze 120 epochs, Adam 0.0001, batch 16, seed 42, and thresholds 0.15/0.85 before launch.
+Compare against retained DTM063 without repeating that fit. Select the final epoch only.
+Complete native, replay, artwork, reversal, and distraction checks. Return case-linked failures and runtime.
+Acceptance requires native improvement without lost prior correct decisions. A failed candidate receives a diagnosis, not automatic retraining.
+No new capture, data-role change, backbone, or promotion is included. Owner: current NUIAK agent.
+[Fixed run plan](reports/work/TRANSITION-246/plan.md).
+[Rationale](reports/work/TRANSITION-245/handoff.md#outcomes-and-next-substantial-experiment).
+
+### Completed diagnostic batch — TRANSITION-247 / NUIAK
+
+All 3 fixed probes complete in 40.40 s. No candidate qualifies for deployment.
+The audit finds that 2 groups supply 50.9% of native training comparisons.
+Existing features and explicit differences show different failure patterns. More capture volume is not the next step.
+[Results and next experiment](reports/work/TRANSITION-247/handoff.md).
+
+Use cached features to test whether current features distinguish focus changes from content changes.
+Compare fixed features from DTM054 and DTM063 on identical training membership.
+Fit one bounded regularized linear probe for each feature set. Set settings before either fit.
+Keep reserved and development cases outside fitting and selection. Retain replay and distraction checks.
+Report whether the features support the distinction, rather than selecting another deployment threshold.
+Do not capture more images until this comparison identifies a missing condition or useful representation.
+Owner: current NUIAK agent. The approved batch adds label and weighting audits, cached baselines, and explicit spatial differences.
+Use 3 fixed diagnostic fits, not another full adaptation run. [Current scope](reports/work/TRANSITION-247/plan.md).
+
+### Completed experiment — TRANSITION-248 / NUIAK
+
+Group weighting improves artwork results from 4/24 to 17/24 and reserved results from 39/52 to 51/52.
+Both runs retain 52/52 training-role holdout decisions. Distraction failures remain; no model replacement occurs.
+[Results and coordination priorities](reports/work/TRANSITION-248/handoff.md).
+
+Compare row-balanced and group-balanced adaptation with one training-only group partition.
+Preserve total native/replay weight, protected roles, and all previous regression checks.
+Complete 2 matched fits and per-group diagnosis before requesting additional capture.
+Owner: current NUIAK agent. [Fixed protocol](reports/work/TRANSITION-248/plan.md).
+
+### Models received and independently verified — TRANSITION-249 / NUIAK and Big Dog
+
+NUIAK publishes the verified 230 MB package and the 3-run assignment.
+Local package checks pass. The worker stops before epoch 1 after exceeding 2 GiB RAM.
+Big Dog reports maintainer approval for 4 GiB and starts a fresh attempt with unchanged inputs.
+NUIAK receives all 3 fits and verifies 9,882 predictions locally. Every decision matches.
+Group weighting repeats artwork gains; the class control does not. All candidates fail distraction checks. Do not promote.
+[Independent review](reports/work/TRANSITION-249/review.md).
+[Delivery evidence](reports/work/TRANSITION-249/handoff.md).
+
+Replicate group weighting with 2 fixed seeds and compare one control matching its class mass.
+Prepare reusable inputs and a complete bounded worker assignment. Verify returned results locally.
+No capture or promotion is included. Owner: NUIAK prepares inputs; Big Dog receives the bounded assignment.
+[Execution plan](reports/work/TRANSITION-249/plan.md).
+[Exact comparison scope](reports/work/TRANSITION-248/handoff.md#next-substantial-tranche).
+
+### Diagnostic complete; result checks prepared — TRANSITION-250 / NUIAK
+
+Diagnose disturbance strength and frame-order sensitivity using retained inputs and fixed models.
+Prepare checks for the 3 returned worker predictions. Do not wait for the peer to perform local diagnostics.
+Owner: current NUIAK agent. [Fixed diagnostic](reports/work/TRANSITION-250/plan.md).
+The diagnostic scores 16,272 decisions in 9.68 s. Strong-only tests hide weaker-disturbance failures.
+Focused tests and offline Swift checks pass. TRANSITION249 worker results now pass local replay; all candidates fail promotion checks.
+[Results and next work](reports/work/TRANSITION-250/handoff.md).
+
+### Review complete — COORD-REVIEW-241 revision 2 / NUIAK
+
+HCF-LOCAL262 receives r22 and Big Dog's completed pilot report. All 10 fresh jobs complete across 2 workers.
+Fresh claims and budgets clear. Original failed attempts still need audited recovery qualification.
+[Current status and local capability audit](reports/work/HCF-LOCAL-262/handoff.md).
+
+STATUS260 receives r20/r21 and the High Contrast priority request: 74 files, 423,217 bytes, all hashes verified.
+The first pilot admits 2 jobs but dispatches none. Migration006 addresses the newly exposed operation-lock permission defect.
+Big Dog starts a fresh isolated pilot. Original claims remain preserved; durable recovery remains open.
+[Latest peer results and consumer response](reports/work/STATUS-260/status.md).
+
+STATUS259 verifies all 75 Big Dog r18 receipts against the local offer.
+Big Dog reports 23/23 actual SQL tests passed. NUIAK accepts the reviewed source for that scoped boundary.
+The approved 10-job pilot has started. Big Dog supplies outcomes and cleanup evidence next.
+[Current disposition and receipts](reports/work/STATUS-259/status.md).
+
+October 7 STATUS258 receives the r2 coordinator handoff, r18 source/index, and missing r17q qualification.
+Big Dog accepts coordination. NUIAK retains local source and model ownership.
+The corrected calendar predicate passes 5 direct checks. Big Dog runs actual r18 database qualification.
+The existing shared folder remains active. Native-effect analysis continues independently.
+[Latest receipts, review, and owner actions](reports/work/STATUS-258/status.md).
+
+October 7 STATUS257 receives and verifies 125 r16/r17 files, totaling 738,620 bytes.
+Big Dog reports local compatibility and compilation complete. Its guard tests pass 9/10.
+The r17 source retains the invalid-calendar defect. TTR owns its repair and corrected source publication.
+TTR and Big Dog also need consistent deployment roots. Local model work remains independent.
+[Current receipt, review, and next actions](reports/work/STATUS-257/status.md).
+
+Revision 15 preparation identifies exact source, dependency, and migration inputs for Big Dog.
+Big Dog's later COORD256 report completes disposable local database compatibility and confirms owned processes stopped.
+Production service and two-host qualification remain separate.
+[Preparation, acceptance checks, and approval scope](reports/work/COORD-REVIEW-241/preparation-r15.md).
+TTR source delivery and receipt cleanup do not depend on service startup. Model work remains independent.
+
+Revision 13 review also completes. NUIAK receives 5 files and returns exact receipts plus recovery and permission requirements.
+The 10 embedded metadata inputs pass byte/hash and role checks. Live service qualification remains open with TTR.
+[Revision 13 review](reports/work/COORD-REVIEW-241/revision13.md). Model training does not depend on this service.
+
+The companion review checks TTR's received schema for roles, ancestry, receipts, and replacement decisions.
+Return 10 concrete consumer cases without starting the proposed service.
+Model work remains independent of service deployment.
+[Review](reports/work/COORD-REVIEW-241/revision2.md) and [cases](reports/work/COORD-REVIEW-241/consumer-cases-r2.json).
+
+### Software complete — TRANSITION-251 / NUIAK
+
+Test actual worker intake with real checkpoint files and adversarial returned results.
+Bound future trainer input checks to 8 images per batch. Preserve exact fitting behavior and the running worker package.
+The intake tests pass. A fixed 1-epoch software test gives identical losses and weights with both validation methods.
+Big Dog's 3 results now pass local replay under TRANSITION249. No candidate passes the model gates.
+[Evidence](reports/work/TRANSITION-251/handoff.md). Owner: current NUIAK agent.
+
+## Completed evidence — FOCUS-REVIEW-236 / NUIAK and Big Dog
+
+### Ready for retained-data investigation — TRANSITION-252 / NUIAK
+
+TRANSITION264 verifies position coverage for 640 retained native pairs and the exact 496-pair training selection.
+The selection lacks top-center and top-right focus centers. Its 2 populated left-side cells receive 88.53% of group-weighted native endpoint mass.
+All measured endpoints are fully visible. Scrolling and invisible-focus coverage remain unproven.
+DTM071 completes the weighting test and fails regression checks. Condition influence changes substantially; position causality remains unproven.
+[Coverage and diagnostic evidence](reports/work/TRANSITION-264/handoff.md).
+
+Audit focus position, list endpoints, scrolling, clipping, and visibility before changing sampling.
+Use retained native observations and cached predictions. Measure changed and unchanged cases separately by connected group and data role.
+Do not infer invisible focus coordinates from image differences. Keep unknown labels explicit.
+Deliver coverage maps, per-condition errors, and a frozen proposal for missing examples with matched training controls.
+Owner: current NUIAK agent. This investigation can run beside TRANSITION-249 without changing its inputs.
+TTR proposal request: `nuiak-transition252-position-diversity-v1`. Request preparation does not authorize new collection.
+[Implementation contract](Research/Plans/EvidenceDrivenFocusQualification.md#focus-position-and-visibility-investigation--transition252).
+
+The comparison, Office audit, and 2 matched training runs are complete.
+FDR040 restores 270/270 previous decisions. All 4 poster errors remain. Both runs retain 14/16 reserved decisions.
+NUIAK verifies all 892 returned predictions locally. Result receipts permit sender cleanup of the returned archives.
+The separate 12-pair local capture batch passes label review and production crop checks. Preserve its development role.
+FDR040 gets 12/24 new decisions correct. No model qualifies for promotion.
+Preserve calibration, previous tests, and reserved roles. Do not export or promote these diagnostic models.
+[Plan](reports/work/FOCUS-REVIEW-236/plan.md) and [worker assignment](reports/coordination/focus236-worker.json).
+
+## Completed experiment — FOCUS-STYLE-237 / NUIAK and Big Dog
+
+The 12 reviewed style pairs receive an explicit development-training decision. Preserve original calibration and previous tests outside training.
+Prepare 1 fixed-statistics candidate with approved replay and fixed epoch selection. Give Big Dog immutable inputs and exact settings.
+Compare original poster errors, previous successes, and reserved cases. Do not call inspected development groups untouched evaluation.
+Acceptance requires a complete comparison and retained failures. Do not lower promotion criteria.
+FDR041 completes 30 epochs in 6.80 s. NUIAK verifies all 470 scores locally.
+Poster false positives remain 4/4. One original focused example regresses. Previous errors remain 0/270; reserved errors remain 2/16.
+The candidate fits all 176 training rows but fails the target repair. No promotion occurs.
+[Results](reports/work/FOCUS-STYLE-237/handoff.md). Inputs and result receipts pass; exact shared input cleanup is complete.
+The current goal prioritizes the model cycle over infrastructure. Keep the helper fix below as separate work.
+[Fixed experiment](reports/work/FOCUS-STYLE-237/plan.md).
+
+### Next model diagnostic — FOCUS-ARTWORK-239 / NUIAK
+
+Cached comparison, Settings intake, and the 8-pair native comparison are complete.
+The 4-model comparison uses 470 existing scores per model without new inference.
+FDR041 orders 3/4 original poster pairs correctly but makes 0/4 correct complete decisions.
+All 10 delivered Settings images pass hashes, decoding, and visual review. They support 5 complete development pairs.
+The About image remains withheld for privacy. No training or settling labels are admitted.
+Version 1 fails preparation because it mixes training and calibration artwork. Version 2 uses only retained calibration artwork.
+All 80 indexed files pass checks. Production cropping produces 16 verified development crops.
+FDR001, FDR040, and FDR041 each get 0/8 complete pairs correct. Preserve the shipped model.
+The next experiment needs training-only artwork with paired focus borders across matched backgrounds. Do not fit these calibration derivatives.
+NUIAK supplies exact references and receipts to TTR. Local capture does not wait for a remote capture request.
+[Report and next capture](reports/work/FOCUS-ARTWORK-239/handoff.md) and [plan](reports/work/FOCUS-ARTWORK-239/plan.md).
+
+Test artwork and surrounding context separately before another training run.
+Reuse current tools and retained scores. Freeze a bounded comparison with distinct artwork families and matched focus states.
+Keep original calibration pixels and prior test inputs outside training. Do not claim inspected layouts are independent final evaluation.
+Acceptance requires per-condition errors, paired score differences, and a specific next training hypothesis or a justified stop.
+No new architecture, threshold tuning, large collection, or automatic fit is included.
+[Diagnostic rationale](reports/work/FOCUS-STYLE-237/handoff.md#outcomes-and-next-work).
+
+### Completed diagnostic — FOCUS-FEATURE-240 / Big Dog
+
+Use resident FOCUS237 inputs and 3 fixed models for one independent comparison of learned features.
+Return distances between paired crops and nearest training examples for each original poster failure.
+Verify that feature collection does not change model scores. Do not fit models or change thresholds.
+Big Dog returns 470 features per model. NUIAK verifies probabilities, all paired distances, and all requested nearest examples.
+Full feature extraction is not independently replayed. The result supports diagnosis, not model promotion.
+[Exact assignment](reports/coordination/focus240-worker.json) sets hashes, limits, tests, and return requirements.
+
+### Open — FOCUS-INTAKE-238 / NUIAK
+
+Fix excluded-target handling in the existing campaign intake helper. Test missing, duplicate, rejected, and excluded targets.
+Require accepted targets to equal the selected set. Require other targets to have explicit exclusion records.
+Preserve raw receipts. Use the FOCUS236 receipt shapes as regression cases, not untracked capture dependencies in unit tests.
+Run focused tests and the required offline Swift checks. This fix does not block the already verified FOCUS237 crops.
+
+## STATUS-235 — worker inputs and status reconciliation / NUIAK
+
+NUIAK verifies the mounted share and transfers the existing Office archive for BD24.
+NUIAK prepares the fixed FDR001/FDR038 comparison package with 446 matching crops and both checkpoints.
+Big Dog can complete the comparison without a new fit or new captures.
+Preserve all data roles. This package does not approve training on calibration or previous test images.
+NUIAK receives EVS, Big Dog's EVS analysis, and the completed EVIDENCE223 report.
+Big Dog completes followup231; the old missing-receipt and pending-replay claims are superseded.
+[Worker contract](reports/coordination/status235-worker.json) and [TTR response](reports/coordination/status235-ttr.json).
+Worker receipts and returned comparisons are verified in FOCUS-REVIEW-236. The exact shared Office archive is removed after receipt.
+FOCUS237 receives all 70 mappings and verifies their metadata against the updated archive.
+The records contain 39 unique hash pairs, not 70 independent comparisons. Pixel and semantic review remain separate.
+NUIAK selects the offered 11 Settings originals for development review. Sillycon TTR publishes the retained files; no capture is requested.
+No Office operation or model promotion occurs. See [handoff](reports/work/STATUS-235/handoff.md) for delivery and cleanup evidence.
+
 ## Highest priority — FOCUS-LOOP / NUIAK — measured repair with local generation
+
+**Experiment complete: FOCUS-RETENTION-234 / NUIAK.** Local TTR captures 24 artwork pairs. FDR-038 fails the repair criteria.
+Preserve original poster calibration, previous test crops, and reserved procedural layouts outside training.
+Use reviewed, owned pilot artwork for local development only. Preserve its full family exclusion from final evaluation.
+Compare the fixed candidate against FDR-001 and the failed FDR-037. No automatic second fit or promotion.
+Previous correct decisions recover to 259/270, versus FDR-037 at 155/270. FDR-001 remains 270/270.
+Reserved procedural decisions reach 14/16. All 4 original poster false positives remain.
+[Results](reports/work/FOCUS-RETENTION-234/handoff.md). Keep the shipped model.
+Next: capture crowded, style-matched compositions with separate artwork families, then test the original poster failure and retention together.
 
 The maintainer makes the focus improvement cycle our highest priority on October 6.
 [Execution plan](Research/Plans/EvidenceDrivenFocusQualification.md#highest-priority--focus-improvement-cycle).
 This priority supersedes earlier suggested ordering. Preserve active worker jobs and existing data roles.
 
-- [ ] Rank the top 10 failure types from existing evidence. Record frequency, impact, label confidence and affected component.
-- [ ] Select 1 measurable visual failure for the first complete repair. Separate navigation and timing defects from model errors.
-- [ ] Check the matching local TTR app, Fixture and Simulator. Reuse the LOCAL-CAPTURE-232 path before requesting remote capture.
-- [ ] Freeze related training, development and reserved evaluation groups. Keep inspected calibration cases out of independent final claims.
-- [ ] Generate controlled positive and negative examples locally. Record observed focus and measured rendered bounds.
-- [ ] Validate all examples and prepare one grouped sample review. Keep random samples separate from targeted disagreements.
-- [ ] Prepare an exact baseline and candidate comparison for Big Dog. Record membership, model, preprocessing, compute budget and acceptance before dispatch.
-- [ ] Independently evaluate returned models on the same reserved examples and previous successful cases. Check errors and abstentions separately.
+**Experiment complete: FOCUS-REPAIR-233, NUIAK.** Local capture, training, and reserved comparisons finish. The candidate fails.
+The target is false focus on artwork. The shipped model misclassifies all 4 reviewed unfocused poster crops.
+[Fixed experiment](reports/work/FOCUS-REPAIR-233/plan.md). No Sillycon capture or worker response blocks this local experiment.
+
+FDR-037 improves reserved decisions from 8/16 to 16/16, but previous correct decisions fall from 270/270 to 155/270.
+All 4 original poster false positives remain. Preserve the shipped model.
+[Results](reports/work/FOCUS-REPAIR-233/handoff.md) separate development evidence from qualification.
+Next: combine realistic artwork with approved previous training examples before another fixed comparison.
+Do not train on the 270 previous test crops or original calibration pairs.
+
+- [x] Rank supported failure types from existing evidence. FOCUS-REVIEW-236 returns 5 categories without padding the list to 10.
+- [x] Select 1 measurable visual failure for the first complete repair. Separate navigation and timing defects from model errors.
+- [x] Check the matching local TTR app, Fixture and Simulator. Reuse the LOCAL-CAPTURE-232 path before requesting remote capture.
+- [x] Freeze related training, development and reserved evaluation groups. Keep inspected calibration cases out of independent final claims.
+- [x] Generate controlled positive and negative examples locally. Record observed focus and measured rendered bounds.
+- [x] Validate all examples and prepare one grouped sample review. Keep random samples separate from targeted disagreements.
+- [x] Prepare an exact baseline and candidate comparison for Big Dog. STATUS-235 fixes membership, model, preprocessing, budget and acceptance.
+- [x] Independently evaluate returned models on the same reserved examples and previous successful cases. FOCUS-REVIEW-236 verifies both returned checkpoints.
 - [ ] Test a qualified candidate through TTR on matched navigation tasks. Preserve the current model if any required gate fails.
 - [ ] Report whether the selected failure improves without regressions. Select the next failure from the measured results.
 
 Local capture already passes for 4 calibration recipes on source `0be978b3`.
 This proves that path only. Recheck current target ownership and readiness before capture.
 TTR support requests concern missing capabilities, not routine local generation or binary delivery.
-Big Dog can complete existing evidence work while NUIAK prepares the exact training package.
+Big Dog completes the existing evidence work. STATUS-235 supplies the next comparison package; it does not request another fit.
 NUIAK publishes both support requests under the verified shared `nuiak/requests` folder.
-Both JSON files pass exact readback checks. Peer acknowledgments remain pending.
+Both original JSON files pass exact readback checks. Big Dog acknowledges the original request in focus-loop-ack01.json.
+Acknowledgment of the new STATUS-235 inputs remains separate.
 [TTR request](reports/coordination/focus-loop-ttr-20261006.json) and
 [Big Dog request](reports/coordination/focus-loop-bigdog-20261006.json) preserve existing work and limits.
-Current assignment records priority, tasks and peer requests. It does not claim the repair experiment has run.
+FOCUS-REPAIR-233 completes 1 local cycle. The broader ranked feedback and navigation tasks remain open.
 
 ## Requested — seeded test apps for navigation and training / TTR and NUIAK
 
@@ -62,23 +455,17 @@ NUIAK checks 40 indexed files and reviews bounds on all 8 original images.
 All pairs retain the calibration role. Training approval remains separate.
 All 13 metadata hashes in TTR's version report match retained files.
 The exact build for each pair remains unknown. [Review](reports/work/STATUS-231/review.md).
-Big Dog still has the BD27 recipe check and EVIDENCE223 report work.
-NUIAK placed those references in the watched request folder. The existing limits remain unchanged.
-No receipt for the EVIDENCE223 pack appears in Big Dog's checked reports. NUIAK retains its shared copy.
+Big Dog completes the BD27 recipe check and EVIDENCE223 reports in followup231-complete01.json.
+STATUS-235 receives and verifies the returned archive. The worker reports 18 pack tests and 18 regression tests passing.
+Big Dog supplies evidence223-receipt01.json. STATUS-235 uses that receipt for exact shared-copy cleanup.
 [Receipt](reports/coordination/receipt231.json) and [worker follow-up](reports/coordination/worker-followup231.json).
 
-## Status check — October 6 — TTR replies; next image review remains open
+## Historical status230 — superseded by STATUS-231 and STATUS-235
 
-TTR replies to DIAG227 with records for Fixture12/14/16 and the host app.
-The records do not prove which version made each image pair.
-NUIAK has read the reply but has not completed that comparison.
-TTR confirms our INTAKE225 receipts and reports removal of the shared copies.
-TTR retains its originals.
-TTR offers 4 new pairs in custom-apple10. It also reports 1 failed case.
-NUIAK has not downloaded or approved this new data.
-Big Dog's latest visible report remains worker219-complete03. NUIAK has already reviewed those results.
-Next: review the version records and new pairs. Continue SEMANTICS229 independently.
-[Response](reports/coordination/status230.json).
+STATUS-231 completes custom-apple10 intake and image review. Do not repeat that transfer or review.
+Historical images still lack exact capture-era versions. This limits those images, not the verified local TTR capture path.
+STATUS-235 receives newer worker results and sends the missing inputs.
+Preserve the [original response](reports/coordination/status230.json) as history. Continue SEMANTICS229 independently.
 
 ## Review delivered — REVIEW228 / NUIAK — training coverage and confidence diagnosis
 
@@ -3648,6 +4035,27 @@ pass. [Results and remaining evidence boundary](reports/work/ACCESSIBILITY-TRACK
 Scope: [tracking diagnosis30](Research/Plans/AccessibilityTracking30.md).
 
 ## Review / producer evidence blocked — ACCESSIBILITY-ASSISTED-29 / Codex
+
+HCF-COLOR263 corrects the proposed user action: local TTR's project picker cannot grant arbitrary NUIAK screenshot access.
+Request a supported retained-image import or explicit input/output grants. No user permission action is currently identified.
+[Access diagnosis and acceptance criteria](reports/work/HCF-COLOR-263/handoff.md).
+
+HCF-LOCAL262 audits local source and attempts retained Vision replay. Both pre-refresh and post-refresh reads fail with Cocoa513 at before_preflight.
+The app-managed grant refresh passes but does not grant access to NUIAK images. Resume with supported input access.
+Automatic OS Focus Style attestation/restoration remains unfinished in inspected source. Keep authored contrast themes separate from OS profile evidence.
+The next development comparison specifies 12 scenes, 4 layout families, 2 profiles, and 2 focus positions: 48 screens.
+Actual membership, profile receipts, and no-focus coverage must precede fitting. [Specification and blockers](reports/work/HCF-LOCAL-262/handoff.md).
+
+HCF-NATIVE261 receives the existing producer archive and completes checksum, image, sidecar, and visual review.
+The inventory has 8 images, 7 unique screenshots, 1 journey, and no no-focus examples.
+Saved proposals increase from 3/6 to 5/6. Preserve the development-review role; independent model comparison needs additional grouped data.
+All 10 annotation tests pass. Next, audit local profile capture support and specify missing independent layout groups.
+[Inventory, baseline, and data requirements](reports/work/HCF-NATIVE-261/handoff.md).
+
+October 7: receive `hcf-priority-20261007`. Reuse this workflow for the requested optional High Contrast detector.
+Next, inventory retained verified profiles and grouped data roles. Request exact existing archive and version receipts before new capture.
+Compare rules, model, and combined outputs only after coverage and split checks pass.
+The producer's 6-frame sanity set does not establish training readiness. [Response](reports/work/STATUS-260/status.md).
 
 October2 planning review of published TTR45c84b6: High Contrast can assist focus
 identity; its outline is not ordinary rendered-body truth. Hover Text CLI/MCP is

@@ -21,8 +21,10 @@ CONFIG=dict(epochs=120,lr=.0001,batch=16,seed=42,threads=2,inputSize=[192,128],s
 def fit(net,x,y,config,progress=None,weights=None):
     torch=d.torch_runtime();torch.set_num_threads(config['threads']);torch.manual_seed(config['seed'])
     h.require(x.ndim==4 and x.shape[1:]==(6,128,192) and y.shape==(len(x),) and len(x)>0
-              and torch.isfinite(x).all() and torch.isfinite(y).all()
-              and ((x>=0)&(x<=1)).all() and ((y==0)|(y==1)).all(),'training_inputs')
+              and torch.isfinite(y).all() and ((y==0)|(y==1)).all(),'training_inputs')
+    # Bound validation masks without changing sample order or optimization.
+    for part in x.split(8):
+        h.require(torch.isfinite(part).all() and ((part>=0)&(part<=1)).all(),'training_inputs')
     h.require(type(config['epochs']) is int and config['epochs']>0 and type(config['batch']) is int
               and config['batch']>0 and np.isfinite(config['lr']) and config['lr']>0,'training_config')
     if weights is not None:

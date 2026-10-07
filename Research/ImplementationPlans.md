@@ -1,6 +1,21 @@
 # Full backlog implementation packet catalog
 
+[Screen context / ADR-0022](ADR-0022-Screen-Context-for-Focus-and-Navigation.md):
+proposed comparison of rules, a small visual classifier, and optional native evidence.
+Measure downstream focus and navigation benefit before integration. This does not replace the current focus repair priority.
+
+[Native focus effect measurement / TRANSITION-253](Plans/NativeFocusEffectMeasurement.md):
+measure native geometry and appearance, fit a bounded renderer, verify reserved references, then test training usefulness.
+October 7: mapping, background, smoothing, and color-space checks do not qualify the approximation for training.
+Prioritize genuine native captures for the next controlled model comparison.
+[Latest diagnostic and separate HCF access requirements](../reports/work/HCF-COLOR-263/handoff.md).
+
 [Highest priority: focus improvement cycle](Plans/EvidenceDrivenFocusQualification.md#highest-priority--focus-improvement-cycle).
+TRANSITION264 rejects position reweighting that preserves class totals but reduces unchanged content-change influence.
+TRANSITION265 completes that position comparison with preserved condition weights. It improves left disturbances but loses artwork correctness.
+TRANSITION266 completes balanced fitting and condition weighting. Targeted training improves, but retained regressions prevent promotion.
+Next, compare initialization with matched optimizer-update budgets, then conditionally run the full regression comparison.
+Use admitted native data before further capture. [Evidence and planned tranche](../reports/work/TRANSITION-266/handoff.md).
 Repair 1 measured visual failure through local generation, controlled training and reserved evaluation.
 NUIAK owns the complete cycle. TTR supplies missing capabilities asynchronously.
 Big Dog supplies assigned analysis and training. Tasks.md records execution state.

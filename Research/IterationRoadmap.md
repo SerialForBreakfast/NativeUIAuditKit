@@ -1,5 +1,8 @@
 # Concurrent delivery roadmap
 
+**Native focus measurement:** [TRANSITION-253](Plans/NativeFocusEffectMeasurement.md) prioritizes measured growth and shadow effects before large procedural generation.
+Pair this work with TRANSITION-252 position coverage. Preserve the running TRANSITION-249 comparisons and independent evaluation groups.
+
 **October6 measurement-first:** [EVIDENCE223](Plans/EvidenceDrivenFocusQualification.md)
 prioritizes focus/transition reporting, retained source/label audit and matched cheap
 baselines. Existing iOS training continues; cached label QA is the companion.

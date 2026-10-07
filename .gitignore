@@ -341,3 +341,9 @@ reports/work/INTAKE-99/received/
 /reports/work/WORKER-CUDA-145/artifacts/
 /reports/work/GLOBAL-REPLAY-146/artifacts/
 /reports/work/**/artifacts/
+
+# Keep operational records and machine-specific permissions local.
+# These rules do not remove tracked files or Git history.
+/reports/coordination/
+/reports/work/
+/.claude/settings.local.json

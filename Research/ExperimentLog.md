@@ -1,5 +1,252 @@
 # NativeUIAuditKit — Experiment Log
 
+## TRANSITION266 — October 7, balanced fitting and condition weights
+
+Register DTM073 and DTM074 before execution. Both use DTM054 initialization and seed 42.
+DTM073 fits 32 distinct balanced pairs plus reversed pairs for 300 epochs with equal weights.
+DTM074 uses DTM072's 1,660 rows for 120 epochs. It redistributes weight between conditions within each native binary class.
+Replay weights and native binary class totals remain unchanged. All evaluation roles and thresholds remain fixed.
+[Protocol](../reports/work/TRANSITION-266/plan.md).
+
+DTM073 completes 300 epochs in 27.58 s: 33/64 fixed-threshold fitting decisions and 39/64 forced decisions.
+The small fit makes 1,200 updates and remains unconverged. Its initializer produces 44/64 raw scores with absolute magnitude above 20.
+DTM074 completes 120 epochs in 317.87 s, preserving each native class's total weight.
+New unchanged-focus training correctness rises from 0/68 to 32/68. Replay falls to 629/668; center-disturbance correctness falls to 12/226.
+Reject promotion. Both checkpoints pass parity and frozen-geometry checks. All 28 focused tests pass.
+[Full result and next test](../reports/work/TRANSITION-266/handoff.md).
+
+## TRANSITION265 — October 7, condition-preserving native position experiment
+
+DTM072's first attempt stops at epoch 10 because its progress writer requires a new filename.
+No checkpoint or evaluation result exists for that attempt. Preserve its registration and first progress record.
+Restart the same registered comparison from its original initializer. Use separate progress files for each reported epoch.
+This repairs logging. It does not change the hypothesis, inputs, settings, selection, or number of model comparisons.
+
+The retained audit finds all content-change examples in 2 left-side grid cells.
+Register 8 native recipes at center/right positions, with 4 targets each and matched artwork/background variants.
+Use the verified local Simulator and mounted USB drive. The first preparation rejects overlapping recipe regions before capture.
+The corrected recipe supplies 32 pairs. Intake verifies 152 files and 64 production crops.
+DTM072 replaces 138 selected content comparisons while preserving weights and training count.
+Fix DTM054 initialization, seed 42, 120 epochs, Adam 0.0001, batch 16, and 2 CPU threads before fitting.
+[Fixed protocol](../reports/work/TRANSITION-265/plan.md).
+
+The completed fit takes 309.40 s. Checkpoint parity and frozen geometry pass.
+Left-side correctness improves from 158/226 to 218/226. Artwork correctness falls from 17/24 to 7/24.
+Center correctness falls from 68/226 to 53/226, despite fewer false changes. Reject promotion.
+New unchanged-focus training examples score 0/68 across both orders at fixed thresholds, versus 26/68 at diagnostic threshold 0.5.
+This motivates a condition learnability and weighting comparison, rather than more capture volume.
+[Full results](../reports/work/TRANSITION-265/handoff.md).
+
+## TRANSITION264 — October 7, position-weighted native comparison
+
+The returned-model diagnostic scores 16,272 decisions in 10.77 s. Weak center disturbances expose substantial abstention in DTM068 and DTM069.
+The companion audit verifies 640 native pairs across 167 images and 103 metadata files.
+The selected 496 native training pairs place 959/992 endpoints in 2 left-side grid cells.
+Existing group weighting assigns those cells 88.53% of native endpoint weight. This identifies coverage imbalance, not its causal effect.
+Register DTM071 before fitting: DTM054 initialization, seed 42, 120 epochs, Adam 0.0001, batch 16, and 2 CPU threads.
+Change native position weights only. Preserve replay weights, class totals, exact membership, and all protected roles.
+The fit completes in 320.43 s. Checkpoint parity and frozen-geometry checks pass.
+Reserved correctness rises from 51/52 to 52/52. Artwork-only correctness falls from 17/24 to 0/24.
+Full center-disturbance correctness falls from 68/226 to 10/226. Reject promotion.
+Weighting reduces unchanged content-change weight by 80.8%. Binary class totals alone do not control this condition imbalance.
+[Full results and next experiment](../reports/work/TRANSITION-264/handoff.md).
+
+## HCF-COLOR263 — October 7, native color-space diagnostic
+
+Fit decoded-RGB and linear-sRGB versions of the same highlight on 4 pairs. Score 36 development pairs with fixed membership.
+All 4 optimizer trials converge. Execution takes 9.797 s. Linear sRGB increases error in every group.
+Wide-artwork mean error rises from 11.647 to 12.641. Retained poster error rises from 3.056 to 5.256.
+This formula does not repair native shading. Preserve native pixels and current data roles for model work.
+[Parameters, evidence, and limits](../reports/work/HCF-COLOR-263/handoff.md).
+
+## HCF-NATIVE261 — October 7, retained evidence and residual diagnosis
+
+Verify the existing HCF archive: 8 images, 7 unique pixels, 1 journey, 6 analyzed frames.
+Saved producer proposals improve from 3/6 to 5/6. All frames contain focus; the abstention is not a no-focus success.
+Keep the development-review role. This is saved-output review, not fresh inference or independent accuracy.
+Score 24 native pairs using frozen geometry and highlight parameters with 2/8-pixel residual smoothing.
+Wide artwork retains 66.6% of error energy at 8 pixels; posters retain 10.4%. Execution takes 5.98 s.
+Fine filtering alone cannot resolve the wide-artwork residual. Prioritize native data for training.
+[Scope, metrics, and verification](../reports/work/HCF-NATIVE-261/handoff.md).
+
+## TRANSITION253 r4/r5 — source mapping and controlled native capture
+
+The 8 retained artwork comparisons show no gain from replacing screenshot warping with original artwork.
+Frozen highlight coordinate changes leave wide-artwork error near 11.6 on a 0–255 scale.
+Local TTR then captures 16 pairs with one artwork across 2 sizes and 2 backgrounds in 128.04 s.
+All 76 files and 32 production crops pass intake. Seven focused background contrasts are exact; one has mean error 0.0222.
+Native growth changes from 17.49% to 13.00%. Background color does not explain the large interior mismatch in this controlled test.
+Preserve native pixels and existing roles. The approximate renderer remains unqualified; no model fit or promotion occurs.
+[Full report](../reports/work/TRANSITION-253/mapping-r4-and-controlled-r5.md).
+
+## TRANSITION253 r3 — border, shadow, and artwork diagnostics
+
+Fit 5 corner candidates and 16 shadow candidates on the original 4 pairs. Check 12 original-family pairs and 8 artwork pairs.
+Keep all existing data roles. Use no new capture or neural training.
+Original-family border error falls from 62.27 to 6.01. Exterior error falls from 10.09 to 7.28.
+The fixed formula transfers poorly to artwork. A size-based formula improves one group's interior error from 15.80 to 5.14.
+Recorded native geometry improves that group to 3.05, but does not resolve the other group's error.
+Do not admit generated renders for training. Next, isolate content mapping and border effects with controlled references.
+[All results](../reports/work/TRANSITION-253/edges-r3.md).
+
+## TRANSITION253 — bounded native highlight fitting, 2026-10-07
+
+Fit 4 retained pairs from recipe 00. Check 12 pairs from recipes 03, 04, and 05 without further fitting.
+All pairs retain their training role. No new capture or neural training occurs.
+The registered comparison uses fixed geometry and 2 bounded starts for a white elliptical highlight.
+Mean check error falls from 3.6255 with quadratic correction to 0.7430 with the highlight, on a 0–255 scale.
+The complete command takes 5.56 s. Both starts converge, and repeated renders match exactly.
+Native pixel equality does not pass. Borders, shadows, animation, and parallax remain unmeasured.
+[Research, formula, and evidence](../reports/work/TRANSITION-253/research-and-formulas.md).
+
+## DTM068–DTM070 — registered worker replication batch
+
+DTM068 and DTM069 repeat group weighting with seeds 43 and 44.
+DTM070 uses seed 42 and class weights matching DTM067's native class mass.
+Reuse exact TRANSITION248 inputs, initialization, and all other settings. No model selection or promotion is authorized.
+[Plan](../reports/work/TRANSITION-249/plan.md). All 3 fits and independent local replay complete; no candidate passes promotion checks.
+
+## DTM066 / DTM067 — matched sampling, registered before execution
+
+Complete: group weighting improves artwork 4/24 to 17/24, reserved 39/52 to 51/52, and replay 638/668 to 660/668.
+Both runs retain 52/52 training-role holdout decisions. DTM067 still makes 53 left-distraction and 91 center-distraction false changes.
+Training takes 319.28 s and 313.91 s. Checkpoint parity and frozen geometry checks pass.
+Retain DTM067 for replication. No production replacement occurs.
+[Results](../reports/work/TRANSITION-248/handoff.md).
+
+Compare equal native row weights against equal connected-group weights.
+Join groups by shared decoded pixels. Exclude a deterministic fifth of training components from both fits.
+Preserve protected roles and replay exclusions. Use DTM054 initialization, 120 epochs, Adam 0.0001, batch 16, seed 42.
+Keep total native and replay weight identical. Select the last epoch only.
+[Protocol](../reports/work/TRANSITION-248/plan.md). No capture or promotion occurs.
+
+## TRANSITION247 — 3 diagnostic fits, registered before execution
+
+Complete: 40.40 s, including preparation. The probes reveal different errors, not a deployment winner.
+Forced artwork results: DTM054 features 20/24, DTM063 features 8/24, spatial differences 8/24.
+The DTM054 probe fails all 226 left-distraction cases. The spatial probe preserves all 678 authored distraction cases.
+Training support is concentrated: 279/548 native rows come from 2 named groups.
+[Results](../reports/work/TRANSITION-247/handoff.md). Next, control group contribution before further capture.
+
+Compare frozen DTM054 features, frozen DTM063 features, and explicit spatial differences on identical eligible rows.
+Use class-balanced ridge regression with penalty 0.01 and training-only normalization.
+Audit exact labels and duplicate weighting first. Keep all existing data roles.
+These candidates test representation quality. They are not calibrated deployment models.
+[Fixed batch](../reports/work/TRANSITION-247/plan.md). No capture, export, or promotion occurs.
+
+## DTM065 — fixed-feature native adaptation, registered October 6
+
+Outcome: reject. Training takes 154.41 s; preparation, training, and evaluation take 193.80 s.
+All frozen tensors remain unchanged, and checkpoint reload predictions match.
+Reserved: 52/52. Original native: 55/60, including training cases. Artwork: 0/24.
+Replay: 636/668. Left distraction: 226/226. Center distraction: 20/226.
+These results reject feature freezing as a sufficient repair. They do not establish that feature updates never matter.
+[Full comparison](../reports/work/TRANSITION-246/handoff.md).
+
+Test whether freezing convolution features preserves old distraction decisions during native adaptation.
+Use DTM054 initialization and the exact DTM063 training tensors and labels.
+Use the existing `linearOnly` option, 120 epochs, Adam 0.0001, batch 16, seed 42, and 2 CPU threads.
+Select the final epoch and keep thresholds 0.15/0.85. No new data role or architecture occurs.
+Require native gains without losing prior correct replay, reserved, or distraction decisions.
+[Plan](../reports/work/TRANSITION-246/plan.md). No automatic second fit, capture, export, or promotion.
+
+## DTM063 and DTM064 — matched region diagnostic, registered October 6
+
+Use DTM054 initialization and the existing change-only trainer for 2 fixed fits.
+DTM063 uses whole frames. DTM064 applies a stable union mask over all nominal control regions, expanded to 120%.
+Both runs use 548 native training comparisons, their reversals, and 668 unchanged replay rows.
+Use 120 epochs, Adam 0.0001, batch 16, seed 42, and 2 CPU threads. Select the last epoch only.
+Preserve thresholds 0.15/0.85 and frozen geometry. Keep reserved and development data outside training.
+Run old replay, distraction checks, reversal checks, and region-dependence checks. No automatic third fit follows a failure.
+[Fixed plan](../reports/work/TRANSITION-245/plan.md). No capture, export, or promotion is included.
+
+Results: both candidates fail. DTM063 takes 288.60 s; DTM064 takes 287.70 s.
+DTM064 improves original native changes from 39/60 to 60/60, including training cases, and artwork-only decisions from 0/24 to 8/24.
+Reserved decisions fall from 52/52 to 40/52. Replay falls from 668/668 to 658/668.
+Left distraction decisions fall from 226/226 to 29/226. Region shifts show substantial sensitivity.
+Keep current models. [Complete results and recovery evidence](../reports/work/TRANSITION-245/handoff.md).
+
+## DTM062 — matched native content controls, registered October 6
+
+Test whether unchanged-focus content variations reduce false changes without losing native focus changes.
+Use DTM054 initialization and the existing change-only trainer. Preserve geometry weights and thresholds 0.15/0.85.
+Use 120 epochs, Adam 0.0001, batch 16, seed 42, and 2 CPU threads. Select only the final epoch.
+Keep the existing 668 replay rows and TRANSITION242 training comparisons.
+Add reviewed TRANSITION243 training-only comparisons in both directions. Preserve protected artwork and reserved data.
+Launch only after native label review and exact input admission. Record immutable membership before launch.
+Require preservation of previous correct distraction decisions, old replay, and reserved native decisions.
+Require improved development artwork decisions. A failure prevents promotion and does not start another run.
+[Plan](../reports/work/TRANSITION-243/plan.md).
+
+Result: DTM062 completes 120 epochs in 301.86 s. The 1824 training rows include 279 new native comparisons and their reversals.
+Original native pairs reach 75/76, including training cases. Reserved comparisons fall from 52/52 to 49/52.
+Old replay falls from 668/668 to 643/668. Left-side distraction decisions fall from 226/226 to 28/226.
+The new comparisons produce 149 correct decisions and 130 abstentions. Protected artwork controls remain 0/24 correct.
+Reject the candidate. No threshold change, second fit, export, or promotion follows.
+Checkpoint SHA256: `9fd162171163da70819c8f17817ea8b3a2509bf6326ee7c68bf6d4e23a253e0a`.
+[Full results](../reports/work/TRANSITION-243/handoff.md).
+
+## DTM061 — native endpoint comparison, registered October 6
+
+Use DTM054 as the initializer for one change-only adaptation. Preserve the existing geometry weights.
+Add verified FOCUS233 training, FOCUS234, and FOCUS236 endpoint comparisons to the existing 668 admitted replay rows.
+Preserve FOCUS233 reserved recipes and FOCUS239 calibration derivatives outside training.
+Use CPU, 2 threads, Adam 0.0001, batch 16, seed 42, and 120 epochs. Select the last epoch only.
+Record exact image, tensor, label, source, and checkpoint hashes before launch.
+Keep 0.15/0.85 thresholds. No automatic second fit, export, or promotion is included.
+The experiment requires native errors in the baseline and valid input checks before training.
+[Contract](../reports/work/TRANSITION-242/plan.md).
+
+Result: DTM061 completes 120 epochs in 239.73 s. Original native pairs improve from 49/76 to 72/76, including training examples.
+Reserved comparisons remain 52/52. Old replay and reversed replay each remain 668/668.
+Development decisions improve from 44/72 to 48/72. Artwork-only false changes fall from 24/24 to 20/24.
+However, left-side distraction decisions fall from 226/226 to 174/226. Center distraction decisions fall from 207/226 to 42/226.
+Reject the candidate despite its narrow repair check passing. No export or promotion occurs.
+Checkpoint SHA256: `2abe6a611180fd6850cbe00d3578b363cea92658bb57292ad33dfb427652f87b`.
+[Full comparison](../reports/work/TRANSITION-242/handoff.md).
+
+## Run FDR041 — targeted crowded styles, October 6
+
+Preregister 1 fit before dispatch. Add 24 reviewed style crops to the unchanged 152 FDR040 training crops.
+Use fresh FDR001 initialization, fixed BatchNorm statistics, seed 42, 30 epochs, batch 64, and AdamW learning rate 0.00003.
+Select only epoch 30. Preserve all other FDR040 settings and score all 470 recorded crops after training.
+The hypothesis tests representative style coverage, not another architecture or a longer run.
+Original calibration, reserved procedural cases, and previous test images remain outside training.
+Calibration layouts have training derivatives. Their comparison cannot establish unseen-layout generalization.
+Bound the fit to 6 GPU min and 2 GiB output. No automatic retry or promotion.
+Input archive SHA256: `db1bb98128ad7cbea3041d759126dfc720fa168bd171c29ea5dd4ea535ee1ed6`.
+[Plan](../reports/work/FOCUS-STYLE-237/plan.md).
+
+Result: 30 epochs finish in 6.80 s. All 176 training rows are correct, including all 24 new style crops.
+Original poster false positives remain 4/4. Original focused misses increase from 0/4 to 1/4 versus FDR040.
+Previous test errors remain 0/270. Reserved errors remain 2/16. Reject the candidate.
+NUIAK verifies all 470 predictions locally in 10.78 s, with no decision changes.
+All 138 BatchNorm buffers remain fixed. Maximum probability difference is 0.00000298.
+Checkpoint SHA256: `ce52210d7042fac89591a442d230ba3971045f7b82f1ce33bba86545c55f3abf`.
+This is a generalization failure despite perfect training classification. The exact visual shortcut is not established.
+[Results and diagnosis](../reports/work/FOCUS-STYLE-237/handoff.md). No repeat fit, threshold change, or promotion follows.
+
+## Run FDR039 / FDR040 — fixed normalization comparison, October 6
+
+Preregistered before worker dispatch. The maintainer approves this larger focus tranche.
+Both runs use the 152 approved FDR038 training crops, unchanged roles, and fresh FDR001 initialization.
+FDR039 updates BatchNorm statistics. FDR040 preserves initial statistics while training affine parameters and other weights.
+Use CUDA, seed 42, 30 epochs, batch 64, AdamW learning rate 0.00003, and identical sample order.
+Select only epoch 30. Evaluate all 446 recorded rows afterward, including protected calibration and previous tests.
+Do not fit those protected rows. These are development diagnostics, not final qualification.
+Bound both fits to 6 GPU min, 8 GiB VRAM, and 2 GiB output. No automatic retry or promotion.
+Input package SHA256: `ef7526ee2d05f5137061bb8d6064e8d009e3c681eea1f1e15770356faac740c3`.
+Initialization SHA256: `08158ebc78689f0549511b26f744f9e39e0250d56cbae311da3c83cf9c4ce1e5`.
+[Contract](../reports/coordination/focus236-worker.json).
+
+Both fits complete in 12.78 s on Big Dog. Peak CUDA allocation is 1,448,263,680 bytes.
+NUIAK verifies both checkpoints on all 446 crops. No decision changes occur; maximum probability difference is 0.00000370.
+All 138 BatchNorm buffers stay fixed in FDR040. The 30 epoch orders match between runs.
+FDR039 retains 259/270 previous decisions. FDR040 restores 270/270 while preserving 14/16 reserved decisions.
+Both models still make 4/4 poster false positives. Neither model passes the repair criteria. Do not promote either model.
+The result supports fixed statistics for this small fine-tuning experiment. It does not establish a universal training rule.
+[Local checks](../reports/work/FOCUS-REVIEW-236/handoff.md) record the exact artifacts and limits.
+
 ### Run035 — REPLAY219 full-frame replay intervention, preregistered October6
 
 VERIFY226 result:2400/2400 independent Mac MPS predictions, exit0/140.848seconds.
@@ -4828,3 +5075,54 @@ change on8scroll_unchanged; change on8appearance focus_moved, no-change on16cont
 and8boundary cases. No abstentions. These are reported-condition prediction counts,
 not qualified accuracy. Hypothesis: motion/appearance shortcut; cause not established.
 Result SHA3ed8466a01a9a1d79b493ba450ee522de7501959bfc11d7534a5cf055f149e35.
+
+## Run FDR-037 — 1 local focus repair cycle (2026-10-06)
+
+The maintainer requests measurement, local generation, 1 candidate, and a reserved comparison.
+Protocol `4a4796fa57c9da7b4711ddc1b997301d43ac626d9f7b133eadbc975f699ec826` uses arm `schema4-repair`.
+Output: `NativeUITrainer/focus_ring_runs/fdr037-repair233`.
+Initialize from FDR-001 SHA `08158ebc78689f0549511b26f744f9e39e0250d56cbae311da3c83cf9c4ce1e5`.
+Train MobileNetV4 on 48 crops from 24 new observed native pairs.
+Use 30 epochs, batch 64, AdamW 0.0003, weight decay 0.01, seed 42, and no augmentation.
+This gives 30 updates. Select the last epoch. Do not use reserved cases during fitting.
+Use MPS and existing dependencies. Limit explicit outputs to 4 GiB. Do not start another candidate automatically.
+
+Hypothesis: native highlight examples improve focus decisions without losing previous correct decisions.
+Baseline: original poster calibration has 4 false positives and 1 miss across 8 crops.
+New training crops have 3 false positives and 24 misses. Reserved crops have 8 misses and no false positives.
+The generated shapes therefore test native highlight learning better than realistic artwork rejection.
+Keep this limitation visible. The original poster failures remain an evaluation-only transfer check.
+All 270 previous test crops are correct before fitting. Their legacy status does not establish modern qualification.
+The 16 reserved crops use new layouts but share procedural motifs. They are correlated development evidence, not final audit evidence.
+Pass this experiment only if reserved errors decrease and previous correct decisions remain correct.
+Report the original poster errors separately. Keep threshold 0.85 and ambiguity band 0.70–0.85 unchanged.
+No Core ML export, production promotion, or navigation authority follows from this run.
+
+Result: execution finishes in 14.8101 s. Training decisions improve from 21/48 to 48/48.
+Reserved decisions improve from 8/16 to 16/16. Previous test decisions fall from 270/270 to 155/270.
+The candidate introduces 114 false positives and 1 miss on previous test crops.
+Poster calibration improves from 3/8 to 4/8, but all 4 unfocused poster errors remain.
+Reject FDR-037. Narrow fitting causes a retention failure; the precise mechanism remains unproven.
+Evaluated last checkpoint SHA: `c17e26bc4ead39bb44d04b2d089d6cc7e41207a474afa6dc56f81bb288051dda`.
+See `reports/work/FOCUS-REPAIR-233/handoff.md` for evidence and the next experiment.
+
+## Run FDR-038 — artwork with reviewed replay (2026-10-06)
+
+The maintainer approves the follow-on experiment. Use arm `schema4-repair` and output `fdr038-retention234`.
+Protocol SHA-256: `735a86f158a155673f61cabd3d390029ed8261a808531df43446cb184f33efc8`.
+Initialize from FDR-001. Train 1 MobileNetV4 candidate for 30 epochs, batch 64, seed 42, and AdamW learning rate 0.00003.
+Use 48 new artwork crops, 48 previously admitted procedural crops, and 56 visually reviewed legacy crops.
+Exclude 100 unclear legacy pairs from the 128-pair review. Legacy replay remains diagnostic evidence, not modern native qualification.
+Select epoch 30 without evaluation during training. Keep the 0.85 threshold unchanged.
+Hypothesis: artwork plus reviewed replay and a lower learning rate reduce poster errors without losing previous correct decisions.
+These combined changes cannot isolate the effect of each change. All previous evaluation roles remain unchanged.
+Use MPS, resident dependencies, and at most 4 GiB of explicit outputs. Do not start a second fit automatically.
+Measure all 270 previous test crops, 16 reserved procedural crops, and 8 original poster calibration crops after training.
+
+Result: 30 epochs finish in 33.6803 s on MPS. All 152 training decisions are correct at 0.85.
+Reserved procedural decisions reach 14/16, with 2 misses in the ambiguity band.
+Previous test decisions reach 259/270, with 11 new false positives under legacy labels.
+Original poster calibration reaches 4/8, but all 4 original false positives remain.
+Reject FDR-038. Mixed fitting reduces the prior retention failure but does not repair the target poster failure.
+Evaluated last checkpoint SHA-256: `3a37d5cb7f8f360f2efdfcc797635e38b37653868a443e48e9e777035ca27405`.
+No export or promotion. See `reports/work/FOCUS-RETENTION-234/handoff.md`.
