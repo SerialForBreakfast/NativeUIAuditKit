@@ -1,5 +1,305 @@
 # NativeUIAuditKit — Tasks
 
+## Highest priority — FOCUS-LOOP / NUIAK — measured repair with local generation
+
+The maintainer makes the focus improvement cycle our highest priority on October 6.
+[Execution plan](Research/Plans/EvidenceDrivenFocusQualification.md#highest-priority--focus-improvement-cycle).
+This priority supersedes earlier suggested ordering. Preserve active worker jobs and existing data roles.
+
+- [ ] Rank the top 10 failure types from existing evidence. Record frequency, impact, label confidence and affected component.
+- [ ] Select 1 measurable visual failure for the first complete repair. Separate navigation and timing defects from model errors.
+- [ ] Check the matching local TTR app, Fixture and Simulator. Reuse the LOCAL-CAPTURE-232 path before requesting remote capture.
+- [ ] Freeze related training, development and reserved evaluation groups. Keep inspected calibration cases out of independent final claims.
+- [ ] Generate controlled positive and negative examples locally. Record observed focus and measured rendered bounds.
+- [ ] Validate all examples and prepare one grouped sample review. Keep random samples separate from targeted disagreements.
+- [ ] Prepare an exact baseline and candidate comparison for Big Dog. Record membership, model, preprocessing, compute budget and acceptance before dispatch.
+- [ ] Independently evaluate returned models on the same reserved examples and previous successful cases. Check errors and abstentions separately.
+- [ ] Test a qualified candidate through TTR on matched navigation tasks. Preserve the current model if any required gate fails.
+- [ ] Report whether the selected failure improves without regressions. Select the next failure from the measured results.
+
+Local capture already passes for 4 calibration recipes on source `0be978b3`.
+This proves that path only. Recheck current target ownership and readiness before capture.
+TTR support requests concern missing capabilities, not routine local generation or binary delivery.
+Big Dog can complete existing evidence work while NUIAK prepares the exact training package.
+NUIAK publishes both support requests under the verified shared `nuiak/requests` folder.
+Both JSON files pass exact readback checks. Peer acknowledgments remain pending.
+[TTR request](reports/coordination/focus-loop-ttr-20261006.json) and
+[Big Dog request](reports/coordination/focus-loop-bigdog-20261006.json) preserve existing work and limits.
+Current assignment records priority, tasks and peer requests. It does not claim the repair experiment has run.
+
+## Requested — seeded test apps for navigation and training / TTR and NUIAK
+
+The maintainer requests repeatable app-like scenarios with seeded layouts, artwork and working navigation.
+This extends the existing semantic-export request. TTR should reuse its Fixture generator and campaign tools.
+[Request](reports/coordination/seeded-test-apps-20261006.json) defines observations, asset rights, data roles and acceptance.
+TTR supplies its capability map, missing tasks and first complete delivery.
+NUIAK supplies the ranked top 10 failure types and checks received annotations.
+Big Dog training remains a separate assignment with fixed inputs and evaluation criteria.
+Keep known-route replay separate from unfamiliar-goal navigation.
+Reserve related layout families before training. Use measured rendered bounds, including native growth.
+Use approved assets with item-level rights records. National Archives and Smithsonian are candidate sources.
+Peer acknowledgment remains pending until TTR replies to the exact request ID.
+
+## Review delivered — LOCAL-CAPTURE-232 / NUIAK — 4 local pairs verified
+
+NUIAK builds TTR and Fixture from the updated Developer checkout at `0be978b3`.
+All 4 local captures complete with 1 accepted pair each and no rejected rows.
+All 48 exported files pass hash checks. All 8 images and 8 production crops pass.
+All 4 pairs pass schema 4 checks and visual review. Calibration membership remains unchanged.
+Fixture responds after capture. TTR reports ready state and clear cleanup records.
+MCP imports the original artwork recipes without direct folder access. No remote capture request is needed.
+Next: use these calibration cases for the approved focus comparison, without treating them as independent final evaluation.
+[Evidence](reports/work/LOCAL-CAPTURE-232/handoff.md).
+
+## Status231 — files received; Big Dog follow-up sent
+
+NUIAK received custom-apple10 and the TTR version report.
+The archive size and hash match. All 93 listed files pass hash checks. All 24 PNG files decode.
+The archive contains 95 entries, including directories, and expands to 143,358,305 bytes.
+NUIAK sent an exact receipt. TTR owns removal of its shared archive. Cleanup confirmation remains pending.
+NUIAK completes the image review. All 4 pairs pass schema 4 checks. All 8 production crops pass.
+NUIAK checks 40 indexed files and reviews bounds on all 8 original images.
+All pairs retain the calibration role. Training approval remains separate.
+All 13 metadata hashes in TTR's version report match retained files.
+The exact build for each pair remains unknown. [Review](reports/work/STATUS-231/review.md).
+Big Dog still has the BD27 recipe check and EVIDENCE223 report work.
+NUIAK placed those references in the watched request folder. The existing limits remain unchanged.
+No receipt for the EVIDENCE223 pack appears in Big Dog's checked reports. NUIAK retains its shared copy.
+[Receipt](reports/coordination/receipt231.json) and [worker follow-up](reports/coordination/worker-followup231.json).
+
+## Status check — October 6 — TTR replies; next image review remains open
+
+TTR replies to DIAG227 with records for Fixture12/14/16 and the host app.
+The records do not prove which version made each image pair.
+NUIAK has read the reply but has not completed that comparison.
+TTR confirms our INTAKE225 receipts and reports removal of the shared copies.
+TTR retains its originals.
+TTR offers 4 new pairs in custom-apple10. It also reports 1 failed case.
+NUIAK has not downloaded or approved this new data.
+Big Dog's latest visible report remains worker219-complete03. NUIAK has already reviewed those results.
+Next: review the version records and new pairs. Continue SEMANTICS229 independently.
+[Response](reports/coordination/status230.json).
+
+## Review delivered — REVIEW228 / NUIAK — training coverage and confidence diagnosis
+
+Audit resident Run035 training examples/annotations and weighted class exposure;
+review representative label/listRow examples without editing labels. Analyze cached
+022/035 confidence ordering on inspected development frames, preserving .25 and
+existing roles. Identify one supported next experiment, or the exact missing input.
+Companion: reconcile peer requests/source-binding status without recapture.
+No training, new inference, admission or promotion in this diagnostic tranche.
+249source hashes/41exposures reconcile;16tests pass. Six visual samples reviewed;
+13ContextMenu training images contain41 interactive action annotations typed label,
+inconsistent with the non-interactive taxonomy. Original labels retained.
+[Handoff](reports/work/REVIEW-228/handoff.md).
+
+## Ready — SEMANTICS229 / NUIAK — versioned label-policy repair before replay
+
+Resolve action-row versus standalone-label and child-text semantics in Research;
+audit affected generator templates and training membership. Implement source/tests,
+then qualify a bounded versioned training-only repair without rewriting retained
+evaluation or old reports. Preserve source lineage and compare original/corrected
+annotations. Next: preregister one exposure-controlled replay comparison, not an
+automatic sweep. Inputs, sequence and acceptance: [plan](reports/work/REVIEW-228/handoff.md#next-substantial-tranche).
+
+## Review delivered — DIAG227 / NUIAK — cached error and native ancestry diagnosis
+
+Compare035/022 on existing2400retained frames using existing diagnostic matcher;
+reconcile every class total. Classify unmatched proposals as review candidates,
+not label errors. Independently audit repair09/failures08 exact pixels and body
+annotations for duplicate/conflicting evidence. No inference, role/label change,
+capture or training. Deliver next bounded hypothesis and actionable peer findings.
+All41class totals reconcile.19lost progressView and39lost pageControl qualifying
+proposals still haveIoU>=.5 boxes below.25confidence; not absent geometry. Tiny-label
+TP gains790 with unmatched-label review proposals376→1188. Native30endpoints have
+26unique pixel hashes; two tab groups link unavailable-body trials to measured
+repair without conflicting focus. [Handoff](reports/work/DIAG-227/handoff.md).
+
+## Review delivered — VERIFY226 / NUIAK — Run035 retention and repair09 visual review
+
+Run existing640/MPS exporter on pinned2400retained fullframes with035fixed-last;
+reuse022/033/034 caches/settings. Budget900seconds/128MiB, no training/selection.
+Review repair09 source/representative visual evidence and diagnostic exclusions;
+no recapture or label admission by structural checks alone. One integrated handoff.
+2400frame pass exit0/140.85s:035mAP50 .901047 versus022 .899967 and034 .872356;
+FP6623 versus4346/7786. ROI failure does not imply full-frame failure. No promotion.
+14production crops pass;14overlay plans bind to raw metadata/pixels; source/build
+binding still needed for native admission. [Handoff](reports/work/VERIFY-226/handoff.md).
+
+## INTAKE225 — returned Run035 and TTR repair evidence reviewed
+
+NUIAK verified four transfers and Run035 checkpoint/accounting:10epochs,
+4400batches/275updates;621cached predictions pinned. Native validation improves,
+but ROI fit/page/combined regress severely; no promotion. Independent2400full-frame
+evaluation remains next, not replaced by ROI scores. TTR repair09:12pairs reviewed
+through declared-version paths (7v4/5v3); failures08:3(2v4/1v3).77PNGs decode,
+144indexed artifacts verify. Labels/source/runtime still need qualification.
+[Handoff](reports/work/INTAKE-225/handoff.md). No new capture requested.
+
+## Review224 — Big Dog repair intake complete; one catalog guard repair pending
+
+Owner NUIAK acceptance / Big Dog BD27 implementation. Received review221-return01
+and reviewed all four fixes. BD25 counts/representatives and BD28 portable metadata
+reconcile; BD26 parser regressions pass, actual1794label revalidation remains
+worker-reported. BD27 still accepts a duplicated recipe under a new episode ID:
+require exact (family_index,seed,condition) membership, not count/ID uniqueness alone.
+[Review](reports/work/BIGDOG-REVIEW-224/handoff.md). Existing authored results remain
+usable; no new inference needed. EVIDENCE223 request acknowledgment still pending.
+
+## Local review delivered; native evidence pending — EVIDENCE223 / NUIAK
+
+Implement FOCUS-EVIDENCE + retained FOCUS-TRUTH + FOCUS-BASELINES together with
+cached iOS label-QA companion. Reuse BD18/22/25/14/27, no duplicate inference/training.
+Preserve roles and production decisions; native qualification remains source-gated.
+[Contract](Research/Plans/EvidenceDrivenFocusQualification.md).
+Shared reporting and cached replay delivered:48native +20ART191 cases dispositioned,
+621iOS cases triaged, BD14/27 operating points compared. These are review proposals,
+not corrected labels or native accuracy. [Handoff](reports/work/EVIDENCE-223/handoff.md).
+Big Dog extensions and TTR source request published/read back; acknowledgment and
+acceptance pending. Next: reconcile returns, adjudicate labels and recover missing
+cached confidence values; do not rerun models merely to fill reporting gaps.
+Follow-on FOCUS-LOOP uses205/206 only after qualified inputs; FOCUS-MODEL-SPIKES
+remains evidence-gated design, not architecture execution.
+
+## Review complete — CROP222 / NUIAK — retain current FocusRing cropping
+
+Implement inspection-only pair-union scoring in existing schema4 entrypoint, run
+same20retained ART191pairs, compare compatible cached shipped scores, report clipping
+strata and margins. No training admission/threshold tuning/production crop change.
+[Contract](Research/Plans/ArtworkModelImprovement204.md#crop222--retained-pair-crop-sensitivity-inspection-only).
+Actual80scores: positive paired margins8/20endpoint versus5/20union; reported
+unfocused>=.85 rises8→12. No production change/admission.28focused tests and
+offline Swift140+14pass; helper change required a fresh matched control.
+[Handoff](reports/work/CROP-222/handoff.md). Qualified labels still gate206training.
+
+## Big Dog ready CPU backlog — BD25–28; low priority behind Run035
+
+October6 review221: all four returned;14tests replayed. BD25 cached atlas accepted
+within scope; BD26 malformed-label parsing blocks helper integration; BD27 authored
+tradeoff verified from report and queued remaining boundary tests; BD28 portable
+paths/negative tests pending. Exact repairs dispatched in
+[review221](reports/coordination/bigdog-review221.json),<=2CPUhours/128MiB.
+No new GPU job or data admission. [Evidence](reports/work/BIGDOG-REVIEW-221/handoff.md).
+
+Owner Big Dog; acceptance NUIAK. Four independent named-input assignments:
+BD25 cached retention-failure atlas; BD26 replay coverage/label statistics;
+BD27 authored temporal-stability stress; BD28 resident artwork coverage/selection.
+One CPU job at a time,<=2threads/2GiB RAM,<=8CPU hours/1GiB total; no GPU,
+downloads, new data roles or production changes. Each includes tests, evidence and
+decision output in the [dispatch contract](reports/coordination/bigdog-ready-backlog220.json).
+BD12/13 inspection,218v2 repair helper and BD14 authored benchmark reviewed;
+26tests replayed and1920authored frames independently reconstructed. Native48
+not admitted; BD15 matched native four-arm corpus still missing.
+[Review](reports/work/BIGDOG-REVIEW-220/handoff.md).
+
+## Dispatched — REPLAY219 / Run035 / Big Dog; acceptance NUIAK
+
+20:49UTC correction: worker had a newer `worker219-staging-failure01` and binding
+return, missed by the prior terminal/blocker-only lookup. Native213 hashes live in
+the files inventory, not entry fields. Repaired wrapper independently reviewed;
+4tests pass. [Corrected staging/launch approval](reports/coordination/worker219-staging-launch-approval.json)
+authorizes a fresh attempt directory with preserved failure evidence. No checkpoint
+or actual launch observed;2400frame inference waits only on candidate delivery.
+
+One retention intervention using resident217/213inputs and fresh022weights:
+1698fullframe replay slots from189admitted sources plus unchanged60native slots.
+Same1758slots/10epochs/440batches per epoch/275updates as034; context, class exposure
+and repetition change jointly. No new pixels/roles or architecture. Manifest128379
+bytes published/read back; one GPU/3600seconds/3GiB including621fixed predictions.
+Worker preflight19:38UTC verified inputs but stopped before GPU: original512
+diagnostic ROIs are absent from the intentionally full-frame-only replay schedule.
+Maintainer approved the separate diagnostic-validation binding extension; Big Dog
+may implement/test it and launch035 without another proposal round trip. Preserve
+all training slots and original validation bytes/order; actual start remains unverified.
+[Scoped approval](reports/coordination/worker219-validation-approval.json).
+16focused tests and offline Swift140+14pass locally; extension tests pending. No promotion.
+Next: independently accept035 and evaluate2400retained fullframes against022/034,
+report all-class/native tradeoffs. CPU218repairs and BD12/13/14 remain independent.
+[Plan](Research/Plans/ArtworkModelImprovement204.md#replay219--full-frame-replay-intervention-run035),
+[request](reports/coordination/worker219-request.json),
+[handoff](reports/work/REPLAY-219/handoff.md).
+
+## Worker inputs resolved — BD12/13 native48; BD14 software contract / Big Dog
+
+NUIAK published two byte-identical native archives (31,944,728bytes total) and a
+portable48-case index with96cached DTM053/054 probabilities.144archive-relative
+image/evidence hashes independently verified. BD12/13 original-byte QA and
+reported-condition comparison can proceed now,4CPU hours/128MiB, no model rerun.
+All48remain inspection/calibration only: capture-era source binding unresolved;
+no accuracy, training admission or independent final-test claim. Other native
+corpora still need named inputs. Publication/readback verified; exact request
+acknowledgment/start19:23:31UTC and all3size/hash receipts19:23:57UTC verified.
+Big Dog reports QA running; no completed QA or training admission implied.
+
+BD14 authored benchmark slice now has a concrete240episode/1920frame recipe,
+fixed family roles, separate foreground/full-frame stability and modal labels,
+fixed diagnostic thresholds and2CPU-hour/1GiB budget. No modal model or native
+qualification claim. BD15 gets a1CPU-hour resident missing-input audit; training
+still needs matched rendered source-arm membership, not just artwork.198C remains
+source-qualified-data gated;198B/D original setup/input wording is superseded by
+completed lifecycle and prediction deliveries. No new model installation granted.
+[Native input contract](reports/coordination/bigdog-native48-inspection.json),
+[backlog contracts](reports/coordination/bigdog-backlog-contracts.json),
+[review/handoff](reports/work/WORKER-218/handoff.md).
+
+## Independent review — FULLFRAME-217 / NUIAK
+
+Runs033/034 registered:1758matched slots,10epochs,275updates each. Both arms add
+the same189already-admitted fullframes covering40classes to1509ROI; final60slots
+contrast old repeats/native artwork. Verified original labels/pixels/groups and
+reserved exclusions;8groups overlap existing trainingROI intentionally,37page
+evaluation higher groups still unknown. webContent unsupported. No new data roles.
+42,370,418-byte delta and exact execution request published/read back through SMB;
+worker receipt/start confirmed. Terminal16:56:08UTC reports both033/034complete,
+20epochs/8800minibatches/550updates and1242predictions,0failures. Return archive
+77,398,274bytes copied/hash-verified and safely extracted. Independent source,
+configuration/count/order and1242prediction review passes. Native gains coexist
+with retainedROI regression; no promotion or automatic next run. Whole-frame
+2400-member evaluation complete:022/033/034 mAP50 .89997/.86646/.87236;
+TP16713/17376/17809 andFP4346/8215/7786. Retention fails; no replacement.
+28focused tests and
+native offline Swift build/140Swift Testing+14XCTest pass. Next: independently
+review WORKER218's case-linked diagnosis and design a retention-preserving comparison;
+no automatic rerun. [Independent review](reports/work/FULLFRAME-217/review.md).
+[Handoff](reports/work/FULLFRAME-217/handoff.md),
+[contract](Research/Plans/ArtworkModelImprovement204.md#fullframe-217--matched-full-frame-retention-pair).
+
+## Changes requested — WORKER218 binding helper / Big Dog; retention accepted NUIAK
+
+Two independent CPU-only deliverables: BD22 caller-pinned authoritative-reference
+comparison with matched/conflict/unverifiable outcomes and adversarial tests;217
+case-linked top10retention regressions using existing predictions and lineage.
+Four CPU hours/128MiB outputs; no GPU, training, capture, installs or new pixels.
+Return received1097519bytes,38members/12775523expanded. Exact acknowledgment and
+terminal verified;13supplied tests pass locally.205count rows match local217,
+AP matches six-decimal rounding. Binding helper not accepted: rootnull crashes;
+known no-focus cannot be represented. Typed malformed-input guards, explicit
+absence/unknown semantics and bounded CLI smoke requested under the same218ID,
+2CPU hours/64MiB. Neither repairs nor native48QA depend on TTR readiness.
+Acceptance: locally replay tests and reconcile all metrics before integrating;
+do not equate matching metadata with true labels or training admission.
+[Request](reports/coordination/worker218-evidence-diagnosis.json),
+[plan](Research/Plans/ArtworkModelImprovement204.md#returned217-acceptance-and-independent-worker218-follow-up).
+
+## Coordination review — BD-18–24 exploratory spikes / Big Dog and TTR
+
+NUIAK reviewed TTR spikes03 and Big Dog spikes03-ack01. Prioritize18 statistical
+feasibility and22 manifest-aware planted-error QA, then resident19/21 diagnostics.
+20confirmed for matched benchmark design only;23new detector execution deferred;
+24inventory only. No downloads/installs or automatic StageB budgets approved here.
+324scores are not324independent examples; separate focus/temporal/motion tasks,
+oracle crops, group-level inference and source-qualified native admission.
+Exact amendment acknowledgment/readiness table received17:35UTC and hash matched.
+Peer reports18inconclusive(5groups,no temporal-stability labels);19crop/diff signal
+failed;22contract trial catches40/50planted errors, misses valid-but-wrong theme/role,
+0/50clean-control flags. Results are peer evidence pending independent replay.
+21blocked on weights/protocol;20design-only;23deferred;24inventory finds0complete
+action/timestamp/episode sequences. No new launches or duplicate tasks requested.
+Five listed metadata artifacts verified against return03hashes; no bulk intake or
+cleanup receipt issued. TTR replay06 reports offload complete and351offline checks,
+but0newgeometry pairs/0journeys; fresh non-contended target readiness required.
+[Scope corrections](reports/coordination/bigdog-spikes18-24-alignment.json).
+
 ## Review — REPLAY-216 complete; retention gates failed
 
 Both031/032returned and independently reviewed:1242predictions, native imageView
@@ -56,6 +356,13 @@ published/read back; peer acknowledgment and return-copy cleanup remain unconfir
 [Lineage and independent coverage audit](reports/work/REPLAY-216/coverage-handoff.md).
 
 ## Prepared follow-on — full-frame retention replay / NUIAK
+
+October6 continuation: FULLFRAME-217 preparation complete / NUIAK; dispatched. One
+matched033/034 comparison: common1509ROI+189fullframes, then60old repeats versus
+60native artwork slots. Validate whole-frame ancestry/labels and worker delta;
+fixed evaluation is preserved. Worker216-close01 acknowledges independent acceptance
+and rejects promotion; cleanup not performed. Native48 qualification still awaits
+capture-era source/build evidence. No new capture or artwork needed for217.
 
 Existing1509ROI pool has no positives for scrollIndicator/sheet/cancelAction/mapView.
 Audit of14804already-admitted training fullframes yields a deterministic189-frame

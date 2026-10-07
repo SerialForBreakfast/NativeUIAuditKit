@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-evidence223-amendment01",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "observed_at": "2026-10-06T21:50:52Z",
+  "state": "requested",
+  "supersedes": [],
+  "extends": ["nuiak-20261006-bd18-24-alignment01", "nuiak-20261006-backlog-contracts02", "ART191", "CROP222", "TRANSITION-205", "FOCUSRING-206"],
+  "priority": "CPU follow-up; preserve Run035 and all assigned GPU work",
+  "artifact": {"file": "nuiak/evidence223-worker-pack01.zip", "bytes": 779362, "sha256": "3239321bbabc75e9f2919c418c054e0394cb3e60957f415a54f4b232dc4cb653", "contents": "Pinned source and six numeric cached reports only; no images or weights"},
+  "environment": "Resident Python3 standard library; no installation or downloads. Extract into a new worker-local directory after bounded path/size/hash validation.",
+  "entrypoint": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/review_focus_evidence.py --inputs inputs.json --output results01",
+  "tests": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p test_focus_evidence.py",
+  "limits": {"concurrentCPUJobs": 1, "threads": 2, "memoryGiB": 2, "cpuHours": 4, "outputMiB": 256, "gpu": false},
+  "assignments": [
+    {"owner": "Big Dog BD18", "work": "Reuse completed five-group findings. Replay the pinned reporting contract and numerical tests; reconcile limits with prior BD18. Report independent support as unavailable for correlated frames. No duplicate model scoring or invented independence."},
+    {"owner": "Big Dog BD22/BD25", "work": "Review the 48 native and 20 ART191 case dispositions from this pack; list source facts available versus missing. For iOS, reuse 621 cached cases: 2378 ranked unmatched proposals, 414 geometry candidates, deterministic 63-case random sample. Recover the 2130 missing confidence values only from existing compatible resident predictions; otherwise report unavailable. No automatic correction, relabeling or data-role changes."},
+    {"owner": "Big Dog BD14/BD27", "work": "Reconcile all four predefined operating points and role/condition slices. BD14 now compares arms on foreground stability; its old whole-frame target differed. Explain tiny-highlight gain versus background nuisance failures; preserve oracle labeling. Identify missing fixed-box focus and qualified native temporal evidence. No new benchmark framework or sweep."},
+    {"owner": "TVTestRig", "work": "Using retained ART191 and native48 originals first, supply capture-era source/build references, observed focus identity, per-frame body bounds, clipping, timestamps and before/after capture-bracket evidence. Reference exact case IDs in pack. Distinguish body bounds from rendered glow/scale. Requested focus alone is insufficient. No recapture requested; return unavailable facts explicitly. Use findings to prepare, not launch, a qualified missing-coverage campaign under205/206."}
+  ],
+  "returnContract": "Named immutable report with input archive hash, source/environment versions, command/exit/runtime, per-assignment disposition, case-linked findings and missing evidence. Return up to ten supported failure categories with counts, severity, uncertainty and proposed Fixture variations; do not pad. Separate authored mechanics, producer agreement and qualified accuracy. Publish receipt of exact archive bytes/hash separately from acknowledgment and acceptance.",
+  "stopConditions": ["hash or version mismatch", "resource limit", "missing compatible cached predictions", "unresolved source or label authority; retain unknown, never infer labels"],
+  "outcomes": {"software": "local tests and portable replay passed", "dataEligible": false, "nativeIntegrationQualified": false, "modelGatePassed": null},
+  "boundaries": "No navigation authority, capture, installation, training, promotion or threshold changes in this assignment. Preserve originals and unresolved transfers; cleanup requires exact receiver receipt. Missing TTR evidence blocks native qualification only."
+}

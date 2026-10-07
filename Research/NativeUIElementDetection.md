@@ -763,6 +763,14 @@ Hard negatives train the model to avoid false positives on visually similar but 
 
 ## 8. Training
 
+October6 research intervention: REPLAY219 tests full-frame replay weighting against
+the retained034crop-heavy reference, preserving initialization and optimizer-update
+budget. It jointly changes context, class exposure and repetition; it is not isolated
+proof that context caused forgetting. Source membership remains admitted training
+only, and repeated slots are not additional independent examples. See
+[the bounded contract](Plans/ArtworkModelImprovement204.md#replay219--full-frame-replay-intervention-run035).
+All-class/native/whole-frame retention must be reported before any replacement.
+
 **October5 IOS187:**186failed the targeted geometry remedy. Test1280training and
 inference using resident supported exporter, box7.5 and022membership/schedule.
 Original960proposal amended before execution after inspecting explicit640/1280

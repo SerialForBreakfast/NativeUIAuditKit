@@ -16,6 +16,17 @@ def epochs(slots):
 
 
 class WorkerReviewTests(unittest.TestCase):
+    def test_compact217_order(self):
+        data=epochs(1758);order=data[0]['order']
+        digest=r.hashlib.sha256(json.dumps(order,separators=(',',':')).encode()).hexdigest()
+        for row in data:
+            row.pop('order');row.update(order_count=1758,order_sha256=digest)
+        self.assertEqual(r.check_epochs(data,1758,order),(4400,275))
+        for field,value in [('order_count',1757),('order_sha256','bad')]:
+            bad=copy.deepcopy(data);bad[0][field]=value
+            with self.assertRaisesRegex(ValueError,'compact_order_integrity'):r.check_epochs(bad,1758,order)
+        with self.assertRaisesRegex(ValueError,'slot_order'):r.check_epochs(data,1758,list(reversed(order)))
+        with self.assertRaises(KeyError):r.check_epochs(data,1758)
     def test_explicit_training_record_budget_preserves_default(self):
         parent=r.ROOT/'.build/debug-output';parent.mkdir(parents=True,exist_ok=True)
         with tempfile.TemporaryDirectory(dir=parent) as tmp:

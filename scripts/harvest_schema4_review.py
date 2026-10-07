@@ -200,22 +200,28 @@ def render_review(root, output, report):
                 runtime=runtime.identity(),preprocessing=runtime.RUNTIME_PREPROCESSING,crops=crops)
 
 
-def score_review(root, model, report):
+def score_review(root, model, report, geometry='endpoint'):
     """Diagnostic responses to unadmitted producer roles, never qualification metrics."""
     import focus_runtime as runtime
     from focus_ring_baseline import model_contract
     require(report == review(root), 'changed_review')
+    require(geometry in ('endpoint', 'pair-union'), 'unsupported_diagnostic_geometry')
     require(report['expected'] == report['reviewed'] and 0 < report['reviewed'] <= 20,
             'diagnostic_membership_budget')
     artifact = model_contract(model); identity = runtime.identity()
     items=[]; provenance=[]
     for row in report['rows']:
         meta=decode(read(root,row['path']))
+        bounds=[box(e['visibleBody']) for e in row['endpoints']]
+        x=min(b[0] for b in bounds); y=min(b[1] for b in bounds)
+        union=[x,y,max(b[0]+b[2] for b in bounds)-x,max(b[1]+b[3] for b in bounds)-y]
         for endpoint in row['endpoints']:
             role=endpoint['role']; name=str(Path(row['path']).parent/meta[role+'_png'])
             key=digest((row['path']+':'+role).encode())
-            items.append(dict(id=key,path=str(root/name),sha256=meta[role+'_sha256'],bounds=endpoint['visibleBody']))
-            provenance.append(dict(id=key,pair=row['path'],reportedRole=role,clipped=endpoint['clipped']))
+            selected=union if geometry=='pair-union' else endpoint['visibleBody']
+            items.append(dict(id=key,path=str(root/name),sha256=meta[role+'_sha256'],bounds=selected))
+            provenance.append(dict(id=key,pair=row['path'],reportedRole=role,clipped=endpoint['clipped'],
+                                   sourceSHA256=meta[role+'_sha256'],bounds=selected))
     scores={}; timings=[]
     for batch in runtime.bounded_batches(items):
         reply=runtime.invoke(batch,model)
@@ -236,8 +242,49 @@ def score_review(root, model, report):
             unfocusedProbability=endpoints['unfocused']['probability'],
             difference=endpoints['focused']['probability']-endpoints['unfocused']['probability'],
             clipped=any(v['clipped'] for v in endpoints.values())))
-    return dict(version='schema4-score-diagnostic-v1',purpose='inspection_only',trainingEligible=False,
+    result = dict(version='schema4-score-diagnostic-v1',purpose='inspection_only',trainingEligible=False,
         modelGateAssessed=False,labelStatus='producer_reported_pending_source_qualification',
         artifact=artifact,runtime=identity,preprocessing=runtime.RUNTIME_PREPROCESSING,
         inspectionSHA256=digest(json.dumps(report,sort_keys=True).encode()),rows=rows,pairs=pairs,
+        diagnosticGeometry=geometry,
         timingBatches=timings,timingScope='CPU-only; new process/model load per bounded batch; not deployment latency')
+    from focus_evidence import schema4_report
+    result['evidence'] = schema4_report(result)
+    return result
+
+
+def compare_geometry(reference, candidate):
+    """Compare paired responses, never reinterpret unadmitted roles as truth."""
+    for value, geometry in ((reference,'endpoint'),(candidate,'pair-union')):
+        require(value.get('version')=='schema4-score-diagnostic-v1' and
+                value.get('purpose')=='inspection_only' and value.get('trainingEligible') is False and
+                value.get('modelGateAssessed') is False and
+                value.get('diagnosticGeometry','endpoint')==geometry, 'comparison_scope')
+    for key in ('artifact','runtime','preprocessing','inspectionSHA256','labelStatus'):
+        require(key in reference and reference[key]==candidate.get(key),'incompatible_'+key)
+    def indexed(value):
+        result={}
+        for row in value['rows']:
+            key=(row['pair'],row['reportedRole']);p=row['probability']
+            require(key not in result and key[1] in ('focused','unfocused') and
+                    type(p) in (float,int) and math.isfinite(p) and 0<=p<=1,'invalid_comparison_row')
+            result[key]=row
+        require(result and all((pair,role) in result for pair,_ in result
+                               for role in ('focused','unfocused')),'partial_comparison')
+        return result
+    a,b=indexed(reference),indexed(candidate)
+    require(set(a)==set(b),'comparison_membership')
+    for key in a:
+        require(a[key]['id']==b[key]['id'] and a[key]['clipped']==b[key]['clipped'],
+                'comparison_identity')
+    pairs=[]
+    for pair in sorted({p for p,_ in a}):
+        old=a[pair,'focused']['probability']-a[pair,'unfocused']['probability']
+        new=b[pair,'focused']['probability']-b[pair,'unfocused']['probability']
+        pairs.append(dict(pair=pair,endpointMargin=old,unionMargin=new,marginDelta=new-old,
+                          clipped=any(a[pair,r]['clipped'] for r in ('focused','unfocused'))))
+    return dict(purpose='inspection_only',trainingEligible=False,modelGateAssessed=False,
+                labelStatus=reference['labelStatus'],artifact=reference['artifact'],
+                pairs=pairs,positiveMargin=dict(endpoint=sum(p['endpointMargin']>0 for p in pairs),
+                                               union=sum(p['unionMargin']>0 for p in pairs)),
+                limitation='Both frames determine union box; not single-frame deployable or accuracy evidence')

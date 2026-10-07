@@ -4501,3 +4501,89 @@ the original scorer and preserve tie ordering. Why: numerical parity alone does 
 make a sealed caller executable. Do not reseal old evidence or bypass its source checks
 to accommodate a convenience refactor. REPLAY216restored the original file and verified
 the actual45-reference composition collector before executing the comparison.
+
+## Structural validity is not semantic authentication (BD22)
+
+What went wrong: authored valid-but-wrong theme/role claims and recropped identical
+pixels with conflicting intended bounds passed structural checks. Correct: compare
+claims against a separately authorized, caller-pinned per-frame reference and report
+matched/conflict/unverifiable independently of structural validity and data admission.
+Missing reference means unverifiable. Do not universally reject identical pixels:
+different valid element identities can have different bounds in the same screenshot.
+Why: hashes authenticate bytes, not the truth of labels. Local consumer regression
+tests reproduce this boundary; worker218 proposes the additional comparison layer.
+
+## Whole-frame difference can hide local motion (BD14 review220)
+
+What went wrong: the authored held-out-software focus-move cases produced16/48
+false-stable windows at normalized whole-frame MAE threshold.005; at.01,36/48.
+Separately, changing backgrounds prevented any stable emission in72windows even
+with unchanged foreground. Correct: report pixel stability and foreground/UI
+settledness separately, retain local-motion stress cases and both false-stable and
+false-unstable denominators. Compare spatially localized evidence without using
+oracle masks as a deployable input. Why: whole-frame averaging dilutes small focus
+changes while unrelated animation dominates other frames. These authored results
+motivate tests, not native threshold qualification. Evidence: review220 handoff.
+
+Review221 extends this evidence: on1152authored stress frames, fixed8x6tile maximum
+MAE at.005 catches48/48tiny-motion unstable held-out windows that whole-frame MAE
+misses, but falsely flags72/72stable-foreground background-animation windows.
+Spatial sensitivity alone does not establish task relevance. Keep both failure types
+in qualification; do not deploy a threshold based only on the favorable condition.
+
+## Preserving growth with a shared crop is a hypothesis, not a fix (CROP222)
+
+What went wrong: independent crop resizing plausibly removes growth, but replacing
+it with the pair-union on20retained cases worsened positive role margins8→5 and
+raised unfocused high scores8→12. Correct: compare matched artifact/runtime/input
+identities before changing preprocessing; retain per-case results and qualification
+limits. A rebuilt helper required a fresh control here. Why: shared crops change
+context and relative size together, and use both frames; they are not automatically
+a better single-frame classifier input. No training labels or production behavior
+were changed. Evidence: reports/work/CROP-222/handoff.md.
+
+## EVIDENCE223 — retain task-specific denominators in cached replay
+
+What went wrong: whole-frame and tiled scores can appear directly comparable while
+legacy targets differ; many related frames can also look like independent support.
+Correct approach: pin inputs, preserve old reports, name the shared truth/task,
+separate authored mechanics from producer agreement, and report connected groups
+without claiming independence. Missing cached confidence stays unrankable, not zero.
+Why: BD27 tiles fixed tiny-highlight misses but introduced background nuisance
+alarms; neither score establishes native settledness. Reuse caches before inference.
+Evidence: reports/work/EVIDENCE-223/handoff.md.
+
+## DIAG227 — separate geometry availability, confidence and repair ancestry
+
+What went wrong: a missed detection can be described as missing geometry without
+checking below-threshold proposals; exact-pixel metadata differences can be called
+conflicting boxes even when the older record explicitly lacks measured bounds.
+Correct: inspect same-class overlap and confidence separately from one-to-one
+matching. Preserve unavailable-to-measured repair history and connected ancestry;
+only disagreeing measured evidence constitutes a geometric contradiction.
+Why: all19 lost progressView and39 lost pageControl qualifying proposals in035
+retain IoU>=.5 geometry below.25 confidence. Two native tab pixel groups link
+unavailable-body trials to measured repairs, not conflicting measured boxes.
+Neither finding authorizes threshold tuning, deletion or label corrections.
+Evidence: reports/work/DIAG-227/handoff.md.
+
+## REVIEW228 — native bounds do not guarantee correct category semantics
+
+What went wrong: ContextMenu action Buttons are captured as label_action and exported
+as label, although the taxonomy defines label as non-interactive text. Geometry and
+hash checks cannot expose that semantic mismatch. Correct: review the render source,
+declared category meaning and representative pixels together; preserve old reports
+and version any correction rather than treating predictions as new truth. Why:
+41 such annotations occur in13 resident training images. Audit related child-text
+policy before bulk relabeling; this finding alone does not explain model regressions.
+Evidence: reports/work/REVIEW-228/handoff.md.
+
+## VERIFY226 — evaluate at the intended image context
+
+What went wrong:035's severe cropped-ROI regression could be mistaken for overall
+detector failure. Independent retained full-frame scoring instead recovered mAP50
+from034 .87236 to035 .90105, with remaining class/FP tradeoffs. Correct: preserve
+both evaluations and qualify the intended deployment context; do not replace full-
+frame evidence with ROI performance or vice versa. Why: context and object scale
+change the task distribution. More fixed-threshold detections can coexist with
+worse class AP. Evidence: reports/work/VERIFY-226/handoff.md.

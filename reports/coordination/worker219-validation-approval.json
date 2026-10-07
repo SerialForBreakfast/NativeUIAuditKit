@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker219-validation-approval01",
+  "request_id": "nuiak-20261006-worker219-fullframe-replay",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T19:43:36Z",
+  "expires_at": "2026-10-13T19:43:36Z",
+  "state": "approved_implementation_and_run_after_tests",
+  "message": "Maintainer explicitly approved Big Dog and unblocking this task. Resolve worker219-preflight-blocker01 with the narrowly scoped external diagnostic-validation binding below, then execute the already approved single Run035 after passing preflight/tests. No further proposal-only approval round trip is required for this scope. This supersedes only the original request's unchanged-trainer/wrapper-only restriction for this binding extension.",
+  "review": "NUIAK inspected validation_paths and execute in the returned worker198_full_trainer.py. validation_paths resolves all validation_source_ids through training examples, and execute stages only training examples. All512 original diagnostic ROIs are intentionally absent from219training. Reinserting them into training or substituting validation membership would invalidate the experiment.",
+  "base_trainer_sha256": "07f226e011278d03640d65eab2778af5ca472260b625e70b2440524a307ad11f",
+  "approved_change": [
+    "Add an explicit, versioned external diagnostic-validation binding and separate staging/resolution path. Legacy callers without this binding retain their existing behavior and rejection checks.",
+    "Bind the exact resident original512 IDs, ordered as accepted216/217, to their original pinned image and label bytes and class map. Resolve using the existing verified parent source manifests, not basenames or path guessing. Preserve original source/group/data-role metadata. Record the ordered ID/image/label hash manifest and its digest before launch.",
+    "Validate all512 unique IDs, all bytes and labels, class compatibility, bounded paths, staging isolation and actual loader order before GPU launch. Explicitly reject absent, corrupt, substituted, duplicated or reordered membership; do not disable validation_membership globally.",
+    "Keep validation-only staging out of train order, optimizer batches and training exposure counts. These are historically training-exposed diagnostics, not a new independent holdout or newly admitted training examples.",
+    "Preserve the frozen219 manifest and1758training slots/249unique images,10epochs,440batches per epoch,275updates, optimizer/loss/augmentation/configuration and fixed-last checkpoint. No early stopping, best-checkpoint selection or threshold tuning from these diagnostics. Preserve existing validation lifecycle and512count/order assertions."
+  ],
+  "required_tests": "Before GPU launch: external binding succeeds with disjoint train/validation IDs; exact original512order/hashes retained; missing/altered image or label, duplicate/reordered IDs, wrong taxonomy, path escape and output collision reject; legacy binding unchanged; train order/count/exposure unchanged and validation cannot enter training loader. Return focused test commands/results plus patch, new trainer/wrapper hashes, configuration and validation manifest. Assert actual training/update/validation accounting during execution as before.",
+  "execution": "The preflight failed before training, so one Run035 remains authorized after this repair. Publish versioned source/config/test pins and a fresh start record before launch. Reuse resident dependencies and inputs. Existing oneGPU/3600seconds including621predictions/3GiB budget and return limits remain unchanged; no automatic training retry, installs, downloads, capture, model export/promotion or Git writes. Preserve blocker evidence and original trainer. If resident512 binding cannot be proved, report that precise blocker instead of substituting data.",
+  "outcomes": {"software_verified":"pending_worker_extension_tests","data_eligible":"existing_roles_unchanged","integration_qualified":"pending_repaired_preflight","model_gate_passed":"not_assessed"},
+  "next": "Big Dog implements/tests the binding extension and starts035 when checks pass. NUIAK reviews returned source, accounting and efficacy independently. This approval is not a claim that training has started."
+}

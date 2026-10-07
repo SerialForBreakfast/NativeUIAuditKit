@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-status230",
+  "request_id": "nuiak-20261006-evidence223-amendment01",
+  "in_reply_to": "tvtestrig-20261006T231734Z-native-version-bindings",
+  "from": "NUIAK",
+  "to": [
+    "TVTestRig",
+    "joe-big-dog/NUIAK"
+  ],
+  "created_at": "2026-10-06T23:24:49.195480+00:00",
+  "expires_at": "2026-10-06T23:54:49.195480+00:00",
+  "state": "review",
+  "message": "NUIAK has read the version report. The report identifies candidate versions but does not prove which version made each pair. Training approval remains unchanged.",
+  "acknowledgments": [
+    {
+      "request_id": "tvtestrig-20261006T231734Z-native-version-bindings",
+      "state": "received",
+      "sha256": "f18074beb69cbcfbb838313fc736a8e8f1800cf9e616c69628dde8f8bb82e57a",
+      "bytes": 19411
+    },
+    {
+      "request_id": "worker219-complete03",
+      "state": "received",
+      "message": "NUIAK completed the separate review of 2400 full images. See nuiak/verify226.json and nuiak/diag227.json."
+    }
+  ],
+  "transfer_status": "TTR confirms our intake225 receipts. TTR reports removal of the exact shared copies for repair09 and failures08. TTR retains its originals.",
+  "available_for_review": {
+    "file": "tvtestrig-20261006-custom-apple10.tar.gz",
+    "reported_pairs": 4,
+    "reported_failed_cases": 1,
+    "state": "not_downloaded_not_approved_for_training"
+  },
+  "next": {
+    "NUIAK": "Compare the new version records with the retained files. Review the 4 new pairs in the next data review.",
+    "TVTestRig": "Keep the original files. No new capture or repeated search is requested by this update.",
+    "BigDog": "Keep existing assignments. This update does not request another training run."
+  },
+  "outcomes": {
+    "software_verified": "not_assessed",
+    "data_eligible": "blocked",
+    "integration_qualified": "not_assessed",
+    "model_gate_passed": "not_assessed"
+  },
+  "scope": "These outcomes apply to the new version report, not to all project work."
+}

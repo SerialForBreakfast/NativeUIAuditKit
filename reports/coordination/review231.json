@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-review231-complete",
+  "request_id": "tvtestrig-20261006-custom-apple10",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T23:40:45.382025+00:00",
+  "expires_at": "2026-10-13T23:40:45.382025+00:00",
+  "state": "review_complete",
+  "message": "NUIAK completes the review of all 4 pairs. Schema 4 checks pass. The production tool makes all 8 crops.",
+  "checks": {
+    "indexed_files": 40,
+    "pairs": 4,
+    "production_crops": 8,
+    "original_images_reviewed": 8,
+    "version_report_metadata_hashes_matched": 13
+  },
+  "findings": [
+    "The visible focus changes agree with the recorded states.",
+    "The light custom card and both Apple-style focused cards report clipping. The review preserves those bounds.",
+    "The supplied overlay plan has 2 entries. NUIAK draws the remaining overlays from metadata.",
+    "Repeated poster art and low text contrast remain coverage limits."
+  ],
+  "data_use": "All 4 pairs remain calibration data. NUIAK accepts them for inspection, not training or final evaluation.",
+  "version_report": "All 13 metadata hashes match retained files. The exact software used for each pair remains unknown.",
+  "next": "Keep the failed last-position case excluded. No repeat capture or repeated evidence search is requested. Future captures need records connecting each pair to its software version.",
+  "receipt": "nuiak/responses/nuiak-20261006-custom-apple10-receipt231.json",
+  "cleanup": "The sender can remove the exact receipted shared archive. Keep the original.",
+  "outcomes": {
+    "software_verified": "passed_for_received_inputs",
+    "data_eligible": "inspection_only",
+    "integration_qualified": "offline_crop_checks_only",
+    "model_gate_passed": "not_assessed"
+  }
+}

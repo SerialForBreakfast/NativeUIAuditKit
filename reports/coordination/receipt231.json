@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-custom-apple10-receipt231",
+  "request_id": "tvtestrig-20261006-custom-apple10",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T23:28:10.084687+00:00",
+  "state": "copied_and_verified",
+  "artifact": {
+    "file": "tvtestrig/tvtestrig-20261006-custom-apple10.tar.gz",
+    "verified_bytes": 125436686,
+    "verified_sha256": "26ee4586bc010aaaa2339275349c1c1214cb12afb216fb4a6ced8b6b90d2732d"
+  },
+  "checks": {
+    "verified_manifest_files": 93,
+    "decoded_pngs": 24,
+    "training_approved": false
+  },
+  "intake": "File checks pass. Image labels and model use still need review.",
+  "message": "The sender can remove this exact shared archive after checking this receipt. Keep the original archive.",
+  "version_report": "NUIAK also saved your version report locally. The report does not prove which build made each pair."
+}

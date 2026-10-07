@@ -81,6 +81,26 @@ class ConsumerTests(unittest.TestCase):
         self.assertEqual(expanded_box([0, 0, 20, 20], (30, 30)), [0, 0, 23.2, 23.2])
         self.assertEqual(expanded_box([100, 50, 100, 100], (400, 300)), [84, 34, 216, 166])
 
+    def test_structural_validation_does_not_authenticate_theme(self):
+        # BD22: internally valid metadata is not an authoritative rendering label.
+        altered=copy.deepcopy(self.doc)
+        altered['pairs'][0]['theme']='dark'
+        validate_manifest(altered,self.data)
+
+    def test_same_pixels_different_bounds_are_not_universal_corruption(self):
+        # Reproduce BD22's authored case without executing incoming worker code.
+        # A trusted per-frame reference is needed to decide whether bounds are false.
+        p=self.doc['pairs'][0];f=p['frames']['focused'];u=p['frames']['unfocused']
+        shutil.copyfile(self.raw/f['path'],self.raw/u['path'])
+        u['sha256']=sha(self.raw/u['path'])
+        with Image.open(self.raw/u['path']) as im:
+            crop_frame(im,expanded_box(u['bounds'],im.size)).save(self.data/p['unfocused_crop'])
+        p['unfocused_crop_sha256']=sha(self.data/p['unfocused_crop'])
+        validate_manifest(self.doc,self.data)
+        (self.data/p['unfocused_crop']).unlink()
+        with self.assertRaisesRegex(FocusDataError,'missing_pixels'):
+            validate_manifest(self.doc,self.data)
+
     def test_wrong_focus_missing_callback_and_prediction_labels(self):
         for key, val, message in (("observedFocusID", "other", "mismatched"), ("focusFrameID", "old", "stale"), ("labelSource", "modelPrediction", "untrusted")):
             doc = copy.deepcopy(self.doc); doc["pairs"][0]["frames"]["focused"][key] = val

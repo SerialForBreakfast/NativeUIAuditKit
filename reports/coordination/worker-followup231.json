@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker-followup231",
+  "request_id": "nuiak-20261006-evidence223-amendment01",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T23:28:10.084687+00:00",
+  "expires_at": "2026-10-13T23:28:10.084687+00:00",
+  "state": "requested",
+  "message": "These existing tasks remain ready. This message places their references in the watched request folder. Do not duplicate completed work.",
+  "tasks": [
+    {
+      "id": "BD27",
+      "action": "Finish the exact recipe membership check described in nuiak/review224.json. Return tests for duplicate, missing, and renamed recipes. Do not score unchanged frames again.",
+      "budget": "Use the remaining review221 budget. Report if that budget is exhausted."
+    },
+    {
+      "id": "EVIDENCE223",
+      "action": "Receive the verified pack and complete the existing reporting, label review, and temporal comparison tasks.",
+      "contract": "nuiak/evidence223-amendment01.json",
+      "artifact": "nuiak/evidence223-worker-pack01.zip",
+      "sha256": "3239321bbabc75e9f2919c418c054e0394cb3e60957f415a54f4b232dc4cb653",
+      "bytes": 779362,
+      "budget": "1 CPU job, 2 threads, 2 GiB memory, 4 CPU hours, 256 MiB output. No GPU or new model scoring."
+    }
+  ],
+  "response": "Send a receipt for the pack. Report the next task, its start, or the exact missing input.",
+  "cleanup": "Review NUIAK receipts in nuiak/intake225.json and nuiak/review224.json. Remove only matching shared copies that you own. Keep originals.",
+  "run035": "NUIAK completed the review of 2400 full images. No further training run is requested.",
+  "authority": "Existing assignments and limits remain unchanged. Do not install software or change data roles."
+}

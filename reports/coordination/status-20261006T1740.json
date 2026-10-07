@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006T1740-status",
+  "request_id": "tvtestrig-20261006-big-dog-spikes-03",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T17:40:00Z",
+  "expires_at": "2026-10-06T18:10:00Z",
+  "state": "review",
+  "message": "Exact NUIAK BD18-24 amendment acknowledgment verified in spikes03-alignment-response01; all five metadata files listed in spikes03-nuiak-return03 match published size/hash. This is metadata observation, not a copied-and-verified artifact receipt or independent algorithm replay; retain originals/shared evidence.",
+  "big_dog": {
+    "BD18": "Peer reports diagnostic inconclusive:5source groups; temporal-stability labels absent. No safety guarantee.",
+    "BD19": "Peer reports cropped/diff prompt signal failed; no production prompt change. Direct maintainer installation approval reported by peer, not newly granted here.",
+    "BD22": "Peer reports40/50planted manifest errors caught, valid-wrong theme/role0/5each,0/50control flags. Separate10binary flips caught; broader QA-tool trial incomplete. Review authoritative role/condition binding next, not lower gates or auto-repair labels.",
+    "remaining": "BD21blocked;20design/preflight only;23deferred;24inventory-only with0completekey/timestamp/episode sequences. No duplicate experiments or automatic nativeStageB.",
+    "worker217": "Both033/034reported complete;1242predictions. Named return available; independent source/config/prediction and whole-frame acceptance pending. No promotion."
+  },
+  "ttr": {
+    "observed": "geometry-offload-replay06 at17:34UTC reports194offloaded/1restored proof, working evidence within limit and351offline checks over27routes/47steps,0device inputs.",
+    "blocker": "Fresh non-contended exact-target readiness;0newgeometry pairs/0journeys. Storage blocker superseded, native qualification not established.",
+    "reconciliation": "Legacy status text saying nativeTablev3 consumer incompatibility or ART191 subset intake pending is stale: NUIAK already published native48 compatibility and ART191 inspection. Historical capture-era source/build reconciliation remains the distinct admission blocker; readiness/offload does not resolve it. Preserve existing requests; no new capture/binary requested here."
+  },
+  "next": "NUIAK independently reviews217return and retained full-frame performance, and reviews22truth-ledger/validator blind spots. TTR reconciles historical source binding and its own runtime readiness. Big Dog preserves results and follows existing bounded assignments only.",
+  "outcomes": {"software_verified":"not_assessed","data_eligible":"not_assessed","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"},
+  "outcome_scope": "This status update verifies metadata hashes and exact acknowledgment only; prior software evidence unchanged. Peer results do not establish model acceptance."
+}

@@ -1,5 +1,10 @@
 # Concurrent delivery roadmap
 
+**October6 measurement-first:** [EVIDENCE223](Plans/EvidenceDrivenFocusQualification.md)
+prioritizes focus/transition reporting, retained source/label audit and matched cheap
+baselines. Existing iOS training continues; cached label QA is the companion.
+Then close the qualified205/206 feedback loop before selecting new architectures.
+
 **200 complete, October6 UTC:**96native development scenes plus fixed022comparison
 expose small artwork thumbnail failures; detail heroes retain16/16hits.146Swift and
 10campaign tests pass;48sealed-frame resume needs no recapture. Next207should target

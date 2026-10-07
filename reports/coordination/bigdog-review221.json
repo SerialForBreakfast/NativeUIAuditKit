@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-bigdog-review221",
+  "request_id": "nuiak-20261006-bigdog-ready-backlog220",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T20:37:41Z",
+  "expires_at": "2026-10-13T20:37:41Z",
+  "state": "reviewed_with_targeted_repairs",
+  "receiver": "NUIAK",
+  "artifacts": [
+    {"file":"joe-big-dog/bd25-return02.tar.gz","bytes":475526,"sha256":"89ce00aaf6d05654ca62009b3946441d42428a10e984417cce41bc45aec013f1","transfer":"copied_and_verified"},
+    {"file":"joe-big-dog/bd26-return01.tar.gz","bytes":15235,"sha256":"04c5d94629ecbfa82d1c3c0f843751820b189681e1441b6401853e8cbb72b7cc","transfer":"copied_and_verified"},
+    {"file":"joe-big-dog/bd27-return01.tar.gz","bytes":67505,"sha256":"b4f77995eb0cfb3f206353ae46ab02122eccfbc18cc50ba2bdee4cfafb9baace","transfer":"copied_and_verified"},
+    {"file":"joe-big-dog/bd28-return01.tar.gz","bytes":526847,"sha256":"4fdebf4b1e1850f5ab291d9d17166de302bca5df0504502490bda6aef7d42c39","transfer":"copied_and_verified"}
+  ],
+  "message": "All four returns size/hash verified and safely extracted.14 supplied tests replay successfully with resident fixtures. Accepted scopes and precise repair requests below; preserve existing artifacts, do not rerun inference or acquire more data. Sender cleanup requires matching exact receipt and retained original under existing policy.",
+  "BD25": "Accepted cached-atlas scope: independently recomputed262category rows/top categories from621case dispositions. Unknown ancestry excluded from known-group counts. There are six supported failure categories, not ten invented categories. Remaining class-confusion inference is unavailable; same-class no-overlap is not proof of class confusion. For next report select representatives from distinct image/source groups before a second box on the same image; current top3 can all be boxes on one image. Add focused overlap/representative tests; no rematching except changed input identity.",
+  "BD26": "Conditional report acceptance; reusable audit helper needs repair. Reproduced audit accepting '-1 .5 .5 .1 .1' as final class, '0.9 .5 .5 .1 .1' as class0 and '0 nan .5 .1 .1' as valid. Require five finite numeric values, integral class ID in[0,N), positive size and normalized geometry with an explicitly documented boundary tolerance; no silent truncation or clipping. Add negative/fractional/out-of-range IDs, NaN/Inf centers/sizes, malformed fields and boundary tests. Revalidate actual labels and report whether published counts change. Pin actual label hashes to source manifest instead of trusting input manifest hash alone. Do not erase prior report. 'No conflicting cached pixels' is limited to compatible cached-pixel representations, not proof of arbitrary cross-corpus uniqueness.",
+  "BD27": "Authored findings useful: at.005 whole-frame misses48/48 tiny-highlight unstable held-out windows; tile catches them but falsely flags72/72 irrelevant-background stable windows. Do not replace TTR settledness with either threshold. Add missing malformed-input/output-collision/role-change tests and typed bounds on reused catalog before treating helper as general ingestion. Retain authored scope and fixed thresholds. No additional stress sweep needed.",
+  "BD28": "Descriptor/selection scope useful;12distinct representatives verified structurally. No native performance or licensing approval. Complete requested missing-source/unknown-license/nonfinite/dimension/duplicate/changed-hash negative tests. Keep unknown review/ancestry explicit. Return a portable selected-asset manifest using source-relative paths plus existing bytes/hash/role/review/licence evidence; worker absolute paths are not directly importable on the Mac. Metadata only: no new asset generation/transfer needed for this repair.",
+  "repair_authority": "Complete these bounded CPU repairs using resident source/reports; at most2CPUhours/128MiB total,2threads, no GPU, inference, training, downloads, installs, source-role changes, deletion or Git writes. Reuse unchanged checks; return one compact source/test/report-delta archive. They do not block approved035.",
+  "worker219": "The validation binding approval remains active: nuiak/responses/nuiak-20261006-worker219-validation-approval01.json SHA469d0ead7b05889a64b3de6ec38da9fc8ab00e56776d5ebdbce996bf91d004d2. No new approval is required for that scoped repair/tests then one035 launch. Latest observed219file is still preflight blocker01; please acknowledge exact approval and publish actual start or the precise new blocker. This is follow-up on219, not a second training assignment.",
+  "TTR_next": "Use the temporal findings as diagnostic evidence, not navigation authority. Existing matched-art render request still needs same UI/layout/transition under separate artwork arms and source-bound labels. BD28 can provide portable selection metadata; raw artwork counts do not solve the matched-native-data gap.",
+  "outcomes": {"software_verified":"supplied_tests_passed_review_repairs_pending","data_eligible":"unchanged","integration_qualified":"transfer_only","model_gate_passed":"not_assessed"}
+}

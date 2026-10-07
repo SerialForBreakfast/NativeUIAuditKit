@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker218-evidence-diagnosis",
+  "request_id": "tvtestrig-20261006-big-dog-spikes-03",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T17:57:00Z",
+  "expires_at": "2026-10-13T17:57:00Z",
+  "state": "assigned_bounded_offline_followup",
+  "message": "Keep productive while NUIAK reviews217. Two independent CPU-only deliverables using resident code/results; no additional pixels, native qualification or model downloads needed. Reuse BD22 and217 IDs in evidence;218 is their follow-up assignment, not repeated execution. Preserve prior trials and active owned work.",
+  "A": {
+    "outcome": "Tested external evidence-binding comparison proposal for BD22 blind spots, returned for NUIAK integration review",
+    "implementation": "Use an explicit separately supplied expected-binding manifest whose identity is pinned by the caller. Bind corpus/pair/frame IDs and image/annotation hashes to authorized role, recipe/theme/condition and per-frame bounds/focus evidence. Compare observed records to this reference, never infer truth from the observed record itself. Emit matched, conflict, or unverifiable with typed field-level reasons. Missing reference, unknown semantic fields or claimed-but-unverified trust remains unverifiable; a hash only proves identity, not authority or real labels. Keep structural validator result separate. Return a narrowly scoped source patch/helper and standalone tests under worker repository rules; do not overwrite NUIAK production source.",
+    "tests": "Reuse unchanged original BD22 cases and clearly version the new reference-bound trial. Cover valid wrong role/theme, identical bytes with conflicting bounds, partial publication, wrong/reference hash, duplicate IDs, missing evidence, altered image, prediction-derived labels, unknown schema, and legitimate same pixels with distinct valid identities/geometry. No universal identical-pixel rejection; semantic conflicts depend on supplied authoritative mapping. No automatic label repair/admission. All references in software fixtures must be labeled authored test-only. Report per-type confusion and unverifiable counts plus clean-control flags; negative safety tests matter more than pooled recall."
+  },
+  "B": {
+    "outcome": "Case-linked retention diagnosis for217 using existing1242predictions, no additional inference",
+    "implementation": "Reconcile unchanged operating0.25/IoU0.5 per-class TP/FP/FN with existing evaluator. Compare033/034 paired cases by label size in original coordinates, source family/group and native-versus-existing role. Trace each ROI to supplied216parent/window lineage; unknown ancestry stays unknown. Rank top10regression categories with support denominators and representative stable IDs. Explicitly separate localization misses, below-threshold geometric candidates, missing proposals, duplicate and unmatched FP. Do not tune thresholds, pick training examples from held-out failures or call these categories causes. Include control/treatment exposures per class from actual training labels, and distinguish predicted associations from a causal claim. Preserve allclass totals; no raw image retransfer."
+  },
+  "budget": "At most4CPU-hours total and128MiB new outputs; no GPU, training, capture, downloads, installations, dependency changes, Git writes, new services or recurring jobs. Use existing resident Python/testing tools. First failure preserves evidence; diagnose before any retry. No requirement to wait for native StageB or private source before completing authored fixtures/retained prediction analysis.",
+  "return": "Publish compact metadata/readiness/start/terminal under owned joe-big-dog namespace. Return source/tests, exact base/source hashes, output schemas, test command/results and case-linked reports as one named immutable SMB archive <=32MiB/300regular files/64MiB expanded. Use exact size/hash receipt protocol; no credentials, images or weights. Keep original inputs unchanged. Missing authority/reference is a reported outcome, not permission to invent it.",
+  "acceptance": "NUIAK independently reviews proposed comparison contract/source and replays deterministic tests; matching reference does not confer training admission.217 diagnosis must reproduce accepted metrics exactly. Neither deliverable promotes a model or authorizes next training. Acknowledge exact request then publish actual start separately; complete each independent part even if the other blocks."
+}

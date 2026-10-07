@@ -9,6 +9,33 @@ is the sole authority**.
 
 ---
 
+## Language — Simplified Technical English
+
+The maintainer requires ASD-STE100 principles for all new text. This requirement applies to chat, documents, PR descriptions, comments, commit text, and Jira/Slack drafts.
+Code identifiers and quoted text are exempt. Follow these rules:
+
+- Write 1 topic per sentence. Write 1 instruction per sentence.
+- Use 20 words or fewer for procedural sentences. Use 25 words or fewer for descriptive sentences.
+- Use the active voice. Name the person, tool, or component that does the action.
+- Use the present tense for facts. Use the imperative for instructions.
+- Use 1 term for 1 meaning. Do not change terms for style.
+- Use simple verbs: do, make, use, get, start, stop, set, remove, show, open, and close.
+- Do not use slang, idioms, metaphors, or filler.
+- Do not use noun clusters with more than 3 words. Use “of” or “for” to separate them.
+- Write numbers as digits. Write units and time with spaces, such as “0.5 s” and “10 min”.
+- Put the condition before the instruction. Example: “If the flag is off, return false.”
+- Use a list for more than 2 steps or items. Put 1 item on each line.
+- Use “do not” for prohibitions. Use “must” only for safety or requirements.
+- Keep paragraphs to 6 sentences or fewer.
+- If a language rule makes a technical statement incorrect, keep the statement correct. Explain the exception.
+
+Use clear descriptions instead of unexplained project terms.
+For example, write “TTR needs to show which app and Fixture versions made these images.”
+Do not write “The source-binding request remains outstanding.”
+Explain what is missing, who supplies it, and which work needs it.
+
+These instructions preserve the maintainer's language preference for future agents in this repository.
+
 ## What This Package Is
 
 NativeUIAuditKit is a research-first Swift Package building a `VNCoreMLRequest`-backed native Apple
@@ -30,6 +57,16 @@ UI element detector — a custom equivalent of a hypothetical `VNRecognizeUIElem
 ---
 
 ## Execution contract — finish the authorized tranche
+
+### Use local capture before remote requests
+
+For reproducible Fixture cases, check local TTR before asking another worker to make images.
+Use approved local capture when the tools and target are ready.
+Keep the original data role and related evaluation exclusions for replacement images.
+Request remote work only when local capture cannot supply the required evidence.
+Name the missing capability or failed local check in that request.
+If a sandbox check fails, test the same safe check with scoped approval before blaming the runtime.
+Do not bypass target ownership, cleanup checks, or label requirements.
 
 ### Substantial tranches and standing backlog selection — 2026-10-01
 
@@ -256,6 +293,27 @@ below. Find an in-project path instead for all other output.
 Violation of this rule is a critical error. Check before executing any file-writing shell command.
 
 ### Shared-status exception and required agent updates
+
+**Maintainer instruction, 2026-10-06: complete each status check.**
+When the user asks to check or update status, do the following work:
+
+- Read current TTR and Big Dog reports. Check their pending tasks and requests.
+- Download new files that peers offer for the approved project work. Check space, names, sizes, and hashes first.
+- Use the existing safe extraction checks. Do not treat received files as approved training data.
+- Reply to relevant reports. Send exact receipts after you verify each transfer.
+- Check receipts for files that NUIAK published. Remove only exact shared copies with matching receipts and preserved originals.
+- For peer-owned files, send receipts and ask the sender to remove the shared copies. Do not delete peer files.
+- Update Tasks.md and the relevant shared response. Verify each published response by reading it back.
+- Check Big Dog's remaining work. Put actionable follow-ups in its watched request folder when existing assignments need a response.
+- If an operation fails, record the exact reason. Complete the other permitted steps.
+
+A status check includes these transfer and response steps. Do not stop at a file listing when approved files await receipt.
+Complete the next permitted steps in the same turn. This includes checking received data, reviewing labels, and sending the result.
+Do not present required follow-up work as a suggestion when current approval covers it.
+Stop only when the assigned work is complete, a concrete problem prevents progress, or the next action needs human approval.
+If one step cannot proceed, complete the other permitted steps. Name the missing evidence or approval in the final report.
+Do not download unrelated releases, private files, or files outside the approved project work.
+Keep training approval, file receipt, and model approval separate.
 
 **Standing transfer approval — maintainer, 2026-10-04:** transfers for the assigned
 NUIAK/TTR and joe-big-dog training workflows are approved, including the named

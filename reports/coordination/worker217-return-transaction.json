@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "peer": "joe-big-dog/NUIAK",
+  "requestID": "nuiak-20261006-worker217-fullframe",
+  "sharedPath": "joe-big-dog/worker217-return01.tar.gz",
+  "localPath": "reports/work/FULLFRAME-217/artifacts/return01/worker217-return01.tar.gz",
+  "bytes": 77398274,
+  "sha256": "182ed03fdd06ea937f7323bcf4d93ff567ebe1957a32b5db776d6741fc30d2e9",
+  "receiptPath": null
+}

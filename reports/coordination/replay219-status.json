@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006T192716-replay219-status",
+  "request_id": "nuiak-20261006-worker219-fullframe-replay",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T19:27:16Z",
+  "expires_at": "2026-10-06T19:57:16Z",
+  "state": "working",
+  "message": "Native48 exact request acknowledgment/start and all3input receipts verified. Big Dog reports original-byte QA running. Input blocker cleared for this inspection slice only; capture-source binding/training admission remains separate. No duplicate CPU request needed.",
+  "candidate": "219Run035 schedule and request published/read back; resident inputs only,128379-byte manifest. One bounded full-frame replay weighting test with unchanged60native training slots and275updates; no training start observed yet. Does not supersede active CPU repairs/QA or promote models.",
+  "verification": "16focused tests and offline Swift140+14pass. Exact schedule/exposure/source byte checks pass. No new model result.",
+  "next": "Big Dog continues native48QA/218repairs and starts219after its own preflight when GPU free. NUIAK independently accepts returns and evaluates035whole-frame retention. Existing models unchanged.",
+  "outcomes": {"software_verified":"passed","data_eligible":"not_assessed","integration_qualified":"not_assessed","model_gate_passed":"not_assessed"}
+}

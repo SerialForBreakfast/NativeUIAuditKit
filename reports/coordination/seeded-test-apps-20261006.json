@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-seeded-test-apps",
+  "from": "nuiak",
+  "to": "tvtestrig",
+  "created_at": "2026-10-07T00:21:07Z",
+  "expires_at": "2026-10-14T00:21:07Z",
+  "state": "requested",
+  "related_request": "nuiak-20261001-semantic-export-fixture-v1",
+  "message": "The maintainer requests repeatable generated test apps for navigation tests and failure-directed training. Extend existing Fixture generation and export. Reuse current work instead of creating a second generator. Return an implementation breakdown and identify existing capabilities before scheduling missing work.",
+  "requirements": [
+    "Generate working app-like scenarios with screens, tabs, menus, carousels, lists, dialogs and scrolling. Vary navigation structure as well as appearance.",
+    "Record recipe seed, generator revision, Fixture build, host build, OS version, locale, asset hashes and settings. Separate layout, content and action seeds. Record nondeterministic effects; identical seeds alone do not guarantee identical pixels across OS versions.",
+    "Use approved generated artwork and rights-reviewed assets. National Archives and Smithsonian are candidate sources, not blanket permission. Record each item's source, rights statement, attribution and reuse restrictions. Prefer already available assets; list missing assets separately.",
+    "Export observed focus, stable control identity, class, text, selected state, visibility, clipping and measured rendered-body bounds for each captured frame. Include native growth. Keep layout bounds, accessibility bounds, shadows and focus outlines distinct. Fixture ownership does not prove every annotation correct.",
+    "Export ordered before/after images, actual actions, timestamps, settling evidence, viewport and screen identity. Preserve observed graph edges and unknown edges separately. Include moves, boundary no-ops, same-focus content changes, scrolling, duplicate labels and interruptions.",
+    "Support known-route replay and unfamiliar-goal navigation as separate tests. Withhold the answer route and annotation truth from the tested navigator. Record its permitted observations and native-evidence access for fair comparisons.",
+    "Accept NUIAK's ranked top 10 failure types as campaign inputs. Generate controlled variants around each failure. Hold other factors fixed within comparisons. Distinguish model errors from navigation or timing defects.",
+    "Use resumable campaigns with per-case accounting, explicit failures, bounded storage, export hashes and exact transfer receipts. Record setup, generation, settling, encoding, export and review time. Report accepted pairs per hour and bytes per pair before proposing parallelism.",
+    "Keep related layouts, recipes, artwork variants and journeys together when assigning data roles. Reserve unseen layout families before tuning. New seeds alone do not make an independent test set.",
+    "Provide automatic annotation checks plus reproducible random samples and separate suspicious-case review. Preserve disagreements; do not automatically replace labels with model or OCR predictions. Reuse the existing grouped annotator flow."
+  ],
+  "delivery": [
+    "First return the reusable capabilities, missing features, owner, implementation order and a proposed example manifest.",
+    "Propose an end-to-end example across 3 distinct navigation families. Show replay, observed labels, interrupted resume and existing NUIAK import compatibility.",
+    "After that proof, propose a measured campaign size for the top failure types. Return complete accounting rather than a target image count alone."
+  ],
+  "responsibilities": {
+    "TTR": "Generate scenarios, observe actual navigation and rendered geometry, and export reproducible evidence.",
+    "NUIAK": "Rank failures, validate annotations, assign data roles, review samples and evaluate model changes.",
+    "Big Dog": "Run separately assigned batched training or analysis on approved synthetic inputs. This request does not dispatch a worker run."
+  },
+  "acceptance": "Deliver reproducible cases, measured annotations, observed transitions, safe failure handling and one verified NUIAK import. Report runtime limits and unsupported scenarios explicitly.",
+  "scope": "This is a requested extension to the existing implementation backlog. TTR retains scheduling and target checks. Request a source commit when needed; NUIAK builds locally. Physical-device work, purchases and new external uploads need separate authority.",
+  "requested_response": "Acknowledge this exact request ID. Map each requirement to existing support or a concrete task. Identify dependencies and the first complete delivery."
+}

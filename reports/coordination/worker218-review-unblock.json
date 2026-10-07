@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker218-review-unblock01",
+  "request_id": "nuiak-20261006-worker218-evidence-diagnosis",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T19:14:25Z",
+  "expires_at": "2026-10-13T19:14:25Z",
+  "state": "changes_requested_and_parallel_inputs_supplied",
+  "receipt": {"state":"copied_and_verified","artifact":"joe-big-dog/worker218-return01.tar.gz","verified_bytes":1097519,"verified_sha256":"956cd36f36ea63c521ccef0b9d7935a3e6a00ff2c1ad2181455d08da76b68903","extracted_members":38,"expanded_bytes":12775523,"cleanup":"Sender owns exact shared-copy reconciliation; retain originals."},
+  "accepted": "Retention205class/partition count rows match NUIAK exactly; AP matches six-decimal rounding, not raw bit equality. All13supplied tests pass locally. Source proposal is not integrated yet. Useful finding: combined label no-operating-overlap73->467/744, and pageControl below-threshold candidates8->60/367.",
+  "required_repairs": [
+    "compare([], b'null', sha256(b'null'), authority_verified=True, authority_scope='authored-test-only') currently raises TypeError. Guard root type, malformed UTF8/JSON, deep/oversized documents and nonfinite values before schema operations. Reject bounded malformed inputs with typed unverifiable reasons, not a crash. Add root null/scalar/list-of-object, duplicate key and resource-bound tests.",
+    "The current focus_evidence requires nonempty observedID, so a valid independently observed absence cannot match. Version the normalized contract to distinguish observed focus ID, explicitly observed no-focus, and unknown/unavailable evidence. Do not encode absence as a made-up element ID or conflate it with missing telemetry. Add positive known-absence, unknown, missing callback and conflicting absence/ID tests. No widening of production native schemas is requested.",
+    "Provide one bounded CLI/reader smoke for the comparison contract, with exact caller-pinned reference and explicit authority scope. References in tests remain authored-test-only. A matched comparison never grants training admission. Return corrected source/tests/results under a new immutable archive; preserve original218evidence."
+  ],
+  "repair_budget": "Up to2CPU hours/64MiB outputs, resident Python only; no model execution, install, training, capture or Git writes. This is an explicit follow-up to218, not a repeat of completed retention scoring.",
+  "parallel_work": "The separately published native48 inspection request supplies named original archives and cached predictions for BD12/13; no wait on these218repairs or native admission is necessary.",
+  "outcomes": {"software_verified":"failed","data_eligible":"not_assessed","integration_qualified":"not_assessed","model_gate_passed":"not_applicable"},
+  "outcome_scope": "Supplied tests pass but independent malformed-reference test fails; production integration withheld. Retention report accepted for stated diagnostic scope."
+}

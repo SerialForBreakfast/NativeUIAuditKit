@@ -10,11 +10,59 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from harvest_schema4_review import review, render_review, score_review, hydrate_recipe
+from harvest_schema4_review import review, render_review, score_review, hydrate_recipe, compare_geometry
 from test_ttr_sidecar_v2 import ROOT, write_bundle
 
 
 class Schema4ReviewTests(unittest.TestCase):
+    def test_union_and_comparison_fail_closed(self):
+        report=review(self.bundle)
+        captured=[]
+        def reply(items,model):
+            captured.extend(items)
+            return {'results':[dict(id=i['id'],probability=.2+n*.6) for n,i in enumerate(items)]}
+        with patch('focus_ring_baseline.model_contract',return_value={'sha256':'pinned'}), \
+             patch('focus_runtime.invoke',side_effect=reply):
+            old=score_review(self.bundle,self.root,report)
+            new=score_review(self.bundle,self.root,report,'pair-union')
+        self.assertEqual(captured[-1]['bounds'],captured[-2]['bounds'])
+        for endpoint in report['rows'][0]['endpoints']:
+            x,y,w,h=endpoint['visibleBody'];a,b,c,d=captured[-1]['bounds']
+            self.assertTrue(a<=x and b<=y and a+c>=x+w and b+d>=y+h)
+        result=compare_geometry(old,new)
+        self.assertFalse(result['trainingEligible'])
+        self.assertEqual(result['pairs'][0]['marginDelta'],0)
+        for mutate in [lambda v:v.update(runtime={}),lambda v:v.update(artifact={}),
+                       lambda v:v.update(inspectionSHA256='changed'),
+                       lambda v:v['rows'].pop(),lambda v:v['rows'].append(v['rows'][0]),
+                       lambda v:v['rows'][0].update(probability=float('nan')),
+                       lambda v:v.update(trainingEligible=True)]:
+            bad=copy.deepcopy(new);mutate(bad)
+            with self.assertRaises(ValueError):compare_geometry(old,bad)
+
+    def test_union_cli_requires_scoring(self):
+        out=self.root/'not-created'
+        result=subprocess.run([sys.executable,str(ROOT/'scripts/ttr_focus_manifest.py'),
+            '--review-schema4-subset','--bundle',str(self.bundle),'--output',str(out),
+            '--review-geometry','pair-union'],capture_output=True)
+        self.assertEqual(result.returncode,2)
+        self.assertFalse(out.exists())
+
+    def test_union_uses_both_distinct_endpoint_extents(self):
+        report=review(self.bundle)
+        report['rows'][0]['endpoints'][0]['visibleBody']=[1,2,10,11]
+        report['rows'][0]['endpoints'][1]['visibleBody']=[3,1,11,13]
+        captured=[]
+        def reply(items,model):
+            captured.extend(items)
+            return {'results':[dict(id=i['id'],probability=.5) for i in items]}
+        # Isolate box selection; real metadata validation is covered separately.
+        with patch('harvest_schema4_review.review',return_value=report), \
+             patch('focus_ring_baseline.model_contract',return_value={'sha256':'pinned'}), \
+             patch('focus_runtime.invoke',side_effect=reply):
+            score_review(self.bundle,self.root,report,'pair-union')
+        self.assertEqual([r['bounds'] for r in captured],[[1,1,13,13]]*2)
+
     def test_shared_recipe_resolver_keeps_sidecar_boundary(self):
         compact=self.meta['recipe']
         source,source_hash=hydrate_recipe(self.bundle,compact)

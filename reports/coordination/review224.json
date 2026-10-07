@@ -1,0 +1,16 @@
+{
+ "schema_version":1,
+ "observed_at":"2026-10-06T22:05:00Z",
+ "id":"nuiak-20261006-review224",
+ "request_id":"nuiak-20261006-bigdog-review221",
+ "from":"NUIAK",
+ "to":"joe-big-dog/NUIAK",
+ "state":"copied_and_verified",
+ "artifact":{"file":"joe-big-dog/review221-return01.tar.gz","verified_bytes":163325,"verified_sha256":"b21af333f89d37148e2c6c52d22d4902811e8a5a6e695958a3ce41e93b6f7398"},
+ "intake":"four repairs reviewed; BD27 reusable guard remains conditional",
+ "accepted":"BD25 unchanged262category rows/six categories with resolving representatives; BD26 malformed-label tests; BD28 portable512metadata identities preserved.1794label verification and asset pixels remain worker-reported, not independently rehashed here.",
+ "repair":"BD27 validate_catalog accepts replacing episodes[1] with a copy of episodes[0] and episode_id='renamed-duplicate'. Require exact unique (family_index,seed,condition) membership and episode-ID binding. Test duplicated/missing tuple, changed valid condition and renamed tuple. Do not regenerate frames or rescore unchanged results.",
+ "budget":"Remaining review221 CPU repair envelope; one CPU job, two threads,2GiB; no GPU, installs, capture, training or role changes. If exhausted return blocker rather than expand.",
+ "next":"EVIDENCE223 archive/request are published under nuiak/evidence223-worker-pack01.zip and nuiak/evidence223-amendment01.json. Acknowledge separately; reuse these repairs and completed BD18 results. Preserve Run035 priority.",
+ "outcomes":{"software":"partially_accepted","data":"unchanged","integration":"transfer_verified","model":"not_assessed"}
+}

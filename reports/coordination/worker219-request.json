@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker219-fullframe-replay",
+  "request_id": "nuiak-20261006-worker198-backlog",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T19:24:28Z",
+  "expires_at": "2026-10-13T19:24:28Z",
+  "state": "authorized_after_resident_preflight_and_tests",
+  "message": "One preregistered Run035 under standing training authority. Keep existing CPU218/BD12/13 assignments; use otherwise idle GPU without takeover. All pixels and weights are resident from217/213. This is a replay-weighting intervention motivated by independently verified retention failures, not an unchanged rerun or another artwork request.",
+  "artifact": {"file":"nuiak/worker219-manifest01.json","bytes":128379,"sha256":"ff3f96b812377a3cae6259cd805f27041462b99449fabb66444efcc0f93b3e00","schemaVersion":"worker219-replay-v1"},
+  "inputs": "Manifest references217parent335afc6940d9148016cc97744ac74c906cfe2655a2d75914bd93eece3f68dcb0 and the exact213native manifest/022initializer. Resolve full217 IDs through217payload; native IDs through accepted213 storage binding. Check every resident byte/hash/role and frozen source references; no path guessing, download or new data admission. All249unique images already admitted; native48 inspection inputs are excluded.",
+  "schedule": "Use exact1758manifest slots:189fullframe IDs ordered SHA256(ID),ID, eight complete repetitions plus first186, then unchanged60native train IDs from034. Intentional repeated slots must not trip source-duplicate rejection; original examples remain unique and all roles unchanged. Preserve group/duplicate ancestry. This is249unique images, not1758independent examples. Record actual instance exposure per class and reconcile manifest exposure.",
+  "training": "Fresh022initializer, not034resume. Reuse accepted217trainer SHA07f226e011278d03640d65eab2778af5ca472260b625e70b2440524a307ad11f and normal8.4.173 lifecycle; extend wrapper only.10epochs,batch4,nbs64,imgsz640,AdamWlr0=.0001,lrf1,warmup0,seed42,float32,AMP/TF32off,allaugmentationoff,workers0,no shuffle.440minibatches/epoch,275continuous accumulation16 updates across tenepochs, alternating27/28updates with no epoch-end flush. Original512training-only diagnostic validation unchanged; fixed-last only. No architecture/loss changes.",
+  "tests": "Before start, verify exact schedule/hash and249unique/1758slots; fullframe repetition counts186x9and3x8; native60x1; wrong role/hash/missing source/output collision failures; unchanged512validation order, partial final minibatch and275updates. Publish source/config/test pins and actual start separately. No proposal-only round trip needed for this exact wrapper extension; altered trainer semantics require review.",
+  "evaluation": "One621prediction set at existing217five partitions/640/degenerate policy:24nativevalidation,12abstractdiagnostic,135fit,37page-development,413retainedROI. Preserve settings/taxonomy/roles; no thresholds tuned. Compare cached034and022 where compatible. NUIAK owns subsequent2400full-frame retained inference; ROI performance alone cannot qualify replacement. Context/class exposure/repetition change jointly, so no isolated-cause claim.",
+  "budget": "One GPU run maximum,3600seconds total including scoring,3GiB new outputs. No automatic retry, larger epochs, downloads, installs, capture, export, promotion or Git writes. Stop first failure and preserve evidence; continue unrelated CPU work only if resources permit safely. No performance guarantee expected.",
+  "return": "One immutable archive<=512MiB compressed/expanded,<=200regular members,<=100MiB/member: wrapper/tests, fixed-last035checkpoint, configuration, per-epoch counts/losses/order hashes plus full canonical order,512validation order,timing/memory,621predictions and all-class report. No input-image copies. Return exact bytes/SHA256 under owned namespace; matching receiver receipt precedes sender-only cleanup. Keep originals.",
+  "next": "NUIAK independently accepts source/counts and full-frame/native/ROI retention. Failed gates yield diagnosis, no automatic follow-on training. Existing production models remain unchanged."
+}

@@ -1,0 +1,10 @@
+{
+ "schema_version":1,
+ "id":"nuiak-20261006-review224-time-correction",
+ "request_id":"nuiak-20261006-review224",
+ "from":"NUIAK",
+ "to":"joe-big-dog/NUIAK",
+ "observed_at":"2026-10-06T22:00:57Z",
+ "state":"metadata_correction",
+ "message":"review224.json accidentally used22:05:00Z. Actual clock observation at publication was22:00:57Z. Correct timestamp only; receipt hashes, decisions and bounded assignment unchanged. Original immutable message preserved."
+}

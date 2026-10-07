@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-bigdog-ready-backlog220",
+  "request_id": "nuiak-20261006-worker198-backlog",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T19:51:32Z",
+  "expires_at": "2026-10-13T19:51:32Z",
+  "state": "approved_ready_cpu_backlog",
+  "message": "Maintainer asks to keep useful work executable in parallel. Run035 and its approved binding repair retain priority. Queue the four bounded CPU jobs below using resident inputs; these do not wait for035 or new TTR captures. Adopt in your local Tasks queue under your repository rules. No recurring sweep or requirement to consume the whole budget. If one named input is missing, identify it and continue the other ready jobs.",
+  "resource_policy": "One CPU job at a time, at most2threads/2GiB RAM and the smaller per-job output cap. Lower priority than active training; pause CPU work if it competes for GPU input bandwidth or memory. No GPU, model inference/training, installs, downloads, capture, role changes, promotion, deletion or Git writes in these jobs. Use resident Python/Pillow/numpy and existing reports. Preserve inputs. Total<=8CPU hours and1GiB new outputs across this finite tranche. Return compact reports/source/tests, not pixels by default.",
+  "jobs": [
+    {
+      "id": "BD25-retention-failure-atlas",
+      "priority": 1,
+      "inputs": "Resident accepted217/218 reports, original217 labels/manifests and cached022/033/034 predictions for the existing621-case five partitions. Parent217 manifest SHA335afc6940d9148016cc97744ac74c906cfe2655a2d75914bd93eece3f68dcb0. Reuse218 existing per-case matches/miss reasons; pin source files. No dependency on the Mac-only2400frame exports or035.",
+      "work": "Consolidate top10 failure categories, not top10 correlated screenshots: missed proposal, localization/IoU miss, class confusion, duplicate FP, confidence miss, and unsupported evidence kept distinct. Rank by affected unique source groups then affected cases, deterministic category tie-break. Preserve per-model/per-partition/class counts, truth support and denominators; never sum overlapping categories as independent errors. Select<=3 stable representative IDs/category and include their existing artifact references. Produce bounded Fixture/generator proposals tied to failures, separating geometry, appearance and class exposure. Reuse prior218 scoring, no identical rerun.",
+      "acceptance": "Machine-readable atlas and concise decision report; case counts reconcile with existing218 results; duplicate/repeated ROI lineage cannot inflate independent support. Tests for category overlap, empty support, deterministic ranking and incompatible prediction metadata. Inspection-driven recommendations are not new final evaluation evidence or authorization to generate/train.",
+      "budget": "2CPU hours/128MiB. Native48 may be cited only as a separate unqualified reported-condition appendix; it is not model-accuracy evidence."
+    },
+    {
+      "id": "BD26-replay-coverage-audit",
+      "priority": 2,
+      "inputs": "Resident217 input manifest SHA335afc6940d9148016cc97744ac74c906cfe2655a2d75914bd93eece3f68dcb0 and219 manifest SHAff3f96b812377a3cae6259cd805f27041462b99449fabb66444efcc0f93b3e00; resolve through already verified217/213 source bindings.",
+      "work": "Extend existing exposure counts with per-class box area/aspect/edge proximity histograms, class co-occurrence and unique scene/group support for034 versus035 schedules. Use fixed normalized area bins[0,.001,.01,.1,1], aspect bins[0,.5,1,2,5,infinity], edge within.02 image width/height. Report both unique-source and repetition-weighted distributions. Enumerate absent classes and low support without inventing a quality threshold. Audit equal decoded pixels with conflicting labels using cached pixel hashes where available; if no cache, decode only249unique219images once. Preserve related-source grouping. Return which changes are exposure changes versus genuinely new support and three ranked next-data priorities, not a new schedule.",
+      "acceptance": "Totals reconcile with frozen manifests and previous exposure counts; tests for repeated slots, zero support, bin boundaries and conflicting-label duplicates. Missing fields are unknown, not zero; no source/role mutation or automatic admission.",
+      "budget": "2CPU hours/128MiB. No inference or dependency on035 completion."
+    },
+    {
+      "id": "BD27-stability-stress",
+      "priority": 3,
+      "inputs": "Your resident BD14 catalog SHA03a2e56c631144680a67e5930a1ea68be448be57c9d38d3dfa6e3e5950adcedd and manifest SHAc81d27092731360ce93cbdb75d121fe66d12e2c8281efb3d3983faf87d3a08ac plus returned bd14_authored renderer. Original1920frames remain unchanged and need no regeneration.",
+      "work": "Create one explicitly authored stress suite: twelveexisting layouts x fourexisting seeds x threecases =144episodes/1152frames. New seeds/groups are not independent merely because variants are new: inherit existing family roles. Cases: localized1pixel-wide moving highlight with background fixed; foreground fixed with small4x4 animated background patch outside all controls; one-frame foreground flash at frame3 returning at4. Preserve8frames/100ms and exact3frame equality truth, first2unknown; select patch bounds deterministically from available non-control pixels and report any impossible cell. Freeze catalog/source/roles before scoring. Reuse fourfixed thresholds and compare whole-frame MAE with maximum tile MAE on fixed8x6tiles; no oracle masks in deployable baseline, no best-threshold selection. Report false stable and false unstable with denominators plus first correct settled-window delay. Retain all144cases and report every configuration. This tests dilution and transient-motion failure mechanisms, not native settledness.",
+      "acceptance": "Deterministic rendering, actual decoded/pixel/state checks, delayed-window truth tests, boundary/collision/role tests; reconcile all1152frames and unknown windows. Report where whole-frame averages miss small motion and where tile sensitivity overreacts to irrelevant background. Do not claim a production threshold or tune against native data.",
+      "budget": "2CPU hours/512MiB. Authored software diagnostics only; no model training or native capture."
+    },
+    {
+      "id": "BD28-artwork-coverage",
+      "priority": 4,
+      "inputs": "Resident ARTWORK204/inventory.json SHAd9aab2d13028aa3d82822a64c9b7bdaa52d40a49263846b9d2c60c58d0cbaa84 and WORKER198/E/inventory02/report.json SHA0e83ca143a90589e59d17654c405608026a7d1b46bf3a1401da09b8a58c17bbb, already enumerated in BD15. Use only their exact resident asset bindings.",
+      "work": "Produce a reusable asset-selection inventory, not more art. Across all metadata, retain source/licence/review state and intendedposter/thumbnail/avatar/background role. For a deterministic<=512asset sample sorted SHA256(sourceID),ID, balanced across available source and aspect-ratio strata, measure normalized grayscale mean/std, dark/bright pixel fraction(<.1/>.9), simple neighbor-difference edge energy, dimensions and decoded duplicate hashes. Publish exact selected IDs before measurement. Compare support for bright-unfocused, lowcontrast, highdetail and muted backgrounds; descriptors are visual proxies, never semantic genre or legal approval. Report missing metadata rather than inferring rights. Return12 representative IDs with hash/path and reason, no contact sheet or pixel transfer needed.",
+      "acceptance": "Reproducible selection and descriptors, no repeated IDs; tests for tiny/constant/transparent images (composite over black and white and record both), nonfinite calculations, missing source and unknown licence. Output gaps and a seedable asset-picker input contract for TTR, not invented native labels or a training corpus. Reuse resident descriptors if already available and compatible.",
+      "budget": "2CPU hours/128MiB. No new artwork generation/download, no model inference."
+    }
+  ],
+  "return": "One immutable<=32MiB archive/job,<=300regular members/64MiB expanded, source/tests/manifest/report with exact input/output pins, commands, timings, independent-support counts and explicit next decision. Raw authored frames stay worker-local. Publish progress/start/terminal per job, acknowledge this exact request and preserve active work. Only matching receiver receipts permit sender-owned exact shared-copy cleanup.",
+  "deferred": "New backbone installs, native action-sequence metrics, four-arm matched-art training and production CoreML qualification still have real prerequisites. Keep them named blocked rather than claiming ready or substituting artwork for annotated native UI. Mac retains rendering/CoreML qualification; Big Dog owns portable CPU/CUDA analysis."
+}

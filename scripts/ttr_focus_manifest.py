@@ -134,12 +134,18 @@ def main():
     p.add_argument("--producer-reference")
     p.add_argument("--review-crops", action="store_true")
     p.add_argument("--review-model", type=Path, help="Inspection-only scoring; no admission or accuracy qualification")
+    p.add_argument('--review-geometry', choices=('endpoint','pair-union'), default='endpoint')
+    p.add_argument('--compare-review-scores', type=Path, help='Compatible cached endpoint diagnostic; requires pair-union scoring')
     group = p.add_mutually_exclusive_group(required=True)
     group.add_argument("--review-schema4-subset", action="store_true")
     group.add_argument("--visual-review", type=Path)
     group.add_argument("--test-only", action="store_true")
     args = p.parse_args()
     try:
+        require(args.review_geometry=='endpoint' or (args.review_schema4_subset and args.review_model),
+                'union_requires_inspection_scoring')
+        require(not args.compare_review_scores or (args.review_schema4_subset and args.review_model and
+                args.review_geometry=='pair-union'), 'comparison_requires_union_scoring')
         if args.review_schema4_subset:
             from harvest_schema4_review import review, render_review, score_review
             root, output = local(args.bundle), local(args.output)
@@ -153,9 +159,15 @@ def main():
                 with (output/'review-crops.json').open('x') as stream:
                     json.dump(crops,stream,indent=2,allow_nan=False)
             if args.review_model:
-                scores=score_review(root,local(args.review_model),result)
+                scores=score_review(root,local(args.review_model),result,args.review_geometry)
                 with (output/'review-scores.json').open('x') as stream:
                     json.dump(scores,stream,indent=2,allow_nan=False)
+                if args.compare_review_scores:
+                    from harvest_schema4_review import compare_geometry, decode, read
+                    prior=local(args.compare_review_scores)
+                    comparison=compare_geometry(decode(read(prior.parent,prior.name)),scores)
+                    with (output/'geometry-comparison.json').open('x') as stream:
+                        json.dump(comparison,stream,indent=2,allow_nan=False)
             print(json.dumps({k:v for k,v in result.items() if k != 'rows'}))
             return 0 if result['reviewed'] == result['expected'] else 2
         require(not args.review_crops, 'review_crops_requires_schema4_inspection')

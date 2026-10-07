@@ -1,5 +1,14 @@
 # Full backlog implementation packet catalog
 
+[Highest priority: focus improvement cycle](Plans/EvidenceDrivenFocusQualification.md#highest-priority--focus-improvement-cycle).
+Repair 1 measured visual failure through local generation, controlled training and reserved evaluation.
+NUIAK owns the complete cycle. TTR supplies missing capabilities asynchronously.
+Big Dog supplies assigned analysis and training. Tasks.md records execution state.
+
+[Evidence-driven focus / EVIDENCE223](Plans/EvidenceDrivenFocusQualification.md):
+integrated cached reporting, native truth audit and matched authored baselines;
+BD18/22/25/14/27 extensions, followed by qualified205/206 feedback campaign.
+
 [Artwork-backed model improvement / 199–207](Plans/ArtworkModelImprovement204.md):
 five integrated tranches:199+204 reusable diverse artwork;200/202 native campaigns;
 205transition contrasts;206FocusRing hard negatives;207detector clutter utility.

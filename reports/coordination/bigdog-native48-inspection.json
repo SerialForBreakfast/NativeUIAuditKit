@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-bd12-13-native48-inspection01",
+  "request_id": "tvtestrig-20261006-big-dog-backlog-02",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T19:14:25Z",
+  "expires_at": "2026-10-13T19:14:25Z",
+  "state": "assigned_inspection_only",
+  "message": "Resolve the original-pixel input blocker for this bounded48-case BD12/13 subset now. Reuse these artifacts instead of requesting recapture or waiting for training admission. This is a narrower executable slice, not completion of every requested native corpus.",
+  "inputs": [
+    {"source":"appearance24","file":"nuiak/bd12-native-appearance24-r1.tar.gz","bytes":18761816,"sha256":"9bb7fc0da6556c20859da9ef2ac35a660aa06061e72fd43aad9071558c09aaee","members":374,"expanded_bytes":37441816},
+    {"source":"scroll24","file":"nuiak/bd12-native-scroll24-r1.tar.gz","bytes":13182912,"sha256":"71127ae9fc2e5bdc84aac034243ba3f22744083bc6740ebb8c9f54d98751b6ad","members":432,"expanded_bytes":29079185},
+    {"file":"nuiak/bd12-native48-index01.json","bytes":56588,"sha256":"4cfc10a5e267149f4f3444134c0c40b6555eb17752c25123590e0506afeff90a","schema":"nuiak-native48-inspection-v1"}
+  ],
+  "binding": "Extract each archive into a new source-specific root. Index source selects that archive; its image/evidence paths are archive-relative. Require exactly48unique(source,caseID) rows,24per source, two ordered before/after images per row, every indexed hash and referenced file present. The index includes existing DTM053/054 change probabilities and model hashes; local model paths are identity references, not required worker paths. No checkpoint transfer or new inference needed. Reject links/traversal/duplicates/special files; at most500members/40MiB expanded per archive,32MiB/member; check free space first. Retain failures, no automatic retry or overwrite.",
+  "roles": "Every case is calibration-inspection-only. Embedded validation folders and recorded conditions are historical producer assertions, not independent holdout labels. Capture-era source/build binding remains unresolved. No training, threshold tuning, final evaluation, label repair or data admission. Do not pass these as authoritative native references for218.",
+  "work": [
+    "BD13: hash/decode/dimensions/bounds/crop consistency and duplicate/byte-identical pairs over original indexed files. Report typed case-linked defects; distinguish unsupported metadata from corruption. Compare archive per-file manifests where provided, without executing archive code or HTML. Flag reported labels/source contradictions as unverified findings, not repaired truth.",
+    "BD12: use cached probabilities only at frozen no-change<=0.15/change>=0.85/otherwise abstain. Produce all48case dispositions, counts by reported condition, deterministic top10disagreement/anomaly categories and stable representative IDs. Rank by count then stable category ID; include denominators and duplicates/group limitations. Describe agreement with reported conditions, never accuracy or false-stable risk. TTR owns review of uncertain labels.",
+    "Return source/tests and compact JSON/Markdown reports, exact input hashes, complete accounting, elapsed time and missing fields. No raw-image retransfer; refer to stable archive/case/frame IDs. Share one <=16MiB return archive/200regular files/64MiB expanded. Publish exact receipts for the three input files before sender cleanup."
+  ],
+  "budget": "4CPU hours total,2threads,nice10 where supported,128MiB new outputs excluding verified input copies. No GPU, downloads, installations, services, capture, model execution, training, Git writes or editing another namespace. Preserve other active work; acknowledge/start/terminal separately.",
+  "next": "NUIAK independently reviews defect and condition-disagreement counts; TTR resolves source binding and label findings. Unavailable source authority blocks accuracy/training only, not this raw QA slice."
+}

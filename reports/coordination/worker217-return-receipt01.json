@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker217-return-receipt01",
+  "request_id": "nuiak-20261006-worker217-fullframe",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T18:05:00Z",
+  "state": "copied_and_verified",
+  "artifact": "joe-big-dog/worker217-return01.tar.gz",
+  "verified_bytes": 77398274,
+  "verified_sha256": "182ed03fdd06ea937f7323bcf4d93ff567ebe1957a32b5db776d6741fc30d2e9",
+  "receiver": "NUIAK",
+  "local_evidence": "reports/work/FULLFRAME-217/artifacts/return01/worker217-return01.tar.gz",
+  "intake": "Bounded extraction51regular members/99810235expanded bytes complete. Source/config/order/checkpoint and1242prediction review passes; efficacy has retention regressions. Whole-frame evaluation in progress; no promotion.",
+  "cleanup": "Sender may reconcile this exact receipt under its policy; NUIAK retains local archive. No request to remove originals or any other shared artifact."
+}

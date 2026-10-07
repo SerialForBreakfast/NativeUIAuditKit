@@ -247,6 +247,7 @@ def percentiles(values):
 
 
 def evaluate(doc, root, policy, helper, measurement_fn=measure):
+    from focus_evidence import report as evidence_report
     sequences = validate(doc, root, policy)
     results = []; timings = []; failures = []
     for s in sequences:
@@ -260,6 +261,22 @@ def evaluate(doc, root, policy, helper, measurement_fn=measure):
             decisions = predict(s, measurements, policy, mode)
             policies[mode] = {"decisions": decisions, "metrics": score(s, decisions)}
         results.append({"id": s["id"], "sourceKind": s["sourceKind"], "scenario": s["scenario"], "partition": s["partition"], "group": s["group"], "policies": policies})
+    evidence = {}
+    for mode in ("full-frame", "foreground-roi"):
+        rows = []
+        originals = {s['id']: s for s in sequences}
+        for result in results:
+            s = originals[result['id']]
+            for f, d in zip(s['frames'], result['policies'][mode]['decisions']):
+                rows.append(dict(id=s['id']+':'+f['id'], group=s['group'], role=s['partition'],
+                    condition=s['scenario'], truth=None if f['truth']=='unknown' else f['truth']=='unstable',
+                    decision=False if d['state']=='ready' else True if d['state']=='wait' else None,
+                    authority='authored' if s['sourceKind']=='test-only' else 'producer-reported'))
+        evidence[mode] = evidence_report(rows, task='temporal-instability', context=dict(
+            domain='procedural' if all(s['sourceKind']=='test-only' for s in sequences) else 'unknown',
+            source=digest(doc), model={'kind':'causal-policy','sha256':digest(policy)},
+            preprocessing={'helperSHA256':file_hash(helper),'mode':mode},
+            runtimeFailures=failures, unknownDomainReason='legacy schema does not distinguish Fixture from real apps'))
     summary = {}
     for mode in ("full-frame", "foreground-roi"):
         slices = {"overall": summarize([r["policies"][mode]["metrics"] for r in results])}
@@ -267,11 +284,11 @@ def evaluate(doc, root, policy, helper, measurement_fn=measure):
             for value in sorted(values):
                 slices[key+":"+value] = summarize([r["policies"][mode]["metrics"] for r in results if r[key]==value])
         summary[mode] = slices
-    sources = ["scripts/transition_benchmark.py", "scripts/generate_transition_fixture.py", "Tools/TransitionTool/main.swift", "Sources/NativeUIAuditKit/Perception/FrameSimilarity.swift", "Sources/NativeUIAuditKit/Perception/ChangeRegionLocalizer.swift"]
+    sources = ["scripts/transition_benchmark.py", "scripts/focus_evidence.py", "scripts/generate_transition_fixture.py", "Tools/TransitionTool/main.swift", "Sources/NativeUIAuditKit/Perception/FrameSimilarity.swift", "Sources/NativeUIAuditKit/Perception/ChangeRegionLocalizer.swift"]
     return {"version": "transition-report-v1", "status": "partial" if failures else "complete", "corpusSHA256": digest(doc), "policySHA256": digest(policy),
             "helperSHA256": file_hash(helper), "sourceHashes": {p: file_hash(ROOT/p) for p in sources}, "policy": policy,
             "accounting": {"expectedSequences":len(sequences), "evaluatedSequences":len(results), "failedSequences":len(failures)},
-            "results": results, "summary": summary, "failures": failures,
+            "results": results, "summary": summary, "failures": failures, "evidence": evidence,
             "latency": {"scope":"offline process including image decode and primitive measurements; not TTR navigation", "hosts":sorted({t["host"] for t in timings}),
                         "machineArchitecture": platform.machine(), "pythonHost": host_description(),
                         "processColdMs": percentiles([t["processMilliseconds"] for t in timings if t["processMilliseconds"] is not None]),

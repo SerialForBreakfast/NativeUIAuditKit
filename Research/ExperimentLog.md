@@ -1,5 +1,99 @@
 # NativeUIAuditKit — Experiment Log
 
+### Run035 — REPLAY219 full-frame replay intervention, preregistered October6
+
+VERIFY226 result:2400/2400 independent Mac MPS predictions, exit0/140.848seconds.
+Frozen retained fullframes: mAP50 .901047 and mAP50:95 .861824, versus022
+.899967/.858373 and034 .872356/.839466. TP18620,FP6623,FN5371 over23991labels;
+022 TP16713/FP4346;034 TP17809/FP7786. Full-frame recovery succeeds diagnostically
+despite severe ROI regression. ProgressView/toggle/pageControl AP declines versus022
+remain visible; label/listRow account for878/854additionalFP. No promotion or fresh
+holdout claim. Comparison SHA f84e0caa1f3881f466b249491366822b509a7c7eeaa3c57ea040e5a38919a5d8.
+
+VERIFY226 preregistered: one evaluation-only640/MPS pass on existing2400-member
+combined manifest SHA d8980cc95dda09335cbfa1420e26d03ae7ffe8d4eed26a1f9a70bda8e36b3d9d,
+fixed-last4b28997b…; unchanged exporter/settings and cached022/033/034 comparison.
+900second/128MiB budget, new reports/work/VERIFY-226/artifacts output; no threshold
+tuning, training or promotion. Retained development evaluation, not untouched audit.
+
+INTAKE225 completion update: worker completed10epochs/4400batches/275updates;
+returned checkpoint SHA2564b28997ba8ab65be589787b23079a480f6b533c061a553827a2553b13af17bca
+independently verified. Lifecycle1616.68seconds reported;621cached predictions
+verified by bytes/hash after evaluation-only path repair (26.62seconds reported).
+Native validation TP401→408,FP19→4,FN7→0 versus034; ROI fit TP234→0,
+page30→0, combined331→8. Report arithmetic reconciled, not independent rematching
+or inference. No promotion. Full2400-frame retention still pending; joint context/
+exposure/repetition change does not isolate causality. Prior failures preserved.
+
+20:49UTC: reviewed returned binding repair and independently replayed4tests.
+Worker reported a subsequent staging KeyError(imageSHA256) before model load;
+native213 hashes come from files inventory. Reviewed repaired wrapper16f0da72…
+and trainer e8b32bb9…. Corrected staging plus the single remaining launch approved
+in a new attempt directory; frozen model/config/membership unchanged. Prior report
+that only blocker01 existed was incomplete: staging-failure01 was also published.
+No candidate checkpoint available for requested local2400frame evaluation yet.
+
+Prelaunch amendment19:43UTC: worker stopped at validation_membership before GPU.
+The original resolver assumes diagnostics belong to the training schedule;035
+intentionally removes those ROIs. Maintainer approved a versioned separate binding
+for the unchanged512 diagnostic images/labels/order, with negative tests and source
+pins before launch. No training-slot, optimizer, selection or data-role change.
+See reports/coordination/worker219-validation-approval.json. Execution still unverified.
+
+One worker CUDA candidate; no launch implied by this registration. Fresh022weights,
+same217trainer8.4.173/config/seed42:10epochs,batch4/nbs64/640,AdamW1e-4,lrf1,warmup0,
+allaugmentation/AMP/TF32off,workers0,no shuffle;440minibatches/epoch and275continuous
+accumulation updates. Original512training-only diagnostic validation; fixed-last.
+1758slots:1698repeats of the already-admitted189fullframes, then unchanged60native
+training images.249unique images, not1758independent observations. No new data roles.
+Full IDs sorted SHA256(ID),ID; repeat8times plus first186. Compare stored034/022,
+not another control run. Hypothesis: different replay weighting may recover whole-
+frame retention. Context/exposure/repetition change together, not isolated causality.
+Exposure total8032→19977instances;label1272→5200,pageControl1588→231,
+imageView643→1218,progressView900→153. Report likely tradeoffs, not only improvements.
+Manifest128379bytes/SHAff3f96b812377a3cae6259cd805f27041462b99449fabb66444efcc0f93b3e00.
+One GPU/3600seconds including621fixed predictions/3GiB; no automatic retry or sweep.
+NUIAK will independently score2400retained fullframes after return. No promotion,
+independent-final-test or DS-G8 claim. PID/start/results pending worker execution.
+
+### Runs033/034 — FULLFRAME217 broader retention, registered before dispatch
+
+October6. One matched CUDA pair on Big Dog, not launched locally. Common ordered
+1509admitted ROI+189admitted fullframes, followed by60old repeats(control033) or
+60native artwork frames(treatment034).1758slots,440minibatches/epoch,10epochs,
+275continuous accumulation16 updates each. Fresh022initializer
+`d40ad18f8d7dea266082de153a3cf078845cf2c53bd277735d79aa4d226f8e6d`;
+resident8.4.173 trainer, batch4/nbs64/640square/AdamW1e-4/lrf1/warmup0/seed42,
+float32,AMP/TF32off,allaugmentationoff,workers0,no shuffle,resume or download.
+Original512 training-only validation; fixed-last, never best-validation selection.
+
+Hypothesis: common whole-frame replay supports classes absent from ROI-only training
+while preserving the matched artwork contrast. Relative to216, both exposure and
+context change; this is not isolated proof of causation or a speed comparison.
+Frozen189selection is label/group based, not a selection of inference successes.
+Eight groups already occur in ROI training;37page-development higher groups remain
+unknown. Neither constitutes independent final qualification.40supported classes;
+webContent absent. Existing data roles preserved, no new admission or capture.
+
+Manifest335afc6940d9148016cc97744ac74c906cfe2655a2d75914bd93eece3f68dcb0;
+archive42370418bytes/d57ddfcfbebd057a42c9ba26f46d0e7dc81148271f6aef379bf96a09e85b5a5f.
+Bound one GPU/two runs/7200seconds including scoring/6GiB outputs, no automatic
+retry or extension. Reuse621evaluation examples per arm and unchanged operating
+metrics; source/config/order/counts and1242predictions require independent acceptance.
+Whole-model qualification additionally needs2400full-frame retained evaluation on
+NUIAK; croppedROI gains cannot substitute. No promotion from this worker assignment.
+Completed on workerPID169238; terminal16:56:08UTC. Independent review verifies
+10epochs/4400batches/275updates each and1242predictions; reported train-run totals
+1338.811/1354.492seconds. Local unchanged640/MPS whole-frame evaluation completed
+in141.854/139.809seconds,exit0,2400members per arm. Reused022predictions on identical
+inputs: mAP50 .899967/.866455/.872356 and mAP50:95 .858373/.827267/.839466
+for022/033/034; TP16713/17376/17809,FP4346/8215/7786 of23991labels across38supported
+classes. Repeatedly inspected retained evaluation, not fresh final qualification.
+Native validationTP326→401 and diagnostic131→168, but retainedROI530→331.
+Reject replacement/promotion; worker218diagnoses fixed predictions before another
+training proposal. ComparisonSHA21f302e78915e70dbde64e5aee241b9f44fbf619178cb20bc4eee4a43cfbcaf3.
+Plan: [FULLFRAME217](Plans/ArtworkModelImprovement204.md#fullframe-217--matched-full-frame-retention-pair).
+
 ### IOS-PROPOSAL197 — capped ROI recall comparison, October6 UTC
 
 No training/new run ID. Frozen022base plus026ROI;135fit crops pass negative screen,

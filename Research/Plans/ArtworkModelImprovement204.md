@@ -287,6 +287,29 @@ to drive navigation or an automatically promoted model.
 
 ## Tranche 4 — FOCUSRING-206: native focus amid distracting artwork
 
+### CROP222 — retained-pair crop sensitivity (inspection only)
+
+Before new training, test whether per-endpoint resizing hides visual growth. Extend
+the existing schema4 scoring entrypoint with an explicit `pair-union` diagnostic:
+the union of both visible body boxes is applied to both frames, followed by unchanged
+production16%expansion/256crop. Default endpoint geometry remains unchanged. The
+union uses both endpoint observations and is not an online single-frame proposal.
+Score the same20ART191pairs once with shipped artifact9e5ba294…; compare cached
+endpoint scores only when artifact/runtime/inspection identities and membership
+match. Report per-pair margins, clipping strata and fixed decision counts; no
+accuracy, threshold tuning, label admission, new captures or production change.
+Keep<=64MiB outputs and20pairs; no training. Tests cover union geometry, incompatible
+cached comparisons, partial/duplicate membership, invalid scores and CLI mode safety.
+Finish with real entrypoint inference, focused tests and one integrated offline Swift
+build/test. If cached runtime differs, stop comparison rather than silently conflate
+runtime and crop changes. Any gain remains hypothesis evidence, not a model gate.
+
+Execution amendment: current helper hash0dc90088… differs from cached87f7f831…,
+while model/source/OS identities match. Cached comparison correctly blocked. Run
+one fresh endpoint control plus one union diagnostic with the same current helper,
+80endpoint scores across20pairs, unchanged64MiB budget. This is required control
+renewal, not a threshold sweep or repeated unchanged inference. Preserve old scores.
+
 **Outcome:** one matched FocusRing data comparison targeting artwork recall/false
 positives. Reuse tranche3 frames/crops when they actually supply required evidence;
 no new capture simply because a different model is being tested.
@@ -507,6 +530,39 @@ only with exact per-class reconciliation, not invalidate sealed inputs by refact
 
 ## Full-frame replay coverage audit — preparation, not another run
 
+### FULLFRAME-217 — matched full-frame retention pair
+
+Authorized continuation October6. Reuse the audited189train fullframes and accepted
+1509ROI membership; append the same189frames to both arms before the existing
+60repeat/native contrast. Runs033/034 freshly initialize022.1758slots per arm,
+440minibatches/epoch,10epochs,275continuous accumulation16 optimizer updates.
+Reuse accepted216 CUDA trainer/config, fixed-last, original512 training-only
+validation, and621evaluation inputs/arm. This tests artwork benefit under broader
+replay; comparison to216also changes exposure and cannot isolate context causally.
+
+Before transfer verify pinned189proposal and original173split membership, every
+image/annotation/YOLO label, decoded pixels, unique source groups, and reserved
+source/group/pixel exclusions. Compare native/page/combined evaluation pixels and
+parent identities as well as173reserved groups. Shared ancestry with already
+admitted ROI training is permitted and disclosed, not counted as independent data.
+Unknown higher ancestry for37page-development rows remains explicit; no final
+qualification claim. No replacement membership or shrinking on failure.
+
+Transfer only189image/label/annotation triples plus manifest; reuse all resident
+198/213/216inputs and weights. Archive <=512MiB expanded/compressed,<=600regular
+members,<=16MiB/member. Worker verifies old and new manifests and tests1758slot
+lookup/counts/partial batches before launch. One pair,one GPU,7200seconds/6GiB;
+no automatic retries/downloads/capture or promotion. Publish source/config/start
+identity and exact receipt, then return existing bounded216-style result contract.
+
+Acceptance: independently review worker code/config/order/counters and all1242
+predictions with unchanged metrics. Preserve full-frame checkpoints for subsequent
+whole-frame2400retained evaluation locally; ROI-only scoring cannot pass whole-model
+retention. Full-frame189training diagnostics are not independent evidence. Accept
+execution independently of model success; failed gates require diagnosis. Dispatch
+completion is the boundary of this preparation tranche; remote completion and its
+acceptance are separate, not presumed from publication.
+
 Audit the already admitted IOS-PLACEMENT173 membership to find training-only full
 frames for classes absent from the page-focused1509ROI replay. Hash-verify labels
 and retain family/group/pixel ancestry. Report per-class image and instance support;
@@ -558,3 +614,92 @@ report missing classes as unavailable. This is in-sample sensitivity, not qualif
 or a mandate to double production resolution. Fresh1280batch time is not directly
 comparable to the prior189-frame640batch time. Decide whether to pursue a separately
 bounded resolution-aware training hypothesis; do not launch it from this diagnostic.
+
+### Returned217 acceptance and independent worker218 follow-up
+
+Review033/034 with an explicit217 profile:1758 ordered slots,440 batches per epoch,
+275 continuous-accumulation updates across ten epochs. Compact epoch records must
+match the complete ordered-path file's canonical JSON hash and count; do not weaken
+the213/216 full-order checks. Independently score the existing1242 predictions using
+the unchanged five-partition evaluator. Broad retention regressions prohibit promotion.
+Whole-frame retained evaluation remains a separate required check before any positive
+whole-model claim; ROI results cannot stand in for that check.
+
+Execute two serial640/MPS exports on the unchanged2400-member combined manifest
+d8980cc95dda09335cbfa1420e26d03ae7ffe8d4eed26a1f9a70bda8e36b3d9d,
+using returned033/034last checkpoints and the existing exporter/degenerate policy.
+Bound each export to900seconds, aggregate outputs128MiB; no retry or backend fallback.
+Reuse hash-verified022 predictions for comparison with unchanged scorer/settings.
+This repeatedly inspected retained set is not a new independent final holdout.
+
+WORKER218 is an independent CPU-only follow-up using resident evidence: case-linked
+033/034 regressions and a tested authoritative-reference comparison for BD22's semantic
+blind spots. Bound it to four CPU hours,128MiB outputs, no training, installs, downloads
+or GPU work. Return matched/conflict/unverifiable, not automatic data admission.
+Missing trusted references are unknown; identical pixels alone do not prove bad labels.
+
+### Worker backlog input closure — October6
+
+Supply the retained native appearance24 and scroll24 archives byte-identically to
+Big Dog for BD12/13 inspection-only QA. Supply a portable48-case index mapping
+archive-relative before/after/evidence paths to hashes, and existing DTM053/054
+probabilities by exact case identity. Do not rerun models or require unavailable
+weights to analyze existing predictions. Validate index membership/bytes locally
+before publication. All48 remain calibration/inspection only; embedded validation
+directory names do not confer independent evaluation status. Seven capture-source
+differences remain unresolved, so agreement with reported conditions is not accuracy.
+Bound worker processing to4CPU hours/128MiB output, no training/capture/downloads.
+
+WORKER218 returned proposal needs malformed-reference guards and explicit known
+absence versus unknown focus semantics before production integration. Review counts
+against local217scores; preserve worker AP rounding rather than claim bit-exact AP.
+Ask for a corrected version under the original218 request, not duplicate work.
+
+BD14 may prepare a deterministic authored software benchmark under a named recipe
+contract; no native stability or modal model claim follows. BD15's multi-source
+training remains blocked on paired rendered/labelled membership, not raw art.
+198B/D supplied workloads are complete;198C native focus comparison retains its
+qualified-data prerequisite. BD20/21/23 installations and new model execution remain
+separate decisions, not something this handoff silently authorizes.
+
+### REPLAY219 — full-frame replay intervention, Run035
+
+Parallel portable CPU work is defined in the bounded
+[BD25–28 dispatch](../../reports/coordination/bigdog-ready-backlog220.json): cached
+failure atlas, unique-versus-weighted coverage, temporal stability stress and
+artwork selection descriptors. Resident inputs, tests, limits and evidence are
+specified per job. They do not wait for035 or permit new model/data-role changes.
+
+October6 prelaunch amendment: separately stage/resolve the original512 diagnostic
+validation inputs instead of resolving them only from219training slots. The reviewed
+failure occurs before GPU. Big Dog is authorized to extend the pinned trainer for
+this binding only, test legacy behavior and exact membership/isolation failures,
+publish new source pins, then run035. Preserve training schedule/config and fixed-last
+selection; diagnostics remain historically training-exposed, not independent holdout.
+The [approval](../../reports/coordination/worker219-validation-approval.json) defines
+the complete test and execution bounds; no additional proposal round trip is needed.
+
+Independent217evaluation rejects both candidates:034retained full-frame AP50 .87236
+versus022 .89997 andFP7786versus4346.218diagnosis confirms major label no-overlap
+and missing-proposal increases. Test one bounded intervention, not an automatic
+repeat: replace034's1509ROI+189fullframe replay slots with1698fullframe slots drawn
+only from the same admitted189images; retain the same60native training slots.
+Fullframe IDs sorted by SHA256(ID), then ID, repeat8times plus first186. Slot order
+is explicit.249unique images are not1758independent examples. This changes context,
+class exposure and repetition jointly; do not claim isolated causal attribution.
+
+Initialize035fresh from022, reuse accepted217trainer/config:10epochs,440batches per
+epoch,275continuous-accumulation updates, batch4/nbs64/640/AdamW1e-4/seed42. Preserve
+original512diagnostic validation and fixed-last selection. Compare to stored034and
+022; no control rerun. One GPU run/3600seconds including621fixed predictions/3GiB.
+No new pixels, data roles, architecture, downloads, capture or promotion. Worker
+verifies all resident byte/hash/role references and tests exact repeated-slot
+schedule; duplicate source IDs in slots are intentional, source examples remain unique.
+
+NUIAK prepares an immutable slot manifest referencing217and213 identities, with
+per-class exposure from verified original labels. Worker returns checkpoint, exact
+source/config/event/order evidence and621predictions. NUIAK scores2400retained full
+frames afterward before efficacy decision. Report native, ROI and whole-frame
+retention separately. Success requires improvement over034 without hiding deficits
+against022; existing promotion gates remain binding. A failure returns diagnosis,
+not another run. No independent-final-test claim from these repeatedly inspected sets.

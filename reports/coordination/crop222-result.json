@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-crop222-result",
+  "request_id": "nuiak-20261006-art191-shipped-diagnostic",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-06T21:18:14Z",
+  "expires_at": "2026-10-13T21:18:14Z",
+  "state": "inspection_completed_no_crop_policy_change",
+  "message": "Controlled shipped FocusRing crop test on the same20retained ART191pairs: fresh endpoint and shared pair-union boxes scored on identical runtime/artifact,80endpoint scores. Positive reported-role margins8/20to5/20; reported-unfocused scores>=.85 rise8to12. Preserve production per-endpoint cropping; union is not supported as a simple fix. No native accuracy or training admission claim.",
+  "artifact_sha256": "9e5ba294e545b4ae0c54aa5d483b1a1f681b6c30477882700b4dbe139b9c66b7",
+  "cases": [
+    {"case":"cutout-01-dark-detailed","margin_delta":0.8986816599999999,"clipped":true},
+    {"case":"streaming-library-dark-r2","margin_delta":-0.881561279,"clipped":true}
+  ],
+  "limitations": "18pairs involve clipping, source/role qualification unresolved. Union uses both endpoint boxes and changes context as well as relative size; not an online single-frame strategy or proof of causal growth sensitivity. No threshold sweep.",
+  "next": "Use retained cases in the existing source/geometry review; do not recapture or change crop policy merely to improve these scores. Qualified matched growth/no-growth/content-only groups remain the useful next evidence. No new device operation requested.",
+  "evidence": "reports/work/CROP-222/handoff.md",
+  "outcomes": {"software_verified":"passed","data_eligible":"blocked","integration_qualified":"diagnostic_crop_inference_only","model_gate_passed":"not_assessed"}
+}

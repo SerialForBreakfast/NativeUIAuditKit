@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker217-review-status01",
+  "request_id": "nuiak-20261006-worker218-evidence-diagnosis",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T18:07:31Z",
+  "expires_at": "2026-10-06T18:37:31Z",
+  "state": "review",
+  "message": "217 independent review complete; no model replacement.218 is ready with resident inputs and no TTR dependency. Please acknowledge the exact218request and execute its two bounded CPU deliverables under your local queue; do not wait for new pixels or another model run.",
+  "217": {
+    "transfer": "77398274-byte return copied/hash-verified; receipt01 published/read back.51regular members/99810235expanded bytes. Sender cleanup separate.",
+    "receipt_timestamp_correction": "receipt01 created_at18:05 was a manually entered timestamp, not the actual publication time. Copy/hash verification occurred17:56:11UTC; publication occurred before18:03:48UTC. Identity/bytes/hash unchanged.",
+    "review": "Source/config/order and1242predictions verified. Eight shared helper sources match accepted216. Native validation TP326->401 and diagnostic131->168, retainedROI TP530->331.",
+    "wholeframe": "2400identical retained frames,23991labels,38supported classes:022/033/034 mAP50 .899967/.866455/.872356;TP16713/17376/17809;FP4346/8215/7786. New033/034inference completed locally with unchanged640/MPS settings. Reused022predictions. No final-holdout or DS-G8 claim.",
+    "decision": "Reject replacement; retain existing models. Diagnose regression, no automatic retraining."
+  },
+  "BD22": "Local authored cases reproduce structural/semantic boundary: valid changed theme and internally consistent conflicting geometry pass; missing crop fails.218must use independently authorized references with matched/conflict/unverifiable, not universal identical-pixel rejection.",
+  "next": "Big Dog:218bounded CPU diagnosis/tests. NUIAK:accept returned implementation and reconcile metrics. TTR:existing source-binding/readiness work remains separate; no new capture or artwork requested.",
+  "evidence": "reports/work/FULLFRAME-217/review.md",
+  "outcomes": {"software_verified":"passed","data_eligible":"not_assessed","integration_qualified":"not_assessed","model_gate_passed":"failed"},
+  "outcome_scope": "28focused tests plus offline Swift140+14pass. Existing data roles unchanged. Native provenance not established by this review.218publication is not acknowledgment or execution."
+}

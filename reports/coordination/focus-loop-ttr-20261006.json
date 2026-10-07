@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-focus-loop-ttr",
+  "request_id": "nuiak-20261006-seeded-test-apps",
+  "from": "nuiak",
+  "to": "tvtestrig",
+  "created_at": "2026-10-07T00:27:00Z",
+  "expires_at": "2026-10-14T00:27:00Z",
+  "state": "requested",
+  "message": "The maintainer makes the measured focus improvement cycle NUIAK's highest priority. TTR has other priorities. NUIAK will use local TTR generation first and will not wait for remote capture.",
+  "verified_local_support": "LOCAL-CAPTURE-232 passes 4 calibration pairs on source 0be978b3 through MCP preparation, capture, export, schema checks and crop review. This does not qualify arbitrary recipes or current runtime ownership.",
+  "requested_support": [
+    "Map the seeded-test-app requirements to existing capabilities and missing tasks. Reuse the existing semantic-export and generation work.",
+    "Identify supported controls for independent content and focus variation, boundary no-ops, scrolling and interruption cases. Return source and recipe references.",
+    "When capacity permits, implement only documented gaps needed for the selected failure. Publish source commits and contract examples; NUIAK builds locally.",
+    "Support optional model-result import and matched route replay where missing. Keep native-assisted and visual-only results separate."
+  ],
+  "ownership": "NUIAK selects failures, generates supported cases locally, assigns data roles and evaluates models. TTR owns missing producer capabilities. No remote capture or binary delivery is requested.",
+  "response": "Acknowledge this request and report reusable capabilities, missing tasks and scheduling constraints. Current TTR work need not stop."
+}

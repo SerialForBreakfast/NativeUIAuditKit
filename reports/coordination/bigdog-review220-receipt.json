@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-bigdog-review220-receipt",
+  "request_id": "nuiak-20261006-backlog-contracts02",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T19:51:32Z",
+  "expires_at": "2026-10-13T19:51:32Z",
+  "state": "copied_verified_scoped_review_complete",
+  "receiver": "NUIAK",
+  "artifacts": [
+    {"request_id":"nuiak-20261006-bd12-13-native48-inspection01","file":"joe-big-dog/bd12-native48-return01.tar.gz","bytes":55651,"sha256":"c7e3c2867bceff684f719025255b256f09898eb6d1b6c48dcc9476266467f4a8","transfer":"copied_and_verified","intake":"accepted_inspection_report_only"},
+    {"request_id":"nuiak-20261006-worker218-review-unblock01","file":"joe-big-dog/worker218-repair02-return01.tar.gz","bytes":10281,"sha256":"5a1173c960375dc66eb0ebcbf846f51a7aa531f6f2dad8f6f2c710876afeb3e6","transfer":"copied_and_verified","intake":"accepted_proposed_helper_repair_not_production_integration"},
+    {"request_id":"nuiak-20261006-backlog-contracts02","file":"joe-big-dog/bd14-15-return01.tar.gz","bytes":326563,"sha256":"b9978942abcef0410e840bdec63e776a8376b7414e929d7fa6528bf2345e3cc1","transfer":"copied_and_verified","intake":"accepted_authored_software_benchmark_and_scoped_gap_inventory"}
+  ],
+  "message": "All archives bounded-extracted and hash-verified locally. Replayed26tests (21818,BD12three,BD14five). Regenerated1920BD14pixels/state/stability from frozen catalog and reconciled120false-stable counts/denominators. No native training eligibility or model gate established. Sender may reconcile these exact receipts before cleaning only matching shared copies, preserving originals; receiver deleted nothing.",
+  "findings": [
+    "Native48: both053/054 disagree with reported scroll_unchanged on8of8cases. Producer-condition association only; source/label authentication unresolved. Eight decoded-identical pairs are not automatically bad examples.16 unsupported crop records require exact original schema support, not invented bounds.",
+    "218v2 fixes reviewed root/absence issues. Authority flag remains caller assertion; do not treat matched as training admission. Production integration is still separate.",
+    "BD14: held-out-software focus motion false-stable16/48 at.005 and36/48 at.01; background-motion stable emissions0/72 despite unchanged foreground. This supports stress-testing spatial dilution, not claiming a universal threshold.",
+    "BD15 inventory is not proof that null extracted metadata never exists in nested source manifests. Zero verified matched four-arm rows means that ablation remains blocked; standalone artwork and native frames are not matched focus transitions."
+  ],
+  "next": "Execute ready CPU backlog nuiak-20261006-bigdog-ready-backlog220 below035priority. TTR should use case-linked native48 discrepancies and matched-render fields when reconciling its existing handoff; no new capture request or physical-device authority is granted here.",
+  "evidence": "reports/work/BIGDOG-REVIEW-220/handoff.md",
+  "outcomes": {"software_verified":"passed_scoped_tests","data_eligible":"roles_unchanged_native48_not_admitted","integration_qualified":"transfer_only","model_gate_passed":"not_assessed"}
+}

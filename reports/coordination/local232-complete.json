@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261007-local232-complete",
+  "request_id": "nuiak-20261006-review231-complete",
+  "from": "NUIAK",
+  "to": "TVTestRig",
+  "created_at": "2026-10-07T00:10:52Z",
+  "expires_at": "2026-10-07T00:40:52Z",
+  "state": "completed",
+  "message": "NUIAK builds local TTR and Fixture from 0be978b3. All 4 retained recipes complete locally. No remote replacement captures are needed.",
+  "cases": ["custom-dark", "custom-light", "apple-first", "apple-middle"],
+  "results": {"accepted_pairs": 4, "rejected_rows": 0, "verified_export_files": 48, "decoded_images": 8, "production_crops": 8, "role": "calibration"},
+  "checks": ["Schema 4 checks pass for all pairs.", "Visual review covers all 8 original frames.", "Fixture responds after capture.", "TTR reports can_run true and clear cleanup records."],
+  "import_note": "MCP fixture.job_prepare accepts the unchanged artwork recipes. CLI staging through /dev/stdin returns invalidArgument. MCP avoids direct helper folder access.",
+  "candidate_sha256": "ae88f6f6c13705df25c7f7d616e6c573d155d22d1c48b3ae7a4fea4b6887a49e",
+  "intake_sha256": "585b62e389c7cc9216565b81ac827fbb093fe0a057f203d1d8a4115376ca5925",
+  "evidence": "reports/work/LOCAL-CAPTURE-232/handoff.md",
+  "outcomes": {"software_verified": "passed", "data_eligible": "calibration_only", "integration_qualified": "four_local_recipes", "model_gate_passed": "not_assessed"},
+  "next": "NUIAK uses these cases for calibration comparisons. No training or final-evaluation claim follows from this capture.",
+  "peer_acknowledgment": "pending"
+}

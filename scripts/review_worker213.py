@@ -1,5 +1,7 @@
 """Independent checks of returned training/configuration evidence, without loading weights."""
 import math
+import hashlib
+import json
 import argparse
 from pathlib import Path
 from generator_asset_plan import inventory_metadata
@@ -11,20 +13,25 @@ BASE=ROOT/'reports/work/WORKER-213/artifacts/return01/payload'
 OUT=BASE.parent/'training-review01.json'
 
 
-def check_epochs(epochs, slots):
+def check_epochs(epochs, slots, compact_order=None):
     batches=(slots+3)//4
     require([x['epoch'] for x in epochs]==list(range(10)),'epochs')
     order=[f'{j:04d}.png' for j in range(slots)]
     for i,x in enumerate(epochs):
         updates=((i+1)*batches)//16-(i*batches)//16
         require(x['batches']==batches and x['updates']==updates,'batch_update_counts')
-        require([Path(v).name for v in x['order']]==order,'slot_order')
+        if compact_order is None:
+            require([Path(v).name for v in x['order']]==order,'slot_order')
+        else:
+            require([Path(v).name for v in compact_order]==order,'slot_order')
+            digest=hashlib.sha256(json.dumps(compact_order,separators=(',',':')).encode()).hexdigest()
+            require(x['order_count']==slots and x['order_sha256']==digest,'compact_order_integrity')
         require(len(x['losses'])==batches and all(math.isfinite(v) for v in x['losses']),'losses')
     return batches*10,(batches*10)//16
 
 
 def run(base=BASE,out=OUT,profile='213'):
-    require(profile in ('213','216'),'profile')
+    require(profile in ('213','216','217'),'profile')
     base=base.absolute();out=out.absolute()
     require(base.resolve()==base and base.is_relative_to(ROOT) and
             out.resolve()==out and out.is_relative_to(ROOT),'boundary')
@@ -34,11 +41,15 @@ def run(base=BASE,out=OUT,profile='213'):
     if profile=='216':
         pins={'worker198_full_trainer.py':'07f226e011278d03640d65eab2778af5ca472260b625e70b2440524a307ad11f',
               'worker216_replay.py':'966c1dd311e0f26477a0fe44c05dde49a277fb72d6126267e3e79ddc448ffec6'}
+    if profile=='217':
+        pins={'worker198_full_trainer.py':'07f226e011278d03640d65eab2778af5ca472260b625e70b2440524a307ad11f',
+              'worker217_fullframe.py':'d62166a6419a86a5566471e5680a11c1bfef2236eb4b77715582c8fd50c8cf87'}
     for name,digest in pins.items():require(sha(base/'scripts'/name)==digest,'source_changed')
     data=inventory_metadata(base/'evidence/training-results.json',max_bytes=(8 if profile=='216' else 4)*1024**2,
                             max_nodes=150000 if profile=='216' else 100000);results=[]
     require([r['arm'] for r in data]==['control','treatment'],'arms')
-    require([r['run'] for r in data]==(['029','030'] if profile=='213' else ['031','032']),'run_identity')
+    run_ids={'213':['029','030'],'216':['031','032'],'217':['033','034']}
+    require([r['run'] for r in data]==run_ids[profile],'run_identity')
     config=None
     expected=dict(batch=4,epochs=10,nbs=64,imgsz=640,optimizer='AdamW',lr0=.0001,lrf=1.,
                   warmup_epochs=0,seed=42,amp=False,resume=False,workers=0,device='0')
@@ -49,7 +60,12 @@ def run(base=BASE,out=OUT,profile='213'):
         normalized={k:v for k,v in cfg.items() if k not in ('model','data','project','name','save_dir')}
         if config is None:config=normalized
         else:require(config==normalized,'arm_configuration_difference')
-        batches,updates=check_epochs(r['epochs'],572 if profile=='213' else 1569)
+        compact_order=None
+        if profile=='217':
+            order_path=base/arm['arm']/'order.txt'
+            require(order_path.stat().st_size<1024**2,'order_size')
+            compact_order=order_path.read_text().splitlines()
+        batches,updates=check_epochs(r['epochs'],{'213':572,'216':1569,'217':1758}[profile],compact_order)
         require(len(r['validations'])==11 and all(v['images']==512 and v['batches']==64 for v in r['validations']),'validation_role_counts')
         cp=(base/'checkpoints'/(arm['arm']+'-last.pt') if profile=='213'
             else base/arm['arm']/'last.pt');digest=sha(cp)
@@ -73,7 +89,7 @@ def run(base=BASE,out=OUT,profile='213'):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile',choices=['213','216'],default='213')
+    parser.add_argument('--profile',choices=['213','216','217'],default='213')
     parser.add_argument('--base',type=Path,default=BASE)
     parser.add_argument('--out',type=Path,default=OUT)
     run(**vars(parser.parse_args()))

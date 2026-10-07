@@ -1,9 +1,98 @@
 # NativeUIAuditKit — Current State
 
+**October6 REVIEW228 (supersedes earlier035-pending notes):** Run035 was received
+and independently evaluated on2400 retained frames: mAP50 .901047 vs022 .899967,
+but FP6623 vs4346; no promotion. Cached diagnosis and249-source training audit now
+complete. Source-semantic conflict found in13 ContextMenu training images (41 action
+rows typed non-interactive label); no historical corrections made. Next is the
+versioned SEMANTICS229 repair and controlled replay design, not more blind volume.
+[Latest handoff](../reports/work/REVIEW-228/handoff.md).
+
+**October6 EVIDENCE223:** shared focus/transition evidence reports and retained replay
+delivered; authored tiled differences expose a tiny-highlight/background-nuisance
+tradeoff, not native efficacy.48native and20ART191 cases remain source-unqualified.
+Cached iOS QA covers621cases with63random review cases; no label edits. TTR/Big Dog
+extension published and verified, acknowledgment pending. No production changes.
+[Handoff](../reports/work/EVIDENCE-223/handoff.md).
+
 **As of:** October 5, 2026, Run026 geometry comparison complete; TTR receipt/replay evidence remains as previously reported; transition robustness remains unqualified; no production promotion
 **Audience:** maintainers and agents
 **Open work:** [`Tasks.md`](../Tasks.md)  
 **Finished work:** [`CompletedTasks.md`](../CompletedTasks.md)
+
+**October6 CROP222:** controlled FocusRing diagnostic rejects shared-box union as
+a simple improvement: positive paired margins8/20→5/20; reported-unfocused high
+scores8→12.80real CoreML scores with matched runtime; no accuracy/admission claim.
+Production crop policy unchanged;28Python and140+14Swift tests pass.
+[Evidence](../reports/work/CROP-222/handoff.md).
+
+**October6 20:49UTC219 correction:** newer staging-failure01 and binding-return01
+were present, missed by narrow filename filtering. Binding repair reviewed and4tests
+pass; corrected native213hash lookup failed before model load and has been repaired.
+Fresh staging/one035launch approved in watched requests, published/read back.
+Checkpoint still absent, so retained-frame model evaluation has not run.
+
+**October6 review221:** BD25–28 returned;14tests pass,1152authored stress frames
+reproduced. Tile scoring catches tiny motion missed by whole-frame averages but
+overreacts to background motion; no deployment recommendation. BD26 validator
+accepts invalid class IDs/NaN centers; targeted repair requested before integration.
+BD28 selection reproducible, native rights/admission unchanged.035still has no
+observed launch/checkpoint; its prior scoped binding approval remains active.
+[Review](../reports/work/BIGDOG-REVIEW-221/handoff.md).
+
+**October6 worker review220 supersedes pending CPU-return notes below:** BD12/13,
+218v2 and BD14/15 received and reviewed within their inspection/software scopes.
+26tests pass;1920authored pixel/state records regenerated. Native48 remains
+unqualified for training. Four resident-input CPU jobs BD25–28 queued below035:
+failure atlas, replay coverage, stability stress, artwork coverage.035preflight
+stopped before GPU at diagnostic membership; separate binding repair approved,
+actual launch still unverified. [Review](../reports/work/BIGDOG-REVIEW-220/handoff.md).
+
+**October6 REPLAY219 prepared/dispatched:** one preregistered035 tests full-frame
+replay weighting after034retention failure. Existing189fullframes repeated to1698
+slots plus unchanged60native training images; same1758slots/275updates, fresh022.
+Only128379-byte schedule transferred; pixels/weights resident.16focused tests and
+offline Swift140+14pass. Worker start/acknowledgment pending; no new model result
+or promotion. Other worker CPU inputs remain published and independently executable.
+[Handoff](../reports/work/REPLAY-219/handoff.md).
+
+**October6 worker input closure:**218return independently reviewed; retention205
+class/partition count rows reconcile, AP matches at6decimals.13tests pass but
+malformed null reference crashes and explicit observed no-focus is unsupported;
+repair requested before integration. Original native48 archives and hash-bound
+index/cached probabilities now published for Big Dog BD12/13 inspection-only QA.
+BD14 authored software benchmark contract supplied; BD15 real rendered-arm and
+native198C eligibility gaps remain explicit. No native training admission or model
+promotion. [Handoff](../reports/work/WORKER-218/handoff.md).
+
+**October6 18:07UTC independent217 review supersedes pending status below:**
+033/034source/config/order and1242predictions verified. Both returned models evaluated
+on identical2400retained fullframes:022/033/034 mAP50 .89997/.86646/.87236,
+TP16713/17376/17809,FP4346/8215/7786. Native gains do not offset retention loss;
+no promotion.28focused tests plus offline Swift140+14pass. WORKER218published/read
+back: CPU-only semantic-reference validation and case-linked regression diagnosis,
+resident inputs, no TTR prerequisite; acknowledgment pending.
+[Evidence](../reports/work/FULLFRAME-217/review.md).
+
+**October6 status reconciliation:** Big Dog217 terminal16:56UTC reports both
+033/034complete with1242predictions and no inference failures; returned artifact
+available, independent acceptance still pending. Peer reports native gains and
+ROI retention regressions, not a promotion. BD-18–24 scope review published/read
+back to both peers: prioritize statistical feasibility18 and manifest-aware QA22;
+matched benchmark20preparation only, detector23deferred, world-model24inventory.
+Exact scope acknowledgment now verified17:35UTC;18inconclusive,19signal failed,
+22partial QA findings are peer-reported, not independently replayed. TTR offload
+blocker cleared per replay06; host contention now blocks native execution, with
+0newpairs/0journeys. Historical capture-source binding remains separate.
+[Review](../reports/work/WORKER-198/spikes18-24-review.md).
+
+**October6 FULLFRAME217 dispatched:** verified189full-frame training delta now on
+SMB for Big Dog, paired Runs033/034 registered with1758slots/10epochs/275updates.
+Both arms share broader40-class context; old/native60slot contrast remains matched.
+Publication/readback complete, worker receipt/start unconfirmed. No new model result.
+216closure acknowledgment received, checkpoints/shared return retained. Native48
+source/build qualification remains pending; no new TTR operation requested.
+[Preparation and verification](../reports/work/FULLFRAME-217/handoff.md).
 
 **October6 REPLAY216 completed:** independent source/config/order and1242prediction
 review accepts execution, rejects promotion. Native imageView hits42→87/120;

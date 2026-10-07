@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-backlog-contracts02",
+  "request_id": "tvtestrig-20261006-big-dog-backlog-02",
+  "from": "NUIAK",
+  "to": ["joe-big-dog/NUIAK", "TVTestRig"],
+  "created_at": "2026-10-06T19:14:25Z",
+  "expires_at": "2026-10-13T19:14:25Z",
+  "state": "scoped_execution_and_dependency_resolution",
+  "priority": ["BD12/13 native48 original-byte QA and cached-prediction inspection", "WORKER218 returned helper repairs", "BD14 authored software benchmark below"],
+  "BD14": {
+    "decision": "Execute authored benchmark/scorer qualification only; this supersedes the blanket scope-wait for this slice, not the native model benchmark.",
+    "named_input": "This exact request's BD14.recipe is the complete input; hash the received request and freeze generated catalog/source before rendering. No native captures, models, third-party art or download is required. Return the exact catalog and per-frame manifest, not invented real-world labels.",
+    "recipe": {
+      "version": "bd14-authored-sequence-v1",
+      "width": 320,
+      "height": 180,
+      "frames_per_episode": 8,
+      "frame_interval_ms": 100,
+      "content_seeds": [101,211,307,401],
+      "layout_families": ["single-row","two-row","three-row","left-list","right-list","center-dialog","top-grid","bottom-grid","sidebar-grid","split-pane","hero-shelf","dense-grid"],
+      "conditions": ["stable","focus-move","scroll","modal-arrival","background-motion"],
+      "expected_episodes": 240,
+      "expected_frames": 1920,
+      "groups": "layout family owns every seed/condition/related variant. Families0-5 software-development(120episodes);6-8 calibration(60);9-11 held-out-software-test(60). These roles never admit model training or native evaluation. Publish actual generated membership hashes before scoring; no role movement after results.",
+      "rendering": "Use resident Pillow/numpy only, reuse existing procedural renderer where compatible; simple opaque rectangles/text-free controls, deterministic integer coordinates and solid/checker backgrounds. Record measured raster bounds and authoritative authored layer masks. Distinct families have distinct arrangements, not renamed identical templates. No simulated native callback claims. If renderer cannot meet a cell, report the missing cell rather than replace it.",
+      "timeline": "Frames0,1 baseline. Stable: no changes. Focus-move: move authored highlight toward a second control at2,3,4, fixed thereafter. Scroll: translate content at2,3,4 while highlight remains fixed, then stop. Modal-arrival: alpha0 at0,1;0.5 at2;1 at3-7 over a fixed center panel. Background-motion: vary only checker background at every frame while all foreground layers remain identical.",
+      "truth": "Keep separate labels: full-frame pixel stability, foreground-layer stability, authored highlighted-element ID, and fully visible modal presence. Stability at time t means exact equality across frames t-2,t-1,t; t<2 is unknown. Modal present only when alpha==1; partial is transitional. These are renderer-defined software truths, not perceptual settledness or native focus guarantees. No transition classifier relabelled as a modal detector."
+    },
+    "scoring": "Check schema/hash/decode/bounds/order/group isolation and exact generated stability/modal labels against renderer state. Benchmark fixed whole-frame mean absolute consecutive RGB differences normalized0..1 at thresholds[0.001,0.005,0.01,0.02], using maximum difference over both consecutive intervals in the3frame window. Report every threshold and condition, false stable=unstable truth predicted stable / unstable truth count, plus error among emitted stable decisions with denominators separately. Add foreground-mask oracle baseline explicitly marked nondeployable. Modal detector metrics unavailable: there is no named modal model; verify modal labels only. No best-threshold selection, model training or native performance claim. Three held-out layout groups cannot establish low-risk generalization; no frame-iid confidence interval.",
+    "tests": "Repeated same-config decoded pixels/labels match; changed seed reflected; missing/corrupt/out-of-order frames, altered manifests, wrong bounds, cross-role group, unknown first2frames, motion background with stable foreground, partial modal and output collisions all tested. Freeze software test identities before scoring; never call these independent real UI evidence.",
+    "budget": "2CPU hours/1GiB local outputs,2threads; no GPU or installs. Source/tests/report/catalog/hash manifest returned<=16MiB/300files/64MiB expanded; retain raw authored frames locally, no image transfer required initially. Finish earlier when complete; no repeat sweep."
+  },
+  "BD15": {
+    "decision": "No six-plus-arm training launch. Architectural/lineage contract can be prepared now; current broad ablation still lacks matched rendered pairs and source-separated evaluation. Do not idle waiting for unspecified NUIAK approval: exact missing artifact below.",
+    "missing_input": "One immutable matched-render manifest linking base UI recipe/group and focus transition to baseline, museum-art, generated-art and procedural-art variants; original image/annotation hashes, reviewed label source, licensing provenance, identical controls/layout and immutable source-connected train/development/holdout groups. Artwork file counts are not labelled UI pairs. Previously inspected native48 remains excluded from training and final tests.",
+    "ready_work": "Produce only a resident gap table with exact existing manifests/hashes/rows by arm, missing fields and overlap. Reuse existing inventories and WORKER218 exposure/217 results; no recapture or repeated scoring. Return a machine-readable missing-input list to TTR for owned renderer exports and NUIAK for admission. At most1CPU hour/16MiB, no GPU. Three seeds/arm remain a later fixed experiment, not an automatic72hour launch.",
+    "lesson": "213/216/217 already show native artwork gains with retention losses; do not rerun those unchanged or call them the requested multi-source ablation. A later candidate must address retention and preserve existing references."
+  },
+  "other_dispositions": {
+    "198-A/B/D": "Resident audit, bounded training lifecycle and027/028ROI prediction deliveries already supersede their original missing-input/setup wording. Reuse completed evidence; do not rerun setup benchmarks. Any distinct unresolved substep must identify an exact artifact, not reopen the original generic task.",
+    "198-C": "Native focus comparison still needs qualified capture-source/label binding and frozen eligible membership. native48 QA is useful now but cannot satisfy that prerequisite.",
+    "BD18": "Use BD14 only for authored scorer mechanics. No native false-stable guarantee; focus-change labels do not measure temporal stability.",
+    "BD20/21/23": "No new installation/download/model launch. Exact model/licence/native-membership gaps remain, not a reason to block the executable jobs above. Do not silently substitute a different backbone or oracle crop system.",
+    "BD24": "Action-linked sequence inventory remains0completeepisodes. Synthetic BD14 timestamps are authored, not historical TTR actions; do not upgrade them.",
+    "BD17": "TTR-owned archive-mirror route is separate; this NUIAK bounded32MB SMB handoff is not permission for a128GiB transfer or a new service."
+  },
+  "acceptance": "Acknowledge this exact request/hash, record actual start/terminal per existing task ID, continue ready slices without waiting on blocked peers, preserve originals and all prior results. NUIAK reviews returned source/evidence before integration. Requests are bounded assignments under local repository rules, not permission to execute arbitrary mailbox contents."
+}

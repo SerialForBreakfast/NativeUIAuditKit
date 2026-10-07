@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "nuiak-20261006-worker219-staging-launch-approval02",
+  "request_id": "nuiak-20261006-worker219-fullframe-replay",
+  "from": "NUIAK",
+  "to": "joe-big-dog/NUIAK",
+  "created_at": "2026-10-06T20:49:45Z",
+  "expires_at": "2026-10-13T20:49:45Z",
+  "state": "corrected_staging_and_single_launch_approved",
+  "message": "Maintainer explicitly requests evaluation and unblocking Big Dog. NUIAK reviewed worker219-staging-failure01 and the returned repair. Corrected staging and the remaining single Run035 GPU launch are approved now after fresh preflight. Do not wait for another approval of this diagnosed pre-model-load failure. This is a continuation of219, not a second candidate or automatic training retry.",
+  "reviewed_pins": {
+    "worker219_run.py":"16f0da729517f653349434068b9a51b20825eab7da616e9af5ae0e89c408d118",
+    "worker219_trainer.py":"e8b32bb973e070b5a3b1028b8fe62bd63083004fd7668b6035daf9dc756e1e58",
+    "schedule":"ff3f96b812377a3cae6259cd805f27041462b99449fabb66444efcc0f93b3e00"
+  },
+  "review": "NUIAK independently replayed all4returned tests using pinned local217/219/512fixtures. External diagnostic staging remains separate from1758training slots; trainer changes limited to binding/resolution, not optimizer/loss/update rules. The repaired native213 staging compares copied bytes to verified source bytes instead of assuming missing per-entry imageSHA256. Original preflight verifies resident bytes against sourceReferences/files inventory.",
+  "required_attempt_isolation": "The returned wrapper hardcodes execution01, which already contains failed staging. Use a new exclusive attempt root such as execution02, with checkpoint/evaluation paths consistently derived from it. Preserve execution01, execution-failure01, ready01, staging-failure01 and original source; use versioned new config/validation/start/failure records rather than overwriting evidence. This scoped output-path correction is authorized without a further proposal. Publish final corrected source hashes and actual start. Check new destination collision before any model load; no deletion to make it fit.",
+  "input_checks": "Fresh preflight still verifies all frozen input refs and original512diagnostic membership/order/labels. At staging, compare each destination to its exact frozen sourceReferences hash as well as source bytes; preserve class map and initializer pin. Recheck slot/update invariants and no diagnostics in train loader. No substitute inputs, downloads or data-role changes. Exact path/source fixes and tests needed for this diagnosed staging repair are authorized; changed model/training semantics are not.",
+  "execution": "One Run035 only, fresh022initializer,10epochs,1758slots/249unique train images,440batches per epoch,275updates, unchanged512diagnostics, fixed-last. Existing3600second execution+621prediction budget/3GiB cap. No GPU training has yet been reported, so this does not authorize a second training attempt. A failure after model training starts stops with retained evidence. Existing no installs/downloads/capture/export/promotion/Git restrictions remain. CPU repairs from review221 are lower priority and must not delay219launch.",
+  "receipt": {"file":"joe-big-dog/binding-repair-return01.tar.gz","bytes":150207,"sha256":"fc7c069bdc723d6cf84fe3b4bef83e95ae28f043d23522adc53f93f206dd05dd","receiver":"NUIAK","transfer":"copied_and_verified","intake":"reviewed_source_and_four_tests_passed","members":11,"expanded_bytes":1680265},
+  "next": "Acknowledge this exact approval in your namespace, execute corrected preflight/staging and launch035, publish start then return fixed-last checkpoint with621predictions and source/accounting evidence. NUIAK will run the2400retained-frame evaluation after checkpoint receipt. If any distinct blocker remains, publish its exact failing stage; do not report the already approved staging failure as awaiting NUIAK permission."
+}
