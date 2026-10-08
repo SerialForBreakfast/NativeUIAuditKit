@@ -163,6 +163,19 @@ public enum ModelManifestValidator {
         let desc = model.modelDescription
         let outputs = desc.outputDescriptionsByName
 
+        for expected in manifest.expectedInputs {
+            guard let feature = desc.inputDescriptionsByName[expected.name] else {
+                throw ModelContractError("Missing input '\(expected.name)'")
+            }
+            if expected.dataType == "Image" {
+                guard let image = feature.imageConstraint,
+                      image.pixelsWide == manifest.inputWidth,
+                      image.pixelsHigh == manifest.inputHeight else {
+                    throw ModelContractError("Image dimensions do not match the manifest")
+                }
+            }
+        }
+
         // Verify all expected output tensors are present and have matching shapes
         for expected in manifest.expectedOutputs {
             guard let feature = outputs[expected.name] else {
@@ -171,6 +184,9 @@ public enum ModelManifestValidator {
 
             if let constraint = feature.multiArrayConstraint {
                 let shape = constraint.shape.map { $0.intValue }
+                guard expected.dimensions.count == shape.count else {
+                    throw ModelContractError("Output rank does not match the manifest")
+                }
                 if expected.dimensions.count == shape.count {
                     for (dimIdx, expectedDim) in expected.dimensions.enumerated() {
                         if expectedDim != -1 && shape[dimIdx] != -1 && expectedDim != shape[dimIdx] {
@@ -178,6 +194,8 @@ public enum ModelManifestValidator {
                         }
                     }
                 }
+            } else {
+                throw ModelContractError("Expected an array output for '\(expected.name)'")
             }
         }
 

@@ -11,6 +11,7 @@ let package = Package(
         .visionOS(.v1)
     ],
     products: [
+        .library(name: "NativeUIAuditKitRuntime", targets: ["NativeUIAuditKitRuntime"]),
         .executable(name: "nativeui-audit", targets: ["NativeUIAuditCLI"]),
         .library(
             name: "NativeUIAuditKitModels",
@@ -25,6 +26,9 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
     ],
     targets: [
+        .executableTarget(name: "ModelCompileWorker", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/ModelCompileWorker"),
+        .executableTarget(name: "ModelFreeProbe", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/ModelFreeProbe"),
+        .target(name: "NativeUIModelContracts", path: "NativeUIAuditKitModels/Sources/NativeUIModelContracts"),
         .executableTarget(name: "TransitionShadowTool", path: "Tools/TransitionShadowTool", exclude: ["README.md"]),
         .testTarget(name: "TransitionShadowTests", dependencies: ["TransitionShadowTool"], path: "Tests/TransitionShadowTests"),
         .executableTarget(name: "SettingsProbeTool", path: "Tools/SettingsProbeTool"),
@@ -32,6 +36,7 @@ let package = Package(
         // bring your own inference code and just want the model (e.g. ViewLens).
         .target(
             name: "NativeUIAuditKitModels",
+            dependencies: ["NativeUIModelContracts"],
             path: "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels",
             // NativeUIDetector_v1.mlpackage.mlmodel is an uncompiled Create ML export, kept
             // on disk for provenance but not shipped as a loadable resource — iOS_v1 exposes
@@ -53,7 +58,12 @@ let package = Package(
         // Full Vision-style detection request wrapper, built on NativeUIAuditKitModels.
         .target(
             name: "NativeUIAuditKit",
-            dependencies: ["NativeUIAuditKitModels"],
+            dependencies: ["NativeUIAuditKitRuntime", "NativeUIAuditKitModels"],
+            path: "Sources/NativeUIAuditKitBundled"
+        ),
+        .target(
+            name: "NativeUIAuditKitRuntime",
+            dependencies: ["NativeUIModelContracts"],
             path: "Sources/NativeUIAuditKit"
         ),
         // Offline diagnostic adapters sharing the production perception primitives.

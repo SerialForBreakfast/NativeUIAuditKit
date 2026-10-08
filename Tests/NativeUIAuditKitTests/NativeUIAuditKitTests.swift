@@ -1,7 +1,8 @@
 import Foundation
 import Testing
 import CoreGraphics
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 @Suite("NativeUIAuditKit Scaffold")
 struct NativeUIAuditKitTests {
@@ -326,7 +327,7 @@ struct NativeUIAuditKitTests {
     @Test("FocusRingClassifier returns a unit-interval probability on a tvOS home crop")
     func testFocusRingClassifyReturnsProbabilityInUnitInterval() async throws {
         let classifier = try #require(
-            await NativeUIDetectionRequest.loadFocusClassifierIfAvailable(),
+            await NativeUIBundledModelProvider().loadFocusWithEvidence().classifier,
             "FocusRingDetector.mlmodelc must be bundled"
         )
         #expect(classifier.focusThreshold == 0.85)

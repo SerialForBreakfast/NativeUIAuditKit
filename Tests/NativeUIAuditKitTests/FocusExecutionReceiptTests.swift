@@ -4,7 +4,8 @@ import Foundation
 import ImageIO
 import NativeUIAuditKitModels
 import Testing
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 struct FocusExecutionReceiptTests: Sendable {
     private func image() throws -> CGImage {
@@ -177,7 +178,7 @@ struct FocusExecutionReceiptTests: Sendable {
         #expect(fallback.focusExecution?.fallbackReason == "disabled")
         #expect(fallback.focusExecution?.modelDigest == nil)
         #expect(fallback.focusExecution?.modelScoringComplete == false)
-        let custom = try #require(await NativeUIDetectionRequest.loadFocusClassifierIfAvailable())
+        let custom = try #require(await NativeUIBundledModelProvider().loadFocusWithEvidence().classifier)
         let unidentified = FocusRingClassifier(model: custom.model)
         let result = try await NativeUIDetectionRequest(configuration: config).performDetailed(on: screenshot,
             preloadedFocusClassifier: unidentified)

@@ -3,7 +3,8 @@ import CoreGraphics
 import CoreVideo
 import ImageIO
 import Testing
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 @Suite("Focus input pixel contract")
 struct FocusPixelContractTests {

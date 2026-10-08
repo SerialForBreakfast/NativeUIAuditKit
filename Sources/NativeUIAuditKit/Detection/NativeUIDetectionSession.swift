@@ -8,22 +8,25 @@ import CoreGraphics
 import CoreML
 import Foundation
 import ImageIO
-import NativeUIAuditKitModels
+import NativeUIModelContracts
 
 /// A stateful detection session that pre-warms and caches CoreML models in memory,
 /// providing thread-safe, low-latency UI element inspection across sequential frames.
 public actor NativeUIDetectionSession: NativeUIRecognizing {
     public let configuration: NativeUIDetectionConfiguration
+    public let modelProvider: any NativeUIModelProviding
     internal let textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])?
 
-    private var cachedModels: [NativeUIPlatform: PreloadedModel] = [:]
+    private var cachedModels: [String: PreloadedModel] = [:]
     private var cachedFocusClassifier: FocusRingClassifier?
 
     public init(
+        modelProvider: any NativeUIModelProviding,
         configuration: NativeUIDetectionConfiguration = .default,
         textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])? = nil
     ) {
         self.configuration = configuration
+        self.modelProvider = modelProvider
         self.textRecognitionHandler = textRecognitionHandler
     }
 
@@ -36,7 +39,8 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
 
     /// Returns whether the model for a given platform is already loaded in memory.
     public func isWarmed(for platform: NativeUIPlatform) -> Bool {
-        cachedModels[platform] != nil
+        guard let key = try? modelProvider.detectorCacheIdentity(for: platform) else { return false }
+        return cachedModels[key] != nil
     }
 
     /// Evicts loaded models from memory to free resources when idle.
@@ -51,36 +55,30 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
         if let cachedFocusClassifier {
             return FocusClassifierLoad(classifier: cachedFocusClassifier, fallbackReason: nil)
         }
-        let loaded = await NativeUIDetectionRequest.loadFocusClassifierWithEvidence()
+        let loaded = await modelProvider.loadFocusWithEvidence()
         cachedFocusClassifier = loaded.classifier
         return loaded
     }
 
     /// Retrieves or loads the model for the requested platform.
     private func getOrLoadModel(for platform: NativeUIPlatform) async throws -> PreloadedModel {
-        if let existing = cachedModels[platform] {
+        let key = try modelProvider.detectorCacheIdentity(for: platform)
+        if let key, let existing = cachedModels[key] {
             return existing
         }
 
         let loaded: PreloadedModel
-        switch platform {
-        case .tvOS:
-            do {
-                let m = try await NativeUIModelAsset.loadTVOSModel()
-                    loaded = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: true))
-            } catch let error as ModelContractError {
-                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
-            }
-        case .iOS, .iPadOS, .macOS, .visionOS, .unknown:
-            do {
-                let m = try await NativeUIModelAsset.loadModel()
-                loaded = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: false))
-            } catch let error as ModelContractError {
-                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
-            }
+        do {
+            loaded = try await modelProvider.loadDetector(for: platform)
+        } catch let error as ModelContractError {
+            throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
         }
 
-        cachedModels[platform] = loaded
+        guard try modelProvider.detectorCacheIdentity(for: platform) == key else {
+            throw NativeUIModelAvailabilityError.changedArtifact
+        }
+
+        if let key { cachedModels[key] = loaded }
         return loaded
     }
 
@@ -112,6 +110,7 @@ public actor NativeUIDetectionSession: NativeUIRecognizing {
         let loaded = try await getOrLoadModel(for: platform)
 
         let request = NativeUIDetectionRequest(
+            modelProvider: modelProvider,
             configuration: configuration,
             textRecognitionHandler: textRecognitionHandler
         )
