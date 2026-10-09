@@ -76,9 +76,9 @@ Keep the callback open for the complete session lifetime if a host retains the m
 The host explicitly disables a selection and releases the rollback version before either can be removed.
 Interrupted installation claims remain for explicit review. The store does not take them over automatically.
 
-Current shipping manifests require macOS 15. The source probe targets macOS 14 but runs on macOS 27.
-Do not change TTR's macOS 14 minimum from this evidence alone.
-Use a separate preview harness on macOS 15 or later while resolving the shared minimum.
+The follow-up manifests target macOS 14. Commit `ec59ea9` still requires macOS 15; consume the follow-up after publication.
+Keep TTR's macOS 14 minimum. Keep model use optional and separate from package compatibility.
+See [minimum host support](MinimumHostSupport.md) for the decision and remaining runtime checks.
 Actual macOS 14 execution and signed TTR sandbox behavior remain unverified.
 Process isolation does not establish a security sandbox for arbitrary models.
 

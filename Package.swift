@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "NativeUIAuditKit",
     platforms: [
-        .macOS(.v15),
+        .macOS(.v14),
         .iOS(.v17),
         .macCatalyst(.v17),
         .visionOS(.v1)

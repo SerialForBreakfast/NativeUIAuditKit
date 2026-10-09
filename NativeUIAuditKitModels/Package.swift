@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "NativeUIAuditKitModels",
-    platforms: [.macOS(.v15), .iOS(.v17), .macCatalyst(.v17), .visionOS(.v1)],
+    platforms: [.macOS(.v14), .iOS(.v17), .macCatalyst(.v17), .visionOS(.v1)],
     products: [
         .library(name: "NativeUIAuditKitModels", targets: ["NativeUIAuditKitModels"])
     ],
