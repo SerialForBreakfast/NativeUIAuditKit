@@ -110,6 +110,9 @@ For shared checkouts, record a single owner for each overlapping implementation 
 
 ## Cross-machine status updates
 
+Use [CoordinatorWorkflow.md](CoordinatorWorkflow.md) for current messaging, read acknowledgments, forwarding evidence, and executor handoffs.
+The SMB rules below still govern artifact transfers and fallback. They do not require duplicate routine status messages.
+
 For approved artifact transactions, use the linked protocol's receipt exception:
 metadata acknowledgment, verified transfer, semantic intake and sender cleanup are
 different outcomes. The receiving worker does not delete peer artifacts. Ordinary

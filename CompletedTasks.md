@@ -1,5 +1,121 @@
 # NativeUIAuditKit — Completed Tasks
 
+## TRANSITION297 — spatial evidence, October 8
+
+- [x] Freeze retained input identities and DTM083/DTM085 model identities.
+- [x] Score 1,318 pairs with observed, proposed, and equal-area control regions where supported.
+- [x] Verify original predictions against caches and preserve original data roles.
+- [x] Report proposal coverage and score shifts without assigning labels to altered inputs.
+- [x] Pass 8 focused tests, offline Swift build, 140 Swift tests, and real tool compatibility checks.
+- [x] Define TRANSITION299's fixed weak-effect diagnostic without production changes.
+
+[Evidence](reports/work/TRANSITION-297/handoff.md).
+
+## TRANSITION292 — separate positive and negative additions, October 8
+
+- [x] Verify the original registration, admitted frames, and both completed controls.
+- [x] Register both schedules with unchanged labels, weights, prefix, and update counts.
+- [x] Complete DTM085 and DTM086 for 120 epochs each.
+- [x] Verify saved-model scores and every existing regression condition.
+- [x] Report 4 matched contrasts, individual losses, uncertainty, and interactions.
+- [x] Pass 29 focused tests, offline Swift build, and 140 Swift tests.
+- [x] Reject both candidates and close this data-mix branch.
+
+[Evidence and next diagnostic](reports/work/TRANSITION-292/handoff.md).
+
+## TRANSITION291 — matched missing-condition comparison, October 7
+
+- [x] Verify approved frames, observed focus, parent roles, and protected endpoint exclusions.
+- [x] Register equal labels, weights, rows, and updates before both fits.
+- [x] Complete DTM083 control and DTM084 candidate for 120 epochs each.
+- [x] Compare every prior condition, both frame orders, and fixed disturbance strengths.
+- [x] Report exact changed cases and separately inspect 24 retained table cases.
+- [x] Pass 29 focused tests, offline Swift build, and 140 Swift tests.
+- [x] Reject replacement after native, artwork, and distraction regressions.
+
+The candidate learns all 48 added focus comparisons. Broader behavior regresses.
+[Results and next comparison](reports/work/TRANSITION-291/handoff.md).
+
+## TRANSITION290 — retained layouts and condition coverage, October 7
+
+- [x] Verify current Maximum-mini-TTR readiness without capture or runtime changes.
+- [x] Audit actual training positions by condition and unique source frames.
+- [x] Complete DTM082's fixed 120 epochs and full regression comparison.
+- [x] Reject DTM082 after reserved, replay, and distraction regressions.
+- [x] Prepare 80 state comparisons from 32 approved retained frames.
+- [x] Score 3 models on those comparisons and 24 separately limited table cases.
+- [x] Check historical source availability and installed evaluation apps.
+- [x] Pass 21 focused tests, offline Swift build, and 140 Swift tests.
+- [x] Publish structured results and verify storage through live chat.
+
+No capture, export, or promotion occurs. [Handoff](reports/work/TRANSITION-290/handoff.md).
+
+## CONFLICT281 — matched gradient comparison, October 7
+
+- [x] Implement optional symmetric projection with unchanged default training behavior.
+- [x] Verify 64 focused Python tests, offline Swift build, and 140 Swift tests.
+- [x] Run DTM078 and DTM079 with identical inputs and 12,480 updates each.
+- [x] Reproduce DTM077 parameters exactly in the control.
+- [x] Score all conditions, strengths, frame orders, and individual regressions.
+- [x] Reject DTM079 after replay and center-disturbance regressions.
+
+Artwork improves from 18/24 to 20/24, while center correctness falls from 90/226 to 70/226.
+Training false changes rise from 2 to 46. Existing model choices remain unchanged.
+[Evidence and follow-on scope](reports/work/CONFLICT-281/handoff.md).
+
+## Archived transition tranche records — October 7
+
+These experiments are complete. Model rejection and retained limitations remain part of each result.
+
+## Completed — TRANSITION270: matched initialization and convergence / NUIAK
+
+DTM075 gets 59/64 and DTM076 gets 64/64 fitting decisions with 12,480 updates each.
+The first 300 DTM075 epoch losses match DTM073 exactly. The previous short fit does not establish a representation failure.
+Conditional DTM077 restores replay to 668/668, but left disturbances fall to 142/226. Reject promotion.
+All 58 focused Python tests, offline Swift build, and offline Swift tests pass.
+The coordination companion verifies r29/r30/r31 source and publishes exact receipts with passing consumer tests.
+[Fixed protocol](reports/work/TRANSITION-270/plan.md). [Results](reports/work/TRANSITION-270/handoff.md).
+
+## Completed — TRANSITION-266: condition learnability and weighting / NUIAK
+
+Both fixed comparisons complete. DTM073 gets 33/64 fitting decisions correct and has not established convergence.
+DTM074 improves new unchanged-focus training decisions from 0/68 to 32/68, but replay falls from 660/668 to 629/668.
+Center-disturbance correctness falls from 53/226 to 12/226. Reject promotion and retain current models.
+All 28 focused tests pass. NUIAK verifies 2 new Big Dog reports and publishes exact receipts with the final status.
+
+The maintainer assigns both fixed comparisons. DTM073 tests balanced fitting; DTM074 tests condition weights with native class totals preserved.
+[Registered scope](reports/work/TRANSITION-266/plan.md).
+
+TRANSITION265's admitted native examples supply both comparisons. Registration fixes each run before execution.
+Fitting errors and retained evaluation remain separate. Individual regressions prevent promotion.
+[Measured failure and next substantial tranche](reports/work/TRANSITION-265/handoff.md).
+
+## Completed — TRANSITION-265 / NUIAK
+
+Capture, intake, the DTM072 fit, regression evaluation, and training-fit diagnosis finish.
+Left-side correctness rises from 158/226 to 218/226. Artwork correctness falls from 17/24 to 7/24.
+Reject promotion. New unchanged-focus content examples score 0/68 across both orders at fixed thresholds, including training examples.
+The 27 focused tests pass. All 8 completed owned jobs are archived; USB evidence remains intact.
+NUIAK verifies 157 new coordination files and publishes exact receipts.
+
+The condition audit confirms that content-change examples occupy only 2 left-side cells.
+Local TTR passes readiness, version, ownership, capacity, and ordinary-profile checks.
+Local TTR captures 8 corrected recipes with 32 native pairs on the verified USB drive.
+The first preparation fails because 2 recipe regions overlap. Preserve it and use corrected non-overlapping row spacing.
+Intake admits 138 replacement rows with observed-focus-matched new-position counterparts.
+The fixed DTM072 fit preserves exact weights, class totals, condition totals, replay rows, and training count.
+[Protocol](reports/work/TRANSITION-265/plan.md).
+
+## Completed comparison — TRANSITION-264 / NUIAK
+
+Complete the 3 returned models' strength/order diagnostic and the native position inventory.
+Both finish. The audit verifies 640 native pairs and identifies strong left-side concentration in selected training examples.
+DTM071 completes 120 epochs. Reserved correctness rises to 52/52, but artwork-only correctness falls to 0/24.
+Reject promotion. Reweighting cuts unchanged content-change weight by 80.8%, despite preserving binary class totals.
+Next, preserve condition totals and check missing position/condition combinations before native capture and a matched fit.
+[Results and next substantial experiment](reports/work/TRANSITION-264/handoff.md).
+[Registered scope](reports/work/TRANSITION-264/plan.md). Existing HCF access issues do not block this experiment.
+
 ## IOS-ASSET-200 — native artwork development campaign, October6 UTC
 
 Opt-in MediaCardGrid/CardDetail adapters and96native development frames qualified:
@@ -3287,3 +3403,32 @@ Visibility-aware native review projection implemented and integrated;84Python/
 134Swift tests and unchanged legacy50frame replay pass. Source/status investigation
 identified missing self-service compiler in examined local refs; exact revision
 requested, never a producer build. [Handoff](reports/work/FOCUS-VISIBILITY-16/handoff.md).
+# SIGNAL286 — input diagnosis and matched representation comparison
+
+Maximum-mini-NUIAK measures all 640 retained native pairs with exact input parity and verifies 325 source files.
+DTM080 completes the fixed 120-epoch comparison. It improves disturbance handling but loses artwork and replay decisions.
+Reject model replacement. Preserve the checkpoint and all results.
+The tranche also reviews independent evaluation support and completes the r47 receipt handoff.
+The 14 focused tests, offline Swift build, and 140 Swift tests pass.
+[Full evidence](reports/work/SIGNAL-286/handoff.md). TRANSITION287 follows below.
+
+# TRANSITION287 — preserve original inputs and add local differences
+
+Maximum-mini-NUIAK completes DTM081's fixed 120-epoch fit and full evaluation.
+Initial and restored-checkpoint parity pass. Original inputs remain unchanged; 216 added weights start at zero.
+The candidate preserves forward replay but does not improve center distractions. It fails individual regression checks.
+Reject replacement. Preserve all inputs, results, and model bytes.
+The 18 focused tests, offline Swift build, and 140 Swift tests pass.
+Plain chat publication and readback pass. BigDog-Coordinator receives the separate structured-message failure report.
+[Results and next work](reports/work/TRANSITION-287/handoff.md).
+
+# TRANSITION289 — input-use diagnosis and real-app contract
+
+Maximum-mini-NUIAK completes 3 fixed interventions across 7 retained input sets.
+All 3,294 ordinary scores match the saved results before intervention.
+Residual inputs help native content cases but barely change center-disturbance decisions.
+Original-difference suppression causes an always-unchanged model. Reject suppression as a correction.
+Every case links to its score, group, role, references, and available unchanged region evidence.
+The independent EVAL90 contract now defines 6 conditions, source requirements, exclusions, and capture stop conditions.
+No capture, training, or data-role change occurs. The 23 focused tests, offline Swift build, and 140 Swift tests pass.
+[Results and selected next experiment](reports/work/TRANSITION-289/handoff.md).

@@ -1,5 +1,38 @@
 # NativeUIAuditKit — Best Practices
 
+## Read fresh file sizes after resume — RELEASE300
+
+Wrong: reuse cached URL resource values after appending a resumed transfer.
+Correct: clear cached resource values before checking the final file size. Then verify the complete archive hash and member hashes.
+Why: the first download resume test reads the old size and rejects a completed transfer.
+The corrected check passes the same test. See `NativeModelDownloadTests.truncatedTransferResumesOnlyWithMatchingEntity`.
+
+## Test spatial evidence without inventing labels — TRANSITION297
+
+Keep original predictions as the reference when removing image differences inside or outside selected regions.
+Report score shifts separately from accuracy. The altered image may no longer have the original meaning.
+Keep observed focus regions separate from image-only proposals. Deployment does not receive the correct box from the evaluation labels.
+An empty proposal does not prove unchanged focus. Check weak native effects before using a proposal threshold to change decisions.
+Use real CLI receipts to prove model execution. Do not treat successful loading or high scores as model accuracy.
+
+## Separate effects can interact — TRANSITION292
+
+Wrong: assign a combined treatment's loss to one component without testing the separate components.
+Correct: complete the missing comparisons with the same initialization, labels, weights, and update count.
+Identical-frame negatives improve artwork alone but worsen artwork when combined with new positive comparisons in this fixed experiment.
+Report the interaction. Do not use the combined score to claim that either component alone causes the loss.
+Reuse completed controls and cached predictions. One seed does not establish repeatability.
+[Evidence](../reports/work/TRANSITION-292/handoff.md).
+
+## Equal label weights do not preserve condition weights — TRANSITION291
+
+Wrong: attribute a combined data addition to positive examples because each group keeps its label weight.
+Correct: check which negative conditions share that weight after the addition.
+Identical-image negatives can reduce the influence of harder content-change examples without changing the total negative weight.
+TRANSITION291 fits the added focus states but loses artwork answers. That result does not isolate the cause.
+Use matched comparisons to separate positive additions from negative changes. Reuse completed controls instead of repeating them.
+[Evidence](../reports/work/TRANSITION-291/handoff.md).
+
 ## Resolve paired endpoints by image identity — TRANSITION253
 
 Wrong: assume the second image in a comparison always uses the sidecar's `focused_scene` field.
@@ -4753,3 +4786,13 @@ The first 300 epoch losses match exactly. A native-adapted initializer gets 64/6
 Why this matters: a failed short fit does not prove an annotation or representation defect.
 Training fit remains separate from held-out performance and regression acceptance.
 [Registered comparison](../reports/work/TRANSITION-270/plan.md).
+
+### Input suppression is diagnosis, not model qualification — TRANSITION289
+
+What went wrong: removing an input gives perfect unchanged-focus checks but also removes every positive prediction.
+Correct approach: score both labels, both frame orders, uncertainty, and individual decisions on matched inputs.
+Preserve ordinary-score parity before intervention. Keep internal input suppression separate from natural-image evaluation.
+Why this matters: DTM081 loses all 421 native positives when its original absolute-difference input is removed.
+Removing its residual input instead harms native content cases while barely changing center-disturbance decisions.
+This distinguishes input dependence from useful accuracy. It does not prove a unique cause or justify another architecture by itself.
+[Evidence](../reports/work/TRANSITION-289/handoff.md).

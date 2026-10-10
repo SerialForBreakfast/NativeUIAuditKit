@@ -1,5 +1,75 @@
 # Full backlog implementation packet catalog
 
+## Focus improvement program — October 9
+
+[FOCUS301](Plans/FocusImprovementProgram.md) defines 10 evidence-backed investigation priorities and independent execution contracts.
+It reuses existing task IDs, scorers, trainers, and feedback tools.
+The first batch checks causes with retained data. Later batches fill measured gaps and test 1 correction.
+Each contract specifies inputs, metrics, limits, tests, acceptance, and ownership.
+Coordination MVP1 gates remote dispatch, not local analysis. Tasks.md remains the sole queue.
+
+## Production delivery order — October 7
+
+Use [Tasks.md](../Tasks.md#production-roadmap--execution-order-october-7) for current priority, owner, readiness, and completion criteria.
+The plan catalog below preserves experiment contracts. Its older “next” statements do not override the current queue.
+
+The delivery sequence is measured failure, fixed comparison, regression acceptance, independent evaluation, CoreML parity, and optional TTR validation.
+Each stage supplies evidence for the next. Coordination readiness alone supplies no model-quality evidence.
+
+### Separate model decisions
+
+[Release preparation](ReleasePreparation.md) defines RELEASE300 and the manual sequence for TTR 0.4.3 RC.
+[Model release contract](ModelReleaseContract.md) defines offline catalog and archive checks. It is not an application installer.
+[Sillycon-TTR handoff](TTRModelHandoff.md) records the implemented preview runtime, native installer limits, and required consumer checks.
+
+[ADR-0024](ADR-0024-Opt-In-Model-Feedback.md) defines optional, reviewed feedback without navigation authority.
+[Feedback contracts](Plans/OptInModelFeedback.md) define FEEDBACK298-A through D and separate consensus from labels.
+[Release readiness](../reports/work/MODEL-DISTRIBUTION-293/readiness.md) records current inventory, real CLI checks, and unresolved release requirements.
+
+[ADR-0023](ADR-0023-Optional-Model-Distribution.md) proposes optional model downloads through GitHub Releases, with resource-free SPM code.
+[Optional model distribution](Plans/OptionalModelDistribution.md) defines 293-A through 293-F, with dependencies, tests, evidence, and approval boundaries.
+Start inventory, package separation, and local installation together. TTR feedback does not block those offline tasks.
+No release or API change occurs in the planning assignment.
+
+[Focus signal and representation](Plans/FocusSignalRepresentation.md) records completed comparisons and defines TRANSITION299's fixed weak-effect diagnostic.
+It separates positive additions from identical-image negatives. It reuses retained frames, unchanged roles, and both completed controls.
+
+[EVAL90](Plans/FocusTransitionLearning49.md#october-7-execution-contract--real-app-evaluation) defines the bounded real-app evaluation contract.
+Its 6 conditions remain separate from Fixture regression checks. Actual target, app, and label evidence precede capture.
+
+- The transition model decides whether focus changes across frames. It also needs unchanged-content, scrolling, and disturbance tests.
+- The single-frame focus model identifies focus appearance. It needs ordinary-profile artwork and hard-negative tests.
+- iOS and tvOS element detectors locate and classify controls. Each needs its own taxonomy and full-screen geometry evaluation.
+- An optional HCF model uses verified accessibility profiles. It cannot substitute assisted images for ordinary-profile evaluation.
+
+Do not pool these metrics into one accuracy claim. Preserve the current shipped models until their replacement gates pass.
+
+### Experiment-to-worker contract
+
+NUIAK supplies exact training membership, exclusions, initializer, source, preprocessing, thresholds, schedule, resource limits, and acceptance criteria.
+Big Dog verifies resident inputs and reports missing files before execution. Reuse retained packages where hashes match.
+Return checkpoint identity, completion and failure records, complete predictions, timings, and resource measurements.
+NUIAK independently checks parity, case accounting, and individual regressions before deciding admission or promotion.
+TTR owns its optional observer integration, navigation safeguards, and current runtime evidence.
+Source synchronization and local builds remain the normal TTR integration path.
+
+### Production decision record
+
+For each candidate, record development versus untouched evaluation groups, class/condition support, and the exact applicable quality gates.
+Include precision, recall, abstention, false focus/change rates, geometry, latency, size, and grouped uncertainty where supported.
+Name unsupported conditions. Do not convert missing labels or insufficient independent groups into passing scores.
+The existing DS-G8, FocusRing, platform-specific, and package gates remain unchanged.
+Agree any missing product acceptance thresholds before inspecting the corresponding final evaluation results.
+Release evidence includes model identity, category map, preprocessing, rollback artifact, and the supported OS/profile matrix.
+Simulator and physical-device results remain separate. All physical trials need their applicable scope.
+
+### Review cadence
+
+After each substantive comparison, update the task outcome and select the next hypothesis from measured errors.
+After each peer delivery, reconcile exact receipts and update only the affected dependencies.
+Keep completed experiments in the archive. Preserve failed evidence without presenting old launch requests as active work.
+Keep topology, credentials, host-specific recovery details, and worker execution records in ignored coordination reports.
+
 [Screen context / ADR-0022](ADR-0022-Screen-Context-for-Focus-and-Navigation.md):
 proposed comparison of rules, a small visual classifier, and optional native evidence.
 Measure downstream focus and navigation benefit before integration. This does not replace the current focus repair priority.
@@ -17,6 +87,9 @@ TRANSITION266 completes balanced fitting and condition weighting. Targeted train
 TRANSITION270 completes that initialization comparison. Small fitting reaches 64/64 and full replay reaches 668/668.
 Disturbance regressions still block promotion. Next, audit training influence and compare retention-aware loss using admitted examples.
 STATUS271 refines the decision: measure group weights, loss, gradients, and decision margins before choosing a training change.
+INFLUENCE278 completes that audit. Opposing content-group gradients dominate remaining loss; two local perturbations confirm the trade-off.
+CONFLICT281 completes the matched update comparison. The control reproduces DTM077 exactly; the treatment fails regression checks.
+Next, measure signal preservation and spatial separation at model input resolution before selecting one representation comparison.
 Use admitted labels for retention. Do not preserve an old model's mistakes through unverified target scores.
 Keep challenge images outside training and report their repeated development use separately from independent evaluation.
 Use admitted native data before further capture. [Evidence and next tranche](../reports/work/TRANSITION-270/handoff.md).

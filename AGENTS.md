@@ -34,10 +34,23 @@ For example, write “TTR needs to show which app and Fixture versions made thes
 Do not write “The source-binding request remains outstanding.”
 Explain what is missing, who supplies it, and which work needs it.
 
-Use “local TTR” for the app on the current NUIAK Mac.
-Use “Sillycon TTR” for the app or worker on Sillycon.
-Name the host when reporting a missing build, capture request, or runtime problem.
-Do not describe a Sillycon dependency as a local TTR problem.
+### Machine and project names — maintainer update, 2026-10-07
+
+Use `Machine-Project` names in new status reports, requests, handoffs, task ownership, and chat.
+This convention replaces “local TTR,” “Sillycon TTR,” and ambiguous worker names.
+
+- `Maximum-mini-NUIAK`: this repository's work on Maximum-mini.
+- `Maximum-mini-TTR`: the TTR app or checkout on Maximum-mini.
+- `Sillycon-TTR`: the TTR app or project work on Sillycon.
+- `BigDog-NUIAK`: model and project work on Big Dog.
+- `BigDog-Coordinator`: coordination work on Big Dog.
+
+Name the responsible machine and project when reporting a missing build, capture request, or runtime problem.
+Keep `BigDog-Coordinator` and `BigDog-NUIAK` distinct, even when they use the same machine.
+If the machine is unknown, state that uncertainty. Do not assign a machine from the project name alone.
+Use project-only names for general capabilities, not machine-specific execution or ownership.
+Preserve existing paths, protocol identifiers, certificate identities, hashes, receipts, and quoted historical evidence.
+These display names do not rename machines or change authentication identities.
 
 These instructions preserve the maintainer's language preference for future agents in this repository.
 
@@ -298,6 +311,20 @@ below. Find an in-project path instead for all other output.
 Violation of this rule is a critical error. Check before executing any file-writing shell command.
 
 ### Shared-status exception and required agent updates
+
+### Coordinator messaging and handoffs — maintainer update, 2026-10-07
+
+Use [CoordinatorWorkflow.md](Research/CoordinatorWorkflow.md) for the enrolled cross-project messaging channel and bounded handoffs.
+Use coordinator chat for messages. Keep the approved SMB receipt flow for named artifacts and messaging fallback.
+Keep profiles, keys, request envelopes, cursors, and raw receipts in ignored local state.
+Do not change certificates, services, provider grants, or execution scope to make messaging work.
+Each repository's Tasks.md remains its sole local ownership/status queue. Coordinator records track cross-project dependencies only.
+Distinguish stored, read, forwarded, accepted, running, completed, and independently verified work.
+Require a destination and forwarded request ID before claiming the coordinator delivered a request to another worker.
+Acknowledge only messages actually read. Reading and acknowledgment do not approve execution or close a task.
+Reconcile unknown attempts before any retry. Do not duplicate completed work for executor testing.
+Read compact attention at session entry, between substantial steps, and before handoff when coordination is relevant.
+Keep local-only work independent. Messaging availability does not imply background monitoring or executor readiness.
 
 **Maintainer instruction, 2026-10-06: complete each status check.**
 When the user asks to check or update status, do the following work:

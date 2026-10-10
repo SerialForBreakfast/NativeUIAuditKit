@@ -1,5 +1,31 @@
 # Concurrent delivery roadmap
 
+**October 9 maintainer priority:** [FOCUS301](Plans/FocusImprovementProgram.md) defines 10 testable focus-model problems and independent worker contracts.
+Start with retained-data diagnosis. Then capture only missing evidence and test 1 matched correction.
+Use coordination MVP1 for verified worker execution. Local analysis does not depend on that rollout.
+The plan defines 4 batches, explicit error denominators, acceptance checks, and separate model tasks.
+No new training or worker dispatch occurs during this planning assignment.
+
+**Independent release work:** RELEASE300 prepares the NUIAK handoff for TTR 0.4.3 RC.
+The resource-free runtime, bundled compatibility, and native source comparison pass locally.
+The installation lifecycle, TTR integration, and public approval remain open.
+Use the [Sillycon-TTR handoff](TTRModelHandoff.md) for preview interfaces and exact test limits.
+Follow the [release checklist](ReleasePreparation.md). Do not tag an unfinished download feature.
+
+**October 8:** TRANSITION297 completes the spatial diagnostic. TRANSITION299 now checks weak native effects before any empty-proposal rule.
+The release inventory and real CLI checks complete; catalog validation and optional installation remain open.
+[ADR-0024](ADR-0024-Opt-In-Model-Feedback.md) defines optional feedback and [FEEDBACK298](Plans/OptInModelFeedback.md) defines its implementation.
+
+**Optional models:** MODEL-DISTRIBUTION293 now has [6 implementation contracts](Plans/OptionalModelDistribution.md).
+The first tranche combines inventory, resource-free inference, and verified local installation.
+Downloads and TTR integration follow. Public release remains separately approved. Existing model-improvement priorities stay unchanged.
+
+**October 8 TRANSITION292:** both missing comparisons complete. Neither preserves previous successes.
+The data changes interact; negative additions alone do not explain the combined artwork loss.
+Keep existing models. TRANSITION297 completes; TRANSITION299 checks the resulting proposal hypothesis before another fit.
+[Exact comparison](Plans/FocusSignalRepresentation.md#transition292-separate-positive-and-negative-additions) and [results](../reports/work/TRANSITION-291/handoff.md).
+Independent real-app evaluation remains separate. The current queue in Tasks.md controls priority.
+
 **Native focus measurement:** [TRANSITION-253](Plans/NativeFocusEffectMeasurement.md) prioritizes measured growth and shadow effects before large procedural generation.
 Pair this work with TRANSITION-252 position coverage. Preserve the running TRANSITION-249 comparisons and independent evaluation groups.
 

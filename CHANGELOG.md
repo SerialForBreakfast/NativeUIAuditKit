@@ -4,6 +4,32 @@ All notable changes to this project are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [Semantic Versioning](https://semver.org/).
 
+## Unreleased — preparation for TTR 0.4.3 RC
+
+TTR 0.4.3 RC is a downstream version. The NUIAK release version remains subject to review.
+
+### Fixed
+
+- Missing optional focus now produces receipts that the existing decoder accepts.
+- The standalone models package now includes the current iOS, tvOS, and FocusRing resources and detector manifests.
+- The standalone verification command tests that package directly and loads all 3 models.
+- Licensing guidance now reflects the actual bundled dependency and unresolved distribution requirements.
+- The provenance table no longer repeats personal values from an earlier privacy incident.
+
+### Added
+
+- Offline release catalog, deterministic ZIP, and archive verification tools.
+- A verified native macOS ZIP extraction probe using `ditto`, without a new dependency.
+- A repository audit and a manual release checklist with separate artifact, privacy, integration, and model gates.
+- A resource-free runtime product with explicit local models and typed missing-model errors.
+- Bundled compatibility adapters that reuse the same inference code.
+- Internal native archive and installation tests, including a real tvOS source comparison.
+- A fixed compiler helper, verified restart checks, exclusive installation claims, and a shared digest test vector.
+- Internal active-model selection, rollback, protected calls, and recoverable removal with one writer per storage root.
+
+No model weights, inference thresholds, or navigation policy change.
+Optional downloads and the complete installation lifecycle remain unfinished. These entries do not claim public release approval.
+
 ## [2.0.0] — 2026-08-23
 
 First release where the package works end-to-end as a resolvable SPM dependency with a

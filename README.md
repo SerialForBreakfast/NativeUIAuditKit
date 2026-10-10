@@ -19,12 +19,15 @@ dependencies: [
 ]
 ```
 
-Two library products — pick the one that matches what you need:
+Choose the library product that matches the required behavior:
 
 - **`NativeUIAuditKitModels`** — just the trained model + versioned metadata, no Vision
   framework dependency. Use this if you bring your own inference/rendering code (this is
   what [ViewLens](https://github.com/SerialForBreakfast/ViewLens) depends on).
 - **`NativeUIAuditKit`** — the full Vision-style detection request API, built on the above.
+- **`NativeUIAuditKitRuntime`** — preview runtime with explicit local models and no bundled model resources.
+  This unreleased product requires the new source changes. Downloads remain unfinished.
+  See the [TTR handoff](Research/TTRModelHandoff.md) for the interface and limits.
 
 ```swift
 .target(
@@ -54,7 +57,7 @@ The model expects a 640×640 letterboxed input with NMS already baked into the C
 For the complete, tested letterbox → predict → parse pipeline, see
 [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) and [`scripts/eval_tvos_model.py`](scripts/eval_tvos_model.py). Full API docs: `swift package generate-documentation`
 (DocC), or see the module documentation comments in
-[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift) and [`ModelRegistry.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift).
+[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift) and [`ModelRegistry.swift`](NativeUIAuditKitModels/Sources/NativeUIModelContracts/ModelRegistry.swift).
 
 `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level Vision-style
 wrapper) supports automatic platform routing for iOS and tvOS screenshots with active focus detection:
@@ -141,7 +144,10 @@ Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKi
 
 ### FocusRingDetector v0.1 (shipped 2026-09-18)
 
-Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small, FP16 4.80 MB (`FocusRingDetector.mlmodelc`). FDR-001 held-out 270/270; hard-negative `light`/`highContrast` split is empty until FOCUS-DET-05. Not AGPL — see [`Research/LicensingArchitecture.md`](Research/LicensingArchitecture.md).
+Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small uses from-scratch training.
+FDR-001 scores 270/270 on its historical test set; the required hard-negative coverage remains incomplete.
+The inspected source package exceeds the 5,000,000-byte export gate. Public weight distribution needs explicit review.
+See [licensing review](Research/LicensingArchitecture.md) and [release preparation](Research/ReleasePreparation.md).
 
 ### Superseded: Create ML baseline (NativeUIDetector_v1, trained 2026-05-28)
 

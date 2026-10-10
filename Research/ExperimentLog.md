@@ -1,5 +1,106 @@
 # NativeUIAuditKit — Experiment Log
 
+## TRANSITION297 — October 8, fixed spatial diagnostic
+
+Maximum-mini-NUIAK scores 640 native pairs and 678 authored disturbance pairs with fixed DTM083 and DTM085.
+The runner verifies original scores against their caches, then removes differences inside or outside fixed regions.
+Regions come from observed focus, the image-only ChangeRegionLocalizer, or equal-area seeded controls.
+Transformed inputs receive no new semantic labels. Score shifts remain diagnostic.
+The image-only tool returns regions for all 421 native positives at threshold 24.
+Of DTM085's 121 center false changes, 101 have no proposed region.
+This suggests a fixed abstention diagnostic before another fit, not an immediate production rule.
+The run changes no weights, thresholds, data roles, or navigation policy.
+[Exact registration and findings](../reports/work/TRANSITION-297/handoff.md).
+
+## TRANSITION292 — October 7, registered component comparison
+
+Maximum-mini-NUIAK registers DTM085 and DTM086 before training. Reuse completed DTM083 and DTM084.
+DTM085 uses new positive comparisons and old negative examples. DTM086 uses old positive examples and identical-frame negatives.
+Both preserve the original 1,660 rows, all labels, group weights, and the reverse order.
+Each run uses 1,820 rows, 120 epochs, 13,680 updates, DTM067 initialization, and DTM081 preprocessing.
+Keep seed 42, batch 16, Adam 0.0001, 2 CPU threads, and fixed-last selection.
+The combined output limit is 256 MiB. Standing approval removes the time limit.
+The runner verifies retained hashes and records both schedules before either launch.
+Keep thresholds 0.15/0.85 and every existing regression check. No capture, export, or production change occurs.
+If both comparisons fail, stop this data-mix branch. Use the results to define a spatial-evidence diagnostic.
+[Runner](../scripts/condition292.py). [Exact registration](../reports/work/TRANSITION-292/registration.json).
+
+Both runs complete. DTM085 takes 627.48 s through evaluation; DTM086 takes 611.40 s.
+DTM085 fits 48/48 new focus comparisons. Native correctness falls to 589/640, versus control 590/640.
+DTM086 fits 35/48. Artwork rises to 19/24, while native correctness falls to 580/640.
+The combined DTM084 artwork result remains 15/24. Negative additions alone do not explain that loss.
+Both saved checkpoints reproduce scores. Both candidates fail regression gates; neither replaces an existing model.
+Stop this mixture experiment. Use a fixed spatial diagnostic before another fit.
+[Complete comparison](../reports/work/TRANSITION-292/handoff.md).
+
+## TRANSITION291 — October 7, registered missing-condition comparison
+
+Maximum-mini-NUIAK registers DTM083 control and DTM084 candidate before either fit.
+Both use 1,820 rows, 13,680 updates, DTM067 initialization, and DTM081 preprocessing.
+The candidate adds 80 retained-state comparisons and their reverses.
+The control repeats 80 existing rows with the same groups and labels, plus their reverses.
+Both use identical labels and weights. Group/label totals match within relative tolerance 0.000001.
+All 668 unrelated replay weights remain unchanged.
+The 32 source frames pass file, decoded-pixel, and encoded-pixel checks against protected native examples.
+No unresolved table case enters training.
+Use 120 epochs, seed 42, batch 16, Adam 0.0001, 2 CPU threads, and fixed-last selection.
+Keep thresholds 0.15/0.85, full regression rules, and the 256 MiB output cap.
+No capture, export, installation, worker dispatch, or production change is part of this comparison.
+[Exact registration](../reports/work/TRANSITION-291/registration.json).
+
+Both runs complete. DTM083 takes 572.14 s through evaluation; DTM084 takes 584.04 s.
+Added focus comparisons improve from 42/48 to 48/48. These examples share training frames.
+Native correctness falls from 590/640 to 582/640. Artwork correctness falls from 18/24 to 15/24.
+Left distractions fall from 152/226 to 139/226. Forward replay improves from 667/668 to 668/668.
+Reject replacement. Both checkpoints and every failed case remain available.
+The complete addition changes both positive comparisons and the negative condition mix.
+Next, separate those effects with the 2 missing combinations. Do not repeat these completed runs.
+[Results](../reports/work/TRANSITION-291/handoff.md).
+
+## TRANSITION290 / DTM082 — October 7, alternating approved layouts
+
+Register 1 fixed 120-epoch comparison against DTM081. Alternate original and shifted layouts for 276 of 1,660 rows.
+Keep DTM067 initialization, DTM081 preprocessing, labels, weights, seed 42, and 12,480 updates.
+Training takes 495.01 s. The full run takes 554.35 s.
+Center correctness falls from 89/226 to 82/226. Reserved correctness falls from 51/52 to 49/52.
+Forward replay falls from 668/668 to 667/668. Reject replacement.
+
+The coverage audit separates content comparisons from focus-only comparisons.
+Content cases occupy 8 cells. Focus-only cases occupy 4, with 273/290 endpoint entries in the left column.
+Prepare 48 same-recipe focus comparisons and 32 identity controls from approved retained frames.
+DTM082 scores 39/48 focus comparisons correctly, versus DTM081 37/48.
+The frames already have training exposure. Do not call these independent evaluation.
+The separate table inspection reports agreement only because capture-version evidence remains unresolved.
+Next: test the prepared missing-condition examples with matched control updates, not another layout-frequency change.
+[Evidence](../reports/work/TRANSITION-290/handoff.md).
+
+## CONFLICT281 — October 7, registered gradient comparison
+
+DTM078 repeats DTM077 from DTM067 with identical training inputs and settings.
+DTM079 changes only opposing updates between the unchanged-focus and changed-focus content groups.
+Both runs use 120 epochs, 12,480 updates, seed 42, and fixed-last selection.
+All labels, weights, roles, thresholds, and regression checks remain fixed.
+The control must reproduce DTM077 parameters exactly before the treatment starts.
+[Protocol](../reports/work/CONFLICT-281/plan.md).
+
+Both runs complete. DTM078 reproduces DTM077 parameters exactly.
+DTM079 improves artwork from 18/24 to 20/24, but center correctness falls from 90/226 to 70/226.
+Training correctness rises from 1,550 to 1,588, while false changes rise from 2 to 46.
+Forced training correctness also falls from 1,625 to 1,612. Reject promotion.
+Projection activates in 9,079 of 9,221 eligible batches. Training takes 317.81 s and 560.76 s.
+Checkpoint parity and frozen geometry pass. [Results](../reports/work/CONFLICT-281/handoff.md).
+
+## INFLUENCE278 — October 7, training-only gradient diagnosis
+
+Compare DTM067 and DTM077 on the exact 1,660 DTM077 training rows, labels, and weights.
+Content-change conditions contribute 98.34% of DTM077's remaining loss. Their gradient cosine is -0.966.
+Replay retains 40.24% of training weight but contributes only 1.46% of remaining loss.
+Two normalized-gradient perturbations decrease unchanged-focus content loss and increase changed-focus content loss.
+This confirms a local optimization conflict, not a complete explanation for held-out errors.
+Recorded DTM077 training probabilities match within 8.47e-8. All checkpoint bytes remain unchanged.
+The audit uses 0 optimizer updates and 0 challenge rows. Existing model decisions remain unchanged.
+[Protocol](../reports/work/INFLUENCE-278/plan.md). [Results](../reports/work/INFLUENCE-278/handoff.md).
+
 ## TRANSITION270 — October 7, registered initialization comparison
 
 DTM075 and DTM076 compare DTM054 and DTM067 initialization on the same 64 admitted fitting rows.
@@ -5141,3 +5242,61 @@ Original poster calibration reaches 4/8, but all 4 original false positives rema
 Reject FDR-038. Mixed fitting reduces the prior retention failure but does not repair the target poster failure.
 Evaluated last checkpoint SHA-256: `3a37d5cb7f8f360f2efdfcc797635e38b37653868a443e48e9e777035ca27405`.
 No export or promotion. See `reports/work/FOCUS-RETENTION-234/handoff.md`.
+# October 7 — SIGNAL286 / DTM080 registration
+
+Completed: 120 epochs in 442.73 s. Full fitting, verification, and evaluation take 480.02 s.
+Left-disturbance correctness improves from 142/226 to 215/226. Quarter-strength center correctness improves from 137/226 to 224/226.
+Artwork falls from 18/24 to 13/24. Replay falls from 668/668 to 661/668.
+Full-strength center false changes fall from 109 to 7, but uncertainty rises from 27 to 139.
+The individual regression gate fails. Reject replacement and retain the experimental checkpoint.
+All 5,424 strength decisions complete. Data roles and thresholds remain unchanged.
+Next: add residual channels with zero initial weights while preserving the original difference and RGB channels.
+
+Maximum-mini-NUIAK measures all 640 retained native pairs before the next comparison.
+The difficult content-change groups retain about 99% of measured image differences after resizing.
+This does not measure semantic focus information. Broad changes remain strong outside observed focus regions.
+
+DTM080 tests local image differences with unchanged RGB context.
+It subtracts a reflected 9 × 9 mean from the signed difference, then uses its absolute value.
+The candidate preserves both RGB frames, model parameters, geometry layers, labels, and training roles.
+It uses DTM067 initialization and the exact DTM078 membership, weights, seed, optimizer, and 120 epochs.
+The existing DTM078 run supplies the matched control. No repeated control training is needed.
+The run uses 2 CPU threads and at most 64 MiB of new output. Standing approval removes the wall-time limit.
+Selection uses the final epoch. Evaluation retains all previous conditions, both frame orders, and disturbance strengths.
+Any individual regression rejects replacement. No export or promotion occurs in this comparison.
+Machine-readable registration records hashes before training starts.
+# October 7 — TRANSITION287 / DTM081 registration
+
+Maximum-mini-NUIAK runs 1 fixed 120-epoch comparison under the approved representation plan.
+DTM081 retains the original 9 channels and appends 3 local-residual channels.
+The new first-layer weights start at zero. Initial sanity scores must agree within 0.000001, with identical decisions.
+Use DTM067 initialization, the exact 1,660 rows, unchanged weights, and DTM078's configuration.
+The run uses 2 CPU threads and at most 64 MiB. The standing approval removes the wall-time limit.
+Use the final epoch and every existing regression check. No new capture, role change, or export occurs.
+The run records source and input hashes before training. Preserve any failed preflight or candidate evidence.
+
+## DTM081 outcome
+
+All 120 epochs complete in 467.34 s. Full execution takes 503.00 s and uses 1,430,218 bytes before the completion record.
+Initial scores match exactly. Restored-checkpoint parity passes.
+Forward replay stays 668/668; artwork stays 18/24; reserved native stays 51/52.
+Left disturbances rise from 142/226 to 143/226. Center disturbances fall from 90/226 to 89/226.
+The candidate misses 1 reserved focus change and loses 4 individually correct forward native decisions against DTM078.
+Reverse replay falls from 666/668 to 665/668. All 5,424 strength decisions complete.
+Reject replacement. Adding local differences alone does not resolve the measured distraction failure.
+The 18 focused tests, offline Swift build, and 140 Swift tests pass.
+[Full results](../reports/work/TRANSITION-287/handoff.md).
+
+# October 7 — TRANSITION289 input interventions
+
+Maximum-mini-NUIAK measures the fixed DTM081 model without fitting new weights.
+All 3,294 ordinary scores match cached results within 0.000001 across 7 sets.
+Residual removal changes 100 native decisions: 67 correct answers are lost and 30 are gained.
+Only 3 center-disturbance decisions change. Residual inputs help native content groups but do not resolve the main distraction failure.
+Removing original absolute differences makes every decision unchanged, missing all 421 native positives and 167 replay positives.
+Removing both difference inputs gives the same decision counts. RGB frames remain available.
+These unfamiliar internal inputs diagnose dependence; they do not establish natural-image accuracy or a usable correction.
+The 2 scoring stages take 12.62 s and 12.39 s, excluding input verification and startup.
+No data roles, thresholds, shipped models, or training configuration change.
+Next: matched native focus/content/position coverage and 1 equal-update comparison, not another channel sweep.
+[Case-linked evidence](../reports/work/TRANSITION-289/handoff.md).

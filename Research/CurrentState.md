@@ -1,5 +1,168 @@
 # NativeUIAuditKit — Current State
 
+**October 9 FOCUS301:** 3 retained-data audits complete without new inference or training.
+Blanket abstention catches 101 center false changes but loses 126 correct native decisions. Reject that rule as a replacement.
+All 13 native losses from the negative-only candidate occur in 2 content training families.
+Focus-change endpoints occupy 4 cells; shifted content covers 8 cells but only 2 related groups.
+Weak-effect support and current-schedule weighting still need checks. No model or data role changes.
+[Measured results](../reports/work/FOCUS-301/handoff.md).
+
+**October 8 bounded downloads:** the internal transfer path and verified installation pass the offline build and all 171 Swift tests.
+Resume checks the strong ETag, exact range, final size, archive hash, and member hashes.
+Two packaging versions of the same tvOS source compile, match 25 reference detections, and reload offline.
+These are not 2 distinct trained models. No live model download, new model, or release occurs.
+Full catalog integration, the public host interface, and live/signed TTR checks remain open.
+[Transfer contract](ModelDownloadContract.md).
+
+**October 8 compatibility publication:** the maintainer pushes `cc72583439f39ce8e7c9eaf5b8f48a9f104dcda0` on the preview branch.
+Both manifests declare macOS 14. The coordinator receives the exact revision with verified readback at cursor 106.
+TTR forwarding, source receipt, and actual host checks remain pending. No further Git step is required for this repair.
+
+**October 8 minimum-version repair:** both manifests now target macOS 14, without changing TTR's application minimum.
+The actual package build and 161 tests pass. The standalone test loads all 3 models on macOS 27.
+Actual macOS 14 model execution remains unverified. Model use stays optional and fails with a typed unavailable result.
+The maintainer publishes this small follow-up before TTR can consume it. Commit `ec59ea9` still declares macOS 15.
+
+**October 8 source publication:** the maintainer pushes `ec59ea90af7a77a887abe1a2a91dd3eda57dc675` on `codex/optional-models-ttr-preview`.
+TTR can review the exact source without a release tag. The coordinator receives the commit and bounded test scope with verified readback.
+Forwarding, TTR acknowledgment, and actual integration tests remain separate. No model release or promotion occurs.
+
+**October 8 RELEASE300 lifecycle:** the offline build and all 161 Swift tests pass.
+The internal store supports selection, rollback, protected inference calls, and recoverable removal.
+Restart and failed-write tests pass. The resource-free probe still builds for macOS 14 on macOS 27.
+The source preview has an exact 42-path review list. It adds no model bytes and needs no release tag.
+The maintainer reviews the public source commit. Downloads and signed TTR integration remain open.
+[Manual Git steps](TTRSourceReview.md) separate source review from release publication.
+
+**October 8 RELEASE300 compiler and recovery:** the offline build and all 156 Swift tests pass.
+Compilation and the initial model load use a separate helper with a pinned hash.
+Restart checks verify completed output. Low-space, duplicate claims, cancellation, timeout, and altered receipts have passing tests.
+The Run 012 source still matches 25/25 detections on the retained tvOS image.
+The macOS 14 probe runs on macOS 27; actual macOS 14 and signed TTR execution remain unverified.
+Activation, removal, rollback, downloads, and public release remain open. No model changes or promotion occur.
+
+**October 8 RELEASE300 continuation:** the resource-free runtime and explicit local providers are implemented.
+Bundled callers keep their defaults through one shared inference implementation. The build and all 152 Swift tests pass.
+Native archive checks, extraction, compilation, and local inference pass on this Mac.
+Run 012 source parity matches 25/25 detections. The older source in the models directory differs on 25/25.
+The installer remains internal until lifecycle and host checks pass. Public downloads and release approval remain open.
+[Sillycon-TTR handoff](TTRModelHandoff.md) defines the preview interface, exact scope, and next checks.
+
+**October 8 RELEASE300:** preparation targets TTR 0.4.3 RC, with a separate NUIAK version.
+The standalone models package now loads all 3 current artifacts. The native ZIP probe passes without a new dependency.
+All 15 release-tool tests, the standalone load test, the root build, and 140 root tests pass.
+The index audit finds 43,530 ignored-but-tracked files. No files are removed or staged.
+The provenance table no longer repeats private values. Git history and broader privacy review remain separate requirements.
+Catalog validation and deterministic archive preparation are implemented. The continuation above adds optional inference and an internal installer.
+Public release also needs exact artifact parity, weight rights, approved source scope, and TTR integration evidence.
+[Manual checklist](ReleasePreparation.md) and [evidence](../reports/work/RELEASE-300/handoff.md).
+
+**October 8 TRANSITION297:** 1,318 fixed spatial comparisons complete; no pair is excluded.
+Image-only proposals return regions for all 421 native focus changes.
+DTM085 reports 121 false changes in the center-disturbance set; 101 have empty proposals.
+Test weak native effects before adopting any proposal rule. No model, threshold, or data role changes.
+The offline build, 8 focused tests, and 140 Swift tests pass.
+Resident iOS/tvOS CLI scans succeed. FocusRing scores 13 crops without errors; this proves execution, not accuracy.
+MODEL-DISTRIBUTION293 now has an exact inventory and release-gap report. The optional package and installer remain open.
+ADR-0024 defines opt-in feedback without navigation authority or automatic training labels.
+[Diagnostic](../reports/work/TRANSITION-297/handoff.md) and [release readiness](../reports/work/MODEL-DISTRIBUTION-293/readiness.md).
+
+**October 8 TRANSITION292:** Maximum-mini-NUIAK completes both missing combinations and reuses the 2 completed controls.
+Positive-only DTM085 fits 48/48 added focus cases, but native correctness falls from 590/640 to 589/640.
+Negative-only DTM086 improves artwork from 18/24 to 19/24, but native correctness falls to 580/640.
+The combined candidate scores 15/24 on artwork. The effects interact; neither new model passes regression checks.
+All 29 focused tests, the offline Swift build, and 140 Swift tests pass. No model is promoted.
+Stop this data-mix branch. Next, compare known focus regions with image-only proposals before another fit.
+[Full comparison](../reports/work/TRANSITION-292/handoff.md).
+
+**October 7 TRANSITION291:** Maximum-mini-NUIAK completes the matched DTM083/DTM084 comparison.
+Both models use identical labels, weights, and 13,680 updates.
+The candidate learns 48/48 added focus comparisons, versus 42/48 for the control.
+Native correctness falls from 590/640 to 582/640. Artwork correctness falls from 18/24 to 15/24. Reject replacement.
+All 29 focused tests, the offline Swift build, and 140 Swift tests pass.
+The separate table inspection shows agreement of 22/24 versus 21/24. These are not qualified accuracy results.
+Next: separate positive additions from identical-image negatives with 2 matched runs, while reusing both completed comparisons.
+[Complete result](../reports/work/TRANSITION-291/handoff.md).
+
+**October 7 TRANSITION290:** Maximum-mini-NUIAK completes DTM082 and the retained-data audit.
+Alternating layouts fails regression checks. Center results fall from 89/226 to 82/226; reserved Fixture results fall from 51/52 to 49/52.
+The audit corrects stale coverage claims. Content comparisons occupy 8 cells, but focus-only changes occupy 4.
+Existing approved frames supply 48 focus-only comparisons and 32 identity controls without capture.
+DTM082 gets 39/48 focus-only comparisons correct, versus DTM081 37/48. These share training frames and do not establish generalization.
+All 21 focused tests, the offline Swift build, and 140 Swift tests pass. No model is promoted.
+Structured chat stores the result at cursor 20. Peer acknowledgment remains separate.
+Next: a matched control/candidate comparison using the prepared missing-condition examples.
+[Complete result](../reports/work/TRANSITION-290/handoff.md).
+
+**October 7 TRANSITION289:** 3 input interventions complete on 3,294 comparisons across 7 sets.
+Residual removal loses 67 correct native answers and gains 30, but changes only 3 center-disturbance decisions.
+Removing original differences makes every tested pair unchanged. This misses all 421 native positives and is not a correction.
+No weights, thresholds, or data roles change. All 23 focused tests and 140 Swift tests pass.
+EVAL90 now has a bounded real-app contract; app, target, and label checks remain before capture.
+TRANSITION290 supersedes this next-step proposal after checking actual replacement coverage.
+[Diagnostic results](../reports/work/TRANSITION-289/handoff.md).
+
+**October 7 TRANSITION287:** Maximum-mini-NUIAK completes DTM081's 120 epochs and full evaluation.
+The added inputs preserve forward replay at 668/668 but leave center disturbances at 89/226, versus 90/226 for DTM078.
+Reserved native correctness stays 51/52, but the candidate misses 1 actual focus change. Reject replacement.
+Initial and saved-checkpoint parity pass. The 18 focused tests, offline Swift build, and 140 Swift tests pass.
+Next, measure which inputs affect failed decisions before selecting another fit.
+Plain chat stores and reads back progress. Structured feedback fails; BigDog-Coordinator receives the exact failed request ID.
+[Results](../reports/work/TRANSITION-287/handoff.md).
+
+**October 7 CHAT288:** the new persistent messaging connection passes certificate, send, status, and incremental-read checks.
+A fresh process recovers the same stored message without resending. Coordinator acknowledgment `CHAT288_OK` is now verified at cursor 5.
+The channel runs separately from the expired model session. No model or worker job starts.
+[Connection evidence](../reports/work/CHAT-288/status.md).
+
+**October 7 SIGNAL286:** Maximum-mini-NUIAK audits 640 native pairs and completes DTM080's fixed 120-epoch comparison.
+Left-disturbance correctness improves from 142/226 to 215/226. Artwork falls from 18/24 to 13/24; replay falls to 661/668.
+Center false changes fall from 109 to 7, but uncertainty rises from 27 to 139. Reject replacement.
+Next, add local residual evidence without removing original inputs. Require initial score parity before fitting.
+BigDog-Coordinator reports expired grants and stopped owned services. Child-process cleanup remains unverified.
+[Evidence and next work](../reports/work/SIGNAL-286/handoff.md).
+
+**October 7 CHAT285:** CSR enrollment, authenticated send/reply, and read-only reconnect pass on Maximum-mini-NUIAK.
+One authorized synthetic message returns the exact expected reply. A fresh process recovers the same receipt without resending.
+BigDog-Coordinator owns final expiry and cleanup evidence.
+Codex and Claude CLI help pass. Antigravity's headless CLI is missing.
+The reply test and CLI parity results remain separate. [Current evidence](../reports/work/CHAT-285/status.md).
+
+**October 7 STATUS284:** Sillycon-TTR reports successful one-shot calls for 3 providers.
+Maximum-mini-NUIAK verifies 4 r44 files and passes offline parser, process-boundary, and independent counter checks.
+BigDog-Coordinator confirms r41 offline qualification. Original recovery and live-chat connection details remain pending.
+Cross-machine chat remains unverified. [Evidence and owner actions](../reports/work/STATUS-284/status.md).
+
+**October 7 STATUS283:** Maximum-mini-NUIAK verifies Sillycon-TTR's r41 recovery source and passes all 5 offline suites.
+BigDog-Coordinator now owns original COORD289 recovery, restart evidence, and the exact live-chat enrollment proposal.
+Accounting and consumer source reviews are complete. Actual cross-machine chat remains unverified.
+[Current readiness](../reports/work/STATUS-283/status.md).
+
+**October 7 STATUS282:** NUIAK accepts Big Dog's 2 accounting corrections after 22 supplied tests and 2 independent reproductions pass.
+All 16 offered files pass size and hash verification. Exact receipts and owner requests are published and read back.
+Big Dog's new COORD289 failure needs TTR's pre-provider recovery path. Earlier COORD279 recovery remains accepted.
+Direct-chat enrollment remains separate. The current model handoff remains usable.
+[Current blocker and next actions](../reports/work/STATUS-282/status.md).
+
+**October 7 CONFLICT281:** the matched control reproduces DTM077 parameters exactly.
+Gradient projection improves artwork from 18/24 to 20/24, but center disturbances fall from 90/226 to 70/226.
+Training wrong answers rise from 2 to 46. The candidate fails regression checks; retain existing models.
+Next, test signal preservation and spatial separation at the actual model input resolution before another optimization change.
+[Results and next work](../reports/work/CONFLICT-281/handoff.md).
+
+**October 7 ROADMAP280:** the production queue now separates model improvement, independent evaluation, HCF assistance, detector repair, and release gates.
+The next model experiment remains the conflict-aware transition comparison. Big Dog's immediate correction work remains the 2 accounting defects.
+SEMANTICS229 is the next iOS repair path. HCF learned comparison needs independent profile-qualified groups.
+Four completed transition records move to CompletedTasks.md. Historical Run035 launch waits and the unmatched Run009 baseline are corrected.
+See [current priority and owner table](../Tasks.md#production-roadmap--execution-order-october-7).
+Peer task alignment is requested through the existing handoff. Acknowledgment remains separate from publication.
+
+**October 7 INFLUENCE278:** the training-influence audit identifies strongly opposing content-group gradients, with cosine -0.966 at DTM077.
+Those groups contribute 98.34% of remaining training loss. Local perturbations confirm the trade-off without changing checkpoint bytes.
+Next: one controlled conflict-aware update comparison with unchanged data roles and individual regression checks.
+COORD288 original release/restart evidence agrees; execution claims reach zero. Two independent ledger defects return to Big Dog for correction.
+[Measured diagnosis and coordination review](../reports/work/INFLUENCE-278/handoff.md).
+
 **October 7 COORD-CORE277:** r40 passes 8 local suites and 32 independent usage checks.
 NUIAK verifies 21 new files and 93 integrated source members. Unknown accounting no longer requires retaining execution claims after verified cleanup.
 Big Dog's actual original-attempt release remains pending. The accounting and dashboard companion review defines the next consumer tests.

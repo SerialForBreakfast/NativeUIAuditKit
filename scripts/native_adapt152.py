@@ -18,18 +18,41 @@ h=content.h
 CONFIG=dict(epochs=120,lr=.0001,batch=16,seed=42,threads=2,inputSize=[192,128],selection='fixed-last')
 
 
-def fit(net,x,y,config,progress=None,weights=None):
+def project_conflicting_gradients(first,second):
+    """Remove opposing components using both original gradient vectors."""
+    torch=d.torch_runtime()
+    h.require(first.shape==second.shape and first.ndim==1
+              and torch.isfinite(first).all() and torch.isfinite(second).all(),'projection_inputs')
+    # Use double precision for dot products and zero-norm checks.
+    a,b=first.double(),second.double()
+    dot=torch.dot(a,b); aa=torch.dot(a,a); bb=torch.dot(b,b)
+    if dot>=0 or aa==0 or bb==0:
+        return first,second,False
+    return (a-dot/bb*b).to(first.dtype),(b-dot/aa*a).to(second.dtype),True
+
+
+def fit(net,x,y,config,progress=None,weights=None,conflict_groups=None,alternate_inputs=None):
     torch=d.torch_runtime();torch.set_num_threads(config['threads']);torch.manual_seed(config['seed'])
     h.require(x.ndim==4 and x.shape[1:]==(6,128,192) and y.shape==(len(x),) and len(x)>0
               and torch.isfinite(y).all() and ((y==0)|(y==1)).all(),'training_inputs')
     # Bound validation masks without changing sample order or optimization.
     for part in x.split(8):
         h.require(torch.isfinite(part).all() and ((part>=0)&(part<=1)).all(),'training_inputs')
+    if alternate_inputs is not None:
+        h.require(alternate_inputs.shape==x.shape and alternate_inputs.dtype==x.dtype,
+                  'alternate_inputs')
+        for part in alternate_inputs.split(8):
+            h.require(torch.isfinite(part).all() and ((part>=0)&(part<=1)).all(),'alternate_inputs')
     h.require(type(config['epochs']) is int and config['epochs']>0 and type(config['batch']) is int
               and config['batch']>0 and np.isfinite(config['lr']) and config['lr']>0,'training_config')
     if weights is not None:
         h.require(weights.shape==y.shape and torch.isfinite(weights).all().item()
                   and (weights>0).all().item(),'training_weights')
+    if conflict_groups is not None:
+        h.require(conflict_groups.shape==y.shape and conflict_groups.dtype==torch.int64
+                  and ((conflict_groups>=-1)&(conflict_groups<=1)).all(),'conflict_groups')
+        h.require(((conflict_groups!=0)|(y==0)).all()
+                  and ((conflict_groups!=1)|(y==1)).all(),'conflict_labels')
     linear_only=config.get('linearOnly',False)
     h.require(type(linear_only) is bool,'training_scope')
     if linear_only:
@@ -45,17 +68,42 @@ def fit(net,x,y,config,progress=None,weights=None):
     optimizer=torch.optim.Adam([p for p in net.parameters() if p.requires_grad],lr=config['lr'])
     generator=torch.Generator().manual_seed(config['seed']);history=[];started=time.monotonic();net.train()
     for epoch in range(config['epochs']):
-        total=0.
+        # Keep labels, row order, weights, and update counts unchanged.
+        epoch_inputs=alternate_inputs if alternate_inputs is not None and epoch%2 else x
+        total=0.; paired_batches=0; projected_batches=0
         for ids in torch.randperm(len(x),generator=generator).split(config['batch']):
             optimizer.zero_grad(set_to_none=True)
-            logits=net.change(net.change_inputs(x[ids])).flatten()
+            logits=net.change(net.change_inputs(epoch_inputs[ids])).flatten()
             loss=torch.nn.functional.binary_cross_entropy_with_logits(logits,y[ids],
                 weight=None if weights is None else weights[ids])
-            h.require(torch.isfinite(loss).item(),'nonfinite_loss');loss.backward()
+            h.require(torch.isfinite(loss).item(),'nonfinite_loss')
+            groups=None if conflict_groups is None else conflict_groups[ids]
+            if groups is not None and (groups==0).any() and (groups==1).any():
+                paired_batches+=1
+                parameters=[p for p in net.change.parameters() if p.requires_grad]
+                elements=torch.nn.functional.binary_cross_entropy_with_logits(logits,y[ids],
+                    weight=None if weights is None else weights[ids],reduction='none')
+                gradients=[]
+                for group in (0,1):
+                    contribution=elements[groups==group].sum()/len(ids)
+                    parts=torch.autograd.grad(contribution,parameters,retain_graph=True)
+                    gradients.append(torch.cat([p.flatten() for p in parts]))
+                a,b,projected=project_conflicting_gradients(*gradients)
+                loss.backward()
+                if projected:
+                    projected_batches+=1
+                    correction=(a-gradients[0])+(b-gradients[1]); offset=0
+                    for p in parameters:
+                        p.grad.add_(correction[offset:offset+p.numel()].reshape_as(p))
+                        offset+=p.numel()
+            else:
+                loss.backward()
             h.require(all(p.grad is None or torch.isfinite(p.grad).all().item() for p in net.change.parameters()),'nonfinite_gradient')
             optimizer.step();total+=float(loss.detach())*len(ids)
         h.require(all(torch.isfinite(p).all().item() for p in net.parameters()),'nonfinite_weight')
         row=dict(epoch=epoch+1,loss=total/len(x),seconds=time.monotonic()-started);history.append(row)
+        if conflict_groups is not None:
+            row.update(pairedBatches=paired_batches,projectedBatches=projected_batches)
         if progress is not None and (epoch==0 or (epoch+1)%10==0):progress(row)
     h.require(all(torch.equal(v,net.state_dict()[k]) for k,v in frozen.items()),'geometry_changed')
     return net.eval(),history

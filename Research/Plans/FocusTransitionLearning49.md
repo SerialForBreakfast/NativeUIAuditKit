@@ -2060,6 +2060,53 @@ training, new data roles or capture. One handoff records both outcomes.
 
 ### EVAL90 — independent transition evidence acquisition contract
 
+#### October 7 execution contract — real-app evaluation
+
+Maximum-mini-NUIAK owns this contract. Native Fixture checks do not satisfy it.
+The current 52 reserved Fixture pairs remain repeated development checks, not untouched real-app evaluation.
+Treat all previously inspected Settings, Home, and Photos images as exposed.
+Earlier roles can differ between experiments. Check their complete use history before admitting any new evaluation group.
+
+Use 2 distinct real-app groups where available. Assign 1 to model selection and keep 1 for a final audit.
+An app group includes its related journeys, artwork, screen templates, and frame derivatives.
+Do not claim app independence from different journey names alone.
+Home and Photos remain candidate sources, not approved membership or confirmed available apps.
+Use only public or generated content. Do not open private Photos content for this task.
+
+| Cell for each app | Proposed pairs | Required truth |
+| --- | ---: | --- |
+| Focus moves between visible controls | 4 | Different observed focus identities |
+| Boundary action leaves focus unchanged | 4 | Same observed focus identity |
+| Content changes with unchanged focus | 4 | Same focus identity across captured content changes |
+| Scrolling with fixed visual selection | 4 | Record identity changes separately from box movement |
+| Small controls near edges or corners | 4 | Reviewed visible bounds and observed focus identities |
+| Overlay appears or disappears | 4 | Record known focus identity or mark the label unknown |
+
+This proposes at most 24 pairs per app. It is an initial coverage check, not a statistical qualification quota.
+Do not fabricate missing cells or repeat near-identical frames to meet counts.
+Unknown focus labels remain excluded from supervised accuracy. Retain them for inspection.
+
+Before capture, record these fields in the existing campaign manifest:
+
+- Exact simulator UUID, runtime, app identity, source revision, and build identity.
+- Safe start state, permitted actions, operation limit, and cleanup check.
+- App group, journey ID, screen family, intended role, and all known parent groups.
+- Both image hashes, dimensions, capture times, and action ID.
+- Observed focus identities, per-frame body bounds, clipping, and the label evidence.
+- Prior model exposure, previous role, and overlap with retained training and evaluation images.
+
+Use the existing recording importer and review tools. Reuse `focus_production_campaign.reserve` for group conflicts.
+Check connected ancestry as well as exact image hashes. A successful reservation check alone does not prove independence.
+Use `focus_evidence` for separate focus-change counts, abstentions, and errors among unchanged decisions.
+Do not report temporal readiness from a two-frame focus label.
+Freeze membership and settings before scoring. Use 1 pinned model initially and retain all failures.
+Keep final-audit scores sealed until the comparison protocol is fixed. Do not use them to select thresholds or epochs.
+
+Acceptance requires complete planned/accepted/excluded accounting, reviewed labels, preserved group roles, and exact input and model hashes.
+Report the 6 cells separately. Do not pool unknown labels into the unchanged class.
+The next action is fresh read-only app/target discovery on Maximum-mini-TTR, followed by the bounded simulator campaign if prerequisites pass.
+Missing runtime identity or trustworthy labels blocks capture only. Physical-device use still requires separate scope.
+
 #### October 3 refinement — proposed branch-sized acquisition matrix
 
 This is a source/role proposal, not reserved membership or capture authority.

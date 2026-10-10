@@ -101,9 +101,9 @@ repository owner, captured during the tvOS Settings RCA session
 
 | File | Contains |
 |---|---|
-| `reports/tvos_navigation_rca_and_safety_architecture.md` | Home IP `192.168.1.14`, personal email `joseph.mccraw@cbsi.com` |
+| `reports/tvos_navigation_rca_and_safety_architecture.md` | Personal network address and email; values omitted |
 | `reports/tvos_settings_complete_tree.json` | Same IP, same email (truncated) |
-| `reports/tvos_settings_hierarchy.json` | Same IP, MAC address `34:fd:6a:02:b8:41`, router IP |
+| `reports/tvos_settings_hierarchy.json` | Personal network, hardware, and router addresses; values omitted |
 | `reports/tvos_settings_interactive_map.html` | Same IP, same email, device name "office" |
 
 **This is not training data** — it is OCR/crawl exploration output and a narrative RCA
@@ -117,7 +117,9 @@ files above had their real values replaced with placeholders
 (`<REDACTED_IP>`, `<REDACTED_ROUTER_IP>`, `<REDACTED_MAC>`, `<REDACTED_EMAIL>`,
 `<REDACTED_NAME>`, `<REDACTED_SERIAL>`, `<REDACTED_DEVICE_UDID>`) and verified clean by
 re-grepping for the original IP, MAC, email, name, serial number, and device UDID strings —
-zero matches remain in the working tree.
+That historical check missed this provenance table, which repeated some values.
+Release preparation removes those values from this table on October 8, 2026.
+The current pattern audit remains a review aid, not proof that all private content is absent.
 
 **This does not remove the real values from prior commits.** They are still present in this
 repo's git history (and on GitHub, in the commit that introduced them) until/unless a history

@@ -5,6 +5,10 @@ description: Read and publish NativeUIAuditKit and TVTestRig coordination status
 
 # Shared status coordination
 
+For enrolled chat, follow [CoordinatorWorkflow.md](../../Research/CoordinatorWorkflow.md).
+Use this SMB guide for named artifact transfers and messaging fallback. Do not mirror every routine chat update.
+Require explicit forwarding evidence before claiming a coordinator message reached TTR. Keep execution authority separate from read receipts.
+
 Use only for TVTestRig–NUIAK interaction, not general local development status. Read the adjacent
 [Instructions.md](Instructions.md) for schema, ownership, and request formats.
 This is a portable agent guide at the user's requested filename, not an

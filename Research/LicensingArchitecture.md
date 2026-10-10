@@ -1,69 +1,41 @@
-# Licensing & Distribution Architecture
+# Licensing and distribution review
 
-This document defines the licensing architecture, intellectual property boundaries, and distribution options for **NativeUIAuditKit** and its optional companion package **NativeUIAuditKitModels**.
+Updated October 8, 2026. This document records evidence and release requirements, not legal advice.
+The maintainer reviews applicable terms before public distribution.
 
----
+## Current facts
 
-## 1. Summary of Licenses
+| Component | Recorded terms | Release requirement |
+| --- | --- | --- |
+| NUIAK Swift code | Repository MIT license | Preserve the license and review third-party notices |
+| Bundled YOLO detectors | Export metadata identifies Ultralytics and AGPL-3.0 | Review the applicable license and intended TTR distribution |
+| FocusRing weights | From-scratch training; no AGPL field found in the inspected metadata | Confirm architecture, data, tooling, and explicit weight license |
+| Research assets and screenshots | Mixed origins and review states | Do not include them without an exact approved inventory |
 
-| Component | Repository / Location | License | Terms & Permissibility |
-|---|---|---|---|
-| **NativeUIAuditKit** (Codebase) | `Sources/NativeUIAuditKit/` | **MIT License** | Fully permissive. Free commercial, proprietary, and open-source use with standard disclaimer. |
-| **NativeUIAuditKitModels** (Swift Glue) | `NativeUIAuditKitModels/Sources/` | **MIT License** | Fully permissive Swift bindings and protocol definitions. |
-| **YOLO CoreML weights** | `NativeUIDetector_v2.mlmodelc`, `NativeUIModel_tvOS.mlmodelc` | **AGPL-3.0** (Ultralytics) | Derived from Ultralytics YOLO11 pre-trained backbones. Subject to AGPL-3.0 copyleft terms upon distribution unless commercially licensed. |
-| **FocusRingDetector v0.1 weights** | `FocusRingDetector.mlmodelc` | Trained from scratch (not Ultralytics) | MobileNetV4-Conv-Small via vendored `scripts/focus_ring_backbone.py`, `pretrained=False`. No AGPL license key in CoreML metadata. |
+The compatibility product `NativeUIAuditKit` bundles 3 compiled models.
+The new `NativeUIAuditKitRuntime` product has no dependency on model resources.
+This package separation does not approve public distribution of any model.
+Moving weights to downloads does not by itself change their license obligations.
+Absence of a license field does not establish permission to redistribute a model.
 
----
+## Primary references
 
-## 2. IP Boundary & Package Decoupling
+Ultralytics describes AGPL-3.0 and Enterprise options for its code and trained models.
+Review the actual terms for the intended use. Do not infer a blanket exemption for testing, converted weights, or separate downloads.
+[Ultralytics licensing](https://www.ultralytics.com/license) and [legal terms](https://www.ultralytics.com/legal).
 
-NativeUIAuditKit was intentionally architected as two separate packages:
+This project does not establish whether a particular downstream application satisfies those terms.
+The maintainer can obtain qualified legal advice or written permission where needed.
+Do not claim that another framework or from-scratch training automatically removes every third-party restriction.
 
-1. **`NativeUIAuditKit` (Core Engine — Pure MIT)**:
-   - Contains all heuristic audits, geometry processing, safe area rules, Vision OCR text fusion, session management, and `NativeUIRecognizing` abstractions.
-   - Contains **zero** model weights, zero YOLO dependencies, and zero AGPL code.
-   - Can be embedded directly into proprietary, commercial, or enterprise closed-source products without any copyleft obligations.
+## Approval record for each released artifact
 
-2. **`NativeUIAuditKitModels` (Optional Pre-Trained Weights)**:
-   - Provides out-of-the-box YOLO11n weights (`nativeui-ios-v2.0` and `nativeui-tvos-v3.0`) and the Stage 2 FocusRingDetector v0.1 classifier.
-   - YOLO compiled artifacts embed `MLModelLicenseKey: "AGPL-3.0 License"` in their CoreML metadata (`metadata.json`), reflecting their origin from the Ultralytics YOLO11 framework.
-   - `FocusRingDetector.mlmodelc` is a from-scratch MobileNetV4 crop classifier (Run FDR-001), not a YOLO11 derivative.
+- Identify the exact artifact, version, source revision, and SHA-256 inventory.
+- Record architecture, initialization, source data, training software, and export software.
+- Include applicable license text and required notices.
+- Record the maintainer's decision for the intended repository visibility and downstream use.
+- Keep model-quality approval separate from permission to distribute.
 
----
-
-## 3. Considerations for Downstream Consumers
-
-### 3.1 Internal Testing, QA, and Automation (e.g. TVTestRig)
-- **Status**: Allowed under AGPL-3.0.
-- Running NativeUIAuditKit and bundled weights within internal CI/CD pipelines, local development rigs, test benches (like TVTestRig), and offline automated testing environments does **not** constitute external conveyance or network service distribution under AGPL-3.0.
-
-### 3.2 External Commercial Distribution
-If a consumer intends to ship an end-user application (e.g. on the App Store) containing bundled weights, two distinct unencumbered paths are available:
-
-#### Path A: Ultralytics Enterprise Commercial License
-- Purchase a commercial distribution license directly from Ultralytics Inc.
-- Allows proprietary distribution of YOLO11 weights without AGPL-3.0 source-disclosure requirements.
-
-#### Path B: Permissive Clean Retrain (Zero Third-Party Licensing)
-- Retrain the detector using a permissively licensed framework:
-  1. **Apple Create ML**: Built into macOS. Produces native `.mlpackage` models with zero third-party licensing encumbrances.
-  2. **TorchVision (BSD 3-Clause / Apache 2.0)**: Train standard object detection architectures (e.g. Faster R-CNN, SSD-MobileNet, RetinaNet) and export via `coremltools`.
-- Because `NativeUIDetectionRequest` accepts any conforming `ModelManifest` and CoreML tensor contract, swapping in a clean-room retrained model requires zero code changes to the core library.
-
----
-
-## 4. Metadata Verification
-
-Every bundled CoreML model artifact contains explicit provenance and licensing metadata verified at runtime and test time:
-
-- `license`: `"AGPL-3.0 License (https://ultralytics.com/license)"`
-- `author`: Ultralytics YOLO11 export
-- `description`: Platform-specific UI element detection model for iOS or tvOS.
-
----
-
-## 5. Training Data Provenance
-
-See [`PROVENANCE.md`](../PROVENANCE.md) for the training hardware, exact hyperparameters, and
-source datasets behind every shipped model, plus an explicit audit for personal identifiers or
-proprietary third-party assets in training data.
+No artifact receives public approval from a passing parser, a model score, or its presence in an earlier release.
+The release tool checks an explicit approval reference but cannot verify its legal sufficiency.
+See [ADR-0023](ADR-0023-Optional-Model-Distribution.md), [release preparation](ReleasePreparation.md), and [provenance](../PROVENANCE.md).
