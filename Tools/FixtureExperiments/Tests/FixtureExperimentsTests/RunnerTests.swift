@@ -190,4 +190,37 @@ final class RunnerTests: XCTestCase {
         try FileManager.default.removeItem(at: folder.appendingPathComponent("grid_unfocused.png"))
         XCTAssertThrowsError(try validateRender(folder, job: job))
     }
+
+    func testMatrixGeneratorPresets() throws {
+        for preset in MatrixPreset.allCases {
+            let out = root.appendingPathComponent("matrix_\(preset.rawValue)")
+            try MatrixGenerator.generateMatrix(
+                at: out,
+                rendererSourceSHA256: identity,
+                preset: preset,
+                experimentID: "exp-\(preset.rawValue)"
+            )
+            let exp = try validateBundle(out)
+            XCTAssertEqual(exp.id, "exp-\(preset.rawValue)")
+            XCTAssertFalse(exp.jobs.isEmpty)
+        }
+    }
+
+    func testSupportedLayoutsValidation() throws {
+        XCTAssertTrue(supportedLayouts.contains("settings_list"))
+        XCTAssertTrue(supportedLayouts.contains("action_dialog"))
+        XCTAssertTrue(supportedLayouts.contains("focus_maze"))
+        let edgeBundle = root.appendingPathComponent("matrix_edge")
+        try MatrixGenerator.generateMatrix(
+            at: edgeBundle,
+            rendererSourceSHA256: identity,
+            preset: .edge,
+            experimentID: "exp-edge"
+        )
+        let exp = try validateBundle(edgeBundle)
+        let layouts = Set(exp.jobs.map(\.layout))
+        XCTAssertTrue(layouts.contains("settings_list"))
+        XCTAssertTrue(layouts.contains("action_dialog"))
+        XCTAssertTrue(layouts.contains("focus_maze"))
+    }
 }

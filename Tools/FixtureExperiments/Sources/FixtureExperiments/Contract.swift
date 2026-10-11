@@ -96,13 +96,23 @@ func inventory(_ root: URL, limit: Int64 = 268435456) throws -> [Artifact] {
     return result.sorted { $0.path < $1.path }
 }
 
+public let supportedLayouts: Set<String> = [
+    "shelf", "grid", "hero_detail", "top_nav_shelf",
+    "settings_list", "action_dialog", "focus_maze"
+]
+
 public struct Job: Codable, Equatable {
     public let id: String
     public let layout: String
     public let focusID: String?
     public let ancestry: String
-    public init(id: String, layout: String, focusID: String? = nil, ancestry: String) {
+    public let theme: String?
+    public let density: String?
+    public let overlay: String?
+    public init(id: String, layout: String, focusID: String? = nil, ancestry: String,
+                theme: String? = nil, density: String? = nil, overlay: String? = nil) {
         self.id = id; self.layout = layout; self.focusID = focusID; self.ancestry = ancestry
+        self.theme = theme; self.density = density; self.overlay = overlay
     }
 }
 
@@ -160,8 +170,11 @@ public func validateBundle(_ root: URL) throws -> Experiment {
     try require(validID(e.id) && validHash(e.rendererSourceSHA256), "invalid_identity")
     try require((1...100).contains(e.jobs.count) && Set(e.jobs.map(\.id)).count == e.jobs.count, "invalid_jobs")
     for job in e.jobs {
-        try require(validID(job.id) && validID(job.ancestry) && ["shelf", "grid", "hero_detail", "top_nav_shelf"].contains(job.layout), "invalid_job")
+        try require(validID(job.id) && validID(job.ancestry) && supportedLayouts.contains(job.layout), "invalid_job")
         if let focus = job.focusID { try require(validID(focus), "invalid_focus") }
+        if let theme = job.theme { try require(validID(theme), "invalid_theme") }
+        if let density = job.density { try require(validID(density), "invalid_density") }
+        if let overlay = job.overlay { try require(validID(overlay), "invalid_overlay") }
     }
     try require(e.limits.timeoutSeconds.isFinite && (0.05...600).contains(e.limits.timeoutSeconds) &&
                 (1...2147483648).contains(e.limits.maxOutputBytes) && (1...3).contains(e.limits.maxAttempts), "invalid_limits")

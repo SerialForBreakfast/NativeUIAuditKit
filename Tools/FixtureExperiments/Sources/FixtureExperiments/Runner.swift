@@ -360,6 +360,9 @@ public final class Runner {
                 var arguments = ["--layout", job.layout, "--resolution", "1080p", "--assets-dir", bundle.appendingPathComponent("assets").path,
                                  "--output-dir", folder.appendingPathComponent("output").path]
                 if let focus = job.focusID { arguments += ["--focus-id", focus] }
+                if let theme = job.theme { arguments += ["--theme", theme] }
+                if let density = job.density { arguments += ["--density", density] }
+                if let overlay = job.overlay { arguments += ["--overlay", overlay] }
                 let renderStart = ProcessInfo.processInfo.systemUptime
                 try execute(host.renderer, arguments: arguments, log: folder.appendingPathComponent("renderer.log"),
                             tmp: folder.appendingPathComponent("tmp"), seconds: experiment.limits.timeoutSeconds) {

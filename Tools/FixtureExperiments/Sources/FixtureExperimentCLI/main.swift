@@ -9,7 +9,7 @@ func output<T: Encodable>(_ value: T) throws {
 
 do {
     let args = Array(CommandLine.arguments.dropFirst())
-    guard let action = args.first else { throw ExperimentError("Expected validate, preflight, run, status, cancel, reconcile, or make-reference.") }
+    guard let action = args.first else { throw ExperimentError("Expected validate, preflight, run, status, cancel, reconcile, make-reference, or make-matrix.") }
     var values = [String: String](); var flags = Set<String>(); var index = 1
     while index < args.count {
         let key = args[index]
@@ -26,6 +26,7 @@ do {
     }
     func url(_ name: String) throws -> URL { URL(fileURLWithPath: try value(name)).standardizedFileURL }
     let allowed = action == "make-reference" ? ["--output", "--renderer-source-sha256"] :
+                  action == "make-matrix" ? ["--output", "--renderer-source-sha256", "--preset", "--experiment-id", "--corpus"] :
                   action == "configure" ? ["--workspace", "--renderer", "--renderer-source", "--output", "--max-load"] :
                   action == "cancel" ? ["--workspace", "--experiment-id"] :
                   action == "validate" ? ["--bundle"] : ["--bundle", "--host", "--max-jobs"]
@@ -41,6 +42,19 @@ do {
     } else if action == "make-reference" {
         try makeReference(at: url("--output"), rendererSourceSHA256: value("--renderer-source-sha256"))
         try output(["state": "created"])
+    } else if action == "make-matrix" {
+        let presetRaw = values["--preset"] ?? "core"
+        guard let preset = MatrixPreset(rawValue: presetRaw) else { throw ExperimentError("invalid_preset") }
+        let experimentID = values["--experiment-id"] ?? "matrix-exp-01"
+        let corpusURL = values["--corpus"].map { URL(fileURLWithPath: $0).standardizedFileURL }
+        try MatrixGenerator.generateMatrix(
+            at: url("--output"),
+            rendererSourceSHA256: value("--renderer-source-sha256"),
+            preset: preset,
+            experimentID: experimentID,
+            corpusDir: corpusURL
+        )
+        try output(["state": "created", "preset": preset.rawValue, "experimentID": experimentID])
     } else if action == "validate" {
         let e = try validateBundle(url("--bundle")); try output(["state": "valid", "experimentID": e.id])
     } else {
