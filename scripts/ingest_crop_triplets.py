@@ -128,6 +128,25 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
 
+    # Write focus_dataset_manifest.json for eval_focus_ring_detector.py compatibility
+    focus_manifest = {
+        "dataset": "NUIAK-Bulk-Anchored-Crop-Triplets-200-v1",
+        "created_at": summary["indexed_at"],
+        "pairs": [
+            {
+                "pair_id": c["case_id"],
+                "focused_crop": c["positive_path"],
+                "unfocused_crop": c["anchor_path"],
+                "negative_crop": c["negative_path"],
+                "split": c["split"],
+                "theme": "dark_standard",
+                "element_type": c["layout"]
+            }
+            for c in validated_cases
+        ]
+    }
+    (root / "focus_dataset_manifest.json").write_text(json.dumps(focus_manifest, indent=2, sort_keys=True) + "\n")
+
     return summary
 
 if __name__ == "__main__":
