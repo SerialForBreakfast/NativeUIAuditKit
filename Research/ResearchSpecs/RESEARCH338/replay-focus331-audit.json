@@ -1,0 +1,70 @@
+{
+  "adapter": {
+    "outputAttributes": [
+      "regions331.OUT",
+      "report_regions331.OUT"
+    ],
+    "steps": [
+      "regions331.audit",
+      "report_regions331.main"
+    ],
+    "type": "python-callable"
+  },
+  "authority": "diagnostic",
+  "decisionRule": "Every field of registration.json, audit.json, and report.json matches the recorded file, except the declared fields.",
+  "hypothesis": "The FOCUS331 image-only boundary-region audit and report reproduce from recorded source and inputs.",
+  "id": "replay-focus331-audit",
+  "inputs": [
+    {
+      "path": "reports/work/TRANSITION-249/artifacts/package/membership.json",
+      "sha256": "e06579c032157fc7d3c617ef50c7834db0c3bcb4f8ca459fb807138e13fa2b69"
+    },
+    {
+      "path": "reports/work/TRANSITION-249/artifacts/package/native.npy",
+      "sha256": "97fcec3a36be98dbbd955c3c459a2ce3bfe06b250c1e8bd40c594af97beca82b"
+    },
+    {
+      "path": "reports/work/FOCUS-329/audit.json",
+      "sha256": "0eb59652838c02981306c11b48698f51eda82088d5773dbebae17d49ff07efb5"
+    }
+  ],
+  "kind": "replay",
+  "limits": {
+    "maxAttempts": 1,
+    "maxOutputBytes": 67108864,
+    "timeoutSeconds": 900
+  },
+  "owner": "NUIAK",
+  "replay": {
+    "files": [
+      {
+        "ignore": [],
+        "name": "registration.json",
+        "sha256": "68fce6b5cbb04ec90cc20b1a8013314363944382594343ca8e6365de1c0ab8a6"
+      },
+      {
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "Wall time of the audit run."
+          }
+        ],
+        "name": "audit.json",
+        "sha256": "9d90586c3e5a3bff0e9455556de90b2ec0a456861470b7c28f7a780cd56a4b04"
+      },
+      {
+        "ignore": [
+          {
+            "path": "audit.sha256",
+            "reason": "Hash of the replayed audit file, which includes its own wall-time field."
+          }
+        ],
+        "name": "report.json",
+        "sha256": "123396257d4fb9640a700ed619ceb6062a44a51e49681ec819cddbcbdc6e151a"
+      }
+    ],
+    "recordedDirectory": "reports/work/FOCUS-331"
+  },
+  "task": "RESEARCH338",
+  "version": "research-spec-v1"
+}

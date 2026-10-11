@@ -1,0 +1,86 @@
+{
+  "adapter": {
+    "outputAttributes": [
+      "controls330.OUT",
+      "report_controls330.OUT"
+    ],
+    "steps": [
+      "controls330.audit",
+      "report_controls330.main"
+    ],
+    "type": "python-callable"
+  },
+  "authority": "diagnostic",
+  "decisionRule": "Every field of audit.json and report.json matches the recorded file, except the declared fields.",
+  "hypothesis": "The FOCUS330 detector-centered audit and report reproduce from recorded detections and inputs.",
+  "id": "replay-focus330-audit",
+  "inputs": [
+    {
+      "path": "reports/work/TRANSITION-249/artifacts/package/membership.json",
+      "sha256": "e06579c032157fc7d3c617ef50c7834db0c3bcb4f8ca459fb807138e13fa2b69"
+    },
+    {
+      "path": "reports/work/TRANSITION-249/artifacts/package/native.npy",
+      "sha256": "97fcec3a36be98dbbd955c3c459a2ce3bfe06b250c1e8bd40c594af97beca82b"
+    },
+    {
+      "path": "reports/work/FOCUS-329/audit.json",
+      "sha256": "0eb59652838c02981306c11b48698f51eda82088d5773dbebae17d49ff07efb5"
+    },
+    {
+      "path": "reports/work/FOCUS-330/detector-registration.json",
+      "sha256": "482fb1da6b131a3f09ccce05dcdd606083e1e70dcd9b5f4b5762961971551518"
+    },
+    {
+      "path": "reports/work/FOCUS-327/run/evaluation.json",
+      "sha256": "f80cb7d466e53be97e0d83274b69e8fa494460cef62df94687f7d612af0bc667"
+    },
+    {
+      "path": "reports/work/FOCUS-329/run/evaluation.json",
+      "sha256": "84c4fc74aa8fac849b914a4ba15b0c85c86c74130cbc04ea9ba65d68dd46e371"
+    }
+  ],
+  "kind": "replay",
+  "limits": {
+    "maxAttempts": 1,
+    "maxOutputBytes": 67108864,
+    "timeoutSeconds": 900
+  },
+  "owner": "NUIAK",
+  "replay": {
+    "files": [
+      {
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "Wall time of the audit run."
+          }
+        ],
+        "name": "audit.json",
+        "sha256": "abe35d7d87a4a09efd63c1ec32a1d30035a71fd82a79b8d83a44c41fd6128279"
+      },
+      {
+        "ignore": [
+          {
+            "path": "audit.sha256",
+            "reason": "Hash of the replayed audit file, which includes its own wall-time field."
+          }
+        ],
+        "name": "report.json",
+        "sha256": "f07b107ced0fe48427a24f33b073e1a9b3ba9a79674afd2b733d331f877453e9"
+      }
+    ],
+    "recordedDirectory": "reports/work/FOCUS-330"
+  },
+  "stage": [
+    {
+      "from": {
+        "path": "reports/work/FOCUS-330/detections.json",
+        "sha256": "afdd2d64593dd1a9c59bb8668889a2e2ecd88af99f233bdba137c8db7274b728"
+      },
+      "to": "detections.json"
+    }
+  ],
+  "task": "RESEARCH338",
+  "version": "research-spec-v1"
+}

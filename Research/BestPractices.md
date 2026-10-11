@@ -2534,6 +2534,16 @@ hash over a stated byte count; 2 of 3 manifests stated wrong sizes with correct 
 **Why:** A claimed change without a pixel change teaches a detector to fire on
 unchanged screens. See `Research/HCF337Results.md`.
 
+### BP-115: Hash every imported module, not only the top script
+
+**Wrong:** Record only the entry script hash in an experiment registration. The FOCUS331
+registration records 1 script hash and 3 data hashes, but the audit imports 134 repository
+modules. A change in any of them can change the result without a registration change.
+**Correct:** Record the SHA-256 of every repository module that the job process imports.
+`scripts/research_queue.py` writes this closure into each `result.json`.
+**Why:** Replays and comparisons need the code that produced a result, not only its entry point.
+See `Research/RESEARCH338Results.md`.
+
 ### Harvest target coverage is not the accepted-row count
 
 **Observed:** SYNTH-01 exports accepted rows separately from excluded, interrupted,
