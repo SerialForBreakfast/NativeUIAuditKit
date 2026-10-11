@@ -1,5 +1,14 @@
 # NativeUIAuditKit — Best Practices
 
+## Decouple code delivery from corpus generation — TTR-NUIAK-FLOW-01
+
+Deliver renderer updates and tool improvements through Git commits.
+Do not generate or transfer bulk synthetic datasets across network shares.
+Maximum-mini-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
+This rule keeps Sillycon free for interactive user development.
+Sillycon does not run Python tooling or batch synthetic rendering passes.
+Use SharedStatusFile for lightweight state notices and metadata receipts only.
+
 ## Test region quality before fitting another classifier — FOCUS330
 
 Control-centered crops need useful detected boxes. A working detector does not establish sufficient recall on a new image family.
