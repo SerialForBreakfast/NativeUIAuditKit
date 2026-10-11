@@ -2553,6 +2553,17 @@ modules. A change in any of them can change the result without a registration ch
 **Why:** Replays and comparisons need the code that produced a result, not only its entry point.
 See `Research/RESEARCH338Results.md`.
 
+### BP-116: Process memory peaks are not reproducible; keep headroom below hard limits
+
+**Wrong:** Treat a recorded peak memory value as a fixed property of a run. The FOCUS329
+training run records a 5.73 GB peak. Its exact queued replay, with identical losses and weights,
+records 7.73 GB during the same data preparation step. The script stops at 8 GiB.
+**Correct:** Exclude `peakBytes` from replay equality, with a stated reason. Set memory limits with
+at least 30% headroom over the largest observed peak. Report each new peak next to its limit.
+**Why:** macOS resident memory can change with system memory pressure and page compression.
+This difference has no measured cause. A run that passed once can fail its own memory check on a repeat run.
+See `Research/RESEARCH339Results.md`.
+
 ### Harvest target coverage is not the accepted-row count
 
 **Observed:** SYNTH-01 exports accepted rows separately from excluded, interrupted,

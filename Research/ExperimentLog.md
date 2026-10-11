@@ -1,5 +1,28 @@
 # NativeUIAuditKit — Experiment Log
 
+## RESEARCH339-R1 — queued replay of the FOCUS329 training run (registered 2026-10-11, before execution)
+
+Hypothesis: the research queue reproduces a finished 30-epoch training run from recorded source and inputs.
+The queue runs `edge329.run` unchanged and redirects its output folder to a new attempt folder named `FOCUS-329`.
+The recorded FOCUS329 folder stays read-only.
+
+- Membership: FOCUS326 `corpus.json`, `review.json`, and `independent.npz`, plus FOCUS319 `corpus.json`. Each is pinned by SHA-256.
+- Initialization: FOCUS325-average `last.pt`, pinned by SHA-256.
+- Configuration: 30 epochs, learning rate 1e-4, batch 16, seed 42, 2 CPU threads. These come from the recorded registration.
+- Storage budget: 512 MiB. Output limit: 256 MiB. The recorded run writes about 8 MB.
+- Time limit: 3,600 s. The recorded run takes 1,165.89 s.
+- Resume: restart only. The trainer saves weights only at the end, so an interrupted run restarts from epoch 0.
+- Acceptance evidence: every compared JSON field matches within an absolute tolerance of 1e-6.
+  The declared exceptions are `seconds` and `peakBytes`, including the same fields in each `fit.json` history entry.
+  `last.pt` is compared by SHA-256. Exact equality is reported separately from the tolerance result.
+
+This run produces no candidate, no promotion, and no data-role change. It qualifies the queue's training job type only.
+
+Outcome, 2026-10-11: the attempt starts at 18:51 UTC and completes in 1,154.7 s (recorded run: 1,165.89 s).
+All 12 compared files are exactly equal after the declared exceptions. `last.pt` is byte-identical.
+Peak memory is 7.73 GB, against 5.73 GB recorded; the script limit is 8 GiB. See [BP-116](BestPractices.md).
+Training jobs are qualified for the queue. [Results](RESEARCH339Results.md).
+
 ## HCF334 — production FocusRing and HCF rules
 
 Run 1 fixed batch on 8 retained images with confidence 0.25 and no OCR. All model calls complete in 1.88 s.

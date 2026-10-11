@@ -1,6 +1,7 @@
 # ADR-0026 — queued, resumable research experiments
 
 Status: accepted. [RESEARCH338](RESEARCH338Results.md) replays 3 FOCUS audits with exact agreement. Diagnostic jobs are qualified.
+[RESEARCH339](RESEARCH339Results.md) replays the FOCUS329 30-epoch training run with byte-identical weights. Training jobs are qualified.
 Date: 2026-10-11.
 Relates to [ADR-0025](ADR-0025-Portable-Experiment-Runner.md), [ADR-0011](ADR-0011-Measured-Training-Efficiency.md),
 [LocalExperimentApprovalEnvelope](Plans/LocalExperimentApprovalEnvelope.md), and [FocusImprovementProgram](Plans/FocusImprovementProgram.md).
@@ -47,7 +48,7 @@ The queue checks authority before it starts a job. It does not ask a person per 
 | Authority class | Current rule |
 | --- | --- |
 | diagnostic | Allowed. No training, capture, device use, or data-role change. |
-| training | Refused until the spec carries the standing-approval fields: hypothesis, exact membership, initialization, epochs, storage budget, and acceptance evidence. |
+| training | Allowed when the spec carries the standing-approval fields: hypothesis, exact membership, initialization, epochs, storage budget, and acceptance evidence. The experiment-log entry must exist before the run. See [RESEARCH339](Plans/RESEARCH339.md). |
 | capture, export, promotion | Refused. These need their own authority. |
 
 Evaluation membership is pinned by hash. A `screen` job cannot use evaluation data to select a variant.
@@ -109,5 +110,6 @@ The replays use no training, no device, and about 6 min of CPU time.
 ## Limits
 
 The first tranche supports only `diagnostic` jobs and the `python-callable` adapter on local hardware.
+RESEARCH339 adds `training` jobs. An interrupted training attempt restarts from epoch 0, because the trainers save weights only at the end.
 Distributed execution needs a bundle transfer and a qualified executor.
 File times show that the replayed modules predate the original runs. File times do not prove that the code was identical.

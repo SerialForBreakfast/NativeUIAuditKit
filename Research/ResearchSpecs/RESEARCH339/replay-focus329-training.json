@@ -1,0 +1,229 @@
+{
+  "version": "research-spec-v1",
+  "id": "replay-focus329-training",
+  "task": "RESEARCH339",
+  "owner": "NUIAK research queue",
+  "kind": "replay",
+  "authority": "training",
+  "hypothesis": "The queue reproduces the finished FOCUS329 30-epoch training run from recorded source and inputs.",
+  "decisionRule": "Qualify training jobs only if every compared JSON field matches within 1e-6 after the declared timing exceptions. Report exact equality and the last.pt hash result separately.",
+  "adapter": {
+    "type": "python-callable",
+    "steps": [
+      "edge329.run"
+    ],
+    "outputAttributes": [
+      "boundary329.OUT",
+      "edge329.OUT"
+    ],
+    "outputFolderName": "FOCUS-329"
+  },
+  "inputs": [
+    {
+      "path": "reports/work/FOCUS-327/inputs.json",
+      "sha256": "0866fedb9c12ae6ea97e7bc569ceaeac0c2ce0fcb8e6d3099432b3bbfe861278"
+    },
+    {
+      "path": "reports/work/FOCUS-325/parity-images.npy",
+      "sha256": "65eae33a849969911e91a2efc40903918b9dad6939b54928ed8b37d4ba324818"
+    },
+    {
+      "path": "reports/work/FOCUS-327/run/last.pt",
+      "sha256": "d6328fe53e30478fb6bcdda44d50ce4d382f41bc9ee6d44b1f1de1c0d17f89df"
+    },
+    {
+      "path": "reports/work/FOCUS-329/audit.json",
+      "sha256": "0eb59652838c02981306c11b48698f51eda82088d5773dbebae17d49ff07efb5"
+    },
+    {
+      "path": "reports/work/FOCUS-329/decision.json",
+      "sha256": "e575dc07403b8dd6256f7c19a5ab266bd0362b71b6f894b82f3348e54df7b9df"
+    }
+  ],
+  "stage": [
+    {
+      "from": {
+        "path": "reports/work/FOCUS-329/inputs.json",
+        "sha256": "e61f7630b805d3a5bb24bf724de39eaae17eade9dedf82f38521d1cb5f90c37f"
+      },
+      "to": "inputs.json"
+    }
+  ],
+  "training": {
+    "experimentLogRunId": "RESEARCH339-R1",
+    "membership": [
+      {
+        "path": "reports/work/FOCUS-326/corpus.json",
+        "sha256": "61675e342116726ed7aa4deac87915a384da2598e02f31e74197660a2f8dedf5"
+      },
+      {
+        "path": "reports/work/FOCUS-326/review.json",
+        "sha256": "cd3aa61b2db220766988947dd497aef08530e200b9e46c2425ed8ef80b9e2dad"
+      },
+      {
+        "path": "reports/work/FOCUS-319/corpus.json",
+        "sha256": "482bb30a9bf35c759a846c5c4b5ccd8ab2a3c48470822eeb907f2ceed8cb52cf"
+      },
+      {
+        "path": "reports/work/FOCUS-326/independent.npz",
+        "sha256": "e0fc46294fe8e63b77e13d7eed92f9d4bfc0158d5e535cc655481ac0ff7e3773"
+      }
+    ],
+    "initialization": {
+      "path": "reports/work/FOCUS-325/average/last.pt",
+      "sha256": "1882c4458a9c583ee8745ae2bbaf012661463fce415c9dd61287de2338310d5e"
+    },
+    "epochs": 30,
+    "storageBudgetBytes": 536870912,
+    "acceptanceEvidence": "Every compared JSON field matches within 1e-6, except seconds and peakBytes. last.pt is compared by SHA-256.",
+    "resume": "restart"
+  },
+  "limits": {
+    "timeoutSeconds": 3600,
+    "maxOutputBytes": 268435456,
+    "maxAttempts": 1
+  },
+  "replay": {
+    "recordedDirectory": "reports/work/FOCUS-329",
+    "files": [
+      {
+        "name": "preparation.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          }
+        ],
+        "sha256": "4ec035d24351d2899fb0962e28602b363551bc3f0d4fd75de6779ecd1bf172de",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/registration.json",
+        "sha256": "de4fb6a5879c1790784e7984d6a0e928187e020822d7ab0bf0d9fdcf915aa47c",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/epoch-0001.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          }
+        ],
+        "sha256": "7b72896cb1c5ab6e86530bb5f393bc2e435d78f03fa352fb0b480b9cebbed328",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/epoch-0010.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          }
+        ],
+        "sha256": "64967db2dfcecdd164ffe2cd6de12365bd2761701598654019fc361595b7ca11",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/epoch-0020.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          }
+        ],
+        "sha256": "f29e139cd7fa1c6eac804129251894b89e374a6dc5e0e41a2ea1a0aa62857271",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/epoch-0030.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          }
+        ],
+        "sha256": "0475746a0f05cf25dad4b2aaa46afb6ce315a06d86103f7adb4d4d7b20dbec9e",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/fit.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          },
+          {
+            "path": "history[].seconds",
+            "reason": "wall time per epoch"
+          },
+          {
+            "path": "history[].peakBytes",
+            "reason": "process memory peak per epoch"
+          }
+        ],
+        "sha256": "4fa18404bc8a9d4984a2434dd0fbb2684b5c97c954dc4bd73fea33a791f12972",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/training.json",
+        "sha256": "403afb3607bc62973a0a49a0f66d9c0e7a8de8c01f1b9c2b32f5ab793f68a225",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/evaluation.json",
+        "sha256": "84c4fc74aa8fac849b914a4ba15b0c85c86c74130cbc04ea9ba65d68dd46e371",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "report.json",
+        "sha256": "bd326b1901f0eaaefd38814b6d1a877df48769a6c78d32f6ee3f9cad56f812b7",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/completion.json",
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "wall time"
+          },
+          {
+            "path": "peakBytes",
+            "reason": "process memory peak"
+          }
+        ],
+        "sha256": "636e432d55b95b694189ce432c4b73634fab807e988a6641646646ae8ab4ed81",
+        "tolerance": 1e-06
+      },
+      {
+        "name": "run/last.pt",
+        "compare": "sha256",
+        "sha256": "b8c1314e1edf622bed86cc763d200b6ba18bcddb5b1ae5229108074e55ef6964"
+      }
+    ]
+  }
+}

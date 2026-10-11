@@ -29,11 +29,16 @@ RESULT_VERSION = 'research-result-v1'
 SUMMARY_VERSION = 'research-summary-v1'
 KINDS = {'replay', 'screen', 'confirm'}
 AUTHORITIES = {'diagnostic', 'training', 'capture', 'export', 'promotion'}
-PERMITTED = {'diagnostic'}
+PERMITTED = {'diagnostic', 'training'}
+TRAINING_FIELDS = {'experimentLogRunId', 'membership', 'initialization', 'epochs', 'storageBudgetBytes',
+                   'acceptanceEvidence', 'resume'}
+EXPERIMENT_LOG = ROOT / 'Research/ExperimentLog.md'
+STORAGE_MARGIN = 1 << 30
 ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,63}')
 NAME = re.compile(r'[A-Za-z_][A-Za-z0-9_]{0,63}')
 FILE = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}')
 HASH = re.compile(r'[0-9a-f]{64}')
+FIELD = re.compile(r'[A-Za-z0-9_]{1,64}(\[\])?')
 
 
 def require(ok, reason):
@@ -99,6 +104,58 @@ def split_target(value, module_dir):
     return module, name
 
 
+def check_name(value):
+    """Accept a relative output name, such as `run/fit.json`."""
+    require(isinstance(value, str) and value and all(FILE.fullmatch(p) for p in value.split('/')), 'replay_name')
+    require('..' not in value.split('/'), 'replay_name')
+    return value
+
+
+def check_ignore(path):
+    parts = path.split('.') if isinstance(path, str) else []
+    require(parts and all(FIELD.fullmatch(p) for p in parts) and not parts[-1].endswith('[]'), 'ignore_path')
+
+
+def validate_training(spec):
+    """Require the standing-approval fields for training jobs."""
+    if spec['authority'] != 'training':
+        require('training' not in spec, 'training_only_for_training_jobs')
+        return
+    training = spec.get('training')
+    require(isinstance(training, dict) and set(training) == TRAINING_FIELDS, 'training_fields')
+    require(isinstance(training['experimentLogRunId'], str) and ID.fullmatch(training['experimentLogRunId']),
+            'training_log_id')
+    require(isinstance(training['membership'], list) and training['membership'], 'training_membership')
+    for pin in training['membership']:
+        local_path(ROOT, check_pin(pin)['path'])
+    local_path(ROOT, check_pin(training['initialization'])['path'])
+    require(type(training['epochs']) is int and 1 <= training['epochs'] <= 1000, 'training_epochs')
+    budget = training['storageBudgetBytes']
+    require(type(budget) is int and 0 < budget <= 1 << 40, 'training_storage')
+    require(spec['limits']['maxOutputBytes'] <= budget, 'training_storage')
+    require(isinstance(training['acceptanceEvidence'], str) and training['acceptanceEvidence'].strip(),
+            'training_acceptance')
+    # The trainers save weights only at the end, so an interrupted run restarts from epoch 0.
+    require(training['resume'] == 'restart', 'training_resume')
+
+
+def check_training(spec, queue):
+    """Check the run-time training conditions: a prior log entry and free storage."""
+    if spec['authority'] != 'training':
+        return
+    training = spec['training']
+    text = EXPERIMENT_LOG.read_text() if EXPERIMENT_LOG.is_file() else ''
+    pattern = r'(?<![\w-])' + re.escape(training['experimentLogRunId']) + r'(?![\w-])'
+    require(re.search(pattern, text), 'experiment_log_missing')
+    queue.mkdir(parents=True, exist_ok=True)
+    require(shutil.disk_usage(queue).free >= training['storageBudgetBytes'] + STORAGE_MARGIN, 'storage_insufficient')
+
+
+def output_dir(spec, attempt):
+    name = spec['adapter'].get('outputFolderName')
+    return attempt / 'out' / name if name else attempt / 'out'
+
+
 def validate(spec, module_dir=MODULES):
     require(isinstance(spec, dict) and spec.get('version') == SPEC_VERSION, 'spec_version')
     for key in ('id', 'task'):
@@ -116,6 +173,10 @@ def validate(spec, module_dir=MODULES):
     require(isinstance(adapter.get('outputAttributes'), list), 'output_attributes_missing')
     for attribute in adapter['outputAttributes']:
         split_target(attribute, module_dir)
+    require(set(adapter) <= {'type', 'steps', 'outputAttributes', 'outputFolderName'}, 'adapter_fields')
+    if 'outputFolderName' in adapter:
+        require(isinstance(adapter['outputFolderName'], str) and FILE.fullmatch(adapter['outputFolderName']),
+                'output_folder_name')
     for pin in spec.get('inputs', []):
         local_path(ROOT, check_pin(pin)['path'])
     for item in spec.get('stage', []):
@@ -127,15 +188,23 @@ def validate(spec, module_dir=MODULES):
     require(type(limits['timeoutSeconds']) in (int, float) and 0 < limits['timeoutSeconds'] <= 86400, 'limits_timeout')
     require(type(limits['maxOutputBytes']) is int and 0 < limits['maxOutputBytes'] <= 1 << 34, 'limits_bytes')
     require(type(limits['maxAttempts']) is int and 1 <= limits['maxAttempts'] <= 5, 'limits_attempts')
+    validate_training(spec)
     if spec['kind'] == 'replay':
         replay = spec.get('replay')
         require(isinstance(replay, dict) and isinstance(replay.get('files'), list) and replay['files'], 'replay_missing')
         local_path(ROOT, replay.get('recordedDirectory'))
         for item in replay['files']:
-            require(isinstance(item.get('name'), str) and FILE.fullmatch(item['name']), 'replay_name')
+            require(isinstance(item, dict) and set(item) <= {'name', 'sha256', 'compare', 'tolerance', 'ignore'},
+                    'replay_fields')
+            check_name(item.get('name'))
             require(isinstance(item.get('sha256'), str) and HASH.fullmatch(item['sha256']), 'replay_hash_format')
+            require(item.get('compare', 'json') in ('json', 'sha256'), 'replay_compare')
+            if item.get('compare') == 'sha256':
+                require('ignore' not in item and 'tolerance' not in item, 'replay_compare')
+            tolerance = item.get('tolerance', 0)
+            require(type(tolerance) in (int, float) and 0 <= tolerance <= 1, 'replay_tolerance')
             for ignore in item.get('ignore', []):
-                require(isinstance(ignore.get('path'), str) and ignore['path'], 'ignore_path')
+                check_ignore(ignore.get('path'))
                 require(isinstance(ignore.get('reason'), str) and ignore['reason'].strip(), 'ignore_reason')
     else:
         require('replay' not in spec, 'replay_only_for_replay_jobs')
@@ -144,6 +213,8 @@ def validate(spec, module_dir=MODULES):
 
 def verify_pins(spec):
     pins = list(spec.get('inputs', [])) + [item['from'] for item in spec.get('stage', [])]
+    if spec['authority'] == 'training':
+        pins += spec['training']['membership'] + [spec['training']['initialization']]
     for pin in pins:
         path = local_path(ROOT, pin['path'])
         require(path.is_file() and digest(path) == pin['sha256'], 'input_changed')
@@ -157,6 +228,7 @@ def verify_pins(spec):
 def submit(spec_path, queue=QUEUE, module_dir=MODULES):
     spec = validate(load(spec_path), module_dir)
     verify_pins(spec)
+    check_training(spec, queue)
     job = queue / 'jobs' / spec['id']
     target = job / 'spec.json'
     if target.exists():
@@ -219,13 +291,18 @@ def relative(path):
     return str(Path(path).resolve().relative_to(ROOT))
 
 
-def get_path(doc, dotted):
-    parts = dotted.split('.')
-    for part in parts[:-1]:
-        if not isinstance(doc, dict) or part not in doc:
-            return None, None
-        doc = doc[part]
-    return (doc, parts[-1]) if isinstance(doc, dict) and parts[-1] in doc else (None, None)
+def remove_path(doc, parts):
+    """Remove a dotted field. `key[]` applies the rest of the path to each list entry."""
+    head, rest = parts[0], parts[1:]
+    if head.endswith('[]'):
+        items = doc.get(head[:-2]) if isinstance(doc, dict) else None
+        return sum(remove_path(item, rest) for item in items) if isinstance(items, list) else 0
+    if not isinstance(doc, dict) or head not in doc:
+        return 0
+    if not rest:
+        del doc[head]
+        return 1
+    return remove_path(doc[head], rest)
 
 
 def map_paths(value, old_prefix, new_prefix):
@@ -238,8 +315,9 @@ def map_paths(value, old_prefix, new_prefix):
     return value
 
 
-def differences(a, b, path='', found=None, limit=20):
-    found = found if found is not None else dict(paths=[], count=0, maxNumericDiff=0.0)
+def differences(a, b, tolerance=0, path='', found=None, limit=20):
+    """Count differing fields. Numeric differences within the tolerance are counted separately."""
+    found = found if found is not None else dict(paths=[], count=0, withinTolerance=0, maxNumericDiff=0.0)
     if isinstance(a, dict) and isinstance(b, dict):
         for key in sorted(set(a) | set(b)):
             sub = f'{path}.{key}' if path else key
@@ -248,16 +326,20 @@ def differences(a, b, path='', found=None, limit=20):
                 if len(found['paths']) < limit:
                     found['paths'].append(sub)
             else:
-                differences(a[key], b[key], sub, found, limit)
+                differences(a[key], b[key], tolerance, sub, found, limit)
     elif isinstance(a, list) and isinstance(b, list) and len(a) == len(b):
         for i, (x, y) in enumerate(zip(a, b)):
-            differences(x, y, f'{path}[{i}]', found, limit)
+            differences(x, y, tolerance, f'{path}[{i}]', found, limit)
     elif a != b or type(a) is not type(b):
-        if type(a) in (int, float) and type(b) in (int, float):
+        numeric = type(a) in (int, float) and type(b) in (int, float)
+        if numeric:
             found['maxNumericDiff'] = max(found['maxNumericDiff'], abs(a - b))
-        found['count'] += 1
-        if len(found['paths']) < limit:
-            found['paths'].append(path or '$')
+        if numeric and abs(a - b) <= tolerance:
+            found['withinTolerance'] += 1
+        else:
+            found['count'] += 1
+            if len(found['paths']) < limit:
+                found['paths'].append(path or '$')
     return found
 
 
@@ -272,25 +354,29 @@ def compare_replay(spec, out):
         if not produced.is_file():
             files.append(dict(name=item['name'], matched=False, reason='missing_output'))
             continue
+        same = digest(produced) == item['sha256']
+        if item.get('compare') == 'sha256':
+            files.append(dict(name=item['name'], compare='sha256', matched=same, bytesIdentical=same))
+            continue
         original = load(recorded / item['name'])
         replayed = map_paths(load(produced), old_prefix, new_prefix)
         ignored = []
         for ignore in item.get('ignore', []):
-            for doc in (original, replayed):
-                parent, key = get_path(doc, ignore['path'])
-                if parent is not None:
-                    del parent[key]
-            ignored.append(ignore['path'])
-        diff = differences(original, replayed)
-        files.append(dict(name=item['name'], matched=diff['count'] == 0, bytesIdentical=digest(produced) == item['sha256'],
-                          ignored=ignored, differenceCount=diff['count'], differencePaths=diff['paths'],
+            parts = ignore['path'].split('.')
+            removed = [remove_path(doc, parts) for doc in (original, replayed)]
+            ignored.append(dict(path=ignore['path'], recordedFields=removed[0], replayedFields=removed[1]))
+        diff = differences(original, replayed, item.get('tolerance', 0))
+        files.append(dict(name=item['name'], compare='json', matched=diff['count'] == 0,
+                          exactlyEqual=diff['count'] == 0 and diff['withinTolerance'] == 0, bytesIdentical=same,
+                          tolerance=item.get('tolerance', 0), ignored=ignored, differenceCount=diff['count'],
+                          withinToleranceCount=diff['withinTolerance'], differencePaths=diff['paths'],
                           maxNumericDiff=diff['maxNumericDiff']))
     return dict(matched=all(f['matched'] for f in files), files=files)
 
 
 def execute(spec, attempt, module_dir, python):
-    out = attempt / 'out'
-    out.mkdir()
+    out = output_dir(spec, attempt)
+    out.mkdir(parents=True)
     for item in spec.get('stage', []):
         source = local_path(ROOT, item['from']['path'])
         shutil.copyfile(source, out / item['to'])
@@ -312,12 +398,16 @@ def run_attempt(job, spec, number, module_dir, python):
     attempt.mkdir(parents=True)
     started = time.time()
     save(attempt / 'attempt.json', dict(version=ATTEMPT_VERSION, job=spec['id'], number=number,
-         specSHA256=text_digest(spec), startedAt=started, python=python, host=platform.node(),
-         platform=platform.platform()))
+         specSHA256=text_digest(spec), startedAt=started, python=python, platform=platform.platform()))
     result = dict(version=RESULT_VERSION, job=spec['id'], task=spec['task'], kind=spec['kind'],
                   authority=spec['authority'], attempt=number, specSHA256=text_digest(spec))
+    if spec['authority'] == 'training':
+        training = spec['training']
+        result['training'] = dict(experimentLogRunId=training['experimentLogRunId'], epochs=training['epochs'],
+                                  resume=training['resume'], storageBudgetBytes=training['storageBudgetBytes'])
     try:
         verify_pins(spec)
+        check_training(spec, job.parents[1])
     except ValueError as error:
         result.update(status='failed', reason=str(error), wallSeconds=0.0, outputs=[])
         save(attempt / 'result.json', result)
@@ -336,7 +426,7 @@ def run_attempt(job, spec, number, module_dir, python):
     else:
         result.update(status='complete')
         if spec['kind'] == 'replay':
-            result['replay'] = compare_replay(spec, attempt / 'out')
+            result['replay'] = compare_replay(spec, output_dir(spec, attempt))
     save(attempt / 'result.json', result)
     return result
 
@@ -367,7 +457,7 @@ def child(attempt, module_dir):
     """Run inside the job process. Import steps, redirect outputs, record the module closure."""
     attempt = Path(attempt)
     spec = load(attempt.parents[1] / 'spec.json')
-    out = (attempt / 'out').resolve()
+    out = output_dir(spec, attempt).resolve()
     adapter = spec['adapter']
     modules = {}
     for target in adapter['outputAttributes'] + adapter['steps']:
@@ -411,7 +501,10 @@ def summarize(queue=QUEUE):
                          attempts=len(attempts), status=last.get('status'), reason=last.get('reason'),
                          wallSeconds=last.get('wallSeconds'),
                          closureModules=len(last['closure']['modules']) if last.get('closure') else None,
+                         experimentLogRunId=spec['training']['experimentLogRunId'] if 'training' in spec else None,
                          replayMatched=replay['matched'] if replay else None,
+                         replayExact=all(f.get('exactlyEqual', f.get('bytesIdentical')) for f in replay['files'])
+                         if replay else None,
                          replayDifferences=sum(f.get('differenceCount', 0) for f in replay['files']) if replay else None))
     summary = dict(version=SUMMARY_VERSION, generatedAt=time.time(), jobs=rows)
     queue.mkdir(parents=True, exist_ok=True)

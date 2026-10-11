@@ -6,6 +6,7 @@ import sys
 import textwrap
 import unittest
 import uuid
+from unittest import mock
 
 import research_queue as q
 
@@ -24,6 +25,11 @@ FIXTURE = textwrap.dedent('''
         raise RuntimeError("planned failure")
     def slow():
         time.sleep(30)
+    def produce_nested():
+        (OUT / "run").mkdir()
+        history = [dict(epoch=1, seconds=time.time()), dict(epoch=2, seconds=time.time())]
+        (OUT / "run" / "fit.json").write_text(json.dumps(dict(loss=0.5 + 1e-9, history=history, folder=OUT.name)))
+        (OUT / "weights.bin").write_bytes(b"abc")
 ''')
 
 
@@ -72,7 +78,8 @@ class QueueTests(unittest.TestCase):
             (dict(version='v0'), 'spec_version'),
             (dict(id='../x'), 'id_format'),
             (dict(authority='unknown'), 'authority_unknown'),
-            (dict(authority='training'), 'authority_not_permitted'),
+            (dict(authority='training'), 'training_fields'),
+            (dict(training=dict()), 'training_only_for_training_jobs'),
             (dict(authority='capture'), 'authority_not_permitted'),
             (dict(kind='replay'), 'replay_missing'),
             (dict(inputs=[dict(path='/etc/passwd', sha256='0' * 64)]), 'unsafe_path'),
@@ -166,7 +173,7 @@ class QueueTests(unittest.TestCase):
         self.run_queue()
         replay = q.load(self.attempt() / 'result.json')['replay']
         self.assertTrue(replay['matched'], replay)
-        self.assertEqual(replay['files'][0]['ignored'], ['seconds'])
+        self.assertEqual(replay['files'][0]['ignored'], [dict(path='seconds', recordedFields=1, replayedFields=1)])
 
     def test_replay_reports_exact_differences(self):
         recorded = dict(value=41, seconds=1.0, self=q.relative(self.recorded / 'result.json'))
@@ -189,6 +196,103 @@ class QueueTests(unittest.TestCase):
         spec = self.replay_spec(dict(value=1), [dict(path='seconds', reason=' ')])
         with self.assertRaisesRegex(ValueError, 'ignore_reason'):
             q.validate(spec, self.modules)
+
+    def nested_spec(self, tolerance):
+        (self.recorded / 'run').mkdir()
+        fit = self.recorded / 'run/fit.json'
+        fit.write_text(json.dumps(dict(loss=0.5, history=[dict(epoch=1, seconds=1.0), dict(epoch=2, seconds=2.0)],
+                                       folder='FOCUS-X')))
+        (self.recorded / 'weights.bin').write_bytes(b'abc')
+        adapter = dict(type='python-callable', steps=['rq_fixture.produce_nested'], outputAttributes=['rq_fixture.OUT'],
+                       outputFolderName='FOCUS-X')
+        return self.spec(kind='replay', adapter=adapter, replay=dict(recordedDirectory=q.relative(self.recorded), files=[
+            dict(name='run/fit.json', sha256=q.digest(fit), tolerance=tolerance,
+                 ignore=[dict(path='history[].seconds', reason='wall time')]),
+            dict(name='weights.bin', sha256=q.digest(self.recorded / 'weights.bin'), compare='sha256')]))
+
+    def test_replay_nested_files_wildcards_tolerance_and_hash_compare(self):
+        self.submit(self.nested_spec(1e-6))
+        self.run_queue()
+        self.assertTrue((self.attempt() / 'out/FOCUS-X/run/fit.json').is_file())
+        replay = q.load(self.attempt() / 'result.json')['replay']
+        self.assertTrue(replay['matched'], replay)
+        fit, weights = replay['files']
+        self.assertEqual(fit['ignored'], [dict(path='history[].seconds', recordedFields=2, replayedFields=2)])
+        self.assertEqual((fit['exactlyEqual'], fit['withinToleranceCount']), (False, 1))
+        self.assertAlmostEqual(fit['maxNumericDiff'], 1e-9)
+        self.assertEqual((weights['compare'], weights['matched']), ('sha256', True))
+
+    def test_replay_without_tolerance_reports_small_difference(self):
+        self.submit(self.nested_spec(0))
+        self.run_queue()
+        fit = q.load(self.attempt() / 'result.json')['replay']['files'][0]
+        self.assertFalse(fit['matched'])
+        self.assertEqual(fit['differencePaths'], ['loss'])
+
+    def test_replay_field_rules(self):
+        spec = self.nested_spec(1e-6)
+        cases = [(('ignore', [dict(path='history[]', reason='x')]), 'ignore_path'),
+                 (('ignore', [dict(path='a b', reason='x')]), 'ignore_path'),
+                 (('tolerance', 2), 'replay_tolerance'),
+                 (('name', 'run/../x.json'), 'replay_name'),
+                 (('compare', 'pixels'), 'replay_compare')]
+        for (key, value), reason in cases:
+            changed = copy.deepcopy(spec)
+            changed['replay']['files'][0][key] = value
+            with self.subTest(reason=reason), self.assertRaisesRegex(ValueError, reason):
+                q.validate(changed, self.modules)
+        changed = copy.deepcopy(spec)
+        changed['replay']['files'][1]['tolerance'] = 0.1
+        with self.assertRaisesRegex(ValueError, 'replay_compare'):
+            q.validate(changed, self.modules)
+
+    def training_spec(self, **changes):
+        training = dict(experimentLogRunId='TEST-R1', membership=[dict(path=q.relative(self.input), sha256=q.digest(self.input))],
+                        initialization=dict(path=q.relative(self.input), sha256=q.digest(self.input)), epochs=2,
+                        storageBudgetBytes=200000, acceptanceEvidence='value equals 42', resume='restart')
+        training.update(changes)
+        return self.spec(authority='training', training=training)
+
+    def test_training_fields(self):
+        cases = [(dict(resume='epoch'), 'training_resume'), (dict(epochs=0), 'training_epochs'),
+                 (dict(storageBudgetBytes=10), 'training_storage'), (dict(membership=[]), 'training_membership'),
+                 (dict(acceptanceEvidence=' '), 'training_acceptance'), (dict(experimentLogRunId='a b'), 'training_log_id')]
+        for change, reason in cases:
+            with self.subTest(reason=reason), self.assertRaisesRegex(ValueError, reason):
+                q.validate(self.training_spec(**change), self.modules)
+        spec = self.training_spec()
+        del spec['training']['resume']
+        with self.assertRaisesRegex(ValueError, 'training_fields'):
+            q.validate(spec, self.modules)
+
+    def test_training_needs_log_entry_and_storage(self):
+        log = self.base / 'ExperimentLog.md'
+        log.write_text('## TEST-R10 other run\n')
+        with mock.patch.object(q, 'EXPERIMENT_LOG', log):
+            with self.assertRaisesRegex(ValueError, 'experiment_log_missing'):
+                self.submit(self.training_spec())
+            log.write_text('## TEST-R1 registered before the run\n')
+            with mock.patch.object(q.shutil, 'disk_usage', return_value=mock.Mock(free=q.STORAGE_MARGIN)):
+                with self.assertRaisesRegex(ValueError, 'storage_insufficient'):
+                    self.submit(self.training_spec())
+            self.assertEqual(self.submit(self.training_spec()), 'submitted')
+            self.assertEqual(self.run_queue(), [('job-a', 'complete')])
+        result = q.load(self.attempt() / 'result.json')
+        self.assertEqual(result['training'], dict(experimentLogRunId='TEST-R1', epochs=2, resume='restart',
+                                                  storageBudgetBytes=200000))
+        self.assertEqual(q.summarize(self.queue)['jobs'][0]['experimentLogRunId'], 'TEST-R1')
+
+    def test_training_pin_change_blocks_execution(self):
+        log = self.base / 'ExperimentLog.md'
+        log.write_text('TEST-R1\n')
+        member = self.base / 'member.json'
+        member.write_text('{}')
+        with mock.patch.object(q, 'EXPERIMENT_LOG', log):
+            self.submit(self.training_spec(membership=[dict(path=q.relative(member), sha256=q.digest(member))]))
+            member.write_text('{"changed": true}')
+            self.run_queue()
+        result = q.load(self.attempt() / 'result.json')
+        self.assertEqual((result['status'], result['reason']), ('failed', 'input_changed'))
 
     def test_summary_reports_each_job(self):
         self.submit(self.spec())
