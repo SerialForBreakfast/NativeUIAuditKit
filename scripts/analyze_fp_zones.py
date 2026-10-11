@@ -23,11 +23,11 @@ Usage:
 import json
 from collections import defaultdict
 
-ANN_PATH = (
-    "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/"
-    "812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/"
-    "E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/"
-    "validation/annotations.json"
+from pathlib import Path
+
+ANN_PATH = str(
+    Path.home()
+    / "Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json"
 )
 
 STRIP_H_FRAC = 0.22   # strip height as fraction of image height

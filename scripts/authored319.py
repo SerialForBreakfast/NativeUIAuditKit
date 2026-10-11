@@ -14,7 +14,7 @@ import regions313 as r
 
 b=r.b;t=r.t
 OUT=b.ROOT/'reports/work/FOCUS-319'
-SCRIPT=Path('/Users/josephmccraw/Developer/TVTestRig/Scripts/render-headless-screen.swift')
+SCRIPT=Path.home()/'Developer/TVTestRig/Scripts/render-headless-screen.swift'
 ART=b.ROOT/'reports/work/ARTWORK-204/artifacts'
 
 

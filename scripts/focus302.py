@@ -11,11 +11,11 @@ from direct_tvos_capture import bind_target, require, write_json
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT/'reports/work/FOCUS-302'
-APP = Path('/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-fssavpzkujakgqggjglqjvvrtyoo/Build/Products/Debug/TVTestRig.app')
+APP = Path.home() / 'Library/Developer/Xcode/DerivedData/TVTestRig-fssavpzkujakgqggjglqjvvrtyoo/Build/Products/Debug/TVTestRig.app'
 HELPER = APP/'Contents/Helpers/aatv'
 TARGET = '9026ECA9-77DB-4AE6-8FE6-BB239E9571FA'
 URL = 'http://127.0.0.1:8080'
-EXPORT = Path('/Users/josephmccraw/Developer/TVTestRig/Skills/tvtestrig/references/export-fixture-job.rb')
+EXPORT = Path.home() / 'Developer/TVTestRig/Skills/tvtestrig/references/export-fixture-job.rb'
 
 
 def digest(path):

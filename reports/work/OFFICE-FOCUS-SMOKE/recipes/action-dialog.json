@@ -1,9 +1,0 @@
-{
-  "schema_version": 1,
-  "archetype": "action_dialog",
-  "element_count": 2,
-  "theme": "high_contrast",
-  "density": "regular",
-  "seed": 7,
-  "step_index": 0
-}

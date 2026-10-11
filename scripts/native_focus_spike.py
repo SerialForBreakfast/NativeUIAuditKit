@@ -22,7 +22,7 @@ from harvest_sidecar_v2 import recipe_hash
 
 ROOT = Path(__file__).resolve().parents[1]
 USB = Path('/Volumes/training-drive/data/NUIAK/NATIVE-FOCUS-EFFECT-SPIKE-26')
-EVIDENCE = Path('/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence')
+EVIDENCE = Path.home() / 'Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence'
 VERSION = 'native-focus-spike-26-v1'
 TERMINAL={'completed','completed_with_failures','failed','cancelled','budget_exhausted',
           'budget_exceeded','stopped'}

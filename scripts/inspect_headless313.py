@@ -50,9 +50,10 @@ def main():
         start=time.monotonic();p=b.worker.score(net,inputs)
         scores[name]=dict(model=b.ref(path),probabilities=p.tolist(),seconds=time.monotonic()-start,
             summary=b.trainer.w.summary(p,np.array([x['authoredChanged'] for x in records])))
+    render_script = Path.home() / 'Developer/TVTestRig/Scripts/render-headless-screen.swift'
     b.write(out,dict(version='headless313-inspection-v1',sourceCommit='d06a64bd',
-        renderer=dict(path='/Users/josephmccraw/Developer/TVTestRig/Scripts/render-headless-screen.swift',
-                      sha256=b.sha(Path('/Users/josephmccraw/Developer/TVTestRig/Scripts/render-headless-screen.swift').read_bytes())),
+        renderer=dict(path=str(render_script),
+                      sha256=b.sha(render_script.read_bytes())),
         manifest=b.ref(root/'batch_corpora_manifest.json'),rows=records,scores=scores,
         inputSHA256=b.sha(values.tobytes()),trainingEligible=False,nativeQualified=False,
         assetMode='Deliberate empty artwork directory; built-in placeholders only.',

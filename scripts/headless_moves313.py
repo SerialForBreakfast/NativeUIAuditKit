@@ -12,7 +12,7 @@ def main():
     b=r.b;out=r.OUT/'headless-moves';b.require(not out.exists(),'output_collision')
     r.t.set_num_threads(2);out.mkdir();started=time.monotonic()
     root=r.OUT/'headless-diagnostic';original=b.read(root/'batch_corpora_manifest.json')
-    script=Path('/Users/josephmccraw/Developer/TVTestRig/Scripts/render-headless-screen.swift')
+    script=Path.home()/'Developer/TVTestRig/Scripts/render-headless-screen.swift'
     pin=b.read(root/'inspection.json')['renderer'];b.require(b.sha(script.read_bytes())==pin['sha256'],'renderer_changed')
     env=dict(os.environ,TMPDIR=str(b.ROOT/'.build'),CLANG_MODULE_CACHE_PATH=str(b.ROOT/'.build/ModuleCache'))
     records=[];values=[]
