@@ -197,6 +197,57 @@ struct NativeModelInstallerTests: Sendable {
         guard differences == 0 else { throw ParityFailure.mismatch }
     }
 
+    @Test(.enabled(if: ProcessInfo.processInfo.environment["NUIAK_TTR_HANDOFF_OUTPUT"] != nil))
+    func exportTTRReviewEvidence() async throws {
+        let project = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let path = try #require(ProcessInfo.processInfo.environment["NUIAK_TTR_HANDOFF_OUTPUT"])
+        let output = URL(fileURLWithPath: path).standardizedFileURL
+        #expect(output.path.hasPrefix(project.appendingPathComponent("reports/work/").path))
+        guard output.path.hasPrefix(project.appendingPathComponent("reports/work/").path),
+              output.resolvingSymlinksInPath() == output,
+              !FileManager.default.fileExists(atPath: output.path) else { throw ParityFailure.mismatch }
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        let archive: ModelArchive
+        if let archivePath = ProcessInfo.processInfo.environment["NUIAK_TTR_HANDOFF_ARCHIVE"],
+           let inventoryPath = ProcessInfo.processInfo.environment["NUIAK_TTR_HANDOFF_INVENTORY"] {
+            let members = try JSONDecoder().decode([ModelArchiveMember].self, from: Data(contentsOf: URL(fileURLWithPath: inventoryPath)))
+            let bytes = try Data(contentsOf: URL(fileURLWithPath: archivePath))
+            let expected = try #require(ProcessInfo.processInfo.environment["NUIAK_TTR_HANDOFF_SHA256"])
+            archive = try ModelArchive(bytes: bytes, expectedSHA256: expected, members: members)
+        } else {
+            archive = try residentArchive()
+        }
+        let installation = output.appendingPathComponent("installation")
+        try FileManager.default.createDirectory(at: installation, withIntermediateDirectories: false)
+        let installer = try NativeModelInstaller(root: installation, compiler: compiler())
+        let compiled = try await installer.install(archive: archive, sourceName: "model.mlpackage") { url in
+            try await requireParity(at: url)
+        }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .prettyPrinted]
+        try encoder.encode(NativeUIModelAsset.requiredManifest(forTVOS: true)).write(to: output.appendingPathComponent("manifest.json"))
+        try encoder.encode(NativeUIModelAsset.tvOSMetadata).write(to: output.appendingPathComponent("metadata.json"))
+        let fixture = try #require(Bundle.module.url(forResource: "tvos_home_screen", withExtension: "png"))
+        try FileManager.default.copyItem(at: fixture, to: output.appendingPathComponent("reference.png"))
+        let imageSource = try #require(CGImageSourceCreateWithURL(fixture as CFURL, nil))
+        let image = try #require(CGImageSourceCreateImageAtIndex(imageSource, 0, nil))
+        let configuration = NativeUIDetectionConfiguration(includesTextRecognition: false, platform: .tvOS, useFocusClassifier: false)
+        let contract = TTRReviewContract(schemaVersion: 1, preprocessing: "yolo-letterbox-v1",
+            manifest: try NativeUIModelAsset.requiredManifest(forTVOS: true), metadata: NativeUIModelAsset.tvOSMetadata)
+        let provider = try contract.provider(compiledURL: compiled, expectedCompiledDigest: NativeUILocalDetector.digest(at: compiled))
+        let unsupported = TTRReviewContract(schemaVersion: 99, preprocessing: "yolo-letterbox-v1",
+            manifest: contract.manifest, metadata: contract.metadata)
+        #expect(throws: NativeUIModelAvailabilityError.self) {
+            try unsupported.provider(compiledURL: compiled, expectedCompiledDigest: "unused")
+        }
+        let result = try await NativeUIDetectionRequest(modelProvider: provider, configuration: configuration).perform(on: image)
+        try encoder.encode(result).write(to: output.appendingPathComponent("reference-results.json"))
+        let receipt = ["compiledDigest": try NativeUILocalDetector.digest(at: compiled),
+                       "archiveSHA256": ModelArchive.hash(archive.bytes), "detections": String(result.count),
+                       "purpose": "Integration review only; no navigation authority"]
+        try encoder.encode(receipt).write(to: output.appendingPathComponent("review-receipt.json"))
+    }
+
     @Test(.enabled(if: residentSourceExists, "The optional source package is not present."))
     func staleSourceFailsParityAndStaysUnpublished() async throws {
         let archive = try residentArchive(stale: true)

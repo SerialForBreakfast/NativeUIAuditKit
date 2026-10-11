@@ -2,6 +2,8 @@
 
 A portable Swift package for detecting native Apple platform UI elements in screenshot PNGs, designed as a drop-in complement to [ScreenAuditKit](../ScreenAuditKit/).
 
+**Product direction:** [MVP, planned features, and proposed features](Research/ProductRoadmap.md).
+
 **Current state:** see [`Research/CurrentState.md`](Research/CurrentState.md). Shipped detectors: iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 009 holdout **0.586**), FocusRing v1.0 data, macOS. Open work: [`Tasks.md`](Tasks.md). Archive: [`CompletedTasks.md`](CompletedTasks.md).
 
 ---

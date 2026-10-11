@@ -1,6 +1,10 @@
 # Release preparation for TTR 0.4.3 RC
 
 Owner: Maximum-mini-NUIAK. Date: October 8, 2026.
+
+October 9 update: use GitHub Releases in the existing public `SerialForBreakfast/NativeUIAuditKit` repository.
+[Exact draft commands](GitHubModelDraft.md) replace the hosting-choice templates below for the first tvOS model preview.
+No separate repository or hosting service is needed. Public model rights remain a separate decision.
 The maintainer confirms that 0.4.3 RC is the TTR version, not the NUIAK version.
 Proposed NUIAK version: `2.1.0-rc.1`, subject to final API and scope review. Existing NUIAK tags reach `2.0.2`.
 Do not create a tag or publish assets from this preparation task.

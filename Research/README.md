@@ -6,6 +6,7 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 
 | File | What it is |
 |---|---|
+| [`ProductRoadmap.md`](ProductRoadmap.md) | Complete NUIAK MVP, planned milestones, future features, proposals, ownership, and completion conditions |
 | [`ADR-0016-Evidence-Bound-Foundation-Model-Semantics.md`](ADR-0016-Evidence-Bound-Foundation-Model-Semantics.md) | Proposed optional Foundation-Model interpretation of verified NUIAK/TTR UI evidence; no action authority |
 | [`ADR-0009-Direct-tvOS-Simulator-Generation.md`](ADR-0009-Direct-tvOS-Simulator-Generation.md) | Independent native Fixture/OS data generation alongside TTR; TVGEN-01–04 |
 | [`Plans/TemporalVisualVerificationSpike.md`](Plans/TemporalVisualVerificationSpike.md) | Proposed safe interruption/temporal-guardrail replay spike for TTR adoption evidence |

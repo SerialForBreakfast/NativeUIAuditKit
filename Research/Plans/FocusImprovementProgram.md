@@ -142,6 +142,94 @@ Deliver a ranked loss report and one fixed resolution or crop comparison proposa
 Limit: 2 CPU threads, 2 GiB RAM, 128 MiB of reports. No new model or alternate cropper.
 Retain production FocusRing's 16% expansion and 256 × 256 behavior unless a separately tested contract changes it.
 
+### FOCUS310 — original-resolution comparison for P04
+
+This comparison completes. [Results](../Focus310Results.md) identify a size gap and reject both candidates for promotion.
+Next, prepare training-only scale coverage before another matched fit. Preserve all existing evaluation exclusions.
+
+Maximum-mini-NUIAK uses the standing local training approval and the explicit original-detail assignment.
+Audit all 1,820 schedule entries, including native replacements and reversed pairs.
+Keep 668 encoded-only entries explicit. Do not claim original pixels for those entries.
+Run 2 fixed 30-epoch adaptations from DTM085 with unchanged membership, weights, and thresholds.
+Keep the FOCUS309 architecture. Replace stretched detail with a square view inside a letterbox.
+Compare encoded enlargement against original pixels from the same image-selected window.
+Preserve window padding at frame edges. Do not use labels to select windows.
+Test source hashes, encoding parity, reversed pairs, identical pairs, padding, and optional trainer inputs.
+Reuse the existing full regression evaluator and cached older predictions.
+Check all native roles, replay cases, disturbance strengths, reversals, and the 4 tiny development pairs.
+Acceptance requires more correct tiny changes with no lost previous successes.
+Keep model promotion separate. Do not lower thresholds after seeing results.
+Use 2 CPU threads, at most 8 GiB of local working memory, and 128 MiB of retained outputs.
+This local training scope supersedes the earlier diagnostic-only memory limit for this experiment only.
+Deliver the size audit, matched results, case-level losses, software tests, and one actionable TTR update.
+
+### FOCUS311 — matched training scale for P04
+
+Completed: [FOCUS311 results](../Focus311Results.md). The candidate fails tiny native changes and loses previous successes.
+
+Maximum-mini-NUIAK owns 1 fixed candidate from DTM085, using the completed FOCUS310 source-detail control.
+Keep model layers, initialization, 30 epochs, seed, labels, weights, and evaluation membership unchanged.
+Assign original size or target body sizes of 3, 6, and 12 encoded pixels by canonical source hash.
+Apply the same scale and centered placement to both frames. Keep reverse pairs consistent.
+Mark these examples as authored derivatives. Do not claim new native rendering or independent examples.
+Reject protected groups, protected pixel overlap, missing measurements, and changed pairs that collapse to identical pixels.
+Verify evaluation view hashes against FOCUS310 before training.
+Measure resulting sizes and retained condition weights. Test the actual trainer and all previous regression conditions.
+Acceptance requires improved tiny-change decisions without lost previous successes at fixed thresholds.
+Report scene-padding effects as a limitation. Do not change thresholds or launch another candidate after failure.
+Keep the output and memory limits from FOCUS310. Deliver one result report and a verified TTR update.
+
+### FOCUS312 — effect coverage and original-view retention
+
+Completed: [FOCUS312 results](../Focus312Results.md). Model acceptance fails. No candidate is promoted.
+
+The retained audit checks 511 unique training image pairs and all 16 tiny development comparisons.
+It finds a crop mismatch: one window holds about half the tiny native change, but at least 91% of 3-pixel derivatives.
+The registered experiment preserves all original views and adds a 0.25 auxiliary loss on the exact FOCUS311 views.
+Keep 30 epochs and 3,420 optimizer updates. Original coefficients stay at 1; auxiliary coefficients add 25% uniformly.
+This tests retention of previous successes. It does not claim to repair the separate crop mismatch.
+Use the completed FOCUS310 control. Record both loss terms and exact original-view hashes.
+
+Maximum-mini-NUIAK owns this diagnosis. No TTR response blocks the retained-data work.
+Inputs are FOCUS310's size audit, FOCUS311's derivatives and predictions, and the qualified tiny development pairs.
+Measure effect contrast, changed area, source resolution, and detail coverage using the existing encoder and cropper.
+Compare control families and source groups. Keep approximate geometry and unavailable measurements explicit.
+Use changed and unchanged conditions. Do not interpret background change as observed focus change.
+Prepare original-plus-scaled training views without reducing original exposure or changing group and negative-condition totals silently.
+Report the exact update budget required for a matched comparison. Do not assume extra examples have no training cost.
+If native training coverage is missing, check Maximum-mini-TTR readiness before requesting remote capture.
+Preserve tiny development groups and all reserved exclusions. New captures require observed labels and measured bodies.
+Tests cover paired transforms, missing bounds, group overlap, identical pairs, and original-view preservation.
+Acceptance requires a case-linked diagnosis and one justified experiment contract, or an evidence-backed stop decision.
+Use standing training authority only after that contract fixes inputs, initialization, epochs, limits, and acceptance checks.
+Deliver measured coverage, the schedule, tests, and the specific TTR consequence. Do not launch an automatic sweep.
+
+### FOCUS313 — two-region detail with a frozen whole-frame branch
+
+Both experiments finish. [Results](../Focus313Results.md) reject both candidates and record a blocked Swift test check.
+Two regions recover essentially all tiny changed pixels, but the learned correction still favors unchanged.
+The current headless CLI can supply authored A-to-B pairs by combining separately rendered focus states.
+Use that supported subset for FOCUS314/315 diagnostics. Do not require a new pair command or repeat the failed region fits.
+
+Maximum-mini-NUIAK owns 2 matched comparisons using resident data and tools.
+Inputs: the exact FOCUS310 original training views, observed labels, group weights, and retained evaluation cases.
+The hypothesis is that separate detail windows preserve distant changes without adapting the existing whole-frame classifier.
+Freeze DTM085's complete whole-frame change branch and geometry branch in both runs.
+Train only the shared detail encoder and added correction. Initialize the correction at zero.
+The control uses 1 image-selected window. The candidate uses 2 nonoverlapping image-selected windows.
+Use the same detail encoder for both windows and mean feature pooling. Keep parameter counts matched.
+Use original-resolution crops where source pixels qualify. Retain the existing encoded fallback elsewhere.
+Do not use observed boxes or labels to select windows. Preserve identical-frame handling and frame-order checks.
+Before fitting, audit second-window overlap, empty regions, crop coverage, and complete source hashes.
+Preserve all original views and exact group/condition weights. Do not add the rejected scale objective.
+Register 30 epochs, batch 16, seed 42, learning rate 0.0001, and fixed thresholds 0.15/0.85 for both runs.
+Use 2 CPU threads, 8 GiB working memory, and 128 MiB retained output. No wall-time limit applies.
+Verify frozen weights exactly after training. Verify checkpoint reload and both real entrypoints.
+Test tiny changes, identical pairs, all retained previous successes, strength/order checks, and case-level losses.
+Acceptance requires improved tiny decisions without lost previous correct decisions. A failed comparison ends the fit sequence.
+Deliver the measured comparison, software tests, model decision, and the specific TTR consequence.
+This remains a development experiment. It grants no navigation authority or final-domain qualification.
+
 ### P05 — Correct position and group imbalance
 
 Reuse TRANSITION252 and the updated TRANSITION290 coverage script. Maximum-mini-NUIAK owns the audit.
@@ -283,6 +371,73 @@ Run focused tests per change, then 1 integrated offline Swift build/test pass fo
 For documentation-only work, check links, task consistency, and diffs.
 
 ## Completion and review
+
+### FOCUS309 — matched context and enlarged detail
+
+This comparison completes. [Results](../Focus309Results.md) show better training fit without better reserved or tiny-control results.
+Center distractions regress. No model is promoted.
+The next bounded outcome audits training sizes and tests original-resolution views against encoded enlargement.
+Preserve aspect ratio, training-only derivatives, fixed thresholds, and all existing evaluation exclusions.
+Register exact source availability and matched controls before another fit. Do not infer absent source pixels from an encoded tensor.
+
+The following contract records the completed comparison.
+
+Maximum-mini-NUIAK owns 2 serial, 30-epoch adaptations from DTM085.
+Reuse the exact DTM085 schedule: 1,820 entries with unchanged labels, weights, and training roles.
+Use seed 42, batch 16, learning rate 0.0001, and 2 CPU threads.
+Preserve the existing trainer and geometry branch. Set the output cap to 128 MiB.
+
+The candidate keeps a full-frame branch and adds an aligned local view.
+The local view uses a 32 × 32 window in the 192 × 128 encoded frame.
+Select its location from maximum local-difference energy with 5-pixel averaging. Clamp windows at screen edges.
+Use the same window for both frames. Use full frames when both images are identical.
+The control uses the same layers but supplies a second full-frame view.
+Initialize the added correction to zero. Verify initial scores against DTM085 before either fit.
+This test enlarges encoded pixels. It does not recover original-resolution information or use annotation boxes as inputs.
+
+Acceptance requires more correct tiny-control changes without losing previous correct decisions at thresholds 0.15/0.85.
+Use the fixed last checkpoint. Do not use tiny-control results to select checkpoints or thresholds.
+Check native and replay sets, all existing disturbance strengths, and reversals through the current evaluator.
+Report native training, development, and reserved roles separately. Previously inspected cases are not a new final audit.
+Check saved-model parity, aligned windows, edge behavior, unchanged images, and the existing training entrypoint.
+Run focused Python tests and 1 offline Swift build/test pass.
+Send TTR the result and the next data need. Do not block this work on renderer repairs.
+
+If both models fail, compare their case-level errors before choosing another model change.
+If encoded detail remains insufficient, prepare a source-detail comparison with exact native image references.
+Do not treat a failed encoded-detail test as proof that source detail cannot help.
+
+### Headless generation opportunity — TTR-UPDATE308
+
+[FOCUS314–317](HeadlessEffectExperiments.md) define controlled exaggerated effects, matched training, and conditional volume tests.
+These tests complement FOCUS313. They do not require authored pixels to reproduce Apple's shader exactly.
+
+The current TTR source adds standalone authored screen generation.
+[The review](../TTRHeadless308Review.md) finds useful controls and reproduces invalid calibration passes.
+Keep the context/detail experiment first. Do not wait for the headless renderer to continue existing model work.
+After TTR repairs completion and annotation contracts, use one bounded authored batch for P06 diagnostics.
+Compare that candidate against independent native cases. Do not count generated geometry as observed native focus.
+BigDog-NUIAK can supply approved artwork and score portable inputs. AppKit generation stays on a Mac.
+
+### FOCUS302 result and next correction
+
+FOCUS307 completes the fixed-model region comparison and the current exposure audit.
+[Results](../Focus307Results.md) reject the tested region-only replacement because retained negatives regress.
+The next hypothesis combines whole-frame context with region detail, rather than replacing context.
+Use fixed training membership and a matched control. Preserve the tiny-control development batch outside training.
+Register the exact representation, epochs, hashes, and limits before fitting.
+Report condition weights as well as group weights. Do not repeat the failed mixture or change thresholds to fit these cases.
+
+The following paragraph records the original FOCUS302 decision that FOCUS307 tests.
+
+Maximum-mini-NUIAK completes local capture, export recovery, strict intake, production crops, and fixed-model scoring.
+[The result](../Focus302Results.md) records 4 valid tiny-control failures and 4 rejected pairs.
+This batch addresses P01 and P04 together. It does not qualify weak effects generally.
+Next, compare image-selected regions with whole-frame inputs using identical membership and fixed models first.
+Keep oracle boxes separate from deployable region selection. Include previous native successes and center/left distractions.
+Record the hypothesis, settings, membership, and output limit before scoring or training.
+If region inputs help, train 1 bounded candidate with matched controls and all retained regression checks.
+Do not infer improvement from these 4 related development pairs alone.
 
 This planning deliverable completes when all 10 contracts have inputs, metrics, limits, tests, and acceptance evidence requirements.
 Task execution remains open in Tasks.md. Do not mark model work complete from this document.

@@ -1,5 +1,62 @@
 # Concurrent delivery roadmap
 
+**HCF336:** [portable experiment package](ADR-0025-Portable-Experiment-Runner.md) places acquisition in TTR and evaluation in NUIAK.
+The package passes local relocation tests. Complete Sillycon qualification and ownership acceptance before native HCF integration.
+
+**HCF335:** [resumable batches](Plans/HCF335.md) pass authored rendering. Next, qualify native HCF restoration and the matched pilot.
+
+**HCF334:** [production comparison](HCF334Results.md) identifies focus-selection failures despite useful detector boxes.
+Keep rules optional. Test independent negative cases before adding a specialist or combining outputs into an automatic decision.
+
+**HCF333:** repair the existing review path and keep High Contrast rules optional. [Results](HCF333Results.md).
+Next, qualify native profile capture and compare rules with model outputs before adding a separate HCF model.
+
+**FOCUS331:** [boundary ranking](Focus331Results.md) helps 13 groups but harms both content families. Both replacement rules fail.
+Next, preserve both original crops and test added boundary evidence. Report the increased input cost explicitly.
+
+**FOCUS330:** the [control-region audit](Focus330Results.md) rejects detector-centered crops before training.
+Next, test image-only boundary ranking while keeping an existing window. Do not add volume before improving region selection.
+
+**FOCUS329:** the approved [plan](Plans/Focus329.md) checks native boundary evidence before an added-edge candidate.
+Original image channels, data roles, and previous-success checks remain unchanged.
+The audit and candidate complete. [Results](Focus329Results.md) show safer native abstention but fail full replacement requirements.
+FOCUS330 proposes a matched control-region comparison before another encoder change.
+
+**FOCUS328:** the approved [plan](Plans/Focus328.md) tests normalized detail without changing whole-frame weights or evaluation membership.
+The diagnostic, candidate, and full comparisons complete. [Results](Focus328Results.md) reject the candidate.
+FOCUS329 proposes a native boundary diagnostic and 1 justified additive correction that preserves raw appearance.
+
+**FOCUS327:** trained detail filters improve authored fit but introduce 4 false changes. [Results](Focus327Results.md) reject the candidate.
+FOCUS328 proposes a training-only growth-versus-content diagnostic and 1 justified representation test, not more volume alone.
+
+**FOCUS326:** independent effect coverage helps authored fit but fails native-transfer requirements. [Results](Focus326Results.md).
+FOCUS327 completes the same-corpus detail-filter comparison. See [the approved plan](Plans/Focus327.md).
+
+**FOCUS325:** matched small-control and pooling tests complete without a qualified model improvement. [Results](Focus325Results.md).
+FOCUS326 proposes independent control-size, effect-width, and contrast coverage before more model changes.
+
+For the complete MVP, planned features, and proposed features, use the [product roadmap](ProductRoadmap.md).
+That document groups deliverables without replacing Tasks.md or the historical evidence below.
+The current model preview is REVIEW306. Earlier release notes below describe historical states, not current publication instructions.
+
+**FOCUS324:** retained features produce native gains but fail distraction checks. [Results](Focus324Results.md).
+The candidate remains rejected. FOCUS325 proposes matched data and detail-encoder tests rather than another scalar-score fit.
+
+**FOCUS323:** direct output fitting adds no native improvement. [Results](Focus323Results.md).
+Stop repeated scalar-score changes. The next proposed tranche audits detail features before compression.
+
+**FOCUS322:** score separation and a guarded correction finish without a model improvement. [Results](Focus322Results.md).
+Next, test direct constrained output fitting before more image training. Tasks.md owns selection and execution status.
+
+**FOCUS312:** original-view retention restores some native decisions but increases false changes. [Results](Focus312Results.md).
+Reject the candidate. FOCUS313 compares 1 versus 2 detail windows while freezing the original whole-frame branch.
+
+**FOCUS311:** scale-matched training learns some authored changes but still misses tiny native changes. [Results](Focus311Results.md).
+
+**FOCUS310:** the size audit and original-detail comparison complete. [Results](Focus310Results.md) keep both candidates out of production.
+Original detail reduces center false alarms but loses 2 reserved successes and still misses tiny changes.
+Next, prepare scale-matched training-only examples and test 1 candidate. Preserve negative weights, reserved groups, and all prior-success checks.
+
 **October 9 maintainer priority:** [FOCUS301](Plans/FocusImprovementProgram.md) defines 10 testable focus-model problems and independent worker contracts.
 Start with retained-data diagnosis. Then capture only missing evidence and test 1 matched correction.
 Use coordination MVP1 for verified worker execution. Local analysis does not depend on that rollout.

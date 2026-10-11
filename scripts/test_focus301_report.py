@@ -11,6 +11,24 @@ def row(identifier='a', truth=0, score=0.9, area=0):
 
 
 class AuditTests(unittest.TestCase):
+    def test_changed_only_preserves_negative_answers(self):
+        result = report.audit_proposals([row(score=.1),row('b',truth=1)],'changed-only')['summaries'][0]
+        self.assertEqual(result['lostCorrect'],1)
+        self.assertEqual(result['diagnostic']['emittedUnchanged'],1)
+        self.assertEqual(result['diagnostic']['changeAbstentions'],1)
+
+    def test_changed_only_does_not_invent_correctness(self):
+        result = report.audit_proposals([row()], 'changed-only')['summaries'][0]
+        self.assertEqual(result['caughtWrong'],1)
+        self.assertEqual(result['diagnostic']['correct'],0)
+        with self.assertRaisesRegex(ValueError,'unknown_proposal_rule'):
+            report.audit_proposals([], 'guess')
+
+    def test_fixed_thresholds(self):
+        self.assertEqual(report.proposal_decision(.15,0,'changed-only'),0)
+        self.assertEqual(report.proposal_decision(.85,0,'changed-only'),-1)
+        self.assertEqual(report.proposal_decision(.85,1,'changed-only'),1)
+
     def test_empty_support(self):
         result = report.counts([], [])
         self.assertIsNone(result['coverage'])

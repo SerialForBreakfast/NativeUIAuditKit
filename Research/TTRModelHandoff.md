@@ -3,6 +3,42 @@
 Date: October 8, 2026. Sender: Maximum-mini-NUIAK. Recipient: Sillycon-TTR.
 Purpose: prepare optional model use for TTR 0.4.3 RC. This is not a release or deployment approval.
 
+## October 10 reconciliation
+
+Maximum-mini-NUIAK receives TTR's historical requests 130, 131, 133, and 147 through coordinator cursors 166–169.
+It acknowledges the delivered messages through cursor 171 and replies at cursor 172.
+Use REVIEW306 for the replacement model. Do not publish or redistribute the old REVIEW304 or REVIEW305 model ZIPs.
+The [privacy correction and release evidence](Release305Results.md) supersede the old archive recommendations below.
+The REVIEW304 provider adapter and comparison protocol remain useful. Its old model bytes do not belong in a new release.
+The supported public provider remains pinned to `cc72583439f39ce8e7c9eaf5b8f48a9f104dcda0`.
+TTR owns download, inventory, compilation, recovery, selection, and removal. NUIAK's internal installer is not a supported public application API.
+The REVIEW306 catalog remains review-only. Publication and a trusted production catalog still need the existing release steps.
+Current TTR renderer details remain pending after forwarding request `coord-handoff-20261010-ttr-question` at cursor 170.
+These historical messages do not establish a current renderer revision or a new execution assignment.
+
+## October 9 delivery clarification
+
+REVIEW304 now supplies the real model, pinned review catalog, public adapter, and fixed-input results through SMB.
+Use [the delivered instructions](TTRReview304.md). No new NUIAK commit or release tag is needed for local import.
+The inner archive passes compilation and 25/25 reference comparisons through the public provider adapter.
+The review URL is not published. Public download qualification and distribution approval remain separate.
+
+The maintainer relays TTR's report of completed host plumbing and 90 passing tests for `MODEL-DIST-01–08`.
+The report does not identify a machine, source revision, or real-model test result. Those details remain unverified here.
+Do not assign another host implementation task from this report.
+
+The public provider API already exists at `cc72583439f39ce8e7c9eaf5b8f48a9f104dcda0`.
+Use `NativeUIAuditKitRuntime`, `NativeUIModelProviding`, `NativeUILocalDetector`, and `NativeUILocalModelProvider` from that revision.
+This API accepts verified local models. It is not a public catalog parser or downloader API.
+The catalog format is defined in [ModelReleaseContract.md](ModelReleaseContract.md).
+No approved downloadable catalog entry exists yet. Do not use a placeholder URL or an inventory digest as an archive hash.
+
+Maximum-mini-NUIAK owns the remaining exact archive, catalog mapping, reference outputs, and release checks.
+Start with the existing tvOS detector, not a new transition model. Keep FocusRing optional.
+The maintainer still owns Git publication and the per-artifact distribution decision.
+TTR should return its exact source revision, machine, and expected catalog fields so NUIAK can check compatibility without duplicate implementation.
+Coordinator storage does not establish delivery. Require a forwarded request ID and TTR acknowledgment.
+
 ## TTR review received
 
 Sillycon-TTR's review arrives through `coord369-forward-79` at cursor 86.

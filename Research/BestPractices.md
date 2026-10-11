@@ -1,5 +1,96 @@
 # NativeUIAuditKit — Best Practices
 
+## Test region quality before fitting another classifier — FOCUS330
+
+Control-centered crops need useful detected boxes. A working detector does not establish sufficient recall on a new image family.
+FOCUS330 reduces content-case boundary coverage from 44.97% to 20.20%, despite preserving the maximum crop budget.
+Compare known-box diagnostics with actual proposals. Do not train with correct boxes that inference cannot obtain.
+Count unique frame-body measurements separately from repeated pair occurrences. Neither count automatically represents independent trials.
+Keep predicted focus states out of proposal selection. Use cached predictions when measuring unchanged models.
+If the selected regions lose relevant evidence, reject that rule before another training run. [Results](Focus330Results.md).
+
+## Keep diagnostic masks independent of the answer — FOCUS329
+
+Use the same population of measured controls when comparing changed and unchanged focus.
+Selecting only focused endpoints can give changed pairs 2 control regions and unchanged pairs only 1.
+That difference can create misleading separation in a boundary-energy ratio.
+Keep known-box diagnostics separate from image-only features. Neither a useful diagnostic nor high training separation proves generalization.
+FOCUS329 stops its first preparation before training and preserves the biased audit. Its corrected audit uses every measured control.
+
+## Training constraints do not protect unseen distractions — FOCUS324
+
+Inspect retained features before adding more scalar-score fits. Keep image views and training membership fixed for that comparison.
+FOCUS324 preserves every protected training decision but loses 90 development distraction successes. Training protection is not a generalization guarantee.
+Report original training sizes separately from authored sizes and unavailable measurements. Do not count unknown sizes as covered.
+Use feature-distance measurements as diagnostics, not calibrated confidence or automatic labels.
+If a larger retained-feature readout still cannot reach target decisions, change the tested visual evidence or representation hypothesis.
+Do not repeat the same bounded output fit. Preserve the full failure evidence. [Results](Focus324Results.md).
+
+## Use achievable bounds to stop unproductive fits — FOCUS323
+
+If a constrained fit adds no useful detections, test whether the fixed output family can reach the failed decision at all.
+Keep each bound specific to its features, coefficient limits, and training constraints.
+Do not describe a bound for one output layer as a limit on every architecture.
+FOCUS323 cannot reach the change threshold on any of the 8 tiny forward/reversed cases under its tested constraints.
+Use development-case bounds for diagnosis only. Do not save their optimized coefficients as a selected candidate.
+Check float32 constraints after a double-precision solve. Protect actual decisions as well as numerical margins.
+Report loss changes separately from correct decisions. FOCUS323 lowers loss but adds no correct native changes.
+If the loss and solver both change, do not attribute the outcome to the solver alone. [Evidence](Focus323Results.md).
+
+## Separate infeasible rules from blocked updates — FOCUS322
+
+Test whether fixed scores admit the proposed decision rule before fitting another candidate.
+If a linear solver reports infeasibility, do not assume that every nonlinear rule also fails.
+If a guard restores most updates, measure whether useful feasible directions still exist.
+Backtracking an unsafe direction cannot find a different direction by itself.
+FOCUS322 preserves training margins but restores 3,356/3,420 updates and adds no correct decisions.
+Its fixed nonlinear features still permit a small training-only improvement under the same constraints.
+Do not loosen evaluation requirements to conceal this optimization problem.
+Report training preservation separately from unseen-image performance. [Evidence](Focus322Results.md).
+
+## Measure margins before adding image training — FOCUS321
+
+Record whole-frame scores, added-detail scores, and distance from the fixed decision threshold.
+If image branches stay frozen, fit a small combination layer from cached scores.
+Pin the images, branch weights, preprocessing, labels, and cache hashes.
+Verify cached scores against the actual image path before reporting results.
+Keep all frozen tensors unchanged. Report fit time separately from preparation and evaluation time.
+Lower loss does not guarantee more correct decisions at fixed thresholds.
+Report false changes, missed changes, abstentions, and previous successes together.
+Do not change thresholds with inspected evaluation cases. [Evidence](Focus321Results.md).
+
+## Measure added training influence — FOCUS320
+
+Wrong: assume auxiliary coefficient 0.25 limits new examples to 25% of the training influence.
+Correct: measure weighted gradient norms and directions on the actual training schedule.
+Why: FOCUS320 finds an authored gradient about 99 times larger after weighting at fresh initialization.
+At the failed candidate, its combined direction opposes the original gradient with cosine -0.9085.
+Report conditions separately. Movement and artwork-only examples can oppose different original labels even when their combined direction looks acceptable.
+A gradient constraint does not guarantee an Adam update or preserved decisions. Test previous successes after the fixed run.
+Keep diagnostic training membership separate from evaluation membership. [Evidence](Focus320Results.md).
+
+## Match effect coverage, not only control size — FOCUS312
+
+Shrinking a whole scene changes distances between controls as well as their sizes.
+One detail window can then contain both changed regions during training, but only one region in a native test.
+Measure changed area, contrast, and the fraction of change inside each selected window.
+Do not use the correct focus boxes to select deployable windows.
+Keep measured pixel coverage separate from correct model decisions.
+When adding scaled views, state whether they replace original views or add another loss.
+Unchanged labels and row weights do not preserve original-image exposure after view replacement.
+Report original and auxiliary coefficients, examples, and optimizer steps separately.
+[Evidence](Focus312Results.md).
+
+## Keep context when testing image detail — FOCUS307
+
+Larger regions can increase focus-change scores without producing correct decisions.
+Report abstentions separately from successful detections.
+Compare source regions against enlarged low-resolution regions to separate extra pixels from a change in scale.
+Check global lighting and artwork negatives before replacing whole-frame inputs.
+The tested region-only policy causes 134/153 lighting false changes where whole frames cause 0.
+Keep aligned coordinates in both frames. Do not select regions from the correct focus boxes during deployable comparisons.
+[Evidence](Focus307Results.md).
+
 ## Read fresh file sizes after resume — RELEASE300
 
 Wrong: reuse cached URL resource values after appending a resumed transfer.
@@ -2431,6 +2522,18 @@ not native focus truth. Equal or unequal pixels alone cannot label a no-op.
 **Why:** A temporal learner needs defensible action/state correspondence; otherwise
 faster collection can teach another action's result. See REVIEW-PARALLEL-01.
 
+### BP-114: Check frame hashes before accepting a claimed visual change
+
+**Wrong:** Accept a peer dataset's message or manifest that claims detected
+interruptions, scrims, or luminance changes. TTR's 2026-10-10 interruption set
+claims 3 detected modalities. Seven of its 9 frames are byte-identical, so tests 1
+and 2 contain no rendered change. Its own markers record 0% luminance change.
+**Correct:** Hash every before, after, and recovered frame. Reject a claimed change
+when the frames are identical, then view the distinct frames. Trust the content
+hash over a stated byte count; 2 of 3 manifests stated wrong sizes with correct hashes.
+**Why:** A claimed change without a pixel change teaches a detector to fire on
+unchanged screens. See `Research/HCF337Results.md`.
+
 ### Harvest target coverage is not the accepted-row count
 
 **Observed:** SYNTH-01 exports accepted rows separately from excluded, interrupted,
@@ -4796,3 +4899,22 @@ Why this matters: DTM081 loses all 421 native positives when its original absolu
 Removing its residual input instead harms native content cases while barely changing center-disturbance decisions.
 This distinguishes input dependence from useful accuracy. It does not prove a unique cause or justify another architecture by itself.
 [Evidence](../reports/work/TRANSITION-289/handoff.md).
+## Independent effect coverage — FOCUS326
+
+Control size and effect size are different variables. Whole-patch resizing changes both and can leave important combinations absent.
+Test body size, border width, and contrast independently. Verify the rendered pixels and bounds, not only requested values.
+Authored training improvements do not prove native transfer. FOCUS326 improves authored fit but fails previous-success checks.
+When convolutional filters remain frozen, describe the run as projection training, not full encoder training.
+Reuse immutable inputs and cached control results when testing trainable filters next. Do not repeat generation without a data reason.
+See [the measured comparison](Focus326Results.md).
+
+## Separate contrast suppression from focus evidence — FOCUS328
+
+What went wrong: detail normalization improves authored fit but removes useful native decisions under the matched training budget.
+Native false changes fall from 4 to 0, while missed changes rise from 0 to 11.
+Correct approach: report both labels separately. Keep raw appearance available when testing additional boundary or contrast features.
+Check crops and full-frame fallbacks separately. Do not remove side pixels by assuming every view has black margins.
+Why this matters: reducing false changes alone can hide more missed focus changes.
+An annotation-based boundary check is a diagnostic reference, not an image-only detector.
+The content-contrast label can include different artwork and backgrounds. Do not treat it as a single brightness adjustment.
+See [the matched experiment](Focus328Results.md) and `scripts/test_contrast328.py`.

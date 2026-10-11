@@ -6,6 +6,12 @@ Tasks.md supplies ownership; dated reports supply evidence, not current readines
 
 ## Build, test and permission diagnosis
 
+- If `swift build` selects the signing build path, preserve its error log.
+  FOCUS327 uses `--build-system native` for offline SwiftPM checks after the default path reports resource-fork signing errors.
+  This explicit option is deprecated in the installed toolchain, but it currently passes the offline build and serial tests.
+  Do not repair signing or remove unrelated file attributes to pass an offline package check.
+  Evidence: `.build/focus327-swift-build.log` and `.build/focus327-swift-native-test.log`.
+
 - For the observed FROZEN164 Vision/OCR suite stall, preserve a sample of the owned
   test process; one isolated existing Vision test and explicit `--no-parallel`
   full-suite run passed without service changes. Bound diagnostics, stop only

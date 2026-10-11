@@ -3,6 +3,14 @@
 Updated October 8, 2026. This document records evidence and release requirements, not legal advice.
 The maintainer reviews applicable terms before public distribution.
 
+The maintainer now selects free, open-source distribution under the applicable AGPL conditions.
+Follow the [source and release checklist](ModelOpenSourceReleasePlan.md). Preserve existing MIT notices while reviewing combined distribution scope.
+
+October 9: [REVIEW304](ModelLicenseReview304.md) verifies pretrained lineage and records the exact release artifact.
+[Third-party notices](../THIRD_PARTY_NOTICES.md) and the full AGPL text are prepared without changing existing model bytes.
+The review finds a recorded export version of 8.4.153 and a resident Ultralytics version of 8.4.124.
+Do not substitute the resident version for training-era evidence. Public publication remains held pending the distribution decision.
+
 ## Current facts
 
 | Component | Recorded terms | Release requirement |

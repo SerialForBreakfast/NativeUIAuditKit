@@ -1,5 +1,189 @@
 # NativeUIAuditKit — Completed Tasks
 
+## HCF334 — production comparison and failure diagnosis
+
+The shipped detector and FocusRing process all 8 retained images. [Results](Research/HCF334Results.md).
+All 5 saved rule proposals have matching detector boxes. FocusRing selects matching boxes in 3 cases and disagrees in 2.
+The report separates ranking competition from incorrect focus scoring. No training or production change occurs.
+All 19 focused tests, the offline build, and 187 Swift tests pass. The coordinator publication passes exact-ID readback.
+
+## HCF333 — review compatibility and model choice
+
+The existing review path accepts High Contrast analysis and validates paired sidecars against exact images.
+The retained audit verifies 8 entries, 7 unique images, and 6 saved analysis frames.
+All 15 focused tests, the offline build, and 187 Swift tests pass. [Results](Research/HCF333Results.md).
+Keep optional rules first. Native profile capture and an independent model comparison remain open under ACCESSIBILITY-ASSISTED-29.
+
+## FOCUS331 — image-only boundary regions
+
+The audit compares both boundary-selected crops with a rule that preserves the first existing crop. [Results](Research/Focus331Results.md).
+Both replacement rules fail the fixed coverage and purity requirements. No candidate starts.
+Boundary ranking helps 13 of 15 measurable groups, but harms both content families.
+The existing models, source images, labels, thresholds, and data roles remain unchanged.
+
+## FOCUS330 — detector-centered regions
+
+The approved diagnostic rejects the crop rule before conditional training. [Results](Research/Focus330Results.md).
+The resident detector scores 138 unique frames. The audit covers all 548 native-derived training pairs from 17 groups.
+Content boundary coverage falls from 44.97% to 20.20%. Known-box diagnostics stay separate from usable inputs.
+No candidate starts. No model, threshold, label, or data role changes.
+
+## FOCUS329 — native boundaries and added edge channels
+
+Maximum-mini-NUIAK completes the native training audit and 1 fixed 30-epoch candidate.
+The audit covers 548 pairs across 17 groups. The corrected mask uses every measured control in both frames.
+Native correctness stays 592/640. Four false changes become abstentions, but 1 reversed-replay success is lost. Tiny changes stay 0/4.
+Reject replacement. Preserve all artifacts and original data roles. No capture, export, or promotion occurs.
+All 101 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+[Results and next proposed tranche](Research/Focus329Results.md).
+
+## FOCUS328 — separate growth from content contrast
+
+The training-only diagnostic, 1 matched 30-epoch candidate, boundary audit, and full regression report complete.
+Authored correctness improves from 736/960 to 893/960. Native-derived correctness falls from 592/640 to 546/640.
+The candidate removes 4 false changes but introduces 11 missed changes. Reject it; no export or promotion occurs.
+All 89 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+See [the plan](Research/Plans/Focus328.md) and [results](Research/Focus328Results.md).
+
+## FOCUS327 — train detail filters on retained images
+
+Owner: Maximum-mini-NUIAK. The probe, matched 30-epoch candidate, full comparison, and TTR capability review complete.
+Authored correctness improves from 589/960 to 736/960. The candidate still misses tiny changes and introduces 4 native-derived false changes.
+Reject it as a replacement. Whole-frame weights, geometry, original views, and data roles remain unchanged.
+All 79 focused tests, the native SwiftPM build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+See [results](Research/Focus327Results.md) and [the feedback review](Research/Focus327TTRFeedback.md).
+
+## FOCUS324 — retained features and constrained correction
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Audit frozen detail features with fixed inputs and training-only normalization.
+- [x] Test 1 justified readout and verify all 1,866 protected training decisions.
+- [x] Preserve 36 frozen tensors and verify exact cache/image and checkpoint parity.
+- [x] Complete all previous-success comparisons and post-evaluation tiny-case bounds.
+- [x] Pass 65 focused tests, the offline build, 14 XCTest tests, and 173 Swift Testing tests.
+- [x] Publish the result for Sillycon-TTR with exact SMB readback. Keep acknowledgment separate.
+
+Reject the candidate. Native correctness rises to 595/640, but it loses 90 left-distraction successes against FOCUS319.
+[Results](Research/Focus324Results.md) report counts, limits, hashes, and the next proposed tranche.
+
+## FOCUS323 — direct constrained output fit
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Fit 9 output coefficients with the existing constrained routine and fixed training inputs.
+- [x] Verify float32 constraints, 38 unchanged tensors, checkpoint reload, and cache/image parity.
+- [x] Complete native, reversed, replay, nuisance, authored, and tiny-change comparisons.
+- [x] Bound tiny-case scores after evaluation without fitting another candidate.
+- [x] Pass 59 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests.
+- [x] Publish the result for Sillycon-TTR with exact SMB readback. Keep acknowledgment separate.
+
+Reject the candidate. It gains 1 distraction decision but adds no correct native focus changes.
+[Results](Research/Focus323Results.md) contain counts, hashes, scope limits, and the next proposed tranche.
+
+## FOCUS322 — separation and protected margins
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Test positive and unrestricted linear separation using retained training scores.
+- [x] Measure feasible margin improvement while preserving training successes.
+- [x] Train 1 guarded nonlinear correction. Preserve all image branches and data roles.
+- [x] Complete native, replay, reversed, nuisance, tiny-change, and authored comparisons.
+- [x] Diagnose blocked updates without starting another training run.
+- [x] Pass 55 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests.
+- [x] Publish the result for Sillycon-TTR with exact SMB readback. Keep peer acknowledgment separate.
+
+Reject the candidate. It preserves FOCUS319 decisions but adds no useful detection.
+[Results](Research/Focus322Results.md) contain counts, hashes, limitations, and the next proposed comparison.
+
+## FOCUS321 — decision margins and score combination
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Audit margins on retained training views and reviewed authored pairs.
+- [x] Fit 3 score-combination parameters with all image branches unchanged.
+- [x] Verify 34 frozen tensors and exact cache/image parity on retained examples.
+- [x] Compare native, reversed, replay, nuisance, authored, and tiny-change results.
+- [x] Pass 49 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests.
+- [x] Reject the candidate. Preserve previous models and complete the TTR update.
+
+[Results](Research/Focus321Results.md) contain counts, hashes, limits, and the next proposed tranche.
+
+## FOCUS320 — training conflict and bounded correction
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Audit weighted gradients across training groups and authored conditions at 3 checkpoints.
+- [x] Complete 1 registered 30-epoch correction with all original views and evaluation roles unchanged.
+- [x] Verify checkpoint reload parity, 24 frozen tensors, and execution input hashes.
+- [x] Compare previous successes, native cases, reversals, nuisance conditions, tiny controls, and authored examples.
+- [x] Reject the candidate. Preserve all failed results and the report command's repaired failure.
+- [x] Pass 45 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests.
+- [x] Publish the measured result for Sillycon-TTR with exact SMB readback. Peer acknowledgment remains unconfirmed.
+
+[Results](Research/Focus320Results.md) and [contract](Research/Plans/HeadlessEffectExperiments.md#focus320--conflicting-training-signals).
+
+
+## FOCUS319 — supported authored training
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Generate and validate 240 authored pairs from reviewed artwork.
+- [x] Complete 1 matched 30-epoch candidate with original views preserved.
+- [x] Test previous successes and record native regressions. Reject the candidate without promotion.
+- [x] Pass 38 focused Python tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests.
+- [x] Publish model results with verified SMB readback. Sillycon-TTR acknowledgment remains unconfirmed.
+
+[Results](Research/Focus319Results.md) and [contract](Research/Plans/HeadlessEffectExperiments.md#approved-supported-subset-test-focus319).
+
+## FOCUS313 — separate detail regions
+
+Owner: Maximum-mini-NUIAK.
+
+- [x] Complete 2 matched 30-epoch experiments with the whole-frame classifier frozen.
+- [x] Preserve original views and evaluate previous successes, tiny changes, and reversed pairs.
+- [x] Qualify the headless companion and record both candidates' failed acceptance.
+- [x] Pass 34 focused tests and current integrated offline checks: build, 14 XCTest tests, and 173 serial Swift Testing tests.
+- [x] Preserve the Vision stall evidence and stop only the 2 approved test processes before the serial run.
+
+[Results](Research/Focus313Results.md) and [contract](Research/Plans/FocusImprovementProgram.md#focus313--two-region-detail-with-a-frozen-whole-frame-branch).
+
+## FOCUS312 — effect coverage and retained original views
+
+- [x] Measure 511 unique training pairs and 16 tiny development comparisons.
+- [x] Verify changed area, contrast, geometry, and one-window coverage.
+- [x] Verify two-window pixel coverage without changing model decisions.
+- [x] Complete 1 registered 30-epoch candidate with original views preserved.
+- [x] Complete all regression checks, 128 training checks, and the correction diagnostic.
+- [x] Pass 39 focused tests, the offline build, and 173 Swift tests.
+- [x] Publish the result for Sillycon-TTR with exact SMB readback. Peer acknowledgment remains pending.
+
+The candidate fails acceptance. [Results](Research/Focus312Results.md) define the next matched comparison.
+
+## FOCUS311 — scale-matched training, October 9
+
+- [x] Verify training-only derivatives and unchanged evaluation hashes.
+- [x] Complete 1 fixed 30-epoch candidate with the cached FOCUS310 control.
+- [x] Complete all retained regression checks and identify lost correct decisions.
+- [x] Diagnose 128 training pairs without another fit or threshold change.
+- [x] Pass 34 focused tests, the offline Swift build, and 173 Swift tests.
+- [x] Publish the result for Sillycon-TTR with verified SMB readback. Peer acknowledgment remains pending.
+
+The candidate fails acceptance. [Results](Research/Focus311Results.md) define the next diagnosis.
+
+## FOCUS310 — original detail and control sizes, October 9
+
+- [x] Audit all 1,820 actual schedule entries, including replacements and reversals.
+- [x] Verify original image hashes and exact encoder parity for native detail views.
+- [x] Preserve crop shape and source padding through the shared crop helper.
+- [x] Complete 2 matched 30-epoch fits and the full retained regression check.
+- [x] Compare previous successes and measure tiny-detail contribution without threshold changes.
+- [x] Pass 53 focused Python tests, the offline build, and 173 Swift tests.
+- [x] Publish the measured result for Sillycon-TTR with verified SMB readback.
+
+Both candidates fail model acceptance. [Results](Research/Focus310Results.md) define the remaining scale-matched correction.
+
+
 ## TRANSITION297 — spatial evidence, October 8
 
 - [x] Freeze retained input identities and DTM083/DTM085 model identities.
@@ -3432,3 +3616,14 @@ Every case links to its score, group, role, references, and available unchanged 
 The independent EVAL90 contract now defines 6 conditions, source requirements, exclusions, and capture stop conditions.
 No capture, training, or data-role change occurs. The 23 focused tests, offline Swift build, and 140 Swift tests pass.
 [Results and selected next experiment](reports/work/TRANSITION-289/handoff.md).
+## FOCUS325 — small controls and detail pooling
+
+Maximum-mini-NUIAK completes 432 authored pairs, 2 matched 30-epoch runs, and a separate effect audit.
+Both candidates fail previous-success checks. No model is promoted.
+All 70 focused tests and required offline Swift checks pass. See [results](Research/Focus325Results.md).
+## FOCUS326 — independent effect coverage
+
+Maximum-mini-NUIAK validates 1,920 authored pairs and completes 2 matched 30-epoch comparisons.
+The independent effect controls broaden visible area and contrast without changing body bounds.
+Both candidates fail previous-success checks. No model is promoted.
+All 76 focused tests and required offline Swift checks pass. See [results](Research/Focus326Results.md).

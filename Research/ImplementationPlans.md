@@ -1,6 +1,38 @@
 # Full backlog implementation packet catalog
 
+[HCF336 / ADR-0025](ADR-0025-Portable-Experiment-Runner.md) defines the portable TTR experiment package and migration checks.
+[Results](HCF336Results.md) qualify the staged package locally; Sillycon qualification remains pending.
+
+[HCF335](Plans/HCF335.md) provides detached, bounded, resumable rendering. [Results](HCF335Results.md) qualify authored execution only.
+
+[HCF334](Plans/HCF334.md) compares production FocusRing outputs with saved HCF proposals. [Results](HCF334Results.md).
+
+[HCF333](Plans/HCF333.md) repairs HCF review compatibility and compares model choices.
+[Results](HCF333Results.md) preserve proposal-only evidence and prioritize a matched rules/model comparison.
+
 ## Focus improvement program — October 9
+
+[FOCUS331](Plans/Focus331.md) compares image-only boundary regions before conditional training. [Results](Focus331Results.md) reject both replacement rules.
+[FOCUS330](Plans/Focus330.md) checks detector-centered regions before conditional training. [Results](Focus330Results.md) reject the tested crop rule.
+[FOCUS329](Plans/Focus329.md) measures native boundaries before testing added edge channels with raw appearance preserved.
+The corrected diagnostic uses every measured control, not a number of controls chosen from focus labels.
+[Results](Focus329Results.md) reject replacement and define the proposed FOCUS330 region comparison.
+
+[FOCUS328](Plans/Focus328.md) compares growth and content contrast, then tests 1 justified normalized-detail candidate.
+It preserves original training views and compares all previous-success reports.
+[Results](Focus328Results.md) record the rejected candidate and the proposed boundary investigation.
+
+[FOCUS327](Plans/Focus327.md) trains detail filters on retained images with a matched frozen-filter control.
+[TTR feedback](Focus327TTRFeedback.md) defines how existing capabilities can support a complete improvement cycle.
+[Results](Focus327Results.md) reject the candidate and define the proposed FOCUS328 diagnostic and correction.
+
+[FOCUS325 results](Focus325Results.md) complete the small-control and pooling comparison. Both candidates fail previous-success checks.
+[FOCUS324](Plans/HeadlessEffectExperiments.md#focus324--detail-features-before-scalar-compression) tests retained features and 1 constrained correction.
+[FOCUS323](Plans/HeadlessEffectExperiments.md#focus323--direct-constrained-output-fit) completes the direct constrained comparison.
+[Results](Focus323Results.md) define its limits and the next feature-level investigation.
+
+[FOCUS322](Plans/HeadlessEffectExperiments.md#focus322--score-separation-and-margin-guard) defines the completed separation and protected-margin comparison.
+[Results](Focus322Results.md) define the proposed follow-on comparison. Tasks.md remains the queue.
 
 [FOCUS301](Plans/FocusImprovementProgram.md) defines 10 evidence-backed investigation priorities and independent execution contracts.
 It reuses existing task IDs, scorers, trainers, and feedback tools.
@@ -803,3 +835,4 @@ simulator dataset packets; training and TTR operation retain separate authority.
 “Complete <packet-id or explicit tranche of packet IDs>, revision 6 catalog and the linked contract's revision/amendments, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
 
 For external packets, replace NUA operating paths with the owning repository's approved assignment and instructions. For hardware, training, recovery-copy or promotion packets, name the authorized operation and verified prerequisites explicitly; catalog inclusion alone is not authorization.
+[FOCUS326](Plans/Focus326.md) completes independent effect coverage. [Results](Focus326Results.md) define the proposed learned-filter test.

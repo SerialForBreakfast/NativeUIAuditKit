@@ -44,7 +44,15 @@ def counts(labels, decisions):
                 coverage=shared['coverage']['value'], sharedMetrics=shared)
 
 
-def audit_proposals(rows):
+def proposal_decision(score, area, rule):
+    require(rule in ('all-empty', 'changed-only'), 'unknown_proposal_rule')
+    require(type(area) is int and 0 <= area <= 192*128, 'invalid_area')
+    original = decision(score)
+    return -1 if area == 0 and (rule == 'all-empty' or original == 1) else original
+
+
+def audit_proposals(rows, rule='all-empty'):
+    require(rule in ('all-empty', 'changed-only'), 'unknown_proposal_rule')
     seen = set()
     roles = {}
     buckets = defaultdict(list)
@@ -66,7 +74,7 @@ def audit_proposals(rows):
             roles[group] = row['role']
         for model, scores in row['models'].items():
             original = decision(scores['original'])
-            gated = -1 if area == 0 else original
+            gated = proposal_decision(scores['original'], area, rule)
             item = dict(id=row['id'], input=row['set'], group=group, role=row['role'],
                         conditions=row['conditions'], model=model, truth=row['changed'],
                         original=original, diagnostic=gated, emptyProposal=area == 0)
@@ -84,7 +92,7 @@ def audit_proposals(rows):
                            emptyProposals=sum(r['emptyProposal'] for r in items),
                            relatedGroups=len({r['group'] for r in items if r['group']}),
                            unknownGroupCases=sum(r['group'] is None for r in items)))
-    return dict(summaries=output, cases=cases, independentBounds=None,
+    return dict(rule=rule, summaries=output, cases=cases, independentBounds=None,
                 limits=['Related groups are not certified independent trials.',
                         'Native weak-effect strata lack qualified labels in this cache.',
                         'Authored disturbance results do not establish native performance.',
@@ -169,6 +177,7 @@ def run_audit(destination):
     coverage = read(ROOT/'reports/work/TRANSITION-290/coverage.json')
     read(ROOT/coverage['membership']['path'], coverage['membership']['sha256'])
     result = dict(version='focus301-retained-audit-v1', proposals=audit_proposals(spatial['rows']),
+                  changedOnlyProposals=audit_proposals(spatial['rows'], 'changed-only'),
                   regressions=audit_regressions(comparison), coverage=audit_coverage(coverage),
                   inputs=inputs, runnerSHA256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   inference=False, training=False, rolesChanged=False, productionEligible=False)

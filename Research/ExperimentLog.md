@@ -1,5 +1,307 @@
 # NativeUIAuditKit — Experiment Log
 
+## HCF334 — production FocusRing and HCF rules
+
+Run 1 fixed batch on 8 retained images with confidence 0.25 and no OCR. All model calls complete in 1.88 s.
+The detector matches all 5 saved rule proposals. FocusRing selects a matching box in 3 and another object in 2.
+Frame 32 indicates ranking competition; frame 34 indicates incorrect crop scoring.
+These are reviewed development failures, not independent accuracy estimates. No training or threshold change occurs.
+[Results](HCF334Results.md) preserve exact identities and define the next negative-case comparison.
+
+## HCF333 — High Contrast compatibility and model choice
+
+The existing review importer rejects the producer's HCF analysis profile before this correction.
+The corrected importer preserves typed proposals and verifies paired sidecars against their exact PNGs.
+The retained audit checks 8 entries and 6 saved analysis frames in 0.087 s. No inference or training occurs.
+Keep optional rules first. The single retained journey cannot support independent training and evaluation groups.
+All 15 focused tests and 187 Swift tests pass. [Results](HCF333Results.md).
+
+## FOCUS331 — image-only boundary regions
+
+The approved [plan](Plans/Focus331.md) compares 2 fixed image-only rules on all 548 retained native-derived training pairs.
+Use smoothed per-frame gradient changes. Compare replacing both windows with preserving the first original window.
+The coverage requirement and purity limit are fixed before execution. Neither rule passes.
+Boundary ranking improves 13 groups but harms both content families. No conditional training run starts.
+The full audit takes 98.70 s. Preserve the failed rules and propose added evidence instead of replacing useful crops.
+No model, threshold, source image, label, or data role changes. [Results](Focus331Results.md).
+
+## FOCUS330 — detector-centered region diagnostic
+
+The maintainer approves continued training. The [plan](Plans/Focus330.md) requires better boundary coverage before its conditional 30-epoch candidate.
+Score 138 unique native-derived training frames with the resident tvOS detector at confidence 0.25, without OCR.
+Audit 548 training pairs. Select at most 2 fixed windows from proposed controls using image change, not labels.
+The registered requirement needs median coverage to improve by more than 0.05 on all nonzero training rows and content rows.
+The requirement fails. Content coverage falls from 44.97% to 20.20%; overall mean coverage also falls.
+No training starts. Preserve the failed proposal and cached previous-model comparisons. [Results](Focus330Results.md).
+
+## FOCUS329 — added edge channels with raw appearance
+
+The training audit checks 548 native-derived pairs from 17 groups. All selected endpoints have measured bodies.
+The first preparation stops before training. The corrected audit uses all measured controls, independent of focus movement.
+Known boundary fractions separate 279 content cases from 2 families. Image-only edge ratios show weaker separation.
+Register 1 fixed 30-epoch candidate before execution. [Plan](Plans/Focus329.md).
+Initialize from FOCUS325-average. Add 6 gradient channels with zero initial weights, while preserving all original channels.
+Keep FOCUS327 data, schedule, weights, thresholds, and previous-success checks. Freeze whole-frame and geometry weights.
+Do not use correct boxes as candidate inputs. Do not start a second candidate after failure.
+The 30-epoch candidate completes in 851.54 s. Preparation and full comparison take 1,165.89 s.
+Native correctness stays 592/640. Four false changes become abstentions. No forward native successes are lost against FOCUS327.
+However, 1 reversed-replay success is lost, and tiny changes remain 0/4. Reject replacement. [Results](Focus329Results.md).
+
+## FOCUS328 — growth versus content contrast
+
+The approved training-only diagnostic supports 1 bounded representation test. [Execution plan](Plans/Focus328.md).
+Use FOCUS325-average initialization, the exact FOCUS327 schedule, and 30 epochs.
+Normalize each detail frame before its learned filters. Preserve full-frame fallbacks and black crop margins.
+Freeze whole-frame and geometry weights. Keep thresholds at 0.15 and 0.85.
+The first preparation stops before training to correct fallback handling. Preserve its source and partial evidence.
+The corrected run has 1,820 original views and 1,200 auxiliary rows. Original hashes and cached feature agreement pass.
+The 30-epoch run finishes in 752.58 s. Corrected preparation, training, and full evaluation take 1,050.40 s.
+Authored correctness reaches 893/960, but native-derived correctness falls to 546/640 with 11 missed changes.
+Reject the candidate. No export or promotion occurs. See [the full results](Focus328Results.md).
+
+## FOCUS327 — train the detail filters
+
+The approved 30-epoch candidate and discarded training-only probe complete. Exact views, weights, schedule, and thresholds remain unchanged.
+Authored correctness improves from 589/960 to 736/960 against the frozen-filter control.
+Native-derived correctness reaches 592/640, but the candidate loses 6 previous successes and introduces 4 false changes.
+Development and reserved results stay unchanged. Tiny changes remain 0/4. Reject the candidate; no export or promotion occurs.
+Training takes 711.01 s. Complete execution takes 1,007.52 s. Peak memory stays below 8 GiB.
+See [the execution plan](Plans/Focus327.md) and [complete results](Focus327Results.md).
+
+## FOCUS326 — independent effect coverage
+
+Outcome: reject both candidates. Each reaches 589/640 native decisions but loses 8 previous native successes. Tiny changes remain 0/4.
+The independent arm reaches 589/960 on its new authored training pairs; it still fails distraction and placeholder checks.
+Preparation takes 87.43 s. Complete runs take 154.76 s and 153.15 s. [Full results](Focus326Results.md).
+
+Register 2 matched 30-epoch runs before execution. Initialize both from FOCUS325-average.
+Use [the frozen contract](Plans/Focus326.md) for 960 authored pairs per arm and the original 240 authored pairs.
+Preserve all 1,820 original views, weights, and evaluation roles. Retain average pooling and fixed thresholds.
+Compare body-coupled effects with independently varied border width and contrast. Train only the existing detail projection and correction layers.
+Use the existing trainer, cached frozen features, batch 16, seed 42, learning rate 0.0001, and auxiliary weight 0.25.
+Use 2 CPU threads, an 8 GiB memory budget, and a 2 GiB output cap. No wall-time limit applies.
+Require image validation and reviewed authored admission before either run. No additional candidate follows a failure.
+
+## FOCUS325 — independent size coverage and pooling correction
+
+Register 2 matched 30-epoch runs before execution. Initialize both from FOCUS319.
+Preserve all 1,820 original views and the 240 approved authored pairs.
+Add 432 authored pairs from existing reviewed shelf renders, using 3 approved artwork families.
+Cross body widths of 3, 6, and 12 encoded pixels with separations of 32 and 96 pixels.
+Use 4 corner regions, movement, fixed-focus artwork changes, identical pairs, and both frame orders.
+Resize control patches independently. Do not shrink the complete scene or change evaluation membership.
+These patch compositions are authored examples, not new native captures. Preserve their artwork ancestry and source hashes.
+Review representative compositions and verify geometry, counts, hashes, and exclusions before admission.
+
+Both runs freeze convolutions, whole-frame weights, and geometry. Train the detail dense layer and correction layer.
+The data-only run retains adaptive average pooling. The correction uses a fixed 50/50 average/max blend on the same 4 × 6 grid.
+This changes pooling, not the convolutional filters. Do not call the current 4 × 6 grid global pooling.
+Cache both pooled representations from one convolution pass. Verify cache/image parity before and after each run.
+Use the existing trainer with learning rate 0.0001, batch 16, seed 42, and fixed final checkpoints.
+Keep original weights and auxiliary coefficient 0.25. Match auxiliary exposure and optimizer updates between both runs.
+Use training data only. Keep thresholds at 0.15 and 0.85 and compare all previous-success sets.
+Use 2 CPU threads, an 8 GiB memory budget, and a 2 GiB output cap. No wall-time limit applies.
+Stop on failed admission, parity, nonfinite values, or changed frozen weights. Preserve failed evidence without automatic retraining.
+No capture, dependency installation, export, promotion, or new worker assignment occurs.
+
+## FOCUS324 — retained detail features
+
+Outcome: reject. Native correctness improves from 581/640 to 595/640, but left-distraction correctness falls from 160/226 to 70/226.
+Tiny changes remain 0/4. The feature audit takes 87.57 s; candidate construction through evaluation takes 155.67 s.
+[Results](Focus324Results.md) separate training gains, development gains, and failed requirements.
+
+Register 1 conditional candidate before execution. Use the frozen FOCUS319 image branches and unchanged original-resolution detail views.
+Cache the 32 context features and 32 pooled detail features before their scalar readout.
+Use only the existing 1,820 training views and 240 authored training pairs.
+Keep original weights, the authored schedule, and its 0.25 coefficient.
+Measure constrained separation with detail features alone and with context plus detail.
+Normalize each feature with training statistics. Set the minimum standard deviation to 0.001.
+If the combined features reduce weighted margin shortfall by more than 0.0001, fit 1 residual readout.
+Use the existing linear solver with 65 coefficients bounded to [-1, 1]. Preserve all correct training decision margins.
+Keep thresholds at 0.15 and 0.85. Use no evaluation data for fitting or selection.
+Reuse the audit solution as the candidate. Do not start another optimization run.
+Check cached/image parity and frozen weights. Compare every previous-success set, including tiny changes and nuisance strengths.
+Report results by training group, available size measurements, and authored condition. Report unknown effect strength as unavailable.
+Use 2 CPU threads, an 8 GiB memory budget, and a 256 MiB output cap. No wall-time limit applies.
+No capture, new data roles, exports, promotion, or peer assignments occur.
+
+## FOCUS323 — directly constrained output fit
+
+Outcome: reject. Native correctness remains 581/640; tiny changes remain 0/4. Left-distraction correctness improves from 160/226 to 161/226.
+The solve takes 0.018 s. Fit through complete evaluation takes 173.54 s.
+Post-evaluation bounds show that no coefficients within the tested family and constraints can detect the 8 tiny forward/reversed cases.
+[Results](Focus323Results.md) preserve the stopping decision and next feature-level question.
+
+Register 1 candidate before execution. Reuse FOCUS322's initial nonlinear features and FOCUS321's pinned training scores.
+Use the resident SciPy HiGHS solver and the existing constrained feature routine.
+Fit 9 output coefficients within [-1, 1]. Minimize weighted linear margin shortfall under the existing training-success constraints.
+Preserve original weights and the authored schedule with coefficient 0.25.
+The target logit margin remains `log(0.85/0.15) + 0.25`. Thresholds remain 0.15 and 0.85.
+Use 1 direct solve, not an epoch schedule or a parameter sweep. No evaluation scores enter fitting.
+Verify solver constraints after conversion to float32. Preserve image branches, initial hidden features, and normalization exactly.
+Check cached/image parity, restored checkpoint scores, and all previous-success sets.
+Use 2 CPU threads, an 8 GiB memory budget, and a 256 MiB output cap. No wall-time limit applies.
+No capture, download, export, peer execution, or production change occurs.
+
+## FOCUS322 — separation audit and guarded residual
+
+Outcome: reject. Decisions match FOCUS319 across the main regression sets. Native correctness is 581/640; tiny changes remain 0/4.
+The guard limits all 3,420 updates and restores 3,356 of them.
+A training-only constrained diagnostic finds a 1.22% margin improvement, so the update method remains a limitation.
+The fixed run and complete comparison take 185.37 s. [Results](Focus322Results.md).
+
+Register 1 nonlinear candidate before launch. No scalar candidate runs.
+The training audit finds neither positive nor unrestricted linear separation for the combined scores.
+Preserving 1,866 training rows leaves no improvement in weighted linear margin shortfall.
+These rows are not independent trials. No exact score pair has conflicting labels in the combined training set.
+Use a 33-parameter residual over the 2 frozen scores. Normalize with training-only means and scales.
+Keep image branches, original views, labels, weights, and data roles unchanged.
+Use squared margin loss, auxiliary coefficient 0.25, seed 42, batch 16, learning rate 0.001, and 30 epochs.
+Protect existing training margins with bounded update backtracking. Keep thresholds 0.15 and 0.85.
+Select the last checkpoint. Test previous successes without using evaluation results for model selection.
+Use 2 CPU threads, an 8 GiB memory budget, and a 256 MiB output cap. No wall-time limit applies.
+No new capture, dependencies, model export, or production change occurs.
+
+## FOCUS321 — combine frozen whole-frame and detail scores
+
+Outcome: reject. Native correctness falls to 520/640; tiny changes remain 0/4.
+The fit preserves all image branches but increases abstentions. [Results](Focus321Results.md).
+
+Register 1 candidate before launch. Keep the FOCUS319 image branches unchanged.
+The training audit finds opposing whole-frame scores in 72/80 artwork-only pairs and 40/80 movement pairs.
+The detail scores point toward the correct label in those cases.
+Fit 2 positive coefficients and 1 bias with the existing trainer.
+Use 1,820 original views and the existing schedule for 240 reviewed authored pairs.
+Keep original weights, auxiliary weight 0.25, seed 42, batch 16, and 30 epochs.
+Use learning rate 0.01 for these 3 parameters only. Keep thresholds 0.15 and 0.85.
+Select the last checkpoint. Do not use evaluation scores for selection.
+Use 2 CPU threads and less than 256 MiB of new output. The standing time override applies.
+Keep all data roles unchanged. Compare native, reversed, nuisance, tiny-change, and authored checks.
+This experiment adapts retained branches. It is not an equal-compute comparison with full image training.
+The audit and registration are in `reports/work/FOCUS-321/`.
+No capture, export, or production change occurs.
+
+## FOCUS313 — frozen classifier and separate detail regions
+
+Outcome: both candidates fail acceptance. Two windows reach 598/640 native correct decisions, versus DTM085's 589/640.
+The candidate gains 12 native decisions and loses 3 previous successes. Tiny changes remain 0/4 in both directions.
+Both windows cover the tiny changed pixels, but the added detail scores reinforce the incorrect unchanged decision.
+Training takes 230.29 s and 342.76 s. Preparation through regression scoring takes 973.69 s.
+The headless companion supplies 8 authored movement comparisons; all 3 models score 2/8 correctly.
+[Results](Focus313Results.md) preserve all conditions, software limitations, and the next controlled data comparison.
+
+Register 2 matched 30-epoch runs from DTM085 before launch.
+Use the original 1,820 training views, labels, weights, groups, and source detail rules.
+Compare 1 versus 2 image-selected windows with shared detail weights and mean feature pooling.
+Freeze the whole-frame classifier and geometry exactly. Train only detail and correction layers.
+Use batch 16, seed 42, learning rate 0.0001, and fixed thresholds 0.15/0.85.
+Use 2 CPU threads, an 8 GiB memory limit, and a 128 MiB output limit. No wall-time limit applies.
+Select the fixed last checkpoint. Check previous successes, tiny changes, reversals, and all existing nuisance strengths.
+Record hashes before fitting. No capture, role change, export, or promotion occurs.
+The user approves this comparison. New worker suggestions remain proposals until the user approves them.
+
+## FOCUS312 — effect audit and original-view retention
+
+Outcome: the candidate fails acceptance. Native correctness is 610/640; left false changes are 185/226.
+Tiny changes remain 0/4 in both orders. All 52 reserved decisions and 226 lighting decisions are correct.
+Training completes 3,420 updates in 534.10 s. Preparation through regression evaluation takes 778.75 s.
+The measured crop mismatch supports a two-region comparison, not another scale-only fit. [Results](Focus312Results.md).
+
+Register 1 fixed 30-epoch candidate before launch. Use DTM085 initialization and FOCUS310's original-detail architecture.
+The audit finds 269–280 changed encoded pixels in tiny native pairs, versus at most 252 in 3-pixel training derivatives.
+These counts use mean absolute RGB difference above 1/255. They measure image change, not focus truth.
+Preserve all 1,820 original views, labels, weights, groups, and original detail views in every epoch.
+Add FOCUS311's exact scaled views through an auxiliary loss with coefficient 0.25.
+The original loss keeps coefficient 1. Each label, group, and condition gains exactly 25% auxiliary weight.
+Use one optimizer step for both losses. Keep 114 updates per epoch and 3,420 updates total.
+The extra view doubles forward/backward work. It does not replace an original example or add independent evidence.
+Use batch 16, seed 42, learning rate 0.0001, 2 CPU threads, and fixed thresholds 0.15/0.85.
+Reuse FOCUS310's completed control. Preserve exact native and tiny evaluation hashes.
+Acceptance requires improved tiny changes with no lost previous correct decisions. Select the fixed last checkpoint only.
+Keep outputs below 128 MiB and working memory below 8 GiB. No wall-time limit applies.
+No capture, download, export, role change, or promotion occurs. A failed candidate ends this fit sequence.
+
+## FOCUS311 — training-only scale comparison
+
+Outcome: the fixed 30-epoch candidate fails acceptance. Native correctness is 575/640; tiny changes remain 0/4 in both orders.
+Reserved correctness reaches 52/52. A training diagnostic improves 3-pixel changed decisions from 0/24 to 14/24.
+This training gain does not establish native transfer. Preserve the candidate for diagnosis, not promotion.
+Training takes 260.80 s; preparation through evaluation takes 457.60 s. [Results](Focus311Results.md).
+
+Maximum-mini-NUIAK registers 1 fixed 30-epoch comparison from DTM085.
+Reuse FOCUS310's architecture, initialization, batch 16, seed 42, learning rate 0.0001, and thresholds 0.15/0.85.
+Keep all 1,820 labels and sample weights unchanged. Keep all evaluation pixels unchanged.
+Canonical source hashes assign each native pair to original size or approximately 3, 6, or 12 encoded pixels.
+The assignment does not read the changed label. Reversed pairs receive the same scale.
+Both source frames shrink together onto the same centered black canvas.
+The measured training body size sets the scale. Image differences still select the inference window.
+This changes whole-scene scale and surrounding padding. It does not isolate control size from scene composition.
+Admit these authored derivatives for development training only, after role, source, overlap, and visible-change checks.
+Do not move any reserved, tiny development, or related evaluation group into training.
+Reuse the completed FOCUS310 source-detail control. Verify identical native and tiny evaluation views before training.
+Acceptance requires more correct tiny changes without lost previous successes. Use the fixed last checkpoint.
+Use 2 CPU threads, at most 8 GiB of working memory, and 128 MiB of retained output.
+No wall-time cap applies. No capture, export, installation, Git write, or production change occurs.
+
+
+## FOCUS310 — original-resolution detail comparison
+
+Both corrected runs complete. [Results](Focus310Results.md) report 611/640 native decisions and 108/226 center false changes for original detail.
+Reserved correctness falls to 49/52. Tiny changes remain 0/4 in both directions. Do not promote either model.
+The audit finds no measured native training control below 15.06 encoded pixels. Tiny development controls measure 2.93 pixels.
+The corrected preparation, fits, and regression checks take 944.58 s.
+
+The following settings describe the registered experiment.
+
+Maximum-mini-NUIAK compares original detail with encoded enlargement from the same DTM085 initializer.
+Both runs use 1,820 unchanged training entries, labels, and weights.
+The settings remain 30 epochs, batch 16, seed 42, learning rate 0.0001, and 2 CPU threads.
+Image differences select one 32 × 32 window. Both frames use the same window.
+Both runs preserve full-frame context, crop shape, and padding outside the source image.
+The existing trainer accepts an optional second paired view. Its default behavior stays unchanged.
+The original-detail branch uses verified source images where available. Both runs use encoded detail for older encoded-only examples.
+The audit measures actual replacement images and keeps missing body measurements separate.
+Acceptance requires improved tiny-control decisions without losses on previous correct decisions at thresholds 0.15/0.85.
+No reserved or tiny development examples enter training. No new final evaluation claim follows this comparison.
+The first attempt stops after epoch 1 when a padding mismatch appears. Its evidence remains in FOCUS-310-attempt1.
+The corrected attempt uses a new directory and a regression test for source padding.
+The output cap is 128 MiB. Prepared views stay in memory. No wall-time cap applies.
+The local working-memory allowance is 8 GiB. This is not a BigDog-NUIAK worker assignment.
+
+
+## FOCUS309 — completed context and detail comparison
+
+Both fits complete. Native training decisions improve to 539/548, versus 505/548 for DTM085 and 528/548 for the matched control.
+Reserved decisions remain 51/52. Tiny changes remain 0/4 in both directions.
+Center false changes increase to 134/226, versus 121/226 for DTM085.
+The added correction causes both useful training changes and harmful distraction changes. Do not promote either model.
+[Results](Focus309Results.md) include case-level regressions, correction removal, runtime, and the next bounded experiment.
+
+The following registration records the settings fixed before training.
+
+Maximum-mini-NUIAK runs 2 matched adaptations from DTM085 with the existing trainer.
+Both runs keep its 1,820 training entries, labels, weights, seed 42, and thresholds 0.15/0.85.
+Both runs use 30 epochs, batch 16, learning rate 0.0001, and 2 CPU threads.
+The control combines 2 full-frame branches. The candidate combines full-frame context with 1 aligned 32 × 32 window.
+Image differences select the window. Labels do not select it. Both frames use the same window.
+A zero-initialized correction preserves initial scores. Both models have the same parameter count.
+The existing evaluator checks native cases, previous successes, disturbance strengths, and reversals.
+The 4 tiny native pairs remain development checks. No checkpoint or threshold selection uses these pairs.
+The output cap is 128 MiB. No wall-time cap applies. No new capture, export, or production change occurs.
+Acceptance requires improved tiny-control decisions without losing previous correct decisions.
+This test enlarges encoded pixels. It does not test recovered source detail or new labels.
+
+## FOCUS307 — October 9, fixed regions and exposure audit
+
+Maximum-mini-NUIAK compares 1,334 retained pairs using fixed DTM083 and DTM085.
+Image-only regions use aligned crops, 2× expansion, and a 32 × 32 minimum window before the existing transition encoder.
+All 8 tiny-control misses become abstentions. Neither model correctly declares those changes at thresholds 0.15/0.85.
+Regions introduce 134/153 false changes on 226 lighting cases, versus 0 for whole frames.
+Reject this region-only policy. A combined context/detail model remains a separate hypothesis.
+The companion verifies all 1,820 label and weight entries in the retained schedules.
+Content-contrast influence falls from 26.38% to 20.54% in the combined schedule despite fixed group totals.
+No model fitting, data-role changes, or promotion occur. [Results](Focus307Results.md).
+
 ## TRANSITION297 — October 8, fixed spatial diagnostic
 
 Maximum-mini-NUIAK scores 640 native pairs and 678 authored disturbance pairs with fixed DTM083 and DTM085.
@@ -5300,3 +5602,47 @@ The 2 scoring stages take 12.62 s and 12.39 s, excluding input verification and 
 No data roles, thresholds, shipped models, or training configuration change.
 Next: matched native focus/content/position coverage and 1 equal-update comparison, not another channel sweep.
 [Case-linked evidence](../reports/work/TRANSITION-289/handoff.md).
+## FOCUS320 registration — October 10
+
+The user approves the retained-data audit and 1 correction. The audit uses training data only and completes in 126.88 s.
+At initialization, weighted authored gradient magnitude is about 99 times the original magnitude, despite coefficient 0.25.
+At FOCUS319, the aggregate cosine is -0.9085. Artwork-only gradients oppose positive examples in both affected native families.
+Test 1 combined correction: remove auxiliary opposition, then cap its norm at the original norm before coefficient 0.25.
+Do not claim an isolated effect for either component. Raw gradient constraints do not guarantee Adam updates or correct decisions.
+Keep fresh DTM085 initialization, 30 epochs, batch 16, seed 42, learning rate 0.0001, and 2 CPU threads.
+Keep all 1,820 original views, labels, weights, detail crops, 240 authored pairs, and 3,420 updates unchanged.
+Use the fixed last checkpoint and thresholds 0.15/0.85. No new admission, capture, export, or promotion occurs.
+Reuse FOCUS313 and FOCUS319 controls. Test all previous-success sets and report case-level losses.
+Keep output below 2 GiB and memory below 8 GiB. No wall-time limit applies. No second fit follows a failure.
+Evidence: `reports/work/FOCUS-320/diagnostic.json`. Plan: [FOCUS320](Plans/HeadlessEffectExperiments.md#focus320--conflicting-training-signals).
+
+Result: the 30-epoch candidate fails acceptance. Native correctness remains 581/640, versus FOCUS313's 598/640.
+It loses 19 native successes and gains 2. Replay improves over FOCUS319 but remains below the control: 665/668 versus 668/668.
+Placeholder movements improve from 2/8 to 4/8. Tiny changes remain 0/4. Center false changes rise from 99/226 to 105/226.
+Original training loss stays low, but individual decisions still regress. Reject the candidate without another automatic fit.
+[Results](Focus320Results.md) include gradients, case-level losses, timing, and the next score-combination hypothesis.
+
+## FOCUS319 retained registration
+
+Hypothesis: matched authored focus movements and artwork-only changes improve transfer to native focus changes.
+The plan fixes 240 new training pairs from 10 reviewed training assets. Existing training views and reserved data roles stay unchanged.
+Use the FOCUS313 2-window architecture, DTM085 initialization, and 30 epochs. Train only the detail correction.
+Add auxiliary loss weight 0.25 with label-matched deterministic exposure. Keep the original 3,420 updates and fixed thresholds.
+Reuse the completed FOCUS313 original-only control. Record added computation and all previous-success checks.
+Do not launch training before image review. Reject a candidate with lost previous successes or increased false changes.
+Raw registration and results: `reports/work/FOCUS-319/`. No production model changes.
+
+FOCUS319 completes 30 epochs in 707.38 s. The complete preparation and primary evaluation take 936.94 s.
+Authored movement correctness improves from 40/80 to 74/80. Artwork-only correctness improves from 8/80 to 63/80.
+Placeholder movements improve from 2/8 to 8/8. Native correctness falls from 598/640 to 581/640 against FOCUS313.
+The candidate loses 33 native successes in 2 training families. Center false changes increase from 99/226 to 136/226.
+Tiny changes remain 0/4, although their added scores change from negative to positive. Reject the candidate as a replacement.
+Keep the data and failed model for the next conflict diagnostic. Do not launch another automatic fit.
+[Full results](Focus319Results.md) separate data checks, model outcomes, and the pending Swift test check.
+## FOCUS325 completed — 2026-10-10
+
+Both registered 30-epoch comparisons finish. Average pooling reaches 588/640 native decisions; mixed pooling reaches 577/640.
+Neither detects the 4 tiny native changes. Both lose previous successes or increase false changes. Reject both candidates.
+Mixed pooling improves new authored training correctness from 204/432 to 260/432, without native transfer.
+The companion audit finds different effect area and contrast despite similar small controls.
+See [the complete results](Focus325Results.md) for inputs, timings, limitations, and the next comparison.

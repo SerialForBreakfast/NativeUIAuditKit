@@ -1,5 +1,177 @@
 # NativeUIAuditKit — Current State
 
+**HCF337:** [handoffs close and the pilot scorer is ready](HCF337Results.md).
+TTR's HCF336 and REVIEW304 receipts match. NUIAK removed both shared copies.
+TTR's 3 new archives match their hashes but are not admitted. Interruption tests 1 and 2 contain no rendered change.
+The HCF pilot still needs verified native truth from TTR's profile lifecycle.
+
+**HCF336:** [portable Swift runner](HCF336Results.md) passes 22 package tests and 2 relocated authored campaigns.
+Source and reference bundle are published for Sillycon-TTR. Peer receipt and execution remain pending.
+
+**HCF335:** [detached rendering and resume pass](HCF335Results.md) for 4 authored layouts and 8 images.
+Native HCF execution still needs TTR's committed profile interface and verified restart restoration.
+The runner changes no model or training membership.
+
+**HCF334:** the shipped models run on all 8 retained images. [Results](HCF334Results.md).
+The detector matches all 5 rule-supported controls. FocusRing selects a matching control in 3 cases and disagrees in 2.
+Keep optional rules and use disagreements for review. A separate HCF model remains unsupported by independent evidence.
+
+**HCF333:** [review compatibility](HCF333Results.md) fixes rejection of TTR's High Contrast reports.
+All 6 saved analysis frames pass. The data still represents 1 journey, with no verified no-focus examples.
+Keep optional rules first. A separate model requires measured benefit on independent groups.
+
+**FOCUS331:** both image-only region tests complete. [Results](Focus331Results.md) reject both crop-replacement rules before training.
+Boundary ranking improves coverage in 13 groups but harms both content families. Keeping only the first original crop also fails.
+No candidate starts. Next: preserve both original crops while testing added boundary evidence, with its increased cost reported explicitly.
+
+**FOCUS330:** the control-region audit completes. [Results](Focus330Results.md) reject detector-centered crops before training.
+Content boundary coverage falls from 44.97% to 20.20%. The detector matches 302 of 675 distinct frame-body measurements.
+No candidate starts. Current models, previous predictions, roles, and thresholds remain unchanged.
+Next: test image-only boundary ranking with a retained existing window before another justified training run.
+
+**FOCUS329:** the native boundary audit and 30-epoch added-edge candidate complete. [Results](Focus329Results.md).
+Native correctness stays 592/640. Four false changes become abstentions, with no lost forward native successes against FOCUS327.
+The candidate loses 1 reversed-replay success. Tiny changes remain 0/4. Reject replacement; no model is promoted.
+All 101 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Known boundaries contain useful information. Existing windows capture about 42% of boundary change in 2 content families.
+Next: compare control-centered proposals before another encoder change. The historical TTR messages now have acknowledged delivery.
+
+**FOCUS328:** the contrast diagnostic and matched 30-epoch candidate complete. [Results](Focus328Results.md) reject blanket detail normalization.
+Authored correctness reaches 893/960. Native-derived correctness falls from 592/640 to 546/640, with 11 missed changes.
+Left-distraction correctness improves from 155/226 to 186/226. Tiny native changes remain 0/4.
+All 89 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Next, measure boundary information on retained native training captures while keeping raw appearance available. No model is promoted.
+
+**FOCUS327:** detail-filter training completes. [Results](Focus327Results.md) reject the candidate as a replacement.
+Authored training correctness improves from 589/960 to 736/960 against the retained control.
+The native-derived total improves from 589/640 to 592/640, but 6 previous successes are lost and 4 false changes appear.
+Native development and reserved results stay unchanged. Tiny changes remain 0/4.
+All 79 focused tests, the native SwiftPM build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Next, separate growth from content contrast before more volume. The [TTR review](Focus327TTRFeedback.md) records the feedback opportunity and missing replies.
+
+**FOCUS326:** independent effect controls and 2 matched 30-epoch runs complete. [Results](Focus326Results.md).
+Both reach 589/640 native decisions but lose 8 previous native successes. Tiny changes remain 0/4.
+Independent effects reduce losses against the coupled control, but still fail distraction and placeholder checks. Reject both candidates.
+All 76 focused tests, the offline build, 14 XCTest tests, and 173 Swift Testing tests pass.
+Next, test learned detail filters using the same data and retained frozen-filter control.
+
+**FOCUS325:** 432 new authored pairs and 2 matched 30-epoch runs complete. [Results](Focus325Results.md).
+Average pooling reaches 588/640 native decisions. Mixed pooling reaches 577/640 and loses 31 previous native successes.
+Both miss all 4 tiny native changes. Reject both candidates; keep the current TTR model.
+All 70 focused tests, the offline build, 14 XCTest tests, and 173 Swift Testing tests pass.
+The next proposed comparison varies effect width and contrast independently from control size.
+
+**FOCUS324:** retained features improve native correctness from 581/640 to 595/640. [Results](Focus324Results.md).
+Development correctness reaches 40/40. However, the candidate loses 90 left-distraction successes and still misses all tiny changes.
+Reject the candidate. All 65 focused tests, the offline build, 14 XCTest tests, and 173 Swift Testing tests pass.
+The bounded readout cannot solve tiny cases under its training constraints. Next: test visual coverage and the detail encoder together.
+
+**FOCUS323:** the direct output fit completes. [Results](Focus323Results.md).
+It gains 1 correct distraction decision but leaves native results at 581/640 and tiny changes at 0/4.
+The diagnostic shows that this fixed feature family cannot fix the tiny cases under the current constraints and coefficient limits.
+Reject the candidate. All 59 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Next: audit detail features before scalar-score compression. Do not repeat another weight-only fit over the same scores.
+
+**FOCUS322:** the separation audit, guarded correction, and complete comparison finish. [Results](Focus322Results.md).
+The solver finds no linear rule that separates all retained training labels.
+The nonlinear guard preserves FOCUS319 decisions but blocks useful learning. Native correctness stays 581/640; tiny changes stay 0/4.
+Reject the candidate. All 55 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Next: test direct constrained fitting of the output layer. Do not repeat the backtracking fit or add data volume yet.
+
+**FOCUS321:** the margin audit and fixed 30-epoch score fit finish. [Results](Focus321Results.md).
+The candidate changes 3 parameters and preserves 34 frozen tensors.
+Native correct decisions fall from FOCUS319's 581/640 to 520/640. Tiny changes remain 0/4.
+More abstentions explain the native loss. Reject the candidate. Production models remain unchanged.
+All 49 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Next: measure score separation on training cases before choosing a loss that preserves decision margins.
+
+**FOCUS320:** the gradient audit and fixed 30-epoch correction finish. [Results](Focus320Results.md).
+At initialization, the weighted authored gradient is about 99 times larger than the original gradient.
+Removing opposition and limiting magnitude lowers disruption but does not pass the model checks.
+Native correctness is 581/640, versus FOCUS313's 598/640. Placeholder movements reach 4/8; tiny changes remain 0/4.
+The candidate loses 19 native successes and gains 2. Reject it. No production model changes.
+All 45 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+Next: measure decision margins and test how whole-frame and detail scores combine. More authored volume is not yet justified.
+
+**FOCUS319:** 240 authored pairs and 1 matched candidate finish. [Results](Focus319Results.md).
+Placeholder movement correctness rises from 2/8 to 8/8. Native correctness falls from 598/640 to 581/640 against FOCUS313.
+Inspected development correctness reaches 38/40; inspected reserved correctness reaches 52/52. Tiny changes remain 0/4.
+The candidate loses 33 native successes in 2 training families and increases center false changes. Do not promote it.
+The authored effect helps the tiny-case scores, but the frozen classifier still outweighs that correction.
+All 38 focused Python checks pass. The offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+
+**FOCUS313:** both 30-epoch comparisons finish. [Results](Focus313Results.md).
+Two windows improve native correctness from 589/640 to 598/640, but lose 3 previous successes and miss all 4 tiny changes.
+Both windows cover the tiny changes. The learned correction still reinforces unchanged decisions. No model is promoted.
+The current headless renderer supplies authored A-to-B pairs without a new producer command.
+All 3 models detect shelf movement, abstain on grid movement, and miss hero-button and tab movement.
+The 34 focused tests pass. The current offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+TTR318 review proposals need human approval. They are not worker assignments.
+
+**FOCUS312:** the retained effect audit and 30-epoch candidate complete. [Results](Focus312Results.md).
+Original views remain unchanged. Native correctness reaches 610/640, but left false changes rise to 185/226.
+Tiny changes remain 0/4 in both directions. Do not promote the candidate.
+One selected window covers about half the tiny native change; 2 windows cover essentially all of it.
+The correction diagnostic isolates harmful added scores, but removing them does not restore previous successes.
+Next: compare 1 versus 2 detail windows with the original whole-frame branch frozen.
+All 39 focused tests, the offline build, and 173 Swift tests pass. Data roles remain unchanged.
+
+**October 9 FOCUS311:** the scale-training candidate fails acceptance. [Results](Focus311Results.md).
+It learns 14/24 sampled 3-pixel training changes, versus 0/24 for FOCUS310, but still misses all 4 tiny native changes.
+Native correctness is 575/640, versus DTM085's 589/640. Reserved correctness is 52/52. Lighting remains 226/226.
+The 30-epoch run, 128-pair training diagnostic, 34 focused tests, offline build, and 173 Swift tests complete.
+No model is promoted. Next, measure native effect coverage and preserve original-view exposure before another fit.
+
+**October 9 FOCUS310:** original-detail training finishes, but neither candidate passes the regression requirements.
+Center false changes fall from 121 to 108 of 226. Reserved correctness falls from 51 to 49 of 52.
+Tiny changes remain 0/4 in both directions. All 226 lighting cases remain correct.
+Measured native training controls span 15.06–27.02 encoded pixels; tiny development controls span 2.93 pixels.
+The audit preserves 668 encoded-only entries as unmeasured, not proof of small-control coverage.
+All 53 focused Python tests, the offline build, and 173 Swift tests pass. No model is promoted.
+Next: one scale-matched training comparison with unchanged evaluation exclusions. [Results](Focus310Results.md).
+
+
+**October 9 FOCUS309:** 2 matched context/detail adaptations complete on unchanged data and weights.
+The candidate improves native training decisions from 505/548 to 539/548 but keeps reserved decisions at 51/52.
+It misses all 4 tiny changes and increases center false changes from 121/226 to 134/226.
+The correction-removal check links both training gains and distraction errors to the added branch.
+Do not promote either model. Original-resolution detail and small-scale coverage remain open.
+All 32 focused Python tests, the offline build, and all 173 Swift tests pass. [Results](Focus309Results.md).
+
+**October 9 TTR-UPDATE308:** Maximum-mini-TTR `538a1119` adds standalone screen rendering for 4 layouts.
+The geometry comparator accepts empty input and a fabricated node without images. These are independently reproduced failures.
+Use this path as experimental authored data only. It does not establish native focus parity.
+Chat shows no new delivered peer messages; the source report contains newer TTR updates than the shared status.
+[Review](TTRHeadless308Review.md) defines repairs, useful experiments, and ownership.
+
+**October 9 FOCUS307:** 1,334 retained pairs complete a fixed region comparison with DTM083 and DTM085.
+Source regions change all 8 tiny-control misses into abstentions, but produce no correct focus-change decisions.
+Regions also cause 134/153 false changes on 226 lighting cases. Reject the tested region-only replacement.
+The independent exposure audit verifies 1,820 schedule entries and shows condition weights change despite fixed group totals.
+All 32 focused Python tests, the native offline build, and all 173 serial Swift tests pass.
+Next: test combined whole-frame context and region detail with explicit negative-condition weights.
+No capture, training, data-role change, or promotion occurs. [Results](Focus307Results.md).
+
+**October 9 REVIEW305 source completion:** the sanitized checkpoint preserves all 503 tensor storage files and removes 5 personal paths.
+The historical exporter succeeds. Native replay matches 25 detections with 0 mismatches.
+The source supplement includes instructions, notices, and receipts.
+The final privacy scan finds a personal identifier in the old Core ML file. REVIEW306 uses the tested privacy-corrected export.
+The maintainer has exact [preview publication steps](ModelPublicationReview305.md). No Git or GitHub write occurs.
+Sillycon-TTR's application review and coordinator forwarding remain separate open items.
+
+**October 9 REVIEW304:** the real tvOS model review pack is published with verified SMB readback.
+It includes a pinned catalog, public adapter, exact source archive, and fixed-input reference results.
+The exact inner archive compiles and matches 25/25 bundled detections through the public provider adapter.
+TTR can test local import without another source commit or release tag. Public download and signed TTR qualification remain open.
+[Receiver instructions](TTRReview304.md) distinguish the local review from public release.
+
+**October 9 FOCUS302:** local native capture and strict intake complete for 2 small-control recipes.
+Intake rejects 4 pairs with missing body measurements and accepts 4 pairs for development checks.
+DTM083 and DTM085 miss all 4 accepted changes, including reversed pairs. Image-only proposals find all 4 forward changes.
+Both models pass 8 unchanged comparisons. The smallest rendered dimension becomes 2.93 pixels after preprocessing.
+This is a specific detail problem, not proof that all weak effects fail. No model or training admission changes.
+The build, 171 Swift tests, and 37 focused Python tests pass. [Results](Focus302Results.md).
+
 **October 9 FOCUS301:** 3 retained-data audits complete without new inference or training.
 Blanket abstention catches 101 center false changes but loses 126 correct native decisions. Reject that rule as a replacement.
 All 13 native losses from the negative-only candidate occur in 2 content training families.

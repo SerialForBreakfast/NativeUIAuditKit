@@ -1,6 +1,254 @@
 # NativeUIAuditKit — Tasks
 
+## HCF337 — handoffs closed; pilot scorer ready; native truth pending
+
+Owner: Maximum-mini-NUIAK. [Plan](Research/Plans/HCF337.md). [Results](Research/HCF337Results.md).
+
+- [x] Read and acknowledge TTR forwards at cursors 211 and 213.
+- [x] Verify the HCF336 and REVIEW304 receipts. Remove only NUIAK's 2 exact shared copies. Keep both originals.
+- [x] Receive TTR offers r48, r50, and r51. All hashes match. Publish 1 intake receipt. Admit none.
+- [x] Answer TTR's requirements request with the [8-part matrix](Research/HCF337TTRRequirements.md) and publish it on SMB.
+- [x] Add `scripts/score_hcf_pilot.py` and 12 tests. Run HCF333/HCF334 tests and the offline Swift build and tests.
+- [ ] Score the existing rules and the shipped model on the 48-screen campaign when verified truth exists.
+
+Coordinator stores `nuiak-hcf337-handoff-01` at cursor 214 and `nuiak-hcf337-requirements-01` at cursor 216.
+Exact-ID readback passes for both. The coordinator has not read them yet.
+The cursor 214 text abbreviates the REVIEW304 hash incorrectly. Correction `nuiak-hcf337-correction-01` is stored at cursor 218 with exact-ID readback.
+Interruption tests 1 and 2 contain no rendered change: 7 of 9 frames are byte-identical. [BP-114](Research/BestPractices.md) records the lesson.
+Resume the pilot when Sillycon-TTR supplies the profile contract, restoration evidence, per-frame focus and profile receipts, and no-focus capability.
+TTR owns removal of its 3 shared archives. No capture, inference, training, data admission, or Git write occurred.
+
+## HCF336 — portable package delivered; Sillycon qualification pending
+
+Owner: Maximum-mini-NUIAK for design and consumer integration. Proposed producer owner: Sillycon-TTR, pending agreement.
+[Design](Research/ADR-0025-Portable-Experiment-Runner.md). [Results](Research/HCF336Results.md). [Package](Tools/FixtureExperiments/README.md).
+The standalone Swift library and CLI pass 22 tests without NUIAK, Python, or model dependencies.
+Two relocated local campaigns produce 16 images and preserve completed jobs on resume.
+The offline NUIAK build and 187 tests pass. No model or training membership changes.
+The 16,998-byte source archive and reference bundle are published and hash-verified on SMB.
+Transfer `nuiak-hcf336-source-v1` is closed: TTR's receipt matches, and HCF337 removed the shared copy.
+Coordinator stores `nuiak-hcf336-source-ready-01` at cursor 204. Exact-ID readback passes; peer acceptance remains unconfirmed.
+The new TTR template update is acknowledged through cursor 207. Our adapter-alignment reply is stored and read back at cursor 208.
+Sillycon-TTR accepts intake and source-review ownership at cursor 211. Implementation and host qualification are not yet accepted.
+Next: Sillycon-TTR reviews the source and runs the supplied bundle. Maximum-mini-NUIAK then checks returned receipts.
+Acceptance: no NUIAK imports, no embedded host paths, fixed inputs, checked receipts, resumable jobs, and competing-caller tests.
+Native HCF execution additionally requires verified profile restoration and restart recovery.
+The package remains staged here until TTR accepts ownership. No external repository files, services, or physical devices change.
+
+## HCF335 — unattended batches; native adapter pending
+
+Owner: Maximum-mini-NUIAK. [Plan](Research/Plans/HCF335.md). [Results](Research/HCF335Results.md).
+The authored runner passes 12 focused tests and a real 4-layout resume test.
+It produces 8 images in 2 detached batches. The first batch remains unchanged.
+The offline build and 187 Swift tests pass with scoped permission for Core ML tests.
+Complete: frozen jobs, hashes, exclusive execution, resource checks, bounded operations, atomic checkpoints, cancellation, and explicit crash reconciliation.
+Complete companion: answer Sillycon-TTR's 7 HCF review questions using HCF333/HCF334 evidence.
+Coordinator stores `nuiak-hcf335-review-01` at cursor 196. Readback passes; peer reading remains unconfirmed.
+Coordinator stores the completed test as `nuiak-hcf335-result-01` at cursor 198. Readback passes; no unread replies remain.
+Pending: native HCF adapter and the matched rules/model pilot.
+Sillycon-TTR reports successful profile changes, but its source remains uncommitted. Restart restoration also remains open.
+Resume when Sillycon-TTR supplies the committed command contract and restoration evidence.
+Do not equate authored rendering with native HCF. No training, recurring service, or model change occurs.
+
+## HCF334 — shipped-model diagnostic complete
+
+Owner: Maximum-mini-NUIAK. [Plan](Research/Plans/HCF334.md). [Results](Research/HCF334Results.md).
+The production batch completes on 8 retained images. The detector matches all 5 saved rule proposals.
+FocusRing selects a matching box in 3 cases and a different object in 2 Home cases.
+Keep optional rules and separate model outputs. Do not add a separate model or require agreement for every review proposal.
+The companion report tests missing results, duplicate results, changed image identities, and all comparison outcomes.
+All 19 focused tests, the offline build, and 187 Swift tests pass.
+Coordinator stores `nuiak-hcf334-result-01` at cursor 187. Readback passes; forwarding and peer acknowledgment remain unconfirmed.
+Native collection remains pending: no TTR desktop process is running, and the inspected CLI lacks automatic profile switching.
+Do not pull over the 2 modified TTR Xcode user files. No source or runtime changes occur.
+Next: independent HCF groups with competing highlights, clock/profile badges, and verified no-focus cases under the existing capture plan.
+
+## HCF333 — High Contrast assistance
+
+Owner: Maximum-mini-NUIAK. Current assignment follows the maintainer's HCF request.
+The review importer now accepts TTR HCF reports and checks paired sidecars against exact PNGs.
+The retained audit verifies 8 entries, 7 unique images, and 6 analysis frames from 1 journey.
+[Results](Research/HCF333Results.md). [Implementation and next comparison](Research/Plans/HCF333.md).
+
+- [x] Repair the existing HCF review path without changing labels or ordinary boxes.
+- [x] Validate retained reports and compare rules, shared models, and a separate model.
+- [x] Run 15 focused tests and 187 Swift tests. Publish the result with exact-ID readback.
+- [ ] Qualify the supported Maximum-mini-TTR profile lifecycle before new native HCF capture.
+- [ ] Complete the 48-screen development campaign with independent layout groups and explicit negative coverage.
+- [ ] Compare fixed rules with compatible model outputs before choosing 1 learned correction.
+
+Keep rules optional and advisory. Do not train a separate model from the single retained journey.
+These entries extend ACCESSIBILITY-ASSISTED-29 / HCF-03; they do not create another producer pipeline.
+Coordinator stores `nuiak-hcf333-result-01` at cursor 183. Forwarding and peer acknowledgment remain unconfirmed.
+
+Product scope: [MVP and future roadmap](Research/ProductRoadmap.md).
+The roadmap separates existing features, planned delivery, and proposals. This file remains the sole work queue.
+
 ## Focus improvement program — October 9
+
+**FOCUS323 completes:** the direct constrained fit adds 1 correct distraction decision but no native improvement.
+Native correctness remains 581/640; tiny changes remain 0/4. Reject the candidate.
+Under the tested features, margins, and coefficient limits, no output weights can detect the 8 forward/reversed tiny cases.
+All 59 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+[Results](Research/Focus323Results.md) define the next feature-level investigation. Stop repeating scalar-score fits.
+The result passes SMB readback for Sillycon-TTR. Coordinator forwarding and peer acknowledgment remain unconfirmed.
+
+**FOCUS322 completes:** the separation audit and guarded correction finish. Reject the candidate.
+Native correctness remains 581/640; tiny changes remain 0/4. The guard preserves FOCUS319 but blocks useful updates.
+All 55 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+[Results](Research/Focus322Results.md) distinguish impossible linear separation from the update method's limitations.
+The result passes SMB readback for Sillycon-TTR. Coordinator storage passes; forwarding and peer acknowledgment remain unconfirmed.
+
+**FOCUS321 completes:** the margin audit and 1 frozen-branch comparison finish. Reject the candidate.
+Native correct decisions fall from FOCUS319's 581/640 to 520/640. Tiny changes remain 0/4.
+The 3-parameter fit takes 0.64 s. Full comparison takes 172.37 s including the fit.
+All 49 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+[Results](Research/Focus321Results.md) preserve case-level losses and the next test.
+Coordinator chat works again. Message storage does not confirm forwarding or peer acknowledgment.
+The result passes SMB readback at `nuiak/responses/nuiak-focus321-result-01.json`. Sillycon-TTR acknowledgment remains unconfirmed.
+
+**FOCUS320 completes:** the gradient audit and 1 matched 30-epoch correction finish. Reject the candidate.
+Authored gradients can dominate despite coefficient 0.25. The correction limits that influence but does not preserve all native successes.
+Native correctness is 581/640, versus 598/640 for FOCUS313. Placeholder movements improve from 2/8 to 4/8; tiny changes remain 0/4.
+All 45 focused tests, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+[Results](Research/Focus320Results.md) identify the next test: measure decision margins, then change how context and detail scores combine.
+Keep original inputs, previous-success checks, and evaluation exclusions. Do not repeat the projection fit or increase authored volume yet.
+The result passes exact SMB readback for Sillycon-TTR. Coordinator chat refuses the connection; peer acknowledgment remains unconfirmed.
+
+**FOCUS319 model work finishes:** 240 authored pairs and 1 matched 30-epoch candidate complete.
+Placeholder movements improve from 2/8 to 8/8. Native correctness falls from 598/640 to 581/640 against the matched control.
+Tiny changes remain 0/4. Reject the candidate. [Results](Research/Focus319Results.md) identify losses in 2 existing training families.
+All 38 focused Python checks, the offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+The coordinator stores the result at cursor 148. SMB readback passes; Sillycon-TTR acknowledgment remains unconfirmed.
+
+**FOCUS313 experiments finish:** 2 matched 30-epoch runs compare 1 versus 2 detail windows with the original classifier frozen.
+The 2-window candidate reaches 598/640 native correct decisions, but loses 3 previous successes and misses all 4 tiny changes.
+Both candidates fail acceptance. [Results](Research/Focus313Results.md) include the complete regression checks and headless companion.
+All 34 focused tests pass. The current offline build, 14 XCTest tests, and 173 serial Swift Testing tests pass.
+The user approves stopping the 2 stalled test processes. The serial run closes the remaining verification work.
+The coordinator stores the result at cursor 146. SMB readback passes; Sillycon-TTR acknowledgment remains unconfirmed.
+Existing headless options produce authored A-to-B pairs now. All 3 tested models score 2/8 movement comparisons correctly.
+The user approves this work. New worker suggestions remain proposals until human approval.
+
+### TTR proposals — not approved for execution
+
+- [ ] **TTR318-A — qualify sequence evidence.** Proposed owner: Sillycon-TTR; NUIAK reviews results.
+  Needs human approval. Check actual actions, observed focus, capture timing, errors, and independent model outcomes.
+- [ ] **TTR318-B — separate catalog discovery from approval.** Proposed owner: Sillycon-TTR.
+  Needs human approval. Use an independently approved hash and test stale, changed, oversized, and unrelated files.
+  [Review and acceptance requirements](Research/TTR318Review.md) define both proposals. No worker is dispatched.
+
+### Approved focus work
+
+FOCUS321 is complete. See [results](Research/Focus321Results.md). No second fit starts.
+
+FOCUS322 is complete. See [results](Research/Focus322Results.md). No second fit starts.
+
+FOCUS323 is complete. See [results](Research/Focus323Results.md). No second candidate runs.
+
+FOCUS324 is complete. [Results](Research/Focus324Results.md) show native gains and a major distraction regression. Reject the candidate.
+
+FOCUS325 is complete. [Results](Research/Focus325Results.md) reject both matched candidates after full regression checks.
+
+FOCUS326 is complete. [Results](Research/Focus326Results.md) reject both matched candidates after all previous-success checks.
+
+FOCUS327 is complete. [Results](Research/Focus327Results.md) show better authored fit but 4 new false changes. Reject the candidate.
+
+FOCUS328 is complete. [Results](Research/Focus328Results.md) reject blanket detail normalization.
+Authored correctness reaches 893/960, but native-derived correctness falls to 546/640 with 11 missed changes.
+
+FOCUS329 completes its native audit and 30-epoch candidate. [Results](Research/Focus329Results.md) reject replacement.
+Native correctness stays 592/640. Four false changes become abstentions, but 1 reversed-replay success is lost. Tiny changes stay 0/4.
+
+FOCUS330 rejects detector-centered regions before training. [Results](Research/Focus330Results.md).
+Content-case boundary coverage falls from 44.97% to 20.20%. The detector matches 302 of 675 distinct frame-body measurements.
+No candidate starts because the registered coverage requirement fails. Current models and all previous predictions remain unchanged.
+Coordinator result `nuiak-focus330-result-01` passes exact-ID readback at cursor 177. Forwarding and TTR acknowledgment remain unconfirmed.
+
+FOCUS331 completes both image-only region tests. [Results](Research/Focus331Results.md) reject both replacement rules before training.
+Boundary ranking improves coverage in 13 groups but harms both content families. Preserving only the first existing crop also fails.
+No candidate starts. Current models and all previous predictions remain unchanged.
+FOCUS331 result `nuiak-focus331-result-01` passes exact-ID readback at cursor 179. Forwarding and TTR acknowledgment remain unconfirmed.
+
+- [ ] **FOCUS332 — preserve original crops and add boundary evidence.** Proposed; awaiting assignment.
+  Owner: Maximum-mini-NUIAK. Keep the FOCUS327 control unchanged and add a zero-initialized correction using boundary crops.
+  This experiment increases the detail budget from 2 crops to 4 crops. Measure memory and latency explicitly.
+  Test 1 fixed 30-epoch run against every previous-success set. Keep membership, weights, thresholds, and evaluation exclusions unchanged.
+  Acceptance: useful native gains without lost previous successes or increased false or missed changes.
+  [Inputs, scope, tests, and acceptance](Research/Focus331Results.md#next-substantial-tranche).
+
+FOCUS329 coordination receives the historical TTR messages at cursors 166–169 and routing receipt 171.
+Maximum-mini-NUIAK acknowledges them through cursor 171. This closes the missing historical-message gap.
+The current renderer question reaches Sillycon-TTR as `coord-handoff-20261010-ttr-question`, cursor 170. Its answer remains pending.
+Response `nuiak-focus329-routing-review-01`, cursor 172, returns the supported provider boundary and the existing REVIEW306 privacy correction.
+Response forwarding and TTR acknowledgment remain separate. No new worker task or model replacement follows these messages.
+Final result `nuiak-focus329-result-01` passes exact-ID readback at cursor 174. Result forwarding and TTR acknowledgment remain unconfirmed.
+
+FOCUS320 is complete. See [completed work](CompletedTasks.md#focus320--training-conflict-and-bounded-correction). No second fit starts.
+
+FOCUS319 is complete. See [completed work](CompletedTasks.md#focus319--supported-authored-training). No second fit is pending.
+
+**Headless effect investigation:** [ranked contracts](Research/Plans/HeadlessEffectExperiments.md) test exaggerated effects without claiming native equivalence.
+FOCUS313 is complete. Synthetic volume does not replace native evaluation.
+Request `nuiak-focus314-authored-effects-01` is stored at coordinator cursor 144.
+The SMB request passes hash verification and readback. Sillycon-TTR acknowledgment and chat forwarding remain unconfirmed.
+
+- [ ] **FOCUS314 — qualify configurable authored pairs.** Maximum-mini-NUIAK owns intake; Sillycon-TTR reviews the producer request.
+  Extend headless308 repairs with explicit pair states and effect controls. Require repeatable pixels, valid geometry, and complete counts.
+- [ ] **FOCUS315 — isolate effect visibility.** Maximum-mini-NUIAK owns 216 matched diagnostic comparisons after FOCUS314.
+  Score existing models by effect, strength, position, and nuisance condition. Keep ambiguous visual cases separate.
+- [ ] **FOCUS316 — compare synthetic transfer.** Maximum-mini-NUIAK owns 3 matched fits after FOCUS315 and FOCUS313.
+  Compare original-only, mixed-strength, and strong-to-weak training. Preserve original views and previous-success checks.
+- [ ] **FOCUS317 — test diversity before volume.** Maximum-mini-NUIAK owns acceptance; BigDog-NUIAK can run a named portable assignment.
+  Requires successful FOCUS316 transfer. Compare 1,024 versus 4,096 pairs under equal updates and unchanged native checks.
+
+
+**FOCUS311 completes:** the 30-epoch scale candidate and full regression check finish. [Results](Research/Focus311Results.md).
+The coordinator stores the result at cursor 141. SMB readback passes. Sillycon-TTR acknowledgment remains pending.
+Tiny native changes remain 0/4 in both directions. Native correctness falls from DTM085's 589/640 to 575/640.
+Reserved correctness improves to 52/52. All lighting cases remain correct. Do not promote the candidate.
+On 24 sampled 3-pixel training changes, correctness rises from 0 to 14. This gain does not transfer to tiny native cases.
+
+**FOCUS312 completes:** the effect audit, 30-epoch candidate, regression checks, and correction diagnostic finish.
+The coordinator stores the result at cursor 143. SMB readback passes. Sillycon-TTR acknowledgment remains pending.
+Native correctness reaches 610/640, but left false changes rise to 185/226. Tiny changes remain 0/4 in both directions.
+Reject the candidate. One detail window holds about half the tiny native difference; 2 windows cover essentially all of it.
+[Results](Research/Focus312Results.md) separate pixel coverage, training gains, and failed model acceptance.
+
+FOCUS313 is complete. See [completed work](CompletedTasks.md#focus313--separate-detail-regions).
+
+**FOCUS310 completes:** the size audit and 2 matched 30-epoch runs finish with all retained regression checks.
+Measured native training controls span 15.06–27.02 encoded pixels. Tiny development controls span 2.93 pixels.
+Original detail reduces center false changes from 121 to 108 of 226, but reserved correctness falls from 51 to 49 of 52.
+Both candidates still miss all 4 tiny changes. Do not promote either model. [Results](Research/Focus310Results.md).
+The coordinator stores the result at cursor 139. SMB publication passes readback; Sillycon-TTR acknowledgment remains pending.
+FOCUS311 completes the scale comparison. FOCUS312 now addresses its measured failures.
+
+**FOCUS309 completes:** both matched 30-epoch runs and all retained regression checks finish.
+Context and enlarged detail improve native training decisions from 505/548 to 539/548.
+Reserved decisions remain 51/52. Tiny changes remain 0/4 in both directions.
+Center false changes rise from 121/226 to 134/226. Do not promote either model.
+The correction-removal check shows that the added branch contributes both training gains and distraction errors.
+All 32 focused Python tests, the offline build, and all 173 Swift tests pass. [Results](Research/Focus309Results.md).
+The coordinator stores the result at cursor 137. The SMB fallback passes readback; Sillycon-TTR acknowledgment remains pending.
+P04's size audit, original-resolution comparison, and scale-matched candidate complete. FOCUS312 addresses the remaining failures.
+Keep training roles, reserved groups, and tiny development pairs unchanged. This work does not need the repaired renderer.
+
+**TTR-UPDATE308:** review of Maximum-mini-TTR `538a1119` finds 4 headless layout types and new model-download checks.
+The unchanged geometry comparator incorrectly certifies empty input and a fabricated node without images.
+[Review and adoption order](Research/TTRHeadless308Review.md) separate authored data from native evidence.
+Sillycon-TTR owns completion repairs and experimental status. Maximum-mini-NUIAK can continue the context/detail comparison independently.
+Next headless step: repair admission checks, then one matched authored batch with independent native evaluation. Do not start bulk generation yet.
+
+**FOCUS302 completes:** Maximum-mini-NUIAK captures 8 small-control pairs through Maximum-mini-TTR.
+Intake accepts 4 pairs for development checks and rejects 4 pairs with missing body measurements.
+Both DTM083 and DTM085 miss all 4 valid changes in both directions. Both models pass all 8 unchanged comparisons.
+Image-only proposals find all 4 forward changes. The smallest rendered dimension becomes 2.93 pixels after preprocessing.
+[Results and limits](Research/Focus302Results.md) define the next correction.
+FOCUS307 completes that comparison on 1,334 pairs. Regions turn tiny-control misses into abstentions but regress on retained distractions.
+The independent audit verifies current condition weights. [Results](Research/Focus307Results.md).
+FOCUS309 and FOCUS310 complete the encoded and original-detail comparisons. Small-scale training coverage remains open.
+Keep this batch outside final evaluation. FOCUS307 does not train or promote models.
 
 **Retained-data batch:** the fixed abstention diagnostic, 4-way regression audit, and saved position audit complete.
 Blanket abstention catches 101 center false changes but loses 126 correct native decisions. Do not adopt it.
@@ -8,7 +256,7 @@ The negative-only candidate loses 13 native answers in 2 content training famili
 [Results](reports/work/FOCUS-301/handoff.md) preserve exact counts and missing weak-effect support.
 Next: measure detail loss and qualify weak-effect strata before selecting 1 correction.
 TRANSITION299 remains open for unsupported weak-effect conditions. P02's cached audit completes; repeatability requires a promising new correction.
-P05 reconciles saved endpoint coverage; current-schedule weighting remains open. P04, P07, and full P09 remain open.
+P05 now includes FOCUS307's verified schedule weights. Missing position coverage remains open. P04, P07, and full P09 remain open.
 
 The maintainer requests 10 testable priorities and independent worker contracts after coordination MVP1.
 [FOCUS301](Research/Plans/FocusImprovementProgram.md) defines the program, metrics, batches, and dispatch checks.
@@ -20,8 +268,8 @@ Maximum-mini-NUIAK owns integration and acceptance. Worker assignments remain pe
 | P01 | TRANSITION299 | Maximum-mini-NUIAK | Check the fixed empty-proposal abstention rule on qualified weak effects |
 | P02 | TRANSITION292 follow-through | BigDog-NUIAK after dispatch | Audit cached gains and losses; do not repeat failed mixtures |
 | P03 | EVAL90 | Maximum-mini-NUIAK | Resolve exact app scope and independent journey groups before capture |
-| P04 | Focus signal diagnostic | BigDog-NUIAK after dispatch | Measure detail lost during existing preprocessing |
-| P05 | TRANSITION252 / coverage290 | Maximum-mini-NUIAK | Reconcile current position, condition, and group exposure |
+| P04 | Focus signal diagnostic | Maximum-mini-NUIAK; BigDog-NUIAK after dispatch | FOCUS310 finds a measured size gap; prepare scale-matched training views and test 1 candidate against all previous successes |
+| P05 | TRANSITION252 / coverage290 | Maximum-mini-NUIAK | Exposure audit completes; preserve condition weights in the next comparison and keep missing position coverage explicit |
 | P06 | FOCUS-ARTWORK239 / FOCUSRING206 / TRANSITION253 | Maximum-mini-NUIAK | Freeze matched artwork/effect tests from qualified inputs |
 | P07 | FOCUS-TRUTH / BD22 / BD25 | BigDog-NUIAK audit; Maximum-mini-NUIAK admission | Resolve retained label and ancestry discrepancies |
 | P08 | FOCUS-BASELINES / BD14 / BD27 | BigDog-NUIAK after dispatch | Check qualified sequence support before temporal comparison |
@@ -123,6 +371,38 @@ Model budgets come from each fixed registration. Coordination approval does not 
 ### Optional model distribution
 
 **RELEASE300 — preparation for TTR 0.4.3 RC [~]**
+The maintainer selects the free, open-source AGPL compliance path. Licensing-path selection is no longer pending.
+The matching export environment contains Ultralytics 8.4.153. The Run 012 source commit is readable.
+Completed: [REVIEW305 preparation](Research/Release305Results.md) includes 746 source files, full notices, and exact-archive parity for 25 detections.
+Completed: the [editable source and publication checks](Research/ModelPublicationReview305.md) remove 5 personal paths and preserve all 503 tensor storage files.
+The historical exporter succeeds; native replay matches all 25 retained detections. No model weights change.
+Next: the maintainer reviews the 7-asset preview inventory and runs the prepared GitHub commands. NUIAK then verifies anonymous downloads.
+Use `models-review306`. The final privacy scan rejects the older model ZIPs because their embedded data contains a personal identifier.
+The rebuilt model uses the sanitized checkpoint. Preserve older drafts without publication.
+Sillycon-TTR's application review remains separate from NUIAK's model release. Coordinator forwarding remains unverified.
+No blanket relicensing or public publication approval is implied.
+October 9 license review: full AGPL text and attribution are prepared; existing MIT notices and uploaded bytes remain unchanged.
+[Exact review](Research/ModelLicenseReview304.md) confirms pretrained lineage. The separate export environment resolves the version mismatch.
+The source audit records 2 modified training-library files. The experiment log describes their image-read fixes.
+Do not equate attribution, public repository visibility, or separate downloads with license compliance.
+The maintainer creates GitHub draft `models-review304` and completes the missing ZIP upload.
+GitHub reports all 3 asset hashes matching local files. The draft targets `cc72583439f39ce8e7c9eaf5b8f48a9f104dcda0`.
+Public publication remains held. The SMB pack remains verified; no TTR receipt permits cleanup yet.
+October 9: GitHub confirms the existing repository is public. Use its Releases page; no separate host is needed.
+The model draft has prepared notes, checksums, and exact [manual commands](Research/GitHubModelDraft.md).
+The scope contains only the tvOS model ZIP, review catalog, and checksums. Do not publish the outer SMB pack.
+The maintainer creates the draft. Model rights and final notices still block public publication, not local TTR integration.
+October 9 REVIEW304: Maximum-mini-NUIAK publishes the real tvOS review pack through the approved SMB transfer.
+The pack includes the pinned catalog, public adapter, source archive, exact inventory, reference image, results, and final archive receipt.
+The delivered inner archive compiles and matches 25/25 detections through the public provider adapter.
+TTR can now test local import without a new NUIAK commit or release tag. [Instructions](Research/TTRReview304.md).
+The catalog is review-only. Its proposed HTTPS path is not published and must not be fetched.
+TTR receipt and actual signed integration remain pending. Public hosting and model rights remain maintainer decisions.
+October 9: the maintainer relays TTR's report of 90 passing host tests for `MODEL-DIST-01–08`.
+Treat host completion as peer-reported until TTR supplies its machine, source revision, and test evidence.
+The published provider API is available at `cc72583`; an approved downloadable catalog entry is not available.
+Maximum-mini-NUIAK owns the next archive/catalog handoff. Do not request duplicate host plumbing.
+[Handoff clarification](Research/TTRModelHandoff.md#october-9-delivery-clarification) separates existing APIs from unfinished distribution work.
 Owner: Maximum-mini-NUIAK. The maintainer selects this work ahead of the next model diagnostic.
 The maintainer publishes preview commit `ec59ea90af7a77a887abe1a2a91dd3eda57dc675` on `codex/optional-models-ttr-preview`.
 The missing source commit no longer blocks TTR review. Signed integration, downloads, and release approval remain open.
@@ -4356,6 +4636,10 @@ pass. [Results and remaining evidence boundary](reports/work/ACCESSIBILITY-TRACK
 Scope: [tracking diagnosis30](Research/Plans/AccessibilityTracking30.md).
 
 ## Review / producer evidence blocked — ACCESSIBILITY-ASSISTED-29 / Codex
+
+HCF333 repairs the NUIAK importer independently of the historical app access failure.
+It accepts HCF analysis and verifies retained paired sidecars. [Results](Research/HCF333Results.md).
+Native profile capture and independent learned-model comparison remain open. Keep optional rules first.
 
 HCF-COLOR263 corrects the proposed user action: local TTR's project picker cannot grant arbitrary NUIAK screenshot access.
 Request a supported retained-image import or explicit input/output grants. No user permission action is currently identified.

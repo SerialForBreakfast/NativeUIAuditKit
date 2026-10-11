@@ -12,11 +12,9 @@ VERSION = 'accessibility-review-batch-v1'
 EVIDENCE = 'accessibility-review-evidence-v1'
 
 
-def perception(record):
-    """Read a standalone TTR AccessibilityPerceptionReport, retaining caller-declared state."""
-    if not record.get('perceptionReport'): return None
-    d=h.read(h.checked(h.ROOT,record['perceptionReport']))
-    h.require(d.get('profile') in ('stable','combined','hover_text') and
+def parse_perception(d):
+    """Check advisory observations without granting focus or navigation authority."""
+    h.require(isinstance(d,dict) and d.get('profile') in ('stable','combined','hover_text','high_contrast_focus') and
               isinstance(d.get('settingsEvidence'),str), 'unsupported_perception_report')
     boxes=d.get('outlineCandidates')
     h.require(isinstance(boxes,list) and len(boxes)<=64, 'outline_limit')
@@ -25,8 +23,58 @@ def perception(record):
             all(type(v) in (int,float) and math.isfinite(v) for v in b.values()),'outline_coordinates')
         h.require(b['x']>=0 and b['y']>=0 and b['width']>0 and b['height']>0 and
             b['x']+b['width']<=1 and b['y']+b['height']<=1,'outline_range')
+    rules=d.get('focusRules')
+    if rules is not None:
+        h.require(isinstance(rules,dict) and type(rules.get('version')) is int and rules['version']==1,
+                  'unsupported_focus_rules')
+        h.require(rules.get('navigationEligible') is False and
+                  rules.get('settingsEvidence')=='not_verified_from_pixels','focus_rules_authority')
+        candidates=rules.get('candidates')
+        h.require(isinstance(candidates,list) and len(candidates)<=128,'focus_candidate_limit')
+        h.require(rules.get('state')==('candidate' if len(candidates)==1 else 'abstained'),
+                  'focus_rule_state')
+        h.require(isinstance(rules.get('reasons'),list) and
+                  all(isinstance(x,str) for x in rules['reasons']),'focus_rule_reasons')
+        for c in candidates:
+            h.require(isinstance(c,dict) and (c.get('geometryRole'),c.get('strategy')) in (
+                ('assisted_outline_proposal','bright_outline'),
+                ('filled_row_proposal','row_fill_contrast_ocr')),'focus_geometry_role')
+            # Reuse the same normalized coordinate checks for both geometry roles.
+            parse_perception(dict(profile='stable',settingsEvidence='proposal',outlineCandidates=[c.get('bounds')]))
+            h.require(isinstance(c.get('labels'),list) and len(c['labels'])<=8 and
+                      all(isinstance(x,str) and len(x)<=512 for x in c['labels']),'focus_context_labels')
+            contrast=c.get('contrast')
+            h.require(contrast is None or (type(contrast) in (int,float) and math.isfinite(contrast)
+                      and -1<=contrast<=1),'focus_contrast')
     return dict(profile=d['profile'],settingsEvidence=d['settingsEvidence'],outlineCandidates=boxes,
-                banner=d.get('banner'),interpretation=d.get('interpretation'),proposalOnly=True)
+                banner=d.get('banner'),focusRules=copy.deepcopy(rules),
+                interpretation=d.get('interpretation'),proposalOnly=True,navigationEligible=False)
+
+
+def perception(record):
+    """Read standalone reports or select an image-bound frame from a TTR sidecar."""
+    if not record.get('perceptionReport'): return None
+    d=h.read(h.checked(h.ROOT,record['perceptionReport']))
+    if d.get('kind')=='vision_pair_preprocessing':
+        h.require(type(d.get('schemaVersion')) is int and d['schemaVersion']==1 and
+            d.get('coordinateConvention')=='top_left_normalized_xywh; pixels=normalized*per_frame_dimensions',
+            'unsupported_perception_sidecar')
+        frames=d.get('frames')
+        h.require(isinstance(frames,list) and len(frames)==2 and
+                  all(isinstance(f,dict) for f in frames),'perception_frames')
+        h.require(sorted(f.get('role','') for f in frames)==['after','before'],'perception_frame_roles')
+        role=record.get('perceptionFrameRole')
+        h.require(role in ('before','after'),'perception_frame_role_required')
+        frame=next(f for f in frames if f['role']==role)
+        ref=record.get('perceptionImage')
+        h.require(isinstance(ref,dict),'perception_image_required')
+        image_path=h.checked(h.ROOT,ref)
+        h.require(frame.get('sha256')==ref['sha256'],'perception_image_mismatch')
+        with Image.open(image_path) as im:
+            h.require(im.format=='PNG' and im.size==(frame.get('width'),frame.get('height')),
+                      'perception_dimensions')
+        d=frame.get('accessibility')
+    return parse_perception(d)
 
 
 def assess(frame, record, target):
@@ -103,6 +151,7 @@ def evidence_refs(evidence):
     for r in evidence.get('frames', []):
         h.require(isinstance(r,dict),'invalid_evidence_record')
         if r.get('perceptionReport'): yield r['perceptionReport']
+        if r.get('perceptionImage'): yield r['perceptionImage']
         for key in ('assistedImage', 'observation'):
             yield r[key]
         for p in r.get('profiles', {}).values():
@@ -159,6 +208,9 @@ def prepare(batch_path, evidence_path, output, sample_count=8, seed=29):
             if a.get('perception'):
                 lines += ['Producer outline proposals (normalized; not ordinary body bounds):',
                           str(a['perception']['outlineCandidates']), '']
+                if a['perception'].get('focusRules') is not None:
+                    lines += ['HCF rule proposals. Geometry roles remain separate. Navigation is not permitted.',
+                              str(a['perception']['focusRules']), '']
     h.write(output/'batch.json', result, sealed=True)
     (output/'review.md').write_text('\n'.join(lines)+'\n')
     validate(output/'batch.json')
