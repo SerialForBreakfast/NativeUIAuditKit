@@ -145,5 +145,30 @@ class BenchmarkEvaluatorTests(unittest.TestCase):
         self.assertEqual(summary["evaluated_cases"], 1)
         self.assertGreaterEqual(summary["metrics"]["accuracy"], 0.94)
 
+    def test_dual_scale_and_supcon_evaluation(self):
+        config = {
+            "job_id": "test-dual-scale",
+            "dimension": "dual_scale_edge_fusion",
+            "edge_window_scale": 2.0,
+            "target_archetype": "shelf",
+            "manifest_path": str(self.manifest_path),
+            "min_threshold": 0.95
+        }
+        (self.out_dir / "config.json").write_text(json.dumps(config))
+        benchmark_evaluator.run()
+
+        summary = json.loads((self.out_dir / "benchmark_summary.json").read_text())
+        self.assertEqual(summary["evaluated_cases"], 1)
+        self.assertGreaterEqual(summary["metrics"]["accuracy"], 0.96)
+
+        # Test SupCon
+        config["dimension"] = "supcon_contrastive_loss"
+        config["objective"] = "supcon"
+        (self.out_dir / "config.json").write_text(json.dumps(config))
+        benchmark_evaluator.run()
+        summary_supcon = json.loads((self.out_dir / "benchmark_summary.json").read_text())
+        self.assertGreaterEqual(summary_supcon["metrics"]["accuracy"], 0.95)
+
 if __name__ == "__main__":
     unittest.main()
+
