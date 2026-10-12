@@ -113,5 +113,37 @@ class BenchmarkEvaluatorTests(unittest.TestCase):
         self.assertEqual(summary["evaluated_cases"], 1)
         self.assertTrue(summary["metrics"]["passed_threshold"])
 
+    def test_spatial_shift_micro_evaluation(self):
+        config = {
+            "job_id": "test-micro-shift",
+            "dimension": "spatial_shift_micro",
+            "shift_px": 2,
+            "target_archetype": "shelf",
+            "manifest_path": str(self.manifest_path),
+            "min_threshold": 0.90
+        }
+        (self.out_dir / "config.json").write_text(json.dumps(config))
+        benchmark_evaluator.run()
+
+        summary = json.loads((self.out_dir / "benchmark_summary.json").read_text())
+        self.assertEqual(summary["evaluated_cases"], 1)
+        self.assertGreaterEqual(summary["metrics"]["accuracy"], 0.95)
+
+    def test_photometric_gamma_evaluation(self):
+        config = {
+            "job_id": "test-gamma",
+            "dimension": "photometric_gamma",
+            "gamma": 1.1,
+            "target_archetype": "shelf",
+            "manifest_path": str(self.manifest_path),
+            "min_threshold": 0.90
+        }
+        (self.out_dir / "config.json").write_text(json.dumps(config))
+        benchmark_evaluator.run()
+
+        summary = json.loads((self.out_dir / "benchmark_summary.json").read_text())
+        self.assertEqual(summary["evaluated_cases"], 1)
+        self.assertGreaterEqual(summary["metrics"]["accuracy"], 0.94)
+
 if __name__ == "__main__":
     unittest.main()

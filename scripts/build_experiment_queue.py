@@ -293,6 +293,369 @@ def build_queue():
                 "target_archetype": "top_nav_shelf",
                 "spatial_bias": "top_left"
             }
+        },
+        {
+            "id": "exp-21-shift-02px",
+            "task": "EXP-16",
+            "hypothesis": "A 2 px shift registers as the same active card body rather than a negative",
+            "decision": "Accuracy >= 0.95 on micro positive shifts",
+            "config": {
+                "job_id": "exp-21-shift-02px",
+                "dimension": "spatial_shift_micro",
+                "shift_px": 2,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-22-shift-05px",
+            "task": "EXP-17",
+            "hypothesis": "Model separates card edge border from immediate inner content under 5 px shift",
+            "decision": "Accuracy >= 0.93 on edge margin retention",
+            "config": {
+                "job_id": "exp-22-shift-05px",
+                "dimension": "spatial_shift_micro",
+                "shift_px": 5,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-23-shift-10px",
+            "task": "EXP-18",
+            "hypothesis": "A 10 px displacement transitions to a hard negative candidate",
+            "decision": "Separation accuracy >= 0.90",
+            "config": {
+                "job_id": "exp-23-shift-10px",
+                "dimension": "spatial_shift_micro",
+                "shift_px": 10,
+                "target_archetype": "grid"
+            }
+        },
+        {
+            "id": "exp-24-shift-15px",
+            "task": "EXP-19",
+            "hypothesis": "Model isolates abutting card margins without boundary ambiguity at 15 px shift",
+            "decision": "Separation accuracy >= 0.90",
+            "config": {
+                "job_id": "exp-24-shift-15px",
+                "dimension": "spatial_shift_micro",
+                "shift_px": 15,
+                "target_archetype": "grid"
+            }
+        },
+        {
+            "id": "exp-25-shift-20px",
+            "task": "EXP-20",
+            "hypothesis": "A 20 px adjacent shift provides complete negative isolation",
+            "decision": "Separation accuracy >= 0.92",
+            "config": {
+                "job_id": "exp-25-shift-20px",
+                "dimension": "spatial_shift_micro",
+                "shift_px": 20,
+                "target_archetype": "top_nav_shelf"
+            }
+        },
+        {
+            "id": "exp-26-shift-25px",
+            "task": "EXP-21",
+            "hypothesis": "A full 25 px row-step displacement eliminates all focus leakage",
+            "decision": "Separation accuracy >= 0.94",
+            "config": {
+                "job_id": "exp-26-shift-25px",
+                "dimension": "spatial_shift_micro",
+                "shift_px": 25,
+                "target_archetype": "settings_list"
+            }
+        },
+        {
+            "id": "exp-27-gamma-07-dark",
+            "task": "EXP-22",
+            "hypothesis": "Underexposed gamma (0.7) retains 3 px white stroke visibility",
+            "decision": "Accuracy >= 0.88 on low luminance",
+            "config": {
+                "job_id": "exp-27-gamma-07-dark",
+                "dimension": "photometric_gamma",
+                "gamma": 0.7,
+                "theme": "dark_standard"
+            }
+        },
+        {
+            "id": "exp-28-gamma-09-shadow",
+            "task": "EXP-23",
+            "hypothesis": "Deep shadow crushing obscures the subtle focus halo",
+            "decision": "Accuracy >= 0.88 on crushed shadows",
+            "config": {
+                "job_id": "exp-28-gamma-09-shadow",
+                "dimension": "photometric_gamma",
+                "gamma": 0.9,
+                "theme": "dark_low_contrast"
+            }
+        },
+        {
+            "id": "exp-29-gamma-11-sdr",
+            "task": "EXP-24",
+            "hypothesis": "Standard SDR brightness curve matches baseline physical accuracy",
+            "decision": "Accuracy >= 0.94 on nominal curve",
+            "config": {
+                "job_id": "exp-29-gamma-11-sdr",
+                "dimension": "photometric_gamma",
+                "gamma": 1.1,
+                "theme": "light_standard"
+            }
+        },
+        {
+            "id": "exp-30-gamma-13-bright",
+            "task": "EXP-25",
+            "hypothesis": "Overexposed gamma (1.3) washes out light card focus rings",
+            "decision": "Accuracy >= 0.87 on high luminance",
+            "config": {
+                "job_id": "exp-30-gamma-13-bright",
+                "dimension": "photometric_gamma",
+                "gamma": 1.3,
+                "theme": "light_standard"
+            }
+        },
+        {
+            "id": "exp-31-vibrant-radial-art",
+            "task": "EXP-26",
+            "hypothesis": "Saturated poster gradients do not trigger false positive focus rings",
+            "decision": "False positive rate < 0.01",
+            "config": {
+                "job_id": "exp-31-vibrant-radial-art",
+                "dimension": "gradient_contrast",
+                "target_archetype": "hero_detail",
+                "theme": "dark_standard"
+            }
+        },
+        {
+            "id": "exp-32-extreme-low-contrast",
+            "task": "EXP-27",
+            "hypothesis": "Model detects focus when ring-to-backdrop contrast is < 1.15:1",
+            "decision": "Accuracy >= 0.85 on subtle contrast",
+            "config": {
+                "job_id": "exp-32-extreme-low-contrast",
+                "dimension": "gradient_contrast",
+                "target_archetype": "shelf",
+                "theme": "dark_low_contrast"
+            }
+        },
+        {
+            "id": "exp-33-scrim-alpha-15",
+            "task": "EXP-28",
+            "hypothesis": "A faint 0.15 scrim allows valid focus detection on foreground sheet",
+            "decision": "Accuracy >= 0.92 on modal target",
+            "config": {
+                "job_id": "exp-33-scrim-alpha-15",
+                "dimension": "scrim_alpha_sweep",
+                "scrim_alpha": 0.15,
+                "target_archetype": "action_dialog"
+            }
+        },
+        {
+            "id": "exp-34-scrim-alpha-30",
+            "task": "EXP-29",
+            "hypothesis": "A 0.30 scrim suppresses background focus candidates by 50%",
+            "decision": "Background candidate suppression > 50%",
+            "config": {
+                "job_id": "exp-34-scrim-alpha-30",
+                "dimension": "scrim_alpha_sweep",
+                "scrim_alpha": 0.30,
+                "target_archetype": "action_dialog"
+            }
+        },
+        {
+            "id": "exp-35-scrim-alpha-50",
+            "task": "EXP-30",
+            "hypothesis": "A 0.50 standard sheet eliminates background false focus",
+            "decision": "Background false positive rate < 0.005",
+            "config": {
+                "job_id": "exp-35-scrim-alpha-50",
+                "dimension": "scrim_alpha_sweep",
+                "scrim_alpha": 0.50,
+                "target_archetype": "action_dialog"
+            }
+        },
+        {
+            "id": "exp-36-scrim-alpha-70",
+            "task": "EXP-31",
+            "hypothesis": "A heavy 0.70 scrim preserves foreground modal button detection",
+            "decision": "Accuracy >= 0.95 on foreground dialog",
+            "config": {
+                "job_id": "exp-36-scrim-alpha-70",
+                "dimension": "scrim_alpha_sweep",
+                "scrim_alpha": 0.70,
+                "target_archetype": "action_dialog"
+            }
+        },
+        {
+            "id": "exp-37-dense-abutting-shadow",
+            "task": "EXP-32",
+            "hypothesis": "Overlapping 1.13x card drop shadows do not trigger false negatives",
+            "decision": "Recall >= 0.88 under 20 px overlap",
+            "config": {
+                "job_id": "exp-37-dense-abutting-shadow",
+                "dimension": "shadow_occlusion",
+                "target_archetype": "shelf",
+                "density": "dense_abutting",
+                "occlusion_px": 20
+            }
+        },
+        {
+            "id": "exp-38-hud-toast-banner",
+            "task": "EXP-33",
+            "hypothesis": "Transient top HUD banner does not degrade shelf focus detection",
+            "decision": "Accuracy >= 0.93 during HUD overlay",
+            "config": {
+                "job_id": "exp-38-hud-toast-banner",
+                "dimension": "modal_scrim_transparency",
+                "target_archetype": "shelf",
+                "overlay": "hud_toast"
+            }
+        },
+        {
+            "id": "exp-39-motion-blur-05",
+            "task": "EXP-34",
+            "hypothesis": "Mild camera jitter (sigma 0.5) preserves focus classification",
+            "decision": "Accuracy >= 0.92 on settled focus",
+            "config": {
+                "job_id": "exp-39-motion-blur-05",
+                "dimension": "motion_blur_sigma",
+                "sigma": 0.5,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-40-motion-blur-15",
+            "task": "EXP-35",
+            "hypothesis": "Rapid swipe blur (sigma 1.5) suppresses premature focus assertion",
+            "decision": "Transition suppression >= 0.85",
+            "config": {
+                "job_id": "exp-40-motion-blur-15",
+                "dimension": "motion_blur_sigma",
+                "sigma": 1.5,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-41-motion-blur-30",
+            "task": "EXP-36",
+            "hypothesis": "Heavy motion blur (sigma 3.0) yields zero false positive focus locks",
+            "decision": "False positive rate < 0.002",
+            "config": {
+                "job_id": "exp-41-motion-blur-30",
+                "dimension": "motion_blur_sigma",
+                "sigma": 3.0,
+                "target_archetype": "grid",
+                "min_threshold": 0.80
+            }
+        },
+        {
+            "id": "exp-42-scale-jitter-108",
+            "task": "EXP-37",
+            "hypothesis": "Model detects subtle third-party elevation of 1.08x",
+            "decision": "Accuracy >= 0.88 on subtle scale",
+            "config": {
+                "job_id": "exp-42-scale-jitter-108",
+                "dimension": "scale_jitter_sweep",
+                "elevation_scale": 1.08,
+                "target_archetype": "grid"
+            }
+        },
+        {
+            "id": "exp-43-scale-jitter-113",
+            "task": "EXP-38",
+            "hypothesis": "Physical ground truth elevation of 1.13x maintains peak accuracy",
+            "decision": "Accuracy >= 0.95 on calibrated scale",
+            "config": {
+                "job_id": "exp-43-scale-jitter-113",
+                "dimension": "scale_jitter_sweep",
+                "elevation_scale": 1.13,
+                "target_archetype": "grid"
+            }
+        },
+        {
+            "id": "exp-44-scale-jitter-118",
+            "task": "EXP-39",
+            "hypothesis": "Exaggerated 1.18x elevation maintains card aspect ratio invariance",
+            "decision": "Accuracy >= 0.92 on large scale",
+            "config": {
+                "job_id": "exp-44-scale-jitter-118",
+                "dimension": "scale_jitter_sweep",
+                "elevation_scale": 1.18,
+                "target_archetype": "hero_detail"
+            }
+        },
+        {
+            "id": "exp-45-margin-02",
+            "task": "EXP-40",
+            "hypothesis": "Small margin (0.2) tests embedding separation baseline",
+            "decision": "Inter-class separation > 0.40",
+            "config": {
+                "job_id": "exp-45-margin-02",
+                "dimension": "contrastive_margin",
+                "margin": 0.2,
+                "target_archetype": "grid",
+                "min_threshold": 0.85
+            }
+        },
+        {
+            "id": "exp-46-margin-05",
+            "task": "EXP-41",
+            "hypothesis": "Standard margin (0.5) provides balanced separation",
+            "decision": "Accuracy >= 0.92 across triplets",
+            "config": {
+                "job_id": "exp-46-margin-05",
+                "dimension": "contrastive_margin",
+                "margin": 0.5,
+                "target_archetype": "grid"
+            }
+        },
+        {
+            "id": "exp-47-margin-08",
+            "task": "EXP-42",
+            "hypothesis": "Wide margin (0.8) forces tighter clusters for subtle rings",
+            "decision": "Embedding separation > 0.75",
+            "config": {
+                "job_id": "exp-47-margin-08",
+                "dimension": "contrastive_margin",
+                "margin": 0.8,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-48-margin-10",
+            "task": "EXP-43",
+            "hypothesis": "Strict margin (1.0) maintains gradient stability",
+            "decision": "Gradient stability index >= 0.88",
+            "config": {
+                "job_id": "exp-48-margin-10",
+                "dimension": "contrastive_margin",
+                "margin": 1.0,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-49-temp-007",
+            "task": "EXP-44",
+            "hypothesis": "Standard InfoNCE temperature (0.07) optimizes hard negative penalty",
+            "decision": "Hard negative accuracy >= 0.93",
+            "config": {
+                "job_id": "exp-49-temp-007",
+                "dimension": "temperature_scaling",
+                "temperature": 0.07,
+                "target_archetype": "shelf"
+            }
+        },
+        {
+            "id": "exp-50-temp-015",
+            "task": "EXP-45",
+            "hypothesis": "Higher temperature (0.15) maintains focus ring boundary resolution",
+            "decision": "Accuracy >= 0.89 on boundary cases",
+            "config": {
+                "job_id": "exp-50-temp-015",
+                "dimension": "temperature_scaling",
+                "temperature": 0.15,
+                "target_archetype": "top_nav_shelf"
+            }
         }
     ]
 
