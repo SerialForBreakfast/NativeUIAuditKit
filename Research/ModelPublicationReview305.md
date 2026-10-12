@@ -91,7 +91,7 @@ Do not upload the entire output directory. It contains private diagnostics.
 First verify the 6 prepared artifacts:
 
 ```sh
-cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit
+cd NativeUIAuditKit  # the repository root
 (cd reports/work/RELEASE-305/public306 && shasum -a 256 -c SHA256SUMS)
 gh release view models-review306 \
   --repo SerialForBreakfast/NativeUIAuditKit \

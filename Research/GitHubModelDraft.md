@@ -22,7 +22,7 @@ The agent prepares files only. The maintainer runs GitHub writes.
 Run this from the repository root:
 
 ```sh
-cd /Users/josephmccraw/Documents/GitHub/NativeUIAuditKit
+cd NativeUIAuditKit  # the repository root
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts .venv-yolo/bin/python scripts/model_release.py verify \
   reports/work/RELEASE-304/delivery/entry.json \
   reports/work/RELEASE-304/delivery/nativeui-tvos-v3.0-review304.zip

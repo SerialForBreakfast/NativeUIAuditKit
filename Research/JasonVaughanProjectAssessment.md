@@ -28,7 +28,7 @@ No project receives approval for installation, network exposure, repository acce
 | 3 | TangleBrain, local trial | Route suitable text tasks to existing local models | Measure accepted results and total cost |
 | 4 | PortHub design review | Fewer port conflicts | Borrow the design only after security and test changes |
 | 5 | Medusa protocol review | Cross-agent messaging | Resolve identity, request integrity, and replay risks first |
-| Defer | ClawBridge | Remote access to Claude Code sessions | Poor fit for our current Codex-based plan |
+| Defer | ClawBridge | Remote access to coding-agent terminal sessions | Poor fit for our current plan |
 | Do not adopt now | Archived tools and unrelated products | Little benefit to current model work | Keep as references only |
 
 ## Scope and evidence limits
@@ -77,7 +77,7 @@ For unrelated or private products, “not estimated” is intentional. A number 
 | [TangleBrain](https://github.com/Jason-Vaughan/TangleBrain) | Routes text requests across local and hosted model backends | v0.25.0 release; recent successful CI, not at the inspected commit | Medium fit for text work. Not a GPU training scheduler | Trial: 1–2 days. Integration: 3–7 days |
 | [Medusa](https://github.com/Jason-Vaughan/Medusa) | Connects agents through MCP, messaging, and peer coordination | Release name v1.0.0-rc2; website calls it beta | Relevant concept. Current authentication is insufficient for our worker controls | Review: 1–2 days. Integration: 5–10+ days after fixes |
 | [PortHub](https://github.com/Jason-Vaughan/PortHub) | Tracks ports through leases, a daemon, and a dashboard | Package v0.1.1; no GitHub release found; test commands are placeholders | Useful local idea. Network API and missing tests prevent direct adoption | Trial: 0.5–1 day. Hardened local integration: 3–6 days |
-| [ClawBridge](https://github.com/Jason-Vaughan/ClawBridge) | Exposes Claude Code terminal sessions and permission prompts through HTTP | v2.0.1 release; implementation and security design available | Low fit for current Codex work. Adds another execution interface | Review: 1 day. Integration: 5–10+ days if a need appears |
+| [ClawBridge](https://github.com/Jason-Vaughan/ClawBridge) | Exposes coding-agent terminal sessions and permission prompts through HTTP | v2.0.1 release; implementation and security design available | Low fit for current work. Adds another execution interface | Review: 1 day. Integration: 5–10+ days if a need appears |
 | [prawduct](https://github.com/Jason-Vaughan/prawduct) | Provides a planning and review workflow for coding agents | Public fork of brookstalley/prawduct | Borrow selected checks. Do not add a second task authority | Review: 0.5–1 day. Selective adaptation: 1–2 days |
 | [CLiTS](https://github.com/Jason-Vaughan/CLiTS) | Collects Chrome diagnostic information | Archived; README recommends newer browser tooling | Low fit. It does not provide native UIKit labels | No adoption. Reference review: 0.5 day |
 | [refuctor](https://github.com/Jason-Vaughan/refuctor) | Tracks technical debt with a developer interface | Archived | Duplicates our task queue without solving model problems | No adoption. Reference review: 0.5 day |
@@ -267,7 +267,7 @@ and [package scripts](https://github.com/Jason-Vaughan/PortHub/blob/ea0fb53e7ef8
 
 ### ClawBridge: additional execution power with limited benefit here
 
-ClawBridge starts Claude Code through a terminal interface and exposes HTTP controls.
+ClawBridge starts a coding-agent command-line tool through a terminal interface and exposes HTTP controls.
 Its native `node-pty` dependency and terminal parsing add maintenance requirements.
 
 The inspected server refuses startup without a token unless an explicit unauthenticated option is set.
@@ -278,8 +278,8 @@ That is not a directory-boundary check and does not resolve symbolic links.
 The export-file checks also use prefix comparisons.
 These checks need targeted tests before they protect our filesystem boundary.
 
-We already have a proposed Codex worker path. Adding a Claude-specific bridge now creates another execution and permission system.
-Use it only if a measured Claude-specific requirement justifies that cost.
+We already have a proposed worker path. A bridge for 1 specific agent tool now adds another execution and permission system.
+Use it only if a measured requirement for that tool justifies that cost.
 
 Source: [server implementation](https://github.com/Jason-Vaughan/ClawBridge/blob/946f41961fe6acf2bc046a792b46733c82c3f494/bridge/server.js).
 

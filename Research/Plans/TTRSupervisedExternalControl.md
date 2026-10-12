@@ -83,7 +83,7 @@ The inspected local TTR source HEAD was46dce7b3a79e4f17af49bc0324d4aeba3cc0958d;
 source-to-Sillycon-binary match was not verified. The later successful connect→acquire
 sequence supports the prerequisite diagnosis. Do not call it a broken lease implementation.
 
-TTR peer status updated18:10:33Z reports MCP-COMPAT-01 and a live local Claude Code
+TTR peer status updated18:10:33Z reports MCP-COMPAT-01 and a live local MCP client
 listing of94 tools, plus some environment-limited test failures. Reuse and assess
 that interface; this is **not** a request to reinvent MCP or a claim that TTR has
 no automation support. Local MCP qualification does not prove a cross-host consumer
