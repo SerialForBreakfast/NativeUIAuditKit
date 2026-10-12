@@ -98,5 +98,20 @@ class BenchmarkEvaluatorTests(unittest.TestCase):
         summary = json.loads((self.out_dir / "benchmark_summary.json").read_text())
         self.assertIn("metrics", summary)
 
+    def test_modal_scrim_evaluation(self):
+        config = {
+            "job_id": "test-scrim",
+            "dimension": "modal_scrim_transparency",
+            "target_archetype": "grid",
+            "manifest_path": str(self.manifest_path),
+            "min_threshold": 0.85
+        }
+        (self.out_dir / "config.json").write_text(json.dumps(config))
+        benchmark_evaluator.run()
+
+        summary = json.loads((self.out_dir / "benchmark_summary.json").read_text())
+        self.assertEqual(summary["evaluated_cases"], 1)
+        self.assertTrue(summary["metrics"]["passed_threshold"])
+
 if __name__ == "__main__":
     unittest.main()

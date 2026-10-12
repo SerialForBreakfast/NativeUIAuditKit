@@ -235,6 +235,64 @@ def build_queue():
                 "dimension": "temporal_settlement",
                 "target_archetype": "focus_maze"
             }
+        },
+        {
+            "id": "exp-16-maze-absorbing-barrier",
+            "task": "EXP-11",
+            "hypothesis": "Absorbing barrier nodes in deep maze layouts do not cause negative-to-positive focus leakage",
+            "decision": "Confirm maze barrier separation accuracy >= 0.88 without path ambiguity",
+            "config": {
+                "job_id": "exp-16-maze-absorbing-barrier",
+                "dimension": "maze_absorbing_barrier",
+                "target_archetype": "focus_maze"
+            }
+        },
+        {
+            "id": "exp-17-modal-scrim-transparency",
+            "task": "EXP-12",
+            "hypothesis": "Modal sheet scrim alpha values between 0.20 and 0.60 correctly suppress background focus candidates",
+            "decision": "Enforce zero false positive detections on dimmed background elements under modal sheet",
+            "config": {
+                "job_id": "exp-17-modal-scrim-transparency",
+                "dimension": "modal_scrim_transparency",
+                "target_archetype": "action_dialog",
+                "overlay": "scrim_modal_sheet"
+            }
+        },
+        {
+            "id": "exp-18-dense-card-abutting",
+            "task": "EXP-13",
+            "hypothesis": "Abutting shelf tiles with 0 px margin maintain IoU bleed < 0.05 under 1.13x elevation",
+            "decision": "Confirm abutting tile bounding box IoU bleed stays below 5% threshold",
+            "config": {
+                "job_id": "exp-18-dense-card-abutting",
+                "dimension": "dense_card_abutting",
+                "target_archetype": "shelf",
+                "density": "dense_abutting"
+            }
+        },
+        {
+            "id": "exp-19-extreme-aspect-ratios",
+            "task": "EXP-14",
+            "hypothesis": "Extreme aspect ratios (21:9 panoramic and 9:16 vertical) maintain focus detection accuracy above 0.88",
+            "decision": "Require focus detection accuracy >= 0.88 across extreme aspect ratios",
+            "config": {
+                "job_id": "exp-19-extreme-aspect-ratios",
+                "dimension": "extreme_aspect_ratios",
+                "target_archetype": "hero_detail"
+            }
+        },
+        {
+            "id": "exp-20-focus-bias-spatial-corners",
+            "task": "EXP-15",
+            "hypothesis": "Spatial focus bias targeted at canvas boundary corners maintains detection recall >= 0.90",
+            "decision": "Confirm detection recall >= 0.90 on extreme corner focus positions",
+            "config": {
+                "job_id": "exp-20-focus-bias-spatial-corners",
+                "dimension": "focus_bias_corners",
+                "target_archetype": "top_nav_shelf",
+                "spatial_bias": "top_left"
+            }
         }
     ]
 

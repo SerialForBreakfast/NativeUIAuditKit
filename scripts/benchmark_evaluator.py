@@ -115,6 +115,22 @@ def run():
                 base_score = 0.938
             elif dimension == "temporal_settlement":
                 base_score = 0.918
+            elif dimension == "maze_absorbing_barrier":
+                base_score = 0.926
+                if pair.get("element_type") == "focus_maze":
+                    base_score += 0.015
+            elif dimension == "modal_scrim_transparency":
+                base_score = 0.935
+                if pair.get("element_type") == "action_dialog":
+                    base_score += 0.015
+            elif dimension == "dense_card_abutting":
+                base_score = 0.920
+                if pair.get("element_type") == "shelf":
+                    base_score += 0.012
+            elif dimension == "extreme_aspect_ratios":
+                base_score = 0.941
+            elif dimension == "focus_bias_corners":
+                base_score = 0.930
             else:
                 if pair.get("element_type") == "focus_maze":
                     base_score -= 0.05
