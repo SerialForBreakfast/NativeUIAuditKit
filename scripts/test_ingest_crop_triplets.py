@@ -80,5 +80,35 @@ class TestIngestCropTriplets(unittest.TestCase):
         self.assertEqual(summary["validated_cases"], 0)
         self.assertEqual(summary["failed_cases"], 1)
 
+    def test_theme_preservation(self):
+        case_id = "test_case_light"
+        case_dir = self.crops_dir / case_id
+        for f in ["crop_anchor.png", "crop_positive.png", "crop_negative.png"]:
+            self._make_dummy_png(case_dir / f, 256, 256)
+        (case_dir / "crop_manifest.json").write_text("{}")
+
+        manifest = {
+            "dataset_name": "Test-Theme-Corpus",
+            "cases": [
+                {
+                    "case_id": case_id,
+                    "layout": "hero_detail",
+                    "theme": "light_standard",
+                    "focus_bias": "balanced",
+                    "crop_anchor_sha256": "dummy_anchor",
+                    "crop_positive_sha256": "dummy_pos",
+                    "crop_negative_sha256": "dummy_neg"
+                }
+            ]
+        }
+        (self.root / "bulk_crop_triplets_manifest.json").write_text(json.dumps(manifest))
+
+        summary = ingest_triplets(self.root)
+        self.assertEqual(summary["themes"].get("light_standard"), 1)
+        self.assertEqual(summary["cases"][0]["theme"], "light_standard")
+        focus_manifest = json.loads((self.root / "focus_dataset_manifest.json").read_text())
+        self.assertEqual(focus_manifest["pairs"][0]["theme"], "light_standard")
+
 if __name__ == "__main__":
     unittest.main()
+

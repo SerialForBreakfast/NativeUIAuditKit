@@ -85,10 +85,12 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
         else:
             split = "test"
 
+        theme = c.get("theme", "dark_standard")
         validated_cases.append({
             "case_id": case_id,
             "split": split,
             "layout": c.get("layout"),
+            "theme": theme,
             "focus_bias": c.get("focus_bias"),
             "interruption": c.get("interruption"),
             "focused_node_id": c.get("focused_node_id"),
@@ -101,7 +103,7 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
         })
 
     summary = {
-        "dataset_name": "NUIAK-Bulk-Anchored-Crop-Triplets-200-v1",
+        "dataset_name": raw_manifest.get("dataset_name", "NUIAK-Bulk-Anchored-Crop-Triplets-200-v1"),
         "total_cases_found": n_total,
         "validated_cases": len(validated_cases),
         "failed_cases": len(failed_cases),
@@ -111,6 +113,7 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
             "test": sum(1 for c in validated_cases if c["split"] == "test")
         },
         "archetypes": {},
+        "themes": {},
         "biases": {},
         "cases": validated_cases,
         "failures": failed_cases,
@@ -119,8 +122,10 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
 
     for c in validated_cases:
         arch = c["layout"]
+        th = c["theme"]
         bias = c["focus_bias"]
         summary["archetypes"][arch] = summary["archetypes"].get(arch, 0) + 1
+        summary["themes"][th] = summary["themes"].get(th, 0) + 1
         summary["biases"][bias] = summary["biases"].get(bias, 0) + 1
 
     if output_manifest_path:
@@ -130,7 +135,7 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
 
     # Write focus_dataset_manifest.json for eval_focus_ring_detector.py compatibility
     focus_manifest = {
-        "dataset": "NUIAK-Bulk-Anchored-Crop-Triplets-200-v1",
+        "dataset": summary["dataset_name"],
         "created_at": summary["indexed_at"],
         "pairs": [
             {
@@ -139,7 +144,7 @@ def ingest_triplets(dataset_dir, output_manifest_path=None, seed=42):
                 "unfocused_crop": c["anchor_path"],
                 "negative_crop": c["negative_path"],
                 "split": c["split"],
-                "theme": "dark_standard",
+                "theme": c["theme"],
                 "element_type": c["layout"]
             }
             for c in validated_cases
