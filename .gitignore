@@ -116,6 +116,7 @@ NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/*.mlpackage
 NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/*.mlpackage.mlmodel
 NativeUITrainer/*.log
 NativeUITrainer/*.plist
+/reports/eval_*.txt
 NativeUITrainer/training.log
 NativeUITrainer/strip_smoke_test/
 
