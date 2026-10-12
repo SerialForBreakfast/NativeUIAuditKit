@@ -491,7 +491,7 @@ completed four-control recipes, not remote switching or the failed nine-control 
 scores, audits candidate coverage and prepares the EXT-CAP-01 consumer checklist;
 no inference, challenge analysis or hardware operation.
 
-[TTR-EXTERNAL-CONTROL-01](Plans/TTRSupervisedExternalControl.md) is the P0 human-approved
+TTR-EXTERNAL-CONTROL-01 (local planning document) is the P0 human-approved
 external pairing/qualified-lease and capture-delivery workflow request. Current work
 is documentation/coordination; producer implementation needs its own assignment.
 Tasks.md remains the authoritative queue.

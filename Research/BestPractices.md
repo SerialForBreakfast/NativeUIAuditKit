@@ -2386,7 +2386,7 @@ separately from backend execution. Do not remove human consent or label review t
 meet a speed target, or launch new transport outside approved scope.
 **Why:** Repeated setup and status round trips consume the supervised collection
 window even when backend primitives work. The requested contract is in
-[TTRSupervisedExternalControl.md](Plans/TTRSupervisedExternalControl.md).
+a local planning document.
 
 **September28 follow-up:** Logging human TTR inputs does not mean every input has
 an image. The local session retained9 commands but only8 checkpoint observations;
