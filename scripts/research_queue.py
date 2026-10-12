@@ -496,16 +496,39 @@ def summarize(queue=QUEUE):
         current, attempts = state(job)
         last = load(attempts[-1] / 'result.json') if attempts and (attempts[-1] / 'result.json').exists() else {}
         replay = last.get('replay')
-        rows.append(dict(job=spec['id'], task=spec['task'], kind=spec['kind'], authority=spec['authority'],
-                         hypothesis=spec['hypothesis'], decisionRule=spec['decisionRule'], state=current,
-                         attempts=len(attempts), status=last.get('status'), reason=last.get('reason'),
-                         wallSeconds=last.get('wallSeconds'),
-                         closureModules=len(last['closure']['modules']) if last.get('closure') else None,
-                         experimentLogRunId=spec['training']['experimentLogRunId'] if 'training' in spec else None,
-                         replayMatched=replay['matched'] if replay else None,
-                         replayExact=all(f.get('exactlyEqual', f.get('bytesIdentical')) for f in replay['files'])
-                         if replay else None,
-                         replayDifferences=sum(f.get('differenceCount', 0) for f in replay['files']) if replay else None))
+        row = dict(job=spec['id'], task=spec['task'], kind=spec['kind'], authority=spec['authority'],
+                   hypothesis=spec['hypothesis'], decisionRule=spec['decisionRule'], state=current,
+                   attempts=len(attempts), status=last.get('status'), reason=last.get('reason'),
+                   wallSeconds=last.get('wallSeconds'),
+                   closureModules=len(last['closure']['modules']) if last.get('closure') else None,
+                   experimentLogRunId=spec['training']['experimentLogRunId'] if 'training' in spec else None,
+                   replayMatched=replay['matched'] if replay else None,
+                   replayExact=all(f.get('exactlyEqual', f.get('bytesIdentical')) for f in replay['files'])
+                   if replay else None,
+                   replayDifferences=sum(f.get('differenceCount', 0) for f in replay['files']) if replay else None)
+        
+        # Extract screening metrics if available
+        if attempts and (attempts[-1] / 'out/benchmark_summary.json').exists():
+            try:
+                bm = load(attempts[-1] / 'out/benchmark_summary.json')
+                metrics = bm.get('metrics', {})
+                eff = metrics.get('accuracy', 0.0)
+                samples = metrics.get('sample_count', bm.get('evaluated_cases', 0))
+                cost = last.get('wallSeconds') or 0.0
+                row['screening'] = dict(effect=eff, sampleCount=samples, costSeconds=cost)
+            except Exception:
+                pass
+        rows.append(row)
+
+    # Rank completed jobs with screening metrics by effect descending, then cost ascending
+    ranked = sorted(
+        [r for r in rows if r.get('screening') and r.get('status') == 'complete'],
+        key=lambda r: (r['screening']['effect'], -r['screening']['costSeconds']),
+        reverse=True
+    )
+    for rank_idx, r in enumerate(ranked, 1):
+        r['screening']['rank'] = rank_idx
+
     summary = dict(version=SUMMARY_VERSION, generatedAt=time.time(), jobs=rows)
     queue.mkdir(parents=True, exist_ok=True)
     save(queue / 'summary.json', summary, replace=True)
@@ -537,8 +560,13 @@ def main():
     else:
         summary = summarize(args.queue.resolve())
         for row in summary['jobs']:
+            extra = ""
+            if row.get('screening'):
+                sc = row['screening']
+                rank = sc.get('rank', '-')
+                extra = f" effect={sc['effect']:.4f} rank={rank} cost={sc['costSeconds']:.2f}s"
             print(f"{row['job']:<32} {row['state']:<12} attempts={row['attempts']} status={row['status']} "
-                  f"replayMatched={row['replayMatched']} differences={row['replayDifferences']}")
+                  f"replayMatched={row['replayMatched']} differences={row['replayDifferences']}{extra}")
 
 
 if __name__ == '__main__':

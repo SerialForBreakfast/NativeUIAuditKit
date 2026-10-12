@@ -304,6 +304,26 @@ class QueueTests(unittest.TestCase):
         self.assertEqual((rows['job-b']['state'], rows['job-b']['reason']), ('exhausted', 'process_failed'))
         self.assertTrue((self.queue / 'summary.json').exists())
 
+    def test_summary_extracts_screening_metrics_and_ranks(self):
+        self.submit(self.spec(id='job-screen-1'))
+        self.submit(self.spec(id='job-screen-2'))
+        self.run_queue()
+
+        # Write mock benchmark summaries
+        (self.attempt(1, 'job-screen-1') / 'out/benchmark_summary.json').write_text(
+            json.dumps({'metrics': {'accuracy': 0.94, 'sample_count': 10}})
+        )
+        (self.attempt(1, 'job-screen-2') / 'out/benchmark_summary.json').write_text(
+            json.dumps({'metrics': {'accuracy': 0.98, 'sample_count': 12}})
+        )
+
+        rows = {r['job']: r for r in q.summarize(self.queue)['jobs']}
+        self.assertIn('screening', rows['job-screen-1'])
+        self.assertIn('screening', rows['job-screen-2'])
+        self.assertEqual(rows['job-screen-2']['screening']['rank'], 1)
+        self.assertEqual(rows['job-screen-1']['screening']['rank'], 2)
+        self.assertEqual(rows['job-screen-2']['screening']['effect'], 0.98)
+
 
 if __name__ == '__main__':
     unittest.main()
