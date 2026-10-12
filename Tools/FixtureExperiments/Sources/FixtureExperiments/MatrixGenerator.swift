@@ -7,6 +7,7 @@ public enum MatrixPreset: String, CaseIterable {
     case core
     case full
     case edge
+    case on_device
 }
 
 public struct MatrixGenerator {
@@ -162,6 +163,20 @@ public struct MatrixGenerator {
                 Job(id: "edge_08_motion_drift", layout: "shelf", ancestry: "\(experimentID)-e08", theme: "dark_standard", density: "standard_spacing"),
                 Job(id: "edge_09_symbol_align", layout: "top_nav_shelf", ancestry: "\(experimentID)-e09", theme: "light_standard", density: "standard_spacing"),
                 Job(id: "edge_10_text_truncation", layout: "settings_list", ancestry: "\(experimentID)-e10", theme: "dark_standard", density: "dense_abutting")
+            ]
+
+        case .on_device:
+            return [
+                Job(id: "device_01_adjacent_negative", layout: "shelf", ancestry: "\(experimentID)-d01", theme: "dark_standard", density: "dense_abutting"),
+                Job(id: "device_02_gradient_contrast", layout: "hero_detail", ancestry: "\(experimentID)-d02", theme: "dark_low_contrast", density: "standard_spacing"),
+                Job(id: "device_03_hcf_accessibility", layout: "grid", ancestry: "\(experimentID)-d03", theme: "light_standard", density: "standard_spacing"),
+                Job(id: "device_04_elevation_113", layout: "grid", ancestry: "\(experimentID)-d04", theme: "dark_standard", density: "standard_spacing"),
+                Job(id: "device_05_undimmed_label", layout: "settings_list", ancestry: "\(experimentID)-d05", theme: "dark_standard", density: "standard_spacing"),
+                Job(id: "device_06_shadow_occlusion", layout: "shelf", ancestry: "\(experimentID)-d06", theme: "dark_standard", density: "dense_abutting"),
+                Job(id: "device_07_high_luminance", layout: "action_dialog", ancestry: "\(experimentID)-d07", theme: "light_standard", density: "standard_spacing"),
+                Job(id: "device_08_maze_absorbing", layout: "focus_maze", ancestry: "\(experimentID)-d08", theme: "dark_standard", density: "standard_spacing"),
+                Job(id: "device_09_scale_jitter", layout: "top_nav_shelf", ancestry: "\(experimentID)-d09", theme: "dark_standard", density: "standard_spacing"),
+                Job(id: "device_10_modal_scrim", layout: "action_dialog", ancestry: "\(experimentID)-d10", theme: "dark_standard", density: "standard_spacing", overlay: "scrim_modal_sheet")
             ]
         }
     }

@@ -223,4 +223,20 @@ final class RunnerTests: XCTestCase {
         XCTAssertTrue(layouts.contains("action_dialog"))
         XCTAssertTrue(layouts.contains("focus_maze"))
     }
+
+    func testOnDeviceMatrixPreset() throws {
+        let deviceBundle = root.appendingPathComponent("matrix_on_device")
+        try MatrixGenerator.generateMatrix(
+            at: deviceBundle,
+            rendererSourceSHA256: identity,
+            preset: .on_device,
+            experimentID: "exp-on-device"
+        )
+        let exp = try validateBundle(deviceBundle)
+        XCTAssertEqual(exp.jobs.count, 10)
+        let jobIDs = Set(exp.jobs.map(\.id))
+        XCTAssertTrue(jobIDs.contains("device_01_adjacent_negative"))
+        XCTAssertTrue(jobIDs.contains("device_04_elevation_113"))
+        XCTAssertTrue(jobIDs.contains("device_10_modal_scrim"))
+    }
 }

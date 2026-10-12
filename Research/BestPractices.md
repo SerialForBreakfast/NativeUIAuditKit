@@ -6,6 +6,24 @@ Deliver renderer updates and tool improvements through Git commits.
 Do not generate or transfer bulk synthetic datasets across network shares.
 Maximum-mini-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
 This rule keeps Sillycon free for interactive user development.
+
+## Physical Apple TV HD calibration and validation testing — EXP-ON-DEVICE-01
+
+Physical UIKit card expansion measured on Apple TV HD is 1.13x.
+Headless rendering uses 1.14x, giving a delta of 0.88%.
+Physical focus rings use a continuous 3 px white rounded stroke.
+Text labels show dynamic un-dimming relative to neighboring tiles.
+Ten validation experiments test these on-device traits:
+- Hard negative spatial discrimination: separates negative tiles shifted by 10 px to 20 px.
+- Gradient contrast invariance: maintains ring isolation on radial gradients.
+- High Contrast Focus (HCF) dual-mode: classifies standard and accessibility borders.
+- Aspect ratio and elevation: supports 1:1, 2:3, and 16:9 cards under 1.13x scale.
+- Drop shadow occlusion: tolerates 15 px to 25 px overlap on adjacent card margins.
+- High-luminance canvas: prevents false negatives when contrast drops below 1.2:1.
+- Text un-dimming attribution: measures label brightness separation.
+- Hardware domain transfer: validates synthetic crops on physical Apple TV captures.
+- Multi-scale resolution: maintains scale jitter invariance across 128 px to 512 px.
+- Motion blur settlement: identifies the transition threshold for remote control moves.
 Sillycon does not run Python tooling or batch synthetic rendering passes.
 Use SharedStatusFile for lightweight state notices and metadata receipts only.
 
