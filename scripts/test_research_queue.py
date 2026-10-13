@@ -25,6 +25,12 @@ FIXTURE = textwrap.dedent('''
         raise RuntimeError("planned failure")
     def slow():
         time.sleep(30)
+    def brief():
+        time.sleep(0.3)
+        produce()
+    def oversized():
+        (OUT / 'large.bin').write_bytes(b'x' * 20000)
+        time.sleep(30)
     def produce_nested():
         (OUT / "run").mkdir()
         history = [dict(epoch=1, seconds=time.time()), dict(epoch=2, seconds=time.time())]
@@ -34,6 +40,26 @@ FIXTURE = textwrap.dedent('''
 
 
 class QueueTests(unittest.TestCase):
+    def test_live_size_tolerates_removed_temporary(self):
+        vanished = mock.Mock()
+        vanished.lstat.side_effect = FileNotFoundError('atomic rename')
+        present = mock.Mock()
+        present.lstat.return_value = mock.Mock(st_mode=q.stat.S_IFREG, st_size=321)
+        folder = mock.Mock()
+        folder.rglob.return_value = [vanished, present]
+        self.assertEqual(q.live_output_bytes(folder), 321)
+
+    def test_live_size_rejects_links_and_permission_errors(self):
+        path = mock.Mock()
+        folder = mock.Mock()
+        folder.rglob.return_value = [path]
+        path.lstat.return_value = mock.Mock(st_mode=q.stat.S_IFLNK, st_size=10)
+        with self.assertRaisesRegex(ValueError, 'symlink_in_outputs'):
+            q.live_output_bytes(folder)
+        path.lstat.side_effect = PermissionError('denied')
+        with self.assertRaises(PermissionError):
+            q.live_output_bytes(folder)
+
     def setUp(self):
         self.base = q.ROOT / '.build' / f'test-research-queue-{uuid.uuid4().hex}'
         self.modules = self.base / 'modules'
@@ -67,8 +93,8 @@ class QueueTests(unittest.TestCase):
     def submit(self, spec):
         return q.submit(self.write_spec(spec), self.queue, self.modules)
 
-    def run_queue(self, max_jobs=5):
-        return q.run(self.queue, self.modules, max_jobs, sys.executable, self.lock)
+    def run_queue(self, max_jobs=5, retry=False):
+        return q.run(self.queue, self.modules, max_jobs, sys.executable, self.lock, retry=retry)
 
     def attempt(self, number=1, job='job-a'):
         return self.queue / 'jobs' / job / 'attempts' / str(number)
@@ -80,7 +106,7 @@ class QueueTests(unittest.TestCase):
             (dict(authority='unknown'), 'authority_unknown'),
             (dict(authority='training'), 'training_fields'),
             (dict(training=dict()), 'training_only_for_training_jobs'),
-            (dict(authority='capture'), 'authority_not_permitted'),
+            (dict(authority='capture'), 'capture_contract'),
             (dict(kind='replay'), 'replay_missing'),
             (dict(inputs=[dict(path='/etc/passwd', sha256='0' * 64)]), 'unsafe_path'),
             (dict(inputs=[dict(path='a/../b', sha256='0' * 64)]), 'unsafe_path'),
@@ -105,6 +131,44 @@ class QueueTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'input_changed'):
             self.submit(bad)
 
+    def test_producer_dependency_runs_and_rejects_changed_bytes(self):
+        producer = self.spec()
+        consumer = self.spec(id='job-b', dependencies=[dict(job='job-a',
+            specSHA256=q.text_digest(producer), outputs=['result.json'])])
+        self.submit(consumer)
+        self.assertEqual(q.state(self.queue / 'jobs/job-b')[0], 'blocked')
+        self.submit(producer)
+        self.assertEqual(self.run_queue(), [('job-a', 'complete'), ('job-b', 'complete')])
+        resolved = q.load(self.attempt(job='job-b') / 'out/dependencies.json')
+        self.assertEqual(resolved[0]['outputs'][0]['sha256'], q.digest(self.attempt() / 'out/result.json'))
+        (self.attempt() / 'out/result.json').write_text('{}')
+        with self.assertRaisesRegex(ValueError, 'dependency_output_changed'):
+            q.dependency_inputs(consumer, self.queue)
+
+    def test_failed_producer_blocks_consumer(self):
+        producer = self.spec(adapter=dict(type='python-callable', steps=['rq_fixture.fail'], outputAttributes=[]))
+        self.submit(producer)
+        self.submit(self.spec(id='job-b', dependencies=[dict(job='job-a',
+            specSHA256=q.text_digest(producer), outputs=['result.json'])]))
+        self.assertEqual(self.run_queue(), [('job-a', 'failed')])
+        self.assertEqual(q.state(self.queue / 'jobs/job-b')[0], 'blocked')
+
+    def test_dependency_cycle_is_rejected(self):
+        a = self.spec(dependencies=[dict(job='job-b', specSHA256='0'*64, outputs=['result.json'])])
+        self.submit(a)
+        b = self.spec(id='job-b', dependencies=[dict(job='job-a', specSHA256=q.text_digest(a), outputs=['result.json'])])
+        with self.assertRaisesRegex(ValueError, 'dependency_cycle'):
+            self.submit(b)
+
+    def test_dependency_paths_and_staging_are_rejected(self):
+        dep = dict(job='job-b', specSHA256='0'*64, outputs=['../result.json'])
+        with self.assertRaisesRegex(ValueError, 'replay_name'):
+            q.validate(self.spec(dependencies=[dep]), self.modules)
+        dep['outputs'] = ['result.json']
+        stage = [{'from':dict(path=q.relative(self.input), sha256=q.digest(self.input)), 'to':'dependencies.json'}]
+        with self.assertRaisesRegex(ValueError, 'reserved_dependency_output'):
+            q.validate(self.spec(dependencies=[dep], stage=stage), self.modules)
+
     def test_run_records_result_and_closure_then_skips(self):
         self.submit(self.spec())
         self.assertEqual(self.run_queue(), [('job-a', 'complete')])
@@ -121,14 +185,15 @@ class QueueTests(unittest.TestCase):
         self.submit(self.spec())
         self.run_queue()
         (self.attempt() / 'out/result.json').write_text('{}')
-        self.assertEqual(q.state(self.queue / 'jobs/job-a')[0], 'pending')
+        self.assertEqual(q.state(self.queue / 'jobs/job-a')[0], 'failed')
 
     def test_interrupted_attempt_is_recorded_then_retried(self):
         self.submit(self.spec())
         self.attempt().mkdir(parents=True)
         q.save(self.attempt() / 'attempt.json', dict(version=q.ATTEMPT_VERSION))
         self.assertEqual(q.state(self.queue / 'jobs/job-a')[0], 'interrupted')
-        self.assertEqual(self.run_queue(), [('job-a', 'complete')])
+        self.assertEqual(self.run_queue(), [])
+        self.assertEqual(self.run_queue(retry=True), [('job-a', 'complete')])
         self.assertEqual(q.load(self.attempt() / 'result.json')['status'], 'interrupted')
         self.assertEqual(q.load(self.attempt(2) / 'result.json')['status'], 'complete')
 
@@ -137,7 +202,8 @@ class QueueTests(unittest.TestCase):
         self.submit(self.spec(adapter=adapter))
         self.assertEqual(self.run_queue(), [('job-a', 'failed')])
         self.assertIn('planned failure', (self.attempt() / 'stderr.log').read_text())
-        self.assertEqual(self.run_queue(), [('job-a', 'failed')])
+        self.assertEqual(self.run_queue(), [])
+        self.assertEqual(self.run_queue(retry=True), [('job-a', 'failed')])
         self.assertEqual(self.run_queue(), [])
         self.assertEqual(q.state(self.queue / 'jobs/job-a')[0], 'exhausted')
 
@@ -318,11 +384,9 @@ class QueueTests(unittest.TestCase):
         )
 
         rows = {r['job']: r for r in q.summarize(self.queue)['jobs']}
-        self.assertIn('screening', rows['job-screen-1'])
-        self.assertIn('screening', rows['job-screen-2'])
-        self.assertEqual(rows['job-screen-2']['screening']['rank'], 1)
-        self.assertEqual(rows['job-screen-1']['screening']['rank'], 2)
-        self.assertEqual(rows['job-screen-2']['screening']['effect'], 0.98)
+        self.assertNotIn('screening', rows['job-screen-1'])
+        self.assertNotIn('screening', rows['job-screen-2'])
+        self.assertEqual(rows['job-screen-2']['evidenceKind'], 'unverified')
 
 
 if __name__ == '__main__':

@@ -1,681 +1,291 @@
 #!/usr/bin/env python3
-"""Generate self-contained research queue dashboard webpage (ASD-STE100)."""
+"""Render a local research dashboard. Static exports cannot start jobs."""
 import argparse
+import html
 import json
 from pathlib import Path
-import sys
-import time
+import research_queue as queue
+from research_dashboard_descriptions import describe_jobs
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = queue.ROOT
+
 
 def build_dashboard_data():
-    queue_dir = ROOT / "reports/work/research-queue"
-    summary_file = queue_dir / "summary.json"
-    if not summary_file.exists():
-        raise FileNotFoundError(f"Missing summary.json at {summary_file}")
+    return queue.summarize(write=False)
 
-    summary = json.loads(summary_file.read_text())
-    jobs_data = []
 
-    for item in summary.get("jobs", []):
-        job_id = item["job"]
-        spec_file = queue_dir / "jobs" / job_id / "spec.json"
-        spec = json.loads(spec_file.read_text()) if spec_file.exists() else {}
-
-        # Extract config details if available
-        config_data = {}
-        for stg in spec.get("stage", []):
-            cfg_path = ROOT / stg.get("from", {}).get("path", "")
-            if cfg_path.exists():
-                try:
-                    config_data = json.loads(cfg_path.read_text())
-                except Exception:
-                    pass
-
-        # Screening and metric values
-        screening = item.get("screening", {})
-        effect = screening.get("effect")
-        rank = screening.get("rank")
-        cost = screening.get("costSeconds", item.get("wallSeconds", 0.0))
-
-        jobs_data.append({
-            "id": job_id,
-            "task": item.get("task", spec.get("task", "UNASSIGNED")),
-            "state": item.get("state", "pending"),
-            "status": item.get("status", "pending"),
-            "kind": item.get("kind", spec.get("kind", "screen")),
-            "authority": item.get("authority", spec.get("authority", "diagnostic")),
-            "hypothesis": item.get("hypothesis", spec.get("hypothesis", "")),
-            "decisionRule": item.get("decisionRule", spec.get("decisionRule", "")),
-            "effect": effect,
-            "rank": rank,
-            "cost": cost,
-            "archetype": config_data.get("target_archetype", "all"),
-            "theme": config_data.get("theme", "all"),
-            "dimension": config_data.get("dimension", "standard"),
-            "config": config_data
-        })
-
-    # Summary metrics
-    total = len(jobs_data)
-    completed = sum(1 for j in jobs_data if j["status"] == "complete")
-    pending = sum(1 for j in jobs_data if j["status"] != "complete")
-    scored = [j["effect"] for j in jobs_data if j["effect"] is not None]
-    max_effect = max(scored) if scored else 0.0
-    mean_cost = sum(j["cost"] for j in jobs_data if j["cost"] is not None) / max(completed, 1)
-
-    return {
-        "generatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "total": total,
-        "completed": completed,
-        "pending": pending,
-        "maxEffect": round(max_effect, 4),
-        "meanCost": round(mean_cost, 3),
-        "jobs": jobs_data
-    }
-
-def render_html(data):
-    json_str = json.dumps(data)
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NativeUIAuditKit — Research Experiment Dashboard</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
-  <style>
-    :root {{
-      --background: #0f1117;
-      --card: #171923;
-      --border: #282d3d;
-      --foreground: #f1f5f9;
-      --muted-foreground: #94a3b8;
-      --primary: #3b82f6;
-      --primary-foreground: #ffffff;
-      --accent: #10b981;
-    }}
-    body {{
-      background-color: var(--background);
-      color: var(--foreground);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }}
-  </style>
-</head>
-<body class="min-h-screen p-4 md:p-8 antialiased">
-  <div class="max-w-7xl mx-auto space-y-6">
-
-    <!-- Header & Live Banner -->
-    <header class="flex flex-col md:flex-row justify-between items-start md:items-center pb-4 border-b border-[var(--border)] gap-4">
-      <div>
-        <div class="flex items-center gap-3">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30">
-            Autonomous Research Engine
-          </span>
-          <span class="text-xs text-[var(--muted-foreground)]">Updated: <span id="gen-timestamp">{data['generatedAt']}</span></span>
-        </div>
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight mt-1 text-[var(--foreground)]">
-          Research Experiment Matrix & Backlog
-        </h1>
-        <p class="text-sm text-[var(--muted-foreground)] mt-0.5">
-          Autonomous testing of architectural shifts, contrastive formulations, and spatial parameters.
-        </p>
-      </div>
-      <div class="flex items-center gap-2">
-        <button onclick="filterQueue('all')" class="px-3 py-1.5 text-xs font-medium bg-[var(--card)] border border-[var(--border)] rounded-lg hover:border-slate-500 transition">
-          Reset Filters
-        </button>
-        <button onclick="location.reload()" class="px-3 py-1.5 text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          Reload
-        </button>
-      </div>
-    </header>
-
-    <!-- Key Performance Indicators -->
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
-      <div class="bg-[var(--card)] border border-[var(--border)] p-4 rounded-xl shadow-sm">
-        <span class="text-xs font-medium text-[var(--muted-foreground)]">Total Jobs</span>
-        <div class="text-2xl font-bold mt-1 text-slate-100" id="kpi-total">{data['total']}</div>
-        <span class="text-xs text-blue-400 font-medium">100% Registered</span>
-      </div>
-      <div class="bg-[var(--card)] border border-[var(--border)] p-4 rounded-xl shadow-sm">
-        <span class="text-xs font-medium text-[var(--muted-foreground)]">Completed</span>
-        <div class="text-2xl font-bold mt-1 text-emerald-400" id="kpi-completed">{data['completed']}</div>
-        <span class="text-xs text-emerald-500/80 font-medium">Verified Outputs</span>
-      </div>
-      <div class="bg-[var(--card)] border border-[var(--border)] p-4 rounded-xl shadow-sm">
-        <span class="text-xs font-medium text-[var(--muted-foreground)]">Pending Backlog</span>
-        <div class="text-2xl font-bold mt-1 text-amber-400" id="kpi-pending">{data['pending']}</div>
-        <span class="text-xs text-amber-500/80 font-medium">Ready in Queue</span>
-      </div>
-      <div class="bg-[var(--card)] border border-[var(--border)] p-4 rounded-xl shadow-sm">
-        <span class="text-xs font-medium text-[var(--muted-foreground)]">Peak Accuracy</span>
-        <div class="text-2xl font-bold mt-1 text-indigo-400">{data['maxEffect']}</div>
-        <span class="text-xs text-indigo-400/80 font-medium">Dual-Scale Fusion</span>
-      </div>
-      <div class="bg-[var(--card)] border border-[var(--border)] p-4 rounded-xl shadow-sm">
-        <span class="text-xs font-medium text-[var(--muted-foreground)]">Low-Contrast Gap</span>
-        <div class="text-2xl font-bold mt-1 text-rose-400">-8.26%</div>
-        <span class="text-xs text-rose-400/80 font-medium">0.8532 vs 0.9358</span>
-      </div>
-      <div class="bg-[var(--card)] border border-[var(--border)] p-4 rounded-xl shadow-sm">
-        <span class="text-xs font-medium text-[var(--muted-foreground)]">Mean Cost</span>
-        <div class="text-2xl font-bold mt-1 text-purple-400">{data['meanCost']}s</div>
-        <span class="text-xs text-purple-400/80 font-medium">Throughput &lt;100ms</span>
-      </div>
-    </div>
-
-    <!-- Main Navigation Tabs -->
-    <div class="flex border-b border-[var(--border)] text-sm font-medium gap-6">
-      <button onclick="switchTab('queue')" id="tab-btn-queue" class="pb-3 border-b-2 border-blue-500 text-blue-400 font-semibold">
-        Experiment Queue & Backlog
-      </button>
-      <button onclick="switchTab('big-changes')" id="tab-btn-big-changes" class="pb-3 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-slate-200">
-        Big Architectural Shifts (Backlog Focus)
-      </button>
-      <button onclick="switchTab('themes')" id="tab-btn-themes" class="pb-3 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-slate-200">
-        Multi-Theme & Archetype Matrix
-      </button>
-      <button onclick="switchTab('cli')" id="tab-btn-cli" class="pb-3 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-slate-200">
-        Queue Execution Commands
-      </button>
-    </div>
-
-    <!-- TAB 1: EXPERIMENT QUEUE -->
-    <section id="tab-queue" class="space-y-4">
-      <!-- Search & Filters Toolbar -->
-      <div class="flex flex-col md:flex-row gap-3 justify-between items-stretch md:items-center bg-[var(--card)] p-3 rounded-xl border border-[var(--border)]">
-        <div class="flex flex-1 items-center gap-2">
-          <input type="text" id="search-input" onkeyup="renderTable()" placeholder="Search by ID, hypothesis, rule, archetype, or theme..." 
-                 class="w-full bg-[var(--background)] border border-[var(--border)] rounded-lg px-3 py-1.5 text-xs text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none focus:border-blue-500">
-        </div>
-        <div class="flex items-center gap-2 flex-wrap">
-          <select id="filter-status" onchange="renderTable()" class="bg-[var(--background)] border border-[var(--border)] text-xs rounded-lg px-2.5 py-1.5 text-[var(--foreground)]">
-            <option value="all">All Statuses</option>
-            <option value="complete">Completed Only</option>
-            <option value="pending">Pending Backlog Only</option>
-          </select>
-          <select id="filter-archetype" onchange="renderTable()" class="bg-[var(--background)] border border-[var(--border)] text-xs rounded-lg px-2.5 py-1.5 text-[var(--foreground)]">
-            <option value="all">All Archetypes</option>
-            <option value="shelf">Shelf</option>
-            <option value="grid">Grid</option>
-            <option value="hero_detail">Hero Detail</option>
-            <option value="top_nav_shelf">Top Nav</option>
-            <option value="settings_list">Settings</option>
-            <option value="action_dialog">Action Dialog</option>
-            <option value="focus_maze">Focus Maze</option>
-          </select>
-          <select id="filter-theme" onchange="renderTable()" class="bg-[var(--background)] border border-[var(--border)] text-xs rounded-lg px-2.5 py-1.5 text-[var(--foreground)]">
-            <option value="all">All Themes</option>
-            <option value="dark_standard">Dark Standard</option>
-            <option value="light_standard">Light Standard</option>
-            <option value="dark_low_contrast">Dark Low Contrast</option>
-          </select>
-          <select id="sort-by" onchange="renderTable()" class="bg-[var(--background)] border border-[var(--border)] text-xs rounded-lg px-2.5 py-1.5 text-[var(--foreground)]">
-            <option value="rank">Sort: Rank / Effect</option>
-            <option value="id">Sort: Experiment ID</option>
-            <option value="cost">Sort: Execution Cost</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Queue Table -->
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl overflow-hidden shadow-sm">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead class="bg-slate-900/60 text-[var(--muted-foreground)] uppercase border-b border-[var(--border)]">
-              <tr>
-                <th class="py-3 px-4">Rank</th>
-                <th class="py-3 px-4">Job ID</th>
-                <th class="py-3 px-4">Task</th>
-                <th class="py-3 px-4">Status</th>
-                <th class="py-3 px-4">Effect / Accuracy</th>
-                <th class="py-3 px-4">Cost</th>
-                <th class="py-3 px-4">Archetype & Theme</th>
-                <th class="py-3 px-4">Hypothesis & Decision Rule</th>
-              </tr>
-            </thead>
-            <tbody id="queue-table-body" class="divide-y divide-[var(--border)]">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 2: BIG ARCHITECTURAL SHIFTS -->
-    <section id="tab-big-changes" class="hidden space-y-4">
-      <div class="p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl text-xs text-blue-200">
-        <strong>Strategic Priority:</strong> The queue now features 35 large-scale experiments evaluating major architectural modifications (exp-66 to exp-100) instead of minor scalar adjustments.
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-        <!-- Card 1: Dual-Scale Fusion -->
-        <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/30">Verified Big Winner</span>
-            <span class="text-xs text-[var(--muted-foreground)]">exp-66 to exp-70</span>
-          </div>
-          <h3 class="text-base font-semibold text-slate-100">1. Dual-Scale Edge Crop Fusion</h3>
-          <p class="text-xs text-[var(--muted-foreground)]">
-            Fuses a 128×128 (2x resolution) edge window with global 256×256 context. 
-            Solves low-contrast border ambiguity by isolating crisp high-frequency stroke gradients.
-          </p>
-          <div class="bg-[var(--background)] p-3 rounded-lg border border-[var(--border)] flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[var(--muted-foreground)]">Baseline Accuracy:</span>
-              <span class="font-semibold text-rose-400 ml-1">0.8532 (low contrast)</span>
-            </div>
-            <div>
-              <span class="text-[var(--muted-foreground)]">Dual-Scale Result:</span>
-              <span class="font-semibold text-emerald-400 ml-1">0.9650 (+11.18 pp)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2: SupCon Loss -->
-        <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/30">Verified Winner</span>
-            <span class="text-xs text-[var(--muted-foreground)]">exp-71 to exp-75</span>
-          </div>
-          <h3 class="text-base font-semibold text-slate-100">2. Supervised Contrastive (SupCon) Loss</h3>
-          <p class="text-xs text-[var(--muted-foreground)]">
-            Replaces pairwise triplet loss with multi-positive class-level cluster compaction. Enforces strict boundary margins between abutting cards in dense layouts.
-          </p>
-          <div class="bg-[var(--background)] p-3 rounded-lg border border-[var(--border)] flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[var(--muted-foreground)]">Triplet Margin 0.5:</span>
-              <span class="font-semibold text-slate-300 ml-1">0.9350</span>
-            </div>
-            <div>
-              <span class="text-[var(--muted-foreground)]">SupCon Multi-Positive:</span>
-              <span class="font-semibold text-emerald-400 ml-1">0.9580 (+2.30 pp)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3: 3D Perspective Elevation -->
-        <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/30">Pending Backlog</span>
-            <span class="text-xs text-[var(--muted-foreground)]">exp-76 to exp-80</span>
-          </div>
-          <h3 class="text-base font-semibold text-slate-100">3. 3D Parallax Pitch & Specular Sheen</h3>
-          <p class="text-xs text-[var(--muted-foreground)]">
-            Simulates genuine tvOS parallax tilt (2° to 8° pitch) with specular lighting highlights. Tests whether trapezoidal projection bounds improve card pop-out discrimination.
-          </p>
-          <div class="bg-[var(--background)] p-3 rounded-lg border border-[var(--border)] flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[var(--muted-foreground)]">Hypothesis:</span>
-              <span class="font-medium text-amber-300 ml-1">4° pitch maximizes 3D separation</span>
-            </div>
-            <div>
-              <span class="text-[var(--muted-foreground)]">Status:</span>
-              <span class="font-semibold text-amber-400 ml-1">Queued</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4: ViT Attention Pooling -->
-        <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/30">Pending Backlog</span>
-            <span class="text-xs text-[var(--muted-foreground)]">exp-81 to exp-85</span>
-          </div>
-          <h3 class="text-base font-semibold text-slate-100">4. ViT-Tiny with Multi-Head Attention Pooling</h3>
-          <p class="text-xs text-[var(--muted-foreground)]">
-            Replaces standard convolutional pooling with cross-attention heads across focus boundaries. Captures non-local focus ring halo bleed that CNNs miss.
-          </p>
-          <div class="bg-[var(--background)] p-3 rounded-lg border border-[var(--border)] flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[var(--muted-foreground)]">Estimated Target:</span>
-              <span class="font-medium text-amber-300 ml-1">&gt;0.9610 on low-contrast</span>
-            </div>
-            <div>
-              <span class="text-[var(--muted-foreground)]">Status:</span>
-              <span class="font-semibold text-amber-400 ml-1">Queued</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5: Multi-Task Auxiliary Heads -->
-        <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/30">Pending Backlog</span>
-            <span class="text-xs text-[var(--muted-foreground)]">exp-86 to exp-90</span>
-          </div>
-          <h3 class="text-base font-semibold text-slate-100">5. Multi-Task Auxiliary Heads</h3>
-          <p class="text-xs text-[var(--muted-foreground)]">
-            Jointly trains focus classification alongside element bounding box regression and theme classification. Gradient regularizer prevents theme overfitting.
-          </p>
-          <div class="bg-[var(--background)] p-3 rounded-lg border border-[var(--border)] flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[var(--muted-foreground)]">Auxiliary Heads:</span>
-              <span class="font-medium text-amber-300 ml-1">Focus + BBox + Theme</span>
-            </div>
-            <div>
-              <span class="text-[var(--muted-foreground)]">Status:</span>
-              <span class="font-semibold text-amber-400 ml-1">Queued</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 6: HDR Luminance Headroom -->
-        <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/30">Pending Backlog</span>
-            <span class="text-xs text-[var(--muted-foreground)]">exp-91 to exp-95</span>
-          </div>
-          <h3 class="text-base font-semibold text-slate-100">6. HDR & EDR Luminance Headroom Simulation</h3>
-          <p class="text-xs text-[var(--muted-foreground)]">
-            Evaluates 1000-nit specular highlight headroom on tvOS 4K HDR displays. Tests if high dynamic range eliminates the low-contrast vulnerability gap.
-          </p>
-          <div class="bg-[var(--background)] p-3 rounded-lg border border-[var(--border)] flex justify-between items-center text-xs">
-            <div>
-              <span class="text-[var(--muted-foreground)]">Dynamic Range:</span>
-              <span class="font-medium text-amber-300 ml-1">1000 Nits vs SDR Baseline</span>
-            </div>
-            <div>
-              <span class="text-[var(--muted-foreground)]">Status:</span>
-              <span class="font-semibold text-amber-400 ml-1">Queued</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- TAB 3: MULTI-THEME MATRIX -->
-    <section id="tab-themes" class="hidden space-y-4">
-      <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-4">
-        <h3 class="text-base font-semibold text-slate-100">Archetype × Theme Performance Matrix</h3>
-        <p class="text-xs text-[var(--muted-foreground)]">
-          Empirical measurements across all 7 archetypes and 3 themes generated locally by the research engine.
-        </p>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead class="bg-slate-900/60 text-[var(--muted-foreground)] uppercase border-b border-[var(--border)]">
-              <tr>
-                <th class="py-3 px-4">Archetype</th>
-                <th class="py-3 px-4 text-center">Dark Standard</th>
-                <th class="py-3 px-4 text-center">Light Standard</th>
-                <th class="py-3 px-4 text-center">Dark Low Contrast</th>
-                <th class="py-3 px-4 text-right">Archetype Mean</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[var(--border)]">
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Hero Detail (Pill)</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9420</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9390</td>
-                <td class="py-3 px-4 text-center text-amber-400 font-medium">0.8990</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.9267</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Shelf (Poster 2:3)</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9380</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9350</td>
-                <td class="py-3 px-4 text-center text-amber-400 font-medium">0.8750</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.9160</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Grid (Card 16:9)</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9350</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9320</td>
-                <td class="py-3 px-4 text-center text-amber-400 font-medium">0.8630</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.9100</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Top Nav Shelf</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9350</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9330</td>
-                <td class="py-3 px-4 text-center text-amber-400 font-medium">0.8620</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.9100</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Action Dialog</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9320</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9310</td>
-                <td class="py-3 px-4 text-center text-amber-400 font-medium">0.8610</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.9080</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Settings List</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9280</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9250</td>
-                <td class="py-3 px-4 text-center text-amber-400 font-medium">0.8470</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.9000</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-slate-200">Focus Maze</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.9020</td>
-                <td class="py-3 px-4 text-center text-emerald-400 font-medium">0.8990</td>
-                <td class="py-3 px-4 text-center text-rose-400 font-medium">0.7660</td>
-                <td class="py-3 px-4 text-right font-bold text-slate-100">0.8557</td>
-              </tr>
-              <tr class="bg-slate-900/80 font-bold">
-                <td class="py-3 px-4 text-slate-100">Overall Theme Mean</td>
-                <td class="py-3 px-4 text-center text-emerald-400">0.9358</td>
-                <td class="py-3 px-4 text-center text-emerald-400">0.9341 (-0.17 pp)</td>
-                <td class="py-3 px-4 text-center text-rose-400">0.8532 (-8.26 pp)</td>
-                <td class="py-3 px-4 text-right text-indigo-400">0.9077</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 4: QUEUE COMMANDS -->
-    <section id="tab-cli" class="hidden space-y-4">
-      <div class="bg-[var(--card)] border border-[var(--border)] p-5 rounded-xl space-y-4">
-        <h3 class="text-base font-semibold text-slate-100">Queue Operations & Resume Instructions</h3>
-        <p class="text-xs text-[var(--muted-foreground)]">
-          Commands to inspect status, execute pending backlog jobs in batches, and summarize findings.
-        </p>
-        <div class="space-y-3 text-xs">
-          <div>
-            <span class="font-medium text-slate-300">1. Inspect Live Queue Status:</span>
-            <pre class="bg-black/50 p-2.5 rounded-lg border border-[var(--border)] text-blue-300 mt-1">PYTHONPATH=scripts python3 scripts/research_monitor.py status</pre>
-          </div>
-          <div>
-            <span class="font-medium text-slate-300">2. Resume Next 10 Jobs from Backlog:</span>
-            <pre class="bg-black/50 p-2.5 rounded-lg border border-[var(--border)] text-emerald-300 mt-1">PYTHONPATH=scripts python3 scripts/research_monitor.py resume --max-jobs 10</pre>
-          </div>
-          <div>
-            <span class="font-medium text-slate-300">3. Re-summarize &amp; Re-rank All Finished Jobs:</span>
-            <pre class="bg-black/50 p-2.5 rounded-lg border border-[var(--border)] text-purple-300 mt-1">PYTHONPATH=scripts python3 scripts/research_queue.py summarize</pre>
-          </div>
-          <div>
-            <span class="font-medium text-slate-300">4. Regenerate Web Dashboard:</span>
-            <pre class="bg-black/50 p-2.5 rounded-lg border border-[var(--border)] text-amber-300 mt-1">python3 scripts/generate_research_dashboard.py</pre>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Modal for Job Details -->
-    <div id="job-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl max-w-2xl w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl">
-        <div class="flex justify-between items-start">
-          <div>
-            <div class="flex items-center gap-2">
-              <span id="modal-task" class="px-2 py-0.5 rounded text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30">TASK</span>
-              <span id="modal-status" class="px-2 py-0.5 rounded text-xs font-semibold bg-emerald-500/10 text-emerald-400">COMPLETE</span>
-            </div>
-            <h3 id="modal-id" class="text-lg font-bold text-slate-100 mt-1.5">Job ID</h3>
-          </div>
-          <button onclick="closeModal()" class="text-[var(--muted-foreground)] hover:text-white p-1">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
-        <div class="space-y-3 text-xs">
-          <div>
-            <span class="text-[var(--muted-foreground)] font-medium">Hypothesis:</span>
-            <p id="modal-hypothesis" class="text-slate-200 mt-0.5 bg-[var(--background)] p-2.5 rounded-lg border border-[var(--border)]"></p>
-          </div>
-          <div>
-            <span class="text-[var(--muted-foreground)] font-medium">Decision Rule:</span>
-            <p id="modal-decision" class="text-slate-200 mt-0.5 bg-[var(--background)] p-2.5 rounded-lg border border-[var(--border)]"></p>
-          </div>
-          <div class="grid grid-cols-3 gap-2">
-            <div class="bg-[var(--background)] p-2.5 rounded-lg border border-[var(--border)]">
-              <span class="text-[var(--muted-foreground)]">Accuracy / Effect:</span>
-              <div id="modal-effect" class="font-bold text-emerald-400 mt-0.5 text-sm">-</div>
-            </div>
-            <div class="bg-[var(--background)] p-2.5 rounded-lg border border-[var(--border)]">
-              <span class="text-[var(--muted-foreground)]">Rank in Queue:</span>
-              <div id="modal-rank" class="font-bold text-indigo-400 mt-0.5 text-sm">-</div>
-            </div>
-            <div class="bg-[var(--background)] p-2.5 rounded-lg border border-[var(--border)]">
-              <span class="text-[var(--muted-foreground)]">Cost:</span>
-              <div id="modal-cost" class="font-bold text-purple-400 mt-0.5 text-sm">-</div>
-            </div>
-          </div>
-          <div>
-            <span class="text-[var(--muted-foreground)] font-medium">Parameters:</span>
-            <pre id="modal-config" class="bg-black/60 p-2.5 rounded-lg text-slate-300 font-mono text-[11px] overflow-x-auto mt-0.5 border border-[var(--border)]"></pre>
-          </div>
-        </div>
-      </div>
-    </div>
-
+def render_html(data, token=''):
+    payload = json.dumps(data, allow_nan=False).replace('<', '\\u003c').replace('&', '\\u0026')
+    descriptions = json.dumps(describe_jobs(data), allow_nan=False).replace('<', '\\u003c').replace('&', '\\u0026')
+    page = """<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>NUIAK research queue</title>
+<style>
+*{box-sizing:border-box}
+body{background:#0d1117;color:#c9d1d9;font:12px/1.35 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,sans-serif;margin:8px;padding:0}
+#top-bar{display:flex;justify-content:space-between;align-items:center;padding:2px 0 6px;border-bottom:1px solid #21262d;margin-bottom:6px}
+#brand{display:flex;align-items:center;gap:6px}
+h1{font-size:14px;font-weight:700;margin:0;color:#f0f6fc}
+.badge{font-size:10px;font-weight:600;padding:1px 5px;border-radius:4px;letter-spacing:0.3px}
+.badge-running{background:#0e333d;color:#5ce1dc;border:1px solid #165b6d}
+.badge-ready{background:#0f3824;color:#55d790;border:1px solid #1c6843}
+.badge-blocked{background:#382c0f;color:#ffc77e;border:1px solid #664f19}
+.badge-idle{background:#21262d;color:#8b949e;border:1px solid #30363d}
+.badge-failed{background:#3d1518;color:#ff9299;border:1px solid #6b232a}
+.priority-badge{font-size:10px;font-weight:700;color:#55d790;background:#0d2319;padding:1px 4px;border-radius:3px}
+.btn-toggle{font-size:12px;font-weight:700;padding:4px 14px;border-radius:5px;border:1px solid;cursor:pointer;transition:all .15s}
+.btn-start{background:#12623b;border-color:#55d790;color:#fff}
+.btn-start:hover{background:#187748}
+.btn-stop{background:#852d34;border-color:#ff9299;color:#fff}
+.btn-stop:hover{background:#a33740}
+.btn-stopping{background:#6e4014;border-color:#ffaa44;color:#fff;cursor:not-allowed}
+#stats-bar{display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap}
+.chip{font-size:11px;padding:1px 6px;border-radius:8px;background:#161b22;border:1px solid #30363d;color:#8b949e}
+.chip strong{color:#f0f6fc}
+#active{border:1px solid #30363d;border-radius:6px;background:#161b22;padding:6px 8px;margin-bottom:8px}
+#active:not(.idle){border-color:#5ce1dc;background:#0d222b;position:sticky;top:4px;z-index:10;box-shadow:0 4px 12px #0008}
+.active-title-row{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+#active-title{font-size:12px;font-weight:600;color:#f0f6fc;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#active-step{font-size:11px;color:#8b949e;margin-bottom:2px}
+#active progress{width:100%;height:5px;border-radius:3px;overflow:hidden;margin-bottom:2px}
+.active-meta{font-size:10px;color:#8b949e;display:flex;gap:6px}
+.toolbar{display:flex;gap:4px;margin-bottom:6px}
+input,select{font:inherit;padding:3px 6px;background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px}
+#search{flex:1}
+select{font-size:11px}
+.section-header{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:600;color:#8b949e;padding:2px 0;margin-bottom:2px}
+table{border-collapse:collapse;width:100%;margin-bottom:6px}
+th{font-size:10px;text-transform:uppercase;color:#8b949e;padding:3px 4px;border-bottom:1px solid #21262d;text-align:left}
+td{padding:4px;border-bottom:1px solid #21262d;vertical-align:top}
+tr.running{background:#0d222b;border-left:3px solid #5ce1dc}
+.job-item{display:flex;flex-direction:column;gap:1px}
+.job-title-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.job-title{font-size:11px;font-weight:600;color:#f0f6fc}
+.job-sub{display:flex;gap:4px;align-items:center}
+.job-id{font-size:10px;color:#8b949e;font-family:monospace}
+.job-hypo{font-size:10px;color:#8b949e;line-height:1.2;margin-top:1px}
+.btn-sm{font-size:10px;padding:2px 6px;background:#21262d;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;cursor:pointer}
+.btn-sm:hover{background:#30363d}
+.btn-danger{background:#3d1518;border-color:#6b232a;color:#ff9299}
+details{border:1px solid #21262d;border-radius:4px;background:#161b22;padding:4px 6px;margin-bottom:4px}
+summary{font-size:10px;font-weight:600;color:#8b949e;cursor:pointer}
+summary:hover{color:#c9d1d9}
+.small{font-size:10px}.muted{color:#8b949e}.warning{color:#ffc77e}.error-text{color:#ffaaa3}
+#detail{white-space:pre-wrap;overflow:auto;max-height:50vh;font-size:10px}
+dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px solid #30363d;border-radius:6px;padding:10px}
+</style>
+<header id="top-bar">
+  <div id="brand"><h1 id="app-title">NUIAK Queue</h1><span id="run-mode" class="badge">Idle</span></div>
+  <div id="top-actions"><button id="toggle-run" class="btn-toggle btn-start">Start</button></div>
+</header>
+<div id="stats-bar">
+  <span class="chip" id="chip-running"><strong>0</strong> running</span>
+  <span class="chip" id="chip-ready"><strong>0</strong> ready</span>
+  <span class="chip" id="chip-blocked"><strong>0</strong> blocked</span>
+  <span class="chip" id="chip-complete"><strong>0</strong> done</span>
+</div>
+<section id="active" aria-live="polite" aria-label="Current task">
+  <div class="active-title-row"><span id="active-badge" class="badge badge-idle">IDLE</span> <span id="active-title">No task is running</span></div>
+  <div id="active-step">The queue is idle.</div>
+  <div id="active-progress"></div>
+  <div class="active-meta"><span id="active-time"></span> <span id="active-eta"></span></div>
+  <details id="active-more" style="margin-top:4px"><summary class="small muted">Task description & decision rule</summary>
+    <p id="active-description" class="small"></p>
+    <p id="active-answer" class="small"></p>
+    <p id="active-decision" class="small"></p>
+  </details>
+  <div id="active-controls" style="margin-top:4px" hidden>
+    <button id="active-stop" class="btn-sm">Stop after this task</button>
+    <button id="active-cancel" class="btn-sm btn-danger">Cancel this task</button>
   </div>
+</section>
+<div class="toolbar">
+  <input id="search" placeholder="Filter backlog..." aria-label="Search">
+  <select id="filter" aria-label="State"><option value="">All</option><option>pending</option><option>blocked</option><option>running</option><option>failed</option><option>cancelled</option><option>interrupted</option></select>
+  <select id="sort" aria-label="Sort"><option value="job">ID</option><option value="state">State</option><option value="wallSeconds">Time</option></select>
+</div>
+<div class="section-header"><span>Upcoming Backlog</span> <span id="backlog-count" class="small muted"></span></div>
+<table><thead><tr><th style="width:24px">#</th><th>Experiment / Task</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="rows"></tbody></table>
+<details id="completed"><summary id="completed-count">Completed test outcomes</summary>
+  <p class="small muted">Completed jobs stay here. Completion does not mean model acceptance.</p>
+  <table><thead><tr><th style="width:24px">#</th><th>Experiment / Outcome</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="completed-rows"></tbody></table>
+</details>
+<details id="batch-tools"><summary class="small muted">Batch selection & controls</summary>
+  <div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0">
+    <button id="start" class="btn-sm">Start selected batch</button>
+    <button id="approve-add" class="btn-sm">Add selected to approved queue</button>
+    <button id="cancel" class="btn-sm">Cancel current job</button>
+    <label class="small"><input type="checkbox" id="retry"> Explicit retry</label>
+  </div>
+  <p id="status" class="small muted"></p><p id="error" class="error-text" role="alert"></p>
+  <span style="display:none"><button id="run-all">▶ Run all ready</button><button id="stop">■ Stop after task</button></span>
+</details>
+<details id="coverage-box"><summary class="small muted">Measured coverage report</summary>
+  <p><select id="coverage-report" class="btn-sm"><option value="">No measured report</option></select></p>
+  <div id="coverage" class="small muted">Coverage is unavailable without measured evidence.</div>
+</details>
+<details id="rules-box"><summary class="small muted">Rules & disclaimers</summary>
+  <p class="warning small">Execution completion is not model acceptance. Placeholder scores are excluded.</p>
+  <p id="mode" class="small muted"></p>
+  <div id="summary" class="small muted"></div>
+</details>
+<dialog id="modal"><div style="display:flex;justify-content:space-between;align-items:center"><strong id="modal-title">Job Details</strong><button id="close" class="btn-sm">Close</button></div><section id="detail-description" style="margin-top:6px"></section><details style="margin-top:6px"><summary class="small">Technical details and registered decision rule</summary><pre id="detail"></pre></details></dialog>
+<script>
+const TOKEN=__TOKEN__;
+let data=__DATA__;
+const DESCRIPTIONS=__DESCRIPTIONS__;
+let busy=Boolean(data.busy);
+const selected=new Set();
+const $=id=>document.getElementById(id);
+function add(parent,tag,text){const e=document.createElement(tag);e.textContent=text;parent.append(e);return e;}
+function description(row){return DESCRIPTIONS[row.job]||{
+ title:'New experiment — description needs review',
+ test:row.hypothesis||'Test description unavailable.',
+ answers:'Plain-language question unavailable. Read the registered decision rule: '+(row.decisionRule||'unavailable'),
+ source:'unreviewed'};}
+function explain(parent,row){
+ const d=description(row);add(parent,'strong',d.title);
+ const test=add(parent,'p','');add(test,'strong','What this tests: ');add(test,'span',d.test);
+ const answer=add(parent,'p','');add(answer,'strong','What the result tells us: ');add(answer,'span',d.answers);
+ if(d.source==='study')add(parent,'p','This job contributes to the study question. It does not answer the whole question alone.').className='small';
+ if(row.state==='blocked')add(parent,'p','Blocked: this is a planned test, not a measured result.').className='warning';
+}
+function show(row){$('detail-description').replaceChildren();explain($('detail-description'),row);
+ $('detail').textContent=JSON.stringify(row,null,2);$('modal').showModal();}
+function render(){
+ const jobs=data.jobs||[];
+ const active=jobs.find(j=>j.job===data.current)||jobs.find(j=>j.state==='running');
+ const isRunning=busy||Boolean(data.current)||Boolean(active);
+ const toggleBtn=$('toggle-run');
+ if(data.stopping){toggleBtn.textContent='Stopping';toggleBtn.className='btn-toggle btn-stopping';toggleBtn.disabled=true;}
+ else if(isRunning){toggleBtn.textContent='Stop';toggleBtn.className='btn-toggle btn-stop';toggleBtn.disabled=!TOKEN;}
+ else{toggleBtn.textContent='Start';toggleBtn.className='btn-toggle btn-start';toggleBtn.disabled=!TOKEN;}
+ $('run-mode').textContent=data.stopping?'Stopping':(isRunning?'Running':(data.continuous?'Auto':'Idle'));
+ $('run-mode').className='badge '+(data.stopping?'badge-blocked':(isRunning?'badge-running':'badge-idle'));
+ const countState=s=>jobs.filter(j=>j.state===s).length;
+ $('chip-running').innerHTML='<strong>'+countState('running')+'</strong> running';
+ $('chip-ready').innerHTML='<strong>'+countState('pending')+'</strong> ready';
+ $('chip-blocked').innerHTML='<strong>'+countState('blocked')+'</strong> blocked';
+ $('chip-complete').innerHTML='<strong>'+countState('complete')+'</strong> done';
+ $('active').className=active?'':'idle';
+ const badgeEl=$('active-badge');
+ if(badgeEl){
+  badgeEl.textContent=active?(data.stopping?'STOPPING':'RUNNING'):'IDLE';
+  badgeEl.className='badge '+(active?(data.stopping?'badge-blocked':'badge-running'):'badge-idle');
+ }
+ $('active-title').textContent=active?(description(active).title+' · '+active.job):'No task is running';
+ $('active-description').textContent=active?'What this tests: '+description(active).test:'Select ready jobs below to start a bounded batch.';
+ $('active-answer').textContent=active?'What the result tells us: '+description(active).answers:'';
+ $('active-step').textContent=active?(active.progress?.step||'Preparing the job; waiting for a worker event.'):'The queue is idle.';
+ if(active?.progress?.updatedAt)$('active-step').textContent+=' · '+new Date(active.progress.updatedAt*1000).toLocaleTimeString();
+ $('active-progress').replaceChildren();
+ if(active?.progress){const p=document.createElement('progress');const event=active.progress;
+  if(Number.isFinite(event.total)&&event.total>0){p.max=event.total;p.value=event.completed;
+   add($('active-progress'),'span',event.completed+' / '+event.total+' '+(event.unit||'steps')+' ').className='small muted';}
+  $('active-progress').append(p);}
+ const elapsed=active?.startedAt?Math.max(0,Date.now()/1000-active.startedAt):null;
+ $('active-time').textContent=active?(elapsed==null?'Elapsed unavailable':elapsed.toFixed(1)+' s elapsed'):'';
+ $('active-eta').textContent=active&&active.eta?('ETA '+active.eta.low.toFixed(0)+'–'+active.eta.high.toFixed(0)+' s ('+active.eta.samples+' runs)'):'';
+ $('active-decision').textContent=active?'Decision rule: '+active.decisionRule:'';
+ $('active-controls').hidden=!active||!TOKEN;
+ $('active-stop').disabled=!busy;$('active-cancel').disabled=!data.current;
+ const countKind=kind=>jobs.filter(j=>j.evidenceKind===kind).length;
+ $('summary').textContent=jobs.length+' jobs; '+countState('complete')+' completed; '+countKind('measured')+' measured reports; '+countKind('placeholder')+' placeholders.';
+ $('mode').textContent=TOKEN?'Local controls enabled. Start 1–10 selected jobs; use 5 for a normal batch.':'Read-only snapshot. Start the local dashboard server for controls.';
+ $('start').disabled=!TOKEN||busy||Boolean(active);
+ $('approve-add').disabled=!TOKEN;
+ if($('run-all'))$('run-all').disabled=!TOKEN||busy;
+ if($('stop'))$('stop').disabled=!TOKEN||!busy;
+ $('cancel').disabled=!TOKEN||!data.current;
+ $('status').textContent=data.stopping?'Stopping after the current job.':(data.current?'Running: '+data.current:
+  (data.waiting||(active?'Another queue runner owns this task. Use that runner to stop it.':'No task is running.')));
+ if(data.error)$('error').textContent=data.error;
+ $('rows').replaceChildren();
+ $('completed-rows').replaceChildren();
+ for(const id of selected){if(!jobs.some(j=>j.job===id&&!['complete','blocked','running','exhausted'].includes(j.state)))selected.delete(id);}
+ const previous=$('coverage-report').value;
+ $('coverage-report').replaceChildren();
+ const measured=jobs.filter(j=>j.measured);
+ if(!measured.length)add($('coverage-report'),'option','No measured report').value='';
+ for(const j of measured)add($('coverage-report'),'option',j.job+' — '+j.measured.task+' — '+j.measured.dataRole).value=j.job;
+ if(measured.some(j=>j.job===previous))$('coverage-report').value=previous;
+ showCoverage();
+ const query=$('search').value.toLowerCase(), filter=$('filter').value, key=$('sort').value;
+ const visible=jobs.filter(j=>{const d=description(j);return (j.state==='complete'||!filter||j.state===filter)&&
+  [j.job,j.hypothesis,d.title,d.test,d.answers].join(' ').toLowerCase().includes(query);});
+ visible.sort((a,b)=>key==='wallSeconds'?(a[key]||0)-(b[key]||0):String(a[key]).localeCompare(String(b[key])));
+ let readyPriority=1;
+ const backlogReady=visible.filter(j=>j.state==='pending');
+ $('backlog-count').textContent=backlogReady.length+' ready';
+ for(const j of visible){
+  const isCompleted=j.state==='complete';
+  const tr=document.createElement('tr');if(j.state==='running'||j.job===data.current)tr.className='running';
+  const tdSelect=add(tr,'td','');tdSelect.style.width='24px';
+  const box=document.createElement('input');box.type='checkbox';box.checked=selected.has(j.job);
+  box.disabled=['complete','blocked','running','exhausted'].includes(j.state);
+  box.onchange=()=>box.checked?selected.add(j.job):selected.delete(j.job);tdSelect.append(box);
+  const tdMain=add(tr,'td','');
+  const item=add(tdMain,'div','');item.className='job-item';
+  const topRow=add(item,'div','');topRow.className='job-title-row';
+  const badge=add(topRow,'span',j.state.toUpperCase());
+  badge.className='badge badge-'+(j.state==='running'?'running':(j.state==='pending'?'ready':(j.state==='blocked'?'blocked':'idle')));
+  if(j.state==='pending'){const pBadge=add(topRow,'span','#'+(readyPriority++));pBadge.className='priority-badge';}
+  const d=description(j);
+  const titleSpan=add(topRow,'span',d.title);titleSpan.className='job-title';
+  const idRow=add(item,'div','');idRow.className='job-sub';
+  add(idRow,'span',j.job).className='job-id';
+  if(j.evidenceKind&&j.evidenceKind!=='unverified')add(idRow,'span',' · '+j.evidenceKind).className='small muted';
+  const testRow=add(item,'div',d.test);testRow.className='job-hypo';
+  const tdAction=add(tr,'td','');tdAction.style.textAlign='right';tdAction.style.whiteSpace='nowrap';
+  const elTime=j.state==='running'&&j.startedAt?Date.now()/1000-j.startedAt:j.wallSeconds;
+  if(elTime!=null)add(tdAction,'div',Math.max(0,elTime).toFixed(1)+' s').className='small muted';
+  if(j.eta)add(tdAction,'div','ETA '+j.eta.low.toFixed(0)+'–'+j.eta.high.toFixed(0)+' s').className='small muted';
+  const btnInspect=add(tdAction,'button','Inspect');btnInspect.className='btn-sm';btnInspect.onclick=()=>show(j);
+  $(isCompleted?'completed-rows':'rows').append(tr);
+ }
+ $('completed-count').textContent='Completed test outcomes ('+jobs.filter(j=>j.state==='complete').length+')';
+}
+function showCoverage(){
+ const job=(data.jobs||[]).find(j=>j.job===$('coverage-report').value&&j.measured);
+ $('coverage').replaceChildren();
+ if(!job){$('coverage').textContent='Coverage is unavailable without measured evidence.';return;}
+ const table=document.createElement('table');
+ const header=add(table,'tr','');for(const title of ['Archetype / theme','Support','Correct'])add(header,'th',title);
+ for(const [name,cell] of Object.entries(job.measured.coverage)){
+  const row=add(table,'tr','');add(row,'td',name);add(row,'td',String(cell.support));
+  add(row,'td',cell.support?cell.correct+'/'+cell.support:'Unsupported');
+ }
+ $('coverage').append(table);
+}
+async function request(path,body){
+ const response=await fetch(path,{method:body?'POST':'GET',headers:{'Authorization':'Bearer '+TOKEN,'Content-Type':'application/json'},
+ ...(body?{body:JSON.stringify(body)}:{})});
+ const value=await response.json();if(!response.ok)throw Error(value.error||'Request failed');return value;
+}
+async function refresh(){if(!TOKEN)return;try{data=await request('/api/state');busy=data.busy;render();}catch(e){$('error').textContent=e.message;}}
+async function action(name,body){try{$('error').textContent='';await request('/api/'+name,body);await refresh();}catch(e){$('error').textContent=e.message;}}
+$('toggle-run').onclick=()=>{if(busy||Boolean(data.current))action('stop',{});else action('start-all',{});};
+$('start').onclick=()=>action('start',{jobs:[...selected],retry:$('retry').checked});
+if($('run-all'))$('run-all').onclick=()=>action('start-all',{});
+$('approve-add').onclick=()=>action('add',{jobs:data.jobs.filter(j=>selected.has(j.job)).map(j=>({id:j.job,sha256:j.specSHA256}))});
+if($('stop'))$('stop').onclick=()=>action('stop',{});
+$('cancel').onclick=()=>action('cancel',{});
+$('active-stop').onclick=()=>action('stop',{});$('active-cancel').onclick=()=>action('cancel',{});
+$('close').onclick=()=>$('modal').close();
+$('coverage-report').onchange=showCoverage;
+for(const id of ['search','filter','sort'])$(id).oninput=render;
+render();if(TOKEN)setInterval(refresh,1500);
+</script></html>"""
+    return page.replace('__TOKEN__', json.dumps(token)).replace('__DATA__', payload).replace('__DESCRIPTIONS__', descriptions)
 
-  <script>
-    const RAW_DATA = {json_str};
-
-    function switchTab(tabId) {{
-      ['queue', 'big-changes', 'themes', 'cli'].forEach(t => {{
-        document.getElementById('tab-' + t).classList.add('hidden');
-        const btn = document.getElementById('tab-btn-' + t);
-        btn.classList.remove('border-blue-500', 'text-blue-400', 'font-semibold');
-        btn.classList.add('border-transparent', 'text-[var(--muted-foreground)]');
-      }});
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
-      const activeBtn = document.getElementById('tab-btn-' + tabId);
-      activeBtn.classList.remove('border-transparent', 'text-[var(--muted-foreground)]');
-      activeBtn.classList.add('border-blue-500', 'text-blue-400', 'font-semibold');
-    }}
-
-    function filterQueue(status) {{
-      document.getElementById('search-input').value = '';
-      document.getElementById('filter-status').value = status;
-      document.getElementById('filter-archetype').value = 'all';
-      document.getElementById('filter-theme').value = 'all';
-      renderTable();
-    }}
-
-    function renderTable() {{
-      const query = document.getElementById('search-input').value.toLowerCase();
-      const statusFilter = document.getElementById('filter-status').value;
-      const archFilter = document.getElementById('filter-archetype').value;
-      const themeFilter = document.getElementById('filter-theme').value;
-      const sortBy = document.getElementById('sort-by').value;
-
-      let filtered = RAW_DATA.jobs.filter(j => {{
-        if (statusFilter !== 'all' && j.status !== statusFilter) return false;
-        if (archFilter !== 'all' && j.archetype !== archFilter) return false;
-        if (themeFilter !== 'all' && j.theme !== themeFilter) return false;
-        if (query) {{
-          const str = (j.id + ' ' + j.task + ' ' + j.hypothesis + ' ' + j.decisionRule + ' ' + j.archetype + ' ' + j.theme).toLowerCase();
-          if (!str.includes(query)) return false;
-        }}
-        return true;
-      }});
-
-      if (sortBy === 'rank') {{
-        filtered.sort((a, b) => {{
-          if (a.rank && b.rank) return a.rank - b.rank;
-          if (a.rank) return -1;
-          if (b.rank) return 1;
-          return a.id.localeCompare(b.id);
-        }});
-      }} else if (sortBy === 'id') {{
-        filtered.sort((a, b) => a.id.localeCompare(b.id));
-      }} else if (sortBy === 'cost') {{
-        filtered.sort((a, b) => (b.cost || 0) - (a.cost || 0));
-      }}
-
-      const tbody = document.getElementById('queue-table-body');
-      tbody.innerHTML = '';
-
-      filtered.forEach(j => {{
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-800/40 cursor-pointer transition';
-        tr.onclick = () => openModal(j);
-
-        const rankBadge = j.rank ? `<span class="font-bold text-indigo-400">#${{j.rank}}</span>` : `<span class="text-slate-500">-</span>`;
-        const statusBadge = j.status === 'complete' 
-          ? `<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">complete</span>`
-          : `<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">pending</span>`;
-        const effectStr = j.effect !== null && j.effect !== undefined ? `<span class="font-bold text-emerald-400">${{j.effect.toFixed(4)}}</span>` : `<span class="text-slate-500">Queued</span>`;
-        const costStr = j.cost ? `${{j.cost.toFixed(2)}}s` : '-';
-
-        tr.innerHTML = `
-          <td class="py-2.5 px-4">${{rankBadge}}</td>
-          <td class="py-2.5 px-4 font-mono font-semibold text-slate-200">${{j.id}}</td>
-          <td class="py-2.5 px-4 text-slate-400 font-mono text-[11px]">${{j.task}}</td>
-          <td class="py-2.5 px-4">${{statusBadge}}</td>
-          <td class="py-2.5 px-4">${{effectStr}}</td>
-          <td class="py-2.5 px-4 text-slate-400">${{costStr}}</td>
-          <td class="py-2.5 px-4 text-slate-300">
-            <span class="text-slate-200">${{j.archetype}}</span>
-            <span class="text-slate-500 text-[10px] block">${{j.theme}}</span>
-          </td>
-          <td class="py-2.5 px-4 max-w-md truncate text-slate-400" title="${{j.hypothesis}}">
-            <span class="text-slate-300 font-medium">${{j.hypothesis}}</span>
-            <span class="text-slate-500 text-[10px] block truncate">${{j.decisionRule}}</span>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      }});
-    }}
-
-    function openModal(j) {{
-      document.getElementById('modal-id').innerText = j.id;
-      document.getElementById('modal-task').innerText = j.task;
-      document.getElementById('modal-status').innerText = j.status.toUpperCase();
-      document.getElementById('modal-hypothesis').innerText = j.hypothesis || 'None specified';
-      document.getElementById('modal-decision').innerText = j.decisionRule || 'None specified';
-      document.getElementById('modal-effect').innerText = j.effect !== null && j.effect !== undefined ? j.effect.toFixed(4) : 'Queued';
-      document.getElementById('modal-rank').innerText = j.rank ? '#' + j.rank : '-';
-      document.getElementById('modal-cost').innerText = j.cost ? j.cost.toFixed(2) + 's' : '-';
-      document.getElementById('modal-config').innerText = JSON.stringify(j.config, null, 2);
-      document.getElementById('job-modal').classList.remove('hidden');
-    }}
-
-    function closeModal() {{
-      document.getElementById('job-modal').classList.add('hidden');
-    }}
-
-    window.onclick = function(event) {{
-      const modal = document.getElementById('job-modal');
-      if (event.target === modal) {{
-        closeModal();
-      }}
-    }}
-
-    // Initial render
-    renderTable();
-  </script>
-</body>
-</html>
-"""
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate research queue web dashboard.")
-    parser.add_argument("--output", "-o", default="reports/research_dashboard.html", help="Output file path")
-    args = parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',type=Path,default=ROOT/'reports/research_dashboard.html')
+    args=parser.parse_args()
+    args.output.write_text(render_html(build_dashboard_data()))
+    print(args.output)
 
-    data = build_dashboard_data()
-    html_content = render_html(data)
 
-    out_path = Path(args.output)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(html_content)
-    print(f"Dashboard generated at {out_path} ({len(html_content)} bytes)")
-
-if __name__ == "__main__":
+if __name__=='__main__':
     main()

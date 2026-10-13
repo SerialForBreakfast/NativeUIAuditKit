@@ -1,5 +1,56 @@
 # Full backlog implementation packet catalog
 
+[FOCUS373](Plans/Focus360.md#graph-v1-adoption--focus373-2026-10-13) adds 7 conditional experiment cards and 4 software tasks from the second graph handoff.
+It preserves HCF priority, current execution, and the original calibration-only request examples.
+
+[FOCUS372](Plans/Focus360.md#handoff-adoption-update--focus372-2026-10-13) checks the TTR handoff and adds 4 software tasks outside the experiment queue.
+
+[HCF371](Plans/HCF371.md) queues native HCF data, separate evaluation groups, rules, and 2 learned candidates through 34 isolated jobs.
+
+[FOCUS366](Plans/FocusNotification366.md) queues fresh notification training, a matched control, and full retained comparisons.
+
+[FOCUS364–365](Plans/FocusGraphs364.md) implements the bounded graph workflow in [ADR-0027](ADR-0027-Evidence-Guided-Experiment-Graphs.md).
+
+[FOCUS363](Plans/FocusLearning363.md) defines 6 work packages for native evidence, HCF learning, model restrictions, and conditional research comparisons.
+It reuses HCF361 and FOCUS360 rather than creating another experiment framework.
+
+[HCF361](Plans/HCF361.md) prioritizes native HCF qualification, a 1,000-frame training stage, matched baselines, and an experimental Core ML model.
+
+[FOCUS360](Plans/Focus360.md) reviews 2 research proposals and defines 10 tests with controls, limits, and peer feedback requirements.
+
+[WORKFLOW357/HCF357](Plans/WorkflowHCF357.md) adds live queue admission, readiness reports, staged HCF learning, and storage recovery tasks.
+
+[FOCUS355](Plans/Focus355.md) queues position and branch training with automatic regression reports and defines 20 ranked research problems.
+
+[VISION353](Plans/Vision353.md) defines 15 low-priority Vision investigations, including tool combinations and confidence calibration.
+
+[DATASET351 results](Dataset351Results.md) record controlled Fixture capture, temporal limits, and 5 completed measured comparisons.
+
+[HCF350](Plans/HCF350.md) defines 15 prioritized comparisons around TTR's paired Standard/HCF pilot.
+
+[FOCUS349](Plans/Movement349.md) tests movement emphasis and extends the existing Office recording audit.
+[FOCUS348](Plans/Appearance348.md) tests source gamma augmentation against equal-budget training and retained successes.
+[Queue readiness](Focus348QueueReview.md) records executable successors and exact missing requirements.
+
+[FOCUS347](Plans/Followup347.md) separates appearance from preprocessing and tests previous successes before another fit.
+
+[FOCUS346](Plans/Reserve346.md) defines 25 ready diagnostics and the research reserve policy.
+
+[Background research](Plans/BackgroundResearch344.md) defines 5 ready diagnostics and the chat/runner boundary.
+
+[FOCUS343 results](Focus343Results.md) separate native misses from authored success.
+[FOCUS344–345](Plans/NativeAppExperiments343.md) define the native size investigation and 12 planned app experiments.
+
+[FOCUS342](Plans/Focus342.md) audits training coverage and tests preservation after the [FOCUS341 results](Focus341Results.md).
+[Queue review](Focus342QueueReview.md) separates executable authored checks from missing native controls.
+[FOCUS342 results](Focus342Results.md) reject both replacements and identify the remaining errors.
+[FOCUS343](Plans/Focus343.md) defines the next cache, artwork, identical-neighbor, and error-analysis batch.
+
+[FOCUS341](Plans/Focus341.md) preserves original crops and tests added boundary detail with matched content negatives.
+
+[RESEARCH340](Plans/MeasuredResearch340.md) defines checked measurements, safe dashboard controls, 20 investigations, and conditional candidate comparisons.
+[Results](RESEARCH340Results.md) separate completed cached checks from missing controlled coverage.
+
 [HCF336 / ADR-0025](ADR-0025-Portable-Experiment-Runner.md) defines the portable TTR experiment package and migration checks.
 [Results](HCF336Results.md) qualify the staged package locally; Sillycon qualification remains pending.
 

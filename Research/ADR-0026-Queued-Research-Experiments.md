@@ -1,5 +1,29 @@
 # ADR-0026 — queued, resumable research experiments
 
+## Capture producers — 2026-10-12
+
+The queue now supports bounded Fixture generation as a producer job.
+Consumers name the producer specification and required outputs before capture starts.
+The queue resolves output hashes only after successful completion and integrity checks.
+Failed capture or unresolved cleanup blocks consumers. Failed attempts do not retry automatically.
+The [GENERATION352 plan](Plans/Generation352.md) defines the capture contract, recovery marker, tests, and first live result.
+
+## Measured evidence amendment — 2026-10-12
+
+The [RESEARCH340 plan](Plans/MeasuredResearch340.md) supersedes assigned screening scores and automatic retries described below.
+The 100 legacy benchmark jobs use placeholder scores. Preserve their files, but exclude those scores from measured results.
+Require pinned predictions, labels, inputs, models, preprocessing, and raw counts for measured accuracy.
+Keep replay agreement, execution completion, and model acceptance separate.
+Report unsupported coverage explicitly. Do not substitute a different theme or rank incompatible tasks together.
+Use 800 s and 100 MB diagnostic limits. The approved candidate exception remains 30 epochs, 30 min, and 2 GiB.
+Require explicit retry after failure or interruption. Keep completed attempts unchanged.
+The optional loopback dashboard controls the existing queue. It does not add remote execution or a second scheduler.
+The current-task panel shows actual worker events. It never estimates progress from elapsed time.
+Use a launch token, Host and Origin checks, shared execution locks, and cancellation of runner-owned process groups only.
+See [results and remaining inputs](RESEARCH340Results.md).
+
+## Historical decision
+
 Status: accepted. [RESEARCH338](RESEARCH338Results.md) replays 3 FOCUS audits with exact agreement. Diagnostic jobs are qualified.
 [RESEARCH339](RESEARCH339Results.md) replays the FOCUS329 30-epoch training run with byte-identical weights. Training jobs are qualified.
 Date: 2026-10-11.
@@ -113,3 +137,10 @@ The first tranche supports only `diagnostic` jobs and the `python-callable` adap
 RESEARCH339 adds `training` jobs. An interrupted training attempt restarts from epoch 0, because the trainers save weights only at the end.
 Distributed execution needs a bundle transfer and a qualified executor.
 File times show that the replayed modules predate the original runs. File times do not prove that the code was identical.
+# WORKFLOW357 amendment — October 12, 2026
+
+The existing loopback server accepts explicit approved job IDs and canonical specification hashes through `/api/add`.
+The runner persists approvals separately and reads them at dispatch boundaries. Adding jobs does not start a stopped runner.
+Pre-dispatch checks report missing inputs, dependencies, training registration, storage, and the production interpreter.
+Campaign reports preserve measured comparison fields and verify output hashes. Execution completion never grants model acceptance.
+The HCF study uses separately recorded training and storage budgets. Backup/restore remain future tasks with exact receipt requirements.

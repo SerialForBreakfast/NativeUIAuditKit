@@ -43,7 +43,8 @@ def bounded_auxiliary_gradient(original,auxiliary):
 
 def fit(net,x,y,config,progress=None,weights=None,conflict_groups=None,alternate_inputs=None,detail_inputs=None,
         auxiliary_inputs=None,auxiliary_detail=None,auxiliary_weight=0.,auxiliary_projection=False,step_guard=None,
-        auxiliary_indices=None):
+        auxiliary_indices=None,preservation_logits=None,auxiliary_preservation_logits=None,preservation_weight=0.,
+        auxiliary_class_weights=None):
     torch=d.torch_runtime();torch.set_num_threads(config['threads']);torch.manual_seed(config['seed'])
     fusion_only=config.get('fusionOnly',False)
     cached_detail=config.get('cachedDetailOnly',False)
@@ -77,8 +78,9 @@ def fit(net,x,y,config,progress=None,weights=None,conflict_groups=None,alternate
     for part in x.split(8):
         h.require(torch.isfinite(part).all() and (fusion_only or cached_detail or ((part>=0)&(part<=1)).all()),'training_inputs')
     if detail_inputs is not None:
+        detail_channels=(6,12,18) if config.get('addedBoundary341',False) else (6,12)
         h.require(detail_inputs.ndim==4 and detail_inputs.shape[0]==len(x)
-                  and detail_inputs.shape[2:]==x.shape[2:] and detail_inputs.shape[1] in (6,12)
+                  and detail_inputs.shape[2:]==x.shape[2:] and detail_inputs.shape[1] in detail_channels
                   and detail_inputs.dtype==x.dtype
                   and alternate_inputs is None,'detail_inputs')
         for part in detail_inputs.split(8):
@@ -92,7 +94,7 @@ def fit(net,x,y,config,progress=None,weights=None,conflict_groups=None,alternate
         h.require(auxiliary_detail is None and auxiliary_weight==0. and auxiliary_indices is None,'auxiliary_missing')
     else:
         if auxiliary_indices is not None:
-            h.require(auxiliary_indices.shape==(len(x),) and auxiliary_indices.dtype==torch.int64
+            h.require(auxiliary_indices.shape in ((len(x),),(config['epochs'],len(x))) and auxiliary_indices.dtype==torch.int64
                       and ((auxiliary_indices>=0)&(auxiliary_indices<len(auxiliary_inputs))).all(),'auxiliary_indices')
         h.require(alternate_inputs is None and conflict_groups is None
                   and np.isfinite(auxiliary_weight) and 0<auxiliary_weight<=1,'auxiliary_contract')
@@ -105,6 +107,24 @@ def fit(net,x,y,config,progress=None,weights=None,conflict_groups=None,alternate
                 h.require(torch.isfinite(part).all() and (fusion_only or cached_detail or ((part>=0)&(part<=1)).all()),'auxiliary_pixels')
     h.require(type(config['epochs']) is int and config['epochs']>0 and type(config['batch']) is int
               and config['batch']>0 and np.isfinite(config['lr']) and config['lr']>0,'training_config')
+    h.require(np.isfinite(preservation_weight) and 0<=preservation_weight<=1,'preservation_weight')
+    if auxiliary_class_weights is not None:
+        h.require(auxiliary_inputs is not None and not auxiliary_projection and
+                  auxiliary_class_weights.shape==(2,) and torch.isfinite(auxiliary_class_weights).all()
+                  and (auxiliary_class_weights>0).all(),'auxiliary_class_weights')
+    h.require((preservation_logits is not None)==(preservation_weight>0),'preservation_missing')
+    h.require(auxiliary_preservation_logits is None or preservation_logits is not None,'preservation_missing')
+    if preservation_logits is not None:
+        h.require(conflict_groups is None and not auxiliary_projection,'preservation_scope')
+        for reference,count in ((preservation_logits,len(x)),(auxiliary_preservation_logits,
+                0 if auxiliary_inputs is None else len(auxiliary_inputs))):
+            if reference is not None:
+                h.require(reference.shape==(count,) and torch.isfinite(reference).all(),'preservation_reference')
+    def preserve(logits,reference,labels):
+        signed=(2*labels-1)*reference
+        eligible=signed>=np.log(.85/.15)
+        margin=signed.clamp(max=3.)
+        return (torch.relu(margin-(2*labels-1)*logits).square()*eligible).mean()
     if weights is not None:
         h.require(weights.shape==y.shape and torch.isfinite(weights).all().item()
                   and (weights>0).all().item(),'training_weights')
@@ -151,16 +171,27 @@ def fit(net,x,y,config,progress=None,weights=None,conflict_groups=None,alternate
             loss=objective(logits,y[ids],None if weights is None else weights[ids])
             h.require(torch.isfinite(loss).item(),'nonfinite_loss')
             original_loss=loss
+            if preservation_logits is not None:
+                loss=loss+preservation_weight*preserve(logits,preservation_logits[ids],y[ids])
             if auxiliary_inputs is not None:
                 original_total+=float(loss.detach())*len(ids)
-                other_ids=ids if auxiliary_indices is None else auxiliary_indices[ids]
+                selected=auxiliary_indices
+                if selected is not None and selected.ndim==2:selected=selected[epoch]
+                other_ids=ids if selected is None else selected[ids]
                 other=auxiliary_inputs[other_ids]
                 if auxiliary_detail is not None:other=torch.cat((other,auxiliary_detail[other_ids]),1)
-                auxiliary_loss=objective(net.change(net.change_inputs(other)).flatten(),y[ids],
-                    None if weights is None else weights[ids])
+                auxiliary_logits=net.change(net.change_inputs(other)).flatten()
+                auxiliary_weights=None if weights is None else weights[ids]
+                if auxiliary_class_weights is not None:
+                    factors=auxiliary_class_weights[y[ids].long()]
+                    auxiliary_weights=factors if auxiliary_weights is None else auxiliary_weights*factors
+                auxiliary_loss=objective(auxiliary_logits,y[ids],auxiliary_weights)
                 h.require(torch.isfinite(auxiliary_loss).item(),'nonfinite_auxiliary_loss')
                 auxiliary_total+=float(auxiliary_loss.detach())*len(ids)
                 loss=loss+auxiliary_weight*auxiliary_loss
+                if auxiliary_preservation_logits is not None:
+                    loss=loss+auxiliary_weight*preservation_weight*preserve(auxiliary_logits,
+                        auxiliary_preservation_logits[other_ids],y[ids])
             groups=None if conflict_groups is None else conflict_groups[ids]
             if auxiliary_projection:
                 parameters=[p for p in net.parameters() if p.requires_grad]

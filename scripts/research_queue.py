@@ -15,10 +15,12 @@ import platform
 import re
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
 import uuid
+import research_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / 'reports/work/research-queue'
@@ -29,11 +31,14 @@ RESULT_VERSION = 'research-result-v1'
 SUMMARY_VERSION = 'research-summary-v1'
 KINDS = {'replay', 'screen', 'confirm'}
 AUTHORITIES = {'diagnostic', 'training', 'capture', 'export', 'promotion'}
-PERMITTED = {'diagnostic', 'training'}
+PERMITTED = {'diagnostic', 'training', 'capture'}
 TRAINING_FIELDS = {'experimentLogRunId', 'membership', 'initialization', 'epochs', 'storageBudgetBytes',
                    'acceptanceEvidence', 'resume'}
 EXPERIMENT_LOG = ROOT / 'Research/ExperimentLog.md'
 STORAGE_MARGIN = 1 << 30
+DIAGNOSTIC_SECONDS = 800
+DIAGNOSTIC_BYTES = 100_000_000
+_DISPLAY_HASHES = {}
 ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,63}')
 NAME = re.compile(r'[A-Za-z_][A-Za-z0-9_]{0,63}')
 FILE = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}')
@@ -165,6 +170,32 @@ def validate(spec, module_dir=MODULES):
     require(spec.get('kind') in KINDS, 'kind_unknown')
     require(spec.get('authority') in AUTHORITIES, 'authority_unknown')
     require(spec['authority'] in PERMITTED, 'authority_not_permitted')
+    if spec['authority'] == 'capture':
+        capture = spec.get('capture', {})
+        require(set(capture) == {'target', 'endpoint', 'plan', 'approval'}, 'capture_contract')
+        require(capture['target'] == '9026ECA9-77DB-4AE6-8FE6-BB239E9571FA', 'capture_target')
+        require(capture['endpoint'] == 'http://127.0.0.1:8080', 'capture_endpoint')
+        require(isinstance(capture['approval'], str) and capture['approval'].strip(), 'capture_approval')
+        local_path(ROOT, check_pin(capture['plan'])['path'])
+        require(spec.get('adapter', {}).get('steps') in
+                (['generation352.run'], ['hcf_recovery367.run']), 'capture_adapter')
+    else:
+        require('capture' not in spec, 'capture_authority_required')
+    dependencies = spec.get('dependencies', [])
+    require(isinstance(dependencies, list) and len(dependencies) <= 10, 'dependency_limit')
+    seen = set()
+    for dep in dependencies:
+        require(isinstance(dep, dict) and set(dep) == {'job', 'specSHA256', 'outputs'}, 'dependency_fields')
+        require(isinstance(dep['job'], str) and ID.fullmatch(dep['job']) and dep['job'] != spec['id']
+                and dep['job'] not in seen, 'dependency_job')
+        seen.add(dep['job'])
+        require(isinstance(dep['specSHA256'], str) and HASH.fullmatch(dep['specSHA256']), 'dependency_hash')
+        require(isinstance(dep['outputs'], list) and 1 <= len(dep['outputs']) <= 16
+                and len(set(dep['outputs'])) == len(dep['outputs']), 'dependency_outputs')
+        for name in dep['outputs']:
+            check_name(name)
+    import research_graph
+    research_graph.validate_conditions(spec)
     adapter = spec.get('adapter')
     require(isinstance(adapter, dict) and adapter.get('type') == 'python-callable', 'adapter_unknown')
     require(isinstance(adapter.get('steps'), list) and adapter['steps'], 'steps_missing')
@@ -183,12 +214,16 @@ def validate(spec, module_dir=MODULES):
         require(isinstance(item, dict) and set(item) == {'from', 'to'}, 'stage_fields')
         local_path(ROOT, check_pin(item['from'])['path'])
         require(isinstance(item['to'], str) and FILE.fullmatch(item['to']), 'stage_name')
+        require(not dependencies or item['to'] != 'dependencies.json', 'reserved_dependency_output')
     limits = spec.get('limits')
     require(isinstance(limits, dict) and set(limits) == {'timeoutSeconds', 'maxOutputBytes', 'maxAttempts'}, 'limits_fields')
     require(type(limits['timeoutSeconds']) in (int, float) and 0 < limits['timeoutSeconds'] <= 86400, 'limits_timeout')
     require(type(limits['maxOutputBytes']) is int and 0 < limits['maxOutputBytes'] <= 1 << 34, 'limits_bytes')
     require(type(limits['maxAttempts']) is int and 1 <= limits['maxAttempts'] <= 5, 'limits_attempts')
     validate_training(spec)
+    if spec['authority'] == 'capture':
+        require(limits['timeoutSeconds'] <= 800 and limits['maxOutputBytes'] <= 100_000_000
+                and limits['maxAttempts'] == 1, 'capture_limits')
     if spec['kind'] == 'replay':
         replay = spec.get('replay')
         require(isinstance(replay, dict) and isinstance(replay.get('files'), list) and replay['files'], 'replay_missing')
@@ -213,6 +248,8 @@ def validate(spec, module_dir=MODULES):
 
 def verify_pins(spec):
     pins = list(spec.get('inputs', [])) + [item['from'] for item in spec.get('stage', [])]
+    if spec['authority'] == 'capture':
+        pins.append(spec['capture']['plan'])
     if spec['authority'] == 'training':
         pins += spec['training']['membership'] + [spec['training']['initialization']]
     for pin in pins:
@@ -229,6 +266,16 @@ def submit(spec_path, queue=QUEUE, module_dir=MODULES):
     spec = validate(load(spec_path), module_dir)
     verify_pins(spec)
     check_training(spec, queue)
+    def visit(current, trail):
+        require(current['id'] not in trail, 'dependency_cycle')
+        require(len(trail) < 64, 'dependency_depth')
+        for dep in current.get('dependencies', []):
+            other = queue / 'jobs' / dep['job'] / 'spec.json'
+            if dep['job'] == spec['id']:
+                raise ValueError('dependency_cycle')
+            if other.is_file():
+                visit(load(other), trail | {current['id']})
+    visit(spec, set())
     job = queue / 'jobs' / spec['id']
     target = job / 'spec.json'
     if target.exists():
@@ -247,7 +294,21 @@ def host_lock(path):
             fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             raise ValueError('resource_busy')
-        yield
+        yield f
+
+
+def live_output_bytes(folder):
+    """Count live files without failing when an atomic write removes its temporary file."""
+    total = 0
+    for path in folder.rglob('*'):
+        try:
+            info = path.lstat()
+        except FileNotFoundError:
+            continue
+        require(not stat.S_ISLNK(info.st_mode), 'symlink_in_outputs')
+        if stat.S_ISREG(info.st_mode):
+            total += info.st_size
+    return total
 
 
 def inventory(folder, limit):
@@ -267,23 +328,87 @@ def attempts_of(job):
         if folder.exists() else []
 
 
-def outputs_intact(attempt, result):
+def outputs_intact(attempt, result, display_cache=False):
     out = attempt / 'out'
-    return all((out / f['path']).is_file() and digest(out / f['path']) == f['sha256'] for f in result['outputs'])
+    for item in result['outputs']:
+        path = local_path(out, item['path'])
+        if not path.is_file():
+            return False
+        stat = path.stat()
+        key = (str(path), stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
+        value = _DISPLAY_HASHES.get(key) if display_cache else None
+        if value is None:
+            value = digest(path)
+            if display_cache:
+                if len(_DISPLAY_HASHES) > 10000:
+                    _DISPLAY_HASHES.clear()
+                _DISPLAY_HASHES[key] = value
+        if value != item['sha256']:
+            return False
+    return True
 
 
-def state(job):
+def dependency_inputs(spec, queue, display_cache=False):
+    """Resolve completed producer outputs. Never guess a future output hash."""
+    resolved = []
+    for dep in spec.get('dependencies', []):
+        job = local_path(queue, 'jobs/' + dep['job'])
+        require((job / 'spec.json').is_file(), 'dependency_missing:' + dep['job'])
+        producer = load(job / 'spec.json')
+        require(text_digest(producer) == dep['specSHA256'], 'dependency_spec_changed:' + dep['job'])
+        valid = None
+        for attempt in attempts_of(job):
+            result_path = attempt / 'result.json'
+            if not result_path.is_file():
+                continue
+            result = load(result_path)
+            if result.get('status') != 'complete':
+                continue
+            require(result.get('specSHA256') == dep['specSHA256'], 'dependency_result_spec')
+            require(outputs_intact(attempt, result, display_cache), 'dependency_output_changed:' + dep['job'])
+            inventory_by_name = {f['path']: f for f in result['outputs']}
+            require(all(name in inventory_by_name for name in dep['outputs']), 'dependency_output_missing:' + dep['job'])
+            valid = dict(job=dep['job'], specSHA256=dep['specSHA256'],
+                         result=dict(path=relative(result_path), sha256=digest(result_path)),
+                         outputs=[dict(path=relative(attempt / 'out' / name),
+                                       sha256=inventory_by_name[name]['sha256']) for name in dep['outputs']])
+            break
+        require(valid is not None, 'dependency_incomplete:' + dep['job'])
+        resolved.append(valid)
+    import research_graph
+    research_graph.check_conditions(spec, resolved, ROOT)
+    return resolved
+
+
+def state(job, display_cache=False):
     """Return the job state from recorded files only."""
     spec = load(job / 'spec.json')
     attempts = attempts_of(job)
     results = [load(a / 'result.json') if (a / 'result.json').exists() else None for a in attempts]
     for attempt, result in zip(attempts, results):
-        if result and result['status'] == 'complete' and outputs_intact(attempt, result):
+        if result and result['status'] == 'complete' and outputs_intact(attempt, result, display_cache):
             return 'complete', attempts
     if attempts and results[-1] is None:
+        active = attempts[-1] / 'active.lock'
+        if active.exists():
+            with active.open() as lease:
+                try:
+                    fcntl.flock(lease, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError:
+                    return 'running', attempts
         return 'interrupted', attempts
     if len(attempts) >= spec['limits']['maxAttempts']:
         return 'exhausted', attempts
+    if attempts:
+        return ('failed' if results[-1].get('status') == 'complete' else results[-1].get('status', 'failed')), attempts
+    if spec.get('requirements'):
+        return 'blocked', attempts
+    if 'benchmark_evaluator.run' in spec.get('adapter', {}).get('steps', []):
+        return 'blocked', attempts
+    try:
+        dependency_inputs(spec, job.parents[1], display_cache)
+    except (ValueError, OSError, KeyError, TypeError):
+        return 'blocked', attempts
     return 'pending', attempts
 
 
@@ -374,9 +499,11 @@ def compare_replay(spec, out):
     return dict(matched=all(f['matched'] for f in files), files=files)
 
 
-def execute(spec, attempt, module_dir, python):
+def execute(spec, attempt, module_dir, python, control=None, lease_fds=()):
     out = output_dir(spec, attempt)
     out.mkdir(parents=True)
+    if spec.get('dependencies'):
+        save(out / 'dependencies.json', dependency_inputs(spec, attempt.parents[3]))
     for item in spec.get('stage', []):
         source = local_path(ROOT, item['from']['path'])
         shutil.copyfile(source, out / item['to'])
@@ -384,16 +511,39 @@ def execute(spec, attempt, module_dir, python):
     env = dict(os.environ, PYTHONPATH=str(module_dir), PYTHONDONTWRITEBYTECODE='1')
     with (attempt / 'stdout.log').open('w') as stdout, (attempt / 'stderr.log').open('w') as stderr:
         process = subprocess.Popen([python, str(Path(__file__).resolve()), '_execute', str(attempt), str(module_dir)],
-                                   cwd=ROOT, env=env, stdout=stdout, stderr=stderr, start_new_session=True)
+                                   cwd=ROOT, env=env, stdout=stdout, stderr=stderr, start_new_session=True,
+                                   pass_fds=lease_fds)
+        started = time.monotonic()
+        reason = None
         try:
-            return process.wait(timeout=spec['limits']['timeoutSeconds']), False
-        except subprocess.TimeoutExpired:
-            os.killpg(process.pid, signal.SIGKILL)
-            process.wait()
-            return process.returncode, True
+            while process.poll() is None:
+                if control is not None and control.cancel.is_set():
+                    reason = 'cancelled'
+                elif time.monotonic() - started > spec['limits']['timeoutSeconds']:
+                    reason = 'timeout'
+                elif live_output_bytes(attempt) > spec['limits']['maxOutputBytes']:
+                    reason = 'output_limit'
+                if reason:
+                    # Popen still owns this unreaped process. Never signal a saved PID.
+                    try:
+                        os.killpg(process.pid, signal.SIGTERM)
+                    except ProcessLookupError:
+                        pass
+                    try:
+                        process.wait(timeout=30 if spec['authority'] == 'capture' else 2)
+                    except subprocess.TimeoutExpired:
+                        os.killpg(process.pid, signal.SIGKILL)
+                        process.wait()
+                    break
+                time.sleep(0.1)
+            return process.wait(), reason
+        finally:
+            if process.poll() is None:
+                os.killpg(process.pid, signal.SIGKILL)
+                process.wait()
 
 
-def run_attempt(job, spec, number, module_dir, python):
+def run_attempt(job, spec, number, module_dir, python, control=None, lease_fds=()):
     attempt = job / 'attempts' / str(number)
     attempt.mkdir(parents=True)
     started = time.time()
@@ -408,17 +558,20 @@ def run_attempt(job, spec, number, module_dir, python):
     try:
         verify_pins(spec)
         check_training(spec, job.parents[1])
+        dependency_inputs(spec, job.parents[1])
     except ValueError as error:
         result.update(status='failed', reason=str(error), wallSeconds=0.0, outputs=[])
         save(attempt / 'result.json', result)
         return result
-    code, timed_out = execute(spec, attempt, module_dir, python)
+    with host_lock(attempt / 'active.lock') as active_lease:
+        code, stop_reason = execute(spec, attempt, module_dir, python, control, (*lease_fds, active_lease.fileno()))
     outputs, within = inventory(attempt / 'out', spec['limits']['maxOutputBytes'])
+    within = within and live_output_bytes(attempt) <= spec['limits']['maxOutputBytes']
     result.update(returnCode=code, wallSeconds=time.time() - started, outputs=outputs,
                   steps=load(attempt / 'steps.json') if (attempt / 'steps.json').exists() else None,
                   closure=load(attempt / 'closure.json') if (attempt / 'closure.json').exists() else None)
-    if timed_out:
-        result.update(status='failed', reason='timeout')
+    if stop_reason:
+        result.update(status='cancelled' if stop_reason == 'cancelled' else 'failed', reason=stop_reason)
     elif code != 0:
         result.update(status='failed', reason='process_failed')
     elif not within:
@@ -431,25 +584,45 @@ def run_attempt(job, spec, number, module_dir, python):
     return result
 
 
-def run(queue=QUEUE, module_dir=MODULES, max_jobs=1, python=sys.executable, lock=None):
+def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock=None,
+        job_ids=None, retry=False, control=None):
+    require(1 <= max_jobs <= 10, 'max_jobs')
     lock = lock or ROOT / '.build/research-queue.lock'
     report = []
-    with host_lock(lock):
+    with host_lock(lock) as host_lease:
         jobs = sorted((queue / 'jobs').iterdir()) if (queue / 'jobs').exists() else []
         for job in jobs:
+            if job_ids is not None and job.name not in job_ids:
+                continue
+            if control is not None and control.stop.is_set():
+                break
             if len(report) >= max_jobs:
                 break
             spec = validate(load(job / 'spec.json'), module_dir)
             current, attempts = state(job)
-            if current == 'interrupted':
+            if current == 'running':
+                continue
+            if current == 'interrupted' and not (attempts[-1] / 'result.json').exists():
                 save(attempts[-1] / 'result.json', dict(version=RESULT_VERSION, job=spec['id'], task=spec['task'],
                      kind=spec['kind'], authority=spec['authority'], attempt=int(attempts[-1].name),
                      specSHA256=text_digest(spec), status='interrupted', outputs=[], wallSeconds=None))
                 current, attempts = state(job)
-            if current != 'pending':
+            if current != 'pending' and not (retry and current in ('failed', 'cancelled', 'interrupted')):
                 continue
-            result = run_attempt(job, spec, len(attempts) + 1, module_dir, python)
+            if spec.get('requirements') or 'benchmark_evaluator.run' in spec['adapter']['steps']:
+                continue
+            require(spec['limits']['timeoutSeconds'] <= (1800 if spec['authority'] == 'training' else DIAGNOSTIC_SECONDS), 'execution_time_limit')
+            require(spec['limits']['maxOutputBytes'] <= (2 << 30 if spec['authority'] == 'training' else DIAGNOSTIC_BYTES), 'execution_output_limit')
+            if spec['authority'] == 'training':
+                require(spec['training']['epochs'] <= 30, 'execution_epoch_limit')
+            if control is not None:
+                control.current = job.name
+            result = run_attempt(job, spec, len(attempts) + 1, module_dir, python, control, (host_lease.fileno(),))
             report.append((spec['id'], result['status']))
+            if control is not None:
+                control.current = None
+            if result['status'] != 'complete':
+                break
     return report
 
 
@@ -473,8 +646,12 @@ def child(attempt, module_dir):
         call = getattr(modules[name], function, None)
         require(callable(call), 'step_not_callable')
         start = time.monotonic()
+        save(attempt / 'progress.json', dict(step=target, completed=len(steps), total=len(adapter['steps']),
+             updatedAt=time.time()), replace=True)
         call()
         steps.append(dict(step=target, seconds=time.monotonic() - start))
+        save(attempt / 'progress.json', dict(step=target, completed=len(steps), total=len(adapter['steps']),
+             updatedAt=time.time()), replace=True)
     save(attempt / 'steps.json', steps)
     closure = []
     for module in list(sys.modules.values()):
@@ -489,11 +666,11 @@ def child(attempt, module_dir):
                                         python=sys.version.split()[0]))
 
 
-def summarize(queue=QUEUE):
+def summarize(queue=QUEUE, write=True):
     rows = []
     for job in sorted((queue / 'jobs').iterdir()) if (queue / 'jobs').exists() else []:
         spec = load(job / 'spec.json')
-        current, attempts = state(job)
+        current, attempts = state(job, display_cache=not write)
         last = load(attempts[-1] / 'result.json') if attempts and (attempts[-1] / 'result.json').exists() else {}
         replay = last.get('replay')
         row = dict(job=spec['id'], task=spec['task'], kind=spec['kind'], authority=spec['authority'],
@@ -507,17 +684,30 @@ def summarize(queue=QUEUE):
                    if replay else None,
                    replayDifferences=sum(f.get('differenceCount', 0) for f in replay['files']) if replay else None)
         
-        # Extract screening metrics if available
-        if attempts and (attempts[-1] / 'out/benchmark_summary.json').exists():
+        try:
+            evidence, measured = research_evidence.classification(spec, attempts[-1] if attempts else None)
+        except (ValueError, KeyError, OSError, TypeError) as error:
+            evidence, measured = 'invalid', None
+            row['evidenceError'] = str(error)
+        row['evidenceKind'] = evidence
+        row['modelAcceptance'] = 'not-assessed'
+        row['requirements'] = spec.get('requirements', [])
+        row['dependencies'] = spec.get('dependencies', [])
+        if spec.get('dependencies'):
             try:
-                bm = load(attempts[-1] / 'out/benchmark_summary.json')
-                metrics = bm.get('metrics', {})
-                eff = metrics.get('accuracy', 0.0)
-                samples = metrics.get('sample_count', bm.get('evaluated_cases', 0))
-                cost = last.get('wallSeconds') or 0.0
-                row['screening'] = dict(effect=eff, sampleCount=samples, costSeconds=cost)
-            except Exception:
-                pass
+                dependency_inputs(spec, queue, display_cache=True)
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                row['requirements'] = row['requirements'] + [str(error)]
+        row['batch'] = spec.get('batch')
+        row['parameters'] = spec.get('parameters', {})
+        if attempts and (attempts[-1] / 'progress.json').exists():
+            row['progress'] = load(attempts[-1] / 'progress.json')
+        if attempts and (attempts[-1] / 'attempt.json').exists():
+            row['startedAt'] = load(attempts[-1] / 'attempt.json')['startedAt']
+        if measured and current == 'complete':
+            row['measured'] = measured
+            row['screening'] = dict(effect=measured['metrics']['accuracy'],
+                sampleCount=measured['metrics']['sample_count'], costSeconds=last.get('wallSeconds'))
         rows.append(row)
 
     # Rank completed jobs with screening metrics by effect descending, then cost ascending
@@ -526,12 +716,14 @@ def summarize(queue=QUEUE):
         key=lambda r: (r['screening']['effect'], -r['screening']['costSeconds']),
         reverse=True
     )
-    for rank_idx, r in enumerate(ranked, 1):
-        r['screening']['rank'] = rank_idx
+    # Do not rank different tasks, memberships, models, or source domains together.
+    for r in ranked:
+        r['screening']['rank'] = None
 
     summary = dict(version=SUMMARY_VERSION, generatedAt=time.time(), jobs=rows)
-    queue.mkdir(parents=True, exist_ok=True)
-    save(queue / 'summary.json', summary, replace=True)
+    if write:
+        queue.mkdir(parents=True, exist_ok=True)
+        save(queue / 'summary.json', summary, replace=True)
     return summary
 
 
@@ -542,7 +734,9 @@ def main():
     sub = parser.add_subparsers(dest='command', required=True)
     sub.add_parser('submit').add_argument('spec', type=Path)
     run_parser = sub.add_parser('run')
-    run_parser.add_argument('--max-jobs', type=int, default=1)
+    run_parser.add_argument('--max-jobs', type=int, default=5)
+    run_parser.add_argument('--job', action='append')
+    run_parser.add_argument('--retry', action='store_true')
     sub.add_parser('status')
     sub.add_parser('summarize')
     execute_parser = sub.add_parser('_execute')
@@ -554,8 +748,9 @@ def main():
     elif args.command == 'submit':
         print(submit(args.spec, args.queue.resolve(), args.module_dir.resolve()))
     elif args.command == 'run':
-        require(1 <= args.max_jobs <= 100, 'max_jobs')
-        for job, status in run(args.queue.resolve(), args.module_dir.resolve(), args.max_jobs):
+        require(1 <= args.max_jobs <= 10, 'max_jobs')
+        for job, status in run(args.queue.resolve(), args.module_dir.resolve(), args.max_jobs,
+                               job_ids=args.job, retry=args.retry):
             print(job, status, flush=True)
     else:
         summary = summarize(args.queue.resolve())

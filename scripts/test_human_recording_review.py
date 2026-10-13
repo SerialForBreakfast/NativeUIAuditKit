@@ -64,6 +64,22 @@ class RecordingTests(unittest.TestCase):
         self.f.dump(self.source/'manifest.json', dict(schemaVersion=3))
         with self.assertRaises(ValueError): self.prepare()
 
+    def test_standalone_requires_option_and_stays_diagnostic(self):
+        path=self.source/'events.jsonl';rows=r.events(path)
+        rows[0]['frame']['_0']['role']='standalone'
+        path.write_text('\n'.join(json.dumps(row) for row in rows))
+        with self.assertRaisesRegex(ValueError,'unsupported_review_role'): self.prepare()
+        self.assertFalse(self.f.batch.exists())
+        p=r.prepare(self.source,self.f.batch,[(0,'screensaver')],include_standalone=True)
+        doc=h.validate_batch(p)
+        self.assertFalse(doc['trainingEligible']);self.assertEqual(doc['pairs'],[])
+        self.assertEqual(doc['frames'][0]['recordingEvent']['role'],'standalone')
+        self.assertFalse(any(h.read(p.parent/'editor/001-recorded-0.json')['flags'].values()))
+        rows[0]['frame']['_0']['role']='transition'
+        path.write_text('\n'.join(json.dumps(row) for row in rows))
+        with self.assertRaisesRegex(ValueError,'unsupported_review_role'):
+            r.prepare(self.source,self.f.root/'third',[(0,'transition')],include_standalone=True,include_unverified=True)
+
     def test_unverified_requires_explicit_option_and_preserves_role(self):
         path = self.source/'events.jsonl'
         rows = r.events(path); rows[0]['frame']['_0']['role'] = 'postInputUnverified'

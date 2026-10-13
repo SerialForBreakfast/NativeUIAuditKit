@@ -1,5 +1,51 @@
 # Concurrent delivery roadmap
 
+**Graph implementation:** [FOCUS364–365](Plans/FocusGraphs364.md) uses shared producers, typed conditions, matched comparisons, and evidence-guided follow-up.
+The broader [FOCUS363](Plans/FocusLearning363.md) program preserves native qualification and matched HCF learning before model changes.
+Prepare the retained benchmark audit while native capture awaits repair.
+Review completed branch experiments before proposing another restriction test.
+Pretrained features and group-aware training remain conditional work, not newly running jobs.
+
+**P0 HCF361:** [native HCF model study](Plans/HCF361.md) takes priority by maintainer direction.
+Qualify the OS Focus Style control, generate the first paired stage, and compare rules with both learned approaches.
+The first stage requests 1,000 HCF training frames and separate evaluation groups, not an immediate 50,000-frame collection.
+Keep other approved background work independent of native profile qualification.
+
+**P1 FOCUS355:** [position and branch corrections](Plans/Focus355.md) compare 2 new training runs with a retained equal-budget control.
+The runner owns 72 dependent comparisons and 10 reports. No automatic promotion occurs.
+Next data priorities are matched content changes, growth strength, clipping, and fixed-focus scrolling.
+The plan ranks 20 problems and separates current controls from missing producer adapters.
+
+**P3 VISION353:** [15 capability investigations](Plans/Vision353.md) test Vision tools, combined evidence, runtime cost, and confidence calibration.
+Prepare these after higher-priority focus repairs. Do not count planned tests as executable queue capacity.
+
+**DATASET351:** [controlled Fixture data](Dataset351Results.md) replaces assumed blockers with 40 measured frames and 5 completed comparisons.
+Next, compare matched control sizes and denser temporal samples before selecting another correction.
+
+**HCF350:** compare [paired Standard/HCF evidence](Plans/HCF350.md) before choosing a separate HCF model.
+Queue planning remains separate from execution. Missing pilot data blocks these comparisons, not other qualified jobs.
+
+**FOCUS349:** test [movement emphasis](Plans/Movement349.md) and analyze the reviewed Office handoff without changing data roles.
+
+**FOCUS348:** compare [gamma augmentation and retained training](Plans/Appearance348.md) at equal budgets.
+Keep original crops and previous successes. The [queue review](Focus348QueueReview.md) separates missing inputs from ready work.
+LUMA v2 files pass transfer checks. Native compatibility still needs the matching production probe and consumer handling.
+
+**FOCUS344–345:** prioritize [native transfer and 12 app experiments](Plans/NativeAppExperiments343.md).
+[FOCUS343](Focus343Results.md) finds complete crop coverage but missed native changes. More authored volume alone lacks justification.
+
+**FOCUS343:** [controlled artwork tests and caching](Plans/Focus343.md) form the recommended next batch.
+Use existing TTR artwork inputs. Test wrong decisions from prior abstentions as well as lost successes.
+
+**FOCUS342:** [results](Focus342Results.md) reject both replacements after 2 completed runs.
+Preservation reduces forgetting but still creates false changes. Keep the baseline and all failure evidence.
+
+**FOCUS341:** [added detail and matched content](Plans/Focus341.md) compare 2 fixed training arms.
+Require target improvement without lost previous successes. Keep native qualification separate from authored training results.
+
+**RESEARCH340:** [measured experiments](Plans/MeasuredResearch340.md) replace placeholder rankings with checked evidence.
+Use the local dashboard for bounded jobs. Complete controlled thin-effect and matched-magnitude comparisons before another candidate.
+
 **HCF336:** [portable experiment package](ADR-0025-Portable-Experiment-Runner.md) places acquisition in TTR and evaluation in NUIAK.
 The package passes local relocation tests. Complete Sillycon qualification and ownership acceptance before native HCF integration.
 

@@ -2,6 +2,9 @@
 
 | File | What it is |
 |---|---|
+| [`ADR-0027-Evidence-Guided-Experiment-Graphs.md`](ADR-0027-Evidence-Guided-Experiment-Graphs.md) | Accepted bounded graphs with shared evidence, typed conditions, and existing queue execution |
+| [`Plans/FocusGraphs364.md`](Plans/FocusGraphs364.md) | Matched appearance and movement tests across 7 authored layouts, with visibility checks and native limits |
+| [`Plans/Focus360.md`](Plans/Focus360.md) | Ranked tests for training conflicts, model blending, native coverage, and HCF teaching |
 | [`ProductRoadmap.md`](ProductRoadmap.md) | Complete NUIAK MVP, planned milestones, future features, proposals, ownership, and completion conditions |
 | [`ADR-0016-Evidence-Bound-Foundation-Model-Semantics.md`](ADR-0016-Evidence-Bound-Foundation-Model-Semantics.md) | Proposed optional Foundation-Model interpretation of verified NUIAK/TTR UI evidence; no action authority |
 | [`ADR-0009-Direct-tvOS-Simulator-Generation.md`](ADR-0009-Direct-tvOS-Simulator-Generation.md) | Independent native Fixture/OS data generation alongside TTR; TVGEN-01–04 |

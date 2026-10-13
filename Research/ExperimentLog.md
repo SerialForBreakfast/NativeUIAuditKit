@@ -1,5 +1,105 @@
 # NativeUIAuditKit — Experiment Log
 
+## HCF371 — native HCF rules and learned models, 2026-10-13
+
+Status: registered before execution. Results remain pending.
+Test fixed outline rules, the retained FocusRing model, an HCF crop candidate, and a full-screen YOLO11n candidate.
+Freeze 1,000 HCF training frames and 120 frames each for development, calibration, and final audit.
+Keep Standard counterparts with the same scene group. Keep inspected HCF368 and HCF370 images as regression cases only.
+Use 3 training layout families and 1 separate family per evaluation role. This pilot covers native image cards only.
+Capture originals on verified USB. Check native focus, body bounds, image hashes, restoration, and visible HCF differences before admission.
+Preserve Swift production crops: 16% expansion, 256×256, RGB divided by 255, without added augmentation.
+Warm-start the crop candidate from FDR038 and the detector from the retained tvOS v3 checkpoint.
+Use seed 371, at most 30 epochs, and development stopping patience of 10 epochs.
+The unchanged runner permits 1,800 s and 2 GiB per training job. Each candidate has 1 attempt.
+A timeout preserves evidence but does not count as successful training. Longer continuation requires a qualified runner limit and resume test.
+Compare fixed thresholds on identical development and regression membership. Require zero lost retained successes before advancing a replacement.
+Keep calibration and final audit out of training and candidate selection. Do not promote or export automatically.
+See [the implementation plan](Plans/HCF371.md). This stage uses at most 1 GPU-hour of the approved 48 GPU-hours.
+
+## FOCUS358 — matched duration test, 2026-10-12
+
+HCF358 finds improving final training loss in the 10-epoch control and position runs.
+The branch candidate worsens after epoch 8 and does not receive a longer run.
+Test 30 epochs for control and position from the same FOCUS329 initialization, seed 42, and original training membership.
+This is a fresh duration comparison, not a resume with missing optimizer state.
+Preserve original views, preprocessing, thresholds 0.15/0.85, and the existing auxiliary position transformation.
+Reuse the 24 comparison definitions per arm. Require native movement gains and zero lost retained successes.
+Each run permits 1,800 s and 2 GiB. Both runs together permit 3,600 s and 4 GiB.
+The background runner executes serially. No automatic retry, sweep, promotion, or HCF admission occurs.
+The fixed longer run tests whether the previous epoch limit hides learning; it does not assume more epochs improve generalization.
+Specifications: `Research/ResearchSpecs/FOCUS358`. Results remain pending until the final comparison completes.
+
+## FOCUS355 — position-balanced training and branch correction, 2026-10-12
+
+Status: authorized for queued execution; no result is assumed.
+Hypothesis: matched position coverage reduces spatial bias; learning whole-frame features may remove suppression of native movement.
+Compare 2 new runs with the completed FOCUS348 control. Keep FOCUS329 initialization, 10 epochs, seed 42, and existing optimizer settings.
+Keep 1,820 original views unchanged. Translate 960 declared authored examples within the existing 1,200-example auxiliary corpus.
+Both new runs use the same translated examples. Only the branch arm enables whole-frame training.
+Keep all ancestry and roles. Native development captures do not enter training.
+Each run permits 1 attempt, 1,800 s, 2 threads, and 2 GiB of outputs.
+Queue 24 comparisons per arm and automatic reports. Require target gains and zero lost previous successes.
+No automatic promotion. See [the plan](Plans/Focus355.md) and frozen FOCUS355 specifications.
+
+## FOCUS343 — native and authored diagnostics, 2026-10-12
+
+Seven jobs complete. Four models miss all 8 directed native corner changes but correctly classify 8 stable pairs.
+Original crops cover all changed bodies. The baseline and preservation candidate pass 32 new authored neighbor cases.
+Fixed cached outputs preserve logits, gradients, and one update exactly. No candidate or production model changes.
+See [results](Focus343Results.md) and [12 native experiments](Plans/NativeAppExperiments343.md).
+
+## FOCUS342 — completed comparison, 2026-10-12
+
+Both fixed 30-epoch runs complete within 1800 s. [Results](Focus342Results.md) preserve exact losses, gains, and limits.
+Rotation loses 166 previous authored successes. Preservation reduces this to 35 and keeps all 52 reserved forward native-derived successes.
+Preservation still creates 24 false changes on matched content and 4 on native-derived training cases.
+Neither candidate replaces FOCUS329 or changes shipped models. No threshold or data-role changes occur.
+All 3 diagnostic jobs pass. Cached calculations exactly match predictions and gradients in the 8-example timing test.
+The next batch tests artwork dependence and safe caching before another justified candidate.
+
+## FOCUS342 — registered before training, 2026-10-12
+
+The FOCUS341 fixed replacement removes 368 old negative examples: 232 artwork changes and 136 identical pairs.
+Of its 115 lost authored successes, 43 concern removed examples and 72 concern retained examples.
+Coverage loss alone does not explain every regression. These training-only findings justify 2 controlled candidates.
+
+- Balanced: rotate 423 old negative updates and 424 matched negative updates each epoch.
+- Balanced preservation: use that schedule and a squared hinge loss for previously correct training margins.
+- Keep 1820 primary examples, 1820 auxiliary examples, and 114 updates per epoch.
+- Keep positive auxiliary assignments unchanged. Cover all old negative examples across epochs.
+- Keep FOCUS329 initialization, original crops, frozen original branches, seed 42, batch 16, and learning rate 0.0001.
+- Use 30 epochs, the fixed final checkpoint, 1800 s, and 2 GiB per candidate.
+- Keep thresholds at 0.15 and 0.85. Preserve all data roles and group exclusions.
+
+The preservation loss applies only to correct training predictions with absolute logit at least log(0.85/0.15).
+Cap its target margin at 3. Use coefficient 1 for primary inputs and 0.25 for auxiliary inputs.
+New matched negatives have no preservation target. Reserved and development cases supply no targets.
+Require target gains without lost retained successes. No automatic retry or promotion occurs.
+
+## FOCUS341 — completed overnight review, 2026-10-12
+
+Both registered runs complete within 1800 s. [Results](Focus341Results.md) record gains, regressions, roles, and timing.
+Matched content correctness rises from 27 to 152 of 192 training cases with the second arm.
+That arm loses 115 previous authored successes and misses 2 changes among 52 reserved native-derived cases.
+Neither arm replaces the baseline. No production model changes.
+The next comparison audits training coverage before changing the schedule or loss.
+
+## FOCUS341 — added detail with matched content negatives (registered before training)
+
+Compare 2 fixed arms: added boundary detail alone, then added detail with matched content negatives.
+Both arms start from FOCUS329. Both original crops and branches stay unchanged.
+Use the existing 1820 training views, schedule, labels, and weights.
+Keep the existing auxiliary inputs in the first arm.
+In the second arm, replace half the negative auxiliary updates with matched content changes.
+All new examples inherit their original training groups. No evaluation role changes.
+Use 30 epochs, seed 42, batch 16, learning rate 0.0001, and 2 CPU threads.
+Limit each arm to 1800 s and 2 GiB. Use the fixed last checkpoint, with no automatic retry.
+Require better target decisions without lost previous successes. Keep thresholds at 0.15 and 0.85.
+Record exact hashes in each queue specification and registration before execution.
+Original-resolution crops use the existing crop function. Extra detail adds 33.3% to input pixels.
+This tests an experimental transition model. It does not change FocusRing or navigation policy.
+
 ## RESEARCH339-R1 — queued replay of the FOCUS329 training run (registered 2026-10-11, before execution)
 
 Hypothesis: the research queue reproduces a finished 30-epoch training run from recorded source and inputs.
@@ -5662,6 +5762,44 @@ The candidate loses 33 native successes in 2 training families. Center false cha
 Tiny changes remain 0/4, although their added scores change from negative to positive. Reject the candidate as a replacement.
 Keep the data and failed model for the next conflict diagnostic. Do not launch another automatic fit.
 [Full results](Focus319Results.md) separate data checks, model outcomes, and the pending Swift test check.
+## FOCUS349 — movement-weighted gamma correction
+
+The full FOCUS348 comparison finds 56 retained successful decisions lost by gamma training.
+Test positive auxiliary weight 2 against negative weight 1, normalized to preserve scheduled total weight.
+Keep primary weights and all 1,820 original views unchanged. Keep the 1,200 auxiliary pairs and their gamma views unchanged.
+Use FOCUS329 initialization, 10 epochs, seed 42, batch 16, learning rate 0.0001, and 2 CPU threads.
+Keep auxiliary coefficient 0.25 and preservation coefficient 1. Use the last checkpoint.
+Limit this run to 1,800 s and 2 GiB. No automatic retry or second correction follows.
+Require target false-change gains, recovered movement, and no lost previous successes. Keep thresholds 0.15/0.85.
+No Office images or native development cases enter training. See [the plan](Plans/Movement349.md).
+
+The run completes in 542.9 s with exact checkpoint parity. All 35 comparisons finish across 56 sets.
+The candidate retains 26 target false changes but still detects only 372/464 authored movements correctly.
+It loses 55 retained successful decisions. These include related frame orders and disturbance strengths, not independent trials.
+Reject replacement. Keep FOCUS329 and all failure evidence.
+Both Office score jobs finish on 21 selected pairs. Four disagreements guide visual review, not an accuracy claim.
+See [FOCUS349 results](Focus349Results.md) and [the Office review](OfficeCapture349.md).
+
+## FOCUS348 — core comparison complete, extended diagnostics running
+
+Compare source gamma 1.5 augmentation with an equal-budget unchanged-image control.
+FOCUS347 confirms 519 lost authored successes through the standard source-image path.
+Both arms start from FOCUS329 and use 10 epochs, seed 42, batch 16, and learning rate 0.0001.
+Keep all 1,820 original views, 1,200 approved authored auxiliary pairs, and original detail crop hashes.
+Use auxiliary weight 0.25 and preservation weight 1. Train only existing detail and correction layers.
+Use 2 CPU threads, 1,800 s, and 2 GiB per job. Do not retry automatically.
+Keep thresholds 0.15/0.85. Require target gains without lost previous successes.
+Use final weights and 26 pinned comparisons. No production model changes occur in this experiment.
+See [the plan](Plans/Appearance348.md).
+
+Both 10-epoch arms complete with exact original crop and checkpoint checks.
+The control uses 456.5 s including preparation. The gamma candidate uses 533.6 s.
+On authored gamma inputs, false changes fall from 587 to 26 against the equal-budget control.
+Correct movement detections fall from 444/464 to 372/464. Reject replacement.
+The control also loses retained successes. Keep FOCUS329 unchanged.
+Ten priority comparison jobs complete. Twenty-five additional comparisons start in detached execution.
+[Results](Focus348Results.md) preserve counts, data limits, software checks, and the next decision.
+
 ## FOCUS325 completed — 2026-10-10
 
 Both registered 30-epoch comparisons finish. Average pooling reaches 588/640 native decisions; mixed pooling reaches 577/640.
@@ -5669,3 +5807,14 @@ Neither detects the 4 tiny native changes. Both lose previous successes or incre
 Mixed pooling improves new authored training correctness from 204/432 to 260/432, without native transfer.
 The companion audit finds different effect area and contrast despite similar small controls.
 See [the complete results](Focus325Results.md) for inputs, timings, limitations, and the next comparison.
+
+## FOCUS366 — approved matched notification training
+
+Date: 2026-10-13. Execution: background queue. Status: control running; results pending.
+
+Test 252 fresh authored pairs against label-matched retained examples.
+Both runs keep FOCUS329 initialization, original crops, seed 42, 10 epochs, and the original loss settings.
+Each run permits 1800 s and 2 GiB. Train only detail filters and correction layers.
+The 392 inspected pairs stay in development. Reject exact training overlaps before execution.
+Require fewer false changes, preserved dimmed-corner movement, and zero lost retained successes.
+No production model or threshold changes. See [the frozen plan](Plans/FocusNotification366.md).

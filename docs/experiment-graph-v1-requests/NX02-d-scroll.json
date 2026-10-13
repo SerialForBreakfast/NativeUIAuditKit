@@ -1,0 +1,39 @@
+{
+  "version": 17,
+  "request_id": "9fa29e3d-ad17-40de-8731-861b7acb45eb",
+  "target": {
+    "simulator_udid": "2BAA6307-6F24-4820-8292-851BCD311417",
+    "fixture_url": "http://127.0.0.1:8080"
+  },
+  "budget": {
+    "max_cases": 24,
+    "max_targets_per_case": 1,
+    "max_wall_clock_seconds": 1800,
+    "max_retained_bytes": 671088640,
+    "minimum_free_disk_bytes": 21474836480
+  },
+  "positions": [
+    4
+  ],
+  "seeds": [
+    64001,
+    64002,
+    64003,
+    64004
+  ],
+  "condition": "scroll_directional",
+  "source_role": "calibration",
+  "renderer_contract": "native-collection-v3",
+  "layouts": [
+    "sectioned"
+  ],
+  "backgrounds": [
+    "dark",
+    "light"
+  ],
+  "artwork_styles": [
+    "city",
+    "orbit",
+    "collage"
+  ]
+}

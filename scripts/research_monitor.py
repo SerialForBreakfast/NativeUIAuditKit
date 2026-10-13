@@ -10,6 +10,7 @@ import time
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import research_queue
+import research_evidence
 
 def get_queue_stats(queue_dir=None):
     q = queue_dir or research_queue.QUEUE
@@ -32,21 +33,22 @@ def get_queue_stats(queue_dir=None):
             stats["complete"] += 1
             status_str = "complete"
             if last_attempt:
-                summary_file = last_attempt / "out/benchmark_summary.json"
-                if summary_file.exists():
-                    try:
-                        summary = json.loads(summary_file.read_text())
-                        score = summary.get("metrics", {}).get("accuracy")
-                    except Exception:
-                        pass
+                try:
+                    _, report = research_evidence.classification(research_queue.load(job_path / 'spec.json'), last_attempt)
+                    score = report['metrics']['accuracy'] if report else None
+                except (KeyError, ValueError, OSError):
+                    pass
         elif state == "interrupted":
             stats["interrupted"] += 1
             status_str = "interrupted"
         elif state in ("failed", "exhausted"):
             stats["failed"] += 1
             status_str = "failed"
-        else:
+        elif state == 'pending':
             stats["pending"] += 1
+        else:
+            stats[state] = stats.get(state, 0) + 1
+            status_str = state
 
         stats["jobs"].append({
             "id": job_id,
@@ -73,10 +75,10 @@ def show_status():
             if j["status"] == "pending":
                 print(f"  - {j['id']}")
     else:
-        print("All jobs are completed or resolved.")
+        print("No jobs are ready. Blocked or failed jobs can still need work.")
     print("========================================")
 
-def resume_queue(max_jobs=10):
+def resume_queue(max_jobs=5):
     print(f"Resuming research queue execution (up to {max_jobs} jobs)...")
     results = research_queue.run(max_jobs=max_jobs)
     print(f"Processed {len(results)} jobs:")
@@ -99,7 +101,7 @@ def main():
     subparsers.add_parser("status", help="Show queue status and counts.")
     
     resume_parser = subparsers.add_parser("resume", help="Resume pending or interrupted jobs.")
-    resume_parser.add_argument("--max-jobs", type=int, default=30, help="Max jobs to process.")
+    resume_parser.add_argument("--max-jobs", type=int, default=5, help="Max jobs to process (1–10).")
 
     subparsers.add_parser("report", help="Show quantitative metrics report.")
 
