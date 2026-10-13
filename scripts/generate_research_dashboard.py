@@ -154,7 +154,8 @@ function show(row){$('detail-description').replaceChildren();explain($('detail-d
  $('detail').textContent=JSON.stringify(row,null,2);$('modal').showModal();}
 function render(){
  const jobs=data.jobs||[];
- const active=jobs.find(j=>j.job===data.current)||jobs.find(j=>j.state==='running');
+ let active=jobs.find(j=>j.job===data.current)||jobs.find(j=>j.state==='running');
+ if(!active&&data.current){active={job:data.current,state:'running',hypothesis:'Executing task '+data.current};}
  const isRunning=busy||Boolean(data.current)||Boolean(active);
  const toggleBtn=$('toggle-run');
  if(data.stopping){toggleBtn.textContent='Stopping';toggleBtn.className='btn-toggle btn-stopping';toggleBtn.disabled=true;}
@@ -167,17 +168,38 @@ function render(){
  $('chip-ready').innerHTML='<strong>'+countState('pending')+'</strong> ready';
  $('chip-blocked').innerHTML='<strong>'+countState('blocked')+'</strong> blocked';
  $('chip-complete').innerHTML='<strong>'+countState('complete')+'</strong> done';
- $('active').className=active?'':'idle';
+ $('active').className=(active||busy)?'':'idle';
  const badgeEl=$('active-badge');
  if(badgeEl){
-  badgeEl.textContent=active?(data.stopping?'STOPPING':'RUNNING'):'IDLE';
-  badgeEl.className='badge '+(active?(data.stopping?'badge-blocked':'badge-running'):'badge-idle');
+  if(data.stopping){badgeEl.textContent='STOPPING';badgeEl.className='badge badge-blocked';}
+  else if(active){badgeEl.textContent='RUNNING';badgeEl.className='badge badge-running';}
+  else if(busy){badgeEl.textContent=data.waiting?'WAITING':'ACTIVE';badgeEl.className='badge '+(data.waiting?'badge-blocked':'badge-running');}
+  else{badgeEl.textContent='IDLE';badgeEl.className='badge badge-idle';}
  }
- $('active-title').textContent=active?(description(active).title+' · '+active.job):'No task is running';
- $('active-description').textContent=active?'What this tests: '+description(active).test:'Select ready jobs below to start a bounded batch.';
- $('active-answer').textContent=active?'What the result tells us: '+description(active).answers:'';
- $('active-step').textContent=active?(active.progress?.step||'Preparing the job; waiting for a worker event.'):'The queue is idle.';
- if(active?.progress?.updatedAt)$('active-step').textContent+=' · '+new Date(active.progress.updatedAt*1000).toLocaleTimeString();
+ if(active){
+  $('active-title').textContent=description(active).title+' · '+active.job;
+  $('active-description').textContent='What this tests: '+description(active).test;
+  $('active-answer').textContent='What the result tells us: '+description(active).answers;
+  $('active-step').textContent=active.progress?.step||'Preparing the job; waiting for a worker event.';
+  if(active.progress?.updatedAt)$('active-step').textContent+=' · '+new Date(active.progress.updatedAt*1000).toLocaleTimeString();
+ }else if(busy){
+  if(data.waiting){
+   $('active-title').textContent=data.waiting;
+   $('active-description').textContent='The runner is waiting for ready jobs or scheduler wakeup.';
+   $('active-step').textContent='Waiting for ready jobs in approved queue.';
+  }else{
+   const nextReady=jobs.find(j=>j.state==='pending');
+   $('active-title').textContent=nextReady?'Runner active — dispatching next ready batch':'Runner active';
+   $('active-description').textContent=nextReady?('Next candidate in line: '+nextReady.job):'Continuous execution is active.';
+   $('active-step').textContent=nextReady?('Preparing '+nextReady.job+' for execution'):'Executing batch in queue...';
+  }
+  $('active-answer').textContent='';
+ }else{
+  $('active-title').textContent='No task is running';
+  $('active-description').textContent='Select ready jobs below or click Start to begin.';
+  $('active-answer').textContent='';
+  $('active-step').textContent='The queue is idle.';
+ }
  $('active-progress').replaceChildren();
  if(active?.progress){const p=document.createElement('progress');const event=active.progress;
   if(Number.isFinite(event.total)&&event.total>0){p.max=event.total;p.value=event.completed;
