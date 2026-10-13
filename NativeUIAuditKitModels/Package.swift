@@ -13,11 +13,12 @@ let package = Package(
             name: "NativeUIAuditKitModels",
             dependencies: ["NativeUIModelContracts"],
             path: "Sources/NativeUIAuditKitModels",
-            exclude: ["NativeUIDetector_v1.mlpackage.mlmodel", "NativeUIModel_tvOS.mlpackage"],
+            exclude: ["NativeUIDetector_v1.mlpackage.mlmodel", "NativeUIModel_tvOS.mlpackage", "best.mlpackage"],
             resources: [
                 .copy("Resources/NativeUIDetector_v2.mlmodelc"),
                 .copy("Resources/NativeUIModel_tvOS.mlmodelc"),
                 .copy("Resources/FocusRingDetector.mlmodelc"),
+                .copy("Resources/NativeUIFocusDetector_tvOS.mlmodelc"),
                 .copy("Resources/model_manifest_tvos_v1.json"),
                 .copy("Resources/model_manifest_ios_v2.json"),
                 .copy("training_config_v1.json"),

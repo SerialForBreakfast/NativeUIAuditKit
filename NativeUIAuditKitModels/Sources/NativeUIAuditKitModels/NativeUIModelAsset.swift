@@ -86,6 +86,11 @@ public enum NativeUIModelAsset {
         Bundle.module.url(forResource: "FocusRingDetector", withExtension: "mlmodelc")
     }
 
+    /// URL of the dedicated full-screen tvOS focused control detector (.mlmodelc).
+    public static var tvOSFocusDetectorURL: URL? {
+        Bundle.module.url(forResource: "NativeUIFocusDetector_tvOS", withExtension: "mlmodelc")
+    }
+
     /// Loads the FocusRingDetector model, or returns `nil` when the compiled
     /// resource is absent. Never throws on absence — only throws on a corrupted
     /// file that exists but cannot be loaded.

@@ -149,6 +149,81 @@ def load_mobilenetv4_conv_small():
     return mod.mobilenetv4_conv_small
 
 
+def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=371, progress=None):
+    """Train the resident backbone on admitted HCF crops. Keep audit rows out."""
+    import random
+    import numpy as np
+    import torch
+    from PIL import Image
+    from torch import nn
+    if epochs != 30 or batch != 16 or any(r['role'] not in ('train', 'development') for r in rows):
+        raise ValueError('hcf_training_contract')
+    random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
+    torch.set_num_threads(2)
+    if not torch.backends.mps.is_available():
+        raise ValueError('hcf_requires_qualified_mps')
+    device = torch.device('mps')
+    model = load_mobilenetv4_conv_small()(pretrained=False, num_classes=1)
+    model.load_state_dict(torch.load(initialization, map_location='cpu', weights_only=True)['state_dict'], strict=True)
+    model.to(device)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=.5)
+    train = [r for r in rows if r['role'] == 'train' and r['profile'] == 'hcf']
+    development = [r for r in rows if r['role'] == 'development' and r['profile'] == 'hcf']
+    if not train or not development:
+        raise ValueError('hcf_training_support')
+    positive = sum(r['label'] for r in train)
+    if not 0 < positive < len(train):
+        raise ValueError('hcf_class_support')
+    criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([(len(train)-positive)/positive], device=device))
+    def tensors(selected):
+        arrays = []
+        for row in selected:
+            with Image.open(row['path']) as image:
+                if image.size != (256,256): raise ValueError('hcf_original_crop_size')
+                arrays.append(np.array(image.convert('RGB'), copy=True))
+        x = torch.from_numpy(np.stack(arrays)).permute(0,3,1,2).contiguous().float().div_(255).to(device)
+        y = torch.tensor([r['label'] for r in selected], dtype=torch.float32, device=device)
+        return x,y
+    best, stale, history = float('inf'), 0, []
+    for epoch in range(1, epochs+1):
+        model.train(); total = 0
+        order = torch.randperm(len(train)).tolist()
+        for start in range(0,len(order),batch):
+            selected = [train[i] for i in order[start:start+batch]]
+            # BatchNorm needs at least 2 examples at its final spatial stage.
+            if len(selected) == 1: selected.append(selected[0])
+            x,y = tensors(selected); optimizer.zero_grad()
+            loss = criterion(model(x).reshape(-1), y)
+            if not torch.isfinite(loss): raise ValueError('hcf_nonfinite_loss')
+            loss.backward(); optimizer.step(); total += float(loss.item())*len(selected)
+            if progress: progress(f'Train HCF crop model: epoch {epoch}/{epochs}', start+len(selected), len(train))
+        model.eval(); validation = 0
+        with torch.no_grad():
+            for start in range(0,len(development),batch):
+                x,y = tensors(development[start:start+batch])
+                validation += float(nn.functional.binary_cross_entropy_with_logits(model(x).reshape(-1), y).item())*len(y)
+        validation /= len(development)
+        if not math.isfinite(validation): raise ValueError('hcf_nonfinite_validation')
+        scheduler.step()
+        state = {k:v.detach().cpu() for k,v in model.state_dict().items()}
+        history.append(dict(epoch=epoch, trainLoss=total/len(train), developmentLoss=validation))
+        improved = validation < best
+        if improved:
+            best, stale = validation, 0
+            torch.save(dict(state_dict=state, epoch=epoch, model=MODEL_NAME), output/'best.pt')
+        else: stale += 1
+        checkpoint = dict(state_dict=state, epoch=epoch, optimizer=optimizer.state_dict(), scheduler=scheduler.state_dict(),
+            torchRNG=torch.get_rng_state(), mpsRNG=torch.mps.get_rng_state(), pythonRNG=random.getstate(),
+            numpyRNG=np.random.get_state(), history=history, stale=stale, best=best)
+        temporary = output/'last.partial'
+        torch.save(checkpoint, temporary); temporary.replace(output/'last.pt')
+        (output/'history.json').write_text(json.dumps(history, indent=2)+'\n')
+        if stale >= 10: break
+    return dict(epochs=len(history), bestDevelopmentLoss=best, trainCrops=len(train), developmentCrops=len(development),
+        earlyStopped=stale >= 10, resumeStateSaved=True, resumeQualified=False)
+
+
 def main() -> int:
     args = parse_args()
     dataset = Path(args.dataset).expanduser()
