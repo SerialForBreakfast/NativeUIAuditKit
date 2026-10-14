@@ -1,8 +1,10 @@
 # NativeUIAuditKit product roadmap
 
-Repository snapshot: 2026-10-09. Owner: Maximum-mini-NUIAK.
+Repository snapshot: 2026-10-09. Owner: research-host-NUIAK.
 
 NUIAK detects visible UI elements and focus evidence from screenshots.
+Its main goal is general UI detection, classification, and focus detection under Standard settings.
+High Contrast Focus (HCF) is a separate, optional research track. It is not a requirement for the main product.
 The next MVP gives TTR optional models, verified installation, and useful diagnostic results without control of navigation.
 Later milestones improve model accuracy, complete the feedback cycle, and expand supported UI types and platforms.
 
@@ -10,6 +12,27 @@ This roadmap groups the existing plans into product milestones. It does not auth
 [Tasks.md](../Tasks.md) remains the only queue for status, priority, and ownership.
 [CurrentState.md](CurrentState.md) records results. [ImplementationPlans.md](ImplementationPlans.md) links the detailed work contracts.
 Historical experiment entries do not become new work merely because they remain in those files.
+
+## Current scope decision — 2026-10-13
+
+The [combined review plan](Plans/StandardResearch391.md) defines the next implementation sequence.
+Prioritize Standard proposal coverage, complete focus selection, and efficient measured evaluation.
+Prepare targeted native data before larger architecture changes. Keep HCF assistance an optional controlled comparison.
+This plan does not change running experiments or default model behavior.
+
+This decision replaces earlier HCF-first planning priorities. It does not interrupt approved jobs or change submitted specifications.
+
+- Standard NUIAK works without HCF, an HCF model download, or a change to OS settings.
+- Keep HCF datasets, model identities, reports, and optional integration separate from Standard results.
+- Preserve shipped models, Standard preprocessing, thresholds, and previous successes during HCF experiments.
+- Report Standard detection, classification, focus selection, and transitions separately. An HCF score does not establish Standard performance.
+- Complete the approved HCF comparison as an optional investigation. Success does not make HCF a default feature.
+- Compare HCF-assisted Standard training against a matched Standard-only control before considering transfer.
+- Test any shared correction on Standard captures and retained successes. Reject regressions under the existing acceptance gates.
+- Keep final evaluation groups separate. Do not transfer HCF labels to Standard images without verified focus identity and body geometry.
+
+Future preparation prioritizes Standard failures. HCF readiness does not block independent Standard work.
+Optional HCF runtime integration needs a separate decision after qualification.
 
 ## Roadmap at a glance
 
@@ -37,7 +60,7 @@ No calendar dates are promised. Required evidence, worker capacity, and accepted
 | Text and UI evidence | OCR association, coordinates, and observation reports | Pixels cannot prove hidden accessibility semantics |
 | Local tools | Swift inference, screenshot CLI, and stdio MCP interface | Tool execution does not establish model quality |
 | Training and evaluation | Seeded generation, intake checks, experiments, and retained comparisons | Each dataset still needs correct labels and approved roles |
-| Worker processing | BigDog-NUIAK can run assigned batch computation | Portable inputs and accepted execution scope remain necessary |
+| Worker processing | compute-host-NUIAK can run assigned batch computation | Portable inputs and accepted execution scope remain necessary |
 | Optional model delivery | Resource-free runtime and local lifecycle tests | Public download and signed TTR execution need end-to-end checks |
 
 The focus tasks remain separate:
@@ -80,11 +103,11 @@ Use the [publication instructions](ModelPublicationReview305.md).
 
 | Work | Owner | Acceptance |
 | --- | --- | --- |
-| Publish the reviewed preview | Maintainer; Maximum-mini-NUIAK prepares evidence | Exact approved inventory, source access, notices, and separate release identity |
-| Verify public downloads | Maximum-mini-NUIAK | Anonymous downloads match catalog and member hashes |
-| Test actual TTR integration | Sillycon-TTR; Maximum-mini-NUIAK reviews results | Download, compile, load, restart offline, rollback, and failure tests pass |
+| Publish the reviewed preview | Maintainer; research-host-NUIAK prepares evidence | Exact approved inventory, source access, notices, and separate release identity |
+| Verify public downloads | research-host-NUIAK | Anonymous downloads match catalog and member hashes |
+| Test actual TTR integration | capture-host-TTR; research-host-NUIAK reviews results | Download, compile, load, restart offline, rollback, and failure tests pass |
 | Report host support | Each executing host reports results | Distinguish declared macOS 14 minimum from tested OS and architecture |
-| Reconcile communication | BigDog-Coordinator routes; receiving owner acknowledges | Forwarded ID and TTR response exist; stored messages alone do not count |
+| Reconcile communication | compute-host-coordinator routes; receiving owner acknowledges | Forwarded ID and TTR response exist; stored messages alone do not count |
 
 The local tests cover macOS 27.0.1 arm64. They do not qualify macOS 14 or Intel execution.
 TTR reviews its application distribution separately. That review does not create a circular dependency for NUIAK's own preparation.
@@ -129,8 +152,8 @@ Contracts: FEEDBACK298-A through D, FOCUS-LOOP, and [the feedback plan](Plans/Op
 
 ## 4 Highest priority model improvements
 
-The current priority is reliable focus-change detection, with single-image focus and element detection tracked separately.
-The latest small-control test exposes detail loss: both tested transition models miss all 4 accepted changes.
+The current priority is general UI detection and classification, with Standard focus selection and focus transitions measured separately.
+The earlier small-control test exposes detail loss: both tested transition models miss all 4 accepted changes.
 Image-based region proposals find those 4 changes. This supports a detail-preserving comparison, not an immediate model replacement.
 
 | Problem | Planned test or correction | Required result |
@@ -257,25 +280,41 @@ To promote a proposal into planned work:
 
 | Owner | Responsibility |
 | --- | --- |
-| Maximum-mini-NUIAK | Model contracts, data admission, Apple validation, release preparation, and final acceptance |
-| Maximum-mini-TTR | Local TTR and Fixture runtime used for specifically authorized capture |
-| Sillycon-TTR | TTR source changes, optional integration, capture hooks, and application navigation policy |
-| BigDog-NUIAK | Portable training, cached scoring, label-review candidates, and batch audits after accepted dispatch |
-| BigDog-Coordinator | Cross-project routing, acknowledgments, and execution coordination within its qualified scope |
+| research-host-NUIAK | Model contracts, data admission, Apple validation, release preparation, and final acceptance |
+| research-host-TTR | Local TTR and Fixture runtime used for specifically authorized capture |
+| capture-host-TTR | TTR source changes, optional integration, capture hooks, and application navigation policy |
+| compute-host-NUIAK | Portable training, cached scoring, label-review candidates, and batch audits after accepted dispatch |
+| compute-host-coordinator | Cross-project routing, acknowledgments, and execution coordination within its qualified scope |
 | Maintainer | Git writes, release publication, and decisions outside standing execution authority |
 
 Batch compatible capture recipes within one prepared runtime session.
-Give BigDog-NUIAK immutable input packages and bounded comparisons that do not block local analysis.
+Give compute-host-NUIAK immutable input packages and bounded comparisons that do not block local analysis.
 Keep Core ML, signed application, and Apple-runtime checks on an appropriate Mac.
 Use exact transfer receipts. Preserve originals and remove shared copies only under the agreed receipt rules.
 Stored, forwarded, accepted, running, completed, and independently verified remain separate states.
 
 ## 9 Next substantial work batches
 
+The following research order replaces older campaign priorities. Existing release work and approved execution remain unchanged.
+
+| Priority | Existing task | Test and next decision |
+| --- | --- | --- |
+| P0 | PROGRAM384-E1 and FOCUS363-B | Audit retained detector errors and Standard coverage. Select missing classes, sizes, positions, and native cases for targeted generation. |
+| P0 | FOCUS373-LOSSES and PROGRAM384-D1 | Compare retained gains, losses, and decision margins. Separate notification correction effects from variation between training runs. |
+| P1 | PROGRAM384-B1 | Compare actual fallback selection with fixed deployable proposals. Determine whether proposals or focus classification cause failures. |
+| P1 | FOCUS355 and PROGRAM384-E3 | Prepare matched Standard examples from measured gaps. Test position, content changes, and control diversity without changing several factors together. |
+| P1 | FOCUS360-E01 | If retained comparisons leave the movement tradeoff unresolved, measure conflicting training signals before choosing another correction. |
+| Optional | HCF388 and HCF389 | Finish approved HCF comparisons separately. Consider optional delivery only after qualification; do not require it for Standard progress. |
+
+Tasks.md records readiness and exact missing inputs. This table does not claim these jobs are ready or add execution approvals.
+Continue existing iOS work independently. Standard tvOS evidence does not establish iOS classification accuracy.
+
+### Existing delivery sequence
+
 | Order | Complete outcome | Parallel work | Stop condition |
 | --- | --- | --- | --- |
 | 1 | Publish and qualify the privacy-corrected optional tvOS preview | Freeze the small-control comparison from retained evidence | Public release needs the maintainer; host qualification needs actual TTR results |
-| 2 | Diagnose and test 1 detail-preserving transition correction | BigDog-NUIAK audits cached labels and group exposure | Stop a failed hypothesis; preserve the full regression report |
+| 2 | Diagnose and test 1 detail-preserving transition correction | compute-host-NUIAK audits cached labels and group exposure | Stop a failed hypothesis; preserve the full regression report |
 | 3 | Complete 1 opt-in feedback cycle | Prepare missing real-app evaluation groups | Uncertain labels block admission, not software work |
 | 4 | Improve single-image focus and artwork transfer | Continue the independent iOS label-policy experiment | Separate model gates and evaluation roles remain unchanged |
 | 5 | Complete broader platform qualification and selected consumer work | Prepare gated future-feature inputs | Do not start gated models or change taxonomies without their prerequisites |

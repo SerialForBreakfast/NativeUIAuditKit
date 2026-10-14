@@ -1,12 +1,47 @@
 # Concurrent delivery roadmap
 
+## Current priority — 2026-10-13
+
+General UI detection, classification, and Standard focus detection remain the main goals.
+HCF is a separate optional investigation, not a prerequisite for Standard NUIAK.
+Use the [product scope decision](ProductRoadmap.md#current-scope-decision--2026-10-13) and [Tasks.md](../Tasks.md) for current priorities.
+
+Prepare these comparisons next:
+
+1. Audit retained Standard detector errors and coverage with PROGRAM384-E1 and FOCUS363-B.
+2. Explain transition gains and lost successes with FOCUS373-LOSSES and the existing PROGRAM384-D1 controls.
+3. Test deployable selection with PROGRAM384-B1 before treating known-box accuracy as usable focus detection.
+4. Prepare targeted Standard generation from those findings. Preserve matched controls and previous successes.
+
+Keep HCF results separate. Test shared changes against Standard-only controls before considering integration.
+Do not change running jobs, submitted specifications, or approvals to apply this planning order.
+
+[STANDARD390](Plans/Standard390.md) prepares 4 cached comparisons and 1 dependent data-priority report.
+It checks the wider regression suite instead of repeating the notification-only review.
+The report combines verified detector records with case-linked focus losses. Training and new capture remain separate decisions.
+
+## Combined review implementation — 2026-10-14
+
+[STANDARD391](Plans/StandardResearch391.md) combines the 3 reviews into preparation tasks and controlled experiments.
+First use STANDARD390 evidence, share compatible evaluation, and measure deployable proposal and selection failures.
+Then prepare targeted Standard data and one justified correction with all required regression comparisons.
+Boundary features, compression, and alternate detectors remain conditional. HCF transfer stays optional and separate.
+The plan changes no active jobs, approvals, or runtime modules. Tasks.md holds preparation status.
+
+[S391-01 and S391-02 complete](Standard391Results.md): retained failure review and exact shared evaluation parity.
+Next implement deployable proposal and selection comparisons, then prepare matched Standard producer cases.
+
+## Earlier campaign priorities
+
+The entries below record earlier campaign decisions. They do not override the current Standard-first planning order.
+
 **Graph implementation:** [FOCUS364–365](Plans/FocusGraphs364.md) uses shared producers, typed conditions, matched comparisons, and evidence-guided follow-up.
-The broader [FOCUS363](Plans/FocusLearning363.md) program preserves native qualification and matched HCF learning before model changes.
+The broader [FOCUS363](Plans/FocusLearning363.md) program includes native qualification and a separate matched HCF study.
 Prepare the retained benchmark audit while native capture awaits repair.
 Review completed branch experiments before proposing another restriction test.
 Pretrained features and group-aware training remain conditional work, not newly running jobs.
 
-**P0 HCF361:** [native HCF model study](Plans/HCF361.md) takes priority by maintainer direction.
+**Earlier P0 HCF361:** [native HCF model study](Plans/HCF361.md) records the approved optional investigation.
 Qualify the OS Focus Style control, generate the first paired stage, and compare rules with both learned approaches.
 The first stage requests 1,000 HCF training frames and separate evaluation groups, not an immediate 50,000-frame collection.
 Keep other approved background work independent of native profile qualification.
@@ -112,7 +147,7 @@ No new training or worker dispatch occurs during this planning assignment.
 **Independent release work:** RELEASE300 prepares the NUIAK handoff for TTR 0.4.3 RC.
 The resource-free runtime, bundled compatibility, and native source comparison pass locally.
 The installation lifecycle, TTR integration, and public approval remain open.
-Use the [Sillycon-TTR handoff](TTRModelHandoff.md) for preview interfaces and exact test limits.
+Use the [capture-host-TTR handoff](TTRModelHandoff.md) for preview interfaces and exact test limits.
 Follow the [release checklist](ReleasePreparation.md). Do not tag an unfinished download feature.
 
 **October 8:** TRANSITION297 completes the spatial diagnostic. TRANSITION299 now checks weak native effects before any empty-proposal rule.
@@ -158,7 +193,7 @@ Next200native asset adapter/review, with202source reconciliation independent.
 
 **Artwork-first priority, October5:** [five delivery tranches](Plans/ArtworkModelImprovement204.md)
 put reusable artwork ahead of mock-UI focus generation. Start199asset planner and204
-bounded Big Dog campaign preparation independently; qualify200iOS/202tvOS native
+bounded compute worker campaign preparation independently; qualify200iOS/202tvOS native
 adapters with an accepted subset, not the entire artwork library. Then205content/focus
 contrasts and206FocusRing share acquisition;207measures detector clutter benefit per
 platform. Keep197proposal work independent/high priority.203remains a bounded stretch
@@ -216,7 +251,7 @@ Positive replay improves retainedAP to.899967 and reduces sheet/cancel FP versus
 but eight development gates fail. Reuse predictions for complete geometry/operating
 error accounting and one justified next proposal, not automatic extraepochs.
 ART183structural intake passes; source/schema4/v5 compatibility awaits exact TTR
-source publication, with feedback delivered. Big Dog180A diagnostic return verified;
+source publication, with feedback delivered. compute worker180A diagnostic return verified;
 180B/C now received and independently checked; no local critical-path dependency.
 [184evidence](../reports/work/IOS-REPLAY-184/handoff.md).
 
@@ -225,7 +260,7 @@ and full comparison. Aggregate AP improved, but operating FP and placement gates
 failed. Reuse all predictions for case-level error/exposure diagnosis and freeze one
 revised comparison; no automatic extraepochs. TTR native24 source synchronization remains
 an independent dependency, not a prerequisite for this local work.
-[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). Big Dog180A/B/C independently
+[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). compute worker180A/B/C independently
 evaluates transition-model sensitivity and consensus at low priority.
 
 **UI-SOURCE177 research completed:** [source intake](Plans/UIComponentIntake.md)
@@ -236,7 +271,7 @@ review-only after dimensional/grid deviations; no native import or training clai
 
 **Low-priority opportunistic lane — ART-A–D (2026-10-05):**
 Priority clarification: the older sheet-generation approach below remains opportunistic;
-resident Big Dog individual-artwork generation is now covered by204above. Do not
+resident compute worker individual-artwork generation is now covered by204above. Do not
 dispatch both as duplicate acquisition campaigns.
 [Generated media artwork](Plans/GeneratedMediaAssets.md) provides fictional posters,
 episode art, avatars and backdrops for native compositions. Start with contract/crop
