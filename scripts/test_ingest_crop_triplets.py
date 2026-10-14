@@ -1,114 +1,85 @@
 #!/usr/bin/env python3
-"""Unit tests for ingest_crop_triplets.py (ASD-STE100)."""
+"""Tests for ingest_crop_triplets.py. Outputs stay under .build/ (ASD-STE100)."""
 import json
 from pathlib import Path
-import struct
+import shutil
 import sys
-import tempfile
 import unittest
+import uuid
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ingest_crop_triplets import ingest_triplets, check_png_dimensions
+import generate_crop_triplets as gen
+from ingest_crop_triplets import compute_sha256, ingest_triplets
+
+ROOT = Path(__file__).resolve().parents[1]
+
 
 class TestIngestCropTriplets(unittest.TestCase):
     def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory()
-        self.root = Path(self.tmp.name)
-        self.crops_dir = self.root / "crops"
-        self.crops_dir.mkdir(parents=True)
+        if gen.Image is None:
+            self.skipTest("Pillow not available")
+        self.root = ROOT / ".build" / f"test-ingest-triplets-{uuid.uuid4().hex}"
+        self.addCleanup(shutil.rmtree, self.root, True)
+        self.manifest = gen.generate_multi_theme_dataset(self.root, cases_per_theme=14)
 
-    def tearDown(self):
-        self.tmp.cleanup()
+    def test_focused_crop_is_the_focused_render(self):
+        summary = ingest_triplets(self.root, self.root / "out.json")
+        self.assertEqual((summary["validated_cases"], summary["failed_cases"]), (42, 0))
+        pairs = json.loads((self.root / "focus_dataset_manifest.json").read_text())["pairs"]
+        first = pairs[0]
+        case = next(c for c in self.manifest["cases"] if c["case_id"] == first["pair_id"])
+        self.assertEqual(compute_sha256(self.root / first["focused_crop"]), case["crop_anchor_sha256"])
+        self.assertEqual(compute_sha256(self.root / first["unfocused_crop"]), case["crop_positive_sha256"])
 
-    def _make_dummy_png(self, path, width=256, height=256):
-        header = b"\x89PNG\r\n\x1a\n"
-        ihdr_data = struct.pack(">II", width, height) + b"\x08\x06\x00\x00\x00"
-        ihdr_chunk = b"\x00\x00\x00\x0dIHDR" + ihdr_data + b"\x00\x00\x00\x00"
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(header + ihdr_chunk)
-
-    def test_ingest_valid_cases(self):
-        case_id = "test_case_01"
-        case_dir = self.crops_dir / case_id
-        for f in ["crop_anchor.png", "crop_positive.png", "crop_negative.png"]:
-            self._make_dummy_png(case_dir / f, 256, 256)
-        (case_dir / "crop_manifest.json").write_text("{}")
-
-        manifest = {
-            "cases": [
-                {
-                    "case_id": case_id,
-                    "layout": "shelf",
-                    "focus_bias": "center",
-                    "interruption": "none",
-                    "focused_node_id": "item_0",
-                    "crop_anchor_sha256": "dummy_anchor",
-                    "crop_positive_sha256": "dummy_pos",
-                    "crop_negative_sha256": "dummy_neg"
-                }
-            ]
-        }
+    def test_groups_do_not_cross_splits(self):
+        # Copy 1 case so 2 cases share identical pixels.
+        cases = self.manifest["cases"]
+        source, copy = cases[0], dict(cases[0], case_id="copy_of_first")
+        shutil.copytree(self.root / "crops" / source["case_id"], self.root / "crops" / "copy_of_first")
+        manifest = dict(self.manifest, cases=cases + [copy])
         (self.root / "bulk_crop_triplets_manifest.json").write_text(json.dumps(manifest))
-
-        out_path = self.root / "out.json"
-        summary = ingest_triplets(self.root, out_path)
-        self.assertEqual(summary["total_cases_found"], 1)
-        self.assertEqual(summary["validated_cases"], 1)
-        self.assertEqual(summary["failed_cases"], 0)
-        self.assertTrue(out_path.exists())
-
-    def test_invalid_dimensions_flagged(self):
-        case_id = "test_case_bad_dim"
-        case_dir = self.crops_dir / case_id
-        self._make_dummy_png(case_dir / "crop_anchor.png", 100, 100) # Wrong dimensions
-        self._make_dummy_png(case_dir / "crop_positive.png", 256, 256)
-        self._make_dummy_png(case_dir / "crop_negative.png", 256, 256)
-        (case_dir / "crop_manifest.json").write_text("{}")
-
-        manifest = {
-            "cases": [
-                {
-                    "case_id": case_id,
-                    "layout": "grid",
-                    "focus_bias": "edge"
-                }
-            ]
-        }
-        (self.root / "bulk_crop_triplets_manifest.json").write_text(json.dumps(manifest))
-
         summary = ingest_triplets(self.root)
-        self.assertEqual(summary["validated_cases"], 0)
-        self.assertEqual(summary["failed_cases"], 1)
+        self.assertEqual(summary["unique_anchor_images"], 42)
+        by_id = {c["case_id"]: c for c in summary["cases"]}
+        self.assertEqual(by_id["copy_of_first"]["split"], by_id[source["case_id"]]["split"])
+        splits_by_group = {}
+        for c in summary["cases"]:
+            splits_by_group.setdefault(c["group"], set()).add(c["split"])
+        self.assertTrue(all(len(s) == 1 for s in splits_by_group.values()))
 
-    def test_theme_preservation(self):
-        case_id = "test_case_light"
-        case_dir = self.crops_dir / case_id
-        for f in ["crop_anchor.png", "crop_positive.png", "crop_negative.png"]:
-            self._make_dummy_png(case_dir / f, 256, 256)
-        (case_dir / "crop_manifest.json").write_text("{}")
-
-        manifest = {
-            "dataset_name": "Test-Theme-Corpus",
-            "cases": [
-                {
-                    "case_id": case_id,
-                    "layout": "hero_detail",
-                    "theme": "light_standard",
-                    "focus_bias": "balanced",
-                    "crop_anchor_sha256": "dummy_anchor",
-                    "crop_positive_sha256": "dummy_pos",
-                    "crop_negative_sha256": "dummy_neg"
-                }
-            ]
-        }
+    def test_hash_mismatch_and_wrong_polarity_fail(self):
+        cases = self.manifest["cases"]
+        bad_hash = dict(cases[0], crop_anchor_sha256="0" * 64)
+        item_path = self.root / "crops" / cases[1]["case_id"] / "crop_manifest.json"
+        item = json.loads(item_path.read_text())
+        item["anchor"]["is_focused"] = False
+        item_path.write_text(json.dumps(item))
+        manifest = dict(self.manifest, cases=[bad_hash, cases[1]] + cases[2:])
         (self.root / "bulk_crop_triplets_manifest.json").write_text(json.dumps(manifest))
-
         summary = ingest_triplets(self.root)
-        self.assertEqual(summary["themes"].get("light_standard"), 1)
-        self.assertEqual(summary["cases"][0]["theme"], "light_standard")
-        focus_manifest = json.loads((self.root / "focus_dataset_manifest.json").read_text())
-        self.assertEqual(focus_manifest["pairs"][0]["theme"], "light_standard")
+        errors = {f["case_id"]: f["error"] for f in summary["failures"]}
+        self.assertIn("hash_mismatch", errors[cases[0]["case_id"]])
+        self.assertIn("polarity_unknown_or_wrong", errors[cases[1]["case_id"]])
+        self.assertEqual(summary["validated_cases"], 40)
+
+    def test_reencoded_pixels_join_declared_groups(self):
+        source = self.manifest['cases'][0]
+        duplicate = dict(source, case_id='reencoded', group='different-lineage')
+        folder = self.root / 'crops' / 'reencoded'
+        shutil.copytree(self.root / 'crops' / source['case_id'], folder)
+        for role in ('anchor', 'positive', 'negative'):
+            path = folder / f'crop_{role}.png'
+            with gen.Image.open(path) as image:
+                image.load()
+                image.save(path, compress_level=0)
+            duplicate[f'crop_{role}_sha256'] = compute_sha256(path)
+        manifest = dict(self.manifest, cases=self.manifest['cases'] + [duplicate])
+        (self.root / 'bulk_crop_triplets_manifest.json').write_text(json.dumps(manifest))
+        result = ingest_triplets(self.root)
+        rows = {row['case_id']: row for row in result['cases']}
+        self.assertEqual(rows[source['case_id']]['group'], rows['reencoded']['group'])
+        self.assertEqual(result['unique_anchor_images'], 42)
+
 
 if __name__ == "__main__":
     unittest.main()
-

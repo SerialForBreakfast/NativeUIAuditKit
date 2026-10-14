@@ -179,6 +179,9 @@ def detector():
     q.save(OUT/'comparison.json',result)
 
 
+candidate_detector = detector
+
+
 def decision():
     study.OUT=OUT
     reports=study.dependency('comparison.json')

@@ -69,8 +69,13 @@ def parse_args():
     return p.parse_args()
 
 
-def train_native_hcf(dataset_yaml, initialization, output, progress=None):
-    """Use the resident YOLO trainer with fixed native HCF settings."""
+def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best'):
+    """Use the resident YOLO trainer with fixed native HCF settings.
+
+    weights='best' keeps the HCF371 behavior (validation fitness). weights='last' returns the final epoch.
+    """
+    if weights not in ('best', 'last'):
+        raise ValueError('hcf_weights_choice')
     import os
     os.environ.setdefault('YOLO_CONFIG_DIR', str(PROJECT_ROOT/'NativeUITrainer/.ultralytics'))
     os.environ.setdefault('MPLCONFIGDIR', str(PROJECT_ROOT/'NativeUITrainer/.mplconfig'))
@@ -86,7 +91,7 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None):
         optimizer='AdamW', lr0=.001, lrf=.01, pretrained=True, plots=False, save=True, save_period=1,
         rect=True, cache=False, amp=False, mosaic=0, mixup=0, copy_paste=0, fliplr=0, flipud=0,
         degrees=0, translate=0, scale=0, shear=0, perspective=0, hsv_h=0, hsv_s=0, hsv_v=0)
-    return output/'detector/weights/best.pt'
+    return output/'detector/weights'/(weights + '.pt')
 
 
 def main():

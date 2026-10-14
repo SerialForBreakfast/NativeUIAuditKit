@@ -149,8 +149,14 @@ def load_mobilenetv4_conv_small():
     return mod.mobilenetv4_conv_small
 
 
-def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=371, progress=None):
-    """Train the resident backbone on admitted HCF crops. Keep audit rows out."""
+def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=371, progress=None, profile='hcf',
+                     selection='best-development', deduplicate=False):
+    """Train the resident backbone on admitted crops. Keep audit rows out.
+
+    selection='best-development' keeps the HCF371 behavior. selection='fixed-last' never uses development
+    rows, so a later development comparison is not biased by checkpoint choice.
+    deduplicate=True keeps 1 training row per (pixel hash, label), so repeated crops do not gain weight.
+    """
     import random
     import numpy as np
     import torch
@@ -168,9 +174,31 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=.5)
-    train = [r for r in rows if r['role'] == 'train' and r['profile'] == 'hcf']
-    development = [r for r in rows if r['role'] == 'development' and r['profile'] == 'hcf']
-    if not train or not development:
+    if profile == 'balanced' or profile is None:
+        train = [r for r in rows if r['role'] == 'train']
+        development = [r for r in rows if r['role'] == 'development']
+    else:
+        train = [r for r in rows if r['role'] == 'train' and r['profile'] == profile]
+        development = [r for r in rows if r['role'] == 'development' and r['profile'] == profile]
+    if selection not in ('best-development', 'fixed-last'):
+        raise ValueError('hcf_selection')
+    if selection == 'fixed-last':
+        development = []
+    duplicates = 0
+    if deduplicate:
+        import hashlib
+        unique = {}
+        labels_by_pixel = {}
+        for row in train:
+            with Image.open(row['path']) as image:
+                if image.size != (256, 256): raise ValueError('hcf_original_crop_size')
+                pixels = hashlib.sha256(image.convert('RGB').tobytes()).hexdigest()
+            if pixels in labels_by_pixel and labels_by_pixel[pixels] != row['label']:
+                raise ValueError('hcf_duplicate_label_conflict')
+            labels_by_pixel[pixels] = row['label']
+            unique.setdefault((pixels, row['label']), row)
+        duplicates, train = len(train) - len(unique), list(unique.values())
+    if not train or (selection == 'best-development' and not development):
         raise ValueError('hcf_training_support')
     positive = sum(r['label'] for r in train)
     if not 0 < positive < len(train):
@@ -198,21 +226,25 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
             if not torch.isfinite(loss): raise ValueError('hcf_nonfinite_loss')
             loss.backward(); optimizer.step(); total += float(loss.item())*len(selected)
             if progress: progress(f'Train HCF crop model: epoch {epoch}/{epochs}', start+len(selected), len(train))
-        model.eval(); validation = 0
-        with torch.no_grad():
-            for start in range(0,len(development),batch):
-                x,y = tensors(development[start:start+batch])
-                validation += float(nn.functional.binary_cross_entropy_with_logits(model(x).reshape(-1), y).item())*len(y)
-        validation /= len(development)
-        if not math.isfinite(validation): raise ValueError('hcf_nonfinite_validation')
+        model.eval(); validation = None
+        if development:
+            validation = 0
+            with torch.no_grad():
+                for start in range(0,len(development),batch):
+                    x,y = tensors(development[start:start+batch])
+                    validation += float(nn.functional.binary_cross_entropy_with_logits(model(x).reshape(-1), y).item())*len(y)
+            validation /= len(development)
+            if not math.isfinite(validation): raise ValueError('hcf_nonfinite_validation')
         scheduler.step()
         state = {k:v.detach().cpu() for k,v in model.state_dict().items()}
         history.append(dict(epoch=epoch, trainLoss=total/len(train), developmentLoss=validation))
-        improved = validation < best
+        if selection == 'fixed-last':
+            torch.save(dict(state_dict=state, epoch=epoch, model=MODEL_NAME), output/'final.pt')
+        improved = validation is not None and validation < best
         if improved:
             best, stale = validation, 0
             torch.save(dict(state_dict=state, epoch=epoch, model=MODEL_NAME), output/'best.pt')
-        else: stale += 1
+        elif validation is not None: stale += 1
         checkpoint = dict(state_dict=state, epoch=epoch, optimizer=optimizer.state_dict(), scheduler=scheduler.state_dict(),
             torchRNG=torch.get_rng_state(), mpsRNG=torch.mps.get_rng_state(), pythonRNG=random.getstate(),
             numpyRNG=np.random.get_state(), history=history, stale=stale, best=best)
@@ -220,7 +252,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
         torch.save(checkpoint, temporary); temporary.replace(output/'last.pt')
         (output/'history.json').write_text(json.dumps(history, indent=2)+'\n')
         if stale >= 10: break
-    return dict(epochs=len(history), bestDevelopmentLoss=best, trainCrops=len(train), developmentCrops=len(development),
+    return dict(epochs=len(history), bestDevelopmentLoss=best if development else None, trainCrops=len(train),
+        duplicateTrainRowsRemoved=duplicates, developmentCrops=len(development), selection=selection,
         earlyStopped=stale >= 10, resumeStateSaved=True, resumeQualified=False)
 
 

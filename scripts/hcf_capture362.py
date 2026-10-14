@@ -19,18 +19,8 @@ OUT = None
 
 
 def save_native_screenshot(path):
-    """Stage one screenshot locally. Verify the USB copy before removing the staging file."""
-    folder=q.ROOT/'.build/debug-output/hcf371-screenshots'
-    folder.mkdir(parents=True, exist_ok=True)
-    staged=folder/(str(uuid.uuid4())+'.png')
-    d.run(['xcrun','simctl','io',n.TARGET,'screenshot','--type=png',str(staged)],timeout=15)
-    q.require(0 < staged.stat().st_size <= 20_000_000, 'screenshot_png_limit')
-    data=staged.read_bytes()
-    q.require(data.startswith(b'\x89PNG\r\n\x1a\n'), 'screenshot_png_limit')
-    with path.open('xb') as stream:
-        stream.write(data)
-    q.require(q.digest(staged) == q.digest(path), 'screenshot_copy_changed')
-    staged.unlink()
+    """Stage one screenshot locally. Verify the copy before removing the staging file."""
+    d.capture_screenshot(n.TARGET, path, timeout=15)
 
 
 def verified_profile(value, desired):
@@ -148,10 +138,7 @@ def capture(output, plan):
                         name = f'{prefix}{profile}-{target}-{repeat}.png'
                         path = output/name
                         begin = time.time()
-                        if plan.get('storage'):
-                            save_native_screenshot(path)
-                        else:
-                            d.run(['xcrun', 'simctl', 'io', n.TARGET, 'screenshot', '--type=png', str(path)], timeout=15)
+                        d.capture_screenshot(n.TARGET, path, timeout=15)
                         end = time.time()
                         after = f.snapshot()
                         q.require(n.signature(after, current, target) == signature, 'capture_bracket_changed')

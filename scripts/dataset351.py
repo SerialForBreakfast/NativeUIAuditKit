@@ -150,7 +150,7 @@ def run(output, execute=False, prepared=None):
         q.require(n.identity(before) == n.identity(current), 'external_scene_change')
         path = output / (case_id + '-' + phase + '.png')
         start = time.time()
-        d.run(['xcrun', 'simctl', 'io', n.TARGET, 'screenshot', '--type=png', str(path)], timeout=15)
+        d.capture_screenshot(n.TARGET, path, timeout=15)
         end = time.time()
         after = fixture.snapshot()
         same_process(after)

@@ -86,8 +86,16 @@ public enum NativeUIModelAsset {
         Bundle.module.url(forResource: "FocusRingDetector", withExtension: "mlmodelc")
     }
 
-    /// URL of the dedicated full-screen tvOS focused control detector (.mlmodelc).
-    public static var tvOSFocusDetectorURL: URL? {
+    /// URL of the experimental full-screen tvOS HCF focused-control detector (.mlmodelc).
+    ///
+    /// Experimental and unaccepted. The HCF371 decision (`hcf371r5-92-decision`) records
+    /// `modelAccepted: false`; the final audit, deployable-proposal, and Core ML parity gates are open.
+    /// Source run: `hcf371r4-70-detector-train` (YOLO11n trained on HCF frames only).
+    /// Known export defect: the NMS stage declares 80 class labels, but the model has 1 class
+    /// (`focused_control`). Do not use this export for runtime decisions.
+    /// The weights derive from Ultralytics YOLO11 (AGPL-3.0). Review the license before distribution.
+    /// Internal so that no consumer depends on it before acceptance.
+    static var experimentalTVOSFocusDetectorURL: URL? {
         Bundle.module.url(forResource: "NativeUIFocusDetector_tvOS", withExtension: "mlmodelc")
     }
 

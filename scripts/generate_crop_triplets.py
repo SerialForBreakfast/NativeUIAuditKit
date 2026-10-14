@@ -6,6 +6,7 @@ import json
 import math
 import os
 from pathlib import Path
+import random
 import struct
 import sys
 import time
@@ -56,22 +57,32 @@ def compute_sha256(path):
             h.update(chunk)
     return h.hexdigest()
 
-def render_crop_canvas(archetype_key, theme_key, is_focused, is_negative=False):
+def case_variation(theme_key, archetype_key, index, seed=0):
+    """Return the per-case element center and size scale. All 3 crops of 1 case share it."""
+    rng = random.Random(f"{seed}:{theme_key}:{archetype_key}:{index}")
+    return dict(cx=128 + rng.randint(-24, 24), cy=128 + rng.randint(-24, 24), scale=round(rng.uniform(0.85, 1.15), 3))
+
+
+def negative_center(variation):
+    """The negative crop shows a smaller element 28 px up and left of the case element."""
+    return variation["cx"] - 28, variation["cy"] - 28
+
+
+def render_crop_canvas(archetype_key, theme_key, is_focused, is_negative=False, variation=None):
     if Image is None:
         raise RuntimeError("Pillow is required for image synthesis.")
 
     arch = ARCHETYPES[archetype_key]
     th = THEMES[theme_key]
+    variation = variation or dict(cx=128, cy=128, scale=1.0)
 
     canvas = Image.new("RGBA", (256, 256), th["bg"] + (255,))
-    cx, cy = 128, 128
-    w, h = arch["w"], arch["h"]
+    cx, cy = variation["cx"], variation["cy"]
+    w, h = int(arch["w"] * variation["scale"]), int(arch["h"] * variation["scale"])
     radius = arch["radius"]
 
     if is_negative:
-        # Render a different adjacent element or offset position
-        cx = 100 if archetype_key == "focus_maze" else 128
-        cy = 100 if archetype_key == "focus_maze" else 128
+        cx, cy = negative_center(variation)
         w = int(w * 0.90)
         h = int(h * 0.90)
 
@@ -112,7 +123,9 @@ def render_crop_canvas(archetype_key, theme_key, is_focused, is_negative=False):
 
     return canvas.convert("RGB")
 
-def generate_multi_theme_dataset(output_dir, cases_per_theme=70):
+def generate_multi_theme_dataset(output_dir, cases_per_theme=70, seed=0):
+    if cases_per_theme < len(ARCHETYPES) or cases_per_theme % len(ARCHETYPES):
+        raise ValueError(f"cases_per_theme must be a positive multiple of {len(ARCHETYPES)}")
     root = Path(output_dir)
     crops_dir = root / "crops"
     crops_dir.mkdir(parents=True, exist_ok=True)
@@ -122,6 +135,7 @@ def generate_multi_theme_dataset(output_dir, cases_per_theme=70):
 
     all_cases = []
     case_counter = 1
+    seen_anchors = {}
 
     for theme in theme_keys:
         for arch_idx, arch in enumerate(arch_keys):
@@ -137,10 +151,11 @@ def generate_multi_theme_dataset(output_dir, cases_per_theme=70):
                 neg_file = case_dir / "crop_negative.png"
                 manifest_file = case_dir / "crop_manifest.json"
 
-                # Render images
-                img_anchor = render_crop_canvas(arch, theme, is_focused=True, is_negative=False)
-                img_pos = render_crop_canvas(arch, theme, is_focused=False, is_negative=False)
-                img_neg = render_crop_canvas(arch, theme, is_focused=False, is_negative=True)
+                # Render images. The case index selects the element position and size.
+                variation = case_variation(theme, arch, i, seed)
+                img_anchor = render_crop_canvas(arch, theme, is_focused=True, variation=variation)
+                img_pos = render_crop_canvas(arch, theme, is_focused=False, variation=variation)
+                img_neg = render_crop_canvas(arch, theme, is_focused=False, is_negative=True, variation=variation)
 
                 img_anchor.save(anchor_file, format="PNG")
                 img_pos.save(pos_file, format="PNG")
@@ -150,31 +165,34 @@ def generate_multi_theme_dataset(output_dir, cases_per_theme=70):
                 sha_pos = compute_sha256(pos_file)
                 sha_neg = compute_sha256(neg_file)
 
-                # Write item manifest
-                biases = ["balanced", "center", "edge", "top_left"]
-                bias = biases[case_counter % len(biases)]
+                if sha_anchor in seen_anchors:
+                    raise ValueError(f"duplicate_anchor_image: {case_id} repeats {seen_anchors[sha_anchor]}")
+                seen_anchors[sha_anchor] = case_id
+                center = [variation["cx"], variation["cy"]]
+                bias = "center" if max(abs(center[0] - 128), abs(center[1] - 128)) <= 8 else "offset"
 
                 item_meta = {
                     "schemaVersion": "contract-v1-focus-triplets",
                     "layoutType": arch,
                     "theme": theme,
                     "cropDimension": [256, 256],
+                    "variation": variation,
                     "anchor": {
-                        "center": [128, 128],
+                        "center": center,
                         "node_id": f"{arch}_node_{case_counter}",
                         "is_focused": True,
                         "file": "crop_anchor.png",
                         "sha256": sha_anchor
                     },
                     "positive": {
-                        "center": [128, 128],
+                        "center": center,
                         "node_id": f"{arch}_node_{case_counter}",
                         "is_focused": False,
                         "file": "crop_positive.png",
                         "sha256": sha_pos
                     },
                     "negative": {
-                        "center": [100, 100],
+                        "center": list(negative_center(variation)),
                         "node_id": f"{arch}_neg_{case_counter}",
                         "is_focused": False,
                         "file": "crop_negative.png",
@@ -225,8 +243,9 @@ def generate_multi_theme_dataset(output_dir, cases_per_theme=70):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate multi-theme synthetic crop triplets.")
     parser.add_argument("output_dir", help="Output directory for generated dataset")
-    parser.add_argument("--cases-per-theme", type=int, default=70, help="Cases per theme (default: 70)")
+    parser.add_argument("--cases-per-theme", type=int, default=70, help="Cases per theme, a multiple of 7 (default: 70)")
+    parser.add_argument("--seed", type=int, default=0, help="Variation seed (default: 0)")
     args = parser.parse_args()
 
-    manifest = generate_multi_theme_dataset(args.output_dir, args.cases_per_theme)
+    manifest = generate_multi_theme_dataset(args.output_dir, args.cases_per_theme, args.seed)
     print(f"Generated {manifest['total_cases']} cases across {len(manifest['themeDistribution'])} themes.")

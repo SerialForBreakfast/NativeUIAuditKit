@@ -68,7 +68,7 @@ def capture(output,execute=False):
                     before=f.snapshot();sig=signature(before,initial,target)
                     q.require(d.bind_target(TARGET,binding['endpoint'])==binding,'binding_changed')
                     path=output/f'{target}-{repeat}.png';begin=time.time()
-                    d.run(['xcrun','simctl','io',TARGET,'screenshot','--type=png',str(path)],timeout=15)
+                    d.capture_screenshot(TARGET,path,timeout=15)
                     end=time.time();after=f.snapshot()
                     record=dict(before=before,after=after,image=pin(path),captureStart=begin,captureEnd=end,target=target)
                     q.save(output/f'{target}-{repeat}.json',record)
