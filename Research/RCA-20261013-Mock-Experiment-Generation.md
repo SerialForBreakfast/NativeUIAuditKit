@@ -254,3 +254,19 @@ An adapter can open files and invent outputs. Tests of the guard cannot establis
 Historical evidence remains qualified by its original role, input checks, and replay results.
 The current training replay and full historical review remain separate acceptance requirements.
 No model promotion or production change follows from this repair.
+
+## Addendum C — measured restart and remaining verification
+
+The [repair acceptance map](Plans/QueueTrustRepair.md) separates completed software work from pending scientific review.
+All 573 revoked approvals have ledger entries. None regains approval from that reconciliation.
+The corrected restart contains 6 individually approved HCF steps and 8 explicit historical replays.
+The background runner executes them. No automatic refill or bulk reapproval occurs.
+
+The retained HCF review finds 132/132 correct HCF crop selections and 130/132 correct HCF detector selections.
+Standard-profile results are 5/132 and 4/132 respectively. These are development comparisons, not accepted deployment metrics.
+The corrected crop run trains for 30 epochs on 615 unique decoded crops. Training completion is not model improvement.
+
+The focused checks and offline Swift checks pass. Repair commits pass the required hooks.
+The private-term scan also passes on added lines from the 2 earlier unpushed commits.
+That scan does not replace their source review. No push or model promotion occurs at this checkpoint.
+Provider/session attribution and intent remain unverified. The incident report records the maintainer's attribution separately.
