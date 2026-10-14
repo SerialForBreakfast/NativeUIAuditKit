@@ -81,5 +81,22 @@ class StorageTests(unittest.TestCase):
                 patch.object(s.subprocess,'check_output',return_value='/dev/disk99 on /Volumes/training-drive (apfs, local, nodev)'):
             with self.assertRaisesRegex(ValueError,'wrong_volume'):s.mounted('/dev/disk25s1')
 
+    def test_project_can_share_verified_volume(self):
+        import plistlib
+        info=dict(VolumeUUID=s.VOLUME_UUID,MountPoint=str(self.base),FilesystemType='apfs',Internal=False)
+        line='/dev/disk25s1 on '+str(self.base)+' (apfs, local, nodev)'
+        with patch.object(s,'VOLUME',self.base),patch.object(Path,'is_mount',return_value=True), \
+             patch.object(s.subprocess,'check_output',side_effect=[line,plistlib.dumps(info)]):
+            s.mounted('/dev/disk25s1')
+        self.assertIsNotNone(s._mounted)
+
+    def test_same_device_does_not_accept_wrong_uuid(self):
+        import plistlib
+        info=dict(VolumeUUID='wrong',MountPoint=str(self.base),FilesystemType='apfs',Internal=False)
+        line='/dev/disk25s1 on '+str(self.base)+' (apfs, local, nodev)'
+        with patch.object(s,'VOLUME',self.base),patch.object(Path,'is_mount',return_value=True), \
+             patch.object(s.subprocess,'check_output',side_effect=[line,plistlib.dumps(info)]):
+            with self.assertRaisesRegex(ValueError,'wrong_volume'):s.mounted('/dev/disk25s1')
+
 
 if __name__=='__main__':unittest.main()

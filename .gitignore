@@ -1,4 +1,9 @@
 # Xcode
+# Local execution logs and peer handoffs remain on this machine.
+/Research/ExperimentLog.md
+/reports/storage/README.md
+/Research/Focus366QueueHandoff.md
+/Research/Generation354TTRReply.md
 /reports/work/CONDITIONED-133/artifacts/
 /reports/work/RETAINED-FEEDBACK-132/artifacts/
 /reports/work/NUISANCE-DIAGNOSTICS-131/artifacts/
@@ -35,6 +40,7 @@ playground.xcworkspace
 # .swiftpm
 
 .build/
+.work/
 
 # CocoaPods
 #
@@ -115,6 +121,8 @@ runs/
 NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/*.mlpackage
 NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/*.mlpackage.mlmodel
 NativeUITrainer/*.log
+NativeUITrainer/*.plist
+/reports/eval_*.txt
 NativeUITrainer/training.log
 NativeUITrainer/strip_smoke_test/
 
@@ -346,4 +354,6 @@ reports/work/INTAKE-99/received/
 # These rules do not remove tracked files or Git history.
 /reports/coordination/
 /reports/work/
-/.claude/settings.local.json
+/reports/research_dashboard.html
+/Research/ResearchSpecs/*/
+

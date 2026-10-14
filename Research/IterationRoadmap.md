@@ -1,5 +1,176 @@
 # Concurrent delivery roadmap
 
+## Current priority — 2026-10-13
+
+General UI detection, classification, and Standard focus detection remain the main goals.
+HCF is a separate optional investigation, not a prerequisite for Standard NUIAK.
+Use the [product scope decision](ProductRoadmap.md#current-scope-decision--2026-10-13) and [Tasks.md](../Tasks.md) for current priorities.
+
+Prepare these comparisons next:
+
+1. Audit retained Standard detector errors and coverage with PROGRAM384-E1 and FOCUS363-B.
+2. Explain transition gains and lost successes with FOCUS373-LOSSES and the existing PROGRAM384-D1 controls.
+3. Test deployable selection with PROGRAM384-B1 before treating known-box accuracy as usable focus detection.
+4. Prepare targeted Standard generation from those findings. Preserve matched controls and previous successes.
+
+Keep HCF results separate. Test shared changes against Standard-only controls before considering integration.
+Do not change running jobs, submitted specifications, or approvals to apply this planning order.
+
+[STANDARD390](Plans/Standard390.md) prepares 4 cached comparisons and 1 dependent data-priority report.
+It checks the wider regression suite instead of repeating the notification-only review.
+The report combines verified detector records with case-linked focus losses. Training and new capture remain separate decisions.
+
+## Combined review implementation — 2026-10-14
+
+[STANDARD391](Plans/StandardResearch391.md) combines the 3 reviews into preparation tasks and controlled experiments.
+First use STANDARD390 evidence, share compatible evaluation, and measure deployable proposal and selection failures.
+Then prepare targeted Standard data and one justified correction with all required regression comparisons.
+Boundary features, compression, and alternate detectors remain conditional. HCF transfer stays optional and separate.
+The plan changes no active jobs, approvals, or runtime modules. Tasks.md holds preparation status.
+
+[S391-01 and S391-02 complete](Standard391Results.md): retained failure review and exact shared evaluation parity.
+Next implement deployable proposal and selection comparisons, then prepare matched Standard producer cases.
+
+## Workflow preparation and prior art — 2026-10-14
+
+[TEMPLATE393](Plans/ExperimentTemplates393.md) develops reusable steps within optional HCF delivery.
+[ADR-0029](ADR-0029-Workflow-Tools-Versus-Templates.md) reviews existing tools without replacing the queue.
+[WORKFLOW394](Plans/WorkflowComparison394.md) proposes a bounded DVC comparison after scoped installation approval.
+Continue current experiments independently. Do not interpret the proposed comparison as measured superiority or migration approval.
+
+## Earlier campaign priorities
+
+The entries below record earlier campaign decisions. They do not override the current Standard-first planning order.
+
+**Graph implementation:** [FOCUS364–365](Plans/FocusGraphs364.md) uses shared producers, typed conditions, matched comparisons, and evidence-guided follow-up.
+The broader [FOCUS363](Plans/FocusLearning363.md) program includes native qualification and a separate matched HCF study.
+Prepare the retained benchmark audit while native capture awaits repair.
+Review completed branch experiments before proposing another restriction test.
+Pretrained features and group-aware training remain conditional work, not newly running jobs.
+
+**Earlier P0 HCF361:** [native HCF model study](Plans/HCF361.md) records the approved optional investigation.
+Qualify the OS Focus Style control, generate the first paired stage, and compare rules with both learned approaches.
+The first stage requests 1,000 HCF training frames and separate evaluation groups, not an immediate 50,000-frame collection.
+Keep other approved background work independent of native profile qualification.
+
+**P1 FOCUS355:** [position and branch corrections](Plans/Focus355.md) compare 2 new training runs with a retained equal-budget control.
+The runner owns 72 dependent comparisons and 10 reports. No automatic promotion occurs.
+Next data priorities are matched content changes, growth strength, clipping, and fixed-focus scrolling.
+The plan ranks 20 problems and separates current controls from missing producer adapters.
+
+**P3 VISION353:** [15 capability investigations](Plans/Vision353.md) test Vision tools, combined evidence, runtime cost, and confidence calibration.
+Prepare these after higher-priority focus repairs. Do not count planned tests as executable queue capacity.
+
+**DATASET351:** [controlled Fixture data](Dataset351Results.md) replaces assumed blockers with 40 measured frames and 5 completed comparisons.
+Next, compare matched control sizes and denser temporal samples before selecting another correction.
+
+**HCF350:** compare [paired Standard/HCF evidence](Plans/HCF350.md) before choosing a separate HCF model.
+Queue planning remains separate from execution. Missing pilot data blocks these comparisons, not other qualified jobs.
+
+**FOCUS349:** test [movement emphasis](Plans/Movement349.md) and analyze the reviewed Office handoff without changing data roles.
+
+**FOCUS348:** compare [gamma augmentation and retained training](Plans/Appearance348.md) at equal budgets.
+Keep original crops and previous successes. The [queue review](Focus348QueueReview.md) separates missing inputs from ready work.
+LUMA v2 files pass transfer checks. Native compatibility still needs the matching production probe and consumer handling.
+
+**FOCUS344–345:** prioritize [native transfer and 12 app experiments](Plans/NativeAppExperiments343.md).
+[FOCUS343](Focus343Results.md) finds complete crop coverage but missed native changes. More authored volume alone lacks justification.
+
+**FOCUS343:** [controlled artwork tests and caching](Plans/Focus343.md) form the recommended next batch.
+Use existing TTR artwork inputs. Test wrong decisions from prior abstentions as well as lost successes.
+
+**FOCUS342:** [results](Focus342Results.md) reject both replacements after 2 completed runs.
+Preservation reduces forgetting but still creates false changes. Keep the baseline and all failure evidence.
+
+**FOCUS341:** [added detail and matched content](Plans/Focus341.md) compare 2 fixed training arms.
+Require target improvement without lost previous successes. Keep native qualification separate from authored training results.
+
+**RESEARCH340:** [measured experiments](Plans/MeasuredResearch340.md) replace placeholder rankings with checked evidence.
+Use the local dashboard for bounded jobs. Complete controlled thin-effect and matched-magnitude comparisons before another candidate.
+
+**HCF336:** [portable experiment package](ADR-0025-Portable-Experiment-Runner.md) places acquisition in TTR and evaluation in NUIAK.
+The package passes local relocation tests. Complete capture-host qualification and ownership acceptance before native HCF integration.
+
+**HCF335:** [resumable batches](Plans/HCF335.md) pass authored rendering. Next, qualify native HCF restoration and the matched pilot.
+
+**HCF334:** [production comparison](HCF334Results.md) identifies focus-selection failures despite useful detector boxes.
+Keep rules optional. Test independent negative cases before adding a specialist or combining outputs into an automatic decision.
+
+**HCF333:** repair the existing review path and keep High Contrast rules optional. [Results](HCF333Results.md).
+Next, qualify native profile capture and compare rules with model outputs before adding a separate HCF model.
+
+**FOCUS331:** [boundary ranking](Focus331Results.md) helps 13 groups but harms both content families. Both replacement rules fail.
+Next, preserve both original crops and test added boundary evidence. Report the increased input cost explicitly.
+
+**FOCUS330:** the [control-region audit](Focus330Results.md) rejects detector-centered crops before training.
+Next, test image-only boundary ranking while keeping an existing window. Do not add volume before improving region selection.
+
+**FOCUS329:** the approved [plan](Plans/Focus329.md) checks native boundary evidence before an added-edge candidate.
+Original image channels, data roles, and previous-success checks remain unchanged.
+The audit and candidate complete. [Results](Focus329Results.md) show safer native abstention but fail full replacement requirements.
+FOCUS330 proposes a matched control-region comparison before another encoder change.
+
+**FOCUS328:** the approved [plan](Plans/Focus328.md) tests normalized detail without changing whole-frame weights or evaluation membership.
+The diagnostic, candidate, and full comparisons complete. [Results](Focus328Results.md) reject the candidate.
+FOCUS329 proposes a native boundary diagnostic and 1 justified additive correction that preserves raw appearance.
+
+**FOCUS327:** trained detail filters improve authored fit but introduce 4 false changes. [Results](Focus327Results.md) reject the candidate.
+FOCUS328 proposes a training-only growth-versus-content diagnostic and 1 justified representation test, not more volume alone.
+
+**FOCUS326:** independent effect coverage helps authored fit but fails native-transfer requirements. [Results](Focus326Results.md).
+FOCUS327 completes the same-corpus detail-filter comparison. See [the approved plan](Plans/Focus327.md).
+
+**FOCUS325:** matched small-control and pooling tests complete without a qualified model improvement. [Results](Focus325Results.md).
+FOCUS326 proposes independent control-size, effect-width, and contrast coverage before more model changes.
+
+For the complete MVP, planned features, and proposed features, use the [product roadmap](ProductRoadmap.md).
+That document groups deliverables without replacing Tasks.md or the historical evidence below.
+The current model preview is REVIEW306. Earlier release notes below describe historical states, not current publication instructions.
+
+**FOCUS324:** retained features produce native gains but fail distraction checks. [Results](Focus324Results.md).
+The candidate remains rejected. FOCUS325 proposes matched data and detail-encoder tests rather than another scalar-score fit.
+
+**FOCUS323:** direct output fitting adds no native improvement. [Results](Focus323Results.md).
+Stop repeated scalar-score changes. The next proposed tranche audits detail features before compression.
+
+**FOCUS322:** score separation and a guarded correction finish without a model improvement. [Results](Focus322Results.md).
+Next, test direct constrained output fitting before more image training. Tasks.md owns selection and execution status.
+
+**FOCUS312:** original-view retention restores some native decisions but increases false changes. [Results](Focus312Results.md).
+Reject the candidate. FOCUS313 compares 1 versus 2 detail windows while freezing the original whole-frame branch.
+
+**FOCUS311:** scale-matched training learns some authored changes but still misses tiny native changes. [Results](Focus311Results.md).
+
+**FOCUS310:** the size audit and original-detail comparison complete. [Results](Focus310Results.md) keep both candidates out of production.
+Original detail reduces center false alarms but loses 2 reserved successes and still misses tiny changes.
+Next, prepare scale-matched training-only examples and test 1 candidate. Preserve negative weights, reserved groups, and all prior-success checks.
+
+**October 9 maintainer priority:** [FOCUS301](Plans/FocusImprovementProgram.md) defines 10 testable focus-model problems and independent worker contracts.
+Start with retained-data diagnosis. Then capture only missing evidence and test 1 matched correction.
+Use coordination MVP1 for verified worker execution. Local analysis does not depend on that rollout.
+The plan defines 4 batches, explicit error denominators, acceptance checks, and separate model tasks.
+No new training or worker dispatch occurs during this planning assignment.
+
+**Independent release work:** RELEASE300 prepares the NUIAK handoff for TTR 0.4.3 RC.
+The resource-free runtime, bundled compatibility, and native source comparison pass locally.
+The installation lifecycle, TTR integration, and public approval remain open.
+Use the [capture-host-TTR handoff](TTRModelHandoff.md) for preview interfaces and exact test limits.
+Follow the [release checklist](ReleasePreparation.md). Do not tag an unfinished download feature.
+
+**October 8:** TRANSITION297 completes the spatial diagnostic. TRANSITION299 now checks weak native effects before any empty-proposal rule.
+The release inventory and real CLI checks complete; catalog validation and optional installation remain open.
+[ADR-0024](ADR-0024-Opt-In-Model-Feedback.md) defines optional feedback and [FEEDBACK298](Plans/OptInModelFeedback.md) defines its implementation.
+
+**Optional models:** MODEL-DISTRIBUTION293 now has [6 implementation contracts](Plans/OptionalModelDistribution.md).
+The first tranche combines inventory, resource-free inference, and verified local installation.
+Downloads and TTR integration follow. Public release remains separately approved. Existing model-improvement priorities stay unchanged.
+
+**October 8 TRANSITION292:** both missing comparisons complete. Neither preserves previous successes.
+The data changes interact; negative additions alone do not explain the combined artwork loss.
+Keep existing models. TRANSITION297 completes; TRANSITION299 checks the resulting proposal hypothesis before another fit.
+[Exact comparison](Plans/FocusSignalRepresentation.md#transition292-separate-positive-and-negative-additions) and [results](../reports/work/TRANSITION-291/handoff.md).
+Independent real-app evaluation remains separate. The current queue in Tasks.md controls priority.
+
 **Native focus measurement:** [TRANSITION-253](Plans/NativeFocusEffectMeasurement.md) prioritizes measured growth and shadow effects before large procedural generation.
 Pair this work with TRANSITION-252 position coverage. Preserve the running TRANSITION-249 comparisons and independent evaluation groups.
 
@@ -29,7 +200,7 @@ Next200native asset adapter/review, with202source reconciliation independent.
 
 **Artwork-first priority, October5:** [five delivery tranches](Plans/ArtworkModelImprovement204.md)
 put reusable artwork ahead of mock-UI focus generation. Start199asset planner and204
-bounded Big Dog campaign preparation independently; qualify200iOS/202tvOS native
+bounded compute host campaign preparation independently; qualify200iOS/202tvOS native
 adapters with an accepted subset, not the entire artwork library. Then205content/focus
 contrasts and206FocusRing share acquisition;207measures detector clutter benefit per
 platform. Keep197proposal work independent/high priority.203remains a bounded stretch
@@ -87,7 +258,7 @@ Positive replay improves retainedAP to.899967 and reduces sheet/cancel FP versus
 but eight development gates fail. Reuse predictions for complete geometry/operating
 error accounting and one justified next proposal, not automatic extraepochs.
 ART183structural intake passes; source/schema4/v5 compatibility awaits exact TTR
-source publication, with feedback delivered. Big Dog180A diagnostic return verified;
+source publication, with feedback delivered. compute host180A diagnostic return verified;
 180B/C now received and independently checked; no local critical-path dependency.
 [184evidence](../reports/work/IOS-REPLAY-184/handoff.md).
 
@@ -96,7 +267,7 @@ and full comparison. Aggregate AP improved, but operating FP and placement gates
 failed. Reuse all predictions for case-level error/exposure diagnosis and freeze one
 revised comparison; no automatic extraepochs. TTR native24 source synchronization remains
 an independent dependency, not a prerequisite for this local work.
-[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). Big Dog180A/B/C independently
+[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). compute host180A/B/C independently
 evaluates transition-model sensitivity and consensus at low priority.
 
 **UI-SOURCE177 research completed:** [source intake](Plans/UIComponentIntake.md)
@@ -107,7 +278,7 @@ review-only after dimensional/grid deviations; no native import or training clai
 
 **Low-priority opportunistic lane — ART-A–D (2026-10-05):**
 Priority clarification: the older sheet-generation approach below remains opportunistic;
-resident Big Dog individual-artwork generation is now covered by204above. Do not
+resident compute host individual-artwork generation is now covered by204above. Do not
 dispatch both as duplicate acquisition campaigns.
 [Generated media artwork](Plans/GeneratedMediaAssets.md) provides fictional posters,
 episode art, avatars and backdrops for native compositions. Start with contract/crop

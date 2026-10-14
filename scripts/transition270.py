@@ -148,7 +148,7 @@ def fit_one(name, initializer, x, y, configuration, pins, weights=None):
     return restored, result
 
 
-def evaluate_full(net, references, manifest):
+def evaluate_full(net, references, manifest, input_transform=None):
     membership = read(PACKAGE / 'membership.json')
     rows = membership['rows']
     report = {}
@@ -156,7 +156,7 @@ def evaluate_full(net, references, manifest):
         x = np.load(PACKAGE / name, allow_pickle=False)
         y = (np.array([r['changed'] for r in rows]) if 'native' in name else
              np.array(membership['replayLabels']) if 'replay' in name else np.zeros(len(x)))
-        p = worker.score(net, x)
+        p = worker.score(net, x if input_transform is None else input_transform(name,x))
         item = dict(summary=trainer.w.summary(p, y), probabilities=p.tolist(), lostCorrect={})
         for key, reference in references.items():
             rp = worker.score(reference, x)
@@ -171,7 +171,8 @@ def evaluate_full(net, references, manifest):
         for strength in (0., .25, .5, 1.):
             v = interpolate(x, strength)
             for order, value in [('forward', v), ('reverse', reporting.reverse(v))]:
-                p = worker.score(net, value); y = np.zeros(len(value))
+                inputs=value if input_transform is None else input_transform(name+':'+order,value)
+                p = worker.score(net, inputs); y = np.zeros(len(value))
                 lost = {k:int(((decisions(worker.score(r, value)) == y) & (decisions(p) != y)).sum())
                         for k,r in references.items()}
                 strengths.append(dict(condition=name, strength=strength, order=order,

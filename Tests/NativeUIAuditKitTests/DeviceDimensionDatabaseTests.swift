@@ -4,7 +4,8 @@
 import CoreGraphics
 import Foundation
 import Testing
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 @Suite("DeviceDimensionDatabase Lookup")
 struct DeviceDimensionDatabaseTests {

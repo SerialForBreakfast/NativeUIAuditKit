@@ -203,18 +203,16 @@ public struct NativeUINoOpRecognizer: NativeUIRecognizing {
 /// The standard CoreML + Vision native UI element recognizer.
 public struct NativeUIDetectorRecognizer: NativeUIRecognizing {
     public let configuration: NativeUIDetectionConfiguration
+    public let modelProvider: any NativeUIModelProviding
     internal let textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])?
 
-    public init(configuration: NativeUIDetectionConfiguration = .default) {
-        self.configuration = configuration
-        self.textRecognitionHandler = nil
-    }
-
-    internal init(
+    public init(
+        modelProvider: any NativeUIModelProviding,
         configuration: NativeUIDetectionConfiguration = .default,
         textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])? = nil
     ) {
         self.configuration = configuration
+        self.modelProvider = modelProvider
         self.textRecognitionHandler = textRecognitionHandler
     }
 
@@ -235,6 +233,7 @@ public struct NativeUIDetectorRecognizer: NativeUIRecognizing {
         }
 
         let request = NativeUIDetectionRequest(
+            modelProvider: modelProvider,
             configuration: configuration,
             textRecognitionHandler: textRecognitionHandler
         )

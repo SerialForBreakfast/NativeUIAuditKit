@@ -1,5 +1,158 @@
 # Full backlog implementation packet catalog
 
+[FOCUS373](Plans/Focus360.md#graph-v1-adoption--focus373-2026-10-13) adds 7 conditional experiment cards and 4 software tasks from the second graph handoff.
+It preserves HCF priority, current execution, and the original calibration-only request examples.
+
+[FOCUS372](Plans/Focus360.md#handoff-adoption-update--focus372-2026-10-13) checks the TTR handoff and adds 4 software tasks outside the experiment queue.
+
+[HCF371](Plans/HCF371.md) queues native HCF data, separate evaluation groups, rules, and 2 learned candidates through 34 isolated jobs.
+
+[FOCUS366](Plans/FocusNotification366.md) queues fresh notification training, a matched control, and full retained comparisons.
+
+[FOCUS364–365](Plans/FocusGraphs364.md) implements the bounded graph workflow in [ADR-0027](ADR-0027-Evidence-Guided-Experiment-Graphs.md).
+
+[FOCUS363](Plans/FocusLearning363.md) defines 6 work packages for native evidence, HCF learning, model restrictions, and conditional research comparisons.
+It reuses HCF361 and FOCUS360 rather than creating another experiment framework.
+
+[HCF361](Plans/HCF361.md) prioritizes native HCF qualification, a 1,000-frame training stage, matched baselines, and an experimental Core ML model.
+
+[FOCUS360](Plans/Focus360.md) reviews 2 research proposals and defines 10 tests with controls, limits, and peer feedback requirements.
+
+[WORKFLOW357/HCF357](Plans/WorkflowHCF357.md) adds live queue admission, readiness reports, staged HCF learning, and storage recovery tasks.
+
+[FOCUS355](Plans/Focus355.md) queues position and branch training with automatic regression reports and defines 20 ranked research problems.
+
+[VISION353](Plans/Vision353.md) defines 15 low-priority Vision investigations, including tool combinations and confidence calibration.
+
+[DATASET351 results](Dataset351Results.md) record controlled Fixture capture, temporal limits, and 5 completed measured comparisons.
+
+[HCF350](Plans/HCF350.md) defines 15 prioritized comparisons around TTR's paired Standard/HCF pilot.
+
+[FOCUS349](Plans/Movement349.md) tests movement emphasis and extends the existing Office recording audit.
+[FOCUS348](Plans/Appearance348.md) tests source gamma augmentation against equal-budget training and retained successes.
+[Queue readiness](Focus348QueueReview.md) records executable successors and exact missing requirements.
+
+[FOCUS347](Plans/Followup347.md) separates appearance from preprocessing and tests previous successes before another fit.
+
+[FOCUS346](Plans/Reserve346.md) defines 25 ready diagnostics and the research reserve policy.
+
+[Background research](Plans/BackgroundResearch344.md) defines 5 ready diagnostics and the chat/runner boundary.
+
+[FOCUS343 results](Focus343Results.md) separate native misses from authored success.
+[FOCUS344–345](Plans/NativeAppExperiments343.md) define the native size investigation and 12 planned app experiments.
+
+[FOCUS342](Plans/Focus342.md) audits training coverage and tests preservation after the [FOCUS341 results](Focus341Results.md).
+[Queue review](Focus342QueueReview.md) separates executable authored checks from missing native controls.
+[FOCUS342 results](Focus342Results.md) reject both replacements and identify the remaining errors.
+[FOCUS343](Plans/Focus343.md) defines the next cache, artwork, identical-neighbor, and error-analysis batch.
+
+[FOCUS341](Plans/Focus341.md) preserves original crops and tests added boundary detail with matched content negatives.
+
+[RESEARCH340](Plans/MeasuredResearch340.md) defines checked measurements, safe dashboard controls, 20 investigations, and conditional candidate comparisons.
+[Results](RESEARCH340Results.md) separate completed cached checks from missing controlled coverage.
+
+[HCF336 / ADR-0025](ADR-0025-Portable-Experiment-Runner.md) defines the portable TTR experiment package and migration checks.
+[Results](HCF336Results.md) qualify the staged package locally; Sillycon qualification remains pending.
+
+[HCF335](Plans/HCF335.md) provides detached, bounded, resumable rendering. [Results](HCF335Results.md) qualify authored execution only.
+
+[HCF334](Plans/HCF334.md) compares production FocusRing outputs with saved HCF proposals. [Results](HCF334Results.md).
+
+[HCF333](Plans/HCF333.md) repairs HCF review compatibility and compares model choices.
+[Results](HCF333Results.md) preserve proposal-only evidence and prioritize a matched rules/model comparison.
+
+## Focus improvement program — October 9
+
+[FOCUS331](Plans/Focus331.md) compares image-only boundary regions before conditional training. [Results](Focus331Results.md) reject both replacement rules.
+[FOCUS330](Plans/Focus330.md) checks detector-centered regions before conditional training. [Results](Focus330Results.md) reject the tested crop rule.
+[FOCUS329](Plans/Focus329.md) measures native boundaries before testing added edge channels with raw appearance preserved.
+The corrected diagnostic uses every measured control, not a number of controls chosen from focus labels.
+[Results](Focus329Results.md) reject replacement and define the proposed FOCUS330 region comparison.
+
+[FOCUS328](Plans/Focus328.md) compares growth and content contrast, then tests 1 justified normalized-detail candidate.
+It preserves original training views and compares all previous-success reports.
+[Results](Focus328Results.md) record the rejected candidate and the proposed boundary investigation.
+
+[FOCUS327](Plans/Focus327.md) trains detail filters on retained images with a matched frozen-filter control.
+[TTR feedback](Focus327TTRFeedback.md) defines how existing capabilities can support a complete improvement cycle.
+[Results](Focus327Results.md) reject the candidate and define the proposed FOCUS328 diagnostic and correction.
+
+[FOCUS325 results](Focus325Results.md) complete the small-control and pooling comparison. Both candidates fail previous-success checks.
+[FOCUS324](Plans/HeadlessEffectExperiments.md#focus324--detail-features-before-scalar-compression) tests retained features and 1 constrained correction.
+[FOCUS323](Plans/HeadlessEffectExperiments.md#focus323--direct-constrained-output-fit) completes the direct constrained comparison.
+[Results](Focus323Results.md) define its limits and the next feature-level investigation.
+
+[FOCUS322](Plans/HeadlessEffectExperiments.md#focus322--score-separation-and-margin-guard) defines the completed separation and protected-margin comparison.
+[Results](Focus322Results.md) define the proposed follow-on comparison. Tasks.md remains the queue.
+
+[FOCUS301](Plans/FocusImprovementProgram.md) defines 10 evidence-backed investigation priorities and independent execution contracts.
+It reuses existing task IDs, scorers, trainers, and feedback tools.
+The first batch checks causes with retained data. Later batches fill measured gaps and test 1 correction.
+Each contract specifies inputs, metrics, limits, tests, acceptance, and ownership.
+Coordination MVP1 gates remote dispatch, not local analysis. Tasks.md remains the sole queue.
+
+## Production delivery order — October 7
+
+Use [Tasks.md](../Tasks.md#production-roadmap--execution-order-october-7) for current priority, owner, readiness, and completion criteria.
+The plan catalog below preserves experiment contracts. Its older “next” statements do not override the current queue.
+
+The delivery sequence is measured failure, fixed comparison, regression acceptance, independent evaluation, CoreML parity, and optional TTR validation.
+Each stage supplies evidence for the next. Coordination readiness alone supplies no model-quality evidence.
+
+### Separate model decisions
+
+[Release preparation](ReleasePreparation.md) defines RELEASE300 and the manual sequence for TTR 0.4.3 RC.
+[Model release contract](ModelReleaseContract.md) defines offline catalog and archive checks. It is not an application installer.
+[Sillycon-TTR handoff](TTRModelHandoff.md) records the implemented preview runtime, native installer limits, and required consumer checks.
+
+[ADR-0024](ADR-0024-Opt-In-Model-Feedback.md) defines optional, reviewed feedback without navigation authority.
+[Feedback contracts](Plans/OptInModelFeedback.md) define FEEDBACK298-A through D and separate consensus from labels.
+[Release readiness](../reports/work/MODEL-DISTRIBUTION-293/readiness.md) records current inventory, real CLI checks, and unresolved release requirements.
+
+[ADR-0023](ADR-0023-Optional-Model-Distribution.md) proposes optional model downloads through GitHub Releases, with resource-free SPM code.
+[Optional model distribution](Plans/OptionalModelDistribution.md) defines 293-A through 293-F, with dependencies, tests, evidence, and approval boundaries.
+Start inventory, package separation, and local installation together. TTR feedback does not block those offline tasks.
+No release or API change occurs in the planning assignment.
+
+[Focus signal and representation](Plans/FocusSignalRepresentation.md) records completed comparisons and defines TRANSITION299's fixed weak-effect diagnostic.
+It separates positive additions from identical-image negatives. It reuses retained frames, unchanged roles, and both completed controls.
+
+[EVAL90](Plans/FocusTransitionLearning49.md#october-7-execution-contract--real-app-evaluation) defines the bounded real-app evaluation contract.
+Its 6 conditions remain separate from Fixture regression checks. Actual target, app, and label evidence precede capture.
+
+- The transition model decides whether focus changes across frames. It also needs unchanged-content, scrolling, and disturbance tests.
+- The single-frame focus model identifies focus appearance. It needs ordinary-profile artwork and hard-negative tests.
+- iOS and tvOS element detectors locate and classify controls. Each needs its own taxonomy and full-screen geometry evaluation.
+- An optional HCF model uses verified accessibility profiles. It cannot substitute assisted images for ordinary-profile evaluation.
+
+Do not pool these metrics into one accuracy claim. Preserve the current shipped models until their replacement gates pass.
+
+### Experiment-to-worker contract
+
+NUIAK supplies exact training membership, exclusions, initializer, source, preprocessing, thresholds, schedule, resource limits, and acceptance criteria.
+Big Dog verifies resident inputs and reports missing files before execution. Reuse retained packages where hashes match.
+Return checkpoint identity, completion and failure records, complete predictions, timings, and resource measurements.
+NUIAK independently checks parity, case accounting, and individual regressions before deciding admission or promotion.
+TTR owns its optional observer integration, navigation safeguards, and current runtime evidence.
+Source synchronization and local builds remain the normal TTR integration path.
+
+### Production decision record
+
+For each candidate, record development versus untouched evaluation groups, class/condition support, and the exact applicable quality gates.
+Include precision, recall, abstention, false focus/change rates, geometry, latency, size, and grouped uncertainty where supported.
+Name unsupported conditions. Do not convert missing labels or insufficient independent groups into passing scores.
+The existing DS-G8, FocusRing, platform-specific, and package gates remain unchanged.
+Agree any missing product acceptance thresholds before inspecting the corresponding final evaluation results.
+Release evidence includes model identity, category map, preprocessing, rollback artifact, and the supported OS/profile matrix.
+Simulator and physical-device results remain separate. All physical trials need their applicable scope.
+
+### Review cadence
+
+After each substantive comparison, update the task outcome and select the next hypothesis from measured errors.
+After each peer delivery, reconcile exact receipts and update only the affected dependencies.
+Keep completed experiments in the archive. Preserve failed evidence without presenting old launch requests as active work.
+Keep topology, credentials, host-specific recovery details, and worker execution records in ignored coordination reports.
+
 [Screen context / ADR-0022](ADR-0022-Screen-Context-for-Focus-and-Navigation.md):
 proposed comparison of rules, a small visual classifier, and optional native evidence.
 Measure downstream focus and navigation benefit before integration. This does not replace the current focus repair priority.
@@ -17,6 +170,9 @@ TRANSITION266 completes balanced fitting and condition weighting. Targeted train
 TRANSITION270 completes that initialization comparison. Small fitting reaches 64/64 and full replay reaches 668/668.
 Disturbance regressions still block promotion. Next, audit training influence and compare retention-aware loss using admitted examples.
 STATUS271 refines the decision: measure group weights, loss, gradients, and decision margins before choosing a training change.
+INFLUENCE278 completes that audit. Opposing content-group gradients dominate remaining loss; two local perturbations confirm the trade-off.
+CONFLICT281 completes the matched update comparison. The control reproduces DTM077 exactly; the treatment fails regression checks.
+Next, measure signal preservation and spatial separation at model input resolution before selecting one representation comparison.
 Use admitted labels for retention. Do not preserve an old model's mistakes through unverified target scores.
 Keep challenge images outside training and report their repeated development use separately from independent evaluation.
 Use admitted native data before further capture. [Evidence and next tranche](../reports/work/TRANSITION-270/handoff.md).
@@ -386,7 +542,7 @@ completed four-control recipes, not remote switching or the failed nine-control 
 scores, audits candidate coverage and prepares the EXT-CAP-01 consumer checklist;
 no inference, challenge analysis or hardware operation.
 
-[TTR-EXTERNAL-CONTROL-01](Plans/TTRSupervisedExternalControl.md) is the P0 human-approved
+TTR-EXTERNAL-CONTROL-01 (local planning document) is the P0 human-approved
 external pairing/qualified-lease and capture-delivery workflow request. Current work
 is documentation/coordination; producer implementation needs its own assignment.
 Tasks.md remains the authoritative queue.
@@ -730,3 +886,4 @@ simulator dataset packets; training and TTR operation retain separate authority.
 “Complete <packet-id or explicit tranche of packet IDs>, revision 6 catalog and the linked contract's revision/amendments, from Research/ImplementationPlans.md and its linked contracts. Follow AGENTS.md and Research/WorkerExecution/SKILL.md. Verify repository, ownership, prerequisites, and the integrated outcome. Implement all assigned behavior and caller integration, run focused/adversarial and required repository checks, fix in-scope failures, and return criterion-by-criterion four-outcome evidence. Do not stop at helper or packet checkpoints while authorized work remains; report progress in commentary and continue. Stop only when the assigned tranche is completed for review, concretely blocked after independent work is finished, or interrupted by the user/actual runtime limits. Preserve unrelated changes and safety gates; mark review, not accepted.”
 
 For external packets, replace NUA operating paths with the owning repository's approved assignment and instructions. For hardware, training, recovery-copy or promotion packets, name the authorized operation and verified prerequisites explicitly; catalog inclusion alone is not authorization.
+[FOCUS326](Plans/Focus326.md) completes independent effect coverage. [Results](Focus326Results.md) define the proposed learned-filter test.

@@ -10,9 +10,10 @@ struct Frame: Decodable, Sendable { let path: String; let sha256: String }
 struct Pair: Decodable, Sendable { let id: String; let previous: Frame; let current: Frame }
 struct Request: Decodable, Sendable {
     let version: Int; let root: String; let noiseThreshold: UInt8; let pairs: [Pair]
+    let localizeOnly: Bool?
 }
 struct Measurement: Encodable, Sendable {
-    let id: String; let distance: Float; let regions: [[Double]]; let milliseconds: Double
+    let id: String; let distance: Float?; let regions: [[Double]]; let milliseconds: Double
 }
 struct Reply: Encodable, Sendable {
     let version: Int; let host: String; let results: [Measurement]
@@ -55,8 +56,8 @@ func run(_ output: FileHandle) throws {
             let start = ProcessInfo.processInfo.systemUptime
             let a = try load(pair.previous, root: root), b = try load(pair.current, root: root)
             let change = try localizer.localize(a, current: b)
-            let distance = try similarity.distance(a, to: b)
-            guard distance.isFinite else { throw Invalid.image }
+            let distance: Float? = request.localizeOnly == true ? nil : try similarity.distance(a, to: b)
+            guard distance?.isFinite != false else { throw Invalid.image }
             // Bound noisy component output conservatively; never drop small changes.
             let regions = change.regions.count <= 128 ? change.regions :
                 [CGRect(x: 0, y: 0, width: a.width, height: a.height)]

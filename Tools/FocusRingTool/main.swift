@@ -1,6 +1,7 @@
 import Foundation
 import CoreGraphics
 import CoreML
+import Vision
 import CoreVideo
 import ImageIO
 import CryptoKit
@@ -56,7 +57,7 @@ func run(output: FileHandle) throws {
     let r = try JSONDecoder().decode(Request.self, from: data)
     let root = URL(fileURLWithPath: r.root).standardizedFileURL.resolvingSymlinksInPath()
     guard FileManager.default.fileExists(atPath: root.appendingPathComponent("Package.swift").path),
-          r.version == 1, ["crop", "infer"].contains(r.mode), !r.items.isEmpty,
+          r.version == 1, ["crop", "infer", "vision"].contains(r.mode), !r.items.isEmpty,
           r.items.count <= 128, Set(r.items.map(\.id)).count == r.items.count else { throw ToolError.invalidRequest }
     let imageRoot = URL(fileURLWithPath: r.imageRoot ?? r.root).standardizedFileURL
     guard imageRoot.path == imageRoot.resolvingSymlinksInPath().path,
@@ -99,8 +100,9 @@ func run(output: FileHandle) throws {
         inputs.append((item, image))
     }
     var classifier: FocusRingClassifier?
+    var visionModel: VNCoreMLModel?
     var loadTime: Double?
-    if r.mode == "infer" {
+    if r.mode == "infer" || r.mode == "vision" {
         guard let path = r.model else { throw ToolError.invalidModel }
         let url = try checked(path, root: root)
         let config = MLModelConfiguration(); config.computeUnits = .cpuOnly
@@ -108,6 +110,7 @@ func run(output: FileHandle) throws {
         let model = try MLModel(contentsOf: url, configuration: config)
         guard model.modelDescription.outputDescriptionsByName["is_focused_prob"] != nil else { throw ToolError.invalidModel }
         classifier = FocusRingClassifier(model: model)
+        if r.mode == "vision" { visionModel = try VNCoreMLModel(for: model) }
         loadTime = milliseconds(start)
     }
     var results: [ItemResult] = []
@@ -118,7 +121,18 @@ func run(output: FileHandle) throws {
         let cropTime = milliseconds(start)
         if let classifier {
             let inferenceStart = ProcessInfo.processInfo.systemUptime
-            let p = try classifier.classify(crop: crop).isFocusedProbability
+            let p: Float
+            if let visionModel {
+                let request = VNCoreMLRequest(model: visionModel)
+                request.imageCropAndScaleOption = .scaleFill
+                try VNImageRequestHandler(cgImage: crop).perform([request])
+                guard let result = request.results?.compactMap({ $0 as? VNCoreMLFeatureValueObservation })
+                    .first(where: { $0.featureName == "is_focused_prob" }),
+                    let values = result.featureValue.multiArrayValue, values.count == 1 else { throw ToolError.invalidModel }
+                p = values[0].floatValue
+            } else {
+                p = try classifier.classify(crop: crop).isFocusedProbability
+            }
             guard p.isFinite, (0...1).contains(p) else { throw ToolError.invalidModel }
             let inferenceTime = milliseconds(inferenceStart)
             let buffer = try classifier.inputPixelBuffer(crop: crop)

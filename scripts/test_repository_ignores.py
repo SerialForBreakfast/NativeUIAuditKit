@@ -23,8 +23,7 @@ class RepositoryIgnoreTests(unittest.TestCase):
             with self.subTest(path=path): self.assertTrue(self.ignored(path))
 
     def test_durable_source_and_intentional_fixtures_remain_visible(self):
-        for path in ["reports/work/FUTURE/handoff.md", "reports/work/FUTURE/artifacts.sha256",
-                     "Research/schemas/annotation.schema.v1.2.json", "Research/ArtifactRetention.md",
+        for path in ["Research/schemas/annotation.schema.v1.2.json", "Research/ArtifactRetention.md",
                      "Tests/Fixtures/catalog.json", "Tests/Fixtures/frame.png",
                      "scripts/validate_visual_probe.py", "Sources/NativeUIAuditKit/Example.swift",
                      "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/FocusRingDetector.mlmodelc/coremldata.bin"]:

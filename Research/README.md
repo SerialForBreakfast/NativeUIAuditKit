@@ -1,15 +1,24 @@
 # Research docs
 
-Living snapshot: [`CurrentState.md`](CurrentState.md).  
-Remaining work: [`../Tasks.md`](../Tasks.md).  
-Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
-
 | File | What it is |
 |---|---|
+| [HCF402](Plans/NativeCoverage402.md) | New native groups, fixed-map diagnostics, Standard class risks, and batch preparation |
+| [Batch authoring](../docs/experiment-batches/README.md) | Register descriptions without experiment-specific preparation scripts |
+| [HCF396](Plans/HCF396.md) | Internal screenshot staging, bounded compression, Vision parity, and optional TTR verification |
+| [Executable templates](Plans/ExecutableTemplates395.md) | All 14 bindings, queue qualification, authoring commands, and remaining blockers |
+| [WORKFLOW394 results](Workflow394Results.md) | Measured queue/DVC comparison, failure tests, and template limits |
+| [Template authoring](Plans/TemplateAuthoring393.md) | Small descriptions, preview, registration, and version rules |
+| [ADR-0029](ADR-0029-Workflow-Tools-Versus-Templates.md) | Proposed workflow-tool comparison; no migration or measured performance claim |
+| [WORKFLOW394](Plans/WorkflowComparison394.md) | Bounded DVC comparison, failure tests, installation requirement, and adoption decision |
+| [ADR-0028](ADR-0028-Reusable-Experiment-Templates.md) | Reusable experiment templates through optional HCF delivery |
+| [TEMPLATE393](Plans/ExperimentTemplates393.md) | Incremental template implementation and qualification |
+| [`ADR-0027-Evidence-Guided-Experiment-Graphs.md`](ADR-0027-Evidence-Guided-Experiment-Graphs.md) | Accepted bounded graphs with shared evidence, typed conditions, and existing queue execution |
+| [`Plans/FocusGraphs364.md`](Plans/FocusGraphs364.md) | Matched appearance and movement tests across 7 authored layouts, with visibility checks and native limits |
+| [`Plans/Focus360.md`](Plans/Focus360.md) | Ranked tests for training conflicts, model blending, native coverage, and HCF teaching |
+| [`ProductRoadmap.md`](ProductRoadmap.md) | Complete NUIAK MVP, planned milestones, future features, proposals, ownership, and completion conditions |
 | [`ADR-0016-Evidence-Bound-Foundation-Model-Semantics.md`](ADR-0016-Evidence-Bound-Foundation-Model-Semantics.md) | Proposed optional Foundation-Model interpretation of verified NUIAK/TTR UI evidence; no action authority |
 | [`ADR-0009-Direct-tvOS-Simulator-Generation.md`](ADR-0009-Direct-tvOS-Simulator-Generation.md) | Independent native Fixture/OS data generation alongside TTR; TVGEN-01–04 |
 | [`Plans/TemporalVisualVerificationSpike.md`](Plans/TemporalVisualVerificationSpike.md) | Proposed safe interruption/temporal-guardrail replay spike for TTR adoption evidence |
-| [`WorkerWorkflow.md`](WorkerWorkflow.md) | Architect/worker roles, safety, context budget, evidence and acceptance |
 | [`IterationRoadmap.md`](IterationRoadmap.md) | Concurrent lanes and separate software/data/model qualification |
 | [`TVTestRigIntegrationContract.md`](TVTestRigIntegrationContract.md) | H1 source-pinned contract loop and P4-L genuine-bundle qualification |
 | [`ImplementationPlans.md`](ImplementationPlans.md) | Full-backlog catalog of individually dispatchable worker packets |
@@ -18,10 +27,7 @@ Finished phases: [`../CompletedTasks.md`](../CompletedTasks.md).
 | [`Plans/ModelsAndHardware.md`](Plans/ModelsAndHardware.md) | Full-frame, FocusRing, real holdout, macOS, badge, crop and unified packets |
 | [`Plans/ConsumersAndRelease.md`](Plans/ConsumersAndRelease.md) | TVTestRig/ScreenAuditKit proposals, maintenance and release packets |
 | [`DatasetRecoveryPlan.md`](DatasetRecoveryPlan.md) | P0 assessment/recovery prerequisite for missing Phase 6a image bytes |
-| [`WorkerExecution/SKILL.md`](WorkerExecution/SKILL.md) | Reusable packet execution/review skill |
 | [`PlanTemplate.md`](PlanTemplate.md) | Template for subsequent implementation packets |
-| [`WorkerKnowledge.md`](WorkerKnowledge.md) | Evidence routing and unresolved guidance conflicts |
-| [`CurrentState.md`](CurrentState.md) | What is shipped, what is not, current bottleneck |
 | [`PhaseMap.md`](PhaseMap.md) | Phase dependency map |
 | [`OfflineTrainingWorkPlan.md`](OfflineTrainingWorkPlan.md) | Office-independent evaluation, regression, ingest, and training preparation plan |
 | [`NativeUIElementDetection.md`](NativeUIElementDetection.md) | Architecture authority |

@@ -32,10 +32,9 @@ from export_coco import (  # noqa: E402
     load_category_map,
 )
 
-SRC_DEFAULT = Path(
-    "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/"
-    "50B7A5E5-3114-4525-994F-C7D547D3E5B8/data/Containers/Data/Application/"
-    "457433DD-AA66-4EE8-88A1-2A04E7761279/Documents/dataset"
+SRC_DEFAULT = (
+    Path.home()
+    / "Library/Developer/CoreSimulator/Devices/50B7A5E5-3114-4525-994F-C7D547D3E5B8/data/Containers/Data/Application/457433DD-AA66-4EE8-88A1-2A04E7761279/Documents/dataset"
 )
 DEST_MANIFEST = PROJECT_ROOT / "dataset" / "dataset" / "manifest.json"
 YOLO_ROOT = PROJECT_ROOT / "NativeUITrainer" / "yolo_dataset_41class"

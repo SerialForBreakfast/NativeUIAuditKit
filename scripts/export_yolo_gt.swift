@@ -37,7 +37,7 @@ let projectRoot = URL(filePath: #filePath)
     .deletingLastPathComponent()   // scripts/
     .deletingLastPathComponent()   // project root
 
-let valAnnotationURL = URL(filePath: "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json")
+let valAnnotationURL = FileManager.default.homeDirectoryForCurrentUser.appending(path: "Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/annotations.json")
 
 /// The 5 training classes, sorted alphabetically — must match eval_map.swift class ordering.
 let classNames = ["alert", "navigationBar", "primaryButton", "textField", "toggle"]

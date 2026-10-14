@@ -21,6 +21,7 @@ BUNDLE = "com.showblender.TVTestRigFixture"
 COUNTS = {"action_dialog": 2, "grid_matrix": 4, "media_shelf": 4,
           "settings_list": 4, "hero_carousel": 4, "focus_maze": 4, "kitchen_sink": 41}
 SOURCE = "tvos_native_generator"
+SCREENSHOT_STAGING = None
 
 
 def require(ok, reason):
@@ -68,6 +69,23 @@ def run(args, timeout=10):
     reply = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
     require(reply.returncode == 0, "command_failed: " + reply.stderr[-600:])
     return reply.stdout
+
+
+def capture_screenshot(target, destination, timeout=15):
+    """Keep staging inside the project. Preserve it if the verified copy fails."""
+    dest = Path(destination).resolve()
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    folder = SCREENSHOT_STAGING or ROOT / '.build/debug-output/native-screenshots'
+    folder.mkdir(parents=True, exist_ok=True)
+    staged = folder / f"simctl_cap_{uuid.uuid4().hex}.png"
+    run(["xcrun", "simctl", "io", target, "screenshot", "--type=png", str(staged)], timeout=timeout)
+    require(staged.is_file() and 0 < staged.stat().st_size <= 20_000_000, "screenshot_png_limit")
+    data = staged.read_bytes()
+    require(data.startswith(b'\x89PNG\r\n\x1a\n'), 'screenshot_png_signature')
+    with dest.open('xb') as stream:
+        stream.write(data)
+    require(hashlib.sha256(dest.read_bytes()).digest() == hashlib.sha256(data).digest(), 'screenshot_copy_changed')
+    staged.unlink()
 
 
 def endpoint_parts(endpoint):
@@ -219,7 +237,7 @@ def capture_frame(fixture, target, output, name, expected, recipe):
         require(all(before["device"].get(k) == fixture.initial_device[k]
                     for k in ("fixture_instance_id", "fixture_run_id")), "instance_changed")
     start = time.time()
-    run(["xcrun", "simctl", "io", target, "screenshot", "--type=png", str(output / name)], fixture.budget(15))
+    capture_screenshot(target, output / name, timeout=fixture.budget(15))
     end = time.time()
     after = fixture.snapshot()
     if hasattr(fixture, "binding"):

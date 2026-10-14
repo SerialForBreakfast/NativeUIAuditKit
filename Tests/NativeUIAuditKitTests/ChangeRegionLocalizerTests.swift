@@ -1,7 +1,8 @@
 import CoreGraphics
 import Foundation
 import Testing
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 @Suite("ChangeRegionLocalizer")
 struct ChangeRegionLocalizerTests {

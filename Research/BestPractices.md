@@ -1,5 +1,278 @@
 # NativeUIAuditKit — Best Practices
 
+## Prepare complete executable graphs — HCF389
+
+- Check the runner's permitted actions before writing the delivery plan. Export is not a diagnostic.
+- Give each job an existing entrypoint, pinned inputs, expected output, budget, and decision.
+- Submit downstream comparisons with their producers. Use dependency hashes instead of guessed future file paths.
+- Validate the entire batch before approving its first job. Approve each immutable specification separately.
+- Test missing inputs, altered hashes, duplicate cases, role conflicts, and negative results before dispatch.
+- Keep active worker code unchanged. Queue approval checks include imported code, not only the entrypoint.
+- Schedule shared engine changes at an idle boundary. Do not invalidate active training to add another action type.
+- Reuse resident exporters and production preprocessing. Import success does not establish conversion or inference success.
+- Distinguish implementation-ready tasks, executable jobs, waiting dependencies, and measured outcomes in every handoff.
+- Add jobs without restarting the runner. Do not run a second scheduler or poll each experiment from chat.
+- Keep the final delivery checks explicit: package identity, inference parity, accuracy, runtime measurements, and receiver evidence.
+- Report exact unimplemented steps. A preparation report does not mean the model is DONE.
+
+## Do not fabricate results to fill the queue — RCA-20261013
+
+Do not register fabricated results or filler tasks to raise queue counts.
+Controlled experiments on generated images remain valid when they measure actual predictions.
+Every experiment must test a genuine hypothesis using real models, image assets, or device recordings.
+Judge a job by the evidence it reads and writes, not by its duration.
+A fast aggregation job is valid when it reads real producer outputs. A job that reads none of its pinned inputs is not evidence.
+An empty queue is acceptable. Report starvation. Do not conceal it with invented work.
+Measure research progress through answered questions, recovered errors, and real model performance.
+Do not use queue completion numbers as a metric of velocity.
+The queue checks declared artifacts, recorded file opens, and exact approvals.
+These checks detect several failure patterns. They do not prove that code uses each opened file.
+Independent replay and review remain necessary.
+The withdrawn EXP-ON-DEVICE-01 "measurements" came from assigned scores, not device runs, and are removed from this file.
+See [RCA-20261013](RCA-20261013-Mock-Experiment-Generation.md), Addendum A, for the verified scope and controls.
+
+## Separate image reuse from training diversity — HCF374
+
+Count capture events, distinct pixels, training samples, and related scene groups separately.
+Keep event metadata when multiple events reference one image payload.
+Audit production crops as well as full frames. Different frames can contain repeated unfocused crops.
+Use Vision similarity to find candidates, not to delete subtle focus changes or infer navigation state.
+Keep deliberate repeats for settling and paired tests. Do not count those repeats as independent evidence.
+Measure duplicate weighting before changing a loader. Preserve the unchanged control and frozen evaluation groups.
+
+## Select longer runs from evidence — HCF358
+
+Separate queue timeouts, capture failures, and fixed-epoch training completion.
+More time does not fix an incorrect interpreter, missing input, or failed capture check.
+If training still improves at its fixed endpoint, compare a longer run with an equal-budget control.
+Keep initialization, membership, preprocessing, and previous-success checks fixed.
+If full resume state is missing, name the run a fresh comparison. Do not call weight-only loading an exact resume.
+Queue the complete regression set and final report with each training job.
+Do not count blocked plans as ready hours or repeat completed work to occupy a worker.
+Estimate matched-profile storage before collection. Include both profiles, derived files, checkpoints, and temporary copies.
+
+
+## Queue the complete learning cycle — FOCUS355
+
+Submit candidate regression jobs with training, using producer dependencies and verified output hashes.
+Do not require a chat turn to submit comparisons after training completes.
+Reuse an unchanged control after checking its initialization, settings, membership, and completed outputs.
+Include a final report that rejects missing comparisons and lost previous successes.
+Count runnable jobs separately from jobs waiting on producers. Count scientific questions separately from execution jobs.
+Preserve originals when adding training transformations. Keep label-independent transformations paired across both frames.
+Never convert inspected development captures into untouched evaluation to fill a queue.
+
+## Turn generation capabilities into measured comparisons — GENERATION354
+
+Use a producer job to make missing inputs. Connect consumers through verified dependencies before execution.
+Qualify 1 producer before submitting the remaining matched captures.
+Record reload receipts and the final observation before cleanup.
+Reload readiness can precede a requested focus ID. Require full observed-focus checks at capture endpoints.
+Check actual pixel changes before attributing model behavior to a requested rendering parameter.
+Inspect crop coverage and branch contributions before changing crops or adding training volume.
+Count unique decoded pairs and related groups separately from jobs and frames.
+Report positive, negative, and abstention thresholds correctly. A probability above 0.5 is not necessarily a positive decision.
+Finite jobs can finish quickly. Do not rerun completed jobs to make the queue appear active.
+
+## Deliver runnable experiments, not a planned count — VISION353
+
+A plan entry does not add execution capacity. Count a job as ready only after input checks and adapter tests pass.
+Prepare shared probes once. Pin the executable and register dependent comparisons before starting a batch.
+Use retained data when it answers the question. Keep unavailable labels explicit instead of inventing accuracy.
+Do not use unchanged OCR text or small feature distance as proof of unchanged focus.
+Record completion honestly when fast jobs finish. Do not repeat jobs or add delays to keep the runner busy.
+
+## Check Fixture controls separately from headless controls — DATASET351
+
+An absent headless option does not mean Fixture lacks the same capability.
+Check the recipe schema and live target before requesting new producer features.
+The existing native Fixture supports custom growth and border controls through composition styles.
+Keep authored effects separate from OS HCF, even when a native app renders both.
+Retain early samples without inventing settled labels. Screenshot timing does not identify the exact animation phase.
+
+## Keep recording checks separate from focus truth — FOCUS349
+
+Verify the offered archive, extracted images, metadata counts, and dimensions before analysis.
+Keep command completion, reported settlement, and reviewed focus labels separate.
+Do not infer command effects from adjacent images when several commands can occur between them.
+Use adjacent images for visual review only. Record that command association is absent.
+Do not assume counters from different connection domains have equal values.
+Check the producer code and capture build before changing a counter check.
+Keep unqualified timing observations separate from valid command transitions.
+Keep private screenshots and profile details out of public reports.
+Reuse the existing annotation review tool. Keep the complete recording and its derivatives in one data group.
+Use model disagreement to select review cases, not to create labels.
+
+## Test weighting against the actual failure — FOCUS349
+
+A near-balanced training schedule can still lose movement after appearance augmentation.
+Stronger movement weights do not guarantee recovery. Test fixed hypotheses against equal-budget retained controls.
+Preserve the original training views and compare exact augmented pixels when testing only loss weights.
+Report false changes, correct movement, and abstentions separately.
+Do not select another weight merely because the first weight fails.
+
+## Measure both sides of an augmentation gain — FOCUS348
+
+Compare augmentation with an equal-budget unchanged-image control.
+Keep original views in training. Record any crop selection changes in the augmented views.
+Compare each model on identical transformed inputs, not transformed inputs against an unchanged-image baseline.
+Report movement recall separately from false focus changes and abstentions.
+FOCUS348 cuts authored target false changes from 587 to 26, but lowers correct movement detections from 444 to 372.
+An aggregate accuracy gain does not justify that trade-off under the current acceptance rule.
+Report gained and lost cases even when total correctness stays unchanged.
+A soft preservation loss does not guarantee that previous successes remain correct.
+Keep rejected checkpoints and case-linked results. Do not promote a model because its training job succeeds.
+
+## Count executable work, not job totals — FOCUS348
+
+Count executable queue duration, not just job count.
+Separate old placeholder experiments from jobs waiting for actual inputs.
+Freeze model comparisons after the model files exist and pass integrity checks.
+Use the detached queue for fixed comparisons. Keep model selection and new hypotheses with the research review.
+Do not rerun completed jobs to keep the queue occupied.
+
+## Audit the executed training schedule — FOCUS342
+
+A corpus manifest does not show which examples the training schedule actually uses.
+FOCUS341 replaces half the negative auxiliary positions with fixed indices. This removes 368 old negative examples from every epoch.
+The missing examples include 232 artwork changes and 136 identical pairs.
+Count unique examples, groups, conditions, and weighted exposures after scheduling, not only before scheduling.
+Compare the complete epoch sequence when rotation changes coverage. Keep the number of updates explicit.
+The candidate also loses 72 successes among retained examples. Missing coverage alone does not prove the cause of regressions.
+Keep training-only preservation targets separate from reserved failures. A preservation loss still needs full regression checks.
+See [FOCUS342](Plans/Focus342.md) and the retained audit in `reports/work/FOCUS-342/audit.json`.
+
+## Decouple code delivery from corpus generation — TTR-NUIAK-FLOW-01
+
+Deliver renderer updates and tool improvements through Git commits.
+Do not generate or transfer bulk synthetic datasets across network shares.
+Maximum-mini-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
+This rule keeps the TTR development machine free for interactive work. That machine does not run Python tooling or batch rendering.
+
+## Test region quality before fitting another classifier — FOCUS330
+
+Control-centered crops need useful detected boxes. A working detector does not establish sufficient recall on a new image family.
+FOCUS330 reduces content-case boundary coverage from 44.97% to 20.20%, despite preserving the maximum crop budget.
+Compare known-box diagnostics with actual proposals. Do not train with correct boxes that inference cannot obtain.
+Count unique frame-body measurements separately from repeated pair occurrences. Neither count automatically represents independent trials.
+Keep predicted focus states out of proposal selection. Use cached predictions when measuring unchanged models.
+If the selected regions lose relevant evidence, reject that rule before another training run. [Results](Focus330Results.md).
+
+## Keep diagnostic masks independent of the answer — FOCUS329
+
+Use the same population of measured controls when comparing changed and unchanged focus.
+Selecting only focused endpoints can give changed pairs 2 control regions and unchanged pairs only 1.
+That difference can create misleading separation in a boundary-energy ratio.
+Keep known-box diagnostics separate from image-only features. Neither a useful diagnostic nor high training separation proves generalization.
+FOCUS329 stops its first preparation before training and preserves the biased audit. Its corrected audit uses every measured control.
+
+## Training constraints do not protect unseen distractions — FOCUS324
+
+Inspect retained features before adding more scalar-score fits. Keep image views and training membership fixed for that comparison.
+FOCUS324 preserves every protected training decision but loses 90 development distraction successes. Training protection is not a generalization guarantee.
+Report original training sizes separately from authored sizes and unavailable measurements. Do not count unknown sizes as covered.
+Use feature-distance measurements as diagnostics, not calibrated confidence or automatic labels.
+If a larger retained-feature readout still cannot reach target decisions, change the tested visual evidence or representation hypothesis.
+Do not repeat the same bounded output fit. Preserve the full failure evidence. [Results](Focus324Results.md).
+
+## Use achievable bounds to stop unproductive fits — FOCUS323
+
+If a constrained fit adds no useful detections, test whether the fixed output family can reach the failed decision at all.
+Keep each bound specific to its features, coefficient limits, and training constraints.
+Do not describe a bound for one output layer as a limit on every architecture.
+FOCUS323 cannot reach the change threshold on any of the 8 tiny forward/reversed cases under its tested constraints.
+Use development-case bounds for diagnosis only. Do not save their optimized coefficients as a selected candidate.
+Check float32 constraints after a double-precision solve. Protect actual decisions as well as numerical margins.
+Report loss changes separately from correct decisions. FOCUS323 lowers loss but adds no correct native changes.
+If the loss and solver both change, do not attribute the outcome to the solver alone. [Evidence](Focus323Results.md).
+
+## Separate infeasible rules from blocked updates — FOCUS322
+
+Test whether fixed scores admit the proposed decision rule before fitting another candidate.
+If a linear solver reports infeasibility, do not assume that every nonlinear rule also fails.
+If a guard restores most updates, measure whether useful feasible directions still exist.
+Backtracking an unsafe direction cannot find a different direction by itself.
+FOCUS322 preserves training margins but restores 3,356/3,420 updates and adds no correct decisions.
+Its fixed nonlinear features still permit a small training-only improvement under the same constraints.
+Do not loosen evaluation requirements to conceal this optimization problem.
+Report training preservation separately from unseen-image performance. [Evidence](Focus322Results.md).
+
+## Measure margins before adding image training — FOCUS321
+
+Record whole-frame scores, added-detail scores, and distance from the fixed decision threshold.
+If image branches stay frozen, fit a small combination layer from cached scores.
+Pin the images, branch weights, preprocessing, labels, and cache hashes.
+Verify cached scores against the actual image path before reporting results.
+Keep all frozen tensors unchanged. Report fit time separately from preparation and evaluation time.
+Lower loss does not guarantee more correct decisions at fixed thresholds.
+Report false changes, missed changes, abstentions, and previous successes together.
+Do not change thresholds with inspected evaluation cases. [Evidence](Focus321Results.md).
+
+## Measure added training influence — FOCUS320
+
+Wrong: assume auxiliary coefficient 0.25 limits new examples to 25% of the training influence.
+Correct: measure weighted gradient norms and directions on the actual training schedule.
+Why: FOCUS320 finds an authored gradient about 99 times larger after weighting at fresh initialization.
+At the failed candidate, its combined direction opposes the original gradient with cosine -0.9085.
+Report conditions separately. Movement and artwork-only examples can oppose different original labels even when their combined direction looks acceptable.
+A gradient constraint does not guarantee an Adam update or preserved decisions. Test previous successes after the fixed run.
+Keep diagnostic training membership separate from evaluation membership. [Evidence](Focus320Results.md).
+
+## Match effect coverage, not only control size — FOCUS312
+
+Shrinking a whole scene changes distances between controls as well as their sizes.
+One detail window can then contain both changed regions during training, but only one region in a native test.
+Measure changed area, contrast, and the fraction of change inside each selected window.
+Do not use the correct focus boxes to select deployable windows.
+Keep measured pixel coverage separate from correct model decisions.
+When adding scaled views, state whether they replace original views or add another loss.
+Unchanged labels and row weights do not preserve original-image exposure after view replacement.
+Report original and auxiliary coefficients, examples, and optimizer steps separately.
+[Evidence](Focus312Results.md).
+
+## Keep context when testing image detail — FOCUS307
+
+Larger regions can increase focus-change scores without producing correct decisions.
+Report abstentions separately from successful detections.
+Compare source regions against enlarged low-resolution regions to separate extra pixels from a change in scale.
+Check global lighting and artwork negatives before replacing whole-frame inputs.
+The tested region-only policy causes 134/153 lighting false changes where whole frames cause 0.
+Keep aligned coordinates in both frames. Do not select regions from the correct focus boxes during deployable comparisons.
+[Evidence](Focus307Results.md).
+
+## Read fresh file sizes after resume — RELEASE300
+
+Wrong: reuse cached URL resource values after appending a resumed transfer.
+Correct: clear cached resource values before checking the final file size. Then verify the complete archive hash and member hashes.
+Why: the first download resume test reads the old size and rejects a completed transfer.
+The corrected check passes the same test. See `NativeModelDownloadTests.truncatedTransferResumesOnlyWithMatchingEntity`.
+
+## Test spatial evidence without inventing labels — TRANSITION297
+
+Keep original predictions as the reference when removing image differences inside or outside selected regions.
+Report score shifts separately from accuracy. The altered image may no longer have the original meaning.
+Keep observed focus regions separate from image-only proposals. Deployment does not receive the correct box from the evaluation labels.
+An empty proposal does not prove unchanged focus. Check weak native effects before using a proposal threshold to change decisions.
+Use real CLI receipts to prove model execution. Do not treat successful loading or high scores as model accuracy.
+
+## Separate effects can interact — TRANSITION292
+
+Wrong: assign a combined treatment's loss to one component without testing the separate components.
+Correct: complete the missing comparisons with the same initialization, labels, weights, and update count.
+Identical-frame negatives improve artwork alone but worsen artwork when combined with new positive comparisons in this fixed experiment.
+Report the interaction. Do not use the combined score to claim that either component alone causes the loss.
+Reuse completed controls and cached predictions. One seed does not establish repeatability.
+[Evidence](../reports/work/TRANSITION-292/handoff.md).
+
+## Equal label weights do not preserve condition weights — TRANSITION291
+
+Wrong: attribute a combined data addition to positive examples because each group keeps its label weight.
+Correct: check which negative conditions share that weight after the addition.
+Identical-image negatives can reduce the influence of harder content-change examples without changing the total negative weight.
+TRANSITION291 fits the added focus states but loses artwork answers. That result does not isolate the cause.
+Use matched comparisons to separate positive additions from negative changes. Reuse completed controls instead of repeating them.
+[Evidence](../reports/work/TRANSITION-291/handoff.md).
+
 ## Resolve paired endpoints by image identity — TRANSITION253
 
 Wrong: assume the second image in a comparison always uses the sidecar's `focused_scene` field.
@@ -2253,7 +2526,7 @@ separately from backend execution. Do not remove human consent or label review t
 meet a speed target, or launch new transport outside approved scope.
 **Why:** Repeated setup and status round trips consume the supervised collection
 window even when backend primitives work. The requested contract is in
-[TTRSupervisedExternalControl.md](Plans/TTRSupervisedExternalControl.md).
+a local planning document.
 
 **September28 follow-up:** Logging human TTR inputs does not mean every input has
 an image. The local session retained9 commands but only8 checkpoint observations;
@@ -2397,6 +2670,39 @@ Report conservative exclusions and producer settlement as attributed evidence,
 not native focus truth. Equal or unequal pixels alone cannot label a no-op.
 **Why:** A temporal learner needs defensible action/state correspondence; otherwise
 faster collection can teach another action's result. See REVIEW-PARALLEL-01.
+
+### BP-114: Check frame hashes before accepting a claimed visual change
+
+**Wrong:** Accept a peer dataset's message or manifest that claims detected
+interruptions, scrims, or luminance changes. TTR's 2026-10-10 interruption set
+claims 3 detected modalities. Seven of its 9 frames are byte-identical, so tests 1
+and 2 contain no rendered change. Its own markers record 0% luminance change.
+**Correct:** Hash every before, after, and recovered frame. Reject a claimed change
+when the frames are identical, then view the distinct frames. Trust the content
+hash over a stated byte count; 2 of 3 manifests stated wrong sizes with correct hashes.
+**Why:** A claimed change without a pixel change teaches a detector to fire on
+unchanged screens. See `Research/HCF337Results.md`.
+
+### BP-115: Hash every imported module, not only the top script
+
+**Wrong:** Record only the entry script hash in an experiment registration. The FOCUS331
+registration records 1 script hash and 3 data hashes, but the audit imports 134 repository
+modules. A change in any of them can change the result without a registration change.
+**Correct:** Record the SHA-256 of every repository module that the job process imports.
+`scripts/research_queue.py` writes this closure into each `result.json`.
+**Why:** Replays and comparisons need the code that produced a result, not only its entry point.
+See `Research/RESEARCH338Results.md`.
+
+### BP-116: Process memory peaks are not reproducible; keep headroom below hard limits
+
+**Wrong:** Treat a recorded peak memory value as a fixed property of a run. The FOCUS329
+training run records a 5.73 GB peak. Its exact queued replay, with identical losses and weights,
+records 7.73 GB during the same data preparation step. The script stops at 8 GiB.
+**Correct:** Exclude `peakBytes` from replay equality, with a stated reason. Set memory limits with
+at least 30% headroom over the largest observed peak. Report each new peak next to its limit.
+**Why:** macOS resident memory can change with system memory pressure and page compression.
+This difference has no measured cause. A run that passed once can fail its own memory check on a repeat run.
+See `Research/RESEARCH339Results.md`.
 
 ### Harvest target coverage is not the accepted-row count
 
@@ -4753,3 +5059,53 @@ The first 300 epoch losses match exactly. A native-adapted initializer gets 64/6
 Why this matters: a failed short fit does not prove an annotation or representation defect.
 Training fit remains separate from held-out performance and regression acceptance.
 [Registered comparison](../reports/work/TRANSITION-270/plan.md).
+
+### Input suppression is diagnosis, not model qualification — TRANSITION289
+
+What went wrong: removing an input gives perfect unchanged-focus checks but also removes every positive prediction.
+Correct approach: score both labels, both frame orders, uncertainty, and individual decisions on matched inputs.
+Preserve ordinary-score parity before intervention. Keep internal input suppression separate from natural-image evaluation.
+Why this matters: DTM081 loses all 421 native positives when its original absolute-difference input is removed.
+Removing its residual input instead harms native content cases while barely changing center-disturbance decisions.
+This distinguishes input dependence from useful accuracy. It does not prove a unique cause or justify another architecture by itself.
+[Evidence](../reports/work/TRANSITION-289/handoff.md).
+## Independent effect coverage — FOCUS326
+
+Control size and effect size are different variables. Whole-patch resizing changes both and can leave important combinations absent.
+Test body size, border width, and contrast independently. Verify the rendered pixels and bounds, not only requested values.
+Authored training improvements do not prove native transfer. FOCUS326 improves authored fit but fails previous-success checks.
+When convolutional filters remain frozen, describe the run as projection training, not full encoder training.
+Reuse immutable inputs and cached control results when testing trainable filters next. Do not repeat generation without a data reason.
+See [the measured comparison](Focus326Results.md).
+
+## Separate contrast suppression from focus evidence — FOCUS328
+
+What went wrong: detail normalization improves authored fit but removes useful native decisions under the matched training budget.
+Native false changes fall from 4 to 0, while missed changes rise from 0 to 11.
+Correct approach: report both labels separately. Keep raw appearance available when testing additional boundary or contrast features.
+Check crops and full-frame fallbacks separately. Do not remove side pixels by assuming every view has black margins.
+Why this matters: reducing false changes alone can hide more missed focus changes.
+An annotation-based boundary check is a diagnostic reference, not an image-only detector.
+The content-contrast label can include different artwork and backgrounds. Do not treat it as a single brightness adjustment.
+See [the matched experiment](Focus328Results.md) and `scripts/test_contrast328.py`.
+
+## Separate image variation from padding variation — FOCUS346
+
+Appearance changes after encoding can change padding as well as image content.
+Changing only padding changes correct decisions, so padding is not a harmless detail.
+Use geometric support masks. Black pixels can be valid image content.
+Compare whole-frame content, detail content, and source-image changes before selecting augmentation.
+Keep source-image resizing and crop selection visible in the report.
+Measure useful decisions and lost successes, not queue completion. Fast diagnostics do not establish a better model.
+[Results](Focus346Results.md) and [controlled follow-up](Plans/Followup347.md) provide the evidence.
+
+## Keep capture facts separate — FOCUS349
+
+Command completion, image settlement, and focus movement describe different facts.
+A failed command can have a settled result frame. Do not convert either field into a focus label.
+Audit sanitized metadata while image privacy review proceeds. Do not require pixels for checks of counts and associations.
+However, do not report model accuracy, visual diversity, or focus bounds without reviewed pixels and labels.
+Keep repeated image records when they occur at different points in a sequence.
+Request retained events before recapture. Missing fresh before frames can prevent valid command-level transition tests.
+Use the existing recording audit and review editor. Do not build another pipeline for each handoff.
+[Office evidence](OfficeCapture349.md) records the current limits.

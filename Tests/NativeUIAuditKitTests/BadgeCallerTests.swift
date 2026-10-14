@@ -1,7 +1,8 @@
 import Foundation
 import Testing
 import NativeUIAuditKitModels
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 struct BadgeCallerTests {
     @Test func actualDetectorLabelConversionKeepsLegacyBoundary() throws {

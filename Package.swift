@@ -5,12 +5,13 @@ import PackageDescription
 let package = Package(
     name: "NativeUIAuditKit",
     platforms: [
-        .macOS(.v15),
+        .macOS(.v14),
         .iOS(.v17),
         .macCatalyst(.v17),
         .visionOS(.v1)
     ],
     products: [
+        .library(name: "NativeUIAuditKitRuntime", targets: ["NativeUIAuditKitRuntime"]),
         .executable(name: "nativeui-audit", targets: ["NativeUIAuditCLI"]),
         .library(
             name: "NativeUIAuditKitModels",
@@ -25,6 +26,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
     ],
     targets: [
+        .executableTarget(name: "FocusFallbackTool", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/FocusFallbackTool"),
+        .executableTarget(name: "ModelCompileWorker", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/ModelCompileWorker"),
+        .executableTarget(name: "ModelFreeProbe", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/ModelFreeProbe"),
+        .target(name: "NativeUIModelContracts", path: "NativeUIAuditKitModels/Sources/NativeUIModelContracts"),
         .executableTarget(name: "TransitionShadowTool", path: "Tools/TransitionShadowTool", exclude: ["README.md"]),
         .testTarget(name: "TransitionShadowTests", dependencies: ["TransitionShadowTool"], path: "Tests/TransitionShadowTests"),
         .executableTarget(name: "SettingsProbeTool", path: "Tools/SettingsProbeTool"),
@@ -32,18 +37,21 @@ let package = Package(
         // bring your own inference code and just want the model (e.g. ViewLens).
         .target(
             name: "NativeUIAuditKitModels",
+            dependencies: ["NativeUIModelContracts"],
             path: "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels",
             // NativeUIDetector_v1.mlpackage.mlmodel is an uncompiled Create ML export, kept
             // on disk for provenance but not shipped as a loadable resource — iOS_v1 exposes
             // its ModelDescriptor metadata only, not a bundled asset. See Task 1/3 notes.
             exclude: [
                 "NativeUIDetector_v1.mlpackage.mlmodel",
-                "NativeUIModel_tvOS.mlpackage"
+                "NativeUIModel_tvOS.mlpackage",
+                "best.mlpackage"
             ],
             resources: [
                 .copy("Resources/NativeUIDetector_v2.mlmodelc"),
                 .copy("Resources/NativeUIModel_tvOS.mlmodelc"),
                 .copy("Resources/FocusRingDetector.mlmodelc"),
+                .copy("Resources/NativeUIFocusDetector_tvOS.mlmodelc"),
                 .copy("Resources/model_manifest_tvos_v1.json"),
                 .copy("Resources/model_manifest_ios_v2.json"),
                 .copy("training_config_v1.json"),
@@ -53,7 +61,12 @@ let package = Package(
         // Full Vision-style detection request wrapper, built on NativeUIAuditKitModels.
         .target(
             name: "NativeUIAuditKit",
-            dependencies: ["NativeUIAuditKitModels"],
+            dependencies: ["NativeUIAuditKitRuntime", "NativeUIAuditKitModels"],
+            path: "Sources/NativeUIAuditKitBundled"
+        ),
+        .target(
+            name: "NativeUIAuditKitRuntime",
+            dependencies: ["NativeUIModelContracts"],
             path: "Sources/NativeUIAuditKit"
         ),
         // Offline diagnostic adapters sharing the production perception primitives.

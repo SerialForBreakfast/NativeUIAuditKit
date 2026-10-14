@@ -1,5 +1,6 @@
 import Testing
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 @Suite("OCR anchor separator regression")
 struct TextAnchorSeparatorTests {

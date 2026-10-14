@@ -1,9 +1,10 @@
 import json, os, subprocess, time
+from pathlib import Path
 from ultralytics import YOLO
 
-AATV = "/Users/josephmccraw/Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv"
+AATV = str(Path.home() / "Library/Developer/Xcode/DerivedData/TVTestRig-bfjtodidumtdyagsgxcmwrmheuxr/Build/Products/Debug/TVTestRig.app/Contents/Helpers/aatv")
 DEVICE_ID = "8D80F616-6C12-49A6-9015-8F594EE5F24E"
-SESSION_DIR = "/Users/josephmccraw/Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/Sessions/5699c327-bad3-482c-9dbf-7f9ec8ade0a5/screens"
+SESSION_DIR = str(Path.home() / "Library/Containers/com.showblender.TVTestRig/Data/.tvtr/Evidence/Sessions/5699c327-bad3-482c-9dbf-7f9ec8ade0a5/screens")
 OUTPUT_DIR = "dataset/tvos_settings"
 MODEL_PATH = "NativeUITrainer/yolo_runs/phase6b_tvos_v3/weights/best.pt"
 OCR_BIN = "scripts/ocr_helper"

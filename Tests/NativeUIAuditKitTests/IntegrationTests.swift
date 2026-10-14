@@ -5,7 +5,8 @@ import CoreGraphics
 import Foundation
 import ImageIO
 import Testing
-@testable import NativeUIAuditKit
+import NativeUIAuditKit
+@testable import NativeUIAuditKitRuntime
 
 @Suite("Integration & NativeUIRecognizing")
 struct IntegrationTests {

@@ -1,6 +1,7 @@
 """Explicit, read-only logical artifact relocation. No symlinks or implicit mounts."""
 import json
 import os
+import plistlib
 from pathlib import Path
 import subprocess
 
@@ -8,6 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 REGISTRY=ROOT/'reports/storage/locations.json'
 VOLUME=Path('/Volumes/training-drive')
 BASE=VOLUME/'data/NUIAK'
+VOLUME_UUID='FD8D8E36-FAAC-4205-87ED-86134C3582B1'
 ALLOWED=('reports/work/','dataset/','NativeUITrainer/reconstructed_corpora/','.build/debug-output/')
 _cache=None
 _mounted=None
@@ -58,11 +60,14 @@ def mappings():
 
 def mounted(device):
     global _mounted
-    require(VOLUME.is_mount() and VOLUME.stat().st_dev!=ROOT.stat().st_dev,'storage_volume_unavailable')
+    require(VOLUME.is_mount() and VOLUME.resolve()==VOLUME,'storage_volume_unavailable')
     key=(device,VOLUME.stat().st_dev)
     if _mounted!=key:
         lines=subprocess.check_output(['/sbin/mount'],text=True).splitlines()
         require(any(line.startswith(device+' on '+str(VOLUME)+' (apfs, local,') for line in lines),'storage_wrong_volume')
+        info=plistlib.loads(subprocess.check_output(['diskutil','info','-plist',str(VOLUME)],timeout=10))
+        require(info.get('VolumeUUID')==VOLUME_UUID and info.get('MountPoint')==str(VOLUME)
+                and info.get('FilesystemType')=='apfs' and info.get('Internal') is False,'storage_wrong_volume')
         _mounted=key
 
 

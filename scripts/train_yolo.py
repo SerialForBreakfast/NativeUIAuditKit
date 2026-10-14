@@ -69,6 +69,33 @@ def parse_args():
     return p.parse_args()
 
 
+def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10):
+    """Use the resident YOLO trainer with fixed native HCF settings.
+
+    weights='best' keeps the HCF371 behavior (validation fitness). weights='last' returns the final epoch.
+    """
+    if weights not in ('best', 'last'):
+        raise ValueError('hcf_weights_choice')
+    if type(patience) is not int or patience not in (0, 10):
+        raise ValueError('hcf_patience_choice')
+    import os
+    os.environ.setdefault('YOLO_CONFIG_DIR', str(PROJECT_ROOT/'NativeUITrainer/.ultralytics'))
+    os.environ.setdefault('MPLCONFIGDIR', str(PROJECT_ROOT/'NativeUITrainer/.mplconfig'))
+    os.environ['YOLO_OFFLINE'] = 'true'
+    if not Path(initialization).is_file(): raise ValueError('hcf_initialization_missing')
+    from ultralytics import YOLO
+    model = YOLO(str(initialization))
+    if progress:
+        model.add_callback('on_train_epoch_end', lambda trainer: progress(
+            'Train HCF full-screen detector', trainer.epoch+1, trainer.epochs))
+    model.train(data=str(dataset_yaml), epochs=30, patience=patience, batch=8, imgsz=640, device='mps', workers=0,
+        project=str(output), name='detector', exist_ok=False, seed=371, deterministic=True,
+        optimizer='AdamW', lr0=.001, lrf=.01, pretrained=True, plots=False, save=True, save_period=1,
+        rect=True, cache=False, amp=False, mosaic=0, mixup=0, copy_paste=0, fliplr=0, flipud=0,
+        degrees=0, translate=0, scale=0, shear=0, perspective=0, hsv_h=0, hsv_s=0, hsv_v=0)
+    return output/'detector/weights'/(weights + '.pt')
+
+
 def main():
     args   = parse_args()
     dataset_dir = Path(args.dataset).expanduser().resolve()

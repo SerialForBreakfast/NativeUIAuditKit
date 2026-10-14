@@ -2,7 +2,9 @@
 
 A portable Swift package for detecting native Apple platform UI elements in screenshot PNGs, designed as a drop-in complement to [ScreenAuditKit](../ScreenAuditKit/).
 
-**Current state:** see [`Research/CurrentState.md`](Research/CurrentState.md). Shipped detectors: iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 009 holdout **0.586**), FocusRing v1.0 data, macOS. Open work: [`Tasks.md`](Tasks.md). Archive: [`CompletedTasks.md`](CompletedTasks.md).
+**Product direction:** [MVP, planned features, and proposed features](Research/ProductRoadmap.md).
+
+**Current state:** Shipped detectors include iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 009 holdout **0.586**), FocusRing v1.0 data, macOS. See [`Research/PhaseMap.md`](Research/PhaseMap.md) for dependencies.
 
 ---
 
@@ -19,12 +21,15 @@ dependencies: [
 ]
 ```
 
-Two library products — pick the one that matches what you need:
+Choose the library product that matches the required behavior:
 
 - **`NativeUIAuditKitModels`** — just the trained model + versioned metadata, no Vision
   framework dependency. Use this if you bring your own inference/rendering code (this is
   what [ViewLens](https://github.com/SerialForBreakfast/ViewLens) depends on).
 - **`NativeUIAuditKit`** — the full Vision-style detection request API, built on the above.
+- **`NativeUIAuditKitRuntime`** — preview runtime with explicit local models and no bundled model resources.
+  This unreleased product requires the new source changes. Downloads remain unfinished.
+  See the [TTR handoff](Research/TTRModelHandoff.md) for the interface and limits.
 
 ```swift
 .target(
@@ -54,7 +59,7 @@ The model expects a 640×640 letterboxed input with NMS already baked into the C
 For the complete, tested letterbox → predict → parse pipeline, see
 [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) and [`scripts/eval_tvos_model.py`](scripts/eval_tvos_model.py). Full API docs: `swift package generate-documentation`
 (DocC), or see the module documentation comments in
-[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift) and [`ModelRegistry.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/ModelRegistry.swift).
+[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift) and [`ModelRegistry.swift`](NativeUIAuditKitModels/Sources/NativeUIModelContracts/ModelRegistry.swift).
 
 `NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level Vision-style
 wrapper) supports automatic platform routing for iOS and tvOS screenshots with active focus detection:
@@ -141,7 +146,10 @@ Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKi
 
 ### FocusRingDetector v0.1 (shipped 2026-09-18)
 
-Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small, FP16 4.80 MB (`FocusRingDetector.mlmodelc`). FDR-001 held-out 270/270; hard-negative `light`/`highContrast` split is empty until FOCUS-DET-05. Not AGPL — see [`Research/LicensingArchitecture.md`](Research/LicensingArchitecture.md).
+Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small uses from-scratch training.
+FDR-001 scores 270/270 on its historical test set; the required hard-negative coverage remains incomplete.
+The inspected source package exceeds the 5,000,000-byte export gate. Public weight distribution needs explicit review.
+See [licensing review](Research/LicensingArchitecture.md) and [release preparation](Research/ReleasePreparation.md).
 
 ### Superseded: Create ML baseline (NativeUIDetector_v1, trained 2026-05-28)
 
@@ -233,12 +241,8 @@ NativeUIAuditKit/
 ├── Package.swift
 ├── README.md
 ├── CHANGELOG.md                           ← version history, semver
-├── Tasks.md                               ← remaining work only
-├── CompletedTasks.md                      ← finished phase archive
-├── AGENTS.md                              ← agent handoff notes
 ├── PROVENANCE.md                          ← shipped-model training audit
 ├── Research/
-│   ├── CurrentState.md                    ← living snapshot (start here)
 │   ├── PhaseMap.md                        ← phase dependency map
 │   ├── ExperimentLog.md                   ← chronological training run history
 │   ├── NativeUIElementDetection.md        ← architecture, API design, training approach
@@ -362,9 +366,7 @@ dataset/
 
 ## Roadmap
 
-Remaining work: [`Tasks.md`](Tasks.md)  
-Finished phases: [`CompletedTasks.md`](CompletedTasks.md)  
-Snapshot: [`Research/CurrentState.md`](Research/CurrentState.md) · map: [`Research/PhaseMap.md`](Research/PhaseMap.md)  
+Phase map: [`Research/PhaseMap.md`](Research/PhaseMap.md)  
 Architecture: [`Research/NativeUIElementDetection.md`](Research/NativeUIElementDetection.md)  
 Training history: [`Research/ExperimentLog.md`](Research/ExperimentLog.md)  
 Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
@@ -387,7 +389,7 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **8: Device/OS Inference** | ✅ Done | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked |
 | **9: ScreenAuditKit Integration** | 🔄 Partial | Drop-in protocol; contract fields; CLI flag | 9-1 done; 9-2/9-3 remain in ScreenAuditKit |
 
-**Immediate next steps** (also [`Tasks.md`](Tasks.md)):
+**Immediate next steps**:
 1. TASK-6a-10 — authorized Office `aatv fixture batch`, then retrain 41-class from Run 009. Do not ship 41-class weights (DS-G8).
 2. FOCUS-DET-05 — ≥6,000 pairs with `light`/`highContrast` hard-neg before replacing FocusRing v0.1.
 

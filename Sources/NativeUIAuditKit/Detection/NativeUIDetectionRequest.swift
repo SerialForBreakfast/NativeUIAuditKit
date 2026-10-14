@@ -17,7 +17,7 @@
 import CoreGraphics
 import CoreML
 import Foundation
-import NativeUIAuditKitModels
+import NativeUIModelContracts
 import Vision
 
 // MARK: - Configuration
@@ -165,18 +165,16 @@ public struct NativeUIDetailedDetectionResult: Sendable, Codable {
 
 public struct NativeUIDetectionRequest: Sendable {
     public let configuration: NativeUIDetectionConfiguration
+    public let modelProvider: any NativeUIModelProviding
     internal let textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])?
 
-    public init(configuration: NativeUIDetectionConfiguration = .default) {
-        self.configuration = configuration
-        self.textRecognitionHandler = nil
-    }
-
-    internal init(
+    public init(
+        modelProvider: any NativeUIModelProviding,
         configuration: NativeUIDetectionConfiguration = .default,
         textRecognitionHandler: (@Sendable (CGImage) async throws -> [RecognizedTextRegion])? = nil
     ) {
         self.configuration = configuration
+        self.modelProvider = modelProvider
         self.textRecognitionHandler = textRecognitionHandler
     }
 
@@ -228,20 +226,10 @@ public struct NativeUIDetectionRequest: Sendable {
             modelLoadMs = 0.0
         } else {
             let startLoad = ContinuousClock.now
-            if effectivePlatform == .tvOS {
-                do {
-                    let m = try await NativeUIModelAsset.loadTVOSModel()
-                    activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.tvOSMetadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: true))
-                } catch let error as ModelContractError {
-                    throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
-                }
-            } else {
-                do {
-                    let m = try await NativeUIModelAsset.loadModel()
-                activeModel = PreloadedModel(model: m, metadata: NativeUIModelAsset.metadata, manifest: try NativeUIModelAsset.requiredManifest(forTVOS: false))
-                } catch let error as ModelContractError {
-                    throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
-                }
+            do {
+                activeModel = try await modelProvider.loadDetector(for: effectivePlatform)
+            } catch let error as ModelContractError {
+                throw NativeUIDetectionError.incompatibleModelContract(reason: error.reason)
             }
             modelLoadMs = Self.durationToMs(startLoad.duration(to: .now))
         }
@@ -286,7 +274,7 @@ public struct NativeUIDetectionRequest: Sendable {
                 } else if let preloadedFocusClassifier {
                     load = FocusClassifierLoad(classifier: preloadedFocusClassifier, fallbackReason: nil)
                 } else {
-                    load = await Self.loadFocusClassifierWithEvidence()
+                    load = await modelProvider.loadFocusWithEvidence()
                 }
             } else {
                 load = FocusClassifierLoad(classifier: nil, fallbackReason: "disabled")
@@ -297,7 +285,7 @@ public struct NativeUIDetectionRequest: Sendable {
                     modelDigest: classifier.artifactDigest, score: { try classifier.classify(crop: $0) })
                 observations = resolution.0
                 focusExecution = resolution.1
-            } else {
+            } else if modelProvider.allowsHeuristicFocusFallback {
                 observations = Self.resolveTVOSFocus(
                     in: screenshot,
                     observations: observations,
@@ -311,9 +299,23 @@ public struct NativeUIDetectionRequest: Sendable {
                             disposition: FocusRingClassifier.focusableTypes.contains($0.elementType) ? .heuristicResult : .unsupportedRole,
                             probability: nil, isFocused: $0.state.isFocused)
                     })
+            } else {
+                focusExecution = FocusExecutionReceipt(
+                    backend: configuration.useFocusClassifier ? .unavailable : .notRequested,
+                    fallbackReason: load.fallbackReason, policy: "explicit-local-model-v1",
+                    candidates: observations.map {
+                        .init(observationID: $0.id,
+                            disposition: configuration.useFocusClassifier ? .policyRejected : .notRequested,
+                            probability: nil, isFocused: nil)
+                    })
             }
             focusMs = Self.durationToMs(startFocus.duration(to: .now))
             health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
+            if focusExecution.backend == .unavailable {
+                health.focus = .failed(reason: load.fallbackReason ?? "model_unavailable")
+            } else if focusExecution.backend == .notRequested {
+                health.focus = .notRequested
+            }
         } else {
             health.focus = .notRequested
         }
@@ -700,18 +702,23 @@ extension NativeUIDetectionRequest {
 extension NativeUIDetectionRequest {
 
     /// Loads `FocusRingDetector` when bundled; returns nil so the heuristic can run.
-    internal static func loadFocusClassifierIfAvailable() async -> FocusRingClassifier? {
-        await loadFocusClassifierWithEvidence().classifier
-    }
-
-    internal static func loadFocusClassifierWithEvidence(url: URL? = NativeUIModelAsset.focusRingDetectorURL) async -> FocusClassifierLoad {
+    internal static func loadFocusClassifierWithEvidence(url: URL?) async -> FocusClassifierLoad {
         guard let url else {
             return FocusClassifierLoad(classifier: nil, fallbackReason: "model_missing")
         }
         do {
             let before = try FocusModelIdentity.digest(url)
-            let model = try await MLModel.load(contentsOf: url, configuration: NativeUIModelAsset.makeConfiguration())
+            let configuration = MLModelConfiguration()
+            configuration.allowLowPrecisionAccumulationOnGPU = true
+            let model = try await MLModel.load(contentsOf: url, configuration: configuration)
             guard try FocusModelIdentity.digest(url) == before else { throw FocusModelIdentity.Failure.changedDuringLoad }
+            let description = model.modelDescription
+            guard let input = description.inputDescriptionsByName["image"]?.imageConstraint,
+                  input.pixelsWide == 256, input.pixelsHigh == 256,
+                  description.outputDescriptionsByName["is_focused_prob"] != nil,
+                  description.outputDescriptionsByName["confidence"] != nil else {
+                throw ModelContractError("The focus model has an unsupported input or output")
+            }
             return FocusClassifierLoad(classifier: FocusRingClassifier(model: model, artifactDigest: before), fallbackReason: nil)
         } catch {
             return FocusClassifierLoad(classifier: nil, fallbackReason: "model_load_failed")

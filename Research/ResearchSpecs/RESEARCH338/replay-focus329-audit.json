@@ -1,0 +1,54 @@
+{
+  "adapter": {
+    "outputAttributes": [
+      "boundary329.OUT"
+    ],
+    "steps": [
+      "boundary329.run"
+    ],
+    "type": "python-callable"
+  },
+  "authority": "diagnostic",
+  "decisionRule": "Every field of registration.json and audit.json matches the recorded file, except the declared fields.",
+  "hypothesis": "The FOCUS329 native boundary audit reproduces from its recorded source and inputs.",
+  "id": "replay-focus329-audit",
+  "inputs": [
+    {
+      "path": "reports/work/TRANSITION-249/artifacts/package/membership.json",
+      "sha256": "e06579c032157fc7d3c617ef50c7834db0c3bcb4f8ca459fb807138e13fa2b69"
+    },
+    {
+      "path": "reports/work/TRANSITION-249/artifacts/package/native.npy",
+      "sha256": "97fcec3a36be98dbbd955c3c459a2ce3bfe06b250c1e8bd40c594af97beca82b"
+    }
+  ],
+  "kind": "replay",
+  "limits": {
+    "maxAttempts": 1,
+    "maxOutputBytes": 67108864,
+    "timeoutSeconds": 1200
+  },
+  "owner": "NUIAK",
+  "replay": {
+    "files": [
+      {
+        "ignore": [],
+        "name": "registration.json",
+        "sha256": "13a7aa902112aef6e68144f47a88e0b73de8c3c0e99170e21dd399004e2ba4da"
+      },
+      {
+        "ignore": [
+          {
+            "path": "seconds",
+            "reason": "Wall time of the audit run."
+          }
+        ],
+        "name": "audit.json",
+        "sha256": "0eb59652838c02981306c11b48698f51eda82088d5773dbebae17d49ff07efb5"
+      }
+    ],
+    "recordedDirectory": "reports/work/FOCUS-329"
+  },
+  "task": "RESEARCH338",
+  "version": "research-spec-v1"
+}

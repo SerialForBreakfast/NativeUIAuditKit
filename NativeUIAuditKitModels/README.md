@@ -1,6 +1,6 @@
 # NativeUIAuditKitModels
 
-This package distributes pre-trained CoreML models and runtime descriptors for use with **NativeUIAuditKit**. Snapshot: [`Research/CurrentState.md`](../Research/CurrentState.md). Provenance: [`PROVENANCE.md`](../PROVENANCE.md).
+This package distributes pre-trained CoreML models and runtime descriptors for use with **NativeUIAuditKit**. Provenance: [`PROVENANCE.md`](../PROVENANCE.md).
 
 ---
 

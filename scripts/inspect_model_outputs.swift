@@ -21,7 +21,7 @@ let projectRoot = URL(filePath: #filePath)
 let modelURL = projectRoot
     .appending(path: "NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIDetector_v1.mlpackage.mlmodel")
 
-let defaultImage = URL(filePath: "/Users/josephmccraw/Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/images/img_000809.png")
+let defaultImage = FileManager.default.homeDirectoryForCurrentUser.appending(path: "Library/Developer/CoreSimulator/Devices/812EDC32-DB8D-49D6-B130-2279180CCDEB/data/Containers/Data/Application/E0711EF5-B600-47B2-A7B8-D5BA63DE1D83/Documents/dataset/createml_export/validation/images/img_000809.png")
 
 let imgURL: URL = CommandLine.arguments.count > 1
     ? URL(filePath: CommandLine.arguments[1]) : defaultImage

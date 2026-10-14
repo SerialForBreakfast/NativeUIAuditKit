@@ -33,6 +33,7 @@ def validate(path):
     for f in batch['frames']:
         event = frames[f['observationID']]
         roles = ('postInputSettled', 'postInputUnverified') if batch.get('includeUnverified') is True else ('postInputSettled',)
+        if batch.get('includeStandalone') is True: roles += ('standalone',)
         h.require(f['recordingEvent'] == event and event['sourceDeviceID'] == batch['sourceDeviceID'] and
                   event['role'] in roles and f['image']['sha256'] == event['sha256'], 'frame_binding_changed')
         p = h.checked(h.ROOT, f['image'])
@@ -43,16 +44,20 @@ def validate(path):
     return batch
 
 
-def prepare(source, output, selection, *, include_unverified=False):
+def prepare(source, output, selection, *, include_unverified=False, include_standalone=False):
     source = Path(source).resolve()
     output = h.fresh(output)
     h.require(type(include_unverified) is bool, 'invalid_unverified_option')
+    h.require(type(include_standalone) is bool, 'invalid_standalone_option')
     batch_id = 'recording-review-'+h.digest(str(output.relative_to(h.ROOT)))[:16]
     manifest = json.loads((source/'manifest.json').read_text())
     h.require(manifest['schemaVersion'] == 2, 'unsupported_recording')
     raw_events = events(source/'events.jsonl')
     frames = {d['frame']['_0']['sequenceNumber']: d['frame']['_0'] for d in raw_events if 'frame' in d}
     h.require(0 < len(selection) <= 8 and len({s[0] for s in selection}) == len(selection), 'invalid_selection')
+    roles = ('postInputSettled',) + (('postInputUnverified',) if include_unverified else ())
+    if include_standalone: roles += ('standalone',)
+    h.require(all(seq in frames and frames[seq]['role'] in roles for seq,_ in selection), 'unsupported_review_role')
     output.mkdir(parents=True)
     for name in ['raw', 'editor']:
         (output/name).mkdir()
@@ -82,7 +87,7 @@ def prepare(source, output, selection, *, include_unverified=False):
         rows.append(row)
         shutil.copyfile(original, output/'editor'/(stem+'.png'))
         h.write(output/'editor'/(stem+'.json'), h.editor_document(batch_id,row))
-    batch = dict(version=VERSION, **h.FLAGS, id=batch_id, includeUnverified=include_unverified,
+    batch = dict(version=VERSION, **h.FLAGS, id=batch_id, includeUnverified=include_unverified, includeStandalone=include_standalone,
                  manifest=refs['manifest.json'], events=refs['events.jsonl'], inventory=refs['files.jsonl'],
                  rawEvidence=list(refs.values())+[category], categoryMap=category,
                  sessionID=manifest['sessionID'], sourceDeviceID=manifest['targetDeviceID'],
@@ -97,6 +102,8 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('source');parser.add_argument('output');parser.add_argument('--selection',required=True)
     parser.add_argument('--include-unverified', action='store_true', help='Allow diagnostic review of producer-unverified frames, never transition frames')
+    parser.add_argument('--include-standalone', action='store_true', help='Allow standalone diagnostic frames without command or settlement claims')
     args=parser.parse_args()
     selection=[(int(part.split(':',1)[0]),part.split(':',1)[1]) for part in args.selection.split(',')]
-    print(prepare(args.source,args.output,selection,include_unverified=args.include_unverified))
+    print(prepare(args.source,args.output,selection,include_unverified=args.include_unverified,
+                  include_standalone=args.include_standalone))

@@ -5,7 +5,12 @@ import ImageIO
 import CryptoKit
 
 struct Frame: Codable, Sendable { let id: String; let path: String; let sha256: String }
-struct Input: Codable, Sendable { let version: Int; let root: String; let frames: [Frame]; let rectanglesOnly: Bool? }
+struct Pair: Codable, Sendable { let id: String; let before: String; let after: String }
+struct Input: Codable, Sendable {
+    let version: Int; let root: String; let frames: [Frame]; let rectanglesOnly: Bool?
+    let featureRevision: Int?; let featureCrop: String?; let pairs: [Pair]?
+    let ocrLevel: String?; let languageCorrection: Bool?; let minimumTextHeight: Float?; let textOnly: Bool?
+}
 struct Proposal: Codable, Sendable { let bounds: [Double]; let confidence: Float; let text: String? }
 struct Output: Codable, Sendable {
     let id: String; let sha256: String; let width: Int; let height: Int
@@ -22,6 +27,54 @@ let input = try JSONDecoder().decode(Input.self, from: FileHandle.standardInput.
 guard input.version == 1, !input.frames.isEmpty, input.frames.count <= 40,
       Set(input.frames.map(\.id)).count == input.frames.count else { throw ProbeError(message: "invalid_input") }
 let root = URL(fileURLWithPath: input.root).resolvingSymlinksInPath().path + "/"
+if let revision = input.featureRevision {
+    guard VNGenerateImageFeaturePrintRequest.supportedRevisions.contains(revision),
+          let pairs = input.pairs, !pairs.isEmpty, pairs.count <= 80,
+          Set(pairs.map(\.id)).count == pairs.count,
+          ["scaleFit", "centerCrop"].contains(input.featureCrop ?? "") else {
+        throw ProbeError(message: "unsupported_feature_configuration")
+    }
+    var prints: [String: VNFeaturePrintObservation] = [:]
+    var timings: [[String: Any]] = []
+    for frame in input.frames {
+        try autoreleasepool {
+            let url = URL(fileURLWithPath: frame.path).resolvingSymlinksInPath()
+            guard url.path.hasPrefix(root) else { throw ProbeError(message: "outside_project") }
+            let data = try Data(contentsOf: url)
+            let hash = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+            guard hash == frame.sha256, let source = CGImageSourceCreateWithData(data as CFData, nil),
+                  let image = CGImageSourceCreateImageAtIndex(source, 0, nil),
+                  image.width * image.height <= 80_000_000 else { throw ProbeError(message: "invalid_or_changed_image") }
+            let request = VNGenerateImageFeaturePrintRequest()
+            request.revision = revision
+            request.imageCropAndScaleOption = input.featureCrop == "scaleFit" ? .scaleFit : .centerCrop
+            let start = ProcessInfo.processInfo.systemUptime
+            try VNImageRequestHandler(cgImage: image, orientation: .up).perform([request])
+            guard let result = request.results?.first as? VNFeaturePrintObservation else {
+                throw ProbeError(message: "missing_feature_print")
+            }
+            prints[frame.id] = result
+            timings.append(["id": frame.id, "sha256": hash, "width": image.width, "height": image.height,
+                "seconds": ProcessInfo.processInfo.systemUptime - start, "elements": result.elementCount])
+        }
+    }
+    var scores: [[String: Any]] = []
+    for pair in pairs {
+        guard let before = prints[pair.before], let after = prints[pair.after] else {
+            throw ProbeError(message: "missing_pair_frame")
+        }
+        var distance: Float = 0
+        try before.computeDistance(&distance, to: after)
+        guard distance.isFinite else { throw ProbeError(message: "nonfinite_distance") }
+        scores.append(["id": pair.id, "before": pair.before, "after": pair.after, "distance": distance])
+    }
+    let receipt: [String: Any] = ["version": 1, "os": ProcessInfo.processInfo.operatingSystemVersionString,
+        "revision": revision, "crop": input.featureCrop!,
+        "supportedRevisions": Array(VNGenerateImageFeaturePrintRequest.supportedRevisions),
+        "frames": timings, "pairs": scores]
+    FileHandle.standardOutput.write(try JSONSerialization.data(withJSONObject: receipt, options: [.prettyPrinted, .sortedKeys]))
+    exit(0)
+}
 var outputs: [Output] = []
 for frame in input.frames {
     let url = URL(fileURLWithPath: frame.path).resolvingSymlinksInPath()
@@ -40,13 +93,18 @@ for frame in input.frames {
     rectangles.quadratureTolerance = 15
     var errors: [String] = []
     let start = ProcessInfo.processInfo.systemUptime
-    do { try VNImageRequestHandler(cgImage: image, orientation: .up).perform([rectangles]) }
+    do { if input.textOnly != true { try VNImageRequestHandler(cgImage: image, orientation: .up).perform([rectangles]) } }
     catch { errors.append("rectangles: \(error)") }
     let rectTime = ProcessInfo.processInfo.systemUptime - start
     let text = VNRecognizeTextRequest()
-    text.recognitionLevel = .accurate
+    guard input.ocrLevel == nil || ["fast", "accurate"].contains(input.ocrLevel!) else { throw ProbeError(message: "ocr_level") }
+    text.recognitionLevel = input.ocrLevel == "fast" ? .fast : .accurate
     text.recognitionLanguages = ["en-US"]
-    text.usesLanguageCorrection = false
+    text.usesLanguageCorrection = input.languageCorrection ?? false
+    if let height = input.minimumTextHeight {
+        guard height.isFinite && height >= 0 && height <= 1 else { throw ProbeError(message: "text_height") }
+        text.minimumTextHeight = height
+    }
     let ocrStart = ProcessInfo.processInfo.systemUptime
     if input.rectanglesOnly != true {
         do { try VNImageRequestHandler(cgImage: image, orientation: .up).perform([text]) }
