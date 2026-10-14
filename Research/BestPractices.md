@@ -1,5 +1,20 @@
 # NativeUIAuditKit — Best Practices
 
+## Prepare complete executable graphs — HCF389
+
+- Check the runner's permitted actions before writing the delivery plan. Export is not a diagnostic.
+- Give each job an existing entrypoint, pinned inputs, expected output, budget, and decision.
+- Submit downstream comparisons with their producers. Use dependency hashes instead of guessed future file paths.
+- Validate the entire batch before approving its first job. Approve each immutable specification separately.
+- Test missing inputs, altered hashes, duplicate cases, role conflicts, and negative results before dispatch.
+- Keep active worker code unchanged. Queue approval checks include imported code, not only the entrypoint.
+- Schedule shared engine changes at an idle boundary. Do not invalidate active training to add another action type.
+- Reuse resident exporters and production preprocessing. Import success does not establish conversion or inference success.
+- Distinguish implementation-ready tasks, executable jobs, waiting dependencies, and measured outcomes in every handoff.
+- Add jobs without restarting the runner. Do not run a second scheduler or poll each experiment from chat.
+- Keep the final delivery checks explicit: package identity, inference parity, accuracy, runtime measurements, and receiver evidence.
+- Report exact unimplemented steps. A preparation report does not mean the model is DONE.
+
 ## Do not fabricate results to fill the queue — RCA-20261013
 
 Do not register fabricated results or filler tasks to raise queue counts.

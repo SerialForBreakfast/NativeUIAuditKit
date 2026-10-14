@@ -94,6 +94,12 @@ def corpus():
     q.require(rows and 'audit' not in cfg['roles'], 'comparison_audit_locked')
     q.require(len({r['id'] for r in rows})==len(rows), 'comparison_duplicate')
     for row in rows:
+        if cfg.get('sourceProjectRoot'):
+            original=Path(cfg['sourceProjectRoot'])
+            q.require(original.is_absolute(), 'comparison_original_root')
+            image=Path(row['path'])
+            if image.is_relative_to(original):
+                row['path']=str(q.local_path(q.ROOT,str(image.relative_to(original))))
         q.require(q.digest(Path(row['path']))==row['sha256'], 'comparison_image_changed')
     return rows,cfg
 

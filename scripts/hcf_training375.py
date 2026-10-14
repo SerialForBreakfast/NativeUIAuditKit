@@ -50,6 +50,8 @@ def detector():
     study.OUT = OUT
     cfg = q.load(OUT / "config.json")
     document, = study.dependency("admission.json")
+    patience = cfg.get('patience', 10)
+    q.require(type(patience) is int and patience in (0, 10), 'detector_patience_invalid')
     q.require(document.get('trainingAdmitted') is True, 'detector_training_not_admitted')
     study.validate_groups(document['cases'])
     root = study.verify_storage(document["storage"])
@@ -80,7 +82,8 @@ def detector():
     initialization = q.ROOT / ref["path"]
     q.require(q.digest(initialization) == ref["sha256"], "detector_initialization_changed")
     from train_yolo import train_native_hcf
-    best = train_native_hcf(dataset / "dataset.yaml", initialization, OUT, study.progress, weights="best")
+    options = {'patience': patience} if 'patience' in cfg else {}
+    best = train_native_hcf(dataset / "dataset.yaml", initialization, OUT, study.progress, weights="best", **options)
     with (OUT / 'detector/results.csv').open() as stream:
         raw_history = [{key.strip(): value for key, value in row.items()} for row in csv.DictReader(stream)]
     history = [dict(epoch=int(row['epoch']), trainLoss=sum(float(row[key]) for key in
@@ -95,7 +98,7 @@ def detector():
         frames=counts,
         epochs=len(history),
         epochsMaximum=30,
-        patience=10,
+        patience=patience,
         membershipSHA256=q.text_digest(rows),
         initialization=ref,
         selection="best-calibration-fitness",

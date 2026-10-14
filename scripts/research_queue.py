@@ -21,6 +21,7 @@ import sys
 import time
 import uuid
 import research_evidence
+import research_execution_policy
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / 'reports/work/research-queue'
@@ -635,7 +636,8 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
             if not research_approval.is_approved(queue, spec):
                 report.append((spec['id'], 'not_approved'))
                 continue
-            require(spec['limits']['timeoutSeconds'] <= (1800 if spec['authority'] == 'training' else DIAGNOSTIC_SECONDS), 'execution_time_limit')
+            require(spec['limits']['timeoutSeconds'] <= research_execution_policy.seconds(
+                text_digest(spec), spec['authority'], DIAGNOSTIC_SECONDS), 'execution_time_limit')
             require(spec['limits']['maxOutputBytes'] <= (2 << 30 if spec['authority'] == 'training' else DIAGNOSTIC_BYTES), 'execution_output_limit')
             if spec['authority'] == 'training':
                 require(spec['training']['epochs'] <= 30, 'execution_epoch_limit')
