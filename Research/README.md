@@ -2,6 +2,10 @@
 
 | File | What it is |
 |---|---|
+| [ADR-0029](ADR-0029-Workflow-Tools-Versus-Templates.md) | Proposed workflow-tool comparison; no migration or measured performance claim |
+| [WORKFLOW394](Plans/WorkflowComparison394.md) | Bounded DVC comparison, failure tests, installation requirement, and adoption decision |
+| [ADR-0028](ADR-0028-Reusable-Experiment-Templates.md) | Reusable experiment templates through optional HCF delivery |
+| [TEMPLATE393](Plans/ExperimentTemplates393.md) | Incremental template implementation and qualification |
 | [`ADR-0027-Evidence-Guided-Experiment-Graphs.md`](ADR-0027-Evidence-Guided-Experiment-Graphs.md) | Accepted bounded graphs with shared evidence, typed conditions, and existing queue execution |
 | [`Plans/FocusGraphs364.md`](Plans/FocusGraphs364.md) | Matched appearance and movement tests across 7 authored layouts, with visibility checks and native limits |
 | [`Plans/Focus360.md`](Plans/Focus360.md) | Ranked tests for training conflicts, model blending, native coverage, and HCF teaching |

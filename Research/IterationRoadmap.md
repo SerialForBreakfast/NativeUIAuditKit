@@ -31,6 +31,13 @@ The plan changes no active jobs, approvals, or runtime modules. Tasks.md holds p
 [S391-01 and S391-02 complete](Standard391Results.md): retained failure review and exact shared evaluation parity.
 Next implement deployable proposal and selection comparisons, then prepare matched Standard producer cases.
 
+## Workflow preparation and prior art — 2026-10-14
+
+[TEMPLATE393](Plans/ExperimentTemplates393.md) develops reusable steps within optional HCF delivery.
+[ADR-0029](ADR-0029-Workflow-Tools-Versus-Templates.md) reviews existing tools without replacing the queue.
+[WORKFLOW394](Plans/WorkflowComparison394.md) proposes a bounded DVC comparison after scoped installation approval.
+Continue current experiments independently. Do not interpret the proposed comparison as measured superiority or migration approval.
+
 ## Earlier campaign priorities
 
 The entries below record earlier campaign decisions. They do not override the current Standard-first planning order.
@@ -82,7 +89,7 @@ Require target improvement without lost previous successes. Keep native qualific
 Use the local dashboard for bounded jobs. Complete controlled thin-effect and matched-magnitude comparisons before another candidate.
 
 **HCF336:** [portable experiment package](ADR-0025-Portable-Experiment-Runner.md) places acquisition in TTR and evaluation in NUIAK.
-The package passes local relocation tests. Complete Sillycon qualification and ownership acceptance before native HCF integration.
+The package passes local relocation tests. Complete capture-host qualification and ownership acceptance before native HCF integration.
 
 **HCF335:** [resumable batches](Plans/HCF335.md) pass authored rendering. Next, qualify native HCF restoration and the matched pilot.
 

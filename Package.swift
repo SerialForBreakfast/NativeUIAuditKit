@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
     ],
     targets: [
+        .executableTarget(name: "FocusFallbackTool", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/FocusFallbackTool"),
         .executableTarget(name: "ModelCompileWorker", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/ModelCompileWorker"),
         .executableTarget(name: "ModelFreeProbe", dependencies: ["NativeUIAuditKitRuntime"], path: "Tools/ModelFreeProbe"),
         .target(name: "NativeUIModelContracts", path: "NativeUIAuditKitModels/Sources/NativeUIModelContracts"),
