@@ -9,6 +9,8 @@ TRAINING_EXCEPTIONS = {
 
 
 def seconds(spec_hash, authority, diagnostic_seconds):
+    if authority == 'export':
+        return 1800
     if authority == 'training':
         return TRAINING_EXCEPTIONS.get(spec_hash, 1800)
     return diagnostic_seconds

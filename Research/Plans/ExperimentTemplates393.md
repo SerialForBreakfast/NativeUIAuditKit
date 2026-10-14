@@ -3,7 +3,8 @@
 Owner: research-host-NUIAK.
 Priority: High. Improve preparation as part of HCF delivery; preserve Standard NUIAK and existing execution.
 Decision: [ADR-0028](../ADR-0028-Reusable-Experiment-Templates.md).
-This plan defines implementation work. It does not claim these templates are ready.
+The first bounded T05/T07/T08 binding passes actual queue checks. The remaining bindings are not ready.
+See [qualification results](../Workflow394Results.md) and [authoring instructions](TemplateAuthoring393.md).
 Tasks.md owns status. HCF389 remains the delivery plan; this work supplies its reusable implementation.
 
 [ADR-0029](../ADR-0029-Workflow-Tools-Versus-Templates.md) compares existing workflow tools separately.

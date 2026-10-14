@@ -210,7 +210,10 @@ class TrustTests(unittest.TestCase):
         fixture = self.modules / 'trust_fixture.py'
         fixture.write_text(fixture.read_text() + '\n# changed after the run\n')
         self.assertEqual(t.drift(job), [q.relative(fixture)])
-        self.assertEqual(q.state(job)[0], 'drifted')
+        self.assertEqual(q.state(job)[0], 'complete')
+        row=q.summarize(self.queue,write=False)['jobs'][0]
+        self.assertEqual(row['trust'],'drifted')
+        self.assertEqual(row['reproducibility'],'source-changed')
         self.assertFalse(approval.is_approved(self.queue, q.load(job / 'spec.json')))
 
     def test_missing_epoch_history_fails(self):

@@ -21,6 +21,7 @@ BUNDLE = "com.showblender.TVTestRigFixture"
 COUNTS = {"action_dialog": 2, "grid_matrix": 4, "media_shelf": 4,
           "settings_list": 4, "hero_carousel": 4, "focus_maze": 4, "kitchen_sink": 41}
 SOURCE = "tvos_native_generator"
+SCREENSHOT_STAGING = None
 
 
 def require(ok, reason):
@@ -74,7 +75,7 @@ def capture_screenshot(target, destination, timeout=15):
     """Keep staging inside the project. Preserve it if the verified copy fails."""
     dest = Path(destination).resolve()
     dest.parent.mkdir(parents=True, exist_ok=True)
-    folder = ROOT / '.build/debug-output/native-screenshots'
+    folder = SCREENSHOT_STAGING or ROOT / '.build/debug-output/native-screenshots'
     folder.mkdir(parents=True, exist_ok=True)
     staged = folder / f"simctl_cap_{uuid.uuid4().hex}.png"
     run(["xcrun", "simctl", "io", target, "screenshot", "--type=png", str(staged)], timeout=timeout)

@@ -33,7 +33,7 @@ RESULT_VERSION = 'research-result-v1'
 SUMMARY_VERSION = 'research-summary-v1'
 KINDS = {'replay', 'screen', 'confirm'}
 AUTHORITIES = {'diagnostic', 'training', 'capture', 'export', 'promotion'}
-PERMITTED = {'diagnostic', 'training', 'capture'}
+PERMITTED = {'diagnostic', 'training', 'capture', 'export'}
 TRAINING_FIELDS = {'experimentLogRunId', 'membership', 'initialization', 'epochs', 'storageBudgetBytes',
                    'acceptanceEvidence', 'resume'}
 EXPERIMENT_LOG = ROOT / 'Research/ExperimentLog.md'
@@ -172,6 +172,10 @@ def validate(spec, module_dir=MODULES):
     require(spec.get('kind') in KINDS, 'kind_unknown')
     require(spec.get('authority') in AUTHORITIES, 'authority_unknown')
     require(spec['authority'] in PERMITTED, 'authority_not_permitted')
+    if spec['authority'] == 'export':
+        require(spec.get('adapter', {}).get('steps') == ['template_adapters395.run'], 'export_adapter')
+        require(spec.get('template', {}).get('id') == 'T10', 'export_template')
+        require(spec.get('jobKind') == 'artifact', 'export_artifact_required')
     if spec['authority'] == 'capture':
         capture = spec.get('capture', {})
         require(set(capture) == {'target', 'endpoint', 'plan', 'approval'}, 'capture_contract')
@@ -180,7 +184,7 @@ def validate(spec, module_dir=MODULES):
         require(isinstance(capture['approval'], str) and capture['approval'].strip(), 'capture_approval')
         local_path(ROOT, check_pin(capture['plan'])['path'])
         require(spec.get('adapter', {}).get('steps') in
-                (['generation352.run'], ['hcf_recovery367.run']), 'capture_adapter')
+                (['generation352.run'], ['hcf_recovery367.run'], ['template_bridge395.capture']), 'capture_adapter')
     else:
         require('capture' not in spec, 'capture_authority_required')
     dependencies = spec.get('dependencies', [])
@@ -392,9 +396,8 @@ def state(job, display_cache=False):
     results = [load(a / 'result.json') if (a / 'result.json').exists() else None for a in attempts]
     for attempt, result in zip(attempts, results):
         if result and result['status'] == 'complete' and outputs_intact(attempt, result, display_cache):
-            import research_trust
-            if research_trust.drift(job, attempt):
-                return 'drifted', attempts
+            if result.get('specSHA256')!=text_digest(spec):
+                return 'invalid',attempts
             return 'complete', attempts
     if attempts and results[-1] is None:
         active = attempts[-1] / 'active.lock'
@@ -638,7 +641,7 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
                 continue
             require(spec['limits']['timeoutSeconds'] <= research_execution_policy.seconds(
                 text_digest(spec), spec['authority'], DIAGNOSTIC_SECONDS), 'execution_time_limit')
-            require(spec['limits']['maxOutputBytes'] <= (2 << 30 if spec['authority'] == 'training' else DIAGNOSTIC_BYTES), 'execution_output_limit')
+            require(spec['limits']['maxOutputBytes'] <= (2 << 30 if spec['authority'] in ('training', 'export') else DIAGNOSTIC_BYTES), 'execution_output_limit')
             if spec['authority'] == 'training':
                 require(spec['training']['epochs'] <= 30, 'execution_epoch_limit')
             if control is not None:
@@ -730,11 +733,12 @@ def summarize(queue=QUEUE, write=True):
         import research_trust
         row['specVersion'] = spec['version']
         row['jobKind'] = spec.get('jobKind')
-        row['trust'] = ('drifted' if current == 'drifted' else 'analytic' if spec.get('jobKind') == 'analytic'
+        row['driftedModules'] = research_trust.drift(job) if current in ('complete', 'drifted') else []
+        row['reproducibility'] = 'source-changed' if row['driftedModules'] else 'not-assessed'
+        row['trust'] = ('drifted' if row['driftedModules'] else 'analytic' if spec.get('jobKind') == 'analytic'
                         else 'measured-report' if evidence == 'measured' else 'recorded-unverified')
         row['question'] = spec.get('question')
         row['approved'] = research_approval.is_approved(queue, spec)
-        row['driftedModules'] = research_trust.drift(job) if current in ('complete', 'drifted') else []
         row['requirements'] = spec.get('requirements', [])
         row['dependencies'] = spec.get('dependencies', [])
         if spec.get('dependencies'):

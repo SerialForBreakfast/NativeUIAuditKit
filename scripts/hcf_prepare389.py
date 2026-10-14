@@ -131,7 +131,7 @@ def export_preflight():
         nextAction='Use the resident exporters after explicit export support passes tests. Imports alone do not qualify conversion.'), refs)
 
 
-def proposal_selection():
+def proposal_selection(documents=None, references=None):
     """Score retained rule proposals without reading labels to choose candidates."""
     import base64
     import io
@@ -141,7 +141,7 @@ def proposal_selection():
     import focus_runtime
     from train_focus_ring_detector import load_mobilenetv4_conv_small
     from hcf_compare371 import summarize
-    docs, refs = inputs()
+    docs, refs = inputs() if documents is None else (documents, references)
     rules = docs[('hcf371r4-60-rules', 'comparison.json')]
     frames = {r['id']: r for key, doc in docs.items() if key[1] == 'admission.json'
               for r in doc['rows'] if r['role'] in ('development', 'retained')}

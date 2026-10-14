@@ -20,7 +20,9 @@ The queue validates specifications, input hashes, dependencies, limits, and appr
 `evaluation_suite391.py` supplies shared cached comparison work.
 HCF389 supplies specialized preparation code and an ordered delivery plan.
 
-No general template registry or description-to-job compiler exists yet.
+The first registry and description compiler now support a bounded T05/T07/T08 crop workflow.
+See [authoring instructions](Plans/TemplateAuthoring393.md) and [measured qualification](Workflow394Results.md).
+The other 11 entries remain contract-only. Their field checks do not establish executable support.
 Existing exporters do not establish a qualified queue export path.
 The inspected HCF389 plan records that export support needs an engine change at an idle boundary.
 This ADR describes new work, not an available command or completed feature.
@@ -151,3 +153,10 @@ Start with T07 and T08, then the candidate/export/parity path, then capture and 
 Reuse specialized adapters behind typed wrappers before attempting broad internal rewrites.
 Test engine changes in isolation. Qualify them between jobs without changing active approvals or worker ownership.
 This design makes no runtime changes and launches no experiments.
+
+## Implementation checkpoint — TEMPLATE395
+
+The [executable adapter plan](Plans/ExecutableTemplates395.md) records all 14 implemented identifiers and their supported variants.
+The existing queue executes their qualification jobs. Registration still requires separate approval.
+Native capture, package size, actual Vision parity, and TTR inference have separate qualification states.
+Software tests do not establish model accuracy or consumer acceptance.

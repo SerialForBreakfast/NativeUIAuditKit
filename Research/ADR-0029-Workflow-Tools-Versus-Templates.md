@@ -123,6 +123,10 @@ This is a design judgment, not a measured superiority claim.
 [WORKFLOW394](Plans/WorkflowComparison394.md) defines the controlled comparison and adoption gate.
 Until that gate passes, TEMPLATE393 remains the implementation path.
 
+The approved runtime pilot now passes matching outputs and bounded recovery checks.
+See [WORKFLOW394 results](Workflow394Results.md).
+The pilot does not establish reduced maintenance or justify migration. Keep the current queue and small templates.
+
 ## Official sources
 
 1. [DVC stage definitions](https://doc.dvc.org/user-guide/pipelines/defining-pipelines)

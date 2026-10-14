@@ -21,27 +21,38 @@ def signature(snapshot,initial,expected):
     q.require(identity(snapshot)==identity(initial),'runtime_or_recipe_changed')
     scene=snapshot['scene'];obs=scene['focus_observation'];diag=scene['observation_diagnostics']
     q.require(scene['is_settled'] and obs['verified'] and obs['source']=='uikit_focus_system','unverified_focus')
-    q.require(obs['observedID']==scene['focused_element_id']==expected,'wrong_focus')
+    if expected is None:
+        q.require(diag.get('nativeFocusResolved') is True and diag.get('reason')=='ready' and
+                  diag.get('nativeProbe',{}).get('referenceFocused') is True, 'unfocused_reference_unverified')
+    q.require(obs.get('observedID')==scene.get('focused_element_id')==expected,'wrong_focus')
     q.require(obs['generation']==scene['observation_generation']==diag['sampledGeneration'],'generation_mismatch')
     q.require(0<=diag['sampleAgeMilliseconds']<=200 and diag['stableMilliseconds']>=150,'stale_or_moving')
     q.require(snapshot['startedAt']-1<=scene['timestamp']<=snapshot['finishedAt']+1,'stale_timestamp')
     size=[scene['scene_width'],scene['scene_height']]
     elements=scene['elements'];ids=[e['element_id'] for e in elements]
-    q.require(len(ids)==len(set(ids)) and sorted(ids)==sorted(obs['plannedFocusIDs']),'missing_controls')
-    q.require([e['element_id'] for e in elements if e['is_focused']]==[expected],'focus_conflict')
+    planned=set(obs['plannedFocusIDs'])
+    composition=scene['recipe'].get('appearance',{}).get('composition',{})
+    definitions=composition.get('definitions',{})
+    decorations={i['id'] for r in composition.get('regions',[]) for i in r['items']
+                 if definitions.get(i['component'],{}).get('kind') in ('text','artwork')}
+    q.require(len(ids)==len(set(ids)) and planned<=set(ids) and set(ids)-planned<=decorations,'missing_controls')
+    q.require([e['element_id'] for e in elements if e['is_focused']]==([] if expected is None else [expected]),'focus_conflict')
     for e in elements:
-        q.require(body.validate(e.get('rendered_body_geometry'),size,e['element_id'],obs['generation']) is not None,'missing_body')
+        if e['element_id'] in planned:
+            q.require(body.validate(e.get('rendered_body_geometry'),size,e['element_id'],obs['generation']) is not None,'missing_body')
     return [obs['generation'],expected,size,elements,scene.get('semantic_inventory')]
 
 
 def settle(fixture,initial,expected):
     until=time.monotonic()+10
+    reason='no_observation'
     while time.monotonic()<until:
         value=fixture.snapshot()
         q.require(identity(value)==identity(initial),'runtime_or_recipe_changed')
         try:signature(value,initial,expected);return value
-        except (ValueError,RuntimeError,KeyError):time.sleep(.1)
-    raise ValueError('settle_timeout')
+        except (ValueError,RuntimeError,KeyError) as error:
+            reason=str(error);time.sleep(.1)
+    raise ValueError('settle_timeout:'+reason)
 
 
 def capture(output,execute=False):

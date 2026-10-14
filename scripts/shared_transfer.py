@@ -80,8 +80,10 @@ def verified(path,tx):
 
 def foundation_move(source,dest):
     """SMB fallback; Foundation refuses an existing destination, unlike rename()."""
-    env=dict(os.environ,TMPDIR=str(ROOT/'.build'),CLANG_MODULE_CACHE_PATH=str(ROOT/'.build/ModuleCache'))
-    subprocess.run(['/usr/bin/swift','-module-cache-path',str(ROOT/'.build/ModuleCache'),
+    # Swift caches contain absolute paths. Separate caches after a project move.
+    cache=ROOT/'.build'/('transfer-cache-'+hashlib.sha256(str(ROOT.resolve()).encode()).hexdigest()[:16])
+    env=dict(os.environ,TMPDIR=str(ROOT/'.build'),CLANG_MODULE_CACHE_PATH=str(cache))
+    subprocess.run(['/usr/bin/swift','-module-cache-path',str(cache),
                     str(ROOT/'scripts/shared_transfer_move.swift'),str(source),str(dest)],
                    env=env,check=True,capture_output=True,text=True,timeout=60)
 

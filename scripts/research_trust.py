@@ -16,7 +16,7 @@ from pathlib import Path
 import research_queue as q
 
 SPEC_V2 = 'research-spec-v2'
-JOB_KINDS = {'capture', 'training', 'evaluation', 'aggregation', 'analytic'}
+JOB_KINDS = {'capture', 'training', 'evaluation', 'aggregation', 'analytic', 'artifact'}
 OWNER = re.compile(r'[A-Za-z0-9][A-Za-z0-9-]{1,63}-(?:NUIAK|TTR)')
 TEXT_FIELDS = ('question', 'controlledComparison', 'decisionRule')
 READS_FILE = 'reads.json'
@@ -42,7 +42,7 @@ def validate_v2(spec):
     q.require(kind in JOB_KINDS, 'job_kind_unknown')
     evidence = spec.get('evidence', {})
     q.require(isinstance(evidence, dict) and set(evidence) <= {'reads', 'weights', 'predictions', 'membershipCount',
-              'history', 'trainingReport', 'captureReceipt', 'citations', 'model'},
+              'history', 'trainingReport', 'captureReceipt', 'citations', 'model', 'artifactReceipt'},
               'evidence_fields')
     reads = evidence.get('reads', [])
     q.require(isinstance(reads, list) and len(set(reads)) == len(reads), 'evidence_reads')
@@ -51,7 +51,10 @@ def validate_v2(spec):
         pinned |= {p['path'] for p in spec['training']['membership']} | {spec['training']['initialization']['path']}
     for path in reads:
         q.require(path in pinned, 'evidence_read_not_pinned:' + str(path))
-    if kind == 'capture':
+    if kind == 'artifact':
+        q.require(reads or spec.get('dependencies'), 'artifact_inputs_missing')
+        q.check_name(evidence.get('artifactReceipt'))
+    elif kind == 'capture':
         q.require(spec['authority'] == 'capture', 'capture_kind_authority')
         q.check_name(evidence.get('captureReceipt'))
     elif kind == 'training':
@@ -83,6 +86,7 @@ def validate_v2(spec):
         q.require('weights' not in evidence, 'weights_only_for_training')
     if kind != 'evaluation':
         q.require('predictions' not in evidence and 'membershipCount' not in evidence, 'predictions_only_for_evaluation')
+    q.require(kind == 'artifact' or 'artifactReceipt' not in evidence, 'artifact_receipt_kind')
 
 
 MEMBERSHIP_KEYS = {'sources', 'rows', 'members', 'cases', 'items', 'jobs'}
@@ -174,7 +178,20 @@ def check_evidence(spec, attempt, out):
     for path in required:
         if path not in reads:
             return 'evidence_not_read:' + os.path.relpath(path, q.ROOT)
-    if kind == 'capture':
+    if kind == 'artifact':
+        receipt = Path(out) / evidence['artifactReceipt']
+        if not receipt.is_file(): return 'artifact_receipt_missing'
+        document = q.load(receipt)
+        if document.get('version') != 'research-artifact-v1' or not document.get('outputs'):
+            return 'artifact_receipt_invalid'
+        seen = set()
+        for item in document['outputs']:
+            q.check_pin(item)
+            path = q.local_path(Path(out), item['path'])
+            if item['path'] in seen or not path.is_file() or q.digest(path) != item['sha256']:
+                return 'artifact_output_changed'
+            seen.add(item['path'])
+    elif kind == 'capture':
         if not any(p.suffix.lower() == '.png' for p in Path(out).rglob('*')):
             return 'capture_without_images'
         receipt = Path(out) / evidence['captureReceipt']

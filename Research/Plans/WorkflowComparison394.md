@@ -2,7 +2,7 @@
 
 Owner: research-host-NUIAK.
 Decision: [ADR-0029](../ADR-0029-Workflow-Tools-Versus-Templates.md).
-Status: Source review complete; runtime comparison awaits scoped installation approval and template readiness.
+Status: The approved isolated DVC comparison passes. See [measured results](../Workflow394Results.md).
 This work is independent of HCF389. It does not block TEMPLATE393.
 
 ## One representative workflow
@@ -64,9 +64,10 @@ If no meaningful reduction appears, retain templates and close the alternative w
 Tasks.md owns live status. The following steps define acceptance, not another task queue.
 
 - W394-01: Review sources and existing code. Complete with ADR-0029 and this mapping.
-- W394-02: Qualify an isolated DVC installation. Blocked on maintainer approval for a pinned release and dependencies.
-- W394-03: Prepare both arms. Requires tested T393 scoring wrappers, the frozen manifest, and W394-02.
-- W394-04: Execute matched runs and failure cases through the background queue. Requires reviewed immutable specifications.
-- W394-05: Publish measurements and an adoption recommendation. Requires both arms; missing results cannot imply superiority.
+- W394-02: Complete. DVC 3.67.1 runs in the approved isolated USB environment; dependency checks pass.
+- W394-03: Complete. Both arms use the same functions, frozen manifest, and model.
+- W394-04: Complete for the bounded pilot. Matched runs, input failures, duplicate requests, and caller restart pass.
+- W394-05: Measurements are published. Keep templates; maintenance savings and comparable authoring costs remain unmeasured.
 
-No framework adoption, installation, benchmark, or active queue change occurs in the source-review tranche.
+The source-review tranche made no runtime changes. The subsequent approved pilot runs in separate test queues.
+No framework adoption or active queue change occurs. Interrupted training resume remains outside this comparison.

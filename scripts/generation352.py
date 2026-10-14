@@ -16,7 +16,7 @@ def run():
     path = q.local_path(q.ROOT, ref['path'])
     q.require(q.digest(path) == ref['sha256'], 'capture_plan_changed')
     plan = q.load(path)
-    study = plan.get('version') == 'native-hcf371-v1'
+    study = plan.get('version') in ('native-hcf371-v1', 'native-hcf402-v1')
     q.require(plan['role'] == ('study-pending' if study else 'development') and plan['trainingEligible'] is False, 'capture_role')
     q.require(plan['binding']['endpoint'] == contract['endpoint'], 'capture_endpoint')
     q.require(plan['binding']['simulatorUDID'] == contract['target'], 'capture_target')

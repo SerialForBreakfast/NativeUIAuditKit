@@ -34,7 +34,7 @@ def verified_profile(value, desired):
 
 
 def validate_plan(plan):
-    if plan.get('version') == 'native-hcf371-v1':
+    if plan.get('version') in ('native-hcf371-v1', 'native-hcf402-v1'):
         from hcf_study371 import validate_capture_plan
         return validate_capture_plan(plan)
     q.require(plan['version'] == 'native-hcf362-v1', 'plan_version')
@@ -154,6 +154,10 @@ def capture(output, plan):
             setting('hcf')
         except Exception as exc:
             error = str(exc)
+            try:
+                q.save(output/'failure-scene.json', f.snapshot())
+            except Exception as snapshot_error:
+                q.save(output/'failure-observation-error.json', dict(error=str(snapshot_error)[:500]))
         finally:
             failures = []
             if session:

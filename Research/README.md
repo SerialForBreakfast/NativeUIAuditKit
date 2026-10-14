@@ -2,6 +2,12 @@
 
 | File | What it is |
 |---|---|
+| [HCF402](Plans/NativeCoverage402.md) | New native groups, fixed-map diagnostics, Standard class risks, and batch preparation |
+| [Batch authoring](../docs/experiment-batches/README.md) | Register descriptions without experiment-specific preparation scripts |
+| [HCF396](Plans/HCF396.md) | Internal screenshot staging, bounded compression, Vision parity, and optional TTR verification |
+| [Executable templates](Plans/ExecutableTemplates395.md) | All 14 bindings, queue qualification, authoring commands, and remaining blockers |
+| [WORKFLOW394 results](Workflow394Results.md) | Measured queue/DVC comparison, failure tests, and template limits |
+| [Template authoring](Plans/TemplateAuthoring393.md) | Small descriptions, preview, registration, and version rules |
 | [ADR-0029](ADR-0029-Workflow-Tools-Versus-Templates.md) | Proposed workflow-tool comparison; no migration or measured performance claim |
 | [WORKFLOW394](Plans/WorkflowComparison394.md) | Bounded DVC comparison, failure tests, installation requirement, and adoption decision |
 | [ADR-0028](ADR-0028-Reusable-Experiment-Templates.md) | Reusable experiment templates through optional HCF delivery |

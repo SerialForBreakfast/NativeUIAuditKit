@@ -40,6 +40,9 @@ def verify_storage(storage):
 
 
 def validate_capture_plan(plan):
+    if plan.get('version') == 'native-hcf402-v1':
+        from native_coverage402 import validate
+        return validate(plan)
     import native343 as native
     q.require(plan['binding']['simulatorUDID'] == native.TARGET and
               plan['binding']['endpoint'] == 'http://127.0.0.1:8080', 'study_target')
