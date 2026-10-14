@@ -16,39 +16,55 @@ class AdditionsTests(QueueTests):
         self.assertEqual(c.next_batch(['a-diagnostic']),['a-diagnostic'])
 
     def test_resume_uses_only_persisted_approvals(self):
-        approved = self.spec(); self.submit(approved)
-        self.submit(self.spec(id='withdrawn-job'))
+        approved = self.spec_v2(); self.submit(approved, approve=False)
+        self.submit(self.spec(id='withdrawn-job'), approve=False)
         c = self.control()
         c.add([dict(id=approved['id'], sha256=q.text_digest(approved))])
         with mock.patch('research_dashboard_server.threading.Thread') as thread:
-            c.start_all(approved_only=True)
+            c.start_all()
             self.assertEqual(thread.call_args.kwargs['args'], (['job-a'],))
             thread.return_value.start.assert_called_once()
         self.assertFalse(c.cancel.is_set())
 
     def test_resume_rejects_changed_approval_before_start(self):
-        spec = self.spec(); self.submit(spec)
+        spec = self.spec_v2(); self.submit(spec, approve=False)
         c = self.control(); c.add([dict(id=spec['id'], sha256=q.text_digest(spec))])
         spec['hypothesis'] = 'Changed question'
         q.save(self.queue/'jobs/job-a/spec.json', spec, replace=True)
         with mock.patch('research_dashboard_server.threading.Thread') as thread:
             with self.assertRaisesRegex(ValueError, 'approved_spec_changed'):
-                c.start_all(approved_only=True)
+                c.start_all()
             thread.assert_not_called()
+
+    def test_unapproved_jobs_never_start(self):
+        approved = self.spec_v2(); self.submit(approved, approve=False)
+        self.submit(self.spec(id='unapproved-job'), approve=False)
+        c = self.control()
+        with mock.patch('research_dashboard_server.threading.Thread') as thread:
+            with self.assertRaisesRegex(ValueError, 'job_not_approved'):
+                c.start(['unapproved-job'])
+            c.start_all()
+            self.assertEqual(thread.call_args.kwargs['args'], ([],))
+        c = self.control()
+        c.add([dict(id=approved['id'], sha256=q.text_digest(approved))])
+        with mock.patch('research_dashboard_server.threading.Thread') as thread:
+            c.start([approved['id']])
+            thread.return_value.start.assert_called_once()
 
     def control(self):
         return Controller(self.queue, self.modules, self.lock)
 
     def test_add_persists_without_start(self):
-        spec = self.spec(); self.submit(spec)
+        spec = self.spec_v2(); self.submit(spec, approve=False)
         c = self.control(); c.stop.set()
         c.add([dict(id=spec['id'], sha256=q.text_digest(spec))])
         self.assertFalse(c.busy); self.assertTrue(c.stop.is_set())
         self.assertEqual(self.control().approved(), {spec['id']: q.text_digest(spec)})
+        self.assertEqual(q.load(self.queue/'approved-additions.json')['jobs'][spec['id']]['approver'], 'maintainer')
         c.add([dict(id=spec['id'], sha256=q.text_digest(spec))])
 
     def test_bad_hash_and_paths(self):
-        spec = self.spec(); self.submit(spec)
+        spec = self.spec_v2(); self.submit(spec, approve=False)
         for ident, digest in [('job-a', '0'*64), ('../job-a', q.text_digest(spec))]:
             with self.assertRaises(ValueError):
                 self.control().add([dict(id=ident, sha256=digest)])

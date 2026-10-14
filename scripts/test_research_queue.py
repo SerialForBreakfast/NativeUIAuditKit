@@ -85,13 +85,26 @@ class QueueTests(unittest.TestCase):
         spec.update(changes)
         return spec
 
+    def spec_v2(self, **changes):
+        spec = self.spec(version='research-spec-v2', owner='Test-NUIAK', jobKind='analytic',
+                         question='Does the fixture double its pinned input value?',
+                         controlledComparison='The pinned input value against the produced value.',
+                         nextActionByOutcome={'supported': 'Keep the fixture contract unchanged.',
+                                              'contradicted': 'Diagnose the fixture before other tests.'})
+        spec.update(changes)
+        return spec
+
     def write_spec(self, spec, name='spec.json'):
         path = self.base / name
         path.write_text(json.dumps(spec))
         return path
 
-    def submit(self, spec):
-        return q.submit(self.write_spec(spec), self.queue, self.modules)
+    def submit(self, spec, approve=True):
+        result = q.submit(self.write_spec(spec), self.queue, self.modules)
+        if approve:
+            import research_approval
+            research_approval.approve(self.queue, spec['id'], 'test', 'isolated test fixture approval', self.modules)
+        return result
 
     def run_queue(self, max_jobs=5, retry=False):
         return q.run(self.queue, self.modules, max_jobs, sys.executable, self.lock, retry=retry)

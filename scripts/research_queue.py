@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / 'reports/work/research-queue'
 MODULES = ROOT / 'scripts'
 SPEC_VERSION = 'research-spec-v1'
+SPEC_VERSIONS = {'research-spec-v1', 'research-spec-v2'}
 ATTEMPT_VERSION = 'research-attempt-v1'
 RESULT_VERSION = 'research-result-v1'
 SUMMARY_VERSION = 'research-summary-v1'
@@ -162,7 +163,7 @@ def output_dir(spec, attempt):
 
 
 def validate(spec, module_dir=MODULES):
-    require(isinstance(spec, dict) and spec.get('version') == SPEC_VERSION, 'spec_version')
+    require(isinstance(spec, dict) and spec.get('version') in SPEC_VERSIONS, 'spec_version')
     for key in ('id', 'task'):
         require(isinstance(spec.get(key), str) and ID.fullmatch(spec[key]), f'{key}_format')
     for key in ('owner', 'hypothesis', 'decisionRule'):
@@ -243,6 +244,9 @@ def validate(spec, module_dir=MODULES):
                 require(isinstance(ignore.get('reason'), str) and ignore['reason'].strip(), 'ignore_reason')
     else:
         require('replay' not in spec, 'replay_only_for_replay_jobs')
+    if spec['version'] == 'research-spec-v2':
+        import research_trust
+        research_trust.validate_v2(spec)
     return spec
 
 
@@ -387,6 +391,9 @@ def state(job, display_cache=False):
     results = [load(a / 'result.json') if (a / 'result.json').exists() else None for a in attempts]
     for attempt, result in zip(attempts, results):
         if result and result['status'] == 'complete' and outputs_intact(attempt, result, display_cache):
+            import research_trust
+            if research_trust.drift(job, attempt):
+                return 'drifted', attempts
             return 'complete', attempts
     if attempts and results[-1] is None:
         active = attempts[-1] / 'active.lock'
@@ -544,11 +551,14 @@ def execute(spec, attempt, module_dir, python, control=None, lease_fds=()):
 
 
 def run_attempt(job, spec, number, module_dir, python, control=None, lease_fds=()):
+    import research_approval
     attempt = job / 'attempts' / str(number)
     attempt.mkdir(parents=True)
     started = time.time()
     save(attempt / 'attempt.json', dict(version=ATTEMPT_VERSION, job=spec['id'], number=number,
          specSHA256=text_digest(spec), startedAt=started, python=python, platform=platform.platform()))
+    approval_record = research_approval.load(job.parents[1])['jobs'][spec['id']]
+    save(attempt / 'approval.json', {key: value for key, value in approval_record.items() if key != 'checks'})
     result = dict(version=RESULT_VERSION, job=spec['id'], task=spec['task'], kind=spec['kind'],
                   authority=spec['authority'], attempt=number, specSHA256=text_digest(spec))
     if spec['authority'] == 'training':
@@ -559,7 +569,10 @@ def run_attempt(job, spec, number, module_dir, python, control=None, lease_fds=(
         verify_pins(spec)
         check_training(spec, job.parents[1])
         dependency_inputs(spec, job.parents[1])
-    except ValueError as error:
+        if spec['authority'] == 'capture':
+            import research_approval
+            result['captureOwnership'] = research_approval.capture_ownership(spec, job.parents[1])
+    except (ValueError, OSError, RuntimeError) as error:
         result.update(status='failed', reason=str(error), wallSeconds=0.0, outputs=[])
         save(attempt / 'result.json', result)
         return result
@@ -576,10 +589,17 @@ def run_attempt(job, spec, number, module_dir, python, control=None, lease_fds=(
         result.update(status='failed', reason='process_failed')
     elif not within:
         result.update(status='failed', reason='output_limit')
+    elif not research_approval.is_approved(job.parents[1], spec):
+        result.update(status='failed', reason='approval_or_code_changed_during_run')
     else:
-        result.update(status='complete')
-        if spec['kind'] == 'replay':
-            result['replay'] = compare_replay(spec, output_dir(spec, attempt))
+        import research_trust
+        problem = research_trust.check_evidence(spec, attempt, output_dir(spec, attempt))
+        if problem:
+            result.update(status='failed', reason=problem)
+        else:
+            result.update(status='complete')
+            if spec['kind'] == 'replay':
+                result['replay'] = compare_replay(spec, output_dir(spec, attempt))
     save(attempt / 'result.json', result)
     return result
 
@@ -611,6 +631,10 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
                 continue
             if spec.get('requirements') or 'benchmark_evaluator.run' in spec['adapter']['steps']:
                 continue
+            import research_approval
+            if not research_approval.is_approved(queue, spec):
+                report.append((spec['id'], 'not_approved'))
+                continue
             require(spec['limits']['timeoutSeconds'] <= (1800 if spec['authority'] == 'training' else DIAGNOSTIC_SECONDS), 'execution_time_limit')
             require(spec['limits']['maxOutputBytes'] <= (2 << 30 if spec['authority'] == 'training' else DIAGNOSTIC_BYTES), 'execution_output_limit')
             if spec['authority'] == 'training':
@@ -632,6 +656,15 @@ def child(attempt, module_dir):
     spec = load(attempt.parents[1] / 'spec.json')
     out = output_dir(spec, attempt).resolve()
     adapter = spec['adapter']
+    import research_trust
+    research_trust.install_read_trace()
+    try:
+        _child_steps(attempt, module_dir, spec, out, adapter)
+    finally:
+        research_trust.write_reads(attempt)
+
+
+def _child_steps(attempt, module_dir, spec, out, adapter):
     modules = {}
     for target in adapter['outputAttributes'] + adapter['steps']:
         name = split_target(target, Path(module_dir))[0]
@@ -691,6 +724,15 @@ def summarize(queue=QUEUE, write=True):
             row['evidenceError'] = str(error)
         row['evidenceKind'] = evidence
         row['modelAcceptance'] = 'not-assessed'
+        import research_approval
+        import research_trust
+        row['specVersion'] = spec['version']
+        row['jobKind'] = spec.get('jobKind')
+        row['trust'] = ('drifted' if current == 'drifted' else 'analytic' if spec.get('jobKind') == 'analytic'
+                        else 'measured-report' if evidence == 'measured' else 'recorded-unverified')
+        row['question'] = spec.get('question')
+        row['approved'] = research_approval.is_approved(queue, spec)
+        row['driftedModules'] = research_trust.drift(job) if current in ('complete', 'drifted') else []
         row['requirements'] = spec.get('requirements', [])
         row['dependencies'] = spec.get('dependencies', [])
         if spec.get('dependencies'):
@@ -739,6 +781,11 @@ def main():
     run_parser.add_argument('--retry', action='store_true')
     sub.add_parser('status')
     sub.add_parser('summarize')
+    for command in ('approve', 'revoke'):
+        action = sub.add_parser(command)
+        action.add_argument('job')
+        action.add_argument('--by', required=True)
+        action.add_argument('--reason', required=True)
     execute_parser = sub.add_parser('_execute')
     execute_parser.add_argument('attempt')
     execute_parser.add_argument('child_module_dir')
@@ -752,6 +799,13 @@ def main():
         for job, status in run(args.queue.resolve(), args.module_dir.resolve(), args.max_jobs,
                                job_ids=args.job, retry=args.retry):
             print(job, status, flush=True)
+    elif args.command in ('approve', 'revoke'):
+        import research_approval
+        if args.command == 'approve':
+            print(research_approval.approve(args.queue.resolve(), args.job, args.by, args.reason, args.module_dir.resolve()))
+        else:
+            research_approval.revoke(args.queue.resolve(), args.job, args.by, args.reason)
+            print('revoked', args.job)
     else:
         summary = summarize(args.queue.resolve())
         for row in summary['jobs']:

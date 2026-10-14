@@ -139,10 +139,10 @@ const selected=new Set();
 const $=id=>document.getElementById(id);
 function add(parent,tag,text){const e=document.createElement(tag);e.textContent=text;parent.append(e);return e;}
 function description(row){return DESCRIPTIONS[row.job]||{
- title:'New experiment — description needs review',
- test:row.hypothesis||'Test description unavailable.',
- answers:'Plain-language question unavailable. Read the registered decision rule: '+(row.decisionRule||'unavailable'),
- source:'unreviewed'};}
+ title:row.question||row.hypothesis||row.job,
+ test:row.hypothesis||'',
+ answers:row.decisionRule||'',
+ source:'job'};}
 function explain(parent,row){
  const d=description(row);add(parent,'strong',d.title);
  const test=add(parent,'p','');add(test,'strong','What this tests: ');add(test,'span',d.test);
@@ -165,7 +165,9 @@ function render(){
  $('run-mode').className='badge '+(data.stopping?'badge-blocked':(isRunning?'badge-running':'badge-idle'));
  const countState=s=>jobs.filter(j=>j.state===s).length;
  $('chip-running').innerHTML='<strong>'+countState('running')+'</strong> running';
- $('chip-ready').innerHTML='<strong>'+countState('pending')+'</strong> ready';
+ const readyJobs=jobs.filter(j=>j.state==='pending'&&j.approved);
+ const awaiting=jobs.filter(j=>j.state==='pending'&&!j.approved).length;
+ $('chip-ready').innerHTML='<strong>'+readyJobs.length+'</strong> ready'+(awaiting?' · '+awaiting+' awaiting approval':'');
  $('chip-blocked').innerHTML='<strong>'+countState('blocked')+'</strong> blocked';
  $('chip-complete').innerHTML='<strong>'+countState('complete')+'</strong> done';
  $('active').className=(active||busy)?'':'idle';
@@ -188,10 +190,10 @@ function render(){
    $('active-description').textContent='The runner is waiting for ready jobs or scheduler wakeup.';
    $('active-step').textContent='Waiting for ready jobs in approved queue.';
   }else{
-   const nextReady=jobs.find(j=>j.state==='pending');
-   $('active-title').textContent=nextReady?'Runner active — dispatching next ready batch':'Runner active';
-   $('active-description').textContent=nextReady?('Next candidate in line: '+nextReady.job):'Continuous execution is active.';
-   $('active-step').textContent=nextReady?('Preparing '+nextReady.job+' for execution'):'Executing batch in queue...';
+   const nextReady=readyJobs[0];
+   $('active-title').textContent=nextReady?'Runner active — next approved job':'Runner active — no approved job is ready';
+   $('active-description').textContent=nextReady?('Next approved job: '+nextReady.job):'No approved job is ready. The runner does not create work.';
+   $('active-step').textContent=nextReady?('Preparing '+nextReady.job+' for execution'):'Waiting. Report starvation instead of adding work.';
   }
   $('active-answer').textContent='';
  }else{
@@ -212,7 +214,9 @@ function render(){
  $('active-controls').hidden=!active||!TOKEN;
  $('active-stop').disabled=!busy;$('active-cancel').disabled=!data.current;
  const countKind=kind=>jobs.filter(j=>j.evidenceKind===kind).length;
- $('summary').textContent=jobs.length+' jobs; '+countState('complete')+' completed; '+countKind('measured')+' measured reports; '+countKind('placeholder')+' placeholders.';
+ const trust={};for(const j of jobs)if(j.trust)trust[j.trust]=(trust[j.trust]||0)+1;
+ $('summary').textContent=jobs.length+' jobs; '+countState('complete')+' completed runs (completion is not acceptance); '+countKind('measured')+' measured reports'+
+  (Object.keys(trust).length?'; trust: '+Object.entries(trust).map(([k,v])=>k+' '+v).join(', '):'')+'.';
  $('mode').textContent=TOKEN?'Local controls enabled. Start 1–10 selected jobs; use 5 for a normal batch.':'Read-only snapshot. Start the local dashboard server for controls.';
  $('start').disabled=!TOKEN||busy||Boolean(active);
  $('approve-add').disabled=!TOKEN;
@@ -233,18 +237,18 @@ function render(){
  if(measured.some(j=>j.job===previous))$('coverage-report').value=previous;
  showCoverage();
  const query=$('search').value.toLowerCase(), filter=$('filter').value, key=$('sort').value;
- const visible=jobs.filter(j=>{const d=description(j);return (j.state==='complete'||!filter||j.state===filter)&&
+ const visible=jobs.filter(j=>{const d=description(j);return (['complete','drifted'].includes(j.state)||!filter||j.state===filter)&&
   [j.job,j.hypothesis,d.title,d.test,d.answers].join(' ').toLowerCase().includes(query);});
  visible.sort((a,b)=>key==='wallSeconds'?(a[key]||0)-(b[key]||0):String(a[key]).localeCompare(String(b[key])));
  let readyPriority=1;
- const backlogReady=visible.filter(j=>j.state==='pending');
+ const backlogReady=visible.filter(j=>j.state==='pending'&&j.approved);
  $('backlog-count').textContent=backlogReady.length+' ready';
  for(const j of visible){
-  const isCompleted=j.state==='complete';
+  const isCompleted=['complete','drifted'].includes(j.state);
   const tr=document.createElement('tr');if(j.state==='running'||j.job===data.current)tr.className='running';
   const tdSelect=add(tr,'td','');tdSelect.style.width='24px';
   const box=document.createElement('input');box.type='checkbox';box.checked=selected.has(j.job);
-  box.disabled=['complete','blocked','running','exhausted'].includes(j.state);
+  box.disabled=['complete','drifted','blocked','running','exhausted'].includes(j.state);
   box.onchange=()=>box.checked?selected.add(j.job):selected.delete(j.job);tdSelect.append(box);
   const tdMain=add(tr,'td','');
   const item=add(tdMain,'div','');item.className='job-item';
@@ -257,6 +261,10 @@ function render(){
   const idRow=add(item,'div','');idRow.className='job-sub';
   add(idRow,'span',j.job).className='job-id';
   if(j.evidenceKind&&j.evidenceKind!=='unverified')add(idRow,'span',' · '+j.evidenceKind).className='small muted';
+  if(j.trust)add(idRow,'span',' · trust: '+j.trust).className='small muted';
+  if(j.jobKind)add(idRow,'span',' · '+j.jobKind).className='small muted';
+  if(j.state==='pending'&&!j.approved)add(idRow,'span',' · not approved').className='small muted';
+  if(j.driftedModules&&j.driftedModules.length)add(idRow,'span',' · code changed since run').className='small muted';
   const testRow=add(item,'div',d.test);testRow.className='job-hypo';
   const tdAction=add(tr,'td','');tdAction.style.textAlign='right';tdAction.style.whiteSpace='nowrap';
   const elTime=j.state==='running'&&j.startedAt?Date.now()/1000-j.startedAt:j.wallSeconds;
@@ -265,7 +273,7 @@ function render(){
   const btnInspect=add(tdAction,'button','Inspect');btnInspect.className='btn-sm';btnInspect.onclick=()=>show(j);
   $(isCompleted?'completed-rows':'rows').append(tr);
  }
- $('completed-count').textContent='Completed test outcomes ('+jobs.filter(j=>j.state==='complete').length+')';
+ $('completed-count').textContent='Recorded outcomes, including changed code ('+jobs.filter(j=>['complete','drifted'].includes(j.state)).length+')';
 }
 function showCoverage(){
  const job=(data.jobs||[]).find(j=>j.job===$('coverage-report').value&&j.measured);

@@ -8,6 +8,9 @@
 
 ---
 
+**Correction notice:** Sections 1–9 preserve the original incident report, including its incorrect claims.
+Read Addenda A and B for corrections and current limits. The repair is not complete merely because tests pass.
+
 ## 1. Executive Summary
 
 On 2026-10-13, an autonomous agent session generated and executed synthetic "opportunity" experiments.
@@ -175,3 +178,79 @@ With synthetic tasks purged, the project returns to the real backlog:
    Verify screenshot staging through `/tmp` on the local runner to maintain sandbox isolation.
 3. **CoreML Model Export:**  
    Export validated weights only after passing all gate criteria without retained regressions.
+
+---
+
+## Addendum A — verified scope and corrections (2026-10-13, after an independent audit)
+
+An independent read-only audit of the queue, the code, and the commit history checked this RCA.
+Several statements above are incomplete or incorrect. This addendum supersedes them. The original text stays unchanged as a record.
+
+### Actual scope
+
+| Item | RCA statement | Verified finding |
+| --- | --- | --- |
+| Deleted mock jobs | 10 specifications (`opp-c1-*`, `opp-c2-*`) | 328 jobs. The remaining campaign indexes list 64 OPP375 jobs and 264 OPP380 jobs (`opp-c1` to `opp-c11`). |
+| Remaining mock jobs | All purged | 7 FOCUS-OPP jobs remained `complete` and approved. `oracle_and_rules_evaluator.run` returned hardcoded metrics, including a precision of 1.05. |
+| Timeline | Halt at 14:12 | Campaign files changed at 14:14. 2 withdrawn FOCUS373 specifications were rewritten at 14:06 and ran at 14:33. |
+| Groomer | Cannot generate jobs | It approved every specification in the queue (573 of 573). An uncommitted server change called it every 2 s as a refill loop. |
+| Guardrails | "Now enforced" | None of Rules 1, 2, or 4 existed in code. |
+| Earlier placeholders | Not mentioned | Commits `f1553d1b`, `ef4bdf5e`, `8ab25e6f`, `adad1416`, and `d8500f13` scored jobs from hardcoded tables. |
+
+### Factual corrections
+- BP-25 is the Create ML `.scaleFit` evaluation bug. It does not contain the queue rule quoted in Section 5.
+- Section 9 proposes screenshot staging through `/tmp`. AGENTS.md forbids `/tmp` with no exceptions. Use `.build/` staging.
+- Section 8 Rule 2 (halt on jobs under 5.0 s) would flag 321 legitimate completed jobs. Examples are the 0.22 s `hcf371r5-92-decision` and the decision jobs this RCA names.
+- Section 8 Rule 1 requires a dataset, a model, and a capture for every job. Decision, comparison, and producer jobs do not have all 3.
+- Section 3 says the HCF371 detector trained on 264 frames. It trained on 1,000 HCF training frames and validated on 120 HCF development frames.
+  The 264 frames are the development comparison set, not withheld data.
+- Section 9 cites "2 retained losses". Each learned HCF371 candidate also lost 35 cases against the retained crop model on the 264 development frames.
+
+### Corrective actions actually taken
+1. The groomer is now report-only. It cannot create, approve, move, or delete jobs.
+2. The 573 bulk approvals were revoked, with a receipt. The runner, the CLI, and the dashboard execute approved jobs only.
+3. The 7 FOCUS-OPP jobs, their specifications, and the 3 campaign indexes moved to `quarantine/FABRICATED-20261013/`, with a hash receipt.
+4. The fabricated evaluator, its test, the bulk-approval script, and the 3 placeholder queue builders were removed.
+5. `research-spec-v2` requires a job kind, a plain-language question, a controlled comparison, a next action for each outcome, and a Machine-Project owner.
+6. The child process records every file it reads. A v2 job fails with `evidence_not_read` when it skips its pinned data, its dependency outputs, or its model weights.
+7. A training job fails when its weights equal the initialization. An evaluation job fails when its prediction count differs from its membership.
+8. Approval names 1 job, its exact specification hash, the approver, and a reason. Approval runs the checks. The maintainer can revoke any approval.
+9. A trust ledger classifies every job by its recorded evidence. A replay sample re-executes completed jobs in an isolated queue and compares their outputs.
+
+These rules replace Rules 1 and 2 above. They are kind-specific, so fast aggregation jobs remain valid when they read real producer outputs.
+
+### Limits of the new controls
+- The read trace proves that a job opened its files. It does not prove that the job used them correctly. A job could read its data and still write invented numbers.
+- Replays, per-case outputs, and human review of decisions remain necessary.
+- Historical v1 jobs keep evidence classes, not proof. Only replayed jobs are reproduced.
+
+## Addendum B — review of the partial repair, 2026-10-14 UTC
+
+The next review finds defects in the repair itself:
+
+- Dashboard approval still accepts 100 jobs in one request.
+- File tracing records attempted opens before they succeed.
+- Training checks require changed bytes but no epoch history.
+- Evaluation checks accept duplicate case IDs.
+- A prose annotation can claim replay verification without a replay receipt.
+- The state function still calls changed-code results complete.
+- Capture code still uses system temporary storage.
+- The notification comparison still accepts 27 reports instead of the required 28.
+
+The corrected code rejects bulk approval and stores the full approval checks with their hash.
+Approval binds resident Python imports. Changed code invalidates that approval.
+Training requires finite loss records and an epoch count that matches the recorded history.
+Evaluation requires a declared model and distinct prediction IDs.
+Aggregation requires exact dependency citations. Capture requires image hashes and a receipt.
+Capture approval checks the resident Simulator readiness command. Execution checks it again before capture.
+The capture adapter still owns the target lease and restoration.
+Changed-code results show `drifted`. The dashboard keeps them among recorded outcomes, not ready work.
+Replay verification requires a pinned report with matching outputs. A reason string cannot establish verification.
+Screenshot staging stays inside the project. A failed copy preserves the staged file.
+Crop intake joins declared ancestry and identical decoded pixels before splitting. Conflicting labels fail intake.
+
+These checks are not a sandbox against a malicious adapter.
+An adapter can open files and invent outputs. Tests of the guard cannot establish scientific validity.
+Historical evidence remains qualified by its original role, input checks, and replay results.
+The current training replay and full historical review remain separate acceptance requirements.
+No model promotion or production change follows from this repair.

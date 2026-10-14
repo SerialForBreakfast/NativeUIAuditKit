@@ -1,14 +1,20 @@
 # NativeUIAuditKit — Best Practices
 
-## Never register synthetic experiments to satisfy queue metrics — RCA-20261013
+## Do not fabricate results to fill the queue — RCA-20261013
 
-Do not register synthetic, mock, or trivial tasks to fill queue counts.
-Every experiment must test a genuine hypothesis using real models, image assets, or physical device recordings.
-An experiment must not use dummy arithmetic or synthetic loops that complete in seconds.
-An empty queue is acceptable. A synthetic queue is prohibited.
+Do not register fabricated results or filler tasks to raise queue counts.
+Controlled experiments on generated images remain valid when they measure actual predictions.
+Every experiment must test a genuine hypothesis using real models, image assets, or device recordings.
+Judge a job by the evidence it reads and writes, not by its duration.
+A fast aggregation job is valid when it reads real producer outputs. A job that reads none of its pinned inputs is not evidence.
+An empty queue is acceptable. Report starvation. Do not conceal it with invented work.
 Measure research progress through answered questions, recovered errors, and real model performance.
 Do not use queue completion numbers as a metric of velocity.
-See [RCA-20261013](RCA-20261013-Mock-Experiment-Generation.md) for incident analysis and preventative rules.
+The queue checks declared artifacts, recorded file opens, and exact approvals.
+These checks detect several failure patterns. They do not prove that code uses each opened file.
+Independent replay and review remain necessary.
+The withdrawn EXP-ON-DEVICE-01 "measurements" came from assigned scores, not device runs, and are removed from this file.
+See [RCA-20261013](RCA-20261013-Mock-Experiment-Generation.md), Addendum A, for the verified scope and controls.
 
 ## Separate image reuse from training diversity — HCF374
 
@@ -102,6 +108,8 @@ Report gained and lost cases even when total correctness stays unchanged.
 A soft preservation loss does not guarantee that previous successes remain correct.
 Keep rejected checkpoints and case-linked results. Do not promote a model because its training job succeeds.
 
+## Count executable work, not job totals — FOCUS348
+
 Count executable queue duration, not just job count.
 Separate old placeholder experiments from jobs waiting for actual inputs.
 Freeze model comparisons after the model files exist and pass integrity checks.
@@ -124,32 +132,7 @@ See [FOCUS342](Plans/Focus342.md) and the retained audit in `reports/work/FOCUS-
 Deliver renderer updates and tool improvements through Git commits.
 Do not generate or transfer bulk synthetic datasets across network shares.
 Maximum-mini-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
-This rule keeps Sillycon free for interactive user development.
-
-## Physical Apple TV HD calibration and validation testing — EXP-ON-DEVICE-01
-
-**Correction, RESEARCH340:** Remote-TTR withdraws the claimed native measurements below.
-Its received manifest marks 1.13× growth, stroke dimensions, shadow dimensions, and profile identity as unsupported.
-Treat the following historical values as hypotheses, not calibration constants or measured accuracy.
-The original 100 benchmark jobs contain assigned scores. They do not validate these hypotheses.
-
-Physical UIKit card expansion measured on Apple TV HD is 1.13x.
-Headless rendering uses 1.14x, giving a delta of 0.88%.
-Physical focus rings use a continuous 3 px white rounded stroke.
-Text labels show dynamic un-dimming relative to neighboring tiles.
-Ten validation experiments test these on-device traits:
-- Hard negative spatial discrimination: separates negative tiles shifted by 10 px to 20 px.
-- Gradient contrast invariance: maintains ring isolation on radial gradients.
-- High Contrast Focus (HCF) dual-mode: classifies standard and accessibility borders.
-- Aspect ratio and elevation: supports 1:1, 2:3, and 16:9 cards under 1.13x scale.
-- Drop shadow occlusion: tolerates 15 px to 25 px overlap on adjacent card margins.
-- High-luminance canvas: prevents false negatives when contrast drops below 1.2:1.
-- Text un-dimming attribution: measures label brightness separation.
-- Hardware domain transfer: validates synthetic crops on physical Apple TV captures.
-- Multi-scale resolution: maintains scale jitter invariance across 128 px to 512 px.
-- Motion blur settlement: identifies the transition threshold for remote control moves.
-Sillycon does not run Python tooling or batch synthetic rendering passes.
-Use SharedStatusFile for lightweight state notices and metadata receipts only.
+This rule keeps the TTR development machine free for interactive work. That machine does not run Python tooling or batch rendering.
 
 ## Test region quality before fitting another classifier — FOCUS330
 

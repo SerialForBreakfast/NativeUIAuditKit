@@ -14,7 +14,7 @@ class DashboardTests(QueueTests):
     def test_add_during_continuous_execution(self):
         first = self.spec(); self.submit(first)
         self.assertEqual(self.request('/api/start-all', {})[0], 200)
-        second = self.spec(id='job-b'); self.submit(second)
+        second = self.spec_v2(id='job-b'); self.submit(second, approve=False)
         payload = {'jobs': [{'id': 'job-b', 'sha256': q.text_digest(second)}]}
         self.assertEqual(self.request('/api/add', payload, token=False)[0], 403)
         self.assertEqual(self.request('/api/add', payload, origin=False)[0], 403)
@@ -79,6 +79,8 @@ class DashboardTests(QueueTests):
                        outputAttributes=['benchmark_evaluator.OUTPUT_DIR']),
                        stage=[{'from':pin(source),'to':'evidence.json'}])
         q.submit(self.write_spec(spec),self.queue,q.MODULES)
+        import research_approval
+        research_approval.approve(self.queue,'job-a','test','isolated test fixture approval',q.MODULES)
         self.control.modules=q.MODULES
         self.assertEqual(self.request('/api/start',{'jobs':['job-a']})[0],200)
         self.wait_done()

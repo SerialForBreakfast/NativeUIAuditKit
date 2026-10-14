@@ -7,6 +7,7 @@ import threading
 import time
 
 import research_queue as q
+import research_approval
 from generate_research_dashboard import render_html
 
 
@@ -34,31 +35,24 @@ class Controller:
         return [ident for rank, ident in ranked if rank == best][:5]
 
     def approved(self):
-        if not self.approvals.exists():
-            return {}
-        doc = q.load(self.approvals)
-        q.require(doc.get('version') == 'research-additions-v1', 'approval_version')
-        return doc['jobs']
+        return research_approval.approved_map(self.queue)
 
     def add(self, jobs):
-        """Approve exact specifications without starting or stopping execution."""
-        q.require(isinstance(jobs, list) and 1 <= len(jobs) <= 100, 'addition_count')
-        with self.guard, q.host_lock(self.queue / 'approval.lock'):
-            additions = {}
+        """Approve exact specifications as the maintainer, through the same checks as agent approvals."""
+        q.require(isinstance(jobs, list) and len(jobs) == 1, 'one_job_approval_required')
+        seen = set()
+        for item in jobs:
+            q.require(isinstance(item, dict) and set(item) <= {'id', 'sha256', 'reason'} and {'id', 'sha256'} <= set(item),
+                      'addition_fields')
+            ident = item['id']
+            q.require(isinstance(ident, str) and q.ID.fullmatch(ident) and ident not in seen, 'job_id')
+            seen.add(ident)
+            spec = q.validate(q.load(self.queue / 'jobs' / ident / 'spec.json'), self.modules)
+            q.require(q.text_digest(spec) == item['sha256'], 'addition_hash')
+        with self.guard:
             for item in jobs:
-                q.require(isinstance(item, dict) and set(item) == {'id', 'sha256'}, 'addition_fields')
-                ident = item['id']
-                q.require(isinstance(ident, str) and q.ID.fullmatch(ident), 'job_id')
-                q.require(ident not in additions, 'duplicate_addition')
-                spec = q.validate(q.load(self.queue / 'jobs' / ident / 'spec.json'), self.modules)
-                q.require(q.text_digest(spec) == item['sha256'], 'addition_hash')
-                q.verify_pins(spec)
-                additions[ident] = item['sha256']
-            approved = self.approved()
-            for ident, digest in additions.items():
-                q.require(ident not in approved or approved[ident] == digest, 'approval_changed')
-            approved.update(additions)
-            q.save(self.approvals, dict(version='research-additions-v1', jobs=approved), replace=True)
+                research_approval.approve(self.queue, item['id'], 'maintainer',
+                                          item.get('reason') or 'Maintainer approval from the dashboard.', self.modules)
 
     @property
     def busy(self):
@@ -77,6 +71,7 @@ class Controller:
                 current, attempts = q.state(job)
                 q.require(current == 'pending' or retry and current in ('failed', 'cancelled', 'interrupted'), 'job_not_ready')
                 q.require(not spec.get('requirements') and 'benchmark_evaluator.run' not in spec['adapter']['steps'], 'job_blocked')
+                q.require(self.approved().get(id) == q.text_digest(spec), 'job_not_approved')
                 q.verify_pins(spec)
             self.stop.clear()
             self.cancel.clear()
@@ -85,18 +80,14 @@ class Controller:
             self.thread = threading.Thread(target=self._run, args=(ids, retry), daemon=False)
             self.thread.start()
 
-    def start_all(self, approved_only=False):
-        """Run the current approved queue until the user stops it."""
+    def start_all(self):
+        """Run approved jobs only, until the user stops it. Unapproved jobs never run."""
         with self.guard:
             q.require(not self.busy, 'batch_running')
-            # Freeze the registered set. Later peer proposals need a new start.
-            ids = sorted(self.approved()) if approved_only else [
-                p.name for p in sorted((self.queue / 'jobs').iterdir())
-                if p.is_dir() and (p / 'spec.json').is_file()]
-            if approved_only:
-                for ident, digest in self.approved().items():
-                    q.require(q.text_digest(q.load(self.queue / 'jobs' / ident / 'spec.json')) == digest,
-                              'approved_spec_changed')
+            ids = sorted(self.approved())
+            for ident, digest in self.approved().items():
+                q.require(q.text_digest(q.load(self.queue / 'jobs' / ident / 'spec.json')) == digest,
+                          'approved_spec_changed')
             self.stop.clear(); self.cancel.clear(); self.error = None
             self.continuous = True; self.skipped = {}
             self.thread = threading.Thread(target=self._continuous, args=(ids,), daemon=False)
@@ -278,7 +269,7 @@ def main():
     with Server(args.port) as server:
         server.controller.priority_tasks = tuple(args.priority_task)
         if args.resume_approved:
-            server.controller.start_all(approved_only=True)
+            server.controller.start_all()
         print(server.origin, flush=True)
         try:
             server.serve_forever()
