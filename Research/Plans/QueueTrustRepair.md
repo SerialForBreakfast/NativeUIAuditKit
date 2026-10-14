@@ -69,3 +69,14 @@ Review the corrected HCF candidates before another model change.
 Review replay differences before granting historical verification labels.
 Then prepare control repeats, the library fallback benchmark, and the retained detector error report.
 Each new job needs a complete evidence contract. Do not fill the queue with incomplete specifications.
+
+The control-repeat graph has 7 approved steps. It reuses the verified seed-42 replay and adds seeds 43 and 44.
+Each new training run keeps the same 30-epoch recipe and 1,800 s/2 GiB ceiling.
+The first comparison covers 1,408 fixed views and reports training and development roles separately.
+It does not replace the full regression suite or authorize weaker model gates.
+
+The fallback benchmark needs an entrypoint for the actual internal Swift method.
+The existing crop tool cannot execute that method. Do not substitute a Python approximation.
+The detector error report has its saved predictions and geometry reports.
+Its blocker is importing verified reports that predate the queue, not missing images or TTR capability.
+Add that report contract between jobs without changing code pinned by an active run.
