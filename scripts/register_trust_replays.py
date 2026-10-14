@@ -8,7 +8,7 @@ SAMPLE = [
     ('focus358-control-train', 'training', None),
     ('focus346-01-whole-floor', 'evaluation', 'diagnostic.json'),
     ('focus347-02-regression-replay', 'evaluation', 'diagnostic.json'),
-    ('focus359-compression-size', 'evaluation', 'summary.json'),
+    ('focus347-01-regression-native', 'evaluation', 'diagnostic.json'),
     ('hcf369-small-dark-spatial', 'aggregation', 'summary.json'),
     ('hcf370-artwork-exchange-spatial', 'aggregation', 'summary.json'),
     ('focus373-repair-decision-v2', 'aggregation', 'decision.json'),
@@ -51,13 +51,16 @@ def register(owner):
         q.require(attempts, 'replay_original_missing')
         attempt = attempts[0]
         recorded = q.load(attempt / 'result.json')
-        ident = f'trust-replay-{number:02d}-v1'
+        # The unsent compression specification uses unsupported field syntax. Preserve it without approval.
+        ident = f'trust-replay-{number:02d}-v' + ('2' if number == 4 else '1')
         config_path = folder / (ident + '-config.json')
-        q.require(not config_path.exists(), 'immutable_config_exists')
         config = dict(original=original_id, step=original['adapter']['steps'][0],
                       jobKind=kind, result=result_name)
         q.require(len(original['adapter']['steps']) == 1, 'replay_single_step_required')
-        q.save(config_path, config)
+        if config_path.exists():
+            q.require(q.load(config_path) == config, 'immutable_config_changed')
+        else:
+            q.save(config_path, config)
         spec = copy.deepcopy(original)
         spec.update(version='research-spec-v2', id=ident, task='TRUST-REPLAY', owner=owner,
             kind='replay', jobKind=kind,
@@ -95,8 +98,10 @@ def register(owner):
         else:
             spec['evidence'] = dict(citations='sources.json')
         path = folder / (ident + '.json')
-        q.require(not path.exists(), 'immutable_spec_exists')
-        q.save(path, spec)
+        if path.exists():
+            q.require(q.load(path) == spec, 'immutable_spec_changed')
+        else:
+            q.save(path, spec)
         print(ident, q.submit(path))
 
 
