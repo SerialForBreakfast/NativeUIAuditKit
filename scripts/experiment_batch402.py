@@ -70,7 +70,7 @@ def compile_batch(batch, queue=q.QUEUE):
     return descriptions
 
 
-def register_batch(batch, queue=q.QUEUE, approved=()):
+def register_batch(batch, queue=q.QUEUE, approved=(), approver='agent:research-host-NUIAK'):
     # Validate the whole batch before the first registration or approval.
     docs = compile_batch(batch, queue)
     q.require(set(approved) <= {d['id'] for d in docs}, 'approval_outside_batch')
@@ -84,7 +84,7 @@ def register_batch(batch, queue=q.QUEUE, approved=()):
         with q.host_lock(lock):
             for row in results:
                 if row['id'] in approved:
-                    approval.approve(queue, row['id'], 'agent:research-host-NUIAK',
+                    approval.approve(queue, row['id'], approver,
                                      'Maintainer-approved fixed comparison. Preserve Standard and previous successes.')
                     row['approved'] = True
     return dict(jobs=results, executionStarted=False)
@@ -117,8 +117,9 @@ if __name__ == '__main__':
     parser.add_argument('action', choices=['inspect', 'preview', 'register'])
     parser.add_argument('batch', type=Path)
     parser.add_argument('--approve', action='append', default=[])
+    parser.add_argument('--approver', default='agent:research-host-NUIAK')
     args = parser.parse_args()
     batch = q.load(args.batch)
     result = (inspect_batch(batch) if args.action=='inspect' else compile_batch(batch) if args.action == 'preview'
-              else register_batch(batch, approved=args.approve))
+              else register_batch(batch, approved=args.approve, approver=args.approver))
     print(json.dumps(result, indent=2))

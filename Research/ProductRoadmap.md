@@ -13,6 +13,13 @@ This roadmap groups the existing plans into product milestones. It does not auth
 [CurrentState.md](CurrentState.md) records results. [ImplementationPlans.md](ImplementationPlans.md) links the detailed work contracts.
 Historical experiment entries do not become new work merely because they remain in those files.
 
+## Preparation priority — 2026-10-14
+
+The maintainer approves [BACKLOG405](Plans/ExperimentBacklog405.md) for experiment preparation.
+Finish optional HCF proposal and delivery checks first. Prepare Standard and iOS/tvOS detector work alongside them.
+This order supersedes the preparation order below. Standard detection remains independent of HCF settings and downloads.
+Tasks.md records readiness. Existing jobs and release gates remain unchanged.
+
 ## Current scope decision — 2026-10-13
 
 The [combined review plan](Plans/StandardResearch391.md) defines the next implementation sequence.
@@ -60,7 +67,7 @@ No calendar dates are promised. Required evidence, worker capacity, and accepted
 | Text and UI evidence | OCR association, coordinates, and observation reports | Pixels cannot prove hidden accessibility semantics |
 | Local tools | Swift inference, screenshot CLI, and stdio MCP interface | Tool execution does not establish model quality |
 | Training and evaluation | Seeded generation, intake checks, experiments, and retained comparisons | Each dataset still needs correct labels and approved roles |
-| Worker processing | compute-host-NUIAK can run assigned batch computation | Portable inputs and accepted execution scope remain necessary |
+| Worker processing | training-host-NUIAK can run assigned batch computation | Portable inputs and accepted execution scope remain necessary |
 | Optional model delivery | Resource-free runtime and local lifecycle tests | Public download and signed TTR execution need end-to-end checks |
 
 The focus tasks remain separate:
@@ -107,7 +114,7 @@ Use the [publication instructions](ModelPublicationReview305.md).
 | Verify public downloads | research-host-NUIAK | Anonymous downloads match catalog and member hashes |
 | Test actual TTR integration | capture-host-TTR; research-host-NUIAK reviews results | Download, compile, load, restart offline, rollback, and failure tests pass |
 | Report host support | Each executing host reports results | Distinguish declared macOS 14 minimum from tested OS and architecture |
-| Reconcile communication | compute-host-coordinator routes; receiving owner acknowledges | Forwarded ID and TTR response exist; stored messages alone do not count |
+| Reconcile communication | training-host-Coordinator routes; receiving owner acknowledges | Forwarded ID and TTR response exist; stored messages alone do not count |
 
 The local tests cover macOS 27.0.1 arm64. They do not qualify macOS 14 or Intel execution.
 TTR reviews its application distribution separately. That review does not create a circular dependency for NUIAK's own preparation.
@@ -283,12 +290,12 @@ To promote a proposal into planned work:
 | research-host-NUIAK | Model contracts, data admission, Apple validation, release preparation, and final acceptance |
 | research-host-TTR | Local TTR and Fixture runtime used for specifically authorized capture |
 | capture-host-TTR | TTR source changes, optional integration, capture hooks, and application navigation policy |
-| compute-host-NUIAK | Portable training, cached scoring, label-review candidates, and batch audits after accepted dispatch |
-| compute-host-coordinator | Cross-project routing, acknowledgments, and execution coordination within its qualified scope |
+| training-host-NUIAK | Portable training, cached scoring, label-review candidates, and batch audits after accepted dispatch |
+| training-host-Coordinator | Cross-project routing, acknowledgments, and execution coordination within its qualified scope |
 | Maintainer | Git writes, release publication, and decisions outside standing execution authority |
 
 Batch compatible capture recipes within one prepared runtime session.
-Give compute-host-NUIAK immutable input packages and bounded comparisons that do not block local analysis.
+Give training-host-NUIAK immutable input packages and bounded comparisons that do not block local analysis.
 Keep Core ML, signed application, and Apple-runtime checks on an appropriate Mac.
 Use exact transfer receipts. Preserve originals and remove shared copies only under the agreed receipt rules.
 Stored, forwarded, accepted, running, completed, and independently verified remain separate states.
@@ -314,7 +321,7 @@ Continue existing iOS work independently. Standard tvOS evidence does not establ
 | Order | Complete outcome | Parallel work | Stop condition |
 | --- | --- | --- | --- |
 | 1 | Publish and qualify the privacy-corrected optional tvOS preview | Freeze the small-control comparison from retained evidence | Public release needs the maintainer; host qualification needs actual TTR results |
-| 2 | Diagnose and test 1 detail-preserving transition correction | compute-host-NUIAK audits cached labels and group exposure | Stop a failed hypothesis; preserve the full regression report |
+| 2 | Diagnose and test 1 detail-preserving transition correction | training-host-NUIAK audits cached labels and group exposure | Stop a failed hypothesis; preserve the full regression report |
 | 3 | Complete 1 opt-in feedback cycle | Prepare missing real-app evaluation groups | Uncertain labels block admission, not software work |
 | 4 | Improve single-image focus and artwork transfer | Continue the independent iOS label-policy experiment | Separate model gates and evaluation roles remain unchanged |
 | 5 | Complete broader platform qualification and selected consumer work | Prepare gated future-feature inputs | Do not start gated models or change taxonomies without their prerequisites |

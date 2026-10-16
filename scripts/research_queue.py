@@ -143,7 +143,11 @@ def validate_training(spec):
     require(isinstance(training['acceptanceEvidence'], str) and training['acceptanceEvidence'].strip(),
             'training_acceptance')
     # The trainers save weights only at the end, so an interrupted run restarts from epoch 0.
-    require(training['resume'] == 'restart', 'training_resume')
+    require(training['resume'] in ('restart','checkpoint-v1'), 'training_resume')
+    if training['resume'] == 'checkpoint-v1':
+        require(spec.get('adapter',{}).get('steps') == ['checkpoint_restore404.run'], 'training_resume_adapter')
+        from checkpoint_restore404 import validate_inputs
+        validate_inputs(spec)
 
 
 def check_training(spec, queue):
@@ -337,6 +341,22 @@ def attempts_of(job):
         if folder.exists() else []
 
 
+def display_digest(path):
+    """Hash for display only. Reuse a hash while the file's identity and stat are unchanged.
+
+    Execution, approval, and readiness checks keep using digest(). Only dashboard labels use this.
+    """
+    stat = Path(path).stat()
+    key = (str(path), stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns)
+    value = _DISPLAY_HASHES.get(key)
+    if value is None:
+        value = digest(path)
+        if len(_DISPLAY_HASHES) > 200000:
+            _DISPLAY_HASHES.clear()
+        _DISPLAY_HASHES[key] = value
+    return value
+
+
 def outputs_intact(attempt, result, display_cache=False):
     out = attempt / 'out'
     for item in result['outputs']:
@@ -349,7 +369,8 @@ def outputs_intact(attempt, result, display_cache=False):
         if value is None:
             value = digest(path)
             if display_cache:
-                if len(_DISPLAY_HASHES) > 10000:
+                # Keep every output of a full snapshot. A smaller cache clears itself during each snapshot.
+                if len(_DISPLAY_HASHES) > 200000:
                     _DISPLAY_HASHES.clear()
                 _DISPLAY_HASHES[key] = value
         if value != item['sha256']:
@@ -640,8 +661,9 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
                 report.append((spec['id'], 'not_approved'))
                 continue
             require(spec['limits']['timeoutSeconds'] <= research_execution_policy.seconds(
-                text_digest(spec), spec['authority'], DIAGNOSTIC_SECONDS), 'execution_time_limit')
-            require(spec['limits']['maxOutputBytes'] <= (2 << 30 if spec['authority'] in ('training', 'export') else DIAGNOSTIC_BYTES), 'execution_output_limit')
+                text_digest(spec), spec['authority'], DIAGNOSTIC_SECONDS, queue), 'execution_time_limit')
+            require(spec['limits']['maxOutputBytes'] <= research_execution_policy.output_bytes(
+                text_digest(spec), spec['authority'], DIAGNOSTIC_BYTES, queue), 'execution_output_limit')
             if spec['authority'] == 'training':
                 require(spec['training']['epochs'] <= 30, 'execution_epoch_limit')
             if control is not None:
@@ -705,6 +727,8 @@ def _child_steps(attempt, module_dir, spec, out, adapter):
 
 
 def summarize(queue=QUEUE, write=True):
+    import research_approval
+    approvals = research_approval.load(queue)
     rows = []
     for job in sorted((queue / 'jobs').iterdir()) if (queue / 'jobs').exists() else []:
         spec = load(job / 'spec.json')
@@ -733,12 +757,13 @@ def summarize(queue=QUEUE, write=True):
         import research_trust
         row['specVersion'] = spec['version']
         row['jobKind'] = spec.get('jobKind')
-        row['driftedModules'] = research_trust.drift(job) if current in ('complete', 'drifted') else []
+        row['driftedModules'] = (research_trust.drift(job, display_cache=not write)
+                                 if current in ('complete', 'drifted') else [])
         row['reproducibility'] = 'source-changed' if row['driftedModules'] else 'not-assessed'
         row['trust'] = ('drifted' if row['driftedModules'] else 'analytic' if spec.get('jobKind') == 'analytic'
                         else 'measured-report' if evidence == 'measured' else 'recorded-unverified')
         row['question'] = spec.get('question')
-        row['approved'] = research_approval.is_approved(queue, spec)
+        row['approved'] = research_approval.is_approved(queue, spec, approvals, display_cache=not write)
         row['requirements'] = spec.get('requirements', [])
         row['dependencies'] = spec.get('dependencies', [])
         if spec.get('dependencies'):

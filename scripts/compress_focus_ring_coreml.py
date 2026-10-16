@@ -1,7 +1,26 @@
-"""One isolated weight-only int8 export; never trains or promotes a model."""
+"""One isolated weight-only int8 or 6-bit export; never trains or promotes a model."""
 import argparse
 import json
 from pathlib import Path
+
+# B405-128: frozen compression settings. `palette6` uses the uniform look-up table because the
+# k-means mode needs scikit-learn, which .venv-coreml does not contain. Grouped channels need spec version 9. `int8` is the default and keeps the HCF396 output unchanged.
+METHODS = {
+    "int8": ("int8-linear-symmetric-per-channel-threshold2048",
+             "FP16-to-int8-weight-only/per-channel/linear-symmetric/threshold2048"),
+    "palette6": ("palette6-uniform-grouped16-threshold2048",
+                 "FP16-to-6-bit-palette-weight-only/per-grouped-channel-16/uniform/threshold2048"),
+}
+
+
+def compression_config(ct, method):
+    if method == "palette6":
+        return ct.optimize.coreml.OptimizationConfig(global_config=
+            ct.optimize.coreml.OpPalettizerConfig(mode="uniform", nbits=6,
+                granularity="per_grouped_channel", group_size=16, weight_threshold=2048))
+    return ct.optimize.coreml.OptimizationConfig(global_config=
+        ct.optimize.coreml.OpLinearQuantizerConfig(mode="linear_symmetric",
+            dtype="int8", granularity="per_channel", weight_threshold=2048))
 
 from export_focus_ring_coreml import export_paths, package_size_report, utc_now
 from focus_ring_baseline import artifact_digest
@@ -33,23 +52,24 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("package", "source-report", "source-sha256", "output-dir", "experimental-id"):
         parser.add_argument("--" + name, required=True)
+    parser.add_argument("--method", choices=sorted(METHODS), default="int8")
     args = parser.parse_args()
     package, destination, original = preflight(args.package, args.source_report,
         args.output_dir, args.experimental_id, args.source_sha256)
     import coremltools as ct
-    config = ct.optimize.coreml.OptimizationConfig(global_config=
-        ct.optimize.coreml.OpLinearQuantizerConfig(mode="linear_symmetric",
-            dtype="int8", granularity="per_channel", weight_threshold=2048))
+    config = compression_config(ct, args.method)
     source = ct.models.MLModel(str(package), skip_model_load=True)
     metadata = source.user_defined_metadata
     if (metadata.get("checkpointSHA256") != original["checkpointSHA256"] or
         metadata.get("modelID") != "focus-ring-experimental-" + original["experimentalID"] or
         metadata.get("releaseEligible") != "false"):
         raise ValueError("source_metadata_mismatch")
-    compressed = ct.optimize.coreml.linear_quantize_weights(source, config=config)
+    compress = (ct.optimize.coreml.palettize_weights if args.method == "palette6"
+                else ct.optimize.coreml.linear_quantize_weights)
+    compressed = compress(source, config=config)
     compressed.user_defined_metadata.update(dict(metadata))
     compressed.user_defined_metadata["modelID"] = "focus-ring-experimental-" + args.experimental_id
-    compressed.user_defined_metadata["compression"] = "int8-linear-symmetric-per-channel-threshold2048"
+    compressed.user_defined_metadata["compression"] = METHODS[args.method][0]
     compressed.user_defined_metadata["sourcePackageSHA256"] = args.source_sha256
     destination.mkdir(parents=True, exist_ok=False)
     output = destination / "FocusRingDetector.mlpackage"
@@ -58,7 +78,7 @@ def main():
         raise ValueError("source_changed_during_compression")
     result = {**original, **package_size_report(output), "generatedAt": utc_now(),
         "experimentalID": args.experimental_id, "mlpackage": str(output),
-        "method": "FP16-to-int8-weight-only/per-channel/linear-symmetric/threshold2048",
+        "method": METHODS[args.method][1],
         "coremltoolsVersion": ct.__version__, "sourcePackageSHA256": args.source_sha256,
         "packageSHA256": artifact_digest(output), "releaseEligible": False}
     with (destination / "focus_ring_detector_training_report.json").open("x") as stream:

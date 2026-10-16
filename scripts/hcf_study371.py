@@ -43,6 +43,9 @@ def validate_capture_plan(plan):
     if plan.get('version') == 'native-hcf402-v1':
         from native_coverage402 import validate
         return validate(plan)
+    if plan.get('version') == 'native-controls-t45-v1':
+        from native_coverage402 import validate_controls
+        return validate_controls(plan)
     import native343 as native
     q.require(plan['binding']['simulatorUDID'] == native.TARGET and
               plan['binding']['endpoint'] == 'http://127.0.0.1:8080', 'study_target')
@@ -201,34 +204,119 @@ def catalog():
         modelAccepted=False, limitation='Scene groups share layout families. Do not count frames as independent trials.'))
 
 
+# JITTER413: box jitter for training crops only. Each side moves by at most this many pixels.
+JITTER_LIMIT = 2.0
+
+
+def jitter_config(value):
+    """Validate the optional jitter block of a crop configuration."""
+    q.require(isinstance(value, dict) and set(value) == {'variants', 'maxSidePixels', 'seed'}, 'jitter_fields')
+    q.require(type(value['variants']) is int and 1 <= value['variants'] <= 8, 'jitter_variants')
+    limit = value['maxSidePixels']
+    q.require(type(limit) in (int, float) and 0 < limit <= JITTER_LIMIT, 'jitter_limit')
+    q.require(type(value['seed']) is int, 'jitter_seed')
+    return value
+
+
+def jitter_sides(seed, key, variant, limit):
+    """Return fixed [left, top, right, bottom] edge moves in [-limit, limit]. Positive moves an edge outward.
+
+    A hash of (seed, key, variant) sets each value, so the result does not depend on process or row order.
+    Values are multiples of 1/64 px, so JSON keeps them exactly.
+    """
+    digest = hashlib.sha256(f'{seed}:{key}:{variant}'.encode()).digest()
+    units = [int.from_bytes(digest[4*i:4*i+4], 'big')/0xFFFFFFFF for i in range(4)]
+    return [round((2*u-1)*limit*64)/64 for u in units]
+
+
+def jitter_box(box, sides):
+    """Apply edge moves to an [x, y, width, height] top-left pixel box."""
+    x, y, w, h = box
+    left, top, right, bottom = sides
+    changed = [x-left, y-top, w+left+right, h+top+bottom]
+    q.require(changed[2] > 0 and changed[3] > 0, 'jitter_empty_box')
+    return changed
+
+
+def check_jitter_roles(doc_rows, rows):
+    """Refuse jitter when a training group or training pixels also occur in another role."""
+    train = [r for r in rows if r['role'] == 'train']
+    other = [r for r in doc_rows if r['role'] != 'train']
+    q.require(not {r['group'] for r in train} & {r['group'] for r in other}, 'jitter_group_leak')
+    q.require(not {r['decodedSHA256'] for r in train} & {r['decodedSHA256'] for r in other}, 'jitter_pixel_leak')
+
+
+def write_crops(items, results, destination):
+    written = []
+    for item, result in zip(items, results):
+        data = base64.b64decode(result['png'], validate=True)
+        target = destination/(item['id']+'.png')
+        with target.open('xb') as stream: stream.write(data)
+        written.append((target, hashlib.sha256(data).hexdigest()))
+    return written
+
+
+def decoded_pixels(path):
+    with Image.open(path) as image:
+        return hashlib.sha256(image.convert('RGB').tobytes()).hexdigest()
+
+
 def prepare_crops():
     import focus_runtime
     doc, = dependency('admission.json')
     cfg = load_config()
+    q.require(set(cfg) <= {'destination', 'roles', 'jitter'}, 'crop_config_fields')
     roles = set(cfg['roles'])
     q.require('audit' not in roles and roles <= ROLES, 'audit_locked')
+    jitter = jitter_config(cfg['jitter']) if 'jitter' in cfg else None
     root = verify_storage(doc['storage'])
     destination = root/cfg['destination']
-    q.require(not destination.exists(), 'crop_destination_exists'); destination.mkdir()
+    q.require(not destination.exists(), 'crop_destination_exists')
     rows = [r for r in doc['rows'] if r['role'] in roles]
+    if jitter:
+        check_jitter_roles(doc['rows'], rows)
+        if 'cases' in doc: validate_groups(doc['cases'])
+    destination.mkdir()
     crop_rows = []
+    # The trainer removes repeated (pixels, label) crops. Jitter each unique crop once, so repeats add no weight.
+    jittered = set()
     for index, row in enumerate(rows):
         image = Path(row['path'])
         q.require(q.digest(image) == row['sha256'], 'crop_source_changed')
         items = [dict(id=row['id']+'-'+key, path=str(image), sha256=row['sha256'], bounds=box)
                  for key,box in row['boxes'].items()]
         reply = focus_runtime.invoke(items, image_root=root)
-        for item, result in zip(items, reply['results']):
-            data = base64.b64decode(result['png'], validate=True)
-            target = destination/(item['id']+'.png')
-            with target.open('xb') as stream: stream.write(data)
+        variants = []
+        for item, (target, _) in zip(items, write_crops(items, reply['results'], destination)):
             key = item['id'][len(row['id'])+1:]
-            crop_rows.append(dict(id=item['id'], frame=row['id'], path=str(target), sha256=q.digest(target),
+            crop = dict(id=item['id'], frame=row['id'], path=str(target), sha256=q.digest(target),
                 label=int(key == row['focus']), control=key, role=row['role'], profile=row['profile'], group=row['group'],
-                family=row['family'], box=row['boxes'][key]))
+                family=row['family'], box=row['boxes'][key])
+            crop_rows.append(crop)
+            if jitter and row['role'] == 'train':
+                pixels = decoded_pixels(target)
+                if (pixels, crop['label']) in jittered: continue
+                jittered.add((pixels, crop['label']))
+                for variant in range(jitter['variants']):
+                    sides = jitter_sides(jitter['seed'], pixels+':'+str(crop['label']), variant, jitter['maxSidePixels'])
+                    variants.append((crop, variant, sides, jitter_box(crop['box'], sides)))
+        if variants:
+            # Use the same production crop tool (FocusRingClassifier.makeCrop) for every changed box.
+            extra = [dict(id=c['id']+'-j'+str(v), path=str(image), sha256=row['sha256'], bounds=box)
+                     for c, v, _, box in variants]
+            q.require(len(extra) <= 128, 'jitter_batch_limit')
+            reply = focus_runtime.invoke(extra, image_root=root)
+            for item, (crop, variant, sides, box), (target, _) in zip(extra, variants,
+                                                                    write_crops(extra, reply['results'], destination)):
+                crop_rows.append(dict(crop, id=item['id'], path=str(target), sha256=q.digest(target), box=box,
+                                      jitter=dict(variant=variant, sides=sides, source=crop['id'])))
         progress('Make original production crops', index+1, len(rows))
-    q.save(OUT/'crops.json', dict(rows=crop_rows, frames=rows, runtime=focus_runtime.identity(),
-                               storage=doc['storage'], preprocessing=focus_runtime.RUNTIME_PREPROCESSING))
+    result = dict(rows=crop_rows, frames=rows, runtime=focus_runtime.identity(),
+                  storage=doc['storage'], preprocessing=focus_runtime.RUNTIME_PREPROCESSING)
+    if jitter:
+        result['jitter'] = dict(jitter, roles=['train'], sources=len(jittered),
+                                variantRows=sum('jitter' in r for r in crop_rows))
+    q.save(OUT/'crops.json', result)
 
 
 def merge_crops():

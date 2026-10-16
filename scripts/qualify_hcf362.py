@@ -10,7 +10,7 @@ import direct_tvos_capture as d
 from focus_batch_harness import lock
 from native343 import TARGET
 
-TTR = Path.home() / 'Developer/TVTestRig'
+TTR = Path('/Users/developer/Developer/TVTestRig')
 APP = TTR/'.local-work/nuiak-hcf362/DerivedData/Build/Products/Debug/TVTestRig.app'
 CLI = APP/'Contents/Helpers/aatv'
 

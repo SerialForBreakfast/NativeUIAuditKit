@@ -98,6 +98,7 @@ extension ScreenshotCapture {
         let bounds = CGRect(origin: .zero, size: canonicalSize)
 
         let window = UIWindow(frame: bounds)
+        ScreenshotCapture.applyPresentationTraits(config, to: viewController)
         window.rootViewController = viewController
         window.isHidden = false
         defer { window.isHidden = true; window.rootViewController = nil }

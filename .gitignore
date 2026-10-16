@@ -1,4 +1,7 @@
 # Xcode
+# Local experiment catalogs, generated batches, and execution results.
+/Research/Experiments/*
+!/Research/Experiments/t46-recipes/
 # Local execution logs and peer handoffs remain on this machine.
 /Research/ExperimentLog.md
 /reports/storage/README.md

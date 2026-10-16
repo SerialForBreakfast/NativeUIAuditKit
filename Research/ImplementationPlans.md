@@ -1,5 +1,10 @@
 # Full backlog implementation packet catalog
 
+[BACKLOG405](Plans/ExperimentBacklog405.md) reconciles 114 scientific subjects into 107 outstanding tasks and 7 answered references.
+It separates 12 engineering tasks and registers a bounded cached-results diagnostic through the existing compiler.
+HCF delivery leads new preparation. Standard behavior and active execution remain unchanged.
+
+
 [FOCUS373](Plans/Focus360.md#graph-v1-adoption--focus373-2026-10-13) adds 7 conditional experiment cards and 4 software tasks from the second graph handoff.
 It preserves HCF priority, current execution, and the original calibration-only request examples.
 
@@ -52,7 +57,7 @@ It reuses HCF361 and FOCUS360 rather than creating another experiment framework.
 [Results](RESEARCH340Results.md) separate completed cached checks from missing controlled coverage.
 
 [HCF336 / ADR-0025](ADR-0025-Portable-Experiment-Runner.md) defines the portable TTR experiment package and migration checks.
-[Results](HCF336Results.md) qualify the staged package locally; Sillycon qualification remains pending.
+[Results](HCF336Results.md) qualify the staged package locally; capture-host qualification remains pending.
 
 [HCF335](Plans/HCF335.md) provides detached, bounded, resumable rendering. [Results](HCF335Results.md) qualify authored execution only.
 
@@ -103,7 +108,7 @@ Each stage supplies evidence for the next. Coordination readiness alone supplies
 
 [Release preparation](ReleasePreparation.md) defines RELEASE300 and the manual sequence for TTR 0.4.3 RC.
 [Model release contract](ModelReleaseContract.md) defines offline catalog and archive checks. It is not an application installer.
-[Sillycon-TTR handoff](TTRModelHandoff.md) records the implemented preview runtime, native installer limits, and required consumer checks.
+[capture-host-TTR handoff](TTRModelHandoff.md) records the implemented preview runtime, native installer limits, and required consumer checks.
 
 [ADR-0024](ADR-0024-Opt-In-Model-Feedback.md) defines optional, reviewed feedback without navigation authority.
 [Feedback contracts](Plans/OptInModelFeedback.md) define FEEDBACK298-A through D and separate consensus from labels.
@@ -130,7 +135,7 @@ Do not pool these metrics into one accuracy claim. Preserve the current shipped 
 ### Experiment-to-worker contract
 
 NUIAK supplies exact training membership, exclusions, initializer, source, preprocessing, thresholds, schedule, resource limits, and acceptance criteria.
-Big Dog verifies resident inputs and reports missing files before execution. Reuse retained packages where hashes match.
+training-host verifies resident inputs and reports missing files before execution. Reuse retained packages where hashes match.
 Return checkpoint identity, completion and failure records, complete predictions, timings, and resource measurements.
 NUIAK independently checks parity, case accounting, and individual regressions before deciding admission or promotion.
 TTR owns its optional observer integration, navigation safeguards, and current runtime evidence.
@@ -178,7 +183,7 @@ Keep challenge images outside training and report their repeated development use
 Use admitted native data before further capture. [Evidence and next tranche](../reports/work/TRANSITION-270/handoff.md).
 Repair 1 measured visual failure through local generation, controlled training and reserved evaluation.
 NUIAK owns the complete cycle. TTR supplies missing capabilities asynchronously.
-Big Dog supplies assigned analysis and training. Tasks.md records execution state.
+training-host supplies assigned analysis and training. Tasks.md records execution state.
 
 [Evidence-driven focus / EVIDENCE223](Plans/EvidenceDrivenFocusQualification.md):
 integrated cached reporting, native truth audit and matched authored baselines;
@@ -191,20 +196,20 @@ Reuses existing contracts, keeps203 stretch/nonblocking and197 independent. Task
 owns execution state; this plan is not a peer dispatch or model result.
 
 [ADR-0020 / FOCUS-RENDER-203](ADR-0020-Procedural-Focus-Rendering-Feasibility.md):
-bounded Big Dog prompt-only versus deterministic procedural focus-rendering spike;
+bounded training-host prompt-only versus deterministic procedural focus-rendering spike;
 geometry/repeatability checks, not native fidelity or training admission.
 
 [ADR-0019 / RENDER-202](ADR-0019-Batched-Renderer-and-Asset-Pipeline.md): proposed
-desktop-independent persistent native batching, Big Dog artwork reuse and explicitly
+desktop-independent persistent native batching, training-host artwork reuse and explicitly
 separate procedural augmentation; bounded qualification contract, not runtime evidence.
 
-[LOCAL-IMAGE201](Plans/LocalImageGeneration201.md): high-priority Big Dog local
+[LOCAL-IMAGE201](Plans/LocalImageGeneration201.md): high-priority training-host local
 artwork preparation and Mac mini feasibility; installation approval gated, no generation yet.
 
 [GEN-PARITY199 / IOS-ASSET200](Plans/GeneratorParity199.md): source-backed tvOS/iOS
 generation gap audit, shared-artwork reuse/batch planning and bounded native adapter.
 
-[Big Dog background backlog198](Plans/WorkerBacklog198.md): low-priority resident
+[training-host background backlog198](Plans/WorkerBacklog198.md): low-priority resident
 audit, conditional CUDA benchmark, focus comparison and proposal scoring; reuse
 existing TTR mining/QA assignments, preserve native admission and Apple qualification.
 

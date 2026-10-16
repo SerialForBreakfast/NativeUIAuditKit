@@ -1,0 +1,56 @@
+{
+  "version": "ios-native-capture-recipe-v1",
+  "families": [
+    "SearchResults",
+    "SegmentedFilter",
+    "SettingsDisclosure",
+    "SettingsList",
+    "SettingsToggleDense",
+    "Sheet",
+    "SliderPanel",
+    "Stepper",
+    "SystemNavigationShell",
+    "TabViewNavigation",
+    "ToolbarActions",
+    "UIKitControls",
+    "UIKitForm",
+    "UIKitList",
+    "UIKitToggleForm",
+    "WizardStepFlow"
+  ],
+  "devices": [
+    "iPhone 17 Pro"
+  ],
+  "groups": "family-seed",
+  "roles": {
+    "SearchResults": "development",
+    "SegmentedFilter": "development",
+    "SettingsDisclosure": "development",
+    "SettingsList": "development",
+    "SettingsToggleDense": "development",
+    "Sheet": "development",
+    "SliderPanel": "development",
+    "Stepper": "development",
+    "SystemNavigationShell": "development",
+    "TabViewNavigation": "development",
+    "ToolbarActions": "development",
+    "UIKitControls": "development",
+    "UIKitForm": "development",
+    "UIKitList": "development",
+    "UIKitToggleForm": "development",
+    "WizardStepFlow": "development"
+  },
+  "trainingEligible": false,
+  "supportedClasses": "taxonomy",
+  "maxFrames": 32,
+  "seeds": [
+    9
+  ],
+  "dynamicType": [
+    "large"
+  ],
+  "appearance": [
+    "light",
+    "dark"
+  ]
+}

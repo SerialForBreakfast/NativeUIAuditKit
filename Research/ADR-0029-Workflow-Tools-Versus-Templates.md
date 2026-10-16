@@ -56,7 +56,7 @@ These are candidate designs, not tested deployments.
 | MLflow | Tracking can serve host-specific jobs without owning their execution | Log actual Apple results; do not infer parity from uploaded metrics | Store compact metadata separately; avoid copying every image into the tracking store |
 
 No workflow framework makes Simulator capture or Vision inference portable to Linux.
-compute-host-NUIAK can still train and score compatible inputs through the existing handoff.
+training-host-NUIAK can still train and score compatible inputs through the existing handoff.
 
 ### Recovery, cache, and concurrency
 

@@ -1,14 +1,19 @@
 """Serve authenticated loopback controls for the existing research queue."""
 import argparse
+import os
+from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import secrets
+import signal
 import threading
 import time
+from urllib.parse import parse_qs, urlsplit
 
 import research_queue as q
 import research_approval
 from generate_research_dashboard import render_html
+from research_dashboard_states import annotate
 
 
 class Controller:
@@ -25,14 +30,17 @@ class Controller:
         self.skipped = {}
         self.approvals = self.queue / 'approved-additions.json'
         self.priority_tasks = ()
+        # Shared snapshot cache: 1 build at a time, reused by every request until it is stale.
+        self.cache = None
+        self.cache_ready = threading.Condition()
+        self.building = False
+        self.invalidated = 0.0
+        self.snapshot_id = 0
 
     def next_batch(self, ready):
-        """Keep ready priority work ahead of independent diagnostics."""
-        ranks = {task: index for index, task in enumerate(self.priority_tasks)}
-        ranked = [(ranks.get(q.load(self.queue/'jobs'/ident/'spec.json')['task'], len(ranks)), ident)
-                  for ident in ready]
-        best = min(rank for rank, _ in ranked)
-        return [ident for rank, ident in ranked if rank == best][:5]
+        """Recheck priority at each completed job, including continuation chunks."""
+        from research_continuations import select
+        return select(ready, self.queue, self.priority_tasks)
 
     def approved(self):
         return research_approval.approved_map(self.queue)
@@ -53,6 +61,15 @@ class Controller:
             for item in jobs:
                 research_approval.approve(self.queue, item['id'], 'maintainer',
                                           item.get('reason') or 'Maintainer approval from the dashboard.', self.modules)
+
+    def extend(self, data):
+        """Save 1 restart with new limits as the maintainer (EXTENSION408). This does not start the runner."""
+        q.require(isinstance(data, dict) and set(data) == {'job', 'timeoutSeconds', 'maxOutputBytes', 'reason'},
+                  'extension_fields')
+        from research_extensions import save
+        with self.guard:
+            return save(self.queue, data['job'], data['timeoutSeconds'], data['maxOutputBytes'], data['reason'],
+                        'maintainer', self.modules)
 
     @property
     def busy(self):
@@ -123,6 +140,10 @@ class Controller:
                 if ready:
                     self.waiting = None
                     batch = self.next_batch(ready)
+                    if not batch:
+                        self.waiting = 'Continuation requires valid approval, resume evidence, or remaining budget.'
+                        self.stop.wait(5)
+                        continue
                     try:
                         q.run(self.queue, self.modules, 5, lock=self.lock, job_ids=batch, control=self)
                         from research_readiness import write_campaign
@@ -137,7 +158,7 @@ class Controller:
                             break
                         self.waiting = 'Waiting for the existing runner. Its current job continues.'
                 else:
-                    self.waiting = 'No ready jobs. Completed jobs do not run again. Blocked jobs stay blocked.'
+                    self.waiting = 'Runner active — waiting for approved work that passes readiness checks.'
                 self.stop.wait(5)
         except Exception as error:
             self.error = str(error)[:500]
@@ -154,26 +175,129 @@ class Controller:
         finally:
             self.current = None
 
+    def invalidate(self):
+        """Make the next state request build a fresh snapshot."""
+        self.invalidated = time.monotonic()
+
+    def live(self):
+        """Runner fields that change often. They are cheap, so every reply reads them again."""
+        return dict(busy=self.busy, current=self.current, stopping=self.stop.is_set() and self.busy,
+                    error=self.error, continuous=self.continuous, waiting=self.waiting, skipped=dict(self.skipped))
+
+    def fresh(self, cache, key):
+        return (cache and cache['started'] >= self.invalidated and cache['key'] == key and
+                time.monotonic() - cache['started'] < max(5.0, 2 * cache['seconds']))
+
+    def cached_snapshot(self):
+        """Return a shared snapshot record. Rebuild it when it is old, invalidated, or the running job changed.
+
+        A build takes from seconds to minutes on the live queue. Only the first request waits for a build.
+        Later requests get the previous snapshot at once, marked stale, while 1 background thread rebuilds it.
+        """
+        key = (self.busy, self.current)
+        with self.cache_ready:
+            # An action invalidates the cache; its caller must see the result, so it waits for a new build.
+            if self.cache and not self.fresh(self.cache, key) and self.cache['started'] >= self.invalidated:
+                if not self.building:
+                    self.building = True
+                    threading.Thread(target=self.build, args=(key,), daemon=True).start()
+                return dict(self.cache, stale=True)
+            while True:
+                cache = self.cache
+                if self.fresh(cache, key):
+                    return cache
+                if not self.building:
+                    self.building = True
+                    break
+                self.cache_ready.wait(timeout=5)
+        return self.build(key)
+
+    def build(self, key):
+        """Build 1 snapshot. The caller has set `building`."""
+        started = time.monotonic()
+        try:
+            value = self.snapshot()
+        finally:
+            with self.cache_ready:
+                self.building = False
+                self.cache_ready.notify_all()
+        with self.cache_ready:
+            self.snapshot_id += 1
+            self.cache = dict(id=self.snapshot_id, value=value, started=started, key=key,
+                              seconds=time.monotonic() - started)
+            return self.cache
+
+    def state_reply(self, since=None):
+        cache = self.cached_snapshot()
+        head = dict(self.live(), snapshotId=cache['id'], buildSeconds=round(cache['seconds'], 2),
+                    stale=cache.get('stale', False))
+        if since == cache['id']:
+            return dict(head, unchanged=True)
+        return dict(cache['value'], **head)
+
     def snapshot(self):
         value = q.summarize(self.queue, write=False)
+        from research_continuations import records, eligible, review
+        continuations = records(self.queue)
         histories = {}
         keys = {}
         for row in value['jobs']:
             spec = q.load(self.queue / 'jobs' / row['job'] / 'spec.json')
+            if row['job'] in continuations:
+                blocker = eligible(row['job'], continuations[row['job']], self.queue)
+                row['continuation'] = dict(state='resumable' if blocker is None else 'blocked',
+                    reason=blocker or 'Runs only after ordinary ready work. Yields after this bounded job.')
+            elif row.get('reason') == 'timeout':
+                try:
+                    decision = review(row['job'], self.queue)
+                    row['continuation'] = dict(state='superseded' if decision else 'needs-qualification',
+                        reason=decision['reason'] if decision else 'Resume support, unchanged controls, and budget need verification.')
+                except (ValueError, OSError, KeyError, TypeError) as error:
+                    row['continuation'] = dict(state='blocked', reason=str(error))
             row['specSHA256'] = q.text_digest(spec)
             key = q.text_digest({k: spec.get(k) for k in ('adapter', 'inputs', 'stage', 'authority', 'training')})
             keys[row['job']] = key
             if row['state'] == 'complete' and row['evidenceKind'] != 'placeholder' and row.get('wallSeconds'):
                 histories.setdefault(key, []).append(row['wallSeconds'])
+        from research_extensions import records as restarts, describe
+        saved = restarts(self.queue)
         for row in value['jobs']:
             # Different IDs are comparable only when executable inputs and settings match.
             history = histories.get(keys[row['job']], [])
-            if len(history) >= 3 and row['state'] == 'running':
-                elapsed = time.time() - row['startedAt']
-                row['eta'] = dict(low=max(0, min(history)-elapsed), high=max(0, max(history)-elapsed), samples=len(history))
+            if row['job'] in saved:
+                record = saved[row['job']]
+                row['extendedFrom'] = dict(parent=record['parent'], reason=record['reason'],
+                                           queuedAt=record['queuedAt'], estimate=record['estimate'])
+            if row['state'] == 'exhausted':
+                try:
+                    row['extension'] = describe(row['job'], self.queue)
+                except (ValueError, OSError, KeyError, TypeError) as error:
+                    row['extension'] = dict(blocker=str(error)[:200])
+            if row['state'] != 'running' or not row.get('startedAt'):
+                continue
+            elapsed = time.time() - row['startedAt']
+            if len(history) >= 3:
+                row['eta'] = dict(low=max(0, min(history)-elapsed), high=max(0, max(history)-elapsed),
+                                  samples=len(history), basis='history')
+            elif (left := progress_remaining(row.get('progress'), row['startedAt'])) is not None:
+                row['eta'] = dict(low=left, high=left, samples=0, basis='progress')
+            elif row.get('extendedFrom', {}).get('estimate', {}).get('available'):
+                left = max(0, row['extendedFrom']['estimate']['restartSeconds'] - elapsed)
+                row['eta'] = dict(low=left, high=left, samples=0, basis='parent-progress')
         value.update(busy=self.busy, current=self.current, stopping=self.stop.is_set() and self.busy, error=self.error,
                      continuous=self.continuous, waiting=self.waiting, skipped=self.skipped)
-        return value
+        return annotate(value, self.queue, self.modules)
+
+
+def progress_remaining(progress, started, now=None):
+    """Extrapolate the remaining seconds linearly from recorded progress units, or return None."""
+    if not isinstance(progress, dict):
+        return None
+    done, total, at = progress.get('completed'), progress.get('total'), progress.get('updatedAt')
+    if not all(type(v) in (int, float) for v in (done, total, at)) or done <= 0 or total <= done or at <= started:
+        return None
+    now = time.time() if now is None else now
+    return max(0.0, (at - started) / done * (total - done) - max(0.0, now - at))
 
 
 class Server(ThreadingHTTPServer):
@@ -223,10 +347,17 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.valid_host():
             return self.reply(403, {'error': 'host_refused'})
+        url = urlsplit(self.path)
         if self.path == '/':
-            return self.reply(200, render_html(self.server.controller.snapshot(), self.server.token), 'text/html')
-        if self.path == '/api/state' and self.authenticated():
-            return self.reply(200, self.server.controller.snapshot())
+            return self.reply(200, render_html(self.server.controller.state_reply(), self.server.token), 'text/html')
+        if url.path == '/api/state' and self.authenticated():
+            since = parse_qs(url.query).get('since', [''])[0]
+            return self.reply(200, self.server.controller.state_reply(int(since) if since.isdigit() else None))
+        if self.path == '/api/health' and self.authenticated():
+            # A light check for scripts. It does not build a queue snapshot.
+            c = self.server.controller
+            return self.reply(200, dict(pid=os.getpid(), busy=c.busy, current=c.current, continuous=c.continuous,
+                                        stopping=c.stop.is_set() and c.busy, waiting=c.waiting, error=c.error))
         self.reply(403, {'error': 'request_refused'})
 
     def do_POST(self):
@@ -243,6 +374,10 @@ class Handler(BaseHTTPRequestHandler):
                 self.server.controller.start(data.get('jobs'), data.get('retry', False))
             elif self.path == '/api/add' and set(data) == {'jobs'}:
                 self.server.controller.add(data['jobs'])
+            elif self.path == '/api/extend':
+                result = self.server.controller.extend(data)
+                self.server.controller.invalidate()
+                return self.reply(200, {'accepted': True, 'result': result})
             elif self.path == '/api/start-all' and not data:
                 self.server.controller.start_all()
             elif self.path == '/api/stop' and not data:
@@ -253,9 +388,35 @@ class Handler(BaseHTTPRequestHandler):
                 self.server.controller.cancel.set()
             else:
                 raise ValueError('request_refused')
+            self.server.controller.invalidate()
             self.reply(200, {'accepted': True})
         except (ValueError, KeyError, TypeError, OSError) as error:
             self.reply(400, {'error': str(error)[:500]})
+
+
+def interrupt(*_):
+    raise KeyboardInterrupt
+
+
+CONTROL = Path(__file__).resolve().parents[1] / '.build/dashboard/control.json'
+
+
+def write_control(server):
+    """Give local restart scripts the token without a full page render. Only this user can read the file."""
+    CONTROL.parent.mkdir(parents=True, exist_ok=True)
+    partial = CONTROL.with_name(f'.control.{os.getpid()}.partial')
+    fd = os.open(partial, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, 'w') as f:
+        json.dump(dict(pid=os.getpid(), port=server.server_port, origin=server.origin, token=server.token), f)
+    os.replace(partial, CONTROL)
+
+
+def remove_control():
+    try:
+        if json.loads(CONTROL.read_text()).get('pid') == os.getpid():
+            CONTROL.unlink()
+    except (OSError, ValueError):
+        pass
 
 
 def main():
@@ -266,15 +427,21 @@ def main():
     parser.add_argument('--priority-task', action='append', default=[],
                         help='Run ready jobs for this task before other ready work.')
     args = parser.parse_args()
+    # A background start can inherit an ignored SIGINT. Restore it, and close cleanly on SIGTERM too.
+    signal.signal(signal.SIGINT, signal.default_int_handler)
+    signal.signal(signal.SIGTERM, interrupt)
     with Server(args.port) as server:
         server.controller.priority_tasks = tuple(args.priority_task)
         if args.resume_approved:
             server.controller.start_all()
+        write_control(server)
         print(server.origin, flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:
             pass
+        finally:
+            remove_control()
 
 
 if __name__ == '__main__':

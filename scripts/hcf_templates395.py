@@ -6,7 +6,23 @@ from pathlib import Path
 import research_queue as q
 from experiment_templates import checked, pin
 
+CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
+
 CONTRACTS={
+ 'T42':({'bundle'},{'slice','classes','groups','matching'},'detector_case_match411.run','artifact','diagnostic'),
+ 'T50':({'labels','baseline','tool'},{'proposals','slice'},'vision_proposals415.run','artifact','diagnostic'),
+ 'T51':({'bundle','tool'},{'arm','elementType'},'swift_fallback416.run','artifact','diagnostic'),
+ 'T43':({'labels','baseline','model'},{'engine','confidence','imageSize','slice'},'detector_inference412.run','artifact','diagnostic'),
+ 'T44':({'manifests','quotas'},{'quotaSet','eligibility','dimensions'},'quota_comparison413.run','artifact','diagnostic'),
+ 'T46':({'recipe','generator'},{'target','timeoutSeconds'},'ios_native_capture_t46.run','artifact','diagnostic'),
+ 'T47':({'pairs','model'},{'direction','thresholds'},'temporal_pairs414.run','artifact','diagnostic'),
+ 'T49':({'configuration','initialization','membership','admission','pairs','prior'},{'arm','seed'},'transition_training415.training','training','training'),
+ 'T41':({'bundle','model','tool'},{'source','intervention'},'box_intervention410.run','artifact','diagnostic'),
+ 'T48':({'bundle','model','tool'},{'source','representation'},'representation_t48.run','artifact','diagnostic'),
+ 'T40':({'bundle'},set(),'cached_selection405.run','artifact','diagnostic'),
+ 'T37':({'capture','proposals','geometry','mapping','model','tool'},set(),'native_selection404.run','artifact','diagnostic'),
+ 'T39':({'qualification'},set(),'checkpoint_negative404.run','artifact','diagnostic'),
+ 'T38':({'configuration','initialization','membership'},set(),'checkpoint404.qualify','training','training'),
  'T01':({'catalog'},set(),'template_adapters395.run','artifact','diagnostic'),
  'T02':({'catalog','policy'},set(),'template_adapters395.run','artifact','diagnostic'),
  'T03':({'recipe'},set(),'template_bridge395.capture','capture','capture'),
@@ -47,13 +63,59 @@ CONTRACTS={
 
 def build(doc):
     required={'version','id','owner','template','question','decision','inputs','parameters','dependencies'}
-    q.require(set(doc)<=required|{'capture','training'} and required<=set(doc),'description_fields')
+    # BACKLOG410: optional catalog identity and decision text. Absent fields keep the original spec bytes.
+    q.require(set(doc)<=required|{'capture','training'}|CATALOG_FIELDS and required<=set(doc),'description_fields')
+    if 'task' in doc:q.require(isinstance(doc['task'],str) and q.ID.fullmatch(doc['task']),'description_task')
+    if 'outcomes' in doc:
+        q.require(isinstance(doc['outcomes'],dict) and {'supported','contradicted'}<=set(doc['outcomes'])
+                  <={'supported','contradicted','inconclusive'} and
+                  all(isinstance(v,str) and len(v.strip())>=12 for v in doc['outcomes'].values()),'description_outcomes')
+    for key in ('hypothesis','controlledComparison'):
+        if key in doc:q.require(isinstance(doc[key],str) and len(doc[key].strip())>=12,'description_'+key)
     q.require(doc['version']=='hcf-template-description-v1','description_version')
     q.require(doc['template'] in CONTRACTS,'template_unknown')
     inputs,parameters,step,kind,authority=CONTRACTS[doc['template']]
-    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'}}.get(doc['template'],set())
+    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'},'T41':{'candidate'},'T47':{'prior','rule'}}.get(doc['template'],set())
     q.require(inputs<=set(doc['inputs']) and set(doc['inputs'])<=inputs|optional,'template_inputs')
-    q.require(set(doc['parameters'])==parameters,'template_parameters')
+    # T47 `scorer` is optional so that registered T47 specifications keep their identity.
+    # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
+    q.require(set(doc['parameters'])-{'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'}}.get(doc['template'],set())==parameters,'template_parameters')
+    if doc['template']=='T41':
+        from box_intervention410 import parameters as intervention
+        intervention(doc['parameters'])
+    if doc['template']=='T48':
+        from representation_t48 import parameters as representation
+        representation(doc['parameters'])
+    if doc['template']=='T42':
+        from detector_case_match411 import parameters as case
+        case(doc['parameters'])
+    if doc['template']=='T50':
+        from vision_proposals415 import parameters as proposals
+        proposals(doc['parameters'])
+    if doc['template']=='T43':
+        from detector_inference412 import parameters as inference
+        inference(doc['parameters'])
+    if doc['template']=='T49':
+        from transition_training415 import parameters as transition
+        transition(doc['parameters'])
+    if doc['template']=='T47':
+        from temporal_pairs414 import parameters as temporal
+        temporal(doc['parameters'])
+    if doc['template']=='T44':
+        from quota_comparison413 import parameters as quota
+        quota(doc['parameters'])
+    if doc['template']=='T46':
+        from ios_native_capture_t46 import parameters as native
+        native(doc['parameters'])
+    if doc['template']=='T51':
+        from swift_fallback416 import parameters as fallback
+        fallback(doc['parameters'])
+    if doc['template']=='T25' and 'kernelSettings' in doc['parameters']:
+        from outer_ring398 import KERNEL_SETTINGS
+        q.require(doc['parameters']['kernelSettings'] in KERNEL_SETTINGS,'kernel_settings')
+    if doc['template']=='T20' and 'taxonomy' in doc['parameters']:
+        from template_analysis397 import TAXONOMY
+        q.require(doc['parameters']['taxonomy']==TAXONOMY,'taxonomy_unknown')
     for ref in doc['inputs'].values():
         if set(ref)=={'job','output'}:
             q.check_name(ref['output'])
@@ -62,7 +124,7 @@ def build(doc):
             q.require(doc['template'] not in ('T03','T05','T06','T07'),'binding_requires_pinned_inputs')
         else:checked(ref)
     if doc['template']=='T10':
-        compressed=doc['parameters']['precision']=='int8weights'
+        compressed=doc['parameters']['precision'] in ('int8weights','palette6weights')
         q.require(('sourceReport' in doc['inputs'])==compressed and
                   ('sourcePackage' in doc['inputs'])==compressed,'compression_inputs')
     q.require(('capture' in doc)==(authority=='capture'),'capture_contract')
@@ -72,7 +134,8 @@ def build(doc):
     if authority=='training':
         q.require(doc['training']['initialization']==doc['inputs']['initialization'],'training_initialization_binding')
         q.require(doc['inputs']['membership'] in doc['training']['membership'],'training_membership_binding')
-        q.require(doc['training']['epochs']==30 and doc['training']['resume']=='restart','training_variant')
+        # T49 keeps the frozen 10-epoch FOCUS366 recipe. Other training templates use 30 epochs.
+        q.require(doc['training']['epochs']==(10 if doc['template']=='T49' else 30) and doc['training']['resume']=='restart','training_variant')
         config=q.load(checked(doc['inputs']['configuration']))
         q.require(config['initialization']==doc['inputs']['initialization'],'training_configuration_binding')
     module=step.split('.')[0]
@@ -105,11 +168,12 @@ def build(doc):
     if doc['template'] in ('T04','T05','T06'):
         step='template_bridge395.native';module='template_bridge395'
         sources.append(pin(q.MODULES/(module+'.py')))
-    spec=dict(version='research-spec-v2',id=doc['id'],task='TEMPLATE395',owner=doc['owner'],kind='screen',
-        authority=authority,jobKind=kind,question=doc['question'],hypothesis=doc['question'],
-        controlledComparison='Use fixed inputs and existing implementations. Keep data roles and Standard models unchanged.',
-        decisionRule=doc['decision'],nextActionByOutcome=dict(supported='Review the verified output before preparing a dependent job.',
-            contradicted='Preserve the failure and repair its exact requirement before an explicit successor.'),
+    spec=dict(version='research-spec-v2',id=doc['id'],task=doc.get('task','TEMPLATE395'),owner=doc['owner'],kind='screen',
+        authority=authority,jobKind=kind,question=doc['question'],hypothesis=doc.get('hypothesis',doc['question']),
+        controlledComparison=doc.get('controlledComparison',
+            'Use fixed inputs and existing implementations. Keep data roles and Standard models unchanged.'),
+        decisionRule=doc['decision'],nextActionByOutcome=doc.get('outcomes',dict(supported='Review the verified output before preparing a dependent job.',
+            contradicted='Preserve the failure and repair its exact requirement before an explicit successor.')),
         inputs=list({p['path']:p for p in sources+pinned}.values()),
         dependencies=doc['dependencies'],stage=stage,evidence=evidence,
         adapter=dict(type='python-callable',steps=[step],outputAttributes=[module+'.OUT']),

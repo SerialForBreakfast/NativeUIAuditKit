@@ -760,6 +760,71 @@ final class GenerateDatasetTests: XCTestCase {
         print("ARTWORK200_CAMPAIGN \(out.path) shard=\(shard) frames=\(records.count)")
     }
 
+    /// One frame of a T46 recipe. scripts/ios_native_capture_t46.py expands the recipe; this test only renders.
+    private struct RecipeFrame46: Codable {
+        let id: String
+        let family: String
+        let seed: UInt64
+        let device: String
+        let dynamicType: GeneratorDynamicTypeSize
+        let appearance: GeneratorColorScheme
+    }
+
+    /// T46 iOS native capture. Opt-in only. Renders each listed frame with its appearance and text size applied.
+    /// Input: NUIAK_T46_RECIPE (JSON frame list) and NUIAK_T46_OUTPUT (new Documents folder name).
+    func testRecipeCapture46() async throws {
+        let env = ProcessInfo.processInfo.environment
+        guard let text = env["NUIAK_T46_RECIPE"], let output = env["NUIAK_T46_OUTPUT"] else {
+            throw XCTSkip("T46 recipe not assigned")
+        }
+        let name = "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+        let data = Data(text.utf8)
+        let frames = try JSONDecoder().decode([RecipeFrame46].self, from: data)
+        guard output.range(of: name, options: .regularExpression) != nil, !frames.isEmpty, frames.count <= 200,
+              Set(frames.map(\.id)).count == frames.count,
+              frames.allSatisfy({ $0.id.range(of: name, options: .regularExpression) != nil }) else {
+            throw GenerateDatasetError.unknownTemplateFamily("invalid T46 recipe")
+        }
+        // Device profiles are the 2 that makeConfig already uses.
+        let devices: [String: (OSVisualProfile, Int)] = ["iPhone 17 Pro": (.ios26, 3), "iPhone SE (3rd generation)": (.ios17, 2)]
+        let out = defaultDatasetDir.deletingLastPathComponent().appendingPathComponent(output)
+        try FileManager.default.createDirectory(at: out, withIntermediateDirectories: false)
+        func hash(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
+        let start = Date()
+        var records: [[String: Any]] = []
+        for frame in frames {
+            guard Date().timeIntervalSince(start) < 600 else { throw GenerateDatasetError.unknownTemplateFamily("T46 time limit") }
+            guard Self.allTemplateFamilies.contains(frame.family), let device = devices[frame.device] else {
+                throw GenerateDatasetError.unknownTemplateFamily(frame.family)
+            }
+            var configured = makeConfig(seed: frame.seed, index: 0, templateFamily: frame.family, state: simulatorStates[0])
+            configured.osProfile = device.0
+            configured.pixelScale = device.1
+            configured.deviceName = frame.device
+            configured.colorScheme = frame.appearance
+            configured.dynamicTypeSize = frame.dynamicType
+            let config = configured
+            let result = try await ScreenshotCapture.$rendersPresentationTraits.withValue(true) {
+                if frame.family.hasPrefix("UIKit") {
+                    return try await captureUIKit(templateFamily: frame.family, seed: frame.seed, config: config)
+                }
+                var corpus = ContentCorpus(seed: frame.seed)
+                return try await capture(templateFamily: frame.family, seed: frame.seed, config: config, corpus: &corpus)
+            }
+            let png = out.appendingPathComponent(frame.id + ".png"), json = out.appendingPathComponent(frame.id + ".json")
+            try result.png.write(to: png, options: .withoutOverwriting)
+            try AnnotationWriter.write(result: result, config: config, imageFileName: png.lastPathComponent,
+                templateFamily: frame.family, generatorVersion: "t46-recipe-v1", to: json)
+            records.append(["id": frame.id, "imageSHA256": result.sha256, "sidecarSHA256": hash(try Data(contentsOf: json))])
+        }
+        let receipt: [String: Any] = ["schemaVersion": "ios-native-capture-receipt-v1", "complete": true,
+            "recipeSHA256": hash(data), "frames": records, "osVersion": UIDevice.current.systemVersion,
+            "seconds": Date().timeIntervalSince(start)]
+        try JSONSerialization.data(withJSONObject: receipt, options: [.prettyPrinted, .sortedKeys])
+            .write(to: out.appendingPathComponent("receipt.json"), options: .withoutOverwriting)
+        print("T46_OUTPUT \(out.path) frames=\(records.count)")
+    }
+
     // MARK: - Capture dispatch
 
     /// Calls the correct template's `ScreenshotCapture.capture` for the given family.

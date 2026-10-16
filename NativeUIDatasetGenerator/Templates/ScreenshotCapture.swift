@@ -28,6 +28,35 @@ import UIKit
 /// - Frame collection uses `GeometryReader` inside a `.captureFrame(id:)` modifier.
 public enum ScreenshotCapture {
 
+    /// T46 recipe captures set this to render `config.colorScheme` and `config.dynamicTypeSize`.
+    /// The default `false` keeps the historical behavior: both values are metadata only.
+    @TaskLocal public static var rendersPresentationTraits = false
+
+    /// Apply the configured appearance and text size to `controller` when the task opts in.
+    @MainActor
+    static func applyPresentationTraits(_ config: GeneratorRunConfig, to controller: UIViewController) {
+        guard rendersPresentationTraits else { return }
+        controller.traitOverrides.userInterfaceStyle = config.colorScheme == .dark ? .dark : .light
+        controller.traitOverrides.preferredContentSizeCategory = contentSizeCategory(config.dynamicTypeSize)
+    }
+
+    private static func contentSizeCategory(_ size: GeneratorDynamicTypeSize) -> UIContentSizeCategory {
+        switch size {
+        case .xSmall: return .extraSmall
+        case .small: return .small
+        case .medium: return .medium
+        case .large: return .large
+        case .xLarge: return .extraLarge
+        case .xxLarge: return .extraExtraLarge
+        case .xxxLarge: return .extraExtraExtraLarge
+        case .accessibilityMedium: return .accessibilityMedium
+        case .accessibilityLarge: return .accessibilityLarge
+        case .accessibilityExtraLarge: return .accessibilityExtraLarge
+        case .accessibilityExtraExtraLarge: return .accessibilityExtraExtraLarge
+        case .accessibilityExtraExtraExtraLarge: return .accessibilityExtraExtraExtraLarge
+        }
+    }
+
     /// Render `view` in an off-screen `UIWindow`, collect element frames via
     /// `FramePreference`, and capture a PNG at the device's native scale.
     ///
@@ -70,6 +99,7 @@ public enum ScreenshotCapture {
         let hosting = UIHostingController(rootView: wrappedView)
         hosting.view.frame = bounds
         hosting.view.backgroundColor = .clear
+        applyPresentationTraits(config, to: hosting)
         window.rootViewController = hosting
 
         // Apply accessibility trait overrides so UIKit chrome (nav bar material,

@@ -39,14 +39,19 @@ def approved_map(queue):
     return {ident: record['sha256'] for ident, record in load(queue)['jobs'].items()}
 
 
-def is_approved(queue, spec):
-    record = load(queue)['jobs'].get(spec['id'])
+def is_approved(queue, spec, doc=None, display_cache=False):
+    """Check 1 approval. Pass `doc` from load() to check many jobs without parsing the file again.
+
+    display_cache=True reuses stat-keyed hashes for dashboard labels. Execution and approval keep full hashing.
+    """
+    record = (doc if doc is not None else load(queue))['jobs'].get(spec['id'])
     if not record or record['sha256'] != q.text_digest(spec):
         return False
     checks = record.get('checks')
     if not checks or q.text_digest(checks) != record.get('checksSHA256'):
         return False
-    return all((q.ROOT / p['path']).is_file() and q.digest(q.ROOT / p['path']) == p['sha256']
+    hash_of = q.display_digest if display_cache else q.digest
+    return all((q.ROOT / p['path']).is_file() and hash_of(q.ROOT / p['path']) == p['sha256']
                for p in checks.get('code', [])) and bool(checks.get('code'))
 
 

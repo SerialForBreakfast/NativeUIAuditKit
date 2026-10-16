@@ -7,6 +7,33 @@ from template_inputs398 import checked
 from template_adapters395 import document, resolve_inputs, command
 
 OUT=None
+# B405-119: frozen kernel settings. `frozen-v2` compiles the received kernel unchanged (the default).
+# `relaxed-v1` lowers the brightness, side-support and contrast gates by fixed amounts. Geometry gates stay.
+# Each replacement must match the received source exactly the listed number of times.
+KERNEL_SETTINGS={
+    'frozen-v2':[],
+    'relaxed-v1':[
+        ('static let version = "outer-ring-v2"','static let version = "outer-ring-v2-relaxed-v1"',1),
+        ('pixels[seed] >= 160','pixels[seed] >= 128',1),
+        ('pixels[n] >= 160','pixels[n] >= 128',1),
+        ('peak >= 160.0/255 && delta >= 0.12','peak >= 128.0/255 && delta >= 0.08',1),
+        ('support >= 0.65, contrast >= 0.12','support >= 0.50, contrast >= 0.08',1)],
+}
+
+
+def kernel_source(kernel,settings,out):
+    """Return the kernel source to compile. Only a listed setting rewrites a copy in the job output."""
+    q.require(settings in KERNEL_SETTINGS,'kernel_settings')
+    if settings=='frozen-v2':return kernel
+    text=kernel.read_text()
+    for old,new,count in KERNEL_SETTINGS[settings]:
+        q.require(text.count(old)==count,'kernel_settings_source_changed')
+        text=text.replace(old,new)
+    path=out/kernel.name;path.write_text(text)
+    q.save(out/'kernel-settings.json',dict(version='outer-ring-kernel-settings-v1',settings=settings,
+        source=dict(path=q.relative(kernel),sha256=q.digest(kernel)),compiled=dict(path=path.name,sha256=q.digest(path)),
+        replacements=[dict(old=o,new=n) for o,n,_ in KERNEL_SETTINGS[settings]]))
+    return path
 
 
 def run():
@@ -21,6 +48,7 @@ def run():
             q.require(path.resolve()==path and path.is_relative_to(base),'source_path')
             q.require(path.stat().st_size==item['bytes'] and q.digest(path)==item['sha256'],'source_hash')
         kernel=checked(inputs['kernel']);records=checked(inputs['geometry']);errors=checked(inputs['errors'])
+        settings=contract['parameters'].get('kernelSettings','frozen-v2')
         q.require(all(any(base/r['path']==p and r['sha256']==q.digest(p) for r in manifest['files'])
                       for p in (kernel,records,errors)),'source_membership')
         match=re.search(r'nonisolated struct NormalizedRectangle:.*?\n}\n',records.read_text(),re.S)
@@ -42,7 +70,7 @@ def run():
         q.save(OUT/'inputs.json',requests)
         binary=OUT/'outer-ring'
         command(['/usr/bin/xcrun','swiftc','-O','-D','SIMULATOR_COMPANION','-module-cache-path',
-                 str(q.ROOT/'.build/standard391-swift-cache'),str(kernel),str(errors),str(OUT/'Geometry.swift'),
+                 str(q.ROOT/'.build/standard391-swift-cache'),str(kernel_source(kernel,settings,OUT)),str(errors),str(OUT/'Geometry.swift'),
                  str(OUT/'main.swift'),'-o',str(binary)],OUT,'compile',timeout=180)
         command([str(binary),str(OUT/'inputs.json'),str(OUT/'raw.json')],OUT,'score',timeout=500)
         raw=q.load(OUT/'raw.json');q.require([r['id'] for r in raw]==[r['id'] for r in rows],'output_membership')
@@ -56,7 +84,8 @@ def run():
             predictions.append(dict(id=row['id'],candidates=candidates,box=None,decision='abstain',
                 reason='Unqualified ring proposals only; no body mapping or focus authority.',report=report))
         result=summarize(rows,predictions)
-        result.update(method='TTR-outer-ring-v2-proposals',sourceManifest=inputs['sourceManifest'],
+        result.update(method='TTR-outer-ring-v2-proposals'+('' if settings=='frozen-v2' else '-'+settings),
+            sourceManifest=inputs['sourceManifest'],
             limitation='All decisions abstain. Use proposals for a separate crop comparison; ring bounds are not body bounds.')
         q.save(OUT/'comparison.json',result)
         q.save(OUT/'artifact-receipt.json',dict(version='research-artifact-v1',outputs=[

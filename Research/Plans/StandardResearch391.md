@@ -178,9 +178,9 @@ Core ML parity and TTR shadow evaluation follow model qualification; no navigati
 
 research-host-NUIAK prepares and admits jobs. The background runner owns execution.
 research-host-TTR owns approved native capture and settings restoration.
-compute-host-NUIAK can run a separately qualified training assignment when local capacity or measured throughput justifies transfer.
+training-host-NUIAK can run a separately qualified training assignment when local capacity or measured throughput justifies transfer.
 LittleDog may prepare manifests or reports only through an already qualified preparation contract.
-compute-host-coordinator tracks delivery and dependencies, not experiment acceptance or local queue ownership.
+training-host-Coordinator tracks delivery and dependencies, not experiment acceptance or local queue ownership.
 
 Each future handoff names immutable inputs, hashes, entrypoint, environment, budgets, outputs, acceptance, and stop conditions.
 Peer advice remains a proposal. It does not alter current approvals.

@@ -146,7 +146,7 @@ See [FOCUS342](Plans/Focus342.md) and the retained audit in `reports/work/FOCUS-
 
 Deliver renderer updates and tool improvements through Git commits.
 Do not generate or transfer bulk synthetic datasets across network shares.
-Maximum-mini-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
+research-host-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
 This rule keeps the TTR development machine free for interactive work. That machine does not run Python tooling or batch rendering.
 
 ## Test region quality before fitting another classifier — FOCUS330
@@ -1880,7 +1880,7 @@ Evidence: reports/work/OFFICE-FOCUS-SMOKE/output-path-rca.md, 2026-09-21.
 
 ### BP-59: Verify the running TTR entrypoint before routing execution elsewhere
 
-**Wrong:** Treat a missing standalone aatv binary or an old Sillycon setup as proof
+**Wrong:** Treat a missing standalone aatv binary or an old capture-host setup as proof
 that local capture must be dispatched to another machine.
 
 **Correct:** Inspect the running app and matching documented CLI entrypoint first.
@@ -5043,7 +5043,7 @@ These related authored cases do not supply independent real-app evidence.
 ### Bound image validation allocations — TRANSITION251
 
 What went wrong: the trainer creates validation masks for the entire image tensor before fitting.
-Big Dog exceeds its 2 GiB limit before epoch 1. Full-array validation is a suspected contributor, not a measured sole cause.
+training-host exceeds its 2 GiB limit before epoch 1. Full-array validation is a suspected contributor, not a measured sole cause.
 Correct approach: validate 8 images at a time. Reject invalid values before creating the optimizer.
 Why this matters: temporary masks no longer grow with corpus size. Exact fitting parity passes on a fixed software test.
 This change does not establish a new peak memory limit for the full training job.
@@ -5109,3 +5109,24 @@ Keep repeated image records when they occur at different points in a sequence.
 Request retained events before recapture. Missing fresh before frames can prevent valid command-level transition tests.
 Use the existing recording audit and review editor. Do not build another pipeline for each handoff.
 [Office evidence](OfficeCapture349.md) records the current limits.
+
+## Check the runner before editing pinned queue code — EXTENSION408
+
+What went wrong: each approval pins the hashes of `research_queue.py`, `research_execution_policy.py`, and their imports.
+An edit to these files invalidates every unstarted approval.
+A job that runs during the edit fails at the end with `approval_or_code_changed_during_run`.
+Correct approach: before an edit, look for attempts without `result.json` and count the valid unstarted approvals.
+Put new queue features in modules outside the pinned closure when possible, such as `research_extensions.py`.
+After the edit, tell the maintainer which approvals to repeat. A running dashboard server keeps its old code until restart.
+Why this matters: a small policy change can silently stop the approved queue.
+
+### BP-117: iOS generator appearance and text-size metadata are not proof of rendered pixels — T46
+
+**Wrong:** Trust `image.colorScheme` and `image.dynamicTypeSize` in iOS generator sidecars. `ScreenshotCapture` uses both values as metadata only.
+Most SwiftUI templates also pick their own color scheme from the seed and apply `.colorScheme(...)` inside the view.
+In the T46 qualification, `SettingsList` dark and light frames are pixel-identical. `InteractiveControlPalette` differs by 0.0002 mean luma.
+**Correct:** Apply the traits on the hosting controller only when a run opts in (`ScreenshotCapture.rendersPresentationTraits`).
+Accept an appearance label only from a matched light/dark pair that renders at least 0.05 lower mean luma for dark.
+Mark unpaired frames `appearanceVerified: unverified`. Do not use them for an appearance quota.
+**Why:** A label that disagrees with the pixels gives false appearance coverage. Historical corpus sidecars from SwiftUI templates carry the same risk.
+See `Research/Plans/Backlog410.md`, section T46.

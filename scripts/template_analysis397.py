@@ -191,7 +191,7 @@ def proposal_audit(inputs,params,out):
         frame=frames[rule['id']];observed=selected[rule['id']]
         q.require(all(frame[k]==rule[k] for k in ('sha256','group','role','profile')),'audit_identity')
         candidates=rule['prediction']['candidates'];scores=observed['prediction']['scores']
-        if params:
+        if 'scale' in params:
             q.require(params['scale'] in (1.05,1.10),'audit_scale')
             candidates=[expand(b,params['scale'],frame['width'],frame['height']) for b in candidates]
         q.require(len(candidates)==len(scores),'audit_score_count')
@@ -208,6 +208,56 @@ def proposal_audit(inputs,params,out):
                 for profile in sorted({r['profile'] for r in rows})},
         source=inputs['rules'],
         limitation='Proposal identity follows the pinned source. Outline/body IoU is diagnostic, not a calibrated inset.'))
+    if 'taxonomy' in params:
+        failure_taxonomy(params['taxonomy'],rules,frames,out)
+
+
+# B405-125: frozen before the first taxonomy job. Geometry only; no image or label is changed.
+TAXONOMY='outline-failure-v1'
+MODES=('no-focus','neighbor','clipping','decoration','other')
+NEIGHBOR_IOU=.5
+CLIPPING_IOU=(.1,.5)
+DECORATION_IOU=.1
+
+
+def failure_mode(predicted,frame):
+    from score_hcf_pilot import iou
+    from hcf_compare371 import box
+    focus=frame.get('focus')
+    if focus not in frame.get('boxes',{}):return 'no-focus',None,None
+    focused=iou(box(predicted),box(frame['boxes'][focus]))
+    others=[iou(box(predicted),box(b)) for name,b in frame['boxes'].items() if name!=focus]
+    neighbor=max(others,default=0.)
+    if neighbor>=NEIGHBOR_IOU:mode='neighbor'
+    elif CLIPPING_IOU[0]<=focused<CLIPPING_IOU[1]:mode='clipping'
+    elif max(focused,neighbor)<DECORATION_IOU:mode='decoration'
+    else:mode='other'
+    return mode,focused,neighbor
+
+
+def failure_taxonomy(name,rules,frames,out):
+    """Classify each wrong rule selection against the known focused body and its labeled neighbors."""
+    q.require(name==TAXONOMY,'taxonomy_unknown')
+    rows=[]
+    for rule in rules['rows']:
+        if rule['outcome']!='wrong':continue
+        predicted=rule['prediction'].get('box')
+        q.require(predicted is not None and len(predicted)==4,'taxonomy_box_missing')
+        mode,focused,neighbor=failure_mode(predicted,frames[rule['id']])
+        rows.append(dict(id=rule['id'],group=rule['group'],profile=rule['profile'],family=rule['family'],
+            mode=mode,focusIoU=focused,bestNeighborIoU=neighbor,box=predicted))
+    counts={profile:{mode:sum(r['profile']==profile and r['mode']==mode for r in rows) for mode in MODES}
+            for profile in sorted({r['profile'] for r in rows})}
+    total={mode:sum(r['mode']==mode for r in rows) for mode in MODES}
+    q.save(out/'failure-taxonomy.json',dict(version='failure-taxonomy-v1',taxonomy=TAXONOMY,modes=list(MODES),
+        thresholds=dict(neighborIoU=NEIGHBOR_IOU,clippingIoU=list(CLIPPING_IOU),decorationIoU=DECORATION_IOU),
+        order='First matching mode in the listed order.',rows=rows,wrong=len(rows),counts=counts,total=total,
+        groups={mode:len({r['group'] for r in rows if r['mode']==mode}) for mode in MODES},
+        families={mode:sorted({r['family'] for r in rows if r['mode']==mode}) for mode in MODES},
+        source=rules.get('method'),modelAccepted=False,
+        limitation='Labeled boxes only. Unlabeled decoration and rendered focus visibility are not observed.'))
+    q.save(out/'benchmark_summary.json',dict(version='failure-taxonomy-summary-v1',gains=[],lostPriorSuccesses=[],
+        slices={mode:dict(frames=total[mode]) for mode in MODES},modelAccepted=False))
 
 
 OPERATIONS={'T15':compare,'T16':qualify,'T17':preparation,'T18':proposals,'T19':identity,'T20':proposal_audit,'T21':proposals,'T22':observer_contract,'T23':observer_verify,'T24':proposal_audit}

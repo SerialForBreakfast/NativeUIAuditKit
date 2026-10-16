@@ -1,5 +1,12 @@
 # Concurrent delivery roadmap
 
+## Preparation priority — 2026-10-14
+
+Use [BACKLOG405](Plans/ExperimentBacklog405.md) for the approved experiment preparation order.
+Finish optional HCF proposal and delivery checks first. Prepare retained Standard and iOS/tvOS comparisons alongside them.
+The catalog separates 107 unresolved scientific questions from engineering work.
+Tasks.md owns readiness. The detached runner owns approved execution. Existing jobs remain unchanged.
+
 ## Current priority — 2026-10-13
 
 General UI detection, classification, and Standard focus detection remain the main goals.
@@ -200,7 +207,7 @@ Next200native asset adapter/review, with202source reconciliation independent.
 
 **Artwork-first priority, October5:** [five delivery tranches](Plans/ArtworkModelImprovement204.md)
 put reusable artwork ahead of mock-UI focus generation. Start199asset planner and204
-bounded compute host campaign preparation independently; qualify200iOS/202tvOS native
+bounded training-host campaign preparation independently; qualify200iOS/202tvOS native
 adapters with an accepted subset, not the entire artwork library. Then205content/focus
 contrasts and206FocusRing share acquisition;207measures detector clutter benefit per
 platform. Keep197proposal work independent/high priority.203remains a bounded stretch
@@ -258,7 +265,7 @@ Positive replay improves retainedAP to.899967 and reduces sheet/cancel FP versus
 but eight development gates fail. Reuse predictions for complete geometry/operating
 error accounting and one justified next proposal, not automatic extraepochs.
 ART183structural intake passes; source/schema4/v5 compatibility awaits exact TTR
-source publication, with feedback delivered. compute host180A diagnostic return verified;
+source publication, with feedback delivered. training-host180A diagnostic return verified;
 180B/C now received and independently checked; no local critical-path dependency.
 [184evidence](../reports/work/IOS-REPLAY-184/handoff.md).
 
@@ -267,7 +274,7 @@ and full comparison. Aggregate AP improved, but operating FP and placement gates
 failed. Reuse all predictions for case-level error/exposure diagnosis and freeze one
 revised comparison; no automatic extraepochs. TTR native24 source synchronization remains
 an independent dependency, not a prerequisite for this local work.
-[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). compute host180A/B/C independently
+[Evidence](../reports/work/IOS-REPLAY-179/handoff.md). training-host180A/B/C independently
 evaluates transition-model sensitivity and consensus at low priority.
 
 **UI-SOURCE177 research completed:** [source intake](Plans/UIComponentIntake.md)
@@ -278,7 +285,7 @@ review-only after dimensional/grid deviations; no native import or training clai
 
 **Low-priority opportunistic lane — ART-A–D (2026-10-05):**
 Priority clarification: the older sheet-generation approach below remains opportunistic;
-resident compute host individual-artwork generation is now covered by204above. Do not
+resident training-host individual-artwork generation is now covered by204above. Do not
 dispatch both as duplicate acquisition campaigns.
 [Generated media artwork](Plans/GeneratedMediaAssets.md) provides fictional posters,
 episode art, avatars and backdrops for native compositions. Start with contract/crop
