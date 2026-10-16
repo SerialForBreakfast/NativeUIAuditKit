@@ -1,6 +1,7 @@
 """Qualify the exact TTR HCF caller. Preserve every reply and cleanup result."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import time
@@ -10,7 +11,7 @@ import direct_tvos_capture as d
 from focus_batch_harness import lock
 from native343 import TARGET
 
-TTR = Path('/Users/developer/Developer/TVTestRig')
+TTR = Path(os.environ.get('NUIAK_TTR_ROOT', Path.home() / 'Developer/TVTestRig'))
 APP = TTR/'.local-work/nuiak-hcf362/DerivedData/Build/Products/Debug/TVTestRig.app'
 CLI = APP/'Contents/Helpers/aatv'
 

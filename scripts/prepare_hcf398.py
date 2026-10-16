@@ -24,7 +24,7 @@ def build():
         q.require(q.digest(path)==record['sha256'],'producer_changed')
         return pin(path)
     def add(name,template,question,decision,inputs,parameters=None):
-        doc=dict(version='hcf-template-description-v1',id='hcf398-'+name,owner='research-host-NUIAK',
+        doc=dict(version='hcf-template-description-v1',id='hcf398-'+name,owner='Maximum-mini-NUIAK',
             template=template,question=question,decision=decision,inputs=inputs,parameters=parameters or {},dependencies=[])
         save(name+'.json',doc); templates.register(doc); jobs.append(doc['id'])
     original=q.load(q.ROOT/'reports/work/HCF397/01-proposals.json')['inputs']
@@ -58,6 +58,6 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--approve',action='store_true');args=parser.parse_args()
     for job in build():
         if args.approve:
-            approval.approve(q.QUEUE,job,'agent:research-host-NUIAK',
+            approval.approve(q.QUEUE,job,'agent:Maximum-mini-NUIAK',
                 'Maintainer approves retained HCF comparisons, template repair, and observer preparation. No training or Standard changes.')
         print(job,flush=True)

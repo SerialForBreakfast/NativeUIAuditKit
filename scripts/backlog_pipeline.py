@@ -114,7 +114,7 @@ def descriptions(record):
     return docs
 
 
-def expand(catalog, ident, queue=q.QUEUE, register=False, approve=False, approver='agent:research-host-NUIAK',
+def expand(catalog, ident, queue=q.QUEUE, register=False, approve=False, approver='agent:Maximum-mini-NUIAK',
            batches=BATCHES):
     """Write the batch for arms that have no job yet. Optionally register and approve exactly those jobs."""
     import experiment_batch402 as batch_tool
@@ -330,7 +330,7 @@ def blockers(catalog):
         template = r['template']['id']
         first = r['requirements'][0]
         if template not in templates.CONTRACTS:
-            key = ('adapter', template, 'research-host-NUIAK')
+            key = ('adapter', template, 'Maximum-mini-NUIAK')
         else:
             key = (first['kind'], template, first['owner'])
         group = groups.setdefault(key, dict(kind=key[0], template=key[1], owner=key[2], records=[], unblocks=set(),
@@ -364,7 +364,7 @@ def add(catalog, short):
     outcomes.setdefault('inconclusive', 'Complete every arm and record missing evidence before a decision.')
     profile_name = short.get('profile', 'diagnostic')
     profile = catalog['profiles'][profile_name]
-    owner = short.get('owner', 'research-host-NUIAK')
+    owner = short.get('owner', 'Maximum-mini-NUIAK')
     numbers = [int(r['id'].split('-')[1]) for r in catalog['experiments']]
     ident = 'B405-%03d' % (max(numbers) + 1)
     plan = short.get('plan')
@@ -457,7 +457,7 @@ def main():
             command.add_argument('records', nargs='+')
     sub.choices['expand'].add_argument('--register', action='store_true')
     sub.choices['expand'].add_argument('--approve-listed', action='store_true')
-    sub.choices['expand'].add_argument('--approver', default='agent:research-host-NUIAK')
+    sub.choices['expand'].add_argument('--approver', default='agent:Maximum-mini-NUIAK')
     sub.choices['add'].add_argument('file', help='JSON list of short record descriptions')
     sub.choices['confirm'].add_argument('--outcome', required=True)
     sub.choices['confirm'].add_argument('--by', required=True)

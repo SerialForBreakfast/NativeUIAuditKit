@@ -6,7 +6,7 @@ T31 fits one inset mapping from named development groups. It rejects overlapping
 T32 reports fitting and evaluation results separately. It also reports exact Standard prediction preservation.
 Both adapters pass positive and negative cases through the real queue. See [HCF401](HCF401.md).
 
-Owner: research-host-NUIAK.
+Owner: Maximum-mini-NUIAK.
 Related: [ADR-0028](../ADR-0028-Reusable-Experiment-Templates.md), [HCF389](HCF389.md), and [TEMPLATE393](ExperimentTemplates393.md).
 
 ## Scope

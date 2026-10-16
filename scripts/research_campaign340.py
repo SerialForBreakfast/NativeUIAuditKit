@@ -52,7 +52,7 @@ def register(queue=q.QUEUE):
         config = dict(code=code, inputs=inputs[1:], title=title)
         config_path = PLAN / (id + '-config.json')
         q.save(config_path, config)
-        spec = dict(version=q.SPEC_VERSION, id=id, task='RESEARCH340-'+code, owner='research-host-NUIAK',
+        spec = dict(version=q.SPEC_VERSION, id=id, task='RESEARCH340-'+code, owner='Maximum-mini-NUIAK',
             kind='screen', authority='diagnostic', batch=code[0], hypothesis=hypothesis,
             decisionRule='Report group-level differences. Do not train unless target errors improve without lost retained successes.',
             requirements=[missing] if missing else [],

@@ -17,7 +17,7 @@ TOOL = q.ROOT / '.build/standard392-swift/arm64-apple-macosx/debug/FocusRingTool
 
 def hcf396_description(precision):
     spec = q.load(SOURCE)
-    return dict(version='hcf-template-description-v1', id='palette6-test', owner='research-host-NUIAK', template='T10',
+    return dict(version='hcf-template-description-v1', id='palette6-test', owner='Maximum-mini-NUIAK', template='T10',
                 question='Does the 6-bit palette option compile into a valid export job?', decision='Accept the export only when every Vision parity decision matches.',
                 inputs=spec['template']['inputs'], dependencies=spec['dependencies'],
                 parameters=dict(experimentalID='palette6-test', precision=precision))

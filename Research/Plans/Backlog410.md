@@ -1,6 +1,6 @@
 # BACKLOG410 — repeatable experiment conversion and review
 
-Owner: research-host-NUIAK. Date: 2026-10-15.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-15.
 
 ## Problem
 
@@ -40,12 +40,12 @@ Approval stays 1 record per job. Capture, training, export, and promotion keep t
 
 | Missing input | Template | Open records | Records unblocked | Owner |
 | --- | --- | ---: | ---: | --- |
-| Fixture focus manifests with role ancestry (B405-041) | T03 | 11 | 40 | research-host-TTR |
-| `detector-case-match` adapter (ENG405-02) | new | 23 | 35 | research-host-NUIAK |
-| iOS native capture adapter (ENG405-03) | T03-ios | 10 | 20 | research-host-NUIAK |
-| `temporal-evaluation` adapter (ENG405-05) | new | 12 | 14 | research-host-NUIAK |
-| Difficult-case deployment membership | T11 | 8 | 10 | research-host-NUIAK |
-| Screen-context and later-model data | future-model | 10 | 10 | research-host-NUIAK |
+| Fixture focus manifests with role ancestry (B405-041) | T03 | 11 | 40 | Maximum-mini-TTR |
+| `detector-case-match` adapter (ENG405-02) | new | 23 | 35 | Maximum-mini-NUIAK |
+| iOS native capture adapter (ENG405-03) | T03-ios | 10 | 20 | Maximum-mini-NUIAK |
+| `temporal-evaluation` adapter (ENG405-05) | new | 12 | 14 | Maximum-mini-NUIAK |
+| Difficult-case deployment membership | T11 | 8 | 10 | Maximum-mini-NUIAK |
+| Screen-context and later-model data | future-model | 10 | 10 | Maximum-mini-NUIAK |
 
 Rerun `backlog_pipeline.py blockers` for the current ranking.
 
@@ -91,7 +91,7 @@ Growth is much more harmful than shrinkage. Height dominates.
 
 ## B405-041
 
-Check by research-host-NUIAK on 2026-10-15. Result: no T03 plan. The blocker is NUIAK work, not missing TTR output.
+Check by Maximum-mini-NUIAK on 2026-10-15. Result: no T03 plan. The blocker is NUIAK work, not missing TTR output.
 
 ### What B405-041 measures
 
@@ -101,7 +101,7 @@ New captures only add to the counts. They cannot change the B405-041 decision by
 
 ### Readiness evidence (read-only)
 
-- research-host-TTR checkout: clean `master` at `b9ddb177`. `origin/master` on the remote is `48f0e37f`.
+- Maximum-mini-TTR checkout: clean `master` at `b9ddb177`. `origin/master` on the remote is `48f0e37f`.
 - The checkout is not updated. TTR AGENTS.md forbids all Git writes, which includes a fetch. NUIAK AGENTS.md permits `git pull --ff-only`. This conflict needs a maintainer decision.
 - Simulator `9026ECA9-77DB-4AE6-8FE6-BB239E9571FA` is booted. The Fixture answers at `http://127.0.0.1:8080/device`.
 - The Fixture PID (37401), instance ID, run ID, and both binary hashes match the binding of the HCF402 plans.
@@ -140,24 +140,24 @@ It predates the HCF371 and HCF402 native captures. It shows these deficits:
 
 | Blocker | Kind | Owner |
 | --- | --- | --- |
-| A reusable quota comparison adapter. It reads pinned current manifests and `semantic_inventory` ancestry. It counts eligible related groups by family, theme, and hard-negative stratum against frozen quotas. | adapter | research-host-NUIAK |
-| Frozen family and theme quota values. Only the scene-archetype quotas and the hard-negative floors (DeliveryDecisions item 7, ADR-0010 D1) are numeric now. | decision | research-host-NUIAK, with maintainer review |
+| A reusable quota comparison adapter. It reads pinned current manifests and `semantic_inventory` ancestry. It counts eligible related groups by family, theme, and hard-negative stratum against frozen quotas. | adapter | Maximum-mini-NUIAK |
+| Frozen family and theme quota values. Only the scene-archetype quotas and the hard-negative floors (DeliveryDecisions item 7, ADR-0010 D1) are numeric now. | decision | Maximum-mini-NUIAK, with maintainer review |
 
-The catalog record B405-041 now names these 2 requirements. `blockers` no longer groups it under research-host-TTR.
+The catalog record B405-041 now names these 2 requirements. `blockers` no longer groups it under Maximum-mini-TTR.
 
 ### Effect on dependents and on the TTR request
 
 The 40-record count includes dependents with other needs. Two of them are separate capture work:
 
-- Button, row, and tab manifests need a new NUIAK capture plan version with `native_button` focus (research-host-NUIAK). The Fixture already has these components.
-- B405-046 needs a native keyboard component. The Fixture at `b9ddb177` has no keyboard component. The owner of Fixture source changes is not recorded here. capture-host-TTR or research-host-TTR must confirm it.
+- Button, row, and tab manifests need a new NUIAK capture plan version with `native_button` focus (Maximum-mini-NUIAK). The Fixture already has these components.
+- B405-046 needs a native keyboard component. The Fixture at `b9ddb177` has no keyboard component. The owner of Fixture source changes is not recorded here. Sillycon-TTR or Maximum-mini-TTR must confirm it.
 
 Item 1 of `reports/work/BACKLOG410/ttr-needs-request-DRAFT.json` asks TTR for role ancestry. The local Fixture already supplies it. This check does not edit the draft. Proposed replacement for item 1:
 "(1) NUIAK confirms that current Fixture scenes supply full role ancestry in semantic_inventory. Please say whether a native keyboard component is planned for the Fixture (B405-046), and which machine owns that change."
 
 ### Decisions needed
 
-- The maintainer decides whether an agent may fetch the research-host-TTR checkout, given the TTR rule against Git writes.
+- The maintainer decides whether an agent may fetch the Maximum-mini-TTR checkout, given the TTR rule against Git writes.
 - The maintainer or an evidence-backed agent decision freezes family and theme quotas before the adapter registers jobs.
 - No capture approval is needed for B405-041.
 
@@ -254,7 +254,7 @@ tvOS: nativeui-tvos-v3.0 on 46 reviewed real frames, 583 controls, confidence 0.
 
 ## T45 — Native button, row, and tab capture recipe, 2026-10-15
 
-research-host-NUIAK adds the recipe version `native-controls-t45-v1`. The T03 template stays the same; no new template ID.
+Maximum-mini-NUIAK adds the recipe version `native-controls-t45-v1`. The T03 template stays the same; no new template ID.
 The old version `native-hcf402-v1` and its `validate` function are unchanged.
 
 ### What the new version admits
@@ -398,28 +398,28 @@ Next action: test new native families in B405-112 when B405-044 supplies them.
 **B405-063 (confirmed: inconclusive).** All 120 no-op pairs are correct, with 0 abstentions and 0 false changes.
 Content-only pairs show 45 abstentions and 33 false changes.
 Every no-op pair has identical before and after pixels. The test therefore cannot measure abstention after a real no-op action.
-B405-063 now requires native no-op receipts with capture noise or animation from B405-044 (research-host-TTR).
+B405-063 now requires native no-op receipts with capture noise or animation from B405-044 (Maximum-mini-TTR).
 
 ### Records without inputs
 
 | Record | Missing input | Producer | Owner |
 | --- | --- | --- | --- |
-| B405-062 | Native content-only changes with unchanged focus, and matched native movements | B405-043 T03 artwork exchange | research-host-TTR |
-| B405-064 | Native scroll pairs with matched offsets | B405-044 T03 capture with a scroll recipe | research-host-TTR |
-| B405-065 | Timestamped native sequences with an animated background | TTR Fixture animated-background recipe | research-host-TTR |
-| B405-066 | Native pairs between identical-artwork controls | B405-043 owned-artwork recipe | research-host-TTR |
-| B405-067 | Guarded Settings rule scorer as a T47 arm, and reviewed Settings frames | T47 variant | research-host-NUIAK |
-| B405-068 | Swift tracking runner and arithmetic-parity evidence | New adapter | research-host-NUIAK |
-| B405-069 | Native timestamps and a sequential capture interface | TTR sequential capture (B405-044) | research-host-TTR |
-| B405-070 | Confirmed B405-061, B405-062, and B405-063 results | Decision | research-host-NUIAK |
-| B405-111 | Native modal sequences with visibility labels | B405-048 T03 overlay capture | research-host-TTR |
-| B405-112 | Ordered native pairs from new families | B405-044 T03 capture | research-host-TTR |
+| B405-062 | Native content-only changes with unchanged focus, and matched native movements | B405-043 T03 artwork exchange | Maximum-mini-TTR |
+| B405-064 | Native scroll pairs with matched offsets | B405-044 T03 capture with a scroll recipe | Maximum-mini-TTR |
+| B405-065 | Timestamped native sequences with an animated background | TTR Fixture animated-background recipe | Maximum-mini-TTR |
+| B405-066 | Native pairs between identical-artwork controls | B405-043 owned-artwork recipe | Maximum-mini-TTR |
+| B405-067 | Guarded Settings rule scorer as a T47 arm, and reviewed Settings frames | T47 variant | Maximum-mini-NUIAK |
+| B405-068 | Swift tracking runner and arithmetic-parity evidence | New adapter | Maximum-mini-NUIAK |
+| B405-069 | Native timestamps and a sequential capture interface | TTR sequential capture (B405-044) | Maximum-mini-TTR |
+| B405-070 | Confirmed B405-061, B405-062, and B405-063 results | Decision | Maximum-mini-NUIAK |
+| B405-111 | Native modal sequences with visibility labels | B405-048 T03 overlay capture | Maximum-mini-TTR |
+| B405-112 | Ordered native pairs from new families | B405-044 T03 capture | Maximum-mini-TTR |
 
 FOCUS372 captures are single focus states without action pairs. They do not supply ordered pairs.
 
 ## T46 — iOS native capture (ENG405-03), 2026-10-15
 
-Work by research-host-NUIAK. Template T46 renders a pinned recipe with the pinned GeneratorRunner build on the generator Simulator.
+Work by Maximum-mini-NUIAK. Template T46 renders a pinned recipe with the pinned GeneratorRunner build on the generator Simulator.
 It writes grouped, labeled iOS frames and a per-class support table.
 
 ### Contract
@@ -472,16 +472,16 @@ T46 marks each frame `appearanceVerified` as `paired-rendered`, `not-rendered`, 
 
 | Record | Arms | Recipe | Frames per arm | Approval |
 | --- | --- | --- | --- | --- |
-| B405-031 class coverage | 3 family thirds (a2, b, c) | seed 7, large, light | 16 | agent:assistant-t46-ios-capture |
-| B405-034 Dynamic Type | 3 family thirds (a2, b, c) | seed 11, large and accessibilityLarge, light | 32 | agent:assistant-t46-ios-capture |
-| B405-035 light and dark | 3 family thirds (a2, b, c) | seed 9, large, light and dark | 32 | agent:assistant-t46-ios-capture |
+| B405-031 class coverage | 3 family thirds (a2, b, c) | seed 7, large, light | 16 | agent:claude-t46-ios-capture |
+| B405-034 Dynamic Type | 3 family thirds (a2, b, c) | seed 11, large and accessibilityLarge, light | 32 | agent:claude-t46-ios-capture |
+| B405-035 light and dark | 3 family thirds (a2, b, c) | seed 9, large, light and dark | 32 | agent:claude-t46-ios-capture |
 
 All arms use the development role and are not training-eligible. The rule is `manual`.
 Recipes are in `Research/Experiments/t46-recipes/`. The build receipt is `.build/ios-capture-t46/build-receipt-r1.json`.
 B405-034 and B405-035 list B405-032 as a dependency. These arms measure rendering only. They do not admit data, so they do not wait for the bounds check.
 The families include the frozen test and validation families. Seed 7, 9, and 11 renders stay development diagnostics. Do not admit them to training.
 
-### Remaining T03-ios blockers (all research-host-NUIAK)
+### Remaining T03-ios blockers (all Maximum-mini-NUIAK)
 
 | Record | Missing input |
 | --- | --- |
@@ -548,7 +548,7 @@ Decisions:
 - Keep HCF effect labels for artwork only. Do not label native buttons, rows, or tabs as HCF-positive.
 - Do not plan B405-104 (mapping across control families) on these families. No HCF effect exists to map.
 - Inspect the 1 row pair that changes 5.5 M pixels. It is probably a different screen state, not an HCF effect.
-- Ask capture-host-TTR whether real tvOS HCF changes native button focus. The Fixture may not use the system focus effect for these components.
+- Ask Sillycon-TTR whether real tvOS HCF changes native button focus. The Fixture may not use the system focus effect for these components.
 
 
 ### Wave 2 — rendered-body measurement (2026-10-15)
@@ -630,8 +630,8 @@ Trivial tests in this list (for example `Package version is non-empty`) are prob
 
 ## Results — remaining detector-case records (T42 extensions, T50), 2026-10-15
 
-Owner: research-host-NUIAK. The contract details are in [DetectorCaseMatch411.md](DetectorCaseMatch411.md).
-The 11 jobs were approved as `agent:assistant-casematch411`. All completed. Each control arm reproduces its stored result exactly.
+Owner: Maximum-mini-NUIAK. The contract details are in [DetectorCaseMatch411.md](DetectorCaseMatch411.md).
+The 11 jobs were approved as `agent:claude-casematch411`. All completed. Each control arm reproduces its stored result exactly.
 
 New options:
 
@@ -655,12 +655,12 @@ New options:
 
 | Record | Kind | Owner | Missing input |
 | --- | --- | --- | --- |
-| B405-019 | adapter | research-host-NUIAK | OCR role association (template id `ocr-role-association`). Run the Vision probe OCR on the images with the 778 B405-012 wrong-class labels. Freeze 1 text rule for each confused class pair before scoring. |
-| B405-020 | adapter, decision | research-host-NUIAK | ENG405-06 detector training and restore variant. Maintainer review of button-role labels (B405-015). Admitted T46 toggle groups 32 to 128 px high at 0.5 to 0.9 frame width (B405-016). |
-| B405-022 | data | research-host-TTR | Paired focused and unfocused frames with measured presentation-layer bounds. |
-| B405-027 | data | research-host-NUIAK | A T45 tab case with a selected tab that differs from the focused tab, plus capture approval. The detector locates 0 of 24 tab items as tabs (B405-108). |
-| B405-030 | adapter, data | research-host-NUIAK | ENG405-06. Admitted tvOS groups for collection items, rows, and tabs. B405-041 admits 0, and its quotas wait for a maintainer freeze. |
-| B405-106 | data | research-host-NUIAK | Steppers from at least 3 template families with value and disabled states. The 200 withheld steppers come from 1 family (MultiSectionForm). Run 013 detects all 200 (AP50 1.0). |
+| B405-019 | adapter | Maximum-mini-NUIAK | OCR role association (template id `ocr-role-association`). Run the Vision probe OCR on the images with the 778 B405-012 wrong-class labels. Freeze 1 text rule for each confused class pair before scoring. |
+| B405-020 | adapter, decision | Maximum-mini-NUIAK | ENG405-06 detector training and restore variant. Maintainer review of button-role labels (B405-015). Admitted T46 toggle groups 32 to 128 px high at 0.5 to 0.9 frame width (B405-016). |
+| B405-022 | data | Maximum-mini-TTR | Paired focused and unfocused frames with measured presentation-layer bounds. |
+| B405-027 | data | Maximum-mini-NUIAK | A T45 tab case with a selected tab that differs from the focused tab, plus capture approval. The detector locates 0 of 24 tab items as tabs (B405-108). |
+| B405-030 | adapter, data | Maximum-mini-NUIAK | ENG405-06. Admitted tvOS groups for collection items, rows, and tabs. B405-041 admits 0, and its quotas wait for a maintainer freeze. |
+| B405-106 | data | Maximum-mini-NUIAK | Steppers from at least 3 template families with value and disabled states. The 200 withheld steppers come from 1 family (MultiSectionForm). Run 013 detects all 200 (AP50 1.0). |
 
 ### Decisions
 
@@ -672,7 +672,7 @@ New options:
 
 ## T48 — Representation comparison (B405-075–080, B405-114), 2026-10-15
 
-Owner: research-host-NUIAK. Estimate: 90–120 min. Actual: about 100 min, plus a usage-limit pause.
+Owner: Maximum-mini-NUIAK. Estimate: 90–120 min. Actual: about 100 min, plus a usage-limit pause.
 
 ### Template
 
@@ -718,11 +718,11 @@ The aspect-fit mapped gains are the unresolved tall controls `hcf402-tall-contro
 
 | Record | Missing input | Owner |
 | --- | --- | --- |
-| B405-076 position transfer | Native frames of the same content at new screen positions. Needs a T45 or T03 capture after B405-041. | research-host-NUIAK |
-| B405-077 scale-aware input | A trained size feature. The fixed model has no size input, and makeCrop has no scale-preserving crop. B405-070 is not confirmed. | research-host-NUIAK |
-| B405-078 screen-level selection | Cached T37 scores already answer this bundle: 0 known-box frames have more than 1 candidate at 0.85 or higher, so a non-forced screen rule changes 0 decisions. Forced top-1 gives 1 gain (tall item-0 at 0.841) and 2 no-focus losses. Needs more no-focus scenes (B405-058) and multi-candidate errors (B405-056). | research-host-NUIAK |
+| B405-076 position transfer | Native frames of the same content at new screen positions. Needs a T45 or T03 capture after B405-041. | Maximum-mini-NUIAK |
+| B405-077 scale-aware input | A trained size feature. The fixed model has no size input, and makeCrop has no scale-preserving crop. B405-070 is not confirmed. | Maximum-mini-NUIAK |
+| B405-078 screen-level selection | Cached T37 scores already answer this bundle: 0 known-box frames have more than 1 candidate at 0.85 or higher, so a non-forced screen rule changes 0 decisions. Forced top-1 gives 1 gain (tall item-0 at 0.841) and 2 no-focus losses. Needs more no-focus scenes (B405-058) and multi-candidate errors (B405-056). | Maximum-mini-NUIAK |
 | B405-079 alternative encoder | A licensed resident encoder and maintainer inclusion of encoder work in the tranche scope | Maintainer |
-| B405-080 unified detector | Joint training. Needs B405-021 and B405-071 results and frozen role groups. | research-host-NUIAK |
+| B405-080 unified detector | Joint training. Needs B405-021 and B405-071 results and frozen role groups. | Maximum-mini-NUIAK |
 
 ## T47 Settings rule scorer and T49 transition training, 2026-10-15
 
@@ -802,11 +802,11 @@ The 3 unstarted notification approvals were revoked. `reconciliation-t47.json` m
 
 Decision: the frozen rule requires 0 lost successes at every seed, so the correction is not frozen.
 Requirements: the maintainer decides whether 1 boundary loss at 1 of 3 seeds blocks the freeze (the same open rule decision as RECONCILE409).
-research-host-NUIAK diagnoses the dimmed-movement margin before any further notification correction.
+Maximum-mini-NUIAK diagnoses the dimmed-movement margin before any further notification correction.
 
 ## Template extensions for B405-128, 125, 119 and 127, 2026-10-15
 
-Owner: research-host-NUIAK. Estimate: 3–4 h. Actual: about 3 h, plus a usage-limit pause.
+Owner: Maximum-mini-NUIAK. Estimate: 3–4 h. Actual: about 3 h, plus a usage-limit pause.
 Each extension keeps old specifications unchanged: a new parameter is optional, and its absence gives the old behavior.
 Plans are in the catalog. Batches are in `Research/Experiments/batches/`. Nothing is committed.
 
@@ -859,7 +859,7 @@ Results:
 - No-focus frames and Standard frames get 0 proposals.
 - On the 264 HCF398 synthetic frames, proposals stay at 52.
 
-Decision: the gate thresholds do not cause the native misses. Measure the native ring pixels before another kernel change. Do not share relaxed-v1 with capture-host-TTR.
+Decision: the gate thresholds do not cause the native misses. Measure the native ring pixels before another kernel change. Do not share relaxed-v1 with Sillycon-TTR.
 
 ### B405-127 — Swift fallback baseline (T51)
 

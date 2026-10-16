@@ -1,6 +1,6 @@
 # RECONCILE407 — successor review and useful comparisons
 
-Owner: research-host-NUIAK. Date: 2026-10-14.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-14.
 
 ## Decisions
 
@@ -81,7 +81,7 @@ Test surrounding context separately. Do not combine displacement and context in 
 Measure scores, decisions, crop hashes, target recovery, and lost previous successes.
 Accept a correction only when it recovers the target and preserves previous successes.
 If neither factor explains the loss, inspect actual resized inputs and pixel sensitivity before training.
-Blocker: research-host-NUIAK needs a qualified scored-intervention variant with explicit candidate correspondence.
+Blocker: Maximum-mini-NUIAK needs a qualified scored-intervention variant with explicit candidate correspondence.
 T37 has no intervention parameter. T40 diagnoses cached scores only.
 Allow 800 s and 100 MB per diagnostic after the variant passes qualification.
 Update 2026-10-15 (INTERVENTION410): T41 qualifies on the tall-control pair through an isolated queue. A `none` arm reproduces the cached scores.
@@ -95,19 +95,19 @@ Compare detector-only proposals with detector-first, optional HCF fallback.
 Measure eligible-box recall, correct selection, false selection, and lost previous successes.
 Accept added coverage only when matched retained decisions show no regression.
 If the detector also misses these bodies, classify its geometry errors before selecting new training data.
-Blocker: research-host-NUIAK needs detector outputs with candidate scores and boxes for these exact frames.
+Blocker: Maximum-mini-NUIAK needs detector outputs with candidate scores and boxes for these exact frames.
 Existing HCF400 fallback reports use different inputs. They cannot establish this comparison.
 Reuse answered B405-006 as the baseline method. Do not reopen its completed retained-data comparison.
 Allow 800 s and 100 MB per diagnostic after the native detector variant qualifies.
 
 ### Standard artwork counterpart
 
-capture-host-TTR supplies 1 new Standard pair and repeats 1 retained HCF pair.
+Sillycon-TTR supplies 1 new Standard pair and repeats 1 retained HCF pair.
 The archive has 31,843,235 bytes. Its SHA256 matches the published transfer manifest.
 Safe extraction produces 39 entries and 36,786,593 bytes.
 The archive includes an empty root directory marker. Excluding only that marker allows existing safety checks to pass.
 The receiver receipt is published and read back successfully.
-capture-host-TTR owns shared source cleanup.
+Sillycon-TTR owns shared source cleanup.
 
 Keep the calibration role and shared lineage. Do not count the duplicate HCF pair as new evidence.
 Different producer revisions prevent attribution of all pixel changes to the accessibility profile.

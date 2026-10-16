@@ -46,7 +46,7 @@ class QueueTests(unittest.TestCase):
         self.root = Path(self.temp.name)
 
     def description(self, parameters):
-        return dict(version='hcf-template-description-v1', id='fallback-test', owner='research-host-NUIAK', template='T51',
+        return dict(version='hcf-template-description-v1', id='fallback-test', owner='Maximum-mini-NUIAK', template='T51',
                     question='How does the Swift fallback select on the cached native boxes?',
                     decision='Test only; the job decides nothing about the models.',
                     inputs=dict(bundle=dict(path=q.relative(BUNDLE), sha256=q.digest(BUNDLE)),

@@ -2,7 +2,7 @@
 
 ## Scope
 
-research-host-NUIAK extends the existing crop trainer and queue.
+Maximum-mini-NUIAK extends the existing crop trainer and queue.
 Standard models, crop preprocessing, thresholds, and retained successes remain unchanged.
 This work does not promote a model or qualify detector restoration.
 

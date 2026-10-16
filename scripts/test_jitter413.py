@@ -183,7 +183,7 @@ class PlanArmTests(unittest.TestCase):
         dep = dict(job='producer-a', specSHA256='0' * 64, outputs=['crops.json'])
         record = dict(id='B405-999', hypothesis='Jitter keeps decisions under box errors.',
                       comparison='Matched control.', plan=dict(
-            template='T06', owner='research-host-NUIAK', jobPrefix='jitter-test', rule='manual', control='control',
+            template='T06', owner='Maximum-mini-NUIAK', jobPrefix='jitter-test', rule='manual', control='control',
             question='Does seeded crop jitter keep T41 successes within 2 px on the 74 retained frames?',
             decision='Accept only with zero losses within 2 px.',
             outcomes=dict(supported='a', contradicted='b', inconclusive='c'),

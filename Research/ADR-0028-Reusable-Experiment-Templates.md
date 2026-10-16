@@ -2,7 +2,7 @@
 
 Date: 2026-10-14
 Status: Proposed implementation; maintainer requests this design.
-Owner: research-host-NUIAK.
+Owner: Maximum-mini-NUIAK.
 Related: [graph design](ADR-0027-Evidence-Guided-Experiment-Graphs.md), [HCF completion](Plans/HCF389.md), and [implementation tasks](Plans/ExperimentTemplates393.md).
 
 ## Decision

@@ -116,7 +116,7 @@ def observer(inputs,params,out):
         architecture=os.uname().machine,compilerVersion=subprocess.check_output(['/usr/bin/xcrun','swiftc','--version'],text=True).strip())
     verification=verify_receipt(receipt,expected)
     q.save(out/'expected-v2.json',expected);q.save(out/'observer-receipt.json',receipt)
-    q.save(out/'verification.json',dict(verification,owner='research-host-NUIAK',TTRIntegrationVerified=False))
+    q.save(out/'verification.json',dict(verification,owner='Maximum-mini-NUIAK',TTRIntegrationVerified=False))
 
 
 def run():

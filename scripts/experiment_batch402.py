@@ -70,7 +70,7 @@ def compile_batch(batch, queue=q.QUEUE):
     return descriptions
 
 
-def register_batch(batch, queue=q.QUEUE, approved=(), approver='agent:research-host-NUIAK'):
+def register_batch(batch, queue=q.QUEUE, approved=(), approver='agent:Maximum-mini-NUIAK'):
     # Validate the whole batch before the first registration or approval.
     docs = compile_batch(batch, queue)
     q.require(set(approved) <= {d['id'] for d in docs}, 'approval_outside_batch')
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     parser.add_argument('action', choices=['inspect', 'preview', 'register'])
     parser.add_argument('batch', type=Path)
     parser.add_argument('--approve', action='append', default=[])
-    parser.add_argument('--approver', default='agent:research-host-NUIAK')
+    parser.add_argument('--approver', default='agent:Maximum-mini-NUIAK')
     args = parser.parse_args()
     batch = q.load(args.batch)
     result = (inspect_batch(batch) if args.action=='inspect' else compile_batch(batch) if args.action == 'preview'

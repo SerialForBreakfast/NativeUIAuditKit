@@ -28,7 +28,7 @@ DEFINITIONS = [
 def catalog():
     return [dict(id=ident, version=1, title=title, requiredInputs=inputs, outputs=outputs,
                  implementation='available' if not blocker else 'contract-only', blocker=blocker or None,
-                 owner='research-host-NUIAK', qualification='not_automatically_qualified')
+                 owner='Maximum-mini-NUIAK', qualification='not_automatically_qualified')
             for ident, title, inputs, outputs, blocker in DEFINITIONS]
 
 

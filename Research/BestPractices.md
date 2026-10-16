@@ -146,7 +146,7 @@ See [FOCUS342](Plans/Focus342.md) and the retained audit in `reports/work/FOCUS-
 
 Deliver renderer updates and tool improvements through Git commits.
 Do not generate or transfer bulk synthetic datasets across network shares.
-research-host-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
+Maximum-mini-NUIAK pulls tool code, compiles the renderer, and generates its own corpus locally.
 This rule keeps the TTR development machine free for interactive work. That machine does not run Python tooling or batch rendering.
 
 ## Test region quality before fitting another classifier — FOCUS330
@@ -1880,7 +1880,7 @@ Evidence: reports/work/OFFICE-FOCUS-SMOKE/output-path-rca.md, 2026-09-21.
 
 ### BP-59: Verify the running TTR entrypoint before routing execution elsewhere
 
-**Wrong:** Treat a missing standalone aatv binary or an old capture-host setup as proof
+**Wrong:** Treat a missing standalone aatv binary or an old Sillycon setup as proof
 that local capture must be dispatched to another machine.
 
 **Correct:** Inspect the running app and matching documented CLI entrypoint first.
@@ -5043,7 +5043,7 @@ These related authored cases do not supply independent real-app evidence.
 ### Bound image validation allocations — TRANSITION251
 
 What went wrong: the trainer creates validation masks for the entire image tensor before fitting.
-training-host exceeds its 2 GiB limit before epoch 1. Full-array validation is a suspected contributor, not a measured sole cause.
+Big Dog exceeds its 2 GiB limit before epoch 1. Full-array validation is a suspected contributor, not a measured sole cause.
 Correct approach: validate 8 images at a time. Reject invalid values before creating the optimizer.
 Why this matters: temporary masks no longer grow with corpus size. Exact fitting parity passes on a fixed software test.
 This change does not establish a new peak memory limit for the full training job.

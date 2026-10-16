@@ -53,8 +53,8 @@ class CatalogTests(unittest.TestCase):
         row = next(r for r in self.catalog['experiments'] if r['id'] == 'B405-004')
         self.assertNotIn('plan', row)
         row['existingJobs'] = []
-        tasks = tasks.replace('| B405-004 | research-host-NUIAK | Needs data |',
-                              '| B405-004 | research-host-NUIAK | Ready to register |')
+        tasks = tasks.replace('| B405-004 | Maximum-mini-NUIAK | Needs data |',
+                              '| B405-004 | Maximum-mini-NUIAK | Ready to register |')
         with self.assertRaisesRegex(ValueError, 'readiness_without_job_binding'):
             backlog.report(self.catalog, tasks)
 

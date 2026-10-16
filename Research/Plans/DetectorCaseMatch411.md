@@ -1,6 +1,6 @@
 # CASEMATCH411 — T42 detector-case-match (ENG405-02)
 
-Date: 2026-10-15. Owner: research-host-NUIAK. Status: adapter complete; 15 jobs registered and approved.
+Date: 2026-10-15. Owner: Maximum-mini-NUIAK. Status: adapter complete; 15 jobs registered and approved.
 
 ## Purpose
 

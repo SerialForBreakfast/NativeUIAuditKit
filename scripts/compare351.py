@@ -91,7 +91,7 @@ def register():
     for index,mode in enumerate(('movement','content','recapture','timing','pixels')):
         ident=f'dataset351-{index:02d}-{mode}'
         cp=folder/(ident+'-config.json');q.save(cp,dict(mode=mode,capture=pin(path),models=models,inputs=refs))
-        spec=dict(version=q.SPEC_VERSION,id=ident,task='DATASET351',owner='research-host-NUIAK',kind='screen',authority='diagnostic',
+        spec=dict(version=q.SPEC_VERSION,id=ident,task='DATASET351',owner='Maximum-mini-NUIAK',kind='screen',authority='diagnostic',
             hypothesis='Controlled native and authored effects expose '+mode+' failures without changing original model crops.',
             decisionRule='Report paired errors and exclusions. Preserve existing models; no training or threshold selection.',
             inputs=refs,stage=[{'from':pin(cp),'to':'config.json'}],

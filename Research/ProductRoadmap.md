@@ -1,6 +1,6 @@
 # NativeUIAuditKit product roadmap
 
-Repository snapshot: 2026-10-09. Owner: research-host-NUIAK.
+Repository snapshot: 2026-10-09. Owner: Maximum-mini-NUIAK.
 
 NUIAK detects visible UI elements and focus evidence from screenshots.
 Its main goal is general UI detection, classification, and focus detection under Standard settings.
@@ -67,7 +67,7 @@ No calendar dates are promised. Required evidence, worker capacity, and accepted
 | Text and UI evidence | OCR association, coordinates, and observation reports | Pixels cannot prove hidden accessibility semantics |
 | Local tools | Swift inference, screenshot CLI, and stdio MCP interface | Tool execution does not establish model quality |
 | Training and evaluation | Seeded generation, intake checks, experiments, and retained comparisons | Each dataset still needs correct labels and approved roles |
-| Worker processing | training-host-NUIAK can run assigned batch computation | Portable inputs and accepted execution scope remain necessary |
+| Worker processing | BigDog-NUIAK can run assigned batch computation | Portable inputs and accepted execution scope remain necessary |
 | Optional model delivery | Resource-free runtime and local lifecycle tests | Public download and signed TTR execution need end-to-end checks |
 
 The focus tasks remain separate:
@@ -110,11 +110,11 @@ Use the [publication instructions](ModelPublicationReview305.md).
 
 | Work | Owner | Acceptance |
 | --- | --- | --- |
-| Publish the reviewed preview | Maintainer; research-host-NUIAK prepares evidence | Exact approved inventory, source access, notices, and separate release identity |
-| Verify public downloads | research-host-NUIAK | Anonymous downloads match catalog and member hashes |
-| Test actual TTR integration | capture-host-TTR; research-host-NUIAK reviews results | Download, compile, load, restart offline, rollback, and failure tests pass |
+| Publish the reviewed preview | Maintainer; Maximum-mini-NUIAK prepares evidence | Exact approved inventory, source access, notices, and separate release identity |
+| Verify public downloads | Maximum-mini-NUIAK | Anonymous downloads match catalog and member hashes |
+| Test actual TTR integration | Sillycon-TTR; Maximum-mini-NUIAK reviews results | Download, compile, load, restart offline, rollback, and failure tests pass |
 | Report host support | Each executing host reports results | Distinguish declared macOS 14 minimum from tested OS and architecture |
-| Reconcile communication | training-host-Coordinator routes; receiving owner acknowledges | Forwarded ID and TTR response exist; stored messages alone do not count |
+| Reconcile communication | BigDog-Coordinator routes; receiving owner acknowledges | Forwarded ID and TTR response exist; stored messages alone do not count |
 
 The local tests cover macOS 27.0.1 arm64. They do not qualify macOS 14 or Intel execution.
 TTR reviews its application distribution separately. That review does not create a circular dependency for NUIAK's own preparation.
@@ -287,15 +287,15 @@ To promote a proposal into planned work:
 
 | Owner | Responsibility |
 | --- | --- |
-| research-host-NUIAK | Model contracts, data admission, Apple validation, release preparation, and final acceptance |
-| research-host-TTR | Local TTR and Fixture runtime used for specifically authorized capture |
-| capture-host-TTR | TTR source changes, optional integration, capture hooks, and application navigation policy |
-| training-host-NUIAK | Portable training, cached scoring, label-review candidates, and batch audits after accepted dispatch |
-| training-host-Coordinator | Cross-project routing, acknowledgments, and execution coordination within its qualified scope |
+| Maximum-mini-NUIAK | Model contracts, data admission, Apple validation, release preparation, and final acceptance |
+| Maximum-mini-TTR | Local TTR and Fixture runtime used for specifically authorized capture |
+| Sillycon-TTR | TTR source changes, optional integration, capture hooks, and application navigation policy |
+| BigDog-NUIAK | Portable training, cached scoring, label-review candidates, and batch audits after accepted dispatch |
+| BigDog-Coordinator | Cross-project routing, acknowledgments, and execution coordination within its qualified scope |
 | Maintainer | Git writes, release publication, and decisions outside standing execution authority |
 
 Batch compatible capture recipes within one prepared runtime session.
-Give training-host-NUIAK immutable input packages and bounded comparisons that do not block local analysis.
+Give BigDog-NUIAK immutable input packages and bounded comparisons that do not block local analysis.
 Keep Core ML, signed application, and Apple-runtime checks on an appropriate Mac.
 Use exact transfer receipts. Preserve originals and remove shared copies only under the agreed receipt rules.
 Stored, forwarded, accepted, running, completed, and independently verified remain separate states.
@@ -321,7 +321,7 @@ Continue existing iOS work independently. Standard tvOS evidence does not establ
 | Order | Complete outcome | Parallel work | Stop condition |
 | --- | --- | --- | --- |
 | 1 | Publish and qualify the privacy-corrected optional tvOS preview | Freeze the small-control comparison from retained evidence | Public release needs the maintainer; host qualification needs actual TTR results |
-| 2 | Diagnose and test 1 detail-preserving transition correction | training-host-NUIAK audits cached labels and group exposure | Stop a failed hypothesis; preserve the full regression report |
+| 2 | Diagnose and test 1 detail-preserving transition correction | BigDog-NUIAK audits cached labels and group exposure | Stop a failed hypothesis; preserve the full regression report |
 | 3 | Complete 1 opt-in feedback cycle | Prepare missing real-app evaluation groups | Uncertain labels block admission, not software work |
 | 4 | Improve single-image focus and artwork transfer | Continue the independent iOS label-policy experiment | Separate model gates and evaluation roles remain unchanged |
 | 5 | Complete broader platform qualification and selected consumer work | Prepare gated future-feature inputs | Do not start gated models or change taxonomies without their prerequisites |

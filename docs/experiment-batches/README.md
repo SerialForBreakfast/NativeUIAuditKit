@@ -30,7 +30,7 @@ This command does not replace the queue or start execution.
   "jobs": [{
     "version": "hcf-template-description-v1",
     "id": "example-selection-comparison",
-    "owner": "research-host-NUIAK",
+    "owner": "Maximum-mini-NUIAK",
     "template": "T15",
     "question": "Does the candidate recover errors without losing previous successes?",
     "decision": "Reject losses. Review gains before preparing another training run.",

@@ -21,7 +21,7 @@ class KernelSettingsTests(unittest.TestCase):
         self.kernel = q.local_path(q.ROOT, self.spec['template']['inputs']['kernel']['path'])
 
     def description(self, parameters):
-        return dict(version='hcf-template-description-v1', id='kernel-test', owner='research-host-NUIAK', template='T25',
+        return dict(version='hcf-template-description-v1', id='kernel-test', owner='Maximum-mini-NUIAK', template='T25',
                     question='Does a fixed kernel relaxation produce proposals on missed frames?',
                     decision='Test only; the job decides nothing about the models.',
                     inputs=self.spec['template']['inputs'], dependencies=[], parameters=parameters)

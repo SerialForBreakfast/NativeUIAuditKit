@@ -35,7 +35,7 @@ class HCF397Tests(unittest.TestCase):
         self.inputs = q.load(SOURCE)['template']['inputs']
 
     def description(self, parameters):
-        return dict(version='hcf-template-description-v1', id='taxonomy-test', owner='research-host-NUIAK', template='T20',
+        return dict(version='hcf-template-description-v1', id='taxonomy-test', owner='Maximum-mini-NUIAK', template='T20',
                     question='Which frozen modes explain the wrong selections of the outline rule?',
                     decision='Test only; the job decides nothing about the models.', inputs=self.inputs,
                     dependencies=[], parameters=parameters)

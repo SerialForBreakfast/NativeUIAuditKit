@@ -1,6 +1,6 @@
 # DASHBOARD406 — pending job audit
 
-Owner: research-host-NUIAK. Date: 2026-10-14.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-14.
 
 ## Findings
 
@@ -314,3 +314,4 @@ The initial page request exceeds the browser navigation timeout. The page subseq
 
 Logs: `.build/dashboard406-tests-final.log`, `.build/dashboard406-swift.log`, and `.build/dashboard406-server.log`.
 The estimate is 20–40 min. Total task elapsed time was not instrumented; individual checks have measured times above.
+

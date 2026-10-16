@@ -14,7 +14,7 @@ INPUTS = {'bundle': {'file': 'Research/Experiments/backlog405-native-inputs.json
 
 
 def record(**plan):
-    value = dict(template='T41', owner='research-host-NUIAK', jobPrefix='t410', rule='any-loss', control='control',
+    value = dict(template='T41', owner='Maximum-mini-NUIAK', jobPrefix='t410', rule='any-loss', control='control',
                  question='Does a fixed one-pixel shift of the known box lose previous correct selections?',
                  decision='Record the smallest losing shift as the localization tolerance.',
                  outcomes=dict(supported='Prioritize localization repair.', contradicted='Shift is tolerated.',
@@ -24,7 +24,7 @@ def record(**plan):
                        dict(id='dxp1', parameters=dict(intervention=dict(kind='translate', dx=1, dy=0)))])
     value.update(plan)
     return dict(id='B405-999', title='Test record', priority=3, hypothesis='Small shifts change decisions.',
-                comparison='Known box versus shifted box', requirements=[dict(owner='research-host-NUIAK')],
+                comparison='Known box versus shifted box', requirements=[dict(owner='Maximum-mini-NUIAK')],
                 reconciliation=dict(disposition='unresolved', reason='open'), plan=value)
 
 
@@ -126,7 +126,7 @@ class AddTests(unittest.TestCase):
                      comparison='Confidence 0.10 versus 0.25 on the same cached predictions',
                      baseline='B405-011 at 0.25.', sourceEvidence=['Research/Plans/Backlog410.md'], template='T42',
                      outcomes=dict(supported='Calibrate thresholds.', contradicted='Review labels.'),
-                     requirements=[dict(owner='research-host-NUIAK', kind='data', missing='x', unblock='y')])
+                     requirements=[dict(owner='Maximum-mini-NUIAK', kind='data', missing='x', unblock='y')])
         value.update(change)
         return value
 
@@ -155,11 +155,11 @@ class AddTests(unittest.TestCase):
 
 class BlockerTests(unittest.TestCase):
     def test_rank_by_dependents(self):
-        def row(ident, template, deps=(), owner='research-host-NUIAK'):
+        def row(ident, template, deps=(), owner='Maximum-mini-NUIAK'):
             return dict(id=ident, template=dict(id=template), dependencies=list(deps),
                         reconciliation=dict(disposition='unresolved'),
                         requirements=[dict(owner=owner, kind='data', missing='m ' + ident)])
-        catalog = dict(experiments=[row('B405-001', 'missing-adapter'), row('B405-002', 'T03', owner='research-host-TTR'),
+        catalog = dict(experiments=[row('B405-001', 'missing-adapter'), row('B405-002', 'T03', owner='Maximum-mini-TTR'),
                                     row('B405-003', 'T41', ['B405-002']), row('B405-004', 'T41', ['B405-003'])])
         catalog['experiments'][3]['plan'] = {}
         ranked = p.blockers(catalog)
@@ -169,7 +169,7 @@ class BlockerTests(unittest.TestCase):
 
 class TableTests(unittest.TestCase):
     TEXT = ('# Tasks\n\n| ID | Owner | Status | Priority | Scientific question |\n| --- | --- | --- | --- | --- |\n'
-            '| B405-998 | research-host-TTR | Needs data | P1 | Old |\n| B405-999 | research-host-NUIAK | Needs adapter | P3 | Old |\n\nAfter.\n')
+            '| B405-998 | Maximum-mini-TTR | Needs data | P1 | Old |\n| B405-999 | Maximum-mini-NUIAK | Needs adapter | P3 | Old |\n\nAfter.\n')
 
     def catalog(self):
         other = record(); del other['plan']; other.update(id='B405-998', title='Unplanned')
@@ -178,8 +178,8 @@ class TableTests(unittest.TestCase):
     def test_render_replaces_then_round_trips(self):
         first = p.render_tasks(self.catalog(), self.TEXT)
         self.assertIn(p.TABLE_BEGIN, first)
-        self.assertIn('| B405-998 | research-host-TTR | Needs data | P3 | Unplanned | – | – |', first)
-        self.assertIn('| B405-999 | research-host-NUIAK | Awaiting review | P3 | Test record | 1/1 | – |', first)
+        self.assertIn('| B405-998 | Maximum-mini-TTR | Needs data | P3 | Unplanned | – | – |', first)
+        self.assertIn('| B405-999 | Maximum-mini-NUIAK | Awaiting review | P3 | Test record | 1/1 | – |', first)
         self.assertTrue(first.endswith('After.\n'))
         self.assertEqual(p.render_tasks(self.catalog(), first), first)
         import experiment_backlog

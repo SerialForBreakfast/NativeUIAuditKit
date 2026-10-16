@@ -110,7 +110,7 @@ class CapturePlanTests(unittest.TestCase):
         import backlog_pipeline as pipeline
         recipe=lambda f:dict(recipe=dict(file='reports/work/T45/'+f+'.json'))
         record=dict(id='B405-042',hypothesis='Native effect visibility differs by control family.',
-            comparison='Standard versus HCF by family.',plan=dict(template='T03',owner='research-host-NUIAK',
+            comparison='Standard versus HCF by family.',plan=dict(template='T03',owner='Maximum-mini-NUIAK',
             jobPrefix='t45-effect',rule='manual',control='button',
             question='Do native button, row, and tab bodies show a visible Standard and HCF focus effect?',
             decision='Restrict effect labels to families with observed visible evidence.',

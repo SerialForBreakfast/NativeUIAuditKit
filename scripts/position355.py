@@ -185,7 +185,7 @@ def register():
             for name in ('position355.py','appearance348.py','compare351.py','retained348.py'):
                 refs['scripts/'+name]=m.f.pin(q.ROOT/'scripts'/name)
             c['inputs']=list(refs.values());cp=folder/(eid+'-config.json');q.save(cp,c)
-            consumer=dict(version=q.SPEC_VERSION,id=eid,task='FOCUS355',owner='research-host-NUIAK',kind='screen',authority='diagnostic',
+            consumer=dict(version=q.SPEC_VERSION,id=eid,task='FOCUS355',owner='Maximum-mini-NUIAK',kind='screen',authority='diagnostic',
                 hypothesis='Test '+arm+' against retained successes and controlled native failures: '+suffix,
                 decisionRule='Report gains, losses, false changes, misses, and abstentions. Any lost previous success rejects replacement.',
                 inputs=c['inputs'],stage=[{'from':m.f.pin(cp),'to':'config.json'}],
@@ -204,7 +204,7 @@ def register():
 
 
 def report_spec(ident,deps):
-    return dict(version=q.SPEC_VERSION,id=ident,task='FOCUS355',owner='research-host-NUIAK',
+    return dict(version=q.SPEC_VERSION,id=ident,task='FOCUS355',owner='Maximum-mini-NUIAK',
         kind='screen',authority='diagnostic',hypothesis='Account for every comparison before judging a candidate.',
         decisionRule='Require all 24 comparisons per arm, target gains, and zero lost previous successes. Do not promote automatically.',
         inputs=[m.f.pin(Path(__file__))],dependencies=deps,

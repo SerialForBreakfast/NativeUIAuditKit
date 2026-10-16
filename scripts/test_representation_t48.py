@@ -87,7 +87,7 @@ class UnitTests(unittest.TestCase):
         doc = desc('t48-bad', dict(kind='none'), q.ROOT / BUNDLE); doc['inputs'].pop('tool')
         with self.assertRaisesRegex(ValueError, 'template_inputs'):
             templates.build(doc)
-        plan = dict(template='T48', owner='research-host-NUIAK', jobPrefix='t48-test', rule='any-loss', control='control',
+        plan = dict(template='T48', owner='Maximum-mini-NUIAK', jobPrefix='t48-test', rule='any-loss', control='control',
                     question='T48 test plan: does an aspect-fit crop lose previous correct selections?',
                     decision='Reject the change if it loses a success.',
                     outcomes=dict(supported='x' * 12, contradicted='x' * 12, inconclusive='x' * 12),

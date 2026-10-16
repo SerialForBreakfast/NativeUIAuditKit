@@ -10,7 +10,7 @@ def build():
     folder=q.ROOT/'reports/work/HCF398'; base=folder/'source/outer-ring-v2-source'
     original=q.load(q.ROOT/'reports/work/HCF397/01-proposals.json')['inputs'];jobs=[]
     def add(name,template,question,decision,inputs,parameters=None,dependencies=None):
-        doc=dict(version='hcf-template-description-v1',id='hcf398-'+name,owner='research-host-NUIAK',template=template,
+        doc=dict(version='hcf-template-description-v1',id='hcf398-'+name,owner='Maximum-mini-NUIAK',template=template,
             question=question,decision=decision,inputs=inputs,parameters=parameters or {},dependencies=dependencies or [])
         path=folder/(name+'.json')
         if path.exists():q.require(q.load(path)==doc,'immutable_description')
@@ -73,6 +73,6 @@ def repair():
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--approve',action='store_true');parser.add_argument('--repair',action='store_true');args=parser.parse_args()
     for job in (repair() if args.repair else build()):
-        if args.approve:approval.approve(q.QUEUE,job,'agent:research-host-NUIAK',
+        if args.approve:approval.approve(q.QUEUE,job,'agent:Maximum-mini-NUIAK',
             'Maintainer approves retained TTR proposal comparisons. No capture, training, Standard change, or navigation authority.')
         print(job,flush=True)

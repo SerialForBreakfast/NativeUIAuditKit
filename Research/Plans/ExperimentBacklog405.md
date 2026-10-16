@@ -1,6 +1,6 @@
 # BACKLOG405 — scientific experiments and queue preparation
 
-Owner: research-host-NUIAK. Date: 2026-10-14.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-14.
 Scope: implement the maintainer-approved scientific backlog and prepare qualified queue descriptions.
 
 Update: the maintainer approves the first diagnostic. Execution and output verification pass. See [DASHBOARD406](Dashboard406.md).

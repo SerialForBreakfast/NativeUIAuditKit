@@ -1,6 +1,6 @@
 # RECONCILE409 — queue inventory, successors, and seed variation result
 
-Owner: research-host-NUIAK. Date: 2026-10-15.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-15.
 
 ## Inventory
 
@@ -14,7 +14,7 @@ No job was ready. The runner was active but had no approved work that passed rea
 | Exhausted, completed successor exists | 18 | Superseded |
 | Exhausted capture, no successor | 2 | Blocked on Fixture body geometry |
 | Blocked on those 2 captures | 4 | Blocked |
-| Peer inference receipt | 1 | Blocked on capture-host-TTR |
+| Peer inference receipt | 1 | Blocked on Sillycon-TTR |
 | Outdated readiness report | 1 | Withdrawn |
 
 Only `hcf375c-71-detector-train` failed with `timeout`. HCF388 supersedes it. No exhausted job needs only more time.
@@ -36,7 +36,7 @@ The evidence records these differences:
 - `hcf402-native-coverage` failed with HTTP 400. The split focused-r3 and no-focus-r4 pilots replace its recipe.
 - `hcf389-proposal-selection` read a dependency from the old checkout path. `hcf397-01-proposals` answers the same question.
 
-Specifications and attempts stay unchanged. The agent `agent:assistant-unblock409` revokes 12 stale approvals.
+Specifications and attempts stay unchanged. The agent `agent:claude-unblock409` revokes 12 stale approvals.
 Of these, 11 belong to superseded jobs. The 12th belongs to `hcf389-next-actions`.
 Its adapter writes fixed blocker text that HCF396 export and parity results contradict. Tasks.md HCF389 holds the current requirements.
 No job fails only the approval code check. Thus no approval renewal is necessary.
@@ -52,9 +52,9 @@ After a restart, the dashboard shows 715 complete, 82 superseded, 6 blocked, and
 
 | Jobs | Missing input | Owner | Resume condition |
 | --- | --- | --- | --- |
-| `hcf402-factor-small-controls`, `hcf402-factor-wide-controls` | The Fixture reports `rendered_body_geometry` as `unavailable` with `non_affine_transform` for the 72-point and wide controls. This occurs on the first HCF-profile frame. | capture-host-TTR owns the Fixture source. research-host-NUIAK verifies it locally. | A Fixture build reports measured body geometry for every planned control in both profiles. Then register `-r2` capture successors. |
-| `hcf402-report-r2-small-controls`, `hcf402-report-r2-wide-controls`, `hcf402-measure-small-controls`, `hcf402-measure-wide-controls` | Completed captures from the row above | research-host-NUIAK | Register report successors that depend on the `-r2` captures. Approve them after a fresh check. |
-| `hcf396-14-ttr-verification` | Actual observer inference and a receipt for `nuiak-hcf396-observer-v1` | capture-host-TTR | capture-host-TTR runs the consumer check after native Autonav qualification. research-host-NUIAK pins the receipt in a new successor. |
+| `hcf402-factor-small-controls`, `hcf402-factor-wide-controls` | The Fixture reports `rendered_body_geometry` as `unavailable` with `non_affine_transform` for the 72-point and wide controls. This occurs on the first HCF-profile frame. | Sillycon-TTR owns the Fixture source. Maximum-mini-NUIAK verifies it locally. | A Fixture build reports measured body geometry for every planned control in both profiles. Then register `-r2` capture successors. |
+| `hcf402-report-r2-small-controls`, `hcf402-report-r2-wide-controls`, `hcf402-measure-small-controls`, `hcf402-measure-wide-controls` | Completed captures from the row above | Maximum-mini-NUIAK | Register report successors that depend on the `-r2` captures. Approve them after a fresh check. |
+| `hcf396-14-ttr-verification` | Actual observer inference and a receipt for `nuiak-hcf396-observer-v1` | Sillycon-TTR | Sillycon-TTR runs the consumer check after native Autonav qualification. Maximum-mini-NUIAK pins the receipt in a new successor. |
 
 Do not substitute requested bounds for unavailable native geometry.
 
@@ -65,8 +65,8 @@ No BACKLOG405 task is ready with existing inputs and templates. Thus no batch is
 - T37 already covers all 9 completed native captures through `native404-selection-00`–`08`. T40 joins those results.
 - 23 tasks need the missing `detector-case-match` adapter (ENG405-02).
 - 12 tasks need `temporal-evaluation`, and 11 tasks need `representation-comparison`. Neither adapter exists.
-- The T03 and T03-ios tasks need qualified Fixture recipes and focus manifests from research-host-TTR.
-- The T07 and T11 tasks need new native data, a frozen pipeline, or actual capture-host-TTR inference.
+- The T03 and T03-ios tasks need qualified Fixture recipes and focus manifests from Maximum-mini-TTR.
+- The T07 and T11 tasks need new native data, a frozen pipeline, or actual Sillycon-TTR inference.
 - B405-002 needs a scored box-intervention adapter. Its 74 retained frames are available.
 
 The ready duration is 0 s. Adapter work produces the next ready jobs. A new capture does not.

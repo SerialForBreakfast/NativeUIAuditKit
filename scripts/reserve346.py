@@ -170,7 +170,7 @@ def register():
     for mode,hypothesis,rule in TESTS:
         id='focus346-'+mode;q.require(not (q.QUEUE/'jobs'/id).exists(),'existing_job')
         config=folder/(id+'-config.json');q.save(config,dict(inputs=refs,manifest=manifest,mode=mode))
-        spec=dict(version=q.SPEC_VERSION,id=id,task='FOCUS346',owner='research-host-NUIAK',kind='screen',authority='diagnostic',
+        spec=dict(version=q.SPEC_VERSION,id=id,task='FOCUS346',owner='Maximum-mini-NUIAK',kind='screen',authority='diagnostic',
             hypothesis=hypothesis,decisionRule=rule+' Keep all original-label counts and lost-success cases. No automatic model change.',
             adapter=dict(type='python-callable',steps=['reserve346.run'],outputAttributes=['reserve346.OUT']),
             inputs=refs,stage=[{'from':pin(config),'to':'config.json'}],limits=dict(timeoutSeconds=800,maxOutputBytes=100_000_000,maxAttempts=1))

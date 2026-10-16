@@ -17,7 +17,7 @@ def build():
         q.require(any(r['path']==name and r['sha256']==ref['sha256'] for r in result['outputs']),'producer_changed')
         return ref
     def add(name,template,question,decision,inputs,parameters=None,dependencies=None):
-        doc=dict(version='hcf-template-description-v1',id='hcf401-'+name,owner='research-host-NUIAK',template=template,
+        doc=dict(version='hcf-template-description-v1',id='hcf401-'+name,owner='Maximum-mini-NUIAK',template=template,
             question=question,decision=decision,inputs=inputs,parameters=parameters or {},dependencies=dependencies or [])
         save(folder/(name+'.json'),doc);templates.register(doc);jobs.append(doc['id']);return doc['id']
     def dep(job,name):
@@ -60,6 +60,6 @@ def build():
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--approve',action='store_true');args=parser.parse_args()
     for job in build():
-        if args.approve:approval.approve(q.QUEUE,job,'agent:research-host-NUIAK',
+        if args.approve:approval.approve(q.QUEUE,job,'agent:Maximum-mini-NUIAK',
             'Maintainer approves fixed mapping on separate inspected groups. Preserve Standard, models, crops, and prior successes.')
         print(job,flush=True)

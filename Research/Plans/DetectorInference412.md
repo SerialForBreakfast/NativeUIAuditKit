@@ -1,6 +1,6 @@
 # INFERENCE412 — T43 detector-inference template
 
-Owner: research-host-NUIAK. Date: 2026-10-15.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-15.
 
 ## Purpose
 

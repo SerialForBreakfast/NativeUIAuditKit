@@ -34,7 +34,7 @@ def register():
             ['scripts/retained348.py','scripts/appearance348.py','scripts/report_additive341.py','scripts/edge329.py']]
         inputs.append(m.f.pin(m.a.e.OUT/'run/last.pt'))
         config=folder/(identity+'-config.json');q.save(config,dict(inputs=inputs,models=models,sources=sources))
-        spec=dict(version=q.SPEC_VERSION,id=identity,task='FOCUS348',owner='research-host-NUIAK',kind='screen',authority='diagnostic',
+        spec=dict(version=q.SPEC_VERSION,id=identity,task='FOCUS348',owner='Maximum-mini-NUIAK',kind='screen',authority='diagnostic',
             hypothesis='Appearance augmentation preserves retained authored neighbor and placeholder successes.',
             decisionRule='Reject a replacement with any lost previous success. Keep thresholds 0.15/0.85.',inputs=inputs,
             adapter=dict(type='python-callable',steps=['retained348.run'],outputAttributes=['retained348.OUT']),

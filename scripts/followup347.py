@@ -158,7 +158,7 @@ def register():
     for suffix,settings,inputs,hypothesis,rule in jobs:
         id='focus347-'+suffix;q.require(not (q.QUEUE/'jobs'/id).exists(),'existing_job')
         config=folder/(id+'-config.json');q.save(config,dict(settings,manifest=manifest,inputs=inputs))
-        spec=dict(version=q.SPEC_VERSION,id=id,task='FOCUS347',owner='research-host-NUIAK',kind='screen',authority='diagnostic',
+        spec=dict(version=q.SPEC_VERSION,id=id,task='FOCUS347',owner='Maximum-mini-NUIAK',kind='screen',authority='diagnostic',
             hypothesis=hypothesis,decisionRule=rule,inputs=inputs,stage=[{'from':pin(config),'to':'config.json'}],
             adapter=dict(type='python-callable',steps=['followup347.run'],outputAttributes=['followup347.OUT']),
             limits=dict(timeoutSeconds=800,maxOutputBytes=100_000_000,maxAttempts=1))
