@@ -62,8 +62,8 @@ PYTHONPATH=scripts .venv-yolo/bin/python scripts/experiment_batch402.py register
 Repeat `--approve` only for individually reviewed jobs.
 Without that option, registration grants no execution approval.
 The detached runner performs its existing readiness and resource checks.
-Batch approval holds the existing dispatch lock. If a batch is running, approval returns `resource_busy` without stopping it.
-Registration remains intact. Repeat admission at an idle boundary with the same descriptions and explicit job IDs.
+Approval uses its own lock and can proceed during execution. The runner checks approval before dispatch and after execution.
+Keep shared execution code changes at a qualified idle boundary. Preserve existing descriptions and submitted specifications.
 The inspector reports each branch independently. A missing input does not hide valid independent descriptions.
 Registration validates the selected batch before writing jobs.
 An interrupted registration can resume with the same immutable descriptions.
@@ -84,6 +84,20 @@ Changed inputs or execution sources require a successor ID, not an edited submit
 T33 reviews retained per-class metrics. It does not rerun inference or prove case-level preservation.
 T34 measures native proposal geometry. It does not prove full-screen focus selection.
 Use the existing comparison templates to preserve earlier successes before accepting a correction.
+
+### Native-control admission and matched exposure
+
+T53 admits retained native controls through an explicit role overlay. Inputs are `configuration` and `decision`.
+It verifies approved source hashes, observed focus, measured bodies, capture intervals, and group, layout, and pixel separation.
+Identical Standard and HCF pixels are allowed only when labels and roles agree. The artwork admission gate remains unchanged.
+
+T54 produces `crops.json` for matched T06 training. Inputs are `configuration`, `artwork`, and `native`.
+Its configuration fixes `arm`, `perLabel`, and `nativePerLabel` under `native-control-membership-v1`.
+The control repeats artwork examples. The mixed arm replaces part of that exposure with equal button, row, and tab quotas.
+Both arms retain all unique artwork examples, equal class counts, and unchanged development rows.
+It rejects changed crops, preprocessing differences, conflicting labels, and cross-role pixel duplicates.
+Use T06 with deduplication disabled and repeat 1 after this producer fixes exposure.
+These adapters qualify preparation. Their success does not establish model improvement.
 
 ## Scientific backlog
 

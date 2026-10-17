@@ -9,6 +9,8 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T54':({'configuration','artwork','native'},set(),'native_control_membership.run','artifact','diagnostic'),
+ 'T53':({'configuration','decision'},set(),'native_control_admission.run','artifact','diagnostic'),
  'T42':({'bundle'},{'slice','classes','groups','matching'},'detector_case_match411.run','artifact','diagnostic'),
  'T50':({'labels','baseline','tool'},{'proposals','slice'},'vision_proposals415.run','artifact','diagnostic'),
  'T51':({'bundle','tool'},{'arm','elementType'},'swift_fallback416.run','artifact','diagnostic'),
