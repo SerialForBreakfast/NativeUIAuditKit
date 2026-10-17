@@ -33,6 +33,48 @@ class KernelSettingsTests(unittest.TestCase):
         self.assertEqual(ring.kernel_source(self.kernel, 'frozen-v2', self.root), self.kernel)
         self.assertEqual(list(self.root.iterdir()), [])
 
+    def test_short_side_setting_changes_only_short_side_sampling(self):
+        path = ring.kernel_source(self.kernel, 'short-side-v1', self.root)
+        original, changed = self.kernel.read_text(), path.read_text()
+        self.assertIn('let inset = max(1, (hi - lo) / (hi - lo < 48 ? 3 : 5))', changed)
+        self.assertIn('outer-ring-v2-short-side-v1', changed)
+        self.assertIn('pixels[seed] >= 160', changed)                 # Brightness gate unchanged.
+        self.assertIn('support >= 0.65, contrast >= 0.12', changed)    # Support and contrast gates unchanged.
+        different = [(a, b) for a, b in zip(original.splitlines(), changed.splitlines()) if a != b]
+        self.assertEqual(len(different), 2)
+        templates.build(self.description(dict(kernelSettings='short-side-v1')))
+
+    def test_interpolation_setting_changes_only_the_drawing_quality(self):
+        path = ring.kernel_source(self.kernel, 'interpolation-high-v1', self.root)
+        original, changed = self.kernel.read_text(), path.read_text()
+        self.assertIn('context.interpolationQuality = .high', changed)
+        self.assertNotIn('context.interpolationQuality = .low', changed)
+        for gate in ('pixels[seed] >= 160', 'support >= 0.65, contrast >= 0.12', 'let inset = max(1, (hi - lo) / 5)', '960.0'):
+            self.assertIn(gate, changed)
+        different = [(a, b) for a, b in zip(original.splitlines(), changed.splitlines()) if a != b]
+        self.assertEqual(len(different), 2)
+        templates.build(self.description(dict(kernelSettings='interpolation-high-v1')))
+
+    def test_combined_setting_is_exactly_both_changes(self):
+        settings = ring.KERNEL_SETTINGS
+        combined = {old: new for old, new, _ in settings['interpolation-high-short-side-v1'] if 'version' not in old}
+        parts = {old: new for name in ('interpolation-high-v1', 'short-side-v1') for old, new, _ in settings[name] if 'version' not in old}
+        self.assertEqual(combined, parts)
+        path = ring.kernel_source(self.kernel, 'interpolation-high-short-side-v1', self.root)
+        different = [(a, b) for a, b in zip(self.kernel.read_text().splitlines(), path.read_text().splitlines()) if a != b]
+        self.assertEqual(len(different), 3)
+        templates.build(self.description(dict(kernelSettings='interpolation-high-short-side-v1')))
+
+    def test_inner_setting_is_the_combined_setting_plus_the_inner_search(self):
+        settings = ring.KERNEL_SETTINGS
+        inner = {old: new for old, new, _ in settings['interpolation-high-short-side-inner-v1'] if 'version' not in old}
+        combined = {old: new for old, new, _ in settings['interpolation-high-short-side-v1'] if 'version' not in old}
+        self.assertEqual(inner, dict(combined, **{'let inner = (1...band).map': 'let inner = (1...(band + 2)).map'}))
+        path = ring.kernel_source(self.kernel, 'interpolation-high-short-side-inner-v1', self.root)
+        different = [(a, b) for a, b in zip(self.kernel.read_text().splitlines(), path.read_text().splitlines()) if a != b]
+        self.assertEqual(len(different), 4)
+        templates.build(self.description(dict(kernelSettings='interpolation-high-short-side-inner-v1')))
+
     def test_settings_values_are_checked(self):
         templates.build(self.description(dict(kernelSettings='relaxed-v1')))
         with self.assertRaisesRegex(ValueError, 'kernel_settings'):

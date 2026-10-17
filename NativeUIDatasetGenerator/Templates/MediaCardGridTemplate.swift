@@ -115,7 +115,7 @@ public struct MediaCardGridConfig: Sendable {
             columnCount: cols,
             pageCount: pages,
             currentPage: Int(rng.next() % UInt64(pages)),
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

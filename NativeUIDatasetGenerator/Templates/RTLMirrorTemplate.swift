@@ -72,7 +72,7 @@ public struct RTLMirrorConfig: Sendable {
             toggleLabels: toggles,
             placeholder: corpus.email(),
             primaryButtonLabel: corpus.buttonLabel(),
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

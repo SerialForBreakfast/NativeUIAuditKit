@@ -151,6 +151,24 @@ def write_reads(attempt):
            truncated=len(paths) >= READS_LIMIT, files=paths), replace=True)
 
 
+def check_training_report(out, evidence, max_epochs):
+    """Check the training history and report fields. Template schema tests call this without a training run."""
+    history_path, report_path = (Path(out) / evidence[key] for key in ('history', 'trainingReport'))
+    if not history_path.is_file() or not report_path.is_file():
+        return 'training_history_missing'
+    history, report = q.load(history_path), q.load(report_path)
+    epochs = report.get('epochs') if isinstance(report, dict) else None
+    if (type(epochs) is not int or not 0 < epochs <= max_epochs
+            or not isinstance(history, list) or len(history) != epochs
+            or any(not isinstance(row, dict) or row.get('epoch') != index
+                   for index, row in enumerate(history, 1))):
+        return 'training_history_epoch_mismatch'
+    if any(not isinstance(row.get('trainLoss'), (int, float))
+           or not math.isfinite(row['trainLoss']) for row in history):
+        return 'training_history_loss_invalid'
+    return None
+
+
 def check_evidence(spec, attempt, out):
     """Return None when the declared evidence exists, or the reason it does not."""
     if spec.get('version') != SPEC_V2:
@@ -210,19 +228,9 @@ def check_evidence(spec, attempt, out):
             return 'training_weights_missing'
         if q.digest(weights) == spec['training']['initialization']['sha256']:
             return 'training_weights_unchanged'
-        history_path, report_path = (Path(out) / evidence[key] for key in ('history', 'trainingReport'))
-        if not history_path.is_file() or not report_path.is_file():
-            return 'training_history_missing'
-        history, report = q.load(history_path), q.load(report_path)
-        epochs = report.get('epochs')
-        if (type(epochs) is not int or not 0 < epochs <= spec['training']['epochs']
-                or not isinstance(history, list) or len(history) != epochs
-                or any(not isinstance(row, dict) or row.get('epoch') != index
-                       for index, row in enumerate(history, 1))):
-            return 'training_history_epoch_mismatch'
-        if any(not isinstance(row.get('trainLoss'), (int, float))
-               or not math.isfinite(row['trainLoss']) for row in history):
-            return 'training_history_loss_invalid'
+        problem = check_training_report(out, evidence, spec['training']['epochs'])
+        if problem:
+            return problem
     elif kind == 'evaluation':
         path = Path(out) / evidence['predictions']
         if not path.is_file():

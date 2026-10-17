@@ -70,7 +70,7 @@ public struct PopoverConfig: Sendable {
             title: corpus.navigationTitle(),
             actionItems: items,
             anchorPosition: anchor,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

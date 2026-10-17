@@ -78,8 +78,13 @@ def save(path, value, replace=False):
     if replace:
         os.replace(tmp, path)
     else:
-        os.link(tmp, path)
-        tmp.unlink()
+        try:
+            os.link(tmp, path)
+        except FileExistsError:
+            # Another writer created the file after the check above. Report it like the check does.
+            raise ValueError('output_collision')
+        finally:
+            tmp.unlink()
 
 
 def load(path):
@@ -300,13 +305,19 @@ def submit(spec_path, queue=QUEUE, module_dir=MODULES):
 
 
 @contextlib.contextmanager
-def host_lock(path):
+def host_lock(path, wait=0):
+    """Hold an exclusive host lock. With wait > 0, retry for up to `wait` seconds before resource_busy."""
     path.parent.mkdir(parents=True, exist_ok=True)
+    deadline = time.monotonic() + wait
     with path.open('a+') as f:
-        try:
-            fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            raise ValueError('resource_busy')
+        while True:
+            try:
+                fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                if time.monotonic() >= deadline:
+                    raise ValueError('resource_busy')
+                time.sleep(0.05)
         yield f
 
 
@@ -614,8 +625,9 @@ def run_attempt(job, spec, number, module_dir, python, control=None, lease_fds=(
         result.update(status='failed', reason='process_failed')
     elif not within:
         result.update(status='failed', reason='output_limit')
-    elif not research_approval.is_approved(job.parents[1], spec):
-        result.update(status='failed', reason='approval_or_code_changed_during_run')
+    elif problem := research_approval.post_run_authorization(job.parents[1], spec, attempt):
+        # ACTIONS417: name the exact cause. Every approved code pin stays strict.
+        result.update(status='failed', reason=problem)
     else:
         import research_trust
         problem = research_trust.check_evidence(spec, attempt, output_dir(spec, attempt))

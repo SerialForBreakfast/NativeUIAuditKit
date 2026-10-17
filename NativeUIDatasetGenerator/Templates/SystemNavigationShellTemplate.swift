@@ -74,7 +74,7 @@ public struct SystemNavigationShellConfig: Sendable {
             title: title,
             searchPlaceholder: search,
             items: selectedItems,
-            colorScheme: isDark ? .dark : .light,
+            colorScheme: ScreenshotCapture.colorScheme(seeded: isDark ? .dark : .light),
             timeText: time
         )
     }

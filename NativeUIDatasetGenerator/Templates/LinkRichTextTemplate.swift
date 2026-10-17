@@ -95,7 +95,7 @@ public struct LinkRichTextConfig: Sendable {
             paragraphCount: paraCount,
             paragraphs: paras,
             links: links,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

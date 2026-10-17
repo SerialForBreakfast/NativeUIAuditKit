@@ -5130,3 +5130,13 @@ Accept an appearance label only from a matched light/dark pair that renders at l
 Mark unpaired frames `appearanceVerified: unverified`. Do not use them for an appearance quota.
 **Why:** A label that disagrees with the pixels gives false appearance coverage. Historical corpus sidecars from SwiftUI templates carry the same risk.
 See `Research/Plans/Backlog410.md`, section T46.
+
+### BP-118: A SwiftUI layout frame is not the drawn native body, and a body check must not count neighbours — ACTIONS417
+
+**Wrong:** Export the `GeometryReader` frame of a native control as its box. On iOS 26 a SwiftUI `Toggle` reports 61 pt, but its `UISwitch` draws 63 pt from the same origin, also in right-to-left layout.
+The search field box is the `UISearchTextField`, but the glass platter is 5 pt larger on each side. Dark mode shows the platter edge.
+A second error is in the check: a body that includes every foreground pixel near the box counts dividers, separators, scroll indicators, and overlapping labels as body.
+**Correct:** When a capture opts in (`ScreenshotCapture.repairsGeometry`), read the drawn native view from the UIKit hierarchy and use its extent. Grow each box that contained the old frame by the same amount.
+Measure the body as connected components that touch the box interior (T46 rule v2). Report rule v1 next to it. Before you use a changed rule, re-run it on the old outputs and check that no previous pass becomes a failure.
+**Why:** The 2 pt switch error was in every family with a toggle. On the B405-032 frames, the neighbour error alone made 3 families fail (Popover, RichContentFeed, iPadSidebar). A rule changed after results without the old-output check can hide real defects.
+See `Research/Plans/Backlog410.md`, section "ACTIONS417 — iOS generator repair".

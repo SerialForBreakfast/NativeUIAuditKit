@@ -78,15 +78,13 @@ def register_batch(batch, queue=q.QUEUE, approved=(), approver='agent:Maximum-mi
     for doc in docs:
         row = templates.register(doc, queue)
         results.append(row)
-    if approved:
-        # Use the existing dispatch lock. Do not stop or wait on an active batch.
-        lock=q.ROOT/'.build/research-queue.lock' if queue==q.QUEUE else queue/'batch-dispatch.lock'
-        with q.host_lock(lock):
-            for row in results:
-                if row['id'] in approved:
-                    approval.approve(queue, row['id'], approver,
-                                     'Maintainer-approved fixed comparison. Preserve Standard and previous successes.')
-                    row['approved'] = True
+    # ACTIONS417: approval serializes on approval.lock and does not wait for a running job.
+    # The runner rechecks the exact approval at dispatch and after execution.
+    for row in results:
+        if row['id'] in approved:
+            approval.approve(queue, row['id'], approver,
+                             'Maintainer-approved fixed comparison. Preserve Standard and previous successes.')
+            row['approved'] = True
     return dict(jobs=results, executionStarted=False)
 
 

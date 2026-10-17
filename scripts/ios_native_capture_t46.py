@@ -23,13 +23,15 @@ import subprocess
 import time
 import uuid
 
+import body_measure417
 import research_queue as q
 
 OUT = None
 TARGET = 'F3EF9DB8-0B0F-4757-B653-D1628269F6FF'
 BUNDLE = 'com.nativeuiauditkit.generatorrunner'
 METHOD = 'testRecipeCapture46'
-GENERATOR_VERSION = 't46-recipe-v1'
+# v2 renders the requested appearance and applies the ACTIONS417 geometry repairs. v1 builds cannot pass this binding.
+GENERATOR_VERSION = 't46-recipe-v2'
 BUILD = q.ROOT / '.build/ios-capture-t46'
 SCRATCH = q.ROOT / '.build/debug-output/t46'
 SCHEMA = q.ROOT / 'Research/schemas/annotation.schema.json'
@@ -274,7 +276,9 @@ def simulate(frames, build_doc, target, timeout, out):
             q.require(total <= 80_000_000, 'capture_copy_budget')
             shutil.copyfile(original, folder / original.name)
             q.require(q.digest(folder / original.name) == record[key], 'copy_hash')
-    return dict(device=device, osVersion=receipt['osVersion'], nativeSeconds=receipt['seconds'],
+    q.require(receipt.get('generatorVersion') == GENERATOR_VERSION, 'native_generator_version')
+    return dict(device=device, osVersion=receipt['osVersion'], generatorVersion=receipt['generatorVersion'],
+                nativeSeconds=receipt['seconds'],
                 testSeconds=round(seconds, 1), nativeOutput=str(source), result=q.relative(scratch / 'result.xcresult'),
                 restoration='No status bar or settings change. Test windows released. Native originals retained.')
 
@@ -402,7 +406,8 @@ def assess(frames, settings, folder):
                          sidecar=dict(path='frames/' + side.name, sha256=q.digest(side)),
                          group=frame['group'], role=frame['role'], family=frame['family'], seed=frame['seed'],
                          device=frame['device'], dynamicType=frame['dynamicType'], appearance=frame['appearance'],
-                         appearanceVerified=appearance, status=status, reasons=reasons[frame['id']],
+                         appearanceVerified=appearance, generatorVersion=GENERATOR_VERSION,
+                         status=status, reasons=reasons[frame['id']],
                          trainingEligible=frame['trainingEligible'] and status == 'eligible',
                          labels=len(labels[frame['id']]), rejectedLabels=len(rejected[frame['id']])))
     table = support(rows, labels, rejected, settings['supportedClasses'])
@@ -470,12 +475,14 @@ def measure_bodies(png, sidecar):
     scale = sidecar['image']['scale']
     margin, tolerance = BODY_MARGIN * scale, BODY_TOLERANCE * scale + 1
     rows = []
-    for element in sidecar['elements']:
-        if element['excluded'] or element['knownIssues']:
-            continue
-        b = element['boundsPixels']
-        x0, y0 = max(0, int(round(b['x']))), max(0, int(round(b['y'])))
-        x1, y1 = min(width, int(round(b['x'] + b['width']))), min(height, int(round(b['y'] + b['height'])))
+    admitted = [e for e in sidecar['elements'] if not (e['excluded'] or e['knownIssues'])]
+
+    def pixel_box(b):
+        return [max(0, int(round(b['x']))), max(0, int(round(b['y']))),
+                min(width, int(round(b['x'] + b['width']))), min(height, int(round(b['y'] + b['height'])))]
+    boxes = [pixel_box(e['boundsPixels']) for e in admitted]
+    for element in admitted:
+        x0, y0, x1, y1 = pixel_box(element['boundsPixels'])
         row = dict(id=element['id'], elementType=element['elementType'], box=[x0, y0, x1, y1])
         if x1 - x0 < 1 or y1 - y0 < 1:
             rows.append(dict(row, status='ambiguous', reason='outside-image')); continue
@@ -499,12 +506,25 @@ def measure_bodies(png, sidecar):
         body = [int(xs.min()) + wx0, int(ys.min()) + wy0, int(xs.max()) + 1 + wx0, int(ys.max()) + 1 + wy0]
         # Positive offset: the body is inside the box on that side. Negative: the body passes the box.
         offsets = [body[0] - x0, body[1] - y0, x1 - body[2], y1 - body[3]]
-        status = 'tight' if all(abs(o) <= tolerance for o in offsets) else \
-            'outside' if any(o < -tolerance for o in offsets) else 'inset'
+        status = body_status(offsets, tolerance)
         inter = max(0, min(x1, body[2]) - max(x0, body[0])) * max(0, min(y1, body[3]) - max(y0, body[1]))
         union = (x1 - x0) * (y1 - y0) + (body[2] - body[0]) * (body[3] - body[1]) - inter
-        rows.append(dict(row, status=status, body=body, offsetsPixels=offsets, iou=round(inter / union, 4)))
+        # Rule v2 (body_measure417): connected body, sibling pixels ignored. Rule v1 above stays the frozen gate.
+        found = body_measure417.body_v2(mask, inside, body_measure417.sibling_mask(row['box'], boxes,
+                                                                                (wx0, wy0, wx1, wy1)), scale)
+        v2 = dict(status='empty') if found is None else dict(status=body_status(
+            [found[0] + wx0 - x0, found[1] + wy0 - y0, x1 - found[2] - wx0, y1 - found[3] - wy0], tolerance),
+            body=[found[0] + wx0, found[1] + wy0, found[2] + wx0, found[3] + wy0])
+        if found is not None:
+            v2['offsetsPixels'] = [v2['body'][0] - x0, v2['body'][1] - y0, x1 - v2['body'][2], y1 - v2['body'][3]]
+        rows.append(dict(row, status=status, body=body, offsetsPixels=offsets, iou=round(inter / union, 4), v2=v2))
     return rows
+
+
+def body_status(offsets, tolerance):
+    """Positive offset: the body is inside the box on that side. Negative: the body passes the box."""
+    return 'tight' if all(abs(o) <= tolerance for o in offsets) else \
+        'outside' if any(o < -tolerance for o in offsets) else 'inset'
 
 
 def body_summary(frames, rows, folder):
@@ -515,31 +535,44 @@ def body_summary(frames, rows, folder):
         if frame['id'] in eligible:
             sidecar = q.load(folder / (frame['id'] + '.json'))
             measured[frame['id']] = measure_bodies(folder / (frame['id'] + '.png'), sidecar)
+    gate = dict(marginPoints=BODY_MARGIN, tolerancePoints=BODY_TOLERANCE, ringUniform=RING_UNIFORM,
+                ringMatch=RING_MATCH, foreground=FOREGROUND, emptyLimit=EMPTY_LIMIT,
+                rule='A family passes with 0 outside labels and at most 10% empty labels among measurable labels.')
+    summary = family_gate(frames, measured, lambda item: item['status'])
+    summary = dict(gate=gate, **summary)
+    # Rule v2 uses the same family gate. It is reported next to v1 and does not replace it.
+    summary['ruleV2'] = dict(family_gate(frames, measured, lambda item: item.get('v2', item)['status']),
+                             gapPoints=body_measure417.GAP,
+                             rule='Body = foreground components that touch the box interior, plus components within '
+                                  'the gap; pixels in an overlapping non-nested label box outside this box are ignored.')
+    return summary, measured
+
+
+def family_gate(frames, measured, status_of):
     statuses = ('tight', 'inset', 'outside', 'empty', 'ambiguous')
     by_family, by_class = defaultdict(Counter), defaultdict(Counter)
     for frame in frames:
         for item in measured.get(frame['id'], []):
-            by_family[frame['family']][item['status']] += 1
-            by_class[item['elementType']][item['status']] += 1
+            by_family[frame['family']][status_of(item)] += 1
+            by_class[item['elementType']][status_of(item)] += 1
     families = {}
     for name, counts in sorted(by_family.items()):
         usable = sum(counts[s] for s in ('tight', 'inset', 'outside', 'empty'))
         families[name] = dict({s: counts[s] for s in statuses}, measurable=usable,
                               passes=usable > 0 and counts['outside'] == 0 and counts['empty'] <= EMPTY_LIMIT * usable)
-    gate = dict(marginPoints=BODY_MARGIN, tolerancePoints=BODY_TOLERANCE, ringUniform=RING_UNIFORM,
-                ringMatch=RING_MATCH, foreground=FOREGROUND, emptyLimit=EMPTY_LIMIT,
-                rule='A family passes with 0 outside labels and at most 10% empty labels among measurable labels.')
-    summary = dict(gate=gate, families=families,
-                   classes={name: {s: counts[s] for s in statuses} for name, counts in sorted(by_class.items())},
-                   passingFamilies=sorted(n for n, v in families.items() if v['passes']),
-                   failingFamilies=sorted(n for n, v in families.items() if not v['passes']))
-    return summary, measured
+    return dict(families=families,
+                classes={name: {s: counts[s] for s in statuses} for name, counts in sorted(by_class.items())},
+                passingFamilies=sorted(n for n, v in families.items() if v['passes']),
+                failingFamilies=sorted(n for n, v in families.items() if not v['passes']))
 
 
 def write_outputs(out, frames, settings, recipe_ref, build_ref, meta):
     rows, table, checks = assess(frames, settings, out / 'frames')
+    # The manifest names the pinned build and the runtime that rendered every frame.
+    runtime = dict(device=meta['device'], osVersion=meta['osVersion'], generatorVersion=meta['generatorVersion'],
+                   sourcesMatchBuild=meta['sourcesMatchBuild'])
     manifest = dict(version='ios-native-capture-manifest-v1', schemaVersion='1.0', recipe=recipe_ref, build=build_ref,
-                    groupRule=settings['groups'], rows=rows)
+                    runtime=runtime, groupRule=settings['groups'], rows=rows)
     q.save(out / 'manifest.json', manifest)
     report = summarize(rows, table, checks, settings, meta)
     report['bytes'] = sum(p.stat().st_size for p in (out / 'frames').iterdir())

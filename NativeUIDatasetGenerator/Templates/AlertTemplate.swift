@@ -66,7 +66,7 @@ public struct AlertConfig: Sendable {
             message: hasMessage ? corpus.listRowSubtitle() : nil,
             buttonCount: Int(buttonCount),
             hasTextField: hasTF,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

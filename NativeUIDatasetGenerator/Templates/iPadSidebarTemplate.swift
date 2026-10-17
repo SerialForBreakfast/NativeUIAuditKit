@@ -96,7 +96,7 @@ public struct iPadSidebarConfig: Sendable {
             detailTitle: items[selIdx].label,
             detailBody: detBody,
             detailHue: hue,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

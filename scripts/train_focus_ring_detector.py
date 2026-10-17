@@ -150,12 +150,14 @@ def load_mobilenetv4_conv_small():
 
 
 def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=371, progress=None, profile='hcf',
-                     selection='best-development', deduplicate=False, resume=None, stop_after_epoch=None):
+                     selection='best-development', deduplicate=False, resume=None, stop_after_epoch=None, repeat=1):
     """Train the resident backbone on admitted crops. Keep audit rows out.
 
     selection='best-development' keeps the HCF371 behavior. selection='fixed-last' never uses development
     rows, so a later development comparison is not biased by checkpoint choice.
     deduplicate=True keeps 1 training row per (pixel hash, label), so repeated crops do not gain weight.
+    repeat=N presents each remaining unique training row N times per epoch, after deduplication. This is an
+    explicit exposure control. repeat=1 keeps the original sampling exactly.
     """
     import random
     import numpy as np
@@ -165,6 +167,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     import hashlib
     if epochs != 30 or batch != 16 or any(r['role'] not in ('train', 'development') for r in rows):
         raise ValueError('hcf_training_contract')
+    if type(repeat) is not int or not 1 <= repeat <= 16:
+        raise ValueError('hcf_repeat')
     if (resume is not None or stop_after_epoch is not None) and selection != 'fixed-last':
         raise ValueError('hcf_resume_requires_fixed_last')
     if stop_after_epoch is not None and (type(stop_after_epoch) is not int or not 1 <= stop_after_epoch <= epochs):
@@ -180,6 +184,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
         initialization=file_hash(initialization), trainer=file_hash(__file__),
         backbone=file_hash(Path(__file__).with_name('focus_ring_backbone.py')),
         torchVersion=str(torch.__version__), numpyVersion=np.__version__, device='mps')
+    if repeat != 1:
+        resume_contract['repeat'] = repeat  # Old contracts stay unchanged for repeat=1.
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
     torch.set_num_threads(2)
     if not torch.backends.mps.is_available():
@@ -253,9 +259,11 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
         random.setstate(checkpoint['pythonRNG']); np.random.set_state(checkpoint['numpyRNG'])
         best, stale = checkpoint['best'], checkpoint['stale']
         first_epoch = completed+1
+    presented = updates = 0
     for epoch in range(first_epoch, epochs+1):
-        model.train(); total = 0
-        order = torch.randperm(len(train)).tolist()
+        model.train(); total = 0; epoch_samples = 0
+        # repeat=1 draws the same permutation as before; modulo maps repeated draws back to unique rows.
+        order = [i % len(train) for i in torch.randperm(len(train)*repeat).tolist()]
         for start in range(0,len(order),batch):
             selected = [train[i] for i in order[start:start+batch]]
             # BatchNorm needs at least 2 examples at its final spatial stage.
@@ -264,7 +272,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
             loss = criterion(model(x).reshape(-1), y)
             if not torch.isfinite(loss): raise ValueError('hcf_nonfinite_loss')
             loss.backward(); optimizer.step(); total += float(loss.item())*len(selected)
-            if progress: progress(f'Train HCF crop model: epoch {epoch}/{epochs}', start+len(selected), len(train))
+            updates += 1; presented += len(selected); epoch_samples += len(selected)
+            if progress: progress(f'Train HCF crop model: epoch {epoch}/{epochs}', start+len(selected), len(order))
         model.eval(); validation = None
         if development:
             validation = 0
@@ -276,7 +285,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
             if not math.isfinite(validation): raise ValueError('hcf_nonfinite_validation')
         scheduler.step()
         state = {k:v.detach().cpu() for k,v in model.state_dict().items()}
-        history.append(dict(epoch=epoch, trainLoss=total/len(train), developmentLoss=validation))
+        history.append(dict(epoch=epoch, trainLoss=total/(len(train)*repeat) if repeat != 1 else total/len(train),
+                            developmentLoss=validation))
         if selection == 'fixed-last':
             torch.save(dict(state_dict=state, epoch=epoch, model=MODEL_NAME), output/'final.pt')
         improved = validation is not None and validation < best
@@ -295,7 +305,15 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     return dict(epochs=len(history), bestDevelopmentLoss=best if development else None, trainCrops=len(train),
         duplicateTrainRowsRemoved=duplicates, developmentCrops=len(development), selection=selection,
         earlyStopped=stale >= 10, resumeStateSaved=True, resumeQualified=False,
-        resumedFromEpoch=first_epoch-1, boundaryStopped=len(history)<epochs and stale<10)
+        resumedFromEpoch=first_epoch-1, boundaryStopped=len(history)<epochs and stale<10,
+        # ACTIONS417 exposure record, measured during this call (resumed epochs are not counted twice).
+        exposure=dict(uniqueTrainImages=len(train), repeat=repeat, samplesPresented=presented,
+                      optimizerUpdates=updates, batchSize=batch,
+                      finalBatch='kept; a 1-sample batch duplicates its sample for BatchNorm',
+                      learningRate='AdamW lr 3e-4; StepLR step 10 epochs, gamma 0.5',
+                      classBalance=dict(positive=positive, negative=len(train)-positive),
+                      initializationSHA256=resume_contract['initialization'], selection=selection,
+                      epochsRun=len(history)-(first_epoch-1)))
 
 
 def main() -> int:

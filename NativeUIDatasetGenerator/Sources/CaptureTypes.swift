@@ -39,6 +39,11 @@ public struct AnnotatedElement: Sendable {
     public let isEnabled: Bool?
     /// Native selected state when measured; not a synonym for switch value or focus.
     public let isSelected: Bool?
+    /// Occlusion that the capture measured, for example `"scroll"` for content under a bar.
+    /// `nil` keeps the historical rule: only the image boundary marks an element occluded.
+    public let occlusionType: String?
+    /// Exclusion that the capture measured, for example `"coveredByChrome"`. `nil` keeps the historical rule.
+    public let exclusionReason: String?
 
     public init(
         id: String,
@@ -49,7 +54,9 @@ public struct AnnotatedElement: Sendable {
         knownIssues: [String] = [],
         isFocused: Bool? = nil,
         isEnabled: Bool? = nil,
-        isSelected: Bool? = nil
+        isSelected: Bool? = nil,
+        occlusionType: String? = nil,
+        exclusionReason: String? = nil
     ) {
         self.id = id
         self.elementType = elementType
@@ -60,6 +67,8 @@ public struct AnnotatedElement: Sendable {
         self.isFocused = isFocused
         self.isEnabled = isEnabled
         self.isSelected = isSelected
+        self.occlusionType = occlusionType
+        self.exclusionReason = exclusionReason
     }
 }
 

@@ -930,3 +930,63 @@ The retrained control reproduces the `hcf375c-70-crop-train` fragility. The jitt
 - `jitter413-train-jitter` failed with `approval_or_code_changed_during_run`. A parallel session edited `template_adapters395.py` during the run.
 - `jitter413-train-jitter-r2` and `jitter413-jit2-t41-*` are identical successors. `reconciliation-jitter413.json` maps them.
 - Approval needs the runner dispatch lock. If `expand --register --approve-listed` reports `resource_busy`, the jobs are registered but not approved. Approve them when the runner releases the lock.
+
+## ACTIONS417 — iOS generator repair, 2026-10-16
+
+Work by Maximum-mini-NUIAK. This work repairs the iOS generator for T46: appearance, rendered bounds, and the toggle width.
+Every repair is opt-in. Only `testRecipeCapture46` turns it on. The default output does not change.
+
+### Changes
+
+- **Requested appearance (B405-035).** Each of the 44 SwiftUI config factories stores `ScreenshotCapture.colorScheme(seeded:)`.
+  T46 sets the task-local `requestedColorScheme`. The factory still draws its seeded value, so the other seeded fields do not change.
+  LiquidGlassNav and MapOverlays paint fixed bright backgrounds. In layout revision 2 they use dark backgrounds in dark mode.
+- **Geometry repairs (`ScreenshotCapture.repairsGeometry`, `GeometryRepair`).**
+  - Toggle: a SwiftUI `Toggle` reports 61 pt, but its `UISwitch` draws 63 pt (log line `T46_SWITCH`). The box uses the drawn switch. Each box that contained the toggle grows by the same amount.
+  - Search field: the box uses the glass platter, which is 5 pt larger on each side than the `UISearchTextField` (log line `T46_SEARCH`).
+  - Native scroll indicators are hidden. No template labels them.
+  - Cover pass: a label in the top strip above a navigation bar, or under a tab bar or toolbar, is clipped to its visible part and marked `occluded: scroll`. Below 20 % visible it is `excluded: coveredByChrome`. Chrome, overlays, and their content are exempt.
+  - Layout revision 2 (environment value `generatorGeometryRevision`): ContextMenu labels hug the text. The ChromeCoverage indicator box is the drawn capsule, 4 pt clear of the dividers.
+- **Records.** Sidecars of T46 captures say `generatorVersion: t46-recipe-v2`. The native receipt names the generator version and device model.
+  The T46 manifest has a `runtime` block (device, runtime, OS version, generator version, sources match build) next to the pinned build receipt.
+- **Body rule v2 (`scripts/body_measure417.py`).** Rule v1 stays the frozen gate. Rule v2 keeps only foreground components that touch the box interior, plus components within 2 pt. It ignores pixels inside an overlapping label box that is not nested with the measured box.
+  Before any v2 result was used, rule v2 was run on the 6 B405-032 outputs. Rule v1 reproduced exactly. Rule v2 removed 3 failures that had only neighbour pixels (Popover, RichContentFeed, iPadSidebar). No previous pass became a failure.
+
+### Verification
+
+- Default output: the HEAD source (`git archive`) and build r4 each rendered `testAllReconstructionFamiliesProbe` (116 default frames, 58 families).
+  - 106 frames are byte-identical PNGs. Their sidecars are equal after the elements are sorted by id.
+  - The other 10 frames (ProgressActivity, RichContentFeed, UIKitControls, PickerDateEntry, SearchResults) also differ between 2 HEAD runs. They contain animations or carets.
+  - Element order in raw sidecars changes between processes on HEAD as well (88 of 116 files between 2 HEAD runs).
+- `swift build` passes. `swift test --no-parallel` passes, exit 0, 0 failures. The parallel stall (ENG405-13) was not run again and is not fixed.
+- New tests: `AnnotationCoverTests` (3, SPM), `testGeometryRepairCovers417` (XCTest on the Simulator), `scripts/test_body_measure417.py` (7). `test_ios_native_capture_t46.py` passes (10, 1 live test skipped).
+- Build receipt: `.build/ios-capture-t46/build-receipt-r4.json`. Receipts r2 and r3 were probe builds. The r1 app is no longer in DerivedData.
+
+### Results (confirmed, 2026-10-16)
+
+Each arm took 13 s to 16 s and wrote 8 MB to 21 MB. All frames use the development role and are not training-eligible.
+
+**B405-135 — bounds after the repair: supported.** Seed 13, iPhone 17 Pro and iPhone SE, light and dark, 192 frames.
+- Rule v2: 45 of 48 families pass in both appearances and on both layouts. All 11 B405-032 failures with box errors are fixed.
+- These 3 families still fail. Their boxes are correct; the check cannot measure them:
+  - ChromeCoverage `tooltip_0`: a list divider shows through the transparent strip beside the 10 pt arrow.
+  - MapOverlays dark `navigationBar`: the map grid continues under the translucent bar.
+  - TabViewNavigation dark `dynamicIsland`: black on black, so the label is empty.
+- Rule v1 also fails Popover, RTLMirror, RichContentFeed, SettingsList, and iPadSidebar. They have only neighbour pixels.
+- Next action: admit the 45 families to bounds-qualified generation in light and dark. Keep the 3 families as unmeasured, not as passes.
+
+**B405-136 — Dynamic Type after the repair: supported.** Seed 11, large and accessibilityLarge, light, Pro, 96 frames.
+- 44 SwiftUI families change label geometry. The 4 UIKit families do not, because they use fixed fonts.
+- The same 7 families as in B405-034 add rejected labels at accessibilityLarge. SettingsList adds 1 label that is excluded as `coveredByChrome`.
+- At accessibilityLarge, text passes its box in ContextMenu, KitchenSink, iPadSidebar, MenuButton, and SearchResults. LoadingSkeleton has no measurable label.
+- Next action: keep Dynamic Type variants for the families without new rejected labels. Exclude the accessibilityLarge variants of the 5 overflow families from bounds-qualified data.
+
+**B405-137 — light and dark after the repair: supported.** Seed 9, Pro, 96 frames. 48 of 48 families are paired-rendered (B405-035: 4).
+- Alert dark: the unbordered `textField_alertInput` is invisible (empty label). Review this label before Alert dark data is admitted.
+
+### Limits and follow-up
+
+- The historical iOS corpus keeps its BP-117 risk. Its sidecars were not regenerated.
+- The cover pass uses the full `UITabBar` frame. The iOS 26 tab bar is a floating capsule, so the pass can mark content beside the capsule as covered.
+- Simulator capture qualification for training data remains separate. No data role changed.
+- Time: estimate 2 h to 3 h, actual about 4.5 h. Rule v2, 4 builds, and the default-output comparison caused the overrun.

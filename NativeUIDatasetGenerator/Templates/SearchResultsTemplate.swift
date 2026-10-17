@@ -67,7 +67,7 @@ public struct SearchResultsConfig: Sendable {
             resultRows: rows,
             sectionHeader: showRecent ? "Recent" : "Results",
             showRecentSection: showRecent,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

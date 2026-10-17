@@ -12,6 +12,7 @@ CONTRACTS={
  'T42':({'bundle'},{'slice','classes','groups','matching'},'detector_case_match411.run','artifact','diagnostic'),
  'T50':({'labels','baseline','tool'},{'proposals','slice'},'vision_proposals415.run','artifact','diagnostic'),
  'T51':({'bundle','tool'},{'arm','elementType'},'swift_fallback416.run','artifact','diagnostic'),
+ 'T52':({'bundle','model','tool'},set(),'ring_pixels420.run','artifact','diagnostic'),
  'T43':({'labels','baseline','model'},{'engine','confidence','imageSize','slice'},'detector_inference412.run','artifact','diagnostic'),
  'T44':({'manifests','quotas'},{'quotaSet','eligibility','dimensions'},'quota_comparison413.run','artifact','diagnostic'),
  'T46':({'recipe','generator'},{'target','timeoutSeconds'},'ios_native_capture_t46.run','artifact','diagnostic'),

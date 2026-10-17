@@ -109,7 +109,7 @@ public struct PickerDateEntryConfig: Sendable {
             pickerStyle: style,
             includesTime: includesTime,
             primaryButtonLabel: corpus.buttonLabel(),
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

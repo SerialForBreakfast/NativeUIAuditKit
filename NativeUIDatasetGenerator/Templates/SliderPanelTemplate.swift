@@ -72,7 +72,7 @@ public struct SliderPanelConfig: Sendable {
         return SliderPanelConfig(
             title: corpus.navigationTitle(),
             rows: rows,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

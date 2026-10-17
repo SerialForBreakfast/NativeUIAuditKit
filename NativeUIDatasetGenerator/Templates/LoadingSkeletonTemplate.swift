@@ -74,7 +74,7 @@ public struct LoadingSkeletonConfig: Sendable {
             showNavBar: showNav,
             title: corpus.navigationTitle(),
             shimmerHue: shimmerHue,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

@@ -63,7 +63,7 @@ public struct RichContentFeedConfig: Sendable {
             locationName: location,
             cardTitles: selectedCards,
             showTooltip: showTip,
-            colorScheme: isDark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: isDark ? .dark : .light)
         )
     }
 }

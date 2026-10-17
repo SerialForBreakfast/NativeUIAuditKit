@@ -62,7 +62,7 @@ class DashboardTests(QueueTests):
         page = render_html({'jobs': [], 'backlog': value})
         self.assertIn('id="backlog-table"', page)
         self.assertIn('backlog-grooming cycle', page)
-        for text in ('id="glance-state"', 'id="glance-next"', 'id="superseded-rows"', 'No active or waiting jobs'):
+        for text in ('id="glance-state"', 'id="glance-next"', 'id="superseded-rows"', 'id="rows-empty"', 'No active or waiting jobs'):
             self.assertIn(text, page)
         self.assertIn('topBlockers', value)
         self.assertIsInstance(value['reviewPending'], list)

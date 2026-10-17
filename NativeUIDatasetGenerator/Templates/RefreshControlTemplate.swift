@@ -62,7 +62,7 @@ public struct RefreshControlConfig: Sendable {
             title: corpus.navigationTitle(),
             rowLabels: rows,
             isRefreshing: refreshing,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

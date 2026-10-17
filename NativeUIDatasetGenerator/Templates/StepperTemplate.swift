@@ -87,7 +87,7 @@ public struct StepperConfig: Sendable {
         return StepperConfig(
             title: corpus.navigationTitle(),
             rows: rows,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

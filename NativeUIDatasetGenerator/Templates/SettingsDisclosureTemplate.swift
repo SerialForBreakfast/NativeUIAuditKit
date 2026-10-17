@@ -98,7 +98,7 @@ public struct SettingsDisclosureConfig: Sendable {
             groups: groups,
             toggleLabels: toggleLabels,
             toggleStates: toggleStates,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

@@ -76,7 +76,7 @@ public struct LiquidGlassTabConfig: Sendable {
             tabBarItemCount: tabCount,
             showHomeIndicator: osProfile.hasHomeIndicator,
             hue: hue,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

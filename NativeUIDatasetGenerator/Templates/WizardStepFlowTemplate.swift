@@ -102,7 +102,7 @@ public struct WizardStepFlowConfig: Sendable {
             fieldValue: corpus.personName(),
             nextLabel: isLast ? "Done" : "Continue",
             backLabel: "Back",
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

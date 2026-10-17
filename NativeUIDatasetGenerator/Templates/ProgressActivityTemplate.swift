@@ -85,7 +85,7 @@ public struct ProgressActivityConfig: Sendable {
             cancelLabel: "Cancel",
             pageCount: pages,
             currentPage: Int(rng.next() % UInt64(pages)),
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

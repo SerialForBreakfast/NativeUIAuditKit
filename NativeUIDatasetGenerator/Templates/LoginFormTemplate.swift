@@ -71,7 +71,7 @@ public struct LoginFormConfig: Sendable {
             showForgotPassword: showForgot,
             showSignUpButton: showSignUp,
             emailErrorState: emailError,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

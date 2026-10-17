@@ -58,7 +58,7 @@ public struct AnalyticsDashboardConfig: Sendable {
             title: corpus.navigationTitle(),
             searchPlaceholder: "Search dashboards",
             cards: cards,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

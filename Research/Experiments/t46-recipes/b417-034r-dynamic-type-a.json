@@ -1,0 +1,56 @@
+{
+  "version": "ios-native-capture-recipe-v1",
+  "families": [
+    "AccountProfileForm",
+    "ActionSheet",
+    "Alert",
+    "AlertWithTextField",
+    "CardDetail",
+    "ChromeCoverage",
+    "ColorPicker",
+    "ContextMenu",
+    "EmptyState",
+    "FormValidation",
+    "GalleryPage",
+    "InteractiveControlPalette",
+    "iPadSidebar",
+    "KitchenSink",
+    "LinkRichText",
+    "LiquidGlassNav"
+  ],
+  "seeds": [
+    11
+  ],
+  "devices": [
+    "iPhone 17 Pro"
+  ],
+  "dynamicType": [
+    "large",
+    "accessibilityLarge"
+  ],
+  "appearance": [
+    "light"
+  ],
+  "groups": "family-seed",
+  "roles": {
+    "AccountProfileForm": "development",
+    "ActionSheet": "development",
+    "Alert": "development",
+    "AlertWithTextField": "development",
+    "CardDetail": "development",
+    "ChromeCoverage": "development",
+    "ColorPicker": "development",
+    "ContextMenu": "development",
+    "EmptyState": "development",
+    "FormValidation": "development",
+    "GalleryPage": "development",
+    "InteractiveControlPalette": "development",
+    "iPadSidebar": "development",
+    "KitchenSink": "development",
+    "LinkRichText": "development",
+    "LiquidGlassNav": "development"
+  },
+  "trainingEligible": false,
+  "supportedClasses": "taxonomy",
+  "maxFrames": 32
+}

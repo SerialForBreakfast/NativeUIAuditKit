@@ -106,7 +106,7 @@ public struct SettingsToggleDenseConfig: Sendable {
             section1Items: makeItems(c1),
             section2Header: sec2Headers[s2Hi],
             section2Items: makeItems(c2),
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

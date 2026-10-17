@@ -124,6 +124,7 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
 </div>
 <div class="section-header"><span>Active and waiting jobs</span> <span id="backlog-count" class="small muted"></span></div>
 <table><thead><tr><th style="width:24px">#</th><th>Experiment / Task</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="rows"></tbody></table>
+<p id="rows-empty" class="small muted" hidden></p>
 <details id="completed"><summary id="completed-count">Completed test outcomes</summary>
   <p class="small muted">Completed jobs stay here. Completion does not mean model acceptance.</p>
   <table><thead><tr><th style="width:24px">#</th><th>Experiment / Outcome</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="completed-rows"></tbody></table>
@@ -376,8 +377,9 @@ function render(){
   if(j.supersededBy)add(item,'div','Answered by '+j.supersededBy+'.').className='small muted';
   $(stateOf(j)==='superseded'?'superseded-rows':isCompleted?'completed-rows':'rows').append(tr);
  }
- if(!$('rows').children.length){const tr=add($('rows'),'tr','');const td=add(tr,'td',filter||query?'No job matches this filter.':
-  'No active or waiting jobs. See Next steps at the top.');td.colSpan=3;td.className='small muted';}
+ // The empty-state note stays outside the table body, so row counts mean job rows only.
+ $('rows-empty').hidden=Boolean($('rows').children.length);
+ $('rows-empty').textContent=filter||query?'No job matches this filter.':'No active or waiting jobs. See Next steps at the top.';
  $('completed-count').textContent='Recorded outcomes, including changed code ('+jobs.filter(j=>['complete','drifted'].includes(j.state)).length+')';
  $('superseded-count').textContent='Superseded history ('+jobs.filter(j=>stateOf(j)==='superseded').length+')';
 }

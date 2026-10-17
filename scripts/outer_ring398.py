@@ -18,6 +18,27 @@ KERNEL_SETTINGS={
         ('pixels[n] >= 160','pixels[n] >= 128',1),
         ('peak >= 160.0/255 && delta >= 0.12','peak >= 128.0/255 && delta >= 0.08',1),
         ('support >= 0.65, contrast >= 0.12','support >= 0.50, contrast >= 0.08',1)],
+    # B405-148: sides shorter than 48 analysis px sample their middle third, not their middle 60 %.
+    # B405-147 shows that short rounded sides of small controls fail side support at the corners. All gates stay.
+    'short-side-v1':[
+        ('static let version = "outer-ring-v2"','static let version = "outer-ring-v2-short-side-v1"',1),
+        ('let inset = max(1, (hi - lo) / 5)','let inset = max(1, (hi - lo) / (hi - lo < 48 ? 3 : 5))',1)],
+    # B405-150: draw the 960 px analysis buffer with high-quality interpolation. B405-148 shows that the
+    # low-quality drawing erases thin rings on some sides. All gates and the analysis size stay.
+    'interpolation-high-v1':[
+        ('static let version = "outer-ring-v2"','static let version = "outer-ring-v2-interpolation-high-v1"',1),
+        ('context.interpolationQuality = .low','context.interpolationQuality = .high',1)],
+    # B405-152: exactly the drawing change of interpolation-high-v1 plus the sampling change of short-side-v1.
+    'interpolation-high-short-side-v1':[
+        ('static let version = "outer-ring-v2"','static let version = "outer-ring-v2-interpolation-high-short-side-v1"',1),
+        ('context.interpolationQuality = .low','context.interpolationQuality = .high',1),
+        ('let inset = max(1, (hi - lo) / 5)','let inset = max(1, (hi - lo) / (hi - lo < 48 ? 3 : 5))',1)],
+    # B405-155: the combined setting plus a 2 px wider inner dark-moat search. Thick rings keep offset 3 bright.
+    'interpolation-high-short-side-inner-v1':[
+        ('static let version = "outer-ring-v2"','static let version = "outer-ring-v2-interpolation-high-short-side-inner-v1"',1),
+        ('context.interpolationQuality = .low','context.interpolationQuality = .high',1),
+        ('let inset = max(1, (hi - lo) / 5)','let inset = max(1, (hi - lo) / (hi - lo < 48 ? 3 : 5))',1),
+        ('let inner = (1...band).map','let inner = (1...(band + 2)).map',1)],
 }
 
 

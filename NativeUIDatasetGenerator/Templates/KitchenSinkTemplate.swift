@@ -72,7 +72,7 @@ public struct KitchenSinkConfig: Sendable {
     public static func make(seed: UInt64, corpus: inout ContentCorpus) -> KitchenSinkConfig {
         var rng = SeededRNG(seed: seed)
         return KitchenSinkConfig(
-            colorScheme: rng.next() % 2 == 0 ? .dark : .light,
+            colorScheme: ScreenshotCapture.colorScheme(seeded: rng.next() % 2 == 0 ? .dark : .light),
             disclosureExpanded: rng.next() % 2 == 0,
             toggleStates: [rng.next() % 2 == 0, rng.next() % 2 == 0, rng.next() % 2 == 0],
             sliderValue: Double(rng.next() % 100) / 100.0,

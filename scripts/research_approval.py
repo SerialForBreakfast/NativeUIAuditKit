@@ -10,6 +10,7 @@ import re
 import shutil
 import time
 import uuid
+from pathlib import Path
 
 import research_queue as q
 import research_trust as t
@@ -53,6 +54,36 @@ def is_approved(queue, spec, doc=None, display_cache=False):
     hash_of = q.display_digest if display_cache else q.digest
     return all((q.ROOT / p['path']).is_file() and hash_of(q.ROOT / p['path']) == p['sha256']
                for p in checks.get('code', [])) and bool(checks.get('code'))
+
+
+def post_run_authorization(queue, spec, attempt):
+    """Return None when this job's own approval still authorizes the attempt, or the exact reason it does not.
+
+    Only this job's record matters: other approvals and revocations do not affect it.
+    Every approved code pin must keep its hash. This keeps the strict check; it does not narrow dependencies.
+    """
+    record = load(queue)['jobs'].get(spec['id'])
+    if record is None:
+        return 'approval_revoked_during_run'
+    used = q.load(Path(attempt) / 'approval.json')
+    checks = record.get('checks') or {}
+    if (record['sha256'] != q.text_digest(spec) or record.get('checksSHA256') != used.get('checksSHA256')
+            or not checks.get('code') or q.text_digest(checks) != record.get('checksSHA256')):
+        return 'approval_changed_during_run'
+    for pin in checks['code']:
+        path = q.ROOT / pin['path']
+        if not path.is_file() or q.digest(path) != pin['sha256']:
+            return 'code_changed_during_run:' + pin['path']
+    closure = Path(attempt) / 'closure.json'
+    if not closure.is_file():
+        return 'closure_record_missing'
+    try:
+        modules = q.load(closure)['modules']
+        q.require(isinstance(modules, list) and all(isinstance(m, dict) and {'path', 'sha256'} <= set(m)
+                                                    for m in modules), 'closure_record_invalid')
+    except (ValueError, KeyError, TypeError, OSError):
+        return 'closure_record_invalid'
+    return None
 
 
 def code_pins(spec, modules):
@@ -119,7 +150,8 @@ def approve(queue, ident, approver, reason, modules=q.MODULES):
     q.require(isinstance(approver, str) and APPROVER.fullmatch(approver), 'approver_format')
     q.require(isinstance(reason, str) and len(reason.strip()) >= 12, 'approval_reason')
     q.require(approver != 'test' or queue.resolve() != q.QUEUE.resolve(), 'test_approver_on_live_queue')
-    with q.host_lock(queue / 'approval.lock'):
+    # ACTIONS417: approvals serialize on approval.lock only, with a bounded wait. They never wait for a running job.
+    with q.host_lock(queue / 'approval.lock', wait=30):
         doc = load(queue)
         existing = doc['jobs'].get(ident)
         current = q.text_digest(q.load(queue / 'jobs' / ident / 'spec.json'))
@@ -141,7 +173,7 @@ def approve(queue, ident, approver, reason, modules=q.MODULES):
 def revoke(queue, ident, by, reason):
     q.require(isinstance(by, str) and APPROVER.fullmatch(by), 'approver_format')
     q.require(isinstance(reason, str) and reason.strip(), 'revoke_reason')
-    with q.host_lock(queue / 'approval.lock'):
+    with q.host_lock(queue / 'approval.lock', wait=30):
         doc = load(queue)
         q.require(ident in doc['jobs'], 'not_approved')
         record = doc['jobs'].pop(ident)

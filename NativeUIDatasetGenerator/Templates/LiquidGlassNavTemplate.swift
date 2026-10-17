@@ -66,7 +66,7 @@ public struct LiquidGlassNavConfig: Sendable {
             contentLabels: labels,
             primaryButtonLabel: corpus.buttonLabel(),
             hue: hue,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }
@@ -83,6 +83,7 @@ public struct LiquidGlassNavConfig: Sendable {
 /// **Platform scope:** iOS GeneratorRunner target only.
 public struct LiquidGlassNavTemplate: View {
     public let config: LiquidGlassNavConfig
+    @Environment(\.generatorGeometryRevision) private var geometryRevision
 
     public init(config: LiquidGlassNavConfig) {
         self.config = config
@@ -92,15 +93,20 @@ public struct LiquidGlassNavTemplate: View {
         Color(hue: config.hue, saturation: 0.7, brightness: 0.85)
     }
 
+    /// Revision 2 darkens the gradient in dark mode so the frame follows the requested scheme (ACTIONS417).
+    private func backgroundBrightness(_ light: Double) -> Double {
+        geometryRevision >= 2 && config.colorScheme == .dark ? light - 0.65 : light
+    }
+
     public var body: some View {
         NavigationStack {
             ZStack(alignment: .topLeading) {
                 // Colourful background gradient — exercises Liquid Glass translucency
                 LinearGradient(
                     colors: [
-                        Color(hue: config.hue, saturation: 0.4, brightness: 0.95),
+                        Color(hue: config.hue, saturation: 0.4, brightness: backgroundBrightness(0.95)),
                         Color(hue: (config.hue + 0.15).truncatingRemainder(dividingBy: 1.0),
-                              saturation: 0.3, brightness: 0.90),
+                              saturation: 0.3, brightness: backgroundBrightness(0.90)),
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
