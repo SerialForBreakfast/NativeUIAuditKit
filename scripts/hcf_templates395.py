@@ -6,7 +6,64 @@ from pathlib import Path
 import research_queue as q
 from experiment_templates import checked, pin
 
+CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
+
 CONTRACTS={
+ 'T91':({'membership','button','row','tab','tool'},{'arm'},'proposal_crop_training421.prepare','artifact','diagnostic'),
+ 'T92':({'admission'},set(),'proposal_crop_training421.qualify_labels','artifact','diagnostic'),
+ 'T89':({'configuration','initialization','membership'},set(),'detector_training419.run','training','training'),
+ 'T90':({'checkpoint'},set(),'detector_training419.checkpoint_review','artifact','diagnostic'),
+ 'T87':({'admission'},{'family'},'training_proposals419.run','artifact','diagnostic'),
+ 'T88':({'frames','model'},{'count','seed'},'training_proposals419.run','artifact','diagnostic'),
+ 'T86':({'checkpoints','trainingManifests'},{'mergeMode','recalibrateBn'},'fisher_model_soup418.run','artifact','diagnostic'),
+ 'T85':({'screenFeaturesManifest'},{'mode','containmentIoaThreshold'},'focus_graph_relation418.run','artifact','diagnostic'),
+ 'T84':({'poolManifest'},{'selectionStrategy','targetCount','uncertaintyWeight','seed'},'submodular_coreset_subset418.run','artifact','diagnostic'),
+ 'T83':({'cropsManifest'},{'interventionMode','haloOuterPx','bodyInnerInsetPx'},'context_counterfactual_crops418.run','artifact','diagnostic'),
+ 'T82':({'observationsPath','adversarialPath'},{'anchorPhrase','maxTailCost'},'prefix_ocr_route_matcher418.run','artifact','diagnostic'),
+ 'T81':({'configuration','initialization','membership','evalLabels'},{'projIouWeight','enableStripPooling','seed'},'strip_iou_detector418.run','training','training'),
+ 'T80':({'calibrationReports','evaluationReports'},{'alpha','temperature','oodEnergyThreshold'},'conformal_energy_abstention418.run','artifact','diagnostic'),
+ 'T79':({'configuration','initialization','membership','selectionGroups'},{'mode','droEta','droSizePenalty','seed'},'group_dro_pareto418.run','training','training'),
+ 'T78':({'configuration','initialization','membership','trainingMatches'},{'samplerMode','enableStnRefiner','stnLossWeight','seed'},'copula_proposal_stn418.run','training','training'),
+ 'T77':({'configuration','initialization','membership','anchorManifest'},{'subspaceEnergy','lpWarmupEpochs','seed'},'nullspace_focus_train418.run','training','training'),
+ 'T76':({'primaryPreds','secondaryPreds','groundTruth','renderedBodies'},{'minConfidence','iouMatchThreshold'},'confident_label_auditor418.run','artifact','diagnostic'),
+ 'T75':({'pairsManifest'},{'scrollPhaseThreshold','coneHalfAngleDeg'},'kinematic_transition418.run','artifact','diagnostic'),
+ 'T74':({'checkpoint','calibrationManifest'},{'compressionMode','marginTemperature','flipPenalty','maxBytes'},'distilled_coreml_compress418.run','artifact','diagnostic'),
+ 'T73':({'model','labels'},{'tileLayout','scaleGatePolicy','wbfIouThreshold','confidence'},'sahi_wbf_inference418.run','artifact','diagnostic'),
+ 'T72':({'failureReport'},{'twinFamily','pairCount','seed'},'counterfactual_synthesis418.run','artifact','diagnostic'),
+ 'T71':({'manifest'},{'kernelVariant','dipoleZMin','moatContrastMin'},'dipole_ring_proposals418.run','artifact','diagnostic'),
+ 'T70':({'configuration','initialization','membership'},{'encodingMode','stripHeight','perimeterWidth','seed'},'coord_ring_crop418.run','training','training'),
+ 'T69':({'configuration','initialization','membership','screenGroups'},{'supconWeight','listmleWeight','temperature','seed'},'set_contrastive_focus418.run','training','training'),
+ 'T68':({'configuration','initialization','membership','styleRefs'},{'beta','blendProb','seed'},'fda_transfer418.run','training','training'),
+ 'T67':({'configuration','initialization','membership','evalLabels'},{'nwdWeight','nwdConstant','smallAreaMax','seed'},'nwd_detector_train418.run','training','training'),
+ 'T66':({'highReport','highReceipt','lowReport','lowReceipt'},{'policy'},'proposal_tier_policy.run','artifact','diagnostic'),
+ 'T65':({'labels','baseline','candidate'},{'confidence'},'detector_scorecard_comparison.run','artifact','diagnostic'),
+ 'T64':({'bundle'},set(),'native_selection_comparison.run','artifact','diagnostic'),
+ 'T62':({'archive'},set(),'consumer_crop_comparison.prepare','artifact','diagnostic'),
+ 'T63':({'membership','model','tool'},{'backend'},'consumer_crop_comparison.score','artifact','diagnostic'),
+ 'T60':({'report','receipt'},{'policy'},'cached_focus_policy.run','artifact','diagnostic'),
+ 'T61':({'report','receipt'},set(),'proposal_geometry_audit.run','artifact','diagnostic'),
+ 'T59':({'capture'},set(),'capture_detector_inputs.run','artifact','diagnostic'),
+ 'T58':({'button','row','tab'},set(),'detector_focus_pilot.report','artifact','diagnostic'),
+ 'T57':({'capture','scorecard','ringProposals','mapping','baseline','candidate','baselineSelection','candidateSelection','tool'},set(),'detector_focus_pilot.run','artifact','diagnostic'),
+ 'T55':({'configuration'},set(),'detector_native_inputs.run','artifact','diagnostic'),
+ 'T56':({'labels','model'},{'engine','confidence','imageSize','slice'},'detector_native_inference.run','artifact','diagnostic'),
+ 'T54':({'configuration','artwork','native'},set(),'native_control_membership.run','artifact','diagnostic'),
+ 'T53':({'configuration','decision'},set(),'native_control_admission.run','artifact','diagnostic'),
+ 'T42':({'bundle'},{'slice','classes','groups','matching'},'detector_case_match411.run','artifact','diagnostic'),
+ 'T50':({'labels','baseline','tool'},{'proposals','slice'},'vision_proposals415.run','artifact','diagnostic'),
+ 'T51':({'bundle','tool'},{'arm','elementType'},'swift_fallback416.run','artifact','diagnostic'),
+ 'T52':({'bundle','model','tool'},set(),'ring_pixels420.run','artifact','diagnostic'),
+ 'T43':({'labels','baseline','model'},{'engine','confidence','imageSize','slice'},'detector_inference412.run','artifact','diagnostic'),
+ 'T44':({'manifests','quotas'},{'quotaSet','eligibility','dimensions'},'quota_comparison413.run','artifact','diagnostic'),
+ 'T46':({'recipe','generator'},{'target','timeoutSeconds'},'ios_native_capture_t46.run','artifact','diagnostic'),
+ 'T47':({'pairs','model'},{'direction','thresholds'},'temporal_pairs414.run','artifact','diagnostic'),
+ 'T49':({'configuration','initialization','membership','admission','pairs','prior'},{'arm','seed'},'transition_training415.training','training','training'),
+ 'T41':({'bundle','model','tool'},{'source','intervention'},'box_intervention410.run','artifact','diagnostic'),
+ 'T48':({'bundle','model','tool'},{'source','representation'},'representation_t48.run','artifact','diagnostic'),
+ 'T40':({'bundle'},set(),'cached_selection405.run','artifact','diagnostic'),
+ 'T37':({'capture','proposals','geometry','mapping','model','tool'},set(),'native_selection404.run','artifact','diagnostic'),
+ 'T39':({'qualification'},set(),'checkpoint_negative404.run','artifact','diagnostic'),
+ 'T38':({'configuration','initialization','membership'},set(),'checkpoint404.qualify','training','training'),
  'T01':({'catalog'},set(),'template_adapters395.run','artifact','diagnostic'),
  'T02':({'catalog','policy'},set(),'template_adapters395.run','artifact','diagnostic'),
  'T03':({'recipe'},set(),'template_bridge395.capture','capture','capture'),
@@ -44,16 +101,71 @@ CONTRACTS={
  'T36':({'capture'},set(),'profile_pixels402.run','artifact','diagnostic'),
 }
 
+NOVEL418_MODULES = {f'T{n}': CONTRACTS[f'T{n}'][2].split('.')[0] for n in range(67, 87)}
+
+
+def validate_novel418_parameters(template_id, values):
+    if template_id in NOVEL418_MODULES:
+        mod = __import__(NOVEL418_MODULES[template_id])
+        mod.parameters(values)
+
 
 def build(doc):
     required={'version','id','owner','template','question','decision','inputs','parameters','dependencies'}
-    q.require(set(doc)<=required|{'capture','training'} and required<=set(doc),'description_fields')
+    # BACKLOG410: optional catalog identity and decision text. Absent fields keep the original spec bytes.
+    q.require(set(doc)<=required|{'capture','training'}|CATALOG_FIELDS and required<=set(doc),'description_fields')
+    if 'task' in doc:q.require(isinstance(doc['task'],str) and q.ID.fullmatch(doc['task']),'description_task')
+    if 'outcomes' in doc:
+        q.require(isinstance(doc['outcomes'],dict) and {'supported','contradicted'}<=set(doc['outcomes'])
+                  <={'supported','contradicted','inconclusive'} and
+                  all(isinstance(v,str) and len(v.strip())>=12 for v in doc['outcomes'].values()),'description_outcomes')
+    for key in ('hypothesis','controlledComparison'):
+        if key in doc:q.require(isinstance(doc[key],str) and len(doc[key].strip())>=12,'description_'+key)
     q.require(doc['version']=='hcf-template-description-v1','description_version')
     q.require(doc['template'] in CONTRACTS,'template_unknown')
     inputs,parameters,step,kind,authority=CONTRACTS[doc['template']]
-    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'}}.get(doc['template'],set())
+    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'},'T41':{'candidate'},'T47':{'prior','rule'},'T56':{'baseline'}}.get(doc['template'],set())
     q.require(inputs<=set(doc['inputs']) and set(doc['inputs'])<=inputs|optional,'template_inputs')
-    q.require(set(doc['parameters'])==parameters,'template_parameters')
+    # T47 `scorer` is optional so that registered T47 specifications keep their identity.
+    # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
+    q.require(set(doc['parameters'])-{'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'}}.get(doc['template'],set())==parameters,'template_parameters')
+    validate_novel418_parameters(doc['template'], doc['parameters'])
+    if doc['template']=='T41':
+        from box_intervention410 import parameters as intervention
+        intervention(doc['parameters'])
+    if doc['template']=='T48':
+        from representation_t48 import parameters as representation
+        representation(doc['parameters'])
+    if doc['template']=='T42':
+        from detector_case_match411 import parameters as case
+        case(doc['parameters'])
+    if doc['template']=='T50':
+        from vision_proposals415 import parameters as proposals
+        proposals(doc['parameters'])
+    if doc['template'] in ('T43','T56'):
+        from detector_inference412 import parameters as inference
+        inference(doc['parameters'])
+    if doc['template']=='T49':
+        from transition_training415 import parameters as transition
+        transition(doc['parameters'])
+    if doc['template']=='T47':
+        from temporal_pairs414 import parameters as temporal
+        temporal(doc['parameters'])
+    if doc['template']=='T44':
+        from quota_comparison413 import parameters as quota
+        quota(doc['parameters'])
+    if doc['template']=='T46':
+        from ios_native_capture_t46 import parameters as native
+        native(doc['parameters'])
+    if doc['template']=='T51':
+        from swift_fallback416 import parameters as fallback
+        fallback(doc['parameters'])
+    if doc['template']=='T25' and 'kernelSettings' in doc['parameters']:
+        from outer_ring398 import KERNEL_SETTINGS
+        q.require(doc['parameters']['kernelSettings'] in KERNEL_SETTINGS,'kernel_settings')
+    if doc['template']=='T20' and 'taxonomy' in doc['parameters']:
+        from template_analysis397 import TAXONOMY
+        q.require(doc['parameters']['taxonomy']==TAXONOMY,'taxonomy_unknown')
     for ref in doc['inputs'].values():
         if set(ref)=={'job','output'}:
             q.check_name(ref['output'])
@@ -62,7 +174,7 @@ def build(doc):
             q.require(doc['template'] not in ('T03','T05','T06','T07'),'binding_requires_pinned_inputs')
         else:checked(ref)
     if doc['template']=='T10':
-        compressed=doc['parameters']['precision']=='int8weights'
+        compressed=doc['parameters']['precision'] in ('int8weights','palette6weights')
         q.require(('sourceReport' in doc['inputs'])==compressed and
                   ('sourcePackage' in doc['inputs'])==compressed,'compression_inputs')
     q.require(('capture' in doc)==(authority=='capture'),'capture_contract')
@@ -72,7 +184,8 @@ def build(doc):
     if authority=='training':
         q.require(doc['training']['initialization']==doc['inputs']['initialization'],'training_initialization_binding')
         q.require(doc['inputs']['membership'] in doc['training']['membership'],'training_membership_binding')
-        q.require(doc['training']['epochs']==30 and doc['training']['resume']=='restart','training_variant')
+        # T49 keeps the frozen 10-epoch FOCUS366 recipe. Other training templates use 30 epochs.
+        q.require(doc['training']['epochs']==(10 if doc['template']=='T49' else 30) and doc['training']['resume']=='restart','training_variant')
         config=q.load(checked(doc['inputs']['configuration']))
         q.require(config['initialization']==doc['inputs']['initialization'],'training_configuration_binding')
     module=step.split('.')[0]
@@ -105,11 +218,12 @@ def build(doc):
     if doc['template'] in ('T04','T05','T06'):
         step='template_bridge395.native';module='template_bridge395'
         sources.append(pin(q.MODULES/(module+'.py')))
-    spec=dict(version='research-spec-v2',id=doc['id'],task='TEMPLATE395',owner=doc['owner'],kind='screen',
-        authority=authority,jobKind=kind,question=doc['question'],hypothesis=doc['question'],
-        controlledComparison='Use fixed inputs and existing implementations. Keep data roles and Standard models unchanged.',
-        decisionRule=doc['decision'],nextActionByOutcome=dict(supported='Review the verified output before preparing a dependent job.',
-            contradicted='Preserve the failure and repair its exact requirement before an explicit successor.'),
+    spec=dict(version='research-spec-v2',id=doc['id'],task=doc.get('task','TEMPLATE395'),owner=doc['owner'],kind='screen',
+        authority=authority,jobKind=kind,question=doc['question'],hypothesis=doc.get('hypothesis',doc['question']),
+        controlledComparison=doc.get('controlledComparison',
+            'Use fixed inputs and existing implementations. Keep data roles and Standard models unchanged.'),
+        decisionRule=doc['decision'],nextActionByOutcome=doc.get('outcomes',dict(supported='Review the verified output before preparing a dependent job.',
+            contradicted='Preserve the failure and repair its exact requirement before an explicit successor.')),
         inputs=list({p['path']:p for p in sources+pinned}.values()),
         dependencies=doc['dependencies'],stage=stage,evidence=evidence,
         adapter=dict(type='python-callable',steps=[step],outputAttributes=[module+'.OUT']),

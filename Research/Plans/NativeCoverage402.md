@@ -1,6 +1,6 @@
 # HCF402 — Native coverage and simpler batch preparation
 
-Owner: research-host-NUIAK. Date: 2026-10-14.
+Owner: Maximum-mini-NUIAK. Date: 2026-10-14.
 
 ## Outcome
 
@@ -128,7 +128,7 @@ Do not replace unavailable native geometry with requested bounds.
 The default Swift test host stalls. The native serial path passes 14 XCTest and 174 Swift Testing checks.
 The final focused Python suite passes 28 checks. No Standard weights or production thresholds change.
 
-capture-host-TTR acknowledges the consumer request and human approval but has not accepted execution.
+Sillycon-TTR acknowledges the consumer request and human approval but has not accepted execution.
 Its current priority is Autonav. Consumer verification remains unavailable, not failed.
 
 ## Handoff
@@ -147,6 +147,6 @@ Keep consumer verification and Standard case-linked diagnosis as independent wor
 
 Diagnostics use 800 s and 100 MB per job. The native pilot uses 18 frames and a 100 MB capture limit.
 The existing bulk storage reserve and cleanup checks remain active.
-capture-host-TTR consumer scores remain a separate dependency. Approval already covers 8 crops from 2 frames.
+Sillycon-TTR consumer scores remain a separate dependency. Approval already covers 8 crops from 2 frames.
 Public model downloads remain blocked by an unpublished reviewed release and the missing TTR download backend.
 Neither issue blocks local native diagnostics.

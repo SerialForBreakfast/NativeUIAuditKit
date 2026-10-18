@@ -39,13 +39,17 @@ def class_report(inputs, params):
         limitation='Retained reported metrics only. Cases already inspected. Per-case preservation requires matched predictions and labels.')
 
 
+CAPTURE_VERSIONS=('native-hcf402-v1','native-controls-t45-v1')
+
+
 def native_report(inputs, params):
     artifact=document(inputs['capture']); source=Path(artifact['path'])
     q.require(source.resolve()==source and source.is_relative_to('/Volumes/training-drive/data/NUIAK/HCF371'), 'capture_scope')
     q.require(q.digest(source)==artifact['sha256'], 'capture_changed')
     capture=q.load(source);plan=artifact['plan'];mapping=document(inputs['mapping'])
     q.require(capture['complete'] and capture['cleanup'], 'capture_incomplete')
-    q.require(plan['version']=='native-hcf402-v1', 'capture_version')
+    # B405-168: T45 control captures share the native frame schema, so the same report applies.
+    q.require(plan['version'] in CAPTURE_VERSIONS, 'capture_version')
     q.require(not {c['group'] for c in plan['cases']} & set(mapping['fitGroups']+mapping['evaluationGroups']), 'group_reuse')
     requests=[]
     for frame in capture['frames']:

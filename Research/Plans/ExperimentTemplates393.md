@@ -1,6 +1,6 @@
 # TEMPLATE393 — reusable tasks through HCF completion
 
-Owner: research-host-NUIAK.
+Owner: Maximum-mini-NUIAK.
 Priority: High. Improve preparation as part of HCF delivery; preserve Standard NUIAK and existing execution.
 Decision: [ADR-0028](../ADR-0028-Reusable-Experiment-Templates.md).
 The first bounded T05/T07/T08 binding passes actual queue checks. The remaining bindings are not ready.

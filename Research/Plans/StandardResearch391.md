@@ -15,7 +15,7 @@ The experiment names below are planning identifiers, not submitted or approved q
 
 ## 1 Prioritized work packages
 
-research-host-NUIAK owns implementation and acceptance unless stated otherwise.
+Maximum-mini-NUIAK owns implementation and acceptance unless stated otherwise.
 Reuse the mapped work rather than create duplicate experiments.
 
 | Priority and task | Deliverable | Existing work to reuse | Acceptance |
@@ -102,8 +102,8 @@ E11 tests RGB plus boundary information without overwriting an RGB channel or ch
 
 ## 4 Data producers and learning experiments
 
-research-host-TTR supplies qualified native Fixture captures when available.
-research-host-NUIAK owns recipes, group roles, intake, and acceptance.
+Maximum-mini-TTR supplies qualified native Fixture captures when available.
+Maximum-mini-NUIAK owns recipes, group roles, intake, and acceptance.
 Use headless authored data for controlled mechanics; do not describe it as native OS evidence.
 
 | ID | Producer and controlled comparison | Initial bounded design | Decision |
@@ -176,11 +176,11 @@ Core ML parity and TTR shadow evaluation follow model qualification; no navigati
 
 ## 7 Worker boundaries and handoffs
 
-research-host-NUIAK prepares and admits jobs. The background runner owns execution.
-research-host-TTR owns approved native capture and settings restoration.
-compute-host-NUIAK can run a separately qualified training assignment when local capacity or measured throughput justifies transfer.
+Maximum-mini-NUIAK prepares and admits jobs. The background runner owns execution.
+Maximum-mini-TTR owns approved native capture and settings restoration.
+BigDog-NUIAK can run a separately qualified training assignment when local capacity or measured throughput justifies transfer.
 LittleDog may prepare manifests or reports only through an already qualified preparation contract.
-compute-host-coordinator tracks delivery and dependencies, not experiment acceptance or local queue ownership.
+BigDog-Coordinator tracks delivery and dependencies, not experiment acceptance or local queue ownership.
 
 Each future handoff names immutable inputs, hashes, entrypoint, environment, budgets, outputs, acceptance, and stop conditions.
 Peer advice remains a proposal. It does not alter current approvals.

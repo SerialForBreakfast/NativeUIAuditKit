@@ -2,7 +2,7 @@
 
 Date: 2026-10-14.
 Status: Proposed; adoption requires review.
-Owner: research-host-NUIAK.
+Owner: Maximum-mini-NUIAK.
 Related: [templates](ADR-0028-Reusable-Experiment-Templates.md), [implementation](Plans/ExperimentTemplates393.md), and [comparison](Plans/WorkflowComparison394.md).
 
 ## Decision proposed
@@ -56,7 +56,7 @@ These are candidate designs, not tested deployments.
 | MLflow | Tracking can serve host-specific jobs without owning their execution | Log actual Apple results; do not infer parity from uploaded metrics | Store compact metadata separately; avoid copying every image into the tracking store |
 
 No workflow framework makes Simulator capture or Vision inference portable to Linux.
-compute-host-NUIAK can still train and score compatible inputs through the existing handoff.
+BigDog-NUIAK can still train and score compatible inputs through the existing handoff.
 
 ### Recovery, cache, and concurrency
 

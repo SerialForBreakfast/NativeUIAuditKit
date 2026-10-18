@@ -11,6 +11,62 @@ import research_queue as q
 
 
 class DashboardTests(QueueTests):
+    def test_readiness_labels_through_http(self):
+        spec = self.spec_v2()
+        self.submit(spec, approve=False)
+        code, body = self.request('/api/state')
+        self.assertEqual(code, 200)
+        row = json.loads(body)['jobs'][0]
+        self.assertEqual(row['state'], 'pending')
+        self.assertEqual(row['displayState'], 'awaiting-approval')
+        self.assertEqual(self.request('/api/add', {'jobs': [{'id': 'job-a', 'sha256': q.text_digest(spec)}]})[0], 200)
+        self.assertEqual(self.control.snapshot()['jobs'][0]['displayState'], 'ready')
+        self.input.write_text('{}')
+        row = self.control.snapshot()['jobs'][0]
+        self.assertEqual(row['displayState'], 'blocked')
+        self.assertIn('input_changed', row['readinessReasons'])
+
+    def test_clear_state_filters_and_safe_fallback(self):
+        from research_dashboard_states import classify
+        self.assertEqual(classify({'state': 'pending', 'approved': True})[0], 'unchecked')
+        self.assertEqual(classify({'state': 'pending'}, {'ready': False, 'blockers': [
+            {'requirement': 'input_changed'}, {'requirement': 'not_approved'}]})[0], 'blocked')
+        page = render_html({'jobs': []})
+        for text in ('Pending (all not started)', 'Awaiting approval', 'READINESS UNCHECKED',
+                     'Runner active — waiting', 'j.readinessReasons.map(reasonLabel)', 'id="chip-awaiting"'):
+            self.assertIn(text, page)
+        self.assertNotIn("j.state==='pending'&&j.approved", page)
+
+    def test_superseded_needs_complete_replacement(self):
+        from research_dashboard_states import supersede
+        rows = [dict(job='old', state='blocked', displayState='blocked', readinessReasons=['input_changed']),
+                dict(job='stale', state='exhausted', displayState='exhausted', readinessReasons=[]),
+                dict(job='new', state='complete', displayState='complete', readinessReasons=[]),
+                dict(job='open', state='pending', displayState='blocked', readinessReasons=['x']),
+                dict(job='waiting', state='pending', displayState='blocked', readinessReasons=['x'])]
+        supersede(rows, {'old': ('new', 'Reason.'), 'stale': ('new', 'Reason.'),
+                         'waiting': ('open', 'Reason.'), 'new': ('old', 'Reason.')})
+        states = {row['job']: row['displayState'] for row in rows}
+        self.assertEqual(states, dict(old='superseded', stale='superseded', new='complete',
+                                      open='blocked', waiting='blocked'))
+        self.assertEqual(rows[0]['supersededBy'], 'new')
+        self.assertIn('id="chip-superseded"', render_html({'jobs': []}))
+
+    def test_backlog_panel_summary(self):
+        from research_dashboard_states import backlog_summary
+        value = backlog_summary([dict(job='x', task='B405-073', authority='diagnostic', state='pending',
+                                      displayState='ready', wallSeconds=None)], q.ROOT)
+        self.assertEqual(value['readyJobs'], 1)
+        self.assertTrue(value['refill'])
+        self.assertEqual(next(r for r in value['records'] if r['id'] == 'B405-073')['ready'], 1)
+        page = render_html({'jobs': [], 'backlog': value})
+        self.assertIn('id="backlog-table"', page)
+        self.assertIn('backlog-grooming cycle', page)
+        for text in ('id="glance-state"', 'id="glance-next"', 'id="superseded-rows"', 'id="rows-empty"', 'No active or waiting jobs'):
+            self.assertIn(text, page)
+        self.assertIn('topBlockers', value)
+        self.assertIsInstance(value['reviewPending'], list)
+
     def test_add_during_continuous_execution(self):
         first = self.spec(); self.submit(first)
         self.assertEqual(self.request('/api/start-all', {})[0], 200)
@@ -114,6 +170,38 @@ class DashboardTests(QueueTests):
         self.wait_done()
         self.assertEqual(len(q.state(self.queue/'jobs/job-a')[1]),1)
 
+    def test_dispatch_reuses_one_approval_snapshot(self):
+        from unittest.mock import patch
+        import research_approval
+        self.submit(self.spec())
+        self.submit(self.spec(id='job-b'))
+        seen = []
+        def check(ident, queue, modules, approvals=None):
+            self.assertIsNotNone(approvals)
+            seen.append(approvals)
+            if len(seen) == 2:
+                self.control.stop.set()
+            return {'ready': False, 'blockers': []}
+        with patch('research_approval.load', wraps=research_approval.load) as load, \
+             patch('research_readiness.check', side_effect=check):
+            self.control._continuous(['job-a', 'job-b'])
+        self.assertEqual(load.call_count, 1)
+        self.assertIs(seen[0], seen[1])
+        self.assertEqual(q.state(self.queue/'jobs/job-a')[0], 'pending')
+
+    def test_stop_during_readiness_prevents_dispatch(self):
+        from unittest.mock import patch
+        self.submit(self.spec())
+        self.submit(self.spec(id='job-b'))
+        def check(*args, **kwargs):
+            self.control.stop.set()
+            return {'ready': True, 'blockers': []}
+        with patch('research_readiness.check', side_effect=check) as readiness, \
+             patch('research_queue.run') as run:
+            self.control._continuous(['job-a', 'job-b'])
+        self.assertEqual(readiness.call_count, 1)
+        run.assert_not_called()
+
     def test_continuous_does_not_retry_failure(self):
         self.submit(self.spec(adapter=dict(type='python-callable',steps=['rq_fixture.slow'],outputAttributes=['rq_fixture.OUT'])))
         self.control.start_all()
@@ -175,6 +263,52 @@ class DashboardTests(QueueTests):
         page=render_html({'jobs':[{'hypothesis':'</script><script>alert(1)</script>'}]})
         self.assertNotIn('</script><script>alert',page)
         self.assertNotIn('https://',page)
+
+
+    def test_snapshot_cache_is_shared_and_invalidated(self):
+        from unittest import mock
+        self.submit(self.spec())
+        calls=[]
+        original=self.control.snapshot
+        def slow():
+            calls.append(1);time.sleep(0.3);return original()
+        with mock.patch.object(self.control,'snapshot',side_effect=slow):
+            replies=[]
+            threads=[threading.Thread(target=lambda:replies.append(self.control.state_reply())) for _ in range(4)]
+            for t in threads:t.start()
+            for t in threads:t.join()
+            self.assertEqual(len(calls),1)
+            self.assertEqual({r['snapshotId'] for r in replies},{1})
+            code,body=self.request('/api/state?since=1')
+            self.assertEqual(json.loads(body),dict(json.loads(body),unchanged=True))
+            self.assertNotIn('jobs',json.loads(body))
+            self.assertEqual(self.request('/api/stop',{})[0],200)
+            code,body=self.request('/api/state?since=1')
+            self.assertEqual(json.loads(body)['snapshotId'],2)
+            self.assertIn('jobs',json.loads(body))
+            self.assertEqual(len(calls),2)
+
+    def test_old_snapshot_is_served_while_rebuilding(self):
+        from unittest import mock
+        self.submit(self.spec())
+        first=self.control.state_reply()
+        self.assertFalse(first['stale'])
+        self.control.cache['started']-=60  # Age the snapshot without an action.
+        release=threading.Event()
+        original=self.control.snapshot
+        def slow():
+            release.wait(5);return original()
+        with mock.patch.object(self.control,'snapshot',side_effect=slow):
+            start=time.monotonic()
+            reply=self.control.state_reply()
+            self.assertLess(time.monotonic()-start,1)
+            self.assertTrue(reply['stale'])
+            self.assertEqual(reply['snapshotId'],first['snapshotId'])
+            release.set()
+            for _ in range(50):
+                if not self.control.building:break
+                time.sleep(.1)
+        self.assertEqual(self.control.state_reply()['snapshotId'],first['snapshotId']+1)
 
 
 if __name__=='__main__':unittest.main()

@@ -70,7 +70,7 @@ public struct ActionSheetConfig: Sendable {
             message: hasMessage ? corpus.listRowTitle() : nil,
             actionLabels: actions,
             destructiveLabel: destructiveLabels[destIdx],
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

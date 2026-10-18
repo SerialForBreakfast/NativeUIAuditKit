@@ -89,7 +89,7 @@ public struct GalleryPageConfig: Sendable {
             slides: slides,
             currentSlide: cur,
             ctaLabel: cta,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

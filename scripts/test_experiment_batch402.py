@@ -64,13 +64,14 @@ class BatchTests(unittest.TestCase):
         child['inputs']['candidate']=dict(job='failed',attempt=1,output='comparison.json')
         with self.assertRaisesRegex(ValueError,'producer_incomplete'):batch.compile_batch(self.value(child),self.queue)
 
-    def test_busy_dispatch_preserves_registration_without_approval(self):
+    def test_approval_proceeds_while_dispatch_is_busy(self):
+        # ACTIONS417: approval no longer waits for the dispatch lock; the runner rechecks it at dispatch.
         import research_approval
         with q.host_lock(self.queue/'batch-dispatch.lock'):
-            with self.assertRaisesRegex(ValueError,'resource_busy'):
-                batch.register_batch(self.value(),self.queue,[self.doc['id']])
+            batch.register_batch(self.value(),self.queue,[self.doc['id']])
         self.assertTrue((self.queue/'jobs'/self.doc['id']/'spec.json').exists())
-        self.assertNotIn(self.doc['id'],research_approval.approved_map(self.queue))
+        self.assertIn(self.doc['id'],research_approval.approved_map(self.queue))
+        # Repeating the same registration and approval is a no-op.
         batch.register_batch(self.value(),self.queue,[self.doc['id']])
         self.assertIn(self.doc['id'],research_approval.approved_map(self.queue))
 

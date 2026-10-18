@@ -8,6 +8,7 @@ import subprocess
 import research_queue as q
 
 OUT = None
+# The previous checkout location, used to map recorded absolute paths into this checkout.
 OLD_ROOT = Path.home() / 'Documents/GitHub/NativeUIAuditKit'
 
 
@@ -127,7 +128,7 @@ def export_preflight():
     save('export-preflight.json', dict(version='hcf389-export-preflight-v1', environment=versions, sources=source,
         model=model, importsPassed=True, conversionPassed=False,
         queueExportSupported='export' in q.PERMITTED,
-        blocker=None if 'export' in q.PERMITTED else 'research-host-NUIAK: queue rejects export authority; qualify an idle-boundary upgrade.',
+        blocker=None if 'export' in q.PERMITTED else 'Maximum-mini-NUIAK: queue rejects export authority; qualify an idle-boundary upgrade.',
         nextAction='Use the resident exporters after explicit export support passes tests. Imports alone do not qualify conversion.'), refs)
 
 

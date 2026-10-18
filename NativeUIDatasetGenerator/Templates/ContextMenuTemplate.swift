@@ -71,7 +71,7 @@ public struct ContextMenuConfig: Sendable {
             rowLabel: corpus.listRowTitle(),
             actionLabels: actions,
             hasDestructiveAction: hasDestructive,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }
@@ -86,6 +86,7 @@ public struct ContextMenuConfig: Sendable {
 /// **Platform scope:** iOS GeneratorRunner target only.
 public struct ContextMenuTemplate: View {
     public let config: ContextMenuConfig
+    @Environment(\.generatorGeometryRevision) private var geometryRevision
 
     public init(config: ContextMenuConfig) {
         self.config = config
@@ -124,11 +125,14 @@ public struct ContextMenuTemplate: View {
                         let isLast       = idx == config.actionLabels.count - 1
                         let isDestructive = isLast && config.hasDestructiveAction
 
-                        Button(label) {}
+                        // Revision 2: the label box hugs the drawn text, not the 44 pt row (ACTIONS417).
+                        Button {} label: {
+                            Text(label).captureFrame(id: "label_action_\(idx)", when: geometryRevision >= 2)
+                        }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .frame(height: 44)
                             .foregroundStyle(isDestructive ? .red : Color.accentColor)
-                            .captureFrame(id: "label_action_\(idx)")
+                            .captureFrame(id: "label_action_\(idx)", when: geometryRevision < 2)
                             .padding(.horizontal, 16)
 
                         if !isLast {

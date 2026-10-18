@@ -88,7 +88,7 @@ public struct SettingsListConfig: Sendable {
             disclosureGroupExpanded: expanded,
             tabBarItemCount: tabCount,
             showHomeIndicator: hasHomeIndicator,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

@@ -176,10 +176,10 @@ public enum AnnotationWriter {
                     isEnabled: schema == .legacy ? true : elem.isEnabled,
                     isSelected: schema == .legacy ? false : elem.isSelected,
                     isFocused: elem.isFocused),
-                occluded: clipped,
-                occlusionType: clipped ? "imageBoundary" : nil,
-                excluded: invisible,
-                exclusionReason: invisible ? "outsideImage" : nil,
+                occluded: clipped || elem.occlusionType != nil,
+                occlusionType: clipped ? "imageBoundary" : elem.occlusionType,
+                excluded: invisible || elem.exclusionReason != nil,
+                exclusionReason: invisible ? "outsideImage" : elem.exclusionReason,
                 knownIssues: elem.knownIssues
             )
         }

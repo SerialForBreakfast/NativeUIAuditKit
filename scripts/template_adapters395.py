@@ -98,8 +98,9 @@ def export(inputs, parameters, output):
     interpreter=q.ROOT/'.venv-coreml/bin/python'
     q.require(environment.get('interpreter')=='.venv-coreml/bin/python' and interpreter.is_file(),'export_environment')
     checked(environment['configuration'])
-    q.require(parameters.get('precision') in ('fp16','fp32','int8weights'),'export_precision')
-    if parameters['precision']=='int8weights':
+    # B405-128: palette6weights uses the frozen 6-bit palette method of the same compression step.
+    q.require(parameters.get('precision') in ('fp16','fp32','int8weights','palette6weights'),'export_precision')
+    if parameters['precision'] in ('int8weights','palette6weights'):
         from focus_ring_baseline import artifact_digest
         source=document(inputs['sourcePackage']);report_path=checked(inputs['sourceReport'])
         original=q.load(report_path);package=q.local_path(q.ROOT,source['path'])
@@ -108,7 +109,8 @@ def export(inputs, parameters, output):
         q.require(original['checkpointSHA256']==doc['checkpoint']['sha256'],'compression_checkpoint')
         command([str(interpreter),str(q.MODULES/'compress_focus_ring_coreml.py'),
             '--package',str(package),'--source-report',str(report_path),'--source-sha256',source['sha256'],
-            '--output-dir',str(output/'export'),'--experimental-id',parameters['experimentalID']],
+            '--output-dir',str(output/'export'),'--experimental-id',parameters['experimentalID']]+
+            (['--method','palette6'] if parameters['precision']=='palette6weights' else []),
             output,'compression',1200)
     else:
         q.require('sourceReport' not in inputs and 'sourcePackage' not in inputs,'unexpected_compression_inputs')

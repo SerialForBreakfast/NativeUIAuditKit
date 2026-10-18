@@ -102,7 +102,7 @@ def freeze_inputs(folder):
     else: q.save(dest, manifest)
     model = q.ROOT/'reports/work/research-queue/jobs/hcf375c-70-crop-train/attempts/1/out/final.pt'
     q.require(q.digest(model) == 'dc0a8449523c545820b6ff5c04577fb1d0f31d6c7bcd2715b94beabc8a6a5b05', 'pilot_model_changed')
-    return dict(version=templates.VERSION, id='workflow394-pilot', owner='research-host-NUIAK',
+    return dict(version=templates.VERSION, id='workflow394-pilot', owner='Maximum-mini-NUIAK',
         question='Does the workflow preserve measured crop predictions and recover completed steps?',
         decision='Require matching membership and decisions. Report overhead without accepting a model.',
         manifest=templates.pin(dest), model=templates.pin(model), batchSize=4)

@@ -28,7 +28,7 @@ def make(ident, question, decision, config, deps, extra):
     config_path = FOLDER / (ident + '-config.json')
     save(config_path, config)
     step = 'prepare' if ident.endswith('05-data-priorities') else 'run'
-    spec = dict(version='research-spec-v2', id=ident, task='STANDARD390', owner='research-host-NUIAK',
+    spec = dict(version='research-spec-v2', id=ident, task='STANDARD390', owner='Maximum-mini-NUIAK',
         kind='screen', authority='diagnostic', jobKind='aggregation', question=question, hypothesis=question,
         controlledComparison='Compare retained predictions on identical rows and fixed thresholds. Keep Standard and HCF work separate.',
         decisionRule=decision,

@@ -70,7 +70,7 @@ public struct SegmentedFilterConfig: Sendable {
             segments: segs,
             selectedSegment: selected,
             rows: rows,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

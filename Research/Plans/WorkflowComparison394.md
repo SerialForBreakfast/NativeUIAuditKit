@@ -1,6 +1,6 @@
 # WORKFLOW394 — compare workflow preparation without delaying HCF
 
-Owner: research-host-NUIAK.
+Owner: Maximum-mini-NUIAK.
 Decision: [ADR-0029](../ADR-0029-Workflow-Tools-Versus-Templates.md).
 Status: The approved isolated DVC comparison passes. See [measured results](../Workflow394Results.md).
 This work is independent of HCF389. It does not block TEMPLATE393.

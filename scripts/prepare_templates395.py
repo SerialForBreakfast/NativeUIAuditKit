@@ -22,7 +22,7 @@ def build(folder,queue):
         q.require(queue==q.QUEUE,'native_dependencies_require_live_queue')
         return dep(ident,*outputs)
     def add(ident,template,inputs,parameters=None,dependencies=None,**extra):
-        doc=dict(version='hcf-template-description-v1',id='template395-'+ident,owner='research-host-NUIAK',template=template,
+        doc=dict(version='hcf-template-description-v1',id='template395-'+ident,owner='Maximum-mini-NUIAK',template=template,
             question='Does '+template+' produce verified outputs through the existing execution queue?',
             decision='Pass only verified outputs. Preserve failures. Do not accept or promote a model.',
             inputs=inputs,parameters=parameters or {},dependencies=dependencies or [],**extra)

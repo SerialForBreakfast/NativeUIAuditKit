@@ -68,7 +68,7 @@ public struct ColorPickerConfig: Sendable {
             accentLabel: "Accent Color",
             accentHue: hue2,
             saveLabel: "Apply",
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

@@ -28,6 +28,50 @@ import UIKit
 /// - Frame collection uses `GeometryReader` inside a `.captureFrame(id:)` modifier.
 public enum ScreenshotCapture {
 
+    /// T46 recipe captures set this to render `config.colorScheme` and `config.dynamicTypeSize`.
+    /// The default `false` keeps the historical behavior: both values are metadata only.
+    @TaskLocal public static var rendersPresentationTraits = false
+
+    /// T46 recipe captures set this to the requested appearance. SwiftUI template factories
+    /// apply their own `.colorScheme(...)`, so a trait override alone cannot change them (BP-117).
+    /// The default `nil` keeps the seeded scheme. Factories still draw the seeded value,
+    /// so the other seeded fields do not change.
+    @TaskLocal public static var requestedColorScheme: ColorScheme? = nil
+
+    /// T46 recipe captures set this to apply the ACTIONS417 geometry repairs (`GeometryRepair`).
+    /// The default `false` keeps the historical geometry and pixels.
+    @TaskLocal public static var repairsGeometry = false
+
+    /// The scheme that a template factory stores: the requested scheme if a task sets one, else `seeded`.
+    static func colorScheme(seeded: ColorScheme) -> ColorScheme {
+        requestedColorScheme ?? seeded
+    }
+
+    /// Apply the configured appearance and text size to `controller` when the task opts in.
+    @MainActor
+    static func applyPresentationTraits(_ config: GeneratorRunConfig, to controller: UIViewController) {
+        guard rendersPresentationTraits else { return }
+        controller.traitOverrides.userInterfaceStyle = config.colorScheme == .dark ? .dark : .light
+        controller.traitOverrides.preferredContentSizeCategory = contentSizeCategory(config.dynamicTypeSize)
+    }
+
+    private static func contentSizeCategory(_ size: GeneratorDynamicTypeSize) -> UIContentSizeCategory {
+        switch size {
+        case .xSmall: return .extraSmall
+        case .small: return .small
+        case .medium: return .medium
+        case .large: return .large
+        case .xLarge: return .extraLarge
+        case .xxLarge: return .extraExtraLarge
+        case .xxxLarge: return .extraExtraExtraLarge
+        case .accessibilityMedium: return .accessibilityMedium
+        case .accessibilityLarge: return .accessibilityLarge
+        case .accessibilityExtraLarge: return .accessibilityExtraLarge
+        case .accessibilityExtraExtraLarge: return .accessibilityExtraExtraLarge
+        case .accessibilityExtraExtraExtraLarge: return .accessibilityExtraExtraExtraLarge
+        }
+    }
+
     /// Render `view` in an off-screen `UIWindow`, collect element frames via
     /// `FramePreference`, and capture a PNG at the device's native scale.
     ///
@@ -67,9 +111,12 @@ public enum ScreenshotCapture {
                 framesReceived = true
             }
 
-        let hosting = UIHostingController(rootView: wrappedView)
+        // Templates read the revision when they must change their own layout. Revision 1 is the historical layout.
+        let hosting = UIHostingController(rootView: wrappedView
+            .environment(\.generatorGeometryRevision, repairsGeometry ? 2 : 1))
         hosting.view.frame = bounds
         hosting.view.backgroundColor = .clear
+        applyPresentationTraits(config, to: hosting)
         window.rootViewController = hosting
 
         // Apply accessibility trait overrides so UIKit chrome (nav bar material,
@@ -100,6 +147,10 @@ public enum ScreenshotCapture {
         try await Task.sleep(for: .milliseconds(150))
 
         try nativePageConfiguration?(hosting.view)
+        let repairing = repairsGeometry
+        if repairing {
+            GeometryRepair.hideScrollIndicators(in: hosting.view)
+        }
 
         guard framesReceived else {
             window.isHidden = true
@@ -112,6 +163,10 @@ public enum ScreenshotCapture {
         // finds the actual UIKit chrome views and reads their real frames.
         let chromeFrames = detectChromeFrames(in: hosting.view)
         capturedFrames.merge(chromeFrames) { _, detected in detected }
+        if repairing {
+            capturedFrames = GeometryRepair.switchBodies(capturedFrames, in: hosting.view)
+            capturedFrames = GeometryRepair.searchFieldBody(capturedFrames, in: hosting.view)
+        }
 
         // Render at the profile's intended pixel scale, not the simulator's physical scale.
         // This ensures ios17-profile images come out @2x (750×1334px for iPhone SE) and
@@ -148,13 +203,19 @@ public enum ScreenshotCapture {
         let pixelH = bounds.height * renderScale
         let scaleInt = config.pixelScale
 
+        let covers = repairing ? GeometryRepair.covers(capturedFrames, canvas: bounds) : [:]
         let elements = capturedFrames.map { id, frame in
             // elementType is the class prefix of the captureFrame id.
             // Convention: id = "{elementType}_{suffix}" (e.g. "slider_0", "label_title").
             // Strip the suffix so classDistribution records canonical types ("slider", "label").
             let elementType = id.components(separatedBy: "_").first ?? id
             let isFocused: Bool? = id.contains("_focused") ? true : (id.contains("_unfocused") ? false : nil)
-            return AnnotatedElement(id: id, elementType: elementType, frame: frame, isFocused: isFocused)
+            guard let cover = covers[id] else {
+                return AnnotatedElement(id: id, elementType: elementType, frame: frame, isFocused: isFocused)
+            }
+            return AnnotatedElement(id: id, elementType: elementType, frame: cover.visible, isFocused: isFocused,
+                                    occlusionType: cover.excluded ? nil : "scroll",
+                                    exclusionReason: cover.excluded ? "coveredByChrome" : nil)
         }
 
         return CaptureResult(
@@ -232,6 +293,186 @@ extension ScreenshotCapture {
     }
 }
 
+// MARK: - Geometry revision (ACTIONS417)
+
+private struct GeneratorGeometryRevisionKey: EnvironmentKey {
+    static let defaultValue = 1
+}
+
+public extension EnvironmentValues {
+    /// Layout revision for templates. 1 is the historical layout. `ScreenshotCapture` sets 2 when
+    /// `repairsGeometry` is on. A template reads it only to change its own layout for revision 2.
+    var generatorGeometryRevision: Int {
+        get { self[GeneratorGeometryRevisionKey.self] }
+        set { self[GeneratorGeometryRevisionKey.self] = newValue }
+    }
+}
+
+/// Geometry repairs for T46 recipe captures (ACTIONS417, B405-032 successors). Not used by default captures.
+///
+/// - A SwiftUI `Toggle` reports a 61 pt layout frame, but its native switch draws 63 pt (iOS 26).
+///   The repair uses the drawn switch extent for the toggle and for each box that contains the toggle.
+/// - iOS 26 draws the search field platter outside the `UISearchTextField` frame. The repair uses the platter.
+/// - Native scroll indicators flash after layout. No template labels them, so the repair hides them.
+/// - Content under a tab bar, a toolbar, or the top strip above a navigation bar is covered.
+///   The repair clips the box to the visible part and marks it occluded (`scroll`), or excludes it
+///   (`coveredByChrome`) when less than 20 % stays visible. Research/NativeUIElementDetection.md
+///   asks for the visible rectangle and an occlusion flag for partly hidden content.
+enum GeometryRepair {
+
+    /// A box after the cover pass.
+    struct Cover {
+        let visible: CGRect
+        let excluded: Bool
+    }
+
+    /// Classes that are chrome. Chrome and the content inside chrome are not covered by chrome.
+    static let chromeClasses: Set<String> = [
+        "navigationBar", "tabBar", "toolbar", "statusBar", "homeIndicator", "dynamicIsland", "tabBarItem",
+    ]
+    /// Overlays draw above bars, so they and their content are not covered by bars.
+    static let overlayClasses: Set<String> = [
+        "sheet", "alert", "actionSheet", "popover", "contextMenu", "tooltip",
+    ]
+    /// Below this visible fraction an element is excluded (the schema's 20 % rule).
+    static let minimumVisibleFraction: CGFloat = 0.2
+
+    @MainActor
+    static func hideScrollIndicators(in root: UIView) {
+        func walk(_ view: UIView) {
+            if let scroll = view as? UIScrollView {
+                scroll.showsVerticalScrollIndicator = false
+                scroll.showsHorizontalScrollIndicator = false
+            }
+            view.subviews.forEach(walk)
+        }
+        walk(root)
+        root.setNeedsLayout()
+        root.layoutIfNeeded()
+    }
+
+    /// The union of a view and its visible subviews, in `root` coordinates.
+    @MainActor
+    static func visualExtent(of view: UIView, in root: UIView) -> CGRect {
+        var rect = view.convert(view.bounds, to: root)
+        for sub in view.subviews where !sub.isHidden && sub.alpha > 0.01 {
+            rect = rect.union(visualExtent(of: sub, in: root))
+        }
+        return rect
+    }
+
+    /// Replace each `toggle_*` box with the union of its layout frame and the drawn native switch.
+    /// Each box that contained the original toggle box grows by the same amount.
+    @MainActor
+    static func switchBodies(_ frames: [String: CGRect], in root: UIView) -> [String: CGRect] {
+        var switches: [CGRect] = []
+        func walk(_ view: UIView) {
+            guard !view.isHidden, view.alpha > 0.01 else { return }
+            if let control = view as? UISwitch {
+                switches.append(visualExtent(of: control, in: root))
+                return
+            }
+            view.subviews.forEach(walk)
+        }
+        walk(root)
+        func area(_ rect: CGRect) -> CGFloat { rect.isNull ? 0 : rect.width * rect.height }
+        var repaired = frames
+        for (id, frame) in frames where id.hasPrefix("toggle_") {
+            let candidates = switches.filter { area($0.intersection(frame)) > 0 }
+            guard let body = candidates.max(by: { area($0.intersection(frame)) < area($1.intersection(frame)) }) else {
+                print("T46_SWITCH \(id) layout=\(frame) body=none")
+                continue
+            }
+            print("T46_SWITCH \(id) layout=\(frame) body=\(body)")
+            let grown = frame.union(body)
+            guard grown != frame else { continue }
+            repaired[id] = grown
+            for (other, outer) in frames where other != id && outer.contains(frame) {
+                repaired[other] = (repaired[other] ?? outer).union(body)
+            }
+        }
+        return repaired
+    }
+
+    /// The largest search field margin that still counts as the field's own platter.
+    static let searchPlatterMargin: CGFloat = 8
+
+    /// Replace `searchField_0` with the drawn platter around the native `UISearchTextField`.
+    /// iOS 26 draws a glass capsule up to a few points outside the text field; dark mode shows its edge.
+    @MainActor
+    static func searchFieldBody(_ frames: [String: CGRect], in root: UIView) -> [String: CGRect] {
+        guard let frame = frames["searchField_0"] else { return frames }
+        var field: UISearchTextField?
+        func walk(_ view: UIView) {
+            guard field == nil, !view.isHidden, view.alpha > 0.01 else { return }
+            if let candidate = view as? UISearchTextField, candidate.convert(candidate.bounds, to: root) == frame {
+                field = candidate
+                return
+            }
+            view.subviews.forEach(walk)
+        }
+        walk(root)
+        guard let field else { return frames }
+        var body = frame
+        var ancestor = field.superview
+        var chain: [String] = []
+        for _ in 0..<4 {
+            guard let view = ancestor, view !== root else { break }
+            let rect = view.convert(view.bounds, to: root)
+            chain.append("\(type(of: view))=\(rect)")
+            let margins = [frame.minX - rect.minX, frame.minY - rect.minY, rect.maxX - frame.maxX, rect.maxY - frame.maxY]
+            if margins.allSatisfy({ $0 >= 0 && $0 <= searchPlatterMargin }) {
+                body = body.union(rect)
+            }
+            ancestor = view.superview
+        }
+        print("T46_SEARCH layout=\(frame) body=\(body) chain=\(chain.joined(separator: " "))")
+        var repaired = frames
+        repaired["searchField_0"] = body
+        return repaired
+    }
+
+    /// Cover results for content under bars. Elements that are not covered are absent from the result.
+    static func covers(_ frames: [String: CGRect], canvas: CGRect) -> [String: Cover] {
+        func type(_ id: String) -> String { id.components(separatedBy: "_").first ?? id }
+        var regions: [CGRect] = []
+        if let bar = frames["navigationBar"], bar.minY > canvas.minY {
+            // iOS 26 blurs scroll content in the top strip above the bar.
+            regions.append(CGRect(x: canvas.minX, y: canvas.minY, width: canvas.width, height: bar.minY - canvas.minY))
+        }
+        for key in ["tabBar", "toolbar"] {
+            if let bar = frames[key] { regions.append(bar) }
+        }
+        guard !regions.isEmpty else { return [:] }
+        let exempt = frames.filter { chromeClasses.contains(type($0.key)) || overlayClasses.contains(type($0.key)) }
+        var result: [String: Cover] = [:]
+        for (id, frame) in frames where frame.width > 0 && frame.height > 0 {
+            if exempt.contains(where: { $0.value.contains(frame) }) { continue }
+            let hits = regions.filter { $0.intersects(frame) && !frame.contains($0) }
+            guard !hits.isEmpty else { continue }
+            var visible = frame
+            var hidden: CGFloat = 0
+            for region in hits {
+                let spans = region.minX <= visible.minX && region.maxX >= visible.maxX
+                if spans && region.minY <= visible.minY && region.maxY > visible.minY {
+                    visible = CGRect(x: visible.minX, y: region.maxY, width: visible.width,
+                                     height: max(0, visible.maxY - region.maxY))
+                } else if spans && region.maxY >= visible.maxY && region.minY < visible.maxY {
+                    visible = CGRect(x: visible.minX, y: visible.minY, width: visible.width,
+                                     height: max(0, region.minY - visible.minY))
+                } else {
+                    let overlap = region.intersection(visible)
+                    hidden += overlap.isNull ? 0 : overlap.width * overlap.height
+                }
+            }
+            let fraction = max(0, visible.width * visible.height - hidden) / (frame.width * frame.height)
+            let excluded = fraction < minimumVisibleFraction
+            result[id] = Cover(visible: excluded ? frame : visible, excluded: excluded)
+        }
+        return result
+    }
+}
+
 // MARK: - FramePreference
 
 /// Propagates element bounding rects (in `.global` coordinate space) up to
@@ -269,5 +510,15 @@ public extension View {
                     )
             }
         )
+    }
+
+    /// `captureFrame(id:)` when `condition` is true; otherwise the view is unchanged.
+    @ViewBuilder
+    func captureFrame(id: String, when condition: Bool) -> some View {
+        if condition {
+            captureFrame(id: id)
+        } else {
+            self
+        }
     }
 }

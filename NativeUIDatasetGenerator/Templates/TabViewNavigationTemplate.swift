@@ -88,7 +88,7 @@ public struct TabViewNavigationConfig: Sendable {
             rowLabels: rows,
             showDynamicIsland: osProfile.hasDynamicIsland,
             showHomeIndicator: osProfile.hasHomeIndicator,
-            colorScheme: dark ? .dark : .light,
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light),
             selectedTab: selectedTab
         )
     }

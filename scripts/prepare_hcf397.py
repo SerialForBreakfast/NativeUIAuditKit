@@ -24,7 +24,7 @@ def build(folder):
         q.require(q.digest(path)==record['sha256'],'producer_output_changed')
         return pin(path)
     def add(suffix,template,question,decision,inputs,parameters=None,dependencies=None):
-        doc=dict(version='hcf-template-description-v1',id='hcf397-'+suffix,owner='research-host-NUIAK',template=template,
+        doc=dict(version='hcf-template-description-v1',id='hcf397-'+suffix,owner='Maximum-mini-NUIAK',template=template,
             question=question,decision=decision,inputs=inputs,parameters=parameters or {},dependencies=dependencies or [])
         saved(suffix+'.json',doc);templates.register(doc);jobs.append(doc['id']);return doc['id']
     catalog=output('hcf371r4-40-catalog','admission.json')
@@ -85,7 +85,7 @@ def successors(folder):
     selection=q.QUEUE/'jobs/hcf397-01-proposals/attempts/1/out/proposal-selection.json'
     result=q.load(selection.parent.parent/'result.json')
     q.require(result['status']=='complete','proposal_success_required')
-    register(dict(version='hcf-template-description-v1',id='hcf397-proposal-failure-audit',owner='research-host-NUIAK',template='T20',
+    register(dict(version='hcf-template-description-v1',id='hcf397-proposal-failure-audit',owner='Maximum-mini-NUIAK',template='T20',
         question='Are retained focus misses caused by missing proposals or rejected matching proposals?',
         decision='Prioritize proposal coverage when boxes are absent. Review crop geometry and scores when matching boxes exist.',
         inputs={**{k:base['inputs'][k] for k in ('catalog','retained','rules')},'selection':pin(selection)},parameters={},dependencies=[]))
@@ -104,7 +104,7 @@ def boundary(folder):
         for source,label in [('hcf397-01-proposals','original-proposals'),('hcf388-detector-evaluate','detector')]:
             name='proposal-selection.json' if source=='hcf397-01-proposals' else 'comparison.json'
             reference=pin(q.QUEUE/'jobs'/source/'attempts/1/out'/name)
-            report=dict(version='hcf-template-description-v1',id=ident+'-vs-'+label,owner='research-host-NUIAK',template='T15',
+            report=dict(version='hcf-template-description-v1',id=ident+'-vs-'+label,owner='Maximum-mini-NUIAK',template='T15',
                 question='Does '+suffix+' expansion preserve '+label+' successes?',decision='Report case-linked gains and losses by profile. Reject replacement when previous successes are lost.',
                 inputs=dict(baseline=reference,candidate=dict(job=ident,output='proposal-selection.json')),
                 parameters=dict(comparison=label+' versus expanded proposals'),dependencies=[dependency])
@@ -118,6 +118,6 @@ if __name__=='__main__':
     mode.add_argument('--successors',action='store_true');mode.add_argument('--boundary',action='store_true');args=parser.parse_args()
     for ident in (boundary if args.boundary else successors if args.successors else build)(q.ROOT/'reports/work/HCF397'):
         if args.approve:
-            approval.approve(q.QUEUE,ident,'agent:research-host-NUIAK',
+            approval.approve(q.QUEUE,ident,'agent:Maximum-mini-NUIAK',
                 'Maintainer approves HCF template comparisons and process qualification. No training, capture, or Standard changes.')
         print(ident,flush=True)

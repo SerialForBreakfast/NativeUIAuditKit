@@ -14,7 +14,7 @@ def build():
         q.require(any(r['path']==name and r['sha256']==ref['sha256'] for r in result['outputs']),'producer_changed')
         return ref
     def add(name,template,question,decision,inputs,parameters,dependencies=None):
-        doc=dict(version='hcf-template-description-v1',id='hcf400-'+name,owner='research-host-NUIAK',template=template,
+        doc=dict(version='hcf-template-description-v1',id='hcf400-'+name,owner='Maximum-mini-NUIAK',template=template,
             question=question,decision=decision,inputs=inputs,parameters=parameters,dependencies=dependencies or [])
         path=folder/(name+'.json')
         if path.exists():q.require(q.load(path)==doc,'immutable_description')
@@ -43,6 +43,6 @@ def build():
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--approve',action='store_true');args=parser.parse_args()
     for job in build():
-        if args.approve:approval.approve(q.QUEUE,job,'agent:research-host-NUIAK',
+        if args.approve:approval.approve(q.QUEUE,job,'agent:Maximum-mini-NUIAK',
             'Maintainer approves cached HCF diagnostics preserving Standard. No model, threshold, capture, or navigation changes.')
         print(job,flush=True)

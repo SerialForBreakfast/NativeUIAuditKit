@@ -22,6 +22,21 @@ The current-task panel shows actual worker events. It never estimates progress f
 Use a launch token, Host and Origin checks, shared execution locks, and cancellation of runner-owned process groups only.
 See [results and remaining inputs](RESEARCH340Results.md).
 
+## Exhausted jobs and dashboard operation — EXTENSION408, 2026-10-14
+
+- The dashboard lists exhausted jobs. An exhausted job has used all of its attempts.
+- The maintainer can save a restart. A restart is a new successor job with larger limits and its own approval.
+- The parent job and its attempts stay unchanged. A restart starts from step 0.
+- A limit above the default policy needs a maintainer override for the exact successor specification hash.
+- The runner selects ordinary ready work first, then restarts in save order, then approved continuation chunks.
+- Capture jobs and `checkpoint-v1` training jobs cannot use restarts. Training stays at 30 epochs or fewer.
+- The time estimate uses recorded progress units of the parent attempt. The progress bar still shows only worker events.
+- The server builds 1 snapshot at a time and shares it between requests. Unchanged polls get a small reply.
+- `scripts/restart_research_dashboard.py` stops the runner after its current job, then restarts the server.
+  It refuses to stop a running job unless the maintainer passes `--wait` or `--cancel-running`.
+
+See [EXTENSION408](Plans/Extension408.md).
+
 ## Historical decision
 
 Status: accepted. [RESEARCH338](RESEARCH338Results.md) replays 3 FOCUS audits with exact agreement. Diagnostic jobs are qualified.

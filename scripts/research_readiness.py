@@ -8,7 +8,7 @@ from pathlib import Path
 import research_queue as q
 
 
-def check(ident, queue=q.QUEUE, modules=q.MODULES):
+def check(ident, queue=q.QUEUE, modules=q.MODULES, approvals=None):
     q.require(isinstance(ident, str) and q.ID.fullmatch(ident), 'job_id')
     result = dict(job=ident, ready=False, blockers=[])
     owner = 'unknown: specification not loaded'
@@ -37,7 +37,7 @@ def check(ident, queue=q.QUEUE, modules=q.MODULES):
         if result['storage']['freeBytes'] < required:
             blocked('storage_insufficient')
         import research_approval
-        if not research_approval.is_approved(queue, spec):
+        if not research_approval.is_approved(queue, spec, approvals):
             blocked('not_approved')
         result['ready'] = not result['blockers']
     except (ValueError, OSError, KeyError, TypeError) as error:
@@ -64,10 +64,13 @@ def report(ids, queue=q.QUEUE, modules=q.MODULES):
                 q.require(result['specSHA256'] == row['specSHA256'], 'result_spec_changed')
                 comparisons = {}
                 for item in result['outputs']:
-                    if item['path'] in ('summary.json', 'comparison.json', 'diagnostic.json') and item['bytes'] <= 2_000_000:
+                    # BACKLOG410: read every small JSON report the attempt lists, not only 3 fixed names.
+                    if (item['path'].endswith('.json') and item['path'] != 'artifact-receipt.json'
+                            and item.get('bytes', 0) <= 2_000_000):
                         doc = q.load(attempt / 'out' / item['path'])
                         comparisons[item['path']] = {key: doc[key] for key in
-                            ('decisions', 'summaryRows', 'againstOriginal', 'scores', 'modelAccepted', 'limitation') if key in doc}
+                            ('decisions', 'summaryRows', 'againstOriginal', 'scores', 'modelAccepted', 'limitation',
+                             'gains', 'lostPriorSuccesses') if isinstance(doc, dict) and key in doc}
                 outputs.append(dict(job=row['job'], resultSHA256=q.digest(path), comparisons=comparisons,
                     wallSeconds=result.get('wallSeconds'), outputs=result['outputs']))
                 break

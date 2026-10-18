@@ -67,7 +67,7 @@ public struct InteractiveControlPaletteConfig: Sendable {
             isToggleOn: toggleOn,
             stepperValue: stepper,
             isDisclosureExpanded: expanded,
-            colorScheme: isDark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: isDark ? .dark : .light)
         )
     }
 }

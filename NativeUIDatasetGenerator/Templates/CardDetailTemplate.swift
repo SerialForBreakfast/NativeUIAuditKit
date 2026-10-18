@@ -92,7 +92,7 @@ public struct CardDetailConfig: Sendable {
             primaryActionLabel: primary,
             secondaryActionLabel: secondary,
             badgeText: badge,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

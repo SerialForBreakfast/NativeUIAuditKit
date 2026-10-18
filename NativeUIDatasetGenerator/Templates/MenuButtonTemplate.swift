@@ -86,7 +86,7 @@ public struct MenuButtonConfig: Sendable {
             showSecondMenu: showSecond,
             secondMenuLabel: "Filter",
             secondMenuItems: items2,
-            colorScheme: dark ? .dark : .light,
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light),
             contextRows: (0..<4).map { _ in corpus.listRowTitle() }
         )
     }

@@ -27,6 +27,9 @@ TTR 0.4.3 RC is a downstream version. The NUIAK release version remains subject 
 - A fixed compiler helper, verified restart checks, exclusive installation claims, and a shared digest test vector.
 - Internal active-model selection, rollback, protected calls, and recoverable removal with one writer per storage root.
 
+- Research queue tooling: restarts of exhausted jobs with larger limits, maintainer limit overrides, and restart time estimates.
+- A safe dashboard restart script, a light `/api/health` endpoint, and a shared dashboard snapshot cache.
+
 No model weights, inference thresholds, or navigation policy change.
 Optional downloads and the complete installation lifecycle remain unfinished. These entries do not claim public release approval.
 

@@ -71,7 +71,7 @@ public struct EmptyStateConfig: Sendable {
             body: hasBody ? corpus.listRowTitle() : "",
             primaryButtonLabel: corpus.buttonLabel(),
             hue: hue,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

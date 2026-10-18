@@ -97,7 +97,7 @@ public struct SheetConfig: Sendable {
             primaryLabel: corpus.buttonLabel(),
             cancelLabel: "Cancel",
             showDragHandle: dragHandle,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

@@ -68,7 +68,7 @@ public struct ChromeCoverageConfig: Sendable {
             tooltipText: tips[Int(rng.next() % UInt64(tips.count))],
             unknownLabel: unknownLabels[Int(rng.next() % UInt64(unknownLabels.count))],
             rows: rows,
-            colorScheme: effectiveColorScheme ?? (dark ? .dark : .light),
+            colorScheme: ScreenshotCapture.colorScheme(seeded: effectiveColorScheme ?? (dark ? .dark : .light)),
             status: status
         )
     }
@@ -83,6 +83,7 @@ public struct ChromeCoverageConfig: Sendable {
 /// No `NavigationStack` — a real nav bar would compete with the painted status bar.
 public struct ChromeCoverageTemplate: View {
     public let config: ChromeCoverageConfig
+    @Environment(\.generatorGeometryRevision) private var geometryRevision
 
     public init(config: ChromeCoverageConfig) {
         self.config = config
@@ -113,12 +114,15 @@ public struct ChromeCoverageTemplate: View {
                         }
                     }
 
+                    // Revision 2: the box is the drawn capsule, 4 pt clear of the row dividers (ACTIONS417).
                     Capsule()
                         .fill(Color.secondary.opacity(0.45))
                         .frame(width: 3, height: 36)
+                        .captureFrame(id: "scrollIndicator_0", when: geometryRevision >= 2)
+                        .padding(.leading, geometryRevision >= 2 ? 4 : 0)
                         .padding(.trailing, 4)
                         .padding(.top, 24)
-                        .captureFrame(id: "scrollIndicator_0")
+                        .captureFrame(id: "scrollIndicator_0", when: geometryRevision < 2)
                 }
 
                 Spacer(minLength: 0)

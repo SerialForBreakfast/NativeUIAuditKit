@@ -14,4 +14,11 @@ class GeometryTests(unittest.TestCase):
             with self.assertRaises(ValueError):rectangle(value)
 
 
+
+class CaptureVersionTests(unittest.TestCase):
+    def test_report_accepts_both_validated_capture_versions(self):
+        import coverage_reports402 as reports, native_coverage402 as coverage
+        self.assertEqual(reports.CAPTURE_VERSIONS, ('native-hcf402-v1', coverage.CONTROLS_VERSION))
+
+
 if __name__=='__main__':unittest.main()

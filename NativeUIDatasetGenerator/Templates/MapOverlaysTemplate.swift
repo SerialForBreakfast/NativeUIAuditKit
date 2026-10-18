@@ -65,7 +65,7 @@ public struct MapOverlaysConfig: Sendable {
             mapHue: hue,
             primaryButtonLabel: corpus.buttonLabel(),
             pinCount: pinCount,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }
@@ -78,6 +78,7 @@ public struct MapOverlaysConfig: Sendable {
 /// **Platform scope:** iOS GeneratorRunner target only.
 public struct MapOverlaysTemplate: View {
     public let config: MapOverlaysConfig
+    @Environment(\.generatorGeometryRevision) private var geometryRevision
 
     public init(config: MapOverlaysConfig) {
         self.config = config
@@ -108,7 +109,9 @@ public struct MapOverlaysTemplate: View {
                         // Land tiles
                         ForEach(0..<rows, id: \.self) { row in
                             ForEach(0..<cols, id: \.self) { col in
-                                let brightness = 0.72 + Double((row + col) % 3) * 0.04
+                                // Revision 2: dark tiles in dark mode, as a native map does (ACTIONS417).
+                                let base = geometryRevision >= 2 && config.colorScheme == .dark ? 0.22 : 0.72
+                                let brightness = base + Double((row + col) % 3) * 0.04
                                 RoundedRectangle(cornerRadius: 1)
                                     .fill(Color(
                                         hue: config.mapHue,

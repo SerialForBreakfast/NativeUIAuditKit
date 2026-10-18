@@ -89,7 +89,7 @@ public struct NotificationCenterConfig: Sendable {
         }
         let dl = dateLabels[Int(rng.next() % UInt64(dateLabels.count))]
         return NotificationCenterConfig(dateLabel: dl, items: items,
-                                        colorScheme: dark ? .dark : .light)
+                                        colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light))
     }
 }
 

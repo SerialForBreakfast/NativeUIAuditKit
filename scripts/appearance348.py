@@ -148,7 +148,7 @@ def register(training_jobs=False):
     for suffix,settings,inputs in jobs:
         identity='focus348-'+suffix;config=folder/(identity+'-config.json')
         q.save(config,dict(settings,manifest=manifest,inputs=inputs))
-        spec=dict(version=q.SPEC_VERSION,id=identity,task='FOCUS348',owner='research-host-NUIAK',
+        spec=dict(version=q.SPEC_VERSION,id=identity,task='FOCUS348',owner='Maximum-mini-NUIAK',
             kind='confirm' if training_jobs else 'screen',authority='training' if training_jobs else 'diagnostic',
             hypothesis='Source gamma augmentation reduces measured appearance errors with original-view replay.',
             decisionRule='Compare equal-budget arms. Require target gains and no lost original or retained successes. Keep thresholds 0.15/0.85.',

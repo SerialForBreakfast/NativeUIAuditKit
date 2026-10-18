@@ -1,0 +1,56 @@
+{
+  "version": "ios-native-capture-recipe-v1",
+  "families": [
+    "LiquidGlassTab",
+    "LoadingSkeleton",
+    "LoginForm",
+    "MapOverlays",
+    "MediaCardGrid",
+    "MenuButton",
+    "ModalDialogueFlow",
+    "MultiSectionForm",
+    "NotificationCenter",
+    "OnboardingPage",
+    "PickerDateEntry",
+    "Popover",
+    "ProgressActivity",
+    "RefreshControl",
+    "RichContentFeed",
+    "RTLMirror"
+  ],
+  "seeds": [
+    13
+  ],
+  "devices": [
+    "iPhone 17 Pro"
+  ],
+  "dynamicType": [
+    "large"
+  ],
+  "appearance": [
+    "light",
+    "dark"
+  ],
+  "groups": "family-seed",
+  "roles": {
+    "LiquidGlassTab": "development",
+    "LoadingSkeleton": "development",
+    "LoginForm": "development",
+    "MapOverlays": "development",
+    "MediaCardGrid": "development",
+    "MenuButton": "development",
+    "ModalDialogueFlow": "development",
+    "MultiSectionForm": "development",
+    "NotificationCenter": "development",
+    "OnboardingPage": "development",
+    "PickerDateEntry": "development",
+    "Popover": "development",
+    "ProgressActivity": "development",
+    "RefreshControl": "development",
+    "RichContentFeed": "development",
+    "RTLMirror": "development"
+  },
+  "trainingEligible": false,
+  "supportedClasses": "taxonomy",
+  "maxFrames": 32
+}

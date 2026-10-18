@@ -4,7 +4,7 @@ A portable Swift package for detecting native Apple platform UI elements in scre
 
 **Product direction:** [MVP, planned features, and proposed features](Research/ProductRoadmap.md).
 
-**Current state:** Shipped detectors include iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 009 holdout **0.586**), FocusRing v1.0 data, macOS. See [`Research/PhaseMap.md`](Research/PhaseMap.md) for dependencies.
+**Current state:** Shipped detectors include iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 013 withheld mAP@0.5 **0.6322** against same-input Run 009 **0.5549** on 13 supported classes; the gate is ≥ 0.85), FocusRing v1.0 data, macOS. See [`Research/PhaseMap.md`](Research/PhaseMap.md) for dependencies.
 
 ---
 
@@ -223,6 +223,20 @@ swift scripts/eval_map.swift
 # Writes reports/eval_results.json
 ```
 
+**Research queue dashboard (local, loopback only):**
+```bash
+.venv-yolo/bin/python -B scripts/restart_research_dashboard.py --priority-task TEMPLATE395
+# Stops any dashboard on port 8765 after its current job, then starts a new one at http://127.0.0.1:8765/
+```
+The script refuses to stop a running job unless you pass `--wait SECONDS` or `--cancel-running`.
+Use `--stop` to stop only and `--dry-run` to preview. See [ADR-0026](Research/ADR-0026-Queued-Research-Experiments.md).
+
+**Inspect exhausted queue jobs and their restart estimates:**
+```bash
+.venv-yolo/bin/python -B scripts/research_extensions.py inventory
+```
+The dashboard Inspect dialog saves a restart with larger limits. See [EXTENSION408](Research/Plans/Extension408.md).
+
 **Augment an existing createml_export/ with new images (without full re-export):**
 ```bash
 python3 scripts/augment_createml_export.py \
@@ -331,6 +345,10 @@ NativeUIAuditKit/
     ├── inspect_model_outputs.swift        ← raw YOLO tensor inspector
     ├── verify_strip_export.swift
     ├── generate_balance_report.py
+    ├── research_queue.py                  ← queued research jobs (ADR-0026)
+    ├── research_dashboard_server.py       ← loopback dashboard for the queue
+    ├── restart_research_dashboard.py      ← safe dashboard stop and restart
+    ├── research_extensions.py             ← restart exhausted jobs with larger limits
     └── run-kitchen-sink-test.sh
 ```
 

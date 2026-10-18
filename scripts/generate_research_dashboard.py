@@ -11,7 +11,8 @@ ROOT = queue.ROOT
 
 
 def build_dashboard_data():
-    return queue.summarize(write=False)
+    from research_dashboard_states import annotate
+    return annotate(queue.summarize(write=False), queue.QUEUE, queue.MODULES)
 
 
 def render_html(data, token=''):
@@ -40,6 +41,9 @@ h1{font-size:14px;font-weight:700;margin:0;color:#f0f6fc}
 .btn-stop:hover{background:#a33740}
 .btn-stopping{background:#6e4014;border-color:#ffaa44;color:#fff;cursor:not-allowed}
 #stats-bar{display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap}
+#backlog{border:1px solid #30363d;border-radius:6px;padding:4px 8px;margin-bottom:8px}
+#glance{border:1px solid #30363d;border-radius:6px;background:#161b22;padding:6px 8px;margin-bottom:8px}#glance ol{margin:2px 0 0 18px;padding:0}.glance-state{font-size:13px;font-weight:600;color:#f0f6fc}
+#backlog-table{width:100%;border-collapse:collapse}#backlog-table td,#backlog-table th{text-align:left;padding:1px 4px;border-bottom:1px solid #21262d}
 .chip{font-size:11px;padding:1px 6px;border-radius:8px;background:#161b22;border:1px solid #30363d;color:#8b949e}
 .chip strong{color:#f0f6fc}
 #active{border:1px solid #30363d;border-radius:6px;background:#161b22;padding:6px 8px;margin-bottom:8px}
@@ -70,6 +74,8 @@ tr.running{background:#0d222b;border-left:3px solid #5ce1dc}
 details{border:1px solid #21262d;border-radius:4px;background:#161b22;padding:4px 6px;margin-bottom:4px}
 summary{font-size:10px;font-weight:600;color:#8b949e;cursor:pointer}
 summary:hover{color:#c9d1d9}
+.extend-form{display:grid;grid-template-columns:auto 1fr;gap:4px 6px;align-items:center;margin:4px 0}
+.extend-form textarea{font:inherit;min-height:44px;background:#161b22;color:#c9d1d9;border:1px solid #30363d;border-radius:4px;padding:3px 6px}
 .small{font-size:10px}.muted{color:#8b949e}.warning{color:#ffc77e}.error-text{color:#ffaaa3}
 #detail{white-space:pre-wrap;overflow:auto;max-height:50vh;font-size:10px}
 dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px solid #30363d;border-radius:6px;padding:10px}
@@ -81,9 +87,21 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
 <div id="stats-bar">
   <span class="chip" id="chip-running"><strong>0</strong> running</span>
   <span class="chip" id="chip-ready"><strong>0</strong> ready</span>
+  <span class="chip" id="chip-awaiting"><strong>0</strong> awaiting approval</span>
   <span class="chip" id="chip-blocked"><strong>0</strong> blocked</span>
+  <span class="chip" id="chip-exhausted"><strong>0</strong> exhausted</span>
+  <span class="chip" id="chip-superseded"><strong>0</strong> superseded</span>
   <span class="chip" id="chip-complete"><strong>0</strong> done</span>
 </div>
+<section id="glance" aria-live="polite" aria-label="Queue state at a glance">
+  <div id="glance-state" class="glance-state">Loading queue state…</div>
+  <div class="small muted">Next steps</div>
+  <ol id="glance-next" class="small"></ol>
+</section>
+<details id="backlog"><summary><strong>Backlog</strong> <span id="backlog-summary" class="small muted"></span></summary>
+  <p id="backlog-warning" class="warning small" hidden></p>
+  <table id="backlog-table" class="small"><thead><tr><th>Record</th><th>Title</th><th>Jobs done</th><th>Ready</th><th>Result</th></tr></thead><tbody></tbody></table>
+</details>
 <section id="active" aria-live="polite" aria-label="Current task">
   <div class="active-title-row"><span id="active-badge" class="badge badge-idle">IDLE</span> <span id="active-title">No task is running</span></div>
   <div id="active-step">The queue is idle.</div>
@@ -101,14 +119,19 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
 </section>
 <div class="toolbar">
   <input id="search" placeholder="Filter backlog..." aria-label="Search">
-  <select id="filter" aria-label="State"><option value="">All</option><option>pending</option><option>blocked</option><option>running</option><option>failed</option><option>cancelled</option><option>interrupted</option></select>
+  <select id="filter" aria-label="State"><option value="">All</option><option value="pending">Pending (all not started)</option><option value="ready">Ready</option><option value="awaiting-approval">Awaiting approval</option><option value="blocked">Blocked</option><option value="unchecked">Readiness unchecked</option><option>running</option><option value="exhausted">Exhausted (no attempts left)</option><option value="superseded">Superseded (completed successor)</option><option>failed</option><option>cancelled</option><option>interrupted</option></select>
   <select id="sort" aria-label="Sort"><option value="job">ID</option><option value="state">State</option><option value="wallSeconds">Time</option></select>
 </div>
-<div class="section-header"><span>Upcoming Backlog</span> <span id="backlog-count" class="small muted"></span></div>
+<div class="section-header"><span>Active and waiting jobs</span> <span id="backlog-count" class="small muted"></span></div>
 <table><thead><tr><th style="width:24px">#</th><th>Experiment / Task</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="rows"></tbody></table>
+<p id="rows-empty" class="small muted" hidden></p>
 <details id="completed"><summary id="completed-count">Completed test outcomes</summary>
   <p class="small muted">Completed jobs stay here. Completion does not mean model acceptance.</p>
   <table><thead><tr><th style="width:24px">#</th><th>Experiment / Outcome</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="completed-rows"></tbody></table>
+</details>
+<details id="superseded"><summary id="superseded-count">Superseded history</summary>
+  <p class="small muted">A completed successor answers each of these questions. They are history, not pending work. Their specifications and attempts stay unchanged.</p>
+  <table><thead><tr><th style="width:24px">#</th><th>Experiment / Successor</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="superseded-rows"></tbody></table>
 </details>
 <details id="batch-tools"><summary class="small muted">Batch selection & controls</summary>
   <div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0">
@@ -129,7 +152,7 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
   <p id="mode" class="small muted"></p>
   <div id="summary" class="small muted"></div>
 </details>
-<dialog id="modal"><div style="display:flex;justify-content:space-between;align-items:center"><strong id="modal-title">Job Details</strong><button id="close" class="btn-sm">Close</button></div><section id="detail-description" style="margin-top:6px"></section><details style="margin-top:6px"><summary class="small">Technical details and registered decision rule</summary><pre id="detail"></pre></details></dialog>
+<dialog id="modal"><div style="display:flex;justify-content:space-between;align-items:center"><strong id="modal-title">Job Details</strong><button id="close" class="btn-sm">Close</button></div><section id="detail-description" style="margin-top:6px"></section><section id="extend" style="margin-top:6px" hidden></section><details style="margin-top:6px"><summary class="small">Technical details and registered decision rule</summary><pre id="detail"></pre></details></dialog>
 <script>
 const TOKEN=__TOKEN__;
 let data=__DATA__;
@@ -137,6 +160,9 @@ const DESCRIPTIONS=__DESCRIPTIONS__;
 let busy=Boolean(data.busy);
 const selected=new Set();
 const $=id=>document.getElementById(id);
+const stateOf=j=>j.displayState||(j.state==='pending'?'unchecked':j.state);
+const stateLabel=j=>({'awaiting-approval':'AWAITING APPROVAL',unchecked:'READINESS UNCHECKED',complete:'COMPLETED'}[stateOf(j)]||stateOf(j).toUpperCase());
+const reasonLabel=r=>({input_changed:'A registered input file changed or is missing. Review its pinned identity.',not_approved:'Approval is required.',storage_insufficient:'Available storage is below the required reserve.'}[r]||r);
 function add(parent,tag,text){const e=document.createElement(tag);e.textContent=text;parent.append(e);return e;}
 function description(row){return DESCRIPTIONS[row.job]||{
  title:row.question||row.hypothesis||row.job,
@@ -148,11 +174,81 @@ function explain(parent,row){
  const test=add(parent,'p','');add(test,'strong','What this tests: ');add(test,'span',d.test);
  const answer=add(parent,'p','');add(answer,'strong','What the result tells us: ');add(answer,'span',d.answers);
  if(d.source==='study')add(parent,'p','This job contributes to the study question. It does not answer the whole question alone.').className='small';
- if(row.state==='blocked')add(parent,'p','Blocked: this is a planned test, not a measured result.').className='warning';
+ if(row.displayState==='superseded')add(parent,'p','Superseded: the completed job '+row.supersededBy+' answers this question. This record is history, not pending work.').className='small';
+ else if(row.state==='blocked')add(parent,'p','Blocked: this is a planned test, not a measured result.').className='warning';
 }
-function show(row){$('detail-description').replaceChildren();explain($('detail-description'),row);
+function dur(s){if(s==null||!Number.isFinite(s))return 'unknown';s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.round(s%3600/60);
+ return h?h+' h '+m+' min':s>=60?Math.round(s/60)+' min':s+' s';}
+const mb=b=>(b/1e6).toLocaleString(undefined,{maximumFractionDigits:3})+' MB';
+function extendPanel(row){
+ const box=$('extend');box.replaceChildren();box.hidden=!row.extension;
+ if(!row.extension)return;
+ const x=row.extension,e=x.estimate||{};
+ add(box,'strong','Exhausted job: restart with new limits');
+ if(x.limits){
+  add(box,'p','Last attempt: '+(x.status||'unknown')+' — '+(x.reason||'no reason')+' after '+dur(x.wallSeconds)+'. Attempts used: '+x.attempts+'.').className='small';
+  add(box,'p','Current limits: '+dur(x.limits.timeoutSeconds)+' and '+mb(x.limits.maxOutputBytes)+'. Default policy: '+
+   dur(x.defaultLimits.timeoutSeconds)+' and '+mb(x.defaultLimits.maxOutputBytes)+'. Larger limits record a maintainer override.').className='small';
+  add(box,'p',e.available?('Progress: '+e.completed+' of '+e.total+' '+e.unit+'. Estimated restart time: '+dur(e.restartSeconds)+
+   '. Work left after the recorded progress: '+dur(e.remainingAfterProgressSeconds)+'. '+e.basis):('Estimate unavailable: '+(e.basis||'no progress record.'))).className='small';
+ }
+ if(x.warning)add(box,'p',x.warning).className='warning small';
+ if(x.successors?.length)add(box,'p','Successors: '+x.successors.join(', ')).className='small muted';
+ if(x.blocker){add(box,'p','Restart unavailable: '+x.blocker).className='warning small';return;}
+ if(!TOKEN){add(box,'p','Start the local dashboard server to save a restart.').className='small muted';return;}
+ add(box,'p','A restart is new job '+x.successorId+'. It starts from step 0. It runs after ordinary ready work, in save order. The parent stays as history.').className='small muted';
+ const form=add(box,'div','');form.className='extend-form';
+ add(form,'label','Timeout (s)');const t=add(form,'input','');t.type='number';t.min=x.limits.timeoutSeconds;t.max=86400;t.step=60;t.value=x.suggested.timeoutSeconds;
+ add(form,'label','Output (MB)');const o=add(form,'input','');o.type='number';o.step='any';o.min=x.limits.maxOutputBytes/1e6;o.value=x.suggested.maxOutputBytes/1e6;
+ add(form,'label','Reason');const r=add(form,'textarea','');r.placeholder='Name the repair or the unresolved question (20 characters or more).';
+ const hint=add(box,'p','');hint.className='small muted';
+ const update=()=>{hint.textContent=e.available?'This timeout is '+Math.round(Number(t.value)/e.restartSeconds*100)+' % of the estimated restart time.':'';};
+ t.oninput=update;update();
+ const save=add(box,'button','Save restart at end of queue');save.className='btn-sm';
+ const out=add(box,'p','');out.className='small';
+ save.onclick=async()=>{save.disabled=true;out.textContent='Saving...';
+  try{const v=await request('/api/extend',{job:row.job,timeoutSeconds:Math.round(Number(t.value)),
+   maxOutputBytes:Math.max(x.limits.maxOutputBytes,Math.round(Number(o.value)*1e6)),reason:r.value});
+   out.textContent='Saved '+v.result.job+'. '+(v.result.approved?'Approved. The runner starts it after ordinary ready work.':'Not approved: '+v.result.approvalError);
+   await refresh();}
+  catch(err){out.textContent=err.message;out.className='small error-text';save.disabled=false;}};
+}
+function show(row){$('detail-description').replaceChildren();explain($('detail-description'),row);extendPanel(row);
  $('detail').textContent=JSON.stringify(row,null,2);$('modal').showModal();}
+function etaText(eta){
+ const range=Math.round(eta.low)===Math.round(eta.high)?dur(eta.low):dur(eta.low)+'–'+dur(eta.high);
+ return range+' left ('+(eta.basis==='progress'?'from progress':eta.basis==='parent-progress'?'from the parent attempt':eta.samples+' runs')+')';}
+function renderGlance(){
+ const b=data.backlog, jobs=data.jobs||[], next=$('glance-next');next.replaceChildren();
+ const running=data.current||jobs.find(j=>j.state==='running')?.job;
+ const ready=b?b.readyJobs:jobs.filter(j=>stateOf(j)==='ready').length;
+ $('glance-state').textContent=data.stopping?'Stopping after the current job.':running?'Running '+running+'.':
+  ready?'Waiting to start '+ready+' ready job'+(ready===1?'':'s')+'.':'Idle: no approved work is ready.';
+ if(data.stale)$('glance-state').textContent+=' (Showing the last snapshot while a new one builds.)';
+ const step=t=>add(next,'li',t);
+ if(b&&b.readyJobs)step(b.readyJobs+' ready job'+(b.readyJobs===1?'':'s')+' will run next (about '+dur(b.readySeconds)+(b.readyUnknown?', '+b.readyUnknown+' without an estimate':'')+').');
+ if(b&&b.reviewPending.length)step('Review completed results: '+b.reviewPending.slice(0,6).map(r=>r.id).join(', ')+(b.reviewPending.length>6?' and '+(b.reviewPending.length-6)+' more':'')+'. Run backlog_pipeline review, then confirm.');
+ if(b&&b.awaitingApproval)step(b.awaitingApproval+' job'+(b.awaitingApproval===1?' passes':'s pass')+' every check except approval.');
+ if(b&&b.blockedJobs)step(b.blockedJobs+' job'+(b.blockedJobs===1?' is':'s are')+' blocked or exhausted. Use the Blocked or Exhausted filter for the exact reason.');
+ if(b&&b.refill)step('Fewer than 10 ready jobs. Run the backlog-grooming cycle: review, confirm, then expand planned records.');
+ for(const g of (b?.topBlockers||[]).slice(0,3))
+  step((g.kind==='adapter'?(g.missingTemplate?'Build the '+g.template+' template':'Extend '+g.template+': '+g.example):g.kind==='decision'?'Decide: '+g.example:'Supply data for '+g.template+': '+g.example)+' ('+g.owner+'). Unblocks '+g.unblocks+' record'+(g.unblocks===1?'':'s')+'.');
+ if(b)add(next,'li','Catalog: '+b.answered+' questions answered, '+b.open+' open ('+(b.open-b.needsPlan)+' with a plan, '+b.needsPlan+' waiting for a template, data, or decision).').className='muted';
+ if(!next.children.length)step('No action is due.');
+}
+function renderBacklog(){
+ renderGlance();
+ const b=data.backlog;$('backlog').hidden=!b;if(!b)return;
+ $('backlog-summary').textContent=b.readyJobs+' ready jobs, about '+dur(b.readySeconds)+(b.readyUnknown?' plus '+b.readyUnknown+' without an estimate':'')+
+  ' · '+b.planned+' planned records · '+b.needsPlan+' records need a plan';
+ $('backlog-warning').hidden=!b.refill;
+ $('backlog-warning').textContent='Fewer than 10 ready jobs remain. Run the backlog-grooming cycle: review, then expand the next planned records.';
+ const body=$('backlog-table').tBodies[0];body.replaceChildren();
+ for(const r of b.records.filter(r=>r.planned||r.jobs)){const tr=add(body,'tr','');
+  for(const v of [r.id,r.title,r.complete+'/'+r.jobs,r.ready,r.result||(r.jobs&&r.complete===r.jobs?'review pending':'–')])add(tr,'td',String(v));}
+}
 function render(){
+ renderBacklog();
  const jobs=data.jobs||[];
  let active=jobs.find(j=>j.job===data.current)||jobs.find(j=>j.state==='running');
  if(!active&&data.current){active={job:data.current,state:'running',hypothesis:'Executing task '+data.current};}
@@ -161,14 +257,17 @@ function render(){
  if(data.stopping){toggleBtn.textContent='Stopping';toggleBtn.className='btn-toggle btn-stopping';toggleBtn.disabled=true;}
  else if(isRunning){toggleBtn.textContent='Stop';toggleBtn.className='btn-toggle btn-stop';toggleBtn.disabled=!TOKEN;}
  else{toggleBtn.textContent='Start';toggleBtn.className='btn-toggle btn-start';toggleBtn.disabled=!TOKEN;}
- $('run-mode').textContent=data.stopping?'Stopping':(isRunning?'Running':(data.continuous?'Auto':'Idle'));
- $('run-mode').className='badge '+(data.stopping?'badge-blocked':(isRunning?'badge-running':'badge-idle'));
- const countState=s=>jobs.filter(j=>j.state===s).length;
+ $('run-mode').textContent=data.stopping?'Stopping':(active?'Running':(busy?'Runner active — waiting':'Idle'));
+ $('run-mode').className='badge '+(data.stopping?'badge-blocked':(active?'badge-running':(busy?'badge-blocked':'badge-idle')));
+ const countState=s=>jobs.filter(j=>stateOf(j)===s).length;
  $('chip-running').innerHTML='<strong>'+countState('running')+'</strong> running';
- const readyJobs=jobs.filter(j=>j.state==='pending'&&j.approved);
- const awaiting=jobs.filter(j=>j.state==='pending'&&!j.approved).length;
- $('chip-ready').innerHTML='<strong>'+readyJobs.length+'</strong> ready'+(awaiting?' · '+awaiting+' awaiting approval':'');
+ const readyJobs=jobs.filter(j=>stateOf(j)==='ready');
+ const awaiting=jobs.filter(j=>stateOf(j)==='awaiting-approval').length;
+ $('chip-ready').innerHTML='<strong>'+readyJobs.length+'</strong> ready';
+ $('chip-awaiting').innerHTML='<strong>'+awaiting+'</strong> awaiting approval';
  $('chip-blocked').innerHTML='<strong>'+countState('blocked')+'</strong> blocked';
+ $('chip-exhausted').innerHTML='<strong>'+countState('exhausted')+'</strong> exhausted';
+ $('chip-superseded').innerHTML='<strong>'+countState('superseded')+'</strong> superseded';
  $('chip-complete').innerHTML='<strong>'+countState('complete')+'</strong> done';
  $('active').className=(active||busy)?'':'idle';
  const badgeEl=$('active-badge');
@@ -209,7 +308,7 @@ function render(){
   $('active-progress').append(p);}
  const elapsed=active?.startedAt?Math.max(0,Date.now()/1000-active.startedAt):null;
  $('active-time').textContent=active?(elapsed==null?'Elapsed unavailable':elapsed.toFixed(1)+' s elapsed'):'';
- $('active-eta').textContent=active&&active.eta?('ETA '+active.eta.low.toFixed(0)+'–'+active.eta.high.toFixed(0)+' s ('+active.eta.samples+' runs)'):'';
+ $('active-eta').textContent=active&&active.eta?('ETA '+etaText(active.eta)):'';
  $('active-decision').textContent=active?'Decision rule: '+active.decisionRule:'';
  $('active-controls').hidden=!active||!TOKEN;
  $('active-stop').disabled=!busy;$('active-cancel').disabled=!data.current;
@@ -228,7 +327,7 @@ function render(){
  if(data.error)$('error').textContent=data.error;
  $('rows').replaceChildren();
  $('completed-rows').replaceChildren();
- for(const id of selected){if(!jobs.some(j=>j.job===id&&!['complete','blocked','running','exhausted'].includes(j.state)))selected.delete(id);}
+ for(const id of selected){if(!jobs.some(j=>j.job===id&&(stateOf(j)==='ready'||(['failed','cancelled','interrupted'].includes(j.state)&&j.approved))))selected.delete(id);}
  const previous=$('coverage-report').value;
  $('coverage-report').replaceChildren();
  const measured=jobs.filter(j=>j.measured);
@@ -237,25 +336,25 @@ function render(){
  if(measured.some(j=>j.job===previous))$('coverage-report').value=previous;
  showCoverage();
  const query=$('search').value.toLowerCase(), filter=$('filter').value, key=$('sort').value;
- const visible=jobs.filter(j=>{const d=description(j);return (['complete','drifted'].includes(j.state)||!filter||j.state===filter)&&
+ const visible=jobs.filter(j=>{const d=description(j);return (['complete','drifted'].includes(j.state)||stateOf(j)==='superseded'||!filter||(filter==='pending'?['pending','blocked'].includes(j.state):stateOf(j)===filter))&&
   [j.job,j.hypothesis,d.title,d.test,d.answers].join(' ').toLowerCase().includes(query);});
  visible.sort((a,b)=>key==='wallSeconds'?(a[key]||0)-(b[key]||0):String(a[key]).localeCompare(String(b[key])));
  let readyPriority=1;
- const backlogReady=visible.filter(j=>j.state==='pending'&&j.approved);
+ const backlogReady=visible.filter(j=>stateOf(j)==='ready');
  $('backlog-count').textContent=backlogReady.length+' ready';
  for(const j of visible){
   const isCompleted=['complete','drifted'].includes(j.state);
   const tr=document.createElement('tr');if(j.state==='running'||j.job===data.current)tr.className='running';
   const tdSelect=add(tr,'td','');tdSelect.style.width='24px';
   const box=document.createElement('input');box.type='checkbox';box.checked=selected.has(j.job);
-  box.disabled=['complete','drifted','blocked','running','exhausted'].includes(j.state);
+  box.disabled=!(stateOf(j)==='ready'||(['failed','cancelled','interrupted'].includes(j.state)&&j.approved));
   box.onchange=()=>box.checked?selected.add(j.job):selected.delete(j.job);tdSelect.append(box);
   const tdMain=add(tr,'td','');
   const item=add(tdMain,'div','');item.className='job-item';
   const topRow=add(item,'div','');topRow.className='job-title-row';
-  const badge=add(topRow,'span',j.state.toUpperCase());
-  badge.className='badge badge-'+(j.state==='running'?'running':(j.state==='pending'?'ready':(j.state==='blocked'?'blocked':'idle')));
-  if(j.state==='pending'){const pBadge=add(topRow,'span','#'+(readyPriority++));pBadge.className='priority-badge';}
+  const badge=add(topRow,'span',stateLabel(j));
+  badge.className='badge badge-'+(stateOf(j)==='running'?'running':(stateOf(j)==='ready'?'ready':(['blocked','awaiting-approval'].includes(stateOf(j))?'blocked':(['failed','exhausted'].includes(stateOf(j))?'failed':'idle'))));
+  if(stateOf(j)==='ready'){const pBadge=add(topRow,'span','#'+(readyPriority++));pBadge.className='priority-badge';}
   const d=description(j);
   const titleSpan=add(topRow,'span',d.title);titleSpan.className='job-title';
   const idRow=add(item,'div','');idRow.className='job-sub';
@@ -263,17 +362,26 @@ function render(){
   if(j.evidenceKind&&j.evidenceKind!=='unverified')add(idRow,'span',' · '+j.evidenceKind).className='small muted';
   if(j.trust)add(idRow,'span',' · trust: '+j.trust).className='small muted';
   if(j.jobKind)add(idRow,'span',' · '+j.jobKind).className='small muted';
-  if(j.state==='pending'&&!j.approved)add(idRow,'span',' · not approved').className='small muted';
+  if(j.readinessReasons?.length)add(item,'div','Needs: '+j.readinessReasons.map(reasonLabel).join('; ')).className='small warning';
   if(j.driftedModules&&j.driftedModules.length)add(idRow,'span',' · code changed since run').className='small muted';
   const testRow=add(item,'div',d.test);testRow.className='job-hypo';
+  if(j.continuation)add(item,'div','Continuation: '+j.continuation.state+' — '+j.continuation.reason).className='small muted';
+  if(j.extension)add(item,'div','Exhausted: '+(j.extension.reason||'unknown')+'. '+(j.extension.blocker?'Restart unavailable.':
+   'Inspect to restart with new limits'+(j.extension.estimate?.available?' (estimated '+dur(j.extension.estimate.restartSeconds)+')':'')+'.')).className='small warning';
+  if(j.extendedFrom)add(item,'div','Restart of '+j.extendedFrom.parent+'. Runs after ordinary ready work, in save order.').className='small muted';
   const tdAction=add(tr,'td','');tdAction.style.textAlign='right';tdAction.style.whiteSpace='nowrap';
   const elTime=j.state==='running'&&j.startedAt?Date.now()/1000-j.startedAt:j.wallSeconds;
   if(elTime!=null)add(tdAction,'div',Math.max(0,elTime).toFixed(1)+' s').className='small muted';
-  if(j.eta)add(tdAction,'div','ETA '+j.eta.low.toFixed(0)+'–'+j.eta.high.toFixed(0)+' s').className='small muted';
+  if(j.eta)add(tdAction,'div','ETA '+etaText(j.eta)).className='small muted';
   const btnInspect=add(tdAction,'button','Inspect');btnInspect.className='btn-sm';btnInspect.onclick=()=>show(j);
-  $(isCompleted?'completed-rows':'rows').append(tr);
+  if(j.supersededBy)add(item,'div','Answered by '+j.supersededBy+'.').className='small muted';
+  $(stateOf(j)==='superseded'?'superseded-rows':isCompleted?'completed-rows':'rows').append(tr);
  }
+ // The empty-state note stays outside the table body, so row counts mean job rows only.
+ $('rows-empty').hidden=Boolean($('rows').children.length);
+ $('rows-empty').textContent=filter||query?'No job matches this filter.':'No active or waiting jobs. See Next steps at the top.';
  $('completed-count').textContent='Recorded outcomes, including changed code ('+jobs.filter(j=>['complete','drifted'].includes(j.state)).length+')';
+ $('superseded-count').textContent='Superseded history ('+jobs.filter(j=>stateOf(j)==='superseded').length+')';
 }
 function showCoverage(){
  const job=(data.jobs||[]).find(j=>j.job===$('coverage-report').value&&j.measured);
@@ -292,7 +400,12 @@ async function request(path,body){
  ...(body?{body:JSON.stringify(body)}:{})});
  const value=await response.json();if(!response.ok)throw Error(value.error||'Request failed');return value;
 }
-async function refresh(){if(!TOKEN)return;try{data=await request('/api/state');busy=data.busy;render();}catch(e){$('error').textContent=e.message;}}
+let polling=false;
+async function refresh(){if(!TOKEN||polling)return;polling=true;
+ try{const v=await request('/api/state'+(data.snapshotId?'?since='+data.snapshotId:''));
+  if(v.unchanged){const {unchanged,...live}=v;Object.assign(data,live);}else data=v;
+  busy=data.busy;render();}
+ catch(e){$('error').textContent=e.message;}finally{polling=false;}}
 async function action(name,body){try{$('error').textContent='';await request('/api/'+name,body);await refresh();}catch(e){$('error').textContent=e.message;}}
 $('toggle-run').onclick=()=>{if(busy||Boolean(data.current))action('stop',{});else action('start-all',{});};
 $('start').onclick=()=>action('start',{jobs:[...selected],retry:$('retry').checked});

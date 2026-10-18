@@ -87,7 +87,7 @@ public struct ToolbarActionsConfig: Sendable {
             title: corpus.navigationTitle(),
             actions: acts,
             rows: rows,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

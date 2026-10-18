@@ -83,7 +83,7 @@ public struct OnboardingPageConfig: Sendable {
             primaryButtonLabel: isLast ? "Get Started" : "Continue",
             totalPages: totalPages,
             currentPage: currentPage,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

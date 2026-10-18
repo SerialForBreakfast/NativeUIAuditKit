@@ -96,7 +96,7 @@ public struct AccountProfileFormConfig: Sendable {
             stepperLabel: "Sessions",
             privateAccount: rng.next() % 2 == 0,
             submitLabel: submitLabels[Int(rng.next() % UInt64(submitLabels.count))],
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

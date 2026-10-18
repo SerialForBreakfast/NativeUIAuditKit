@@ -1,6 +1,6 @@
 # STANDARD390 — prepare Standard corrections from retained evidence
 
-Date: 2026-10-13. Owner: research-host-NUIAK.
+Date: 2026-10-13. Owner: Maximum-mini-NUIAK.
 
 ## Question and scope
 

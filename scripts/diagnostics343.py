@@ -103,7 +103,7 @@ def register(mode):
         paths += [v['image']['path'] for v in q.load(q.ROOT/paths[-3])['frames']]
     refs=[pin(q.ROOT/p) for p in paths]
     config=folder/(id+'-config.json');q.save(config,dict(inputs=refs,mode=mode))
-    spec=dict(version=q.SPEC_VERSION,id=id,task='FOCUS343',owner='research-host-NUIAK',kind='screen',authority='diagnostic',
+    spec=dict(version=q.SPEC_VERSION,id=id,task='FOCUS343',owner='Maximum-mini-NUIAK',kind='screen',authority='diagnostic',
         hypothesis={'artwork':'Artwork-only cases expose retained appearance dependence.',
                     'margins':'Previous successes and previous abstentions show different correction failures.',
                     'native':'Native corner focus changes test transfer beyond authored training screens.'}[mode],

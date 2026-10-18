@@ -90,7 +90,7 @@ public struct ModalDialogueFlowConfig: Sendable {
             secondaryLabel: secondary,
             cancelLabel: cancel,
             destructiveLabel: destructive,
-            colorScheme: isDark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: isDark ? .dark : .light)
         )
     }
 }

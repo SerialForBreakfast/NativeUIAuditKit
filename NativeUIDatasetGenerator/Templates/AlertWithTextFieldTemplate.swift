@@ -91,7 +91,7 @@ public struct AlertWithTextFieldConfig: Sendable {
             fieldValue: hasValue ? corpus.listRowTitle() : "",
             confirmLabel: confirmLabels[confIdx],
             cancelLabel: "Cancel",
-            colorScheme: dark ? .dark : .light,
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light),
             bgHue: hue
         )
     }

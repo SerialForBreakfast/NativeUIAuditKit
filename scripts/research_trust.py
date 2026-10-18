@@ -151,6 +151,24 @@ def write_reads(attempt):
            truncated=len(paths) >= READS_LIMIT, files=paths), replace=True)
 
 
+def check_training_report(out, evidence, max_epochs):
+    """Check the training history and report fields. Template schema tests call this without a training run."""
+    history_path, report_path = (Path(out) / evidence[key] for key in ('history', 'trainingReport'))
+    if not history_path.is_file() or not report_path.is_file():
+        return 'training_history_missing'
+    history, report = q.load(history_path), q.load(report_path)
+    epochs = report.get('epochs') if isinstance(report, dict) else None
+    if (type(epochs) is not int or not 0 < epochs <= max_epochs
+            or not isinstance(history, list) or len(history) != epochs
+            or any(not isinstance(row, dict) or row.get('epoch') != index
+                   for index, row in enumerate(history, 1))):
+        return 'training_history_epoch_mismatch'
+    if any(not isinstance(row.get('trainLoss'), (int, float))
+           or not math.isfinite(row['trainLoss']) for row in history):
+        return 'training_history_loss_invalid'
+    return None
+
+
 def check_evidence(spec, attempt, out):
     """Return None when the declared evidence exists, or the reason it does not."""
     if spec.get('version') != SPEC_V2:
@@ -210,19 +228,9 @@ def check_evidence(spec, attempt, out):
             return 'training_weights_missing'
         if q.digest(weights) == spec['training']['initialization']['sha256']:
             return 'training_weights_unchanged'
-        history_path, report_path = (Path(out) / evidence[key] for key in ('history', 'trainingReport'))
-        if not history_path.is_file() or not report_path.is_file():
-            return 'training_history_missing'
-        history, report = q.load(history_path), q.load(report_path)
-        epochs = report.get('epochs')
-        if (type(epochs) is not int or not 0 < epochs <= spec['training']['epochs']
-                or not isinstance(history, list) or len(history) != epochs
-                or any(not isinstance(row, dict) or row.get('epoch') != index
-                       for index, row in enumerate(history, 1))):
-            return 'training_history_epoch_mismatch'
-        if any(not isinstance(row.get('trainLoss'), (int, float))
-               or not math.isfinite(row['trainLoss']) for row in history):
-            return 'training_history_loss_invalid'
+        problem = check_training_report(out, evidence, spec['training']['epochs'])
+        if problem:
+            return problem
     elif kind == 'evaluation':
         path = Path(out) / evidence['predictions']
         if not path.is_file():
@@ -245,8 +253,11 @@ def check_evidence(spec, attempt, out):
     return None
 
 
-def drift(job, attempt=None):
-    """Return step modules whose current hash differs from the hash recorded at run time."""
+def drift(job, attempt=None, display_cache=False):
+    """Return step modules whose current hash differs from the hash recorded at run time.
+
+    display_cache=True reuses stat-keyed hashes for dashboard labels only.
+    """
     spec = q.load(job / 'spec.json')
     if attempt is None:
         attempt = next((a for a in q.attempts_of(job) if (a / 'result.json').exists()
@@ -260,6 +271,6 @@ def drift(job, attempt=None):
         name = '/' + step.split('.')[0] + '.py'
         for path in [p for p in recorded if ('/' + p).endswith(name)]:
             current = q.ROOT / path
-            if not current.is_file() or q.digest(current) != recorded[path]:
+            if not current.is_file() or (q.display_digest if display_cache else q.digest)(current) != recorded[path]:
                 changed.append(path)
     return sorted(set(changed))

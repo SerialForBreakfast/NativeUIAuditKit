@@ -84,7 +84,7 @@ public struct FormValidationConfig: Sendable {
             primaryButtonLabel: corpus.buttonLabel(),
             rememberMeOn: rememberMe,
             showTermsToggle: showTerms,
-            colorScheme: dark ? .dark : .light
+            colorScheme: ScreenshotCapture.colorScheme(seeded: dark ? .dark : .light)
         )
     }
 }

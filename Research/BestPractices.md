@@ -5109,3 +5109,34 @@ Keep repeated image records when they occur at different points in a sequence.
 Request retained events before recapture. Missing fresh before frames can prevent valid command-level transition tests.
 Use the existing recording audit and review editor. Do not build another pipeline for each handoff.
 [Office evidence](OfficeCapture349.md) records the current limits.
+
+## Check the runner before editing pinned queue code — EXTENSION408
+
+What went wrong: each approval pins the hashes of `research_queue.py`, `research_execution_policy.py`, and their imports.
+An edit to these files invalidates every unstarted approval.
+A job that runs during the edit fails at the end with `approval_or_code_changed_during_run`.
+Correct approach: before an edit, look for attempts without `result.json` and count the valid unstarted approvals.
+Put new queue features in modules outside the pinned closure when possible, such as `research_extensions.py`.
+After the edit, tell the maintainer which approvals to repeat. A running dashboard server keeps its old code until restart.
+Why this matters: a small policy change can silently stop the approved queue.
+
+### BP-117: iOS generator appearance and text-size metadata are not proof of rendered pixels — T46
+
+**Wrong:** Trust `image.colorScheme` and `image.dynamicTypeSize` in iOS generator sidecars. `ScreenshotCapture` uses both values as metadata only.
+Most SwiftUI templates also pick their own color scheme from the seed and apply `.colorScheme(...)` inside the view.
+In the T46 qualification, `SettingsList` dark and light frames are pixel-identical. `InteractiveControlPalette` differs by 0.0002 mean luma.
+**Correct:** Apply the traits on the hosting controller only when a run opts in (`ScreenshotCapture.rendersPresentationTraits`).
+Accept an appearance label only from a matched light/dark pair that renders at least 0.05 lower mean luma for dark.
+Mark unpaired frames `appearanceVerified: unverified`. Do not use them for an appearance quota.
+**Why:** A label that disagrees with the pixels gives false appearance coverage. Historical corpus sidecars from SwiftUI templates carry the same risk.
+See `Research/Plans/Backlog410.md`, section T46.
+
+### BP-118: A SwiftUI layout frame is not the drawn native body, and a body check must not count neighbours — ACTIONS417
+
+**Wrong:** Export the `GeometryReader` frame of a native control as its box. On iOS 26 a SwiftUI `Toggle` reports 61 pt, but its `UISwitch` draws 63 pt from the same origin, also in right-to-left layout.
+The search field box is the `UISearchTextField`, but the glass platter is 5 pt larger on each side. Dark mode shows the platter edge.
+A second error is in the check: a body that includes every foreground pixel near the box counts dividers, separators, scroll indicators, and overlapping labels as body.
+**Correct:** When a capture opts in (`ScreenshotCapture.repairsGeometry`), read the drawn native view from the UIKit hierarchy and use its extent. Grow each box that contained the old frame by the same amount.
+Measure the body as connected components that touch the box interior (T46 rule v2). Report rule v1 next to it. Before you use a changed rule, re-run it on the old outputs and check that no previous pass becomes a failure.
+**Why:** The 2 pt switch error was in every family with a toggle. On the B405-032 frames, the neighbour error alone made 3 families fail (Popover, RichContentFeed, iPadSidebar). A rule changed after results without the old-output check can hide real defects.
+See `Research/Plans/Backlog410.md`, section "ACTIONS417 — iOS generator repair".
