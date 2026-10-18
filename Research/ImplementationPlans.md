@@ -1,5 +1,8 @@
 # Full backlog implementation packet catalog
 
+[AUDIT417](Plans/ExperimentAudit20261017.md) prioritizes detector repair, reusable subset preparation, and native data producers after completed comparisons.
+It registers 15 cached diagnostics without changing execution code or Standard behavior.
+
 [BACKLOG405](Plans/ExperimentBacklog405.md) reconciles 114 scientific subjects into 107 outstanding tasks and 7 answered references.
 It separates 12 engineering tasks and registers a bounded cached-results diagnostic through the existing compiler.
 HCF delivery leads new preparation. Standard behavior and active execution remain unchanged.
@@ -885,6 +888,12 @@ simulator dataset packets; training and TTR operation retain separate authority.
 | REL-A | TASK-DIST-02 | [Release evidence](Plans/ConsumersAndRelease.md#rel-a--qualified-model-release-evidence); NUA |
 | REL-B | TASK-DIST-02 | [Promotion/tagging](Plans/ConsumersAndRelease.md#rel-b--maintainer-promotion-and-tagging); maintainer |
 | HIST-A | TASK-DIST-01 | [History decision package](Plans/ConsumersAndRelease.md#hist-a--history-remediation-decision-package); architect/maintainer |
+
+## Research paper experiment plans — 2026-10-17
+
+[PAPER417](Plans/ResearchPapers20261017.md) defines 5 controlled investigations and 5 reusable adapter tasks.
+Catalog records B405-180 through B405-184 remain blocked on named preparation requirements.
+The plan extends existing sampling and no-focus evidence. It does not approve downloads or new model execution.
 
 ## Dispatch text
 

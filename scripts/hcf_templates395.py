@@ -9,6 +9,15 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T62':({'archive'},set(),'consumer_crop_comparison.prepare','artifact','diagnostic'),
+ 'T63':({'membership','model','tool'},{'backend'},'consumer_crop_comparison.score','artifact','diagnostic'),
+ 'T60':({'report','receipt'},{'policy'},'cached_focus_policy.run','artifact','diagnostic'),
+ 'T61':({'report','receipt'},set(),'proposal_geometry_audit.run','artifact','diagnostic'),
+ 'T59':({'capture'},set(),'capture_detector_inputs.run','artifact','diagnostic'),
+ 'T58':({'button','row','tab'},set(),'detector_focus_pilot.report','artifact','diagnostic'),
+ 'T57':({'capture','scorecard','ringProposals','mapping','baseline','candidate','baselineSelection','candidateSelection','tool'},set(),'detector_focus_pilot.run','artifact','diagnostic'),
+ 'T55':({'configuration'},set(),'detector_native_inputs.run','artifact','diagnostic'),
+ 'T56':({'labels','model'},{'engine','confidence','imageSize','slice'},'detector_native_inference.run','artifact','diagnostic'),
  'T54':({'configuration','artwork','native'},set(),'native_control_membership.run','artifact','diagnostic'),
  'T53':({'configuration','decision'},set(),'native_control_admission.run','artifact','diagnostic'),
  'T42':({'bundle'},{'slice','classes','groups','matching'},'detector_case_match411.run','artifact','diagnostic'),
@@ -78,7 +87,7 @@ def build(doc):
     q.require(doc['version']=='hcf-template-description-v1','description_version')
     q.require(doc['template'] in CONTRACTS,'template_unknown')
     inputs,parameters,step,kind,authority=CONTRACTS[doc['template']]
-    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'},'T41':{'candidate'},'T47':{'prior','rule'}}.get(doc['template'],set())
+    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'},'T41':{'candidate'},'T47':{'prior','rule'},'T56':{'baseline'}}.get(doc['template'],set())
     q.require(inputs<=set(doc['inputs']) and set(doc['inputs'])<=inputs|optional,'template_inputs')
     # T47 `scorer` is optional so that registered T47 specifications keep their identity.
     # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
@@ -95,7 +104,7 @@ def build(doc):
     if doc['template']=='T50':
         from vision_proposals415 import parameters as proposals
         proposals(doc['parameters'])
-    if doc['template']=='T43':
+    if doc['template'] in ('T43','T56'):
         from detector_inference412 import parameters as inference
         inference(doc['parameters'])
     if doc['template']=='T49':

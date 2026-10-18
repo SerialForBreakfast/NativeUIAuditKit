@@ -71,6 +71,28 @@ Changed inputs or execution sources require a successor ID, not an edited submit
 
 ## Select useful work
 
+### Detector boxes to focus selection
+
+T60 accepts a T57 `report` and its completion `receipt`. Set `policy` to `unchanged`, `hcf-ring-first`, or `abstention-fallback`.
+It verifies original decisions before evaluating the fixed policy. It records gains, losses, new wrong selections, and unresolved baseline losses.
+Use it for cached development comparisons only. It changes no model, threshold, or runtime behavior.
+
+T59 accepts one `capture` artifact and produces `labels.json` for T56.
+It supports verified retained Fixture development captures, including observed no-focus states.
+It preserves capture events while deduplicating identical pixels with matching labels and groups.
+Unknown focus, conflicting duplicates, changed images, and training-eligible inputs fail.
+Use T59, T56, and T57 as a dependency graph. Do not write another capture-to-scoring script.
+
+T57 compares both crop models on known boxes, detector boxes, and detector boxes with optional HCF rings.
+Inputs are `capture`, `scorecard`, `ringProposals`, `mapping`, `baseline`, `candidate`, `baselineSelection`, `candidateSelection`, and `tool`.
+Use completed T56 scorecards and retained T37 references. Pin each input with the existing batch compiler.
+The template verifies unchanged reference scores before publishing results. It records rejected boxes and removed duplicates.
+It does not use true classes to filter detector boxes. It never applies ring offsets to detector boxes.
+
+T58 needs `button`, `row`, and `tab` reports from T57. All reports use the same model and crop-helper identities.
+Both templates use diagnostic budgets. Neither template trains, captures, or accepts a model.
+See the [pilot contract](../../Research/Plans/DetectorFocusPipelinePilot.md) for data limits and decisions.
+
 - State the observed failure or unresolved question.
 - Name the matched control and one changed factor.
 - Freeze data roles, groups, model identity, preprocessing, and thresholds.
@@ -101,6 +123,19 @@ These adapters qualify preparation. Their success does not establish model impro
 
 ## Scientific backlog
 
+### Native detector inputs and inference
+
+T55 takes `configuration` and prepares development labels from retained T46 or admitted native-control captures.
+It preserves source bounds, original classes, groups, and exclusions. It rejects changed files and conflicting duplicates.
+It does not admit training data or establish complete annotation coverage.
+
+T56 takes `labels` and `model`. It accepts an optional PyTorch `baseline` scorecard for matched comparisons.
+Parameters match T43: `engine`, `confidence`, `imageSize`, and `slice`.
+PyTorch supports iOS and tvOS. The production engine supports tvOS only.
+The adapter reuses T43 inference and T42 matching. Outputs include `scorecard.json`, `bundle.json`, and `cases.json`.
+Use T42 with the output bundle for further cached analysis.
+See [native detector comparisons](../../Research/Plans/NativeDetector20261017.md) for current scope and qualification limits.
+
 [BACKLOG405](../../Research/Plans/ExperimentBacklog405.md) separates scientific questions from engineering prerequisites.
 Tasks.md owns status. The catalog supplies definitions, controls, decisions, and blockers.
 Validate both catalogs before preparing a batch:
@@ -128,3 +163,19 @@ If the failure is not `timeout` or `output_limit`, repair the cause first. See [
 T43 runs pinned detector weights on pinned reviewed frames and compares the result with a pinned baseline scorecard.
 Its production engine reproduces the stored tvOS scorecard exactly. Its PyTorch engine does not; compare PyTorch arms only with each other.
 See [INFERENCE412](../../Research/Plans/DetectorInference412.md).
+
+T61 audits geometry from a completed T57 report without inference.
+Supply pinned `report` and `receipt` inputs and empty `parameters`.
+It compares detector boxes with known control bodies and reports paired score changes.
+It reports ambiguous matches instead of treating them as reliable labels.
+These are development measurements. Do not use their offsets for training.
+See [the correction plan](../../Research/Plans/DetectorFocusPolicy.md).
+
+## Retained consumer comparisons
+
+T62 uses `archive` and no parameters. It verifies the producer manifest and creates development memberships.
+T63 uses `membership`, `model`, and `tool`. Its `backend` is `vision` or `pytorch`.
+Use a verified export receipt for Vision. Use a checkpoint for PyTorch.
+T63 verifies production crop hashes and reports crop errors separately from frame decisions.
+Vision replay requires scores within 0.01 of the retained producer scores.
+PyTorch comparisons do not establish Vision parity. Neither template admits data to training.
