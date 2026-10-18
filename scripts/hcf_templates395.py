@@ -9,6 +9,32 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T91':({'membership','button','row','tab','tool'},{'arm'},'proposal_crop_training421.prepare','artifact','diagnostic'),
+ 'T92':({'admission'},set(),'proposal_crop_training421.qualify_labels','artifact','diagnostic'),
+ 'T89':({'configuration','initialization','membership'},set(),'detector_training419.run','training','training'),
+ 'T90':({'checkpoint'},set(),'detector_training419.checkpoint_review','artifact','diagnostic'),
+ 'T87':({'admission'},{'family'},'training_proposals419.run','artifact','diagnostic'),
+ 'T88':({'frames','model'},{'count','seed'},'training_proposals419.run','artifact','diagnostic'),
+ 'T86':({'checkpoints','trainingManifests'},{'mergeMode','recalibrateBn'},'fisher_model_soup418.run','artifact','diagnostic'),
+ 'T85':({'screenFeaturesManifest'},{'mode','containmentIoaThreshold'},'focus_graph_relation418.run','artifact','diagnostic'),
+ 'T84':({'poolManifest'},{'selectionStrategy','targetCount','uncertaintyWeight','seed'},'submodular_coreset_subset418.run','artifact','diagnostic'),
+ 'T83':({'cropsManifest'},{'interventionMode','haloOuterPx','bodyInnerInsetPx'},'context_counterfactual_crops418.run','artifact','diagnostic'),
+ 'T82':({'observationsPath','adversarialPath'},{'anchorPhrase','maxTailCost'},'prefix_ocr_route_matcher418.run','artifact','diagnostic'),
+ 'T81':({'configuration','initialization','membership','evalLabels'},{'projIouWeight','enableStripPooling','seed'},'strip_iou_detector418.run','training','training'),
+ 'T80':({'calibrationReports','evaluationReports'},{'alpha','temperature','oodEnergyThreshold'},'conformal_energy_abstention418.run','artifact','diagnostic'),
+ 'T79':({'configuration','initialization','membership','selectionGroups'},{'mode','droEta','droSizePenalty','seed'},'group_dro_pareto418.run','training','training'),
+ 'T78':({'configuration','initialization','membership','trainingMatches'},{'samplerMode','enableStnRefiner','stnLossWeight','seed'},'copula_proposal_stn418.run','training','training'),
+ 'T77':({'configuration','initialization','membership','anchorManifest'},{'subspaceEnergy','lpWarmupEpochs','seed'},'nullspace_focus_train418.run','training','training'),
+ 'T76':({'primaryPreds','secondaryPreds','groundTruth','renderedBodies'},{'minConfidence','iouMatchThreshold'},'confident_label_auditor418.run','artifact','diagnostic'),
+ 'T75':({'pairsManifest'},{'scrollPhaseThreshold','coneHalfAngleDeg'},'kinematic_transition418.run','artifact','diagnostic'),
+ 'T74':({'checkpoint','calibrationManifest'},{'compressionMode','marginTemperature','flipPenalty','maxBytes'},'distilled_coreml_compress418.run','artifact','diagnostic'),
+ 'T73':({'model','labels'},{'tileLayout','scaleGatePolicy','wbfIouThreshold','confidence'},'sahi_wbf_inference418.run','artifact','diagnostic'),
+ 'T72':({'failureReport'},{'twinFamily','pairCount','seed'},'counterfactual_synthesis418.run','artifact','diagnostic'),
+ 'T71':({'manifest'},{'kernelVariant','dipoleZMin','moatContrastMin'},'dipole_ring_proposals418.run','artifact','diagnostic'),
+ 'T70':({'configuration','initialization','membership'},{'encodingMode','stripHeight','perimeterWidth','seed'},'coord_ring_crop418.run','training','training'),
+ 'T69':({'configuration','initialization','membership','screenGroups'},{'supconWeight','listmleWeight','temperature','seed'},'set_contrastive_focus418.run','training','training'),
+ 'T68':({'configuration','initialization','membership','styleRefs'},{'beta','blendProb','seed'},'fda_transfer418.run','training','training'),
+ 'T67':({'configuration','initialization','membership','evalLabels'},{'nwdWeight','nwdConstant','smallAreaMax','seed'},'nwd_detector_train418.run','training','training'),
  'T66':({'highReport','highReceipt','lowReport','lowReceipt'},{'policy'},'proposal_tier_policy.run','artifact','diagnostic'),
  'T65':({'labels','baseline','candidate'},{'confidence'},'detector_scorecard_comparison.run','artifact','diagnostic'),
  'T64':({'bundle'},set(),'native_selection_comparison.run','artifact','diagnostic'),
@@ -75,6 +101,14 @@ CONTRACTS={
  'T36':({'capture'},set(),'profile_pixels402.run','artifact','diagnostic'),
 }
 
+NOVEL418_MODULES = {f'T{n}': CONTRACTS[f'T{n}'][2].split('.')[0] for n in range(67, 87)}
+
+
+def validate_novel418_parameters(template_id, values):
+    if template_id in NOVEL418_MODULES:
+        mod = __import__(NOVEL418_MODULES[template_id])
+        mod.parameters(values)
+
 
 def build(doc):
     required={'version','id','owner','template','question','decision','inputs','parameters','dependencies'}
@@ -95,6 +129,7 @@ def build(doc):
     # T47 `scorer` is optional so that registered T47 specifications keep their identity.
     # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
     q.require(set(doc['parameters'])-{'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'}}.get(doc['template'],set())==parameters,'template_parameters')
+    validate_novel418_parameters(doc['template'], doc['parameters'])
     if doc['template']=='T41':
         from box_intervention410 import parameters as intervention
         intervention(doc['parameters'])

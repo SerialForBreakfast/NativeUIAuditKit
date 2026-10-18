@@ -21,6 +21,26 @@ This inspection establishes available membership, not qualified detector predict
 
 ## Exact implementation gap
 
+Update, 2026-10-17: T87 and T88 now provide separate training-only preparation and measured proposal errors.
+They retain unique image hashes, group identities, missing bodies, ambiguous correspondences, and unmatched proposals.
+The sampler uses seed 371 and selects groups before controls. It does not create labels for missing boxes.
+The fixed detector settings are confidence 0.5, image size 640, and NMS IoU 0.45.
+Matching requires a unique correspondence at IoU 0.1 or above. Ambiguous matches remain excluded.
+These are candidate correspondences for review, not independently verified body labels.
+
+The batch contains 3 preparation jobs, 3 inference jobs, and 1 retained checkpoint review.
+All 7 receive explicit approval. The background runner owns execution.
+The batch is `Research/Experiments/batches/proposal419.json`.
+Each job retains the 800 s and 100 MB diagnostic limits.
+
+T89 wraps the resident detector trainer with fixed-last selection and 30 epochs.
+It requires complete labels, pinned images, and separate train and calibration groups.
+Software checks cover its caller contract. Real training qualification remains pending.
+The native admission contains no calibration groups. Do not move inspected development groups into calibration.
+T90 reviews retained checkpoint state without repeating training. State presence cannot qualify restoration.
+The new T67–T86 prototypes do not remove these requirements.
+See [the source review](Template418QualificationReview.md) for exact integration gaps.
+
 T55 and T56 currently require development inputs. They do not support this training-only preparation.
 T61 consumes development T57 reports. Those offsets cannot supply the training sampler.
 Do not relabel training inputs as development or weaken the existing adapters.
@@ -52,6 +72,28 @@ Do not invent offsets for missing proposals.
 - Queue: positive and negative cases use the real queue in isolation before admission.
 
 ## Executable graph after qualification
+
+The first background results establish useful correspondence limits:
+
+| Family | Unique training images | Groups | Unique matches | Missed bodies | Ambiguous bodies | Unmatched proposals |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Button | 4 | 1 | 9 | 6 | 1 | 4 |
+| Row | 5 | 1 | 20 | 0 | 0 | 19 |
+| Tab | 12 | 3 | 26 | 1 | 21 | 12 |
+
+These counts measure geometric correspondence, not focus accuracy or generalization.
+All 7 diagnostic jobs complete through the detached runner.
+Tabs have 21 ambiguous bodies. Do not treat those proposals as clean training offsets.
+The row sampler can describe observed errors, but 1 group does not establish broad transfer.
+Do not manufacture offsets for the 6 missed button bodies.
+
+The retained detector checkpoint lacks optimizer, scheduler, random state, and a usable epoch.
+T90 requires a fresh fixed run. It does not authorize restoration from this inference checkpoint.
+
+Validation: 18 focused Python tests pass, including positive and negative isolated queue checks.
+The integrated offline Swift command succeeds. Swift Testing reports 177 tests across 25 suites.
+The trainer caller test uses an explicit software fixture, not a trained detector.
+Real T89 training qualification remains blocked on complete eligible membership and separate calibration groups.
 
 Training-input preparation → detector inference → correspondence audit → fixed sampling → matched training → retained regression comparisons.
 

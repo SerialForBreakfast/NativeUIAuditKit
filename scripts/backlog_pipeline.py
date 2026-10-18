@@ -80,6 +80,7 @@ def validate_plan(record):
         if plan['template'] == 'T51':
             from swift_fallback416 import parameters as check
             check(values)
+        templates.validate_novel418_parameters(plan['template'], values)
     return plan
 
 

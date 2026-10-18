@@ -1,5 +1,25 @@
 # Define a batch without a new script
 
+## Training-only proposal errors and detector training
+
+T87 accepts `admission` and a `family` parameter: `button`, `row`, or `tab`.
+It produces `training-frames.json` from admitted training groups. It rejects group leakage and conflicting duplicate labels.
+T88 accepts `frames` and `model`, with `count` and `seed` parameters.
+It runs the pinned detector and writes `errors.json`. Missing or ambiguous proposals cannot enter its sampler.
+Use T87 output references for T88 dependencies. See `Research/Experiments/batches/proposal419.json`.
+
+T89 accepts `configuration`, `initialization`, and `membership`, with no parameters.
+It wraps the resident YOLO trainer: 30 epochs, fixed-last selection, and no early stopping.
+Membership uses `detector-training-membership-v1`, complete labels, pinned images, and separate train and calibration groups.
+T89 has software caller checks. Real training qualification remains pending. Do not claim a ready training experiment without qualified membership.
+
+T90 accepts `checkpoint`, with no parameters. It reports missing restoration state without starting training.
+Use only trusted, locally produced checkpoints. Loading a PyTorch checkpoint can execute serialized code.
+Complete checkpoint state still requires independent restoration parity qualification.
+
+T67–T86 remain prototypes pending the checks in `Research/Plans/Template418QualificationReview.md`.
+Their software test completion does not establish real model training or scientific validity.
+
 ## Preferred path: catalog plans (BACKLOG410)
 
 Catalogs, generated batches, and result records stay local. Versioned native capture recipes remain reusable source inputs.
