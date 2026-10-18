@@ -6,6 +6,9 @@ Standard detection and focus remain primary. HCF remains optional.
 
 ## Quick wins
 
+[ADR-0030](ADR-0030-Read-Only-Experiment-Graph-Views.md) selects Cytoscape.js for the internal read-only graph view.
+It specifies 2 layouts in 2D and 2 optional layouts in 3D. Implementation remains pending.
+
 | Priority | Decision | Next useful action |
 | --- | --- | --- |
 | 1 | [0028: reusable templates](ADR-0028-Reusable-Experiment-Templates.md) | Turn qualified backlog items into descriptions with producer, scoring, and report dependencies. Do not build another harness. |
