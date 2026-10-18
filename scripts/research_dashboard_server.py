@@ -116,11 +116,15 @@ class Controller:
             while not self.stop.is_set():
                 ready = []
                 with self.guard:
+                    approvals = research_approval.load(self.queue)
                     selected = dict(initial)
-                    for ident, digest in self.approved().items():
+                    for ident, record in approvals['jobs'].items():
+                        digest = record['sha256']
                         q.require(ident not in selected or selected[ident] == digest, 'approval_changed')
                         selected[ident] = digest
                 for id, digest in selected.items():
+                    if self.stop.is_set():
+                        break
                     job = self.queue / 'jobs' / id
                     try:
                         spec = q.validate(q.load(job / 'spec.json'), self.modules)
@@ -129,7 +133,7 @@ class Controller:
                         if state != 'pending':
                             continue
                         from research_readiness import check
-                        readiness = check(id, self.queue, self.modules)
+                        readiness = check(id, self.queue, self.modules, approvals=approvals)
                         if not readiness['ready']:
                             self.skipped[id] = readiness['blockers']
                             continue
@@ -137,6 +141,8 @@ class Controller:
                         ready.append(id)
                     except (ValueError, OSError, KeyError) as error:
                         self.skipped[id] = str(error)[:200]
+                if self.stop.is_set():
+                    break
                 if ready:
                     self.waiting = None
                     batch = self.next_batch(ready)

@@ -1,5 +1,15 @@
 # Define a batch without a new script
 
+## Cached supplemental detector comparison
+
+Use `supplemental_proposals427.run` for matched completed T57 reports from different detector weights.
+Its pinned `supplemental-proposals-v1` bundle contains `baseline` and `supplemental` entries with report, result, and specification pins.
+Stage the bundle as `bundle.json`. The adapter verifies completed receipts and unchanged settings before comparison.
+It retains a single baseline selection and consults supplemental scores only after baseline abstention.
+This adapter uses the existing queue contract without changing active shared template modules.
+It does not merge boxes, run inference, train, or approve a runtime model.
+See [the contract](../../Research/Plans/Supplemental427.md) for acceptance rules and negative tests.
+
 ## Training-only proposal errors and detector training
 
 T87 accepts `admission` and a `family` parameter: `button`, `row`, or `tab`.
@@ -12,6 +22,17 @@ T89 accepts `configuration`, `initialization`, and `membership`, with no paramet
 It wraps the resident YOLO trainer: 30 epochs, fixed-last selection, and no early stopping.
 Membership uses `detector-training-membership-v1`, complete labels, pinned images, and separate train and calibration groups.
 T89 has software caller checks. Real training qualification remains pending. Do not claim a ready training experiment without qualified membership.
+
+T89 also accepts `detector-training-membership-v2` with training rows only.
+Set `calibrationPolicy` to `none-fixed-last-training-diagnostics` explicitly.
+The resident trainer measures its validation metrics on training images in this mode. These metrics are not held-out accuracy.
+Keep fixed-last selection and patience 0. Queue separate development comparisons before training.
+Do not split related layouts merely to satisfy a calibration requirement.
+
+For retained native controls, `focusable_detector_labels422.py` prepares scoped button, row, and tab labels.
+Supply the admitted manifest and T87 frame manifests. Omit calibration groups for the train-only contract.
+The command checks recipe-to-scene coverage and preserves development exclusions. It does not qualify exhaustive general UI annotations.
+See DETECTOR422 in the [offset review](../../Research/Plans/Offset421AndRefinementReview.md).
 
 T90 accepts `checkpoint`, with no parameters. It reports missing restoration state without starting training.
 Use only trusted, locally produced checkpoints. Loading a PyTorch checkpoint can execute serialized code.

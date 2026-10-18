@@ -170,6 +170,38 @@ class DashboardTests(QueueTests):
         self.wait_done()
         self.assertEqual(len(q.state(self.queue/'jobs/job-a')[1]),1)
 
+    def test_dispatch_reuses_one_approval_snapshot(self):
+        from unittest.mock import patch
+        import research_approval
+        self.submit(self.spec())
+        self.submit(self.spec(id='job-b'))
+        seen = []
+        def check(ident, queue, modules, approvals=None):
+            self.assertIsNotNone(approvals)
+            seen.append(approvals)
+            if len(seen) == 2:
+                self.control.stop.set()
+            return {'ready': False, 'blockers': []}
+        with patch('research_approval.load', wraps=research_approval.load) as load, \
+             patch('research_readiness.check', side_effect=check):
+            self.control._continuous(['job-a', 'job-b'])
+        self.assertEqual(load.call_count, 1)
+        self.assertIs(seen[0], seen[1])
+        self.assertEqual(q.state(self.queue/'jobs/job-a')[0], 'pending')
+
+    def test_stop_during_readiness_prevents_dispatch(self):
+        from unittest.mock import patch
+        self.submit(self.spec())
+        self.submit(self.spec(id='job-b'))
+        def check(*args, **kwargs):
+            self.control.stop.set()
+            return {'ready': True, 'blockers': []}
+        with patch('research_readiness.check', side_effect=check) as readiness, \
+             patch('research_queue.run') as run:
+            self.control._continuous(['job-a', 'job-b'])
+        self.assertEqual(readiness.call_count, 1)
+        run.assert_not_called()
+
     def test_continuous_does_not_retry_failure(self):
         self.submit(self.spec(adapter=dict(type='python-callable',steps=['rq_fixture.slow'],outputAttributes=['rq_fixture.OUT'])))
         self.control.start_all()

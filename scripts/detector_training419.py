@@ -13,16 +13,20 @@ from detector_native_inputs import bounds
 
 OUT = None
 VERSION = 'detector-training-membership-v1'
+TRAIN_ONLY_VERSION = 'detector-training-membership-v2'
 
 
 def prepare(data, output):
     from PIL import Image
-    q.require(data.get('version') == VERSION and data.get('trainingAdmitted') is True, 'detector_training_admission')
+    train_only=data.get('version') == TRAIN_ONLY_VERSION
+    q.require(data.get('version') in (VERSION,TRAIN_ONLY_VERSION) and data.get('trainingAdmitted') is True, 'detector_training_admission')
+    if train_only:
+        q.require(data.get('calibrationPolicy')=='none-fixed-last-training-diagnostics', 'detector_training_calibration_policy')
     names = data['names']
     q.require(isinstance(names, list) and names and len(names)==len(set(names))
               and all(isinstance(n,str) and n for n in names), 'detector_training_names')
     rows=data['rows']
-    q.require(rows and {r['role'] for r in rows} == {'train','calibration'}, 'detector_training_roles')
+    q.require(rows and {r['role'] for r in rows} == ({'train'} if train_only else {'train','calibration'}), 'detector_training_roles')
     groups, pixels, ids = {}, {}, set()
     verified=[]
     for row in rows:
@@ -58,7 +62,10 @@ def prepare(data, output):
         (targets/(row['id']+'.txt')).write_text(''.join(labels))
     import yaml
     path=dataset/'dataset.yaml'
-    path.write_text(yaml.safe_dump(dict(path=str(dataset),train='images/train',val='images/calibration',names=dict(enumerate(names)))))
+    # The resident trainer computes validation metrics even for fixed-last runs.
+    # In v2 these are explicitly training diagnostics, never held-out accuracy.
+    path.write_text(yaml.safe_dump(dict(path=str(dataset),train='images/train',
+        val='images/train' if train_only else 'images/calibration',names=dict(enumerate(names)))))
     return path, counts
 
 
@@ -68,7 +75,8 @@ def run():
     config=document(refs['configuration'])
     q.require(config==dict(initialization=refs['initialization'],selection='fixed-last',patience=0), 'detector_training_configuration')
     initialization=checked(refs['initialization'])
-    dataset,counts=prepare(document(refs['membership']),OUT)
+    membership=document(refs['membership'])
+    dataset,counts=prepare(membership,OUT)
     from train_yolo import train_native_hcf
     import hcf_study371 as study
     study.OUT=OUT
@@ -81,8 +89,11 @@ def run():
     shutil.copyfile(model,OUT/'final.pt')
     q.save(OUT/'history.json',history)
     q.save(OUT/'fit.json',dict(epochs=30,initialization=refs['initialization'],membership=refs['membership'],
-        frames=counts,selection='fixed-last',resumeQualified=False,modelAccepted=False))
+        frames=counts,selection='fixed-last',resumeQualified=False,modelAccepted=False,
+        validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
+        calibrationUsedForSelection=False))
     q.save(OUT/'benchmark_summary.json',dict(epochs=30,frames=counts,modelAccepted=False,
+        validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
         decision='Score the candidate on retained evaluation groups. Training completion is not acceptance.'))
 
 

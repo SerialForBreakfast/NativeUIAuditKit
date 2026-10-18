@@ -43,6 +43,19 @@ class DetectorTrainingTests(unittest.TestCase):
         bad=copy.deepcopy(self.data);bad['rows'][1]['image']=bad['rows'][0]['image']
         with self.assertRaisesRegex(ValueError,'detector_training_pixel_conflict'): d.prepare(bad,self.root)
 
+    def test_train_only_policy_is_explicit(self):
+        data=copy.deepcopy(self.data)
+        data.update(version=d.TRAIN_ONLY_VERSION,rows=[data['rows'][0]])
+        with self.assertRaisesRegex(ValueError,'detector_training_calibration_policy'):d.prepare(data,self.root)
+        data['calibrationPolicy']='none-fixed-last-training-diagnostics'
+        bad=copy.deepcopy(data);bad['rows'][0]['role']='development'
+        with self.assertRaisesRegex(ValueError,'detector_training_roles'):d.prepare(bad,self.root)
+        path,counts=d.prepare(data,self.root)
+        import yaml
+        spec=yaml.safe_load(path.read_text())
+        self.assertEqual(spec['val'],spec['train'])
+        self.assertEqual(counts,{'train':1,'calibration':0})
+
     def test_checkpoint_review_actual_queue(self):
         import torch
         import hcf_templates395 as t

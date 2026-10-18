@@ -12,7 +12,7 @@
 > Preserve single-owner MPS use, input integrity and existing checkpoints. No active
 > run changes, application shutdowns or system operations are authorized by this amendment.
 
-- **Status:** Approved for Run 009+ (Run 008 baseline preserved)
+- **Status:** Historical; optimization claims are partially superseded by ADR-0011. Preserve Run 008 and integrity safeguards.
 - **Date:** 2026-08-29
 - **Deciders:** NativeUIAuditKit Architecture & ML Engineering
 - **Applies to:** Phase 6a (41-class YOLO11m), Dataset Pipeline, Apple Silicon Training Host (Mac Mini M4)
