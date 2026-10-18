@@ -9,6 +9,9 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T66':({'highReport','highReceipt','lowReport','lowReceipt'},{'policy'},'proposal_tier_policy.run','artifact','diagnostic'),
+ 'T65':({'labels','baseline','candidate'},{'confidence'},'detector_scorecard_comparison.run','artifact','diagnostic'),
+ 'T64':({'bundle'},set(),'native_selection_comparison.run','artifact','diagnostic'),
  'T62':({'archive'},set(),'consumer_crop_comparison.prepare','artifact','diagnostic'),
  'T63':({'membership','model','tool'},{'backend'},'consumer_crop_comparison.score','artifact','diagnostic'),
  'T60':({'report','receipt'},{'policy'},'cached_focus_policy.run','artifact','diagnostic'),

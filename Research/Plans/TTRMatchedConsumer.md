@@ -52,3 +52,39 @@ Report missing proposals separately from classifier errors. Require zero lost su
 If known-box scoring improves but full-screen selection fails, prioritize proposal geometry or coverage.
 If both paths lose successes, reject the dose correction before export or consumer integration.
 If both improve without losses, prepare repeatability and consumer qualification. Do not change Standard automatically.
+
+## Lower-exposure results
+
+Training completes in 1185 s. All 8 full-screen comparisons are complete.
+Tabs improve from 5/8 to 8/8 with detector boxes in each profile.
+The Standard diamond case recovers, giving 4/4 instead of 3/4.
+Buttons stay at 7/8 with detector boxes and 8/8 with known boxes.
+Rows keep 4/8 correct selections, but wrong selections increase from 1/8 to 3/8 in each profile.
+Each row profile loses 1 previous success and gains a different success. Known boxes remain 8/8.
+Profile counterparts are related evidence, not independent replications.
+These regressions already prevent promotion. Finish the existing comparisons to preserve a complete failure record.
+
+Both models correctly abstain on 6 no-focus frames across 3 related groups.
+Small Standard decoration adds 1 wrong selection without gaining a correct selection.
+Tall HCF controls lose 2 successes with combined detector and ring proposals: 4/4 becomes 2/4.
+Tall Standard controls remain 3/4. Known boxes remain 4/4 for tall controls in both profiles.
+These failures strengthen the need to test real proposal crops, not only known boxes.
+
+The 30 T15 comparisons fail because the nested selection format differs from the expected flat format.
+B405-210 uses T64 to read the verified nested reports. It does not repeat training or scoring.
+T64 verifies producer receipts, model identities, input membership, geometry, thresholds, and development roles.
+The isolated queue completes the valid report and rejects an unsupported bundle.
+Original failed attempts remain unchanged.
+
+Queue cached geometry audits for rows, tabs, buttons, diamonds, and edge cases through T61.
+Use the audits to distinguish missing proposals from crop sensitivity before another fit.
+The next correction should use training-only proposal errors or within-screen competing negatives, after its adapter and inputs qualify.
+Do not use inspected development offsets for training. Do not launch another exposure sweep merely to fill the queue.
+
+## Consumer acknowledgment
+
+Sillycon-TTR acknowledges the earlier results through coordinator cursor 818.
+Its replay uses the unchanged helper and the original archive images. It does not independently execute the new candidates.
+Later consumer verification needs delivered Core ML files and the exact mapping file, not identifiers alone.
+The current candidate fails local preservation checks, so do not export it for replacement.
+The updated regression report is stored at cursor 819. Its forwarding remains unconfirmed.

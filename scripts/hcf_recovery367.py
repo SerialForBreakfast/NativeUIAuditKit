@@ -28,6 +28,10 @@ def run():
     spec=q.load(OUT.parent.parent.parent/'spec.json');contract=spec['capture']
     ref=contract['plan'];q.require(q.digest(q.ROOT/ref['path'])==ref['sha256'],'plan_changed')
     plan=q.load(q.ROOT/ref['path'])
+    if plan.get('version') == 'native-capture-recovery-v2':
+        import native_capture_recovery
+        native_capture_recovery.OUT = OUT
+        return native_capture_recovery.run()
     q.require(plan['version']=='hcf-recovery367-v1' and contract['target']==n.TARGET and
         contract['endpoint']=='http://127.0.0.1:8080','recovery_scope')
     q.require(q.digest(h.CLI.resolve())==plan['helperSHA256'],'helper_changed')

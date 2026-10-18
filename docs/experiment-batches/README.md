@@ -173,6 +173,14 @@ See [the correction plan](../../Research/Plans/DetectorFocusPolicy.md).
 
 ## Retained consumer comparisons
 
+T66 compares verified T57 reports at detector confidence 0.5 and 0.25.
+Inputs are `highReport`, `highReceipt`, `lowReport`, and `lowReceipt`.
+Set `policy` to `unchanged` for replay or `high-first` for the fixed fallback.
+The adapter preserves a unique high-confidence selection before considering the lower-confidence report.
+It reports each model and profile separately, including lost no-focus abstentions.
+Use only matching inspected development inputs. No inference or model acceptance occurs.
+See [the proposal policy](../../Research/Plans/ProposalTierPolicy.md).
+
 T62 uses `archive` and no parameters. It verifies the producer manifest and creates development memberships.
 T63 uses `membership`, `model`, and `tool`. Its `backend` is `vision` or `pytorch`.
 Use a verified export receipt for Vision. Use a checkpoint for PyTorch.
