@@ -1,5 +1,39 @@
 # Define a batch without a new script
 
+## Select bounded proposal follow-ups
+
+Use `selection_campaign444.py` after matched proposal campaigns complete.
+The request names existing baseline, candidate, and contrast report jobs.
+It sets integer limits for the supported Standard metrics. It contains no executable commands.
+
+```json
+{
+  "version": "bounded-selection-request-v1",
+  "id": "new-selection",
+  "sources": {
+    "baseline": "completed-base-report",
+    "candidate": "completed-new-report",
+    "contrast": "completed-detector-contrast"
+  },
+  "rules": {
+    "geometry": {"cropLosses": {"min": 1}, "scoreFailures": {"min": 1}},
+    "supplemental": {"proposalGains": {"min": 1}, "proposalLosses": {"min": 1}}
+  }
+}
+```
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/selection_campaign444.py REQUEST.json --output reports/work/NEW-SELECTION
+```
+
+Inspect the compiled manifest with `workflow_admission440.py` before exact-job approval.
+The compiler reuses T61 and the fixed supplemental adapter. It does not run jobs or grant approval.
+At most 8 matched conditions enter this graph. Each selected job runs once.
+Missing focused observations, no-focus observations, or 3-group support release neither branch.
+Standard controls selection. HCF remains a separate optional report slice.
+Terminal summaries record the next requirement. They cannot create training, capture, or promotion jobs.
+See [SELECTION444](../../Research/Plans/BoundedSelection444.md) for rules and limits.
+
 ## One request with bounded follow-ups
 
 Use `workflow_campaign439.py` for an embedded model-decision plan or a reused compiled graph with typed follow-up branches.
