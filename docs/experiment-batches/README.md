@@ -1,5 +1,54 @@
 # Define a batch without a new script
 
+## Reusable crop training campaigns
+
+Use `training_campaign452.py` for preparation, T06 fitting, matched T37/T63 scoring, comparison, and bounded follow-ups.
+This frontend reuses the existing queue and workers. It does not introduce another trainer.
+Standard remains primary. HCF can appear in frozen membership but stays a separate result slice.
+
+Create one `training-campaign-v1` request with these fields:
+
+| Field | Required content |
+|---|---|
+| `id` | New immutable campaign ID |
+| `question`, `controlledComparison` | Observed gap, changed factor, matched control, and practical decision |
+| `suite` | Pin to a `training-suite-v1` document |
+| `training` | New training definition below, or `{"reuse":"registered-training-id"}` |
+| `budget` | Positive `maxJobs`, `maxSeconds`, and `maxOutputBytes` |
+| `followups` | Existing supported/contradicted branch descriptions, or an empty list |
+| `reuseScores` | Optional complete map from baseline job IDs to completed candidate score jobs |
+
+The suite contains `baselines` and `excludedGroups`.
+Each baseline entry contains `job` and `specSHA256`. Freeze the whole retained suite, including consumer regressions.
+Excluded groups include development, calibration, and audit ancestry. Their names require reviewed source grouping, not invented independence.
+
+For new training, supply `id`, `preparation`, `configuration`, `initialization`, `membership`, and `experimentLogRunId`.
+Use pins for configuration, initialization, and membership.
+Preparation is a registered crop producer ID or an existing T05 description with producer dependencies.
+Pending preparation uses `crop-membership-plan-v1`; the worker checks produced membership before fitting.
+Complete crop documents remain supported for qualified retained inputs.
+The compiler preserves 30 epochs, fixed-last selection, 1 attempt, 1800 s, and 2 GiB per new fit.
+Use the trainer's balanced mode; frozen rows select the profiles without an implicit HCF filter.
+Record the training hypothesis in ExperimentLog before admission. A request does not grant data eligibility.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/training_campaign452.py REQUEST.json --output reports/work/CAMPAIGN
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/workflow_admission440.py reports/work/CAMPAIGN/compiled.json --text
+```
+
+Register with the existing admission interface. Approve exact IDs in groups of 5–10. The detached runner owns execution.
+The compiler copies fixed scoring inputs from every baseline. It changes only the candidate model reference.
+`reuseScores` avoids new scoring and must cover the entire suite. Reused training does not run again.
+The cumulative reservation charges every new node and reused training, including unselected follow-up branches.
+Completed baseline scoring is not charged as new work. Reservation ceilings are not duration estimates.
+Retries require explicit successors and a reviewed remaining budget. This frontend does not resume checkpoints or create automatic training branches.
+
+Follow-up branches support existing T37/T63 diagnostic descriptions and `decision-audit`.
+The existing terminal report handles inconclusive results without another fit. No branch promotes models or changes Standard.
+Missing inputs block only their dependent graph. Missing detector annotations need a producer task, not substituted labels.
+This version supports crop training only. Detector trainers require their own qualified campaign contract.
+See [RESEARCH451](../../Research/Plans/ResearchGraph451.md) for qualification and remaining work.
+
 ## Diagnosis and matched correction campaigns
 
 Use `research_campaign451.py` for retained T57 evidence and compatible crop corrections.

@@ -197,3 +197,24 @@ Its single no-focus frame still abstains. The report rejects replacement because
 Both campaigns therefore demonstrate usable reports and preservation gates, not model promotion.
 RESEARCH451-01 through 03 are complete. No expensive completed producer work repeats.
 The final focused suite passes 41 tests in 59.697 s after the no-focus repair.
+
+## Reusable training frontend — TRAINING452
+
+The first training increment uses `training_campaign452.py` and `training-campaign-v1`.
+It reuses T05 preparation, T06 fitting, T37/T63 scoring, and the existing comparison and branch workers.
+One pinned suite defines every baseline and excluded evaluation group. Candidate scoring preserves all non-model inputs.
+The request includes fixed configuration, initialization, membership, training log identity, and cumulative limits.
+New fits retain 30 epochs, fixed-last selection, 1800 s, 2 GiB, and one attempt.
+The compiler rejects duplicate membership, group leakage, missing exclusions, changed baselines, and excess cumulative limits.
+The existing training bridge rejects changed producer membership before fitting.
+No new automatic training branch, checkpoint-resume policy, detector trainer, or promotion authority is added.
+
+Qualification uses isolated positive and negative software tests plus 2 retained native campaigns.
+The native campaigns reuse completed Standard-only and without-button fits and all 17 retained scoring conditions each.
+They generate decision and regression reports without repeating training or inference.
+Synthetic tests validate control flow only. Existing trainer qualification remains separate from these compiler tests.
+The reports retain consumer regressions and optional HCF slices. Neither result grants model acceptance.
+Original group ancestry still needs the existing reviewed mapping; serialized group labels alone do not establish independence.
+
+The batch guide defines the request fields and admission commands.
+Runtime source modules stay unchanged. The detached runner keeps execution ownership.
