@@ -1,5 +1,61 @@
 # Define a batch without a new script
 
+## Diagnosis and matched correction campaigns
+
+Use `research_campaign451.py` for retained T57 evidence and compatible crop corrections.
+One `research-campaign-v1` request defines the question, membership, pairs, retained failures, and total budget.
+Each pair names `condition`, a registered `baseline` job, and a `correction` job or T57 description.
+The membership uses `coverage-membership-v1` and maps case identities to original groups.
+The compiler creates diagnosis, comparison, and terminal report jobs through the existing queue.
+An embedded T57 scorer depends on diagnosis. Existing completed scores are reused without inference.
+Inputs must be pinned or resolvable during compilation. Scoring receipts may arrive later.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/research_campaign451.py REQUEST.json --output reports/work/CAMPAIGN
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/workflow_admission440.py reports/work/CAMPAIGN/compiled.json --text
+```
+
+Use existing admission tools to register and approve exact jobs. Compilation does not start execution.
+The `budget` contains positive `maxJobs`, `maxSeconds`, and `maxOutputBytes` limits for newly generated jobs.
+The compiler rejects graphs whose summed limits exceed that budget. Each job permits one attempt.
+Historical reused work is not charged as new execution. Limits do not represent measured runtime estimates.
+Each retained failure contains `reason` and a pinned `evidence` file. Declared retained failures prevent acceptance.
+The report never promotes a model. HCF results remain separate from Standard acceptance.
+Invalid evidence blocks dependent comparisons; it does not become a successful terminal report.
+This version does not select new training, capture, exports, or recursive follow-ups.
+See [the contract and qualification](../../Research/Plans/ResearchGraph451.md).
+
+## Final comparisons with future receipts
+
+Use `cascade_validation.compile_request` with `cascade-validation-request-v1`.
+Name `id`, a pinned `membership` file, the retained `prior` decision, and up to 8 `pairs`.
+Each pair names `condition`, `primary`, and `supplemental` registered T57 jobs.
+Producers may still run. The queue verifies their receipts and output hashes before dispatching comparisons.
+The compiler creates one comparison per pair and a terminal report. It never starts execution.
+Inspect and approve exact IDs through the existing admission tools.
+The report preserves case identities and counts original capture groups.
+See [VALIDATION448](../../Research/Plans/CascadeValidation448.md).
+
+## Baseline-first model fallback
+
+`cached_model_cascade.compile_request` reuses the agreement graph compiler.
+Use `cached-cascade-request-v1` with `id`, `decision`, `review`, and verified `bundles` pins.
+The `decision` names the supplemental summary. The `review` names the completed agreement summary.
+The compiler creates a measured gate, cached comparisons, and a complete report.
+The policy preserves baseline single selections and HCF behavior.
+See [CASCADE446](../../Research/Plans/BaselineCascade446.md) for fixed settings and acceptance checks.
+
+## Fixed agreement correction
+
+`proposal_agreement445.compile_request` accepts a `proposal-agreement-request-v1` document.
+Name `id`, the prior supplemental `decision` job, and up to 8 verified `bundles` pins.
+It compiles a gate, cached comparisons, and a complete terminal decision.
+Use the existing admission inspector and exact-job approval after compilation.
+The gate requires retained-model gains and new wrong selections before releasing the correction.
+The fixed rule uses unique primary score ranking and IoU 0.5. It exposes no threshold sweep.
+Standard controls acceptance. HCF retains primary decisions.
+See [AGREEMENT445](../../Research/Plans/ProposalAgreement445.md) for evidence and limits.
+
 ## Select bounded proposal follow-ups
 
 Use `selection_campaign444.py` after matched proposal campaigns complete.
