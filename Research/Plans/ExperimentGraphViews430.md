@@ -1,6 +1,6 @@
 # GRAPH430 — internal graph viewer implementation
 
-Status: planned, not implemented. Decision: [ADR-0030](../ADR-0030-Read-Only-Experiment-Graph-Views.md).
+Status: 2D views implemented. Decision: [ADR-0030](../ADR-0030-Read-Only-Experiment-Graph-Views.md).
 The maintainer selects Cytoscape.js. The graph does not edit or execute experiments.
 
 ## Delivery sequence
@@ -27,5 +27,34 @@ Pin and review exact dependencies before installation. The 2D source contract ca
 
 ## Scope of this delivery
 
-This change delivers the ADR, layout specifications, and implementation tasks only.
-No dashboard assets are downloaded. No graph view is deployed. No current experiment is restarted.
+The read-only companion runs on loopback port 8766. The original list and controls remain on port 8765.
+The companion also preserves the list below its optional graph panel.
+It reads the existing snapshot API. It cannot dispatch, approve, stop, or cancel jobs.
+The original server and runner share one process. The companion avoids restarting that process during training.
+
+The 2D execution view uses Cytoscape's built-in breadth-first layout with rotated coordinates.
+The 2D blocker view uses concentric rings by dependency distance from the selected blocker.
+This replaces the planned Dagre dependency for the first delivery.
+The local Cytoscape 3.33.1 asset has a checked hash and its MIT license.
+No browser asset request leaves the machine.
+
+The graph shows recorded prerequisites only. The snapshot does not expose typed decision conditions.
+Unknown owners and unrecorded actions stay explicit. The viewer does not infer them from prose.
+Completed records hide by default. A checkbox restores them to inspect dependency continuity.
+The running panel remains visible above both views. Keyboard inspection supplies a canvas alternative.
+Refresh preserves the viewport when topology is unchanged. Hidden tabs stop polling.
+
+## Qualification bounds
+
+- Project a 2,500-job fixture within 1 s.
+- Render at most 180 nodes per selected campaign or branch.
+- Read at most 32 MiB per snapshot. Cache reads for 10 s.
+- Test missing references, cycles, duplicate identities, hidden history, and unique downstream counts.
+- Test hostile text, refused origins, unknown paths, unavailable snapshots, and rejected POST requests.
+- Keep the original runner process and code pins unchanged.
+
+Run `node scripts/test_research_graph_view.js` for graph and layout checks.
+Run `python -B -m unittest discover -s scripts -p 'test_research_graph_view.py'` for rendering and transport checks.
+Start the companion with `python -B scripts/research_graph_server.py` from the project environment.
+
+3D views and the private repository remain separate decisions. They do not block this read-only delivery.

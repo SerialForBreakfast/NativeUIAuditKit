@@ -62,6 +62,27 @@ class NativeBridgeTests(unittest.TestCase):
         receipt=source/'capture.json';q.save(receipt,dict(complete=True,cleanup=cleanup,frames=[dict(path='frame.png',sha256=q.digest(image))]))
         q.save(out/'artifact.json',dict(path=str(receipt),sha256=q.digest(receipt)))
 
+    def test_frozen_membership_plan_checks_labels_groups_and_missing_rows_before_training(self):
+        import copy
+        import hcf_study371,hcf_factor_train376
+        rows=[dict(id=role,role=role,group=role,profile='standard',label=1) for role in ('train','development')]
+        path=self.root/'frozen-membership.json';q.save(path,dict(version='crop-membership-plan-v1',rows=rows))
+        for index,change in enumerate((None,dict(label=0),dict(group='changed'),dict(role='audit'),dict(profile='hcf'),'missing')):
+            with self.subTest(change=change):
+                actual=copy.deepcopy(rows)
+                if change=='missing':actual.pop()
+                elif change:actual[0].update(change)
+                for row in actual:row.update(path='software-only',sha256='a'*64)
+                out=self.prepare('frozen-'+str(index),dict(membership=pin(path)))
+                q.save(out.parents[2]/'spec.json',dict(template=dict(id='T06',inputs=dict(membership=pin(path)),parameters={})),replace=True)
+                with patch.object(bridge,'OUT',out),patch.object(hcf_study371,'dependency',return_value=[dict(rows=actual)]),patch.object(hcf_factor_train376,'train') as operation:
+                    if change:
+                        with self.assertRaisesRegex(ValueError,'training_membership_mismatch'):bridge.native()
+                        operation.assert_not_called()
+                        self.assertEqual(q.load(out/'template-result.json')['execution'],'failed')
+                    else:
+                        bridge.native();operation.assert_called_once()
+
     def test_capture_positive_and_cleanup_failure(self):
         import generation352
         out=self.prepare('T03')

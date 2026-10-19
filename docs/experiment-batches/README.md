@@ -1,5 +1,54 @@
 # Define a batch without a new script
 
+## One request with bounded follow-ups
+
+Use `workflow_campaign439.py` for an embedded model-decision plan or a reused compiled graph with typed follow-up branches.
+Each branch names `supported` or `contradicted` and fixed job descriptions. Inconclusive evidence releases neither branch.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/workflow_campaign439.py REQUEST.json --output reports/work/NEW-CAMPAIGN
+```
+
+Add `--register` and one `--approve EXACT_ID` per authorized new job.
+Before admission, inspect the compiled campaign:
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/workflow_admission440.py COMPILED.json --text
+```
+
+The campaign command also runs this preflight before publishing specifications.
+Preflight checks training records, storage, dependencies, failed producers, and completed evidence.
+It does not approve jobs or reserve resources. See [WORKFLOW440](../../Research/Plans/WorkflowAdmission440.md).
+
+Do not approve IDs outside the compiled campaign. Changed specifications require successor IDs.
+Use `workflow_batch435.py inspect COMPILED.json --text` to review readiness and unselected branches.
+See [the contract and limits](../../Research/Plans/WorkflowCampaign439.md).
+For T05 preparation followed by T06 training, pin the membership plan before preparation starts.
+Put both descriptions in the execution batch. Connect training to the exact preparation specification and `crops.json` output.
+The membership plan freezes ordered `id`, `role`, `profile`, `group`, and `label` fields.
+The existing bridge compares produced membership with this plan before training starts.
+Unknown labels remain blocked. Other templates keep their existing input requirements.
+
+## Admit frozen captures after recovery
+
+Use `recovery_capture_gate437.specification` for new bounded 6-capture recovery branches.
+Its `recovery-capture-admission-v2` plan pins the recovery specification, staging file, original marker, and 6 draft recipes.
+Preserve an immutable original marker copy before recovery removes the active guard.
+The original byte hash remains required. Saved marker values must match after JSON serialization.
+Keep submitted GATE433 jobs unchanged. They require explicit successors, not edited specifications.
+Each capture entry names its fixed job ID and draft hash. No arbitrary commands enter the plan.
+Register and approve the gate through existing queue APIs. Do not run its adapter directly against the live queue.
+
+After verified restoration, the gate derives qualified recipes and uses the existing T03 compiler.
+It registers and approves only those named captures. Each capture also depends on successful gate completion.
+Missing evidence, changed identities, uncertain restoration, conflicting jobs, and revoked approvals block admission.
+Partial admission does not start captures. Identical publication is idempotent; changed specifications require new IDs.
+The gate does not capture, remove guards, start a runner, or retry failed work.
+Use the isolated tests in `test_recovery_capture_gate437.py` before extending this contract.
+
+This adapter does not provide general deferred binding for every template.
+See [the qualification](../../Research/Plans/Review432.md#gate433-implementation-and-qualification).
+
 ## Cached supplemental detector comparison
 
 Use `supplemental_proposals427.run` for matched completed T57 reports from different detector weights.
@@ -194,7 +243,64 @@ Set `source` to `known-box`, `raw-proposal`, or `mapped-proposal`. Set `interven
 A `none` job must reproduce the cached T37 scores within 0.0001. This check proves candidate correspondence.
 T41 reports per-case scores, crop hashes, gains, lost previous successes, and abstentions. It never accepts a model.
 
-## After a job is exhausted
+## Reusable model decision batches
+
+For registered scoring jobs, use `scripts/workflow_batch435.py` to avoid manually pairing conditions.
+Write a `model-decision-request-v1` request with `id`, `question`, `controlledComparison`, `training`, `baseline`, and `candidate`.
+The last 2 fields contain exact job IDs. The helper matches their inputs and settings, not list positions.
+Every baseline condition needs exactly 1 matching candidate condition.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/workflow_batch435.py prepare REQUEST.json --output reports/work/NEW-BATCH
+```
+
+After scope approval, add `--register --approve-new`. Identical requests preserve existing jobs and completed attempts.
+Inspect requirements and completed decisions without changing execution:
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/workflow_batch435.py inspect reports/work/NEW-BATCH/compiled/compiled.json --text
+```
+
+See [WORKFLOW435](../../Research/Plans/WorkflowPreparation435.md) for tested behavior and current limits.
+
+Use `scripts/model_decision_batch434.py` for matched T06, T37, and T63 workflows.
+See [WORKFLOW434](../../Research/Plans/ModelDecisionBatches434.md) for decisions, supported contracts, and qualification.
+
+Write a `model-decision-batch-v1` JSON description with these fields:
+
+- `id`: the new batch ID.
+- `question`: what the experiment tests.
+- `controlledComparison`: what changes and what stays fixed.
+- `training`: the candidate T06 job ID.
+- `pairs`: entries with `id`, `baseline`, and `candidate` scoring job IDs.
+- `executionBatch`: null for existing jobs, or a pinned batch description for new execution jobs.
+- `version`: `model-decision-batch-v1`.
+
+Compile into a new project folder before admission:
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/model_decision_batch434.py PLAN.json --output reports/work/NEW-BATCH
+```
+
+After scope approval, add `--register --approve-new` to admit the generated jobs.
+The compiler does not start a runner or repeat existing training.
+The follow-up produces a bounded decision report. It does not authorize new training or model promotion.
+
+## Bounded campaign approval
+
+For `workflow_campaign439.py`, use `--approval-transaction` with `--register` and 1–10 explicit `--approve JOB_ID` arguments.
+This option preserves individual authorization checks and publishes the selected approval records once.
+It does not approve unnamed jobs, restore revoked IDs, or start execution.
+The individual approval path remains the default. Capture admission uses its existing path.
+See [WORKFLOW442](../../Research/Plans/WorkflowTransaction442.md) for timing and recovery evidence.
+
+## Exhausted attempts
+
+For several compatible decision graphs, use `workflow_review437.py REQUEST --text`.
+The request uses version `workflow-review-v1` and a `batches` list of compiled-manifest pins.
+Each pin contains `path` and `sha256`. The command accepts up to 12 manifests.
+It counts shared jobs once and reports failed evidence without hiding other batches.
+It does not dispatch, approve, or retry work. See [WORKFLOW437](../../Research/Plans/WorkflowCompletion437.md).
 
 A job is exhausted when it uses all of its attempts. Do not edit its specification.
 Run `.venv-yolo/bin/python -B scripts/research_extensions.py inventory` to see the failure reason and a time estimate.

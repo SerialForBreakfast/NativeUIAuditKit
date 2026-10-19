@@ -1,7 +1,7 @@
 # ADR-0030 — Read-only experiment graph views
 
 Date: 2026-10-18.
-Status: Cytoscape.js selected by the maintainer. Layouts specified; implementation remains pending.
+Status: Cytoscape.js selected by the maintainer. The 2D companion is implemented. The 3D views remain deferred.
 Scope: Internal research dashboard. This is not a public NUIAK feature or model dependency.
 Related: [experiment graphs](ADR-0027-Evidence-Guided-Experiment-Graphs.md), [templates](ADR-0028-Reusable-Experiment-Templates.md), and [implementation plan](Plans/ExperimentGraphViews430.md).
 
@@ -21,7 +21,7 @@ Qualify its pinned package and dependencies before installation and rollout. No 
 
 | View | Renderer and layout | Question answered | Presentation |
 | --- | --- | --- | --- |
-| 2D execution map | Cytoscape.js with Dagre, left to right | What runs next, and which prerequisites must finish? | Arrange producers, training, scoring, and reports by dependency depth. Label condition edges. |
+| 2D execution map | Cytoscape.js breadth-first layout, rotated left to right | What runs next, and which prerequisites must finish? | Show recorded dependencies. Add condition labels only when the snapshot supplies them. |
 | 2D blocker map | Cytoscape.js concentric layout around a selected blocker | Which work does this blocker prevent? | Show upstream requirements and downstream jobs. Count unique affected jobs. Highlight running work outside the blocked branch. |
 | 3D execution layers | 3D Force Graph in directed layout mode | How do several campaign branches share preparation? | Separate dependency depths into layers. Use campaign colors and readable selection labels. Keep direction visible. |
 | 3D dependency explorer | 3D Force Graph radial directed layout | What does this selected task connect to across campaigns? | Show a bounded neighborhood. Expand connections on demand. Focus the camera on selection. Do not imply distance measures priority. |

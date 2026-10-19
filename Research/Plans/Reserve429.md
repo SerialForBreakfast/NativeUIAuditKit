@@ -34,6 +34,16 @@ Estimate approximately 80 min for 3 fits from the matched 8192-row preparation e
 No automatic model promotion, capture, export, or navigation follows these results.
 The background runner owns execution. No scheduled task is created.
 
+## Admission, 2026-10-18
+
+All 57 jobs are registered and individually approved: 3 producers, 3 fits, and 51 scoring jobs.
+The batch uses the existing T06, T37, and T63 adapters without worker code changes.
+Each fit waits for its matching verified membership producer. Scoring waits for its completed model.
+The batch description is `reports/work/RESERVE429/batch.json`.
+Training remains bounded to 1800 s and 2 GiB per fit. No automatic retry follows failure.
+The approximately 80 min training estimate is conditional on producer success, not a claim of ready duration.
+Compare completed results against PROFILE425 Standard before selecting another correction.
+
 ## Independent reserve preparation
 
 Standard iOS: use the completed position and size reports to choose annotation or detector work before another threshold sweep.
