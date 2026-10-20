@@ -13,6 +13,7 @@
 //   navigationBar    (chrome — auto-detected)
 //   toggle_0..N-1   UISwitch — 4–10 switches across 2–3 grouped sections
 //   primaryButton    "Save" / "Apply" / "Done" CTA at bottom
+//   label            standalone row titles and section headers
 //
 // NOT annotated (absent from this template):
 //   textField, secondaryButton, tabBar, searchField — all absent
@@ -93,6 +94,18 @@ public final class UIKitToggleFormViewController: UIViewController, UIKitAnnotat
             view: ctaButton,
             visibleText: ctaButton.title(for: .normal)
         ))
+        for (index, label) in rowLabels.enumerated() {
+            result.append(UIKitAnnotatedView(
+                id: "rowLabel_\(index)", elementType: "label", view: label,
+                visibleText: label.text
+            ))
+        }
+        for (index, label) in sectionHeaderLabels.enumerated() {
+            result.append(UIKitAnnotatedView(
+                id: "sectionHeader_\(index)", elementType: "label", view: label,
+                visibleText: label.text
+            ))
+        }
         return result
     }
 

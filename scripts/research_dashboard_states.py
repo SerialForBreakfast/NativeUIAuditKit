@@ -8,6 +8,12 @@ RECONCILIATIONS = 'Research/Experiments/reconciliation*.json'
 def classify(row, readiness=None):
     state = row['state']
     reasons = list(row.get('requirements') or [])
+    # The queue emits this reason only after it verifies the condition evidence.
+    # Inconclusive evidence and attempted jobs remain visible as blockers.
+    if state == 'blocked' and row.get('attempts') == 0 and len(reasons) == 1:
+        parts = reasons[0].split(':', 3)
+        if len(parts) == 4 and parts[0] == 'condition_not_met' and parts[2] in ('supported', 'contradicted'):
+            return 'unselected', reasons
     if state == 'pending':
         if readiness is None:
             return 'unchecked', ['Readiness has not been checked.']

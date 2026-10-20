@@ -133,6 +133,10 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
   <p class="small muted">A completed successor answers each of these questions. They are history, not pending work. Their specifications and attempts stay unchanged.</p>
   <table><thead><tr><th style="width:24px">#</th><th>Experiment / Successor</th><th style="width:70px;text-align:right">Status</th></tr></thead><tbody id="superseded-rows"></tbody></table>
 </details>
+<details id="unselected"><summary id="unselected-count">Unselected branches</summary>
+  <p class="small muted">Verified results select another branch. These jobs do not require repair. Execution records remain unchanged.</p>
+  <table><tbody id="unselected-rows"></tbody></table>
+</details>
 <details id="batch-tools"><summary class="small muted">Batch selection & controls</summary>
   <div style="display:flex;gap:4px;flex-wrap:wrap;margin:4px 0">
     <button id="start" class="btn-sm">Start selected batch</button>
@@ -175,6 +179,7 @@ function explain(parent,row){
  const answer=add(parent,'p','');add(answer,'strong','What the result tells us: ');add(answer,'span',d.answers);
  if(d.source==='study')add(parent,'p','This job contributes to the study question. It does not answer the whole question alone.').className='small';
  if(row.displayState==='superseded')add(parent,'p','Superseded: the completed job '+row.supersededBy+' answers this question. This record is history, not pending work.').className='small';
+ else if(stateOf(row)==='unselected')add(parent,'p','Not selected: verified evidence selects another branch. No repair is required.').className='small';
  else if(row.state==='blocked')add(parent,'p','Blocked: this is a planned test, not a measured result.').className='warning';
 }
 function dur(s){if(s==null||!Number.isFinite(s))return 'unknown';s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.round(s%3600/60);
@@ -327,6 +332,8 @@ function render(){
  if(data.error)$('error').textContent=data.error;
  $('rows').replaceChildren();
  $('completed-rows').replaceChildren();
+ $('superseded-rows').replaceChildren();
+ $('unselected-rows').replaceChildren();
  for(const id of selected){if(!jobs.some(j=>j.job===id&&(stateOf(j)==='ready'||(['failed','cancelled','interrupted'].includes(j.state)&&j.approved))))selected.delete(id);}
  const previous=$('coverage-report').value;
  $('coverage-report').replaceChildren();
@@ -375,13 +382,14 @@ function render(){
   if(j.eta)add(tdAction,'div','ETA '+etaText(j.eta)).className='small muted';
   const btnInspect=add(tdAction,'button','Inspect');btnInspect.className='btn-sm';btnInspect.onclick=()=>show(j);
   if(j.supersededBy)add(item,'div','Answered by '+j.supersededBy+'.').className='small muted';
-  $(stateOf(j)==='superseded'?'superseded-rows':isCompleted?'completed-rows':'rows').append(tr);
+  $(stateOf(j)==='unselected'?'unselected-rows':stateOf(j)==='superseded'?'superseded-rows':isCompleted?'completed-rows':'rows').append(tr);
  }
  // The empty-state note stays outside the table body, so row counts mean job rows only.
  $('rows-empty').hidden=Boolean($('rows').children.length);
  $('rows-empty').textContent=filter||query?'No job matches this filter.':'No active or waiting jobs. See Next steps at the top.';
  $('completed-count').textContent='Recorded outcomes, including changed code ('+jobs.filter(j=>['complete','drifted'].includes(j.state)).length+')';
  $('superseded-count').textContent='Superseded history ('+jobs.filter(j=>stateOf(j)==='superseded').length+')';
+ $('unselected-count').textContent='Unselected branches ('+jobs.filter(j=>stateOf(j)==='unselected').length+')';
 }
 function showCoverage(){
  const job=(data.jobs||[]).find(j=>j.job===$('coverage-report').value&&j.measured);

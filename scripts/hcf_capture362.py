@@ -53,6 +53,8 @@ def validate_plan(plan):
 
 def capture(output, plan):
     validate_plan(plan)
+    q.require(plan.get('restorationRetention') in (None, 'verified-png-hardlinks-v1'),
+              'restoration_retention_contract')
     q.require(q.digest(CLI.resolve()) == plan['helperSHA256'], 'helper_changed')
     q.require(d.bind_target(n.TARGET, plan['binding']['endpoint']) == plan['binding'], 'fixture_changed')
     output.mkdir()
@@ -164,16 +166,30 @@ def capture(output, plan):
             if session:
                 try:
                     if original_profile is not None:
+                        if plan.get('restorationRetention'):
+                            # Keep the producer lock. Retention requires no active target session.
+                            c.terminal(c.remote('disconnect', session), 'closed')
+                            closed = True
+                            session = None
+                            from ttr_evidence_compaction458 import compact_with_producer_lock
+                            retention = output/'before-restoration-retention'
+                            retention.mkdir()
+                            compact_with_producer_lock(retention)
+                            receipt = c.remote('connect')
+                            session = receipt['operationID']
+                            closed = False
+                            c.terminal(receipt, 'ready')
                         setting(original_profile)
                     elif changed_profile:
                         raise ValueError('original_profile_unknown')
                 except Exception as exc:
                     failures.append('profile_restore:'+str(exc))
-                try:
-                    c.terminal(c.remote('disconnect', session), 'closed')
-                    closed = True
-                except Exception as exc:
-                    failures.append('disconnect:'+str(exc))
+                if session:
+                    try:
+                        c.terminal(c.remote('disconnect', session), 'closed')
+                        closed = True
+                    except Exception as exc:
+                        failures.append('disconnect:'+str(exc))
             try:
                 if activated and closed:
                     d.run(['xcrun', 'simctl', 'launch', n.TARGET, d.BUNDLE])

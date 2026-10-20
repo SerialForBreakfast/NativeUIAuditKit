@@ -43,7 +43,7 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
     /// "Reset" secondary button at the bottom of the controls showcase.
     private let resetButton = UIButton(type: .system)
 
-    // MARK: - Section labels (visual context only, not annotated)
+    // MARK: - Standalone section labels
 
     private let sliderLabel = UILabel()
     private let segmentLabel = UILabel()
@@ -83,7 +83,7 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
     // MARK: - UIKitAnnotatable
 
     public var annotatedViews: [UIKitAnnotatedView] {
-        [
+        var result = [
             UIKitAnnotatedView(id: "slider",            elementType: "slider",            view: slider),
             UIKitAnnotatedView(id: "segmentedControl",  elementType: "segmentedControl",  view: segmentedControl),
             UIKitAnnotatedView(id: "activityIndicator", elementType: "activityIndicator", view: activityIndicator),
@@ -94,6 +94,16 @@ public final class UIKitControlsViewController: UIViewController, UIKitAnnotatab
             UIKitAnnotatedView(id: "resetButton",       elementType: "secondaryButton",   view: resetButton,
                                visibleText: resetButton.title(for: .normal)),
         ]
+        let labels: [(String, UILabel)] = [
+            ("sliderLabel", sliderLabel), ("segmentLabel", segmentLabel),
+            ("activityLabel", activityLabel), ("progressLabel", progressLabel),
+            ("pageLabel", pageLabel), ("toggleLabel", toggleLabel),
+            ("secureLabel", secureLabel)
+        ]
+        result += labels.map { id, label in
+            UIKitAnnotatedView(id: id, elementType: "label", view: label, visibleText: label.text)
+        }
+        return result
     }
 
     // MARK: - Setup

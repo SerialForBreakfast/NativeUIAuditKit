@@ -102,22 +102,27 @@ def retained_pngs(project, map_root):
 
 def local_compact(output):
     """Use the existing ownership check and the exact TTR route lock."""
+    from focus_batch_harness import lock
+    with lock():
+        return compact_with_producer_lock(output)
+
+
+def compact_with_producer_lock(output):
+    """Caller holds the producer lock. Require closed target ownership before retention."""
     from qualify_hcf362 import TTR, Client
     from native343 import TARGET
     from usb_training386 import verify_volume, VOLUME
-    from focus_batch_harness import lock
     verify_volume()
     map_root = TTR/'.local-work/nuiak-hcf362/hcf-map'
-    with lock():
-        ready = Client(output).call('compaction-readiness', 'simulator', 'readiness', '--simulator-udid', TARGET)
-        q.require(ready.get('can_run') and ready.get('ownership') and
-                  all(r['state'] == 'clear' for r in ready['ownership']), 'compaction_target_busy')
-        fd = os.open(map_root/'route-execution.lock', os.O_RDWR | os.O_NOFOLLOW)
-        try:
-            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            journals = {p: q.digest(p) for p in map_root.glob('hcf-*/recovery.json')}
-            result = compact(retained_pngs(TTR, map_root), VOLUME/'data/NUIAK/archive-native458/png', output/'compaction.json')
-            q.require(all(q.digest(p) == digest for p,digest in journals.items()), 'compaction_journal_changed')
-            return result
-        finally:
-            os.close(fd)
+    ready = Client(output).call('compaction-readiness', 'simulator', 'readiness', '--simulator-udid', TARGET)
+    q.require(ready.get('can_run') and ready.get('ownership') and
+              all(r['state'] == 'clear' for r in ready['ownership']), 'compaction_target_busy')
+    fd = os.open(map_root/'route-execution.lock', os.O_RDWR | os.O_NOFOLLOW)
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        journals = {p: q.digest(p) for p in map_root.glob('hcf-*/recovery.json')}
+        result = compact(retained_pngs(TTR, map_root), VOLUME/'data/NUIAK/archive-native458/png', output/'compaction.json')
+        q.require(all(q.digest(p) == digest for p,digest in journals.items()), 'compaction_journal_changed')
+        return result
+    finally:
+        os.close(fd)

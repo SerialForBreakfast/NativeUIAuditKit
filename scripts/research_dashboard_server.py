@@ -122,7 +122,8 @@ class Controller:
                         digest = record['sha256']
                         q.require(ident not in selected or selected[ident] == digest, 'approval_changed')
                         selected[ident] = digest
-                for id, digest in selected.items():
+                from dispatch_candidates479 import unstarted
+                for id, digest in unstarted(selected, self.queue):
                     if self.stop.is_set():
                         break
                     job = self.queue / 'jobs' / id
