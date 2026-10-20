@@ -16,8 +16,17 @@ def valid_result(report):
     q.require(report.get('complete') is True, 'recovery_incomplete')
     state=report.get('route',{}).get('hcf',{})
     q.require(state.get('status')=='completed' and state.get('desiredVerified') is True, 'profile_unverified')
-    q.require(state.get('original')==state.get('observed')=='standard' and
-        state.get('restoration')=='verified', 'standard_restoration_unverified')
+    if report.get('recoveryMode') == 'standard-restoration-v1':
+        q.require(state.get('mode') == 'ensure' and state.get('requested') == 'standard'
+                  and state.get('observed') == 'standard'
+                  and state.get('original') in ('standard', 'hcf')
+                  and state.get('restoration') in ('explicit_persistent_change', 'not_required')
+                  and report.get('standardPreparation') == report.get('route'),
+                  'standard_restoration_unverified')
+    else:
+        q.require('recoveryMode' not in report, 'recovery_mode_unknown')
+        q.require(state.get('original')==state.get('observed')=='standard' and
+            state.get('restoration')=='verified', 'standard_restoration_unverified')
     q.require(report.get('disconnect',{}).get('state')=='closed', 'session_not_closed')
     ready=report.get('postflight',{})
     q.require(ready.get('can_run') and ready.get('ownership') and
@@ -28,6 +37,10 @@ def run():
     spec=q.load(OUT.parent.parent.parent/'spec.json');contract=spec['capture']
     ref=contract['plan'];q.require(q.digest(q.ROOT/ref['path'])==ref['sha256'],'plan_changed')
     plan=q.load(q.ROOT/ref['path'])
+    if spec.get('recoveryReview') is True:
+        q.require(plan.get('version') == 'native-capture-recovery-v2', 'review_plan_version')
+        from recovery_receipt_review import review
+        return review(spec, OUT)
     if plan.get('version') == 'native-capture-recovery-v2':
         import native_capture_recovery
         native_capture_recovery.OUT = OUT

@@ -1,6 +1,19 @@
 const assert=require('node:assert/strict');
 const {performance}=require('node:perf_hooks');
 const G=require('./research_graph_view.js');
+const lanes=G.readiness({jobs:[
+ {job:'p',state:'ready',workflowLane:'priority',workflowDuration:{samples:1,low:4,high:8}},
+ {job:'r',state:'ready',workflowLane:'reserve'},
+ {job:'e',state:'exhausted'},
+ {job:'s',state:'failed',displayState:'superseded'},
+ {job:'c',state:'blocked',conditions:[{}],readinessReasons:['dependency_incomplete:p'],dependencies:['p']}
+]});
+assert.equal(lanes.lanes.priority.knownSeconds,4);
+assert.equal(lanes.lanes.reserve.unknownReady,1);
+assert.equal(lanes.lanes.unassigned.counts.exhausted,1);
+assert.equal(lanes.lanes.unassigned.counts.superseded,1);
+assert.equal(lanes.lanes.conditional.counts.waiting,1);
+assert.equal(lanes.lanes.unassigned.jobs.length,1);
 const cyto=require('./vendor/cytoscape-3.33.1/cytoscape.min.js');
 const snapshot={current:'train',jobs:[
   {job:'capture',task:'A',state:'complete'},

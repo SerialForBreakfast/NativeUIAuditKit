@@ -3,6 +3,7 @@ import copy
 import tempfile
 import unittest
 import io
+from contextlib import nullcontext
 from pathlib import Path
 from unittest.mock import patch
 from PIL import Image
@@ -38,7 +39,7 @@ class RecoveryTests(unittest.TestCase):
             if screenshot_error: raise RuntimeError('writer_failed')
             Image.new('RGB', (2,2)).save(path)
             if mutate: q.save(self.marker, dict(job='another'), replace=True)
-        with patch.object(recovery.runtime.d, 'Fixture'), patch.object(recovery.native343, 'settle', return_value={'verified':True}), \
+        with patch.object(recovery, 'lock', nullcontext), patch.object(recovery.runtime.d, 'Fixture'), patch.object(recovery.native343, 'settle', return_value={'verified':True}), \
                 patch.object(recovery.runtime.d, 'capture_screenshot', side_effect=screenshot):
             recovery.finish(self.output, self.marker, self.digest, report or restored(),
                             dict(scene=dict(focused_element_id='item')), 'http://127.0.0.1:8080')
@@ -97,6 +98,55 @@ class RecoveryTests(unittest.TestCase):
         self.assertIsNone(trust.check_evidence(spec,self.root,self.output))
         (self.output/'restored-fixture.png').write_bytes(b'changed')
         self.assertEqual(trust.check_evidence(spec,self.root,self.output),'capture_receipt_image_changed')
+
+    def qualify(self, initial='hcf', invalid=False, uncertain=False):
+        calls = []
+        def call(name, *args, **kwargs):
+            calls.append((name, args))
+            if name in ('readiness', 'postflight'):
+                return dict(can_run=True, ownership=[dict(state='clear')])
+            if name == 'ensure-standard':
+                if uncertain:
+                    raise RuntimeError('uncertain_input')
+                return dict(hcf=dict(status='completed', desiredVerified=not invalid,
+                    original=initial, observed='hcf' if invalid else 'standard', inputsAttempted=int(initial=='hcf')))
+            if name == 'hcf-roundtrip':
+                return restored()['route']
+            raise AssertionError(name)
+        import hcf_settings368
+        with patch.object(recovery.runtime, 'lock', nullcontext), \
+                patch.object(hcf_settings368, 'Client') as client, \
+                patch.object(recovery.runtime.d, 'Fixture') as fixture, \
+                patch.object(recovery.runtime.d, 'run', return_value='fixture'):
+            client.return_value.call.side_effect = call
+            client.return_value.remote.side_effect = [dict(operationID='owned', state='ready'), dict(state='closed')]
+            client.return_value.terminal.side_effect = lambda receipt, desired: receipt
+            fixture.return_value.snapshot.return_value = dict(device=dict(simulator_udid='test'))
+            report = recovery.runtime.run(self.root/'sequence', normalize=True, ensure_standard=True)
+        return report, calls
+
+    def test_standard_preparation_precedes_roundtrip_in_same_session_and_journal(self):
+        report, calls = self.qualify()
+        self.assertTrue(report['complete'])
+        routes = [args for name,args in calls if name in ('ensure-standard','hcf-roundtrip')]
+        self.assertEqual([args[args.index('--mode')+1] for args in routes], ['ensure','roundtrip'])
+        self.assertEqual([args[args.index('--desired')+1] for args in routes], ['standard','hcf'])
+        for option in ('--map-dir','--session','--simulator-udid'):
+            self.assertEqual(routes[0][routes[0].index(option)+1],routes[1][routes[1].index(option)+1])
+        self.assertTrue(report['settingChanged'])
+
+    def test_invalid_preparation_stops_roundtrip_and_retains_cleanup(self):
+        report, calls = self.qualify(invalid=True)
+        self.assertFalse(report['complete'])
+        self.assertEqual(report['error'], 'standard_preparation_unverified')
+        self.assertNotIn('hcf-roundtrip', [name for name,args in calls])
+        self.assertEqual(report['disconnect']['state'],'closed')
+
+    def test_uncertain_preparation_is_not_retried(self):
+        report, calls = self.qualify(uncertain=True)
+        self.assertFalse(report['complete'])
+        self.assertEqual([name for name,args in calls].count('ensure-standard'),1)
+        self.assertNotIn('hcf-roundtrip',[name for name,args in calls])
 
 
 if __name__=='__main__':unittest.main()

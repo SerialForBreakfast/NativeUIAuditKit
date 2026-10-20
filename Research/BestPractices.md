@@ -1,5 +1,22 @@
 # NativeUIAuditKit — Best Practices
 
+## Distinguish restoration from a required final profile — RECOVERY462
+
+For cleanup-only recovery, use explicit Standard restoration without another HCF round trip.
+Pin `standard-restoration-v1` in the recovery plan and verify the same mode in its consumer.
+Require observed Standard, verified desired state, closed ownership, and unchanged Fixture context.
+Keep round-trip qualification separate. Do not repeat it when only cleanup remains.
+
+The recovery caller required Standard but requested a round trip from an observed HCF starting state.
+TTR correctly restored HCF. The consumer then rejected that valid round-trip result.
+Use explicit Standard preparation when the authorized recovery requires Standard.
+Verify preparation before the round trip. Use the same session and journal directory for both operations.
+Keep uncertain input, final restoration, Fixture identity, and ownership checks strict.
+Do not replace recovery semantics with a weaker acceptance check.
+Retained direct-route captures lack campaign IDs. Use retention recovery rather than inventing a campaign resume identity.
+If native recovery passes but queue publication fails, verify and republish the retained outputs without repeating device actions.
+Pin the exact failure, original specification, complete outputs, and missing receipt. Keep the failed attempt immutable.
+
 ## Prepare complete executable graphs — HCF389
 
 - Check the runner's permitted actions before writing the delivery plan. Export is not a diagnostic.

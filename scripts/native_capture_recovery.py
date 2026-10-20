@@ -79,8 +79,13 @@ def run():
         raise RuntimeError('recovery_cancelled')
     signal.signal(signal.SIGTERM, stop)
     try:
-        report = runtime.run(output/'qualification', normalize=True)
+        mode = plan.get('recoveryMode')
+        q.require(mode in (None, 'standard-restoration-v1'), 'recovery_mode_unknown')
+        report = runtime.run(output/'qualification', normalize=True, ensure_standard=True,
+                             restore_only=mode == 'standard-restoration-v1')
         finish(output, MARKER, plan['markerSHA256'], report, before, contract['endpoint'])
+        from ttr_evidence_compaction458 import after_job
+        after_job(output)
     finally:
         signal.signal(signal.SIGTERM, previous)
 

@@ -105,7 +105,7 @@
       const id=todo[i];memo.set(id,derive(id));
       for(const next of graph.outgoing.get(id)){degree.set(next,degree.get(next)-1);if(degree.get(next)===0)todo.push(next);}
     }
-    const selected=[...graph.jobs.values()].filter(j=>campaign(j)===name);
+    const selected=[...graph.jobs.values()].filter(j=>!name||campaign(j)===name);
     const counts={};
     for(const j of selected){const c=category(j.job);counts[c]=(counts[c]||0)+1;}
     const relevant=new Set(selected.map(j=>j.job));
@@ -128,7 +128,28 @@
       capacity[kind]={jobs:rows.length,measured:times.length,low:times.length===rows.length?times.reduce((s,t)=>s+t.low,0):null,
         high:times.length===rows.length?times.reduce((s,t)=>s+t.high,0):null,samples:times.reduce((s,t)=>s+t.samples,0)};
     }
-    return {counts,actions,running,issues:graph.issues,affectedJobs:affected.length,capacity};
+    return {counts,actions,running,issues:graph.issues,affectedJobs:affected.length,capacity,categories:memo};
+  }
+  function readiness(snapshot) {
+    const w=workflow(snapshot), lanes={};
+    for(const lane of ['priority','reserve','conditional','unassigned'])lanes[lane]={counts:{},jobs:[],knownSeconds:0,unknownReady:0};
+    for(const j of snapshot.jobs||[]) {
+      let category=w.categories.get(j.job)||'needs action';
+      const s=state(j);
+      if(s==='superseded')category='superseded';
+      else if(s==='exhausted')category='exhausted';
+      else if(category==='history')category='complete';
+      const lane=Array.isArray(j.conditions)&&j.conditions.length?'conditional':
+        (['priority','reserve','conditional'].includes(j.workflowLane)?j.workflowLane:'unassigned');
+      const item=lanes[lane];item.counts[category]=(item.counts[category]||0)+1;
+      if(!['complete','superseded','branch not selected'].includes(category))item.jobs.push({job:j,category});
+      if(category==='ready') {
+        const t=j.workflowDuration;
+        if(t&&Number.isInteger(t.samples)&&t.samples>0&&Number.isFinite(t.high)&&Number.isFinite(t.low)&&t.low>=0&&t.high>=t.low)item.knownSeconds+=t.low;
+        else item.unknownReady++;
+      }
+    }
+    return {lanes,actions:w.actions,running:w.running,stale:!!snapshot.stale};
   }
   function measuredETA(job) {
     const eta=job?.eta;
@@ -138,7 +159,7 @@
     if(!Number.isInteger(eta.samples)||eta.samples<1)return 'ETA unavailable';
     return Math.ceil(eta.low)+'–'+Math.ceil(eta.high)+' s remaining ('+eta.samples+' measured runs)';
   }
-  root.QueueGraph = {index, reach, blockers, project, campaign, state, workflow, measuredETA, isHistory, branchConditions};
+  root.QueueGraph = {index, reach, blockers, project, campaign, state, workflow, readiness, measuredETA, isHistory, branchConditions};
   if (typeof module !== 'undefined') module.exports=root.QueueGraph;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
 
@@ -159,6 +180,49 @@ if (typeof document !== 'undefined') {
     const batchActions=write(batchPanel,'div','');
     const batchHistory=document.createElement('details');batchPanel.append(batchHistory);
     const historyTitle=write(batchHistory,'summary','Completed outcomes'), historyBody=write(batchHistory,'div','');
+    const overviewPanel=document.createElement('section');overviewPanel.id='research-overview';
+    overviewPanel.style.cssText=batchPanel.style.cssText;batchPanel.after(overviewPanel);
+    function updateOverview(){
+      overviewPanel.replaceChildren();write(overviewPanel,'h2','Research decisions and queue readiness');
+      const ready=QueueGraph.readiness(data);
+      if(ready.stale)write(overviewPanel,'strong','STALE — readiness is not current. Execution is unchanged.');
+      write(overviewPanel,'p','Standard comes first. HCF is optional. Completion does not grant model acceptance.');
+      for(const [lane,value] of Object.entries(ready.lanes)){
+        const details=document.createElement('details');overviewPanel.append(details);
+        write(details,'summary',lane+' — '+Object.entries(value.counts).map(([k,n])=>n+' '+k).join(' · '));
+        write(details,'p','Ready work: '+Math.floor(value.knownSeconds)+' measured seconds; '+value.unknownReady+' ready jobs have unknown duration. Budget limits are not estimates.');
+        for(const item of value.jobs.slice(0,30)){
+          const b=write(details,'button',item.job.job+' — '+item.category);b.onclick=()=>show(item.job);
+          write(details,'p',description(item.job).test);
+        }
+        if(value.jobs.length>30)write(details,'p',(value.jobs.length-30)+' more upcoming jobs. Use the campaign list.');
+      }
+      const total=Object.values(ready.lanes).reduce((s,l)=>s+(l.counts.ready||0),0);
+      write(overviewPanel,'p',total<10?'REFILL NEEDED: fewer than 10 ready jobs. Conditional and blocked work do not supply overnight capacity.':
+        'Ready count is not proof of overnight capacity. Check measured duration and missing estimates.');
+      write(overviewPanel,'p','Capacity target: 24 hours of useful ready work. '+(total===0?'Unmet: no ready work.':
+        'Compare measured time with this target. Unknown durations do not establish coverage.'));
+      write(overviewPanel,'p','Exhausted attempts need a checkpoint and budget review. Blocked jobs need their stated requirement. Neither automatically restarts.');
+      const reports=data.researchOverview||{};
+      if(reports.issue)write(overviewPanel,'p',reports.issue);
+      write(overviewPanel,'p',reports.limitation||'No combined research evidence is configured.');
+      const history=document.createElement('details');overviewPanel.append(history);
+      write(history,'summary','Campaign findings ('+(reports.campaigns||[]).length+')');
+      for(const report of reports.campaigns||[]){
+        const card=document.createElement('details');history.append(card);
+        write(card,'summary',report.title+' — '+(report.outcome||report.execution));
+        write(card,'p','Execution: '+report.execution+'. Evidence: '+report.evidence+'. Model acceptance: '+report.modelAcceptance+'.');
+        if(report.report)write(card,'p','Receipt source: '+report.report+'; attempt '+report.attempt+'.');
+        if(report.issue)write(card,'p',report.issue);
+        for(const s of report.slices||[])write(card,'p',s.profile+' / '+s.arm+': '+s.gains+' gains, '+s.losses+' losses, '+s.newWrong+' new wrong; '+s.observations+' observations, '+s.groups+' recorded groups, '+s.noFocus+' no-focus. Outcomes: '+JSON.stringify(s.outcomes));
+        write(card,'p',report.limitation||'Measurements unavailable.');
+        write(card,'p',report.nextAction||'Wait for verified evidence.');
+        for(const r of report.nextRequirements||[])write(card,'p','Next requirement: '+r);
+        const cases=document.createElement('details');card.append(cases);write(cases,'summary','Case-linked changes');
+        for(const r of report.cases||[])write(cases,'p',r.id+' / '+r.group+' / '+r.profile+' / '+r.arm+': '+r.baseline+' → '+r.candidate);
+        if(report.omittedCases)write(cases,'p',report.omittedCases+' more cases in the original report.');
+      }
+    }
     function updateWorkflow(){
       const names=[...new Set((data.jobs||[]).map(QueueGraph.campaign))].sort();
       const previous=batchSelect.value;
@@ -224,6 +288,7 @@ if (typeof document !== 'undefined') {
     };
     function update(force=false) {
       updateWorkflow();
+      updateOverview();
       const jobs=data.jobs||[], old=selector.value;
       const campaigns=[...new Set(jobs.map(QueueGraph.campaign))].sort();
       if(JSON.stringify(campaigns)!==selector.dataset.keys){
@@ -286,7 +351,7 @@ if (typeof document !== 'undefined') {
       setInterval(async()=>{if(document.hidden||fetching)return;fetching=true;
         try{const r=await fetch('/api/state');if(!r.ok)throw Error('Snapshot unavailable');
           data=await r.json();busy=data.busy;lastGood=Date.now();render();}
-        catch(e){data.stale=true;updateWorkflow();get('graph-freshness').textContent='DISCONNECTED — last successful contact '+new Date(lastGood).toLocaleTimeString();}
+        catch(e){data.stale=true;updateWorkflow();updateOverview();get('graph-freshness').textContent='DISCONNECTED — last successful contact '+new Date(lastGood).toLocaleTimeString();}
         finally{fetching=false;}
       },10000);
     }

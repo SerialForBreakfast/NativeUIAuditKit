@@ -47,7 +47,8 @@ class Client:
         return receipt
 
 
-def run(output, normalize=False):
+def run(output, normalize=False, ensure_standard=False, restore_only=False):
+    q.require(not restore_only or ensure_standard, 'restoration_requires_standard')
     q.require(not output.exists(), 'output_collision')
     output.mkdir(parents=True)
     if normalize:
@@ -69,15 +70,29 @@ def run(output, normalize=False):
             c.terminal(receipt, 'ready')
             # Setup activates only the named Settings app on the approved Simulator.
             report['settingsActivation'] = d.run(['xcrun', 'simctl', 'launch', TARGET, 'com.apple.TVSettings'])
-            value = c.call('hcf-roundtrip', 'route', 'hcf', '--desired', 'hcf', '--mode', 'roundtrip',
+            if ensure_standard:
+                preparation = c.call('ensure-standard', 'route', 'hcf', '--desired', 'standard', '--mode', 'ensure',
+                    '--map-dir', str(TTR/'.local-work/nuiak-hcf362/hcf-map'),
+                    '--simulator-udid', TARGET, '--session', session)
+                report['standardPreparation'] = preparation
+                state = preparation.get('hcf', {})
+                report['settingChanged'] = state.get('inputsAttempted', 0) > 0
+                q.require(state.get('status') == 'completed' and state.get('desiredVerified') is True
+                          and state.get('observed') == 'standard', 'standard_preparation_unverified')
+            value = preparation if restore_only else c.call('hcf-roundtrip', 'route', 'hcf', '--desired', 'hcf', '--mode', 'roundtrip',
                            '--map-dir', str(TTR/'.local-work/nuiak-hcf362/hcf-map'),
                            '--simulator-udid', TARGET, '--session', session)
             report['route'] = value
             hcf = value['hcf']
             report['restoration'] = hcf['restoration']
-            report['settingChanged'] = hcf['inputsAttempted'] > 0
+            report['settingChanged'] = report['settingChanged'] or hcf['inputsAttempted'] > 0
             q.require(hcf['status'] == 'completed' and hcf['desiredVerified'], 'hcf_not_verified')
-            q.require(hcf['observed'] == hcf['original'] and hcf['restoration'] in ('verified', 'not_required'), 'restore_not_verified')
+            if restore_only:
+                q.require(hcf.get('mode') == 'ensure' and hcf.get('requested') == 'standard'
+                          and hcf['observed'] == 'standard', 'restore_not_verified')
+                report['recoveryMode'] = 'standard-restoration-v1'
+            else:
+                q.require(hcf['observed'] == hcf['original'] and hcf['restoration'] in ('verified', 'not_required'), 'restore_not_verified')
             report['complete'] = True
         except Exception as error:
             report['error'] = str(error)

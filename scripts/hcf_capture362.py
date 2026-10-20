@@ -29,7 +29,8 @@ def verified_profile(value, desired):
               'os_profile_unverified')
     q.require(row.get('requested') == row.get('observed') == desired, 'os_profile_wrong')
     q.require(row.get('original') in ('standard', 'hcf') and row.get('mode') == 'ensure', 'os_profile_original')
-    q.require(row.get('policy') == 'hcf-setting-en-us-23L470-v1', 'os_profile_policy')
+    q.require(row.get('policy') in ('hcf-setting-en-us-23L470-v1', 'hcf-setting-en-us-23L470-v2'),
+              'os_profile_policy')
     return row
 
 

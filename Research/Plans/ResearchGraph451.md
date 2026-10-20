@@ -218,3 +218,22 @@ Original group ancestry still needs the existing reviewed mapping; serialized gr
 
 The batch guide defines the request fields and admission commands.
 Runtime source modules stay unchanged. The detached runner keeps execution ownership.
+
+## Combined findings and readiness — RESEARCH453
+
+The read-only companion uses `research_overview453.py` to verify selected terminal reports against their immutable specifications and receipts.
+Missing or changed evidence remains unavailable. One failed report does not hide other campaigns.
+The combined view retains case identities, profile slices, recorded groups, no-focus support, and the next missing requirement.
+Do not add overlapping campaign counts into a single accuracy measure. Receipt verification is not independent scientific qualification.
+Completed findings stay collapsed. The existing list and graph remain available.
+
+Readiness separates priority, reserve, conditional, and unassigned work. A missing lane remains unassigned, not inferred approval.
+The view separates dependency waits, closed branches, exhausted attempts, actionable blockers, and superseded history.
+Measured comparable durations remain distinct from limits. Unknown durations cannot establish overnight capacity.
+The internal configuration uses `research-overview-v1` with exact terminal job identities and specification hashes.
+The optional lane map assigns campaign task names. It does not change scheduling priority or execution authority.
+
+The retained annotation review verifies all original sources for the existing button, row, and tab scope.
+It does not manufacture complete general UI labels. Text and container targets require their own measured geometry.
+Three T88 diagnostics compare training correspondences for the retained and scoped detectors without another fit.
+Their outcomes choose between new layout coverage and fitting diagnosis. Training correspondence is not held-out detection accuracy.

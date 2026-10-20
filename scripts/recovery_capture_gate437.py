@@ -42,6 +42,7 @@ def verify_recovery(spec, queue, plan):
                       ('fixture', 'fixture-after.json'), ('previousMarker', 'previous-marker.json')]:
         q.require(receipt[key] == refs[name], 'gate_receipt_binding:' + key)
     qualification = q.load(paths['qualification/qualification.json'])
+    q.require(qualification.get('recoveryMode') == recovery_plan.get('recoveryMode'), 'gate_recovery_mode')
     valid_result(qualification)
     q.require(bool(qualification['postflight']['ownership']), 'gate_ownership_missing')
     before, after = (q.load(paths[name]) for name in ('fixture-before.json', 'fixture-after.json'))

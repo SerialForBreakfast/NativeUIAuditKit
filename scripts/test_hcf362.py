@@ -14,6 +14,12 @@ class NativeProfileTests(unittest.TestCase):
     def test_verified_os_profile(self):
         self.assertEqual(h.verified_profile(self.value(), 'hcf')['original'], 'standard')
 
+    def test_v2_retains_all_profile_checks(self):
+        value=self.value();value['hcf']['policy']='hcf-setting-en-us-23L470-v2'
+        self.assertEqual(h.verified_profile(value,'hcf')['observed'],'hcf')
+        value['hcf']['desiredVerified']=False
+        with self.assertRaisesRegex(ValueError,'os_profile_unverified'):h.verified_profile(value,'hcf')
+
     def test_missing_stale_wrong_and_unverified_profile(self):
         for field, value in [('status','stopped'), ('desiredVerified',False), ('observed','standard'),
                              ('original',None), ('mode','roundtrip'), ('policy','other')]:

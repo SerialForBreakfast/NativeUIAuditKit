@@ -8,6 +8,21 @@ A portable Swift package for detecting native Apple platform UI elements in scre
 
 ---
 
+## Research status and evidence
+
+Standard UI detection, classification, and focus detection remain the primary goals.
+iOS research remains independent of tvOS capture work.
+High Contrast Focus (HCF) remains an optional research track. It does not replace Standard behavior.
+
+Current experimental results do not change the shipped models listed above.
+The [latest reviewed comparison](Research/Review470Results.md) measures detector fallback on inspected development cases.
+It reports gains, lost successes, wrong selections, and no-focus outcomes separately.
+The crop correction remains experimental until its matched comparisons finish.
+
+Use the [experiment workflow guide](docs/experiment-workflow.md) to understand preparation, execution, evidence, and acceptance.
+The [batch authoring guide](docs/experiment-batches/README.md) describes reusable experiment definitions.
+These internal research tools are not requirements for library consumers.
+
 ## Add as a Dependency
 
 For local screenshot inspection without writing Swift, use the

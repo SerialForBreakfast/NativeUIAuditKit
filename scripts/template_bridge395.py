@@ -105,4 +105,6 @@ def capture():
             images.append(dict(path=str(target.relative_to(OUT)),sha256=q.digest(target)))
         q.save(OUT/'capture-evidence.json',dict(version='research-capture-evidence-v1',images=images,
             cleanup=True,modelAccepted=False))
+        from ttr_evidence_compaction458 import after_job
+        after_job(OUT)
     execute(work)

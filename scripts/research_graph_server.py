@@ -12,6 +12,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from research_graph_view import render_graph
 from workflow_metadata439 import enrich
+from research_overview453 import attach
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -41,6 +42,7 @@ class Snapshot:
             if not isinstance(value.get('jobs'), list):
                 raise ValueError('Snapshot lacks jobs')
             value = enrich(value, ROOT/'reports/work/research-queue')
+            value = attach(value, ROOT)
             value['graphCompanion'] = True
             self.value, self.updated = value, time.monotonic()
             return value
