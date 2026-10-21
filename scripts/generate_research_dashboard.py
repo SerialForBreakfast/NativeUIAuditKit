@@ -286,7 +286,11 @@ function render(){
   $('active-title').textContent=description(active).title+' · '+active.job;
   $('active-description').textContent='What this tests: '+description(active).test;
   $('active-answer').textContent='What the result tells us: '+description(active).answers;
-  $('active-step').textContent=active.progress?.step||'Preparing the job; waiting for a worker event.';
+  // The shared detector trainer emits this historical HCF label for every platform.
+  // Correct display text only. Preserve the original progress receipt and job specification.
+  const rawStep=active.progress?.step;
+  $('active-step').textContent=rawStep==='Train HCF full-screen detector'?
+    'Train UI element detector':rawStep||'Preparing the job; waiting for a worker event.';
   if(active.progress?.updatedAt)$('active-step').textContent+=' · '+new Date(active.progress.updatedAt*1000).toLocaleTimeString();
  }else if(busy){
   if(data.waiting){
