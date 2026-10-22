@@ -36,6 +36,40 @@ The maintainer's additional allowance remains 1,800 s. The total storage allowan
 Keep the final epoch-30 continuation and all 17 comparisons pending until the new checkpoint and usage receipts verify.
 Do not reuse the original failed producer identity to release downstream comparisons.
 
+## Bounded continuation — qualified and bound, 2026-10-22
+
+- `recovery488-chain-parity` passes in 57.6 s. It stops at epoch 16, resumes and stops at 23, then resumes to 30.
+  Every state difference and the loss difference is exactly 0 against an uninterrupted run.
+- An isolated run of the real restore adapter reproduces that restored checkpoint exactly, through both chunks.
+- The restore adapter now reads `resumeStopEpoch`. A chunk can resume from a declared dependency's `last.pt`.
+  Both uses require the chain parity proof. A stop epoch at or below the checkpoint epoch fails.
+- `research_continuations.py` accepts a v2 record that names the previous chunk. All chunks reserve against the original attempt.
+  A release record frees a reservation only for an unapproved job that never started.
+- The release for `dedup486-exposure-resume23` is recorded. Its specification and record stay as history.
+- `dedup486-exposure-chunk23` (epochs 16 to 23) and `dedup486-exposure-chunk30` (to 30) are registered and approved.
+  The reservation is 3,401 s of the 3,601 s budget. Each chunk has 800 s and 250,000,000 bytes.
+- `training_campaign452.py` may reuse the last chunk as the trained model. Preparation lineage comes from the original fit.
+- 27 successors (`dedup486-exposure-r2-*`) bind to `dedup486-exposure-chunk30`: 17 scores, 5 comparisons, 1 merge,
+  1 decision, 1 follow-up, and 2 outcome branches. None depends on the failed fit or on the old scoring jobs.
+- The first compile (`exposure-r2`) kept the original branch IDs, which already exist. It was never registered.
+  The registered compile is `exposure-r2b`.
+- Chunk 1 result: failed. It trains epochs 17 to 23 in 346 s, and `last.pt` (epoch 23) is intact.
+  The trust check fails it with `evidence_not_read` for `recovery488-repeat9-negatives/negative-results.json`.
+  The chunks inherited that dependency from the revoked base spec. The restore adapter never reads it.
+  The isolated adapter test called the adapter directly, so it skipped the queue trust check. That gap hid the defect.
+  Chunk 2 has the same dependency. Chunk 2 and the 27 r2 successors are now blocked for good.
+  Usage of the extra 1,800 s: 346 s.
+- Repair, approved by the maintainer on 2026-10-22:
+  - The registry counts measured usage for finished chunks. Unfinished chunks still reserve their limits.
+  - `dedup486-exposure-chunk30` and the 27 r2b successors are revoked before execution. Chunk 2's reservation is released.
+  - `dedup486-exposure-chunk23r2` and `dedup486-exposure-chunk30r2` declare only the dependencies they read. Each has 700 s.
+  - An isolated queue run of the exact spec shapes passes approval, dependency, and trust checks with exact parity.
+  - Reservation: 1,801 + 346 + 700 + 700 = 3,547 s of 3,601 s.
+  - 27 successors (`dedup486-exposure-r3-*`) bind to `dedup486-exposure-chunk30r2`. They are approved and wait for it.
+  - `dedup486-exposure-chunk23r2` completes in 345 s with epochs 1 to 23 and passes all checks. `chunk30r2` then starts.
+  - The running dashboard kept the old budget rule until a restart at 12:35. See BestPractices.
+- Definitions: `reports/work/RECOVERY488/chunks/`, `exposure-r2b/`, and `release-resume23.json`.
+
 ## Independent iOS comparison
 
 `ios491-lowlr` reuses the IOS482 mixed membership and Run013 initialization.
@@ -54,6 +88,17 @@ Three additional approved reports compare the new outputs against the previous m
 These reports reuse predictions. They do not repeat baseline inference or training.
 Any lost Run013 detection rejects replacement. Report unmatched predictions without claiming verified false positives.
 Training metrics remain training diagnostics. No fit or terminal result automatically promotes a model.
+
+### Result
+
+Reviewed 2026-10-22: contradicted. The lower learning rate does not fix retention.
+- `ios491-lowlr-train` completes in 935 s. All 17 jobs complete with verified outputs.
+- Against Run013, it gains 15 detections and loses 46 retained successes across the 6 sets.
+- Set 02 is worst: 6 gained and 21 lost. Only set 04 gains more than it loses (4 against 2).
+- `label` loses 19 and `homeIndicator` loses 6. `listRow` gains 4.
+- Matched reports: against IOS482 mixed, 14 gained and 17 lost. Against native-only, 58 gained and 33 lost.
+- Decision: reject replacement. Do not run further learning-rate fits for this membership.
+  The next detector change needs a cause for the lost `label` and `homeIndicator` cases, not smaller updates.
 
 ## Validation and remaining boundaries
 

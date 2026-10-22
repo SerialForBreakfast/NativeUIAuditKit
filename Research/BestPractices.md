@@ -5157,3 +5157,31 @@ A second error is in the check: a body that includes every foreground pixel near
 Measure the body as connected components that touch the box interior (T46 rule v2). Report rule v1 next to it. Before you use a changed rule, re-run it on the old outputs and check that no previous pass becomes a failure.
 **Why:** The 2 pt switch error was in every family with a toggle. On the B405-032 frames, the neighbour error alone made 3 families fail (Popover, RichContentFeed, iPadSidebar). A rule changed after results without the old-output check can hide real defects.
 See `Research/Plans/Backlog410.md`, section "ACTIONS417 — iOS generator repair".
+
+## Rename every node when you recompile a campaign — RECOVERY488
+
+What went wrong: a successor compile reused the original request. Its follow-up branch jobs kept fixed IDs that already existed.
+Registration would conflict, or would bind the old branch jobs to the wrong decision.
+Correct approach: give the successor request a new ID and rename every fixed job ID inside it, including follow-up branches.
+Check that no compiled ID exists in the queue before registration.
+Why this matters: score and comparison IDs derive from the request ID, but branch IDs do not. A partial rename hides the conflict.
+
+Also: `checkpoint_restore404.py` is in every approval's pinned code set, because `research_queue.validate_training` imports it.
+Edit it only when no approved, unstarted job verifies, and refresh its pin in specifications that use the new behavior.
+
+## Test a new job shape through the queue, not only the adapter — RECOVERY488
+
+What went wrong: an adapter test called `checkpoint_restore404.run` directly. The real queue run then failed the trust check.
+The spec declared a dependency that the adapter never reads, so the check reported `evidence_not_read` after 346 s of training.
+Correct approach: before a costly run, run the exact spec shape through `research_queue.run` in an isolated queue.
+Keep only the dependencies that the job reads. Use a pin or a completed-job check for other gates.
+Why this matters: a 1-attempt job loses its attempt and its budget to a declaration defect that a 30 s test can find.
+
+## Restart the dashboard after an edit to code that it selects with — RECOVERY488
+
+What went wrong: the running dashboard kept an older `research_continuations.py`. Python keeps the first loaded copy of a module.
+The old budget rule rejected the repaired chunks, so the runner waited with no error for about 10 min.
+Correct approach: after an edit to `research_continuations.py`, `research_queue.py`, or other modules the server selects with, restart the
+dashboard at an idle boundary with `scripts/restart_research_dashboard.py`. Then confirm that the expected job starts.
+Why this matters: a fresh-process check can pass while the server still applies the old rule.
+

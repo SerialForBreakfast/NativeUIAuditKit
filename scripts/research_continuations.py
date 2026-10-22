@@ -7,11 +7,55 @@ import research_queue as q
 import research_approval as approval
 
 VERSION = 'research-continuation-v1'
+# RECOVERY488: a v2 record names the earlier chunk whose last checkpoint it resumes.
+# All chunks still reserve time and storage against the original exhausted attempt.
+CHAIN_VERSION = 'research-continuation-v2'
+RELEASE_VERSION = 'research-continuation-release-v1'
 
 
 def records(queue):
     folder = queue / 'continuations'
     return {p.stem: q.load(p) for p in sorted(folder.glob('*.json'))}
+
+
+def released(queue):
+    """Return {job: release} for verified releases of reservations that never ran."""
+    out = {}
+    for path in sorted((queue / 'continuation-releases').glob('*.json')):
+        doc = q.load(path)
+        if validate_release(doc, queue) is None:
+            out[doc['job']] = doc
+    return out
+
+
+def validate_release(doc, queue):
+    """A release frees a reservation only for an unapproved job that never started. Return the problem or None."""
+    try:
+        q.require(isinstance(doc, dict) and set(doc) == {'version', 'job', 'specSHA256', 'reason'} and
+                  doc['version'] == RELEASE_VERSION, 'continuation_release_fields')
+        q.require(isinstance(doc['reason'], str) and len(doc['reason'].strip()) >= 20, 'continuation_release_reason')
+        job = q.local_path(queue, 'jobs/' + doc['job'])
+        spec = q.load(job / 'spec.json')
+        q.require(q.text_digest(spec) == doc['specSHA256'], 'continuation_release_spec_changed')
+        q.require(not q.attempts_of(job), 'continuation_release_started')
+        q.require(doc['job'] not in approval.approved_map(queue), 'continuation_release_still_approved')
+        return None
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        return str(error)
+
+
+def release(doc, queue=q.QUEUE):
+    """Record that a revoked, unstarted continuation no longer reserves budget. The record stays as history."""
+    with q.host_lock(queue/'continuation-registration.lock'):
+        problem = validate_release(doc, queue)
+        q.require(problem is None, problem or '')
+        q.require(doc['job'] in records(queue), 'continuation_release_unknown')
+        path = queue/'continuation-releases'/(doc['job']+'.json')
+        if path.exists():
+            q.require(q.load(path) == doc, 'continuation_release_immutable')
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            q.save(path, doc)
 
 
 def checked(ref):
@@ -22,9 +66,11 @@ def checked(ref):
 
 
 def validate(record, queue):
-    q.require(set(record) == {'version', 'job', 'specSHA256', 'parent', 'parentAttempt',
-        'parentResult', 'checkpoint', 'qualification', 'reason', 'budget'}, 'continuation_fields')
-    q.require(record['version'] == VERSION, 'continuation_version')
+    fields = {'version', 'job', 'specSHA256', 'parent', 'parentAttempt',
+              'parentResult', 'checkpoint', 'qualification', 'reason', 'budget'}
+    chain = record.get('version') == CHAIN_VERSION
+    q.require(set(record) == (fields | {'previous'} if chain else fields), 'continuation_fields')
+    q.require(record['version'] in (VERSION, CHAIN_VERSION), 'continuation_version')
     for key in ('job', 'parent'):
         q.require(isinstance(record[key], str) and q.ID.fullmatch(record[key]), 'continuation_id')
     q.require(record['job'] != record['parent'], 'continuation_self')
@@ -46,10 +92,21 @@ def validate(record, queue):
         old=dict(parent_spec['training']);new=dict(spec['training'])
         old.pop('resume');new.pop('resume')
         q.require(old==new,'continuation_training_controls_changed')
-    checkpoint = checked(record['checkpoint'])
-    q.require(source.parent.resolve() in checkpoint.parents, 'continuation_checkpoint_owner')
     pins = spec['inputs']
-    q.require(record['checkpoint'] in pins and record['qualification'] in pins, 'continuation_inputs_not_pinned')
+    if chain:
+        # The previous chunk must share this parent and budget. Its last checkpoint is a declared dependency.
+        previous = records(queue).get(record['previous'])
+        q.require(previous is not None and previous['job'] != record['job'] and
+                  (previous['parent'], previous['parentAttempt'], previous['budget']) ==
+                  (record['parent'], record['parentAttempt'], record['budget']), 'continuation_previous')
+        q.require(record['checkpoint'] == dict(job=record['previous'], output='last.pt') and
+                  any(d['job'] == record['previous'] and 'last.pt' in d['outputs'] for d in spec.get('dependencies', [])),
+                  'continuation_previous_checkpoint')
+        q.require(record['qualification'] in pins, 'continuation_inputs_not_pinned')
+    else:
+        checkpoint = checked(record['checkpoint'])
+        q.require(source.parent.resolve() in checkpoint.parents, 'continuation_checkpoint_owner')
+        q.require(record['checkpoint'] in pins and record['qualification'] in pins, 'continuation_inputs_not_pinned')
     proof = q.load(checked(record['qualification']))
     q.require(proof.get('version') == 'resume-qualification-v1' and
               proof.get('passed') is True and proof.get('checkpoint') == record['checkpoint'] and
@@ -70,6 +127,9 @@ def validate(record, queue):
     # Reserve worst-case resources for every sibling, including pending jobs.
     siblings = records(queue)
     q.require(record['parent'] not in siblings, 'continuation_nested_budget_unsupported')
+    for ident in released(queue):
+        if ident != record['job']:
+            siblings.pop(ident, None)
     siblings[record['job']] = record
     seconds = elapsed
     size = q.live_output_bytes(source.parent/'out')
@@ -79,10 +139,31 @@ def validate(record, queue):
         q.require(sibling['budget'] == budget, 'continuation_budget_conflict')
         other = q.load(queue/'jobs'/sibling['job']/'spec.json')
         q.require(q.text_digest(other) == sibling['specSHA256'], 'continuation_sibling_changed')
-        seconds += other['limits']['timeoutSeconds']
-        size += other['limits']['maxOutputBytes']
+        used = sibling_usage(queue/'jobs'/sibling['job'], other)
+        seconds += used[0]
+        size += used[1]
     q.require(seconds <= budget['totalSeconds'] and size <= budget['totalOutputBytes'], 'continuation_budget_exhausted')
     return spec
+
+
+def sibling_usage(job, spec):
+    """Return (seconds, bytes) that 1 sibling uses or may use.
+
+    A finished attempt counts its measured wall time and retained outputs. An unfinished or unknown attempt
+    and a job that has not run count the worst case: the spec time and output limits.
+    """
+    attempts = q.attempts_of(job)
+    if not attempts:
+        return spec['limits']['timeoutSeconds'], spec['limits']['maxOutputBytes']
+    seconds = size = 0
+    for attempt in attempts:
+        result = attempt/'result.json'
+        wall = q.load(result).get('wallSeconds') if result.is_file() else None
+        if type(wall) not in (int, float) or not math.isfinite(wall) or wall < 0:
+            return spec['limits']['timeoutSeconds'] * len(attempts), spec['limits']['maxOutputBytes'] * len(attempts)
+        seconds += wall
+        size += q.live_output_bytes(attempt/'out') if (attempt/'out').exists() else 0
+    return seconds, size
 
 
 def register(record, queue=q.QUEUE):
@@ -167,9 +248,11 @@ def inventory(queue=q.QUEUE):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['inventory', 'register'])
+    parser.add_argument('action', choices=['inventory', 'register', 'release'])
     parser.add_argument('record', nargs='?', type=Path)
     args = parser.parse_args()
-    if args.action == 'register':
-        parser.error('record is required') if args.record is None else register(q.load(args.record))
+    if args.action in ('register', 'release'):
+        if args.record is None:
+            parser.error('record is required')
+        (register if args.action == 'register' else release)(q.load(args.record))
     print(json.dumps(inventory(), indent=2))

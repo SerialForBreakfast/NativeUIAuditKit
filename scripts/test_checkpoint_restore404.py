@@ -63,4 +63,37 @@ class AdmissionTests(unittest.TestCase):
             restore.validate_contract(a,b)
 
 
+    # RECOVERY488: bounded chunks need a 2-step chain proof.
+    def chain(self):
+        self.proof['scopeVersion']=restore.CHAIN
+        self.proof['sources']={'initialization':self.refs['initialization']}
+
+    def test_stop_epoch_requires_chain_proof(self):
+        self.spec['resumeStopEpoch']=23
+        with self.assertRaisesRegex(ValueError,'restore_chain_unqualified'):self.check()
+        self.chain()
+        self.assertEqual(self.check(),self.refs)
+
+    def test_stop_epoch_range(self):
+        self.chain()
+        for bad in (0,30,23.0):
+            self.spec['resumeStopEpoch']=bad
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,'restore_stop_epoch'):self.check()
+
+    def test_dependency_checkpoint(self):
+        self.chain()
+        self.refs['checkpoint']={'job':'chunk-1','output':'last.pt'}
+        self.spec['inputs']=[r for k,r in self.refs.items() if k!='checkpoint']
+        with self.assertRaisesRegex(ValueError,'restore_checkpoint_dependency'):self.check()
+        self.spec['dependencies']=[{'job':'chunk-1','outputs':['last.pt'],'specSHA256':'c'*64}]
+        self.assertEqual(self.check()['checkpoint'],{'job':'chunk-1','output':'last.pt'})
+        self.refs['checkpoint']={'job':'chunk-1','output':'final.pt'}
+        with self.assertRaisesRegex(ValueError,'restore_checkpoint_dependency'):self.check()
+
+    def test_dependency_checkpoint_requires_chain_proof(self):
+        self.refs['checkpoint']={'job':'chunk-1','output':'last.pt'}
+        self.spec['dependencies']=[{'job':'chunk-1','outputs':['last.pt'],'specSHA256':'c'*64}]
+        with self.assertRaisesRegex(ValueError,'restore_chain_unqualified'):self.check()
+
+
 if __name__=='__main__':unittest.main()

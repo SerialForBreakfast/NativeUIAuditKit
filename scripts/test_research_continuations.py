@@ -107,5 +107,76 @@ class ContinuationTests(unittest.TestCase):
         self.assertEqual(c.eligible('resume-a',record,self.queue),'continuation_input_changed')
 
 
+    # RECOVERY488: chained chunks and reservation releases.
+    def chain_record(self, first, ident='resume-chain'):
+        spec = self.spec(id=ident)
+        checkpoint = dict(job=first['job'], output='last.pt')
+        proof = self.base/(ident+'-qualification.json')
+        q.save(proof, dict(q.load(c.checked(first['qualification'])), checkpoint=checkpoint))
+        proof_pin = dict(path=q.relative(proof), sha256=q.digest(proof))
+        spec['inputs'] += [first['checkpoint'], proof_pin]
+        spec['dependencies'] = [dict(job=first['job'], specSHA256=first['specSHA256'], outputs=['last.pt'])]
+        self.submit(spec)
+        return dict(first, version=c.CHAIN_VERSION, job=ident, specSHA256=q.text_digest(spec),
+                    previous=first['job'], checkpoint=checkpoint, qualification=proof_pin)
+
+    def test_chain_reserves_against_original_parent(self):
+        first = self.prepare(); c.register(first, self.queue)
+        second = self.chain_record(first)
+        c.register(second, self.queue)
+        self.assertEqual(c.records(self.queue)['resume-chain']['previous'], 'resume-a')
+        bad = dict(second, checkpoint=dict(job='other', output='last.pt'))
+        with self.assertRaisesRegex(ValueError, 'previous_checkpoint'):
+            c.validate(bad, self.queue)
+        with self.assertRaisesRegex(ValueError, 'continuation_previous'):
+            c.validate(dict(second, previous='missing'), self.queue)
+
+    def test_chain_budget_includes_every_chunk(self):
+        first = self.prepare(); c.register(first, self.queue)
+        for index in range(3):
+            c.register(self.chain_record(first, 'chain-' + str(index)), self.queue)
+        with self.assertRaisesRegex(ValueError, 'budget_exhausted'):
+            c.register(self.chain_record(first, 'chain-extra'), self.queue)
+
+    def test_release_frees_unstarted_revoked_reservation(self):
+        for index in range(4):
+            c.register(self.prepare('resume-' + str(index)), self.queue)
+        with self.assertRaisesRegex(ValueError, 'budget_exhausted'):
+            c.register(self.prepare('resume-extra'), self.queue)
+        doc = dict(version=c.RELEASE_VERSION, job='resume-0', reason='Revoked before execution after a source-pin conflict.',
+                   specSHA256=c.records(self.queue)['resume-0']['specSHA256'])
+        with self.assertRaisesRegex(ValueError, 'still_approved'):
+            c.release(doc, self.queue)
+        approval.revoke(self.queue, 'resume-0', 'test', 'software revocation')
+        c.release(doc, self.queue)
+        self.assertIn('resume-0', c.released(self.queue))
+        c.register(self.prepare('resume-extra2'), self.queue)
+        self.assertIn('resume-0', c.records(self.queue))
+
+    def test_release_refuses_started_job(self):
+        record = self.prepare(); c.register(record, self.queue)
+        approval.revoke(self.queue, 'resume-a', 'test', 'software revocation')
+        (self.queue/'jobs/resume-a/attempts/1').mkdir(parents=True)
+        doc = dict(version=c.RELEASE_VERSION, job='resume-a', reason='Revoked before execution after a source-pin conflict.',
+                   specSHA256=record['specSHA256'])
+        with self.assertRaisesRegex(ValueError, 'release_started'):
+            c.release(doc, self.queue)
+
+
+    def test_finished_sibling_counts_measured_usage(self):
+        for index in range(4):
+            c.register(self.prepare('resume-' + str(index)), self.queue)
+        with self.assertRaisesRegex(ValueError, 'budget_exhausted'):
+            c.register(self.prepare('resume-extra'), self.queue)
+        # A finished attempt frees the rest of its 20 s reservation. An unfinished attempt does not.
+        attempt = self.queue/'jobs/resume-0/attempts/1'
+        (attempt/'out').mkdir(parents=True)
+        spec = q.load(self.queue/'jobs/resume-0/spec.json')
+        self.assertEqual(c.sibling_usage(self.queue/'jobs/resume-0', spec), (20, spec['limits']['maxOutputBytes']))
+        q.save(attempt/'result.json', dict(status='failed', reason='evidence_not_read:x', wallSeconds=0.0, outputs=[]))
+        self.assertEqual(c.sibling_usage(self.queue/'jobs/resume-0', spec), (0.0, 0))
+        c.register(self.prepare('resume-extra2'), self.queue)
+
+
 if __name__ == '__main__':
     unittest.main()

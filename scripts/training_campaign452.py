@@ -101,8 +101,13 @@ def compile_request(source, destination, queue=q.QUEUE):
                                   acceptanceEvidence='Require complete matched Standard and retained-success comparisons.'))
         training = templates.build(desc)
         authored.append(desc)
+    # RECOVERY488: a reused job may also be the last continuation chunk. It must resume through the restore
+    # adapter and run to epoch 30. A chunk with `resumeStopEpoch` stops early, so it never supplies the model.
+    terminal = (training['training'].get('resume') == 'checkpoint-v1' and 'resumeInputs' in training and
+                'resumeStopEpoch' not in training and training['adapter']['steps'] == ['checkpoint_restore404.run'])
     q.require(training.get('template', {}).get('id') == 'T06' and training['authority'] == 'training' and
-              training['training']['epochs'] == 30 and training['training']['resume'] == 'restart', 'training_graph_trainer')
+              training['training']['epochs'] == 30 and (training['training']['resume'] == 'restart' or terminal),
+              'training_graph_trainer')
     inputs = training['template']['inputs']
     frozen_membership(inputs['membership'], excluded)
     config = q.load(checked(inputs['configuration']))
@@ -112,7 +117,13 @@ def compile_request(source, destination, queue=q.QUEUE):
               'training_graph_profile_or_initialization')
     # The frozen rows, not an implicit trainer profile filter, select training membership.
     checked(inputs['initialization'])
-    q.require(any(d['outputs'] == ['crops.json'] for d in training['dependencies']), 'training_graph_preparation_missing')
+    lineage = training
+    if terminal:
+        # A continuation chunk inherits preparation from the original exhausted fit that it resumes.
+        from research_continuations import records
+        lineage = q.load(queue/'jobs'/records(queue)[training['id']]['parent']/'spec.json')
+        q.require(lineage['template']['inputs'] == inputs, 'training_graph_continuation_inputs')
+    q.require(any(d['outputs'] == ['crops.json'] for d in lineage['dependencies']), 'training_graph_preparation_missing')
     reuse = request.get('reuseScores', {})
     q.require(isinstance(reuse, dict) and (not reuse or set(reuse) == {s['id'] for s in baseline}),
               'training_graph_reuse_suite')
