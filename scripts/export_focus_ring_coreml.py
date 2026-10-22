@@ -46,13 +46,17 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default="mobilenetv4_conv_small")
     p.add_argument('--trace-receipt', help='Explicit sealed complete-model TorchScript receipt; never a head-only export')
     p.add_argument('--precision',choices=['fp16','fp32'],default='fp16',help='Explicit conversion precision; default legacy FP16')
+    p.add_argument('--maximum-package-bytes', type=int, default=MAX_BYTES,
+                   help='Approved package budget in decimal bytes, at most 50 MB')
     p.add_argument('--pixel-contract', choices=['png-straight-rgb-v1'], help='Explicit candidate runtime input contract; absent preserves legacy')
     p.add_argument("--experimental-id", required=True, help="Unique non-production artifact identity, e.g. fdr007-native-incremental")
     return p.parse_args()
 
 
-def package_size_report(path: Path) -> dict:
+def package_size_report(path: Path, maximum_bytes: int = MAX_BYTES) -> dict:
     """Count logical bytes without following links; MB is decimal, MiB binary."""
+    if type(maximum_bytes) is not int or not 0 < maximum_bytes <= 50_000_000:
+        raise ValueError('invalid_package_budget')
     if not path.exists() or path.is_symlink():
         raise ValueError("invalid_package_path")
     members = [path] if path.is_file() else list(path.rglob("*"))
@@ -63,8 +67,8 @@ def package_size_report(path: Path) -> dict:
         raise ValueError("empty_package")
     size = sum(member.stat().st_size for member in files)
     return {"size_bytes": size, "size_mb": size / 1_000_000,
-            "size_mib": size / 1024**2, "size_limit_bytes": MAX_BYTES,
-            "size_gate_version": "decimal-bytes-v1", "size_gate_pass": size <= MAX_BYTES}
+            "size_mib": size / 1024**2, "size_limit_bytes": maximum_bytes,
+            "size_gate_version": "decimal-bytes-v1", "size_gate_pass": size <= maximum_bytes}
 
 
 def export_paths(weights, output, experimental_id):
@@ -89,6 +93,8 @@ def export_paths(weights, output, experimental_id):
 
 def main() -> int:
     args = parse_args()
+    if not 0 < args.maximum_package_bytes <= 50_000_000:
+        raise ValueError('invalid_package_budget')
     try:
         weights, export_dir = export_paths(args.weights, args.output_dir, args.experimental_id)
     except (ValueError, OSError) as error:
@@ -205,7 +211,7 @@ def convert_traced(args, weights, weights_hash, export_dir, model_name, traced, 
     mlmodel.save(str(pkg))
     if hashlib.sha256(weights.read_bytes()).hexdigest() != weights_hash:
         raise ValueError("checkpoint_changed_during_export")
-    size = package_size_report(pkg)
+    size = package_size_report(pkg, args.maximum_package_bytes)
     print(f"Exported {pkg} ({size['size_bytes']} bytes, {size['size_mb']:.6f} MB, {size['size_mib']:.6f} MiB)")
 
     report = {
@@ -227,11 +233,11 @@ def convert_traced(args, weights, weights_hash, export_dir, model_name, traced, 
     report_path.write_text(json.dumps(report, indent=2) + "\n")
 
     if not size["size_gate_pass"]:
-        print(f"ERROR: {pkg.name} is {size['size_bytes']} bytes, exceeds {MAX_BYTES}-byte budget; experimental output retained")
+        print(f"ERROR: {pkg.name} is {size['size_bytes']} bytes, exceeds {size['size_limit_bytes']}-byte budget; experimental output retained")
         return 1
 
     print(
-        f"\nSize gate: {size['size_bytes']} bytes <= {MAX_BYTES} bytes PASS\n"
+        f"\nSize gate: {size['size_bytes']} bytes <= {size['size_limit_bytes']} bytes PASS\n"
         "\nNext: compile to .mlmodelc:\n"
         f"  xcrun coremlc compile {pkg} {export_dir}\n"
         "Experimental artifact only. Do not copy into shipped resources.\n"

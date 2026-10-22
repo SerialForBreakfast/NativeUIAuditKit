@@ -1,5 +1,27 @@
 # Define a batch without a new script
 
+## Bounded detector and restoration settings
+
+T89 accepts `learningRate` values 0.001 and 0.0001 in its pinned configuration. Omission preserves 0.001.
+Set `checkpointRetention` to `last-best-final` to reuse the qualified retention callback. Omission preserves the old snapshot policy.
+Keep membership, initialization, epochs, and evaluation groups matched when testing the learning-rate change.
+Use the existing detector batch compiler for scoring, terminal decisions, and conditional class diagnostics.
+
+T38 accepts a pinned configuration with `repeat` from 1 through 16. Omission preserves repeat 1.
+Qualification compares uninterrupted training and separate-process restoration with exact state and loss-history checks.
+A subset proof does not establish full-corpus accuracy or arbitrary checkpoint compatibility.
+The restore adapter requires identical settings and verified qualification-row membership in the original checkpoint contract.
+Keep complete original membership validation, cumulative continuation budgets, and negative tests. Do not reuse a repeat-1 proof for repeat 9.
+
+## Retained optional observer exports
+
+T10 can reuse a pinned FP16 package with `sourcePackage` and `sourceReport` inputs.
+Set `precision` to `fp16` for retained packages. Fresh FP16 and FP32 exports also accept `maximumPackageBytes`.
+The default remains 5,000,000 bytes. The optional observer permits the approved 50,000,000-byte limit per model.
+The adapter verifies the package hash, checkpoint, precision, and exact byte count before copying and compiling.
+The adapter preserves the source report. A new report records the selected limit and source pins.
+T11 and consumer regression checks remain required. A passing size check does not activate a model.
+
 ## Reusable crop training campaigns
 
 Use `training_campaign452.py` for preparation, T06 fitting, matched T37/T63 scoring, comparison, and bounded follow-ups.

@@ -12,6 +12,13 @@ from template_inputs398 import checked, pin
 OUT = None
 
 
+def repeat_value(cfg):
+    value = cfg.get('repeat', 1)
+    q.require(type(value) is int and 1 <= value <= 16, 'resume_repeat')
+    q.require(set(cfg) <= {'membership', 'initialization', 'repeat'}, 'resume_configuration_fields')
+    return value
+
+
 def phase(config, output, mode, resume=None):
     from train_focus_ring_detector import train_native_hcf
     cfg=q.load(config)
@@ -21,7 +28,8 @@ def phase(config, output, mode, resume=None):
     initial=checked(cfg['initialization'])
     output.mkdir(parents=True, exist_ok=False)
     result=train_native_hcf(rows,initial,output,seed=371,profile='balanced',selection='fixed-last',
-        deduplicate=True,resume=resume,stop_after_epoch=12 if mode=='boundary' else None)
+        deduplicate=True,resume=resume,stop_after_epoch=12 if mode=='boundary' else None,
+        repeat=repeat_value(cfg))
     q.save(output/'fit.json',dict(result,modelAccepted=False))
 
 
@@ -48,7 +56,8 @@ def qualify():
     document(refs['membership']);checked(refs['initialization']).read_bytes()
     config=OUT/'config.json'
     q.require(q.load(config)==cfg,'resume_configuration_changed')
-    for ref in cfg.values():checked(ref)
+    repeat = repeat_value(cfg)
+    for key in ('membership', 'initialization'):checked(cfg[key])
     start=time.monotonic()
     checkpoint=None
     for name in ('uninterrupted','boundary','restored'):
@@ -72,7 +81,8 @@ def qualify():
     passed=all(v==0 for v in metrics.values()) and loss_delta==0 and q.digest(checkpoint)==checkpoint_hash
     report=dict(version='hcf-crop-restoration-v1',passed=passed,metrics=metrics,lossMaximumDifference=loss_delta,
         endpointEpoch=30,interruptionEpoch=12,totalTrainingEpochs=60,checkpoint=pin(checkpoint),
-        sources=cfg,seconds=time.monotonic()-start,modelAccepted=False,
+        sources={key:cfg[key] for key in ('membership','initialization')},
+        repeat=repeat,scopeVersion='training-subset-parity-v1',seconds=time.monotonic()-start,modelAccepted=False,
         scope='Fixed-last crop trainer on retained tiny training membership and this MPS runtime. No detector or arbitrary checkpoint qualification.')
     q.save(OUT/'restoration.json',report)
     q.require(passed,'resume_comparison_failed')

@@ -32,6 +32,11 @@ class ExportParityTests(unittest.TestCase):
         self.assertTrue(report["size_gate_pass"])
         (package/"extra").write_bytes(b"x")
         self.assertFalse(package_size_report(package)["size_gate_pass"])
+        self.assertTrue(package_size_report(package, 50_000_000)["size_gate_pass"])
+        self.assertEqual(package_size_report(package, 50_000_000)["size_limit_bytes"], 50_000_000)
+        for limit in (0, 50_000_001, True):
+            with self.assertRaisesRegex(ValueError, 'invalid_package_budget'):
+                package_size_report(package, limit)
 
     def test_size_rejects_missing_empty_and_symlinks(self):
         empty = self.root/"empty"; empty.mkdir()

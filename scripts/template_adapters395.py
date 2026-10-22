@@ -5,6 +5,7 @@ import io
 import json
 import math
 import os
+import shutil
 from pathlib import Path
 import statistics
 import subprocess
@@ -100,7 +101,9 @@ def export(inputs, parameters, output):
     checked(environment['configuration'])
     # B405-128: palette6weights uses the frozen 6-bit palette method of the same compression step.
     q.require(parameters.get('precision') in ('fp16','fp32','int8weights','palette6weights','int8largestweights'),'export_precision')
-    if parameters['precision'] in ('int8weights','palette6weights','int8largestweights'):
+    if parameters['precision']=='fp16' and 'sourcePackage' in inputs:
+        reuse_fp16(inputs, parameters, doc, output)
+    elif parameters['precision'] in ('int8weights','palette6weights','int8largestweights'):
         from focus_ring_baseline import artifact_digest
         source=document(inputs['sourcePackage']);report_path=checked(inputs['sourceReport'])
         original=q.load(report_path);package=q.local_path(q.ROOT,source['path'])
@@ -115,9 +118,11 @@ def export(inputs, parameters, output):
             output,'compression',1200)
     else:
         q.require('sourceReport' not in inputs and 'sourcePackage' not in inputs,'unexpected_compression_inputs')
+        limit=parameters.get('maximumPackageBytes',5_000_000)
+        q.require(type(limit) is int and 0<limit<=50_000_000,'export_size_limit')
         command([str(interpreter),str(q.MODULES/'export_focus_ring_coreml.py'),'--weights',str(weights),
             '--output-dir',str(output/'export'),'--experimental-id',parameters['experimentalID'],
-            '--precision',parameters['precision']],output,'conversion',1200)
+            '--precision',parameters['precision'],'--maximum-package-bytes',str(limit)],output,'conversion',1200)
     report=q.load(output/'export/focus_ring_detector_training_report.json')
     q.require(report['checkpointSHA256']==doc['checkpoint']['sha256'] and report['size_gate_pass'],'export_receipt')
     package=output/'export/FocusRingDetector.mlpackage'
@@ -127,6 +132,30 @@ def export(inputs, parameters, output):
     files=[pin(p) for p in sorted((output/'export').rglob('*')) if p.is_file()]
     q.save(output/'export.json',dict(version='template-export-v1',files=files,checkpoint=doc['checkpoint'],
         compiled=q.relative(compiled),package=q.relative(package),modelAccepted=False,scope='optional-shadow'))
+
+
+def reuse_fp16(inputs, parameters, candidate, output):
+    """Copy a verified retained package. Preserve its original size failure."""
+    from focus_ring_baseline import artifact_digest
+    limit=parameters.get('maximumPackageBytes',5_000_000)
+    q.require(type(limit) is int and 0<limit<=50_000_000,'export_size_limit')
+    source=document(inputs['sourcePackage']);original=document(inputs['sourceReport'])
+    package=q.local_path(q.ROOT,source['path'])
+    q.require(source.get('digestAlgorithm')=='focus-artifact-v1','export_source_digest')
+    q.require(artifact_digest(package)==source['sha256'],'export_source_changed')
+    q.require(original['checkpointSHA256']==candidate['checkpoint']['sha256'],'export_source_checkpoint')
+    q.require(original.get('method')=='torch.jit.trace/FP16/macOS15/RGB255','export_source_precision')
+    q.require(not any(p.is_symlink() for p in package.rglob('*')),'export_source_symlink')
+    size=sum(p.stat().st_size for p in package.rglob('*') if p.is_file())
+    q.require(size<=limit,'export_size_gate')
+    destination=output/'export/FocusRingDetector.mlpackage'
+    shutil.copytree(package,destination)
+    q.require(artifact_digest(destination)==source['sha256'],'export_copy_changed')
+    report=dict(original,experimentalID=parameters['experimentalID'],mlpackage=str(destination),
+        sourceReport=inputs['sourceReport'],sourcePackage=inputs['sourcePackage'],
+        retainedPackageReused=True,size_bytes=size,size_limit_bytes=limit,size_gate_pass=True,
+        size_gate_version='decimal-bytes-v1',releaseEligible=False)
+    q.save(destination.parent/'focus_ring_detector_training_report.json',report)
 
 
 def verified_export(ref):

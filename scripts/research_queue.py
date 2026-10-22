@@ -641,13 +641,19 @@ def run_attempt(job, spec, number, module_dir, python, control=None, lease_fds=(
     return result
 
 
+def job_directories(queue):
+    """Ignore metadata files, but keep malformed job directories visible to validation."""
+    folder = queue / 'jobs'
+    return sorted(p for p in folder.iterdir() if p.is_dir()) if folder.exists() else []
+
+
 def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock=None,
         job_ids=None, retry=False, control=None):
     require(1 <= max_jobs <= 10, 'max_jobs')
     lock = lock or ROOT / '.build/research-queue.lock'
     report = []
     with host_lock(lock) as host_lease:
-        jobs = sorted((queue / 'jobs').iterdir()) if (queue / 'jobs').exists() else []
+        jobs = job_directories(queue)
         for job in jobs:
             if job_ids is not None and job.name not in job_ids:
                 continue
@@ -742,7 +748,7 @@ def summarize(queue=QUEUE, write=True):
     import research_approval
     approvals = research_approval.load(queue)
     rows = []
-    for job in sorted((queue / 'jobs').iterdir()) if (queue / 'jobs').exists() else []:
+    for job in job_directories(queue):
         spec = load(job / 'spec.json')
         current, attempts = state(job, display_cache=not write)
         last = load(attempts[-1] / 'result.json') if attempts and (attempts[-1] / 'result.json').exists() else {}

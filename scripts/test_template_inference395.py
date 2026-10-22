@@ -52,6 +52,33 @@ class InferenceContracts(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'command_failed:conversion'):
                 adapter.export(inputs, parameters, self.out)
 
+    def test_retained_fp16_preserves_source_and_checks_limit(self):
+        from focus_ring_baseline import artifact_digest
+        package=self.root/'source.mlpackage';package.mkdir()
+        (package/'weights').write_bytes(b'explicit software fixture')
+        source=self.record('source.json',dict(path=q.relative(package),
+            digestAlgorithm='focus-artifact-v1',sha256=artifact_digest(package)))
+        report=self.record('source-report.json',dict(checkpointSHA256='frozen',
+            method='torch.jit.trace/FP16/macOS15/RGB255',size_gate_pass=False))
+        inputs=dict(sourcePackage=source,sourceReport=report)
+        candidate=dict(checkpoint=dict(sha256='frozen'))
+        parameters=dict(experimentalID='test',maximumPackageBytes=50_000_000)
+        for bad in (0,50_000_001,True):
+            with self.assertRaisesRegex(ValueError,'export_size_limit'):
+                adapter.reuse_fp16(inputs,dict(parameters,maximumPackageBytes=bad),candidate,self.out)
+        with self.assertRaisesRegex(ValueError,'export_size_gate'):
+            adapter.reuse_fp16(inputs,dict(parameters,maximumPackageBytes=1),candidate,self.out)
+        with self.assertRaisesRegex(ValueError,'export_source_checkpoint'):
+            adapter.reuse_fp16(inputs,parameters,dict(checkpoint=dict(sha256='wrong')),self.out)
+        adapter.reuse_fp16(inputs,parameters,candidate,self.out)
+        copied=q.load(self.out/'export/focus_ring_detector_training_report.json')
+        self.assertTrue(copied['size_gate_pass'])
+        self.assertEqual(copied['size_limit_bytes'],50_000_000)
+        self.assertFalse(q.load(self.root/'source-report.json')['size_gate_pass'])
+        (package/'weights').write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError,'export_source_changed'):
+            adapter.reuse_fp16(inputs,parameters,candidate,self.out)
+
     def test_parity_pass_and_mismatch(self):
         import torch
         from PIL import Image

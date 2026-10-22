@@ -383,6 +383,20 @@ class QueueTests(unittest.TestCase):
         self.assertEqual((rows['job-b']['state'], rows['job-b']['reason']), ('exhausted', 'process_failed'))
         self.assertTrue((self.queue / 'summary.json').exists())
 
+    def test_metadata_files_do_not_hide_jobs(self):
+        self.submit(self.spec())
+        (self.queue / 'jobs' / '.DS_Store').write_bytes(b'metadata')
+        (self.queue / 'jobs' / 'notes.txt').write_text('not a job')
+        self.assertEqual([p.name for p in q.job_directories(self.queue)], ['job-a'])
+        self.assertEqual(self.run_queue(), [('job-a', 'complete')])
+        self.assertEqual([r['job'] for r in q.summarize(self.queue, write=False)['jobs']], ['job-a'])
+
+    def test_malformed_job_directory_remains_an_error(self):
+        self.submit(self.spec())
+        (self.queue / 'jobs' / 'broken-job').mkdir()
+        with self.assertRaises(FileNotFoundError):
+            q.summarize(self.queue, write=False)
+
     def test_summary_extracts_screening_metrics_and_ranks(self):
         self.submit(self.spec(id='job-screen-1'))
         self.submit(self.spec(id='job-screen-2'))

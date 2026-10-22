@@ -128,7 +128,7 @@ def build(doc):
     q.require(inputs<=set(doc['inputs']) and set(doc['inputs'])<=inputs|optional,'template_inputs')
     # T47 `scorer` is optional so that registered T47 specifications keep their identity.
     # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
-    q.require(set(doc['parameters'])-{'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'}}.get(doc['template'],set())==parameters,'template_parameters')
+    q.require(set(doc['parameters'])-{'T10':{'maximumPackageBytes'},'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'}}.get(doc['template'],set())==parameters,'template_parameters')
     validate_novel418_parameters(doc['template'], doc['parameters'])
     if doc['template']=='T41':
         from box_intervention410 import parameters as intervention
@@ -175,8 +175,12 @@ def build(doc):
         else:checked(ref)
     if doc['template']=='T10':
         compressed=doc['parameters']['precision'] in ('int8weights','palette6weights','int8largestweights')
-        q.require(('sourceReport' in doc['inputs'])==compressed and
-                  ('sourcePackage' in doc['inputs'])==compressed,'compression_inputs')
+        retained=doc['parameters']['precision']=='fp16' and 'sourcePackage' in doc['inputs']
+        q.require(('sourceReport' in doc['inputs'])==(compressed or retained) and
+                  ('sourcePackage' in doc['inputs'])==(compressed or retained),'compression_inputs')
+        if 'maximumPackageBytes' in doc['parameters']:
+            limit=doc['parameters']['maximumPackageBytes']
+            q.require(doc['parameters']['precision'] in ('fp16','fp32') and type(limit) is int and 0<limit<=50_000_000,'export_size_limit')
     q.require(('capture' in doc)==(authority=='capture'),'capture_contract')
     q.require(('training' in doc)==(authority=='training'),'training_contract')
     if authority=='capture':

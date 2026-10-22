@@ -25,7 +25,7 @@ def run():
         out=OUT/name;out.mkdir()
         try:
             train_native_hcf(membership,initial,out,seed=seed,profile='balanced',selection='fixed-last',
-                deduplicate=True,resume=checkpoint,stop_after_epoch=13)
+                deduplicate=True,resume=checkpoint,stop_after_epoch=13,repeat=proof.get('repeat',1))
         except ValueError as error:
             q.require(str(error)==expected,'unexpected_restore_rejection:'+str(error))
             q.require(not (out/'last.pt').exists(),'rejection_wrote_checkpoint')

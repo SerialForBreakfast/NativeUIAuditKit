@@ -16,6 +16,16 @@ VERSION = 'detector-training-membership-v1'
 TRAIN_ONLY_VERSION = 'detector-training-membership-v2'
 
 
+def learning_rate(config, initialization):
+    base=dict(initialization=initialization,selection='fixed-last',patience=0)
+    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention'} and
+              all(config[k]==v for k,v in base.items()),'detector_training_configuration')
+    q.require(config.get('checkpointRetention','all') in ('all','last-best-final'), 'detector_checkpoint_retention')
+    value=config.get('learningRate',.001)
+    q.require(type(value) in (int,float) and value in (.001,.0001),'detector_training_learning_rate')
+    return value
+
+
 def prepare(data, output):
     from PIL import Image
     train_only=data.get('version') == TRAIN_ONLY_VERSION
@@ -73,14 +83,27 @@ def run():
     cfg=q.load(OUT.parents[2]/'spec.json')['template']
     refs=resolve_inputs(cfg,OUT)
     config=document(refs['configuration'])
-    q.require(config==dict(initialization=refs['initialization'],selection='fixed-last',patience=0), 'detector_training_configuration')
+    rate=learning_rate(config,refs['initialization'])
     initialization=checked(refs['initialization'])
     membership=document(refs['membership'])
     dataset,counts=prepare(membership,OUT)
     from train_yolo import train_native_hcf
     import hcf_study371 as study
     study.OUT=OUT
-    model=train_native_hcf(dataset,initialization,OUT,study.progress,weights='last',patience=0)
+    options=dict(weights='last',patience=0)
+    if 'learningRate' in config:options['learning_rate']=rate
+    if config.get('checkpointRetention') == 'last-best-final':
+        import detector_retention478 as retention
+        from ultralytics.utils.callbacks import default_callbacks
+        callbacks=default_callbacks['on_pretrain_routine_end']
+        retention.OUT=OUT
+        callbacks.append(retention.apply_retention)
+        try:
+            model=train_native_hcf(dataset,initialization,OUT,study.progress,**options)
+        finally:
+            callbacks.remove(retention.apply_retention)
+    else:
+        model=train_native_hcf(dataset,initialization,OUT,study.progress,**options)
     with (OUT/'detector/results.csv').open() as stream:
         rows=[{k.strip():v for k,v in row.items()} for row in csv.DictReader(stream)]
     history=[dict(epoch=int(r['epoch']),trainLoss=sum(float(r[k]) for k in ('train/box_loss','train/cls_loss','train/dfl_loss'))) for r in rows]
@@ -89,7 +112,7 @@ def run():
     shutil.copyfile(model,OUT/'final.pt')
     q.save(OUT/'history.json',history)
     q.save(OUT/'fit.json',dict(epochs=30,initialization=refs['initialization'],membership=refs['membership'],
-        frames=counts,selection='fixed-last',resumeQualified=False,modelAccepted=False,
+        frames=counts,selection='fixed-last',learningRate=rate,resumeQualified=False,modelAccepted=False,
         validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
         calibrationUsedForSelection=False))
     q.save(OUT/'benchmark_summary.json',dict(epochs=30,frames=counts,modelAccepted=False,

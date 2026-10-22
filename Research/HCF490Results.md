@@ -5,6 +5,238 @@ HCF remains optional. Standard and iOS remain unchanged. Navigation remains disa
 
 ## Latest review — broader fallback and receiving-Mac verification
 
+### Transition result and retained correction comparison
+
+FOCUS329 detects the native switch in forward and reversed order. Both scores are 1.0 with verified result receipts.
+This is one pair from a training group. The score is not a calibrated accuracy percentage or proof of destination selection.
+No new TTR reply appears after cursor 1187.
+
+Reuse the earlier 408-pair results instead of running them again. Their output hashes verify.
+FOCUS329 has 316 correct, 33 false changes, 12 missed changes, and 47 abstentions.
+On 168 content-only pairs, it has 90 correct, 33 false changes, and 45 abstentions.
+The retained notification-trained seed 42 has 350 correct and 18 false changes, with zero lost successes.
+Seed 44 has 352 correct and 16 false changes, with zero lost successes.
+Seed 43 loses one success. It remains excluded from this next comparison despite its higher total score.
+These are retained development results, not new improvements or native moving-background qualification.
+
+All four T47 jobs complete with verified outputs. Seeds 42 and 44 each detect the switch in both orders with score 1.0.
+This preserves the native case. Reversed order does not add an independent native action.
+Require preservation of the native switch result and retain the complete earlier regression record.
+If either order fails, reject that candidate for this case. Passing supports broader native motion tests, not deployment.
+The existing 800 s and 100 MB limits apply per job. This short batch does not provide overnight work.
+No training, capture, historical scoring, model activation, or threshold adjustment repeats.
+Standard and the optional observer remain unchanged.
+Definitions: `reports/work/HCF490/grid40300-diagnosis/notification-batch.json`.
+
+### Next batch — background motion and absence of focus
+
+Continue FOCUS355 P10, P12, and P14. Do not repeat the completed 408-pair or single-pair checks.
+Keep FOCUS329 as the control. Compare notification seeds 42 and 44 on identical inputs with unchanged thresholds.
+The comparison needs the following matched conditions:
+
+| Condition | Observed focus | Question and decision |
+| --- | --- | --- |
+| Static background, fixed focus | Same native ID | Preserve stable predictions. Reject new false changes. |
+| Moving background, fixed focus | Same native ID | Does background motion cause false changes? Reject candidates that lose the static success. |
+| Static background, moved focus | Different native IDs | Preserve true movement detection. |
+| Moving background, moved focus | Different native IDs | Does motion hide a real transfer? Compare misses and abstentions. |
+| Static and moving backgrounds, no focus | Verified absence in both frames | Does motion cause false selection? Require observer abstention. |
+| Focus arrival and disappearance | Verified absence at one endpoint | Separate presence changes from transfers between controls. |
+
+Start with matched grid, row, and tab groups. Keep each recipe, asset family, and reversed pair within one group.
+Use verified Standard profiles first. Treat HCF profiles as a separate optional stratum.
+Record native focus brackets, frame timestamps, body bounds, motion region, motion phase, app versions, and source hashes.
+Do not derive observed focus from the requested control. Preserve the original data roles and exclusions.
+Report false changes, missed changes, abstentions, wrong selections, lost successes, and runtime per condition and group.
+Keep transition detection separate from destination selection. A correct change prediction cannot qualify the observer's selected control.
+
+Prepare 3 T47 scoring jobs after qualified movement and fixed-focus inputs arrive. Use 800 s and 100 MB per job.
+Use the existing observer replay for verified no-focus images after its input contract passes. Do not change the active observer.
+If either candidate loses a previous success, reject it. If both pass, prefer fewer false changes without additional misses.
+If evidence is inconclusive, retain both reports and request missing conditions. Do not start training or promote a model automatically.
+
+Current readiness: these are prepared comparisons, not admitted jobs. No native moving-background corpus is verified in this review.
+The checked Maximum-mini-TTR checkout lists MOT-00–14 and FIX-SCROLL-01 as planned or proposed.
+That source status does not prove Sillycon-TTR lacks newer work. Request its exact recipes and delivery receipts.
+The local transition generator produces test-only drawings. It cannot supply native model qualification.
+T75 consumes supplied scroll offsets. Its execution path does not call its image-based phase-correlation function.
+Do not use T75 results as measured image-motion evidence.
+T47 requires nonempty endpoint IDs. Verify an explicit absence contract before admitting no-focus transitions.
+Static no-focus observer replay does not depend on that temporal contract or the motion producer.
+BigDog-Coordinator stores the capability request at cursor 1189. Forwarding to Sillycon-TTR remains unconfirmed.
+No new jobs are admitted from this matrix. The runner and active observer remain unchanged.
+
+### Paired-frame results and temporal follow-up
+
+Both reference-frame jobs complete with verified output hashes and passing parity.
+At fixed measured-body coordinates, the HCF arrival score rises from 0.197 to 0.744.
+Its departure score falls from 0.03195 to 0.00000783. Both unchanged controls keep identical scores.
+Mixed arrival rises from 0.00000534 to 0.582. Its departure score incorrectly rises from 0.900 to 0.983.
+Mixed assigns the unchanged `item-3` a score of 0.967 in both frames.
+This persistent false positive supports content sensitivity. It does not establish the specific visual cause.
+Neither absolute-score model recovers a valid later-frame selection. Do not lower thresholds or activate a temporal policy.
+
+Two approved T47 jobs test the retained FOCUS329 transition model on the native pair in forward and reversed order.
+These tests ask whether the existing pair model detects movement where single-frame selection fails.
+They do not identify the destination control or establish moving-background accuracy.
+Reversed order is a diagnostic transformation, not an independent observed action.
+The original training role, unknown accessibility profile, and native focus receipts remain explicit.
+Each job has an 800 s limit and 100 MB output limit. The runner owns execution; this is short diagnostic work.
+Definitions: `reports/work/HCF490/grid40300-diagnosis/temporal-batch.json`.
+No new TTR reply appears after cursor 1187. Standard, thresholds, and the active optional observer remain unchanged.
+
+Extend existing P10/P12/B4 investigations before making any non-HCF motion accuracy claim.
+Compare static and moving backgrounds with focus fixed, focus moved, and no focused control.
+Separate scrolling from local animation. Record native observed focus, frame geometry, action timing, and verified Standard profile.
+Compare single-frame selection, local temporal evidence, and a combined policy on matched independent groups.
+Report wrong selections, missed selections, false changes, abstentions, retained losses, and runtime separately.
+Qualification requires actual retained or generated inputs. Do not count these preparation requirements as ready jobs.
+
+### Geometry results: boxes alone do not recover this scene
+
+Both grid geometry jobs complete with verified output hashes and passing conversion parity.
+The HCF focused score is 0.744 with measured body bounds, 0.00452 with wrapper bounds, and 0.0257 with artwork bounds.
+All remain below the fixed 0.85 selection threshold. No negative control crosses that threshold for HCF.
+The mixed focused-body score is 0.582. Unfocused body scores reach 0.983 for `item-1` and 0.967 for `item-3`.
+The mixed model therefore produces 2 false-positive crops. The unique-selection rule abstains rather than choosing either control.
+Reject geometry-only recovery for this scene. Do not lower thresholds or replace the active observer from this evidence.
+Missing proposals and crop scoring both remain relevant. The accessibility profile remains unverified.
+
+The retained reference frame has bracket-verified focus on `item-1`; the later frame has verified focus on `item-0`.
+Two approved T11 jobs score the reference image with the same 12 crop coordinates and frozen models.
+Completed later-frame scores provide the matched control. No capture, training, or completed scoring repeats.
+Compare arrival and departure score directions. Use `item-2` and `item-3` as unchanged-focus controls.
+Persistent high negative scores would support content sensitivity. Helpful score changes justify broader temporal tests, not deployment.
+Fixed coordinates isolate image changes but do not equal the reference frame's measured body bounds.
+This is one source training group used for diagnosis, not independent evaluation.
+Each job has an 800 s limit and 100 MB output limit. These short jobs are not overnight capacity.
+Definitions: `reports/work/HCF490/grid40300-diagnosis/reference-batch.json`.
+No new TTR reply appears after cursor 1185. Passive status confirms the expected primary model remains available and warm.
+Standard resources remain selected. Navigation remains disabled. Previous successful comparisons remain required regression evidence.
+
+### Runtime results and missing-proposal diagnosis
+
+Both T12 jobs complete with verified output hashes. Each measures 48 crop inferences across 3 helper processes.
+HCF median inference is 2.63 ms; p95 is 29.95 ms. Model loading takes 2.55–6.40 ms.
+Mixed median inference is 2.71 ms; p95 is 31.68 ms. Model loading takes 2.49–3.66 ms.
+These measurements exclude proposal generation. OS caches are uncontrolled. They do not establish full-frame or device latency.
+No new TTR reply appears after cursor 1183. The previous activation message is stored, not confirmed forwarded.
+
+The saved grid scene has verified native focus on `item-0` before and after capture.
+Its best screenshot proposal overlaps the measured focused body by only 0.168 IoU. No ring proposal appears.
+The accessibility profile is unverified. Do not describe this as an HCF-specific failure.
+The original source role is training. This diagnostic does not create independent evaluation evidence or change training membership.
+TTR supplies the retained image and sidecar through its chunk interface. File hashes match the original manifest.
+Direct container access fails; no permissions or services change. No capture repeats.
+
+Two approved T11 jobs compare measured body, wrapper, and artwork bounds on the same 4 controls with both frozen FP32 models.
+Each job scores 12 crops. The background runner owns execution within 800 s and 100 MB per job.
+If measured bodies recover focus, investigate screenshot proposal coverage. If every arm misses, investigate crop scoring.
+Reject arms with new wrong selections. Parity success alone does not mean focus accuracy passes.
+Keep the previous 38-observation comparison as regression evidence before any later deployment correction.
+These short diagnostics do not fill an overnight queue. No model, threshold, Standard resource, or active observer changes.
+Private evidence and definitions: `reports/work/HCF490/grid40300-diagnosis/`.
+
+### FP32 correction passes the full consumer comparison
+
+FP32 resolves both measured score mismatches without changing weights, thresholds, or preprocessing.
+The packages use 9,996,543 bytes for HCF and 9,996,545 bytes for mixed, below 50,000,000 bytes each.
+All 38 retained TTR observations pass score parity. Maximum errors are 0.000002444 for HCF and 0.000000983 for mixed.
+All 264 crop RGB hashes match. No previous success is lost and no new wrong selection appears.
+HCF remains 16/16 correct. Standard-profile remains 10/16 correct. All 6 no-focus observations remain correct.
+These results qualify retained Fixture development inputs, not independent applications or navigation authority.
+
+Both targeted T11 checks pass. All 14 additional checks pass on 98 previously tested crops per model.
+Maximum errors are 0.000002875 for HCF and 0.000000367 for mixed. Threshold decisions remain unchanged.
+Maximum-mini-TTR now runs the verified source candidate after an idle-only replacement. The previous build remains available for rollback.
+The active observer records both expected compiled model hashes on 10 crops from one saved 3840 × 2160 screenshot.
+Its export verifies and reopens without inference. All 10 proposals return unfocused; this runtime check does not establish accuracy.
+The separate baseline verifier reports a missing expected control on this saved training scene. Preserve that diagnostic for proposal review.
+No new capture or navigation occurs. Standard resources and the selected baseline remain unchanged.
+NUIAK is enabled for the optional saved-image observer. Automatic analysis has no enabled targets.
+The corrected mapping remains limited to 3840 × 2160. Independent application qualification remains open.
+The FP32 host suite passes 26 tests, with 4 historical-input skips.
+
+Private consumer evidence: `reports/work/HCF490/ttr-proposals-fp32/activation-gate.json`.
+Maximum-mini-TTR host receipt: `.local-work/hcf490-validation/run-20261022T015347Z/summary.json`.
+Maximum-mini-TTR build receipt: `.local-work/nuiak-hcf490-lineage/runs/20261022T015624Z-73e2fe6d/candidate.json`.
+Active runtime evidence: Maximum-mini-TTR `.local-work/hcf490-active-20261022/observer.json` and `final-status.json`.
+Combined regression receipt: `reports/work/HCF490/fp32-comparison/regression-acceptance.json`.
+Two approved T12 jobs measure FP32 CPU inference and load costs on identical retained crops with 3 repetitions.
+The detached runner owns execution. Each job has an 800 s limit and 100 MB output limit.
+These are short runtime diagnostics, not overnight capacity. No new TTR reply appears after coordination cursor 1181.
+
+### Approved 50 MB budget and retained FP16 result
+
+The maintainer sets the optional observer budget to 50,000,000 bytes per model.
+All 6 retained FP16 export and partition jobs complete successfully through the background runner.
+The broader TTR replay still fails on the same 2 crops. HCF error is 0.010472; mixed error is 0.020849.
+Weight quantization is therefore not the sole cause. The unchanged 0.01 gate blocks activation.
+All 264 crop hashes match. HCF remains 16/16 correct, Standard-profile remains 10/16, and all 6 no-focus observations remain correct.
+No prior success is lost. No new wrong selection appears.
+
+The next fixed comparison changes conversion precision to FP32. It keeps weights, inputs, thresholds, and the approved size budget fixed.
+Two T10 exports and 2 T11 checks target both failed crops and observed focused controls.
+The background runner owns these 4 approved jobs. No training or capture repeats.
+Twenty-one Python tests pass. The FP16 TTR host suite passes 26 tests with 4 historical-input skips.
+The TTR receipt is `.local-work/hcf490-validation/run-20261022T014829Z/summary.json`.
+Private evidence is `reports/work/HCF490/ttr-proposals-fp16/activation-gate.json`.
+The next batch is `reports/work/HCF490/fp32-comparison/batch.json`.
+No corrected resources enter the running app. Standard and previous model resources remain unchanged.
+
+### Actual TTR proposals and the activation decision
+
+Maximum-mini-TTR now tests its real screenshot detector without supplied native bounds.
+The first 14-frame replay finds no usable focused proposal in 4 HCF edge-clearance frames.
+The original TTR ring algorithm also returns no ring on those frames.
+Research used a corrected ring variant that had not reached this consumer path.
+
+The source adds that variant explicitly. Existing ring callers retain their default behavior.
+The optional version-2 manifest selects the corrected primary model, mixed fallback, and fixed ring-to-body mapping.
+The original HCF396 resource remains separate. The mapping accepts only the qualified 3840 × 2160 image size.
+Neither native labels nor preferred focus enter screenshot inference. Evaluation reads observed labels separately.
+
+| Retained consumer scope | Detector proposals with fallback | Corrected proposal union with fallback |
+| --- | --- | --- |
+| HCF focused controls | 0/16 correct; 1 wrong; 15 misses | 16/16 correct; 0 wrong |
+| Standard-profile focused controls | 10/16 correct; 6 misses | 10/16 correct; 6 misses |
+| No-focus observations | 6/6 correct abstentions | 6/6 correct abstentions |
+
+The 38 observations cover 4 focus conditions and 3 no-focus scenes under 2 profiles.
+Related observations do not increase the independent scene count.
+No previous consumer successes are lost. The correction adds no wrong selection.
+This improves the complete proposal path, not the trained weights. Independent app qualification remains open.
+
+All 264 crop RGB hashes match the independent FocusRingTool preprocessing.
+The queue supplies matched PyTorch scores for the actual consumer proposals.
+The broader comparison fails the existing 0.01 parity limit on 2 crops:
+
+| Case | Model | PyTorch | TTR Vision | Absolute error |
+| --- | --- | --- | --- | --- |
+| tall-controls, Standard, item 2, proposal 5 | HCF | 0.574489 | 0.584961 | 0.010472 |
+| diamond-decoration, Standard, item 0, proposal 1 | mixed | 0.584814 | 0.564453 | 0.020361 |
+
+Neither error changes a decision at 0.5, 0.7, or 0.85. The score gate still fails.
+Do not activate the corrected resources or replace the running app.
+The retained FP16 package is 5,038,126 bytes. The maintainer sets the limit to 50,000,000 bytes per model.
+T10 reuses the pinned FP16 packages without retracing or weight quantization. It preserves the original size-failure reports.
+Two exports and 4 partition checks enter the existing queue. Accuracy and regression gates remain unchanged.
+
+Twenty-six observer and original ring tests pass. Four tests lack historical inputs and remain skipped.
+The configured observer is tested through a private resource bundle. This is offline host evidence, not live activation.
+The baseline detector reports partial results on 18 observations. These flags remain visible and do not authorize navigation.
+
+The runner completes 6 producer and geometry jobs plus the initial edge-clearance comparison.
+The initial no-focus comparison fails because identical profile images repeat detector hashes.
+Its named successor deduplicates only detector inputs. It retains all 6 evaluation observations and does not repeat captures.
+Three broader comparisons and that successor complete. Five T60 reports reuse their scores.
+These jobs are short diagnostics. They do not provide an overnight workload.
+
+Private evidence stays under `reports/work/HCF490/ttr-proposals-r2/`.
+`qualification.json` records case outcomes. `activation-gate.json` records all score and crop checks.
+The final host receipt is `.local-work/hcf490-validation/run-20261022T013128Z/summary.json` in Maximum-mini-TTR.
+No new Sillycon-TTR reply appears after coordinator cursor 1175 during this review.
+
 ### Single-weight conversion correction
 
 The broader HCF palette6 check fails partition 2 at 0.019721 maximum error.

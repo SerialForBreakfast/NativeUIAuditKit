@@ -44,5 +44,23 @@ class AdmissionTests(unittest.TestCase):
         self.spec['resumeInputs']={}
         with self.assertRaisesRegex(ValueError,'restore_inputs'):self.check()
 
+    def test_subset_preserves_all_settings_and_membership(self):
+        actual={'resumeContract':{'rows':[{'id':'a'},{'id':'b'}],'repeat':9,'trainer':'fixed'}}
+        tested={'resumeContract':{'rows':[{'id':'a'}],'repeat':9,'trainer':'fixed'}}
+        self.assertEqual(restore.validate_contract(actual,tested,True),9)
+        tested['resumeContract']['repeat']=1
+        with self.assertRaisesRegex(ValueError,'contract_not_qualified'):
+            restore.validate_contract(actual,tested,True)
+        tested['resumeContract']['repeat']=9
+        tested['resumeContract']['rows']=[{'id':'other'}]
+        with self.assertRaisesRegex(ValueError,'not_training_subset'):
+            restore.validate_contract(actual,tested,True)
+
+    def test_default_contract_stays_exact(self):
+        a={'resumeContract':{'rows':[1,2]}}
+        b={'resumeContract':{'rows':[1]}}
+        with self.assertRaisesRegex(ValueError,'contract_not_qualified'):
+            restore.validate_contract(a,b)
+
 
 if __name__=='__main__':unittest.main()
