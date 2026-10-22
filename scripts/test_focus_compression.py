@@ -3,11 +3,31 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from compress_focus_ring_coreml import preflight
+from compress_focus_ring_coreml import preflight, largest_weight, compression_config
+from types import SimpleNamespace
 from focus_ring_baseline import artifact_digest
 
 
 class CompressionTests(unittest.TestCase):
+    def test_largest_weight_is_deterministic(self):
+        weights={name:SimpleNamespace(val=SimpleNamespace(size=size))
+                 for name,size in [('small',4),('z',100),('a',100)]}
+        self.assertEqual(largest_weight(weights),'a')
+        self.assertEqual(largest_weight(dict(reversed(list(weights.items())))),'a')
+
+    def test_largest_weight_rejects_empty_and_unknown_method(self):
+        with self.assertRaisesRegex(ValueError,'no_compressible_weights'):largest_weight({})
+        with self.assertRaisesRegex(ValueError,'unknown_compression_method'):compression_config(None,'unknown')
+
+    def test_largest_config_does_not_compress_other_weights(self):
+        factory=lambda **kw:kw
+        ct=SimpleNamespace(optimize=SimpleNamespace(coreml=SimpleNamespace(
+            OptimizationConfig=factory,OpLinearQuantizerConfig=factory)))
+        config=compression_config(ct,'int8largest',{'large':SimpleNamespace(val=SimpleNamespace(size=4000))})
+        self.assertIsNone(config['global_config'])
+        self.assertEqual(list(config['op_name_configs']),['large'])
+        self.assertEqual(config['op_name_configs']['large']['dtype'],'int8')
+
     def setUp(self):
         parent = Path(__file__).resolve().parents[1] / ".build/debug-output/compression-tests"
         parent.mkdir(parents=True, exist_ok=True)

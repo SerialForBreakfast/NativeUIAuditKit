@@ -6,6 +6,8 @@ from pathlib import Path
 # B405-128: frozen compression settings. `palette6` uses the uniform look-up table because the
 # k-means mode needs scikit-learn, which .venv-coreml does not contain. Grouped channels need spec version 9. `int8` is the default and keeps the HCF396 output unchanged.
 METHODS = {
+    "int8largest": ("int8-largest-weight-only-v1",
+                    "FP16-to-int8-largest-weight-only/per-channel/linear-symmetric"),
     "int8": ("int8-linear-symmetric-per-channel-threshold2048",
              "FP16-to-int8-weight-only/per-channel/linear-symmetric/threshold2048"),
     "palette6": ("palette6-uniform-grouped16-threshold2048",
@@ -13,7 +15,21 @@ METHODS = {
 }
 
 
-def compression_config(ct, method):
+def largest_weight(metadata):
+    """Choose by size, then name. Evaluation scores never enter selection."""
+    if not metadata:
+        raise ValueError("no_compressible_weights")
+    return min(metadata, key=lambda name: (-metadata[name].val.size, name))
+
+
+def compression_config(ct, method, metadata=None):
+    if method not in METHODS:
+        raise ValueError("unknown_compression_method")
+    if method == "int8largest":
+        name = largest_weight(metadata or {})
+        return ct.optimize.coreml.OptimizationConfig(global_config=None,
+            op_name_configs={name: ct.optimize.coreml.OpLinearQuantizerConfig(
+                mode="linear_symmetric", dtype="int8", granularity="per_channel", weight_threshold=2048)})
     if method == "palette6":
         return ct.optimize.coreml.OptimizationConfig(global_config=
             ct.optimize.coreml.OpPalettizerConfig(mode="uniform", nbits=6,
@@ -57,8 +73,10 @@ def main():
     package, destination, original = preflight(args.package, args.source_report,
         args.output_dir, args.experimental_id, args.source_sha256)
     import coremltools as ct
-    config = compression_config(ct, args.method)
     source = ct.models.MLModel(str(package), skip_model_load=True)
+    weights = (ct.optimize.coreml.get_weights_metadata(source, weight_threshold=2048)
+               if args.method == "int8largest" else None)
+    config = compression_config(ct, args.method, weights)
     metadata = source.user_defined_metadata
     if (metadata.get("checkpointSHA256") != original["checkpointSHA256"] or
         metadata.get("modelID") != "focus-ring-experimental-" + original["experimentalID"] or
@@ -81,6 +99,10 @@ def main():
         "method": METHODS[args.method][1],
         "coremltoolsVersion": ct.__version__, "sourcePackageSHA256": args.source_sha256,
         "packageSHA256": artifact_digest(output), "releaseEligible": False}
+    if weights is not None:
+        name = largest_weight(weights)
+        result["compressedWeight"] = dict(name=name, elements=int(weights[name].val.size),
+                                         selection="largest-element-count-then-name-v1")
     with (destination / "focus_ring_detector_training_report.json").open("x") as stream:
         json.dump(result, stream, indent=2)
     print(json.dumps(result), flush=True)

@@ -5,6 +5,97 @@ HCF remains optional. Standard and iOS remain unchanged. Navigation remains disa
 
 ## Latest review — broader fallback and receiving-Mac verification
 
+### Single-weight conversion correction
+
+The broader HCF palette6 check fails partition 2 at 0.019721 maximum error.
+Reject that conversion despite its passing partition 4. Preserve both failed conversion variants.
+The correction compresses only the largest weight tensor. Element count and name determine selection, not evaluation scores.
+Both exports select `const_90_to_fp16`, with 1,228,800 elements. All other weights retain their source precision.
+HCF uses 3,811,992 package bytes. The mixed model uses 3,811,994 package bytes.
+Both meet the unchanged 5,000,000-byte limit without retraining.
+All 7 HCF partitions pass. Maximum absolute error is 0.002618 across 98 crops.
+All 7 mixed-model partitions also pass. Maximum absolute error is 0.002744 across the same 98 crops.
+Neither model changes decisions at 0.5, 0.7, or 0.85. All output hashes verify.
+The background runner executes these checks through T10 and T11. These are short diagnostics, not overnight training work.
+
+TTR host validation checks all 98 crop RGB hashes against the retained production reference. Every hash matches.
+It also verifies each parent image hash before cropping. Original images and source checkpoints remain unchanged.
+The retained fallback replay uses screenshot-derived proposals, not ground-truth boxes.
+TTR passes this replay on 14 full-frame inputs and 98 proposals with the corrected models.
+Selected-model decisions, positive decisions, parent hashes, and crop hashes match the frozen reference.
+Thirteen TTR host tests pass. Four historical-input tests remain skipped.
+The first replay rejects a reference with the wrong digest format. The corrected reference uses TTR's compiled-tree algorithm.
+The rejected reference and failed test remain preserved. No validation gate changes.
+It does not establish TTR proposal generation or independent app accuracy.
+No fallback resources enter the running application. Standard and navigation remain unchanged.
+
+The 7 cached full-screen policy reports also verify their output hashes.
+Low-confidence proposals preserve 16/16 HCF selections across 4 retained conditions.
+The Standard-profile research comparison gets 13/16. Neither profile loses previous successes or adds wrong selections.
+Both proposal thresholds correctly abstain on 3 retained no-focus scenes per profile.
+These related profile observations do not create 6 independent scenes.
+This evidence supports retained-input consumer verification, not a shipped detector change.
+
+Software checks pass: 30 Python tests and 12 offline Swift tests.
+The first Swift attempt finds an old cache with the parked checkout path.
+A fresh project-local module cache repairs that build failure without deleting the old cache.
+
+### October 21 source integration and wider conversion checks
+
+Maximum-mini-TTR uses the verified developer Git checkout.
+The maintainer approves scoped fallback and lineage source changes there.
+The source adds the frozen two-model selection rule and records parent, crop, model, compiler, and source identities.
+Navigation stays disabled. The running app remains unchanged.
+Eleven focused host tests pass. Four historical input tests remain skipped.
+Sixteen candidate preflight checks pass with system Ruby.
+These checks do not establish retained-image consumer acceptance.
+
+The background runner exports the exact mixed checkpoint without retraining.
+FP16 produces 5,038,126 bytes and fails the unchanged 5,000,000-byte package limit.
+INT8 produces 2,612,938 bytes. The initial 8-crop Vision check passes with maximum error 0.00001145.
+The wider comparison covers 98 retained proposals for each model, divided into 7 partitions.
+Original captures remain unchanged. Verified copies provide project-relative inputs for the existing parity template.
+The rejected external-path attempts remain preserved.
+
+Partition 4 fails the existing 0.01 parity limit for both models.
+HCF396 maximum error is 0.017066. The mixed model maximum error is 0.026182.
+HCF396 scores proposal `hcf402-edge-clearance-hcf-item-3-0-proposal-6` at 0.839332 in PyTorch and 0.822266 in Vision.
+This HCF396 difference does not cross the 0.85 threshold. It still fails score parity.
+This is conversion evidence, not an accuracy regression or an exhausted training budget.
+Do not resume these failed checks unchanged or enable the fallback resources.
+
+Two approved correction chains reuse T10 and T11 with existing palette6 compression.
+Each chain tests its exact failed slice before broader qualification.
+Batch files: `reports/work/HCF490/palette-correction-batch.json` and `reports/work/HCF490/mixed-palette-correction-batch.json`.
+The runner owns execution. These short diagnostics do not provide overnight training capacity.
+Remaining acceptance requires broader parity, actual TTR crop hashes, and the frozen full-screen selection comparison.
+Standard, iOS, original checkpoints, and previous success records remain unchanged.
+
+The runner completes both palette6 correction chains with verified output hashes.
+HCF396 partition 4 now passes: maximum error falls from 0.017066 to 0.006812, with no threshold disagreements.
+Six remaining HCF partitions are submitted as regression checks; partition 4 is not repeated.
+The mixed palette6 variant fails: maximum error rises to 0.203428 and one threshold decision changes.
+Reject the mixed palette6 variant. Preserve the original checkpoint and INT8 evidence.
+The next useful mixed-model investigation is conversion precision on the same failed crop, not additional training.
+Full fallback acceptance remains blocked. The inactive TTR source build passes its signed package gate in 97.94 s.
+The built application contains the verified source revision, source digest, and compiler fields.
+
+Sillycon-TTR reply 1170 confirms receipt cleanup and a local Ruby compatibility repair.
+Maximum-mini-NUIAK acknowledges that reply. No later reply is available during this review.
+
+### Source-only continuation
+
+The maintainer requires TTR from Git and local source builds only. AGENTS.md now records this requirement.
+The previously registered TTR folder has no Git metadata.
+The app project registry also reports that folder is not a Git repository.
+The later source integration above resolves the checkout location. No prebuilt application is substituted and no existing TTR session is restarted.
+
+All 9 proposal-recovery scoring jobs complete. Their recorded output hashes verify.
+Seven T60 descriptions now compare the fixed fallback on 5 low-confidence arms and 2 additional high-confidence controls.
+They reuse completed scores and pin execution receipts. They do not repeat capture, training, or inference.
+Batch: `reports/work/HCF490/proposal-policy-batch.json`.
+This is short cached analysis, not an overnight workload. The detached runner owns execution.
+
 All 3 broader fallback jobs complete with verified output hashes.
 Frozen fallback improves HCF selections from 10/12 to 12/12 across edge-clearance, tall-control, and diamond-decoration development groups.
 It loses no previous successes and adds no wrong selections in these groups.
@@ -367,3 +458,22 @@ Sillycon-TTR still owns native UI review and qualification of the new normal can
 T23 still lacks compiled-after observation, per-input RGB hashes, candidate IDs, compiler version, and source revision.
 Second-host behavior and broad paired-case provenance remain unverified.
 The optional observer is not fully qualified. Preserve the default-off experimental scope and unchanged Standard/navigation behavior.
+
+## Source-built receiver and lower-confidence proposals — 2026-10-21
+
+Maximum-mini-TTR uses Git revision `dd40d8bf802a0e55c5596be24f6e5f44e8d7b331` from the maintainer-supplied Developer checkout.
+The signed candidate builds in 77.19 s, below the provisional 15–25 min estimate.
+The exact build receipt, package signatures, compiled HCF396 hash, and retained paired case checks pass.
+The app starts without replacing an existing TTR process. Passive coordinator status passes.
+The feature inventory reports HCF396 available, disabled, and ineligible for navigation.
+No capture, inference, device operation, or restart test occurs during these receiver checks.
+System Ruby lacks `Array.filter_map` in candidate preflight. An in-memory compatibility shim permits the passive check without source edits.
+Native UI review and T23 input lineage remain open. Source build success does not close them.
+
+Seven cached fallback comparisons complete with verified outputs.
+Across 4 retained focused conditions, lower-confidence proposals improve Standard-profile selections from 10/16 to 13/16.
+The 3 gains are edge-clearance items 0, 1, and 2. No previous success is lost, and no wrong selection appears.
+HCF remains 16/16 across those conditions. All 3 retained no-focus scenes remain correct under each profile.
+Profile counterparts are not independent scenes. These results are development evidence, not release qualification.
+The frozen fallback differs from the current TTR observer. Standard and shipped models remain unchanged.
+Next consumer work must verify the frozen policy on retained inputs through TTR before any adoption claim.

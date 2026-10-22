@@ -174,7 +174,7 @@ def build(doc):
             q.require(doc['template'] not in ('T03','T05','T06','T07'),'binding_requires_pinned_inputs')
         else:checked(ref)
     if doc['template']=='T10':
-        compressed=doc['parameters']['precision'] in ('int8weights','palette6weights')
+        compressed=doc['parameters']['precision'] in ('int8weights','palette6weights','int8largestweights')
         q.require(('sourceReport' in doc['inputs'])==compressed and
                   ('sourcePackage' in doc['inputs'])==compressed,'compression_inputs')
     q.require(('capture' in doc)==(authority=='capture'),'capture_contract')
