@@ -9,6 +9,7 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T93':({'membership','original','suite'},set(),'training_anchors495.run','artifact','diagnostic'),
  'T91':({'membership','button','row','tab','tool'},{'arm'},'proposal_crop_training421.prepare','artifact','diagnostic'),
  'T92':({'admission'},set(),'proposal_crop_training421.qualify_labels','artifact','diagnostic'),
  'T89':({'configuration','initialization','membership'},set(),'detector_training419.run','training','training'),
@@ -204,6 +205,14 @@ def build(doc):
     stage=[]
     if 'configuration' in doc['inputs']:stage=[dict(to='config.json',**{'from':doc['inputs']['configuration']})]
     pinned=[r for r in doc['inputs'].values() if 'path' in r]
+    if doc['template'] == 'T06' and 'teacherPreservation' in config:
+        from teacher_preservation495 import validate_config as teacher_config, validate_anchors
+        teacher = teacher_config(config['teacherPreservation'])
+        for key in ('model', 'anchors'):
+            checked(teacher[key])
+            pinned.append(teacher[key])
+        validate_anchors(q.load(checked(doc['inputs']['membership']))['rows'],
+                         q.load(checked(teacher['anchors']))['rows'])
     reads=list(dict.fromkeys(r['path'] for r in pinned))
     evidence=dict(reads=reads,artifactReceipt='artifact-receipt.json')
     if kind=='aggregation':evidence=dict(reads=reads,citations='sources.json')

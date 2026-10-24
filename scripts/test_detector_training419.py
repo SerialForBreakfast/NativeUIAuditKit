@@ -73,15 +73,24 @@ class DetectorTrainingTests(unittest.TestCase):
         self.assertEqual(report['missing'],['scheduler','random_state'])
 
     def test_training_wrapper_calls_resident_trainer(self):
+        self.exercise_training_wrapper(False)
+
+    def test_frozen_training_wrapper_calls_resident_trainer(self):
+        self.exercise_training_wrapper(True)
+
+    def exercise_training_wrapper(self, frozen):
         # This test qualifies the caller contract, not training or model quality.
         out=self.root/'jobs/train/attempts/1/out';out.mkdir(parents=True)
         init=self.root/'init.pt';init.write_bytes(b'test-only')
         membership=self.root/'membership.json';q.save(membership,self.data)
         config=self.root/'configuration.json'
-        q.save(config,dict(initialization=pin(init),selection='fixed-last',patience=0))
+        values=dict(initialization=pin(init),selection='fixed-last',patience=0)
+        if frozen: values['freezeBackbone']=True
+        q.save(config,values)
         refs=dict(configuration=pin(config),initialization=pin(init),membership=pin(membership))
         q.save(out.parents[2]/'spec.json',dict(template=dict(inputs=refs)))
-        def train(dataset,initialization,output,progress,weights,patience):
+        def train(dataset,initialization,output,progress,weights,patience,**options):
+            self.assertEqual(options,{'freeze_backbone':True} if frozen else {})
             self.assertEqual(weights,'last');self.assertEqual(patience,0)
             self.assertEqual(initialization,init)
             folder=output/'detector';folder.mkdir()
@@ -92,6 +101,7 @@ class DetectorTrainingTests(unittest.TestCase):
         with patch.object(d,'OUT',out),patch('train_yolo.train_native_hcf',side_effect=train): d.run()
         self.assertEqual(q.load(out/'fit.json')['epochs'],30)
         self.assertFalse(q.load(out/'fit.json')['modelAccepted'])
+        self.assertEqual(q.load(out/'fit.json')['freezeBackbone'],frozen)
 
 
 if __name__=='__main__':unittest.main()

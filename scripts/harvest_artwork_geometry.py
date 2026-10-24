@@ -5,17 +5,34 @@ ROLE = "artwork_layout_view_bounds"
 STATUS = "unavailable_native_effect_not_measured"
 
 
-def validate(value, size, require):
+def validate(value, size, require, *, element_id=None, generation=None):
     # Swift's optional decodeIfPresent accepts absent and explicit null alike.
     if value is None:
         return
     required = {"version", "source", "presentation_bounds_status"}
-    allowed = required | {"pixel_bounds", "normalized_bounds", "unavailable_reason"}
+    allowed = required | {"pixel_bounds", "normalized_bounds", "unavailable_reason", "presentation"}
     require(isinstance(value, dict) and required <= set(value) <= allowed,
             "artwork_geometry_fields")
     require(type(value["version"]) is int and value["version"] == 1
             and value["source"] == ROLE and value["presentation_bounds_status"] == STATUS,
             "artwork_geometry_protocol")
+    presentation=value.get('presentation')
+    if presentation is not None:
+        fields={'version','element_id','generation','source','availability','unavailable_reason',
+                'full_pixel_bounds','visible_pixel_bounds','visible_normalized_bounds','clipping'}
+        require(isinstance(presentation,dict) and set(presentation)<=fields and
+                presentation.get('source')=='artwork_presentation_layer' and
+                isinstance(element_id,str) and type(generation) is int and generation>=0,
+                'artwork_presentation_contract')
+        from fixture_rendered_body import validate as body_geometry
+        body=dict(presentation,role='rendered_control_body',coordinate_space='image_top_left_pixels',
+                  source='native_body_presentation_layer')
+        # The producer uses the same projection contract for these separate measurements.
+        # Do not use artwork presentation as a control body or a focus-effect label.
+        if body.get('unavailable_reason')=='animation_in_progress':
+            require(body.get('availability')=='unavailable','artwork_presentation_animation')
+            body['unavailable_reason']='projection_failed'
+        body_geometry(body,size,element_id,generation)
     p, n, reason = (value.get(k) for k in
                     ("pixel_bounds", "normalized_bounds", "unavailable_reason"))
     if reason is not None:

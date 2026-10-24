@@ -193,7 +193,29 @@ def validate(spec, module_dir=MODULES):
         require(isinstance(capture['approval'], str) and capture['approval'].strip(), 'capture_approval')
         local_path(ROOT, check_pin(capture['plan'])['path'])
         require(spec.get('adapter', {}).get('steps') in
-                (['generation352.run'], ['hcf_recovery367.run'], ['template_bridge395.capture']), 'capture_adapter')
+                (['generation352.run'], ['hcf_recovery367.run'], ['template_bridge395.capture'],
+                 ['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']), 'capture_adapter')
+        if spec['adapter']['steps'] == ['ttr_campaign_recovery493.run']:
+            import ttr_campaign_recovery493
+            config = load(local_path(ROOT, capture['plan']['path']))
+            ttr_campaign_recovery493.validate_config(config)
+            allowed = {'adr493-retained-campaign-recovery': 'campaign-recovery493-v1',
+                       'adr493-retained-campaign-resume-v3': 'campaign-recovery493-v2',
+                       'adr493-retained-six-resume-v4': 'campaign-recovery493-v3'}
+            require(spec['task'] == 'ADRSPIKES493' and
+                    allowed.get(spec['id']) == config['version'], 'recovery_approved_scope')
+            if config['version'] in ('campaign-recovery493-v2','campaign-recovery493-v3'):
+                ttr_campaign_recovery493.retained_restart(config)
+        if spec['adapter']['steps'] == ['ttr_campaign_queue493.run']:
+            import ttr_campaign_queue493
+            config = load(local_path(ROOT, capture['plan']['path']))
+            ttr_campaign_queue493.validate_config(config)
+            require(spec['task'] == 'ADRSPIKES493' and
+                    spec['id'] in ('adr493-session-' + str(config['order']),
+                                   'adr493-session-' + str(config['order']) + '-r2',
+                                   'adr493-session-' + str(config['order']) + '-r3',
+                                   'adr493-session-' + str(config['order']) + '-r4',
+                                   'adr493-session-' + str(config['order']) + '-r5'), 'campaign_approved_scope')
     else:
         require('capture' not in spec, 'capture_authority_required')
     dependencies = spec.get('dependencies', [])
@@ -237,7 +259,8 @@ def validate(spec, module_dir=MODULES):
     require(type(limits['maxAttempts']) is int and 1 <= limits['maxAttempts'] <= 5, 'limits_attempts')
     validate_training(spec)
     if spec['authority'] == 'capture':
-        require(limits['timeoutSeconds'] <= 800 and limits['maxOutputBytes'] <= 100_000_000
+        ceiling = 250_000_000 if adapter['steps'] in (['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']) else 100_000_000
+        require(limits['timeoutSeconds'] <= 800 and limits['maxOutputBytes'] <= ceiling
                 and limits['maxAttempts'] == 1, 'capture_limits')
     if spec['kind'] == 'replay':
         replay = spec.get('replay')
@@ -681,7 +704,9 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
             require(spec['limits']['timeoutSeconds'] <= research_execution_policy.seconds(
                 text_digest(spec), spec['authority'], DIAGNOSTIC_SECONDS, queue), 'execution_time_limit')
             require(spec['limits']['maxOutputBytes'] <= research_execution_policy.output_bytes(
-                text_digest(spec), spec['authority'], DIAGNOSTIC_BYTES, queue), 'execution_output_limit')
+                text_digest(spec), spec['authority'],
+                250_000_000 if spec['adapter']['steps'] in (['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']) else DIAGNOSTIC_BYTES,
+                queue), 'execution_output_limit')
             if spec['authority'] == 'training':
                 require(spec['training']['epochs'] <= 30, 'execution_epoch_limit')
             if control is not None:

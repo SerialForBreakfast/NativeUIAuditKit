@@ -12,6 +12,11 @@ def validate_config(cfg):
     q.require(type(cfg.get('seed')) is int and cfg['seed'] in (371,372,373),'seed_changed')
     # ACTIONS417: optional exposure control after deduplication. Absent means 1, the original sampling.
     q.require(type(cfg.get('repeat',1)) is int and 1<=cfg.get('repeat',1)<=16,'repeat_invalid')
+    q.require(type(cfg.get('freezeEncoder', False)) is bool, 'freeze_encoder_invalid')
+    if 'teacherPreservation' in cfg:
+        from teacher_preservation495 import validate_config as teacher_config
+        teacher_config(cfg['teacherPreservation'])
+        q.require(not cfg.get('freezeEncoder', False), 'teacher_freeze_combination_unqualified')
     return cfg
 
 
@@ -27,7 +32,8 @@ def train():
     from train_focus_ring_detector import train_native_hcf
     result=train_native_hcf(rows,initial,OUT,epochs=30,batch=16,seed=cfg['seed'],progress=study.progress,
                            profile=cfg['profile'],deduplicate=cfg['deduplicate'],selection='fixed-last',
-                           repeat=cfg.get('repeat',1))
+                           repeat=cfg.get('repeat',1), freeze_encoder=cfg.get('freezeEncoder',False),
+                           teacher_preservation=cfg.get('teacherPreservation'))
     q.save(OUT/'fit.json',dict(**result,modelAccepted=False,profile=cfg['profile'],
         membershipSHA256=q.text_digest(rows),initialization=ref,configuration=cfg,
         limitation='Equal epochs do not imply equal update counts after duplicate removal.'))

@@ -22,6 +22,8 @@ The crop correction remains experimental until its matched comparisons finish.
 Use the [experiment workflow guide](docs/experiment-workflow.md) to understand preparation, execution, evidence, and acceptance.
 The [batch authoring guide](docs/experiment-batches/README.md) describes reusable experiment definitions.
 These internal research tools are not requirements for library consumers.
+The [teacher-preservation experiment](Research/TeacherPreservation495.md) tests training-only anchors through the existing comparison workflow.
+Its software tests pass, but the first candidate fails Standard retention. The [matched results](Research/Teacher495Results.md) define the next correction.
 
 ## Add as a Dependency
 

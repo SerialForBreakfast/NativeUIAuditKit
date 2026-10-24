@@ -196,6 +196,40 @@ class TrainingCampaignTests(fixtures.DecisionTests):
             with self.assertRaisesRegex(ValueError,'experiment_log_missing'):admission.admit(manifest,self.queue)
         self.assertFalse((self.queue/'jobs/new-fit').exists())
 
+    def test_frozen_encoder_option_survives_compilation_and_invalid_flag_fails(self):
+        request = self.request('frozen-campaign')
+        config = self.root/'frozen-config.json'
+        q.save(config, dict(initialization=self.inputs['oldmodel'], profile='balanced',
+                            deduplicate=False, seed=371, freezeEncoder=True))
+        request['training']['configuration'] = pin(config)
+        manifest = self.prepare_graph(request)
+        spec = next(q.load(checked(r['spec'])) for r in manifest['jobs'] if r['job']=='new-fit')
+        self.assertTrue(q.load(checked(spec['template']['inputs']['configuration']))['freezeEncoder'])
+        bad = self.request('bad-freeze-campaign')
+        invalid = self.root/'invalid-freeze.json'
+        q.save(invalid, dict(q.load(config), freezeEncoder='true'))
+        bad['training']['configuration'] = pin(invalid)
+        with self.assertRaisesRegex(ValueError, 'freeze_encoder_invalid'):
+            self.prepare_graph(bad)
+
+    def test_teacher_references_are_pinned_and_training_only(self):
+        request = self.request('teacher-campaign')
+        anchors = self.root/'anchors.json'
+        rows = q.load(self.membership)['rows']
+        q.save(anchors, dict(version='teacher-anchors-v1', rows=rows[:2]))
+        config = self.root/'teacher-config.json'
+        q.save(config, dict(initialization=self.inputs['oldmodel'], profile='balanced', deduplicate=False, seed=371,
+            teacherPreservation=dict(model=self.inputs['oldmodel'], anchors=pin(anchors), weight=1.0)))
+        request['training']['configuration'] = pin(config)
+        manifest = self.prepare_graph(request)
+        spec = next(q.load(checked(r['spec'])) for r in manifest['jobs'] if r['job']=='new-fit')
+        self.assertIn(pin(anchors), spec['inputs'])
+        q.save(anchors, dict(version='teacher-anchors-v1', rows=rows), replace=True)
+        cfg=q.load(config);cfg['teacherPreservation']['anchors']=pin(anchors);q.save(config,cfg,replace=True)
+        request['id']='bad-teacher-campaign';request['training']['configuration']=pin(config)
+        with self.assertRaisesRegex(ValueError, 'teacher_anchor_not_training_member'):
+            self.prepare_graph(request)
+
 
 # Do not inherit the older suite as duplicate tests.
 for name in list(fixtures.DecisionTests.__dict__):

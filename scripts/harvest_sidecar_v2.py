@@ -351,7 +351,9 @@ def scene_check(scene, size, expected, *, transition_visibility=False):
     require(identifiers(ids), "element_ids")
     focused = []
     for e in elements:
-        validate_artwork_geometry(e.get("artwork_geometry"), size, require)
+        validate_artwork_geometry(e.get("artwork_geometry"), size, require,
+                                  element_id=e.get('element_id'),
+                                  generation=(scene.get('focus_observation') or {}).get('generation'))
         require(type(e.get("is_focused")) is bool and isinstance(e.get("taxonomy_class"), str), "element_label")
         if e["is_focused"]:
             focused.append(e["element_id"])
@@ -375,9 +377,13 @@ def scene_check(scene, size, expected, *, transition_visibility=False):
     navigation = observation.get('verificationMode') == 'native_navigation'
     from fixture_native_visibility import kind, visible_membership as native_membership
     native_table = kind(scene) in ('native_table_v2','native_collection_v1')
+    composition = (scene_appearance or {}).get('composition')
+    composed_navigation = isinstance(composition,dict) and composition.get('version')==3
+    if composed_navigation:
+        appearance_digest_source(scene['recipe'])
     if native_table:
         appearance_digest_source(scene['recipe'])  # exact source-pinned layout, never a string-only bypass
-    require(observation.get('verificationMode') is None or navigation and (reference or native_table) and transition_visibility,
+    require(observation.get('verificationMode') is None or navigation and (reference or native_table or composed_navigation) and transition_visibility,
             'native_verification_mode')
     if navigation:
         require('requestedID' not in observation and 'requestedID' not in diagnostics and

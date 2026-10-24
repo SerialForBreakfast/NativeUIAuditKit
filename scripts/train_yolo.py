@@ -69,7 +69,40 @@ def parse_args():
     return p.parse_args()
 
 
-def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001):
+class FrozenYOLOBackbone:
+    """Verify the resident YOLO11 backbone and preserve its normalization buffers."""
+
+    def __init__(self, model):
+        import torch
+        backbone = model.yaml.get('backbone', [])
+        expected = ['Conv','Conv','C3k2','Conv','C3k2','Conv','C3k2','Conv','C3k2','SPPF','C2PSA']
+        if (len(backbone) != 11 or type(model.model[-1]).__name__ != 'Detect' or
+                [type(layer).__name__ for layer in model.model[:11]] != expected):
+            raise ValueError('detector_frozen_architecture')
+        self.prefixes = tuple(f'model.{i}.' for i in range(len(backbone)))
+        self.reference = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()
+                          if k.startswith(self.prefixes)}
+        if not self.reference or not all(torch.isfinite(v).all() for v in self.reference.values()):
+            raise ValueError('detector_frozen_state')
+        self.checks = 0
+
+    def verify(self, trainer):
+        import torch
+        state = trainer.model.state_dict()
+        if any(not torch.equal(state[k].detach().cpu(), v) for k, v in self.reference.items()):
+            raise ValueError('detector_frozen_backbone_changed')
+        if any(p.requires_grad for k, p in trainer.model.named_parameters() if k.startswith(self.prefixes)):
+            raise ValueError('detector_frozen_backbone_trainable')
+        self.checks += 1
+        # EMA arithmetic can round unchanged tensors. Preserve the frozen initializer exactly.
+        if getattr(trainer, 'ema', None) is not None:
+            ema = trainer.ema.ema.state_dict()
+            with torch.no_grad():
+                for key, value in self.reference.items():
+                    ema[key].copy_(value.to(device=ema[key].device, dtype=ema[key].dtype))
+
+
+def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False):
     """Use the resident YOLO trainer with fixed native HCF settings.
 
     weights='best' keeps the HCF371 behavior (validation fitness). weights='last' returns the final epoch.
@@ -80,6 +113,8 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
         raise ValueError('hcf_patience_choice')
     if type(learning_rate) not in (int,float) or learning_rate not in (.001,.0001):
         raise ValueError('hcf_learning_rate_choice')
+    if type(freeze_backbone) is not bool:
+        raise ValueError('detector_freeze_backbone_boolean')
     import os
     os.environ.setdefault('YOLO_CONFIG_DIR', str(PROJECT_ROOT/'NativeUITrainer/.ultralytics'))
     os.environ.setdefault('MPLCONFIGDIR', str(PROJECT_ROOT/'NativeUITrainer/.mplconfig'))
@@ -87,6 +122,12 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
     if not Path(initialization).is_file(): raise ValueError('hcf_initialization_missing')
     from ultralytics import YOLO
     model = YOLO(str(initialization))
+    options = {}
+    if freeze_backbone:
+        frozen = FrozenYOLOBackbone(model.model)
+        options['freeze'] = 11
+        model.add_callback('on_pretrain_routine_end', frozen.verify)
+        model.add_callback('on_train_epoch_end', frozen.verify)
     if progress:
         model.add_callback('on_train_epoch_end', lambda trainer: progress(
             'Train HCF full-screen detector', trainer.epoch+1, trainer.epochs))
@@ -94,7 +135,14 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
         project=str(output), name='detector', exist_ok=False, seed=371, deterministic=True,
         optimizer='AdamW', lr0=learning_rate, lrf=.01, pretrained=True, plots=False, save=True, save_period=1,
         rect=True, cache=False, amp=False, mosaic=0, mixup=0, copy_paste=0, fliplr=0, flipud=0,
-        degrees=0, translate=0, scale=0, shear=0, perspective=0, hsv_h=0, hsv_s=0, hsv_v=0)
+        degrees=0, translate=0, scale=0, shear=0, perspective=0, hsv_h=0, hsv_s=0, hsv_v=0, **options)
+    if freeze_backbone:
+        import json
+        if frozen.checks != 31:
+            raise ValueError('detector_frozen_verification_incomplete')
+        (output/'frozen-backbone.json').write_text(json.dumps(dict(
+            layers=list(range(11)), tensors=len(frozen.reference), checks=frozen.checks,
+            parametersAndBuffersUnchanged=True, emaFrozenStatePreserved=True)))
     return output/'detector/weights'/(weights + '.pt')
 
 

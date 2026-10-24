@@ -2,6 +2,12 @@
 
 ## Bounded detector and restoration settings
 
+T89 accepts optional Boolean `freezeBackbone`. The default remains false.
+The true variant supports the resident YOLO11 detector backbone, layers 0 through 10.
+It verifies unchanged parameters and BatchNorm buffers before training and after each epoch.
+It preserves those tensors in EMA checkpoints. Detection heads remain trainable.
+Use matched membership, initialization, settings, and retained comparisons. Frozen checkpoint restoration remains unqualified.
+
 T89 accepts `learningRate` values 0.001 and 0.0001 in its pinned configuration. Omission preserves 0.001.
 Set `checkpointRetention` to `last-best-final` to reuse the qualified retention callback. Omission preserves the old snapshot policy.
 Keep membership, initialization, epochs, and evaluation groups matched when testing the learning-rate change.
@@ -231,7 +237,11 @@ Use T87 output references for T88 dependencies. See `Research/Experiments/batche
 T89 accepts `configuration`, `initialization`, and `membership`, with no parameters.
 It wraps the resident YOLO trainer: 30 epochs, fixed-last selection, and no early stopping.
 Membership uses `detector-training-membership-v1`, complete labels, pinned images, and separate train and calibration groups.
-T89 has software caller checks. Real training qualification remains pending. Do not claim a ready training experiment without qualified membership.
+T89 has software caller checks and completed native detector fits.
+DETECTOR422, IOS493, and IOS494 provide retained execution evidence.
+On October 24, all 36 detector admission, freezing, and campaign tests pass.
+These results qualify the tested training path. They do not qualify model accuracy or checkpoint restoration.
+Each new fit still requires qualified membership and matched development comparisons.
 
 T89 also accepts `detector-training-membership-v2` with training rows only.
 Set `calibrationPolicy` to `none-fixed-last-training-diagnostics` explicitly.

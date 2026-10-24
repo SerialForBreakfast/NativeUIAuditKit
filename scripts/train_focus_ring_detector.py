@@ -149,8 +149,30 @@ def load_mobilenetv4_conv_small():
     return mod.mobilenetv4_conv_small
 
 
+def freeze_crop_encoder(model):
+    """Train only the existing binary classifier. Keep encoder buffers fixed too."""
+    import torch
+    if not isinstance(getattr(model, 'classifier', None), torch.nn.Linear) or model.classifier.out_features != 1:
+        raise ValueError('crop_freeze_classifier_contract')
+    for name, parameter in model.named_parameters():
+        parameter.requires_grad_(name.startswith('classifier.'))
+    model.eval()
+    model.classifier.train()
+    return {name: value.detach().cpu().clone() for name, value in model.state_dict().items()
+            if not name.startswith('classifier.')}
+
+
+def verify_crop_encoder(model, reference):
+    import torch
+    state = model.state_dict()
+    if not reference or any(name not in state or not torch.equal(value, state[name].detach().cpu())
+                            for name, value in reference.items()):
+        raise ValueError('crop_frozen_encoder_changed')
+
+
 def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=371, progress=None, profile='hcf',
-                     selection='best-development', deduplicate=False, resume=None, stop_after_epoch=None, repeat=1):
+                     selection='best-development', deduplicate=False, resume=None, stop_after_epoch=None, repeat=1,
+                     freeze_encoder=False, teacher_preservation=None):
     """Train the resident backbone on admitted crops. Keep audit rows out.
 
     selection='best-development' keeps the HCF371 behavior. selection='fixed-last' never uses development
@@ -165,6 +187,12 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     from PIL import Image
     from torch import nn
     import hashlib
+    if type(freeze_encoder) is not bool:
+        raise ValueError('crop_freeze_flag')
+    if freeze_encoder and resume is not None:
+        raise ValueError('crop_frozen_resume_unqualified')
+    if teacher_preservation is not None and (resume is not None or freeze_encoder or selection != 'fixed-last'):
+        raise ValueError('teacher_requires_full_fixed_last_restart')
     if epochs != 30 or batch != 16 or any(r['role'] not in ('train', 'development') for r in rows):
         raise ValueError('hcf_training_contract')
     if type(repeat) is not int or not 1 <= repeat <= 16:
@@ -186,6 +214,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
         torchVersion=str(torch.__version__), numpyVersion=np.__version__, device='mps')
     if repeat != 1:
         resume_contract['repeat'] = repeat  # Old contracts stay unchanged for repeat=1.
+    if freeze_encoder:
+        resume_contract['freezeEncoder'] = True
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
     torch.set_num_threads(2)
     if not torch.backends.mps.is_available():
@@ -194,7 +224,8 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     model = load_mobilenetv4_conv_small()(pretrained=False, num_classes=1)
     model.load_state_dict(torch.load(initialization, map_location='cpu', weights_only=True)['state_dict'], strict=True)
     model.to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
+    frozen_state = freeze_crop_encoder(model) if freeze_encoder else None
+    optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad), lr=3e-4)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=.5)
     if profile == 'balanced' or profile is None:
         train = [r for r in rows if r['role'] == 'train']
@@ -235,6 +266,11 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
         x = torch.from_numpy(np.stack(arrays)).permute(0,3,1,2).contiguous().float().div_(255).to(device)
         y = torch.tensor([r['label'] for r in selected], dtype=torch.float32, device=device)
         return x,y
+    preservation = None
+    if teacher_preservation is not None:
+        from teacher_preservation495 import prepare
+        preservation = prepare(teacher_preservation, train, tensors, device)
+        resume_contract['teacherPreservation'] = teacher_preservation
     best, stale, history = float('inf'), 0, []
     first_epoch = 1
     if resume is not None:
@@ -262,6 +298,9 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     presented = updates = 0
     for epoch in range(first_epoch, epochs+1):
         model.train(); total = 0; epoch_samples = 0
+        if freeze_encoder:
+            model.eval()
+            model.classifier.train()
         # repeat=1 draws the same permutation as before; modulo maps repeated draws back to unique rows.
         order = [i % len(train) for i in torch.randperm(len(train)*repeat).tolist()]
         for start in range(0,len(order),batch):
@@ -269,7 +308,10 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
             # BatchNorm needs at least 2 examples at its final spatial stage.
             if len(selected) == 1: selected.append(selected[0])
             x,y = tensors(selected); optimizer.zero_grad()
-            loss = criterion(model(x).reshape(-1), y)
+            logits = model(x).reshape(-1)
+            loss = criterion(logits, y)
+            if preservation is not None:
+                loss = loss + preservation.loss(logits, selected)
             if not torch.isfinite(loss): raise ValueError('hcf_nonfinite_loss')
             loss.backward(); optimizer.step(); total += float(loss.item())*len(selected)
             updates += 1; presented += len(selected); epoch_samples += len(selected)
@@ -284,6 +326,11 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
             validation /= len(development)
             if not math.isfinite(validation): raise ValueError('hcf_nonfinite_validation')
         scheduler.step()
+        if frozen_state is not None:
+            verify_crop_encoder(model, frozen_state)
+        if preservation is not None:
+            preservation.verify()
+            (output/'teacher-preservation.json').write_text(json.dumps(preservation.report(), indent=2)+'\n')
         state = {k:v.detach().cpu() for k,v in model.state_dict().items()}
         history.append(dict(epoch=epoch, trainLoss=total/(len(train)*repeat) if repeat != 1 else total/len(train),
                             developmentLoss=validation))
@@ -305,6 +352,7 @@ def train_native_hcf(rows, initialization, output, *, epochs=30, batch=16, seed=
     return dict(epochs=len(history), bestDevelopmentLoss=best if development else None, trainCrops=len(train),
         duplicateTrainRowsRemoved=duplicates, developmentCrops=len(development), selection=selection,
         earlyStopped=stale >= 10, resumeStateSaved=True, resumeQualified=False,
+        freezeEncoder=freeze_encoder, frozenEncoderVerified=frozen_state is not None,
         resumedFromEpoch=first_epoch-1, boundaryStopped=len(history)<epochs and stale<10,
         # ACTIONS417 exposure record, measured during this call (resumed epochs are not counted twice).
         exposure=dict(uniqueTrainImages=len(train), repeat=repeat, samplesPresented=presented,

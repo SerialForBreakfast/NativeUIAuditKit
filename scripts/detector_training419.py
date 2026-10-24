@@ -18,9 +18,10 @@ TRAIN_ONLY_VERSION = 'detector-training-membership-v2'
 
 def learning_rate(config, initialization):
     base=dict(initialization=initialization,selection='fixed-last',patience=0)
-    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention'} and
+    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone'} and
               all(config[k]==v for k,v in base.items()),'detector_training_configuration')
     q.require(config.get('checkpointRetention','all') in ('all','last-best-final'), 'detector_checkpoint_retention')
+    q.require(type(config.get('freezeBackbone',False)) is bool, 'detector_freeze_backbone_boolean')
     value=config.get('learningRate',.001)
     q.require(type(value) in (int,float) and value in (.001,.0001),'detector_training_learning_rate')
     return value
@@ -92,6 +93,7 @@ def run():
     study.OUT=OUT
     options=dict(weights='last',patience=0)
     if 'learningRate' in config:options['learning_rate']=rate
+    if config.get('freezeBackbone'):options['freeze_backbone']=True
     if config.get('checkpointRetention') == 'last-best-final':
         import detector_retention478 as retention
         from ultralytics.utils.callbacks import default_callbacks
@@ -112,7 +114,7 @@ def run():
     shutil.copyfile(model,OUT/'final.pt')
     q.save(OUT/'history.json',history)
     q.save(OUT/'fit.json',dict(epochs=30,initialization=refs['initialization'],membership=refs['membership'],
-        frames=counts,selection='fixed-last',learningRate=rate,resumeQualified=False,modelAccepted=False,
+        frames=counts,selection='fixed-last',learningRate=rate,freezeBackbone=config.get('freezeBackbone',False),resumeQualified=False,modelAccepted=False,
         validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
         calibrationUsedForSelection=False))
     q.save(OUT/'benchmark_summary.json',dict(epochs=30,frames=counts,modelAccepted=False,
