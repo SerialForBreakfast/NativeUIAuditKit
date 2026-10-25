@@ -59,6 +59,47 @@ class DetectorCampaignTests(CampaignTests):
         with self.assertRaisesRegex(ValueError,'budget_exceeded'):
             worker.compile_request(self.request('small',budget=dict(maxJobs=1,maxSeconds=1,maxOutputBytes=1)),self.root/'small',self.queue)
 
+    def test_image_size_change_preserves_models_and_thresholds(self):
+        left = copy.deepcopy(self.left); right = copy.deepcopy(self.right)
+        for name, report, size in [('small', left, 640), ('large', right, 960)]:
+            card = q.load(checked(report['inputs']['scorecard']))
+            card['settings']['imageSize'] = size
+            card['identity']['detector'].update(engine='pytorch', weightsSHA256='a'*64, imageSize=size)
+            path = self.root/(name+'.json'); q.save(path, card, replace=True)
+            report['inputs']['scorecard'] = pin(path)
+        self.assertEqual(len(worker.compare(left, right, self.rows, 'image-size')), len(self.rows))
+        with self.assertRaisesRegex(ValueError, 'unmatched_scorecards'):
+            worker.compare(left, right, self.rows)
+        path = checked(right['inputs']['scorecard']); card = q.load(path)
+        card['settings']['confidence'] = .25; q.save(path, card, replace=True)
+        right['inputs']['scorecard'] = pin(path)
+        with self.assertRaisesRegex(ValueError, 'unmatched_scorecards'):
+            worker.compare(left, right, self.rows, 'image-size')
+        card['settings']['confidence'] = .5
+        card['identity']['detector']['weightsSHA256'] = 'b'*64
+        q.save(path, card, replace=True); right['inputs']['scorecard'] = pin(path)
+        with self.assertRaisesRegex(ValueError, 'size_weights_changed'):
+            worker.compare(left, right, self.rows, 'image-size')
+
+    def test_size_campaigns_execute_and_reject_weight_drift(self):
+        for ident, report, size in [('base', self.left, 1280), ('correction', self.right, 960)]:
+            card = q.load(checked(report['inputs']['scorecard']))
+            card['settings']['imageSize'] = size
+            card['identity']['detector'].update(engine='pytorch', weightsSHA256='a'*64, imageSize=size)
+            path = self.root/(ident+'-size.json'); q.save(path, card, replace=True)
+            report['inputs']['scorecard'] = pin(path)
+            self.specs[ident]['template']['inputs'] = report['inputs']
+            self.complete(self.specs[ident], report)
+        for name in ('size-a', 'size-b'):
+            manifest = worker.compile_request(self.request(name, changedFactor='image-size'), self.root/name, self.queue)
+            register(manifest, self.queue, approve=True)
+            q.run(self.queue, job_ids=[name+'-decision'], lock=self.root/'lock')
+            result = q.load(self.queue/'jobs'/(name+'-decision')/'attempts/1/out/decision.json')
+            self.assertEqual(result['outcome'], 'supported')
+        with self.assertRaisesRegex(ValueError, 'size_training'):
+            worker.compile_request(self.request('size-fit', changedFactor='image-size',
+                training=self.training_description()), self.root/'size-fit', self.queue)
+
     def training_description(self):
         init=self.root/'initializer.pt';init.write_bytes(b'software-test-only')
         config=self.root/'config.json';q.save(config,dict(initialization=pin(init),selection='fixed-last',patience=0),replace=True)

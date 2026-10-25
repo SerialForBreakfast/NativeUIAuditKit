@@ -505,3 +505,66 @@ Use a verified export receipt for Vision. Use a checkpoint for PyTorch.
 T63 verifies production crop hashes and reports crop errors separately from frame decisions.
 Vision replay requires scores within 0.01 of the retained producer scores.
 PyTorch comparisons do not establish Vision parity. Neither template admits data to training.
+
+## Fixed detector input-size comparisons
+
+A detector-campaign-v1 request accepts optional changedFactor with weights or image-size.
+The default weights comparison requires identical inference settings.
+For image-size, set training to null and use registered T57 producers with T56 scorecard dependencies.
+Only imageSize may differ. Model hashes, backend, confidence, NMS, labels, frames, and crop inputs must match.
+Supported sizes are 640, 960, and 1280. No automatic model promotion follows.
+The compiler preserves pending scorecards as dependencies. It verifies fixed crop inputs before registration.
+See [STREAM511](../../Research/Stream511IndependentExperiments.md).
+
+## SDK513: control crops and temporal preparation
+
+Use `scripts/sdk_training513.py` for verified SDK action-pair inputs.
+The compiler emits intake, crop, and temporal jobs through the existing queue.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/sdk_training513.py REQUEST.json --output OUTPUT_DIRECTORY
+```
+
+The request uses version `sdk-preparation-v1`.
+Provide `id`, pinned `pairs`, pinned TTR `source`, pinned production `tool`, `exclusions`, and `admission`.
+The source descriptor names its Git commit and pins every portable Ruby source file.
+Exclusions contain `groups`, `contentGroups`, `sourceFamilies`, and `images` lists.
+Set `admission` to null for review-only preparation.
+For training, provide a reviewer, reason, and exact pair hashes mapped to `train` or `development`.
+Producer splits must match these roles. Test packets cannot become training inputs.
+Set `withinFamilyDevelopment` explicitly when development shares app ancestry.
+Group overlap and duplicate pixels across roles remain prohibited.
+
+The outputs are `intake.json`, `crops.json`, and `temporal.json`.
+Use `crop_training_description` to bind a completed eligible crop producer to T06.
+The binding checks configuration, initialization, roles, eligibility, and producer identity.
+It does not approve or start training.
+Temporal rows preserve absence labels and work with existing temporal preprocessing.
+
+Missing observed profiles block admitted crop preparation without discarding valid temporal observations.
+Do not infer complete detector labels from registered controls.
+Do not infer background motion or native selection from registration metadata.
+See [SDK513 qualification](../../Research/SDK513Preparation.md).
+
+## STREAM514: retained resolution fallback
+
+Use `resolution_fallback514.compile_plan` for matched completed 1280-pixel and 960-pixel T57 reports.
+A `resolution-fallback-plan-v1` document contains `id` and `pairs`.
+Each pair names completed `baseline` and `fallback` job IDs.
+The compiler verifies identical weights, settings other than resolution, captures, crop models, thresholds, and development roles.
+It emits one comparison per pair and a combined decision.
+The fixed rule preserves a unique baseline selection. It uses the smaller resolution only after baseline abstention.
+No-focus regressions reject the correction. Cached execution does not measure live latency.
+The detached runner executes admitted jobs. No model or consumer behavior changes automatically.
+
+## STREAM515: detector resolution and preservation comparisons
+
+Use T56 for inference at a supported resolution without a baseline input.
+Use `detector_resolution515.make_spec` to compare the completed scorecard with retained references.
+The plan version is `detector-resolution-plan-v1`.
+Each pair supplies pinned `baseline`, `preservation`, and `labels` references plus the `candidate` producer ID.
+The comparison requires identical weights for the resolution arm.
+The preservation arm permits different weights and remains a separate report.
+A terminal specification with no index combines all pair reports.
+Reject losses against either baseline. Keep source settings and data roles pinned.
+Two isolated campaigns qualify this connection. It does not change inference or matching implementations.

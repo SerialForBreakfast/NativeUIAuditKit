@@ -183,6 +183,11 @@ def execute(config, client, output, clock=time.monotonic, sleep=time.sleep, inta
 def run():
     spec=q.load(OUT.parents[2]/'spec.json')
     config=q.load(checked(spec['capture']['plan']))
+    for dependency in q.load(OUT/'dependencies.json'):
+        for reference in dependency['outputs']:
+            receipt=q.load(checked(reference))
+            q.require(receipt.get('cleanup') is True and receipt.get('modelAccepted') is False,
+                      'campaign_dependency_cleanup')
     execute(config,Client(config,OUT),OUT)
 
 

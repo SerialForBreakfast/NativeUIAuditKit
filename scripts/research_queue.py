@@ -215,7 +215,9 @@ def validate(spec, module_dir=MODULES):
                                    'adr493-session-' + str(config['order']) + '-r2',
                                    'adr493-session-' + str(config['order']) + '-r3',
                                    'adr493-session-' + str(config['order']) + '-r4',
-                                   'adr493-session-' + str(config['order']) + '-r5'), 'campaign_approved_scope')
+                                   'adr493-session-' + str(config['order']) + '-r5',
+                                   'adr493-session-' + str(config['order']) + '-r6',
+                                   'adr493-session-' + str(config['order']) + '-r7'), 'campaign_approved_scope')
     else:
         require('capture' not in spec, 'capture_authority_required')
     dependencies = spec.get('dependencies', [])

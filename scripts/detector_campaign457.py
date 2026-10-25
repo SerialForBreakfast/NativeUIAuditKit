@@ -17,7 +17,7 @@ from supplemental_proposals427 import load
 OUT = None
 
 
-def compare(left, right, expected):
+def compare(left, right, expected, changed_factor="weights"):
     """Change detector boxes only. Keep the crop model and all reference inputs fixed."""
     for report in (left, right):
         validate_report(report, expected)
@@ -25,7 +25,19 @@ def compare(left, right, expected):
         left['inputs'][k] == right['inputs'][k] for k in left['inputs'] if k != 'scorecard'),
         'detector_campaign_crop_or_input_changed')
     cards = [q.load(checked(r['inputs']['scorecard'])) for r in (left, right)]
-    q.require(cards[0]['settings'] == cards[1]['settings'] and cards[0]['inputs'] == cards[1]['inputs']
+    q.require(changed_factor in ('weights', 'image-size'), 'detector_campaign_changed_factor')
+    settings = [dict(card['settings']) for card in cards]
+    if changed_factor == 'image-size':
+        sizes = [value.pop('imageSize') for value in settings]
+        q.require(all(size in (640, 960, 1280) for size in sizes) and sizes[0] != sizes[1],
+                  'detector_campaign_size_intervention')
+        identities = [dict(card['identity']['detector']) for card in cards]
+        q.require(all(identity.get('engine') == 'pytorch' and identity.get('weightsSHA256')
+                      for identity in identities), 'detector_campaign_size_model_identity')
+        for identity, size in zip(identities, sizes):
+            q.require(identity.pop('imageSize') == size, 'detector_campaign_size_identity')
+        q.require(identities[0] == identities[1], 'detector_campaign_size_weights_changed')
+    q.require(settings[0] == settings[1] and cards[0]['inputs'] == cards[1]['inputs']
               and cards[0]['frames'] == cards[1]['frames'], 'detector_campaign_unmatched_scorecards')
     q.require(cards[0]['identity']['detector']['nmsIoU'] == cards[1]['identity']['detector']['nmsIoU'],
               'detector_campaign_nms_changed')
@@ -80,7 +92,8 @@ def finish():
             report=load(dict(report=dep['outputs'][0],result=dep['result'],spec=sp))
             q.require(report['inputs']==resolved_inputs(q.load(checked(sp)),queue),'detector_campaign_report_inputs')
             reports.append(report)
-        rows.extend(compare(*reports,[r for r in membership if r['condition']==pair['condition']]))
+        rows.extend(compare(*reports,[r for r in membership if r['condition']==pair['condition']],
+                            plan.get('changedFactor', 'weights')))
     for failure in plan['retainedFailures']: checked(failure['evidence'])
     result=assess(rows,plan['retainedFailures'])
     # Preserve durations separately. These do not measure authoring or avoidable idle time.
@@ -97,7 +110,9 @@ def finish():
 
 def compile_request(source, destination, queue=q.QUEUE):
     plan=q.load(source)
-    q.require(set(plan)=={'version','id','question','membership','training','pairs','retainedFailures','budget'},'detector_campaign_fields')
+    q.require(set(plan)-{'changedFactor'}=={'version','id','question','membership','training','pairs','retainedFailures','budget'},'detector_campaign_fields')
+    q.require(plan.get('changedFactor', 'weights') in ('weights', 'image-size'), 'detector_campaign_changed_factor')
+    q.require(plan.get('changedFactor') != 'image-size' or plan['training'] is None, 'detector_campaign_size_training')
     q.require(plan['version']=='detector-campaign-v1' and q.ID.fullmatch(plan['id']),'detector_campaign_version')
     q.require(isinstance(plan['question'],str) and 15<=len(plan['question'])<=1000,'detector_campaign_question')
     rows=members(q.load(checked(plan['membership'])))
@@ -123,7 +138,11 @@ def compile_request(source, destination, queue=q.QUEUE):
         if train is None:
             candidate=q.load(queue/'jobs'/pair['candidate']/'spec.json');q.require(candidate['template']['id']=='T57','detector_campaign_template')
             parents[candidate['id']]=candidate
-            a,b=resolved_inputs(base,queue),resolved_inputs(candidate,queue)
+            a=resolved_inputs(base,queue)
+            b=candidate['template']['inputs']
+            # Future detector scorecards remain dependencies. All fixed crop inputs are pinned now.
+            for key, reference in b.items():
+                if key != 'scorecard': checked(reference)
             q.require(set(a)==set(b) and all(a[k]==b[k] for k in a if k!='scorecard'),'detector_campaign_unmatched_inputs')
             ident=candidate['id']
         else:
