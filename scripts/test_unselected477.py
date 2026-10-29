@@ -8,14 +8,13 @@ class UnselectedTests(unittest.TestCase):
         return dict(state='blocked', attempts=attempts, requirements=[reason])
 
     def test_verified_opposite_outcome(self):
-        for outcome in ('supported', 'contradicted'):
+        for outcome in ('supported', 'contradicted', 'inconclusive'):
             row = self.row('condition_not_met:decision:' + outcome + ':Measured outcome.')
             self.assertEqual(classify(row)[0], 'unselected')
             self.assertEqual(row['state'], 'blocked')
 
     def test_uncertain_and_invalid_evidence_remain_blocked(self):
-        for reason in ('condition_not_met:decision:inconclusive:Insufficient evidence.',
-                       'condition_evidence_changed', 'dependency_incomplete:decision',
+        for reason in ('condition_evidence_changed', 'dependency_incomplete:decision',
                        'condition_not_met:decision:unsupported:Invalid.'):
             self.assertEqual(classify(self.row(reason))[0], 'blocked')
 

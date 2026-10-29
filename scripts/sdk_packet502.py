@@ -2,6 +2,7 @@
 import math
 from pathlib import Path
 from PIL import Image
+from sdk_semantics529 import semantics
 import research_queue as q
 from experiment_templates import checked, pin
 
@@ -65,7 +66,8 @@ def review(evidence, image):
         rows.append(dict(identity=element['identity'], parentID=element.get('parentID'),
             pixelBounds=values if valid else None, geometryAvailable=bool(valid), observedVisibleEnabled=visible,
             registeredSelected=element.get('selected'), selectionProvenance='registration_not_verified_native_selection',
-            className=element.get('className'), taxonomyClass=None))
+            className=element.get('className'), taxonomyClass=None,
+            semanticEvidence=semantics(element)))
         if element['identity']['id'] == focus and (not valid or not visible or element.get('hidden') is not False or element.get('enabled') is not True):
             reasons.add('focused_geometry_or_visibility_unverified')
     focus_state = 'unknown' if reasons else 'no_focus' if focus is None else 'focused'

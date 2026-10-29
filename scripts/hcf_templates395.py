@@ -114,7 +114,7 @@ def validate_novel418_parameters(template_id, values):
 def build(doc):
     required={'version','id','owner','template','question','decision','inputs','parameters','dependencies'}
     # BACKLOG410: optional catalog identity and decision text. Absent fields keep the original spec bytes.
-    q.require(set(doc)<=required|{'capture','training'}|CATALOG_FIELDS and required<=set(doc),'description_fields')
+    q.require(set(doc)<=required|{'capture','training','conditions','continueIndependentOnFailure'}|CATALOG_FIELDS and required<=set(doc),'description_fields')
     if 'task' in doc:q.require(isinstance(doc['task'],str) and q.ID.fullmatch(doc['task']),'description_task')
     if 'outcomes' in doc:
         q.require(isinstance(doc['outcomes'],dict) and {'supported','contradicted'}<=set(doc['outcomes'])
@@ -146,6 +146,9 @@ def build(doc):
     if doc['template'] in ('T43','T56'):
         from detector_inference412 import parameters as inference
         inference(doc['parameters'])
+    if doc['template']=='T56' and 'path' in doc['inputs']['labels']:
+        from detector_native_inference import validate as native_labels
+        native_labels(q.load(checked(doc['inputs']['labels'])))
     if doc['template']=='T49':
         from transition_training415 import parameters as transition
         transition(doc['parameters'])
@@ -244,7 +247,7 @@ def build(doc):
                     maxOutputBytes=2<<30 if authority in ('training','export') else 100_000_000,maxAttempts=1),
         template=dict(id=doc['template'],version=1,inputs=doc['inputs'],parameters=doc['parameters'],
                       compiler=pin(Path(__file__))))
-    for name in ('capture','training'):
+    for name in ('capture','training','conditions','continueIndependentOnFailure'):
         if name in doc:spec[name]=doc[name]
     q.validate(spec)
     return spec

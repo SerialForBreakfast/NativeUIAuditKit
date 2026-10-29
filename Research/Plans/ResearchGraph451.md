@@ -237,3 +237,16 @@ The retained annotation review verifies all original sources for the existing bu
 It does not manufacture complete general UI labels. Text and container targets require their own measured geometry.
 Three T88 diagnostics compare training correspondences for the retained and scoped detectors without another fit.
 Their outcomes choose between new layout coverage and fitting diagnosis. Training correspondence is not held-out detection accuracy.
+
+## GRAPH531 — Recovery contract
+
+The queue supports explicit failed-attempt dependencies and inconclusive conditions.
+See [the implementation and authoring contract](../Graph531Resilience.md).
+
+For each expected operational failure, name one approved diagnostic repair or qualification job.
+Match the exact producer specification, attempt number, and failure reason.
+Follow the verified repair output with ordinary success dependencies.
+Do not pass incomplete outputs as completed data or automatically expand training budgets.
+Use an executable producer for missing inputs. A prose requirement is not a recovery branch.
+Keep unsupported repairs visible with their owner and exact missing capability.
+Cancellation and unexpected failures do not authorize another action.

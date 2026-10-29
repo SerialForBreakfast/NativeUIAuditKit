@@ -15,20 +15,48 @@ TARGET = '9026ECA9-77DB-4AE6-8FE6-BB239E9571FA'
 
 
 def validate_config(config):
-    q.require(config.get('version') == 'ttr-campaign-queue-v1', 'campaign_config_version')
+    q.require(config.get('version') in ('ttr-campaign-queue-v1', 'ttr-campaign-queue-v2'), 'campaign_config_version')
+    if config['version'] == 'ttr-campaign-queue-v2':
+        q.require(set(config) == {'version', 'job', 'task', 'manifest', 'order', 'helper', 'fixtureBinaries', 'callerExport'},
+                  'campaign_config_fields')
+        q.require(all(isinstance(config[k], str) and q.ID.fullmatch(config[k]) for k in ('job', 'task')),
+                  'campaign_job_identity')
+        q.check_pin(config['helper'])
+        q.require(isinstance(config['fixtureBinaries'], dict) and config['fixtureBinaries'], 'campaign_fixture_pins')
+        q.require(isinstance(config['callerExport'], dict) and
+                  set(config['callerExport']) == {'script', 'dependency', 'helper'}, 'campaign_export_pins')
+        for ref in config['callerExport'].values():q.check_pin(ref)
     manifest = config['manifest']
     q.require(manifest['target'] == {'simulator_udid': TARGET, 'fixture_url': 'http://127.0.0.1:8080'}, 'campaign_target')
     q.require(len(manifest['cases']) == 4 and len({c['case_id'] for c in manifest['cases']}) == 4, 'campaign_membership')
     q.require(type(manifest.get('reuse_runner')) is bool, 'campaign_reuse_flag')
     q.require(all(c.get('transition') and not c.get('interruption') and c.get('split_group') == 'validation'
                   for c in manifest['cases']), 'campaign_transition_scope')
-    q.require(manifest['budget']['max_wall_clock_seconds'] <= 600 and
-              manifest['budget']['max_retained_bytes'] <= 100000000, 'campaign_producer_budget')
+    q.require(type(manifest['budget']['max_wall_clock_seconds']) is int and
+              0 < manifest['budget']['max_wall_clock_seconds'] <= 600 and
+              type(manifest['budget']['max_retained_bytes']) is int and
+              0 < manifest['budget']['max_retained_bytes'] <= 100000000, 'campaign_producer_budget')
     q.require(config['order'] in (1, 2, 3, 4) and manifest['reuse_runner'] == (config['order'] in (2, 3)), 'campaign_order')
     helper=Path(config['helper']['path'])
     q.require(helper.is_absolute() and helper.name == 'aatv' and helper.parent.name == 'Helpers' and
               'Developer/TVTestRig/.local-work/' in str(helper), 'campaign_source_helper')
     return manifest
+
+
+def validate_spec(spec, config):
+    """Bind reusable campaign configuration to the exact approved queue specification."""
+    validate_config(config)
+    if config['version'] == 'ttr-campaign-queue-v2':
+        q.require(spec['id'] == config['job'] and spec['task'] == config['task'], 'campaign_spec_identity')
+        q.require(spec['capture']['target'] == config['manifest']['target']['simulator_udid'] and
+                  spec['capture']['endpoint'] == config['manifest']['target']['fixture_url'], 'campaign_spec_target')
+        q.require(spec['limits']['timeoutSeconds'] >= config['manifest']['budget']['max_wall_clock_seconds'] and
+                  spec['limits']['maxOutputBytes'] >= config['manifest']['budget']['max_retained_bytes'],
+                  'campaign_spec_budget')
+    else:
+        prefix = 'adr493-session-' + str(config['order'])
+        q.require(spec['task'] == 'ADRSPIKES493' and
+                  spec['id'] in (prefix, *(prefix + '-r' + str(n) for n in range(2, 8))), 'campaign_approved_scope')
 
 
 class Client:

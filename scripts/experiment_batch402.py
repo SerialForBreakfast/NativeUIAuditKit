@@ -28,8 +28,11 @@ def compile_batch(batch, queue=q.QUEUE):
                 continue
             dependencies = {}
             for dep in doc.get('dependencies',[]):
-                q.require(set(dep)=={'job','specSHA256','outputs'} and q.ID.fullmatch(dep['job']), 'dependency_fields')
+                q.require(set(dep) in ({'job','specSHA256','outputs'}, {'job','specSHA256','outputs','failure'}, {'job','outputs'}, {'job','outputs','failure'}) and q.ID.fullmatch(dep['job']), 'dependency_fields')
                 source=specs[dep['job']] if dep['job'] in specs else q.load(queue/'jobs'/dep['job']/'spec.json')
+                if 'specSHA256' not in dep:
+                    q.require(dep['job'] in specs, 'external_dependency_hash_required')
+                    dep['specSHA256']=q.text_digest(source)
                 q.require(dep['specSHA256']==q.text_digest(source), 'dependency_spec_changed')
                 for name in dep['outputs']:q.check_name(name)
                 dependencies[dep['job']]=copy.deepcopy(dep)
@@ -52,6 +55,7 @@ def compile_batch(batch, queue=q.QUEUE):
                     q.check_name(ref['output'])
                     source = specs[parent] if parent in specs else q.load(queue/'jobs'/parent/'spec.json')
                     dep = dependencies.setdefault(parent, dict(job=parent, specSHA256=q.text_digest(source), outputs=[]))
+                    q.require('failure' not in dep, 'failure_outputs_forbidden')
                     dep['outputs'].append(ref['output'])
                 else:
                     checked(ref)
@@ -98,6 +102,8 @@ def inspect_batch(batch, queue=q.QUEUE):
         def include(ident):
             if ident in closure:return
             closure.add(ident)
+            for dep in indexed[ident].get('dependencies',[]):
+                if dep['job'] in indexed:include(dep['job'])
             for ref in indexed[ident]['inputs'].values():
                 if set(ref)=={'job','output'} and ref['job'] in indexed:include(ref['job'])
         include(job['id'])

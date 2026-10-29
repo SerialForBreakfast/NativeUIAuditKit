@@ -568,3 +568,31 @@ The preservation arm permits different weights and remains a separate report.
 A terminal specification with no index combines all pair reports.
 Reject losses against either baseline. Keep source settings and data roles pinned.
 Two isolated campaigns qualify this connection. It does not change inference or matching implementations.
+
+## Bounded failure recovery
+
+Template descriptions support `conditions` and `continueIndependentOnFailure`.
+Use the latter only for diagnostic artifact jobs with independent work behind them.
+The queue still stops the cycle on cancellation, unknown failures, capture failures, and training failures.
+
+A failure dependency contains `job`, `outputs: []`, and `failure: {"attempt": 1, "reason": "process_failed"}`.
+Use `timeout` or `output_limit` only when that exact failure has an approved diagnostic response.
+For parents within the same batch, the compiler derives `specSHA256`. External parents require the exact hash.
+The recovery job has 1 attempt. It receives the failed result receipt, not partial outputs.
+A verified recovery result can then release ordinary downstream dependencies.
+Conditions support `supported`, `contradicted`, and `inconclusive`.
+See [GRAPH531](../../Research/Graph531Resilience.md) for tests, limits, and examples.
+
+
+### Reusable Fixture session campaigns
+
+Use `ttr-campaign-queue-v2` for the existing 4-case session comparison.
+The configuration adds `job` and `task`, which must match the immutable queue specification.
+Keep `manifest`, `order`, `helper`, `fixtureBinaries`, and `callerExport` from the supported capture contract.
+New campaign names no longer require validator edits.
+Use pinned source-built helpers, the authorized target, and unchanged validation roles.
+The producer budget remains at most 600 s and 100 MB. The queue ceiling remains 800 s and 250 MB.
+This contract does not authorize execution or widen the supported recipes.
+Submit and approve each exact specification through the existing queue tools.
+Legacy v1 specifications retain their existing campaign restrictions.
+See [WORKFLOW533](../../Research/Workflow533CampaignsAndResults.md).

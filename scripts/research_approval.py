@@ -131,6 +131,19 @@ def checks(queue, ident, modules, approver='maintainer'):
 
 def capture_ownership(spec, queue):
     """Use the resident read-only readiness command. A receipt is not a target lease."""
+    if spec['adapter']['steps'] in (['sdk_capture527.run'], ['sdk_profile538.run']):
+        if spec['adapter']['steps'] == ['sdk_profile538.run']:
+            from sdk_profile538 import readiness
+        else:
+            from sdk_capture527 import readiness
+        from experiment_templates import checked
+        config=q.load(checked(spec['capture']['plan']))
+        folder=queue/'approval-checks'/(spec['id']+'-'+uuid.uuid4().hex)
+        folder.mkdir(parents=True)
+        ready=readiness(config,folder)
+        receipt=folder/'ownership.json'
+        q.save(receipt,dict(checkedAt=time.time(),target=spec['capture']['target'],readiness=ready))
+        return dict(path=q.relative(receipt),sha256=q.digest(receipt))
     if spec['adapter']['steps'] in (['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']):
         from ttr_campaign_queue493 import Client, readiness, validate_config
         if spec['adapter']['steps'] == ['ttr_campaign_recovery493.run']:

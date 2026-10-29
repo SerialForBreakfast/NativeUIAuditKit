@@ -26,7 +26,7 @@ class PreparationTests(unittest.TestCase):
         self.assertEqual(result.returncode,0,result.stderr)
         return json.loads(result.stdout)
 
-    def pair(self,name='sample',before='button',after=None,split='train',profile='standard',version=2,known=True,family=None):
+    def pair(self,name='sample',before='button',after=None,split='train',profile='standard',version=2,known=True,family=None,timing_unknown=False,lifetime_after=None):
         root=self.root/name;root.mkdir();visual={};coverage={};refs={}
         source=dict(appID='software-test',sourceURL='https://example.invalid/software-test',sourceRevision='a'*40,sdkRevision='b'*40,
             instrumentationSHA256='c'*64,sourceFamily=family or name,codeLicense='software-test',contentRights='generated-test',privacy='synthetic_or_reviewed_account_free')
@@ -36,7 +36,9 @@ class PreparationTests(unittest.TestCase):
             e=sample(image);e.update(width=16,height=16,captureID=name+'-'+side)
             for snapshot in ('before','after'):
                 e[snapshot]['focusID']=focus;e[snapshot]['focusKnown']=known
-                element=e[snapshot]['elements'][0];element['bounds']=dict(x=2,y=2,width=8,height=8);element['className']='UIButton'
+                element=e[snapshot]['elements'][0]
+                if side=='after' and lifetime_after:element['identity']['lifetime']=lifetime_after
+                element['bounds']=dict(x=2,y=2,width=8,height=8);element['className']='UIButton'
             q.save(folder/'source.json',e)
             c=dict(id=name+'-'+side,group=name,contentGroup=name,split=split,uiType='button',hcfMode=profile,motion='unknown',seed='test',platform='tvOS',osVersion='test',frames=[dict(role='single',image='source.png',evidence='source.json',evidenceSHA256=q.digest(folder/'source.json'))])
             q.save(folder/'input.json',dict(schemaVersion=1,source=source,cases=[c]));self.ruby_call('export',folder/'input.json',folder/'packet')
@@ -46,6 +48,7 @@ class PreparationTests(unittest.TestCase):
             visual[side]=dict(captureID=e['captureID'],profile=dict(state=profile,source='human_reviewed',captureID=e['captureID'],observationTime=time),appearance=dict(state='none',source='human_reviewed',captureID=e['captureID'],observationTime=time),settling=dict(state='settled',source='human_reviewed',captureID=e['captureID'],observationTime=time),inventory=dict(rootID='test-root',coordinateSpace='screen_pixels',geometryKind='layout',alignment='bracketed',captureID=e['captureID'],registeredCount=1,truncated=False,unavailable=['complete_visible_inventory','occlusion','focus_effect_bounds']))
         request=dict(operationID=name,simulatorID='software-test',sequence=1,button='right')
         action=dict(request=request,receipt=dict(operationID=name,simulatorID='software-test',sequence=1,state='delivered',effectStatus='unverified'),timing=dict(clockID='supervisor',beforeStartedNS=1,beforeFinishedNS=2,actionStartedNS=3,actionFinishedNS=4,afterStartedNS=5,afterFinishedNS=6))
+        if timing_unknown:action['timing']=dict(basis='unavailable',reason='not_recorded_by_original_supervisor')
         d=dict(schemaVersion=version,kind='sdk_action_pair',before=refs['before'],after=refs['after'],action=action,expected=s.observed(before,after),coverage=coverage)
         if version==2:d['visualProvenance']=visual
         q.save(root/'input.json',d);self.ruby_call('export-action-pair',root/'input.json',root/'pair')
@@ -63,9 +66,21 @@ class PreparationTests(unittest.TestCase):
         self.assertEqual(len(r['frames'][1]['controls']),1)
         crops=s.prepare_crops(r,self.root/'crops',pin(self.tool))
         self.assertEqual([x['label'] for x in crops['rows']],[1,0])
+        self.assertTrue(all(x['identity']['lifetime']=='test-lifetime' for x in crops['rows']))
+        self.assertTrue(all(x['semanticEvidence']['identityComplete'] for x in crops['rows']))
         for row in crops['rows']:
             with Image.open(row['path']) as image:self.assertEqual(image.size,(256,256))
         self.assertEqual(crops['preprocessing']['expansion'],.16)
+
+    def test_recycled_control_changes_temporal_label_without_changing_producer_evidence(self):
+        ref=self.pair(before='button',after='button',lifetime_after='replacement-lifetime')
+        row=s.intake(self.request([ref],False))['pairs'][0]
+        self.assertFalse(row['trainingEligible'])
+        with self.assertRaisesRegex(ValueError,'training_gaps'):s.intake(self.request([ref],True))
+        self.assertEqual(row['producerObserved'],'unchanged')
+        self.assertEqual(row['observed'],'move')
+        self.assertEqual(row['changed'],1)
+        self.assertEqual(row['identityTransition']['relation'],'replaced_control')
 
     def test_producer_test_data_and_excluded_groups_never_train(self):
         ref=self.pair(split='test');request=self.request([ref],True)
@@ -167,3 +182,43 @@ class PreparationTests(unittest.TestCase):
         self.assertIn('sdk513_admission_membership',stderr)
 
 if __name__=='__main__':unittest.main()
+
+class ProductScopeTests(PreparationTests):
+    def setUp(self):
+        super().setUp()
+        self.source=q.ROOT/'reports/work/SDK525/source.json'
+        self.ruby=q.ROOT/'reports/work/SDK525/ttr-tools-e4c693c5/export-evidence.rb'
+
+    def test_missing_action_time_does_not_block_valid_crops(self):
+        ref=self.pair(timing_unknown=True)
+        request=self.request([ref],True);request['products']=['crops']
+        data=s.intake(request)
+        self.assertTrue(all(f['trainingEligible'] for f in data['frames']))
+        self.assertFalse(data['pairs'][0]['trainingEligible'])
+        crops=s.prepare_crops(data,self.root/'scoped-crops',pin(self.tool))
+        self.assertEqual([r['label'] for r in crops['rows']],[1,0])
+        request['products']=['temporal']
+        with self.assertRaisesRegex(ValueError,'pair_issues'):s.intake(request)
+
+    def test_crop_scope_still_requires_profile(self):
+        ref=self.pair(version=1,timing_unknown=True)
+        request=self.request([ref],True);request['products']=['crops']
+        data=s.intake(request)
+        self.assertFalse(any(f['trainingEligible'] for f in data['frames']))
+        with self.assertRaisesRegex(ValueError,'crop_prerequisites'):s.prepare_crops(data,self.root/'invalid-crops',pin(self.tool))
+
+    def test_two_crop_only_campaigns_use_queue_without_temporal_gate(self):
+        for name in ['one','second']:
+            ref=self.pair(name=name,timing_unknown=True)
+            request=self.request([ref],True,name='scope-'+name);request['products']=['crops']
+            path=self.root/(name+'.json');q.save(path,request)
+            manifest=s.compile_request(path,self.root/(name+'-compiled'))
+            self.assertEqual(len(manifest['jobs']),2)
+            register(manifest,self.queue,approve=True)
+            ids=[entry['job'] for entry in manifest['jobs']]
+            for _ in range(2):q.run(self.queue,job_ids=ids,lock=self.root/'lock',max_jobs=5)
+            self.assertEqual([q.state(self.queue/'jobs'/i)[0] for i in ids],['complete']*2)
+
+    def test_invalid_product_is_rejected(self):
+        request=self.request([self.pair()],True);request['products']=['anything']
+        with self.assertRaisesRegex(ValueError,'sdk513_products'):s.intake(request)

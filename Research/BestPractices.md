@@ -1,5 +1,28 @@
 # NativeUIAuditKit — Best Practices
 
+## Quarantine measured annotation defects — UNBLOCK534
+
+RTLMirror records label and listRow bounds on the same Text view.
+Exact overlapping boxes therefore do not establish independently measured row geometry.
+Trace competing annotations to their producer before changing training or evaluation labels.
+Quarantine affected training images in a new manifest when reliable replacement geometry is unavailable.
+Preserve every original artifact and report reduced exposure when image counts change.
+Check remaining class support and evaluation exclusions before admission.
+A local annotation defect does not block independent qualified data or another model track.
+
+## Capture contradictory outcomes — SDK529
+
+- Treat expected UI outcomes as hypotheses, not prerequisites for saving evidence.
+- Keep native focus, enabled state, visibility, selected state, and visual labels separate.
+- A delivered input does not establish its intended effect.
+- Preserve valid unexpected endpoints. Report scientific rejection separately from execution failure.
+- Keep unknown image labels unknown. Do not weaken training admission to complete an experiment.
+- Use fresh identity and safe input checks before actions. Never retry uncertain inputs automatically.
+- After a hypothesis fails, change the tested factor rather than repeat until the expected result appears.
+
+See [the disabled-focus finding and corrected strategy](SDK529FocusStateStrategy.md).
+
+
 ## Distinguish restoration from a required final profile — RECOVERY462
 
 For cleanup-only recovery, use explicit Standard restoration without another HCF round trip.

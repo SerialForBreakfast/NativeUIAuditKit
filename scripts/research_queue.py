@@ -189,12 +189,19 @@ def validate(spec, module_dir=MODULES):
         capture = spec.get('capture', {})
         require(set(capture) == {'target', 'endpoint', 'plan', 'approval'}, 'capture_contract')
         require(capture['target'] == '9026ECA9-77DB-4AE6-8FE6-BB239E9571FA', 'capture_target')
-        require(capture['endpoint'] == 'http://127.0.0.1:8080', 'capture_endpoint')
+        require(capture['endpoint'] == ('http://127.0.0.1:8097/diagnostics/sdk/probe'
+                if spec.get('adapter', {}).get('steps') in (['sdk_capture527.run'], ['sdk_profile538.run']) else 'http://127.0.0.1:8080'), 'capture_endpoint')
         require(isinstance(capture['approval'], str) and capture['approval'].strip(), 'capture_approval')
         local_path(ROOT, check_pin(capture['plan'])['path'])
         require(spec.get('adapter', {}).get('steps') in
                 (['generation352.run'], ['hcf_recovery367.run'], ['template_bridge395.capture'],
-                 ['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']), 'capture_adapter')
+                 ['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run'], ['sdk_capture527.run'], ['sdk_profile538.run']), 'capture_adapter')
+        if spec['adapter']['steps'] == ['sdk_profile538.run']:
+            from sdk_profile538 import validate_spec
+            validate_spec(spec)
+        if spec['adapter']['steps'] == ['sdk_capture527.run']:
+            from sdk_capture527 import validate_spec
+            validate_spec(spec)
         if spec['adapter']['steps'] == ['ttr_campaign_recovery493.run']:
             import ttr_campaign_recovery493
             config = load(local_path(ROOT, capture['plan']['path']))
@@ -209,32 +216,35 @@ def validate(spec, module_dir=MODULES):
         if spec['adapter']['steps'] == ['ttr_campaign_queue493.run']:
             import ttr_campaign_queue493
             config = load(local_path(ROOT, capture['plan']['path']))
-            ttr_campaign_queue493.validate_config(config)
-            require(spec['task'] == 'ADRSPIKES493' and
-                    spec['id'] in ('adr493-session-' + str(config['order']),
-                                   'adr493-session-' + str(config['order']) + '-r2',
-                                   'adr493-session-' + str(config['order']) + '-r3',
-                                   'adr493-session-' + str(config['order']) + '-r4',
-                                   'adr493-session-' + str(config['order']) + '-r5',
-                                   'adr493-session-' + str(config['order']) + '-r6',
-                                   'adr493-session-' + str(config['order']) + '-r7'), 'campaign_approved_scope')
+            ttr_campaign_queue493.validate_spec(spec, config)
     else:
         require('capture' not in spec, 'capture_authority_required')
     dependencies = spec.get('dependencies', [])
     require(isinstance(dependencies, list) and len(dependencies) <= 10, 'dependency_limit')
     seen = set()
     for dep in dependencies:
-        require(isinstance(dep, dict) and set(dep) == {'job', 'specSHA256', 'outputs'}, 'dependency_fields')
+        require(isinstance(dep, dict) and set(dep) in ({'job', 'specSHA256', 'outputs'}, {'job', 'specSHA256', 'outputs', 'failure'}), 'dependency_fields')
         require(isinstance(dep['job'], str) and ID.fullmatch(dep['job']) and dep['job'] != spec['id']
                 and dep['job'] not in seen, 'dependency_job')
         seen.add(dep['job'])
         require(isinstance(dep['specSHA256'], str) and HASH.fullmatch(dep['specSHA256']), 'dependency_hash')
-        require(isinstance(dep['outputs'], list) and 1 <= len(dep['outputs']) <= 16
+        minimum = 0 if 'failure' in dep else 1
+        if 'failure' in dep:
+            require(spec['authority'] == 'diagnostic' and spec.get('jobKind') == 'artifact', 'failure_recovery_diagnostic')
+            failure = dep['failure']
+            require(isinstance(failure, dict) and set(failure) == {'attempt', 'reason'}, 'failure_dependency_fields')
+            require(type(failure['attempt']) is int and failure['attempt'] >= 1, 'failure_dependency_attempt')
+            require(failure['reason'] in ('process_failed', 'timeout', 'output_limit'), 'failure_dependency_reason')
+            require(dep['outputs'] == [], 'failure_outputs_forbidden')
+        require(isinstance(dep['outputs'], list) and minimum <= len(dep['outputs']) <= 16
                 and len(set(dep['outputs'])) == len(dep['outputs']), 'dependency_outputs')
         for name in dep['outputs']:
             check_name(name)
     import research_graph
     research_graph.validate_conditions(spec)
+    if 'continueIndependentOnFailure' in spec:
+        require(type(spec['continueIndependentOnFailure']) is bool, 'failure_continuation_type')
+        require(spec['authority'] == 'diagnostic' and spec.get('jobKind') == 'artifact', 'failure_continuation_scope')
     adapter = spec.get('adapter')
     require(isinstance(adapter, dict) and adapter.get('type') == 'python-callable', 'adapter_unknown')
     require(isinstance(adapter.get('steps'), list) and adapter['steps'], 'steps_missing')
@@ -259,6 +269,8 @@ def validate(spec, module_dir=MODULES):
     require(type(limits['timeoutSeconds']) in (int, float) and 0 < limits['timeoutSeconds'] <= 86400, 'limits_timeout')
     require(type(limits['maxOutputBytes']) is int and 0 < limits['maxOutputBytes'] <= 1 << 34, 'limits_bytes')
     require(type(limits['maxAttempts']) is int and 1 <= limits['maxAttempts'] <= 5, 'limits_attempts')
+    if any('failure' in dep for dep in dependencies):
+        require(limits['maxAttempts'] == 1, 'failure_recovery_attempt_limit')
     validate_training(spec)
     if spec['authority'] == 'capture':
         ceiling = 250_000_000 if adapter['steps'] in (['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']) else 100_000_000
@@ -422,6 +434,23 @@ def dependency_inputs(spec, queue, display_cache=False):
         require((job / 'spec.json').is_file(), 'dependency_missing:' + dep['job'])
         producer = load(job / 'spec.json')
         require(text_digest(producer) == dep['specSHA256'], 'dependency_spec_changed:' + dep['job'])
+        if 'failure' in dep:
+            failure = dep['failure']; attempts = attempts_of(job)
+            require(bool(attempts) and attempts[-1].name == str(failure['attempt']), 'recovery_attempt_unavailable:' + dep['job'])
+            attempt = attempts[-1]; result_path = attempt / 'result.json'
+            require(result_path.is_file(), 'recovery_attempt_pending:' + dep['job'])
+            result = load(result_path); record = load(attempt / 'attempt.json')
+            require(result.get('version') == RESULT_VERSION and result.get('job') == dep['job'] and
+                    result.get('attempt') == failure['attempt'] and result.get('specSHA256') == dep['specSHA256'] and
+                    record.get('job') == dep['job'] and record.get('number') == failure['attempt'] and
+                    record.get('specSHA256') == dep['specSHA256'], 'recovery_result_identity:' + dep['job'])
+            require(result.get('status') != 'complete', 'recovery_not_needed:' + dep['job'] + ':complete')
+            require(result.get('status') == 'failed' and result.get('reason') == failure['reason'],
+                    'recovery_not_selected:' + dep['job'])
+            # A published failure receipt is not a usable checkpoint or successful producer output.
+            resolved.append(dict(job=dep['job'], specSHA256=dep['specSHA256'],
+                result=dict(path=relative(result_path), sha256=digest(result_path)), outputs=[], failure=failure))
+            continue
         valid = None
         for attempt in attempts_of(job):
             result_path = attempt / 'result.json'
@@ -718,7 +747,11 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
             if control is not None:
                 control.current = None
             if result['status'] != 'complete':
-                break
+                safe_continuation = (spec.get('continueIndependentOnFailure') is True and
+                    spec['authority'] == 'diagnostic' and spec.get('jobKind') == 'artifact' and
+                    result['status'] == 'failed' and result.get('reason') in ('process_failed', 'timeout', 'output_limit'))
+                if not safe_continuation:
+                    break
     return report
 
 
@@ -731,6 +764,11 @@ def child(attempt, module_dir):
     import research_trust
     research_trust.install_read_trace()
     try:
+        failure_deps = [dep for dep in spec.get('dependencies', []) if 'failure' in dep]
+        if failure_deps:
+            recorded = [dep for dep in load(out / 'dependencies.json') if 'failure' in dep]
+            resolved = dependency_inputs(dict(dependencies=failure_deps), attempt.parents[3])
+            require(recorded == resolved, 'recovery_receipt_changed_before_execution')
         _child_steps(attempt, module_dir, spec, out, adapter)
     finally:
         research_trust.write_reads(attempt)

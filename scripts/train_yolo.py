@@ -102,7 +102,7 @@ class FrozenYOLOBackbone:
                     ema[key].copy_(value.to(device=ema[key].device, dtype=ema[key].dtype))
 
 
-def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False):
+def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False, warmup_bias_lr=None):
     """Use the resident YOLO trainer with fixed native HCF settings.
 
     weights='best' keeps the HCF371 behavior (validation fitness). weights='last' returns the final epoch.
@@ -115,6 +115,8 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
         raise ValueError('hcf_learning_rate_choice')
     if type(freeze_backbone) is not bool:
         raise ValueError('detector_freeze_backbone_boolean')
+    if warmup_bias_lr is not None and (type(warmup_bias_lr) not in (int,float) or warmup_bias_lr!=learning_rate):
+        raise ValueError('detector_warmup_bias_rate')
     import os
     os.environ.setdefault('YOLO_CONFIG_DIR', str(PROJECT_ROOT/'NativeUITrainer/.ultralytics'))
     os.environ.setdefault('MPLCONFIGDIR', str(PROJECT_ROOT/'NativeUITrainer/.mplconfig'))
@@ -123,6 +125,12 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
     from ultralytics import YOLO
     model = YOLO(str(initialization))
     options = {}
+    if warmup_bias_lr is not None:
+        options['warmup_bias_lr']=warmup_bias_lr
+        def verify_rate(trainer):
+            if trainer.args.warmup_bias_lr!=warmup_bias_lr or trainer.args.lr0!=learning_rate:
+                raise ValueError('detector_effective_rate_changed')
+        model.add_callback('on_pretrain_routine_end',verify_rate)
     if freeze_backbone:
         frozen = FrozenYOLOBackbone(model.model)
         options['freeze'] = 11

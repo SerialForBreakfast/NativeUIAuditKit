@@ -1,3 +1,4 @@
+from sdk_semantics529 import transition
 """Prepare SDK control crops and temporal rows through qualified existing interfaces."""
 import argparse
 import hashlib
@@ -30,11 +31,13 @@ def portable(request, path):
 
 
 def intake(request):
-    q.require(set(request) == {'version', 'id', 'pairs', 'source', 'exclusions', 'admission', 'tool'},
+    q.require(set(request)-{'products'} == {'version', 'id', 'pairs', 'source', 'exclusions', 'admission', 'tool'},
               'sdk513_request_fields')
     q.require(request['version'] == 'sdk-preparation-v1' and q.ID.fullmatch(request['id']), 'sdk513_request_version')
     q.require(0 < len(request['pairs']) <= 32 and len({p['sha256'] for p in request['pairs']}) == len(request['pairs']),
               'sdk513_pair_membership')
+    products=request.get('products',['crops','temporal'])
+    q.require(products in (['crops'],['temporal'],['crops','temporal']), 'sdk513_products')
     exclusions = request['exclusions']
     q.require(set(exclusions) == {'groups','contentGroups','sourceFamilies','images'}, 'sdk513_exclusions')
     q.require(all(isinstance(v,list) and all(isinstance(x,str) and x for x in v) for v in exclusions.values()),
@@ -94,11 +97,17 @@ def intake(request):
         q.require(label==doc['observed'], 'sdk513_observed_transition')
         # Requested content-only motion is not a verified motion label.
         issues=[x for x in receipt['issues'] if x!='content_motion_not_independently_verified']
-        if issues:gaps.append(dict(pair=index,requirement='pair_issues',details=issues))
+        crop_issues=[x for x in issues if x!='supervisor_timing_unavailable']
+        blocking_issues=issues if 'temporal' in products else crop_issues
+        if blocking_issues:gaps.append(dict(pair=index,requirement='pair_issues',details=blocking_issues))
+        identity=transition(a,b)
+        if not identity['eligible']:
+            issues.append('focus_identity_unavailable')
+            if 'temporal' in products:gaps.append(dict(pair=index,requirement='pair_issues',details=['focus_identity_unavailable']))
         common_missing=[m for f in endpoint for m in f['missing'] if m.startswith(('producer_split_', 'excluded_'))]
         pairs.append(dict(id=request['id']+f'-pair-{index:03}',manifest=ref,group=a['group'],contentGroup=a['contentGroup'],family=a['family'],
-            role=role,split=a['split'],profile=a['profile'],observed=label,expected=doc['expected'],
-            changed=int(a['focusID']!=b['focusID']),images=[a['image'],b['image']],
+            role=role,split=a['split'],profile=a['profile'],observed=identity['observed'],producerObserved=label,identityTransition=identity,expected=doc['expected'],
+            changed=(int(identity['observed'] in ('move','arrival','departure')) if identity['eligible'] else None),images=[a['image'],b['image']],
             endpoints=dict(before=a['focusID'],after=b['focusID']),issues=receipt['issues'],
             backgroundMotionVerified=False,trainingEligible=role=='train' and not issues and not common_missing))
     if admission is not None:
@@ -107,9 +116,10 @@ def intake(request):
     return dict(version='sdk-prepared-intake-v1',frames=frames,pairs=pairs,gaps=gaps,
         capabilities=dict(actionLinkedPairs=len(pairs),observedFocusStates=dict(Counter(p['observed'] for p in pairs)),
                           controlCropRows=sum(len(f['controls']) for f in frames),completeDetectorLabels=False),
-        trainingEligible=admission is not None and any(p['role']=='train' for p in pairs),
+        trainingEligible=(('crops' in products and any(f['trainingEligible'] for f in frames)) or
+                          ('temporal' in products and any(p['trainingEligible'] for p in pairs))),
         sourceFamilyOverlap=sorted(family_overlap),crossApplicationQualification=False,
-        source=request['source'],requestSHA256=q.text_digest(request),admission=admission,modelAccepted=False,
+        products=products,source=request['source'],requestSHA256=q.text_digest(request),admission=admission,modelAccepted=False,
         limitation='Registered controls only. No complete detector labels. Selected flags remain registration metadata. Motion is not independently verified.')
 
 
@@ -136,10 +146,11 @@ def prepare_crops(data, destination, tool):
                     role=frame['role'],profile=frame['profile'],group=frame['contentGroup'],family=frame['family'],
                     box=control['pixelBounds'],sourceImage=frame['image'],pair=frame['pair'],
                     parentID=control.get('parentID'),nativeClass=control.get('className'),
+                    identity=control['identity'],semanticEvidence=control.get('semanticEvidence'),
                     registeredSelected=control.get('registeredSelected'),selectionProvenance=control.get('selectionProvenance'),
                     trainingEligible=frame['trainingEligible']))
         return dict(rows=rows,frames=data['frames'],runtime=runtime.identity(),preprocessing=runtime.RUNTIME_PREPROCESSING,
-                    trainingEligible=data['trainingEligible'],modelAccepted=False)
+                    trainingEligible=any(r['trainingEligible'] for r in rows),modelAccepted=False)
     finally:runtime.TOOL=old
 
 
@@ -182,7 +193,7 @@ def run():
         else:
             for row in result['pairs']:
                 for image in row['images']:checked(image)
-            result=dict(version='sdk-temporal-membership-v1',rows=result['pairs'],trainingEligible=result['trainingEligible'],modelAccepted=False);name='temporal.json'
+            result=dict(version='sdk-temporal-membership-v1',rows=result['pairs'],trainingEligible=any(p['trainingEligible'] for p in result['pairs']),modelAccepted=False);name='temporal.json'
     q.save(OUT/name,result)
     q.save(OUT/'artifact-receipt.json',dict(version='research-artifact-v1',outputs=[dict(path=name,sha256=q.digest(OUT/name))]))
 
@@ -191,14 +202,14 @@ def compile_request(path, destination):
     request=q.load(path);intake(request)  # Semantic preflight; no cropping, training, or capture.
     checked(request['tool']);source=q.load(checked(request['source']))
     destination.mkdir(parents=True,exist_ok=True);specs=[]
-    for stage in ('intake','crops','temporal'):
+    for stage in ['intake',*request.get('products',['crops','temporal'])]:
         spec=dict(version='research-spec-v2',id=request['id']+'-'+stage,task='SDK513',owner='Maximum-mini-NUIAK',
             authority='diagnostic',kind='screen',jobKind='artifact',request=pin(path),preparationStep=stage,
             question='Can verified SDK observations produce reusable control crops and temporal labels without changing data roles?',
             hypothesis='Observed state and native geometry support scoped labels without complete screen annotation.',
             controlledComparison='Preserve source pixels, observed labels, ancestry, and production crop preprocessing.',
             decisionRule='Reject invalid evidence and role leakage. Do not infer motion or promote models.',
-            nextActionByOutcome=dict(supported='Use eligible rows with existing trainers and matched reports.',contradicted='Report the exact missing prerequisite without repeating captures.'),
+            nextActionByOutcome=dict(supported='Use eligible rows with existing trainers and matched reports.',contradicted='Repair the exact missing prerequisite or prepare an authorized replacement capture.'),
             inputs=[pin(path),pin(Path(__file__)),request['source'],request['tool'],pin(q.ROOT/'Sources/NativeUIAuditKit/Detection/FocusRingClassifier.swift'),*source['files'],*request['pairs']],
             dependencies=[] if stage=='intake' else [dict(job=specs[0]['id'],specSHA256=q.text_digest(specs[0]),outputs=['intake.json'])],
             adapter=dict(type='python-callable',steps=['sdk_training513.run'],outputAttributes=['sdk_training513.OUT']),

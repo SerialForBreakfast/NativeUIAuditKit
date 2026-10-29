@@ -188,6 +188,8 @@ def check_evidence(spec, attempt, out):
     if spec.get('dependencies') and not deps.is_file():
         return 'dependencies_record_missing'
     for dep in q.load(deps) if deps.is_file() else []:
+        if 'failure' in dep:
+            required.append(str((q.ROOT / dep['result']['path']).resolve()))
         for output in dep['outputs']:
             required.append(str((q.ROOT / output['path']).resolve()))
             if kind == 'evaluation' and output['path'].endswith('/model.json'):

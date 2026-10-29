@@ -18,12 +18,14 @@ TRAIN_ONLY_VERSION = 'detector-training-membership-v2'
 
 def learning_rate(config, initialization):
     base=dict(initialization=initialization,selection='fixed-last',patience=0)
-    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone'} and
+    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone','warmupBiasRate'} and
               all(config[k]==v for k,v in base.items()),'detector_training_configuration')
     q.require(config.get('checkpointRetention','all') in ('all','last-best-final'), 'detector_checkpoint_retention')
     q.require(type(config.get('freezeBackbone',False)) is bool, 'detector_freeze_backbone_boolean')
     value=config.get('learningRate',.001)
     q.require(type(value) in (int,float) and value in (.001,.0001),'detector_training_learning_rate')
+    if 'warmupBiasRate' in config:
+        q.require(type(config['warmupBiasRate']) in (int,float) and config['warmupBiasRate']==value,'detector_warmup_bias_rate')
     return value
 
 
@@ -93,6 +95,7 @@ def run():
     study.OUT=OUT
     options=dict(weights='last',patience=0)
     if 'learningRate' in config:options['learning_rate']=rate
+    if 'warmupBiasRate' in config:options['warmup_bias_lr']=config['warmupBiasRate']
     if config.get('freezeBackbone'):options['freeze_backbone']=True
     if config.get('checkpointRetention') == 'last-best-final':
         import detector_retention478 as retention
@@ -110,11 +113,18 @@ def run():
         rows=[{k.strip():v for k,v in row.items()} for row in csv.DictReader(stream)]
     history=[dict(epoch=int(r['epoch']),trainLoss=sum(float(r[k]) for k in ('train/box_loss','train/cls_loss','train/dfl_loss'))) for r in rows]
     q.require([r['epoch'] for r in history]==list(range(1,31)), 'detector_training_incomplete')
+    if 'warmupBiasRate' in config:
+        import yaml
+        args=yaml.safe_load((OUT/'detector/args.yaml').read_text())
+        q.require(args['warmup_bias_lr']==config['warmupBiasRate'] and args['lr0']==rate,'detector_effective_rate_changed')
+        rates=[float(v) for row in rows for k,v in row.items() if k.startswith('lr/')]
+        q.require(rates and all(0<=v<=rate*1.0001 for v in rates),'detector_effective_rate_exceeded')
+        q.save(OUT/'effective-rates.json',dict(lr0=rate,warmupBiasRate=config['warmupBiasRate'],maximumLoggedRate=max(rates),samples=len(rates)))
     q.require(model.is_file(), 'detector_training_checkpoint_missing')
     shutil.copyfile(model,OUT/'final.pt')
     q.save(OUT/'history.json',history)
     q.save(OUT/'fit.json',dict(epochs=30,initialization=refs['initialization'],membership=refs['membership'],
-        frames=counts,selection='fixed-last',learningRate=rate,freezeBackbone=config.get('freezeBackbone',False),resumeQualified=False,modelAccepted=False,
+        frames=counts,selection='fixed-last',learningRate=rate,warmupBiasRate=config.get('warmupBiasRate'),freezeBackbone=config.get('freezeBackbone',False),resumeQualified=False,modelAccepted=False,
         validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
         calibrationUsedForSelection=False))
     q.save(OUT/'benchmark_summary.json',dict(epochs=30,frames=counts,modelAccepted=False,

@@ -189,3 +189,43 @@ private final class TableViewHelper: NSObject, UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { rowHeight }
 }
+
+
+// Native row annotations must not reuse the text view's bounds.
+@MainActor
+final class NativeRowAnnotationTests: XCTestCase {
+    func testNativeTableAndCollectionBoundsPreserveLabels() throws {
+        for cell in [UITableViewCell() as UIView, UICollectionViewCell(frame: .zero)] {
+            let root = UIView(frame: CGRect(x: 0, y: 0, width: 393, height: 852))
+            cell.frame = CGRect(x: 16, y: 100, width: 361, height: 52)
+            root.addSubview(cell)
+            let label = CGRect(x: 210, y: 112, width: 140, height: 24)
+            let input = ["label_row_1": label, "listRow_1": label, "other": CGRect(x: 1, y: 2, width: 3, height: 4)]
+            let result = try GeometryRepair.nativeListRows(input, in: root)
+            XCTAssertEqual(result["listRow_1"], cell.frame)
+            XCTAssertEqual(result["label_row_1"], label)
+            XCTAssertEqual(result["other"], input["other"])
+        }
+    }
+
+    func testMissingHiddenAndAmbiguousCellsFail() {
+        let root = UIView(frame: CGRect(x: 0, y: 0, width: 393, height: 852))
+        let label = CGRect(x: 210, y: 112, width: 140, height: 24)
+        let input = ["label_row_1": label, "listRow_1": label]
+        XCTAssertThrowsError(try GeometryRepair.nativeListRows(input, in: root))
+        let first = UITableViewCell(); first.frame = CGRect(x: 16, y: 100, width: 361, height: 52)
+        root.addSubview(first); first.isHidden = true
+        XCTAssertThrowsError(try GeometryRepair.nativeListRows(input, in: root))
+        first.isHidden = false
+        let second = UICollectionViewCell(frame: CGRect(x: 10, y: 95, width: 375, height: 64))
+        root.addSubview(second)
+        XCTAssertThrowsError(try GeometryRepair.nativeListRows(input, in: root))
+    }
+
+    func testDistinctRowsRemainUnchanged() throws {
+        let root = UIView()
+        let input = ["label_row_1": CGRect(x: 30, y: 20, width: 60, height: 20),
+                     "listRow_1": CGRect(x: 0, y: 10, width: 100, height: 44)]
+        XCTAssertEqual(try GeometryRepair.nativeListRows(input, in: root), input)
+    }
+}

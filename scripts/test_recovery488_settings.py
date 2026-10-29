@@ -42,5 +42,26 @@ class SettingsTests(unittest.TestCase):
                 self.assertEqual(candidate.pop('lr0'),.0001)
                 self.assertEqual(baseline,candidate)
 
+    def test_explicit_bias_warmup_changes_only_bias_schedule(self):
+        import research_queue as q
+        from train_yolo import train_native_hcf
+        from types import SimpleNamespace
+        cfg=dict(initialization={},selection='fixed-last',patience=0,learningRate=.0001,warmupBiasRate=.0001)
+        self.assertEqual(learning_rate(cfg,{}),.0001)
+        for invalid in (True,.1,-1,float('nan')):
+            with self.assertRaisesRegex(ValueError,'warmup_bias_rate'):learning_rate(dict(cfg,warmupBiasRate=invalid),{})
+        with tempfile.TemporaryDirectory(dir=q.ROOT/'.build') as folder:
+            root=Path(folder);initial=root/'initial.pt';initial.write_bytes(b'test-only')
+            with patch('ultralytics.YOLO') as model:
+                train_native_hcf(root/'data.yaml',initial,root/'out',weights='last',patience=0,learning_rate=.0001)
+                baseline=dict(model.return_value.train.call_args.kwargs)
+                train_native_hcf(root/'data.yaml',initial,root/'out',weights='last',patience=0,learning_rate=.0001,warmup_bias_lr=.0001)
+                candidate=dict(model.return_value.train.call_args.kwargs)
+                self.assertEqual(candidate.pop('warmup_bias_lr'),.0001);self.assertEqual(baseline,candidate)
+                callback=model.return_value.add_callback.call_args.args[1]
+                callback(SimpleNamespace(args=SimpleNamespace(warmup_bias_lr=.0001,lr0=.0001)))
+                with self.assertRaisesRegex(ValueError,'effective_rate_changed'):
+                    callback(SimpleNamespace(args=SimpleNamespace(warmup_bias_lr=.1,lr0=.0001)))
+
 
 if __name__=='__main__':unittest.main()

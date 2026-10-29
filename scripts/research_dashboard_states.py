@@ -9,10 +9,12 @@ def classify(row, readiness=None):
     state = row['state']
     reasons = list(row.get('requirements') or [])
     # The queue emits this reason only after it verifies the condition evidence.
-    # Inconclusive evidence and attempted jobs remain visible as blockers.
+    # Verified outcomes select one branch. Attempted jobs remain visible.
     if state == 'blocked' and row.get('attempts') == 0 and len(reasons) == 1:
+        if reasons[0].startswith('recovery_not_needed:') and reasons[0].endswith(':complete'):
+            return 'unselected', reasons
         parts = reasons[0].split(':', 3)
-        if len(parts) == 4 and parts[0] == 'condition_not_met' and parts[2] in ('supported', 'contradicted'):
+        if len(parts) == 4 and parts[0] == 'condition_not_met' and parts[2] in ('supported', 'contradicted', 'inconclusive'):
             return 'unselected', reasons
     if state == 'pending':
         if readiness is None:

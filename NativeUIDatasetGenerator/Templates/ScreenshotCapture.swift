@@ -166,6 +166,7 @@ public enum ScreenshotCapture {
         if repairing {
             capturedFrames = GeometryRepair.switchBodies(capturedFrames, in: hosting.view)
             capturedFrames = GeometryRepair.searchFieldBody(capturedFrames, in: hosting.view)
+            capturedFrames = try GeometryRepair.nativeListRows(capturedFrames, in: hosting.view)
         }
 
         // Render at the profile's intended pixel scale, not the simulator's physical scale.
@@ -430,6 +431,43 @@ enum GeometryRepair {
         var repaired = frames
         repaired["searchField_0"] = body
         return repaired
+    }
+
+    enum RowEvidenceError: Error {
+        case missingOrAmbiguousCell(String)
+    }
+
+    /// Replace aliased text measurements with the containing native cell bounds.
+    /// Keep label bounds unchanged. Missing or ambiguous cells fail capture.
+    static func nativeListRows(_ frames: [String: CGRect], in root: UIView) throws -> [String: CGRect] {
+        var cells: [CGRect] = []
+        func walk(_ view: UIView) {
+            guard !view.isHidden, view.alpha > 0.01 else { return }
+            if view is UITableViewCell || view is UICollectionViewCell {
+                let rect = view.convert(view.bounds, to: root)
+                if !rect.isEmpty, !rect.isNull, !rect.isInfinite, !cells.contains(rect) {
+                    cells.append(rect)
+                }
+            }
+            view.subviews.forEach(walk)
+        }
+        walk(root)
+        var result = frames
+        for (id, label) in frames where id.hasPrefix("label_row_") {
+            let suffix = String(id.dropFirst("label_row_".count))
+            guard Int(suffix) != nil else { continue }
+            let rowID = "listRow_" + suffix
+            guard frames[rowID] == label else { continue }
+            let matches = cells.filter {
+                $0.insetBy(dx: -0.5, dy: -0.5).contains(label) && $0 != label
+            }
+            guard matches.count == 1, let body = matches.first else {
+                throw RowEvidenceError.missingOrAmbiguousCell(rowID)
+            }
+            result[rowID] = body
+            print("T46_NATIVE_ROW id=\(rowID) label=\(label) nativeCell=\(body)")
+        }
+        return result
     }
 
     /// Cover results for content under bars. Elements that are not covered are absent from the result.

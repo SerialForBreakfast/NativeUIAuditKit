@@ -31,10 +31,17 @@ def matches(elements, predictions):
 
 def prepare(request):
     fields={'version','id','manifest','models','confidence','imageSize'}
-    q.require(fields<=set(request)<=fields|{'cachedGeneral'},'sdk_geometry_fields')
+    q.require(fields<=set(request)<=fields|{'cachedGeneral','candidateConfidence','candidateImageSize'},'sdk_geometry_fields')
     q.require(request['version']=='sdk-geometry-request-v1' and q.ID.fullmatch(request['id']), 'sdk_geometry_version')
     q.require(set(request['models'])=={'scoped','general'},'sdk_geometry_models')
     q.require(request['confidence']==0.25 and request['imageSize']==1280,'sdk_geometry_settings')
+    if 'candidateConfidence' in request:
+        q.require(request['candidateConfidence']==0.10, 'sdk_candidate_confidence')
+        q.require(request['models']['scoped']==request['models']['general'], 'sdk_threshold_model_changed')
+        q.require('cachedGeneral' in request, 'sdk_threshold_baseline_required')
+    if 'candidateImageSize' in request:
+        q.require(request['candidateImageSize']==960 and 'candidateConfidence' not in request, 'sdk_resolution_factor')
+        q.require(request['models']['scoped']==request['models']['general'] and 'cachedGeneral' in request, 'sdk_resolution_baseline')
     corpus=audit(checked(request['manifest']))
     frames=[]
     for case in corpus['cases']:
@@ -64,10 +71,10 @@ def build(path):
         jobKind='artifact',authority='diagnostic',dependencies=[],inputs=refs,
         adapter=dict(type='python-callable',steps=['sdk_geometry506.run'],outputAttributes=['sdk_geometry506.OUT']),
         limits=dict(timeoutSeconds=800,maxOutputBytes=100000000,maxAttempts=1),
-        evidence=dict(artifactReceipt='artifact-receipt.json',reads=[x['path'] for x in refs[:4]]),
+        evidence=dict(artifactReceipt='artifact-receipt.json',reads=list(dict.fromkeys(x['path'] for x in refs[:4]))),
         question='Which detector supplies boxes for the registered SDK controls on identical retained pixels?',
         hypothesis='Missing proposals explain some focus failures before classification runs.',
-        controlledComparison='Same pixels, original roles, 1280 image size, 0.25 confidence, and existing NMS. Change only pinned detector.',
+        controlledComparison=('Same pixels, weights, roles, 0.25 confidence, and NMS. Candidate image size 960 versus cached baseline 1280.' if 'candidateImageSize' in r else 'Same pixels, weights, roles, 1280 image size, and NMS. Candidate confidence 0.10 versus cached baseline 0.25.' if 'candidateConfidence' in r else 'Same pixels, original roles, 1280 image size, 0.25 confidence, and existing NMS. Change only pinned detector.'),
         decisionRule='Report case-linked coverage gains and losses at IoU 0.5. Do not infer precision or class accuracy from incomplete annotations.',
         nextActionByOutcome=dict(supported='Use recovered and missing control IDs to choose the next proposal correction.',
                                  contradicted='Preserve models and investigate localization before further training.'))
@@ -82,15 +89,17 @@ def run():
             for i,cached in enumerate(request['cachedGeneral']):q.save(raw/('%03d.json'%i),q.load(checked(cached)))
             identity=q.load(checked(request['cachedGeneral'][0]))['runtime']['detector']
         else:
-            identity=inference.pytorch(checked(ref),frames,request['confidence'],request['imageSize'],raw)
+            confidence=request.get('candidateConfidence',request['confidence']) if name=='scoped' else request['confidence']
+            size=request.get('candidateImageSize',request['imageSize']) if name=='scoped' else request['imageSize']
+            identity=inference.pytorch(checked(ref),frames,confidence,size,raw)
         rows=[]
         for i,frame in enumerate(frames):
             path=raw/('%03d.json'%i);d=q.load(path)
             q.require(d['inputSHA256']==frame['sha256'] and d['runtime']['detector']==identity,'sdk_prediction_identity')
             rows.append(dict(case=frame['case'],image=frame['image'],group=frame['group'],split=frame['split'],
-                role=frame['role'],controls=matches(frame['elements'],d['runtime']['result']['elements'])))
+                role=frame['role'],proposalCount=len(d['runtime']['result']['elements']),controls=matches(frame['elements'],d['runtime']['result']['elements'])))
             artifacts.append(path)
-        results[name]=dict(model=ref,identity=identity,rows=rows)
+        results[name]=dict(model=ref,identity=identity,rows=rows,proposalCount=sum(r['proposalCount'] for r in rows))
     differences=[]
     for s,g in zip(results['scoped']['rows'],results['general']['rows']):
         q.require(s['image']==g['image'],'sdk_comparison_membership')
@@ -101,6 +110,12 @@ def run():
     report=dict(version='sdk-geometry-comparison-v1',models=results,cases=differences,
         gains=sum(r['gain'] for r in differences),losses=sum(r['lost'] for r in differences),
         ancestryGroups=corpus['ancestryGroups'],trainingEligible=False,modelAccepted=False,
+        comparison=dict(changedFactor='resolution' if 'candidateImageSize' in request else 'confidence' if 'candidateConfidence' in request else 'model',
+            baseline='general',candidate='scoped',baselineConfidence=request['confidence'],
+            candidateConfidence=request.get('candidateConfidence',request['confidence']),
+            baselineImageSize=request['imageSize'],candidateImageSize=request.get('candidateImageSize',request['imageSize'])),
+        candidateGains=sum(r['scoped'] and not r['general'] for r in differences),
+        candidateLostSuccesses=sum(r['general'] and not r['scoped'] for r in differences),
         limitation='Registered-box coverage only. Matches are not one-to-one detection recall. No precision, taxonomy, focus-selection, or independent-app accuracy claim.')
     q.save(OUT/'benchmark_summary.json',report);artifacts.append(OUT/'benchmark_summary.json')
     q.save(OUT/'artifact-receipt.json',dict(version='research-artifact-v1',outputs=[dict(path=str(p.relative_to(OUT)),sha256=q.digest(p)) for p in artifacts]))

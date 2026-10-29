@@ -8,6 +8,7 @@ import research_queue as q
 from experiment_templates import checked, pin
 from sdk_dataset505 import audit
 from sdk_packet502 import review
+from sdk_semantics529 import transition
 from detector_focus_pilot import merge
 from detector_native_inputs import bounds
 from native_selection404 import outcome
@@ -34,7 +35,7 @@ def packet(path,ident):
     return dict(id=ident,image=pin(image),sha256=q.digest(image),width=e['width'],height=e['height'],
         group=case['group'],contentGroup=case['contentGroup'],split=case['split'],role=frame['role'],
         sourceID=e['sourceID'],appID=e['before']['appID'],processID=e['before']['processID'],runID=e['before']['runID'],
-        profile=case['hcfMode'],focusID=focus,truth=truth,controls=controls,trainingEligible=False)
+        profile=case['hcfMode'],focusID=focus,focusState=r['focusState'],truth=truth,controls=controls,trainingEligible=False)
 
 def pair(ref):
     path=checked(ref);d=q.load(path)
@@ -53,7 +54,9 @@ def pair(ref):
     q.require(all(frames[0][k]==frames[1][k] for k in ('appID','processID','runID','group','contentGroup','split','profile')),'sdk508_pair_lineage')
     label=observed(frames[0]['focusID'],frames[1]['focusID'])
     q.require(label==d['observed'],'sdk508_observed_mismatch')
-    return dict(id=path.parent.name,manifest=ref,expected=d['expected'],observed=label,issues=d['issues'],
+    identity=transition(*frames)
+    return dict(id=path.parent.name,manifest=ref,expected=d['expected'],observed=identity['observed'],
+        producerObserved=label,identityTransition=identity,temporalEligible=identity['eligible'],issues=d['issues'],
         coverage=d['coverage'],frames=frames)
 
 def prepare(request):

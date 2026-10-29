@@ -13,9 +13,11 @@ def validate(labels):
     q.require(labels.get('version') == VERSION and labels.get('role') == 'development'
               and labels.get('trainingEligible') is False, 'detector_role')
     q.require(labels.get('platform') in ('iOS','tvOS'), 'detector_platform')
+    q.require(labels.get('labelReview') in ('reviewed','unknown'), 'detector_label_review')
     frames=labels['frames']
     q.require(0 < len(frames) <= 64 and len({r['sha256'] for r in frames}) == len(frames), 'detector_membership')
     for row in frames:
+        q.require(isinstance(row.get('screen'),str) and row['screen'], 'detector_screen')
         q.require(row['image']['sha256'] == row['sha256'] and row['group'], 'detector_identity')
         checked(row['image'])
         q.require(len({c['id'] for c in row['controls']}) == len(row['controls']), 'detector_control_ids')

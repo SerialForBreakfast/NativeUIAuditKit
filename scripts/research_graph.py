@@ -13,7 +13,7 @@ def validate_conditions(spec):
         q.require(isinstance(item, dict) and set(item) == {'job', 'output', 'outcome'}, 'condition_fields')
         q.require(item['job'] in dependencies, 'condition_dependency_missing')
         q.require(item['output'] in dependencies[item['job']]['outputs'], 'condition_output_missing')
-        q.require(item['outcome'] in OUTCOMES - {'inconclusive'}, 'condition_outcome')
+        q.require(item['outcome'] in OUTCOMES, 'condition_outcome')
         key = (item['job'], item['output'])
         q.require(key not in seen, 'condition_duplicate')
         seen.add(key)
