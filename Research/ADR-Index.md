@@ -6,6 +6,11 @@ Standard detection and focus remain primary. HCF remains optional.
 
 ## Quick wins
 
+[ADR-0031](ADR-0031-Reinforcement-Learning-and-TTR-Iteration.md) proposes a separate
+navigation policy and a TTR-backed learning loop: demonstrations and expert correction
+first, conditional simulator RL second, and independently qualified physical-device use.
+It authorizes no runs or navigation and does not replace supervised perception training.
+
 [ADR-0030](ADR-0030-Read-Only-Experiment-Graph-Views.md) selects Cytoscape.js for the internal read-only graph view.
 It specifies 2 layouts in 2D and 2 optional layouts in 3D. Implementation remains pending.
 
