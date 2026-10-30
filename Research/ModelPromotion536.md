@@ -1,5 +1,8 @@
 # MODEL536 — Next model promotion paths
 
+Real-app accuracy is not independently established. Dataset scores do not measure the percentage of screenshots understood.
+See [REAL543](RealAppValidation543.md) for the independent benchmark and historical metric audit.
+
 Owner: Maximum-mini-NUIAK. Reviewed October 25, 2026.
 
 ## Common decision
@@ -14,7 +17,7 @@ Use existing release requirements. This plan does not lower DS-G8 or authorize a
 
 ## 1. iOS detector: shipped 5-class model and Run013 expansion
 
-Run013 achieves matched withheld mAP50 0.6322 versus Run009 0.5549 on 13 supported classes.
+Run013 achieves matched withheld generated-family custom mAP50 0.6322 versus Run009 0.5549 on 13 supported classes.
 Native adaptations still lose retained detections. The 5-class release remains the consumer baseline.
 The immediate candidate is annotation-quarantine training, not another resolution sweep.
 

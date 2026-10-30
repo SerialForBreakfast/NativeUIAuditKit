@@ -60,3 +60,13 @@ record visual review separately, bound to `manifestSHA256`. Source/runtime/build
 evidence stays with the capture. All pairs are development-only; the existing
 training validator deliberately does not accept this as a Fixture manifest.
 Repeat sweeps of this layout retain the same lineage, not new evaluation groups.
+
+## REAL550 NewsTV activation
+
+Run only the explicitly selected NewsTV test on the authorized Simulator.
+`testNewsTVPilotInitial` launches installed NewsTV with controlled content, verifies foreground state, captures once, and terminates it.
+`testNewsTVActivateExisting` requires an enrolled running NewsTV process. The host owns termination and cleanup verification.
+It activates that process, holds for 12 s, and captures once. It sends no navigation inputs.
+Use `-only-testing:NativeOSFocusTests/NativeOSFocusTests/testNewsTVPilotInitial` or the other exact method name.
+Do not run the Settings or Home tests as part of this benchmark.
+These screenshots remain pending human review. SDK inactivity does not establish known no-focus.

@@ -84,6 +84,7 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
   <div id="brand"><h1 id="app-title">NUIAK Queue</h1><span id="run-mode" class="badge">Idle</span></div>
   <div id="top-actions"><button id="toggle-run" class="btn-toggle btn-start">Start</button></div>
 </header>
+<p class="muted" id="accuracy-scope">Execution counts are not model accuracy. Real-app accuracy is not independently established. Dataset scores apply only to their stated evaluation scope.</p>
 <div id="stats-bar">
   <span class="chip" id="chip-running"><strong>0</strong> running</span>
   <span class="chip" id="chip-ready"><strong>0</strong> ready</span>

@@ -3,6 +3,59 @@ import CryptoKit
 
 /// Opt-in simulator integration probe; never part of ordinary offline package tests.
 final class NativeOSFocusTests: XCTestCase {
+    /// REAL550: one predetermined NewsTV screen. No navigation or model inference.
+    @MainActor
+    func testNewsTVPilotInitial() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication(bundleIdentifier: "com.jordankoch.NewsTV")
+        app.launchArguments = ["--real543-controlled-content"]
+        defer {
+            app.terminate()
+            let cleanup = XCTAttachment(string: "terminated=\(app.state == .notRunning); inputs=0; requestedCaptures=1")
+            cleanup.name = "newstv-cleanup"
+            cleanup.lifetime = .keepAlways
+            add(cleanup)
+        }
+        app.launch()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15), "NewsTV must be foreground before capture")
+        let before = app.debugDescription
+        let image = XCUIScreen.main.screenshot()
+        XCTAssertEqual(app.state, .runningForeground)
+        let after = app.debugDescription
+        let reference = XCTAttachment(string: "case=newstv-news-home-initial; role=pilot-pending-review; modelPredictionsViewed=false; sdkEvidence=unavailable\nBEFORE\n" + before + "\nAFTER\n" + after)
+        reference.name = "newstv-initial-native-reference"
+        reference.lifetime = .keepAlways
+        add(reference)
+        let screenshot = XCTAttachment(screenshot: image)
+        screenshot.name = "newstv-news-home-initial"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
+
+    /// Activates an already enrolled NewsTV process for read-only SDK observations.
+    @MainActor
+    func testNewsTVActivateExisting() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication(bundleIdentifier: "com.jordankoch.NewsTV")
+        XCTAssertNotEqual(app.state, .notRunning, "The host must enroll NewsTV before this test")
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
+        // The host collects authenticated SDK observations during this bounded interval.
+        let stable = NSPredicate { _, _ in app.state == .runningForeground }
+        XCTAssertTrue(stable.evaluate(with: app))
+        RunLoop.current.run(until: Date().addingTimeInterval(12))
+        XCTAssertEqual(app.state, .runningForeground)
+        let native = XCTAttachment(string: app.debugDescription)
+        native.name = "newstv-sdk-active-native-reference"
+        native.lifetime = .keepAlways
+        add(native)
+        let screenshot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        screenshot.name = "newstv-sdk-active-initial"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        // The enrolling host owns termination and records cleanup.
+    }
+
     struct Node: Codable, Equatable, Sendable {
         let identifier: String
         let label: String

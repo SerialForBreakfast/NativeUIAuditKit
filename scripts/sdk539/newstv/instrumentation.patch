@@ -1,0 +1,290 @@
+diff --git a/NewsTV/NewsTVApp.swift b/NewsTV/NewsTVApp.swift
+index 17fb4db..5ab1ffe 100644
+--- a/NewsTV/NewsTVApp.swift
++++ b/NewsTV/NewsTVApp.swift
+@@ -24,13 +24,16 @@ import SwiftUI
+ @main
+ struct NewsTVApp: App {
+     init() {
+-        NovaAPIServer.shared.start()
++        print("REAL543_CONTENT enabled=\(Real543Content.enabled)")
++        fflush(stdout)
++        if !Real543Content.enabled { NovaAPIServer.shared.start() }
+     }
+ 
+     var body: some Scene {
+         WindowGroup {
+             contentView
+                 .preferredColorScheme(.dark)
++                .real543Scene()
+         }
+     }
+ 
+@@ -43,3 +46,153 @@ struct NewsTVApp: App {
+         #endif
+     }
+ }
++
++#if os(tvOS)
++import UIKit
++import TTRDiagnostics
++import TTRDiagnosticsUI
++import TTRDiagnosticsLink
++import TTRDiagnosticsQuery
++
++@MainActor final class Real543SDK {
++    static let shared = Real543SDK()
++    let recorder: UIRecorder
++    let probes = NSHashTable<Real543Bounds.Probe>.weakObjects()
++    private var server: SDKLocalProbeServer?
++    private var started = false
++    var scenePhase = "unknown"
++    private init() {
++        #if DEBUG
++        let allowed = true
++        #else
++        let allowed = false
++        #endif
++        let config = (try? SDKLaunchConfiguration.parse(arguments: ProcessInfo.processInfo.arguments)
++            .applyingAppPolicy(diagnosticsAllowed: allowed)) ?? (try! SDKLaunchConfiguration(enabled: false))
++        recorder = UIRecorder(configuration: config)
++    }
++    func start() async {
++        print("REAL543_SDK start enabled=\(recorder.enabled)")
++        fflush(stdout)
++        guard recorder.enabled, !started else { return }
++        started = true
++        do {
++            let env = ProcessInfo.processInfo.environment
++            guard let key = env["TTR_SAMPLE_KEY"].flatMap({ Data(base64Encoded: $0) }), key.count == 32,
++                  let source = env["SIMULATOR_UDID"], UUID(uuidString: source) != nil else {
++                print("REAL543_SDK missing enrollment or Simulator identity")
++                return
++            }
++            let archive = try DiagnosticArchive.decode(await recorder.exportData())
++            let enrollment = try Enrollment(appID: Bundle.main.bundleIdentifier!,
++                processID: archive.processID, runID: archive.runID, secret: key)
++            let probe = SDKLiveProbe(recorder: recorder, enrollment: enrollment) {
++                let sdk = Real543SDK.shared
++                sdk.probes.allObjects.forEach { $0.record() }
++                let windows = sdk.probes.allObjects.compactMap(\.window)
++                let window = windows.first(where: { $0.isKeyWindow }) ?? windows.first
++                let system = window.flatMap { UIFocusSystem.focusSystem(for: $0) }
++                let focused = system?.focusedItem as? UIView
++                let id = focused?.accessibilityIdentifier
++                let registeredID = id.flatMap { name in sdk.recorder.page().contains { $0.identity.id == name } ? name : nil }
++                let observation: [String: Any] = [
++                    "swiftUIScenePhase": sdk.scenePhase,
++                    "applicationState": UIApplication.shared.applicationState.rawValue,
++                    "windowSceneState": window?.windowScene?.activationState.rawValue ?? -99,
++                    "keyWindow": window?.isKeyWindow ?? false,
++                    "windowHidden": window?.isHidden ?? true,
++                    "focusSystemAvailable": system != nil,
++                    "nativeItemPresent": system?.focusedItem != nil,
++                    "nativeItemClass": focused.map { String(describing: type(of: $0)) } ?? "unavailable",
++                    "registeredFocusedID": registeredID ?? "unavailable"]
++                if let bytes = try? JSONSerialization.data(withJSONObject: observation, options: [.sortedKeys]) {
++                    print("REAL543_SCENE " + String(decoding: bytes, as: UTF8.self)); fflush(stdout)
++                }
++                // Registration and selection styling do not establish native focus.
++                return .init(focusID: nil, focusKnown: false,
++                    interrupted: UIApplication.shared.applicationState != .active, captureSourceID: source)
++            }
++            let listener = try SDKLocalProbeServer(port: 8097) { try await probe.reply(to: $0) }
++            server = listener
++            let endpoint = try await listener.start(lifetimeSeconds: 800)
++            let identity = ["appID": enrollment.appID, "processID": archive.processID.uuidString,
++                "runID": archive.runID.uuidString, "endpoint": endpoint.absoluteString]
++            print("REAL543_SDK " + String(decoding: try JSONSerialization.data(withJSONObject: identity), as: UTF8.self))
++            fflush(stdout)
++        } catch { print("REAL543_SDK failed: \(error)") }
++    }
++}
++
++// A noninteractive layout probe measures the declared control's layout rectangle.
++// It does not claim occlusion, complete coverage, or focus-ring geometry.
++struct Real543Bounds: UIViewRepresentable {
++    let id: String
++    final class Probe: UIView {
++        var identity: UIElementIdentity
++        init(id: String) {
++            identity = .init(id: id)
++            super.init(frame: .zero)
++            isUserInteractionEnabled = false
++            Real543SDK.shared.probes.add(self)
++        }
++        required init?(coder: NSCoder) { fatalError("init(coder:) is unsupported") }
++        override func layoutSubviews() { super.layoutSubviews(); record() }
++        override func didMoveToWindow() {
++            super.didMoveToWindow()
++            if window == nil { Real543SDK.shared.recorder.unregister(identity) } else { record() }
++        }
++        func record() {
++            guard let window, bounds.width > 0, bounds.height > 0 else { return }
++            let rect = convert(bounds, to: window)
++            let element = UIElement(identity: identity,
++                bounds: .init(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height),
++                coordinateSpace: .windowPoints)
++            do { try Real543SDK.shared.recorder.register(element) }
++            catch { print("REAL543_SDK registration failed: \(error)") }
++        }
++    }
++    func makeUIView(context: Context) -> Probe { Probe(id: id) }
++    func updateUIView(_ view: Probe, context: Context) {
++        if view.identity.id != id {
++            Real543SDK.shared.recorder.unregister(view.identity)
++            view.identity = .init(id: id)
++        }
++        view.record()
++    }
++    static func dismantleUIView(_ view: Probe, coordinator: ()) {
++        Real543SDK.shared.recorder.unregister(view.identity)
++    }
++}
++#endif
++
++extension View {
++    @ViewBuilder func real543Control(_ id: String) -> some View {
++        #if os(tvOS)
++        if Real543SDK.shared.recorder.enabled {
++            self.background(Real543Bounds(id: id)).accessibilityIdentifier(id)
++        } else { self }
++        #else
++        self
++        #endif
++    }
++}
++
++#if os(tvOS)
++struct Real543SceneObserver: ViewModifier {
++    @Environment(\.scenePhase) private var phase
++    func body(content: Content) -> some View {
++        content.onChange(of: phase, initial: true) { _, value in
++            Real543SDK.shared.scenePhase = String(describing: value)
++        }
++    }
++}
++#endif
++extension View {
++    @ViewBuilder func real543Scene() -> some View {
++        #if os(tvOS)
++        self.modifier(Real543SceneObserver())
++        #else
++        self
++        #endif
++    }
++}
+diff --git a/NewsTV/Views/CategoryNewsView.swift b/NewsTV/Views/CategoryNewsView.swift
+index 10f599c..577584f 100644
+--- a/NewsTV/Views/CategoryNewsView.swift
++++ b/NewsTV/Views/CategoryNewsView.swift
+@@ -38,6 +38,7 @@ struct CategoryNewsView: View {
+                             )
+                         }
+                         .buttonStyle(.newsCard)
++                        .real543Control("article.\(articles[index].id.uuidString)")
+                     }
+                 }
+                 .padding(.horizontal, 48)
+diff --git a/NewsTV/Views/TVContentView.swift b/NewsTV/Views/TVContentView.swift
+index fed1b93..04477f7 100644
+--- a/NewsTV/Views/TVContentView.swift
++++ b/NewsTV/Views/TVContentView.swift
+@@ -73,6 +73,9 @@ struct TVContentView: View {
+         }
+         .task {
+             await runSetup()
++            #if os(tvOS)
++            await Real543SDK.shared.start()
++            #endif
+         }
+     }
+ 
+@@ -83,7 +86,7 @@ struct TVContentView: View {
+         await newsAggregator.fetchAllNews()
+ 
+         // Fetch local news if ZIP code is configured
+-        await LocalNewsService.shared.fetchLocalNews()
++        if !Real543Content.enabled { await LocalNewsService.shared.fetchLocalNews() }
+ 
+         // Mark initial load complete - this MUST happen to show content
+         isInitialLoad = false
+@@ -193,6 +196,7 @@ struct TVContentView: View {
+                         )
+                     }
+                     .buttonStyle(.plain)
++                    .real543Control("main-tab.\(tab.rawValue)")
+                 }
+             }
+             .padding(.horizontal, 48)
+@@ -251,6 +255,7 @@ struct TVContentView: View {
+                         )
+                     }
+                     .buttonStyle(.plain)
++                    .real543Control("category.\(category.rawValue)")
+                 }
+             }
+             .padding(.horizontal, 48)
+diff --git a/Shared/Models/NewsModels.swift b/Shared/Models/NewsModels.swift
+index a3c0e5b..e10912d 100644
+--- a/Shared/Models/NewsModels.swift
++++ b/Shared/Models/NewsModels.swift
+@@ -74,7 +74,7 @@ struct NewsArticle: Identifiable, Codable, Hashable {
+     var timeAgoString: String {
+         let formatter = RelativeDateTimeFormatter()
+         formatter.unitsStyle = .abbreviated
+-        return formatter.localizedString(for: publishedDate, relativeTo: Date())
++        return formatter.localizedString(for: publishedDate, relativeTo: Real543Content.enabled ? Real543Content.date : Date())
+     }
+ 
+     var isRecent: Bool {
+@@ -662,3 +662,32 @@ struct NewsTVSettings: Codable {
+         case auto = "Auto"
+     }
+ }
++
++
++// Controlled content changes data only. Existing app views remain in use.
++enum Real543Content {
++    static var enabled: Bool {
++        #if DEBUG
++        return ProcessInfo.processInfo.arguments.contains("--real543-controlled-content")
++        #else
++        return false
++        #endif
++    }
++    static let date = Date(timeIntervalSince1970: 1793232000)
++    static var articles: [NewsArticle] {
++        let categories: [NewsCategory] = [.topStories, .technology, .science]
++        return (0..<18).map { index in
++            let category = categories[index / 6]
++            let source = NewsSource(id: "real543", name: "Research Bulletin",
++                rssURL: URL(string: "https://example.invalid/feed")!, category: category)
++            return NewsArticle(id: UUID(uuidString: String(format: "54300000-0000-0000-0000-%012d", index))!,
++                title: "Community project update \(index + 1)", source: source,
++                url: URL(string: "https://example.invalid/article/\(index)")!,
++                publishedDate: date.addingTimeInterval(-Double(index * 600)), category: category,
++                rssDescription: "Volunteers review a local project and publish a progress report.",
++                summary: "This original research text supplies controlled content for UI evaluation.",
++                fullSummary: "The team records progress, reviews the plan, and prepares the next meeting.",
++                keyPoints: ["Review progress", "Prepare the next meeting"])
++        }
++    }
++}
+diff --git a/Shared/Services/NewsAggregator.swift b/Shared/Services/NewsAggregator.swift
+index 2ad052f..e3cb708 100644
+--- a/Shared/Services/NewsAggregator.swift
++++ b/Shared/Services/NewsAggregator.swift
+@@ -112,6 +112,12 @@ class NewsAggregator: ObservableObject {
+     // MARK: - Fetch All
+ 
+     func fetchAllNews() async {
++        if Real543Content.enabled {
++            articles = Real543Content.articles
++            isLoading = false
++            error = nil
++            return
++        }
+         isLoading = true
+         error = nil
+ 

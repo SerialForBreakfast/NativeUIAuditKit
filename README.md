@@ -4,7 +4,19 @@ A portable Swift package for detecting native Apple platform UI elements in scre
 
 **Product direction:** [MVP, planned features, and proposed features](Research/ProductRoadmap.md).
 
-**Current state:** Shipped detectors include iOS 5-class YOLO11n (`nativeui-ios-v2.0`, mAP@0.5 = **0.935** CoreML / **0.968** PyTorch, ~7.5 ms/image), tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`, mAP@0.5 = **0.9822**), and FocusRingDetector v0.1 (MobileNetV4 crop classifier, 4.80 MB). Phase 6 5-class work is complete, including withheld-template generalization (mAP 0.934). Remaining: 41-class iOS DS-G8 (Run 013 withheld mAP@0.5 **0.6322** against same-input Run 009 **0.5549** on 13 supported classes; the gate is ≥ 0.85), FocusRing v1.0 data, macOS. See [`Research/PhaseMap.md`](Research/PhaseMap.md) for dependencies.
+**Accuracy scope:** Real-app accuracy is **not independently established**. Dataset mAP is not the percentage of screenshots understood. See the [accuracy audit and benchmark](Research/RealAppValidation543.md).
+
+**Current state:** Shipped models and their historical evaluation scopes are:
+
+- iOS 5-class YOLO11n (`nativeui-ios-v2.0`): generated-screen validation mAP@0.5 is **0.935** CoreML and **0.968** PyTorch.
+- Historical direct model inference takes about **7.5 ms/image**. This excludes full consumer overhead.
+- tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`): synthetic-screen validation mAP@0.5 is **0.9822**.
+- FocusRingDetector v0.1 uses a MobileNetV4 crop classifier. Its model size is **4.80 MB**.
+- The completed 5-class phase includes withheld generated-template mAP **0.934**.
+
+The 41-class iOS gate remains open. Run013 custom AP50 is **0.6322**, versus Run009 **0.5549**, on identical withheld generated screens.
+That comparison supports 13 classes. Its release requirement is at least **0.85**.
+FocusRing v1.0 data and macOS work remain open. See [PhaseMap](Research/PhaseMap.md) for dependencies.
 
 ---
 
@@ -15,9 +27,27 @@ iOS research remains independent of tvOS capture work.
 High Contrast Focus (HCF) remains an optional research track. It does not replace Standard behavior.
 
 Current experimental results do not change the shipped models listed above.
-The [latest reviewed comparison](Research/Review470Results.md) measures detector fallback on inspected development cases.
-It reports gains, lost successes, wrong selections, and no-focus outcomes separately.
-The crop correction remains experimental until its matched comparisons finish.
+The [current consumer measurements](Research/Real550ConsumerReplay.md) use the actual Standard screenshot path.
+On 3 retained Fixture development screens, proposals cover 5 of 12 registered controls at IoU 0.5, ignoring classes.
+All 3 consumer results are partial and select no control. These counts are not independent real-app accuracy.
+NewsTV now supplies 1 predetermined pilot case, captured in 2 trials. It still needs reviewed labels and complete runtime provenance.
+XCTest reports foreground while the SDK reports inactivity. Focus remains unknown; this is not a verified no-focus example.
+
+### Plan for trustworthy accuracy measurements
+
+1. Pin the loaded Standard models, preprocessing, taxonomy, thresholds, and TTR build evidence before inference.
+2. Collect a 50-screen pilot across up to 5 qualified source-built apps. Report the actual qualified scope.
+3. Obtain blinded human review of complete visible controls. Keep SDK reference labels outside model inputs.
+4. Freeze 200 additional screens across 5 apps, with 8 distinct flows and 5 capture points per flow.
+5. Report per-class precision and recall, localization errors, focus outcomes, no-focus false selections, latency, and execution failures.
+6. Cross-check AP50, AP75, and AP50–95 with the official COCO evaluator. Preserve historical custom AP definitions separately.
+7. Report each app separately, equal-app summaries, denominators, missing coverage, and uncertainty from whole-flow resampling.
+
+The benchmark measures a selected test population. It does not establish deployment-wide accuracy.
+Pilot cases become development evidence. Cases used to guide corrections cannot remain independent qualification evidence.
+No training, threshold tuning, or model promotion occurs inside the benchmark.
+HCF and iOS remain separate from the tvOS Standard headline. Temporal tracking receives a separate benchmark.
+See the [frozen protocol and remaining gates](Research/RealAppValidation543.md) and [application qualification status](Research/RealAppApplications543.md).
 
 Use the [experiment workflow guide](docs/experiment-workflow.md) to understand preparation, execution, evidence, and acceptance.
 The [batch authoring guide](docs/experiment-batches/README.md) describes reusable experiment definitions.
@@ -107,33 +137,34 @@ NativeUIAuditKit builds a custom Vision-style request backed by CoreML object de
 - **tvOS focus** — geometric heuristic, plus optional FocusRingDetector Stage 2 on YOLO crops
 
 **Two operating modes:**
-- **Sidecar mode** — highest accuracy; hierarchy metadata exported at capture time is paired with the PNG
-- **Pixel-only mode** — moderate accuracy; works on orphan PNGs with no metadata
+- **Sidecar mode** — uses supplied hierarchy; hierarchy metadata exported at capture time is paired with the PNG
+- **Pixel-only mode** — uses screenshot pixels; works on orphan PNGs with no metadata
 
 **Three platform-specific models (iOS and tvOS trained; macOS planned):**
-- `NativeUIModel_iOS` — iOS + iPadOS (shared visual language) — **YOLO11n v2.0 shipped ✓** (mAP@0.5 = 0.935)
-- `NativeUIModel_tvOS` — tvOS (focus state paradigm, top shelf, carousel) — **YOLO11n v3.0 shipped ✓** (mAP@0.5 = **0.9822**, 25 active classes, qualified on Apple TV 4K hardware)
+- `NativeUIModel_iOS` — iOS + iPadOS (shared visual language) — **YOLO11n v2.0 shipped ✓** (generated-screen validation mAP@0.5 = 0.935)
+- `NativeUIModel_tvOS` — tvOS (focus state paradigm, top shelf, carousel) — **YOLO11n v3.0 shipped ✓** (synthetic-screen validation mAP@0.5 = **0.9822**, 25 active classes; historical Apple TV execution checks)
 - `NativeUIModel_macOS` — macOS (window chrome, NSToolbar, AppKit layout)
 
 ---
 
 ## Model Performance
 
-### tvOS Model: YOLO11n v3.0 (Trained & Hardware-Qualified 2026-09-17)
+### tvOS Model: YOLO11n v3.0 (Synthetic Validation and Historical Hardware Execution)
 
 25-class tvOS detector trained on 5,000 balanced 1080p synthetic screens (25 UI families) using Ultralytics YOLO11n and exported to CoreML (`NativeUIModel_tvOS.mlmodelc`) with FP16 quantization.
 
-- **Validation mAP@0.5:** **0.9822** (Precision: 0.983, Recall: 0.983, mAP@0.5:0.95: 0.944).
+- **Synthetic-screen validation mAP@0.5:** **0.9822** (Precision: 0.983, Recall: 0.983, mAP@0.5:0.95: 0.944).
 - **Active classes (25):** `activityIndicator`, `alert`, `cancelAction`, `collectionItem`, `contextMenu`, `destructiveButton`, `imageView`, `label`, `link`, `listRow`, `navigationBar`, `popover`, `primaryButton`, `progressView`, `searchField`, `secondaryButton`, `secureField`, `segmentedControl`, `sheet`, `sidebar`, `slider`, `stepperControl`, `tabBar`, `toggle`, `toolbar`.
 - **Dual Focus Engine:** Evaluates active focus via parallax geometric tile expansion (\(301.5 \times 173.2\) pt vs baseline \(247 \times 147\) pt), radiant perimeter glow, inverted high-luminance interior pills (mean brightness 228.9 vs 149.6), and VoiceOver accessibility contrast borders.
-- **Physical Hardware Qualification (Office Lab Apple TV 4K):** 
-  - Ingested 23 live 1080p captures across Home Screen top shelf dock & grid rows, App Switcher multitasking carousel, and third-party app onboarding screens.
-  - 586 native elements detected with zero false positives from AVFoundation video stream artifacts.
-  - Full report at `reports/tvos_hardware_qualification.json`.
+- **Historical hardware observations:** The earlier summary reported 23 captures and 586 detections.
+  These counts do not establish precision or recall.
+  The retained report contains 29 capture entries and lacks complete reference labels.
+  Its earlier “zero false positives” claim is not independently supported.
+  See `reports/tvos_hardware_qualification.json` and the accuracy audit.
 
 ### iOS Model: YOLO11n v2.0 (Trained + Evaluated 2026-08-23)
 
-5-class iOS detector trained via Ultralytics YOLO11n (100 epochs), exported to CoreML with NMS baked into the graph (IoU 0.30, confidence floor 0.001). Evaluated on the **same 1,394 held-out validation images** as the Create ML baseline below, so the two are directly comparable.
+5-class iOS detector trained via Ultralytics YOLO11n (100 epochs), exported to CoreML with NMS baked into the graph (IoU 0.30, confidence floor 0.001). Evaluated on the **same 1,394 generated-screen validation images** as the Create ML baseline below, so the two are directly comparable.
 
 | Class | AP@0.5 (.pt) | AP@0.5 (CoreML) | GT instances |
 |---|---|---|---|
@@ -144,7 +175,7 @@ NativeUIAuditKit builds a custom Vision-style request backed by CoreML object de
 | toggle | 0.984 | 0.909 | 1,074 |
 | **mAP@0.5** | **0.968** | **0.935** | — |
 
-DS-G5 (every class AP@0.5 ≥ 0.50) and DS-G6 (mAP ≥ 0.70) both pass with wide margin. Every class improved over the Create ML baseline — navigationBar 0.775 → 0.909, textField 0.505 → 0.961 most notably. The ~3-point gap between the raw PyTorch and exported CoreML numbers is normal export/quantization precision loss, not a defect.
+DS-G5 (every class AP@0.5 ≥ 0.50) and DS-G6 (mAP ≥ 0.70) both pass with wide margin. Every class improved over the Create ML baseline — navigationBar 0.775 → 0.909, textField 0.505 → 0.961 most notably. The observed backend gap is about 3 percentage points. These results do not isolate its cause.
 
 **On-device latency** (physical iPhone, `best.mlpackage` via direct `MLModel` inference — no Vision framework overhead):
 
@@ -414,11 +445,11 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **3: Dataset Generator** | ✅ Done | SwiftUI templates + first generation run | 50/50 spot-check pass; imageSHA256 = 1.0 |
 | **4: UIKit Generator** | ✅ Done | UIKit-rendered controls (anti-overfitting) | UIKit templates live; ~20k training entries |
 | **5 / 5a / 5b: Hard Negatives + templates** | ✅ Done | Known-bad + extended SwiftUI/UIKit templates | 16,440 images; UIKitToggleForm live |
-| **6: iOS Model (5-class)** | ✅ Done | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (mAP=0.935, YOLO11n); device latency ✓ (~7.5ms); holdout 0.934 |
+| **6: iOS Model (5-class)** | ✅ Done | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (generated-screen mAP=0.935, YOLO11n); direct inference latency ✓ (~7.5ms); withheld generated-template mAP 0.934 |
 | **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline | TASK-6d-1 through 6d-7 pass |
 | **6→6a: Foundation Models eval** | ✅ Skipped | Confirmed infeasible — `FoundationModels` has no image input API | Decision documented — proceeded to 6a |
-| **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout | DS-G8: mAP@0.5 ≥ 0.85 on withheld-template test (Run 009 = **0.586**) |
-| **6b: tvOS Model** | ✅ Done (v3.0) | OS UI + FocusRing v0.1 | mAP@0.5 = 0.9822; remaining: R-1 scale, FOCUS-DET-05, 6b-U |
+| **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout | DS-G8: mAP@0.5 ≥ 0.85 on withheld-template test (historical Run 009 = **0.586**; matched Run 009 **0.5549**, Run 013 **0.6322**; custom AP) |
+| **6b: tvOS Model** | ✅ Done (v3.0) | OS UI + FocusRing v0.1 | Synthetic-screen validation mAP@0.5 = 0.9822; remaining: R-1 scale, FOCUS-DET-05, 6b-U |
 | **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | Requires 6a DS-G8; then mAP@0.5 ≥ 0.80 |
 | **7: OCR Fusion** | ✅ Done | Visible text + truncation/clipping rules | `ObservationMerger` + audit rules |
 | **8: Device/OS Inference** | ✅ Done | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked |

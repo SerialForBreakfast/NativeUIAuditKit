@@ -1,5 +1,8 @@
 # Model status and recovery — October 24, 2026
 
+Real-app accuracy is not independently established. Dataset scores do not measure the percentage of screenshots understood.
+See [REAL543](RealAppValidation543.md) for the independent benchmark and historical metric audit.
+
 Owner: Maximum-mini-NUIAK.
 All 26 MATCHED499 jobs complete. Their output hashes match their execution receipts.
 No new model qualifies for promotion. Standard and the optional HCF observer remain unchanged.
@@ -8,10 +11,10 @@ No new model qualifies for promotion. Standard and the optional HCF observer rem
 
 | Model | Evidence and scope | Problem | Next priority |
 |---|---|---|---|
-| Shipped iOS `nativeui-ios-v2.0`, 5 classes | Historical Core ML mAP50 0.935; PyTorch 0.968. These are release evaluation results. | These scores do not establish coverage across new native classes. | Preserve this release. Evaluate broader native coverage separately. |
-| Experimental iOS Run013, 13 supported classes | Matched withheld mAP50 0.6322 versus Run009 0.5549. | Native adaptation still loses retained detections. The 41-class release gate remains closed. | Repair training coverage and localization before another fit. |
+| Shipped iOS `nativeui-ios-v2.0`, 5 classes | Historical Core ML mAP50 0.935; PyTorch 0.968. These are generated-screen validation results. | These scores do not establish coverage across new native classes. | Preserve this release. Evaluate broader native coverage separately. |
+| Experimental iOS Run013, 13 supported classes | Matched withheld generated-family custom mAP50 0.6322 versus Run009 0.5549. | Native adaptation still loses retained detections. The 41-class release gate remains closed. | Repair training coverage and localization before another fit. |
 | Frozen iOS adaptations | Mixed data detects 1,829/2,030 labeled occurrences, versus 1,848 for frozen original-only training. It gains 13 and loses 32. | Class-agnostic matching still loses boxes. Class naming alone does not explain the regression. | Identify lost classes and geometry. Require complete training-only labels and matched retention checks. |
-| Shipped tvOS `nativeui-tvos-v3.0`, 25 classes | Historical mAP50 0.9822. Current native stress comparisons detect 86/236 labeled occurrences. | This general detector loses 56 scoped-detector successes and gains 28. Historical accuracy does not describe these native cases. | Diagnose body coverage and crop geometry. Do not replace the scoped proposal source wholesale. |
+| Shipped tvOS `nativeui-tvos-v3.0`, 25 classes | Historical synthetic-screen validation mAP50 0.9822. Current native stress comparisons detect 86/236 labeled occurrences. | This general detector loses 56 scoped-detector successes and gains 28. Historical accuracy does not describe these native cases. | Diagnose body coverage and crop geometry. Do not replace the scoped proposal source wholesale. |
 | Scoped tvOS DETECTOR422 | Detects 114/236 labels in the matched class-agnostic comparison. Supports 10/24 correct Standard focus selections. | Missing or malformed boxes still prevent correct focus selection. | Use matched geometry reports to select a targeted proposal correction. |
 | Shipped FocusRing crop classifier | Historical 270/270 development crops; that set contains no hard negatives. | Crop accuracy does not establish full-screen accuracy or safe abstention. | Preserve the release. Evaluate proposal errors, decorative controls, and no-focus cases separately. |
 | Standard experimental crop models | Both tested crop models select correctly on 24/24 supplied-box native observations. | With general-detector boxes, the newer crop model selects 3/24 correctly and makes 12 wrong selections. | Fix the proposal path before further crop training. Teacher preservation also fails retained consumer negatives. |

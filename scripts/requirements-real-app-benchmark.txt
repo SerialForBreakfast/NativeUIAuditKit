@@ -1,0 +1,2 @@
+# Official COCO evaluator for REAL543. Use the existing evaluation environment.
+pycocotools==2.0.11

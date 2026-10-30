@@ -1,0 +1,163 @@
+diff --git a/PhotoGuessingGame/Services/PhotoService.swift b/PhotoGuessingGame/Services/PhotoService.swift
+index 2f91f39..543bcc1 100644
+--- a/PhotoGuessingGame/Services/PhotoService.swift
++++ b/PhotoGuessingGame/Services/PhotoService.swift
+@@ -118,13 +118,13 @@ class PhotoService {
+         ]
+ 
+         for i in 0..<10 {
+-            let year = Int.random(in: 2015...2024)
+-            let month = Int.random(in: 1...12)
+-            let day = Int.random(in: 1...28)
++            let year = REAL543Content.enabled ? 2015 + i : Int.random(in: 2015...2024)
++            let month = REAL543Content.enabled ? 1 + i % 12 : Int.random(in: 1...12)
++            let day = REAL543Content.enabled ? 1 + (i * 3) % 28 : Int.random(in: 1...28)
+             let cityInfo = cities[i % cities.count]
+ 
+             let photo = GamePhoto(
+-                id: UUID(),
++                id: REAL543Content.enabled ? REAL543Content.identifier(i) : UUID(),
+                 imageData: nil,
+                 imagePath: "demo_\(i)",
+                 date: PhotoDate(year: year, month: month, day: day),
+diff --git a/PhotoGuessingGame/Utils/GameUtils.swift b/PhotoGuessingGame/Utils/GameUtils.swift
+index 2be2347..52a5040 100644
+--- a/PhotoGuessingGame/Utils/GameUtils.swift
++++ b/PhotoGuessingGame/Utils/GameUtils.swift
+@@ -12,10 +12,15 @@ enum GameUtils {
+         // least eight years: with a flat 1990 floor, a photo from before 1983
+         // left too few years and the loop below never ended, and one from
+         // before 1980 made the range empty and crashed.
+-        let currentYear = Calendar.current.component(.year, from: Date())
++        let currentYear = REAL543Content.enabled ? 2026 : Calendar.current.component(.year, from: Date())
+         let maxYear = max(correctYear, min(currentYear, correctYear + 10))
+         let minYear = min(max(1990, correctYear - 10), maxYear - 7, correctYear)
+ 
++        if REAL543Content.enabled {
++            for year in minYear...maxYear where options.count < 8 { options.insert(year) }
++            return options.sorted()
++        }
++
+         while options.count < 8 {
+             let randomYear = Int.random(in: minYear...maxYear)
+             options.insert(randomYear)
+@@ -31,14 +36,14 @@ enum GameUtils {
+ 
+         // Add other values from the pool
+         let otherValues = allValues.filter { $0.lowercased() != correctValue.lowercased() }
+-        let shuffled = otherValues.shuffled()
++        let shuffled = REAL543Content.enabled ? otherValues.sorted() : otherValues.shuffled()
+ 
+         for value in shuffled {
+             if options.count >= count { break }
+             options.insert(value)
+         }
+ 
+-        return Array(options).shuffled()
++        return REAL543Content.enabled ? options.sorted() : Array(options).shuffled()
+     }
+ 
+     /// Get the number of days in a given month
+@@ -47,8 +52,8 @@ enum GameUtils {
+         components.year = year
+         components.month = month
+ 
+-        guard let date = Calendar.current.date(from: components),
+-              let range = Calendar.current.range(of: .day, in: .month, for: date) else {
++        guard let date = REAL543Content.calendar.date(from: components),
++              let range = REAL543Content.calendar.range(of: .day, in: .month, for: date) else {
+             return 31
+         }
+ 
+@@ -62,11 +67,11 @@ enum GameUtils {
+         components.month = month
+         components.day = 1
+ 
+-        guard let date = Calendar.current.date(from: components) else {
++        guard let date = REAL543Content.calendar.date(from: components) else {
+             return 0
+         }
+ 
+-        return Calendar.current.component(.weekday, from: date) - 1
++        return REAL543Content.calendar.component(.weekday, from: date) - 1
+     }
+ 
+     /// Format a score with proper pluralization
+@@ -94,3 +99,30 @@ enum GameUtils {
+         }
+     }
+ }
++
++
++// Controlled benchmark data does not change focus behavior or view layout.
++enum REAL543Content {
++    static var enabled: Bool {
++        #if DEBUG
++        ProcessInfo.processInfo.arguments.contains("--real543-controlled-content")
++        #else
++        false
++        #endif
++    }
++    static var calendar: Calendar {
++        guard enabled else { return Calendar.current }
++        var value = Calendar(identifier: .gregorian)
++        value.timeZone = TimeZone(secondsFromGMT: 0)!
++        value.locale = Locale(identifier: "en_US_POSIX")
++        return value
++    }
++    static func identifier(_ index: Int) -> UUID {
++        UUID(uuidString: String(format: "00000000-0000-4000-8000-%012d", index + 1))!
++    }
++    static func hue(_ id: UUID) -> Double {
++        // Swift hash values vary between processes. Use the stable suffix instead.
++        let index = Int(id.uuidString.suffix(12)) ?? 0
++        return Double((index * 37) % 360) / 360.0
++    }
++}
+diff --git a/PhotoGuessingGame/ViewModels/GameViewModel.swift b/PhotoGuessingGame/ViewModels/GameViewModel.swift
+index a2cd78d..60294b9 100644
+--- a/PhotoGuessingGame/ViewModels/GameViewModel.swift
++++ b/PhotoGuessingGame/ViewModels/GameViewModel.swift
+@@ -89,6 +89,10 @@ class GameViewModel: ObservableObject {
+     // MARK: - Photo Loading
+ 
+     func loadPhotos() async {
++        if REAL543Content.enabled {
++            allPhotos = photoService.loadDemoPhotos()
++            return
++        }
+         isLoadingPhotos = true
+         loadingProgress = 0
+         loadingMessage = "Loading photos..."
+@@ -159,6 +163,7 @@ class GameViewModel: ObservableObject {
+     // MARK: - Game Flow
+ 
+     func startGame() {
++        if REAL543Content.enabled { extractLocationData() }
+         // Filter photos based on game mode
+         switch gameMode {
+         case .date:
+@@ -168,7 +173,7 @@ class GameViewModel: ObservableObject {
+         }
+ 
+         // Shuffle photos
+-        photos.shuffle()
++        if !REAL543Content.enabled { photos.shuffle() }
+ 
+         // Reset game state
+         currentPhotoIndex = 0
+diff --git a/PhotoGuessingGame/Views/PhotoDisplayView.swift b/PhotoGuessingGame/Views/PhotoDisplayView.swift
+index 647dedc..aa66eb5 100644
+--- a/PhotoGuessingGame/Views/PhotoDisplayView.swift
++++ b/PhotoGuessingGame/Views/PhotoDisplayView.swift
+@@ -57,8 +57,8 @@ struct DemoPhotoPlaceholder: View {
+             // Gradient background based on photo properties
+             LinearGradient(
+                 colors: [
+-                    Color(hue: Double(photo.id.hashValue % 360) / 360.0, saturation: 0.5, brightness: 0.6),
+-                    Color(hue: Double((photo.id.hashValue + 60) % 360) / 360.0, saturation: 0.5, brightness: 0.4)
++                    Color(hue: (REAL543Content.enabled ? REAL543Content.hue(photo.id) : Double(photo.id.hashValue % 360) / 360.0), saturation: 0.5, brightness: 0.6),
++                    Color(hue: (REAL543Content.enabled ? (REAL543Content.hue(photo.id) + 1.0 / 6.0).truncatingRemainder(dividingBy: 1) : Double((photo.id.hashValue + 60) % 360) / 360.0), saturation: 0.5, brightness: 0.4)
+                 ],
+                 startPoint: .topLeading,
+                 endPoint: .bottomTrailing
