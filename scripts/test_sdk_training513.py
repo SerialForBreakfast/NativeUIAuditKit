@@ -222,3 +222,27 @@ class ProductScopeTests(PreparationTests):
     def test_invalid_product_is_rejected(self):
         request=self.request([self.pair()],True);request['products']=['anything']
         with self.assertRaisesRegex(ValueError,'sdk513_products'):s.intake(request)
+
+
+class IndependentProductTests(ProductScopeTests):
+    def test_missing_timing_blocks_only_temporal_product(self):
+        for index in range(2):
+            name='products-'+str(index)
+            ref=self.pair(name=name,timing_unknown=True)
+            request=self.request([ref],True,name=name)
+            path=self.root/(name+'.json');q.save(path,request)
+            result=s.compile_products(path,self.root/(name+'-products'))
+            self.assertEqual([r['state'] for r in result['products']],['prepared','blocked'])
+            self.assertTrue(result['products'][0]['trainingEligible'])
+            compiled=q.load(checked(result['products'][0]['compiled']))
+            register(compiled,self.queue,approve=True)
+            ids=[j['job'] for j in compiled['jobs']]
+            for _ in range(2):q.run(self.queue,job_ids=ids,lock=self.root/'lock',max_jobs=5)
+            self.assertEqual([q.state(self.queue/'jobs'/i)[0] for i in ids],['complete']*2)
+            self.assertFalse(result['executionStarted'])
+
+    def test_review_role_never_becomes_training(self):
+        ref=self.pair(name='review-product',split='test')
+        path=self.root/'review-products.json';q.save(path,self.request([ref],name='review-products'))
+        result=s.compile_products(path,self.root/'review-products')
+        self.assertTrue(all(not r['trainingEligible'] for r in result['products']))

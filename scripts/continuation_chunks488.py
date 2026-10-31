@@ -91,6 +91,58 @@ def build(base, ids, stop, proof, folder, budget, reason, queue=q.QUEUE, timeout
     return out
 
 
+def from_parent(parent_id, ident, proof, folder, budget, reason, timeout, max_bytes, trainer=None, queue=q.QUEUE):
+    """QUEUE548: build 1 continuation that resumes an exhausted T06 fit to epoch 30. Return (spec, record).
+
+    Only the adapter, resume inputs, limits, and resume mode change. The job declares no unread dependency.
+    """
+    parent = q.load(queue/'jobs'/parent_id/'spec.json')
+    q.require(parent['authority'] == 'training' and parent['training']['resume'] == 'restart' and
+              parent['template']['id'] == 'T06', 'chunk_parent_not_t06')
+    attempts = q.attempts_of(queue/'jobs'/parent_id)
+    result_path = attempts[-1]/'result.json'
+    result = q.load(result_path)
+    q.require(result.get('status') == 'failed' and result.get('reason') == 'timeout', 'chunk_parent_not_timeout')
+    checkpoint = pin(attempts[-1]/'out/last.pt')
+    restoration = q.load(proof)
+    q.require(restoration.get('passed') is True and restoration.get('trainer') == trainer, 'chunk_parity_trainer')
+    spec = copy.deepcopy(parent)
+    spec['id'] = ident
+    spec['adapter'] = dict(type='python-callable', steps=['checkpoint_restore404.run'],
+                           outputAttributes=['checkpoint_restore404.OUT'])
+    spec['dependencies'] = []
+    spec['limits'] = dict(maxAttempts=1, timeoutSeconds=timeout, maxOutputBytes=max_bytes)
+    spec['training'] = dict(spec['training'], resume='checkpoint-v1')
+    membership, initialization = spec['training']['membership'][0], spec['training']['initialization']
+    parent_result = pin(result_path)
+    proof_pin = qualification(folder/(ident + '-qualification.json'), checkpoint, spec['adapter'], budget,
+                              parent_result, proof, 'Single chunk to epoch 30. Subset parity with the same trainer and '
+                              'deduplication setting. Native accuracy is not qualified.')
+    spec['resumeInputs'] = dict(checkpoint=checkpoint, qualification=pin(proof), membership=membership,
+                                initialization=initialization)
+    if trainer is not None:
+        spec['restoreTrainer'] = trainer
+    extra = [checkpoint, pin(proof), proof_pin, pin(q.ROOT/'scripts/checkpoint_restore404.py')]
+    if trainer is not None:
+        extra.append(pin(q.ROOT/('scripts/train_focus_ring_detector_' + trainer + '.py')))
+    kept = []
+    for p in spec['inputs']:
+        current = q.ROOT/p['path']
+        if current.is_file() and q.digest(current) == p['sha256']:
+            kept.append(p)
+        else:
+            # The parent's own adapter code may change after the fit. Any other stale input stops the build.
+            q.require(p['path'].startswith('scripts/'), 'chunk_parent_input_changed:' + p['path'])
+    spec['inputs'] = kept + [p for p in extra if p not in kept]
+    spec['evidence'] = dict(spec['evidence'], reads=[membership['path'], initialization['path'],
+                                                     pin(proof)['path'], checkpoint['path']])
+    q.validate(spec)
+    record = dict(version=c.VERSION, job=ident, specSHA256=q.text_digest(spec), parent=parent_id,
+                  parentAttempt=int(attempts[-1].name), parentResult=parent_result, checkpoint=checkpoint,
+                  qualification=proof_pin, reason=reason, budget=budget)
+    return spec, record
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('base', help='job ID of the reviewed base successor')

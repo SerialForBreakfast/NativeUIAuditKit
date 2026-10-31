@@ -220,6 +220,36 @@ def compile_request(path, destination):
     q.save(destination/'compiled.json',result);return result
 
 
+def compile_products(path, destination):
+    """Compile each requested data product without imposing another product's gates."""
+    request = q.load(path)
+    products = request.get('products', ['crops', 'temporal'])
+    q.require(products in (['crops'], ['temporal'], ['crops', 'temporal']), 'sdk513_products')
+    # Structural, ancestry, and evidence validation still applies to every product.
+    # Keep each result explicit. No failed product becomes a successful dependency.
+    q.require(not destination.exists(), 'sdk513_product_destination_exists')
+    destination.mkdir(parents=True)
+    results = []; jobs = []
+    for product in products:
+        selected = dict(request, id=request['id']+'-'+product, products=[product])
+        prepared = destination/(product+'-request.json')
+        q.save(prepared, selected)
+        try:
+            data = intake(selected)
+            compiled = compile_request(prepared, destination/product)
+            jobs.extend(compiled['jobs'])
+            results.append(dict(product=product, state='prepared', trainingEligible=data['trainingEligible'],
+                                gaps=data['gaps'], compiled=pin(destination/product/'compiled.json')))
+        except (ValueError, OSError, KeyError, TypeError) as error:
+            results.append(dict(product=product, state='blocked', trainingEligible=False, requirement=str(error)))
+    result = dict(version='sdk-product-batch-v1', request=pin(path), products=results,
+                  jobs=jobs, executionStarted=False, modelAccepted=False)
+    q.save(destination/'products.json', result)
+    return result
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('request',type=Path);parser.add_argument('--output',type=Path,required=True)
-    args=parser.parse_args();print(json.dumps(compile_request(args.request,args.output),indent=2))
+    parser.add_argument('--independent-products',action='store_true')
+    args=parser.parse_args()
+    print(json.dumps((compile_products if args.independent_products else compile_request)(args.request,args.output),indent=2))

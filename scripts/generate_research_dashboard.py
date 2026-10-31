@@ -103,6 +103,10 @@ dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px sol
   <p id="backlog-warning" class="warning small" hidden></p>
   <table id="backlog-table" class="small"><thead><tr><th>Record</th><th>Title</th><th>Jobs done</th><th>Ready</th><th>Result</th></tr></thead><tbody></tbody></table>
 </details>
+<details id="model-tracks" open><summary><strong>Model tracks</strong></summary>
+  <p id="model-track-status" class="small muted"></p>
+  <table class="small"><thead><tr><th>Model</th><th>Question</th><th>State</th><th>Ready work</th><th>Next action and owner</th></tr></thead><tbody id="model-track-rows"></tbody></table>
+</details>
 <section id="active" aria-live="polite" aria-label="Current task">
   <div class="active-title-row"><span id="active-badge" class="badge badge-idle">IDLE</span> <span id="active-title">No task is running</span></div>
   <div id="active-step">The queue is idle.</div>
@@ -242,8 +246,16 @@ function renderGlance(){
  if(b)add(next,'li','Catalog: '+b.answered+' questions answered, '+b.open+' open ('+(b.open-b.needsPlan)+' with a plan, '+b.needsPlan+' waiting for a template, data, or decision).').className='muted';
  if(!next.children.length)step('No action is due.');
 }
+function renderModelTracks(){
+ const value=data.modelTracks, body=$('model-track-rows');body.replaceChildren();
+ $('model-track-status').textContent=value?.error||value?.limitation||'Track report unavailable.';
+ for(const t of (value?.tracks||[])){
+  const row=add(body,'tr','');
+  for(const text of [t.track,t.question,t.state,t.readyJobs+' jobs; '+dur(t.readySeconds)+(t.readyUnknown?' + '+t.readyUnknown+' unestimated':''),t.nextAction+' Owner: '+t.owner])add(row,'td',text);
+ }
+}
 function renderBacklog(){
- renderGlance();
+ renderGlance();renderModelTracks();
  const b=data.backlog;$('backlog').hidden=!b;if(!b)return;
  $('backlog-summary').textContent=b.readyJobs+' ready jobs, about '+dur(b.readySeconds)+(b.readyUnknown?' plus '+b.readyUnknown+' without an estimate':'')+
   ' · '+b.planned+' planned records · '+b.needsPlan+' records need a plan';

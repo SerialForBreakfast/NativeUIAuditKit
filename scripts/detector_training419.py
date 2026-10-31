@@ -18,7 +18,7 @@ TRAIN_ONLY_VERSION = 'detector-training-membership-v2'
 
 def learning_rate(config, initialization):
     base=dict(initialization=initialization,selection='fixed-last',patience=0)
-    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone','warmupBiasRate'} and
+    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone','warmupBiasRate','teacherPreservation'} and
               all(config[k]==v for k,v in base.items()),'detector_training_configuration')
     q.require(config.get('checkpointRetention','all') in ('all','last-best-final'), 'detector_checkpoint_retention')
     q.require(type(config.get('freezeBackbone',False)) is bool, 'detector_freeze_backbone_boolean')
@@ -89,11 +89,16 @@ def run():
     rate=learning_rate(config,refs['initialization'])
     initialization=checked(refs['initialization'])
     membership=document(refs['membership'])
+    if 'teacherPreservation' in config:
+        from detector_preservation551 import validate
+        validate(config['teacherPreservation'], membership)
     dataset,counts=prepare(membership,OUT)
     from train_yolo import train_native_hcf
     import hcf_study371 as study
     study.OUT=OUT
     options=dict(weights='last',patience=0)
+    if 'teacherPreservation' in config:
+        options['teacher_preservation'] = (config['teacherPreservation'], membership)
     if 'learningRate' in config:options['learning_rate']=rate
     if 'warmupBiasRate' in config:options['warmup_bias_lr']=config['warmupBiasRate']
     if config.get('freezeBackbone'):options['freeze_backbone']=True
@@ -124,7 +129,7 @@ def run():
     shutil.copyfile(model,OUT/'final.pt')
     q.save(OUT/'history.json',history)
     q.save(OUT/'fit.json',dict(epochs=30,initialization=refs['initialization'],membership=refs['membership'],
-        frames=counts,selection='fixed-last',learningRate=rate,warmupBiasRate=config.get('warmupBiasRate'),freezeBackbone=config.get('freezeBackbone',False),resumeQualified=False,modelAccepted=False,
+        frames=counts,teacherPreservation=config.get('teacherPreservation'),selection='fixed-last',learningRate=rate,warmupBiasRate=config.get('warmupBiasRate'),freezeBackbone=config.get('freezeBackbone',False),resumeQualified=False,modelAccepted=False,
         validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
         calibrationUsedForSelection=False))
     q.save(OUT/'benchmark_summary.json',dict(epochs=30,frames=counts,modelAccepted=False,

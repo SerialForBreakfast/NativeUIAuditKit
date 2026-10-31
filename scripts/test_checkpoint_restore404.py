@@ -96,4 +96,21 @@ class AdmissionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'restore_chain_unqualified'):self.check()
 
 
+    # QUEUE548: only known frozen trainers are accepted.
+    def test_restore_trainer_allowlist(self):
+        self.spec['restoreTrainer']='d04a1702'
+        self.assertEqual(self.check(),self.refs)
+        self.spec['restoreTrainer']='other'
+        with self.assertRaisesRegex(ValueError,'restore_trainer_unknown'):self.check()
+
+    def test_frozen_trainer_is_byte_identical(self):
+        import hashlib, subprocess
+        from pathlib import Path
+        frozen=Path(restore.__file__).with_name('train_focus_ring_detector_d04a1702.py').read_bytes()
+        original=subprocess.run(['git','show','d04a1702:scripts/train_focus_ring_detector.py'],
+            cwd=Path(restore.__file__).parent,capture_output=True,check=True).stdout
+        self.assertEqual(hashlib.sha256(frozen).hexdigest(),hashlib.sha256(original).hexdigest())
+        self.assertTrue(callable(restore.trainer('d04a1702')))
+
+
 if __name__=='__main__':unittest.main()

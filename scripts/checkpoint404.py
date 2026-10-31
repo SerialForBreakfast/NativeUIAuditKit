@@ -15,7 +15,9 @@ OUT = None
 def repeat_value(cfg):
     value = cfg.get('repeat', 1)
     q.require(type(value) is int and 1 <= value <= 16, 'resume_repeat')
-    q.require(set(cfg) <= {'membership', 'initialization', 'repeat', 'endpoints'}, 'resume_configuration_fields')
+    q.require(set(cfg) <= {'membership', 'initialization', 'repeat', 'endpoints', 'trainer', 'deduplicate'},
+              'resume_configuration_fields')
+    q.require(cfg.get('deduplicate', True) in (True, False), 'resume_deduplicate')
     return value
 
 
@@ -28,15 +30,17 @@ def endpoints(cfg):
 
 
 def phase(config, output, mode, resume=None, stop=None):
-    from train_focus_ring_detector import train_native_hcf
+    from checkpoint_restore404 import trainer
     cfg=q.load(config)
+    train_native_hcf=trainer(cfg.get('trainer'))
     rows=q.load(checked(cfg['membership']))['rows']
     for row in rows:
         q.require(q.digest(Path(row['path'])) == row['sha256'], 'resume_crop_changed')
     initial=checked(cfg['initialization'])
     output.mkdir(parents=True, exist_ok=False)
     result=train_native_hcf(rows,initial,output,seed=371,profile='balanced',selection='fixed-last',
-        deduplicate=True,resume=resume,stop_after_epoch=stop if stop is not None else 12 if mode=='boundary' else None,
+        deduplicate=cfg.get('deduplicate',True),resume=resume,
+        stop_after_epoch=stop if stop is not None else 12 if mode=='boundary' else None,
         repeat=repeat_value(cfg))
     q.save(output/'fit.json',dict(result,modelAccepted=False))
 
@@ -98,6 +102,7 @@ def qualify():
     report=dict(version='hcf-crop-restoration-v1',passed=passed,metrics=metrics,lossMaximumDifference=loss_delta,
         endpointEpoch=30,interruptionEpoch=stops[0],interruptionEpochs=stops,totalTrainingEpochs=60,checkpoint=pin(checkpoint),
         sources={key:cfg[key] for key in ('membership','initialization')},
+        trainer=cfg.get('trainer'),deduplicate=cfg.get('deduplicate',True),
         repeat=repeat,scopeVersion='training-subset-chain-parity-v1' if len(stops)==2 else 'training-subset-parity-v1',
         seconds=time.monotonic()-start,modelAccepted=False,
         scope='Fixed-last crop trainer on retained tiny training membership and this MPS runtime. No detector or arbitrary checkpoint qualification.')

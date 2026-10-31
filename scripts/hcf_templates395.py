@@ -208,6 +208,11 @@ def build(doc):
     stage=[]
     if 'configuration' in doc['inputs']:stage=[dict(to='config.json',**{'from':doc['inputs']['configuration']})]
     pinned=[r for r in doc['inputs'].values() if 'path' in r]
+    if doc['template'] == 'T89' and 'teacherPreservation' in config:
+        from detector_preservation551 import validate
+        validate(config['teacherPreservation'], q.load(checked(doc['inputs']['membership'])))
+        pinned += [config['teacherPreservation'][key] for key in ('model', 'anchors')]
+        sources.append(pin(q.MODULES/'detector_preservation551.py'))
     if doc['template'] == 'T06' and 'teacherPreservation' in config:
         from teacher_preservation495 import validate_config as teacher_config, validate_anchors
         teacher = teacher_config(config['teacherPreservation'])

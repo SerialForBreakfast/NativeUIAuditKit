@@ -70,3 +70,16 @@ Research/Retention547Training.md records the fixed training controls and origina
 
 Standard, shipped models, previous successes, and original evidence remain unchanged.
 No runner restart, direct training, capture, dependency installation, or promotion occurs.
+
+## PROFILE425 HCF continuation scores — 2026-10-31
+The original HCF fit has no scores, so the matched controls are PROFILE425 Standard and joint.
+
+| Comparison with HCF epoch 30 | Lost successes | Gained | New wrong |
+|---|---|---|---|
+| Standard, 15 screen sets | 6 known-box (dark-background: 3 Standard, 3 HCF rows) | 0 | 0 |
+| Joint, 15 screen sets | 12 known-box | 3 | 0 |
+| Standard, 2 matched TTR crop sets | 6 | 1 | false positives rise from 6 to 8 and from 4 to 8 |
+
+HCF accepts all 8 negative crops in both TTR sets. It keeps 0 lost raw successes. Proposal arms are unchanged.
+The rule requires 0 lost successes and 0 new wrong selections. Both checks fail. Do not continue or repeat this fit unchanged.
+Details: reports/work/QUEUE548/r2-review.txt.

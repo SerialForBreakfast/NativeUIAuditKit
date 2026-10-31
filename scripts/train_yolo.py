@@ -102,7 +102,7 @@ class FrozenYOLOBackbone:
                     ema[key].copy_(value.to(device=ema[key].device, dtype=ema[key].dtype))
 
 
-def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False, warmup_bias_lr=None):
+def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False, warmup_bias_lr=None, teacher_preservation=None):
     """Use the resident YOLO trainer with fixed native HCF settings.
 
     weights='best' keeps the HCF371 behavior (validation fitness). weights='last' returns the final epoch.
@@ -125,6 +125,9 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
     from ultralytics import YOLO
     model = YOLO(str(initialization))
     options = {}
+    if teacher_preservation is not None:
+        from detector_preservation551 import attach
+        attach(model, *teacher_preservation, Path(dataset_yaml), Path(output))
     if warmup_bias_lr is not None:
         options['warmup_bias_lr']=warmup_bias_lr
         def verify_rate(trainer):

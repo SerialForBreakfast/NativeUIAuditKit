@@ -5208,3 +5208,19 @@ Correct approach: after an edit to `research_continuations.py`, `research_queue.
 dashboard at an idle boundary with `scripts/restart_research_dashboard.py`. Then confirm that the expected job starts.
 Why this matters: a fresh-process check can pass while the server still applies the old rule.
 
+## Reuse dashboard options from the server log — QUEUE548
+
+What went wrong: a zsh pattern extracted the running server's `--priority-task` value incorrectly.
+The restart passed `--priority-task [^` instead of `PARALLEL551`.
+Correct approach: read the previous options from the latest `start:` line in `.build/dashboard/server.log`, or type them explicitly.
+Check the new server's command line after each restart.
+Why this matters: a wrong priority silently changes the order of ready work after the restart.
+
+## Batch TTR launches across backlog needs — REAL550, 2026-10-31
+
+What went wrong: one TTR activation took several minutes and replayed only 3 images.
+About 35 open records waited on TTR or Fixture captures (T03, T47, T37, T07, and T42) at the same time.
+Correct approach: before each build, launch, or capture session, collect all needs from `backlog_pipeline.py blockers` and Tasks.md.
+Prepare their recipes and consumer jobs first. Then do them in 1 session.
+Why this matters: launches occupy shared Simulators and cost minutes. Batching unblocks more experiments for each launch.
+

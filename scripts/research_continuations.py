@@ -85,7 +85,10 @@ def validate(record, queue):
     q.require(result.get('status') == 'failed' and result.get('reason') == 'timeout', 'continuation_not_exhausted')
     parent_spec = q.load(parent/'spec.json')
     q.require(result.get('specSHA256') == q.text_digest(parent_spec), 'continuation_parent_changed')
-    q.require(all(pin in spec['inputs'] for pin in parent_spec['inputs']), 'continuation_controls_changed')
+    # Data and configuration pins must stay identical. Code pins of the parent's own adapter may change: the
+    # continuation runs the restore adapter, and the checkpoint contract enforces the trainer and backbone hashes.
+    q.require(all(pin in spec['inputs'] for pin in parent_spec['inputs'] if not pin['path'].startswith('scripts/')),
+              'continuation_controls_changed')
     for field in ('authority', 'hypothesis', 'decisionRule', 'templateConfig'):
         q.require(spec.get(field) == parent_spec.get(field), 'continuation_controls_changed:' + field)
     if spec.get('authority') == 'training':

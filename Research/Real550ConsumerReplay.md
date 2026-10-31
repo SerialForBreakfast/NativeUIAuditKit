@@ -196,3 +196,29 @@ Both original receipts remain preserved.
 The coordinator stores the proven activation recipe and lifecycle discrepancy at cursor 1820.
 No TTR reply or delivery confirmation is present. The TTR source owner still controls its implementation and Git publication.
 Next: review this actual screen, reconcile SDK readiness, and complete runtime provenance before frozen inference.
+
+## Activation of ac85177b and replay, October 31, 2026
+
+The maintainer approves activation of TTR source ac85177b on Maximum-mini-TTR.
+Maximum-mini-NUIAK verifies that the previous e8bbdd4a app is idle before replacement.
+It has no active command, no observation, and no queued command.
+The new app starts in project mode, and the TTR candidate preflight reports `ready_for_device_preflight`.
+
+| Case | Export audit | Valid elements | Rejected geometry | Selection | Same predictions as e8bbdd4a |
+|---|---|---|---|---|---|
+| button | pass | 2 | 1 | null, `partial_provider_result` | yes |
+| row | pass | 6 | 1 | null, `partial_provider_result` | yes |
+| tab | pass | 4 | 1 | null, `partial_provider_result` | yes |
+
+The runtime now observes these identities:
+
+- source revision ac85177b, as a build-supplied base revision, not a clean-tree attestation
+- preprocessing `yolo-letterbox-v1`
+- taxonomy `sha256-canonical-model-manifest-v1:b6a3d84d…ca29`, for the entire validated manifest
+
+Detector and focus digests are unchanged. Crop identity remains unavailable.
+The off-screen proposal still suppresses each selection. REAL550-FOCUS owns that diagnosis.
+The NUIAK feature returns to disabled. No capture, navigation, training, or model change occurs.
+These results are development integration evidence, not accuracy evidence.
+Receipts: [activation summary](../reports/work/REAL550/activate551/summary.json). Coordinator cursor 1838 stores the status.
+

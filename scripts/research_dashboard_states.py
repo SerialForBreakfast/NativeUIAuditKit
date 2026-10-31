@@ -65,6 +65,11 @@ def annotate(value, queue, modules):
         row['displayState'], row['readinessReasons'] = classify(row, readiness)
     supersede(value['jobs'], successors(q.ROOT))
     value['backlog'] = backlog_summary(value['jobs'], q.ROOT)
+    from model_tracks551 import report
+    try:
+        value['modelTracks'] = report((q.ROOT/'Tasks.md').read_text(), value['jobs'])
+    except (OSError, ValueError) as error:
+        value['modelTracks'] = dict(tracks=[], error=str(error))
     return value
 
 

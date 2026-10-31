@@ -3,7 +3,7 @@
 Real-app accuracy is not independently established. Dataset scores do not measure the percentage of screenshots understood.
 See [REAL543](RealAppValidation543.md) for the independent benchmark and historical metric audit.
 
-Owner: Maximum-mini-NUIAK. Reviewed October 25, 2026.
+Owner: Maximum-mini-NUIAK. Reviewed October 31, 2026.
 
 ## Common decision
 
@@ -19,21 +19,19 @@ Use existing release requirements. This plan does not lower DS-G8 or authorize a
 
 Run013 achieves matched withheld generated-family custom mAP50 0.6322 versus Run009 0.5549 on 13 supported classes.
 Native adaptations still lose retained detections. The 5-class release remains the consumer baseline.
-The immediate candidate is annotation-quarantine training, not another resolution sweep.
+ROW545 annotations are corrected. Frozen, wider-data, and lower-rate candidates still lose retained detections.
+The next controlled factor is classification preservation on original training images.
 
-1. Consume the existing IOS534 control and additive graphs. Do not submit duplicate fits.
-2. Review their matched IOS527 and Run013 reports, including class-aware and class-agnostic losses.
-3. Review row535-native-bounds. Require measured row extent and preserved text bounds across all 4 frames.
-4. If row geometry passes, prepare corrected training-only groups using T46 and existing membership preparation.
-5. Change only the justified training factor. Use T89 and detector_training_batch478 for train, score, compare, and retention.
-6. If retention passes, qualify independent native groups and the exact Core ML consumer path.
+1. Reuse the completed ROW545 control fit and its 7 scoring sets.
+2. Train IOS551-PRESERVE with the same 157 images, initialization, seed, learning rates, and 30 epochs.
+3. Apply a frozen Run013 teacher only to the 125 original training members.
+4. Compare every candidate score with ROW545, Run013, and the earlier native control.
+5. If previous successes regress, run the predefined class-versus-geometry diagnoses.
+6. If retention and native gains pass, prepare independent qualification. Do not promote from these development results.
 
-Acceptance: retain prior successes, improve the targeted native cases, and pass existing class and release gates.
-If quarantine fails, diagnose the remaining 8 missing-box cases before another fit.
-Do not erase the 5 competing evaluation labels from historical acceptance reports.
-Status: control training completes. Additive training and comparison completion are not established in this review.
-The row capture is approved but has no result yet. No new fit is admitted by this plan.
-Budgets: reuse the submitted 30-epoch, 1,800 s, 2 GiB fit specifications. New membership requires a new immutable specification.
+The fixed fit permits 1,800 s and 2 GiB. Teacher overhead remains unmeasured.
+The graph includes 1 fit, 7 scores, 1 decision, 3 retention reports, and 7 conditional diagnoses.
+These 19 nodes represent 1 investigation. They are not 19 independent experiments.
 
 ## 2. tvOS detector: general model and scoped proposal candidates
 
@@ -120,28 +118,33 @@ Budget: T49 retains its existing 10-epoch contract. Record exact time and storag
 
 ## Shared blocker and execution order
 
-Sillycon-TTR must supply the supported profile producer command and exact source revision.
-Existing collectors and verifiers do not construct the complete campaign ledger.
-BigDog-Coordinator request 1506 asks for routing. Forwarding and acceptance remain unverified.
-This is an implementation dependency, not a request for repeated capture permission.
-Maximum-mini-NUIAK owns producer integration, qualification, and automatic intake after that interface is available.
+The producer now exists. Its current source accepts only test-role tvOS cases.
+Maximum-mini-NUIAK must not relabel those captures as training data.
+Sillycon-TTR must support new training and validation groups with explicit ancestry and observed profile evidence.
+The request is stored at coordinator cursor 1836. Forwarding and acceptance remain unconfirmed.
+
+Maximum-mini-NUIAK now compiles static crops and temporal products independently through sdk_training513.
+Missing action timing blocks temporal training without blocking qualified static crops.
+Detector taxonomy and full inventory remain separate requirements. Binary focus crops do not inherit them.
+Two software campaigns exercise the same compiler with different configurations.
+This proves software reuse. It does not establish native training eligibility.
 
 Priority order:
 
-1. Finish existing IOS534 and row535 graphs. They have executable jobs already admitted.
-2. Qualify the measured Standard fallback through the exact TTR consumer path.
-3. Connect native profile acquisition once, then release separate Standard, HCF, mixed, and temporal data products.
-4. Run matched native correction fits after each product passes its own admission checks.
-5. Perform independent release qualification and preserve rollback artifacts.
+1. Qualify retained Standard replay through published TTR revision ac85177b.
+2. Execute the matched iOS preservation graph through the detached runner after qualification.
+3. Review complete real-app labels independently of TTR provenance work.
+4. Release each native product when its own evidence and producer role pass.
+5. Qualify exact HCF checkpoint restoration before any approved continuation.
+6. Prepare independent temporal groups before training a departure correction.
 
-Do not require complete detector inventory for crop-only products.
-Do not require temporal history for single-frame crops.
-Do not require optional HCF groups for Standard acquisition.
-Unknown labels remain unknown. Missing observations cannot be reconstructed from expectations.
+Unknown labels remain unknown. Missing observations cannot be reconstructed from expected actions.
+Standard remains first. HCF stays optional. Inspected evidence remains development evidence.
 
 ## Execution status and evidence
 
-This document defines conditional execution plans. It does not claim missing-input branches are runnable jobs.
-No new training, capture, model promotion, or runner restart occurs during this review.
-Existing evidence: CurrentState.md, Stream515Qualification.md, SDK530NativeLabelsAndIOS.md, and Review535RowsAndQueue.md.
-Queue review confirms ios534-control-train attempt 1 completes. Final comparisons and row capture results are absent.
+See Tasks.md for current admissions and exact blockers.
+See reports/work/PARALLEL551 for implementation tests and frozen experiment specifications.
+TTR candidate activation still needs the separately requested authorization.
+Executed crop identity remains unavailable in the published runtime contract.
+Real-app accuracy remains unestablished. No result in this plan changes a shipped model.

@@ -11,6 +11,18 @@ OUT=None
 
 
 CHAIN='training-subset-chain-parity-v1'
+# QUEUE548: a frozen, byte-identical trainer restores checkpoints whose contract pins an older trainer hash.
+TRAINERS=(None,'d04a1702')
+
+
+def trainer(name):
+    """Return the train function. Static imports keep both trainers in the approval code pins."""
+    q.require(name in TRAINERS,'restore_trainer_unknown')
+    if name=='d04a1702':
+        from train_focus_ring_detector_d04a1702 import train_native_hcf
+    else:
+        from train_focus_ring_detector import train_native_hcf
+    return train_native_hcf
 
 
 def chained(spec):
@@ -32,6 +44,7 @@ def validate_inputs(spec):
         checked(ref)
     stop=spec.get('resumeStopEpoch')
     q.require(stop is None or (type(stop) is int and 1<=stop<30),'restore_stop_epoch')
+    q.require(spec.get('restoreTrainer') in TRAINERS,'restore_trainer_unknown')
     proof=q.load(checked(refs['qualification']))
     q.require(proof.get('version')=='hcf-crop-restoration-v1' and proof.get('passed') is True,'restore_unqualified')
     q.require(not chained(spec) or proof.get('scopeVersion')==CHAIN,'restore_chain_unqualified')
@@ -80,10 +93,13 @@ def run():
     repeat=validate_contract(checkpoint,qualified,proof.get('scopeVersion') in ('training-subset-parity-v1',CHAIN))
     stop=spec.get('resumeStopEpoch')
     q.require(stop is None or checkpoint.get('epoch',30)<stop,'restore_stop_before_checkpoint')
-    from train_focus_ring_detector import train_native_hcf
+    train_native_hcf=trainer(spec.get('restoreTrainer'))
     rows=q.load(checked(refs['membership']))['rows']
     for row in rows:q.require(q.digest(Path(row['path']))==row['sha256'],'restore_crop_changed')
-    result=train_native_hcf(rows,checked(refs['initialization']),OUT,seed=371,profile='balanced',
-        selection='fixed-last',deduplicate=True,resume=checkpoint_path(refs['checkpoint']),repeat=repeat,
-        stop_after_epoch=stop)
+    # QUEUE548: settings come from the checkpoint contract. The trainer refuses any contract difference.
+    contract=checkpoint['resumeContract']
+    q.require(contract.get('selection')=='fixed-last','restore_selection')
+    result=train_native_hcf(rows,checked(refs['initialization']),OUT,seed=contract.get('seed',371),
+        profile=contract.get('profile','balanced'),selection='fixed-last',deduplicate=contract.get('deduplicate',True),
+        resume=checkpoint_path(refs['checkpoint']),repeat=repeat,stop_after_epoch=stop)
     q.save(OUT/'fit.json',dict(result,modelAccepted=False))
