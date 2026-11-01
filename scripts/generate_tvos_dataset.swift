@@ -185,7 +185,6 @@ struct HomeScreenView: View {
                             .scaleEffect(app.isFocused ? 1.15 : 1.0)
                             .overlay(RoundedRectangle(cornerRadius: 16).stroke(app.isFocused ? Color.white : Color.clear, lineWidth: 3))
                             .shadow(color: app.isFocused ? Color.white.opacity(0.6) : Color.clear, radius: 20)
-                            .captureFrame(id: app.isFocused ? "collectionItem_app_\(idx)_focused" : "collectionItem_app_\(idx)_unfocused")
 
                             Text(app.title)
                                 .font(.system(size: 20, weight: app.isFocused ? .bold : .medium))
@@ -193,6 +192,8 @@ struct HomeScreenView: View {
                                 .frame(width: 308)
                                 .captureFrame(id: "label_app_\(idx)")
                         }
+                        // Whole-cell box: artwork plus title (Research 5.2.1).
+                        .captureFrame(id: app.isFocused ? "collectionItem_app_\(idx)_focused" : "collectionItem_app_\(idx)_unfocused")
                     }
                 }
                 .padding(.leading, 100)
@@ -427,7 +428,6 @@ struct ContextMenuView: View {
                     }
                     .frame(width: 440, height: 660)
                     .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.white.opacity(0.2), lineWidth: 1))
-                    .captureFrame(id: "collectionItem_target_poster_unfocused")
 
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Severance")
@@ -441,6 +441,8 @@ struct ContextMenuView: View {
                     }
                     .frame(width: 440, alignment: .leading)
                 }
+                // Whole-cell box: poster plus title (Research 5.2.1).
+                .captureFrame(id: "collectionItem_target_poster_unfocused")
 
                 // Context Menu Card
                 VStack(spacing: 8) {
@@ -568,13 +570,14 @@ struct SidebarMenuView: View {
                                     .scaleEffect(isCardFoc ? 1.08 : 1.0)
                                     .overlay(RoundedRectangle(cornerRadius: 18).stroke(isCardFoc ? Color.white : Color.clear, lineWidth: 3))
                                     .shadow(color: isCardFoc ? Color.white.opacity(0.4) : Color.clear, radius: 16)
-                                    .captureFrame(id: isCardFoc ? "collectionItem_card_\(cIdx)_focused" : "collectionItem_card_\(cIdx)_unfocused")
 
                                 Text("Show Title \(cIdx + 1)")
                                     .font(.system(size: 22, weight: isCardFoc ? .bold : .medium))
                                     .foregroundColor(.white)
                                     .captureFrame(id: "label_card_\(cIdx)")
                             }
+                            // Whole-cell box: artwork plus title (Research 5.2.1).
+                            .captureFrame(id: isCardFoc ? "collectionItem_card_\(cIdx)_focused" : "collectionItem_card_\(cIdx)_unfocused")
                         }
                     }
                 }
@@ -690,13 +693,14 @@ struct TopShelfHeroView: View {
                                     .scaleEffect(isFoc ? 1.12 : 1.0)
                                     .overlay(RoundedRectangle(cornerRadius: 16).stroke(isFoc ? Color.white : Color.clear, lineWidth: 3))
                                     .shadow(color: isFoc ? Color.white.opacity(0.5) : Color.clear, radius: 16)
-                                    .captureFrame(id: isFoc ? "collectionItem_shelf_\(idx)_focused" : "collectionItem_shelf_\(idx)_unfocused")
 
                                 Text("Show Episode \(idx + 1)")
                                     .font(.system(size: 20, weight: isFoc ? .bold : .medium))
                                     .foregroundColor(isFoc ? .white : .white.opacity(0.7))
                                     .captureFrame(id: "label_shelf_card_\(idx)")
                             }
+                            // Whole-cell box: artwork plus title (Research 5.2.1).
+                            .captureFrame(id: isFoc ? "collectionItem_shelf_\(idx)_focused" : "collectionItem_shelf_\(idx)_unfocused")
                         }
                     }
                 }
@@ -1136,10 +1140,11 @@ struct SharePlayView: View {
                     ForEach(0..<3, id: \.self) { idx in
                         VStack(spacing: 6) {
                             Circle().fill(Color.blue.opacity(0.6)).frame(width: 64, height: 64)
-                                .captureFrame(id: "collectionItem_avatar_\(idx)_unfocused")
                             Text("Person \(idx + 1)").font(.system(size: 16)).foregroundColor(.white.opacity(0.85))
                                 .captureFrame(id: "label_part_\(idx)")
                         }
+                        // Whole-cell box: avatar plus name (Research 5.2.1).
+                        .captureFrame(id: "collectionItem_avatar_\(idx)_unfocused")
                     }
                 }
 
@@ -1413,7 +1418,6 @@ struct AppSwitcherView: View {
                                     .stroke(isFoc ? Color.white : Color.white.opacity(0.15), lineWidth: isFoc ? 5 : 1)
                             )
                             .shadow(color: isFoc ? Color.white.opacity(0.35) : Color.black.opacity(0.6), radius: isFoc ? 30 : 12)
-                            .captureFrame(id: isFoc ? "collectionItem_app_card_\(idx)_focused" : "collectionItem_app_card_\(idx)_unfocused")
 
                             HStack(spacing: 14) {
                                 ZStack {
@@ -1432,6 +1436,8 @@ struct AppSwitcherView: View {
                                     .captureFrame(id: "label_app_title_\(idx)")
                             }
                         }
+                        // Whole-cell box: preview plus icon and title (Research 5.2.1).
+                        .captureFrame(id: isFoc ? "collectionItem_app_card_\(idx)_focused" : "collectionItem_app_card_\(idx)_unfocused")
                         .scaleEffect(isFoc ? 1.05 : 0.95)
                     }
                 }
@@ -2378,13 +2384,14 @@ struct LiveBroadcastHUDView: View {
                                     .stroke(isFoc ? Color.white : Color.clear, lineWidth: 4)
                             )
                             .shadow(color: isFoc ? Color.white.opacity(0.35) : Color.clear, radius: 16)
-                            .captureFrame(id: isFoc ? "collectionItem_channel_\(idx)_focused" : "collectionItem_channel_\(idx)_unfocused")
 
                             Text("Channel \(idx + 1)")
                                 .font(.system(size: 20, weight: isFoc ? .bold : .medium))
                                 .foregroundColor(isFoc ? .white : .white.opacity(0.7))
                                 .captureFrame(id: "label_channel_name_\(idx)")
                         }
+                        // Whole-cell box: artwork plus name (Research 5.2.1).
+                        .captureFrame(id: isFoc ? "collectionItem_channel_\(idx)_focused" : "collectionItem_channel_\(idx)_unfocused")
                     }
                 }
                 .padding(.bottom, 48)

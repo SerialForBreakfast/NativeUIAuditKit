@@ -90,6 +90,12 @@ def build(labels, out, replays=PILOT['replays'], sessions=PILOT['sessions']):
                      scoredAboveThreshold=sum(s >= THRESHOLD for s, _ in scored), scoredAboveSecondary=sum(s >= SECONDARY for s, _ in scored),
                      scoredTop=[dict(role=e['role'], score=round(s, 3), iouWithTruth=round(_iou(e['pixels'], focus['box']), 3) if focus['box'] else None) for s, e in scored[:3]],
                      truthRankAmongScored=next((i+1 for i, (_, e) in enumerate(scored) if focus['box'] and _iou(e['pixels'], focus['box']) >= .5), None))
+        covering = lambda c: bool(focus['box']) and _iou(c[1]['pixels'], focus['box']) >= .5
+        entry.update(allAboveThreshold=sum(sc >= THRESHOLD for sc, _ in ranked),  # RA557-02: text proposals included.
+                     truthRankAmongAll=next((i+1 for i, c in enumerate(ranked) if covering(c)), None),
+                     coverRoleAmongAll=next((c[1]['role'] for c in ranked if covering(c)), None),
+                     uniqueHighCoversTruthAll=sum(sc >= THRESHOLD for sc, _ in ranked) == 1 and any(covering(c) for c in ranked if c[0] >= THRESHOLD),
+                     uniqueHighCoversTruthScored=sum(sc >= THRESHOLD for sc, _ in scored) == 1 and any(covering(c) for c in scored if c[0] >= THRESHOLD))
         selected = [e for e in elements if e['id'] == selection.get('id')]
         if focus['state'] == 'focused':
             overlaps = sorted(((_iou(e['pixels'], focus['box']), e) for e in elements), key=lambda x: -x[0])

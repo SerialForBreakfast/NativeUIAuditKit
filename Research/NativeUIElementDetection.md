@@ -340,6 +340,18 @@ The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit cla
 | `webContent` | `"webContent"` | Legacy reserved compatibility category; not actively generated for P0-C | All |
 | `unknown` | `"unknown"` | Element that looks native but cannot be confidently classed | All |
 
+### 5.2.1 Box convention — interactive frame (decision, 2026-11-01)
+
+A box covers the control that receives focus or a tap, as the platform reports its frame (view or accessibility frame).
+For `collectionItem`, the box is the whole cell: artwork plus any title or caption inside the cell.
+Text inside a control keeps its own `label` box as well. Nested boxes are valid.
+Focus effects (scale, glow, shadow) do not change the box. Measure them as separate geometry, not as the label.
+Separate geometry, such as Fixture `artwork_geometry` and `rendered_body_geometry`, stays additive telemetry.
+
+Evidence: TTR Fixture `pixel_bounds`, the NewsTV SDK frames, and this taxonomy already use the whole cell.
+`scripts/generate_tvos_dataset.swift`, which trained `nativeui-tvos-v3.0`, boxed card artwork only. That made real-app card IoU about 0.52 and AP75 0.0 (REALAPP557 RA557-01).
+Decision: the maintainer chooses the whole cell. Generator labels change; existing datasets and models keep their old convention until retrained.
+
 ### 5.3 Secondary Labels (Post-Processing, Not Detector Classes)
 
 These are derived by audit rules and post-processing, not by the pixel detector:
