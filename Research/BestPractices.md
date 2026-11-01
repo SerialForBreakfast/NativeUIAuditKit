@@ -5276,3 +5276,12 @@ What went wrong: the real-app pilot found 0 of 15 focused controls. The first ex
 Correct approach: score each reviewed focus box and every proposal with the shipped FocusRing model through `makeCrop`.
 On the pilot, unfocused content scored ≥ 0.85 on 16 of 21 frames. The suppression fix alone gains 0 frames.
 Why it matters: a known runtime defect can hide a larger model defect. Separate proposal, score and policy failures before you choose a fix.
+
+## Check the owner of Fixture port 8080 before a batch — FOCUS556, 2026-11-01
+
+What went wrong: a Fixture app from the previous day's 1080p batch still ran on another Simulator and held port 8080.
+`fixture batch` read geometry from that 1080p Fixture and frames from the 4K target. It failed closed with `coordinateSpaceMismatch`.
+A Fixture launched while the port is taken does not retry its bind. It accepts connections and never answers.
+Correct approach: before each batch, check that the 8080 listener is the target Simulator's Fixture. `scripts/direct_tvos_capture.py` `bind_target` does this check.
+After each batch, stop the Fixture app that the session started. Poll `/scene` after launch; a listening socket alone is not readiness.
+Why it matters: the shared host loopback port makes another device's geometry look valid until coordinate admission rejects it.

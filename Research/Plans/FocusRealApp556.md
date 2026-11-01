@@ -52,6 +52,24 @@ Score the reviewed focus boxes and all proposals of the 21 development frames wi
 Use `scripts/focus_diagnosis554.py` with a `--model` option. Report D1 and D2 for each candidate, next to its recorded R1 result.
 Decision: if a retained candidate passes D1, D2 and R1, go to S5 with it. Otherwise S1 names which earlier data change helped most.
 
+**S1 result, 2026-11-01.** Data: `reports/work/REALAPP554/focus556-s1.json` and `focus556-s1-retention.json`.
+PyTorch FDR-001 matches the shipped Core ML model on 187 of 187 development crops at 0.85 (largest difference 0.021).
+15 checkpoints use the single-crop architecture. 20 use other architectures and are skipped.
+FDR-001 reproduces its recorded retention: 270/270 previous, 8/16 reserved, 3/8 posters.
+
+| Candidate | D1 (of 21) | Pills > 0 (of 10) | D2 (of 21) | D3 approx. | False highs (of 157) | R1 (of 270) |
+|---|---|---|---|---|---|---|
+| FDR-001 (shipped) | 4 | 0 | 19 | 0 | 71 | 270 |
+| FDR-003 scratch, native Settings focus | 17 | 10 | 12 | 5 | 27 | 136 |
+| FDR-014 appearance sampling | 0 | 0 | 1 | 6 | 4 | 160 |
+| FDR-008 mixed appearance | 0 | 0 | 4 | 6 | 13 | 218 |
+| FDR-006 warm, native Settings focus | 2 | 0 | 2 | 5 | 7 | 194 |
+| FDR-010 gap retention | 1 | 1 | 4 | 5 | 13 | 177 |
+
+No retained candidate passes R1, so none goes to S5. S1 points to 2 data effects for S4:
+native tvOS focus examples (FDR-003) give pill recognition, and appearance variety (FDR-014, FDR-008) reduces false highs.
+Both lost retention because they trained without replay. F2 must combine both effects with the FDR-038 replay set.
+
 ### S2 — Capture a training-only Fixture batch (about 45 min, 1 Simulator session)
 
 Capture new Fixture frames for training only. Use the CAPTURE553 batch path and a new data role, `focus-training`. Do not reuse CAPTURE553 frames, because their role is development.
@@ -68,6 +86,12 @@ Content, chosen to match the real-app failures without using real-app pixels:
 Unfocused crops come from every unfocused control in a frame, not only from the 1 baseline frame.
 Check before capture: run `real_app_session554.py alert-check`, and reserve new group IDs.
 Missing feature: Fixture `custom` focus has no background-fill change, which is the NewsTV pill style. Ask Maximum-mini-TTR for it in 1 request. Native `tabs` pills are the fallback.
+
+**S2 result, 2026-11-01.** 18 training-only recipes (`reports/work/FOCUS556/recipes/`) on Simulator 62DA0048, Fixture 3043ff66, TTR ac85177b.
+The batch accepts 92 of 92 rows (184 frames at 3840 × 2160) in 178 s. 31 rows have a selected tab that is not focused.
+No frame matches the pixels of the 42 real-app frames. Receipt: `reports/work/FOCUS556/s2-receipt.json`.
+3 earlier attempts failed closed before capture and are kept: an invalid mixed-size recipe, a port conflict, and an unbound Fixture.
+Background-fill pills are not in this batch. The request is stored at cursor 1847.
 
 ### S3 — Prepare the training corpus (about 30 min)
 
@@ -100,6 +124,9 @@ About 3 h of agent work, plus 1 TTR request if the pill fill feature is missing.
 Slow steps: the S2 capture session and the S1 scoring of about 30 candidates.
 
 ## Maintainer decisions
+
+Decision 1 is approved, 2026-11-01: the new `focus-training` Fixture capture in S2 is FocusRing training data. CAPTURE553 frames keep their development role.
+
 
 1. Approve the new `focus-training` Fixture capture in S2 as training data. The alternative is to change CAPTURE553 frames from development to training, and this plan does not recommend that.
 2. Approve 1 request to Maximum-mini-TTR for a Fixture background-fill focus style, or accept native `tabs` pills as the only pill source.

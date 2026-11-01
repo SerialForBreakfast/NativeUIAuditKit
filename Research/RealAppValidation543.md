@@ -2,7 +2,8 @@
 
 Owner: Maximum-mini-NUIAK. Date: 2026-10-29.
 
-Real-app accuracy is not independently established. Dataset mAP is not the percentage of screenshots understood.
+The first reviewed pilot is complete (REALAPP554, 2026-11-01). It is a 3-app Simulator pilot, not general accuracy.
+Dataset mAP is not the percentage of screenshots understood.
 This benchmark measures a selected test population. It does not estimate accuracy across all deployed applications.
 
 ## Implemented software
@@ -142,10 +143,10 @@ Candidate reports require the same frozen membership and a predeclared configura
 
 ## Remaining deliverables
 
-- REAL543-RUNTIME: connect actual Standard replay receipts to this report contract and prove one retained screenshot.
-- REAL543-APPS: attach SDK539 qualification receipts and predetermined pilot flows.
-- REAL543-REVIEW: obtain blinded human labels and completeness decisions.
-- REAL543-PILOT: execute the pilot and fix evaluation defects.
+- REAL543-RUNTIME: done. 21 audited replays and the `runtime-ac85177b.json` receipt (REALAPP554).
+- REAL543-APPS: done for NewsTV. Photo Guessing Game and Swiftfin have no SDK, so they supply focus references only.
+- REAL543-REVIEW: done. Blinded review of 21 screens and a 31-question recheck.
+- REAL543-PILOT: done. See the pilot result below.
 - REAL543-QUALIFY: freeze and evaluate the additional 200 screens.
 - REAL543-FOLLOWUP: rank failures by frequency, consumer harm, and affected applications.
 - REAL543-TEMPORAL: define a separate movement, dismissal, settling, and background benchmark after the static baseline.
@@ -283,7 +284,8 @@ Unavailable preprocessing, taxonomy, and crop identities remain explicit qualifi
 A bounded metadata trial compares 3 direct observations after startup.
 SwiftUI reports `inactive`. UIApplication reports state 1. UIWindowScene reports state 1.
 The window is visible and key. A native focus system exists, but its focused item is nil.
-All observations agree. The interruption flag is correct; its cause remains unresolved.
+All observations agree. The interruption flag is correct.
+Resolved 2026-11-01 (REALAPP554 RA554-01): the NewsTV notification permission prompt caused the inactive state. The controlled-content build skips it.
 A successful launch and authenticated SDK connection do not establish foreground readiness.
 Do not classify this inactive scene as a verified no-focus screen.
 The trial takes 9.42 s. Cleanup passes. It captures no screenshots and sends no remote inputs.
@@ -327,3 +329,18 @@ Three retained Fixture screenshots produce hash-verified exports and partial pro
 The `audit-replay` CLI checks export integrity without granting benchmark eligibility.
 Runtime provenance and independent reviewed references remain required before freeze and scoring.
 See [REAL550](Real550ConsumerReplay.md) for measured failures and the rejected policy shortcut.
+
+
+## Pilot result — REALAPP554, 2026-11-01
+
+Scope: 21 distinct screens from NewsTV, Photo Guessing Game and Swiftfin, on Simulator 62DA0048 (Apple TV 4K, tvOS 26.5).
+Runtime: Maximum-mini-TTR ac85177b `visual replay`, shipped tvOS detector and FocusRing, confidence 0.5.
+
+- Detection (NewsTV, 9 screens, 207 reviewed controls): recall 23 / 207. COCO AP50 0.206, AP75 0.0, AP50–95 0.021.
+- Article cards: recall 22 / 54, precision 22 / 24. Tab pills: recall 1 / 153; 106 are detected as `label`.
+- Focus (21 screens): 0 of 15 focused controls found. 4 of 21 correct, all abstentions on no-focus screens.
+- Text detections have no reference, because the review covered controls only.
+
+Reports: [pilot baseline](../reports/work/REALAPP554/pilot-v2/baseline-report.md), [focus diagnosis](../reports/work/REALAPP554/focus-diagnosis.md),
+[focus development baseline](../reports/work/REALAPP554/focus-dev-baseline.md). Plan: [RealApp554](Plans/RealApp554.md).
+The inspected pilot is retained regression evidence. It cannot be independent qualification evidence. Fresh flows are reserved for REAL543-QUALIFY.

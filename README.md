@@ -4,7 +4,9 @@ A portable Swift package for detecting native Apple platform UI elements in scre
 
 **Product direction:** [MVP, planned features, and proposed features](Research/ProductRoadmap.md).
 
-**Accuracy scope:** Real-app accuracy is **not independently established**. Dataset mAP is not the percentage of screenshots understood. See the [accuracy audit and benchmark](Research/RealAppValidation543.md).
+**Accuracy scope:** The first human-reviewed real-app pilot (November 1, 2026) shows that synthetic mAP does not transfer to real apps.
+On 9 reviewed NewsTV screens, the tvOS detector finds **23 of 207** controls (COCO AP50 **0.206**). Focus selection finds **0 of 15** focused controls.
+This is a 3-app Simulator pilot, not general accuracy. Dataset mAP is not the percentage of screenshots understood. See the [pilot baseline](reports/work/REALAPP554/pilot-v2/baseline-report.md) and the [benchmark protocol](Research/RealAppValidation543.md).
 
 **Current state:** Shipped models and their historical evaluation scopes are:
 
@@ -27,13 +29,32 @@ iOS research remains independent of tvOS capture work.
 High Contrast Focus (HCF) remains an optional research track. It does not replace Standard behavior.
 
 Current experimental results do not change the shipped models listed above.
-The [current consumer measurements](Research/Real550ConsumerReplay.md) use the actual Standard screenshot path.
-On 3 retained Fixture development screens, proposals cover 5 of 12 registered controls at IoU 0.5, ignoring classes.
-All 3 consumer results are partial and select no control. These counts are not independent real-app accuracy.
-NewsTV now supplies 1 predetermined pilot case, captured in 2 trials. It still needs reviewed labels and complete runtime provenance.
-XCTest reports foreground while the SDK reports inactivity. Focus remains unknown; this is not a verified no-focus example.
+### First real-app pilot — REALAPP554, November 1, 2026
+
+The shipped tvOS models ran on 21 distinct screens from 3 source-built apps: NewsTV, Photo Guessing Game and Swiftfin.
+They ran through the actual Standard screenshot path (TVTestRig ac85177b `visual replay`) on an Apple TV 4K Simulator.
+The maintainer reviewed every screen blind to model output, and then answered a targeted recheck.
+
+| Measure | Result | Scope |
+|---|---|---|
+| Control recall | 23 / 207 (11%) | NewsTV, 9 screens |
+| Article cards (`collectionItem`) | recall 22 / 54, precision 22 / 24 | NewsTV |
+| Tab pills (`secondaryButton`) | recall 1 / 153; 106 are detected as `label` | NewsTV |
+| COCO AP50 / AP75 / AP50–95 | 0.206 / 0.0 / 0.021 | NewsTV |
+| Focus selection | 0 / 15 focused controls found; 4 / 21 correct, all abstentions | 3 apps, 21 screens |
+| Replay latency (request to durable result) | median 148 ms, p95 155 ms | NewsTV |
+
+The focus diagnosis finds 2 FocusRing defects. Unfocused images, panels and buttons score ≥ 0.85, so several candidates compete on 16 of 21 screens.
+FocusRing also misses the focus style of tab pills: all NewsTV pills score 0.00.
+A separate 21-screen focus development set confirms this: 0 of 21 focused controls are found.
+A known TVTestRig defect also suppresses selection on 4 screens, but fixing it alone gains no correct selection.
+See the [pilot baseline](reports/work/REALAPP554/pilot-v2/baseline-report.md), [focus diagnosis](reports/work/REALAPP554/focus-diagnosis.md) and [focus development baseline](reports/work/REALAPP554/focus-dev-baseline.md).
+The FocusRing correction plan is [FOCUS556](Research/Plans/FocusRealApp556.md).
 
 ### Plan for trustworthy accuracy measurements
+
+Status: steps 1–3, 5 and 6 are done for the 21-screen pilot (REALAPP554). The pilot has 3 apps, not 5.
+Step 4 remains. Step 7 is partial: detection is scored on 1 app, because only NewsTV has reviewed SDK observations.
 
 1. Pin the loaded Standard models, preprocessing, taxonomy, thresholds, and TTR build evidence before inference.
 2. Collect a 50-screen pilot across up to 5 qualified source-built apps. Report the actual qualified scope.
@@ -156,6 +177,7 @@ NativeUIAuditKit builds a custom Vision-style request backed by CoreML object de
 - **Synthetic-screen validation mAP@0.5:** **0.9822** (Precision: 0.983, Recall: 0.983, mAP@0.5:0.95: 0.944).
 - **Active classes (25):** `activityIndicator`, `alert`, `cancelAction`, `collectionItem`, `contextMenu`, `destructiveButton`, `imageView`, `label`, `link`, `listRow`, `navigationBar`, `popover`, `primaryButton`, `progressView`, `searchField`, `secondaryButton`, `secureField`, `segmentedControl`, `sheet`, `sidebar`, `slider`, `stepperControl`, `tabBar`, `toggle`, `toolbar`.
 - **Dual Focus Engine:** Evaluates active focus via parallax geometric tile expansion (\(301.5 \times 173.2\) pt vs baseline \(247 \times 147\) pt), radiant perimeter glow, inverted high-luminance interior pills (mean brightness 228.9 vs 149.6), and VoiceOver accessibility contrast borders.
+- **Real-app pilot (2026-11-01):** control recall 23 / 207 and COCO AP50 0.206 on 9 reviewed NewsTV screens. Tab pills are the largest gap (1 / 153). See the research status section.
 - **Historical hardware observations:** The earlier summary reported 23 captures and 586 detections.
   These counts do not establish precision or recall.
   The retained report contains 29 capture entries and lacks complete reference labels.
@@ -196,6 +218,7 @@ Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKi
 
 Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small uses from-scratch training.
 FDR-001 scores 270/270 on its historical test set; the required hard-negative coverage remains incomplete.
+On real apps it finds 0 of 15 focused controls (pilot) and 0 of 21 (development set). No retained candidate fixes this and keeps the 270/270 retention ([FOCUS556 S1](Research/Plans/FocusRealApp556.md)).
 The inspected source package exceeds the 5,000,000-byte export gate. Public weight distribution needs explicit review.
 See [licensing review](Research/LicensingArchitecture.md) and [release preparation](Research/ReleasePreparation.md).
 
@@ -449,7 +472,7 @@ Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
 | **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline | TASK-6d-1 through 6d-7 pass |
 | **6→6a: Foundation Models eval** | ✅ Skipped | Confirmed infeasible — `FoundationModels` has no image input API | Decision documented — proceeded to 6a |
 | **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout | DS-G8: mAP@0.5 ≥ 0.85 on withheld-template test (historical Run 009 = **0.586**; matched Run 009 **0.5549**, Run 013 **0.6322**; custom AP) |
-| **6b: tvOS Model** | ✅ Done (v3.0) | OS UI + FocusRing v0.1 | Synthetic-screen validation mAP@0.5 = 0.9822; remaining: R-1 scale, FOCUS-DET-05, 6b-U |
+| **6b: tvOS Model** | ✅ Done (v3.0) | OS UI + FocusRing v0.1 | Synthetic-screen validation mAP@0.5 = 0.9822; real-app pilot AP50 = 0.206, focus 0 / 15; remaining: R-1 scale, FOCUS-DET-05 (FOCUS556), 6b-U |
 | **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | Requires 6a DS-G8; then mAP@0.5 ≥ 0.80 |
 | **7: OCR Fusion** | ✅ Done | Visible text + truncation/clipping rules | `ObservationMerger` + audit rules |
 | **8: Device/OS Inference** | ✅ Done | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked |
