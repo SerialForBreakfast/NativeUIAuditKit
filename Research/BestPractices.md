@@ -5224,3 +5224,48 @@ Correct approach: before each build, launch, or capture session, collect all nee
 Prepare their recipes and consumer jobs first. Then do them in 1 session.
 Why this matters: launches occupy shared Simulators and cost minutes. Batching unblocks more experiments for each launch.
 
+
+## Check for system alerts before a Fixture batch — CAPTURE553, 2026-10-31
+
+What went wrong: 4 `fixture batch` attempts stopped at the first scene with `sceneNotSettled` and `unresolved_focus`.
+The native probe reported `focusedItemKind: absent`. A Fixture rebuilt from the app's source revision failed the same way.
+The cause was a NewsTV notification permission alert on the Simulator. PineBoard logged deactivation reason `systemModalAlert` for the Fixture scene.
+Correct approach: before a batch, search the Simulator log for `systemModalAlert`. If it is present, read the screen text with Vision OCR, not a displayed image.
+A permission answer changes another app's state. Get maintainer direction before you choose it.
+Also check recipe rules offline first. `canvas.labels` needs a `buttons`, `settings_rows`, `tabs`, or `nested_tabs_v1` presentation.
+Why it matters: an alert from 1 app blocks every capture on that Simulator. A Fixture rebuild does not fix it.
+
+## Label Fixture baselines from the observed scene — CAPTURE553, 2026-10-31
+
+What went wrong: `fixture batch` names each reference frame `_unfocused.png`. In 6 of 58 4K rows, the reference scene observed a focused grid control.
+Correct approach: label each frame from its observed `focused_element_id` and focus observation. Treat a frame as no-focus only when the scene reports no focused element and a focused reference control.
+Why it matters: a file name is a producer intention, not an observation. A wrong no-focus label corrupts the no-focus and abstention measurements.
+
+
+## Validate priority-task values at dashboard start — 2026-10-31
+
+What went wrong: a restart at 08:52 started the server with `--priority-task [^`. The server ran at about 100% CPU for 7 h and dispatched no approved jobs.
+The page timed out, so the stop was not visible. After a correct restart, all 6 waiting jobs completed in about 1 min.
+Correct approach: both `restart_research_dashboard.py` and `research_dashboard_server.py` now reject values that are not task IDs.
+After a restart, check that approved ready jobs start. A server that answers on its port is not proof that it dispatches jobs.
+Why it matters: a stalled runner looks idle, not broken, and blocks every queued result.
+
+## Wait for a closed remote session before the next one — REALAPP554, 2026-11-01
+
+What went wrong: a new `simulator remote connect` was rejected with `commandRejected`. A readiness check also reported `target_not_ready`.
+Both happened because the previous session from the same task had not finished closing after `disconnect`.
+Correct approach: after `disconnect`, poll `simulator remote status` for that session until it reports `closed`. Then start the next session.
+`scripts/real_app_session554.py` does this and records `sessionClosed`.
+Why it matters: a closing session looks like another owner. A worker can wrongly decide that the Simulator is occupied.
+
+## Treat an empty SDK snapshot as a failure — REALAPP554, 2026-11-01
+
+What went wrong: `aatv sdk snapshot` returned `success: true` with 0 elements and the issue `live_evidence_unavailable`. Code that checked only `success` used the empty reply.
+Correct approach: require elements and the absence of `live_evidence_unavailable` before you use a snapshot. Record a failed case otherwise.
+Why it matters: an empty reply looks like a screen with no controls. It can hide a failed connection.
+
+## Start project servers from the shell on the external drive — REALAPP554, 2026-11-01
+
+What went wrong: the desktop app's `preview_start` launched the review server, but the process hung in `dyld` while it opened its working folder on `/Volumes/training-drive`. It never listened.
+Correct approach: start the server from the agent shell as a background command. Then open its URL in the browser pane with `preview_start --url`.
+Why it matters: the hung process looks like a slow start. The port stays closed and no log explains why.

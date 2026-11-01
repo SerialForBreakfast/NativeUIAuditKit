@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review Recheck</title>
+<style>
+:root{--bg:#f6f6f4;--panel:#fff;--ink:#1d1d1b;--muted:#6b6b66;--line:#dcdcd6;--accent:#2563eb;--ok:#15803d;--bad:#dc2626;--focus:#22c55e;--ask:#fde68a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--panel:#21211f;--ink:#ecece8;--muted:#a2a29b;--line:#3a3a36;--accent:#60a5fa;--ok:#4ade80;--ask:#78350f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 -apple-system,system-ui,sans-serif;height:100vh;display:grid;grid-template-rows:auto auto 1fr;overflow:hidden}
+header{display:flex;gap:10px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+header h1{font-size:15px;margin:0}
+input[type=text],select{padding:5px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+#q{padding:8px 12px;background:var(--ask);border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#q b{font-size:15px;margin-right:6px}
+button.b{padding:7px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:inherit;cursor:pointer;white-space:nowrap}
+button.go{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:600}
+button.no{border-color:var(--bad);color:var(--bad);font-weight:600}
+#stage{overflow:auto;padding:8px;min-height:0}
+#wrap{position:relative;display:inline-block}
+#img{display:block;user-select:none;-webkit-user-drag:none}
+svg{position:absolute;inset:0;width:100%;height:100%}
+.o{fill:transparent;stroke-width:3;vector-effect:non-scaling-stroke}
+.o.pick{cursor:pointer}.o.pick:hover{fill:rgba(255,255,255,.15)}
+.o.hi{stroke:#facc15!important;stroke-width:6;stroke-dasharray:10 6}
+.add{fill:rgba(220,38,38,.12);stroke:var(--bad);stroke-width:4;vector-effect:non-scaling-stroke}
+.fo{fill:none;stroke:var(--focus);stroke-width:9;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 6px var(--focus))}
+text{pointer-events:none;font-family:-apple-system,system-ui,sans-serif;font-weight:600}
+#msg{font-size:12px}#msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
+.muted{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Review Recheck</h1>
+  <span id="progress" class="muted"></span>
+  <span style="flex:1"></span>
+  <input id="reviewer" type="text" style="width:140px" placeholder="Reviewer name" aria-label="Reviewer">
+  <button class="b" id="zoom">Zoom 100%</button>
+  <button class="b" id="prev">◀</button><button class="b" id="next">▶</button>
+</header>
+<div id="q"></div>
+<section id="stage"><div id="wrap"><img id="img" alt="Captured frame"><svg id="svg"></svg></div>
+  <p class="muted" id="hint"></p></section>
+<script>
+const $=id=>document.getElementById(id);
+const COLORS={collectionItem:'#f59e0b',secondaryButton:'#3b82f6',primaryButton:'#a855f7',listRow:'#14b8a6',imageView:'#ec4899',slider:'#84cc16',textField:'#06b6d4'};
+const QUICK=['secondaryButton','primaryButton','collectionItem','listRow','textField','slider','toggle','segmentedControl'];
+const color=c=>c?COLORS[c]||'#e5e7eb':'#ffffff';
+let data,items=[],idx=0,item,cs,label,zoom=1,mode=null,added=[],newBox=null,drag=null,clipped=new Set();
+try{$('reviewer').value=localStorage.getItem('reviewer')||''}catch(e){}
+$('reviewer').oninput=()=>{try{localStorage.setItem('reviewer',$('reviewer').value)}catch(e){}};
+async function api(p,b){const r=await fetch(p,b?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}:{});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j}
+const msg=(t,c)=>{const m=document.getElementById('msg');if(m){m.textContent=t;m.className=c||''}};
+async function load(){data=await api('/api/recheck');items=data.items;const i=items.findIndex(x=>!x.answered);show(i<0?0:i)}
+async function show(i){idx=i;item=items[i];cs=data.cases[item.case];label=await api('/api/case/'+item.case);mode=null;added=[];newBox=null;clipped=new Set();
+  $('img').src='/image/'+item.case;$('img').onload=()=>{fit();draw()};
+  $('progress').textContent=`${items.filter(x=>x.answered).length} of ${items.length} answered · ${i+1}/${items.length} · ${item.case}`;question()}
+function question(){const k=item.kind;let h=`<b>${item.prompt}</b>`;
+  if(k==='complete')h+=mode==='add'?`<button class="b go" data-r="missing">Done adding (${added.length})</button><button class="b" data-x="cancel">Cancel</button>`
+    :`<button class="b go" data-r="complete">✓ Yes, all have a box</button><button class="b no" data-x="add">✕ Some are missing</button>`;
+  if(k==='focusbox')h+=mode==='pick'?`<button class="b go" data-r="replace" ${newBox?'':'disabled'}>Use the red box</button><button class="b" data-x="cancel">Cancel</button>`
+    :`<button class="b go" data-r="correct">✓ Correct</button><button class="b no" data-x="pick">✕ Wrong control</button><button class="b" data-r="no_focus">No visible focus</button><button class="b" data-r="unknown">Can't tell</button>`;
+  if(k==='nofocus')h+=mode==='pick'?`<button class="b go" data-r="focused" ${newBox?'':'disabled'}>Use the red box</button><button class="b" data-x="cancel">Cancel</button>`
+    :`<button class="b go" data-r="no_focus">✓ No visible focus</button><button class="b no" data-x="pick">Yes, I see focus</button><button class="b" data-r="unknown">Can't tell</button>`;
+  if(k==='clip')h+=`<button class="b go" data-r="done">Done (${clipped.size} cut off)</button>`;
+  if(k==='extra')h+=`<button class="b go" data-r="keep">✓ Keep it</button><button class="b no" data-r="remove">✕ Remove it</button>`;
+  if(item.answered&&item.answer)h+=`<span class="muted">Saved answer: ${item.answer.result}</span>`;
+  h+='<span id="msg"></span>';$('q').innerHTML=h;
+  $('hint').textContent=mode==='add'?'Drag around each missing control. Pick its class in the list that appears. Click a red box to remove it.'
+    :mode==='pick'?'Click the focused control, or drag a box around it.':'Yellow dashes mark the box in question. Green marks the focus from the first review.'}
+$('q').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.x){mode=b.dataset.x==='cancel'?null:b.dataset.x;added=[];newBox=null;question();draw();return}if(b.dataset.r)answer(b.dataset.r)};
+async function answer(result){const a={result,reviewer:$('reviewer').value.trim()};
+  if(result==='done')a.clipped=[...clipped];
+  if(result==='missing')a.boxes=added.map(x=>({class:x.class,box:x.box}));if(result==='replace'||result==='focused')a.box=newBox;
+  try{if(!a.reviewer)throw new Error('Enter your name at the top first.');if(result==='missing'&&!added.length)throw new Error('Drag a box around each missing control first.');
+    await api('/api/recheck/'+item.id,a);item.answered=true;item.answer=a;const n=items.findIndex((x,j)=>j>idx&&!x.answered);
+    if(n>=0)show(n);else if(items.every(x=>x.answered)){$('q').innerHTML='<b>All questions are answered. Tell Claude the recheck is done.</b>';$('progress').textContent=`${items.length} of ${items.length} answered`}else show(Math.min(idx+1,items.length-1))}
+  catch(e){msg(e.message,'bad')}}
+function fit(){const w=$('stage').clientWidth-16;$('img').style.width=cs.width*Math.min(1,w/cs.width)*zoom+'px';$('svg').setAttribute('viewBox',`0 0 ${cs.width} ${cs.height}`)}
+$('zoom').onclick=()=>{zoom=zoom===1?2:zoom===2?3:1;$('zoom').textContent='Zoom '+zoom*100+'%';fit()};window.onresize=()=>cs&&fit();
+function el(n,a,t){const e=document.createElementNS('http://www.w3.org/2000/svg',n);for(const k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;return e}
+function draw(){const s=$('svg');s.innerHTML='';const fs=Math.max(18,cs.width/110);const hi=new Set(item.objects||[]);
+  label.objects.forEach((o,i)=>{if(o.flag==='not-control'||o.flag==='wrong-box')return;const r=el('rect',{x:o.box[0],y:o.box[1],width:o.box[2],height:o.box[3],class:'o'+(mode==='pick'||(item.kind==='clip'&&hi.has(o.id))?' pick':'')+(hi.has(o.id)?' hi':''),stroke:clipped.has(o.id)?'#dc2626':color(o.class)});r.dataset.i=i;s.appendChild(r);
+    if(hi.has(o.id)||item.kind==='complete')s.appendChild(el('text',{x:o.box[0]+4,y:Math.max(fs,o.box[1]-fs*.3),'font-size':fs,fill:color(o.class),stroke:'#000','stroke-width':.6},o.class||'unclassified'))});
+  const f=label.focus;if(f.state==='focused'&&f.box&&mode!=='pick'){const b=f.box,p=fs*.5;s.appendChild(el('rect',{x:b[0]-p,y:b[1]-p,width:b[2]+2*p,height:b[3]+2*p,class:'fo'}));
+    s.appendChild(el('rect',{x:b[0]-p,y:b[1]+b[3]+p,width:fs*4.2,height:fs*1.5,fill:'#22c55e'}));s.appendChild(el('text',{x:b[0]-p+6,y:b[1]+b[3]+p+fs*1.15,'font-size':fs*1.1,fill:'#04210f'},'FOCUS'))}
+  added.forEach((a,i)=>{const r=el('rect',{x:a.box[0],y:a.box[1],width:a.box[2],height:a.box[3],class:'add'});r.dataset.a=i;s.appendChild(r);s.appendChild(el('text',{x:a.box[0]+4,y:a.box[1]+fs,'font-size':fs,fill:'#dc2626'},a.class||'pick class'))});
+  if(newBox)s.appendChild(el('rect',{x:newBox[0],y:newBox[1],width:newBox[2],height:newBox[3],class:'add'}))}
+function pt(ev){const r=$('svg').getBoundingClientRect();return[(ev.clientX-r.left)*cs.width/r.width,(ev.clientY-r.top)*cs.height/r.height]}
+const clamp=b=>{b[0]=Math.max(0,Math.min(b[0],cs.width-1));b[1]=Math.max(0,Math.min(b[1],cs.height-1));b[2]=Math.max(1,Math.min(b[2],cs.width-b[0]));b[3]=Math.max(1,Math.min(b[3],cs.height-b[1]));return b.map(v=>Math.round(v*10)/10)};
+$('svg').onpointerdown=ev=>{const t=ev.target;
+  if(item.kind==='clip'&&t.dataset.i!==undefined){const o=label.objects[+t.dataset.i];if((item.objects||[]).includes(o.id)){clipped.has(o.id)?clipped.delete(o.id):clipped.add(o.id);question();draw()}return}
+  if(!mode)return;
+  if(mode==='add'&&t.dataset.a!==undefined){added.splice(+t.dataset.a,1);question();draw();return}
+  if(mode==='pick'&&t.dataset.i!==undefined){newBox=[...label.objects[+t.dataset.i].box];question();draw();return}
+  try{$('svg').setPointerCapture(ev.pointerId)}catch(e){}drag={p:pt(ev)}};
+$('svg').onpointermove=ev=>{if(!drag)return;const p=pt(ev);drag.b=clamp([Math.min(p[0],drag.p[0]),Math.min(p[1],drag.p[1]),Math.abs(p[0]-drag.p[0]),Math.abs(p[1]-drag.p[1])]);
+  if(mode==='pick')newBox=drag.b;else drag.preview=true;draw();if(mode==='add'&&drag.b)$('svg').appendChild(el('rect',{x:drag.b[0],y:drag.b[1],width:drag.b[2],height:drag.b[3],class:'add'}))};
+$('svg').onpointerup=ev=>{if(!drag)return;const b=drag.b;drag=null;if(!b||b[2]<6||b[3]<6){draw();return}
+  if(mode==='add'){const a={class:null,box:b};added.push(a);classMenu(a,ev)}question();draw()};
+function classMenu(a,ev){const m=document.createElement('div');m.style.cssText=`position:fixed;left:${Math.min(ev.clientX+8,innerWidth-200)}px;top:${Math.min(ev.clientY+8,innerHeight-260)}px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px;z-index:9;display:grid;gap:3px;width:190px`;
+  m.innerHTML=QUICK.map(c=>`<button class="b" data-c="${c}" style="border-left:4px solid ${color(c)};text-align:left">${c}</button>`).join('')+`<select><option value="">Other…</option>${data.classes.map(c=>`<option>${c}</option>`).join('')}</select>`;
+  const done=c=>{a.class=c||null;m.remove();draw()};m.onclick=e=>{const b=e.target.closest('button');if(b)done(b.dataset.c)};m.querySelector('select').onchange=e=>done(e.target.value);document.body.appendChild(m)}
+$('next').onclick=()=>idx<items.length-1&&show(idx+1);$('prev').onclick=()=>idx>0&&show(idx-1);
+document.onkeydown=ev=>{if(['INPUT','SELECT'].includes(ev.target.tagName))return;if(ev.key==='Escape'){mode=null;added=[];newBox=null;question();draw()}};
+load();
+</script>
+</body>
+</html>

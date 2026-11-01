@@ -85,3 +85,23 @@ Two screenshots represent one predetermined case. Nine NewsTV cases remain plann
 A prediction-free draft contains 23 registered rectangles. Human review must verify full visible coverage and alignment.
 SDK inactivity disagrees with XCTest foreground state. Focus remains unknown and unscored.
 The application remains partially qualified. See REAL550 for exact receipts and the review link.
+
+## Benchmark app approval — 2026-10-31
+
+The maintainer approves NewsTV (MIT), Swiftfin (MPL-2.0), and Photo Guessing Game (GPL-3.0-or-later) as REAL543 benchmark apps.
+These apps are evaluation-only. They do not supply training data. A separate training pool uses different apps.
+Code licenses do not cover displayed media or text. Use controlled content: own images, openly licensed media, and fixed data.
+WeatherFeels (MIT) stays a candidate. It needs the Metal toolchain, which is a system download that needs separate approval.
+
+## 5th app candidates — public repository check, 2026-10-31
+
+This check reads the public GitHub pages only. No source is cloned or built.
+
+| Candidate | License | tvOS target | Build needs | Screens without content | Assessment |
+|---|---|---|---|---|---|
+| Moonlight (moonlight-stream/moonlight-ios) | GPL-3.0 | Yes, "Moonlight TV" | Xcode project, recursive Git submodules (moonlight-common, X1Kit), local signing team | Not documented. Streaming needs a host PC with Sunshine or GameStream | Smaller build. Host list, add-host entry, and settings may work without a host. Verify after source intake. |
+| Provenance (Provenance-Emu/Provenance) | Project license plus GPL, LGPL, MIT, and BSD cores | Yes, "ProvenanceTV", tvOS 16+ | Xcode workspaces, Tuist, submodules, vendored cores, MoltenVK | Not documented. The library needs imported ROMs; no licensed homebrew content is listed | Large build. Content rights for a filled library are unresolved. |
+
+Recommendation: do the source intake for Moonlight first. Keep Provenance as the reserve.
+A Moonlight case set needs controlled screens without a host. A local Sunshine host is a separate decision.
+

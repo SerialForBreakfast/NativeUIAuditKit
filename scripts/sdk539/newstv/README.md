@@ -43,6 +43,7 @@ The reviewer must inspect all visible controls before false-positive scoring.
 The DEBUG-only argument `--real543-controlled-content` supplies 18 original text articles across 3 categories.
 It disables live RSS fetching and the unrelated Nova listener during this mode.
 It skips local-news fetching during initial setup. Article ages use a fixed reference time.
+It skips the notification permission request (REALAPP554 RA554-01). That system alert makes the app scene inactive.
 No external images are supplied. Existing app layout and controls remain in use.
 This does not establish network isolation for every application feature.
 The first pilot restricts navigation to the planned news, technology, and science flows.

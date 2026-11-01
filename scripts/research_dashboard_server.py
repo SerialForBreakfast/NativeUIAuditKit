@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import re
 import secrets
 import signal
 import threading
@@ -434,6 +435,9 @@ def main():
     parser.add_argument('--priority-task', action='append', default=[],
                         help='Run ready jobs for this task before other ready work.')
     args = parser.parse_args()
+    bad = [task for task in args.priority_task if not re.fullmatch(r'[A-Z][A-Z0-9]*(-[A-Z0-9]+)*', task)]
+    if bad:
+        parser.error('--priority-task needs task IDs such as CAPTURE553. Rejected: ' + ', '.join(map(repr, bad)))
     # A background start can inherit an ignored SIGINT. Restore it, and close cleanly on SIGTERM too.
     signal.signal(signal.SIGINT, signal.default_int_handler)
     signal.signal(signal.SIGTERM, interrupt)

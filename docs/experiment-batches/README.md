@@ -344,6 +344,12 @@ It preserves capture events while deduplicating identical pixels with matching l
 Unknown focus, conflicting duplicates, changed images, and training-eligible inputs fail.
 Use T59, T56, and T57 as a dependency graph. Do not write another capture-to-scoring script.
 
+T59 also accepts a `fixture-batch-capture-v1` capture artifact for completed `aatv fixture batch` output under `dataset/tvos_captures`.
+The artifact names the `manifest.json` path and hash, the source Simulator `target`, and development `cases` keyed by recipe file.
+It checks each focused and reference frame against its host-clock capture bracket, pixel hashes, run ID, recipe hash, and source device.
+It labels each frame from observed focus, not from the producer's file name. Producer splits stay advisory.
+The labels record `fixture_instance_id` and wall-clock snapshot bounds as unavailable. Keep each job at 64 unique frames or fewer.
+
 T57 compares both crop models on known boxes, detector boxes, and detector boxes with optional HCF rings.
 Inputs are `capture`, `scorecard`, `ringProposals`, `mapping`, `baseline`, `candidate`, `baselineSelection`, `candidateSelection`, and `tool`.
 Use completed T56 scorecards and retained T37 references. Pin each input with the existing batch compiler.

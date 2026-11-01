@@ -28,6 +28,8 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
+# A malformed value such as '[^' once started a server that dispatched no jobs.
+TASK_ID = re.compile(r'[A-Z][A-Z0-9]*(-[A-Z0-9]+)*')
 SERVER = ROOT / 'scripts/research_dashboard_server.py'
 PYTHON = ROOT / '.venv-yolo/bin/python'
 QUEUE = ROOT / 'reports/work/research-queue'
@@ -328,6 +330,9 @@ def main():
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535 or args.wait < 0:
         parser.error('Use a port from 1024 to 65535 and a wait of 0 or more seconds.')
+    bad = [task for task in args.priority_task if not TASK_ID.fullmatch(task)]
+    if bad:
+        parser.error('Use task IDs such as CAPTURE553 or B405-215 for --priority-task. Rejected: ' + ', '.join(map(repr, bad)))
     try:
         preflight(args)
         teardown(args.port, args)

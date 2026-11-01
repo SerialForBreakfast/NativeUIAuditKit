@@ -19,7 +19,12 @@ def identity(snapshot):
 
 def signature(snapshot,initial,expected):
     q.require(identity(snapshot)==identity(initial),'runtime_or_recipe_changed')
-    scene=snapshot['scene'];obs=scene['focus_observation'];diag=scene['observation_diagnostics']
+    return scene_signature(snapshot['scene'],expected,(snapshot['startedAt'],snapshot['finishedAt']))
+
+
+def scene_signature(scene,expected,window):
+    """Check 1 scene. window is the wall-clock read interval, or None when the caller verifies timing another way."""
+    obs=scene['focus_observation'];diag=scene['observation_diagnostics']
     q.require(scene['is_settled'] and obs['verified'] and obs['source']=='uikit_focus_system','unverified_focus')
     if expected is None:
         q.require(diag.get('nativeFocusResolved') is True and diag.get('reason')=='ready' and
@@ -27,7 +32,8 @@ def signature(snapshot,initial,expected):
     q.require(obs.get('observedID')==scene.get('focused_element_id')==expected,'wrong_focus')
     q.require(obs['generation']==scene['observation_generation']==diag['sampledGeneration'],'generation_mismatch')
     q.require(0<=diag['sampleAgeMilliseconds']<=200 and diag['stableMilliseconds']>=150,'stale_or_moving')
-    q.require(snapshot['startedAt']-1<=scene['timestamp']<=snapshot['finishedAt']+1,'stale_timestamp')
+    if window is not None:
+        q.require(window[0]-1<=scene['timestamp']<=window[1]+1,'stale_timestamp')
     size=[scene['scene_width'],scene['scene_height']]
     elements=scene['elements'];ids=[e['element_id'] for e in elements]
     planned=set(obs['plannedFocusIDs'])

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Label Review</title>
+<style>
+:root{--bg:#f6f6f4;--panel:#fff;--ink:#1d1d1b;--muted:#6b6b66;--line:#dcdcd6;--accent:#2563eb;--ok:#15803d;--bad:#dc2626;--focus:#22c55e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--panel:#21211f;--ink:#ecece8;--muted:#a2a29b;--line:#3a3a36;--accent:#60a5fa;--ok:#4ade80}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 -apple-system,system-ui,sans-serif;height:100vh;display:grid;grid-template-rows:auto auto 1fr;overflow:hidden}
+header{display:flex;gap:10px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+header h1{font-size:15px;margin:0}
+select,input[type=text]{padding:5px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+button.b{padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer;white-space:nowrap}
+button.b.on{outline:2px solid var(--accent)}
+button.go{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:600}
+#bar{display:flex;gap:8px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+#focusstate{font-weight:600;padding:3px 8px;border-radius:6px;border:2px solid var(--line)}
+#focusstate.f{border-color:var(--focus);color:var(--focus)}
+#legend{display:flex;gap:8px;flex-wrap:wrap;font-size:12px}
+#legend span{display:inline-flex;align-items:center;gap:4px}
+#legend i{width:12px;height:12px;border-radius:2px;display:inline-block}
+#stage{overflow:auto;position:relative;min-height:0;padding:8px}
+#wrap{position:relative;display:inline-block}
+#img{display:block;user-select:none;-webkit-user-drag:none}
+svg{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.o{fill:transparent;stroke-width:3;vector-effect:non-scaling-stroke;cursor:pointer}
+.o:hover{fill:rgba(255,255,255,.12)}
+.o.flag{stroke:var(--bad)!important;stroke-dasharray:8 5}
+.fo{fill:none;stroke:var(--focus);stroke-width:9;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 6px var(--focus))}
+text{pointer-events:none;font-family:-apple-system,system-ui,sans-serif;font-weight:600}
+#menu{position:fixed;display:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);padding:6px;z-index:9;width:220px}
+#menu button{display:block;width:100%;text-align:left;margin:2px 0}
+#menu .cls{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+#menu .cls button{font-size:12px;padding:4px}
+#msg{font-size:12px}#msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
+.muted{color:var(--muted);font-size:12px}
+kbd{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:0 4px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Label Review</h1>
+  <select id="pick" aria-label="Frame"></select>
+  <span id="progress" class="muted"></span>
+  <span style="flex:1"></span>
+  <input id="reviewer" type="text" style="width:140px" placeholder="Reviewer name" aria-label="Reviewer">
+  <button class="b" id="zoom">Zoom 100%</button>
+</header>
+<div id="bar">
+  <span id="focusstate">Focus: not set</span>
+  <button class="b" id="nofocus" title="0">No focus</button>
+  <button class="b" id="cantell" title="?">Can't tell</button>
+  <button class="b" id="missing" title="M">Controls missing</button>
+  <button class="b go" id="accept" title="Enter">✓ Accept and next</button>
+  <button class="b" id="prev">◀</button><button class="b" id="next">▶</button>
+  <span id="msg"></span>
+  <span id="legend"></span>
+</div>
+<section id="stage"><div id="wrap"><img id="img" alt="Captured frame"><svg id="svg"></svg></div>
+  <p class="muted">Click a wrong box to flag it, or to mark focus. <kbd>F</kbd> then click: focus. Drag on an empty area: add a missing control.
+  <kbd>Enter</kbd> accepts the frame as shown. Unflagged boxes count as correct.</p></section>
+<div id="menu"></div>
+<script>
+const $=id=>document.getElementById(id);
+const COLORS={collectionItem:'#f59e0b',secondaryButton:'#3b82f6',primaryButton:'#a855f7',listRow:'#14b8a6',label:'#9ca3af',imageView:'#ec4899',slider:'#84cc16',textField:'#06b6d4',tabBar:'#6366f1',sheet:'#78716c'};
+const QUICK=['secondaryButton','primaryButton','collectionItem','listRow','textField','slider','toggle','segmentedControl','picker','tabBar'];
+const color=c=>c?COLORS[c]||`hsl(${[...c].reduce((a,ch)=>a*31+ch.charCodeAt(0)>>>0,7)%360} 70% 50%)`:'#ffffff';
+let meta,cases=[],cur=null,label=null,zoom=1,drag=null,dirty=false,focusMode=false;
+try{$('reviewer').value=localStorage.getItem('reviewer')||''}catch(e){}
+$('reviewer').oninput=()=>{try{localStorage.setItem('reviewer',$('reviewer').value)}catch(e){}};
+async function api(path,body){const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j}
+const msg=(t,c)=>{$('msg').textContent=t;$('msg').className=c||''};
+async function loadList(){meta=await api('/api/cases');cases=meta.cases;renderPick()}
+function renderPick(){$('pick').innerHTML=cases.map((c,i)=>`<option value="${i}">${c.status==='accepted'?'✓ ':'· '}${c.id}</option>`).join('');
+  if(cur)$('pick').value=cases.findIndex(c=>c.id===cur.id);$('progress').textContent=`${cases.filter(c=>c.status==='accepted').length} of ${cases.length} accepted`}
+$('pick').onchange=()=>open(+$('pick').value);
+async function open(i){if(dirty&&!confirm('Discard unsaved changes on this frame?'))return;cur=cases[i];label=await api('/api/case/'+cur.id);dirty=false;hideMenu();
+  label.objects.forEach(o=>o.flag=o.flag||null);label.missingSet=cur.status==='accepted'&&label.complete===false;$('img').src='/image/'+cur.id;$('img').onload=()=>{fit();draw()};renderPick();msg(cur.expectedScreen||'')}
+function fit(){const w=$('stage').clientWidth-16;const s=Math.min(1,w/cur.width)*zoom;$('img').style.width=cur.width*s+'px';$('svg').setAttribute('viewBox',`0 0 ${cur.width} ${cur.height}`)}
+$('zoom').onclick=()=>{zoom=zoom===1?2:zoom===2?3:1;$('zoom').textContent='Zoom '+zoom*100+'%';fit()};
+window.onresize=()=>cur&&fit();
+function el(n,a,t){const e=document.createElementNS('http://www.w3.org/2000/svg',n);for(const k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;return e}
+function draw(){const s=$('svg');s.innerHTML='';const fs=Math.max(18,cur.width/110);const used=new Set();
+  label.objects.forEach((o,i)=>{const c=color(o.class);used.add(o.class);
+    const r=el('rect',{x:o.box[0],y:o.box[1],width:o.box[2],height:o.box[3],class:'o'+(o.flag?' flag':''),stroke:c});r.dataset.i=i;s.appendChild(r);
+    const tag=o.flag?('✕ '+o.flag+(o.class?' → '+o.class:'')):(o.class||'unclassified');
+    s.appendChild(el('rect',{x:o.box[0],y:Math.max(0,o.box[1]-fs*1.25),width:tag.length*fs*.58+8,height:fs*1.2,fill:o.flag?'#dc2626':c,opacity:.9,'pointer-events':'none'}));
+    s.appendChild(el('text',{x:o.box[0]+4,y:Math.max(fs,o.box[1]-fs*.3),'font-size':fs,fill:'#fff'},tag))});
+  const f=label.focus;if(f.state==='focused'&&f.box){const b=f.box,p=fs*.5;s.appendChild(el('rect',{x:b[0]-p,y:b[1]-p,width:b[2]+2*p,height:b[3]+2*p,class:'fo'}));
+    s.appendChild(el('rect',{x:b[0]-p,y:b[1]+b[3]+p,width:fs*4.2,height:fs*1.5,fill:'#22c55e','pointer-events':'none'}));
+    s.appendChild(el('text',{x:b[0]-p+6,y:b[1]+b[3]+p+fs*1.15,'font-size':fs*1.1,fill:'#04210f'},'FOCUS'))}
+  $('legend').innerHTML=[...used].map(c=>`<span><i style="background:${color(c)}"></i>${c||'unclassified'}</span>`).join('')+'<span><i style="background:#dc2626"></i>flagged</span><span><i style="background:#22c55e"></i>focus</span>';
+  const fsEl=$('focusstate');fsEl.className=f.state==='focused'?'f':'';fsEl.textContent='Focus: '+({focused:'marked',no_focus:'no focus',unknown:'not set / can\'t tell'})[f.state];
+  $('missing').classList.toggle('on',label.complete===false&&label.missingSet===true)}
+function pt(ev){const r=$('svg').getBoundingClientRect();return[(ev.clientX-r.left)*cur.width/r.width,(ev.clientY-r.top)*cur.height/r.height]}
+const clamp=b=>{b[0]=Math.max(0,Math.min(b[0],cur.width-1));b[1]=Math.max(0,Math.min(b[1],cur.height-1));b[2]=Math.max(1,Math.min(b[2],cur.width-b[0]));b[3]=Math.max(1,Math.min(b[3],cur.height-b[1]));return b.map(v=>Math.round(v*10)/10)};
+function setFocus(o){label.focus={state:'focused',box:[...o.box]};focusMode=false;dirty=true;hideMenu();draw()}
+$('svg').onpointerdown=ev=>{if(!cur)return;hideMenu();const t=ev.target;
+  if(t.dataset.i!==undefined){const o=label.objects[+t.dataset.i];if(focusMode)return setFocus(o);return showMenu(o,ev)}
+  try{$('svg').setPointerCapture(ev.pointerId)}catch(e){}const p=pt(ev);
+  const o={id:'m-'+Date.now().toString(36),class:null,box:[p[0],p[1],1,1],visibility:'visible',provenance:'reviewer:missing',flag:'missing'};
+  label.objects.push(o);drag={p,o}};
+$('svg').onpointermove=ev=>{if(!drag)return;const p=pt(ev);drag.o.box=clamp([Math.min(p[0],drag.p[0]),Math.min(p[1],drag.p[1]),Math.abs(p[0]-drag.p[0]),Math.abs(p[1]-drag.p[1])]);draw()};
+$('svg').onpointerup=ev=>{if(!drag)return;const o=drag.o;drag=null;
+  if(o.box[2]<6||o.box[3]<6){label.objects.pop();draw();return}
+  label.complete=false;label.missingSet=true;dirty=true;draw();showMenu(o,ev)};
+function showMenu(o,ev){const m=$('menu');const missing=o.flag==='missing';
+  m.innerHTML=(missing?'<div class="muted">Missing control. Pick its class:</div>':`<div class="muted">${o.class||'unclassified'} · ${o.provenance.replace('sdk-draft:','SDK ')}</div>`)+
+   `<button class="b" data-a="focus">◎ Focus is here</button>`+
+   (missing?'':`<button class="b" data-a="not-control">✕ Not a control</button><button class="b" data-a="wrong-box">✕ Box is wrong / misaligned</button><div class="muted" style="margin-top:4px">✕ Wrong class, correct class is:</div>`)+
+   `<div class="cls">${QUICK.map(c=>`<button class="b" data-c="${c}" style="border-left:4px solid ${color(c)}">${c}</button>`).join('')}</div>`+
+   `<select data-s style="width:100%;margin-top:3px"><option value="">Other class…</option>${meta.classes.map(c=>`<option>${c}</option>`).join('')}</select>`+
+   (o.flag?`<button class="b" data-a="clear">${missing?'Remove this box':'Clear flag (box is correct)'}</button>`:'');
+  m.style.display='block';const x=Math.min(ev.clientX+8,innerWidth-230),y=Math.min(ev.clientY+8,innerHeight-m.offsetHeight-8);m.style.left=x+'px';m.style.top=Math.max(4,y)+'px';
+  m.onclick=e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a,c=b.dataset.c;
+    if(a==='focus')return setFocus(o);
+    if(a==='clear'){if(missing){label.objects.splice(label.objects.indexOf(o),1);if(!label.objects.some(x=>x.flag==='missing')){label.missingSet=false}}else{o.flag=null;o.class=o.draftClass??o.class}}
+    if(a==='not-control'||a==='wrong-box'){o.draftClass=o.draftClass??o.class;o.flag=a;o.class=null}
+    if(c){if(!missing){o.draftClass=o.draftClass??o.class;o.flag='wrong-class'}o.class=c}
+    dirty=true;hideMenu();draw()};
+  m.querySelector('[data-s]').onchange=e=>{const c=e.target.value;if(!c)return;if(!missing){o.draftClass=o.draftClass??o.class;o.flag='wrong-class'}o.class=c;dirty=true;hideMenu();draw()}}
+function hideMenu(){$('menu').style.display='none'}
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#menu')&&!e.target.closest('svg'))hideMenu()});
+$('nofocus').onclick=()=>{label.focus={state:'no_focus',box:null};dirty=true;draw()};
+$('cantell').onclick=()=>{label.focus={state:'unknown',box:null};dirty=true;draw()};
+$('missing').onclick=()=>{label.missingSet=!label.missingSet;label.complete=!label.missingSet;dirty=true;draw()};
+function payload(){const f=label.focus.state==='focused'?{state:'focused',box:label.focus.box}:{state:label.focus.state,box:null};
+  const objects=label.objects.map(o=>{const r={id:o.id,class:o.class,box:o.box,visibility:o.visibility,provenance:o.provenance};
+    if(o.flag){r.flag=o.flag;if(o.flag!=='missing')r.provenance=o.provenance+';reviewer:'+o.flag+(o.draftClass?':draft='+o.draftClass:'')}return r});
+  return{imageSHA256:label.imageSHA256,complete:label.missingSet!==true,objects,focus:f,review:{blinded:true,reviewer:$('reviewer').value.trim(),status:'accepted'}}}
+async function accept(){try{if(!$('reviewer').value.trim())throw new Error('Enter your name at the top first.');
+  if(label.focus.state==='unknown'&&!confirm('Focus is not marked. Accept with focus "can\'t tell"?'))return;
+  const r=await api('/api/case/'+cur.id,payload());cur.status=r.status;dirty=false;renderPick();msg('Accepted.','ok');step(1)}catch(e){msg(e.message,'bad')}}
+$('accept').onclick=accept;
+function step(d){const i=cases.findIndex(c=>c.id===cur.id);if(i+d>=0&&i+d<cases.length)open(i+d)}
+$('next').onclick=()=>step(1);$('prev').onclick=()=>step(-1);
+document.onkeydown=ev=>{if(['INPUT','SELECT'].includes(ev.target.tagName))return;const k=ev.key;
+  if(k==='Enter'){ev.preventDefault();accept()}else if(k==='f'||k==='F'){focusMode=!focusMode;msg(focusMode?'Click the focused control.':'')}
+  else if(k==='0')$('nofocus').onclick();else if(k==='?')$('cantell').onclick();else if(k==='m'||k==='M')$('missing').onclick();
+  else if(k==='Escape'){hideMenu();focusMode=false}else if(k==='ArrowRight'&&!ev.target.closest('#menu'))step(1);else if(k==='ArrowLeft')step(-1)};
+window.onbeforeunload=e=>{if(dirty){e.preventDefault();e.returnValue=''}};
+loadList().then(()=>{const i=cases.findIndex(c=>c.status!=='accepted');open(i<0?0:i)});
+</script>
+</body>
+</html>
