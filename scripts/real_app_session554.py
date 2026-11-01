@@ -150,7 +150,8 @@ BUTTONS = {'up', 'down', 'left', 'right', 'select', 'back', 'playPause'}
 
 def validate_plan(plan):
     q.require(plan.get('version') == 'realapp554-case-plan-v1' and plan.get('predictionViewed') is False, 'plan_identity')
-    q.require(plan.get('dataRole') == 'pilot-evaluation' and plan.get('trainingEligible') is False, 'plan_role')
+    # pilot-evaluation is the holdout. focus-development is for tuning and comparison only.
+    q.require(plan.get('dataRole') in ('pilot-evaluation', 'focus-development') and plan.get('trainingEligible') is False, 'plan_role')
     ids = [c['id'] for f in plan['flows'] for c in f['cases']]
     q.require(ids and len(ids) == len(set(ids)) and all(q.ID.fullmatch(i) for i in ids), 'plan_case_identity')
     q.require(all(set(c['inputs']) <= BUTTONS for f in plan['flows'] for c in f['cases']), 'plan_input')

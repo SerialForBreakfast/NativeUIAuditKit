@@ -5269,3 +5269,10 @@ Why it matters: an empty reply looks like a screen with no controls. It can hide
 What went wrong: the desktop app's `preview_start` launched the review server, but the process hung in `dyld` while it opened its working folder on `/Volumes/training-drive`. It never listened.
 Correct approach: start the server from the agent shell as a background command. Then open its URL in the browser pane with `preview_start --url`.
 Why it matters: the hung process looks like a slow start. The port stays closed and no log explains why.
+
+## Score the reviewed focus box before you blame the selector — REALAPP554, 2026-11-01
+
+What went wrong: the real-app pilot found 0 of 15 focused controls. The first explanation was the known TTR off-screen suppression.
+Correct approach: score each reviewed focus box and every proposal with the shipped FocusRing model through `makeCrop`.
+On the pilot, unfocused content scored ≥ 0.85 on 16 of 21 frames. The suppression fix alone gains 0 frames.
+Why it matters: a known runtime defect can hide a larger model defect. Separate proposal, score and policy failures before you choose a fix.
