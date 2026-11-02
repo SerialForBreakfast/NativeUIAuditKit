@@ -8,6 +8,8 @@ TRAINING_EXCEPTIONS = {
     # HCF388 resolves early stopping while retaining the approved 30-epoch study.
     'f7ae94240dc3193471a1e2d31e1ff3efe19f00f788c8a5368a674c528df94608': 7200,
 }
+# Maintainer 2026-11-01: long model-improving runs are encouraged. The training limit only guards against hung jobs.
+TRAINING_SECONDS = 43200
 # EXTENSION408: maintainer limit overrides for exact successor specifications.
 OVERRIDES = 'execution-limits.json'
 OVERRIDE_VERSION = 'research-execution-limits-v1'
@@ -35,7 +37,7 @@ def seconds(spec_hash, authority, diagnostic_seconds, queue=None):
     if authority == 'export':
         default = 1800
     elif authority == 'training':
-        default = TRAINING_EXCEPTIONS.get(spec_hash, 1800)
+        default = max(TRAINING_EXCEPTIONS.get(spec_hash, 0), TRAINING_SECONDS)
     else:
         default = diagnostic_seconds
     # Capture limits stay fixed. The spec validator also enforces them.

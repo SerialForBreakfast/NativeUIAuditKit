@@ -345,6 +345,10 @@ The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit cla
 A box covers the control that receives focus or a tap, as the platform reports its frame (view or accessibility frame).
 For `collectionItem`, the box is the whole cell: artwork plus any title or caption inside the cell.
 Text inside a control keeps its own `label` box as well. Nested boxes are valid.
+Exception for the 13-role detector (rule B, maintainer decision 2026-11-02, PILLS560 R4): role targets drop a `text` box inside a `button` box.
+Text inside a button is part of the button; OCR reads it. The 41-class sidecar labels keep their nested `label` boxes.
+Artwork inside a cell is part of the cell. Do not label it as a separate `imageView`; use `imageView` only for a standalone image (decision, 2026-11-01).
+Keyboard and PIN keys stay `collectionItem`. Training samples cap keys at 25% of `collectionItem` boxes (decision, 2026-11-01).
 Focus effects (scale, glow, shadow) do not change the box. Measure them as separate geometry, not as the label.
 Separate geometry, such as Fixture `artwork_geometry` and `rendered_body_geometry`, stays additive telemetry.
 

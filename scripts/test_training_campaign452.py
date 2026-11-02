@@ -35,7 +35,7 @@ class TrainingCampaignTests(fixtures.DecisionTests):
             question='Does the fixed crop correction preserve all Standard and consumer successes?',
             controlledComparison='Use identical frozen evaluation inputs and change only the candidate crop model.',
             training=copy.deepcopy(self.definition), suite=pin(self.suite),
-            budget=dict(maxJobs=12, maxSeconds=12000, maxOutputBytes=4<<30),
+            budget=dict(maxJobs=12, maxSeconds=12*43200, maxOutputBytes=4<<30),  # 12 h training guard per job (2026-11-01)
             followups=[dict(when=o,jobs=[dict(id=ident+'-'+o,kind='decision-audit',
                 question='Which retained failures require eligible correction inputs?')]) for o in ('supported','contradicted')])
 

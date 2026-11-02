@@ -124,6 +124,48 @@ public struct ContentCorpus {
     }
 }
 
+// MARK: - Seeded variation (CELLS558 S2)
+
+/// Seed-driven content and style choices. Low-variation families use it so that each seed draws a different screen.
+struct Variation {
+    private var rng: SeededRNG
+    init(seed: UInt64, salt: UInt64) { rng = SeededRNG(seed: seed ^ salt) }
+    mutating func int(_ range: ClosedRange<Int>) -> Int { range.lowerBound + Int(rng.next() % UInt64(range.count)) }
+    mutating func chance(_ p: Double) -> Bool { Double(rng.next() % 10_000) / 10_000.0 < p }
+    mutating func pick<T>(_ items: [T]) -> T { items[Int(rng.next() % UInt64(items.count))] }
+    mutating func sample<T>(_ items: [T], _ n: Int) -> [T] {
+        var pool = items, out: [T] = []
+        for _ in 0..<min(n, items.count) { out.append(pool.remove(at: Int(rng.next() % UInt64(pool.count)))) }
+        return out
+    }
+
+    static let tabWords = ["Home", "Movies", "Shows", "Sports", "Kids", "News", "Live", "Music", "Library", "Search",
+                           "For You", "Store", "Channels", "Watch Now", "Explore", "Downloads", "Favorites", "Top Charts",
+                           "Comedy", "Drama", "Docs", "Family", "Local", "World", "Business", "Science", "Health", "Gaming"]
+    static let headlines = ["Featured Collection", "Continue Watching", "New This Week", "Top Picks", "Trending Now",
+                            "Recently Added", "Because You Watched", "Staff Favorites", "Editors' Choice", "Coming Soon"]
+    static let menuItems: [(String, String)] = [("Search", "magnifyingglass"), ("Home", "house.fill"), ("Movies", "film.fill"),
+        ("TV Shows", "tv.fill"), ("Sports", "sportscourt.fill"), ("Library", "square.stack.3d.up.fill"), ("Music", "music.note"),
+        ("Kids", "figure.child"), ("News", "newspaper.fill"), ("Settings", "gearshape.fill"), ("Downloads", "arrow.down.circle.fill")]
+    static let languages = ["English [CC]", "Spanish", "French", "German", "Italian", "Japanese", "Portuguese", "Korean", "Off"]
+    static let settingValues = ["On", "Off", "Automatic", "4K SDR (60Hz)", "1080p", "Dolby Atmos", "Never", "15 Minutes", "English"]
+    static let alertButtons = ["Not Now", "Learn More", "Settings", "Try Again", "Details"]
+}
+
+/// Light or dark colors for the varied templates. tvOS shows focus as a raised white surface in both themes.
+struct Palette {
+    let background, surface, selected, text, secondary: Color
+    static func make(light: Bool) -> Palette {
+        light ? Palette(background: Color(white: 0.90), surface: Color.black.opacity(0.06), selected: Color.black.opacity(0.14),
+                        text: Color(white: 0.08), secondary: Color(white: 0.30))
+              : Palette(background: Color(red: 0.05, green: 0.05, blue: 0.08), surface: Color.white.opacity(0.08),
+                        selected: Color.white.opacity(0.18), text: .white, secondary: Color.white.opacity(0.65))
+    }
+}
+
+/// Class of a top tab item. Pending maintainer decision (CELLS558): `primaryButton` (current generator) or `secondaryButton` (TTR Fixture).
+let tabItemClass = "primaryButton"
+
 // MARK: - Template 1: Home Screen
 
 struct HomeScreenView: View {
@@ -216,17 +258,23 @@ struct SettingsView: View {
     var corpus: ContentCorpus
 
     var body: some View {
-        var rng = SeededRNG(seed: seed)
-        let focusIdx = Int(rng.next() % 6)
-        let categories = ["General", "Users", "Video and Audio", "Remotes", "Network", "System"]
+        var v = Variation(seed: seed, salt: 0x5E77)
+        let categories = v.sample(["General", "Users and Accounts", "Video and Audio", "Remotes and Devices", "Network",
+                                   "System", "Apps", "AirPlay and HomeKit", "Accessibility", "Privacy and Security"], v.int(4...8))
+        let focusIdx = v.int(0...(categories.count - 1))
+        let rows = v.sample(["Wi-Fi", "Bluetooth", "Audio Output", "Subtitles and Captioning", "Siri", "Software Updates",
+                             "Sleep After", "Screensaver", "Language", "Resolution", "Match Content", "Reduce Loud Sounds"], v.int(3...6))
+        let toggles = rows.map { _ in v.chance(0.5) }
+        let values = rows.map { _ in v.pick(Variation.settingValues) }
+        let p = Palette.make(light: v.chance(0.3))
 
         ZStack(alignment: .topLeading) {
-            Color(red: 0.05, green: 0.05, blue: 0.08).ignoresSafeArea()
+            p.background.ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 20) {
                 Text("Settings")
                     .font(.system(size: 44, weight: .bold))
-                    .foregroundColor(.white)
+                    .foregroundColor(p.text)
                     .padding(.horizontal, 90)
                     .padding(.top, 50)
                     .captureFrame(id: "navigationBar_title")
@@ -238,35 +286,43 @@ struct SettingsView: View {
                             HStack {
                                 Text(categories[idx])
                                     .font(.system(size: 26, weight: isFoc ? .bold : .medium))
-                                    .foregroundColor(isFoc ? .black : .white)
+                                    .foregroundColor(isFoc ? .black : p.text)
                                     .captureFrame(id: "label_cat_\(idx)")
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundColor(isFoc ? .black.opacity(0.6) : .white.opacity(0.4))
+                                    .foregroundColor(isFoc ? .black.opacity(0.6) : p.secondary)
                             }
                             .padding(.horizontal, 28)
                             .frame(width: 580, height: 74)
-                            .background(isFoc ? Color.white : Color.white.opacity(0.08))
+                            .background(isFoc ? Color.white : p.surface)
                             .cornerRadius(16)
+                            .shadow(color: isFoc ? Color.black.opacity(0.3) : Color.clear, radius: 10)
                             .captureFrame(id: isFoc ? "listRow_cat_\(idx)_focused" : "listRow_cat_\(idx)_unfocused")
                         }
                     }
 
                     VStack(spacing: 14) {
-                        ForEach(0..<5, id: \.self) { idx in
+                        ForEach(0..<rows.count, id: \.self) { idx in
                             HStack {
-                                Text("Option \(idx + 1)")
+                                Text(rows[idx])
                                     .font(.system(size: 26))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(p.text)
                                     .captureFrame(id: "label_opt_\(idx)")
                                 Spacer()
-                                Toggle("", isOn: .constant(idx % 2 == 0))
-                                    .labelsHidden()
-                                    .captureFrame(id: "toggle_setting_\(idx)")
+                                if toggles[idx] {
+                                    Toggle("", isOn: .constant(idx % 2 == 0))
+                                        .labelsHidden()
+                                        .captureFrame(id: "toggle_setting_\(idx)")
+                                } else {
+                                    Text(values[idx])
+                                        .font(.system(size: 24))
+                                        .foregroundColor(p.secondary)
+                                        .captureFrame(id: "label_value_\(idx)")
+                                }
                             }
                             .padding(.horizontal, 28)
                             .frame(width: 980, height: 78)
-                            .background(Color.white.opacity(0.06))
+                            .background(p.surface)
                             .cornerRadius(16)
                             .captureFrame(id: "listRow_setting_\(idx)_unfocused")
                         }
@@ -287,21 +343,31 @@ struct AlertView: View {
     var corpus: ContentCorpus
 
     var body: some View {
-        var rng = SeededRNG(seed: seed)
-        let focusBtn = Int(rng.next() % 2) // 0: primary, 1: cancel
+        var v = Variation(seed: seed, salt: 0xA1E7)
+        var c = ContentCorpus(seed: seed ^ 0xA1E8)
+        let title = c.alertTitle()
+        let message = c.alertMessage()
+        let primary = v.pick(["Continue", "OK", "Update Now", "Allow", "Sign In", "Connect"])
+        let extra = v.chance(0.5) ? v.pick(Variation.alertButtons) : nil
+        let count = extra == nil ? 2 : 3
+        let focusBtn = v.int(0...(count - 1)) // 0 primary, last cancel, middle extra
+        let light = v.chance(0.3)
+        let p = Palette.make(light: light)
+        let width = CGFloat(v.int(640...860))
+        let dialog = light ? Color(white: 0.97) : Color(red: 0.16, green: 0.16, blue: 0.20)
 
         ZStack {
-            Color.black.opacity(0.85).ignoresSafeArea()
+            (light ? Color.black.opacity(0.35) : Color.black.opacity(0.85)).ignoresSafeArea()
 
             VStack(spacing: 28) {
                 VStack(spacing: 12) {
-                    Text("Allow TVTestRig Access?")
+                    Text(title)
                         .font(.system(size: 34, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(p.text)
                         .captureFrame(id: "label_alert_title")
-                    Text("This allows TVTestRig to automate Apple TV navigation.")
+                    Text(message)
                         .font(.system(size: 22))
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(p.secondary)
                         .padding(.horizontal, 32)
                         .multilineTextAlignment(.center)
                         .captureFrame(id: "label_alert_message")
@@ -309,26 +375,24 @@ struct AlertView: View {
                 .padding(.top, 40)
 
                 VStack(spacing: 16) {
-                    Text("Continue")
-                        .font(.system(size: 24, weight: focusBtn == 0 ? .bold : .medium))
-                        .foregroundColor(focusBtn == 0 ? .black : .white)
-                        .frame(width: 660, height: 68)
-                        .background(focusBtn == 0 ? Color.white : Color.white.opacity(0.12))
-                        .cornerRadius(16)
-                        .captureFrame(id: focusBtn == 0 ? "primaryButton_action_focused" : "primaryButton_action_unfocused")
-
-                    Text("Cancel")
-                        .font(.system(size: 24, weight: focusBtn == 1 ? .bold : .medium))
-                        .foregroundColor(focusBtn == 1 ? .black : .white)
-                        .frame(width: 660, height: 68)
-                        .background(focusBtn == 1 ? Color.white : Color.white.opacity(0.12))
-                        .cornerRadius(16)
-                        .captureFrame(id: focusBtn == 1 ? "cancelAction_dismiss_focused" : "cancelAction_dismiss_unfocused")
+                    ForEach(0..<count, id: \.self) { idx in
+                        let isFoc = (idx == focusBtn)
+                        let isCancel = (idx == count - 1)
+                        let kind = idx == 0 ? "primaryButton_action" : (isCancel ? "cancelAction_dismiss" : "secondaryButton_extra")
+                        Text(idx == 0 ? primary : (isCancel ? "Cancel" : (extra ?? "")))
+                            .font(.system(size: 24, weight: isFoc ? .bold : .medium))
+                            .foregroundColor(isFoc ? .black : p.text)
+                            .frame(width: width - 100, height: 68)
+                            .background(isFoc ? Color.white : p.surface)
+                            .cornerRadius(16)
+                            .shadow(color: isFoc ? Color.black.opacity(0.3) : Color.clear, radius: 10)
+                            .captureFrame(id: isFoc ? "\(kind)_focused" : "\(kind)_unfocused")
+                    }
                 }
                 .padding(.bottom, 36)
             }
-            .frame(width: 760)
-            .background(Color(red: 0.16, green: 0.16, blue: 0.20))
+            .frame(width: width)
+            .background(dialog)
             .cornerRadius(28)
             .captureFrame(id: "alert_dialog_box")
         }
@@ -344,37 +408,36 @@ struct TabBarView: View {
     var corpus: ContentCorpus
 
     var body: some View {
-        var rng = SeededRNG(seed: seed)
-        let tabs = ["Apple TV+", "Store", "Library", "Search"]
-        let focIdx = Int(rng.next() % UInt64(tabs.count))
+        var v = Variation(seed: seed, salt: 0x7AB0)
+        let tabs = v.sample(Variation.tabWords, v.int(3...8))
+        let focIdx = v.int(0...(tabs.count - 1))
+        // Selected but not focused looks like focus. Keep it in at least 30% of screens as a hard negative.
+        let selIdx = v.chance(0.45) ? v.int(0...(tabs.count - 1)) : focIdx
+        let style = v.int(0...2) // 0 filled pill, 1 underline, 2 raised text
+        let p = Palette.make(light: v.chance(0.3))
+        let fontSize = CGFloat(v.int(21...28))
+        let topPad = CGFloat(v.int(10...40))
+        let headline = v.pick(Variation.headlines)
 
         ZStack(alignment: .top) {
-            Color(red: 0.04, green: 0.04, blue: 0.06).ignoresSafeArea()
+            p.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                HStack(spacing: 24) {
-                    ForEach(0..<tabs.count, id: \.self) { idx in
-                        let isFoc = (idx == focIdx)
-                        Text(tabs[idx])
-                            .font(.system(size: 24, weight: isFoc ? .bold : .medium))
-                            .foregroundColor(isFoc ? .black : .white.opacity(0.8))
-                            .padding(.horizontal, 28)
-                            .padding(.vertical, 12)
-                            .background(isFoc ? Color.white : Color.clear)
-                            .cornerRadius(20)
-                            .captureFrame(id: isFoc ? "primaryButton_tab_\(idx)_focused" : "primaryButton_tab_\(idx)_unfocused")
-                    }
-                }
+                TabRow(tabs: tabs, focIdx: focIdx, selIdx: selIdx, style: style, fontSize: fontSize,
+                       spacing: CGFloat(v.int(4...30)), padH: CGFloat(v.int(18...32)), padV: CGFloat(v.int(8...14)), p: p, row: 0,
+                       platter: TabRow.plainFocus(seed: seed, row: 0).platter, lift: TabRow.plainFocus(seed: seed, row: 0).lift)
+                    .frame(maxWidth: .infinity, alignment: v.chance(0.5) ? .leading : .center)
+                    .padding(.horizontal, 90)
                 .frame(maxWidth: .infinity)
                 .frame(height: 110)
-                .background(Color.black.opacity(0.3))
+                .background(p.surface)
                 .captureFrame(id: "tabBar_top_navigation")
-                .padding(.top, 20)
+                .padding(.top, topPad)
 
                 VStack(alignment: .leading, spacing: 20) {
-                    Text("Featured Collection")
+                    Text(headline)
                         .font(.system(size: 48, weight: .heavy))
-                        .foregroundColor(.white)
+                        .foregroundColor(p.text)
                         .captureFrame(id: "label_featured_title")
 
                     RoundedRectangle(cornerRadius: 24)
@@ -491,32 +554,28 @@ struct SidebarMenuView: View {
     var corpus: ContentCorpus
 
     var body: some View {
-        var rng = SeededRNG(seed: seed)
-        let items: [(title: String, icon: String)] = [
-            ("Search", "magnifyingglass"),
-            ("Home", "house.fill"),
-            ("Movies", "film.fill"),
-            ("TV Shows", "tv.fill"),
-            ("Sports", "sportscourt.fill"),
-            ("Library", "square.stack.3d.up.fill")
-        ]
-        let selectedNav = Int(rng.next() % UInt64(items.count))
-        let focusNav = (rng.next() % 2 == 0) ? selectedNav : nil
+        var v = Variation(seed: seed, salt: 0x51DE)
+        let items = v.sample(Array(Variation.menuItems.dropFirst()), v.int(4...7))
+        let selectedNav = v.int(0...(items.count - 1))
+        let focusNav: Int? = v.chance(0.5) ? (v.chance(0.6) ? selectedNav : v.int(0...(items.count - 1))) : nil
+        let cardCount = v.int(2...4)
+        let cardHeight = CGFloat(v.int(300...580))
+        let p = Palette.make(light: v.chance(0.3))
 
         ZStack(alignment: .topLeading) {
-            Color(red: 0.05, green: 0.05, blue: 0.08).ignoresSafeArea()
+            p.background.ignoresSafeArea()
 
             HStack(spacing: 0) {
                 // Left Navigation Sidebar
                 VStack(alignment: .leading, spacing: 14) {
                     HStack(spacing: 16) {
-                        Image(systemName: "magnifyingglass").foregroundColor(.white.opacity(0.8))
-                        Text("Search").font(.system(size: 24)).foregroundColor(.white.opacity(0.6))
+                        Image(systemName: "magnifyingglass").foregroundColor(p.secondary)
+                        Text("Search").font(.system(size: 24)).foregroundColor(p.secondary)
                         Spacer()
                     }
                     .padding(.horizontal, 20)
                     .frame(width: 380, height: 60)
-                    .background(Color.white.opacity(0.08))
+                    .background(p.surface)
                     .cornerRadius(16)
                     .captureFrame(id: "searchField_nav_search")
                     .padding(.bottom, 12)
@@ -526,23 +585,23 @@ struct SidebarMenuView: View {
                         let isSel = (idx == selectedNav)
 
                         HStack(spacing: 18) {
-                            Image(systemName: item.icon)
+                            Image(systemName: item.1)
                                 .font(.system(size: 22))
-                                .foregroundColor(isFoc ? .black : (isSel ? .white : .white.opacity(0.7)))
+                                .foregroundColor(isFoc ? .black : (isSel ? p.text : p.secondary))
                                 .frame(width: 28)
                                 .captureFrame(id: "imageView_nav_icon_\(idx)")
-                            Text(item.title)
+                            Text(item.0)
                                 .font(.system(size: 24, weight: (isFoc || isSel) ? .bold : .medium))
-                                .foregroundColor(isFoc ? .black : .white)
+                                .foregroundColor(isFoc ? .black : p.text)
                                 .captureFrame(id: "label_nav_title_\(idx)")
                             Spacer()
                         }
                         .padding(.horizontal, 20)
                         .frame(width: 380, height: 64)
-                        .background(isFoc ? Color.white : (isSel ? Color.white.opacity(0.18) : Color.clear))
+                        .background(isFoc ? Color.white : (isSel ? p.selected : Color.clear))
                         .cornerRadius(16)
                         .scaleEffect(isFoc ? 1.04 : 1.0)
-                        .shadow(color: isFoc ? Color.white.opacity(0.4) : Color.clear, radius: 12)
+                        .shadow(color: isFoc ? Color.black.opacity(0.35) : Color.clear, radius: 12)
                         .captureFrame(id: isFoc ? "listRow_nav_\(idx)_focused" : "listRow_nav_\(idx)_unfocused")
                     }
 
@@ -550,30 +609,30 @@ struct SidebarMenuView: View {
                 }
                 .padding(32)
                 .frame(width: 440, height: 1080)
-                .background(Color.black.opacity(0.4))
+                .background(p.surface)
                 .captureFrame(id: "sidebar_main_nav")
 
                 // Right Content Pane
                 VStack(alignment: .leading, spacing: 24) {
-                    Text(items[selectedNav].title)
+                    Text(items[selectedNav].0)
                         .font(.system(size: 44, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(p.text)
                         .captureFrame(id: "label_section_header")
 
                     HStack(spacing: 36) {
-                        ForEach(0..<3, id: \.self) { cIdx in
+                        ForEach(0..<cardCount, id: \.self) { cIdx in
                             let isCardFoc = (focusNav == nil && cIdx == 0)
                             VStack(alignment: .leading, spacing: 12) {
                                 RoundedRectangle(cornerRadius: 18)
-                                    .fill(Color.blue.opacity(0.4))
-                                    .frame(width: 420, height: 580)
+                                    .fill(Color(hue: Double((Int(seed) + cIdx * 7) % 20) / 20.0, saturation: 0.5, brightness: 0.55))
+                                    .frame(width: 1240 / CGFloat(cardCount) - 36, height: cardHeight)
                                     .scaleEffect(isCardFoc ? 1.08 : 1.0)
                                     .overlay(RoundedRectangle(cornerRadius: 18).stroke(isCardFoc ? Color.white : Color.clear, lineWidth: 3))
                                     .shadow(color: isCardFoc ? Color.white.opacity(0.4) : Color.clear, radius: 16)
 
-                                Text("Show Title \(cIdx + 1)")
+                                Text("\(items[selectedNav].0) Title \(cIdx + 1)")
                                     .font(.system(size: 22, weight: isCardFoc ? .bold : .medium))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(p.text)
                                     .captureFrame(id: "label_card_\(cIdx)")
                             }
                             // Whole-cell box: artwork plus title (Research 5.2.1).
@@ -827,9 +886,12 @@ struct SplitSettingsView: View {
     var corpus: ContentCorpus
 
     var body: some View {
-        var rng = SeededRNG(seed: seed)
-        let focRow = Int(rng.next() % 5)
-        let cats = ["Video and Audio", "General", "Remotes", "Network", "Users"]
+        var v = Variation(seed: seed, salt: 0x5B11)
+        let focRow = v.int(0...4) // 4: focus stays in the category list
+        let cats = v.sample(["Video and Audio", "General", "Remotes", "Network", "Users", "Apps", "AirPlay", "Accessibility", "System"], v.int(4...7))
+        let resolution = v.pick(["4K SDR (60Hz)", "4K HDR (60Hz)", "1080p SDR (60Hz)", "Automatic"])
+        let delay = "\(v.int(0...12) * 10) ms"
+        let format = v.chance(0.5)
 
         ZStack(alignment: .topLeading) {
             Color(red: 0.05, green: 0.05, blue: 0.08).ignoresSafeArea()
@@ -845,7 +907,7 @@ struct SplitSettingsView: View {
                     .captureFrame(id: "secondaryButton_back_nav")
 
                     Image(systemName: "chevron.right").foregroundColor(.white.opacity(0.4))
-                    Text("Video and Audio").font(.system(size: 34, weight: .bold)).foregroundColor(.white)
+                    Text(cats[0]).font(.system(size: 34, weight: .bold)).foregroundColor(.white)
                         .captureFrame(id: "label_screen_title")
                     Spacer()
                 }
@@ -873,7 +935,7 @@ struct SplitSettingsView: View {
                             Text("Resolution").font(.system(size: 24, weight: focRow == 0 ? .bold : .medium))
                                 .foregroundColor(focRow == 0 ? .black : .white)
                             Spacer()
-                            Text("4K SDR (60Hz)").foregroundColor(focRow == 0 ? .black.opacity(0.7) : .white.opacity(0.6))
+                            Text(resolution).foregroundColor(focRow == 0 ? .black.opacity(0.7) : .white.opacity(0.6))
                         }
                         .padding(.horizontal, 28).frame(width: 1040, height: 76)
                         .background(focRow == 0 ? Color.white : Color.white.opacity(0.08)).cornerRadius(16)
@@ -901,7 +963,7 @@ struct SplitSettingsView: View {
                             Text("Match Content").font(.system(size: 24, weight: focRow == 2 ? .bold : .medium))
                                 .foregroundColor(focRow == 2 ? .black : .white)
                             Spacer()
-                            Toggle("", isOn: .constant(true)).labelsHidden()
+                            Toggle("", isOn: .constant(format)).labelsHidden()
                                 .captureFrame(id: focRow == 2 ? "toggle_match_content_focused" : "toggle_match_content_unfocused")
                         }
                         .padding(.horizontal, 28).frame(width: 1040, height: 76)
@@ -915,7 +977,7 @@ struct SplitSettingsView: View {
                             Spacer()
                             HStack(spacing: 16) {
                                 Image(systemName: "minus.circle.fill")
-                                Text("20 ms").font(.system(size: 22, weight: .bold))
+                                Text(delay).font(.system(size: 22, weight: .bold))
                                 Image(systemName: "plus.circle.fill")
                             }
                             .foregroundColor(focRow == 3 ? .black : .white)
@@ -1035,66 +1097,66 @@ struct AudioSubtitlesView: View {
     var corpus: ContentCorpus
 
     var body: some View {
-        var rng = SeededRNG(seed: seed)
-        let foc = Int(rng.next() % 4) // 0: segment, 1: lang1, 2: lang2, 3: dialogue
+        var v = Variation(seed: seed, salt: 0xA0D1)
+        let langs = v.sample(Variation.languages, v.int(2...5))
+        let checked = v.int(0...(langs.count - 1))
+        let foc = v.int(0...(langs.count + 1)) // 0 segment, 1...n languages, n+1 dialogue toggle
+        let segFirst = v.pick(["Subtitles", "Audio"])
+        let segSecond = segFirst == "Audio" ? "Subtitles" : "Audio"
+        let light = v.chance(0.25)
+        let p = Palette.make(light: light)
+        let card = light ? Color(white: 0.97) : Color(red: 0.14, green: 0.14, blue: 0.18)
 
         ZStack {
-            Color.black.opacity(0.82).ignoresSafeArea()
+            (light ? Color.black.opacity(0.3) : Color.black.opacity(0.82)).ignoresSafeArea()
 
             VStack(spacing: 24) {
                 // Segmented Selector
                 let isSegFoc = (foc == 0)
                 HStack(spacing: 0) {
-                    Text("Subtitles").font(.system(size: 22, weight: .bold)).foregroundColor(.black)
+                    Text(segFirst).font(.system(size: 22, weight: .bold)).foregroundColor(.black)
                         .frame(maxWidth: .infinity).frame(height: 52).background(Color.white).cornerRadius(12)
-                    Text("Audio").font(.system(size: 22)).foregroundColor(.white.opacity(0.7))
+                    Text(segSecond).font(.system(size: 22)).foregroundColor(p.secondary)
                         .frame(maxWidth: .infinity).frame(height: 52)
                 }
-                .padding(4).frame(width: 640).background(isSegFoc ? Color.white : Color.white.opacity(0.12)).cornerRadius(16)
+                .padding(4).frame(width: 640).background(isSegFoc ? Color.white : p.surface).cornerRadius(16)
                 .captureFrame(id: isSegFoc ? "segmentedControl_tabs_focused" : "segmentedControl_tabs_unfocused")
 
                 // Language Rows
                 VStack(spacing: 8) {
-                    let isL1Foc = (foc == 1)
-                    HStack {
-                        Text("English [CC]").font(.system(size: 22, weight: isL1Foc ? .bold : .medium))
-                            .foregroundColor(isL1Foc ? .black : .white)
-                            .captureFrame(id: "label_lang_0")
-                        Spacer()
-                        Image(systemName: "checkmark").foregroundColor(isL1Foc ? .black : .white)
-                            .captureFrame(id: "imageView_checkmark_0")
+                    ForEach(0..<langs.count, id: \.self) { idx in
+                        let isFoc = (foc == idx + 1)
+                        HStack {
+                            Text(langs[idx]).font(.system(size: 22, weight: isFoc ? .bold : .medium))
+                                .foregroundColor(isFoc ? .black : p.text)
+                                .captureFrame(id: "label_lang_\(idx)")
+                            Spacer()
+                            if idx == checked {
+                                Image(systemName: "checkmark").foregroundColor(isFoc ? .black : p.text)
+                                    .captureFrame(id: "imageView_checkmark_\(idx)")
+                            }
+                        }
+                        .padding(.horizontal, 24).frame(width: 640, height: 60)
+                        .background(isFoc ? Color.white : (idx == checked ? p.selected : p.surface)).cornerRadius(14)
+                        .captureFrame(id: isFoc ? "listRow_lang_\(idx)_focused" : "listRow_lang_\(idx)_unfocused")
                     }
-                    .padding(.horizontal, 24).frame(width: 640, height: 60)
-                    .background(isL1Foc ? Color.white : Color.white.opacity(0.15)).cornerRadius(14)
-                    .captureFrame(id: isL1Foc ? "listRow_lang_0_focused" : "listRow_lang_0_unfocused")
-
-                    let isL2Foc = (foc == 2)
-                    HStack {
-                        Text("Spanish").font(.system(size: 22, weight: isL2Foc ? .bold : .medium))
-                            .foregroundColor(isL2Foc ? .black : .white)
-                            .captureFrame(id: "label_lang_1")
-                        Spacer()
-                    }
-                    .padding(.horizontal, 24).frame(width: 640, height: 60)
-                    .background(isL2Foc ? Color.white : Color.white.opacity(0.06)).cornerRadius(14)
-                    .captureFrame(id: isL2Foc ? "listRow_lang_1_focused" : "listRow_lang_1_unfocused")
                 }
 
                 // Dialogue Boost Toggle
-                let isDiagFoc = (foc == 3)
+                let isDiagFoc = (foc == langs.count + 1)
                 HStack {
-                    Text("Enhance Dialogue").font(.system(size: 20, weight: isDiagFoc ? .bold : .medium))
-                        .foregroundColor(isDiagFoc ? .black : .white)
+                    Text(v.pick(["Enhance Dialogue", "Reduce Loud Sounds", "Mono Audio"])).font(.system(size: 20, weight: isDiagFoc ? .bold : .medium))
+                        .foregroundColor(isDiagFoc ? .black : p.text)
                         .captureFrame(id: "label_dialogue_title")
                     Spacer()
-                    Toggle("", isOn: .constant(true)).labelsHidden()
+                    Toggle("", isOn: .constant(v.chance(0.5))).labelsHidden()
                         .captureFrame(id: isDiagFoc ? "toggle_enhance_dialogue_focused" : "toggle_enhance_dialogue_unfocused")
                 }
                 .padding(.horizontal, 24).frame(width: 640, height: 60)
-                .background(isDiagFoc ? Color.white : Color.white.opacity(0.06)).cornerRadius(14)
+                .background(isDiagFoc ? Color.white : p.surface).cornerRadius(14)
                 .captureFrame(id: isDiagFoc ? "listRow_dialogue_focused" : "listRow_dialogue_unfocused")
             }
-            .padding(32).background(Color(red: 0.14, green: 0.14, blue: 0.18)).cornerRadius(28)
+            .padding(32).background(card).cornerRadius(28)
             .captureFrame(id: "popover_audio_subtitles_card")
         }
         .frame(width: 1920, height: 1080)
@@ -1344,6 +1406,232 @@ struct SiriOverlayView: View {
             .captureFrame(id: "popover_siri_card")
         }
         .frame(width: 1920, height: 1080)
+        .ignoresSafeArea(.all)
+    }
+}
+
+// MARK: - Template 26: Content Cells (CELLS558 S3)
+
+/// One row of cells. Variants: 0 poster, 1 article, 2 overlay title, 3 text panel, 4 hero with button, 5 scrolled shelf.
+struct CellRowSpec {
+    let variant: Int, count: Int, width: CGFloat, artHeight: CGFloat, offset: CGFloat, height: CGFloat
+    let heading: String, titles: [String], summaries: [String], metas: [String], hues: [Double]
+
+    static let adjectives = ["Hidden", "Last", "Silent", "Bright", "Northern", "Golden", "Lost", "Wild", "Final", "Secret", "Open", "Distant"]
+    static let nouns = ["Harbor", "Signal", "Summit", "River", "Garden", "Station", "Island", "Road", "Archive", "Season", "Circuit", "Valley"]
+    static let phrases = ["A new look at an old question.", "Experts weigh the next steps.", "What changes this week and why.",
+                          "Behind the scenes of a long project.", "Five things to know before you start.", "The story so far, in brief.",
+                          "Results arrive after months of work.", "A guide for first-time viewers.", "Plans move ahead despite delays."]
+
+    static func rows(seed: UInt64) -> (rows: [CellRowSpec], focusRow: Int, focusCell: Int, light: Bool) {
+        var v = Variation(seed: seed, salt: 0xCE11)
+        let light = v.chance(0.3)
+        var rows: [CellRowSpec] = []
+        var y: CGFloat = 130
+        for _ in 0..<v.int(1...3) {
+            let variant = v.int(0...5)
+            let count = variant == 4 ? v.int(1...2) : v.int(2...6)
+            let spacing: CGFloat = 40
+            let shown = variant == 5 ? CGFloat(count) - 0.6 : CGFloat(count)
+            let width = (1760 - spacing * (shown - 1)) / shown
+            let aspect: CGFloat = variant == 0 ? CGFloat(v.int(130...150)) / 100 : CGFloat(v.int(50...62)) / 100
+            let artHeight = min(variant == 3 ? 0 : width * aspect, 420)
+            let lines: CGFloat = variant == 0 ? 2 : (variant == 1 || variant == 3 || variant == 5 ? 6 : 1)
+            let height = artHeight + lines * 30 + (variant == 4 ? 80 : 20) + 50
+            if y + height > 1040 { break }
+            y += height + 30
+            func title() -> String { "\(v.pick(adjectives)) \(v.pick(nouns))" + (v.chance(0.4) ? " \(v.pick(nouns))" : "") }
+            rows.append(CellRowSpec(variant: variant, count: count, width: width, artHeight: artHeight,
+                                    offset: variant == 5 ? -width * 0.3 : 0, height: height, heading: v.pick(Variation.headlines),
+                                    titles: (0..<count).map { _ in title() },
+                                    summaries: (0..<count).map { _ in v.pick(phrases) + (v.chance(0.5) ? " " + v.pick(phrases) : "") },
+                                    metas: (0..<count).map { _ in "\(v.int(1...59)) min · \(v.pick(["Live", "New", "Season \(v.int(1...6))", "Updated", "4K"]))" },
+                                    hues: (0..<count).map { _ in Double(v.int(0...99)) / 100 }))
+        }
+        if rows.isEmpty {
+            rows.append(CellRowSpec(variant: 0, count: 4, width: 410, artHeight: 420, offset: 0, height: 530, heading: "Top Picks",
+                                    titles: ["Open Road", "Last Signal", "Wild Garden", "Silent River"], summaries: ["", "", "", ""],
+                                    metas: ["", "", "", ""], hues: [0.1, 0.3, 0.5, 0.7]))
+        }
+        let focusRow = v.int(0...(rows.count - 1))
+        return (rows, focusRow, v.int(0...(rows[focusRow].count - 1)), light)
+    }
+}
+
+struct ContentCellsView: View {
+    let seed: UInt64
+
+    var body: some View {
+        let spec = CellRowSpec.rows(seed: seed)
+        let p = Palette.make(light: spec.light)
+
+        ZStack(alignment: .topLeading) {
+            p.background.ignoresSafeArea()
+
+            VStack(alignment: .leading, spacing: 30) {
+                ForEach(0..<spec.rows.count, id: \.self) { r in
+                    let row = spec.rows[r]
+                    VStack(alignment: .leading, spacing: 14) {
+                        Text(row.heading).font(.system(size: 30, weight: .bold)).foregroundColor(p.text)
+                            .captureFrame(id: "label_row_\(r)")
+                        HStack(alignment: .top, spacing: 40) {
+                            ForEach(0..<row.count, id: \.self) { i in
+                                let isFoc = (r == spec.focusRow && i == spec.focusCell)
+                                cell(row: row, r: r, i: i, isFoc: isFoc, p: p)
+                            }
+                        }
+                        .offset(x: row.offset)
+                    }
+                }
+            }
+            .padding(.horizontal, 80)
+            .padding(.top, 60)
+        }
+        .frame(width: 1920, height: 1080)
+        .clipped()
+        .ignoresSafeArea(.all)
+    }
+
+    @ViewBuilder
+    func cell(row: CellRowSpec, r: Int, i: Int, isFoc: Bool, p: Palette) -> some View {
+        let art = Color(hue: row.hues[i], saturation: 0.55, brightness: spec_brightness(p))
+        let titleColor = (isFoc && row.variant == 3) ? Color.black : p.text
+        VStack(alignment: .leading, spacing: 8) {
+            if row.variant != 3 {
+                ZStack(alignment: .bottomLeading) {
+                    RoundedRectangle(cornerRadius: 14).fill(art)
+                    if row.variant == 2 {
+                        LinearGradient(colors: [.clear, Color.black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
+                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                        Text(row.titles[i]).font(.system(size: 26, weight: .bold)).foregroundColor(.white).padding(16)
+                            .captureFrame(id: "label_cell_title_\(r)_\(i)")
+                    }
+                    if row.variant == 4 {
+                        Text("Play").font(.system(size: 22, weight: .bold)).foregroundColor(.black)
+                            .padding(.horizontal, 30).padding(.vertical, 12).background(Color.white).cornerRadius(12).padding(20)
+                            .captureFrame(id: isFoc ? "primaryButton_cell_play_\(r)_\(i)_focused" : "primaryButton_cell_play_\(r)_\(i)_unfocused")
+                    }
+                }
+                .frame(width: row.width, height: row.artHeight)
+            }
+            if row.variant != 2 {
+                Text(row.titles[i]).font(.system(size: row.variant == 0 ? 22 : 26, weight: .semibold)).foregroundColor(titleColor)
+                    .lineLimit(2).frame(width: row.width - (row.variant == 3 ? 40 : 0), alignment: .leading)
+                    .captureFrame(id: "label_cell_title_\(r)_\(i)")
+            }
+            if row.variant == 1 || row.variant == 3 || row.variant == 5 {
+                Text(row.summaries[i]).font(.system(size: 20)).foregroundColor(isFoc && row.variant == 3 ? Color.black.opacity(0.75) : p.secondary)
+                    .lineLimit(3).frame(width: row.width - (row.variant == 3 ? 40 : 0), alignment: .leading)
+                    .captureFrame(id: "label_cell_summary_\(r)_\(i)")
+                Text(row.metas[i]).font(.system(size: 18)).foregroundColor(isFoc && row.variant == 3 ? Color.black.opacity(0.6) : p.secondary)
+                    .captureFrame(id: "label_cell_meta_\(r)_\(i)")
+            }
+        }
+        .padding(row.variant == 3 ? 20 : 0)
+        .background(row.variant == 3 ? (isFoc ? Color.white : p.surface) : Color.clear)
+        .cornerRadius(row.variant == 3 ? 16 : 0)
+        // Whole-cell box: artwork and all text inside the cell (Research 5.2.1). No nested imageView for the artwork.
+        .captureFrame(id: isFoc ? "collectionItem_cell_\(r)_\(i)_focused" : "collectionItem_cell_\(r)_\(i)_unfocused")
+        .scaleEffect(isFoc ? 1.06 : 1.0)
+        .shadow(color: isFoc ? Color.white.opacity(0.45) : Color.clear, radius: isFoc ? 18 : 0)
+    }
+
+    func spec_brightness(_ p: Palette) -> Double { 0.55 }
+}
+
+// PILLS560: 1 tab row. Pill box = the padded pill (underline excluded); the tab text keeps a nested `label` box (Research 5.2.1).
+struct TabRow: View {
+    let tabs: [String], focIdx: Int, selIdx: Int, style: Int, fontSize: CGFloat, spacing: CGFloat, padH: CGFloat, padV: CGFloat
+    let p: Palette, row: Int
+    // PILLS560 R5: tvOS `.buttonStyle(.plain)` focus. The system platter extends `platter` beyond the button frame, and the box stays the frame (§5.2.1).
+    var platter: CGSize = .zero
+    var lift: CGFloat = 1.0
+
+    var body: some View {
+        HStack(spacing: spacing) {
+            ForEach(0..<tabs.count, id: \.self) { idx in
+                let isFoc = (idx == focIdx)
+                let isSel = (idx == selIdx) && !isFoc
+                let plain = isFoc && platter != .zero
+                Text(tabs[idx])
+                    .font(.system(size: fontSize, weight: isFoc || isSel ? .bold : .medium))
+                    .foregroundColor(isFoc && (style == 0 || plain) ? .black : (isFoc || isSel ? p.text : p.secondary))
+                    .captureFrame(id: "label_tab_\(row)_\(idx)")
+                    .padding(.horizontal, padH)
+                    .padding(.vertical, padV)
+                    .background(isFoc && style == 0 && !plain ? Color.white : (isSel ? p.selected : Color.clear))
+                    .cornerRadius(22)
+                    .overlay(alignment: .bottom) {
+                        Rectangle().fill(isFoc && style == 1 && !plain ? p.text : Color.clear).frame(height: 3).padding(.horizontal, padH).offset(y: 6)
+                    }
+                    .background {
+                        if plain {
+                            RoundedRectangle(cornerRadius: 22 + platter.height).fill(Color.white)
+                                .padding(.horizontal, -platter.width).padding(.vertical, -platter.height)
+                        }
+                    }
+                    .captureFrame(id: isFoc ? "\(tabItemClass)_tab_\(row)_\(idx)_focused" : "\(tabItemClass)_tab_\(row)_\(idx)_unfocused")
+                    .scaleEffect(plain ? lift : (isFoc && style == 2 ? 1.1 : 1.0))
+                    .shadow(color: isFoc && (style != 1 || plain) ? Color.black.opacity(0.35) : Color.clear, radius: 10)
+            }
+        }
+    }
+
+    /// Half of focused rows use the `.plain` platter. A separate salt keeps every other random draw unchanged.
+    static func plainFocus(seed: UInt64, row: Int) -> (platter: CGSize, lift: CGFloat) {
+        var f = Variation(seed: seed, salt: 0xF0C5 &+ UInt64(row))
+        guard f.chance(0.5) else { return (.zero, 1.0) }
+        // No lift: `captureFrame` reads the frame after `scaleEffect`, so a scale would also scale the label (old style 2 has that defect).
+        return (CGSize(width: CGFloat(f.int(14...32)), height: CGFloat(f.int(12...18))), 1.0)
+    }
+}
+
+// PILLS560: 1–2 tab rows above 1 content shelf. Most screens focus a cell or a tab; unfocused rows are plain text.
+struct TabRowsView: View {
+    let seed: UInt64
+
+    var body: some View {
+        var v = Variation(seed: seed, salt: 0x7AB5)
+        let spec = CellRowSpec.rows(seed: seed)
+        let shelf = spec.rows[0]
+        let p = Palette.make(light: v.chance(0.3))
+        let rows = v.chance(0.6) ? 2 : 1
+        let where_ = v.int(0...9) // 0–2 row 1 tab, 3–5 row 2 tab, else a cell
+        let focusRow = where_ < 3 ? 0 : (where_ < 6 && rows == 2 ? 1 : -1)
+        let lead = v.chance(0.7)
+        let tabs = (0..<rows).map { r in v.sample(Variation.tabWords, v.int(r == 0 ? 3...7 : 4...9)) }
+        let sel = tabs.map { v.int(0...($0.count - 1)) }
+        let foc = (0..<rows).map { r in r == focusRow ? v.int(0...(tabs[r].count - 1)) : -1 }
+        let styles = (0..<rows).map { _ in v.chance(0.75) ? 0 : v.int(1...2) }
+        let sizes = (0..<rows).map { r in CGFloat(r == 0 ? v.int(24...30) : v.int(20...26)) }
+        let spacing = (0..<rows).map { _ in CGFloat(v.int(4...30)) }
+        let padH = (0..<rows).map { _ in CGFloat(v.int(18...32)) }
+        let padV = (0..<rows).map { _ in CGFloat(v.int(8...14)) }
+        let top = CGFloat(v.int(30...110))
+        let focusCell = focusRow < 0 ? v.int(0...(shelf.count - 1)) : -1
+
+        ZStack(alignment: .topLeading) {
+            p.background.ignoresSafeArea()
+            VStack(alignment: .leading, spacing: CGFloat(v.int(14...40))) {
+                ForEach(0..<rows, id: \.self) { r in
+                    TabRow(tabs: tabs[r], focIdx: foc[r], selIdx: sel[r], style: styles[r], fontSize: sizes[r],
+                           spacing: spacing[r], padH: padH[r], padV: padV[r], p: p, row: r,
+                           platter: TabRow.plainFocus(seed: seed, row: r).platter, lift: TabRow.plainFocus(seed: seed, row: r).lift)
+                        .frame(maxWidth: .infinity, alignment: lead ? .leading : .center)
+                }
+                HStack(alignment: .top, spacing: 40) {
+                    ForEach(0..<shelf.count, id: \.self) { i in
+                        ContentCellsView(seed: seed).cell(row: shelf, r: 0, i: i, isFoc: i == focusCell, p: p)
+                    }
+                }
+                .offset(x: shelf.offset)
+                .padding(.top, 20)
+            }
+            .padding(.horizontal, 80)
+            .padding(.top, top)
+        }
+        .frame(width: 1920, height: 1080)
+        .clipped()
         .ignoresSafeArea(.all)
     }
 }
@@ -2559,7 +2847,9 @@ func generateDataset() async {
             ("tvOSLoadingBuffers", 1),
             ("tvOSLiveBroadcastHUD", 1),
             ("tvOSConferenceRoom", 1),
-            ("tvOSHardNegatives", 1)
+            ("tvOSHardNegatives", 1),
+            ("tvOSContentCells", 1),
+            ("tvOSTabRows", 1)
         ]
     } else {
         // Distribute proportionally across all 25 template families
@@ -2589,12 +2879,16 @@ func generateDataset() async {
             ("tvOSLoadingBuffers", baseCount),
             ("tvOSLiveBroadcastHUD", baseCount),
             ("tvOSConferenceRoom", baseCount),
-            ("tvOSHardNegatives", max(1, targetCount - (baseCount * 24)))
+            ("tvOSHardNegatives", max(1, targetCount - (baseCount * 24))),
+            // CELLS558 S3: real-like cells, added on top of the original 25-family counts.
+            ("tvOSContentCells", baseCount * 2),
+            // PILLS560: tab rows above content, added last so earlier families keep their pixels.
+            ("tvOSTabRows", baseCount * 2)
         ]
     }
 
     let totalTarget = counts.reduce(0) { $0 + $1.count }
-    print("Generating \(totalTarget) tvOS OS UI images across 25 families at 1920x1080 into \(outDir.path)...")
+    print("Generating \(totalTarget) tvOS OS UI images across \(counts.count) families at 1920x1080 into \(outDir.path)...")
     let start = Date()
 
     var globalIndex = 0
@@ -2773,6 +3067,10 @@ func generateDataset() async {
                 renderAndSave(view: ConferenceRoomView(seed: s, corpus: corpus), family: family)
             case "tvOSHardNegatives":
                 renderAndSave(view: HardNegativeView(seed: s), family: family)
+            case "tvOSContentCells":
+                renderAndSave(view: ContentCellsView(seed: s), family: family)
+            case "tvOSTabRows":
+                renderAndSave(view: TabRowsView(seed: s), family: family)
             default:
                 break
             }

@@ -5285,3 +5285,11 @@ A Fixture launched while the port is taken does not retry its bind. It accepts c
 Correct approach: before each batch, check that the 8080 listener is the target Simulator's Fixture. `scripts/direct_tvos_capture.py` `bind_target` does this check.
 After each batch, stop the Fixture app that the session started. Poll `/scene` after launch; a listening socket alone is not readiness.
 Why it matters: the shared host loopback port makes another device's geometry look valid until coordinate admission rejects it.
+
+## Rebind dependents when a fixed producer needs a successor — QUEUE560
+
+What went wrong: 2 IOS478R decision jobs ran uncommitted code that did not read their request file, and failed `evidence_not_read`.
+The code was fixed 49 min later, but the failed specs pin the old file as an input. EXTENSION408 restarts refuse them (`input_changed`), and 12 dependents stayed blocked for 2 weeks.
+Correct approach: compare the attempt's `closure.json` hashes with current code first. If the fix is in code the spec pins, register a successor that pins the fixed file.
+Then register successors of each dependent with the dependency and condition bound to the new producer and its spec hash.
+Why this matters: dependents name an exact producer job and spec hash, so a fixed producer alone does not unblock anything.

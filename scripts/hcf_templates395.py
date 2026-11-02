@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import research_queue as q
+import research_execution_policy as policy
 from experiment_templates import checked, pin
 
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
@@ -248,7 +249,7 @@ def build(doc):
         inputs=list({p['path']:p for p in sources+pinned}.values()),
         dependencies=doc['dependencies'],stage=stage,evidence=evidence,
         adapter=dict(type='python-callable',steps=[step],outputAttributes=[module+'.OUT']),
-        limits=dict(timeoutSeconds=1800 if authority in ('training','export') else 800,
+        limits=dict(timeoutSeconds=policy.TRAINING_SECONDS if authority=='training' else 1800 if authority=='export' else 800,
                     maxOutputBytes=2<<30 if authority in ('training','export') else 100_000_000,maxAttempts=1),
         template=dict(id=doc['template'],version=1,inputs=doc['inputs'],parameters=doc['parameters'],
                       compiler=pin(Path(__file__))))
