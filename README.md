@@ -1,86 +1,56 @@
 # NativeUIAuditKit
 
-A portable Swift package for detecting native Apple platform UI elements in screenshot PNGs, designed as a drop-in complement to [ScreenAuditKit](../ScreenAuditKit/).
-
-**Product direction:** [MVP, planned features, and proposed features](Research/ProductRoadmap.md).
-
-**Accuracy scope:** The first human-reviewed real-app pilot (November 1, 2026) shows that synthetic mAP does not transfer to real apps.
-On 9 reviewed NewsTV screens, the tvOS detector finds **23 of 207** controls (COCO AP50 **0.206**). Focus selection finds **0 of 15** focused controls.
-This is a 3-app Simulator pilot, not general accuracy. Dataset mAP is not the percentage of screenshots understood. See the [pilot baseline](reports/work/REALAPP554/pilot-v2/baseline-report.md) and the [benchmark protocol](Research/RealAppValidation543.md).
-
-**Current state:** Shipped models and their historical evaluation scopes are:
-
-- iOS 5-class YOLO11n (`nativeui-ios-v2.0`): generated-screen validation mAP@0.5 is **0.935** CoreML and **0.968** PyTorch.
-- Historical direct model inference takes about **7.5 ms/image**. This excludes full consumer overhead.
-- tvOS 25-class YOLO11n (`nativeui-tvos-v3.0`): synthetic-screen validation mAP@0.5 is **0.9822**.
-- FocusRingDetector v0.1 uses a MobileNetV4 crop classifier. Its model size is **4.80 MB**.
-- The completed 5-class phase includes withheld generated-template mAP **0.934**.
-
-The 41-class iOS gate remains open. Run013 custom AP50 is **0.6322**, versus Run009 **0.5549**, on identical withheld generated screens.
-That comparison supports 13 classes. Its release requirement is at least **0.85**.
-FocusRing v1.0 data and macOS work remain open. See [PhaseMap](Research/PhaseMap.md) for dependencies.
+A Swift package that finds native Apple UI elements in screenshots. It returns each element's role, box, visible text and tvOS focus state.
+It complements [ScreenAuditKit](../ScreenAuditKit/). All inference runs on the device; screenshots never leave the machine.
 
 ---
 
-## Research status and evidence
+## Accuracy at a glance
 
-Standard UI detection, classification, and focus detection remain the primary goals.
-iOS research remains independent of tvOS capture work.
-High Contrast Focus (HCF) remains an optional research track. It does not replace Standard behavior.
+**Synthetic scores do not predict real-app accuracy.** Read the real-app rows first.
 
-Current experimental results do not change the shipped models listed above.
-### First real-app pilot — REALAPP554, November 1, 2026
+### Shipped models
 
-The shipped tvOS models ran on 21 distinct screens from 3 source-built apps: NewsTV, Photo Guessing Game and Swiftfin.
-They ran through the actual Standard screenshot path (TVTestRig ac85177b `visual replay`) on an Apple TV 4K Simulator.
-The maintainer reviewed every screen blind to model output, and then answered a targeted recheck.
+| Model | What it detects | Synthetic test | Real apps |
+|---|---|---|---|
+| `nativeui-ios-v2.0` | iOS, 5 classes | mAP@0.5 **0.935** (Core ML) | not measured |
+| `nativeui-tvos-v3.0` | tvOS, 25 classes | mAP@0.5 **0.982** | **23 of 207** controls found (11%), AP50 0.206 |
+| FocusRingDetector v0.1 | tvOS focused control | 270 of 270 (historical test) | **0 of 15** focused controls found |
 
-| Measure | Result | Scope |
+Real-app scope: 9 human-reviewed NewsTV screens (controls) and 21 screens from 3 apps (focus), November 1, 2026. Source: [RealAppValidation543](Research/RealAppValidation543.md).
+
+### tvOS candidate in development (not shipped)
+
+R5 (`pills560-platter-r5`) detects 13 roles, such as button, text, cell and bar. It is not shipped.
+
+| Real-app measure | Role baseline (R1) | Candidate R5 |
 |---|---|---|
-| Control recall | 23 / 207 (11%) | NewsTV, 9 screens |
-| Article cards (`collectionItem`) | recall 22 / 54, precision 22 / 24 | NewsTV |
-| Tab pills (`secondaryButton`) | recall 1 / 153; 106 are detected as `label` | NewsTV |
-| COCO AP50 / AP75 / AP50–95 | 0.206 / 0.0 / 0.021 | NewsTV |
-| Focus selection | 0 / 15 focused controls found; 4 / 21 correct, all abstentions | 3 apps, 21 screens |
-| Replay latency (request to durable result) | median 148 ms, p95 155 ms | NewsTV |
+| Tab and category pills found | 20 of 170 | **168 of 170** |
+| Focused control found | 5 of 21 | **18 of 21** |
+| Content cards found | 56 of 60 | **60 of 60** |
+| Box fit on focused pills (median IoU) | 0.37 | **0.60** |
 
-The focus diagnosis finds 2 FocusRing defects. Unfocused images, panels and buttons score ≥ 0.85, so several candidates compete on 16 of 21 screens.
-FocusRing also misses the focus style of tab pills: all NewsTV pills score 0.00.
-A separate 21-screen focus development set confirms this: 0 of 21 focused controls are found.
-A known TVTestRig defect also suppresses selection on 4 screens, but fixing it alone gains no correct selection.
-See the [pilot baseline](reports/work/REALAPP554/pilot-v2/baseline-report.md), [focus diagnosis](reports/work/REALAPP554/focus-diagnosis.md) and [focus development baseline](reports/work/REALAPP554/focus-dev-baseline.md).
-The FocusRing correction plan is [FOCUS556](Research/Plans/FocusRealApp556.md).
+How to read this table:
+- Both models run the shipping input path: Core ML (R5) or matched PyTorch (R1), 640 × 640 letterbox. Source: [PILLS560 results](Research/Plans/Pills560.md#results-summary).
+- The screens come from 2 apps (NewsTV, Photo Guessing Game). They guided the tuning, so they are development data, not an independent test.
+- A frozen multi-app holdout must confirm these results before any release ([REALCORPUS561](Research/Plans/RealCorpus561.md)).
 
-### Plan for trustworthy accuracy measurements
+---
 
-Status: steps 1–3, 5 and 6 are done for the 21-screen pilot (REALAPP554). The pilot has 3 apps, not 5.
-Step 4 remains. Step 7 is partial: detection is scored on 1 app, because only NewsTV has reviewed SDK observations.
+## Status
 
-1. Pin the loaded Standard models, preprocessing, taxonomy, thresholds, and TTR build evidence before inference.
-2. Collect a 50-screen pilot across up to 5 qualified source-built apps. Report the actual qualified scope.
-3. Obtain blinded human review of complete visible controls. Keep SDK reference labels outside model inputs.
-4. Freeze 200 additional screens across 5 apps, with 8 distinct flows and 5 capture points per flow.
-5. Report per-class precision and recall, localization errors, focus outcomes, no-focus false selections, latency, and execution failures.
-6. Cross-check AP50, AP75, and AP50–95 with the official COCO evaluator. Preserve historical custom AP definitions separately.
-7. Report each app separately, equal-app summaries, denominators, missing coverage, and uncertainty from whole-flow resampling.
+- **Shipped:** iOS 5-class detector, tvOS 25-class detector, FocusRingDetector v0.1. See [Model details](#model-details).
+- **In progress:**
+  - tvOS real-app accuracy. R5 is the candidate; holdout scoring is next.
+  - FocusRing real-app correction ([FOCUS556](Research/Plans/FocusRealApp556.md)).
+  - iOS 41-class detector. Gate DS-G8 needs withheld mAP@0.5 ≥ 0.85; Run 013 reaches 0.632 on 13 supported classes.
+- **Planned:** macOS detector (waits on DS-G8).
 
-The benchmark measures a selected test population. It does not establish deployment-wide accuracy.
-Pilot cases become development evidence. Cases used to guide corrections cannot remain independent qualification evidence.
-No training, threshold tuning, or model promotion occurs inside the benchmark.
-HCF and iOS remain separate from the tvOS Standard headline. Temporal tracking receives a separate benchmark.
-See the [frozen protocol and remaining gates](Research/RealAppValidation543.md) and [application qualification status](Research/RealAppApplications543.md).
+Dependencies: [PhaseMap](Research/PhaseMap.md). Direction: [ProductRoadmap](Research/ProductRoadmap.md).
 
-Use the [experiment workflow guide](docs/experiment-workflow.md) to understand preparation, execution, evidence, and acceptance.
-The [batch authoring guide](docs/experiment-batches/README.md) describes reusable experiment definitions.
-These internal research tools are not requirements for library consumers.
-The [teacher-preservation experiment](Research/TeacherPreservation495.md) tests training-only anchors through the existing comparison workflow.
-Its software tests pass, but the first candidate fails Standard retention. The [matched results](Research/Teacher495Results.md) define the next correction.
+---
 
-## Add as a Dependency
-
-For local screenshot inspection without writing Swift, use the
-[nativeui-audit CLI and stdio MCP server](Tools/NativeUIAuditCLI/README.md).
-It wraps the production pipeline without replacing shipped models.
+## Add as a dependency
 
 ```swift
 // Package.swift
@@ -89,53 +59,22 @@ dependencies: [
 ]
 ```
 
-Choose the library product that matches the required behavior:
+Choose 1 library product:
 
-- **`NativeUIAuditKitModels`** — just the trained model + versioned metadata, no Vision
-  framework dependency. Use this if you bring your own inference/rendering code (this is
-  what [ViewLens](https://github.com/SerialForBreakfast/ViewLens) depends on).
-- **`NativeUIAuditKit`** — the full Vision-style detection request API, built on the above.
-- **`NativeUIAuditKitRuntime`** — preview runtime with explicit local models and no bundled model resources.
-  This unreleased product requires the new source changes. Downloads remain unfinished.
-  See the [TTR handoff](Research/TTRModelHandoff.md) for the interface and limits.
+| Product | Use it when |
+|---|---|
+| `NativeUIAuditKitModels` | You need only the trained models and metadata, and you run your own inference. [ViewLens](https://github.com/SerialForBreakfast/ViewLens) uses this. |
+| `NativeUIAuditKit` | You want the Vision-style detection request with OCR, audit rules and tvOS focus. |
+| `NativeUIAuditKitRuntime` | Preview only: explicit local models, no bundled resources. Unreleased; see the [TTR handoff](Research/TTRModelHandoff.md). |
 
-```swift
-.target(
-    name: "YourTarget",
-    dependencies: [
-        .product(name: "NativeUIAuditKitModels", package: "NativeUIAuditKit")
-    ]
-)
-```
+For screenshot checks without Swift code, use the [nativeui-audit CLI and stdio MCP server](Tools/NativeUIAuditCLI/README.md).
 
-**Quick Start:**
-
-```swift
-import NativeUIAuditKitModels
-
-// iOS Model
-let model = try await NativeUIModelAsset.loadModel()          // ANE/GPU-configured MLModel
-let metadata = NativeUIModelAsset.metadata                    // input size, class order, thresholds
-print(metadata.classLabels)  // ["alert", "navigationBar", "primaryButton", "textField", "toggle"]
-
-// tvOS Model (25 active classes)
-let tvOSDescriptor = ModelRegistry.tvOS                       // nativeui-tvos-v3.0
-let tvOSModel = try await ModelRegistry.loadModel(for: tvOSDescriptor)
-```
-
-The model expects a 640×640 letterboxed input with NMS already baked into the CoreML graph.
-For the complete, tested letterbox → predict → parse pipeline, see
-[`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) and [`scripts/eval_tvos_model.py`](scripts/eval_tvos_model.py). Full API docs: `swift package generate-documentation`
-(DocC), or see the module documentation comments in
-[`NativeUIModelAsset.swift`](NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/NativeUIModelAsset.swift) and [`ModelRegistry.swift`](NativeUIAuditKitModels/Sources/NativeUIModelContracts/ModelRegistry.swift).
-
-`NativeUIDetectionRequest` (the `NativeUIAuditKit` product's higher-level Vision-style
-wrapper) supports automatic platform routing for iOS and tvOS screenshots with active focus detection:
+### Quick start
 
 ```swift
 import NativeUIAuditKit
 
-let request = NativeUIDetectionRequest()   // auto-routes to tvOS when 1080p Apple TV image detected
+let request = NativeUIDetectionRequest()   // routes 1080p Apple TV images to the tvOS model
 let observations = try await request.perform(on: screenshotCGImage)
 
 for obs in observations {
@@ -143,379 +82,200 @@ for obs in observations {
 }
 ```
 
+Models only:
+
+```swift
+import NativeUIAuditKitModels
+
+let model = try await NativeUIModelAsset.loadModel()                    // iOS, ANE/GPU-configured MLModel
+let tvOSModel = try await ModelRegistry.loadModel(for: ModelRegistry.tvOS)   // nativeui-tvos-v3.0
+```
+
+The models expect a 640 × 640 letterboxed input. NMS is in the Core ML graph.
+Pass `iouThreshold` and `confidenceThreshold` explicitly; the export defaults differ (IoU 0.7).
+Reference pipelines: [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift) and [`scripts/eval_tvos_model.py`](scripts/eval_tvos_model.py).
+API documentation: `swift package generate-documentation`.
 
 ---
 
-## What This Package Does
+## What the package does
 
-NativeUIAuditKit builds a custom Vision-style request backed by CoreML object detectors trained on synthetic native Apple UIs. Given a screenshot PNG, it returns structured `NativeUIElementObservation` values with:
+For each screenshot, `NativeUIDetectionRequest` returns `NativeUIElementObservation` values with:
 
-- **Semantic element type** — one of ~41 stable role strings: `primaryButton`, `navigationBar`, `toggle`, `dynamicIsland`, etc.
-- **Accurate bounding boxes** — in Vision-normalized, pixel, and point coordinate systems
-- **Visible text** — from `VNRecognizeTextRequest` OCR fusion (`ObservationMerger`)
-- **Audit issues** — truncation, clipping, overlapping controls, insufficient touch target
-- **Device / OS inference** — ranked candidates from visual chrome signals (orphan PNG mode)
-- **tvOS focus** — geometric heuristic, plus optional FocusRingDetector Stage 2 on YOLO crops
+- **Role:** 1 of about 41 stable role strings, such as `primaryButton`, `navigationBar` or `toggle`.
+- **Box:** in Vision-normalized, pixel and point coordinates.
+- **Visible text:** from `VNRecognizeTextRequest` (OCR fusion, `ObservationMerger`).
+- **Audit issues:** truncation, clipping, overlapping controls, small touch targets.
+- **Device and OS:** ranked candidates from visual chrome.
+- **tvOS focus:** a geometric heuristic, plus the optional FocusRingDetector on detector crops.
 
-**Two operating modes:**
-- **Sidecar mode** — uses supplied hierarchy; hierarchy metadata exported at capture time is paired with the PNG
-- **Pixel-only mode** — uses screenshot pixels; works on orphan PNGs with no metadata
-
-**Three platform-specific models (iOS and tvOS trained; macOS planned):**
-- `NativeUIModel_iOS` — iOS + iPadOS (shared visual language) — **YOLO11n v2.0 shipped ✓** (generated-screen validation mAP@0.5 = 0.935)
-- `NativeUIModel_tvOS` — tvOS (focus state paradigm, top shelf, carousel) — **YOLO11n v3.0 shipped ✓** (synthetic-screen validation mAP@0.5 = **0.9822**, 25 active classes; historical Apple TV execution checks)
-- `NativeUIModel_macOS` — macOS (window chrome, NSToolbar, AppKit layout)
+It works in 2 modes:
+- **Sidecar mode:** uses a view hierarchy exported with the screenshot.
+- **Pixel-only mode:** uses only the screenshot pixels.
 
 ---
 
-## Model Performance
+## Model details
 
-### tvOS Model: YOLO11n v3.0 (Synthetic Validation and Historical Hardware Execution)
+### iOS: YOLO11n v2.0 (shipped)
 
-25-class tvOS detector trained on 5,000 balanced 1080p synthetic screens (25 UI families) using Ultralytics YOLO11n and exported to CoreML (`NativeUIModel_tvOS.mlmodelc`) with FP16 quantization.
+5 classes, trained with Ultralytics YOLO11n for 100 epochs. Evaluated on 1,394 generated validation screens.
 
-- **Synthetic-screen validation mAP@0.5:** **0.9822** (Precision: 0.983, Recall: 0.983, mAP@0.5:0.95: 0.944).
-- **Active classes (25):** `activityIndicator`, `alert`, `cancelAction`, `collectionItem`, `contextMenu`, `destructiveButton`, `imageView`, `label`, `link`, `listRow`, `navigationBar`, `popover`, `primaryButton`, `progressView`, `searchField`, `secondaryButton`, `secureField`, `segmentedControl`, `sheet`, `sidebar`, `slider`, `stepperControl`, `tabBar`, `toggle`, `toolbar`.
-- **Dual Focus Engine:** Evaluates active focus via parallax geometric tile expansion (\(301.5 \times 173.2\) pt vs baseline \(247 \times 147\) pt), radiant perimeter glow, inverted high-luminance interior pills (mean brightness 228.9 vs 149.6), and VoiceOver accessibility contrast borders.
-- **Real-app pilot (2026-11-01):** control recall 23 / 207 and COCO AP50 0.206 on 9 reviewed NewsTV screens. Tab pills are the largest gap (1 / 153). See the research status section.
-- **Historical hardware observations:** The earlier summary reported 23 captures and 586 detections.
-  These counts do not establish precision or recall.
-  The retained report contains 29 capture entries and lacks complete reference labels.
-  Its earlier “zero false positives” claim is not independently supported.
-  See `reports/tvos_hardware_qualification.json` and the accuracy audit.
-
-### iOS Model: YOLO11n v2.0 (Trained + Evaluated 2026-08-23)
-
-5-class iOS detector trained via Ultralytics YOLO11n (100 epochs), exported to CoreML with NMS baked into the graph (IoU 0.30, confidence floor 0.001). Evaluated on the **same 1,394 generated-screen validation images** as the Create ML baseline below, so the two are directly comparable.
-
-| Class | AP@0.5 (.pt) | AP@0.5 (CoreML) | GT instances |
+| Class | AP@0.5 PyTorch | AP@0.5 Core ML | Instances |
 |---|---|---|---|
-| alert | 0.995 | **1.000** | 40 |
+| alert | 0.995 | 1.000 | 40 |
 | navigationBar | 0.975 | 0.909 | 1,186 |
 | primaryButton | 0.905 | 0.894 | 761 |
 | textField | 0.981 | 0.961 | 315 |
 | toggle | 0.984 | 0.909 | 1,074 |
 | **mAP@0.5** | **0.968** | **0.935** | — |
 
-DS-G5 (every class AP@0.5 ≥ 0.50) and DS-G6 (mAP ≥ 0.70) both pass with wide margin. Every class improved over the Create ML baseline — navigationBar 0.775 → 0.909, textField 0.505 → 0.961 most notably. The observed backend gap is about 3 percentage points. These results do not isolate its cause.
+Withheld generated-template mAP is 0.934. On a physical iPhone, direct model inference takes about 7.5–9 ms per image (size 5.18 MB, cold load 25 ms).
+This excludes Vision and consumer overhead. Benchmark source: [`YOLOBenchmarkTests.swift`](GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift).
 
-**On-device latency** (physical iPhone, `best.mlpackage` via direct `MLModel` inference — no Vision framework overhead):
+### tvOS: YOLO11n v3.0 (shipped)
 
-| Metric | Result | Gate |
-|---|---|---|
-| Model size | 5.18 MB | < 15 MB |
-| Cold load | 25 ms avg | < 3 s |
-| Per-image inference (total) | ~7.5–9 ms avg | < 200 ms |
-| — letterbox + `CVPixelBuffer` | 5.9 ms | |
-| — `MLModel.prediction` | 3.4 ms | |
-| — output parsing | < 0.1 ms | |
+25 classes, trained on 5,000 synthetic 1080p screens from 25 UI families. Exported to Core ML with FP16.
+Synthetic validation: mAP@0.5 0.982, precision 0.983, recall 0.983, mAP@0.5:0.95 0.944.
+Real apps (pilot): 23 of 207 NewsTV controls found. Tab pills are the largest gap: 1 of 153 found, 106 detected as `label`.
 
-Every latency gate clears by more than an order of magnitude — fast enough to run inline during agentic UI iteration with no perceptible delay. Full pipeline and benchmark source: [`scripts/eval_yolo_map.swift`](scripts/eval_yolo_map.swift), [`GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift`](GeneratorRunner/GeneratorRunnerTests/YOLOBenchmarkTests.swift).
+### FocusRingDetector v0.1 (shipped)
 
-Promoted and shipped as of `2.0.0`: the compiled model lives at `NativeUIAuditKitModels/Sources/NativeUIAuditKitModels/Resources/NativeUIDetector_v2.mlmodelc`, bundled as an SPM resource in the `NativeUIAuditKitModels` product — see [Add as a Dependency](#add-as-a-dependency). (Raw training checkpoints remain gitignored in `NativeUITrainer/yolo_runs/`.)
+A MobileNetV4-Conv-Small classifier on 256 × 256 detector crops. It scores 270 of 270 on its historical test set.
+On real apps it finds 0 of 15 focused controls (pilot) and 0 of 21 (development set). See [FOCUS556](Research/Plans/FocusRealApp556.md).
+Public weight distribution needs review: [licensing](Research/LicensingArchitecture.md), [release preparation](Research/ReleasePreparation.md).
 
-### FocusRingDetector v0.1 (shipped 2026-09-18)
+### History
 
-Stage 2 tvOS focus classifier on 256×256 YOLO crops. MobileNetV4-Conv-Small uses from-scratch training.
-FDR-001 scores 270/270 on its historical test set; the required hard-negative coverage remains incomplete.
-On real apps it finds 0 of 15 focused controls (pilot) and 0 of 21 (development set). No retained candidate fixes this and keeps the 270/270 retention ([FOCUS556 S1](Research/Plans/FocusRealApp556.md)).
-The inspected source package exceeds the 5,000,000-byte export gate. Public weight distribution needs explicit review.
-See [licensing review](Research/LicensingArchitecture.md) and [release preparation](Research/ReleasePreparation.md).
-
-### Superseded: Create ML baseline (NativeUIDetector_v1, trained 2026-05-28)
-
-The original anchor-based Create ML objectPrint model — required strip-tiling and per-class pass routing to handle high-aspect-ratio classes like navigationBar (~16:1). Kept on disk as `ModelRegistry.iOS_v1`; it is **not** the default bundled detector.
-
-| Class | AP@0.5 | GT | TP | Pred | Notes |
-|---|---|---|---|---|---|
-| alert | 1.000 | 40 | 40 | 40 | Full-image pass only |
-| toggle | 0.821 | 1,074 | 1,019 | 1,232 | Strip pass, conf ≥ 0.95 |
-| navigationBar | 0.775 | 1,186 | 1,176 | 1,508 | Strip pass |
-| primaryButton | 0.680 | 761 | 687 | 1,185 | Full-image + strip |
-| textField | 0.505 | 315 | 268 | 609 | Strip pass + cross-class suppression |
-| **mAP@0.5** | **0.756** | | | | DS-G5 ✓ DS-G6 ✓ |
-
-**Training configuration:** transferLearning (objectPrint revision:1), 25,000 iterations, batch 32, 22%-height strip tiling at 50% overlap, 20,632 training entries (18,563 original + 2,069 UIKitToggleForm hard-negative augmentation).
-
-**Inference pipeline:** per-class pass routing (alert → full-image only; navBar/textField/toggle → strip pass; primaryButton → both), cross-class conflict suppression (textField suppressed if IoU > 0.30 with toggle or primaryButton), NMS IoU threshold 0.30.
-
-Full experiment history: [`Research/ExperimentLog.md`](Research/ExperimentLog.md)
-
+The Create ML baseline (`NativeUIDetector_v1`, mAP@0.5 0.756) is superseded and not bundled.
+Training history is recorded in the research plans and [PROVENANCE.md](PROVENANCE.md).
 
 ---
 
-## Requirements
+## How accuracy is measured
 
-- macOS 15+, Xcode 26+
-- Swift 6.0+
-- iOS 17+ simulator (for `GeneratorRunner` test target)
-- Python 3 + Pillow (for `scripts/augment_createml_export.py`)
+- **Synthetic tests** use generated screens with labels made at render time. They show training fit, not real-app accuracy.
+- **Real-app tests** use source-built apps on the Apple TV Simulator. A person reviews every screen without seeing model output.
+- **Development and holdout data stay separate.** Screens that guide a correction cannot later be independent test evidence.
+- **Scores use the shipping path:** Core ML, 640 × 640 letterbox, explicit thresholds.
+- **Reports show each app separately,** with denominators, missing coverage and uncertainty.
 
-No external Swift dependencies. Vision, CoreML, CoreGraphics, UIKit only.
+Protocol: [RealAppValidation543](Research/RealAppValidation543.md). App qualification: [RealAppApplications543](Research/RealAppApplications543.md).
 
 ---
 
-## Build & Test
+## Build and test
 
-**SPM package (macOS):**
 ```bash
 swift build
 swift test
 ```
 
-**Generator smoke test (iOS Simulator):**
+Tests run offline. They do not need Xcode, a Simulator or network access.
+
+Generator smoke test (iOS Simulator):
+
 ```bash
 scripts/run-kitchen-sink-test.sh
-# Runs KitchenSinkValidationTest, extracts annotated PNGs to .build/debug-output/attachments/
 ```
 
-**Full dataset generation (iOS Simulator):**
+Full iOS dataset generation (iOS Simulator):
+
 ```bash
-xcodebuild test \
-  -project GeneratorRunner/GeneratorRunner.xcodeproj \
-  -scheme GeneratorRunnerTests \
-  -destination "platform=iOS Simulator,name=iPhone 17 Pro" \
-  -only-testing GeneratorRunnerTests/GenerateDatasetTests
-# Writes PNG + JSON pairs to the simulator Documents/dataset/ directory
+xcodebuild test -project GeneratorRunner/GeneratorRunner.xcodeproj -scheme GeneratorRunnerTests -destination "platform=iOS Simulator,name=iPhone 17 Pro" -only-testing GeneratorRunnerTests/GenerateDatasetTests
 ```
 
-**Train (run in Terminal — ~10h, do not run via agent harness):**
+tvOS synthetic dataset:
+
 ```bash
-swift run -c release NativeUITrainer \
-  --dataset <simulator-dataset-root> \
-  --output NativeUIAuditKitModels/Sources/NativeUIAuditKitModels \
-  [--skip-export]   # use when source train/ PNGs have been deleted after a prior run
-  2>&1 | tee NativeUITrainer/training.log
+swift scripts/generate_tvos_dataset.swift --count 5000 --output dataset/<name>
 ```
 
-**Evaluate trained model:**
+Requirements: macOS 15+, Xcode 26+, Swift 6.0+. No external Swift dependencies.
+
+### For contributors: research queue
+
 ```bash
-swift scripts/eval_map.swift
-# Writes reports/eval_results.json
+.venv-yolo/bin/python -B scripts/restart_research_dashboard.py --priority-task <TASK>
 ```
 
-**Research queue dashboard (local, loopback only):**
-```bash
-.venv-yolo/bin/python -B scripts/restart_research_dashboard.py --priority-task TEMPLATE395
-# Stops any dashboard on port 8765 after its current job, then starts a new one at http://127.0.0.1:8765/
-```
-The script refuses to stop a running job unless you pass `--wait SECONDS` or `--cancel-running`.
-Use `--stop` to stop only and `--dry-run` to preview. See [ADR-0026](Research/ADR-0026-Queued-Research-Experiments.md).
-
-**Inspect exhausted queue jobs and their restart estimates:**
-```bash
-.venv-yolo/bin/python -B scripts/research_extensions.py inventory
-```
-The dashboard Inspect dialog saves a restart with larger limits. See [EXTENSION408](Research/Plans/Extension408.md).
-
-**Augment an existing createml_export/ with new images (without full re-export):**
-```bash
-python3 scripts/augment_createml_export.py \
-  --source <new-images-simulator-dataset-root> \
-  --target <training-simulator-dataset-root> \
-  --template-family UIKitToggleForm \
-  --strip-fraction 0.22
-```
+This starts the loopback dashboard at http://127.0.0.1:8765/. It does not stop a running job unless you pass `--wait SECONDS` or `--cancel-running`.
+Guides: [experiment workflow](docs/experiment-workflow.md), [batch authoring](docs/experiment-batches/README.md), [queue design (ADR-0026)](Research/ADR-0026-Queued-Research-Experiments.md), [job restarts (EXTENSION408)](Research/Plans/Extension408.md).
 
 ---
 
-## Package Structure
+## Repository layout
 
 ```
 NativeUIAuditKit/
-├── Package.swift
-├── README.md
-├── CHANGELOG.md                           ← version history, semver
-├── PROVENANCE.md                          ← shipped-model training audit
-├── Research/
-│   ├── PhaseMap.md                        ← phase dependency map
-│   ├── ExperimentLog.md                   ← chronological training run history
-│   ├── NativeUIElementDetection.md        ← architecture, API design, training approach
-│   ├── TrainingDataStrategy.md            ← dataset design, bias prevention, platform coverage
-│   ├── BestPractices.md                   ← lessons learned (BP-01 through BP-47)
-│   ├── TrainingRunbook.md                 ← Create ML historical procedure (YOLO is scripts/)
-│   ├── FocusRingDetectorSpec.md           ← Stage 2 tvOS crop classifier
-│   ├── FixtureBatchIngest.md              ← TVTestRig batch sidecar format + IPC
-│   ├── OCRFusionPolicy.md                 ← OCR fusion rules and truncation detection
-│   └── schemas/
-│       ├── annotation.schema.json         ← versioned annotation schema (v1.0)
-│       └── category_map.json              ← element type → integer ID for COCO export
-├── Sources/
-│   └── NativeUIAuditKit/
-│       ├── NativeUIAuditKit.docc/          ← DocC catalog (landing page + Getting Started)
-│       ├── Detection/NativeUIDetectionRequest.swift
-│       └── Models/NativeUIElementObservation.swift
-├── Tests/
-│   ├── NativeUIAuditKitTests/
-│   └── NativeUIAuditKitModelsTests/        ← model asset smoke tests (resource resolves + loads)
-├── NativeUIAuditKitModels/                ← trained model (bundled SPM resource)
-│   └── Sources/NativeUIAuditKitModels/
-│       ├── NativeUIAuditKitModels.docc/    ← DocC catalog
-│       ├── Resources/
-│       │   ├── NativeUIDetector_v2.mlmodelc/     ← iOS YOLO11n v2.0
-│       │   ├── NativeUIModel_tvOS.mlmodelc/      ← tvOS YOLO11n v3.0
-│       │   └── FocusRingDetector.mlmodelc/       ← Stage 2 focus classifier v0.1
-
-│       ├── NativeUIDetector_v1.mlpackage.mlmodel   ← superseded (2026-05-28); on disk, not a bundled resource
-│       ├── training_config_v1.json         ← Create ML config (superseded)
-│       ├── training_config_v2.json         ← YOLO11n config (current)
-│       ├── NativeUIModelAsset.swift        ← zero-config model + metadata accessor
-│       └── ModelRegistry.swift
-├── NativeUIDatasetGenerator/
-│   ├── Sources/                           ← macOS orchestrator
-│   │   ├── SeededRNG.swift
-│   │   ├── ContentCorpus.swift
-│   │   ├── GeneratorConfig.swift          ← OSVisualProfile, GeneratorRunConfig
-│   │   ├── AnnotationWriter.swift
-│   │   ├── DatasetManifest.swift
-│   │   └── ...
-│   └── Templates/                         ← iOS SwiftUI + UIKit templates (40+)
-│       ├── ScreenshotCapture.swift
-│       ├── KitchenSinkTemplate.swift
-│       ├── AlertTemplate.swift            ← + AlertWithTextFieldTemplate
-│       ├── LoginFormTemplate.swift
-│       ├── SettingsListTemplate.swift     ← + SettingsToggleDenseTemplate, SettingsDisclosureTemplate
-│       ├── MultiSectionFormTemplate.swift
-│       ├── AccountProfileFormTemplate.swift  ← train Form-in-List clone (TASK-6a-8)
-│       ├── ChromeCoverageTemplate.swift      ← statusBar, scrollIndicator, tooltip, unknown
-│       ├── NativeUIPageControlView.swift     ← shared UIPageControl + SwiftUI dots
-│       ├── SheetTemplate.swift
-│       ├── SliderPanelTemplate.swift
-│       ├── SegmentedFilterTemplate.swift
-│       ├── TabViewNavigationTemplate.swift
-│       ├── LiquidGlassNavTemplate.swift   ← iOS 26 Liquid Glass variants
-│       ├── LiquidGlassTabTemplate.swift
-│       ├── UIKitToggleFormViewController.swift  ← hard-negative: zero textField, toggle+button
-│       ├── UIKitFormViewController.swift
-│       ├── UIKitListViewController.swift
-│       ├── UIKitControlsViewController.swift
-│       └── KnownBad/                      ← intentional failure case templates
-├── GeneratorRunner/                        ← iOS Xcode project
-│   └── GeneratorRunnerTests/
-│       ├── KitchenSinkValidationTest.swift
-│       └── GenerateDatasetTests.swift      ← ~20k image generation across all templates
-├── NativeUITrainer/                        ← Create ML CLI (retired for production; YOLO logs/weights live here)
-│   └── Sources/
-│       ├── main.swift                      ← CLI: --dataset --output [--skip-export]
-│       ├── CreateMLExporter.swift
-│       ├── TrainingConfig.swift
-│       └── ExportResult.swift
-├── reports/
-│   ├── eval_results.json                  ← latest eval output
-│   ├── dataset_balance.md
-│   └── ...                               ← diagnostic outputs
-└── scripts/
-    ├── eval_map.swift                     ← custom mAP eval (per-class routing + suppression)
-    ├── augment_createml_export.py         ← append new images without full re-export
-    ├── diagnose_class_fps.swift           ← per-class FP classification (near-dup vs false-class)
-    ├── diagnose_textfield_fps.swift
-    ├── diagnose_fp_passes.swift           ← per-pass FP attribution
-    ├── analyze_fp_zones.py               ← strip y-zone FP analysis
-    ├── confusion_matrix.py
-    ├── test_model_predictions.swift       ← single-image spot check
-    ├── inspect_model_outputs.swift        ← raw YOLO tensor inspector
-    ├── verify_strip_export.swift
-    ├── generate_balance_report.py
-    ├── research_queue.py                  ← queued research jobs (ADR-0026)
-    ├── research_dashboard_server.py       ← loopback dashboard for the queue
-    ├── restart_research_dashboard.py      ← safe dashboard stop and restart
-    ├── research_extensions.py             ← restart exhausted jobs with larger limits
-    └── run-kitchen-sink-test.sh
+├── Sources/NativeUIAuditKit/       ← detection request, observations, OCR fusion, audit rules
+├── NativeUIAuditKitModels/         ← bundled Core ML models (iOS v2.0, tvOS v3.0, FocusRing v0.1) and metadata
+├── NativeUIDatasetGenerator/       ← iOS synthetic data generator (SwiftUI and UIKit templates)
+├── GeneratorRunner/                ← iOS Xcode project that renders the templates
+├── Tools/NativeUIAuditCLI/         ← command-line tool and MCP server
+├── Tests/                          ← offline package tests
+├── scripts/                        ← training, evaluation and diagnostic tools
+├── Research/                       ← architecture, plans, experiment log, best practices
+└── reports/                        ← evaluation outputs and work reports
 ```
 
-Dataset lives **outside** this repository — gitignored, stored in the simulator container:
-```
-dataset/
-├── manifest.json
-├── train/           ← source PNGs + annotation JSONs
-├── validation/
-├── test/
-└── createml_export/ ← Create ML annotatedFiles layout (hard-linked PNGs + annotations.json)
-```
+Datasets and training checkpoints are not in the repository.
 
 ---
 
-## Element Taxonomy (~41 classes)
+## Element taxonomy (about 41 roles)
 
-**Chrome:** `statusBar` · `navigationBar` · `tabBar` · `toolbar` · `sidebar` · `homeIndicator` · `dynamicIsland`
+| Group | Roles |
+|---|---|
+| Chrome | `statusBar` `navigationBar` `tabBar` `toolbar` `sidebar` `homeIndicator` `dynamicIsland` |
+| Controls | `primaryButton` `secondaryButton` `destructiveButton` `cancelAction` `textField` `secureField` `toggle` `slider` `segmentedControl` `picker` `stepperControl` `searchField` `menuButton` `colorWell` |
+| Content | `label` `imageView` `link` `mapView` |
+| Indicators | `activityIndicator` `progressView` `pageControl` `scrollIndicator` `refreshControl` |
+| Containers | `alert` `actionSheet` `sheet` `popover` `listRow` `collectionItem` `disclosureGroup` `tooltip` `contextMenu` |
+| Special | `webContent` `unknown` |
 
-**Controls:** `primaryButton` · `secondaryButton` · `destructiveButton` · `cancelAction` · `textField` · `secureField` · `toggle` · `slider` · `segmentedControl` · `picker` · `stepperControl` · `searchField` · `menuButton` · `colorWell`
-
-**Content:** `label` · `imageView` · `link` · `mapView`
-
-**Indicators:** `activityIndicator` · `progressView` · `pageControl` · `scrollIndicator` · `refreshControl`
-
-**Containers:** `alert` · `actionSheet` · `sheet` · `popover` · `listRow` · `collectionItem` · `disclosureGroup` · `tooltip` · `contextMenu`
-
-**Special:** `webContent` · `unknown`
-
-*Shipped iOS detector trains 5 classes: alert, navigationBar, primaryButton, textField, toggle. Full 41-class YOLO11m expansion is Phase 6a (not shipped — DS-G8 fail). tvOS ships 25 of these classes as `nativeui-tvos-v3.0`.*
+The shipped iOS model detects 5 of these roles. The shipped tvOS model detects 25.
+The tvOS candidate groups them into 13 detector roles, after Apple Screen Recognition ([ROLES559](Research/Plans/Roles559.md)). The public role strings do not change.
 
 ---
 
 ## Roadmap
 
-Phase map: [`Research/PhaseMap.md`](Research/PhaseMap.md)  
-Architecture: [`Research/NativeUIElementDetection.md`](Research/NativeUIElementDetection.md)  
-Training history: [`Research/ExperimentLog.md`](Research/ExperimentLog.md)  
-Best practices: [`Research/BestPractices.md`](Research/BestPractices.md)
-
-| Phase | Status | Goal | Key Gate |
+| Phase | Status | Goal | Gate |
 |---|---|---|---|
-| **0: Scaffold** | ✅ Done | Buildable package + research docs | — |
-| **1: Coordinate Spike** | ✅ Done | Prove exported coords align with PNG pixels ≤2px | ≤2pt delta on all elements @2x and @3x |
-| **2: Taxonomy + Schema v1** | ✅ Done | Expand to ~41 classes; freeze annotation schema | Schema tagged v1.0 |
-| **3: Dataset Generator** | ✅ Done | SwiftUI templates + first generation run | 50/50 spot-check pass; imageSHA256 = 1.0 |
-| **4: UIKit Generator** | ✅ Done | UIKit-rendered controls (anti-overfitting) | UIKit templates live; ~20k training entries |
-| **5 / 5a / 5b: Hard Negatives + templates** | ✅ Done | Known-bad + extended SwiftUI/UIKit templates | 16,440 images; UIKitToggleForm live |
-| **6: iOS Model (5-class)** | ✅ Done | Working CoreML detector; mAP ≥ 0.70 | DS-G5 ✓ DS-G6 ✓ (generated-screen mAP=0.935, YOLO11n); direct inference latency ✓ (~7.5ms); withheld generated-template mAP 0.934 |
-| **6d: `NativeUIDetectionRequest` v2 migration** | ✅ Done | Port the Vision-style request API to the v2 model/pipeline | TASK-6d-1 through 6d-7 pass |
-| **6→6a: Foundation Models eval** | ✅ Skipped | Confirmed infeasible — `FoundationModels` has no image input API | Decision documented — proceeded to 6a |
-| **6a: iOS Model (41-class)** | 🔄 In progress | Anchor-free YOLO11m; family holdout | DS-G8: mAP@0.5 ≥ 0.85 on withheld-template test (historical Run 009 = **0.586**; matched Run 009 **0.5549**, Run 013 **0.6322**; custom AP) |
-| **6b: tvOS Model** | ✅ Done (v3.0) | OS UI + FocusRing v0.1 | Synthetic-screen validation mAP@0.5 = 0.9822; real-app pilot AP50 = 0.206, focus 0 / 15; remaining: R-1 scale, FOCUS-DET-05 (FOCUS556), 6b-U |
-| **6c: macOS Model** | ⬜ | AppKit, NSToolbar, Y-axis flip | Requires 6a DS-G8; then mAP@0.5 ≥ 0.80 |
-| **7: OCR Fusion** | ✅ Done | Visible text + truncation/clipping rules | `ObservationMerger` + audit rules |
-| **8: Device/OS Inference** | ✅ Done | `NativeUIDeviceInference` from chrome heuristics | Sidecar = exact; orphan PNG = ranked |
-| **9: ScreenAuditKit Integration** | 🔄 Partial | Drop-in protocol; contract fields; CLI flag | 9-1 done; 9-2/9-3 remain in ScreenAuditKit |
+| 0–5b: scaffold, schema, generators, hard negatives | ✅ Done | Buildable package and synthetic data | — |
+| 6: iOS model, 5 classes | ✅ Done | Working Core ML detector | mAP ≥ 0.70: 0.935 |
+| 6a: iOS model, 41 classes | 🔄 In progress | Full taxonomy | DS-G8: withheld mAP@0.5 ≥ 0.85 (Run 013: 0.632) |
+| 6b: tvOS model and focus | ✅ v3.0 shipped; 🔄 real-app work | Real-app accuracy | Frozen multi-app holdout |
+| 6c: macOS model | ⬜ Planned | AppKit detector | Waits on DS-G8 |
+| 7: OCR fusion | ✅ Done | Visible text and truncation rules | — |
+| 8: Device and OS inference | ✅ Done | Device candidates from chrome | — |
+| 9: ScreenAuditKit integration | 🔄 Partial | Drop-in protocol | 9-2 and 9-3 remain in ScreenAuditKit |
 
-**Immediate next steps**:
-1. TASK-6a-10 — authorized Office `aatv fixture batch`, then retrain 41-class from Run 009. Do not ship 41-class weights (DS-G8).
-2. FOCUS-DET-05 — ≥6,000 pairs with `light`/`highContrast` hard-neg before replacing FocusRing v0.1.
+Next steps:
+1. Score R5 on a frozen multi-app tvOS holdout ([REALCORPUS561](Research/Plans/RealCorpus561.md), RA554-13).
+2. Fix FocusRing on real apps without loss on its 270-image retention test ([FOCUS556](Research/Plans/FocusRealApp556.md)).
+3. Continue the iOS 41-class work toward DS-G8. Do not ship 41-class weights before the gate passes.
 
 ---
 
-## Design Principles
+## Design principles
 
-1. **Deterministic checks first** — pixel inference augments, it does not replace, rule-based validation
-2. **No cloud dependency** — all inference runs locally; screenshots never leave the machine
-3. **Semantic roles, not private class names** — `primaryButton` survives OS redesigns; `UIButton` does not
-4. **Three models, not one** — iOS/iPadOS, tvOS, and macOS have distinct enough visual languages to warrant separate detectors
-5. **Confidence surfaced, not hidden** — every observation declares its `confidenceSource` (`.sidecar`, `.pixelModel`, or `.heuristic`)
-6. **Generate, don't annotate** — all training data is synthetic, with ground truth exported at render time
-7. **Bias prevention by design** — every environment variable that could leak into the model (clock, battery, wallpaper, text content) is explicitly swept
+1. **Deterministic checks first.** Pixel inference adds to rule-based checks; it does not replace them.
+2. **No cloud dependency.** All inference runs locally.
+3. **Semantic roles, not private class names.** `primaryButton` survives OS redesigns; `UIButton` does not.
+4. **Separate models per platform.** iOS, tvOS and macOS look different enough to need separate detectors.
+5. **Visible confidence.** Every observation states its source: `.sidecar`, `.pixelModel` or `.heuristic`.
+6. **Generate, then verify on real apps.** Training data is synthetic, with labels made at render time. Real apps measure accuracy.
+7. **Prevent bias by design.** The generator varies clock, battery, wallpaper and text content.
 
----
-
-## Key Design Decisions
-
-**Why three models instead of one?** tvOS places the tab bar at the top of the screen; iOS places it at the bottom. tvOS uses focus states that visually transform every element. macOS has window chrome, Y-axis inverted coordinates, and a pointer paradigm with hover states and tooltips. Three targeted models, selected by sidecar platform field or pixel-only heuristic, are more accurate and easier to retrain independently when an OS redesign happens.
-
-**Why anchor-free (YOLO11/RT-DETR) for the full 41-class model?** The element taxonomy spans ~50:1 in aspect ratio — from the homeIndicator (~134×5pt, ratio ~27:1) to a collectionItem (roughly square). Anchor-based detectors (including Create ML objectPrint) cannot cover this range without anchor-to-class mismatch. Create ML is used for the 5-class prototype where the aspect ratio spread is manageable; anchor-free architecture is required for the full taxonomy.
-
-**Why strip tiling?** The 5-class prototype uses Create ML objectPrint (anchor-based). In full 2556×1179px portrait images, a navigationBar has ~16:1 aspect ratio — no anchor matches it, so the model receives zero gradient. Tiling into 22%-height horizontal strips reduces effective aspect ratios to ≤4:1 and makes all classes learnable. This is unnecessary for anchor-free YOLO11.
-
-**Why per-class pass routing?** After strip training, the model learns element features in strip context. Running the same model on full images AND strips creates duplicate predictions across passes. Routing each class to only the pass where it performs well (e.g., alert → full-image only; toggle → strip only) eliminates this FP source. Identified empirically across Runs 003–005.
-
-**Why withhold entire template families from validation, not random 80/20?** A random split from the same generator templates leaks template structure into the validation set. Template-family splits test genuine generalization to unseen screen layouts.
-
-**Why evaluate Apple Foundation Models before Phase 6a?** Apple Intelligence ships a ~3B parameter on-device multimodal vision model. If it achieves strong zero-shot mAP on our 41-class test set, months of custom training effort may be better spent on fine-tuning or distillation rather than training from scratch.
+More design decisions: [NativeUIElementDetection](Research/NativeUIElementDetection.md). Lessons learned: [BestPractices](Research/BestPractices.md).
 
 ---
 
 ## Related
 
-- [`PROVENANCE.md`](PROVENANCE.md) — training hardware, hyperparameters, source datasets, and a personal-identifier audit for every shipped model
-- [`Research/LicensingArchitecture.md`](Research/LicensingArchitecture.md) — MIT (code) vs. AGPL-3.0 (bundled YOLO11 weights) license boundary
-- [`../ScreenAuditKit/`](../ScreenAuditKit/) — screenshot validation engine this package integrates with
-- [`../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md`](../memlog/research/ScreenAuditKit-NativeUIElementDetection-Research.md) — original feasibility ADR
-- [`../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md`](../memlog/research/ADR-0002-AI-Assisted-Screenshot-Validation.md)
+- [`PROVENANCE.md`](PROVENANCE.md): training hardware, settings, data sources and a personal-identifier audit for each shipped model.
+- [`CHANGELOG.md`](CHANGELOG.md): version history.
+- [`Research/LicensingArchitecture.md`](Research/LicensingArchitecture.md): MIT code and AGPL-3.0 YOLO11 weights.
+- [`../ScreenAuditKit/`](../ScreenAuditKit/): the screenshot validation engine that uses this package.
