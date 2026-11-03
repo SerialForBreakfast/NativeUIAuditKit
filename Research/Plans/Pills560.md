@@ -149,3 +149,20 @@ Decision rule (fixed before registration):
   PIN slots ≥ 60/64; tvos558 without tab bars AP50 ≥ R5 − 0.01, no role loses more than 0.02 against R5; tvos560 tab AP50 ≥ 0.95.
 - Contradicted: Photo focused-cell median IoU ≤ R5, or focus < 13/21.
 - Inconclusive: any other result. No promotion.
+
+## Results summary
+
+Shipping input path: Core ML for R5, matched PyTorch for R1, both with a 640 × 640 letterbox and NMS IoU 0.45.
+Development data: NewsTV and Photo Guessing Game (2 apps). These screens guided the tuning; they are not an independent test.
+
+| Real-app measure | R1 (roles baseline) | R5 (`pills560-platter-r5`) |
+|---|---|---|
+| Tab and category pills found | 20 of 170 | 168 of 170 |
+| Focused control found | 5 of 21 | 18 of 21 |
+| Content cards found | 56 of 60 | 60 of 60 |
+| Focused-pill box fit (median IoU) | 0.368 | 0.601 |
+| Focused Photo cell box fit (median IoU) | 0.011 | 0.643 |
+
+R5 Core ML matches R5 PyTorch on identical input pixels: median score difference 0.0023; on 21 frames 753 detections match, 1 appears only in PyTorch and 5 only in Core ML.
+Decisions on the 640 × 640 path: R5 and R6 are inconclusive under their fixed rules (R5 `bar` −0.054; R6 Photo gain +0.013). R5 is the holdout candidate. No promotion.
+Next: score R5 on the frozen multi-app holdout ([REALCORPUS561](RealCorpus561.md)).
