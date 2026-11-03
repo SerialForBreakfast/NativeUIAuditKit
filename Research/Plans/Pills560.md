@@ -118,3 +118,34 @@ Decision rule (fixed before registration):
 - Inconclusive: any other result. No promotion.
 
 R5 membership: `membership-r5.json` (sha256 a660a439…). 170 tab rows repointed; 53 have new pixels (48 train), 14 have new labels (former style-2 rows). Other rows keep their R4 pins.
+
+## Style-2 label fix (2026-11-02, after R5) — no training run
+
+Fix: `TabRow` style 2 (focused tab lifted by 1.1) now captures the button and label boxes outside `scaleEffect` (`captureFrame(id:if:)` and an invisible unscaled copy).
+Check: `dataset/tvos560/style2` against `dataset/tvos560/platter`: pixels identical (3 `tvOSContentCells` images with ±2 rendering noise); labels change in 43 images, all focused style-2 tabs, exactly 1/1.1.
+R5 membership has 3 affected training rows (`membership-r6.json`, sha256 4ba157f3…). A run cannot measure 3 labels above run-to-run noise, so no R6 job is registered.
+Future datasets use the fixed generator.
+
+Open (same defect, measured): focused content cells in `tvOSContentCells` and `tvOSTabRows` (and their play buttons) are 1.06 times the frame, because `.scaleEffect(1.06)` follows `captureFrame`.
+`tvOSAppSwitcher` focused cards are 1.37 × 1.31 times unfocused cards; part of that may be layout, not scale (not checked).
+
+## R6 — focused cells keep the frame box (added 2026-11-02, after R5)
+
+Defect: `ContentCellsView.cell` applied `.scaleEffect(1.06)` after `captureFrame`. Focused cells, their text and play buttons were labeled 1.06 times the frame.
+Fix: the cell is drawn scaled without captures; an invisible unscaled copy (overlay) records the boxes. Style-2 tabs use the same fix.
+Dataset: `dataset/tvos560/cells6`. Against `style2`: pixels identical (1 noise image); labels change in 605 images (all exactly 1/1.06).
+`tvOSAppSwitcher` also scales every card (focused 1.05, unfocused 0.95) and lays out focused cards larger; not changed here (open).
+
+| Run | Data |
+|---|---|
+| R5 (control) | `membership-r5.json` |
+| R6 | `membership-r6.json` (sha256 2de3e1a7…): R5 rows and pixels; `tvOSContentCells`, `tvOSTabRows`, `tvOSTopTabBar` rows use `cells6` labels. 148 rows change labels (132 train, 16 calibration) |
+
+Configuration as R5. Scoring: both scorers with `--rule-b`. New measure: median best IoU on the 11 focused Photo Guessing Game cells (`otherFocusMedianIoU`; R5 is scored with the same code).
+Synthetic test sets keep the old 1.06 labels on focused cells. AP50 is not affected (IoU about 0.89); AP75 may fall slightly.
+
+Decision rule (fixed before registration):
+- Supported: Photo focused-cell median IoU ≥ R5 + 0.02; focus ≥ 15/21; NewsTV focused-pill median IoU ≥ R5 − 0.02; pills ≥ 160/170; cards ≥ 58/60 with median IoU ≥ R5 − 0.01;
+  PIN slots ≥ 60/64; tvos558 without tab bars AP50 ≥ R5 − 0.01, no role loses more than 0.02 against R5; tvos560 tab AP50 ≥ 0.95.
+- Contradicted: Photo focused-cell median IoU ≤ R5, or focus < 13/21.
+- Inconclusive: any other result. No promotion.

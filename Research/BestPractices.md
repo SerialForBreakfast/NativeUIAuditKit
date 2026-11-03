@@ -5293,3 +5293,39 @@ The code was fixed 49 min later, but the failed specs pin the old file as an inp
 Correct approach: compare the attempt's `closure.json` hashes with current code first. If the fix is in code the spec pins, register a successor that pins the fixed file.
 Then register successors of each dependent with the dependency and condition bound to the new producer and its spec hash.
 Why this matters: dependents name an exact producer job and spec hash, so a fixed producer alone does not unblock anything.
+
+## Do not let focus scale change a label box — PILLS560
+
+**Wrong:** Put `.scaleEffect(...)` after `.captureFrame(...)` and expect the label to stay the layout frame.
+`captureFrame` reads a global frame, and SwiftUI applies the ancestor's scale to it. Tab style 2 (scale 1.1) produced labels 1.1 times the frame.
+**Correct:** Draw a focus effect as a background or overlay that extends beyond the frame (for example a platter with negative padding). Use no scale on a captured view, or capture an unscaled copy.
+Compare regenerated labels with the previous dataset before training.
+To keep a scaled focus lift, capture the boxes after the scale: `captureFrame(id:if:)` outside `scaleEffect`, plus an invisible unscaled copy for nested labels (TabRow style 2).
+Audit: compare each focused box with its unfocused siblings. In tvos560, focused content cells are still 1.06 times the frame.
+**Why:** The box rule (§5.2.1) is the platform frame. Real tvOS `.plain` focus draws a platter beyond the frame; teaching the frame raised NewsTV focused-pill IoU from 0.454 to 0.631 (R5).
+
+## Exclude dataset directories from macOS Spotlight indexing — CELLS558
+
+**Wrong:** Write gigabytes of newly generated training images to external storage without indexing exclusions.
+When `dataset/tvos558` added 5,400 images (3.3 GB), macOS `mds_stores` indexed every file during training.
+Each training epoch experienced 30 s of overhead, causing multiple 1,800 s timeout failures.
+**Correct:** Place a `.metadata_never_index` file in `/Volumes/training-drive/data/NUIAK` or disable indexing on dataset directories.
+Check background host CPU before starting GPU training.
+**Why:** High background CPU and disk IO starve PyTorch DataLoader workers and trigger premature timeouts.
+
+## Use the 12-hour training hang guard instead of shrinking datasets — CELLS558
+
+**Wrong:** Reduce training datasets, drop epochs, or add toy stubs to fit an arbitrary 1,800 s timeout.
+Multiple `CELLS558` jobs timed out at 1,805 s on epoch 15 or 25, wasting hours of compute.
+**Correct:** Use the default T89 limit of 43,200 s (12 h) established on 2026-11-01.
+The 12 h limit acts as a guard against hung jobs while allowing full 30-epoch convergence.
+Never shorten runs or shrink datasets to satisfy an artificial timer.
+**Why:** Model accuracy requires complete dataset training and natural convergence.
+
+## Score exported detectors on the shipping input path — PILLS560 R6
+
+**Wrong:** Score an exported `.mlpackage` through Ultralytics, or decide gates only on the Ultralytics PyTorch path.
+Ultralytics calls the Core ML pipeline without thresholds, so the export defaults apply (NMS IoU 0.7, confidence 0.25): 271 extra detections on 21 frames.
+Ultralytics PyTorch also pads 16:9 frames to 640 × 384, while `NativeUIDetectionRequest` pads to 640 × 640.
+**Correct:** Call Core ML with explicit `iouThreshold` and `confidenceThreshold`, as the Swift library does. Use the same 640 × 640 letterbox for gate measures (`scripts/coreml_parity562.py`).
+**Why:** On identical pixels the backends agree (median score diff 0.0024). The input shape alone moved NewsTV focused-pill IoU from 0.660 to 0.587, across a gate.

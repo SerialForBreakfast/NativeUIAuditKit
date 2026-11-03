@@ -6,6 +6,16 @@ Standard detection and focus remain primary. HCF remains optional.
 
 ## Quick wins
 
+[ADR-0033](ADR-0033-Weight-Space-Programming-for-Perception-Models.md) establishes
+Weight-Space Programming (WSP) guidelines for UI element detection and FocusRing models
+(semantic head projection for taxonomy reduction, surgical output bias calibration,
+mechanistic circuit auditing, and conflict-aware model merging in T86).
+
+[ADR-0032](ADR-0032-Real-App-Grounded-Tuning-and-Synthetic-Alignment.md) establishes
+closed-loop real-app grounded tuning and synthetic generator alignment (whole-cell boxes,
+unscaled frame capture, platter margins, 13 functional roles, Rule B button hierarchy,
+and 12-hour training hang guard).
+
 [ADR-0031](ADR-0031-Reinforcement-Learning-and-TTR-Iteration.md) proposes a separate
 navigation policy and a TTR-backed learning loop: demonstrations and expert correction
 first, conditional simulator RL second, and independently qualified physical-device use.

@@ -44,10 +44,12 @@ def main():
     parser.add_argument('--model', action='append', required=True, help='NAME=CHECKPOINT')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--rule-b', action='store_true', help='Score against truth without text inside buttons')
+    parser.add_argument('--square', action='store_true', help='Use the shipping 640 × 640 letterbox')
     args = parser.parse_args()
+    e.SQUARE = args.square
     models = {m.split('=', 1)[0]: Path(m.split('=', 1)[1]).resolve() for m in args.model}
     groups = sets(); keep = not args.rule_b
-    result = dict(version='pills560-retention-v1', ruleB=args.rule_b, images={k: len(v) for k, v in groups.items()}, models={})
+    result = dict(version='pills560-retention-v1', ruleB=args.rule_b, square640=args.square, images={k: len(v) for k, v in groups.items()}, models={})
     for name, weights in models.items():
         m, mb = {}, {}
         for s, images in groups.items():

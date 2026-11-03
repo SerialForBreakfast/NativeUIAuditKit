@@ -43,6 +43,15 @@ public struct FramePreference: PreferenceKey {
 }
 
 public extension View {
+    /// Records the frame only when `on` is true. Use it to move a capture outside a `scaleEffect` (PILLS560 R6).
+    func captureFrame(id: String, if on: Bool) -> some View {
+        background(
+            GeometryReader { geo in
+                Color.clear.preference(key: FramePreference.self, value: on ? [id: geo.frame(in: .global)] : [:])
+            }
+        )
+    }
+
     func captureFrame(id: String) -> some View {
         background(
             GeometryReader { geo in
@@ -1492,8 +1501,18 @@ struct ContentCellsView: View {
         .ignoresSafeArea(.all)
     }
 
-    @ViewBuilder
+    /// A focused cell lifts by 1.06. Its boxes are captured on an invisible unscaled copy, so they stay the frame (§5.2.1, PILLS560 R6).
     func cell(row: CellRowSpec, r: Int, i: Int, isFoc: Bool, p: Palette) -> some View {
+        cellBody(row: row, r: r, i: i, isFoc: isFoc, p: p, capture: !isFoc)
+            .scaleEffect(isFoc ? 1.06 : 1.0)
+            .shadow(color: isFoc ? Color.white.opacity(0.45) : Color.clear, radius: isFoc ? 18 : 0)
+            .overlay {
+                if isFoc { cellBody(row: row, r: r, i: i, isFoc: isFoc, p: p, capture: true).opacity(0) }
+            }
+    }
+
+    @ViewBuilder
+    func cellBody(row: CellRowSpec, r: Int, i: Int, isFoc: Bool, p: Palette, capture: Bool) -> some View {
         let art = Color(hue: row.hues[i], saturation: 0.55, brightness: spec_brightness(p))
         let titleColor = (isFoc && row.variant == 3) ? Color.black : p.text
         VStack(alignment: .leading, spacing: 8) {
@@ -1504,12 +1523,12 @@ struct ContentCellsView: View {
                         LinearGradient(colors: [.clear, Color.black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
                             .clipShape(RoundedRectangle(cornerRadius: 14))
                         Text(row.titles[i]).font(.system(size: 26, weight: .bold)).foregroundColor(.white).padding(16)
-                            .captureFrame(id: "label_cell_title_\(r)_\(i)")
+                            .captureFrame(id: "label_cell_title_\(r)_\(i)", if: capture)
                     }
                     if row.variant == 4 {
                         Text("Play").font(.system(size: 22, weight: .bold)).foregroundColor(.black)
                             .padding(.horizontal, 30).padding(.vertical, 12).background(Color.white).cornerRadius(12).padding(20)
-                            .captureFrame(id: isFoc ? "primaryButton_cell_play_\(r)_\(i)_focused" : "primaryButton_cell_play_\(r)_\(i)_unfocused")
+                            .captureFrame(id: isFoc ? "primaryButton_cell_play_\(r)_\(i)_focused" : "primaryButton_cell_play_\(r)_\(i)_unfocused", if: capture)
                     }
                 }
                 .frame(width: row.width, height: row.artHeight)
@@ -1517,23 +1536,21 @@ struct ContentCellsView: View {
             if row.variant != 2 {
                 Text(row.titles[i]).font(.system(size: row.variant == 0 ? 22 : 26, weight: .semibold)).foregroundColor(titleColor)
                     .lineLimit(2).frame(width: row.width - (row.variant == 3 ? 40 : 0), alignment: .leading)
-                    .captureFrame(id: "label_cell_title_\(r)_\(i)")
+                    .captureFrame(id: "label_cell_title_\(r)_\(i)", if: capture)
             }
             if row.variant == 1 || row.variant == 3 || row.variant == 5 {
                 Text(row.summaries[i]).font(.system(size: 20)).foregroundColor(isFoc && row.variant == 3 ? Color.black.opacity(0.75) : p.secondary)
                     .lineLimit(3).frame(width: row.width - (row.variant == 3 ? 40 : 0), alignment: .leading)
-                    .captureFrame(id: "label_cell_summary_\(r)_\(i)")
+                    .captureFrame(id: "label_cell_summary_\(r)_\(i)", if: capture)
                 Text(row.metas[i]).font(.system(size: 18)).foregroundColor(isFoc && row.variant == 3 ? Color.black.opacity(0.6) : p.secondary)
-                    .captureFrame(id: "label_cell_meta_\(r)_\(i)")
+                    .captureFrame(id: "label_cell_meta_\(r)_\(i)", if: capture)
             }
         }
         .padding(row.variant == 3 ? 20 : 0)
         .background(row.variant == 3 ? (isFoc ? Color.white : p.surface) : Color.clear)
         .cornerRadius(row.variant == 3 ? 16 : 0)
         // Whole-cell box: artwork and all text inside the cell (Research 5.2.1). No nested imageView for the artwork.
-        .captureFrame(id: isFoc ? "collectionItem_cell_\(r)_\(i)_focused" : "collectionItem_cell_\(r)_\(i)_unfocused")
-        .scaleEffect(isFoc ? 1.06 : 1.0)
-        .shadow(color: isFoc ? Color.white.opacity(0.45) : Color.clear, radius: isFoc ? 18 : 0)
+        .captureFrame(id: isFoc ? "collectionItem_cell_\(r)_\(i)_focused" : "collectionItem_cell_\(r)_\(i)_unfocused", if: capture)
     }
 
     func spec_brightness(_ p: Palette) -> Double { 0.55 }
@@ -1553,10 +1570,14 @@ struct TabRow: View {
                 let isFoc = (idx == focIdx)
                 let isSel = (idx == selIdx) && !isFoc
                 let plain = isFoc && platter != .zero
+                // Style 2 lifts the focused tab by 1.1. Capture its boxes outside the scale, so they stay the frame (§5.2.1).
+                let scaled = isFoc && style == 2 && !plain
+                let buttonID = isFoc ? "\(tabItemClass)_tab_\(row)_\(idx)_focused" : "\(tabItemClass)_tab_\(row)_\(idx)_unfocused"
+                let font = Font.system(size: fontSize, weight: isFoc || isSel ? .bold : .medium)
                 Text(tabs[idx])
-                    .font(.system(size: fontSize, weight: isFoc || isSel ? .bold : .medium))
+                    .font(font)
                     .foregroundColor(isFoc && (style == 0 || plain) ? .black : (isFoc || isSel ? p.text : p.secondary))
-                    .captureFrame(id: "label_tab_\(row)_\(idx)")
+                    .captureFrame(id: "label_tab_\(row)_\(idx)", if: !scaled)
                     .padding(.horizontal, padH)
                     .padding(.vertical, padV)
                     .background(isFoc && style == 0 && !plain ? Color.white : (isSel ? p.selected : Color.clear))
@@ -1570,9 +1591,16 @@ struct TabRow: View {
                                 .padding(.horizontal, -platter.width).padding(.vertical, -platter.height)
                         }
                     }
-                    .captureFrame(id: isFoc ? "\(tabItemClass)_tab_\(row)_\(idx)_focused" : "\(tabItemClass)_tab_\(row)_\(idx)_unfocused")
-                    .scaleEffect(plain ? lift : (isFoc && style == 2 ? 1.1 : 1.0))
+                    .captureFrame(id: buttonID, if: !scaled)
+                    .scaleEffect(plain ? lift : (scaled ? 1.1 : 1.0))
                     .shadow(color: isFoc && (style != 1 || plain) ? Color.black.opacity(0.35) : Color.clear, radius: 10)
+                    .captureFrame(id: buttonID, if: scaled)
+                    .overlay {
+                        if scaled {
+                            Text(tabs[idx]).font(font).captureFrame(id: "label_tab_\(row)_\(idx)")
+                                .padding(.horizontal, padH).padding(.vertical, padV).opacity(0)
+                        }
+                    }
             }
         }
     }
@@ -1581,7 +1609,7 @@ struct TabRow: View {
     static func plainFocus(seed: UInt64, row: Int) -> (platter: CGSize, lift: CGFloat) {
         var f = Variation(seed: seed, salt: 0xF0C5 &+ UInt64(row))
         guard f.chance(0.5) else { return (.zero, 1.0) }
-        // No lift: `captureFrame` reads the frame after `scaleEffect`, so a scale would also scale the label (old style 2 has that defect).
+        // No lift: `captureFrame` reads the frame after `scaleEffect`, so a scale would also scale the label.
         return (CGSize(width: CGFloat(f.int(14...32)), height: CGFloat(f.int(12...18))), 1.0)
     }
 }
