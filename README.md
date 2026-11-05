@@ -7,6 +7,9 @@ It complements [ScreenAuditKit](../ScreenAuditKit/). All inference runs on the d
 
 ## Accuracy at a glance
 
+Computed results remain provisional until user evidence approval. Publishing metric claims and promoting models require explicit user review in this chat.
+See [user evidence approval](Research/UserEvidenceApproval.md). Experiment execution continues independently.
+
 **Synthetic scores do not predict real-app accuracy.** Read the real-app rows first.
 
 ### Shipped models

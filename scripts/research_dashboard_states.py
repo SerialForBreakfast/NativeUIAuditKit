@@ -64,6 +64,8 @@ def annotate(value, queue, modules):
         readiness = check(row['job'], queue, modules, approvals) if row['state'] == 'pending' else None
         row['displayState'], row['readinessReasons'] = classify(row, readiness)
     supersede(value['jobs'], successors(q.ROOT))
+    from metric_approval import decorate_jobs
+    decorate_jobs(value['jobs'], q.ROOT)
     value['backlog'] = backlog_summary(value['jobs'], q.ROOT)
     from model_tracks551 import report
     try:

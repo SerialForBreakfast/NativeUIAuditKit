@@ -336,7 +336,7 @@ function render(){
  $('active-stop').disabled=!busy;$('active-cancel').disabled=!data.current;
  const countKind=kind=>jobs.filter(j=>j.evidenceKind===kind).length;
  const trust={};for(const j of jobs)if(j.trust)trust[j.trust]=(trust[j.trust]||0)+1;
- $('summary').textContent=jobs.length+' jobs; '+countState('complete')+' completed runs (completion is not acceptance); '+countKind('measured')+' measured reports'+
+ $('summary').textContent=jobs.length+' jobs; '+countState('complete')+' completed runs (completion is not acceptance); '+countKind('measured')+' measured reports (provisional until user evidence approval)'+
   (Object.keys(trust).length?'; trust: '+Object.entries(trust).map(([k,v])=>k+' '+v).join(', '):'')+'.';
  $('mode').textContent=TOKEN?'Local controls enabled. Start 1–10 selected jobs; use 5 for a normal batch.':'Read-only snapshot. Start the local dashboard server for controls.';
  $('start').disabled=!TOKEN||busy||Boolean(active);
@@ -385,6 +385,9 @@ function render(){
   add(idRow,'span',j.job).className='job-id';
   if(j.evidenceKind&&j.evidenceKind!=='unverified')add(idRow,'span',' · '+j.evidenceKind).className='small muted';
   if(j.trust)add(idRow,'span',' · trust: '+j.trust).className='small muted';
+  add(idRow,'span',' · metrics: '+(j.metricsStatus||'provisional')).className='small muted';
+  if(j.approvedScope)add(idRow,'span',' · approved scope: '+j.approvedScope).className='small muted';
+  if(j.promotionStatus==='user-approved')add(idRow,'span',' · promotion separately approved').className='small muted';
   if(j.jobKind)add(idRow,'span',' · '+j.jobKind).className='small muted';
   if(j.readinessReasons?.length)add(item,'div','Needs: '+j.readinessReasons.map(reasonLabel).join('; ')).className='small warning';
   if(j.driftedModules&&j.driftedModules.length)add(idRow,'span',' · code changed since run').className='small muted';

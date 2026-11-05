@@ -360,3 +360,7 @@ reports/work/INTAKE-99/received/
 /reports/research_dashboard.html
 /Research/ResearchSpecs/*/
 
+
+# Local user evidence requests and signed approval records
+/reports/work/user-approvals/
+/reports/work/APPROVAL563/

@@ -10,6 +10,19 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T105':({'model','manifest'},set(),'role_detector567.score','artifact','diagnostic'),
+ 'T106':({'baseline','candidate'},set(),'role_detector567.compare','artifact','diagnostic'),
+ 'T104':({'source','candidate','model'},set(),'focus_discrimination565.anchors','artifact','diagnostic'),
+ 'T101':({'suite'},set(),'focus_discrimination565.prepare','artifact','diagnostic'),
+ 'T102':({'baseline','candidate','suite','retention'},set(),'focus_discrimination565.compare','artifact','diagnostic'),
+ 'T103':({'protocol','model'},set(),'focus_discrimination565.feature_probe','artifact','diagnostic'),
+ 'T99':({'plan','model'},set(),'proposal_correction564.proposals','artifact','diagnostic'),
+ 'T100':({'baseline','candidate'},set(),'proposal_correction564.compare','artifact','diagnostic'),
+ 'T98':({'source'},set(),'weight_surgery_queue.detector_initializations','artifact','diagnostic'),
+ 'T94':({'base','donor','preflight','completion','recipe'},set(),'weight_surgery_queue.produce','artifact','diagnostic'),
+ 'T95':({'model','suite'},set(),'weight_surgery_queue.score','artifact','diagnostic'),
+ 'T96':({'baseline','bias','classifier','head'},set(),'weight_surgery_queue.compare','artifact','diagnostic'),
+ 'T97':({'plan'},set(),'weight_surgery_queue.prepare','artifact','diagnostic'),
  'T93':({'membership','original','suite'},set(),'training_anchors495.run','artifact','diagnostic'),
  'T91':({'membership','button','row','tab','tool'},{'arm'},'proposal_crop_training421.prepare','artifact','diagnostic'),
  'T92':({'admission'},set(),'proposal_crop_training421.qualify_labels','artifact','diagnostic'),
@@ -130,8 +143,10 @@ def build(doc):
     q.require(inputs<=set(doc['inputs']) and set(doc['inputs'])<=inputs|optional,'template_inputs')
     # T47 `scorer` is optional so that registered T47 specifications keep their identity.
     # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
-    q.require(set(doc['parameters'])-{'T10':{'maximumPackageBytes'},'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'}}.get(doc['template'],set())==parameters,'template_parameters')
+    q.require(set(doc['parameters'])-{'T10':{'maximumPackageBytes'},'T47':{'scorer'},'T20':{'taxonomy'},'T25':{'kernelSettings'},'T103':{'cropPolicy'}}.get(doc['template'],set())==parameters,'template_parameters')
     validate_novel418_parameters(doc['template'], doc['parameters'])
+    if doc['template']=='T103':
+        q.require(doc['parameters'].get('cropPolicy','stretch') in ('stretch','aspect-fit'),'training_crop_policy')
     if doc['template']=='T41':
         from box_intervention410 import parameters as intervention
         intervention(doc['parameters'])
@@ -209,6 +224,9 @@ def build(doc):
     stage=[]
     if 'configuration' in doc['inputs']:stage=[dict(to='config.json',**{'from':doc['inputs']['configuration']})]
     pinned=[r for r in doc['inputs'].values() if 'path' in r]
+    if doc['template'] == 'T89':
+        sources.append(pin(q.MODULES/'train_yolo.py'))
+        if config.get('verifyInitialization'):sources.append(pin(q.MODULES/'detector_initializer567.py'))
     if doc['template'] == 'T89' and 'teacherPreservation' in config:
         from detector_preservation551 import validate
         validate(config['teacherPreservation'], q.load(checked(doc['inputs']['membership'])))

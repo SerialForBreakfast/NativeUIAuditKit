@@ -8,7 +8,9 @@ from experiment_templates import checked
 
 
 def validate(config, membership):
-    q.require(set(config) == {'model', 'anchors', 'weight'}, 'detector_preservation_fields')
+    q.require({'model','anchors','weight'}<=set(config)<= {'model','anchors','weight','geometryWeight'}, 'detector_preservation_fields')
+    if 'geometryWeight' in config:
+        q.require(type(config['geometryWeight']) in (int,float) and math.isfinite(config['geometryWeight']) and config['geometryWeight']>0,'geometry_preservation_weight')
     weight = config['weight']
     q.require(type(weight) in (int, float) and math.isfinite(weight) and weight > 0,
               'detector_preservation_weight')
@@ -95,7 +97,11 @@ def attach(model, config, membership, dataset, output):
         q.require(type(teacher.model[-1]).__name__ == 'Detect' and not teacher.model[-1].end2end,
                   'detector_preservation_architecture')
         original = student.init_criterion()
-        wrapper = ClassificationPreservation(original, teacher, paths, config['weight'])
+        if 'geometryWeight' in config:
+            from detector_geometry570 import GeometryPreservation
+            wrapper=GeometryPreservation(original,teacher,paths,config['weight'],config['geometryWeight'])
+        else:
+            wrapper = ClassificationPreservation(original, teacher, paths, config['weight'])
         student.criterion = wrapper
         state['wrapper'] = wrapper
         state['student'] = student
@@ -108,6 +114,9 @@ def attach(model, config, membership, dataset, output):
             configuration=config, anchorCount=len(paths), calls=wrapper.calls,
             presentedAnchorImages=wrapper.anchor_images, meanPenalty=wrapper.loss_sum/wrapper.calls,
             teacherUnchanged=True, teacherDetached=True, trainingOnly=True,
-            boxLossUnchanged=True, addedOptimizerUpdates=0, modelAccepted=False))
+            boxLossUnchanged='geometryWeight' not in config, originalSupervisedBoxLossUnchanged=True,
+            geometryDistributionPenaltyAdded='geometryWeight' in config,
+            meanGeometryPenalty=wrapper.geometry_loss_sum/wrapper.calls if 'geometryWeight' in config else None,
+            addedOptimizerUpdates=0, modelAccepted=False))
     model.add_callback('on_pretrain_routine_end', setup)
     model.add_callback('on_train_end', finish)

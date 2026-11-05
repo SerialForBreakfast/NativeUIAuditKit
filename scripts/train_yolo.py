@@ -102,7 +102,7 @@ class FrozenYOLOBackbone:
                     ema[key].copy_(value.to(device=ema[key].device, dtype=ema[key].dtype))
 
 
-def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False, warmup_bias_lr=None, teacher_preservation=None):
+def train_native_hcf(dataset_yaml, initialization, output, progress=None, weights='best', patience=10, learning_rate=.001, freeze_backbone=False, warmup_bias_lr=None, teacher_preservation=None, seed=371, verify_initialization=False):
     """Use the resident YOLO trainer with fixed native HCF settings.
 
     weights='best' keeps the HCF371 behavior (validation fitness). weights='last' returns the final epoch.
@@ -117,6 +117,8 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
         raise ValueError('detector_freeze_backbone_boolean')
     if warmup_bias_lr is not None and (type(warmup_bias_lr) not in (int,float) or warmup_bias_lr!=learning_rate):
         raise ValueError('detector_warmup_bias_rate')
+    if type(seed) is not int or seed not in (42,371): raise ValueError('detector_seed')
+    if type(verify_initialization) is not bool: raise ValueError('detector_initializer_boolean')
     import os
     os.environ.setdefault('YOLO_CONFIG_DIR', str(PROJECT_ROOT/'NativeUITrainer/.ultralytics'))
     os.environ.setdefault('MPLCONFIGDIR', str(PROJECT_ROOT/'NativeUITrainer/.mplconfig'))
@@ -125,6 +127,10 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
     from ultralytics import YOLO
     model = YOLO(str(initialization))
     options = {}
+    if verify_initialization:
+        from detector_initializer567 import InitializerGuard
+        initializer=InitializerGuard(model.model,seed,Path(output))
+        model.add_callback('on_pretrain_routine_end',initializer.verify)
     if teacher_preservation is not None:
         from detector_preservation551 import attach
         attach(model, *teacher_preservation, Path(dataset_yaml), Path(output))
@@ -143,10 +149,12 @@ def train_native_hcf(dataset_yaml, initialization, output, progress=None, weight
         model.add_callback('on_train_epoch_end', lambda trainer: progress(
             'Train HCF full-screen detector', trainer.epoch+1, trainer.epochs))
     model.train(data=str(dataset_yaml), epochs=30, patience=patience, batch=8, imgsz=640, device='mps', workers=0,
-        project=str(output), name='detector', exist_ok=False, seed=371, deterministic=True,
+        project=str(output), name='detector', exist_ok=False, seed=seed, deterministic=True,
         optimizer='AdamW', lr0=learning_rate, lrf=.01, pretrained=True, plots=False, save=True, save_period=1,
         rect=True, cache=False, amp=False, mosaic=0, mixup=0, copy_paste=0, fliplr=0, flipud=0,
         degrees=0, translate=0, scale=0, shear=0, perspective=0, hsv_h=0, hsv_s=0, hsv_v=0, **options)
+    if verify_initialization and initializer.calls!=1:
+        raise ValueError('detector_initializer_verification_missing')
     if freeze_backbone:
         import json
         if frozen.checks != 31:

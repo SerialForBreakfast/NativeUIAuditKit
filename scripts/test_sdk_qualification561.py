@@ -51,5 +51,30 @@ class QualificationTests(unittest.TestCase):
             self.assertFalse(m['checks']['focus'])
 
 
+    def test_unknown_reference_never_counts_as_focus_agreement(self):
+        with tempfile.TemporaryDirectory(dir=q.ROOT/'.build',prefix='sdkq561-') as folder:
+            root=Path(folder)
+            for n in range(10):
+                value=dict(focus=dict(state='unknown',box=None),objects=[obj('a',[0,0,10,10])])
+                self.write(root,f'app-flow{n%5}-screen-{n}',value,value)
+            result=s.qualify(root/'drafts',root/'labels');m=result['apps']['app']
+            self.assertEqual(m['focusAgreement'],'0/0');self.assertEqual(m['unknownFocusReferences'],10)
+            self.assertFalse(m['checks']['focus']);self.assertFalse(m['qualified'])
+            self.assertEqual(result['metricsStatus'],'provisional')
+
+    def test_verified_no_focus_is_distinct_from_unknown(self):
+        draft=dict(focus=dict(state='no_focus'),objects=[])
+        self.assertTrue(s.frame_result(draft,draft)['focusAgrees'])
+        unknown=dict(focus=dict(state='unknown'),objects=[])
+        self.assertFalse(s.frame_result(unknown,draft)['focusAgrees'])
+
+    def test_matching_unknown_classes_are_unresolved_not_role_success(self):
+        with tempfile.TemporaryDirectory(dir=q.ROOT/'.build',prefix='sdkq561-') as folder:
+            root=Path(folder);value=dict(focus=dict(state='no_focus'),objects=[obj('a',[0,0,10,10],cls='UnmappedNativeWidget')])
+            self.write(root,'app-a-b-1',value,value)
+            m=s.qualify(root/'drafts',root/'labels')['apps']['app']
+            self.assertIsNone(m['roleAgreement']);self.assertEqual(m['unresolvedRoleReferences'],1)
+            self.assertEqual(m['roleReferenceCount'],0);self.assertFalse(m['checks']['role'])
+
 if __name__ == '__main__':
     unittest.main()

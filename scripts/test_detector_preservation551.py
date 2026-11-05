@@ -78,6 +78,12 @@ class PreservationTests(unittest.TestCase):
             wrapper.verify();self.assertEqual(wrapper.anchor_images,1)
 
     def test_callback_lifecycle_preserves_rng_and_checkpoint(self):
+        self.exercise_callback(False)
+
+    def test_geometry_callback_lifecycle_preserves_rng_and_checkpoint(self):
+        self.exercise_callback(True)
+
+    def exercise_callback(self, geometry):
         from types import SimpleNamespace
         from unittest.mock import patch
         from ultralytics.nn.tasks import DetectionModel
@@ -95,6 +101,7 @@ class PreservationTests(unittest.TestCase):
             teacher=copy.deepcopy(student);ema=ModelEMA(student)
             callbacks={};host=SimpleNamespace(add_callback=lambda name,fn:callbacks.update({name:fn}))
             config=dict(model=pin(modelpath),anchors=pin(anchors),weight=1.0)
+            if geometry:config['geometryWeight']=1.0
             attach(host,config,dict(rows=[row],names=['a','b']),root/'dataset.yaml',root)
             trainer=SimpleNamespace(model=student,device=torch.device('cpu'))
             rng=torch.random.get_rng_state().clone()
@@ -112,6 +119,8 @@ class PreservationTests(unittest.TestCase):
             self.assertFalse(isinstance(getattr(loaded,'criterion',None),ClassificationPreservation))
             callbacks['on_train_end'](trainer)
             self.assertFalse(isinstance(student.criterion,ClassificationPreservation))
-            self.assertTrue(q.load(root/'preservation.json')['teacherUnchanged'])
+            report=q.load(root/'preservation.json');self.assertTrue(report['teacherUnchanged'])
+            self.assertEqual(report['geometryDistributionPenaltyAdded'],geometry)
+            if geometry:self.assertGreater(report['meanGeometryPenalty'],0.)
 
 if __name__=='__main__':unittest.main()

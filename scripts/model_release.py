@@ -98,6 +98,8 @@ def validate_entry(entry, publication=False):
     require(isinstance(entry['approvalReference'], str), 'approval_reference')
     if publication:
         require(entry['releaseStatus'] == 'approved' and bool(entry['approvalReference'].strip()), 'approval_required')
+        from metric_approval import require_promotion
+        require_promotion(entry, ROOT)
     require(isinstance(entry['hosts'], list) and bool(entry['hosts']), 'hosts')
     host_names = set()
     for host in entry['hosts']:

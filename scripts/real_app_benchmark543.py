@@ -129,6 +129,7 @@ def validate_labels(labels, case, names):
         seen.add(obj['id']); _box(obj['box'], case['width'], case['height'])
         require(obj['visibility'] in ('visible', 'clipped', 'occluded', 'unknown'), 'visibility')
         require(obj['provenance'], 'label_provenance')
+        require(not any(p in str(obj['provenance']).lower() for p in ('candidate', 'prediction', 'model-output', 'model_output', 'model_prediction')), 'candidate_prediction_as_reference')
     focus = labels['focus']; require(focus['state'] in ('focused', 'no_focus', 'unknown'), 'focus_state')
     if focus['state'] == 'focused': _box(focus['box'], case['width'], case['height'])
     else: require(focus.get('box') is None, 'focus_box')
@@ -362,7 +363,7 @@ def score(frozen_ref, predictions):
             macro[name][metric]=dict(value=sum(values)/len(values) if values else None,supportedApps=len(values),plannedApps=len(apps))
     rates=[a['correctFocus']['value'] for a in apps.values() if a['correctFocus']['value'] is not None]
     return dict(version='real-app-report-v1',freeze=frozen_ref,baselineSHA256=baseline,phase=m['phase'],platform=m['platform'],profile=m['profile'],
-                configuration=configuration,scope='Selected real-app test population; not deployment-wide accuracy',dataRole='development' if m['phase']=='pilot' else 'independent-qualification',modelAccepted=False,rows=rows,
+                configuration=configuration,scope='Selected real-app test population; not deployment-wide accuracy',dataRole='development' if m['phase']=='pilot' else 'independent-qualification',modelAccepted=False,metricsStatus='provisional',userApprovalRequired=True,rows=rows,
                 overall=aggregate(rows,m['classes']),perApplication=apps,equalApplicationPerClass=macro,
                 equalApplicationCorrectFocus=dict(value=sum(rates)/len(rates) if rates else None,supportedApps=len(rates),plannedApps=len(apps)),
                 uncertainty=uncertainty(rows,apps),officialCOCO=official_ap(rows,m['classes']),

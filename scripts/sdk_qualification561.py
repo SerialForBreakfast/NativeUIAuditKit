@@ -29,14 +29,18 @@ def frame_result(draft, label):
     kept = [i for i in drafts if i in final and final[i].get('flag') != 'not-control']
     added = [o for o in label['objects'] if not o['provenance'].startswith('sdk-draft:')]
     ious = [0.0 if final[i].get('flag') == 'wrong-box' else _iou(drafts[i]['box'], final[i]['box']) for i in kept]
-    roles = [final[i].get('flag') != 'wrong-class' and role(drafts[i]['class']) == role(final[i]['class']) for i in kept]
+    resolved=[i for i in kept if role(final[i]['class']) is not None]
+    roles = [final[i].get('flag') != 'wrong-class' and role(drafts[i]['class']) == role(final[i]['class']) for i in resolved]
+    unresolved=len(kept)-len(resolved)
     dfocus, ffocus = draft.get('focus', {}), label.get('focus', {})
+    known_reference=ffocus.get('state') in ('focused','no_focus')
     if ffocus.get('state') == 'focused':
         focus = dfocus.get('state') == 'focused' and _iou(dfocus['box'], ffocus['box']) >= .5
     else:
-        focus = dfocus.get('state') == ffocus.get('state')
+        focus = known_reference and dfocus.get('state') == ffocus.get('state')
     return dict(drafts=len(drafts), kept=len(kept), deleted=len(drafts) - len(kept), added=len(added), ious=ious, roles=roles,
-                focusAgrees=focus, draftFocus=dfocus.get('state'), reviewedFocus=ffocus.get('state'),
+                unresolvedRoles=unresolved, unmappedSDKRoles=sum(role(drafts[i]['class']) is None for i in resolved),
+                focusAgrees=focus, referenceFocusKnown=known_reference, draftFocus=dfocus.get('state'), reviewedFocus=ffocus.get('state'),
                 addedClasses=[str(role(o['class']) or o['class']) for o in added])
 
 
@@ -70,22 +74,27 @@ def qualify(drafts_dir, labels_dir, prefix=None):
                  medianIoU=round(statistics.median(ious), 4) if ious else None,
                  shareIoU75=round(sum(v >= .75 for v in ious)/len(ious), 4) if ious else None,
                  roleAgreement=round(sum(roles)/len(roles), 4) if roles else None,
+                 roleReferenceCount=len(roles), unresolvedRoleReferences=sum(f['unresolvedRoles'] for _,f in frames),
+                 unmappedSDKRoles=sum(f['unmappedSDKRoles'] for _,f in frames),
                  falseRegistrations=round(deleted/drafts, 4) if drafts else None,
-                 focusAgreement=f"{sum(f['focusAgrees'] for _, f in frames)}/{len(frames)}",
+                 focusAgreement=f"{sum(f['focusAgrees'] for _, f in frames if f['referenceFocusKnown'])}/{sum(f['referenceFocusKnown'] for _, f in frames)}",
+                 knownFocusReferences=sum(f['referenceFocusKnown'] for _,f in frames),
+                 unknownFocusReferences=sum(not f['referenceFocusKnown'] for _,f in frames),
+                 unknownSDKFocus=sum(f['draftFocus'] not in ('focused','no_focus') for _,f in frames),
                  focusStates=dict(collections.Counter(f"{f['draftFocus']}->{f['reviewedFocus']}" for _, f in frames).most_common()),
                  missedRoles=dict(collections.Counter(c for _, f in frames for c in f['addedClasses'])),
                  stability='not measured')
         checks = dict(coverage=m['coverage'] is not None and m['coverage'] >= GATES['coverage'],
                       geometry=m['medianIoU'] is not None and m['medianIoU'] >= GATES['medianIoU'] and m['shareIoU75'] >= GATES['shareIoU75'],
-                      role=m['roleAgreement'] is not None and m['roleAgreement'] >= GATES['roleAgreement'],
+                      role=m['roleAgreement'] is not None and m['roleAgreement'] >= GATES['roleAgreement'] and m['unresolvedRoleReferences']==0,
                       falseRegistrations=m['falseRegistrations'] is not None and m['falseRegistrations'] <= GATES['falseRegistrations'],
-                      focus=all(f['focusAgrees'] for _, f in frames),
+                      focus=all(f['referenceFocusKnown'] and f['focusAgrees'] for _, f in frames),
                       sample=m['frames'] >= GATES['frames'] and m['flows'] >= GATES['flows'])
         m['checks'] = checks
         m['qualified'] = all(checks.values())
         m['failures'] = [k for k, v in checks.items() if not v]
         out[app] = m
-    return dict(version='sdk-qualification561-v1', gates=GATES, apps=out)
+    return dict(version='sdk-qualification561-v1', gates=GATES, apps=out, metricsStatus='provisional', modelAccepted=False)
 
 
 def main():

@@ -41,6 +41,12 @@ class ReleaseTests(unittest.TestCase):
         self.assertTrue(m.verify_archive(self.archive, self.entry)['verified'])
         m.validate_catalog(dict(schemaVersion=1, models=[self.entry]))
 
+    def test_agent_claimed_approval_cannot_authorize_publication(self):
+        entry = copy.deepcopy(self.entry)
+        entry.update(releaseStatus='approved', approvalReference='agent-says-Joe-approved.json')
+        with self.assertRaises(ValueError):
+            m.validate_entry(entry, publication=True)
+
     def test_publication_requires_explicit_record(self):
         with self.assertRaisesRegex(ValueError, 'approval_required'):
             m.validate_entry(self.entry, publication=True)

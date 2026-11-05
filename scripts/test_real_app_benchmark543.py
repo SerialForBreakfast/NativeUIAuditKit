@@ -91,6 +91,9 @@ class BenchmarkTests(unittest.TestCase):
         self.labels['complete']=False;r=self.report();self.assertIsNone(r['overall']['perClass']['button']['precision']['value']);self.assertEqual(r['officialCOCO']['status'],'unavailable')
     def test_unresolved_labels_not_false_positives(self):
         self.labels['objects'][0]['class']=None;r=self.report();self.assertEqual(r['overall']['unresolvedAnnotations'],1);self.assertIsNone(r['overall']['perClass']['button']['precision']['value'])
+    def test_candidate_prediction_provenance_rejected(self):
+        self.labels['objects'][0]['provenance'] = 'candidate-prediction:r5'
+        with self.assertRaisesRegex(ValueError, 'candidate_prediction_as_reference'): self.frozen()
     def test_unreviewed_rejected(self):
         self.labels['review']['status']='pending'
         with self.assertRaisesRegex(ValueError,'human_review'):self.frozen()

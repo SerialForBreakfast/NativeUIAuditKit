@@ -18,10 +18,12 @@ TRAIN_ONLY_VERSION = 'detector-training-membership-v2'
 
 def learning_rate(config, initialization):
     base=dict(initialization=initialization,selection='fixed-last',patience=0)
-    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone','warmupBiasRate','teacherPreservation'} and
+    q.require(set(base) <= set(config) <= set(base)|{'learningRate','checkpointRetention','freezeBackbone','warmupBiasRate','teacherPreservation','seed','verifyInitialization'} and
               all(config[k]==v for k,v in base.items()),'detector_training_configuration')
     q.require(config.get('checkpointRetention','all') in ('all','last-best-final'), 'detector_checkpoint_retention')
     q.require(type(config.get('freezeBackbone',False)) is bool, 'detector_freeze_backbone_boolean')
+    q.require(type(config.get('seed',371)) is int and config.get('seed',371) in (42,371),'detector_seed')
+    q.require(type(config.get('verifyInitialization',False)) is bool,'detector_initializer_boolean')
     value=config.get('learningRate',.001)
     q.require(type(value) in (int,float) and value in (.001,.0001),'detector_training_learning_rate')
     if 'warmupBiasRate' in config:
@@ -97,6 +99,8 @@ def run():
     import hcf_study371 as study
     study.OUT=OUT
     options=dict(weights='last',patience=0)
+    if 'seed' in config:options['seed']=config['seed']
+    if config.get('verifyInitialization'):options['verify_initialization']=True
     if 'teacherPreservation' in config:
         options['teacher_preservation'] = (config['teacherPreservation'], membership)
     if 'learningRate' in config:options['learning_rate']=rate
@@ -129,6 +133,7 @@ def run():
     shutil.copyfile(model,OUT/'final.pt')
     q.save(OUT/'history.json',history)
     q.save(OUT/'fit.json',dict(epochs=30,initialization=refs['initialization'],membership=refs['membership'],
+        seed=config.get('seed',371),initializationVerified=config.get('verifyInitialization',False),metricsStatus='provisional',
         frames=counts,teacherPreservation=config.get('teacherPreservation'),selection='fixed-last',learningRate=rate,warmupBiasRate=config.get('warmupBiasRate'),freezeBackbone=config.get('freezeBackbone',False),resumeQualified=False,modelAccepted=False,
         validationMetricRole='training-diagnostic' if membership['version']==TRAIN_ONLY_VERSION else 'calibration',
         calibrationUsedForSelection=False))

@@ -144,7 +144,8 @@ class DashboardTests(QueueTests):
         self.assertEqual(row['state'],'complete', (self.attempt()/'stderr.log').read_text())
         self.assertEqual(row['evidenceKind'],'measured')
         self.assertEqual(row['measured']['metrics']['truePositive'],1)
-        self.assertEqual(row['modelAcceptance'],'not-assessed')
+        self.assertEqual(row['modelAcceptance'],'requires-user-approval')
+        self.assertEqual(row['metricsStatus'],'provisional')
 
     def test_current_task_panel_is_prominent(self):
         page=render_html({'jobs':[]})
