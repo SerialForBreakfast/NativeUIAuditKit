@@ -1,6 +1,7 @@
-"""Export the winning WSP FocusRing model (conv_head+classifier alpha=0.50) to Core ML.
+"""Historical experimental WSP checkpoint writer (conv_head+classifier alpha=0.50) to Core ML.
 
-Achieves 270/270 legacy retention (100%) and 10/10 NewsTV button pill recall (100%).
+The historical 10/10 count uses scores above 0.01. It is not recall at 0.85.
+The candidate fails development acceptance. Legacy retention does not establish full-screen accuracy.
 """
 import sys
 import copy
@@ -39,13 +40,14 @@ def main():
         'expert': str(FDR003_PATH.relative_to(q.ROOT)),
         'alpha': 0.50,
         'layers_filter': ['conv_head', 'classifier'],
-        'legacy_retention': '270/270',
-        'newstv_pills': '10/10'
+        'metricsStatus': 'provisional',
+        'modelAccepted': False,
+        'evaluationEvidence': 'reports/work/WSP/wsp-and-rc561-summary.md'
     }
 
     TARGET_WEIGHTS.parent.mkdir(parents=True, exist_ok=True)
     torch.save(out_ckpt, TARGET_WEIGHTS)
-    print(f"Saved winning WSP checkpoint to {TARGET_WEIGHTS} ({TARGET_WEIGHTS.stat().st_size} bytes)")
+    print(f"Saved experimental WSP checkpoint to {TARGET_WEIGHTS} ({TARGET_WEIGHTS.stat().st_size} bytes)")
 
 if __name__ == '__main__':
     main()

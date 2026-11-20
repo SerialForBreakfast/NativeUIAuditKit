@@ -51,7 +51,7 @@ Hyperparameters below are what actually shipped, not every configuration tried.
 - **Architecture:** MobileNetV4-Conv-Small (vendored `scripts/focus_ring_backbone.py`; no `timm` runtime dependency), 256×256 RGB input, sigmoid output, batch 64, 30 epochs, lr 3e-4
 - **Training set:** 1,500 focused/unfocused crop pairs harvested from the `TVTestRigFixture` test-harness app via `scripts/harvest_focus_pairs.py` (split: 1,201 train / 164 val / 135 test, `recipe_seed`-disjoint)
 - **Export:** `torch.jit.trace` → `coremltools` 9.0, FP16 — `FocusRingDetector.mlpackage` (4.80 MB)
-- **Result:** held-out test accuracy 100%, FPR 0%, FNR 0% (270/270); hard-negative gate is currently vacuous (n=0 — no `light`/`highContrast` theme pairs collected yet, tracked as [FOCUS-DET-05](Tasks.md))
+- **Historical scope:** 270/270 recorded legacy crop decisions; this does not establish real-app, full-screen, or no-focus accuracy; hard-negative gate is currently vacuous (n=0 — no `light`/`highContrast` theme pairs collected yet, tracked as [FOCUS-DET-05](Tasks.md))
 
 ### 41-class full-taxonomy detector — **not shipped**
 

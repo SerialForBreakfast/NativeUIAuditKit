@@ -54,6 +54,7 @@ class PreservationTests(unittest.TestCase):
             for change in ({'role':'evaluation'},{'trainingEligible':False},{'labelsComplete':False}):
                 bad=dict(row,**change)
                 with self.assertRaisesRegex(ValueError,'training_only'):validate(cfg,dict(rows=[bad]))
+            validate(dict(cfg,weight=0.,geometryWeight=1.),dict(rows=[row]))
             for weight in (0,float('nan'),True):
                 with self.assertRaisesRegex(ValueError,'weight'):validate(dict(cfg,weight=weight),dict(rows=[row]))
 

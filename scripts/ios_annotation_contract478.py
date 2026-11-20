@@ -13,7 +13,36 @@ CONTROL_LABELS = ("sliderLabel", "segmentLabel", "activityLabel", "progressLabel
                   "pageLabel", "toggleLabel", "secureLabel")
 
 
-def completeness(family, elements):
+def toggle_shape(seed):
+    """Replay the layout draws from UIKitToggleForm and SeededRNG at the audited revision."""
+    q.require(type(seed) is int and 0 <= seed < 2**64, "ios_annotation_seed")
+    state = seed or 1
+    mask = 2**64 - 1
+
+    def draw():
+        nonlocal state
+        state ^= (state << 13) & mask
+        state ^= state >> 7
+        state ^= (state << 17) & mask
+        return state
+
+    draw()  # Tint
+    if draw() % 3:
+        draw()  # Optional navigation title
+    sections = 2 + draw() % 2
+    draw()  # Label offset
+    draw()  # Header offset
+    rows = 0
+    for _ in range(sections):
+        count = 2 + draw() % 3
+        rows += count
+        for _ in range(count):
+            draw()  # Switch state
+            draw()  # Tint override
+    return sections, rows
+
+
+def completeness(family, elements, *, seed=None):
     """Return missing or conflicting supplied annotations. Do not infer boxes."""
     visible = [e for e in elements if not e.get("excluded")]
     ids = [e["id"] for e in visible]
@@ -23,17 +52,11 @@ def completeness(family, elements):
         expected = dict(CONTROL_TYPES, **{k: "label" for k in CONTROL_LABELS})
     else:
         q.require(family == "UIKitToggleForm", "ios_annotation_family")
-        switches = sorted(k for k in actual if k.startswith("toggle_"))
-        q.require(4 <= len(switches) <= 12, "ios_annotation_toggle_count")
-        q.require(set(switches) == {f"toggle_{i}" for i in range(len(switches))},
-                  "ios_annotation_toggle_identity")
-        headers = [k for k in actual if k.startswith("sectionHeader_")]
+        sections, count = toggle_shape(seed)
         expected = dict(navigationBar="navigationBar", ctaButton="primaryButton")
-        expected.update({k: "toggle" for k in switches})
-        expected.update({f"rowLabel_{i}": "label" for i in range(len(switches))})
-        # Missing headers are a failed annotation contract, not evidence of no headers.
-        expected.update({f"sectionHeader_{i}": "label" for i in range(max(2, len(headers)))})
-        q.require(len(headers) <= 3, "ios_annotation_header_count")
+        expected.update({f"toggle_{i}": "toggle" for i in range(count)})
+        expected.update({f"rowLabel_{i}": "label" for i in range(count)})
+        expected.update({f"sectionHeader_{i}": "label" for i in range(sections)})
     problems = [dict(id=k, expected=v, actual=actual.get(k))
                 for k, v in expected.items() if actual.get(k) != v]
     problems.extend(dict(id=k, expected=None, actual=actual[k]) for k in actual.keys() - expected.keys())
@@ -63,7 +86,10 @@ def review(manifest_path, summary_path):
             path = q.local_path(manifest_path.parent, ref["path"])
             q.require(q.digest(path) == ref["sha256"], "ios_annotation_payload_changed")
         sidecar = q.load(q.local_path(manifest_path.parent, row["sidecar"]["path"]))
-        problems = completeness(row["family"], sidecar["elements"])
+        profile = sidecar["generatorProfile"]
+        q.require(profile["seed"] == row["seed"] and profile["templateFamily"] == row["family"],
+                  "ios_annotation_generator_identity")
+        problems = completeness(row["family"], sidecar["elements"], seed=row["seed"])
         findings.extend(dict(frame=row["id"], **p) for p in problems)
         counts.update(e["elementType"] for e in sidecar["elements"] if not e.get("excluded"))
         q.require(hashes.setdefault(row["image"]["sha256"], row["group"]) == row["group"],

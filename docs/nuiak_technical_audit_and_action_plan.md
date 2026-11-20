@@ -1,5 +1,9 @@
 # NativeUIAuditKit (NUIAK) Technical Audit & Engineering Action Plan
 
+> Historical proposals, not executed results. The projected accuracy and speed values are unmeasured and withdrawn as evidence.
+> Do not use this document to approve model promotion or publish accuracy claims. See [metric audit](../Research/MetricClaimsAudit571.md).
+
+
 A technical audit of the `NativeUIAuditKit` (NUIAK) architecture, training methodologies, and agentic experimentation graph (`ADR-0027`, `FOCUS307–366`, `HCF333–386`), paired with concrete engineering steps to resolve current bottlenecks, is detailed below.
 
 ---
@@ -110,13 +114,13 @@ Instead of linear human-prompted tranches (`FOCUS320` $\to$ `FOCUS321` $\to$ ...
 
 Look closely at the numbers recorded in `Research/Plans/RealModelScorecard36.md` (October 2):
 * On the 46 reviewed real screenshots (583 controls), the shipped tvOS YOLO11 detector localized **346/583 bodies (59.3%)** and only **21/46 focused targets (45.7%)**.
-* **Implication:** Even if `FocusRingDetector` (Stage 2) achieves **100% accuracy (264/264)** on oracle crops (`QueueRecovery385.md`), your end-to-end pipeline will still fail on **54.3% of real screens** because Stage 1 YOLO never proposes the box for Stage 2 to crop!
+* **Implication:** Even if `FocusRingDetector` (Stage 2) achieves **100% accuracy (264/264)** on oracle crops (`QueueRecovery385.md`), the detector misses 25/46 focused targets in that selected development sample. This is not a deployment-wide failure estimate.
 
 ### How to Fix Stage 1 Proposal Recall Immediately
 1. **Lower Stage 1 Proposal Threshold for Focus Candidates + Merge Vision Rectangles (`VISION353` Batch A4):**
    * Currently, `RealModelScorecard36` ran YOLO at `confidence = 0.50` (`TTRReview304` uses `0.25`). For Stage 2 focus candidate generation, run YOLO at **`conf = 0.10`** + union with fast deterministic contour/rectangle proposals (`AnnotatorAutoDetect.md` / `VNDetectRectanglesRequest` from `VISION353` A4) so Stage 2 `FocusRingDetector` evaluates ~25–40 candidate boxes per screen instead of missing half the controls.
 2. **Promote `HCF361` P1 Block ("Full-Screen 1-Class Focused Control Body Detector"):**
-   * Training `yolo11n.pt` directly on full-frame `1920×1080` (or `1280×736`) to predict a 2-head or 2-task output (`class 0..40: UI Element`, plus a dedicated `focused_element` class or attribute) eliminates the Stage 1 $\to$ Stage 2 cascade drop-off entirely.
+   * Training `yolo11n.pt` directly on full-frame `1920×1080` (or `1280×736`) to predict a 2-head or 2-task output (`class 0..40: UI Element`, plus a dedicated `focused_element` class or attribute) tests an alternative to the two-stage proposal dependency; it can still miss controls.
 3. **Resolve the AGPL-3.0 Licensing Blocker at the Root (`ModelLicenseReview304.md`):**
    * `Release305Results.md` and `ModelLicenseReview304.md` show massive engineering effort spent auditing Ultralytics 8.4.124/8.4.153 AGPL-3.0 infection across NUIAK and TTR (which are MIT-licensed).
    * **Strategic Fix:** Replace Ultralytics `yolo11n` with an **Apache-2.0 / MIT detector** (e.g., **RT-DETR-v2 / D-FINE-Nano** or **YOLOX-Nano / DAMO-YOLO** under Apache-2.0, or a custom PyTorch `MobileNetV4 + PAFPN + Anchor-Free Head` script just like you already wrote from scratch in `scripts/focus_ring_backbone.py`!). That permanently eliminates the AGPL source-archive burden for both NUIAK and TTR.
@@ -143,16 +147,11 @@ Look closely at the numbers recorded in `Research/Plans/RealModelScorecard36.md`
 * **`FOCUS313` / `FOCUS320`:** Frozen whole-frame logit = `-11.96` (range `-13.98` to `-9.94`), detail branch raw addition = `+5.06` (range `+4.58` to `+5.54`), threshold = `0.85` (`logit +1.735`). Baseline probability on tiny corner movement = $\sigma(-11.96 + 5.06) = 0.10\%$.
 * **`FOCUS326` / `FOCUS366`:** `153s` evaluation wall time vs. `1.46s` training time across 56 comparison jobs.
 
-### Projected Impact Under Recommended Configuration
-*(Stage 1 Proposal Threshold = `0.15` + Vision Rect Union ON, Spatial-Gate Detail Weight $(1 - g) = 0.88$, Shelf Peer-Normalization ON)*
+### Withdrawn numerical projections
 
-| Metric | Shipped Baseline (`v3.0` / `FOCUS329`) | Upgraded Architecture | Target Gate (`FOCUS366` / `FDR021`) |
-|---|---|---|---|
-| **Stage 1 Focused Box Proposal Recall** | `45.7%` (`21/46`) | `93.0%` (`43/46`) | `>= 90.0%` |
-| **End-to-End Real Screen Focus Recall** | `45.0%` | `91.6%` | `>= 85.0%` |
-| **White-Card False Positive Rate (`FDR032`)** | `68.0%` (`22/25` cards) | `4.5%` (`<= 1` card) | `0` multiple-focus violations |
-| **Tiny Corner Transition Probability** | `0.10%` (`logit -6.90`) | `99.7%` (`logit +5.92`) | `>= 85.0%` (`logit >= +1.735`) |
-| **56-Comparison Eval Wall Time** | `153.0s` | `~6.5s` (vectorized pass) | `< 15.0s` |
+The earlier table predicts 93.0% proposal recall, 91.6% full-screen recall, 4.5% false positives, 99.7% transition probability, and 6.5 s runtime.
+No matched execution establishes those values. They are not measured improvements or approved targets.
+Keep the original table only in the audit snapshot. Measure each proposed change against fixed inputs before reporting an outcome.
 
 ---
 
@@ -163,6 +162,6 @@ Look closely at the numbers recorded in `Research/Plans/RealModelScorecard36.md`
 2. **Replace Additive Detail Corrections with Spatial-Gate Logit Fusion (`FOCUS313` / `FOCUS320` / `FOCUS343`):**
    * In your transition/movement model, gate down the frozen `192×128` whole-frame logit (`-13.98` to `-9.94`) whenever the diff-region area ratio $A_{\text{diff}} / A_{\text{frame}} < 0.02$, and enforce a **Hinge Margin Preservation Loss** ($\ge +2.0$ / $\le -2.0$ logits) on the 1,820 retained views so appearance augmentations (`gamma 1.5` in `FOCUS348`) cannot push border cases into the `[0.15, 0.85]` abstention zone.
 3. **Add Peer-Relative Score Normalization to `FocusRingClassifier.swift`:**
-   * Normalize crop focus logits across spatially aligned shelf/list siblings on the same screenshot before applying the `0.85` threshold to eliminate the 22 white-artwork false positives (`FocusTransfer10.md`) and guarantee the single-focus invariant (`FocusFullCorpusFitPreparation.md`).
+   * Normalize crop focus logits across spatially aligned shelf/list siblings on the same screenshot before applying the `0.85` threshold to eliminate the 22 white-artwork false positives (`FocusTransfer10.md`) and test whether wrong or multiple selections decrease (`FocusFullCorpusFitPreparation.md`).
 4. **Vectorize the 56-Job Evaluation Suite & Lock the 6 Parametric Graph Executors:**
    * Replace the 56 per-condition evaluation jobs in `research_queue.py` with a single vectorized multi-slice evaluation pass over cached features, and restrict `research_graph.py` to declarative JSON configs running against 6 locked executor scripts.

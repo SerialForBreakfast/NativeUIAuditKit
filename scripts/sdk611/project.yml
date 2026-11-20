@@ -1,0 +1,14 @@
+name: TranslucentStudy
+options:
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  TranslucentStudy:
+    type: application
+    platform: iOS
+    sources: [App]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.example.nuiak.ios611.translucent
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+      INFOPLIST_KEY_UILaunchScreen_Generation: YES

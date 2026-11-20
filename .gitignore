@@ -364,3 +364,11 @@ reports/work/INTAKE-99/received/
 # Local user evidence requests and signed approval records
 /reports/work/user-approvals/
 /reports/work/APPROVAL563/
+
+# Isolated, approved LangGraph trial environment.
+/.venv-langgraph585/
+
+# Generated output and local work
+/.local-work/
+/reports/visualizations/**/.browser-cache/
+/reports/visualizations/**/.browser-profile/

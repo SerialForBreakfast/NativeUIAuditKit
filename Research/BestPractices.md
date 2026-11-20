@@ -1,5 +1,28 @@
 # NativeUIAuditKit — Best Practices
 
+## Keep completion runtimes separate from authoring — LANGGRAPH586
+
+A runtime import of a campaign compiler also pins its authoring dependencies.
+An unrelated optional template change can then invalidate an unchanged completion job.
+Use a small runtime module for new completion specifications.
+Keep its input checks, output contract, and exact source pins.
+Test that unrelated authoring edits preserve approval. Test that runtime edits still invalidate approval.
+Use explicit successors for changed job entry points. Preserve original specifications and completed attempts.
+
+Campaign state must describe missing evidence separately from execution status.
+A missing training profile does not prevent a valid review-only audit.
+Check existing registrations and approvals after an uncertain admission. Do not repeat successful model work for recovery testing.
+
+## Audit perfect metric claims — METRICS571
+
+Treat 100% results as a review flag, not automatic proof of correctness or fabrication.
+Check label provenance, data overlap, complete annotations, fixed thresholds, missing cases, and the actual consumer path.
+Differentiate backend agreement, legacy crop retention, training fit, and independent full-screen performance.
+Do not copy predictions into evaluation labels. Do not replace circular labels with unreviewed agent-authored boxes.
+If references are invalid, withdraw all dependent accuracy claims, including plausible lower scores. Preserve original evidence.
+Raw predictions and completed jobs do not establish correctly detected controls. Unknown-to-unknown equality is not label agreement.
+Keep results provisional until explicit user review. See [MetricClaimsAudit571](MetricClaimsAudit571.md).
+
 ## Quarantine measured annotation defects — UNBLOCK534
 
 RTLMirror records label and listRow bounds on the same Text view.
@@ -5329,3 +5352,36 @@ Ultralytics calls the Core ML pipeline without thresholds, so the export default
 Ultralytics PyTorch also pads 16:9 frames to 640 × 384, while `NativeUIDetectionRequest` pads to 640 × 640.
 **Correct:** Call Core ML with explicit `iouThreshold` and `confidenceThreshold`, as the Swift library does. Use the same 640 × 640 letterbox for gate measures (`scripts/coreml_parity562.py`).
 **Why:** On identical pixels the backends agree (median score diff 0.0024). The input shape alone moved NewsTV focused-pill IoU from 0.660 to 0.587, across a gate.
+
+
+## Native crop eligibility and support counts — November 7, 2026
+
+Apply geometry requirements to the product that uses image pixels. An empty known no-focus inventory supplies no crop-training pixels.
+Preserve its missing mapping and raw frame. Do not use it to admit unmapped eligible controls or block unrelated verified crops.
+Count training presentations, unique row IDs, and unique decoded image pixels separately. A repeated membership list does not increase unique support.
+Preserve inaccurate historical fields in raw receipts. Publish corrected derived counts with the exact verified membership and an explicit limitation.
+A directory basename cannot identify separate exported pairs. Bind new case identities to immutable manifests and preserve producer split information.
+When a consumer reuses completed outputs, pin its current validator and preserve the immutable producer specification and result.
+Require exact retained row equality before a counterfactual intervention. Do not substitute new labels or discard source identity.
+Evidence: [the continuation report](Parallel590592Results.md). All model measures remain provisional for Joe.
+
+## T06 needs a crops.json producer, and copied specs must replace every input — HARDNEG596
+
+What went wrong: 4 T06 fits failed in 1 s. T06 (`hcf_factor_train376.train`) reads `crops.json` through a dependency job; a pinned membership file alone fails.
+The first publish jobs, copied from an older spec, then failed `evidence_not_read`: they still listed the old membership in `inputs` and `evidence.reads`.
+Correct approach: publish the membership with a `crop_membership_publish425` job, then pin its `crops.json` in T06 and add the publisher as a dependency with its spec hash.
+When copying a hand-built spec, replace the staged file in `stage`, `inputs` and `evidence.reads`, and assert that the old path no longer appears.
+Why this matters: each wrong registration leaves exhausted attempts and blocked dependents that need successors.
+
+### BP-119: A macOS-hosted SwiftUI generator cannot make construction-faithful tvOS training frames — RESET604
+
+What went wrong: the tvOS generator (`scripts/generate_tvos_dataset.swift`) runs on macOS and draws with `ImageRenderer`. It labelled styled `Text` views as buttons by ID prefix.
+A rewrite to real controls (session `rewrite-tvos-generator-l`, 2026-11-13) reported these host limits. NUIAK has not reproduced them independently:
+- `ImageRenderer` draws platform-backed views as placeholders: `Picker`, `TextField`, `SecureField`, `ProgressView`, `List`, `TabView`, `Link`, and `.borderless` `Button`.
+- It does not draw presentations (`.alert`, `.confirmationDialog`).
+- `.card` and `TabView` `.page` are unavailable on macOS.
+So every frame would be withheld (`host_platform_not_tvos`).
+Correct approach: get construction-faithful tvOS frames from a tvOS host. The current source is the TTR native Fixture route on the tvOS Simulator (contract delivery step 3).
+Do not train on macOS-rendered stand-ins for tvOS controls. Do not relabel them to look compliant.
+Why this matters: a frame drawn on macOS shows placeholders, not the tvOS control. Its construction facts would be true while its pixels are not the control. Joe decided on 2026-11-13 to rely on the TTR native route.
+

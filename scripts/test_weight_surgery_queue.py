@@ -39,6 +39,18 @@ class QueueTests(unittest.TestCase):
         reports['head']['suiteSHA256'] = 'b'
         with self.assertRaisesRegex(ValueError, 'comparison_membership'): w.compare_reports(reports)
 
+    def test_classifier_and_head_comparison_can_omit_unused_bias_arm(self):
+        reports={key:self.report() for key in ('baseline','classifier','head')}
+        result=w.compare_reports(reports)
+        self.assertEqual(len(result['arms']),3);self.assertFalse(result['modelAccepted'])
+        with self.assertRaisesRegex(ValueError,'comparison_arms'):w.compare_reports({'baseline':self.report(),'head':self.report()})
+
+    def test_batchnorm_correction_keeps_legacy_rejection(self):
+        reports={key:self.report() for key in ('baseline','classifier','head','donor-base-bn')}
+        reports['donor-base-bn']['legacyProbabilities'][0]=.2
+        row=next(v for v in w.compare_reports(reports)['arms'] if v['arm']=='donor-base-bn')
+        self.assertEqual(row['lostLegacy'],[0]);self.assertEqual(row['outcome'],'contradicted')
+
     def test_ancestry_rejects_scratch_and_wrong_parent(self):
         base = dict(path='base.pt', sha256='a'); donor = dict(path='donor.pt', sha256='b')
         p = dict(arm='warm-stretch', launchEligible=True, protocolSHA256='c', warmCheckpoint=base,

@@ -1,6 +1,6 @@
-"""Rigorous comparative benchmark of Shipped Standard vs Candidate R5
-on RC561 / RA554-13 multi-app independent ground truth holdout.
-Computes True Positives, False Positives, False Negatives, Precision, Recall, and F1 at IoU 0.50.
+"""Disabled historical RC561 script. References lack independent review.
+
+Preserve this source for the metric audit. Use real_app_benchmark543 with reviewed references.
 """
 import sys
 import json
@@ -30,6 +30,7 @@ def compute_iou(boxA, boxB):
     return interArea / unionArea
 
 def evaluate_model(dets_data, manifest):
+    raise RuntimeError("invalid_rc561_references: use the provenance-checked benchmark")
     total_tp = 0
     total_fp = 0
     total_fn = 0
@@ -116,6 +117,7 @@ def evaluate_model(dets_data, manifest):
     }
 
 def main():
+    raise RuntimeError("invalid_rc561_references: see Research/MetricClaimsAudit571.md")
     with open(HOLDOUT_MANIFEST) as f:
         manifest = json.load(f)
     with open(STANDARD_DETS) as f:

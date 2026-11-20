@@ -1,0 +1,1989 @@
+--- a/TVCatalog.xcodeproj/project.pbxproj
++++ b/TVCatalog.xcodeproj/project.pbxproj
+@@ -1,446 +1,1119 @@
+-// !$*UTF8*$!
+-{
+-	archiveVersion = 1;
+-	classes = {
+-	};
+-	objectVersion = 56;
+-	objects = {
+-
+-/* Begin PBXBuildFile section */
+-		383AF4672BDF23A4002F64D8 /* VisibleWhenFocusedModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383AF4662BDF23A4002F64D8 /* VisibleWhenFocusedModifier.swift */; };
+-		383AF4692BDF2510002F64D8 /* HeroHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383AF4682BDF2510002F64D8 /* HeroHeaderView.swift */; };
+-		384591232BF26D3E003CD0E2 /* SidebarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384591222BF26D3E003CD0E2 /* SidebarContentView.swift */; };
+-		386D05E62BE97B1700E143DA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386D05E52BE97B1700E143DA /* SearchView.swift */; };
+-		38C5AFB42BBF18B5009C6DC6 /* TVCatalogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5AFB32BBF18B5009C6DC6 /* TVCatalogApp.swift */; };
+-		38C5AFB62BBF18B5009C6DC6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5AFB52BBF18B5009C6DC6 /* ContentView.swift */; };
+-		38C5AFB82BBF18B6009C6DC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38C5AFB72BBF18B6009C6DC6 /* Assets.xcassets */; };
+-		38C5AFBB2BBF18B6009C6DC6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38C5AFBA2BBF18B6009C6DC6 /* Preview Assets.xcassets */; };
+-		38DF62762BDF2BE100F730EE /* MovieShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62752BDF2BE100F730EE /* MovieShelf.swift */; };
+-		38DF62782BDF2D3200F730EE /* TVMusicShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62772BDF2D3200F730EE /* TVMusicShelf.swift */; };
+-		38DF627B2BDF3CB100F730EE /* CodeSampleArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF627A2BDF3CB100F730EE /* CodeSampleArtwork.swift */; };
+-		38DF62AB2BE3166600F730EE /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62AA2BE3166600F730EE /* Asset.swift */; };
+-		38DF62B22BE3168200F730EE /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62AF2BE3168200F730EE /* DescriptionView.swift */; };
+-		38DF62B32BE3168200F730EE /* CardShelf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62AE2BE3168200F730EE /* CardShelf.swift */; };
+-		38DF62B52BE3168200F730EE /* StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62B12BE3168200F730EE /* StackView.swift */; };
+-		38DF62B62BE3168200F730EE /* ButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62AC2BE3168200F730EE /* ButtonsView.swift */; };
+-		38DF62B72BE3168200F730EE /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DF62AD2BE3168200F730EE /* CardContentView.swift */; };
+-/* End PBXBuildFile section */
+-
+-/* Begin PBXFileReference section */
+-		383AF4662BDF23A4002F64D8 /* VisibleWhenFocusedModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibleWhenFocusedModifier.swift; sourceTree = "<group>"; };
+-		383AF4682BDF2510002F64D8 /* HeroHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderView.swift; sourceTree = "<group>"; };
+-		384591222BF26D3E003CD0E2 /* SidebarContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarContentView.swift; sourceTree = "<group>"; };
+-		386D05E52BE97B1700E143DA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+-		38C5AFB02BBF18B5009C6DC6 /* tvOS SwiftUI media catalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tvOS SwiftUI media catalog.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+-		38C5AFB32BBF18B5009C6DC6 /* TVCatalogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCatalogApp.swift; sourceTree = "<group>"; };
+-		38C5AFB52BBF18B5009C6DC6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+-		38C5AFB72BBF18B6009C6DC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+-		38C5AFBA2BBF18B6009C6DC6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+-		38DF62752BDF2BE100F730EE /* MovieShelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieShelf.swift; sourceTree = "<group>"; };
+-		38DF62772BDF2D3200F730EE /* TVMusicShelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMusicShelf.swift; sourceTree = "<group>"; };
+-		38DF627A2BDF3CB100F730EE /* CodeSampleArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSampleArtwork.swift; sourceTree = "<group>"; };
+-		38DF62AA2BE3166600F730EE /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+-		38DF62AC2BE3168200F730EE /* ButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsView.swift; sourceTree = "<group>"; };
+-		38DF62AD2BE3168200F730EE /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
+-		38DF62AE2BE3168200F730EE /* CardShelf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShelf.swift; sourceTree = "<group>"; };
+-		38DF62AF2BE3168200F730EE /* DescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
+-		38DF62B12BE3168200F730EE /* StackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackView.swift; sourceTree = "<group>"; };
+-		45C9287ADBEABFAAF70B1C52 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+-		AD246972C56C6D1ABD245506 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
+-		BF5A0D50273E3444EB7F1FEF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+-/* End PBXFileReference section */
+-
+-/* Begin PBXFrameworksBuildPhase section */
+-		38C5AFAD2BBF18B5009C6DC6 /* Frameworks */ = {
+-			isa = PBXFrameworksBuildPhase;
+-			buildActionMask = 2147483647;
+-			files = (
+-			);
+-			runOnlyForDeploymentPostprocessing = 0;
+-		};
+-/* End PBXFrameworksBuildPhase section */
+-
+-/* Begin PBXGroup section */
+-		0507B57884E2F871A78DE1EF /* LICENSE */ = {
+-			isa = PBXGroup;
+-			children = (
+-				AD246972C56C6D1ABD245506 /* LICENSE.txt */,
+-			);
+-			name = LICENSE;
+-			path = "";
+-			sourceTree = "<group>";
+-		};
+-		383AF4652BDF238F002F64D8 /* ViewModifiers */ = {
+-			isa = PBXGroup;
+-			children = (
+-				383AF4662BDF23A4002F64D8 /* VisibleWhenFocusedModifier.swift */,
+-			);
+-			path = ViewModifiers;
+-			sourceTree = "<group>";
+-		};
+-		38C5AFA72BBF18B5009C6DC6 = {
+-			isa = PBXGroup;
+-			children = (
+-				BF5A0D50273E3444EB7F1FEF /* README.md */,
+-				38C5AFB22BBF18B5009C6DC6 /* TVCatalog */,
+-				38C5AFB12BBF18B5009C6DC6 /* Products */,
+-				656B12863EFF5D1B73F0F4FD /* Configuration */,
+-				0507B57884E2F871A78DE1EF /* LICENSE */,
+-			);
+-			sourceTree = "<group>";
+-		};
+-		38C5AFB12BBF18B5009C6DC6 /* Products */ = {
+-			isa = PBXGroup;
+-			children = (
+-				38C5AFB02BBF18B5009C6DC6 /* tvOS SwiftUI media catalog.app */,
+-			);
+-			name = Products;
+-			sourceTree = "<group>";
+-		};
+-		38C5AFB22BBF18B5009C6DC6 /* TVCatalog */ = {
+-			isa = PBXGroup;
+-			children = (
+-				38C5AFB32BBF18B5009C6DC6 /* TVCatalogApp.swift */,
+-				38C5AFB52BBF18B5009C6DC6 /* ContentView.swift */,
+-				384591222BF26D3E003CD0E2 /* SidebarContentView.swift */,
+-				38DF62B12BE3168200F730EE /* StackView.swift */,
+-				38DF62AC2BE3168200F730EE /* ButtonsView.swift */,
+-				38DF62AF2BE3168200F730EE /* DescriptionView.swift */,
+-				386D05E52BE97B1700E143DA /* SearchView.swift */,
+-				383AF4682BDF2510002F64D8 /* HeroHeaderView.swift */,
+-				38DF62752BDF2BE100F730EE /* MovieShelf.swift */,
+-				38DF62772BDF2D3200F730EE /* TVMusicShelf.swift */,
+-				38DF62AE2BE3168200F730EE /* CardShelf.swift */,
+-				38DF62AD2BE3168200F730EE /* CardContentView.swift */,
+-				38DF62792BDF3C9600F730EE /* ArtworkGenerators */,
+-				383AF4652BDF238F002F64D8 /* ViewModifiers */,
+-				38C5AFB72BBF18B6009C6DC6 /* Assets.xcassets */,
+-				38C5AFB92BBF18B6009C6DC6 /* Preview Content */,
+-			);
+-			path = TVCatalog;
+-			sourceTree = "<group>";
+-		};
+-		38C5AFB92BBF18B6009C6DC6 /* Preview Content */ = {
+-			isa = PBXGroup;
+-			children = (
+-				38C5AFBA2BBF18B6009C6DC6 /* Preview Assets.xcassets */,
+-			);
+-			path = "Preview Content";
+-			sourceTree = "<group>";
+-		};
+-		38DF62792BDF3C9600F730EE /* ArtworkGenerators */ = {
+-			isa = PBXGroup;
+-			children = (
+-				38DF627A2BDF3CB100F730EE /* CodeSampleArtwork.swift */,
+-				38DF62AA2BE3166600F730EE /* Asset.swift */,
+-			);
+-			name = ArtworkGenerators;
+-			path = Artwork;
+-			sourceTree = "<group>";
+-		};
+-		656B12863EFF5D1B73F0F4FD /* Configuration */ = {
+-			isa = PBXGroup;
+-			children = (
+-				45C9287ADBEABFAAF70B1C52 /* SampleCode.xcconfig */,
+-			);
+-			name = Configuration;
+-			sourceTree = "<group>";
+-		};
+-/* End PBXGroup section */
+-
+-/* Begin PBXNativeTarget section */
+-		38C5AFAF2BBF18B5009C6DC6 /* TVCatalog */ = {
+-			isa = PBXNativeTarget;
+-			buildConfigurationList = 38C5AFBE2BBF18B6009C6DC6 /* Build configuration list for PBXNativeTarget "TVCatalog" */;
+-			buildPhases = (
+-				38C5AFAC2BBF18B5009C6DC6 /* Sources */,
+-				38C5AFAD2BBF18B5009C6DC6 /* Frameworks */,
+-				38C5AFAE2BBF18B5009C6DC6 /* Resources */,
+-			);
+-			buildRules = (
+-			);
+-			dependencies = (
+-			);
+-			name = TVCatalog;
+-			productName = TVCatalog;
+-			productReference = 38C5AFB02BBF18B5009C6DC6 /* tvOS SwiftUI media catalog.app */;
+-			productType = "com.apple.product-type.application";
+-		};
+-/* End PBXNativeTarget section */
+-
+-/* Begin PBXProject section */
+-		38C5AFA82BBF18B5009C6DC6 /* Project object */ = {
+-			isa = PBXProject;
+-			attributes = {
+-				BuildIndependentTargetsInParallel = 1;
+-				LastSwiftUpdateCheck = 1600;
+-				LastUpgradeCheck = 1600;
+-				ORGANIZATIONNAME = Apple;
+-				TargetAttributes = {
+-					38C5AFAF2BBF18B5009C6DC6 = {
+-						CreatedOnToolsVersion = 16.0;
+-					};
+-				};
+-			};
+-			buildConfigurationList = 38C5AFAB2BBF18B5009C6DC6 /* Build configuration list for PBXProject "TVCatalog" */;
+-			compatibilityVersion = "Xcode 14.0";
+-			developmentRegion = en;
+-			hasScannedForEncodings = 0;
+-			knownRegions = (
+-				en,
+-				Base,
+-			);
+-			mainGroup = 38C5AFA72BBF18B5009C6DC6;
+-			productRefGroup = 38C5AFB12BBF18B5009C6DC6 /* Products */;
+-			projectDirPath = "";
+-			projectRoot = "";
+-			targets = (
+-				38C5AFAF2BBF18B5009C6DC6 /* TVCatalog */,
+-			);
+-		};
+-/* End PBXProject section */
+-
+-/* Begin PBXResourcesBuildPhase section */
+-		38C5AFAE2BBF18B5009C6DC6 /* Resources */ = {
+-			isa = PBXResourcesBuildPhase;
+-			buildActionMask = 2147483647;
+-			files = (
+-				38C5AFBB2BBF18B6009C6DC6 /* Preview Assets.xcassets in Resources */,
+-				38C5AFB82BBF18B6009C6DC6 /* Assets.xcassets in Resources */,
+-			);
+-			runOnlyForDeploymentPostprocessing = 0;
+-		};
+-/* End PBXResourcesBuildPhase section */
+-
+-/* Begin PBXSourcesBuildPhase section */
+-		38C5AFAC2BBF18B5009C6DC6 /* Sources */ = {
+-			isa = PBXSourcesBuildPhase;
+-			buildActionMask = 2147483647;
+-			files = (
+-				38DF62782BDF2D3200F730EE /* TVMusicShelf.swift in Sources */,
+-				38C5AFB62BBF18B5009C6DC6 /* ContentView.swift in Sources */,
+-				383AF4672BDF23A4002F64D8 /* VisibleWhenFocusedModifier.swift in Sources */,
+-				38DF62B22BE3168200F730EE /* DescriptionView.swift in Sources */,
+-				38DF62B32BE3168200F730EE /* CardShelf.swift in Sources */,
+-				386D05E62BE97B1700E143DA /* SearchView.swift in Sources */,
+-				384591232BF26D3E003CD0E2 /* SidebarContentView.swift in Sources */,
+-				38DF62B52BE3168200F730EE /* StackView.swift in Sources */,
+-				38DF62B62BE3168200F730EE /* ButtonsView.swift in Sources */,
+-				38DF62B72BE3168200F730EE /* CardContentView.swift in Sources */,
+-				38C5AFB42BBF18B5009C6DC6 /* TVCatalogApp.swift in Sources */,
+-				383AF4692BDF2510002F64D8 /* HeroHeaderView.swift in Sources */,
+-				38DF627B2BDF3CB100F730EE /* CodeSampleArtwork.swift in Sources */,
+-				38DF62AB2BE3166600F730EE /* Asset.swift in Sources */,
+-				38DF62762BDF2BE100F730EE /* MovieShelf.swift in Sources */,
+-			);
+-			runOnlyForDeploymentPostprocessing = 0;
+-		};
+-/* End PBXSourcesBuildPhase section */
+-
+-/* Begin XCBuildConfiguration section */
+-		38C5AFBC2BBF18B6009C6DC6 /* Debug */ = {
+-			isa = XCBuildConfiguration;
+-			baseConfigurationReference = 45C9287ADBEABFAAF70B1C52 /* SampleCode.xcconfig */;
+-			buildSettings = {
+-				ALWAYS_SEARCH_USER_PATHS = NO;
+-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+-				CLANG_ANALYZER_NONNULL = YES;
+-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+-				CLANG_ENABLE_MODULES = YES;
+-				CLANG_ENABLE_OBJC_ARC = YES;
+-				CLANG_ENABLE_OBJC_WEAK = YES;
+-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+-				CLANG_WARN_BOOL_CONVERSION = YES;
+-				CLANG_WARN_COMMA = YES;
+-				CLANG_WARN_CONSTANT_CONVERSION = YES;
+-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+-				CLANG_WARN_EMPTY_BODY = YES;
+-				CLANG_WARN_ENUM_CONVERSION = YES;
+-				CLANG_WARN_INFINITE_RECURSION = YES;
+-				CLANG_WARN_INT_CONVERSION = YES;
+-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+-				CLANG_WARN_STRICT_PROTOTYPES = YES;
+-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+-				CLANG_WARN_UNREACHABLE_CODE = YES;
+-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+-				COPY_PHASE_STRIP = NO;
+-				DEBUG_INFORMATION_FORMAT = dwarf;
+-				ENABLE_STRICT_OBJC_MSGSEND = YES;
+-				ENABLE_TESTABILITY = YES;
+-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+-				GCC_C_LANGUAGE_STANDARD = gnu17;
+-				GCC_DYNAMIC_NO_PIC = NO;
+-				GCC_NO_COMMON_BLOCKS = YES;
+-				GCC_OPTIMIZATION_LEVEL = 0;
+-				GCC_PREPROCESSOR_DEFINITIONS = (
+-					"DEBUG=1",
+-					"$(inherited)",
+-				);
+-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+-				GCC_WARN_UNDECLARED_SELECTOR = YES;
+-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+-				GCC_WARN_UNUSED_FUNCTION = YES;
+-				GCC_WARN_UNUSED_VARIABLE = YES;
+-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+-				MTL_FAST_MATH = YES;
+-				ONLY_ACTIVE_ARCH = YES;
+-				SDKROOT = appletvos;
+-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+-				SWIFT_VERSION = 6.0;
+-				TVOS_DEPLOYMENT_TARGET = 18.0;
+-			};
+-			name = Debug;
+-		};
+-		38C5AFBD2BBF18B6009C6DC6 /* Release */ = {
+-			isa = XCBuildConfiguration;
+-			baseConfigurationReference = 45C9287ADBEABFAAF70B1C52 /* SampleCode.xcconfig */;
+-			buildSettings = {
+-				ALWAYS_SEARCH_USER_PATHS = NO;
+-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+-				CLANG_ANALYZER_NONNULL = YES;
+-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+-				CLANG_ENABLE_MODULES = YES;
+-				CLANG_ENABLE_OBJC_ARC = YES;
+-				CLANG_ENABLE_OBJC_WEAK = YES;
+-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+-				CLANG_WARN_BOOL_CONVERSION = YES;
+-				CLANG_WARN_COMMA = YES;
+-				CLANG_WARN_CONSTANT_CONVERSION = YES;
+-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+-				CLANG_WARN_EMPTY_BODY = YES;
+-				CLANG_WARN_ENUM_CONVERSION = YES;
+-				CLANG_WARN_INFINITE_RECURSION = YES;
+-				CLANG_WARN_INT_CONVERSION = YES;
+-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+-				CLANG_WARN_STRICT_PROTOTYPES = YES;
+-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+-				CLANG_WARN_UNREACHABLE_CODE = YES;
+-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+-				COPY_PHASE_STRIP = NO;
+-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+-				ENABLE_NS_ASSERTIONS = NO;
+-				ENABLE_STRICT_OBJC_MSGSEND = YES;
+-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+-				GCC_C_LANGUAGE_STANDARD = gnu17;
+-				GCC_NO_COMMON_BLOCKS = YES;
+-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+-				GCC_WARN_UNDECLARED_SELECTOR = YES;
+-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+-				GCC_WARN_UNUSED_FUNCTION = YES;
+-				GCC_WARN_UNUSED_VARIABLE = YES;
+-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+-				MTL_ENABLE_DEBUG_INFO = NO;
+-				MTL_FAST_MATH = YES;
+-				SDKROOT = appletvos;
+-				SWIFT_COMPILATION_MODE = wholemodule;
+-				SWIFT_VERSION = 6.0;
+-				TVOS_DEPLOYMENT_TARGET = 18.0;
+-				VALIDATE_PRODUCT = YES;
+-			};
+-			name = Release;
+-		};
+-		38C5AFBF2BBF18B6009C6DC6 /* Debug */ = {
+-			isa = XCBuildConfiguration;
+-			baseConfigurationReference = 45C9287ADBEABFAAF70B1C52 /* SampleCode.xcconfig */;
+-			buildSettings = {
+-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+-				CODE_SIGN_STYLE = Automatic;
+-				CURRENT_PROJECT_VERSION = 1;
+-				DEVELOPMENT_ASSET_PATHS = "\"TVCatalog/Preview Content\"";
+-				DEVELOPMENT_TEAM = "";
+-				ENABLE_PREVIEWS = YES;
+-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+-				GENERATE_INFOPLIST_FILE = YES;
+-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+-				LD_RUNPATH_SEARCH_PATHS = (
+-					"$(inherited)",
+-					"@executable_path/Frameworks",
+-				);
+-				MARKETING_VERSION = 1.0;
+-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.TVCatalog${SAMPLE_CODE_DISAMBIGUATOR}";
+-				PRODUCT_NAME = "tvOS SwiftUI media catalog";
+-				PROVISIONING_PROFILE_SPECIFIER = "";
+-				SWIFT_EMIT_LOC_STRINGS = YES;
+-				SWIFT_VERSION = 5.0;
+-				TARGETED_DEVICE_FAMILY = 3;
+-			};
+-			name = Debug;
+-		};
+-		38C5AFC02BBF18B6009C6DC6 /* Release */ = {
+-			isa = XCBuildConfiguration;
+-			baseConfigurationReference = 45C9287ADBEABFAAF70B1C52 /* SampleCode.xcconfig */;
+-			buildSettings = {
+-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+-				CODE_SIGN_STYLE = Automatic;
+-				CURRENT_PROJECT_VERSION = 1;
+-				DEVELOPMENT_ASSET_PATHS = "\"TVCatalog/Preview Content\"";
+-				DEVELOPMENT_TEAM = "";
+-				ENABLE_PREVIEWS = YES;
+-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+-				GENERATE_INFOPLIST_FILE = YES;
+-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+-				LD_RUNPATH_SEARCH_PATHS = (
+-					"$(inherited)",
+-					"@executable_path/Frameworks",
+-				);
+-				MARKETING_VERSION = 1.0;
+-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.TVCatalog${SAMPLE_CODE_DISAMBIGUATOR}";
+-				PRODUCT_NAME = "tvOS SwiftUI media catalog";
+-				PROVISIONING_PROFILE_SPECIFIER = "";
+-				SWIFT_EMIT_LOC_STRINGS = YES;
+-				SWIFT_VERSION = 5.0;
+-				TARGETED_DEVICE_FAMILY = 3;
+-			};
+-			name = Release;
+-		};
+-/* End XCBuildConfiguration section */
+-
+-/* Begin XCConfigurationList section */
+-		38C5AFAB2BBF18B5009C6DC6 /* Build configuration list for PBXProject "TVCatalog" */ = {
+-			isa = XCConfigurationList;
+-			buildConfigurations = (
+-				38C5AFBC2BBF18B6009C6DC6 /* Debug */,
+-				38C5AFBD2BBF18B6009C6DC6 /* Release */,
+-			);
+-			defaultConfigurationIsVisible = 0;
+-			defaultConfigurationName = Release;
+-		};
+-		38C5AFBE2BBF18B6009C6DC6 /* Build configuration list for PBXNativeTarget "TVCatalog" */ = {
+-			isa = XCConfigurationList;
+-			buildConfigurations = (
+-				38C5AFBF2BBF18B6009C6DC6 /* Debug */,
+-				38C5AFC02BBF18B6009C6DC6 /* Release */,
+-			);
+-			defaultConfigurationIsVisible = 0;
+-			defaultConfigurationName = Release;
+-		};
+-/* End XCConfigurationList section */
+-	};
+-	rootObject = 38C5AFA82BBF18B5009C6DC6 /* Project object */;
+-}
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
++<plist version="1.0">
++<dict>
++	<key>archiveVersion</key>
++	<string>1</string>
++	<key>classes</key>
++	<dict/>
++	<key>objectVersion</key>
++	<string>56</string>
++	<key>objects</key>
++	<dict>
++		<key>021A97FD340F49ECA14769D4</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++			<key>productRef</key>
++			<string>8698054CDEC741AA9A486722</string>
++		</dict>
++		<key>0507B57884E2F871A78DE1EF</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>AD246972C56C6D1ABD245506</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>name</key>
++			<string>LICENSE</string>
++			<key>path</key>
++			<string></string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>17E32A70DE244C418BA78722</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>TVCatalogSDK604.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>315B9602C2DB4299912CBDBA</key>
++		<dict>
++			<key>isa</key>
++			<string>XCSwiftPackageProductDependency</string>
++			<key>package</key>
++			<string>55F83179436043A1ABCA3018</string>
++			<key>productName</key>
++			<string>TTRDiagnosticsClient</string>
++		</dict>
++		<key>383AF4652BDF238F002F64D8</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>383AF4662BDF23A4002F64D8</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>path</key>
++			<string>ViewModifiers</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>383AF4662BDF23A4002F64D8</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>VisibleWhenFocusedModifier.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>383AF4672BDF23A4002F64D8</key>
++		<dict>
++			<key>fileRef</key>
++			<string>383AF4662BDF23A4002F64D8</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>383AF4682BDF2510002F64D8</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>HeroHeaderView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>383AF4692BDF2510002F64D8</key>
++		<dict>
++			<key>fileRef</key>
++			<string>383AF4682BDF2510002F64D8</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>384591222BF26D3E003CD0E2</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>SidebarContentView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>384591232BF26D3E003CD0E2</key>
++		<dict>
++			<key>fileRef</key>
++			<string>384591222BF26D3E003CD0E2</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>386D05E52BE97B1700E143DA</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>SearchView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>386D05E62BE97B1700E143DA</key>
++		<dict>
++			<key>fileRef</key>
++			<string>386D05E52BE97B1700E143DA</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38C5AFA72BBF18B5009C6DC6</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>BF5A0D50273E3444EB7F1FEF</string>
++				<string>38C5AFB22BBF18B5009C6DC6</string>
++				<string>38C5AFB12BBF18B5009C6DC6</string>
++				<string>656B12863EFF5D1B73F0F4FD</string>
++				<string>0507B57884E2F871A78DE1EF</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFA82BBF18B5009C6DC6</key>
++		<dict>
++			<key>attributes</key>
++			<dict>
++				<key>BuildIndependentTargetsInParallel</key>
++				<string>1</string>
++				<key>LastSwiftUpdateCheck</key>
++				<string>1600</string>
++				<key>LastUpgradeCheck</key>
++				<string>1600</string>
++				<key>ORGANIZATIONNAME</key>
++				<string>Apple</string>
++				<key>TargetAttributes</key>
++				<dict>
++					<key>38C5AFAF2BBF18B5009C6DC6</key>
++					<dict>
++						<key>CreatedOnToolsVersion</key>
++						<string>16.0</string>
++					</dict>
++				</dict>
++			</dict>
++			<key>buildConfigurationList</key>
++			<string>38C5AFAB2BBF18B5009C6DC6</string>
++			<key>compatibilityVersion</key>
++			<string>Xcode 14.0</string>
++			<key>developmentRegion</key>
++			<string>en</string>
++			<key>hasScannedForEncodings</key>
++			<string>0</string>
++			<key>isa</key>
++			<string>PBXProject</string>
++			<key>knownRegions</key>
++			<array>
++				<string>en</string>
++				<string>Base</string>
++			</array>
++			<key>mainGroup</key>
++			<string>38C5AFA72BBF18B5009C6DC6</string>
++			<key>packageReferences</key>
++			<array>
++				<string>55F83179436043A1ABCA3018</string>
++			</array>
++			<key>productRefGroup</key>
++			<string>38C5AFB12BBF18B5009C6DC6</string>
++			<key>projectDirPath</key>
++			<string></string>
++			<key>projectRoot</key>
++			<string></string>
++			<key>targets</key>
++			<array>
++				<string>38C5AFAF2BBF18B5009C6DC6</string>
++			</array>
++		</dict>
++		<key>38C5AFAB2BBF18B5009C6DC6</key>
++		<dict>
++			<key>buildConfigurations</key>
++			<array>
++				<string>38C5AFBC2BBF18B6009C6DC6</string>
++				<string>38C5AFBD2BBF18B6009C6DC6</string>
++			</array>
++			<key>defaultConfigurationIsVisible</key>
++			<string>0</string>
++			<key>defaultConfigurationName</key>
++			<string>Release</string>
++			<key>isa</key>
++			<string>XCConfigurationList</string>
++		</dict>
++		<key>38C5AFAC2BBF18B5009C6DC6</key>
++		<dict>
++			<key>buildActionMask</key>
++			<string>2147483647</string>
++			<key>files</key>
++			<array>
++				<string>38DF62782BDF2D3200F730EE</string>
++				<string>38C5AFB62BBF18B5009C6DC6</string>
++				<string>383AF4672BDF23A4002F64D8</string>
++				<string>38DF62B22BE3168200F730EE</string>
++				<string>38DF62B32BE3168200F730EE</string>
++				<string>386D05E62BE97B1700E143DA</string>
++				<string>384591232BF26D3E003CD0E2</string>
++				<string>38DF62B52BE3168200F730EE</string>
++				<string>38DF62B62BE3168200F730EE</string>
++				<string>38DF62B72BE3168200F730EE</string>
++				<string>38C5AFB42BBF18B5009C6DC6</string>
++				<string>383AF4692BDF2510002F64D8</string>
++				<string>38DF627B2BDF3CB100F730EE</string>
++				<string>38DF62AB2BE3166600F730EE</string>
++				<string>38DF62762BDF2BE100F730EE</string>
++				<string>F57C61E29B704CDB98E8942A</string>
++			</array>
++			<key>isa</key>
++			<string>PBXSourcesBuildPhase</string>
++			<key>runOnlyForDeploymentPostprocessing</key>
++			<string>0</string>
++		</dict>
++		<key>38C5AFAD2BBF18B5009C6DC6</key>
++		<dict>
++			<key>buildActionMask</key>
++			<string>2147483647</string>
++			<key>files</key>
++			<array>
++				<string>B94E523BB55B4B3EA1772389</string>
++				<string>6FB46B6D6A854EF096FE1C7E</string>
++				<string>705345031BDE450E9D831954</string>
++				<string>C87D7AAC8DF74DB0949473CA</string>
++				<string>021A97FD340F49ECA14769D4</string>
++			</array>
++			<key>isa</key>
++			<string>PBXFrameworksBuildPhase</string>
++			<key>runOnlyForDeploymentPostprocessing</key>
++			<string>0</string>
++		</dict>
++		<key>38C5AFAE2BBF18B5009C6DC6</key>
++		<dict>
++			<key>buildActionMask</key>
++			<string>2147483647</string>
++			<key>files</key>
++			<array>
++				<string>38C5AFBB2BBF18B6009C6DC6</string>
++				<string>38C5AFB82BBF18B6009C6DC6</string>
++			</array>
++			<key>isa</key>
++			<string>PBXResourcesBuildPhase</string>
++			<key>runOnlyForDeploymentPostprocessing</key>
++			<string>0</string>
++		</dict>
++		<key>38C5AFAF2BBF18B5009C6DC6</key>
++		<dict>
++			<key>buildConfigurationList</key>
++			<string>38C5AFBE2BBF18B6009C6DC6</string>
++			<key>buildPhases</key>
++			<array>
++				<string>38C5AFAC2BBF18B5009C6DC6</string>
++				<string>38C5AFAD2BBF18B5009C6DC6</string>
++				<string>38C5AFAE2BBF18B5009C6DC6</string>
++			</array>
++			<key>buildRules</key>
++			<array/>
++			<key>dependencies</key>
++			<array/>
++			<key>isa</key>
++			<string>PBXNativeTarget</string>
++			<key>name</key>
++			<string>TVCatalog</string>
++			<key>packageProductDependencies</key>
++			<array>
++				<string>C265BA0AD65E49BFBCC7E610</string>
++				<string>9CF2AFA95E3B46DE8828DAA8</string>
++				<string>594EE3E6204241B08D0867A0</string>
++				<string>315B9602C2DB4299912CBDBA</string>
++				<string>8698054CDEC741AA9A486722</string>
++			</array>
++			<key>productName</key>
++			<string>TVCatalog</string>
++			<key>productReference</key>
++			<string>38C5AFB02BBF18B5009C6DC6</string>
++			<key>productType</key>
++			<string>com.apple.product-type.application</string>
++		</dict>
++		<key>38C5AFB02BBF18B5009C6DC6</key>
++		<dict>
++			<key>explicitFileType</key>
++			<string>wrapper.application</string>
++			<key>includeInIndex</key>
++			<string>0</string>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>path</key>
++			<string>tvOS SwiftUI media catalog.app</string>
++			<key>sourceTree</key>
++			<string>BUILT_PRODUCTS_DIR</string>
++		</dict>
++		<key>38C5AFB12BBF18B5009C6DC6</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>38C5AFB02BBF18B5009C6DC6</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>name</key>
++			<string>Products</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFB22BBF18B5009C6DC6</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>38C5AFB32BBF18B5009C6DC6</string>
++				<string>38C5AFB52BBF18B5009C6DC6</string>
++				<string>384591222BF26D3E003CD0E2</string>
++				<string>38DF62B12BE3168200F730EE</string>
++				<string>38DF62AC2BE3168200F730EE</string>
++				<string>38DF62AF2BE3168200F730EE</string>
++				<string>386D05E52BE97B1700E143DA</string>
++				<string>383AF4682BDF2510002F64D8</string>
++				<string>38DF62752BDF2BE100F730EE</string>
++				<string>38DF62772BDF2D3200F730EE</string>
++				<string>38DF62AE2BE3168200F730EE</string>
++				<string>38DF62AD2BE3168200F730EE</string>
++				<string>38DF62792BDF3C9600F730EE</string>
++				<string>383AF4652BDF238F002F64D8</string>
++				<string>38C5AFB72BBF18B6009C6DC6</string>
++				<string>38C5AFB92BBF18B6009C6DC6</string>
++				<string>17E32A70DE244C418BA78722</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>path</key>
++			<string>TVCatalog</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFB32BBF18B5009C6DC6</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>TVCatalogApp.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFB42BBF18B5009C6DC6</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38C5AFB32BBF18B5009C6DC6</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38C5AFB52BBF18B5009C6DC6</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>ContentView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFB62BBF18B5009C6DC6</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38C5AFB52BBF18B5009C6DC6</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38C5AFB72BBF18B6009C6DC6</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>folder.assetcatalog</string>
++			<key>path</key>
++			<string>Assets.xcassets</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFB82BBF18B6009C6DC6</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38C5AFB72BBF18B6009C6DC6</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38C5AFB92BBF18B6009C6DC6</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>38C5AFBA2BBF18B6009C6DC6</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>path</key>
++			<string>Preview Content</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFBA2BBF18B6009C6DC6</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>folder.assetcatalog</string>
++			<key>path</key>
++			<string>Preview Assets.xcassets</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38C5AFBB2BBF18B6009C6DC6</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38C5AFBA2BBF18B6009C6DC6</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38C5AFBC2BBF18B6009C6DC6</key>
++		<dict>
++			<key>baseConfigurationReference</key>
++			<string>45C9287ADBEABFAAF70B1C52</string>
++			<key>buildSettings</key>
++			<dict>
++				<key>ALWAYS_SEARCH_USER_PATHS</key>
++				<string>NO</string>
++				<key>ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS</key>
++				<string>YES</string>
++				<key>CLANG_ANALYZER_NONNULL</key>
++				<string>YES</string>
++				<key>CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION</key>
++				<string>YES_AGGRESSIVE</string>
++				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
++				<string>gnu++20</string>
++				<key>CLANG_ENABLE_MODULES</key>
++				<string>YES</string>
++				<key>CLANG_ENABLE_OBJC_ARC</key>
++				<string>YES</string>
++				<key>CLANG_ENABLE_OBJC_WEAK</key>
++				<string>YES</string>
++				<key>CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING</key>
++				<string>YES</string>
++				<key>CLANG_WARN_BOOL_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_COMMA</key>
++				<string>YES</string>
++				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS</key>
++				<string>YES</string>
++				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
++				<string>YES_ERROR</string>
++				<key>CLANG_WARN_DOCUMENTATION_COMMENTS</key>
++				<string>YES</string>
++				<key>CLANG_WARN_EMPTY_BODY</key>
++				<string>YES</string>
++				<key>CLANG_WARN_ENUM_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_INFINITE_RECURSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_INT_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_NON_LITERAL_NULL_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF</key>
++				<string>YES</string>
++				<key>CLANG_WARN_OBJC_LITERAL_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
++				<string>YES_ERROR</string>
++				<key>CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER</key>
++				<string>YES</string>
++				<key>CLANG_WARN_RANGE_LOOP_ANALYSIS</key>
++				<string>YES</string>
++				<key>CLANG_WARN_STRICT_PROTOTYPES</key>
++				<string>YES</string>
++				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
++				<string>YES</string>
++				<key>CLANG_WARN_UNGUARDED_AVAILABILITY</key>
++				<string>YES_AGGRESSIVE</string>
++				<key>CLANG_WARN_UNREACHABLE_CODE</key>
++				<string>YES</string>
++				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
++				<string>YES</string>
++				<key>COPY_PHASE_STRIP</key>
++				<string>NO</string>
++				<key>DEBUG_INFORMATION_FORMAT</key>
++				<string>dwarf</string>
++				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
++				<string>YES</string>
++				<key>ENABLE_TESTABILITY</key>
++				<string>YES</string>
++				<key>ENABLE_USER_SCRIPT_SANDBOXING</key>
++				<string>YES</string>
++				<key>GCC_C_LANGUAGE_STANDARD</key>
++				<string>gnu17</string>
++				<key>GCC_DYNAMIC_NO_PIC</key>
++				<string>NO</string>
++				<key>GCC_NO_COMMON_BLOCKS</key>
++				<string>YES</string>
++				<key>GCC_OPTIMIZATION_LEVEL</key>
++				<string>0</string>
++				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
++				<array>
++					<string>DEBUG=1</string>
++					<string>$(inherited)</string>
++				</array>
++				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
++				<string>YES</string>
++				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
++				<string>YES_ERROR</string>
++				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
++				<string>YES</string>
++				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
++				<string>YES_AGGRESSIVE</string>
++				<key>GCC_WARN_UNUSED_FUNCTION</key>
++				<string>YES</string>
++				<key>GCC_WARN_UNUSED_VARIABLE</key>
++				<string>YES</string>
++				<key>LOCALIZATION_PREFERS_STRING_CATALOGS</key>
++				<string>YES</string>
++				<key>MTL_ENABLE_DEBUG_INFO</key>
++				<string>INCLUDE_SOURCE</string>
++				<key>MTL_FAST_MATH</key>
++				<string>YES</string>
++				<key>ONLY_ACTIVE_ARCH</key>
++				<string>YES</string>
++				<key>SDKROOT</key>
++				<string>appletvos</string>
++				<key>SWIFT_ACTIVE_COMPILATION_CONDITIONS</key>
++				<string>DEBUG $(inherited)</string>
++				<key>SWIFT_OPTIMIZATION_LEVEL</key>
++				<string>-Onone</string>
++				<key>SWIFT_VERSION</key>
++				<string>6.0</string>
++				<key>TVOS_DEPLOYMENT_TARGET</key>
++				<string>18.0</string>
++			</dict>
++			<key>isa</key>
++			<string>XCBuildConfiguration</string>
++			<key>name</key>
++			<string>Debug</string>
++		</dict>
++		<key>38C5AFBD2BBF18B6009C6DC6</key>
++		<dict>
++			<key>baseConfigurationReference</key>
++			<string>45C9287ADBEABFAAF70B1C52</string>
++			<key>buildSettings</key>
++			<dict>
++				<key>ALWAYS_SEARCH_USER_PATHS</key>
++				<string>NO</string>
++				<key>ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS</key>
++				<string>YES</string>
++				<key>CLANG_ANALYZER_NONNULL</key>
++				<string>YES</string>
++				<key>CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION</key>
++				<string>YES_AGGRESSIVE</string>
++				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
++				<string>gnu++20</string>
++				<key>CLANG_ENABLE_MODULES</key>
++				<string>YES</string>
++				<key>CLANG_ENABLE_OBJC_ARC</key>
++				<string>YES</string>
++				<key>CLANG_ENABLE_OBJC_WEAK</key>
++				<string>YES</string>
++				<key>CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING</key>
++				<string>YES</string>
++				<key>CLANG_WARN_BOOL_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_COMMA</key>
++				<string>YES</string>
++				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS</key>
++				<string>YES</string>
++				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
++				<string>YES_ERROR</string>
++				<key>CLANG_WARN_DOCUMENTATION_COMMENTS</key>
++				<string>YES</string>
++				<key>CLANG_WARN_EMPTY_BODY</key>
++				<string>YES</string>
++				<key>CLANG_WARN_ENUM_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_INFINITE_RECURSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_INT_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_NON_LITERAL_NULL_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF</key>
++				<string>YES</string>
++				<key>CLANG_WARN_OBJC_LITERAL_CONVERSION</key>
++				<string>YES</string>
++				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
++				<string>YES_ERROR</string>
++				<key>CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER</key>
++				<string>YES</string>
++				<key>CLANG_WARN_RANGE_LOOP_ANALYSIS</key>
++				<string>YES</string>
++				<key>CLANG_WARN_STRICT_PROTOTYPES</key>
++				<string>YES</string>
++				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
++				<string>YES</string>
++				<key>CLANG_WARN_UNGUARDED_AVAILABILITY</key>
++				<string>YES_AGGRESSIVE</string>
++				<key>CLANG_WARN_UNREACHABLE_CODE</key>
++				<string>YES</string>
++				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
++				<string>YES</string>
++				<key>COPY_PHASE_STRIP</key>
++				<string>NO</string>
++				<key>DEBUG_INFORMATION_FORMAT</key>
++				<string>dwarf-with-dsym</string>
++				<key>ENABLE_NS_ASSERTIONS</key>
++				<string>NO</string>
++				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
++				<string>YES</string>
++				<key>ENABLE_USER_SCRIPT_SANDBOXING</key>
++				<string>YES</string>
++				<key>GCC_C_LANGUAGE_STANDARD</key>
++				<string>gnu17</string>
++				<key>GCC_NO_COMMON_BLOCKS</key>
++				<string>YES</string>
++				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
++				<string>YES</string>
++				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
++				<string>YES_ERROR</string>
++				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
++				<string>YES</string>
++				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
++				<string>YES_AGGRESSIVE</string>
++				<key>GCC_WARN_UNUSED_FUNCTION</key>
++				<string>YES</string>
++				<key>GCC_WARN_UNUSED_VARIABLE</key>
++				<string>YES</string>
++				<key>LOCALIZATION_PREFERS_STRING_CATALOGS</key>
++				<string>YES</string>
++				<key>MTL_ENABLE_DEBUG_INFO</key>
++				<string>NO</string>
++				<key>MTL_FAST_MATH</key>
++				<string>YES</string>
++				<key>SDKROOT</key>
++				<string>appletvos</string>
++				<key>SWIFT_COMPILATION_MODE</key>
++				<string>wholemodule</string>
++				<key>SWIFT_VERSION</key>
++				<string>6.0</string>
++				<key>TVOS_DEPLOYMENT_TARGET</key>
++				<string>18.0</string>
++				<key>VALIDATE_PRODUCT</key>
++				<string>YES</string>
++			</dict>
++			<key>isa</key>
++			<string>XCBuildConfiguration</string>
++			<key>name</key>
++			<string>Release</string>
++		</dict>
++		<key>38C5AFBE2BBF18B6009C6DC6</key>
++		<dict>
++			<key>buildConfigurations</key>
++			<array>
++				<string>38C5AFBF2BBF18B6009C6DC6</string>
++				<string>38C5AFC02BBF18B6009C6DC6</string>
++			</array>
++			<key>defaultConfigurationIsVisible</key>
++			<string>0</string>
++			<key>defaultConfigurationName</key>
++			<string>Release</string>
++			<key>isa</key>
++			<string>XCConfigurationList</string>
++		</dict>
++		<key>38C5AFBF2BBF18B6009C6DC6</key>
++		<dict>
++			<key>baseConfigurationReference</key>
++			<string>45C9287ADBEABFAAF70B1C52</string>
++			<key>buildSettings</key>
++			<dict>
++				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
++				<string>App Icon &amp; Top Shelf Image</string>
++				<key>ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME</key>
++				<string>AccentColor</string>
++				<key>CODE_SIGN_STYLE</key>
++				<string>Automatic</string>
++				<key>CURRENT_PROJECT_VERSION</key>
++				<string>1</string>
++				<key>DEVELOPMENT_ASSET_PATHS</key>
++				<string>"TVCatalog/Preview Content"</string>
++				<key>DEVELOPMENT_TEAM</key>
++				<string></string>
++				<key>ENABLE_PREVIEWS</key>
++				<string>YES</string>
++				<key>ENABLE_USER_SCRIPT_SANDBOXING</key>
++				<string>YES</string>
++				<key>GENERATE_INFOPLIST_FILE</key>
++				<string>YES</string>
++				<key>INFOPLIST_KEY_UILaunchScreen_Generation</key>
++				<string>YES</string>
++				<key>INFOPLIST_KEY_UIUserInterfaceStyle</key>
++				<string>Automatic</string>
++				<key>LD_RUNPATH_SEARCH_PATHS</key>
++				<array>
++					<string>$(inherited)</string>
++					<string>@executable_path/Frameworks</string>
++				</array>
++				<key>MARKETING_VERSION</key>
++				<string>1.0</string>
++				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
++				<string>com.example.apple-samplecode.TVCatalog${SAMPLE_CODE_DISAMBIGUATOR}</string>
++				<key>PRODUCT_NAME</key>
++				<string>tvOS SwiftUI media catalog</string>
++				<key>PROVISIONING_PROFILE_SPECIFIER</key>
++				<string></string>
++				<key>SWIFT_EMIT_LOC_STRINGS</key>
++				<string>YES</string>
++				<key>SWIFT_VERSION</key>
++				<string>5.0</string>
++				<key>TARGETED_DEVICE_FAMILY</key>
++				<string>3</string>
++			</dict>
++			<key>isa</key>
++			<string>XCBuildConfiguration</string>
++			<key>name</key>
++			<string>Debug</string>
++		</dict>
++		<key>38C5AFC02BBF18B6009C6DC6</key>
++		<dict>
++			<key>baseConfigurationReference</key>
++			<string>45C9287ADBEABFAAF70B1C52</string>
++			<key>buildSettings</key>
++			<dict>
++				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
++				<string>App Icon &amp; Top Shelf Image</string>
++				<key>ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME</key>
++				<string>AccentColor</string>
++				<key>CODE_SIGN_STYLE</key>
++				<string>Automatic</string>
++				<key>CURRENT_PROJECT_VERSION</key>
++				<string>1</string>
++				<key>DEVELOPMENT_ASSET_PATHS</key>
++				<string>"TVCatalog/Preview Content"</string>
++				<key>DEVELOPMENT_TEAM</key>
++				<string></string>
++				<key>ENABLE_PREVIEWS</key>
++				<string>YES</string>
++				<key>ENABLE_USER_SCRIPT_SANDBOXING</key>
++				<string>YES</string>
++				<key>GENERATE_INFOPLIST_FILE</key>
++				<string>YES</string>
++				<key>INFOPLIST_KEY_UILaunchScreen_Generation</key>
++				<string>YES</string>
++				<key>INFOPLIST_KEY_UIUserInterfaceStyle</key>
++				<string>Automatic</string>
++				<key>LD_RUNPATH_SEARCH_PATHS</key>
++				<array>
++					<string>$(inherited)</string>
++					<string>@executable_path/Frameworks</string>
++				</array>
++				<key>MARKETING_VERSION</key>
++				<string>1.0</string>
++				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
++				<string>com.example.apple-samplecode.TVCatalog${SAMPLE_CODE_DISAMBIGUATOR}</string>
++				<key>PRODUCT_NAME</key>
++				<string>tvOS SwiftUI media catalog</string>
++				<key>PROVISIONING_PROFILE_SPECIFIER</key>
++				<string></string>
++				<key>SWIFT_EMIT_LOC_STRINGS</key>
++				<string>YES</string>
++				<key>SWIFT_VERSION</key>
++				<string>5.0</string>
++				<key>TARGETED_DEVICE_FAMILY</key>
++				<string>3</string>
++			</dict>
++			<key>isa</key>
++			<string>XCBuildConfiguration</string>
++			<key>name</key>
++			<string>Release</string>
++		</dict>
++		<key>38DF62752BDF2BE100F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>MovieShelf.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62762BDF2BE100F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62752BDF2BE100F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62772BDF2D3200F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>TVMusicShelf.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62782BDF2D3200F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62772BDF2D3200F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62792BDF3C9600F730EE</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>38DF627A2BDF3CB100F730EE</string>
++				<string>38DF62AA2BE3166600F730EE</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>name</key>
++			<string>ArtworkGenerators</string>
++			<key>path</key>
++			<string>Artwork</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF627A2BDF3CB100F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>CodeSampleArtwork.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF627B2BDF3CB100F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF627A2BDF3CB100F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62AA2BE3166600F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>Asset.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62AB2BE3166600F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62AA2BE3166600F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62AC2BE3168200F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>ButtonsView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62AD2BE3168200F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>CardContentView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62AE2BE3168200F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>CardShelf.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62AF2BE3168200F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>DescriptionView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62B12BE3168200F730EE</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>sourcecode.swift</string>
++			<key>path</key>
++			<string>StackView.swift</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>38DF62B22BE3168200F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62AF2BE3168200F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62B32BE3168200F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62AE2BE3168200F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62B52BE3168200F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62B12BE3168200F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62B62BE3168200F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62AC2BE3168200F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>38DF62B72BE3168200F730EE</key>
++		<dict>
++			<key>fileRef</key>
++			<string>38DF62AD2BE3168200F730EE</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++		<key>45C9287ADBEABFAAF70B1C52</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>name</key>
++			<string>SampleCode.xcconfig</string>
++			<key>path</key>
++			<string>Configuration/SampleCode.xcconfig</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>55F83179436043A1ABCA3018</key>
++		<dict>
++			<key>isa</key>
++			<string>XCLocalSwiftPackageReference</string>
++			<key>relativePath</key>
++			<string>Vendor/TTRDiagnostics</string>
++		</dict>
++		<key>594EE3E6204241B08D0867A0</key>
++		<dict>
++			<key>isa</key>
++			<string>XCSwiftPackageProductDependency</string>
++			<key>package</key>
++			<string>55F83179436043A1ABCA3018</string>
++			<key>productName</key>
++			<string>TTRDiagnosticsLink</string>
++		</dict>
++		<key>656B12863EFF5D1B73F0F4FD</key>
++		<dict>
++			<key>children</key>
++			<array>
++				<string>45C9287ADBEABFAAF70B1C52</string>
++			</array>
++			<key>isa</key>
++			<string>PBXGroup</string>
++			<key>name</key>
++			<string>Configuration</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>6FB46B6D6A854EF096FE1C7E</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++			<key>productRef</key>
++			<string>9CF2AFA95E3B46DE8828DAA8</string>
++		</dict>
++		<key>705345031BDE450E9D831954</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++			<key>productRef</key>
++			<string>594EE3E6204241B08D0867A0</string>
++		</dict>
++		<key>8698054CDEC741AA9A486722</key>
++		<dict>
++			<key>isa</key>
++			<string>XCSwiftPackageProductDependency</string>
++			<key>package</key>
++			<string>55F83179436043A1ABCA3018</string>
++			<key>productName</key>
++			<string>TTRDiagnosticsQuery</string>
++		</dict>
++		<key>9CF2AFA95E3B46DE8828DAA8</key>
++		<dict>
++			<key>isa</key>
++			<string>XCSwiftPackageProductDependency</string>
++			<key>package</key>
++			<string>55F83179436043A1ABCA3018</string>
++			<key>productName</key>
++			<string>TTRDiagnosticsUI</string>
++		</dict>
++		<key>AD246972C56C6D1ABD245506</key>
++		<dict>
++			<key>includeInIndex</key>
++			<string>1</string>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>path</key>
++			<string>LICENSE.txt</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>B94E523BB55B4B3EA1772389</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++			<key>productRef</key>
++			<string>C265BA0AD65E49BFBCC7E610</string>
++		</dict>
++		<key>BF5A0D50273E3444EB7F1FEF</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXFileReference</string>
++			<key>lastKnownFileType</key>
++			<string>net.daringfireball.markdown</string>
++			<key>path</key>
++			<string>README.md</string>
++			<key>sourceTree</key>
++			<string>&lt;group&gt;</string>
++		</dict>
++		<key>C265BA0AD65E49BFBCC7E610</key>
++		<dict>
++			<key>isa</key>
++			<string>XCSwiftPackageProductDependency</string>
++			<key>package</key>
++			<string>55F83179436043A1ABCA3018</string>
++			<key>productName</key>
++			<string>TTRDiagnostics</string>
++		</dict>
++		<key>C87D7AAC8DF74DB0949473CA</key>
++		<dict>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++			<key>productRef</key>
++			<string>315B9602C2DB4299912CBDBA</string>
++		</dict>
++		<key>F57C61E29B704CDB98E8942A</key>
++		<dict>
++			<key>fileRef</key>
++			<string>17E32A70DE244C418BA78722</string>
++			<key>isa</key>
++			<string>PBXBuildFile</string>
++		</dict>
++	</dict>
++	<key>rootObject</key>
++	<string>38C5AFA82BBF18B5009C6DC6</string>
++</dict>
++</plist>
+--- a/TVCatalog/ContentView.swift
++++ b/TVCatalog/ContentView.swift
+@@ -8,25 +8,27 @@
+ import SwiftUI
+ 
+ struct ContentView: View {
++    @State var selectedTab: String = "Stack"
++
+     var body: some View {
+-        TabView {
++        TabView(selection: $selectedTab) {
+             // The main content app landing page.
+-            Tab("Stack", systemImage: "line.3.horizontal") {
++            Tab("Stack", systemImage: "line.3.horizontal", value: "Stack") {
+                 StackView()
+             }
+ 
+             // A gallery of the different button styles available in tvOS.
+-            Tab("Buttons", systemImage: "button.horizontal") {
++            Tab("Buttons", systemImage: "button.horizontal", value: "Buttons") {
+                 ButtonsView()
+             }
+ 
+             // An example of a full-screen product description.
+-            Tab("Description", systemImage: "text.quote") {
++            Tab("Description", systemImage: "text.quote", value: "Description") {
+                 DescriptionView()
+             }
+ 
+             // A searchable content grid.
+-            Tab("Search", systemImage: "magnifyingglass") {
++            Tab("Search", systemImage: "magnifyingglass", value: "Search") {
+                 SearchView()
+             }
+         }
+--- a/TVCatalog/DescriptionView.swift
++++ b/TVCatalog/DescriptionView.swift
+@@ -23,6 +23,7 @@
+             Text("Title")
+                 .font(.largeTitle)
+                 .bold()
++                .tvCatalogFact("txt.title", "Text")
+ 
+             Spacer()
+ 
+@@ -31,64 +32,52 @@
+                     .font(.caption.bold())
+                     .foregroundStyle(.secondary)
+                     .frame(maxWidth: .infinity, alignment: .leading)
++                    .tvCatalogFact("txt.signup_info", "Text")
+ 
+                 HStack(alignment: .top, spacing: 30) {
+-                    // The three buttons each need to be the same width.  To
+-                    // achieve this, their labels use
+-                    // `.frame(maxWidth: .infinity)`.  It's important to place
+-                    // this modifier on the label rather than on the button
+-                    // because the button is simply the label with some padding
+-                    // and a background.  This means that the button's platter
+-                    // doesn't extend beyond its label farther than its static
+-                    // padding amount, so the view stretches the label in the
+-                    // required axis.  The default alignment of a max-width
+-                    // frame is `.center`, so the text remains centered inside
+-                    // the button.
+                     VStack(spacing: 12) {
+                         Button {} label: {
+-                            Text("Sign Up")
++                            Text("Sign Up").tvCatalogFact("txt.sign_up", "Text", parent: "btn.sign_up")
+                                 .font(.body.bold())
+                                 .frame(maxWidth: .infinity)
+                         }
++                        .tvCatalogAction("btn.sign_up", style: .automatic)
+ 
+                         Button {} label: {
+-                            Text("Buy or Rent")
++                            Text("Buy or Rent").tvCatalogFact("txt.buy_or_rent", "Text", parent: "btn.buy_or_rent")
+                                 .font(.body.bold())
+                                 .frame(maxWidth: .infinity)
+                         }
++                        .tvCatalogAction("btn.buy_or_rent", style: .automatic)
+ 
+                         Button {} label: {
+-                            Label("Add to Up Next", systemImage: "plus")
++                            Label { Text("Add to Up Next").tvCatalogFact("txt.up_next", "Text", parent: "btn.add_to_up_next") } icon: { Image(systemName: "plus").tvCatalogFact("art.plus", "Image", parent: "btn.add_to_up_next") }
+                                 .font(.body.bold())
+                                 .frame(maxWidth: .infinity)
+                         }
++                        .tvCatalogAction("btn.add_to_up_next", style: .automatic)
+                     }
+ 
+-                    // The view presents the description using the `.plain`
+-                    // button style, which renders only its label until it
+-                    // receives focus.  The `.lineLimit` modifier truncates the
+-                    // content, and when someone presses the button, a
+-                    // `.fullScreenCover` presents the entire description.
+                     Button {
+                         showDescription = true
+                     } label: {
+                         Text(loremIpsum)
+                             .font(.callout)
+                             .lineLimit(5)
++                            .tvCatalogFact("txt.description", "Text", parent: "btn.description_expand")
+                     }
+-                    .buttonStyle(.plain)
++                    .tvCatalogAction("btn.description_expand", style: .plain)
+                     .frame(width: 1000)
+ 
+-                    // If you want to have flowing text with different
+-                    // attributes on different words, you can use either an
+-                    // `AttributedString` or, for simplicity, add some `Text`
+-                    // views together.
+                     VStack(spacing: 0) {
+-                        Text("Starring")
+-                            .foregroundStyle(.secondary) + Text(" Stars, Costars, and Extras")
+-                        Text("Director")
+-                            .foregroundStyle(.secondary) + Text(" Someone Great")
++                        (Text("Starring")
++                            .foregroundStyle(.secondary) + Text(" Stars, Costars, and Extras"))
++                            .tvCatalogFact("txt.cast", "Text")
++                        (Text("Director")
++                            .foregroundStyle(.secondary) + Text(" Someone Great"))
++                            .tvCatalogFact("txt.director", "Text")
+                     }
++
+                 }
+             }
+             .padding(.top)
+@@ -118,6 +107,7 @@
+                         }
+                 }
+                 .ignoresSafeArea()
++                .tvCatalogFact("art.backdrop", "Image")
+         }
+         .fullScreenCover(isPresented: $showDescription) {
+             VStack(alignment: .center) {
+--- a/TVCatalog/TVCatalogApp.swift
++++ b/TVCatalog/TVCatalogApp.swift
+@@ -9,14 +9,26 @@
+ 
+ @main
+ struct TVCatalogApp: App {
++    var initialTab: String {
++        let args = ProcessInfo.processInfo.arguments
++        if let idx = args.firstIndex(of: "--tab"), idx + 1 < args.count {
++            return args[idx + 1]
++        }
++        return "Stack"
++    }
++
+     var body: some Scene {
+         WindowGroup {
+-            // You have a choice here:
+-            //  - `ContentView` uses classic `TabView` navigation.
+-            //  - `SidebarContentView` uses the new sidebar, with extra filler
+-            //    items.
+-            ContentView()
+-//            SidebarContentView()
++            Group {
++                if initialTab.lowercased() == "sidebar" {
++                    SidebarContentView()
++                } else {
++                    ContentView(selectedTab: initialTab)
++                }
++            }
++            #if os(tvOS)
++            .task { await TVCatalogSDK604.shared.start() }
++            #endif
+         }
+     }
+ }
+--- /dev/null
++++ b/TVCatalog/TVCatalogSDK604.swift
+@@ -0,0 +1,249 @@
++import SwiftUI
++#if os(tvOS)
++import UIKit
++import TTRDiagnostics
++import TTRDiagnosticsUI
++import TTRDiagnosticsLink
++import TTRDiagnosticsClient
++import TTRDiagnosticsQuery
++
++@MainActor
++final class TVCatalogSDK604 {
++    static let shared = TVCatalogSDK604()
++    let recorder: UIRecorder
++    let probes = NSHashTable<TVCatalogProbeView>.weakObjects()
++    private var server: SDKLocalProbeServer?
++    private var started = false
++    private var generationCounter: UInt64 = 1
++
++    private init() {
++        #if DEBUG
++        let allowed = true
++        #else
++        let allowed = false
++        #endif
++        let config = (try? SDKLaunchConfiguration.parse(arguments: ProcessInfo.processInfo.arguments)
++            .applyingAppPolicy(diagnosticsAllowed: allowed)) ?? (try! SDKLaunchConfiguration(enabled: false))
++        recorder = UIRecorder(configuration: config)
++    }
++
++    func bumpGeneration() { generationCounter &+= 1 }
++
++    // The tab identities follow the app's source declaration order. Pair the native control
++    // with its UITabBarItem by a unique, exact accessibility title, never by geometry alone.
++    private let tabs = ["tab.stack", "tab.buttons", "tab.description", "tab.search"]
++    private var tabViews: [ObjectIdentifier: String] = [:]
++    private var priorTabs: [String: UIElementIdentity] = [:]
++    private func tabIdentity(_ id: String) -> UIElementIdentity {
++        priorTabs[id] ?? UIElementIdentity(id: id)
++    }
++
++    private func registerTabBarButtons(in window: UIWindow) {
++        func children(_ root: UIView) -> [UIView] {
++            [root] + root.subviews.flatMap { children($0) }
++        }
++        tabViews = [:]
++        var published: [String: UIElementIdentity] = [:]
++        for bar in children(window).compactMap({ $0 as? UITabBar }) where !bar.isHidden && bar.alpha > 0 {
++            guard let items = bar.items, items.count == tabs.count else { continue }
++            let barID = "navigation.tabbar"
++            bar.ttrRecordConstruction(.init(framework: "UIKit", primitive: "UITabBar", source: "ContentView.TabView"))
++            try? recorder.register(view: bar, identity: tabIdentity(barID))
++            published[barID] = recorder.page().first { $0.identity.id == barID }?.identity
++            for (index, item) in items.enumerated() {
++                guard let title = item.title else { continue }
++                let matches = children(bar).compactMap { $0 as? UIControl }.filter {
++                    $0.accessibilityLabel == title && !$0.isHidden && $0.alpha > 0
++                }
++                guard matches.count == 1, let view = matches.first else { continue }
++                let id = tabs[index]
++                view.ttrRecordConstruction(.init(framework: "UIKit", primitive: "UITabBarItem", source: "ContentView.TabView.nativeItem"))
++                try? recorder.register(view: view, identity: tabIdentity(id), parentID: barID, ownerRelation: "same_action")
++                tabViews[ObjectIdentifier(view)] = id
++                published[id] = recorder.page().first { $0.identity.id == id }?.identity
++            }
++        }
++        for (id, identity) in priorTabs where published[id] == nil { recorder.unregister(identity) }
++        priorTabs = published
++    }
++    func start() async {
++        print("REAL543_SDK start enabled=\(recorder.enabled)")
++        fflush(stdout)
++        guard recorder.enabled, !started else { return }
++        started = true
++        do {
++            let env = ProcessInfo.processInfo.environment
++            guard let key = env["TTR_SAMPLE_KEY"].flatMap({ Data(base64Encoded: $0) }), key.count == 32,
++                  let source = env["SIMULATOR_UDID"], UUID(uuidString: source) != nil else {
++                print("REAL543_SDK missing enrollment or Simulator identity")
++                return
++            }
++            let archive = try DiagnosticArchive.decode(await recorder.exportData())
++            let appID = Bundle.main.bundleIdentifier ?? "com.example.apple-samplecode.TVCatalog"
++            let enrollment = try Enrollment(appID: appID, processID: archive.processID, runID: archive.runID, secret: key)
++
++            let resolveWindow: @MainActor () -> UIWindow? = {
++                let windows = TVCatalogSDK604.shared.probes.allObjects.compactMap(\.window)
++                return windows.first(where: { $0.isKeyWindow }) ?? windows.first
++                    ?? UIApplication.shared.connectedScenes
++                        .compactMap { $0 as? UIWindowScene }
++                        .flatMap(\.windows)
++                        .first(where: { $0.isKeyWindow })
++            }
++
++            let probe = SDKLiveProbe(
++                recorder: recorder,
++                enrollment: enrollment,
++                layout: {
++                    TVCatalogSDK604.shared.probes.allObjects.forEach { $0.record() }
++                    guard let window = resolveWindow() else { return nil }
++                    return try UIKitLayoutCollector.collect(
++                        root: window,
++                        enabled: true,
++                        appID: appID,
++                        processID: archive.processID,
++                        runID: archive.runID,
++                        generation: { TVCatalogSDK604.shared.generationCounter },
++                        identity: { view in (view as? TVCatalogProbeView)?.identity }
++                    )
++                },
++                accessibilityDrafts: {
++                    guard let window = resolveWindow() else { return nil }
++                    return UIAccessibilityDraftScanner.scan(root: window, includeLabels: true) { view in
++                        view is TVCatalogProbeView
++                    }
++                },
++                state: {
++                    let sdk = TVCatalogSDK604.shared
++                    sdk.probes.allObjects.forEach { $0.record() }
++                    guard let window = resolveWindow() else {
++                        return .init(focusID: nil, focusKnown: false, interrupted: UIApplication.shared.applicationState != .active, captureSourceID: source)
++                    }
++                    sdk.registerTabBarButtons(in: window)
++                    let sampleView = sdk.probes.allObjects.first(where: { $0.window != nil }) ?? window.rootViewController?.view ?? window
++                    let registered = Set(sdk.recorder.page().map { $0.identity.id })
++                    let rawFocused = UIFocusSystem.focusSystem(for: window)?.focusedItem
++                    let mapItem: (UIFocusItem) -> String? = { item in
++                        if let id = (item as? UIAccessibilityIdentification)?.accessibilityIdentifier,
++                           registered.contains(id) { return id }
++                        var view = item as? UIView
++                        while let v = view {
++                            if let id = sdk.tabViews[ObjectIdentifier(v)] { return id }
++                            view = v.superview
++                        }
++                        return nil
++                    }
++                    let readiness = UIReadinessObservation.sample(view: sampleView)
++                    let mappedID = rawFocused.flatMap(mapItem)
++                    let sample = UIFocusSample(itemPresent: rawFocused != nil, mappedID: mappedID, readiness: readiness)
++                    let obs: [String: Any] = [
++                        "applicationState": UIApplication.shared.applicationState.rawValue,
++                        "focusObservable": sample.readiness.focusObservable,
++                        "rawItemPresent": rawFocused != nil,
++                        "rawItemType": rawFocused.map { String(describing: type(of: $0)) } ?? "nil",
++                        "rawItemFrame": rawFocused.map { "\($0.frame)" } ?? "nil",
++                        "rawItemAccID": (rawFocused as? UIAccessibilityIdentification)?.accessibilityIdentifier ?? "nil",
++                        "focusKnown": sample.known,
++                        "focusedID": sample.focusID ?? "none"
++                    ]
++                    if let bytes = try? JSONSerialization.data(withJSONObject: obs, options: [.sortedKeys]) {
++                        print("REAL543_SCENE " + String(decoding: bytes, as: UTF8.self))
++                        fflush(stdout)
++                    }
++                    return .init(sample: sample, interrupted: !readiness.ready, captureSourceID: source, nativeFocus: UINativeFocusObservation.sample(view: sampleView, id: mapItem))
++                }
++            )
++            let listener = try SDKLocalProbeServer(port: 8098) { try await probe.reply(to: $0) }
++            server = listener
++            let endpoint = try await listener.start(lifetimeSeconds: 800)
++            let identity: [String: String] = [
++                "appID": enrollment.appID,
++                "processID": archive.processID.uuidString,
++                "runID": archive.runID.uuidString,
++                "endpoint": endpoint.absoluteString
++            ]
++            print("REAL543_SDK " + String(decoding: try JSONSerialization.data(withJSONObject: identity), as: UTF8.self))
++            fflush(stdout)
++        } catch {
++            print("REAL543_SDK failed: \(error)")
++            fflush(stdout)
++        }
++    }
++}
++
++final class TVCatalogProbeView: UIView {
++    let identity: UIElementIdentity
++    let fact: UIConstructionFact
++    let parent: String?
++    init(id: String, fact: UIConstructionFact, parent: String?) {
++        self.identity = .init(id: id)
++        self.fact = fact
++        self.parent = parent
++        super.init(frame: .zero)
++        isUserInteractionEnabled = false
++        TVCatalogSDK604.shared.probes.add(self)
++    }
++    required init?(coder: NSCoder) { fatalError("unsupported") }
++    override func layoutSubviews() { super.layoutSubviews(); record() }
++    override func didMoveToWindow() {
++        super.didMoveToWindow()
++        if window == nil { TVCatalogSDK604.shared.recorder.unregister(identity) } else { record() }
++    }
++    func record() {
++        guard let window, bounds.width > 0, bounds.height > 0 else { return }
++        ttrRecordConstruction(fact)
++        let recorder = TVCatalogSDK604.shared.recorder
++        try? recorder.register(view: self, identity: identity, parentID: parent,
++                               ownerRelation: parent == nil ? nil : "same_action")
++        if var entry = recorder.page().first(where: { $0.identity == identity }) {
++            // SwiftUI builds a Button at this call site. The transparent sizing view cannot
++            // itself take focus. Respect actual enabled state measured by the SwiftUI owner.
++            if fact.primitive == "Button" { entry.focusable = ownerEnabled && isOwnerFocusable }
++            try? recorder.register(entry)
++        }
++    }
++    var ownerEnabled = true
++    var isOwnerFocusable = false
++}
++
++private struct TVCatalogBoundsBridge: UIViewRepresentable {
++    let id: String
++    let fact: UIConstructionFact
++    let parent: String?
++    let focusable: Bool
++    @Environment(\.isEnabled) var enabled
++    func makeUIView(context: Context) -> TVCatalogProbeView {
++        TVCatalogProbeView(id: id, fact: fact, parent: parent)
++    }
++    func updateUIView(_ view: TVCatalogProbeView, context: Context) {
++        view.ownerEnabled = enabled
++        view.isOwnerFocusable = focusable
++        view.record()
++    }
++    static func dismantleUIView(_ view: TVCatalogProbeView, coordinator: ()) {
++        TVCatalogSDK604.shared.recorder.unregister(view.identity)
++    }
++}
++#endif
++
++extension View {
++    @ViewBuilder func tvCatalogFact(_ id: String, _ primitive: String, parent: String? = nil,
++                                    style: String? = nil, focusable: Bool = false) -> some View {
++        #if os(tvOS)
++        if TVCatalogSDK604.shared.recorder.enabled {
++            self.background(TVCatalogBoundsBridge(id: id, fact: .init(framework: "SwiftUI", primitive: primitive,
++                                 style: style, styleSource: style == nil ? nil : "applied_instance",
++                                 source: "TVCatalog.DescriptionView"), parent: parent, focusable: focusable))
++        } else { self }
++        #else
++        self
++        #endif
++    }
++
++    func tvCatalogAction<S: PrimitiveButtonStyle>(_ id: String, style: S) -> some View {
++        // Keep the applied style and fact together. An unsupported constructor has no mapping.
++        let name = style is PlainButtonStyle ? "plain" : style is DefaultButtonStyle ? "automatic" : nil
++        return self.buttonStyle(style).accessibilityIdentifier(id)
++            .tvCatalogFact(id, "Button", style: name, focusable: true)
++    }
++}

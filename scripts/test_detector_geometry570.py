@@ -23,6 +23,31 @@ class GeometryTests(unittest.TestCase):
         loss.sum().backward();self.assertGreater(float(boxes.grad[0].abs().sum()),0.)
         self.assertEqual(float(boxes.grad[1].abs().sum()),0.);wrapper.verify();self.assertIsNone(wrapper.teacher.weight.grad)
 
+    def test_foreground_mask_limits_geometry_gradients_and_handles_empty(self):
+        boxes=torch.randn(2,8,4,requires_grad=True);target=torch.zeros_like(boxes)
+        mask=torch.tensor([[True,False,False,True],[False,False,False,False]])
+        loss=distribution_loss(boxes,target,mask);loss.backward()
+        self.assertTrue(torch.equal(boxes.grad[1],torch.zeros_like(boxes.grad[1])))
+        self.assertTrue(torch.equal(boxes.grad[0,:,1:3],torch.zeros_like(boxes.grad[0,:,1:3])))
+        self.assertGreater(float(boxes.grad[0,:,[0,3]].abs().sum()),0)
+        self.assertEqual(float(distribution_loss(boxes,target,torch.zeros_like(mask)).detach()),0.)
+        with self.assertRaisesRegex(ValueError,'mask'):
+            distribution_loss(boxes,target,torch.zeros(2,4))
+
+    def test_geometry_only_keeps_box_gradients_without_logit_penalty(self):
+        wrapper=GeometryPreservation(base,Teacher(),['/anchor.png'],0.,1.)
+        boxes=torch.randn(2,8,4,requires_grad=True)
+        scores=torch.zeros(2,2,4,requires_grad=True)
+        batch=dict(im_file=['/anchor.png','/native.png'],img=torch.zeros(2,3,4,4))
+        loss,items=wrapper(dict(boxes=boxes,scores=scores),batch)
+        self.assertEqual(float(loss[1].detach()),2.)
+        loss.sum().backward()
+        self.assertTrue(torch.equal(scores.grad,torch.zeros_like(scores)))
+        self.assertGreater(float(boxes.grad[0].abs().sum()),0.)
+        self.assertEqual(float(boxes.grad[1].abs().sum()),0.)
+        self.assertEqual(wrapper.loss_sum,0.)
+        wrapper.verify()
+
     def test_non_anchor_and_distribution_identity(self):
         boxes=torch.zeros(1,8,4,requires_grad=True);scores=torch.zeros(1,2,4,requires_grad=True)
         batch=dict(im_file=['/native.png'],img=torch.zeros(1,3,4,4));pred=dict(boxes=boxes,scores=scores)

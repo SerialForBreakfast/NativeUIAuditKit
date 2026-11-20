@@ -1,5 +1,6 @@
 import CoreGraphics
 import CoreML
+import CoreVideo
 import Foundation
 import ImageIO
 import NativeUIAuditKitModels
@@ -22,6 +23,26 @@ struct FocusExecutionReceiptTests: Sendable {
     private func result(_ probability: Float) -> FocusRingClassifier.Result {
         .init(isFocusedProbability: probability, confidence: abs(probability - 0.5) * 2,
               isFocused: probability >= 0.85, isAmbiguous: probability >= 0.7 && probability < 0.85)
+    }
+
+    @Test func executedInputObserverPreservesScoresAndCanRefusePrediction() async throws {
+        let classifier = try #require(await NativeUIBundledModelProvider().loadFocusWithEvidence().classifier)
+        let crop = try #require(FocusRingClassifier.makeCrop(from: image(), bbox: CGRect(x: 0, y: 0, width: 64, height: 64)))
+        let baseline = try classifier.classify(crop: crop)
+        var calls = 0
+        let observed = try classifier.classify(crop: crop) { buffer in
+            calls += 1
+            #expect(CVPixelBufferGetWidth(buffer) == 256)
+            #expect(CVPixelBufferGetHeight(buffer) == 256)
+            #expect(CVPixelBufferGetPixelFormatType(buffer) == kCVPixelFormatType_32BGRA)
+        }
+        #expect(calls == 1)
+        #expect(abs(observed.isFocusedProbability - baseline.isFocusedProbability) < 0.000001)
+        #expect(observed.isFocused == baseline.isFocused)
+        enum Refusal: Error { case refused }
+        #expect(throws: Refusal.self) {
+            try classifier.classify(crop: crop) { _ in throw Refusal.refused }
+        }
     }
 
     @Test func mixedScoringAccountsForEveryCandidate() throws {

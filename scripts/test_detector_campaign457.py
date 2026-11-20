@@ -108,10 +108,23 @@ class DetectorCampaignTests(CampaignTests):
         return dict(version='hcf-template-description-v1',id='software-fit',owner='Maximum-mini-NUIAK',template='T89',
             question='Does new training coverage improve Standard control detection?',decision='Preserve every retained success without model promotion.',
             inputs=dict(configuration=pin(config),initialization=pin(init),membership=pin(membership)),parameters={},
-            training=dict(initialization=pin(init),membership=[pin(membership)],epochs=30,resume='restart',storageBudgetBytes=2<<30,
+            training=dict(expectedScoreboardChange='Both seeds improve localization recall on frozen TVBench development beyond the measured noise floor.', initialization=pin(init),membership=[pin(membership)],epochs=30,resume='restart',storageBudgetBytes=2<<30,
                 experimentLogRunId='SOFTWARE457',acceptanceEvidence='Require complete matched regression evidence.'))
 
     def test_detector_new_training_connects_scores_and_report(self):
+        # T56 requires native development labels, rather than the capture-plan stub.
+        image=self.root/'native-image.png';image.write_bytes(b'software-fixture-image')
+        image_ref=pin(image)
+        labels=self.root/'native-labels.json'
+        q.save(labels,dict(version='detector-native-inputs-v1',role='development',trainingEligible=False,
+            platform='tvOS',labelReview='reviewed',frames=[dict(screen='software-screen',
+            image=image_ref,sha256=image_ref['sha256'],group='development-only',width=100,height=100,
+            controls=[dict(id='button',bounds=[0,0,10,10],**{'class':'button'})])]))
+        card_path=checked(self.left['inputs']['scorecard']);card=q.load(card_path)
+        card['inputs']=pin(labels);q.save(card_path,card,replace=True)
+        self.left['inputs']['scorecard']=pin(card_path)
+        self.specs['base']['template']['inputs']=self.left['inputs']
+        self.complete(self.specs['base'],self.left)
         train=self.training_description()
         request=self.request('new-training',training=train,pairs=[dict(condition='one',baseline='base',candidate=None)],
             budget=dict(maxJobs=4,maxSeconds=9600,maxOutputBytes=3<<30))

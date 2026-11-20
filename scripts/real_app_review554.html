@@ -3,145 +3,625 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Label Review</title>
+<title>TVBench Fast Label Review</title>
 <style>
-:root{--bg:#f6f6f4;--panel:#fff;--ink:#1d1d1b;--muted:#6b6b66;--line:#dcdcd6;--accent:#2563eb;--ok:#15803d;--bad:#dc2626;--focus:#22c55e}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--panel:#21211f;--ink:#ecece8;--muted:#a2a29b;--line:#3a3a36;--accent:#60a5fa;--ok:#4ade80}}
+:root{--bg:#f4f4f1;--panel:#ffffff;--panel2:#f9f9f7;--ink:#18181b;--muted:#64645f;--line:#dcdcd6;--accent:#2563eb;--ok:#15803d;--bad:#dc2626;--warn:#d97706;--focus:#22c55e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121316;--panel:#1a1c21;--panel2:#22252b;--ink:#eceef2;--muted:#9aa0aa;--line:#2e323b;--accent:#60a5fa;--ok:#22c55e;--bad:#f87171;--warn:#fbbf24}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.4 -apple-system,system-ui,sans-serif;height:100vh;display:grid;grid-template-rows:auto auto 1fr;overflow:hidden}
-header{display:flex;gap:10px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
-header h1{font-size:15px;margin:0}
-select,input[type=text]{padding:5px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
-button.b{padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit;cursor:pointer;white-space:nowrap}
-button.b.on{outline:2px solid var(--accent)}
-button.go{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:600}
-#bar{display:flex;gap:8px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
-#focusstate{font-weight:600;padding:3px 8px;border-radius:6px;border:2px solid var(--line)}
-#focusstate.f{border-color:var(--focus);color:var(--focus)}
-#legend{display:flex;gap:8px;flex-wrap:wrap;font-size:12px}
-#legend span{display:inline-flex;align-items:center;gap:4px}
-#legend i{width:12px;height:12px;border-radius:2px;display:inline-block}
-#stage{overflow:auto;position:relative;min-height:0;padding:8px}
-#wrap{position:relative;display:inline-block}
+body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.4 -apple-system,system-ui,sans-serif;height:100vh;display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+header{display:flex;gap:8px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+header h1{font-size:14px;margin:0;letter-spacing:.01em}
+select,input[type=text]{padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--ink);font:inherit}
+button.b{padding:5px 9px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--ink);font:inherit;cursor:pointer;white-space:nowrap;transition:background .1s,border-color .1s}
+button.b:hover{border-color:var(--accent)}
+button.b.on{outline:2px solid var(--accent);background:rgba(37,99,235,.14)}
+button.go{background:var(--ok);border-color:var(--ok);color:#041b0b;font-weight:700}
+button.go:hover{filter:brightness(1.06)}
+button.warn{background:rgba(217,119,6,.16);border-color:var(--warn);color:var(--warn);font-weight:600}
+button.no{background:rgba(220,38,38,.12);border-color:var(--bad);color:var(--bad);font-weight:600}
+.pill{font-size:11px;padding:2px 7px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);color:var(--muted)}
+.pill.ok{border-color:var(--ok);color:var(--ok)}
+.pill.warn{border-color:var(--warn);color:var(--warn)}
+#main{display:grid;grid-template-columns:1fr 350px;min-height:0;height:100%}
+#stage{overflow:auto;position:relative;min-height:0;padding:10px;background:#0b0c0e;display:flex;flex-direction:column;align-items:flex-start}
+#wrap{position:relative;display:inline-block;box-shadow:0 4px 24px rgba(0,0,0,.45)}
 #img{display:block;user-select:none;-webkit-user-drag:none}
 svg{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
-.o{fill:transparent;stroke-width:3;vector-effect:non-scaling-stroke;cursor:pointer}
-.o:hover{fill:rgba(255,255,255,.12)}
-.o.flag{stroke:var(--bad)!important;stroke-dasharray:8 5}
-.fo{fill:none;stroke:var(--focus);stroke-width:9;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 6px var(--focus))}
-text{pointer-events:none;font-family:-apple-system,system-ui,sans-serif;font-weight:600}
-#menu{position:fixed;display:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.25);padding:6px;z-index:9;width:220px}
-#menu button{display:block;width:100%;text-align:left;margin:2px 0}
-#menu .cls{display:grid;grid-template-columns:1fr 1fr;gap:3px}
-#menu .cls button{font-size:12px;padding:4px}
-#msg{font-size:12px}#msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
-.muted{color:var(--muted);font-size:12px}
-kbd{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.o{fill:transparent;stroke-width:2.5;vector-effect:non-scaling-stroke;cursor:pointer}
+.o:hover{fill:rgba(255,255,255,.10)}
+.o.sel{fill:rgba(96,165,250,.14);stroke-width:4.5}
+.o.flag-bad{stroke:var(--bad)!important;stroke-dasharray:8 5;opacity:.45}
+.handle{fill:#fff;stroke:#18181b;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.fo{fill:none;stroke:var(--focus);stroke-width:8;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 8px var(--focus))}
+text{pointer-events:none;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
+#rail{border-left:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.card{padding:10px 12px;border-bottom:1px solid var(--line)}
+.card h2{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 6px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fullgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#accept{width:100%;padding:9px 12px;font-size:14px}
+#focusCandRow{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+#selCard{background:var(--panel2)}
+#selCls{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px}
+#selCls button{font-size:11px;padding:4px 6px;text-align:left}
+#objList{flex:1;overflow:auto;padding:8px 10px;display:flex;flex-direction:column;gap:4px}
+.item{display:grid;grid-template-columns:auto 1fr auto auto;gap:5px;align-items:center;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);cursor:pointer}
+.item.sel{border-color:var(--accent);background:rgba(37,99,235,.14)}
+.item.bad{opacity:.5;text-decoration:line-through}
+.swatch{width:10px;height:10px;border-radius:3px}
+.item .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+.item button{padding:2px 6px;font-size:11px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);cursor:pointer}
+.item button.foc{border-color:var(--focus);color:var(--focus)}
+.item button.rej{border-color:var(--bad);color:var(--bad)}
+#quickFloat{position:fixed;display:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.35);padding:6px;z-index:12;width:238px}
+#quickFloat .cls{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:4px}
+#quickFloat .cls button{font-size:11px;padding:4px;text-align:left}
+#msg{font-size:12px;min-height:16px}#msg.bad{color:var(--bad)}#msg.ok{color:var(--ok)}
+.muted{color:var(--muted);font-size:11px}
+kbd{font-size:10px;border:1px solid var(--line);border-radius:4px;padding:0 4px;background:var(--panel2)}
+body.contract .fo{stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 2px #000)}
+body.contract .fo-back{stroke:#000;stroke-width:9;filter:none}
+@keyframes focus-contrast{0%,45%,100%{stroke:#fff}50%,95%{stroke:#000}}
+@keyframes focus-back{0%,45%,100%{stroke:#000}50%,95%{stroke:#fff}}
+body.contract.pulse-focus .fo{animation:focus-contrast 1.8s step-end infinite}
+body.contract.pulse-focus .fo-back{animation-name:focus-back}
+#svg.hide-boxes .control-overlays{display:none}
+#focusDecisionState{font-weight:700;font-size:14px;line-height:1.4;margin:6px 0}
+#sourceInfo{overflow-wrap:anywhere}
+.contract-controls{display:none}
+body.contract .contract-controls{display:flex}
 </style>
 </head>
 <body>
 <header>
-  <h1>Label Review</h1>
-  <select id="pick" aria-label="Frame"></select>
+  <h1>TVBench Fast Review</h1>
+  <button class="b" id="pendingOnly" title="Filter selector to pending frames">Pending only</button>
+  <select id="pick" aria-label="Frame" style="max-width:300px"></select>
+  <span id="appTag" class="pill"></span>
+  <span id="expTag" class="pill"></span>
   <span id="progress" class="muted"></span>
   <span style="flex:1"></span>
-  <input id="reviewer" type="text" style="width:140px" placeholder="Reviewer name" aria-label="Reviewer">
-  <button class="b" id="zoom">Zoom 100%</button>
+  <button class="b" id="undo" title="Cmd/Ctrl+Z">↶ Undo</button>
+  <button class="b" id="zoom" aria-label="Change image zoom">Fit (100%)</button>
+  <input id="reviewer" type="text" style="width:130px" placeholder="Reviewer name" aria-label="Reviewer">
 </header>
-<div id="bar">
-  <span id="focusstate">Focus: not set</span>
-  <button class="b" id="nofocus" title="0">No focus</button>
-  <button class="b" id="cantell" title="?">Can't tell</button>
-  <button class="b" id="missing" title="M">Controls missing</button>
-  <button class="b go" id="accept" title="Enter">✓ Accept and next</button>
-  <button class="b" id="prev">◀</button><button class="b" id="next">▶</button>
-  <span id="msg"></span>
-  <span id="legend"></span>
+<dialog id="reviewerGate" aria-labelledby="reviewerGateTitle">
+  <form method="dialog">
+    <h2 id="reviewerGateTitle">Save this review</h2>
+    <label>Reviewer name <input id="reviewerGateName" required autofocus autocomplete="off"></label>
+    <p>Your focus selection and boxes are ready to save.</p>
+    <button type="button" id="reviewerGateCancel">Keep editing</button>
+    <button type="submit" value="continue" id="reviewerGateContinue">Save and continue</button>
+  </form>
+</dialog>
+
+<div id="main">
+  <section id="stage">
+    <div id="wrap"><img id="img" alt="Captured frame"><svg id="svg"></svg></div>
+    <p class="muted" style="margin:8px 2px 0">
+      1-click: <kbd>Enter</kbd> Validate &amp; Next · <kbd>N</kbd> No Focus &amp; Next · <kbd>Alt+Click</kbd> Reject box · <kbd>F</kbd> Focus selected · <kbd>Shift+Enter</kbd> Focus selected &amp; Next · Drag corners to resize · Drag empty space to add control.
+    </p>
+  </section>
+
+  <aside id="rail">
+    <div class="card">
+      <h2>1-Click Frame Decision</h2>
+      <button class="b go" id="accept" title="Validate current boxes + focus and jump to next pending (Enter)">✓ Validate &amp; Next [Enter]</button>
+      <p id="focusDecisionState" role="status" aria-live="polite" hidden></p>
+      <p id="sourceInfo" class="muted" hidden></p>
+      <div class="fullgrid" style="margin-top:6px">
+        <button class="b" id="noFocusNext" title="Set no_focus, validate, and advance (N)">○ No Focus + Next [N]</button>
+        <button class="b" id="cantTellNext" title="Set focus unknown, save, and advance">? Can't Tell + Next</button>
+        <button class="b" id="prev">◀ Prev [←]</button>
+        <button class="b" id="next">Next [→] ▶</button>
+      </div>
+      <div class="row" style="margin-top:6px;justify-content:space-between">
+        <button class="b" id="missing" title="Mark frame incomplete (M)">Incomplete / missing [M]</button>
+        <button class="b no" id="clearDrafts" title="Clear all unaccepted boxes on this frame">✕ Clear Boxes</button>
+      </div>
+      <div role="status" aria-live="polite" id="msg" style="margin-top:4px"></div>
+    </div>
+
+    <div class="card">
+      <h2>Focus Target <span id="focusstate" class="pill">not set</span></h2>
+      <div class="row">
+        <button class="b" id="nofocus" title="0">No focus [0]</button>
+        <button class="b" id="cantell" title="?">Can't tell [?]</button>
+        <button class="b" id="markFocus" aria-pressed="false">Mark focused item</button>
+        <button class="b" id="showFocus" aria-pressed="false">Highlight marked focus</button>
+        <button class="b" id="focusSelectedBtn" title="F">◎ Focus Selected [F]</button>
+      </div>
+      <div class="row contract-controls" style="margin-top:6px">
+        <button class="b" id="pulseFocus" aria-pressed="true">Pulse focus outline</button>
+        <button class="b" id="showBoxes" aria-pressed="true">Show control boxes</button>
+      </div>
+      <div id="focusCandRow"></div>
+    </div>
+
+    <div class="card" id="selCard">
+      <h2>Selected Control <span id="selTitle" class="muted">(click any box or drag handle to resize)</span></h2>
+      <div class="row">
+        <button class="b go" id="selFocusGo" disabled>◎+✓ Focus &amp; Accept</button>
+        <button class="b no" id="selReject" disabled>✕ Not Control [X]</button>
+        <button class="b" id="selKeep" disabled>✓ Keep</button>
+      </div>
+      <div id="selCls"></div>
+      <select id="selOther" style="width:100%;margin-top:4px" disabled><option value="">Other class…</option></select>
+    </div>
+
+    <div id="objList"></div>
+  </aside>
 </div>
-<section id="stage"><div id="wrap"><img id="img" alt="Captured frame"><svg id="svg"></svg></div>
-  <p class="muted">Click a wrong box to flag it, or to mark focus. <kbd>F</kbd> then click: focus. Drag on an empty area: add a missing control.
-  <kbd>Enter</kbd> accepts the frame as shown. Unflagged boxes count as correct.</p></section>
-<div id="menu"></div>
+
+<div id="quickFloat"></div>
+
 <script>
 const $=id=>document.getElementById(id);
-const COLORS={collectionItem:'#f59e0b',secondaryButton:'#3b82f6',primaryButton:'#a855f7',listRow:'#14b8a6',label:'#9ca3af',imageView:'#ec4899',slider:'#84cc16',textField:'#06b6d4',tabBar:'#6366f1',sheet:'#78716c'};
-const QUICK=['secondaryButton','primaryButton','collectionItem','listRow','textField','slider','toggle','segmentedControl','picker','tabBar'];
+const COLORS={collectionItem:'#f59e0b',secondaryButton:'#3b82f6',primaryButton:'#a855f7',listRow:'#14b8a6',label:'#9ca3af',imageView:'#ec4899',slider:'#84cc16',textField:'#06b6d4',tabBar:'#6366f1',sheet:'#78716c',toggle:'#10b981',segmentedControl:'#eab308',picker:'#f97316'};
+let QUICK=['secondaryButton','primaryButton','collectionItem','listRow','tabBar','textField','slider','toggle','segmentedControl','imageView'];
 const color=c=>c?COLORS[c]||`hsl(${[...c].reduce((a,ch)=>a*31+ch.charCodeAt(0)>>>0,7)%360} 70% 50%)`:'#ffffff';
-let meta,cases=[],cur=null,label=null,zoom=1,drag=null,dirty=false,focusMode=false;
+
+let meta,cases=[],cur=null,label=null,hints={focusCandidates:[]},zoom=1,drag=null,dirty=false,focusMode=false,pendingFilter=true,selIdx=-1,undoStack=[],lastClass='secondaryButton';
+
 try{$('reviewer').value=localStorage.getItem('reviewer')||''}catch(e){}
 $('reviewer').oninput=()=>{try{localStorage.setItem('reviewer',$('reviewer').value)}catch(e){}};
-async function api(path,body){const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j}
-const msg=(t,c)=>{$('msg').textContent=t;$('msg').className=c||''};
-async function loadList(){meta=await api('/api/cases');cases=meta.cases;renderPick()}
-function renderPick(){$('pick').innerHTML=cases.map((c,i)=>`<option value="${i}">${c.status==='accepted'?'✓ ':'· '}${c.id}</option>`).join('');
-  if(cur)$('pick').value=cases.findIndex(c=>c.id===cur.id);$('progress').textContent=`${cases.filter(c=>c.status==='accepted').length} of ${cases.length} accepted`}
-$('pick').onchange=()=>open(+$('pick').value);
-async function open(i){if(dirty&&!confirm('Discard unsaved changes on this frame?'))return;cur=cases[i];label=await api('/api/case/'+cur.id);dirty=false;hideMenu();
-  label.objects.forEach(o=>o.flag=o.flag||null);label.missingSet=cur.status==='accepted'&&label.complete===false;$('img').src='/image/'+cur.id;$('img').onload=()=>{fit();draw()};renderPick();msg(cur.expectedScreen||'')}
-function fit(){const w=$('stage').clientWidth-16;const s=Math.min(1,w/cur.width)*zoom;$('img').style.width=cur.width*s+'px';$('svg').setAttribute('viewBox',`0 0 ${cur.width} ${cur.height}`)}
-$('zoom').onclick=()=>{zoom=zoom===1?2:zoom===2?3:1;$('zoom').textContent='Zoom '+zoom*100+'%';fit()};
+
+async function api(path,body){
+  const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});
+  const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);return j;
+}
+const msg=(t,c)=>{$('msg').textContent=t||'';$('msg').className=c||''};
+
+function pushUndo(){
+  if(!label)return;
+  undoStack.push(JSON.stringify({objects:label.objects,focus:label.focus,missingSet:label.missingSet,selIdx}));
+  if(undoStack.length>40)undoStack.shift();
+}
+function popUndo(){
+  if(!undoStack.length)return;
+  const s=JSON.parse(undoStack.pop());
+  label.objects=s.objects;label.focus=s.focus;label.missingSet=s.missingSet;selIdx=s.selIdx;dirty=true;draw();
+}
+$('undo').onclick=popUndo;
+
+function visibleCases(){
+  if(!pendingFilter)return cases;
+  const p=cases.filter(c=>c.status!=='accepted'||(cur&&c.id===cur.id));
+  return p.length?p:cases;
+}
+
+async function loadList(){
+  meta=await api('/api/cases');
+  cases=meta.cases;
+  if(meta.focusStates?.includes('known_no_focus')){
+    QUICK=meta.classes;lastClass='button';document.body.classList.add('contract');
+    document.body.classList.toggle('pulse-focus',!matchMedia('(prefers-reduced-motion: reduce)').matches);
+    $('pulseFocus').setAttribute('aria-pressed',String(document.body.classList.contains('pulse-focus')));
+    $('noFocusNext').textContent='Known no focus + Next [N]';
+    $('noFocusNext').title='Confirm that this screen has no focused control, save, and advance';
+    $('nofocus').textContent='Known no focus [0]';
+  }
+  $('selOther').innerHTML='<option value="">Other class…</option>'+(meta.focusStates?.includes('known_no_focus')?'<option value="__unknown__">Role unknown</option>':'')+meta.classes.map(c=>`<option>${c}</option>`).join('');
+  renderSelClassButtons();
+  renderPick();
+}
+
+function renderPick(){
+  const list=visibleCases();
+  $('pick').innerHTML=list.map(c=>`<option value="${c.id}">${c.status==='accepted'?'✓ ':'· '}${c.id} (${c.draftCount||0})</option>`).join('');
+  if(cur)$('pick').value=cur.id;
+  const acc=cases.filter(c=>c.status==='accepted').length;
+  $('progress').textContent=`${acc} / ${cases.length} accepted`;
+}
+
+$('pendingOnly').classList.add('on');
+$('pendingOnly').onclick=()=>{pendingFilter=!pendingFilter;$('pendingOnly').classList.toggle('on',pendingFilter);renderPick()};
+$('pick').onchange=()=>{const idx=cases.findIndex(c=>c.id===$('pick').value);if(idx>=0)openCase(idx)};
+
+async function openCase(i){
+  if(dirty&&!confirm('Discard unsaved edits on this frame?'))return;
+  cur=cases[i];
+  const resp=await api('/api/case/'+cur.id);
+  hints=resp.hints||{focusCandidates:[]};
+  source=resp.source||null;
+  delete resp.hints;delete resp.source;
+  $('sourceInfo').hidden=!source;
+  $('sourceInfo').textContent=source?`Source: XCUITest accessibility · ${source.bundleIdentifier} · ${source.screenID} · AX focus: ${source.focus?.observed||'unknown'}`:'';
+  label=resp;
+  label.objects.forEach(o=>o.flag=o.flag||null);
+  label.missingSet=cur.status==='accepted'&&label.complete===false;
+  focusMode=false;spotlight=false;dirty=false;undoStack=[];selIdx=label.objects.length?0:-1;hideFloat();
+  $('appTag').textContent=(cur.app||'unknown').split('.').pop();
+  $('expTag').textContent=cur.exposure||'';
+  $('expTag').className='pill '+(cur.exposure==='uninspected-candidate'?'ok':'warn');
+  $('img').src='/image/'+cur.id;
+  $('img').onload=()=>{fit();draw()};
+  renderPick();
+  msg(cur.expectedScreen||'');
+}
+
+function fit(){
+  if(!cur)return;
+  const w=$('stage').clientWidth-24;
+  const h=Math.max(1,$('stage').clientHeight-72);
+  const s=Math.min(1,w/cur.width,h/cur.height)*zoom;
+  $('img').style.width=cur.width*s+'px';
+  $('svg').setAttribute('viewBox',`0 0 ${cur.width} ${cur.height}`);
+}
+$('zoom').onclick=()=>{zoom=zoom===1?1.5:zoom===1.5?2:1;$('zoom').textContent=zoom===1?'Fit (100%)':`Zoom ${Math.round(zoom*100)}%`;fit()};
 window.onresize=()=>cur&&fit();
+
 function el(n,a,t){const e=document.createElementNS('http://www.w3.org/2000/svg',n);for(const k in a)e.setAttribute(k,a[k]);if(t)e.textContent=t;return e}
-function draw(){const s=$('svg');s.innerHTML='';const fs=Math.max(18,cur.width/110);const used=new Set();
-  label.objects.forEach((o,i)=>{const c=color(o.class);used.add(o.class);
-    const r=el('rect',{x:o.box[0],y:o.box[1],width:o.box[2],height:o.box[3],class:'o'+(o.flag?' flag':''),stroke:c});r.dataset.i=i;s.appendChild(r);
-    const tag=o.flag?('✕ '+o.flag+(o.class?' → '+o.class:'')):(o.class||'unclassified');
-    s.appendChild(el('rect',{x:o.box[0],y:Math.max(0,o.box[1]-fs*1.25),width:tag.length*fs*.58+8,height:fs*1.2,fill:o.flag?'#dc2626':c,opacity:.9,'pointer-events':'none'}));
-    s.appendChild(el('text',{x:o.box[0]+4,y:Math.max(fs,o.box[1]-fs*.3),'font-size':fs,fill:'#fff'},tag))});
-  const f=label.focus;if(f.state==='focused'&&f.box){const b=f.box,p=fs*.5;s.appendChild(el('rect',{x:b[0]-p,y:b[1]-p,width:b[2]+2*p,height:b[3]+2*p,class:'fo'}));
-    s.appendChild(el('rect',{x:b[0]-p,y:b[1]+b[3]+p,width:fs*4.2,height:fs*1.5,fill:'#22c55e','pointer-events':'none'}));
-    s.appendChild(el('text',{x:b[0]-p+6,y:b[1]+b[3]+p+fs*1.15,'font-size':fs*1.1,fill:'#04210f'},'FOCUS'))}
-  $('legend').innerHTML=[...used].map(c=>`<span><i style="background:${color(c)}"></i>${c||'unclassified'}</span>`).join('')+'<span><i style="background:#dc2626"></i>flagged</span><span><i style="background:#22c55e"></i>focus</span>';
-  const fsEl=$('focusstate');fsEl.className=f.state==='focused'?'f':'';fsEl.textContent='Focus: '+({focused:'marked',no_focus:'no focus',unknown:'not set / can\'t tell'})[f.state];
-  $('missing').classList.toggle('on',label.complete===false&&label.missingSet===true)}
+
+let spotlight=false,source=null;
+function draw(){
+  if(!cur||!label)return;
+  const s=$('svg');s.innerHTML='';
+  const fs=Math.max(18,cur.width/115);
+  const overlays=el('g',{class:'control-overlays'});s.appendChild(overlays);
+  label.objects.forEach((o,i)=>{
+    const bad=o.flag==='not-control'||o.flag==='wrong-box';
+    const sel=i===selIdx;
+    const c=color(o.class);
+    const r=el('rect',{x:o.box[0],y:o.box[1],width:o.box[2],height:o.box[3],class:'o'+(sel?' sel':'')+(bad?' flag-bad':''),stroke:c});
+    r.dataset.i=i;overlays.appendChild(r);
+    const tag=`#${i+1} `+(o.flag==='not-control'?'✕ not-control':(o.class||'pick class'));
+    overlays.appendChild(el('rect',{x:o.box[0],y:Math.max(0,o.box[1]-fs*1.25),width:tag.length*fs*.55+10,height:fs*1.2,fill:bad?'#dc2626':c,opacity:bad?.75:.92,'pointer-events':'none'}));
+    overlays.appendChild(el('text',{x:o.box[0]+4,y:Math.max(fs,o.box[1]-fs*.3),'font-size':fs,fill:'#fff'},tag));
+  });
+  if(selIdx>=0&&label.objects[selIdx]){
+    const b=label.objects[selIdx].box,hs=Math.max(10,cur.width/150);
+    [[b[0],b[1],'nw'],[b[0]+b[2],b[1],'ne'],[b[0],b[1]+b[3],'sw'],[b[0]+b[2],b[1]+b[3],'se'],
+     [b[0]+b[2]/2,b[1],'n'],[b[0]+b[2]/2,b[1]+b[3],'s'],[b[0],b[1]+b[3]/2,'w'],[b[0]+b[2],b[1]+b[3]/2,'e']].forEach(([hx,hy,dir])=>{
+      const h=el('rect',{x:hx-hs/2,y:hy-hs/2,width:hs,height:hs,class:'handle'});
+      h.dataset.handle=dir;h.style.cursor=dir+'-resize';overlays.appendChild(h);
+    });
+  }
+  const f=label.focus;
+  const marked=f.state==='focused'&&!!f.box;
+  if(!marked)spotlight=false;
+  $('markFocus').setAttribute('aria-pressed',String(focusMode));
+  $('markFocus').textContent=focusMode?'Cancel marking':'Mark focused item';
+  $('showFocus').disabled=!marked;
+  $('showFocus').setAttribute('aria-pressed',String(spotlight));
+  $('showFocus').textContent=spotlight?'Hide highlight':'Highlight marked focus';
+  if(spotlight&&marked){
+    const [x,y,w,h]=f.box;
+    s.appendChild(el('path',{d:`M0 0H${cur.width}V${cur.height}H0Z M${x} ${y}h${w}v${h}h-${w}Z`,'fill-rule':'evenodd',fill:'#000',opacity:.6,'pointer-events':'none'}));
+  }
+  if(drag?.mode==='focusBox'&&drag.box){
+    const [x,y,w,h]=drag.box;
+    s.appendChild(el('rect',{x,y,width:w,height:h,class:'fo'}));
+  }
+  if(marked){
+    const b=f.box,p=fs*.45;
+    if(document.body.classList.contains('contract'))s.appendChild(el('rect',{x:b[0]-p,y:b[1]-p,width:b[2]+2*p,height:b[3]+2*p,class:'fo fo-back'}));
+    s.appendChild(el('rect',{x:b[0]-p,y:b[1]-p,width:b[2]+2*p,height:b[3]+2*p,class:'fo'}));
+    s.appendChild(el('rect',{x:b[0]-p,y:b[1]+b[3]+p,width:fs*4.4,height:fs*1.45,fill:'#22c55e','pointer-events':'none'}));
+    s.appendChild(el('text',{x:b[0]-p+6,y:b[1]+b[3]+p+fs*1.12,'font-size':fs*1.05,fill:'#04210f'},'FOCUS'));
+  }
+  const fsEl=$('focusstate');
+  fsEl.className='pill '+(f.state==='focused'?'ok':['no_focus','known_no_focus'].includes(f.state)?'warn':'');
+  fsEl.textContent=({focused:'focused',no_focus:'no focus',known_no_focus:'known no focus',unknown:'not set'})[f.state];
+  $('focusDecisionState').hidden=!document.body.classList.contains('contract');
+  $('focusDecisionState').textContent=f.state==='known_no_focus'?'Known no focus: explicit reviewer decision.':f.state==='focused'?'Focused control marked.':source?.focus?.observed==='none_observed'?'Unknown focus: AX observed no focus. Confirm visually before choosing known no focus.':'Unknown focus: a reviewer must decide.';
+  $('missing').classList.toggle('on',label.complete===false&&label.missingSet===true);
+  renderFocusCands();
+  renderSelCard();
+  renderObjList();
+}
+
+function renderFocusCands(){
+  const row=$('focusCandRow');
+  const cands=(hints&&hints.focusCandidates)||[];
+  if(!cands.length){row.innerHTML='';return}
+  row.innerHTML='<span class="muted">Focus picks:</span>'+cands.slice(0,3).map((c,k)=>{
+    const active=label.focus.state==='focused'&&label.focus.box&&Math.abs(label.focus.box[0]-c.box[0])<2&&Math.abs(label.focus.box[1]-c.box[1])<2;
+    return `<button class="b ${active?'on':''}" data-fc="${k}">#${(c.index??k)+1} ${c.class||''}</button>`;
+  }).join('');
+  row.querySelectorAll('[data-fc]').forEach(btn=>btn.onclick=()=>{
+    const c=cands[+btn.dataset.fc];
+    pushUndo();
+    if(c.index>=0&&label.objects[c.index])selIdx=c.index;
+    label.focus={state:'focused',box:[...c.box]};dirty=true;draw();
+  });
+}
+
+function renderSelClassButtons(){
+  $('selCls').innerHTML=QUICK.map((c,idx)=>`<button class="b" data-sc="${c}" style="border-left:4px solid ${color(c)}">${idx<9?`<kbd>${idx+1}</kbd> `:''}${c}</button>`).join('');
+  $('selCls').onclick=e=>{
+    const b=e.target.closest('button');if(!b||selIdx<0)return;
+    fixClass(label.objects[selIdx],b.dataset.sc);
+  };
+  $('selOther').onchange=e=>{if(!e.target.value||selIdx<0)return;fixClass(label.objects[selIdx],e.target.value==='__unknown__'?null:e.target.value)};
+}
+
+function renderSelCard(){
+  const o=selIdx>=0?label.objects[selIdx]:null;
+  $('selTitle').textContent=o?`#${selIdx+1} · ${o.class||'unclassified'} (${o.flag||'ok'})`:'(click any box)';
+  $('selFocusGo').disabled=!o;
+  $('selReject').disabled=!o;
+  $('selKeep').disabled=!o;
+  $('selOther').disabled=!o;
+  $('selOther').value=o&&o.class?o.class:(o&&meta.focusStates?.includes('known_no_focus')?'__unknown__':'');
+  $('selCls').querySelectorAll('button').forEach(b=>{b.disabled=!o;b.classList.toggle('on',!!o&&o.class===b.dataset.sc)});
+}
+
+function renderObjList(){
+  const list=$('objList');
+  list.innerHTML=label.objects.map((o,i)=>{
+    const bad=o.flag==='not-control'||o.flag==='wrong-box';
+    return `<div class="item ${i===selIdx?'sel':''} ${bad?'bad':''}" data-row="${i}">
+      <span class="swatch" style="background:${color(o.class)}"></span>
+      <span class="lbl">#${i+1} ${o.class||'unclassified'}</span>
+      <button class="foc" data-act="foc" data-i="${i}" title="Set Focus">◎</button>
+      <button class="rej" data-act="rej" data-i="${i}" title="Reject / Restore">${bad?'↺':'✕'}</button>
+    </div>`;
+  }).join('');
+  list.onclick=e=>{
+    const act=e.target.closest('[data-act]');
+    if(act){
+      e.stopPropagation();
+      const idx=+act.dataset.i,o=label.objects[idx];
+      if(act.dataset.act==='foc'){selIdx=idx;setFocus(o);return}
+      if(act.dataset.act==='rej'){selIdx=idx;toggleReject(o);return}
+    }
+    const row=e.target.closest('[data-row]');
+    if(row){selIdx=+row.dataset.row;draw()}
+  };
+}
+
+function fixClass(o,cls){
+  pushUndo();
+  if(cls)lastClass=cls;
+  if(o.flag==='not-control'||o.flag==='wrong-box')o.flag=null;
+  if(o.class!==cls&&!String(o.provenance||'').includes('reviewer:adjusted-class')){
+    o.provenance=(o.provenance||'draft')+';reviewer:adjusted-class';
+  }
+  o.class=cls;
+  if(o.visibility==='unknown')o.visibility='visible';
+  dirty=true;hideFloat();draw();
+}
+
+function toggleReject(o){
+  pushUndo();
+  if(o.flag==='not-control'){
+    o.flag=null;
+    o.class=o.savedClass||lastClass;
+  }else if(o.flag==='missing'){
+    label.objects.splice(label.objects.indexOf(o),1);
+    selIdx=Math.min(selIdx,label.objects.length-1);
+  }else{
+    o.savedClass=o.class;
+    o.flag='not-control';
+    o.class=null;
+  }
+  dirty=true;hideFloat();draw();
+}
+
+function setFocus(o){
+  pushUndo();
+  label.focus={state:'focused',box:[...o.box]};
+  if(o.flag==='not-control'||o.flag==='wrong-box')o.flag=null;
+  if(!o.class&&!meta.focusStates?.includes('known_no_focus'))o.class=lastClass;
+  focusMode=false;dirty=true;hideFloat();draw();
+}
+
+$('selFocusGo').onclick=async()=>{if(selIdx<0)return;setFocus(label.objects[selIdx]);await accept(true)};
+$('selReject').onclick=()=>{if(selIdx>=0)toggleReject(label.objects[selIdx])};
+$('selKeep').onclick=()=>{if(selIdx<0)return;pushUndo();const o=label.objects[selIdx];o.flag=null;if(!o.class&&!meta.focusStates?.includes('known_no_focus'))o.class=lastClass;if(o.visibility==='unknown')o.visibility='visible';dirty=true;draw()};
+$('focusSelectedBtn').onclick=()=>{if(selIdx>=0)setFocus(label.objects[selIdx])};
+
 function pt(ev){const r=$('svg').getBoundingClientRect();return[(ev.clientX-r.left)*cur.width/r.width,(ev.clientY-r.top)*cur.height/r.height]}
-const clamp=b=>{b[0]=Math.max(0,Math.min(b[0],cur.width-1));b[1]=Math.max(0,Math.min(b[1],cur.height-1));b[2]=Math.max(1,Math.min(b[2],cur.width-b[0]));b[3]=Math.max(1,Math.min(b[3],cur.height-b[1]));return b.map(v=>Math.round(v*10)/10)};
-function setFocus(o){label.focus={state:'focused',box:[...o.box]};focusMode=false;dirty=true;hideMenu();draw()}
-$('svg').onpointerdown=ev=>{if(!cur)return;hideMenu();const t=ev.target;
-  if(t.dataset.i!==undefined){const o=label.objects[+t.dataset.i];if(focusMode)return setFocus(o);return showMenu(o,ev)}
-  try{$('svg').setPointerCapture(ev.pointerId)}catch(e){}const p=pt(ev);
-  const o={id:'m-'+Date.now().toString(36),class:null,box:[p[0],p[1],1,1],visibility:'visible',provenance:'reviewer:missing',flag:'missing'};
-  label.objects.push(o);drag={p,o}};
-$('svg').onpointermove=ev=>{if(!drag)return;const p=pt(ev);drag.o.box=clamp([Math.min(p[0],drag.p[0]),Math.min(p[1],drag.p[1]),Math.abs(p[0]-drag.p[0]),Math.abs(p[1]-drag.p[1])]);draw()};
-$('svg').onpointerup=ev=>{if(!drag)return;const o=drag.o;drag=null;
-  if(o.box[2]<6||o.box[3]<6){label.objects.pop();draw();return}
-  label.complete=false;label.missingSet=true;dirty=true;draw();showMenu(o,ev)};
-function showMenu(o,ev){const m=$('menu');const missing=o.flag==='missing';
-  m.innerHTML=(missing?'<div class="muted">Missing control. Pick its class:</div>':`<div class="muted">${o.class||'unclassified'} · ${o.provenance.replace('sdk-draft:','SDK ')}</div>`)+
-   `<button class="b" data-a="focus">◎ Focus is here</button>`+
-   (missing?'':`<button class="b" data-a="not-control">✕ Not a control</button><button class="b" data-a="wrong-box">✕ Box is wrong / misaligned</button><div class="muted" style="margin-top:4px">✕ Wrong class, correct class is:</div>`)+
-   `<div class="cls">${QUICK.map(c=>`<button class="b" data-c="${c}" style="border-left:4px solid ${color(c)}">${c}</button>`).join('')}</div>`+
-   `<select data-s style="width:100%;margin-top:3px"><option value="">Other class…</option>${meta.classes.map(c=>`<option>${c}</option>`).join('')}</select>`+
-   (o.flag?`<button class="b" data-a="clear">${missing?'Remove this box':'Clear flag (box is correct)'}</button>`:'');
-  m.style.display='block';const x=Math.min(ev.clientX+8,innerWidth-230),y=Math.min(ev.clientY+8,innerHeight-m.offsetHeight-8);m.style.left=x+'px';m.style.top=Math.max(4,y)+'px';
-  m.onclick=e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a,c=b.dataset.c;
-    if(a==='focus')return setFocus(o);
-    if(a==='clear'){if(missing){label.objects.splice(label.objects.indexOf(o),1);if(!label.objects.some(x=>x.flag==='missing')){label.missingSet=false}}else{o.flag=null;o.class=o.draftClass??o.class}}
-    if(a==='not-control'||a==='wrong-box'){o.draftClass=o.draftClass??o.class;o.flag=a;o.class=null}
-    if(c){if(!missing){o.draftClass=o.draftClass??o.class;o.flag='wrong-class'}o.class=c}
-    dirty=true;hideMenu();draw()};
-  m.querySelector('[data-s]').onchange=e=>{const c=e.target.value;if(!c)return;if(!missing){o.draftClass=o.draftClass??o.class;o.flag='wrong-class'}o.class=c;dirty=true;hideMenu();draw()}}
-function hideMenu(){$('menu').style.display='none'}
-document.addEventListener('pointerdown',e=>{if(!e.target.closest('#menu')&&!e.target.closest('svg'))hideMenu()});
-$('nofocus').onclick=()=>{label.focus={state:'no_focus',box:null};dirty=true;draw()};
-$('cantell').onclick=()=>{label.focus={state:'unknown',box:null};dirty=true;draw()};
-$('missing').onclick=()=>{label.missingSet=!label.missingSet;label.complete=!label.missingSet;dirty=true;draw()};
-function payload(){const f=label.focus.state==='focused'?{state:'focused',box:label.focus.box}:{state:label.focus.state,box:null};
-  const objects=label.objects.map(o=>{const r={id:o.id,class:o.class,box:o.box,visibility:o.visibility,provenance:o.provenance};
-    if(o.flag){r.flag=o.flag;if(o.flag!=='missing')r.provenance=o.provenance+';reviewer:'+o.flag+(o.draftClass?':draft='+o.draftClass:'')}return r});
-  return{imageSHA256:label.imageSHA256,complete:label.missingSet!==true,objects,focus:f,review:{blinded:true,reviewer:$('reviewer').value.trim(),status:'accepted'}}}
-async function accept(){try{if(!$('reviewer').value.trim())throw new Error('Enter your name at the top first.');
-  if(label.focus.state==='unknown'&&!confirm('Focus is not marked. Accept with focus "can\'t tell"?'))return;
-  const r=await api('/api/case/'+cur.id,payload());cur.status=r.status;dirty=false;renderPick();msg('Accepted.','ok');step(1)}catch(e){msg(e.message,'bad')}}
-$('accept').onclick=accept;
-function step(d){const i=cases.findIndex(c=>c.id===cur.id);if(i+d>=0&&i+d<cases.length)open(i+d)}
+const clamp=b=>{b[0]=Math.max(0,Math.min(b[0],cur.width-1));b[1]=Math.max(0,Math.min(b[1],cur.height-1));b[2]=Math.max(4,Math.min(b[2],cur.width-b[0]));b[3]=Math.max(4,Math.min(b[3],cur.height-b[1]));return b.map(v=>Math.round(v*10)/10)};
+
+$('markFocus').onclick=()=>{
+  focusMode=!focusMode;hideFloat();draw();
+  msg(focusMode?'Drag a box around the focused control, or click an existing annotation.':'');
+};
+$('pulseFocus').onclick=()=>{document.body.classList.toggle('pulse-focus');$('pulseFocus').setAttribute('aria-pressed',String(document.body.classList.contains('pulse-focus')))};
+$('showBoxes').onclick=()=>{$('svg').classList.toggle('hide-boxes');$('showBoxes').setAttribute('aria-pressed',String(!$('svg').classList.contains('hide-boxes')))};
+$('showFocus').onclick=()=>{spotlight=!spotlight;draw()};
+$('svg').onpointerdown=ev=>{
+  if(focusMode){
+    const objectIndex=ev.target.dataset.i;
+    if(objectIndex!==undefined){spotlight=true;setFocus(label.objects[Number(objectIndex)]);return}
+    drag={mode:'focusBox',p:pt(ev)};
+    $('svg').setPointerCapture(ev.pointerId);ev.preventDefault();return;
+  }
+  if(!cur)return;
+  hideFloat();
+  const t=ev.target;
+  if(t.dataset.handle&&selIdx>=0){
+    pushUndo();
+    const o=label.objects[selIdx];
+    try{$('svg').setPointerCapture(ev.pointerId)}catch(e){}
+    drag={mode:'resize',dir:t.dataset.handle,p:pt(ev),orig:[...o.box],o};
+    return;
+  }
+  if(t.dataset.i!==undefined){
+    const idx=+t.dataset.i,o=label.objects[idx];
+    selIdx=idx;
+    if(ev.altKey){toggleReject(o);return}
+    if(focusMode){setFocus(o);return}
+    pushUndo();
+    try{$('svg').setPointerCapture(ev.pointerId)}catch(e){}
+    drag={mode:'move',p:pt(ev),orig:[...o.box],o,moved:false,ev};
+    draw();
+    return;
+  }
+  pushUndo();
+  try{$('svg').setPointerCapture(ev.pointerId)}catch(e){}
+  const p=pt(ev);
+  const o={id:'m-'+Date.now().toString(36),class:lastClass,box:[p[0],p[1],4,4],visibility:'visible',provenance:'reviewer:missing',flag:'missing'};
+  label.objects.push(o);selIdx=label.objects.length-1;
+  drag={mode:'draw',p,o};
+};
+
+$('svg').onpointermove=ev=>{
+  if(!drag)return;
+  const p=pt(ev),dx=p[0]-drag.p[0],dy=p[1]-drag.p[1];
+  if(drag.mode==='focusBox'){
+    drag.box=clamp([Math.min(p[0],drag.p[0]),Math.min(p[1],drag.p[1]),Math.abs(dx),Math.abs(dy)]);
+    draw();return;
+  }
+  if(drag.mode==='draw'){
+    drag.o.box=clamp([Math.min(p[0],drag.p[0]),Math.min(p[1],drag.p[1]),Math.abs(dx),Math.abs(dy)]);
+    draw();return;
+  }
+  if(drag.mode==='move'){
+    if(Math.abs(dx)<3&&Math.abs(dy)<3)return;
+    drag.moved=true;
+    drag.o.box=clamp([drag.orig[0]+dx,drag.orig[1]+dy,drag.orig[2],drag.orig[3]]);
+    markAdjustedBox(drag.o);dirty=true;draw();return;
+  }
+  if(drag.mode==='resize'){
+    let [x,y,w,h]=drag.orig;const d=drag.dir;
+    if(d.includes('w')){x+=dx;w-=dx}
+    if(d.includes('e')){w+=dx}
+    if(d.includes('n')){y+=dy;h-=dy}
+    if(d.includes('s')){h+=dy}
+    if(w<8){w=8}if(h<8){h=8}
+    drag.o.box=clamp([x,y,w,h]);
+    markAdjustedBox(drag.o);dirty=true;draw();
+  }
+};
+
+function markAdjustedBox(o){
+  if(o.flag==='wrong-box')o.flag=null;
+  if(o.visibility==='unknown')o.visibility='visible';
+  if(!String(o.provenance||'').includes('reviewer:adjusted-box')){
+    o.provenance=(o.provenance||'draft')+';reviewer:adjusted-box';
+  }
+}
+
+$('svg').onpointerup=ev=>{
+  if(!drag)return;
+  const d=drag;drag=null;
+  if(d.mode==='focusBox'){
+    if(!d.box||Math.min(d.box[2],d.box[3])<8){draw();msg('Drag around the whole focused control.');return}
+    pushUndo();label.focus={state:'focused',box:d.box};focusMode=false;spotlight=true;dirty=true;
+    draw();msg('Focus marked. Save partial review or validate to keep it.');return;
+  }
+  if(d.mode==='draw'){
+    if(d.o.box[2]<8||d.o.box[3]<8){
+      label.objects.pop();selIdx=-1;undoStack.pop();draw();return;
+    }
+    dirty=true;draw();showFloat(d.o,ev);return;
+  }
+  if(d.mode==='move'&&!d.moved){
+    undoStack.pop();
+    showFloat(d.o,ev);
+  }
+};
+
+function showFloat(o,ev){
+  const m=$('quickFloat');
+  m.innerHTML=`<div class="row" style="justify-content:space-between"><span class="muted">#${label.objects.indexOf(o)+1} · ${o.class||'pick class'}</span><button class="b no" data-a="rej" style="padding:2px 6px">✕ Not control</button></div>
+    <div class="row" style="margin-top:4px"><button class="b" data-a="focus" style="flex:1">◎ Focus</button><button class="b go" data-a="focusgo" style="flex:1">◎+✓ Accept</button></div>
+    <div class="cls">${QUICK.map(c=>`<button class="b" data-c="${c}" style="border-left:4px solid ${color(c)}">${c}</button>`).join('')}</div>`;
+  m.style.display='block';
+  const x=Math.min((ev.clientX||200)+12,innerWidth-250),y=Math.min((ev.clientY||200)+12,innerHeight-m.offsetHeight-8);
+  m.style.left=Math.max(8,x)+'px';m.style.top=Math.max(8,y)+'px';
+  m.onclick=async e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.a==='rej')return toggleReject(o);
+    if(b.dataset.a==='focus')return setFocus(o);
+    if(b.dataset.a==='focusgo'){setFocus(o);await accept(true);return}
+    if(b.dataset.c)return fixClass(o,b.dataset.c);
+  };
+}
+function hideFloat(){$('quickFloat').style.display='none'}
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#quickFloat')&&!e.target.closest('svg'))hideFloat()});
+
+$('nofocus').onclick=()=>{pushUndo();focusMode=false;label.focus={state:meta.focusStates?.includes('known_no_focus')?'known_no_focus':'no_focus',box:null};dirty=true;draw()};
+$('cantell').onclick=()=>{pushUndo();focusMode=false;label.focus={state:'unknown',box:null};dirty=true;draw()};
+$('missing').onclick=()=>{pushUndo();label.missingSet=!label.missingSet;label.complete=!label.missingSet;dirty=true;draw()};
+$('clearDrafts').onclick=()=>{pushUndo();label.objects=[];label.focus={state:'unknown',box:null};selIdx=-1;dirty=true;draw()};
+
+function payload(){
+  const f=label.focus.state==='focused'?{state:'focused',box:label.focus.box}:{state:label.focus.state,box:null};
+  const objects=label.objects.map(o=>{
+    const r={id:o.id,class:o.class,box:o.box,visibility:o.visibility,provenance:o.provenance};
+    if(o.roleSource)r.roleSource=o.roleSource;
+    if(o.flag)r.flag=o.flag;
+    return r;
+  });
+  return{imageSHA256:label.imageSHA256,complete:label.missingSet!==true,objects,focus:f,review:{blinded:true,reviewer:$('reviewer').value.trim(),status:'accepted'}};
+}
+
+let submitting=false;
+async function identifyReviewer(){
+  if($('reviewer').value.trim())return true;
+  const gate=$('reviewerGate'), input=$('reviewerGateName');
+  gate.returnValue='';input.value='';input.setCustomValidity('');
+  $('reviewerGateCancel').onclick=()=>gate.close();
+  gate.querySelector('form').onsubmit=e=>{
+    if(input.value.trim())return;
+    e.preventDefault();input.setCustomValidity('Enter your reviewer name.');input.reportValidity();
+  };
+  input.oninput=()=>input.setCustomValidity('');
+  const closed=new Promise(resolve=>gate.addEventListener('close',resolve,{once:true}));
+  gate.showModal();input.focus();
+  await closed;
+  if(gate.returnValue!=='continue')return false;
+  $('reviewer').value=input.value.trim();$('reviewer').oninput();
+  return true;
+}
+async function accept(skipConfirm=false){
+  if(submitting||!cur||!label)return;
+  submitting=true;
+  const header=document.querySelector('header'), main=$('main');
+  try{
+    if(!await identifyReviewer())return;
+    if(!skipConfirm&&label.focus.state==='unknown'&&!confirm('Save with focus marked unknown?'))return;
+    header.inert=true; main.inert=true;
+    const index=cases.indexOf(cur);
+    const r=await api('/api/case/'+cur.id,payload());
+    if(r.saved!==true||r.status!=='accepted')throw new Error('Save was not confirmed. Please retry.');
+    cur.status=r.status;cur.draftCount=label.objects.length;dirty=false;renderPick();
+    const following=cases.slice(index+1).concat(cases.slice(0,index));
+    const nextCase=following.find(c=>c.status!=='accepted');
+    if(nextCase)await openCase(cases.indexOf(nextCase));
+    else msg('All frames reviewed. Your final review is saved.','ok');
+  }catch(e){msg(e.message,'bad')}
+  finally{header.inert=false;main.inert=false;submitting=false}
+}
+$('accept').onclick=()=>accept(false);
+$('noFocusNext').onclick=async()=>{pushUndo();focusMode=false;label.focus={state:meta.focusStates?.includes('known_no_focus')?'known_no_focus':'no_focus',box:null};dirty=true;draw();await accept(true)};
+$('cantTellNext').onclick=async()=>{pushUndo();focusMode=false;label.focus={state:'unknown',box:null};dirty=true;draw();await accept(true)};
+
+function step(d){
+  const list=visibleCases();
+  const i=list.findIndex(c=>c.id===(cur&&cur.id));
+  if(i>=0&&i+d>=0&&i+d<list.length){openCase(cases.findIndex(c=>c.id===list[i+d].id))}
+}
 $('next').onclick=()=>step(1);$('prev').onclick=()=>step(-1);
-document.onkeydown=ev=>{if(['INPUT','SELECT'].includes(ev.target.tagName))return;const k=ev.key;
-  if(k==='Enter'){ev.preventDefault();accept()}else if(k==='f'||k==='F'){focusMode=!focusMode;msg(focusMode?'Click the focused control.':'')}
-  else if(k==='0')$('nofocus').onclick();else if(k==='?')$('cantell').onclick();else if(k==='m'||k==='M')$('missing').onclick();
-  else if(k==='Escape'){hideMenu();focusMode=false}else if(k==='ArrowRight'&&!ev.target.closest('#menu'))step(1);else if(k==='ArrowLeft')step(-1)};
+
+document.onkeydown=ev=>{
+  if(submitting||ev.repeat||['INPUT','SELECT','TEXTAREA'].includes(ev.target.tagName)||ev.target.isContentEditable)return;
+  if((ev.metaKey||ev.ctrlKey)&&ev.key.toLowerCase()==='z'){ev.preventDefault();popUndo();return}
+  const k=ev.key;
+  if(k==='Enter'){
+    ev.preventDefault();
+    if(ev.shiftKey&&selIdx>=0){setFocus(label.objects[selIdx]);accept(true)}
+    else accept(false);
+  }else if(k==='f'||k==='F'){
+    if(selIdx>=0)setFocus(label.objects[selIdx]);
+    else $('markFocus').click()
+  }else if(k==='n'||k==='N'){ev.preventDefault();$('noFocusNext').click()}
+  else if(k==='0'){$('nofocus').onclick()}
+  else if(k==='?'){$('cantell').onclick()}
+  else if(k==='m'||k==='M'){$('missing').onclick()}
+  else if((k==='x'||k==='X'||k==='Backspace'||k==='Delete')&&selIdx>=0){ev.preventDefault();toggleReject(label.objects[selIdx])}
+  else if(k==='Tab'&&label&&label.objects.length){ev.preventDefault();selIdx=(selIdx+(ev.shiftKey?-1:1)+label.objects.length)%label.objects.length;draw()}
+  else if(/^[1-9]$/.test(k)&&selIdx>=0){const c=QUICK[+k-1];if(c)fixClass(label.objects[selIdx],c)}
+  else if(k==='Escape'){hideFloat();focusMode=false;draw()}
+  else if(k==='ArrowRight')step(1);
+  else if(k==='ArrowLeft')step(-1);
+};
 window.onbeforeunload=e=>{if(dirty){e.preventDefault();e.returnValue=''}};
-loadList().then(()=>{const i=cases.findIndex(c=>c.status!=='accepted');open(i<0?0:i)});
+loadList().then(()=>{const i=cases.findIndex(c=>c.status!=='accepted');openCase(i<0?0:i)});
 </script>
 </body>
 </html>

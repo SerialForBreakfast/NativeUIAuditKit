@@ -345,16 +345,32 @@ The taxonomy uses **stable semantic role strings**, not private UIKit/AppKit cla
 A box covers the control that receives focus or a tap, as the platform reports its frame (view or accessibility frame).
 For `collectionItem`, the box is the whole cell: artwork plus any title or caption inside the cell.
 Text inside a control keeps its own `label` box as well. Nested boxes are valid.
-Exception for the 13-role detector (rule B, maintainer decision 2026-11-02, PILLS560 R4): role targets drop a `text` box inside a `button` box.
-Text inside a button is part of the button; OCR reads it. The 41-class sidecar labels keep their nested `label` boxes.
+Update for the tvOS detector (RESET604 D3, maintainer decision 2026-11-09): remove `text` (`label`) from the tvOS detector roles.
+The tvOS detector uses 12 interactive/structural roles. OCR supplies text, so missing Fixture `label` boxes do not block detector training.
+Historical note (rule B, maintainer decision 2026-11-02, PILLS560 R4): earlier 13-role runs dropped `text` boxes inside `button` boxes.
+The 41-class sidecar labels keep their `label` boxes for raw archival records.
 Artwork inside a cell is part of the cell. Do not label it as a separate `imageView`; use `imageView` only for a standalone image (decision, 2026-11-01).
 Keyboard and PIN keys stay `collectionItem`. Training samples cap keys at 25% of `collectionItem` boxes (decision, 2026-11-01).
 Focus effects (scale, glow, shadow) do not change the box. Measure them as separate geometry, not as the label.
 Separate geometry, such as Fixture `artwork_geometry` and `rendered_body_geometry`, stays additive telemetry.
+Role-specific box rule (`RESET604`, 2026-11-11): `collectionItem`, `listRow`, buttons, and all interactive controls train on the clipped interactive frame (`pixel_bounds` / accessibility frame). Standalone `imageView` elements train on `rendered_body_geometry.visible_pixel_bounds` when supplied, or clipped `pixel_bounds` otherwise. Static text (`label`) never enters detector controls (`map_role -> None`). Preserve `wrapper`, `rendered_body`, and clipped `visible` bounds in metadata, and separate `unknown` focus from verified `no_focus`.
 
 Evidence: TTR Fixture `pixel_bounds`, the NewsTV SDK frames, and this taxonomy already use the whole cell.
 `scripts/generate_tvos_dataset.swift`, which trained `nativeui-tvos-v3.0`, boxed card artwork only. That made real-app card IoU about 0.52 and AP75 0.0 (REALAPP557 RA557-01).
 Decision: the maintainer chooses the whole cell. Generator labels change; existing datasets and models keep their old convention until retrained.
+
+#### 5.2.2 tvOS framework projection contract (decision, 2026-11-12)
+
+New tvOS detector labels come only from real UIKit and SwiftUI construction. See [tvos-framework-projection-v1](Contracts/tvos-framework-projection-v1.md) and its [machine table](Contracts/tvos-framework-projection-v1.json).
+- The tvOS detector has 10 classes: `button`, `cell`, `picture`, `textField`, `toggle`, `segmentedControl`, `pageControl`, `bar`, `dialog`, `indicator`.
+- `adjustable` and `container` are removed for tvOS, because no tvOS framework type produces them.
+- Style and semantic role are attributes. `primaryButton`, `secondaryButton`, `cancelAction`, and `destructiveButton` are not tvOS training classes.
+- A SwiftUI `Button` with `.card` style is `cell`. Custom TTR `UIControl` views are not admitted.
+- Every visible object gets 1 disposition: `target`, `owned_metadata`, `out_of_scope`, or `unresolved`.
+- Keyboard and PIN keys follow the cell rule in this contract. This resolves the conflict with `scripts/roles559.py`, which stays unchanged for historical results.
+
+The 41-class schema in §5.2 stays stable public API, and shipped models keep their contracts.
+Generator labels that come from hand-typed ID prefixes (`ScreenshotCapture.swift`, `scripts/generate_tvos_dataset.swift`) are legacy. They have not shown compliance with this contract.
 
 ### 5.3 Secondary Labels (Post-Processing, Not Detector Classes)
 

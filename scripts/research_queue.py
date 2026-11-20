@@ -134,7 +134,11 @@ def validate_training(spec):
         require('training' not in spec, 'training_only_for_training_jobs')
         return
     training = spec.get('training')
-    require(isinstance(training, dict) and set(training) == TRAINING_FIELDS, 'training_fields')
+    require(isinstance(training, dict) and TRAINING_FIELDS <= set(training)
+            <= TRAINING_FIELDS | {'expectedScoreboardChange'}, 'training_fields')
+    if 'expectedScoreboardChange' in training:
+        require(isinstance(training['expectedScoreboardChange'], str)
+                and bool(training['expectedScoreboardChange'].strip()), 'training_expected_scoreboard_change')
     require(isinstance(training['experimentLogRunId'], str) and ID.fullmatch(training['experimentLogRunId']),
             'training_log_id')
     require(isinstance(training['membership'], list) and training['membership'], 'training_membership')
@@ -153,6 +157,19 @@ def validate_training(spec):
         require(spec.get('adapter',{}).get('steps') == ['checkpoint_restore404.run'], 'training_resume_adapter')
         from checkpoint_restore404 import validate_inputs
         validate_inputs(spec)
+
+
+def check_execution_epochs(spec):
+    epochs = spec['training']['epochs']
+    if spec.get('template', {}).get('id') != 'T107':
+        require(epochs <= 30, 'execution_epoch_limit')
+        return
+    require(spec['adapter']['steps'] == ['train_detector604.queue_run'], 'execution_epoch_adapter')
+    ref = check_pin(spec['template']['inputs']['configuration'])
+    path = local_path(ROOT, ref['path'])
+    require(ref in spec['inputs'] and digest(path) == ref['sha256'], 'execution_epoch_config_pin')
+    configured = load(path).get('epochs', 100)
+    require(type(configured) is int and configured == epochs and 1 <= epochs <= 300, 'execution_epoch_limit')
 
 
 def check_training(spec, queue):
@@ -190,20 +207,18 @@ def validate(spec, module_dir=MODULES):
         require(set(capture) == {'target', 'endpoint', 'plan', 'approval'}, 'capture_contract')
         require(capture['target'] == '9026ECA9-77DB-4AE6-8FE6-BB239E9571FA', 'capture_target')
         require(capture['endpoint'] == ('http://127.0.0.1:8097/diagnostics/sdk/probe'
-                if spec.get('adapter', {}).get('steps') in (['sdk_capture527.run'], ['sdk_profile538.run']) else 'http://127.0.0.1:8080'), 'capture_endpoint')
+                if spec.get('adapter', {}).get('steps') in (['sdk_capture527.run'], ['sdk_profile538.run'], ['native_scene572.run']) else 'http://127.0.0.1:8080'), 'capture_endpoint')
         require(isinstance(capture['approval'], str) and capture['approval'].strip(), 'capture_approval')
         local_path(ROOT, check_pin(capture['plan'])['path'])
         require(spec.get('adapter', {}).get('steps') in
                 (['generation352.run'], ['hcf_recovery367.run'], ['template_bridge395.capture'],
-                 ['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run'], ['sdk_capture527.run'], ['sdk_profile538.run']), 'capture_adapter')
-        if spec['adapter']['steps'] == ['sdk_profile538.run']:
-            from sdk_profile538 import validate_spec
-            validate_spec(spec)
-        if spec['adapter']['steps'] == ['sdk_capture527.run']:
-            from sdk_capture527 import validate_spec
-            validate_spec(spec)
+                 ['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run'], ['sdk_capture527.run'], ['sdk_profile538.run'], ['native_scene572.run']), 'capture_adapter')
+        if spec['adapter']['steps'] in (['native_scene572.run'], ['sdk_profile538.run'], ['sdk_capture527.run']):
+            from research_capture_contracts import selected
+            selected(spec).validate_spec(spec)
         if spec['adapter']['steps'] == ['ttr_campaign_recovery493.run']:
-            import ttr_campaign_recovery493
+            from research_capture_contracts import selected
+            ttr_campaign_recovery493 = selected(spec)
             config = load(local_path(ROOT, capture['plan']['path']))
             ttr_campaign_recovery493.validate_config(config)
             allowed = {'adr493-retained-campaign-recovery': 'campaign-recovery493-v1',
@@ -214,7 +229,8 @@ def validate(spec, module_dir=MODULES):
             if config['version'] in ('campaign-recovery493-v2','campaign-recovery493-v3'):
                 ttr_campaign_recovery493.retained_restart(config)
         if spec['adapter']['steps'] == ['ttr_campaign_queue493.run']:
-            import ttr_campaign_queue493
+            from research_capture_contracts import selected
+            ttr_campaign_queue493 = selected(spec)
             config = load(local_path(ROOT, capture['plan']['path']))
             ttr_campaign_queue493.validate_spec(spec, config)
     else:
@@ -468,6 +484,31 @@ def dependency_inputs(spec, queue, display_cache=False):
                          outputs=[dict(path=relative(attempt / 'out' / name),
                                        sha256=inventory_by_name[name]['sha256']) for name in dep['outputs']])
             break
+        if valid is None:
+            try:
+                from research_dashboard_states import successors
+                replacement, _ = successors(ROOT).get(dep['job'], (None, None))
+                if replacement:
+                    rep_job = local_path(queue, 'jobs/' + replacement)
+                    if (rep_job / 'spec.json').is_file():
+                        for attempt in attempts_of(rep_job):
+                            result_path = attempt / 'result.json'
+                            if not result_path.is_file():
+                                continue
+                            result = load(result_path)
+                            if result.get('status') != 'complete':
+                                continue
+                            if outputs_intact(attempt, result, display_cache):
+                                inventory_by_name = {f['path']: f for f in result.get('outputs', [])}
+                                if all(name in inventory_by_name for name in dep['outputs']):
+                                    valid = dict(job=replacement, specSHA256=result.get('specSHA256'),
+                                                 result=dict(path=relative(result_path), sha256=digest(result_path)),
+                                                 outputs=[dict(path=relative(attempt / 'out' / name),
+                                                               sha256=inventory_by_name[name]['sha256']) for name in dep['outputs']],
+                                                 supersededFrom=dep['job'])
+                                    break
+            except Exception:
+                pass
         require(valid is not None, 'dependency_incomplete:' + dep['job'])
         resolved.append(valid)
     import research_graph
@@ -739,7 +780,7 @@ def run(queue=QUEUE, module_dir=MODULES, max_jobs=5, python=sys.executable, lock
                 250_000_000 if spec['adapter']['steps'] in (['ttr_campaign_queue493.run'], ['ttr_campaign_recovery493.run']) else DIAGNOSTIC_BYTES,
                 queue), 'execution_output_limit')
             if spec['authority'] == 'training':
-                require(spec['training']['epochs'] <= 30, 'execution_epoch_limit')
+                check_execution_epochs(spec)
             if control is not None:
                 control.current = job.name
             result = run_attempt(job, spec, len(attempts) + 1, module_dir, python, control, (host_lease.fileno(),))

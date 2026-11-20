@@ -1,6 +1,6 @@
-"""RC561 / RA554-13: Build frozen multi-app 4K holdout dataset and score candidate models.
-Packages the 8 pixel-unique 4K screens from 4 independent tvOS apps.
-Evaluates Candidate R5 (Core ML) detection and WSP FocusRing models.
+"""Disabled historical RC561 script. References lack independent review.
+
+Preserve this source for the metric audit. Use real_app_benchmark543 with reviewed references.
 """
 import sys
 from pathlib import Path
@@ -27,6 +27,7 @@ def compute_sha256(path):
     return h.hexdigest()
 
 def main():
+    raise RuntimeError("invalid_rc561_references: see Research/MetricClaimsAudit571.md")
     LABELS_DIR.mkdir(parents=True, exist_ok=True)
     with open(DETECTIONS_JSON) as f:
         det_data = json.load(f)

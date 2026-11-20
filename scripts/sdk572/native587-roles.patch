@@ -1,0 +1,21 @@
+--- Tools/collect-focus-pair.rb
++++ Tools/collect-focus-pair.rb
+@@ -13,7 +13,7 @@
+    check(File.file?(File.realpath(@cli))&&File.executable?(@cli),'CLI executable required')
+    [target,session].each{|v|check(/\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/i.match?(v),'exact target/session UUID required')}
+    @plan=plan;SDKEvidenceExport.keys(plan,%w[schemaVersion source case endpoint enrollment button expected])
+-   check(plan['schemaVersion']==1,'campaign schema')
++   check([1,2].include?(plan['schemaVersion']),'campaign schema')
+    check(%w[up down left right].include?(plan['button']),'directional input only')
+    check(%w[move unchanged arrival departure no_focus].include?(plan['expected']),'transition expectation')
+    @app=plan.fetch('source').fetch('appID')
+@@ -26,7 +26,8 @@
+    check(source['privacy']=='synthetic_or_reviewed_account_free','reviewed privacy required')
+    c=plan.fetch('case');SDKEvidenceExport.keys(c,%w[group contentGroup split uiType seed platform osVersion])
+    %w[group contentGroup split uiType seed platform osVersion].each{|k|SDKEvidenceExport.text(c.fetch(k))}
+-   check(c['split']=='test'&&c['platform']=='tvOS','qualification is test-only tvOS')
++   allowed_splits=plan['schemaVersion']==1 ? %w[test] : %w[train validation]
++   check(allowed_splits.include?(c['split'])&&c['platform']=='tvOS','split does not match the declared collector contract')
+    require 'uri'
+    uri=URI(plan.fetch('endpoint'));check(uri.scheme=='http'&&%w[127.0.0.1 localhost].include?(uri.host)&&uri.path=='/diagnostics/sdk/probe'&&!uri.userinfo&&!uri.query&&!uri.fragment,'local SDK endpoint required')
+    @enrollment=File.realpath(plan.fetch('enrollment'))

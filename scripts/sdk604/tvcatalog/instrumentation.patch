@@ -1,0 +1,367 @@
+diff -ruN dataset/real_apps/sources/apple-media-catalog/TVCatalog/DescriptionView.swift .build/tvcatalog-sdk604/TVCatalog/DescriptionView.swift
+--- dataset/real_apps/sources/apple-media-catalog/TVCatalog/DescriptionView.swift	2024-05-24 10:55:34
++++ .build/tvcatalog-sdk604/TVCatalog/DescriptionView.swift	2026-11-11 10:59:31
+@@ -23,6 +23,7 @@
+             Text("Title")
+                 .font(.largeTitle)
+                 .bold()
++                .tvCatalogSDKControl("txt.title", "text")
+ 
+             Spacer()
+ 
+@@ -31,44 +32,32 @@
+                     .font(.caption.bold())
+                     .foregroundStyle(.secondary)
+                     .frame(maxWidth: .infinity, alignment: .leading)
++                    .tvCatalogSDKControl("txt.signup_info", "text")
+ 
+                 HStack(alignment: .top, spacing: 30) {
+-                    // The three buttons each need to be the same width.  To
+-                    // achieve this, their labels use
+-                    // `.frame(maxWidth: .infinity)`.  It's important to place
+-                    // this modifier on the label rather than on the button
+-                    // because the button is simply the label with some padding
+-                    // and a background.  This means that the button's platter
+-                    // doesn't extend beyond its label farther than its static
+-                    // padding amount, so the view stretches the label in the
+-                    // required axis.  The default alignment of a max-width
+-                    // frame is `.center`, so the text remains centered inside
+-                    // the button.
+                     VStack(spacing: 12) {
+                         Button {} label: {
+                             Text("Sign Up")
+                                 .font(.body.bold())
+                                 .frame(maxWidth: .infinity)
+                         }
++                        .tvCatalogSDKControl("btn.sign_up", "button")
+ 
+                         Button {} label: {
+                             Text("Buy or Rent")
+                                 .font(.body.bold())
+                                 .frame(maxWidth: .infinity)
+                         }
++                        .tvCatalogSDKControl("btn.buy_or_rent", "button")
+ 
+                         Button {} label: {
+                             Label("Add to Up Next", systemImage: "plus")
+                                 .font(.body.bold())
+                                 .frame(maxWidth: .infinity)
+                         }
++                        .tvCatalogSDKControl("btn.add_to_up_next", "button")
+                     }
+ 
+-                    // The view presents the description using the `.plain`
+-                    // button style, which renders only its label until it
+-                    // receives focus.  The `.lineLimit` modifier truncates the
+-                    // content, and when someone presses the button, a
+-                    // `.fullScreenCover` presents the entire description.
+                     Button {
+                         showDescription = true
+                     } label: {
+@@ -78,17 +67,15 @@
+                     }
+                     .buttonStyle(.plain)
+                     .frame(width: 1000)
++                    .tvCatalogSDKControl("btn.description_expand", "button")
+ 
+-                    // If you want to have flowing text with different
+-                    // attributes on different words, you can use either an
+-                    // `AttributedString` or, for simplicity, add some `Text`
+-                    // views together.
+                     VStack(spacing: 0) {
+                         Text("Starring")
+                             .foregroundStyle(.secondary) + Text(" Stars, Costars, and Extras")
+                         Text("Director")
+                             .foregroundStyle(.secondary) + Text(" Someone Great")
+                     }
++                    .tvCatalogSDKControl("txt.credits", "text")
+                 }
+             }
+             .padding(.top)
+diff -ruN dataset/real_apps/sources/apple-media-catalog/TVCatalog/TVCatalogApp.swift .build/tvcatalog-sdk604/TVCatalog/TVCatalogApp.swift
+--- dataset/real_apps/sources/apple-media-catalog/TVCatalog/TVCatalogApp.swift	2026-11-02 17:48:15
++++ .build/tvcatalog-sdk604/TVCatalog/TVCatalogApp.swift	2026-11-11 10:59:29
+@@ -19,11 +19,16 @@
+ 
+     var body: some Scene {
+         WindowGroup {
+-            if initialTab.lowercased() == "sidebar" {
+-                SidebarContentView()
+-            } else {
+-                ContentView(selectedTab: initialTab)
++            Group {
++                if initialTab.lowercased() == "sidebar" {
++                    SidebarContentView()
++                } else {
++                    ContentView(selectedTab: initialTab)
++                }
+             }
++            #if os(tvOS)
++            .task { await TVCatalogSDK604.shared.start() }
++            #endif
+         }
+     }
+ }
+diff -ruN dataset/real_apps/sources/apple-media-catalog/TVCatalog/TVCatalogSDK604.swift .build/tvcatalog-sdk604/TVCatalog/TVCatalogSDK604.swift
+--- dataset/real_apps/sources/apple-media-catalog/TVCatalog/TVCatalogSDK604.swift	1969-12-31 16:00:00
++++ .build/tvcatalog-sdk604/TVCatalog/TVCatalogSDK604.swift	2026-11-11 11:02:57
+@@ -0,0 +1,259 @@
++import SwiftUI
++#if os(tvOS)
++import UIKit
++import TTRDiagnostics
++import TTRDiagnosticsUI
++import TTRDiagnosticsLink
++import TTRDiagnosticsClient
++import TTRDiagnosticsQuery
++
++@MainActor
++final class TVCatalogSDK604 {
++    static let shared = TVCatalogSDK604()
++    let recorder: UIRecorder
++    let probes = NSHashTable<TVCatalogProbeView>.weakObjects()
++    private var server: SDKLocalProbeServer?
++    private var started = false
++    private var generationCounter: UInt64 = 1
++
++    private init() {
++        #if DEBUG
++        let allowed = true
++        #else
++        let allowed = false
++        #endif
++        let config = (try? SDKLaunchConfiguration.parse(arguments: ProcessInfo.processInfo.arguments)
++            .applyingAppPolicy(diagnosticsAllowed: allowed)) ?? (try! SDKLaunchConfiguration(enabled: false))
++        recorder = UIRecorder(configuration: config)
++    }
++
++    func bumpGeneration() { generationCounter &+= 1 }
++
++    private func registerTabBarButtons(in window: UIWindow) {
++        var stack: [UIView] = [window]
++        var idx = 0
++        while let v = stack.popLast() {
++            let clsName = NSStringFromClass(type(of: v))
++            if !v.isHidden, v.alpha > 0, clsName == "UITabBarButton" {
++                let rect = v.convert(v.bounds, to: window)
++                if rect.width > 1, rect.height > 1 {
++                    let slug = (v.accessibilityLabel ?? "item_\(idx)")
++                        .lowercased()
++                        .replacingOccurrences(of: " ", with: "_")
++                    var el = UIElement(
++                        identity: .init(id: "tab.\(slug)"),
++                        publicLabel: v.accessibilityLabel,
++                        bounds: .init(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height),
++                        accessibilityTraits: UIAccessibilityTraits.button.rawValue,
++                        coordinateSpace: .windowPoints
++                    )
++                    el.typeDescriptor = .swiftUI(.button)
++                    try? recorder.register(el)
++                    idx += 1
++                    continue
++                }
++            }
++            stack.append(contentsOf: v.subviews)
++        }
++    }
++
++    func start() async {
++        print("REAL543_SDK start enabled=\(recorder.enabled)")
++        fflush(stdout)
++        guard recorder.enabled, !started else { return }
++        started = true
++        do {
++            let env = ProcessInfo.processInfo.environment
++            guard let key = env["TTR_SAMPLE_KEY"].flatMap({ Data(base64Encoded: $0) }), key.count == 32,
++                  let source = env["SIMULATOR_UDID"], UUID(uuidString: source) != nil else {
++                print("REAL543_SDK missing enrollment or Simulator identity")
++                return
++            }
++            let archive = try DiagnosticArchive.decode(await recorder.exportData())
++            let appID = Bundle.main.bundleIdentifier ?? "com.example.apple-samplecode.TVCatalog"
++            let enrollment = try Enrollment(appID: appID, processID: archive.processID, runID: archive.runID, secret: key)
++
++            let resolveWindow: @MainActor () -> UIWindow? = {
++                let windows = TVCatalogSDK604.shared.probes.allObjects.compactMap(\.window)
++                return windows.first(where: { $0.isKeyWindow }) ?? windows.first
++                    ?? UIApplication.shared.connectedScenes
++                        .compactMap { $0 as? UIWindowScene }
++                        .flatMap(\.windows)
++                        .first(where: { $0.isKeyWindow })
++            }
++
++            let probe = SDKLiveProbe(
++                recorder: recorder,
++                enrollment: enrollment,
++                layout: {
++                    TVCatalogSDK604.shared.probes.allObjects.forEach { $0.record() }
++                    guard let window = resolveWindow() else { return nil }
++                    return try UIKitLayoutCollector.collect(
++                        root: window,
++                        enabled: true,
++                        appID: appID,
++                        processID: archive.processID,
++                        runID: archive.runID,
++                        generation: { TVCatalogSDK604.shared.generationCounter },
++                        identity: { view in (view as? TVCatalogProbeView)?.identity }
++                    )
++                },
++                accessibilityDrafts: {
++                    guard let window = resolveWindow() else { return nil }
++                    return UIAccessibilityDraftScanner.scan(root: window, includeLabels: true) { view in
++                        view is TVCatalogProbeView
++                    }
++                },
++                state: {
++                    let sdk = TVCatalogSDK604.shared
++                    sdk.probes.allObjects.forEach { $0.record() }
++                    guard let window = resolveWindow() else {
++                        return .init(focusID: nil, focusKnown: false, interrupted: UIApplication.shared.applicationState != .active, captureSourceID: source)
++                    }
++                    sdk.registerTabBarButtons(in: window)
++                    let sampleView = sdk.probes.allObjects.first(where: { $0.window != nil }) ?? window.rootViewController?.view ?? window
++                    let registered = sdk.recorder.page().filter { $0.typeDescriptor?.role != .text }
++                    let rawFocused = UIFocusSystem.focusSystem(for: window)?.focusedItem
++                    let mapItem: (UIFocusItem) -> String? = { item in
++                        if let acc = item as? UIAccessibilityIdentification,
++                           let aid = acc.accessibilityIdentifier,
++                           registered.contains(where: { $0.identity.id == aid }) {
++                            return aid
++                        }
++                        var screenRect: CGRect? = nil
++                        if let v = item as? UIView {
++                            screenRect = v.convert(v.bounds, to: window)
++                        } else if let coord = item.parentFocusEnvironment?.focusItemContainer?.coordinateSpace {
++                            screenRect = coord.convert(item.frame, to: window)
++                        } else {
++                            screenRect = item.frame
++                        }
++                        if let rect = screenRect {
++                            let center = CGPoint(x: rect.midX, y: rect.midY)
++                            if let hit = registered.first(where: {
++                                guard let b = $0.bounds else { return false }
++                                let r = CGRect(x: b.x - 4, y: b.y - 4, width: b.width + 8, height: b.height + 8)
++                                return r.contains(center)
++                            }) {
++                                return hit.identity.id
++                            }
++                        }
++                        return nil
++                    }
++                    let readiness = UIReadinessObservation.sample(view: sampleView)
++                    let mappedID = rawFocused.flatMap(mapItem)
++                    let sample = UIFocusSample(itemPresent: rawFocused != nil, mappedID: mappedID, readiness: readiness)
++                    let obs: [String: Any] = [
++                        "applicationState": UIApplication.shared.applicationState.rawValue,
++                        "focusObservable": sample.readiness.focusObservable,
++                        "rawItemPresent": rawFocused != nil,
++                        "rawItemType": rawFocused.map { String(describing: type(of: $0)) } ?? "nil",
++                        "rawItemFrame": rawFocused.map { "\($0.frame)" } ?? "nil",
++                        "rawItemAccID": (rawFocused as? UIAccessibilityIdentification)?.accessibilityIdentifier ?? "nil",
++                        "focusKnown": sample.known,
++                        "focusedID": sample.focusID ?? "none"
++                    ]
++                    if let bytes = try? JSONSerialization.data(withJSONObject: obs, options: [.sortedKeys]) {
++                        print("REAL543_SCENE " + String(decoding: bytes, as: UTF8.self))
++                        fflush(stdout)
++                    }
++                    return .init(sample: sample, interrupted: UIApplication.shared.applicationState != .active, captureSourceID: source)
++                }
++            )
++            let listener = try SDKLocalProbeServer(port: 8098) { try await probe.reply(to: $0) }
++            server = listener
++            let endpoint = try await listener.start(lifetimeSeconds: 800)
++            let identity: [String: String] = [
++                "appID": enrollment.appID,
++                "processID": archive.processID.uuidString,
++                "runID": archive.runID.uuidString,
++                "endpoint": endpoint.absoluteString
++            ]
++            print("REAL543_SDK " + String(decoding: try JSONSerialization.data(withJSONObject: identity), as: UTF8.self))
++            fflush(stdout)
++        } catch {
++            print("REAL543_SDK failed: \(error)")
++            fflush(stdout)
++        }
++    }
++}
++
++final class TVCatalogProbeView: UIView {
++    var identity: UIElementIdentity
++    var swiftUIType: UISwiftUIType
++    init(id: String, swiftUIType: UISwiftUIType) {
++        self.identity = .init(id: id)
++        self.swiftUIType = swiftUIType
++        super.init(frame: .zero)
++        isUserInteractionEnabled = false
++        TVCatalogSDK604.shared.probes.add(self)
++    }
++    required init?(coder: NSCoder) { fatalError("unsupported") }
++    override func layoutSubviews() {
++        super.layoutSubviews()
++        TVCatalogSDK604.shared.bumpGeneration()
++        record()
++    }
++    override func didMoveToWindow() {
++        super.didMoveToWindow()
++        if window == nil { TVCatalogSDK604.shared.recorder.unregister(identity) } else { record() }
++    }
++    func record() {
++        guard let window, bounds.width > 0, bounds.height > 0 else { return }
++        let rect = convert(bounds, to: window)
++        var element = UIElement(
++            identity: identity,
++            bounds: .init(x: rect.minX, y: rect.minY, width: rect.width, height: rect.height),
++            coordinateSpace: .windowPoints
++        )
++        element.typeDescriptor = .swiftUI(swiftUIType)
++        if let scene = window.windowScene {
++            let screen = window.screen.coordinateSpace
++            let o = window.convert(CGPoint.zero, to: screen)
++            let ax = window.convert(CGPoint(x: 1, y: 0), to: screen)
++            let ay = window.convert(CGPoint(x: 0, y: 1), to: screen)
++            element.captureGeometry = .init(
++                windowID: String(describing: ObjectIdentifier(window)),
++                sceneID: scene.session.persistentIdentifier,
++                screenBounds: .init(x: window.screen.bounds.minX, y: window.screen.bounds.minY, width: window.screen.bounds.width, height: window.screen.bounds.height),
++                displayScale: Double(window.screen.scale),
++                toScreenPoints: [Double(ax.x - o.x), Double(ax.y - o.x), Double(ay.x - o.x), Double(ay.y - o.y), Double(o.x), Double(o.y)],
++                source: "uikit_coordinate_conversion"
++            )
++        }
++        try? TVCatalogSDK604.shared.recorder.register(element)
++    }
++}
++
++private struct TVCatalogBoundsBridge: UIViewRepresentable {
++    let id: String
++    let type: UISwiftUIType
++    func makeUIView(context: Context) -> TVCatalogProbeView { TVCatalogProbeView(id: id, swiftUIType: type) }
++    func updateUIView(_ view: TVCatalogProbeView, context: Context) {
++        if view.identity.id != id {
++            TVCatalogSDK604.shared.recorder.unregister(view.identity)
++            view.identity = .init(id: id)
++        }
++        view.swiftUIType = type
++        view.record()
++    }
++    static func dismantleUIView(_ view: TVCatalogProbeView, coordinator: ()) {
++        TVCatalogSDK604.shared.recorder.unregister(view.identity)
++    }
++}
++#endif
++
++extension View {
++    @ViewBuilder func tvCatalogSDKControl(_ id: String, _ type: String) -> some View {
++        #if os(tvOS)
++        if TVCatalogSDK604.shared.recorder.enabled {
++            let mapped: UISwiftUIType = type == "text" ? .text : .button
++            self.background(TVCatalogBoundsBridge(id: id, type: mapped)).accessibilityIdentifier(id)
++        } else {
++            self
++        }
++        #else
++        self
++        #endif
++    }
++}

@@ -3,6 +3,7 @@
 The page shows captured frames and SDK draft boxes only. It never reads replay results or model predictions.
 Commands:
   prepare --sessions SESSION_JSON ... --out NEW_DIR
+  prepare-ax --drafts SCREEN.draft.json ... --out NEW_DIR  (10 contract classes)
   serve --dir DIR [--port 8770]          (review page at /, recheck page at /recheck)
   recheck-prepare --dir DIR              (targeted questions about the first review)
   recheck-apply --dir DIR --out NEW_DIR  (label version 2; first labels stay unchanged)
@@ -21,16 +22,95 @@ CLASSES = [m['label'] for m in q.load(MANIFEST)['tensorChannelMapping'] if m['ty
 VISIBILITY = ('visible', 'clipped', 'occluded', 'unknown')
 FOCUS = ('focused', 'no_focus', 'unknown')
 DRAFT_CLASS = {'article': 'collectionItem', 'category': 'secondaryButton', 'main-tab': 'secondaryButton'}  # Fixture tab labels use secondaryButton.
+EXPLICIT_CLASS_MAP = {
+    'button': 'secondaryButton',
+    'primaryButton': 'primaryButton',
+    'secondaryButton': 'secondaryButton',
+    'destructiveButton': 'destructiveButton',
+    'cancelAction': 'cancelAction',
+    'menuButton': 'menuButton',
+    'link': 'link',
+    'disclosureGroup': 'disclosureGroup',
+    'cell': 'collectionItem',
+    'collectionItem': 'collectionItem',
+    'listRow': 'listRow',
+    'bar': 'tabBar',
+    'tabBar': 'tabBar',
+    'navigationBar': 'navigationBar',
+    'toolbar': 'toolbar',
+    'sidebar': 'sidebar',
+    'textField': 'textField',
+    'searchField': 'searchField',
+    'toggle': 'toggle',
+    'adjustable': 'slider',
+    'slider': 'slider',
+    'segmentedControl': 'segmentedControl',
+    'pageControl': 'pageControl',
+    'picture': 'imageView',
+    'imageView': 'imageView',
+    'dialog': 'sheet',
+    'sheet': 'sheet',
+    'alert': 'alert',
+    'indicator': 'progressView',
+}
+AX_TRAIT_BUTTON = 1 << 0
+AX_TRAIT_STATIC_TEXT = 1 << 6
+AX_TRAIT_SEARCH_FIELD = 1 << 10
 PAGE = Path(__file__).with_name('real_app_review554.html')
 
 
+def sdk_to_pixel_box(bounds, capture_geometry, img_w, img_h):
+    """Convert SDK window/screen bounds to clipped top-left image pixels via captureGeometry."""
+    b = json.loads(bounds) if isinstance(bounds, str) else bounds
+    if isinstance(b, (list, tuple)) and len(b) == 4:
+        x, y, w, h = [float(v) for v in b]
+    else:
+        x, y, w, h = float(b['x']), float(b['y']), float(b['width']), float(b['height'])
+
+    if capture_geometry:
+        sb = capture_geometry.get('screenBounds') or {}
+        pts_w = float(sb.get('width') or 0.0)
+        pts_h = float(sb.get('height') or 0.0)
+        mat = capture_geometry.get('toScreenPoints')
+        if isinstance(mat, (list, tuple)) and len(mat) == 6:
+            a, b_m, c, d, tx, ty = [float(v) for v in mat]
+            corners = [(x, y), (x + w, y), (x, y + h), (x + w, y + h)]
+            xs = [a * cx + c * cy + tx for cx, cy in corners]
+            ys = [b_m * cx + d * cy + ty for cx, cy in corners]
+            x, y, w, h = min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys)
+        sx = (img_w / pts_w) if pts_w > 0 else float(capture_geometry.get('displayScale') or (img_w / 1920.0))
+        sy = (img_h / pts_h) if pts_h > 0 else float(capture_geometry.get('displayScale') or (img_h / 1080.0))
+    else:
+        sx = img_w / 1920.0
+        sy = img_h / 1080.0
+
+    px1 = max(0.0, x * sx)
+    py1 = max(0.0, y * sy)
+    px2 = min(float(img_w), (x + w) * sx)
+    py2 = min(float(img_h), (y + h) * sy)
+    if px2 - px1 <= 0.5 or py2 - py1 <= 0.5:
+        return None
+    return [round(px1, 1), round(py1, 1), round(px2 - px1, 1), round(py2 - py1, 1)]
+
+
+def _map_sdk_class(role, sdk_id=''):
+    if role in CLASSES:
+        return role
+    if role in EXPLICIT_CLASS_MAP:
+        return EXPLICIT_CLASS_MAP[role]
+    return DRAFT_CLASS.get((sdk_id or '').split('.')[0])
+
+
 def prepare(sessions, out):
-    """Write 1 case list and 1 draft for each distinct captured frame. Drafts come from SDK rectangles only."""
-    out = Path(out); (out/'drafts').mkdir(parents=True, exist_ok=False); (out/'labels').mkdir()
-    cases, seen = [], {}
+    """Write 1 case list, rich metadata sidecars, and SDK-only drafts (quarantining transitional frames)."""
+    out = Path(out); (out/'drafts').mkdir(parents=True, exist_ok=False); (out/'labels').mkdir(); (out/'metadata').mkdir()
+    cases, seen, skipped_transitional = [], {}, []
     for path in sessions:
         session = q.load(path)
         for record in session['cases']:
+            if record.get('transitional') or record['status'] == 'transitional':
+                skipped_transitional.append(record['id'])
+                continue
             if record['status'] != 'captured':
                 continue
             if record['sha256'] in seen:
@@ -38,40 +118,172 @@ def prepare(sessions, out):
             from PIL import Image
             with Image.open(record['image']) as image:
                 width, height = image.size
-            scale = width/1920
+            sdk_before = record.get('sdkBefore') or {}
+            geom = sdk_before.get('captureGeometry')
             objects = []
-            for index, (sdk_id, bounds, _) in enumerate((record.get('sdkBefore') or {}).get('elements', [])):
-                b = json.loads(bounds)
-                box = [b['x']*scale, b['y']*scale, b['width']*scale, b['height']*scale]
-                box[2] = min(box[2], width-box[0]); box[3] = min(box[3], height-box[1])
-                if box[2] <= 0 or box[3] <= 0:
+            id_to_box = {}
+            exceptions = []
+            if sdk_before.get('truncated'):
+                exceptions.append('truncated_tree')
+
+            rich_els = sdk_before.get('richElements')
+            if rich_els:
+                for index, el in enumerate(rich_els):
+                    if el.get('hidden'):
+                        continue
+                    eid = el.get('id') or f'sdk-{index:02d}'
+                    cls = _map_sdk_class(el.get('declaredTaxonomy') or el.get('role'), eid)
+                    if (el.get('declaredTaxonomy') or el.get('role')) in ('label', 'label_view', 'staticText', 'text'):
+                        continue
+                    raw_bounds = el.get('visibleBounds') or el.get('clippedBounds') or el.get('bounds')
+                    if not raw_bounds:
+                        continue
+                    box = sdk_to_pixel_box(raw_bounds, geom, width, height)
+                    if not box:
+                        continue
+                    id_to_box[eid] = box
+                    objects.append({
+                        'id': f'sdk-{index:02d}',
+                        'class': cls,
+                        'box': box,
+                        'visibility': 'visible',
+                        'provenance': f"sdk-registered:{el.get('role') or 'unknown'}:{eid}",
+                    })
+            else:
+                for index, (sdk_id, bounds, _) in enumerate(sdk_before.get('elements', [])):
+                    box = sdk_to_pixel_box(bounds, geom, width, height)
+                    if not box:
+                        continue
+                    id_to_box[sdk_id] = box
+                    objects.append({
+                        'id': f'sdk-{index:02d}',
+                        'class': _map_sdk_class(None, sdk_id),
+                        'box': box,
+                        'visibility': 'unknown',
+                        'provenance': 'sdk-draft:' + sdk_id,
+                    })
+
+            ax_page = sdk_before.get('accessibilityDrafts') or {}
+            if ax_page.get('truncated'):
+                exceptions.append('ax_truncated')
+            ax_added = 0
+            for ax_idx, ax in enumerate(ax_page.get('elements') or []):
+                traits = int(ax.get('traits') or 0)
+                if (traits & AX_TRAIT_STATIC_TEXT) and not (traits & (AX_TRAIT_BUTTON | AX_TRAIT_SEARCH_FIELD)):
                     continue
-                objects.append({'id': f'sdk-{index:02}', 'class': DRAFT_CLASS.get(sdk_id.split('.')[0]), 'box': [round(v, 1) for v in box],
-                                'visibility': 'unknown', 'provenance': 'sdk-draft:'+sdk_id})
-            case = dict(id=record['id'], app=session['bundle'], flow=record['flow'], image=record['image'], sha256=record['sha256'],
-                        width=width, height=height, plannedFocus=None, expectedScreen=record.get('expectedScreen'), duplicates=[])
+                box = sdk_to_pixel_box(ax['bounds'], geom, width, height)
+                if not box:
+                    continue
+                cls = 'searchField' if (traits & AX_TRAIT_SEARCH_FIELD) else ('secondaryButton' if (traits & AX_TRAIT_BUTTON) else None)
+                objects.append({
+                    'id': f'ax-{ax_idx:02d}',
+                    'class': cls,
+                    'box': box,
+                    'visibility': 'visible',
+                    'provenance': f"sdk-ax-draft:{ax.get('draftID', ax_idx)}",
+                })
+                ax_added += 1
+            if ax_added:
+                exceptions.append('unregistered_ax_drafts')
+
+            focus_doc = dict(state='unknown', box=None)
+            if record.get('focusKnown') or sdk_before.get('focusKnown'):
+                fid = record.get('focusID') or sdk_before.get('focusID')
+                if fid and fid in id_to_box:
+                    focus_doc = dict(state='focused', box=id_to_box[fid])
+                elif fid is None:
+                    focus_doc = dict(state='no_focus', box=None)
+                else:
+                    exceptions.append('focus_outside_registered_box')
+            else:
+                exceptions.append('unknown_focus')
+
+            q.save(out/'metadata'/f"{record['id']}.json", dict(
+                id=record['id'], screenshotSHA256=record['sha256'], generation=sdk_before.get('generation'),
+                captureGeometry=geom, focusKnown=bool(record.get('focusKnown') or sdk_before.get('focusKnown')),
+                focusID=record.get('focusID') or sdk_before.get('focusID'),
+                exceptionReasons=exceptions, richElements=rich_els or [],
+            ))
+            case = dict(
+                id=record['id'], app=session['bundle'], flow=record['flow'], image=record['image'], sha256=record['sha256'],
+                width=width, height=height, plannedFocus=None, expectedScreen=record.get('expectedScreen'),
+                duplicates=[], exceptionReasons=exceptions, needsReview=bool(exceptions),
+            )
             seen[record['sha256']] = case; cases.append(case)
-            q.save(out/'drafts'/f"{record['id']}.json", dict(imageSHA256=record['sha256'], complete=False, objects=objects,
-                   focus=dict(state='unknown', box=None), review=dict(blinded=True, reviewer='', status='pending')))
-    q.save(out/'cases.json', dict(version='realapp554-review-v1', sessions=[str(p) for p in sessions], classes=CLASSES, cases=cases,
-                                  note='Blinded: no model predictions. SDK drafts can miss controls and can be misaligned.'))
+            q.save(out/'drafts'/f"{record['id']}.json", dict(
+                imageSHA256=record['sha256'], complete=False, objects=objects,
+                focus=focus_doc, review=dict(blinded=True, reviewer='', status='pending'),
+            ))
+    cases.sort(key=lambda c: (0 if c.get('needsReview') else 1, c['id']))
+    q.save(out/'cases.json', dict(
+        version='realapp554-review-v2', sessions=[str(p) for p in sessions], classes=CLASSES, cases=cases,
+        skippedTransitional=skipped_transitional,
+        note='Blinded SDK/AX drafts sorted exceptions-first. No model predictions.',
+    ))
     return cases
 
 
-def check(label, case):
+def prepare_ax(drafts, out):
+    """Make a contract-class review pack from passive AX drafts. Keep source drafts unchanged."""
+    import framework_projection604 as fp
+    from PIL import Image
+    out = Path(out)
+    classes = fp.tvos_classes()
+    rows = []
+    for path in map(Path, drafts):
+        draft = q.load(path)
+        q.require(draft.get('version') == 'tvbench-ax-draft-v1', 'ax_draft_version')
+        q.require(draft.get('classes') == classes, 'ax_draft_classes')
+        q.require(path.name.endswith('.draft.json'), 'ax_draft_filename')
+        image = path.with_name(path.name.removesuffix('.draft.json') + '.png').resolve()
+        q.require(q.digest(image) == draft['imageSHA256'], 'image_changed')
+        with Image.open(image) as im:
+            q.require(list(im.size) == [draft['width'], draft['height']], 'image_dimensions')
+        case_id = path.name.removesuffix('.draft.json')
+        q.require(re.fullmatch(r'[A-Za-z0-9._-]+', case_id), 'case_id')
+        case = dict(id=case_id, app=draft['bundleIdentifier'], flow=draft['screenID'], screenID=draft['screenID'], bundleIdentifier=draft['bundleIdentifier'], image=str(image),
+                    sha256=draft['imageSHA256'], width=draft['width'], height=draft['height'],
+                    duplicates=[], needsReview=True, exceptionReasons=['ax_draft_requires_review'])
+        objects = [dict(id=o['id'], **{'class': o['class']}, box=o['box'], visibility=o['visibility'],
+                        provenance='ax-draft:' + str(path.resolve()), roleSource=o.get('roleSource', 'ax_element_type'))
+                   for o in draft['objects']]
+        focus = draft['focus']
+        state = focus['state']
+        q.require(state in ('focused', 'known_no_focus', 'unknown'), 'focus_state')
+        label = dict(imageSHA256=draft['imageSHA256'], complete=False, objects=objects,
+                     focus=dict(state=state, box=focus.get('box') if state == 'focused' else None),
+                     review=dict(blinded=True, reviewer='', status='pending'))
+        check(label, case, classes, ('focused', 'known_no_focus', 'unknown'))
+        rows.append((case, label, draft))
+    q.require(len({c['id'] for c, _, _ in rows}) == len(rows), 'duplicate_case_id')
+    out.mkdir(parents=True, exist_ok=False)
+    for folder in ('drafts', 'labels', 'metadata'):
+        (out/folder).mkdir()
+    for case, label, draft in rows:
+        q.save(out/'drafts'/f"{case['id']}.json", label)
+        q.save(out/'metadata'/f"{case['id']}.json", draft)
+    q.save(out/'cases.json', dict(version='tvbench-ax-review-v1', labelMode='contract', classes=classes,
+                                 focusStates=['focused', 'known_no_focus', 'unknown'], cases=[c for c, _, _ in rows],
+                                 note='Passive AX drafts. Human review is required. No model predictions.'))
+    return [c for c, _, _ in rows]
+
+
+def check(label, case, classes=None, focus_states=None):
     """Apply the benchmark label rules. Raise ValueError with a reason."""
     q.require(set(label) == {'imageSHA256', 'complete', 'objects', 'focus', 'review'} and label['imageSHA256'] == case['sha256'], 'label_shape')
     q.require(type(label['complete']) is bool, 'completeness')
+    classes = CLASSES if classes is None else classes
+    focus_states = FOCUS if focus_states is None else focus_states
     ids = set()
     for obj in label['objects']:
-        q.require(set(obj) <= {'id', 'class', 'box', 'visibility', 'provenance', 'flag'} and obj['id'] not in ids, 'object_shape')
+        q.require(set(obj) <= {'id', 'class', 'box', 'visibility', 'provenance', 'flag', 'roleSource'} and obj['id'] not in ids, 'object_shape')
         q.require(obj.get('flag') in (None, 'wrong-class', 'wrong-box', 'not-control', 'missing'), 'object_flag')
         ids.add(obj['id'])
-        q.require(obj['class'] is None or obj['class'] in CLASSES, 'label_class')
+        q.require(obj['class'] is None or obj['class'] in classes, 'label_class')
         q.require(obj['visibility'] in VISIBILITY and isinstance(obj['provenance'], str) and obj['provenance'], 'object_fields')
         box(obj['box'], case)
     focus = label['focus']
-    q.require(focus['state'] in FOCUS, 'focus_state')
+    q.require(focus['state'] in focus_states, 'focus_state')
     if focus['state'] == 'focused':
         box(focus['box'], case)
     else:
@@ -97,6 +309,7 @@ ANSWERS = {'complete': ('complete', 'missing'), 'clip': ('done',), 'nofocus': ('
 def recheck_items(root):
     """Targeted questions for the first review. Each item shows reviewed boxes only, never model output."""
     root = Path(root); items = []
+    q.require(q.load(root/'cases.json').get('labelMode') != 'contract', 'contract_recheck_unsupported')
     for case in q.load(root/'cases.json')['cases']:
         label = q.load(root/'labels'/f"{case['id']}.json")
         newstv = case['app'].endswith('NewsTV')
@@ -181,6 +394,14 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code); self.send_header('Content-Type', kind); self.send_header('Cache-Control', 'no-store')
         self.send_header('Content-Length', str(len(data))); self.end_headers(); self.wfile.write(data)
 
+    def policy(self):
+        doc = q.load(self.root/'cases.json')
+        if doc.get('labelMode') == 'contract':
+            import framework_projection604 as fp
+            q.require(doc.get('classes') == fp.tvos_classes(), 'review_contract_classes')
+            return doc['classes'], ('focused', 'known_no_focus', 'unknown')
+        return CLASSES, FOCUS
+
     def cases(self):
         return {c['id']: c for c in q.load(self.root/'cases.json')['cases']}
 
@@ -188,8 +409,13 @@ class Handler(BaseHTTPRequestHandler):
         saved = self.root/'labels'/f'{case_id}.json'
         return q.load(saved if saved.exists() else self.root/'drafts'/f'{case_id}.json')
 
+    def hints(self, case_id):
+        hint_path = self.root/'hints'/f'{case_id}.json'
+        return q.load(hint_path) if hint_path.is_file() else dict(focusCandidates=[])
+
     def do_GET(self):
         cases = self.cases()
+        classes, focus_states = self.policy()
         if self.path == '/':
             return self.send(200, PAGE.read_bytes(), 'text/html; charset=utf-8')
         if self.path == '/recheck':
@@ -201,19 +427,29 @@ class Handler(BaseHTTPRequestHandler):
                 answer=q.load(answers/f"{i['id']}.json") if (answers/f"{i['id']}.json").exists() else None) for i in items],
                 cases={k: dict(v, image=None) for k, v in cases.items()}))
         if self.path == '/api/cases':
-            rows = [dict(c, image=None, status=self.current(i)['review']['status']) for i, c in cases.items()]
-            return self.send(200, dict(classes=CLASSES, visibility=VISIBILITY, cases=rows))
-        match = re.fullmatch(r'/(api/case|image)/([A-Za-z0-9._-]+)', self.path)
+            rows = []
+            for i, c in cases.items():
+                cur = self.current(i)
+                rows.append(dict(c, image=None, status=cur['review']['status'],
+                                 draftCount=len(cur.get('objects', [])),
+                                 focusState=cur.get('focus', {}).get('state', 'unknown')))
+            return self.send(200, dict(classes=classes, focusStates=focus_states, visibility=VISIBILITY, cases=rows))
+        match = re.fullmatch(r'/(api/case|api/hints|image)/([A-Za-z0-9._-]+)', self.path)
         if not match or match[2] not in cases:
             return self.send(404, dict(error='not_found'))
         if match[1] == 'image':
             path = Path(cases[match[2]]['image'])
             q.require(q.digest(path) == cases[match[2]]['sha256'], 'image_changed')
             return self.send(200, path.read_bytes(), 'image/png')
-        return self.send(200, self.current(match[2]))
+        if match[1] == 'api/hints':
+            return self.send(200, self.hints(match[2]))
+        source_path = self.root/'metadata'/f'{match[2]}.json'
+        source = q.load(source_path) if source_path.is_file() and 'known_no_focus' in focus_states else None
+        return self.send(200, dict(self.current(match[2]), hints=self.hints(match[2]), source=source))
 
     def do_POST(self):
         cases = self.cases()
+        classes, focus_states = self.policy()
         if self.headers.get('Origin') not in (None, *(f'http://{h}:{self.server.server_port}' for h in ('127.0.0.1', 'localhost'))):
             return self.send(404, dict(error='not_found'))
         recheck = re.fullmatch(r'/api/recheck/([A-Za-z0-9._-]+)', self.path)
@@ -237,7 +473,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.send(404, dict(error='not_found'))
         try:
             label = json.loads(self.rfile.read(min(int(self.headers.get('Content-Length', 0)), 2_000_000)))
-            check(label, cases[match[1]])
+            check(label, cases[match[1]], classes, focus_states)
         except (ValueError, KeyError, TypeError) as error:
             return self.send(400, dict(error=str(error)))
         target = self.root/'labels'/f'{match[1]}.json'
@@ -259,12 +495,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('prepare'); p.add_argument('--sessions', type=Path, nargs='+', required=True); p.add_argument('--out', type=Path, required=True)
+    ax = sub.add_parser('prepare-ax'); ax.add_argument('--drafts', type=Path, nargs='+', required=True); ax.add_argument('--out', type=Path, required=True)
     s = sub.add_parser('serve'); s.add_argument('--dir', type=Path, required=True); s.add_argument('--port', type=int, default=8770)
     r = sub.add_parser('recheck-prepare'); r.add_argument('--dir', type=Path, required=True)
     a = sub.add_parser('recheck-apply'); a.add_argument('--dir', type=Path, required=True); a.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
     if args.command == 'prepare':
         print(len(prepare(args.sessions, args.out)), 'cases')
+    elif args.command == 'prepare-ax':
+        print(len(prepare_ax(args.drafts, args.out)), 'cases')
     elif args.command == 'recheck-prepare':
         items = recheck_items(args.dir); print(len(items), 'items', dict(__import__('collections').Counter(i['kind'] for i in items)))
     elif args.command == 'recheck-apply':

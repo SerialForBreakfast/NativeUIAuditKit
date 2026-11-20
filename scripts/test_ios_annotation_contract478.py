@@ -13,17 +13,17 @@ class AnnotationContractTests(unittest.TestCase):
 
     def toggles(self):
         return [element("navigationBar", "navigationBar"), element("ctaButton", "primaryButton")] + [
-            element(f"toggle_{i}", "toggle") for i in range(4)] + [
-            element(f"rowLabel_{i}", "label") for i in range(4)] + [
-            element(f"sectionHeader_{i}", "label") for i in range(2)]
+            element(f"toggle_{i}", "toggle") for i in range(8)] + [
+            element(f"rowLabel_{i}", "label") for i in range(8)] + [
+            element(f"sectionHeader_{i}", "label") for i in range(3)]
 
     def test_two_families_use_same_contract(self):
         self.assertEqual(worker.completeness("UIKitControls", self.controls()), [])
-        self.assertEqual(worker.completeness("UIKitToggleForm", self.toggles()), [])
+        self.assertEqual(worker.completeness("UIKitToggleForm", self.toggles(), seed=47701), [])
 
     def test_missing_standalone_labels_fail(self):
         for family, rows in [("UIKitControls", self.controls()), ("UIKitToggleForm", self.toggles())]:
-            findings = worker.completeness(family, [r for r in rows if r["elementType"] != "label"])
+            findings = worker.completeness(family, [r for r in rows if r["elementType"] != "label"], seed=47701)
             self.assertGreater(len(findings), 0)
             self.assertTrue(all(r["expected"] == "label" for r in findings))
 
@@ -46,8 +46,15 @@ class AnnotationContractTests(unittest.TestCase):
     def test_gap_in_toggle_ids_fails(self):
         rows = self.toggles()
         rows[2]["id"] = "toggle_99"
-        with self.assertRaisesRegex(ValueError, "toggle_identity"):
-            worker.completeness("UIKitToggleForm", rows)
+        findings = worker.completeness("UIKitToggleForm", rows, seed=47701)
+        self.assertEqual({r["id"] for r in findings}, {"toggle_99", "toggle_0"})
+
+    def test_missing_final_pair_and_header(self):
+        missing = {"toggle_7", "rowLabel_7", "sectionHeader_2"}
+        rows = [r for r in self.toggles() if r["id"] not in missing]
+        findings = worker.completeness("UIKitToggleForm", rows, seed=47701)
+        self.assertEqual({r["id"] for r in findings}, missing)
+
 
 
 if __name__ == "__main__":

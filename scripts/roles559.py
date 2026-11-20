@@ -1,9 +1,9 @@
-"""ROLES559: map the 41 schema classes to 13 detector roles, after Apple Screen Recognition (Zhang et al., CHI 2021).
+"""ROLES559 / RESET604 D3: map the 41 schema classes to 12 detector roles (text dropped; OCR supplies text).
 
-A role is what the element does (button, text, cell), not how it looks (filled or tinted).
+A role is what the element does (button, cell, bar), not how it looks (filled or tinted).
 This is a training-time map only. The schema raw values stay stable public API.
 Keyboard and PIN keys map to `button`: by role they are buttons, not content cells.
-Rule B (PILLS560 R4, maintainer 2026-11-02): text inside a button is part of the button. `button_text=False` drops `text` boxes inside `button` boxes.
+RESET604 D3 (maintainer decision 2026-11-09): `text` (`label`) is removed from detector roles so OCR supplies text.
 Builds 1 role membership from an existing CELLS558 membership with the same rows, groups and boxes.
 Usage: roles559.py --membership reports/work/REALAPP557/cells558/membership-c2.json --out reports/work/REALAPP557/roles559
 """
@@ -14,7 +14,6 @@ import detector_training419 as t
 
 ROLE_MAP = {
     'button': ('primaryButton', 'secondaryButton', 'destructiveButton', 'cancelAction', 'menuButton', 'link', 'disclosureGroup'),
-    'text': ('label',),
     'picture': ('imageView', 'mapView'),
     'textField': ('textField', 'secureField', 'searchField'),
     'toggle': ('toggle',),
@@ -28,14 +27,16 @@ ROLE_MAP = {
     'container': ('webContent',),
 }
 ROLES = list(ROLE_MAP)
-CLASS_ROLE = {c: role for role, classes in ROLE_MAP.items() for c in classes}  # `unknown` has no role and is dropped.
+CLASS_ROLE = {c: role for role, classes in ROLE_MAP.items() for c in classes}  # `unknown` and `label` have no role and are dropped.
 KEY_PREFIXES = ('collectionItem_key_', 'collectionItem_keypad_')
 
 
 def role(cls, element_id=''):
-    """Return the role for 1 schema class, or None. Keys are buttons."""
+    """Return the role for 1 schema class or role name, or None. Keys are buttons."""
     if element_id.startswith(KEY_PREFIXES):
         return 'button'
+    if cls in ROLE_MAP:
+        return cls
     return CLASS_ROLE.get(cls)
 
 
@@ -70,8 +71,8 @@ def build(source, out):
         controls = [dict(c, **{'class': boxes[c['id']]['cls']}) for c in row['controls'] if c['id'] in boxes]
         rows.append(dict(row, controls=controls))
     new = dict(doc, names=ROLES, rows=rows,
-               targetScope=doc['targetScope'] + ' ROLES559: 13 detector roles (Screen Recognition style).',
-               limitation=doc['limitation'] + ' Classes mapped to roles by scripts/roles559.py; keys are buttons.')
+               targetScope=doc['targetScope'] + ' ROLES559/D3: 12 detector roles (Screen Recognition style; OCR supplies text).',
+               limitation=doc['limitation'] + ' Classes mapped to 12 roles by scripts/roles559.py; keys are buttons.')
     path = Path(out)/('membership-roles-' + Path(source).stem.removeprefix('membership-') + '.json')
     q.save(path, new, replace=True)
     check = q.ROOT/f'.build/debug-output/roles559-prepare-{q.digest(path)[:8]}'; check.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
-"""Generate verified independent ground truth labels for RC561 / RA554-13 holdout.
-Zero reliance on model predictions. Pure ground-truth annotations from visual verification
-and source code layouts.
+"""Disabled historical RC561 script. References lack independent review.
+
+Preserve this source for the metric audit. Use real_app_benchmark543 with reviewed references.
 """
 import sys
 import json
@@ -13,7 +13,7 @@ import research_queue as q
 CAPTURES_DIR = q.ROOT / 'reports/work/RC561/captures'
 HOLDOUT_DIR = q.ROOT / 'reports/work/RC561/holdout'
 LABELS_DIR = HOLDOUT_DIR / 'labels'
-LABELS_DIR.mkdir(parents=True, exist_ok=True)
+# Historical labels remain preserved. Importing this module must not write files.
 
 # Define independent ground truth for all 8 screens
 GROUND_TRUTH = {
@@ -151,6 +151,7 @@ GROUND_TRUTH = {
 }
 
 def main():
+    raise RuntimeError("invalid_rc561_references: see Research/MetricClaimsAudit571.md")
     manifest_cases = []
     total_controls = 0
 

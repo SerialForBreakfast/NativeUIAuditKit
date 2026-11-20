@@ -1,5 +1,9 @@
 # TVTestRigFixture: Next-Generation On-Device Synthetic UI Generator & Training Rig
 
+> Design proposal, not measured capability or accuracy. Native hierarchy does not guarantee visible boxes, focus labels, or settled pixels.
+> Validate observed focus, clipping, transforms, clocks, and independent group separation. Simulator results do not establish hardware behavior.
+
+
 **Document Status:** Architectural Vision & Feature Specification  
 **Target Platform:** tvOS 18+ / physical Apple TV 4K & tvOS Simulator  
 **Audience:** NativeUIAuditKit Core Team, TVTestRig Maintainers, Computer Vision Engineers  
@@ -42,7 +46,7 @@ With `TVTestRigFixture`, we can invert this paradigm. Because the fixture is a n
 |   └─────────────────────────────────────────────────────────────────────────────────────────────────┘   |
 |   ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐   |
 |   │ 3. Ground-Truth Telemetry Oracle (Window Coordinate Introspection)                              │   |
-|   │    Extracts exact pixel rects, active focus, text strings, and traits with 100% accuracy        │   |
+|   │    Extracts exact pixel rects, active focus, text strings, and traits with recorded provenance and explicit unknown states        │   |
 |   └─────────────────────────────────────────────────────────────────────────────────────────────────┘   |
 |   ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐   |
 |   │ 4. Deterministic Frame Capture & Event Handshake                                                │   |
@@ -51,7 +55,7 @@ With `TVTestRigFixture`, we can invert this paradigm. Because the fixture is a n
 +---------------------------------------------------------------------------------------------------------+
 ```
 
-This delivers the **holy grail of training data**: **100% authentic hardware rendering** (native Apple TV GPU shaders, parallax focus, specular highlights) combined with **100% mathematically exact ground-truth bounding boxes and state labels** generated directly from the UI window hierarchy.
+This design can combine native rendering with measured hierarchy observations. Visible geometry and focus still require validation against captured pixels and callbacks.
 
 ---
 
@@ -150,13 +154,13 @@ For any synthesized scene with $N$ interactive elements:
    - Settle 150ms for Metal glow shaders and parallax spring animations to finish.
    - Capture frame and emit sidecar where element $i$ has `isFocused: true` and all others have `isFocused: false`.
 
-**Impact:** A single synthesized scene of 10 controls immediately yields **11 perfectly calibrated training images** showing both the resting state and the exact focus glow distortion for every single control!
+**Impact:** A single synthesized scene of 10 controls immediately yields **11 candidate training images that require geometry and focus checks** showing both the resting state and the exact focus glow distortion for every single control!
 
 ---
 
 ### Pillar D: Comprehensive 41-Class Component Kitchen Sink
 
-The fixture must implement reference implementations of **all 41 classes** in the `NativeUIAuditKit` taxonomy, guaranteeing 100% class balance on hardware:
+The fixture must implement reference implementations of **all 41 classes** in the `NativeUIAuditKit` taxonomy, targeting class coverage that the capture manifest must measure:
 
 | Taxonomy Class Group | Specific tvOS Implementations in Fixture |
 |---|---|
@@ -258,7 +262,7 @@ Orchestrates an autonomous on-device sweep:
 
 The fixture’s mission extends beyond generating passive training imagery for NativeUIAuditKit’s computer vision model. It serves as an **active training gymnasium and diagnostic proving ground for TVTestRig’s own automated navigation engine**.
 
-Just as flight simulators subject autopilots to extreme turbulence, wind shear, and system failures, `TVTestRigFixture` can programmatically inject **pathological, broken, and hostile UI/UX patterns**. This allows TVTestRig to discover its own algorithmic blind spots, harden its pathfinding logic, and master navigation in a 100% safe, non-destructive sandbox before ever touching complex production apps or system settings.
+Just as flight simulators subject autopilots to extreme turbulence, wind shear, and system failures, `TVTestRigFixture` can programmatically inject **pathological, broken, and hostile UI/UX patterns**. This allows TVTestRig to discover its own algorithmic blind spots, harden its pathfinding logic, and master navigation in a bounded test environment with verified cleanup before ever touching complex production apps or system settings.
 
 ```
 +───────────────────────────────────────────────────────────────────────────────────+
@@ -367,7 +371,7 @@ By using `TVTestRigFixture` as an adversarial diagnostic testbed:
 
 By turning `TVTestRigFixture` into an on-device synthetic generation engine and adversarial navigation proving ground:
 1. **Model Quality:** The tvOS detector trains on authentic Metal shaders, real parallax focus dynamics, and hardware drop shadows.
-2. **Speed & Scale:** We eliminate slow manual or UI-driven navigation entirely. We can generate **10,000+ perfectly labeled tvOS training frames per hour**.
+2. **Speed & Scale:** We eliminate slow manual or UI-driven navigation entirely. We can generate **a target of 10,000 candidate tvOS frames per hour; throughput and label quality remain unmeasured**.
 3. **Audit Readiness:** Ground-truth defect injection provides the exact testbed needed to train and validate NativeUIAuditKit's Phase 7 accessibility audit engine.
 4. **Hardened TVTestRig Navigation:** TVTestRig’s navigation engine learns to detect focus stalls, solve broken focus guides, break out of focus traps, and report focus accessibility defects directly.
 5. **Zero Production Risk:** Runs inside a safe app sandbox on dedicated test hardware, with zero possibility of touching system accounts, resetting video modes, or drifting into foreign apps.

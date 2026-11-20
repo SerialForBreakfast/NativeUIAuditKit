@@ -1,0 +1,30 @@
+--- a/TVCatalog/TVCatalogSDK604.swift
++++ b/TVCatalog/TVCatalogSDK604.swift
+@@ -48,6 +48,27 @@
+             guard let items = bar.items, items.count == tabs.count else { continue }
+             let barID = "navigation.tabbar"
+             bar.ttrRecordConstruction(.init(framework: "UIKit", primitive: "UITabBar", source: "ContentView.TabView"))
++            bar.ttrBindFrameworkBody(.paintedGroup) { owner in
++                let raw = owner.bounds
++                let rects = children(owner).dropFirst().compactMap { view -> CGRect? in
++                    guard !view.isHidden, view.alpha > 0.01 else { return nil }
++                    let r = view.convert(view.bounds, to: owner)
++                    guard abs(r.midX - raw.midX) < 1, abs(r.midY - raw.midY) < 1,
++                          abs(r.height - raw.height) < 1, r.width > raw.width/4, r.width < raw.width * 0.85 else { return nil }
++                    return r
++                }
++                let titles = Set(items.compactMap { $0.title })
++                let joined = children(owner).compactMap { $0 as? UIControl }.filter {
++                    $0.accessibilityLabel.map(titles.contains) == true && !$0.isHidden
++                }
++                guard joined.count == items.count else { return nil }
++                let envelope = joined.reduce(CGRect.null) { $0.union($1.convert($1.bounds,to:owner)) }
++                let enclosing = rects.filter { $0.contains(envelope) }
++                // Choose the innermost full-height group enclosing every owned tab.
++                guard let body = enclosing.min(by: { $0.width < $1.width }),
++                      enclosing.allSatisfy({ $0.contains(body) }) else { return nil }
++                return body
++            }
+             try? recorder.register(view: bar, identity: tabIdentity(barID))
+             published[barID] = recorder.page().first { $0.identity.id == barID }?.identity
+             for (index, item) in items.enumerated() {

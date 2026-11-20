@@ -4,15 +4,23 @@ from pathlib import Path
 import torch
 from torch.nn import functional as F
 import research_queue as q
-from experiment_templates import checked
+from template_inputs398 import checked
 
 
 def validate(config, membership):
-    q.require({'model','anchors','weight'}<=set(config)<= {'model','anchors','weight','geometryWeight'}, 'detector_preservation_fields')
+    q.require({'model','anchors','weight'}<=set(config)<= {'model','anchors','weight','geometryWeight','geometryConfidence','classificationConfidence'}, 'detector_preservation_fields')
     if 'geometryWeight' in config:
         q.require(type(config['geometryWeight']) in (int,float) and math.isfinite(config['geometryWeight']) and config['geometryWeight']>0,'geometry_preservation_weight')
+    if 'geometryConfidence' in config:
+        c=config['geometryConfidence']
+        q.require('geometryWeight' in config and type(c) in (int,float) and math.isfinite(c) and 0<c<=1,'geometry_preservation_confidence')
+    if 'classificationConfidence' in config:
+        c=config['classificationConfidence']
+        q.require('geometryWeight' in config and type(c) in (int,float) and math.isfinite(c) and 0<c<=1,
+                  'classification_preservation_confidence')
     weight = config['weight']
-    q.require(type(weight) in (int, float) and math.isfinite(weight) and weight > 0,
+    q.require(type(weight) in (int, float) and math.isfinite(weight) and
+              (weight > 0 or weight == 0 and config.get('geometryWeight', 0) > 0),
               'detector_preservation_weight')
     checked(config['model'])
     anchors = q.load(checked(config['anchors']))
@@ -99,7 +107,7 @@ def attach(model, config, membership, dataset, output):
         original = student.init_criterion()
         if 'geometryWeight' in config:
             from detector_geometry570 import GeometryPreservation
-            wrapper=GeometryPreservation(original,teacher,paths,config['weight'],config['geometryWeight'])
+            wrapper=GeometryPreservation(original,teacher,paths,config['weight'],config['geometryWeight'],config.get('geometryConfidence'),config.get('classificationConfidence'))
         else:
             wrapper = ClassificationPreservation(original, teacher, paths, config['weight'])
         student.criterion = wrapper
@@ -111,12 +119,18 @@ def attach(model, config, membership, dataset, output):
         q.require(wrapper.calls > 0 and wrapper.anchor_images > 0, 'detector_preservation_unused')
         state['student'].criterion = state['original']
         q.save(output/'preservation.json', dict(version='detector-preservation-result-v1',
-            configuration=config, anchorCount=len(paths), calls=wrapper.calls,
+            configuration=config, classificationPenaltyAdded=config['weight'] > 0, anchorCount=len(paths), calls=wrapper.calls,
             presentedAnchorImages=wrapper.anchor_images, meanPenalty=wrapper.loss_sum/wrapper.calls,
             teacherUnchanged=True, teacherDetached=True, trainingOnly=True,
             boxLossUnchanged='geometryWeight' not in config, originalSupervisedBoxLossUnchanged=True,
             geometryDistributionPenaltyAdded='geometryWeight' in config,
             meanGeometryPenalty=wrapper.geometry_loss_sum/wrapper.calls if 'geometryWeight' in config else None,
+            teacherForegroundPositions=getattr(wrapper,'foreground_positions',None),
+            teacherTotalPositions=getattr(wrapper,'total_positions',None),
+            emptyTeacherForegroundImages=getattr(wrapper,'empty_foreground_images',None),
+            classificationTeacherForegroundPositions=getattr(wrapper,'classification_foreground_positions',None),
+            classificationTeacherTotalPositions=getattr(wrapper,'classification_total_positions',None),
+            emptyClassificationForegroundImages=getattr(wrapper,'classification_empty_images',None),
             addedOptimizerUpdates=0, modelAccepted=False))
     model.add_callback('on_pretrain_routine_end', setup)
     model.add_callback('on_train_end', finish)

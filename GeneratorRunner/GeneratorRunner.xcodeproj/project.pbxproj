@@ -49,6 +49,8 @@
 		CC000014000000000000CC14 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000005000000000000BB05 /* SeededRNG.swift */; };
 		CC000015000000000000CC15 /* ScreenshotCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000006000000000000BB06 /* ScreenshotCapture.swift */; };
 		CC000016000000000000CC16 /* LoginFormTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000007000000000000BB07 /* LoginFormTemplate.swift */; };
+		F6070016000000000000CC16 /* NativeFormTaxonomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6070007000000000000BB07 /* NativeFormTaxonomy.swift */; };
+		F6080016000000000000CC16 /* NativeListTaxonomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6080007000000000000BB07 /* NativeListTaxonomy.swift */; };
 		CC000017000000000000CC17 /* SettingsListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000008000000000000BB08 /* SettingsListTemplate.swift */; };
 		CC000018000000000000CC18 /* AlertTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000009000000000000BB09 /* AlertTemplate.swift */; };
 		CC000019000000000000CC19 /* AnnotationWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001A000000000000BB1A /* AnnotationWriter.swift */; };
@@ -147,6 +149,8 @@
 		BB000005000000000000BB05 /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeededRNG.swift; path = ../NativeUIDatasetGenerator/Sources/SeededRNG.swift; sourceTree = SOURCE_ROOT; };
 		BB000006000000000000BB06 /* ScreenshotCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScreenshotCapture.swift; path = ../NativeUIDatasetGenerator/Templates/ScreenshotCapture.swift; sourceTree = SOURCE_ROOT; };
 		BB000007000000000000BB07 /* LoginFormTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginFormTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/LoginFormTemplate.swift; sourceTree = SOURCE_ROOT; };
+		F6070007000000000000BB07 /* NativeFormTaxonomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NativeFormTaxonomy.swift; path = ../NativeUIDatasetGenerator/Templates/NativeFormTaxonomy.swift; sourceTree = SOURCE_ROOT; };
+		F6080007000000000000BB07 /* NativeListTaxonomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NativeListTaxonomy.swift; path = ../NativeUIDatasetGenerator/Templates/NativeListTaxonomy.swift; sourceTree = SOURCE_ROOT; };
 		BB000008000000000000BB08 /* SettingsListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsListTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/SettingsListTemplate.swift; sourceTree = SOURCE_ROOT; };
 		BB000009000000000000BB09 /* AlertTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlertTemplate.swift; path = ../NativeUIDatasetGenerator/Templates/AlertTemplate.swift; sourceTree = SOURCE_ROOT; };
 		BB00000A000000000000BB0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -266,6 +270,8 @@
 			children = (
 				BB000006000000000000BB06 /* ScreenshotCapture.swift */,
 				BB000007000000000000BB07 /* LoginFormTemplate.swift */,
+				F6070007000000000000BB07 /* NativeFormTaxonomy.swift */,
+				F6080007000000000000BB07 /* NativeListTaxonomy.swift */,
 				BB000008000000000000BB08 /* SettingsListTemplate.swift */,
 				BB000009000000000000BB09 /* AlertTemplate.swift */,
 				BB00000C000000000000BB0C /* KitchenSinkTemplate.swift */,
@@ -488,6 +494,8 @@
 				CC000022000000000000CC22 /* BalanceReport.swift in Sources */,
 				CC000015000000000000CC15 /* ScreenshotCapture.swift in Sources */,
 				CC000016000000000000CC16 /* LoginFormTemplate.swift in Sources */,
+				F6070016000000000000CC16 /* NativeFormTaxonomy.swift in Sources */,
+				F6080016000000000000CC16 /* NativeListTaxonomy.swift in Sources */,
 				CC000017000000000000CC17 /* SettingsListTemplate.swift in Sources */,
 				CC000018000000000000CC18 /* AlertTemplate.swift in Sources */,
 				CC00001D000000000000CC1D /* KitchenSinkTemplate.swift in Sources */,

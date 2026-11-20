@@ -73,7 +73,10 @@ package struct FocusRingClassifier: @unchecked Sendable {
     ///
     /// Must not be called on the MainActor with a large batch; callers iterate crops off the
     /// UI thread (same pattern as YOLO `Task.detached` in `performDetailed`).
-    package func classify(crop: CGImage) throws -> Result {
+    package func classify(
+        crop: CGImage,
+        observeInput: ((CVPixelBuffer) throws -> Void)? = nil
+    ) throws -> Result {
         guard crop.width == Self.cropSize, crop.height == Self.cropSize else {
             throw NativeUIDetectionError.imagePreprocessingFailed
         }
@@ -82,6 +85,9 @@ package struct FocusRingClassifier: @unchecked Sendable {
         let provider = try MLDictionaryFeatureProvider(dictionary: [
             inputName: MLFeatureValue(pixelBuffer: pixelBuf),
         ])
+        // Observe the same buffer instance held by the feature provider.
+        // The default path performs no hashing or observation.
+        try observeInput?(pixelBuf)
         let out = try model.prediction(from: provider)
         let prob = Self.scalar(out, names: ["is_focused_prob", "var_is_focused_prob"])
         let conf: Float

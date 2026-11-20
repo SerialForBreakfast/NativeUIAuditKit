@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image
 from sdk_semantics529 import semantics
 import research_queue as q
-from experiment_templates import checked, pin
+from template_inputs398 import checked, pin
 
 OUT = None
 

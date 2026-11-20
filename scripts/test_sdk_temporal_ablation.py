@@ -21,6 +21,15 @@ class AblationTests(unittest.TestCase):
                 sp=path.with_name(condition+'-spec.json'); q.save(sp,spec)
                 self.assertEqual(q.submit(sp,Path(folder)/'queue'),'submitted')
                 self.assertEqual(spec['adapter']['steps'],['sdk_temporal_ablation.run'])
+    def test_consumer_pins_its_validator_and_keeps_producer_identity(self):
+        with tempfile.TemporaryDirectory(dir=q.ROOT/'.build') as folder:
+            path=Path(folder)/'request.json';request=self.request();q.save(path,request)
+            spec=m.build(path)
+            self.assertIn(pin(q.MODULES/'sdk_temporal508.py'),spec['inputs'])
+            for key in ('sourceSpec','sourceResult','sourceSummary'):
+                self.assertIn(request[key],spec['inputs'])
+            q.verify_pins(spec)
+
     def test_changed_membership_rejected(self):
         original=m.rows
         def changed(source):

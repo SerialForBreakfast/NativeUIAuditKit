@@ -14,6 +14,9 @@ OUT = None
 
 
 def validate_config(c):
+    if c.get('version')=='sdk-profile-pair-v2':
+        from native_profile587 import validate_config as native_validate
+        return native_validate(c)
     q.require(set(c) == {'version','id','capture','plan','producer','sources'}, 'profile538_fields')
     q.require(c['version'] == 'sdk-profile-pair-v1' and q.ID.fullmatch(c['id']), 'profile538_identity')
     capture.validate_config(c['capture'])
@@ -57,7 +60,11 @@ def readiness(c, out):
 
 
 def build(path):
-    c = q.load(path); validate_config(c)
+    c = q.load(path)
+    if c.get('version')=='sdk-profile-pair-v2':
+        from native_profile587 import build as native_build
+        return native_build(path)
+    validate_config(c)
     s = dict(version='research-spec-v2',id=c['id'],task='PIPELINE538',owner='Maximum-mini-NUIAK',
              kind='screen',jobKind='capture',authority='capture',dependencies=[],
              capture=dict(target=c['capture']['target'],endpoint=c['capture']['endpoint'],plan=pin(path),approval='bounded producer qualification'),
@@ -206,6 +213,9 @@ def publish(c, out, result):
 
 def run():
     spec=q.load(OUT.parents[2]/'spec.json');validate_spec(spec);c=q.load(checked(spec['capture']['plan']))
+    if c.get('version')=='sdk-profile-pair-v2':
+        from native_profile587 import run as native_run
+        return native_run(OUT)
     q.save(OUT/'readiness.json',readiness(c,OUT))
     for ref in spec['inputs']:checked(ref)
     dest=Path(c['capture']['output']);q.require(not dest.exists(),'profile538_output_exists')

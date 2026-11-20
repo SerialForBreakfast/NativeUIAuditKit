@@ -44,6 +44,7 @@ class Snapshot:
             value = enrich(value, ROOT/'reports/work/research-queue')
             value = attach(value, ROOT)
             value['graphCompanion'] = True
+            self.token = control.get('token', '')
             self.value, self.updated = value, time.monotonic()
             return value
 
@@ -55,7 +56,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Type', kind+'; charset=utf-8')
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
-        self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'")
+        self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' http://127.0.0.1:8765 http://localhost:8765; frame-ancestors 'none'; base-uri 'none'")
         self.end_headers()
         self.wfile.write(payload)
 
@@ -67,11 +68,18 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.valid():
             return self.reply(403, {'error':'request_refused'})
-        if self.path not in ('/', '/api/state'):
+        if self.path not in ('/', '/graph', '/api/state'):
             return self.reply(404, {'error':'not_found'})
         try:
             value = self.server.snapshot.read()
-            return self.reply(200, render_graph(value), 'text/html') if self.path=='/' else self.reply(200, value)
+            token = getattr(self.server.snapshot, 'token', '')
+            if self.path == '/graph':
+                return self.reply(200, render_graph(value, token=token), 'text/html')
+            elif self.path in ('/', ''):
+                from generate_research_dashboard import render_html
+                return self.reply(200, render_html(value, token=token), 'text/html')
+            else:
+                return self.reply(200, value)
         except Exception:
             # Never put a private token, local path, or upstream response into an error.
             return self.reply(503, {'error':'Queue snapshot unavailable. The experiment runner is unchanged.'})

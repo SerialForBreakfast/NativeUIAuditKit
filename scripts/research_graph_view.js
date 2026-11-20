@@ -52,7 +52,7 @@
       .sort((a,b) => b.impact-a.impact || a.job.job.localeCompare(b.job.job));
   }
   function project(snapshot, options={}) {
-    const graph = index(snapshot), limit = options.limit || 180;
+    const graph = index(snapshot), limit = options.limit !== undefined ? options.limit : 180;
     let ids = new Set([...graph.jobs.values()].filter(j => !options.campaign || campaign(j) === options.campaign).map(j => j.job));
     if (options.focus && graph.jobs.has(options.focus)) {
       ids = new Set([options.focus, ...reach(options.focus,graph.incoming), ...reach(options.focus,graph.outgoing)]);
@@ -61,8 +61,22 @@
     for (const id of [...ids]) for (const dep of graph.incoming.get(id)) ids.add(dep);
     const hidden = [...ids].filter(id => terminal.has(state(graph.jobs.get(id))));
     if (!options.history) for (const id of hidden) ids.delete(id);
+    if (options.state && options.state !== 'all') {
+      ids = new Set([...ids].filter(id => {
+        const j = graph.jobs.get(id);
+        const s = id === snapshot.current ? 'running' : state(j);
+        return s === options.state;
+      }));
+    }
+    if (options.search) {
+      const q = options.search.toLowerCase();
+      ids = new Set([...ids].filter(id => {
+        const j = graph.jobs.get(id);
+        return id.toLowerCase().includes(q) || String(j?.task||'').toLowerCase().includes(q) || String(j?.hypothesis||'').toLowerCase().includes(q);
+      }));
+    }
     const ordered = [...ids].sort((a,b) => Number(b===snapshot.current)-Number(a===snapshot.current) || a.localeCompare(b));
-    ids = new Set(ordered.slice(0,limit));
+    ids = new Set(limit > 0 ? ordered.slice(0,limit) : ordered);
     const nodes = [...ids].map(id => {
       const j=graph.jobs.get(id), s=id===snapshot.current?'running':state(j);
       return {data:{id, label:id+'\n'+s, state:s}, classes:s};
@@ -74,7 +88,7 @@
         .map(c=>['supported','contradicted'].includes(c.outcome)?'requires '+c.outcome:'invalid condition').join('; '):'';
       edges.push({data:{id:JSON.stringify([dep,id]), source:dep, target:id, label}});
     }
-    return {schemaVersion:1, graph, nodes, edges, hidden:hidden.length, omitted:Math.max(0,ordered.length-limit), issues:graph.issues};
+    return {schemaVersion:1, graph, nodes, edges, hidden:hidden.length, omitted:limit>0?Math.max(0,ordered.length-limit):0, issues:graph.issues};
   }
   function workflow(snapshot, name) {
     const graph=index(snapshot), memo=new Map();
@@ -259,6 +273,8 @@ if (typeof document !== 'undefined') {
     const inspect=id=>{
       chosen=id;
       const graph=QueueGraph.index(data), j=graph.jobs.get(id); if(!j)return;
+      const insp=get('graph-inspector');
+      if(insp) insp.hidden=false;
       const el=get('graph-detail');el.replaceChildren();
       write(el,'h3',id);
       const d=description(j);
@@ -272,78 +288,258 @@ if (typeof document !== 'undefined') {
         ['Delivery',j.deliveryState||'Not recorded']]) {
         write(el,'strong',label);write(el,'p',typeof value==='object'?JSON.stringify(value):String(value??'Unavailable'));
       }
+      if(j.state==='exhausted'&&j.extension&&!j.extension.blocker){
+        const ext=j.extension, to=ext.suggested?.timeoutSeconds||800;
+        const mb=Math.round((ext.suggested?.maxOutputBytes||100000000)/1e6);
+        const box=document.createElement('div');box.className='extend-box';
+        const h4=document.createElement('h4');h4.textContent='1-Button Approval: Give More Time';
+        const p=document.createElement('p');p.style.fontSize='11px';p.style.color='#c9d1d9';
+        p.textContent='Task exhausted due to limits ('+(j.reason||'timeout/output limit')+'). Increase limits to '+to+' s and '+mb+' MB to restart this task.';
+        const btn=document.createElement('button');btn.id='btn-extend-detail-'+j.job;btn.className='btn-approve-time';
+        btn.style.fontSize='11px';btn.style.padding='5px 12px';btn.textContent='+ Approve & Restart ('+to+' s, '+mb+' MB)';
+        btn.onclick=()=>approveMoreTime(j.job,to,ext.suggested?.maxOutputBytes||(mb*1e6));
+        box.append(h4,p,btn);el.append(box);
+      }
       if(cy){cy.nodes().unselect();cy.getElementById(id).select();}
     };
     const layout=()=>{
-      if(!cy)return;
-      const focus=chosen||cy.nodes()[0]?.id();
-      const distance=new Map([[focus,0]]), todo=[focus];
-      for(let i=0;i<todo.length;i++) for(const node of cy.getElementById(todo[i]).neighborhood().nodes()){
-        if(!distance.has(node.id())){distance.set(node.id(),distance.get(todo[i])+1);todo.push(node.id());}
+      if(!cy||!cy.nodes().length)return;
+      const m = mode.value;
+      if (m === 'grid') {
+        cy.layout({name: 'grid', fit: true, padding: 40, avoidOverlap: true, spacingFactor: 1.25, condense: true, nodeDimensionsIncludeLabels: true}).run();
+      } else if (m === 'cose') {
+        cy.layout({name: 'cose', animate: false, fit: true, padding: 50, nodeRepulsion: 15000, idealEdgeLength: 100, edgeElasticity: 100, gravity: 80, numIter: 800, nodeDimensionsIncludeLabels: true}).run();
+      } else if (m === 'blockers') {
+        const focus=chosen||cy.nodes()[0]?.id();
+        const distance=new Map([[focus,0]]), todo=[focus];
+        for(let i=0;i<todo.length;i++) for(const node of cy.getElementById(todo[i]).neighborhood().nodes()){
+          if(!distance.has(node.id())){distance.set(node.id(),distance.get(todo[i])+1);todo.push(node.id());}
+        }
+        cy.layout({name:'concentric',animate:false,padding:40,concentric:n=>1000-(distance.get(n.id())??999),levelWidth:()=>1,minNodeSpacing:60}).run();
+      } else {
+        // Hierarchical DAG flow (Left -> Right) with wrapped columns for wide suites
+        const nodes = cy.nodes();
+        const inDegree = new Map(), outgoing = new Map();
+        for (const n of nodes) {
+          inDegree.set(n.id(), n.incomers('node').length);
+          outgoing.set(n.id(), n.outgoers('node').map(o => o.id()));
+        }
+        const rank = new Map();
+        const queue = nodes.filter(n => inDegree.get(n.id()) === 0).map(n => n.id());
+        for (const id of queue) rank.set(id, 0);
+        for (let i = 0; i < queue.length; i++) {
+          const u = queue[i];
+          const r = rank.get(u) || 0;
+          for (const v of outgoing.get(u) || []) {
+            const cur = rank.get(v) || 0;
+            if (r + 1 > cur) rank.set(v, r + 1);
+            const rem = inDegree.get(v) - 1;
+            inDegree.set(v, rem);
+            if (rem === 0) queue.push(v);
+          }
+        }
+        for (const n of nodes) if (!rank.has(n.id())) rank.set(n.id(), 0);
+        const colGroups = new Map();
+        for (const n of nodes) {
+          const r = rank.get(n.id());
+          if (!colGroups.has(r)) colGroups.set(r, []);
+          colGroups.get(r).push(n);
+        }
+        const colWidth = 240, rowHeight = 75, MAX_PER_SUBCOL = 10;
+        let currentX = 0;
+        cy.batch(() => {
+          const sortedRanks = [...colGroups.keys()].sort((a,b)=>a-b);
+          for (const r of sortedRanks) {
+            const groupNodes = colGroups.get(r);
+            const subCols = Math.ceil(groupNodes.length / MAX_PER_SUBCOL);
+            for (let sc = 0; sc < subCols; sc++) {
+              const slice = groupNodes.slice(sc * MAX_PER_SUBCOL, (sc + 1) * MAX_PER_SUBCOL);
+              slice.forEach((node, idx) => {
+                node.position({
+                  x: currentX + (sc * colWidth),
+                  y: idx * rowHeight
+                });
+              });
+            }
+            currentX += subCols * colWidth + 50;
+          }
+        });
       }
-      cy.layout(mode.value==='blockers'?{name:'concentric',animate:false,padding:35,
-        concentric:n=>1000-(distance.get(n.id())??999),levelWidth:()=>1,minNodeSpacing:45}:
-        {name:'breadthfirst',directed:true,animate:false,padding:35,spacingFactor:1.4,
-         transform:(_node,p)=>({x:p.y,y:p.x})}).run();
+      readable();
     };
+    const MIN_READABLE_ZOOM=0.25;
+    function readable(){
+      if(!cy||!cy.nodes().length)return;
+      cy.resize();cy.fit(undefined,40);
+      if(cy.zoom()<MIN_READABLE_ZOOM){
+        const target=(chosen&&cy.getElementById(chosen).length)?cy.getElementById(chosen):cy.nodes()[0];
+        cy.zoom(MIN_READABLE_ZOOM);cy.center(target);
+      }
+    }
     function update(force=false) {
       updateWorkflow();
       updateOverview();
       const jobs=data.jobs||[], old=selector.value;
+      const setStat=(id,cnt)=>{const el=get(id);if(el){const s=el.querySelector?.('strong');if(s)s.textContent=cnt;}};
+      setStat('stat-total',jobs.length);
+      setStat('stat-running',jobs.filter(j=>j.job===data.current||j.state==='running').length);
+      setStat('stat-ready',jobs.filter(j=>QueueGraph.state(j)==='ready').length);
+      setStat('stat-blocked',jobs.filter(j=>QueueGraph.state(j)==='blocked').length);
+      setStat('stat-exhausted',jobs.filter(j=>j.state==='exhausted').length);
+      setStat('stat-done',jobs.filter(j=>['complete','superseded'].includes(QueueGraph.state(j))).length);
+
+      const runJob = jobs.find(j=>j.job===data.current||j.state==='running');
+      const hudStatus = get('hud-status');
+      const hudStatusText = get('hud-status-text');
+      const hudTaskInfo = get('hud-task-info');
+      if (hudStatus && hudStatusText && hudTaskInfo) {
+        if (runJob) {
+          hudStatus.className = 'hud-pill running';
+          hudStatusText.textContent = 'Running';
+          hudTaskInfo.textContent = runJob.job + ' — ' + (description(runJob).title || runJob.hypothesis || 'Running experiment');
+        } else {
+          hudStatus.className = 'hud-pill idle';
+          hudStatusText.textContent = 'Idle';
+          const rCnt = jobs.filter(j=>QueueGraph.state(j)==='ready').length;
+          const bCnt = jobs.filter(j=>QueueGraph.state(j)==='blocked').length;
+          const eCnt = jobs.filter(j=>j.state==='exhausted').length;
+          hudTaskInfo.textContent = 'Queue idle · ' + rCnt + ' ready · ' + bCnt + ' blocked · ' + eCnt + ' can extend';
+        }
+      }
+
       const campaigns=[...new Set(jobs.map(QueueGraph.campaign))].sort();
       if(JSON.stringify(campaigns)!==selector.dataset.keys){
-        selector.replaceChildren();for(const name of campaigns){const option=write(selector,'option',name);option.value=name;}
+        selector.replaceChildren();
+        const optAll=write(selector,'option','All Campaigns');optAll.value='';
+        for(const name of campaigns){const option=write(selector,'option',name);option.value=name;}
         selector.dataset.keys=JSON.stringify(campaigns);
-        selector.value=campaigns.includes(old)?old:QueueGraph.campaign(jobs.find(j=>j.job===data.current)||jobs.find(j=>!['complete','superseded'].includes(QueueGraph.state(j)))||{});
+        selector.value=campaigns.includes(old)?old:'';
       }
-      const g=QueueGraph.index(data), attention=get('graph-blockers');attention.replaceChildren();
-      const urgent=QueueGraph.workflow(data,selector.value).actions;
-      for(const b of urgent.slice(0,8)){
-        const button=write(attention,'button',b.job.job+' · '+QueueGraph.state(b.job)+' · '+b.impact+' downstream');
-        button.onclick=()=>{mode.value='blockers';chosen=b.job.job;get('graph-show').click();update(true);inspect(chosen);};
-        write(attention,'p',(b.job.readinessReasons||b.job.requirements||[]).join('; ')||b.job.reason||'Missing requirement is not recorded.');
+      const g=QueueGraph.index(data), attention=get('graph-blockers');
+      if(attention){
+        attention.replaceChildren();
+        const urgent=QueueGraph.workflow(data,selector.value).actions;
+        const bCnt=get('blocked-count');if(bCnt)bCnt.textContent=urgent.length;
+        for(const b of urgent.slice(0,15)){
+          const item=document.createElement('div');item.className='item-card';
+          const hdr=document.createElement('div');hdr.className='item-header';
+          const btn=document.createElement('button');btn.className='item-title';btn.textContent=b.job.job;
+          btn.onclick=()=>{chosen=b.job.job;if(cy&&cy.getElementById(chosen).length){cy.center(cy.getElementById(chosen));cy.getElementById(chosen).select();}inspect(chosen);};
+          const badge=document.createElement('span');badge.className='badge badge-blocked';badge.textContent=b.impact+' downstream';
+          hdr.append(btn,badge);
+          const meta=document.createElement('div');meta.className='item-warning';
+          meta.textContent=(b.job.readinessReasons||b.job.requirements||[]).join('; ')||b.job.reason||'Requirement pending';
+          item.append(hdr,meta);attention.append(item);
+        }
+        if(!urgent.length){const em=document.createElement('p');em.className='item-meta';em.textContent='No actionable blockers in this selection.';attention.append(em);}
       }
-      if(!urgent.length)write(attention,'p','No actionable blocker is recorded for this campaign.');
+
+      const extList=get('graph-extendable');
+      if(extList){
+        extList.replaceChildren();
+        const extendable=jobs.filter(j=>j.state==='exhausted'&&j.extension&&!j.extension.blocker);
+        const eCnt=get('extendable-count');if(eCnt)eCnt.textContent=extendable.length;
+        for(const j of extendable.slice(0,15)){
+          const item=document.createElement('div');item.className='item-card';
+          const hdr=document.createElement('div');hdr.className='item-header';
+          const btn=document.createElement('button');btn.className='item-title';btn.textContent=j.job;
+          btn.onclick=()=>{chosen=j.job;if(cy&&cy.getElementById(chosen).length){cy.center(cy.getElementById(chosen));cy.getElementById(chosen).select();}inspect(chosen);};
+          hdr.append(btn);
+          const ext=j.extension, to=ext.suggested?.timeoutSeconds||800;
+          const mb=Math.round((ext.suggested?.maxOutputBytes||100000000)/1e6);
+          const meta=document.createElement('div');meta.className='item-meta';
+          meta.textContent='Exhausted: '+(j.reason||'limits reached')+' · Suggest: '+to+' s, '+mb+' MB';
+          const act=document.createElement('div');act.style.marginTop='4px';
+          const appBtn=document.createElement('button');appBtn.id='btn-extend-'+j.job;appBtn.className='btn-approve-time';
+          appBtn.textContent='+ Give More Time ('+to+' s, '+mb+' MB)';
+          appBtn.onclick=()=>{if(typeof approveMoreTime==='function')approveMoreTime(j.job,to,ext.suggested?.maxOutputBytes||(mb*1e6));};
+          act.append(appBtn);item.append(hdr,meta,act);extList.append(item);
+        }
+        if(!extendable.length){const em=document.createElement('p');em.className='item-meta';em.textContent='No exhausted tasks eligible for extension.';extList.append(em);}
+      }
+
       get('graph-freshness').textContent=data.stale?'STALE — last snapshot; do not infer completion.':'Snapshot '+(data.snapshotId||'export')+' · '+new Date(lastGood).toLocaleTimeString();
-      if(panel.hidden||document.hidden)return;
+      if((panel && panel.hidden && !get('graph-canvas')) || document.hidden)return;
       if(typeof cytoscape==='undefined'){get('graph-warning').textContent='Graph library unavailable. Use the list view.';return;}
-      const p=QueueGraph.project(data,{campaign:selector.value,focus:mode.value==='blockers'?chosen:'',history:get('graph-history').checked});
-      get('graph-warning').textContent=[...p.issues.slice(0,10),p.issues.length>10?(p.issues.length-10)+' more graph warnings.':'',p.hidden+' completed or superseded nodes hidden.',p.omitted?p.omitted+' nodes omitted. Narrow the campaign.':'',
+      const stateFilter=get('graph-filter-state')?.value||'';
+      const limitFilter=get('graph-limit')?Number(get('graph-limit').value):180;
+      const p=QueueGraph.project(data,{campaign:selector.value,focus:mode.value==='blockers'?chosen:'',history:get('graph-history').checked,state:stateFilter,limit:limitFilter,search:get('graph-find')?.value});
+      get('graph-warning').textContent=[...p.issues.slice(0,10),p.issues.length>10?(p.issues.length-10)+' more graph warnings.':'',p.hidden+' completed or superseded nodes hidden.',p.omitted?p.omitted+' nodes omitted. Narrow the campaign or increase limit.':'',
         'Arrows show recorded prerequisites, not inferred decision rules.'].filter(Boolean).join(' ');
-      const signature=JSON.stringify([mode.value,selector.value,p.nodes.map(n=>n.data.id),p.edges.map(e=>e.data.id)]);
+      const signature=JSON.stringify([mode.value,selector.value,stateFilter,limitFilter,p.nodes.map(n=>n.data.id),p.edges.map(e=>e.data.id)]);
       if(!cy){cy=cytoscape({container:get('graph-canvas'),elements:[],layout:{name:'preset'},autoungrabify:true,boxSelectionEnabled:false,
-        style:[{selector:'node',style:{'shape':'round-rectangle','width':180,'height':52,'background-color':'#24394c','color':'#e6edf3','label':'data(label)','text-wrap':'wrap','font-size':11,'text-valign':'center','border-width':1,'border-color':'#52697f'}},
-          {selector:'edge',style:{'width':1.5,'line-color':'#52697f','target-arrow-color':'#52697f','target-arrow-shape':'triangle','curve-style':'bezier',
-            'label':'data(label)','font-size':10,'color':'#ffc77e','text-background-color':'#0d1117','text-background-opacity':1}},
-          {selector:'.running',style:{'background-color':'#07565b','border-color':'#70ffff','border-width':4,'shape':'round-rectangle'}},
-          {selector:'.blocked, .failed, .missing, .exhausted, .drifted',style:{'shape':'hexagon','background-color':'#65451f','border-color':'#ffc77e'}},
-          {selector:'.ready',style:{'background-color':'#185133'}},
-          {selector:'.complete, .superseded',style:{'background-color':'#30363d','opacity':0.6}},
-          {selector:':selected',style:{'border-color':'#ffffff','border-width':4}}]});
-        cy.on('tap','node',event=>inspect(event.target.id()));
+        style:[{selector:'node',style:{'shape':'round-rectangle','width':210,'height':50,'background-color':'#182330','color':'#f0f6fc','label':'data(label)','text-wrap':'wrap','font-size':11,'font-weight':600,'text-valign':'center','border-width':1.5,'border-color':'#3b4c5e'}},
+          {selector:'edge',style:{'width':2,'line-color':'#52697f','target-arrow-color':'#52697f','target-arrow-shape':'triangle','curve-style':'bezier',
+            'label':'data(label)','font-size':10,'color':'#ffc77e','text-background-color':'#0d1117','text-background-opacity':0.8,'arrow-scale':1.1}},
+          {selector:'.running',style:{'background-color':'#0b4952','border-color':'#5ce1dc','border-width':3}},
+          {selector:'.blocked, .failed, .missing',style:{'background-color':'#3a2c0f','border-color':'#ffc77e','border-width':2}},
+          {selector:'.exhausted',style:{'background-color':'#3d1a10','border-color':'#ffaa44','border-width':2}},
+          {selector:'.ready',style:{'background-color':'#125430','border-color':'#55d790','border-width':2}},
+          {selector:'.complete, .superseded',style:{'background-color':'#161b22','border-color':'#30363d','color':'#8b949e','opacity':0.7}},
+          {selector:':selected',style:{'border-color':'#ffffff','border-width':3,'opacity':1}},
+          {selector:'.highlighted-incoming',style:{'border-color':'#5ce1dc','border-width':3,'line-color':'#5ce1dc','target-arrow-color':'#5ce1dc'}},
+          {selector:'.highlighted-outgoing',style:{'border-color':'#ffc77e','border-width':3,'line-color':'#ffc77e','target-arrow-color':'#ffc77e'}},
+          {selector:'.dimmed',style:{'opacity':0.25}}]});
+        cy.on('tap','node',event=>{
+          const node=event.target, id=node.id();
+          inspect(id);
+          cy.elements().removeClass('dimmed highlighted-incoming highlighted-outgoing');
+          cy.elements().addClass('dimmed');
+          node.removeClass('dimmed');
+          node.incomers().removeClass('dimmed').addClass('highlighted-incoming');
+          node.outgoers().removeClass('dimmed').addClass('highlighted-outgoing');
+        });
+        cy.on('tap',event=>{
+          if(event.target===cy){
+            cy.elements().removeClass('dimmed highlighted-incoming highlighted-outgoing');
+            const insp=get('graph-inspector');if(insp)insp.hidden=true;
+          }
+        });
+        const btnIn=get('btn-zoom-in'), btnOut=get('btn-zoom-out'), btnFit=get('btn-zoom-fit');
+        if(btnIn)btnIn.onclick=()=>{cy.zoom({level:cy.zoom()*1.25,renderedPosition:{x:cy.width()/2,y:cy.height()/2}});};
+        if(btnOut)btnOut.onclick=()=>{cy.zoom({level:cy.zoom()*0.8,renderedPosition:{x:cy.width()/2,y:cy.height()/2}});};
+        if(btnFit)btnFit.onclick=()=>readable();
       }
       if(signature!==topology||force){cy.elements().remove();cy.add([...p.nodes,...p.edges]);topology=signature;layout();}
       else cy.batch(()=>{for(const n of p.nodes){const item=cy.getElementById(n.data.id);item.data(n.data);item.classes(n.classes);}});
-      const list=get('graph-node-list'), previous=list.value;list.replaceChildren();
-      write(list,'option','Select a job to inspect').value='';
-      for(const n of p.nodes)write(list,'option',n.data.label.replace('\n',' · ')).value=n.data.id;
-      list.value=p.nodes.some(n=>n.data.id===chosen)?chosen:previous;
+      const list=get('graph-node-list'), previous=list?.value;
+      if(list){
+        list.replaceChildren();
+        write(list,'option','Select a job to inspect').value='';
+        for(const n of p.nodes)write(list,'option',n.data.label.replace('\n',' · ')).value=n.data.id;
+        list.value=p.nodes.some(n=>n.data.id===chosen)?chosen:previous;
+      }
+      const rowsTable=get('rows');
+      if(rowsTable){
+        rowsTable.replaceChildren();
+        const lCnt=get('list-count');if(lCnt)lCnt.textContent=p.nodes.length;
+        for(const n of p.nodes.slice(0,60)){
+          const tr=document.createElement('tr');tr.style.borderBottom='1px solid #21262d';
+          const td=document.createElement('td');td.style.padding='2px 4px';
+          const b=document.createElement('button');b.className='item-title';b.style.fontSize='10px';
+          b.textContent=n.data.id+' · '+n.data.state;b.onclick=()=>inspect(n.data.id);
+          td.append(b);tr.append(td);rowsTable.append(tr);
+        }
+      }
       if(chosen&&g.jobs.has(chosen))inspect(chosen);
-      get('graph-count').textContent=p.nodes.length+' jobs · '+p.edges.length+' dependencies';
+      get('graph-count').textContent=p.nodes.length+' visible jobs · '+p.edges.length+' dependencies';
     }
-    get('graph-show').onclick=()=>{panel.hidden=false;get('graph-show').setAttribute('aria-pressed','true');update();cy?.resize();};
+    get('graph-show').onclick=()=>{panel.hidden=false;get('graph-show').setAttribute('aria-pressed','true');update();readable();};
     get('graph-hide').onclick=()=>{panel.hidden=true;get('graph-show').setAttribute('aria-pressed','false');};
-    selector.onchange=()=>{chosen='';update(true);};mode.onchange=()=>{
-      if(mode.value==='blockers')chosen=QueueGraph.blockers(QueueGraph.index(data)).find(b=>QueueGraph.campaign(b.job)===selector.value)?.job.job||chosen;
+    selector.onchange=()=>{chosen='';update(true);};
+    const filterState=get('graph-filter-state');if(filterState)filterState.onchange=()=>update(true);
+    const filterLimit=get('graph-limit');if(filterLimit)filterLimit.onchange=()=>update(true);
+    mode.onchange=()=>{
+      if(mode.value==='blockers')chosen=QueueGraph.blockers(QueueGraph.index(data)).find(b=>!selector.value||QueueGraph.campaign(b.job)===selector.value)?.job.job||chosen;
       update(true);if(chosen)inspect(chosen);
     };
-    get('graph-history').onchange=()=>update(true);get('graph-fit').onclick=()=>cy?.fit(undefined,35);
+    get('graph-history').onchange=()=>update(true);get('graph-fit').onclick=()=>readable();
     get('graph-node-list').onchange=e=>inspect(e.target.value);
     get('graph-running').onclick=()=>{const j=(data.jobs||[]).find(j=>j.job===data.current);if(!j)return;
-      selector.value=QueueGraph.campaign(j);mode.value='execution';chosen=j.job;get('graph-show').click();update(true);inspect(j.job);cy?.center(cy.getElementById(j.job));};
-    get('graph-find').oninput=e=>{const q=e.target.value.toLowerCase();if(cy)cy.nodes().style('opacity',n=>!q||[n.id(),description(QueueGraph.index(data).jobs.get(n.id())).title].join(' ').toLowerCase().includes(q)?1:0.18);};
-    const oldRender=render;
-    render=function(){get('superseded-rows').replaceChildren();oldRender();update();};
+      selector.value=QueueGraph.campaign(j);mode.value='execution';chosen=j.job;update(true);inspect(j.job);cy?.center(cy.getElementById(j.job));};
+    get('graph-find').oninput=()=>{update(true);};
+    const oldRender=typeof render==='function'?render:null;
+    render=function(){get('superseded-rows')?.replaceChildren?.();if(oldRender)oldRender();update();};
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)update();});
     // The companion only reads snapshots. It has no mutation token or POST path.
     if(data.graphCompanion){
@@ -357,4 +553,41 @@ if (typeof document !== 'undefined') {
     }
     update();
   })();
+}
+
+// Readable order (maintainer request, 2026-11-07): current task first; long reference sections collapsed.
+// Presentation only: elements move or fold; none are removed and no data or control changes.
+if (typeof document !== 'undefined') {
+(function tidyLayout(){
+  if (!document.head || !document.querySelector) return;
+  const byId=id=>document.getElementById(id);
+  const top=byId('top-bar'); if(!top)return;
+  const fold=(nodes,title)=>{
+    nodes=nodes.filter(Boolean); if(!nodes.length)return null;
+    const box=document.createElement('details'); box.className='tidy-fold';
+    const summary=document.createElement('summary'); summary.textContent=title; box.append(summary);
+    nodes[0].before?.(box); nodes.forEach(n=>box.append(n)); return box;
+  };
+  const TITLES={'glance':'At a glance — next steps and reviews','accuracy-scope':'Accuracy scope note'};
+  const headline=(el,fallback)=>{const h=el&&el.querySelector('h1,h2,h3,summary');return ((h&&h.textContent)||fallback).replace(/\s+/g,' ').trim().slice(0,80);};
+  // 1. Current task, stats and graph go directly under the header.
+  let anchor=top;
+  for(const id of ['active','stats-bar','graph-tools','graph-panel']){const el=byId(id);if(el){anchor.after(el);anchor=el;}}
+  // 2. Fold long reference sections, keeping their original order after the graph.
+  for(const id of ['glance','backlog','model-tracks','workflow-status','research-overview','accuracy-scope']){
+    const el=byId(id); if(!el)continue;
+    if(el.tagName==='DETAILS'){el.open=false;anchor.after(el);anchor=el;continue;}
+    const box=fold([el],TITLES[id]||headline(el,id)); if(box){anchor.after(box);anchor=box;}
+  }
+  // 3. Fold the job table with its toolbar and header; show the row count in the title.
+  const table=[...document.body.children].find(e=>e.tagName==='TABLE');  // The main job list, not tables inside sections.
+  if(table){
+    const parts=[document.querySelector('div.toolbar'),document.querySelector('div.section-header'),table,byId('rows-empty')];
+    const rows=table.querySelectorAll('tbody tr').length;
+    const box=fold(parts,`Job list (${rows} rows) — filter and inspect`); if(box){anchor.after(box);anchor=box;}
+  }
+  const style=document.createElement('style');
+  style.textContent='details.tidy-fold{margin:8px 0;border:1px solid #30363d;border-radius:8px;padding:6px 10px}details.tidy-fold>summary{cursor:pointer;font-weight:600}';
+  document.head.appendChild(style);
+})();
 }

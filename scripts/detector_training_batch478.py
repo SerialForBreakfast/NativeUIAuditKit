@@ -92,12 +92,12 @@ def compile_request(source, destination, queue=q.QUEUE):
         decisionRule='Any lost success contradicts replacement. Gains require further qualification. Never promote.',
         nextActionByOutcome=dict(supported='Prepare independent qualification.', contradicted='Inspect case-linked losses.',
                                  inconclusive='Stop this correction without new evidence.'),
-        inputs=[pin(source), pin(Path(__file__))],
+        inputs=[pin(source), pin(q.MODULES/'detector_completion586.py')],
         dependencies=[dict(job=s['id'],specSHA256=q.text_digest(s),outputs=['benchmark_summary.json'])
                       for s in specs if s['id'] in scored],
         evidence=dict(reads=[q.relative(source)],artifactReceipt='artifact-receipt.json'),
-        adapter=dict(type='python-callable',steps=['detector_training_batch478.finish'],
-                     outputAttributes=['detector_training_batch478.OUT']),
+        adapter=dict(type='python-callable',steps=['detector_completion586.finish'],
+                     outputAttributes=['detector_completion586.OUT']),
         limits=dict(timeoutSeconds=800,maxOutputBytes=100_000_000,maxAttempts=1))
     specs.append(terminal)
     # The fixed follow-up diagnoses class errors only after regression. It never starts another fit.

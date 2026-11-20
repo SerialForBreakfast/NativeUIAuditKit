@@ -7,7 +7,7 @@ import torch
 import research_queue as q
 from template_adapters395 import resolve_inputs, document
 from template_inputs398 import checked, pin
-from weight_surgery import edit_parameters
+from weight_surgery import edit_parameters, restore_batchnorm_buffers
 from focus_ring_backbone import mobilenetv4_conv_small
 
 OUT = None
@@ -18,6 +18,8 @@ ARMS = {'baseline': ('classifier', 0., 0.), 'bias': ('classifier', 0., .5),
 def ancestry(base, donor, preflight, completion):
     """Verify retained initialization records; do not infer ancestry from tensor shapes."""
     p, c = document(preflight), document(completion)
+    if c.get('version') == 'weight-surgery-model-v1':
+        return recovered_ancestry(base, donor, preflight, completion, p, c)
     q.require(p.get('arm') == c.get('arm') == 'warm-stretch', 'ancestry_arm')
     q.require(p.get('launchEligible') is True and c.get('status') == 'completed', 'ancestry_completion')
     q.require(p.get('protocolSHA256') and p['protocolSHA256'] == c.get('protocolSHA256'), 'ancestry_protocol')
@@ -36,6 +38,44 @@ def ancestry(base, donor, preflight, completion):
                 limitation='Historical records bind initialization; no execution attestation is claimed.')
 
 
+def recovered_ancestry(base, donor, preflight, completion, proof, model):
+    """Verify the known recovered native fit. Tensor shapes alone do not establish ancestry."""
+    from focus_receipt568 import normalize
+    q.require(proof.get('ancestryVerified') is True and proof.get('method')=='strict-checkpoint-training-initialization'
+              and proof.get('additionalTraining') is False, 'ancestry_recovery_contract')
+    q.require(proof.get('ancestry',{}).get('base')==base and model.get('checkpoint')==donor
+              and model.get('edit')==preflight and model.get('threshold')==.85,'ancestry_recovery_binding')
+    failed_path=checked(proof['originalFailedResult']);failed=q.load(failed_path)
+    spec_path=failed_path.parents[2]/'spec.json';spec=q.load(spec_path)
+    q.require(failed.get('status')=='failed' and failed.get('reason')=='training_history_loss_invalid'
+              and failed.get('returnCode')==0 and failed['specSHA256']==q.text_digest(spec),'ancestry_recovery_failure')
+    q.require(spec['adapter']['steps']==['focus_replay568.train'] and spec['authority']=='training'
+              and spec['training']['initialization']==base and spec['training']['epochs']==30,'ancestry_recovery_parent')
+    q.require(q.outputs_intact(failed_path.parent,failed),'ancestry_recovery_outputs')
+    folder=failed_path.parent/'out'
+    q.require(checked(donor)==folder/'final.pt' and checked(proof['training'])==folder/'fit.json',
+              'ancestry_recovery_location')
+    fit=document(proof['training'])
+    q.require(fit==document(proof['normalizedTraining']) and fit.get('version')=='native-focus-fit568-v1'
+              and fit.get('initialization')==base and fit.get('epochs')==30 and fit.get('validationCropsRead')==0,
+              'ancestry_recovery_fit')
+    history=normalize(q.load(folder/'history.json'),30)
+    checkpoint=torch.load(checked(donor),map_location='cpu',weights_only=True)
+    q.require(checkpoint.get('epoch')==30 and abs(checkpoint['loss']-history[-1]['trainLoss'])<=1e-8,
+              'ancestry_recovery_checkpoint')
+    for ref in (base,donor):
+        state=torch.load(checked(ref),map_location='cpu',weights_only=True)
+        name=state.get('model_name')
+        named_native=(ref==donor and name is None and fit.get('arm') in ('native','control')
+                      and state.get('run_name')=='focus568-'+fit['arm'])
+        q.require((name=='mobilenetv4_conv_small' or named_native) and
+                  all(not t.is_floating_point() or torch.isfinite(t).all() for t in state['state_dict'].values()),
+                  'ancestry_model_name_or_nonfinite')
+    return dict(verified=True,evidenceKind='retained-queue-spec-and-recovered-completion',base=base,donor=donor,
+        preflight=preflight,completion=completion,sourceSpec=pin(spec_path),sourceFailedResult=proof['originalFailedResult'],
+        training=proof['training'],limitation='Recorded initialization and verified retained outputs. No execution attestation or model acceptance.')
+
+
 def receipt(names):
     q.save(OUT/'artifact-receipt.json', dict(version='research-artifact-v1', outputs=[
         dict(path=name, sha256=q.digest(OUT/name)) for name in names]))
@@ -48,15 +88,18 @@ def refs():
 def produce():
     r = refs()
     config = document(r['recipe'])
-    q.require(config.get('version') == 'weight-surgery-recipe-v1' and config.get('arm') in ARMS, 'surgery_recipe')
+    q.require(config.get('version') == 'weight-surgery-recipe-v1' and config.get('arm') in set(ARMS) | {'donor-base-bn'}, 'surgery_recipe')
     proof = ancestry(r['base'], r['donor'], r['preflight'], r['completion'])
     base = torch.load(checked(r['base']), map_location='cpu', weights_only=True)
     donor = torch.load(checked(r['donor']), map_location='cpu', weights_only=True)
     model = mobilenetv4_conv_small()
-    group, coefficient, offset = ARMS[config['arm']]
-    prefixes = ('classifier', 'conv_head') if group == 'head' else ('classifier',)
-    allowed = [k for k, _ in model.named_parameters() if k.split('.')[0] in prefixes]
-    state, edit = edit_parameters(model, base['state_dict'], donor['state_dict'], allowed, coefficient, offset)
+    if config['arm'] == 'donor-base-bn':
+        state, edit = restore_batchnorm_buffers(model, base['state_dict'], donor['state_dict'])
+    else:
+        group, coefficient, offset = ARMS[config['arm']]
+        prefixes = ('classifier', 'conv_head') if group == 'head' else ('classifier',)
+        allowed = [k for k, _ in model.named_parameters() if k.split('.')[0] in prefixes]
+        state, edit = edit_parameters(model, base['state_dict'], donor['state_dict'], allowed, coefficient, offset)
     model.load_state_dict(state, strict=True)
     target = OUT/'candidate.pt'
     q.require(not target.exists(), 'candidate_collision')
@@ -197,11 +240,11 @@ def score():
 
 def compare_reports(reports):
     baseline = reports['baseline']
-    q.require(set(reports) == set(ARMS), 'comparison_arms')
+    q.require({'baseline','classifier','head'} <= set(reports) <= set(ARMS) | {'donor-base-bn'}, 'comparison_arms')
     q.require(len({r['suiteSHA256'] for r in reports.values()}) == 1 and all(r['threshold'] == .85 for r in reports.values()), 'comparison_membership')
     rows = []
     old = {r['id']: r for r in baseline['outcomes']}
-    for arm in ARMS:
+    for arm in reports:
         r = reports[arm]; now = {v['id']: v for v in r['outcomes']}
         q.require(set(old) == set(now), 'comparison_cases')
         q.require(r['legacyLabels'] == baseline['legacyLabels'] and len(r['legacyProbabilities']) == len(r['legacyLabels']), 'comparison_legacy')

@@ -328,11 +328,11 @@ public enum ModelRegistry {
         minimumDeploymentTarget: "iOS 17.0"
     )
 
-    /// tvOS OS UI detector — YOLO11n, Phase 6b (v2.0).
     /// tvOS OS UI detector — YOLO11n, Phase 6b (v3.0).
     ///
-    /// Evaluated on 500 held-out test images: mAP@0.5 = 0.982, Precision = 0.983, Recall = 0.983.
-    /// Visual focus determination accuracy = 100.0%.
+    /// Historical generated-screen evaluation: 500 test images; mAP@0.5 = 0.982.
+    /// This does not establish real-app detection or current FocusRing accuracy.
+    /// The historical perfect focus result uses a different brightness selector.
     /// Tailored for Apple TV automation and navigation with TVTestRig.
     /// Detects Home Screen tiles, Settings navigation, split views, modal alerts, tab bars,
     /// context menus, Control Center, AVKit playback controls, audio/subtitles dialogs,

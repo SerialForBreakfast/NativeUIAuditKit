@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TVBench · Focus review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#10141c;color:#eef2f8;font:16px system-ui}header,section,footer{padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}header{background:#202735}strong{margin-right:auto}select,button{font:inherit;color:inherit;background:#2a3446;border:1px solid #657185;border-radius:7px;padding:8px 12px}button:disabled{opacity:.45}button:not(:disabled),label{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #74cfff}#validate{background:#00664c}main{display:grid;place-items:center;background:#07090e}#stage{position:relative;line-height:0;max-width:100%}img{display:block;max-width:100%;max-height:calc(100vh - 215px);object-fit:contain}svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}svg.draw{pointer-events:auto;cursor:crosshair;touch-action:none}rect{fill:none;stroke:white;stroke-width:4;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 1px white) drop-shadow(0 0 2px black)}.pulse rect{animation:blink 1.8s ease-in-out infinite alternate}@keyframes blink{from{stroke:black}to{stroke:white}}#message{color:#ffe0a1}#notice{min-height:1.5em;color:#a9dae9}#end{padding:32px;text-align:center} [hidden]{display:none!important}
+#focusStatus{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:800;line-height:1.15}#prompt{display:grid;gap:.3rem;padding:12px 18px;border-left:8px solid #e6ae49}#prompt[data-state=present]{border-color:#58d8ba}#prompt[data-state=absent]{border-color:#96bbff}
+</style>
+<header><strong>TVBench / Focus review</strong><select id="cases" aria-label="Review screen"></select><span id="progress"></span></header>
+<div id="prompt" role="status"><span id="focusStatus">Loading focus evidence…</span><span id="message"></span></div><section><label><input type="checkbox" id="outline" checked> Show focus box</label><label><input type="checkbox" id="pulse" checked> Pulse black / white</label></section>
+<main><div id="stage"><img id="photo" alt="Original app screenshot" draggable="false"><svg id="overlay" preserveAspectRatio="none"><rect id="border" visibility="hidden"/></svg></div></main>
+<div id="end" hidden>Packet complete. Select a screen above to inspect its review.</div>
+<footer><button id="validate">Validate TTR box &amp; next</button><button id="correct">Draw correction &amp; next</button><button id="flag">Flag &amp; next</button><button id="none">Confirm no visible focus &amp; next</button><span id="notice" role="status"></span></footer>
+<script>
+const $=s=>document.getElementById(s);let rows=[],i=0,start=null,draft=null,drawing=false,busy=false,loaded=false,gen=0;
+const row=()=>rows[i], done=r=>r.decision||r.previous==='accepted';
+function render(){const r=row(),a=r?.decision?.action,p=r?.proposal;
+ const b=draft||(a==='no_focus'?null:r?.decision?.box||p?.box);
+ const state=a==='flag'?'unknown':a==='no_focus'?'absent':b?'present':p?.state==='no_focus'?'absent':'unknown';
+ const title={present:'Focus present',absent:a==='no_focus'?'No focus — confirmed by reviewer':'TTR reports no focus — confirm or flag',unknown:'Focus unknown'};
+ $('prompt').hidden=!r;$('prompt').dataset.state=state;
+ $('focusStatus').textContent=title[state]+(state==='present'&&a!=='correct'&&p.message.startsWith('Focused control: ')?' — '+p.message.slice(17).split(' · ')[0]:'');
+ if(r)$('message').textContent=a==='flag'?'Reviewer flagged this frame. '+p.message:a==='correct'?'Reviewer supplied the focus box.':a==='no_focus'?'Reviewer confirmed no visible focus.':a==='validate'?'Reviewer confirmed the TTR focus box.':state==='unknown'?'TTR did not capture verified focus. This is not a no-focus label.':p.message;
+ $('outline').disabled=!b;$('pulse').disabled=!b;
+
+ $('overlay').classList.toggle('pulse',$('pulse').checked);$('overlay').classList.toggle('draw',drawing);
+ const rect=$('border');rect.setAttribute('visibility',r&&loaded&&b&&$('outline').checked?'visible':'hidden');
+ if(b)['x','y','width','height'].forEach((k,j)=>rect.setAttribute(k,b[j]));
+ $('validate').disabled=busy||!loaded||!r?.proposal.box||drawing;
+ for(const k of ['flag','none','correct'])$(k).disabled=busy||!loaded;
+ $('correct').textContent=drawing?'Cancel correction':'Draw correction & next';
+ $('cases').disabled=busy;$('progress').textContent=rows.filter(done).length+' / '+rows.length+' reviewed';
+}
+function select(n){const g=++gen;i=n;draft=start=null;drawing=loaded=false;$('notice').textContent='';$('outline').checked=true;
+ const r=row();$('end').hidden=!!r;$('stage').hidden=!r;$('cases').value=r?.id||'';
+ $('message').textContent=r?r.proposal.message+(r.decision?' · Saved: '+r.decision.action:''):'Review complete';
+ if(r){$('overlay').setAttribute('viewBox',[0,0,r.width,r.height].join(' '));const img=new Image();img.onload=()=>{if(g!==gen)return;
+ if(img.naturalWidth!==r.width||img.naturalHeight!==r.height){$('notice').textContent='Image dimensions changed.';return}
+ $('photo').src=img.src;loaded=true;render()};img.onerror=()=>{if(g===gen)$('notice').textContent='Frame unavailable. Reload to retry.'};img.src='/image/'+r.id}
+ render()}
+async function save(action,box=null){if(busy||!loaded)return;const r=row();
+ if(action==='no_focus'&&!window.confirm('Confirm no visible focus on '+r.app+' ('+r.id+')? OK saves this decision and advances. Cancel keeps this screen open.'))return;
+ busy=true;render();
+ try{const res=await fetch('/api/focus/'+r.id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,box,sha256:r.sha256})});
+ const data=await res.json();if(!res.ok)throw Error(data.error);r.decision=data;
+ const next=rows.map((_,k)=>(i+k+1)%rows.length).find(k=>!done(rows[k]));select(next??-1);$('notice').textContent='Saved '+r.id+' · '+action;
+ }catch(e){$('notice').textContent='Could not save: '+e.message+'. Your review has not advanced.'}finally{busy=false;render()}}
+$('cases').onchange=e=>select(rows.findIndex(r=>r.id===e.target.value));$('outline').onchange=$('pulse').onchange=render;
+$('validate').onclick=()=>save('validate',row().proposal.box);$('none').onclick=()=>save('no_focus');$('flag').onclick=()=>save('flag');
+$('correct').onclick=()=>{drawing=!drawing;draft=start=null;$('outline').checked=true;$('notice').textContent=drawing?'Drag around the correct item. Release to save and advance.':'';render()};
+const svg=$('overlay');
+function pos(e){const a=svg.getBoundingClientRect(),r=row();return [Math.round(r.width*Math.max(0,Math.min(1,(e.clientX-a.left)/a.width))),Math.round(r.height*Math.max(0,Math.min(1,(e.clientY-a.top)/a.height)))]}
+svg.onpointerdown=e=>{if(!drawing||busy||!e.isPrimary||e.button!==0)return;start=pos(e);svg.setPointerCapture(e.pointerId)};
+svg.onpointermove=e=>{if(!start||!e.isPrimary)return;const p=pos(e);draft=[Math.min(p[0],start[0]),Math.min(p[1],start[1]),Math.abs(p[0]-start[0]),Math.abs(p[1]-start[1])];render()};
+svg.onpointerup=e=>{if(!start||!e.isPrimary)return;svg.onpointermove(e);start=null;if(draft[2]>=3&&draft[3]>=3)save('correct',draft);else{draft=null;render()}};
+svg.onpointercancel=()=>{draft=start=null;render()};
+fetch('/api/focus').then(r=>r.json()).then(data=>{rows=data;for(const r of rows)$('cases').add(new Option(r.app+' · '+r.id,r.id));const requested=rows.findIndex(r=>r.id===location.hash.slice(1));select(requested>=0?requested:rows.findIndex(r=>!done(r)))}).catch(e=>$('notice').textContent='Could not load packet: '+e.message);
+</script></html>

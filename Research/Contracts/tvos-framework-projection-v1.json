@@ -1,0 +1,805 @@
+{
+  "contract": "tvos-framework-projection-v1",
+  "mapping_version": "tvos-framework-projection-v1.0",
+  "status": "proposed by Maximum-mini-NUIAK 2026-11-12; frozen when Sillycon-TTR accepts",
+  "owner": "Maximum-mini-NUIAK",
+  "counterpart": "Sillycon-TTR (TTR R604-16)",
+  "doc": "Research/Contracts/tvos-framework-projection-v1.md",
+  "platform": {
+    "os": "tvOS",
+    "xcode": "27.0 (27A266a)",
+    "sdk": "AppleTVSimulator 27.0 (24J360)",
+    "deployment_target": "tvOS 17.0 (TVTestRig Fixture)"
+  },
+  "classes": [
+    "button",
+    "cell",
+    "picture",
+    "textField",
+    "toggle",
+    "segmentedControl",
+    "pageControl",
+    "bar",
+    "dialog",
+    "indicator"
+  ],
+  "dispositions": {
+    "target": "Exactly 1 detector box: object id, class, box, rule_id.",
+    "owned_metadata": "Belongs to a target (parent_id). Keep id and bounds. No detector box.",
+    "out_of_scope": "Visible but not a detector object (static text, declared decoration, hidden affordance). Reason recorded. Compatible with a complete frame.",
+    "unresolved": "No admissible evidence or rule. The frame is excluded from full-frame detector training. Verified observations stay available for other uses."
+  },
+  "attributes": [
+    "style",
+    "role",
+    "selected",
+    "focusable",
+    "focus_destination"
+  ],
+  "evidence": {
+    "construction": {
+      "required": [
+        "instance_id",
+        "framework",
+        "primitive",
+        "source"
+      ],
+      "optional": [
+        "style",
+        "style_source",
+        "role",
+        "purpose"
+      ],
+      "framework_values": [
+        "UIKit",
+        "SwiftUI"
+      ],
+      "style_source_values": [
+        "applied_instance",
+        "declared_recipe"
+      ],
+      "note": "What TTR (or the instrumented app) constructed. style and role are framework enum cases. role is null unless the construction API carries it."
+    },
+    "observation": {
+      "required": [
+        "instance_id",
+        "uikit_class",
+        "visible_bounds_px",
+        "focusable",
+        "scene_revision",
+        "screenshot_sha256"
+      ],
+      "optional": [
+        "traits",
+        "selected",
+        "affordance_visible"
+      ],
+      "note": "What the settled capture measured. Traits are observations, never labels."
+    },
+    "join": "construction.instance_id == observation.instance_id, and observation.scene_revision / screenshot_sha256 equal the frame's values.",
+    "ownership": {
+      "fields": [
+        "parent_id",
+        "owner_relation"
+      ],
+      "owner_relation_values": [
+        "same_action",
+        "separate_action"
+      ],
+      "note": "A child with owner_relation same_action is owned_metadata of parent_id. A separate_action child keeps its own target."
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "cell.swiftui-card",
+      "specificity": 3,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "Button",
+        "style": "card",
+        "style_source": "applied_instance"
+      },
+      "disposition": "target",
+      "class": "cell",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      },
+      "note": "Specific exception. Must win over button.swiftui."
+    },
+    {
+      "rule_id": "button.swiftui",
+      "specificity": 2,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "Button",
+        "style_required": true,
+        "style_not": [
+          "card"
+        ]
+      },
+      "disposition": "target",
+      "class": "button",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      }
+    },
+    {
+      "rule_id": "button.uikit",
+      "specificity": 2,
+      "match": {
+        "framework": "UIKit",
+        "primitive": "UIButton"
+      },
+      "disposition": "target",
+      "class": "button",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      },
+      "note": "Any UIButton.Configuration. UIButton has no semantic role."
+    },
+    {
+      "rule_id": "button.link",
+      "specificity": 2,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "Link"
+      },
+      "disposition": "target",
+      "class": "button",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      }
+    },
+    {
+      "rule_id": "button.menu",
+      "specificity": 2,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "Menu"
+      },
+      "disposition": "target",
+      "class": "button",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      },
+      "note": "The visible trigger. A presented menu surface is a dialog target."
+    },
+    {
+      "rule_id": "button.alert-action",
+      "specificity": 2,
+      "match": {
+        "framework": "UIKit",
+        "primitive": "UIAlertAction"
+      },
+      "disposition": "target",
+      "class": "button",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      },
+      "note": "role = UIAlertAction.Style (default, cancel, destructive)."
+    },
+    {
+      "rule_id": "cell.collection",
+      "specificity": 2,
+      "match": {
+        "framework": "UIKit",
+        "primitive_in": [
+          "UICollectionViewCell",
+          "UICollectionViewListCell"
+        ]
+      },
+      "disposition": "target",
+      "class": "cell",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      },
+      "note": "Keyboard and PIN keys follow this rule when they are cells. No ID prefix changes a class."
+    },
+    {
+      "rule_id": "cell.table",
+      "specificity": 2,
+      "match": {
+        "framework": "UIKit",
+        "primitive": "UITableViewCell"
+      },
+      "disposition": "target",
+      "class": "cell",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      }
+    },
+    {
+      "rule_id": "cell.list",
+      "specificity": 2,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "ListRow"
+      },
+      "disposition": "target",
+      "class": "cell",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      }
+    },
+    {
+      "rule_id": "picture.image",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UIImageView",
+          "Image"
+        ]
+      },
+      "disposition": "target",
+      "class": "picture",
+      "box": "visible_artwork_body",
+      "note": "Standalone artwork (no owner, own measured body) is a picture target. Owned artwork becomes owned_metadata through ownership."
+    },
+    {
+      "rule_id": "textField.input",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UITextField",
+          "TextField",
+          "SecureField"
+        ]
+      },
+      "disposition": "target",
+      "class": "textField",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      }
+    },
+    {
+      "rule_id": "textField.search",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UISearchBar",
+          "searchable"
+        ]
+      },
+      "disposition": "target",
+      "class": "textField",
+      "box": "visible_field_body",
+      "requires_affordance": true
+    },
+    {
+      "rule_id": "toggle.swiftui",
+      "specificity": 2,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "Toggle"
+      },
+      "disposition": "target",
+      "class": "toggle",
+      "box": "interactive_body",
+      "expect": {
+        "focusable": true
+      }
+    },
+    {
+      "rule_id": "segmentedControl.uikit",
+      "specificity": 2,
+      "match": {
+        "framework": "UIKit",
+        "primitive": "UISegmentedControl"
+      },
+      "disposition": "target",
+      "class": "segmentedControl",
+      "box": "control_body"
+    },
+    {
+      "rule_id": "segmentedControl.swiftui",
+      "specificity": 3,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "Picker",
+        "style": "segmented",
+        "style_source": "applied_instance"
+      },
+      "disposition": "target",
+      "class": "segmentedControl",
+      "box": "control_body"
+    },
+    {
+      "rule_id": "segment.item",
+      "specificity": 2,
+      "match": {
+        "primitive": "Segment",
+        "owned": true
+      },
+      "disposition": "owned_metadata",
+      "focus_destination": true,
+      "box": "item_body",
+      "note": "Each segment keeps identity and geometry. Focus truth names the segment."
+    },
+    {
+      "rule_id": "pageControl.uikit",
+      "specificity": 2,
+      "match": {
+        "framework": "UIKit",
+        "primitive": "UIPageControl"
+      },
+      "disposition": "target",
+      "class": "pageControl",
+      "box": "control_body"
+    },
+    {
+      "rule_id": "pageControl.page",
+      "specificity": 3,
+      "match": {
+        "framework": "SwiftUI",
+        "primitive": "TabView",
+        "style": "page",
+        "style_source": "applied_instance"
+      },
+      "disposition": "target",
+      "class": "pageControl",
+      "box": "visible_index_body",
+      "requires_affordance": true,
+      "note": "The visible page index, not the TabView."
+    },
+    {
+      "rule_id": "bar.tab",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UITabBar",
+          "TabBar"
+        ]
+      },
+      "disposition": "target",
+      "class": "bar",
+      "box": "bar_body"
+    },
+    {
+      "rule_id": "bar.tab-item",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UITabBarItem",
+          "TabItem"
+        ],
+        "owned": true
+      },
+      "disposition": "owned_metadata",
+      "focus_destination": true,
+      "box": "item_body",
+      "note": "Focus truth names the item, not the bar."
+    },
+    {
+      "rule_id": "bar.navigation",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UINavigationBar",
+          "NavigationBar"
+        ]
+      },
+      "disposition": "target",
+      "class": "bar",
+      "box": "bar_body"
+    },
+    {
+      "rule_id": "dialog.alert",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UIAlertController",
+          "alert",
+          "confirmationDialog"
+        ]
+      },
+      "disposition": "target",
+      "class": "dialog",
+      "box": "presented_surface",
+      "note": "Child actions are button targets."
+    },
+    {
+      "rule_id": "dialog.sheet",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "sheet",
+          "MenuSurface"
+        ]
+      },
+      "disposition": "target",
+      "class": "dialog",
+      "box": "presented_surface",
+      "requires_affordance": true
+    },
+    {
+      "rule_id": "indicator.progress",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UIProgressView",
+          "UIActivityIndicatorView",
+          "ProgressView"
+        ]
+      },
+      "disposition": "target",
+      "class": "indicator",
+      "box": "control_body"
+    },
+    {
+      "rule_id": "text.static",
+      "specificity": 2,
+      "match": {
+        "primitive_in": [
+          "UILabel",
+          "Text"
+        ]
+      },
+      "disposition": "out_of_scope",
+      "reason": "static_text",
+      "note": "Owned text becomes owned_metadata. Text never becomes a target."
+    },
+    {
+      "rule_id": "view.decorative",
+      "specificity": 2,
+      "match": {
+        "primitive": "UIView",
+        "purpose": "decorative"
+      },
+      "disposition": "out_of_scope",
+      "reason": "declared_decoration"
+    },
+    {
+      "rule_id": "custom.ttr-convention",
+      "specificity": 1,
+      "match": {
+        "framework": "UIKit",
+        "primitive_in": [
+          "UIControl",
+          "UIView"
+        ]
+      },
+      "disposition": "unresolved",
+      "reason": "ttr_convention_not_admitted",
+      "note": "Custom UIControl/UIView with no framework semantics. Rebuild with a native primitive."
+    }
+  ],
+  "resolution": {
+    "order": "Highest specificity wins. 2 matching rules with equal specificity and different outcomes give unresolved conflicting_rules.",
+    "ownership": "Applied after rule matching. parent_id must name an object in the same frame (else missing_parent) and owner_relation must be set (else ownership_relation_missing). same_action: the object becomes owned_metadata of its parent. separate_action: the object keeps its rule outcome. Text and images inside a target are owned.",
+    "affordance": "requires_affordance rules: observation.affordance_visible true -> target; false -> out_of_scope affordance_hidden; missing -> unresolved affordance_evidence_missing.",
+    "invariance": "id prefix, title, language, tint, and Fixture family never take part in matching."
+  },
+  "geometry": {
+    "pixel_convention": {
+      "rect": "half-open integer rect [x0,x1) x [y0,y1)",
+      "edges": "on pixel boundaries",
+      "origin": "PNG top-left",
+      "rounding_from_points": "floor(min*scale), ceil(max*scale)",
+      "scale_and_transform": "captureGeometry of the same frame"
+    },
+    "box_semantics": {
+      "interactive_body": "clipped visible body of the focusable control; focus effects (scale, glow, shadow) excluded",
+      "visible_artwork_body": "visible artwork pixels (rendered_body_geometry.visible_pixel_bounds)",
+      "visible_field_body": "visible text-entry field",
+      "visible_index_body": "visible page index dots",
+      "control_body": "clipped body of the whole control",
+      "item_body": "clipped body of 1 segment or tab item",
+      "bar_body": "clipped body of the bar",
+      "presented_surface": "clipped presented surface, without the dimming layer"
+    },
+    "release_gate": {
+      "max_edge_error_px": 1.78,
+      "min_iou": 0.9722,
+      "source": "starter qualification, 64 frames (comp-qual-v1)",
+      "qualified": false,
+      "qualify_on": [
+        "small tabs",
+        "large cards",
+        "scrolling",
+        "overlays"
+      ]
+    },
+    "stretch": {
+      "max_edge_error_px": 1.0,
+      "min_iou": 0.98
+    },
+    "small_control_rule": {
+      "short_side_below_px": 48,
+      "judge_by": "edge_error_only"
+    },
+    "separate_recorded_criterion": {
+      "max_edge_error_px": 8.0,
+      "min_iou": 0.9,
+      "source": "composition capture audit, 3,214 frames (comp-capture-v1/v2)"
+    }
+  },
+  "focus": {
+    "states": [
+      "focused",
+      "known_no_focus",
+      "unknown"
+    ],
+    "rules": [
+      "focused names 1 object id: a target or an owned focus_destination item.",
+      "An empty registry does not prove known_no_focus.",
+      "Focus is valid only for the same scene_revision and screenshot_sha256 as the frame."
+    ]
+  },
+  "reason_codes": [
+    "framework_facts_missing",
+    "join_mismatch",
+    "frame_identity_mismatch",
+    "fact_conflict",
+    "conflicting_rules",
+    "unprojected_framework_facts",
+    "style_evidence_missing",
+    "ttr_convention_not_admitted",
+    "affordance_evidence_missing",
+    "affordance_hidden",
+    "static_text",
+    "declared_decoration",
+    "duplicate_object_id",
+    "missing_parent",
+    "ownership_relation_missing"
+  ],
+  "availability": [
+    {
+      "type": "UISwitch",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UISwitch.h:23 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UISlider",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UISlider.h:26 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UIStepper",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UIStepper.h:18 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UIDatePicker",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UIDatePicker.h:40 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UIPickerView",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UIPickerView.h:19 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UIColorWell",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UIColorWell.h:15 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UIRefreshControl",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UIRefreshControl.h:16 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "UIToolbar",
+      "framework": "UIKit",
+      "status": "unavailable_on_target",
+      "evidence": "UIKit UIToolbar.h:23 API_UNAVAILABLE(tvos)"
+    },
+    {
+      "type": "WKWebView",
+      "framework": "WebKit",
+      "status": "unavailable_on_target",
+      "evidence": "WebKit.framework absent from AppleTVSimulator27.0.sdk"
+    },
+    {
+      "type": "Slider",
+      "framework": "SwiftUI",
+      "status": "unavailable_on_target",
+      "evidence": "SwiftUI.swiftinterface:4733 @available(tvOS, unavailable)"
+    },
+    {
+      "type": "Stepper",
+      "framework": "SwiftUI",
+      "status": "unavailable_on_target",
+      "evidence": "SwiftUI.swiftinterface:25939 @available(tvOS, unavailable)"
+    },
+    {
+      "type": "DatePicker",
+      "framework": "SwiftUI",
+      "status": "unavailable_on_target",
+      "evidence": "SwiftUI.swiftinterface:24991 @available(tvOS, unavailable)"
+    },
+    {
+      "type": "ColorPicker",
+      "framework": "SwiftUI",
+      "status": "unavailable_on_target",
+      "evidence": "SwiftUI.swiftinterface:30831 @available(tvOS, unavailable)"
+    },
+    {
+      "type": "Gauge",
+      "framework": "SwiftUI",
+      "status": "unavailable_on_target",
+      "evidence": "SwiftUI.swiftinterface:24889 @available(tvOS, unavailable)"
+    },
+    {
+      "type": "Picker (non-segmented styles)",
+      "framework": "SwiftUI",
+      "status": "available_outside_10_roles",
+      "evidence": "SwiftUI.swiftinterface:17838; no rule, so unresolved unprojected_framework_facts"
+    },
+    {
+      "type": "UIButton",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UIButton.h:49",
+      "rule_id": "button.uikit"
+    },
+    {
+      "type": "Button",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface CardButtonStyle:22682",
+      "rule_id": "button.swiftui / cell.swiftui-card"
+    },
+    {
+      "type": "Link",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:14418",
+      "rule_id": "button.link"
+    },
+    {
+      "type": "Menu",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:8736",
+      "rule_id": "button.menu"
+    },
+    {
+      "type": "UICollectionViewCell",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UICollectionViewCell.h:65",
+      "rule_id": "cell.collection"
+    },
+    {
+      "type": "UICollectionViewListCell",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UICollectionViewListCell.h:18",
+      "rule_id": "cell.collection"
+    },
+    {
+      "type": "UITableViewCell",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UITableViewCell.h:81",
+      "rule_id": "cell.table"
+    },
+    {
+      "type": "UIImageView",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UIImageView.h:21",
+      "rule_id": "picture.image"
+    },
+    {
+      "type": "UITextField",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UITextField.h:53",
+      "rule_id": "textField.input"
+    },
+    {
+      "type": "UISearchBar",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UISearchBar.h:46",
+      "rule_id": "textField.search"
+    },
+    {
+      "type": "TextField / SecureField",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:6520 / 21105",
+      "rule_id": "textField.input"
+    },
+    {
+      "type": "Toggle",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:6153",
+      "rule_id": "toggle.swiftui"
+    },
+    {
+      "type": "UISegmentedControl",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UISegmentedControl.h:43",
+      "rule_id": "segmentedControl.uikit"
+    },
+    {
+      "type": "Picker + .segmented",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:16044",
+      "rule_id": "segmentedControl.swiftui"
+    },
+    {
+      "type": "UIPageControl",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UIPageControl.h:50",
+      "rule_id": "pageControl.uikit"
+    },
+    {
+      "type": "TabView + .page",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:12860",
+      "rule_id": "pageControl.page"
+    },
+    {
+      "type": "UITabBar",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UITabBar.h:28",
+      "rule_id": "bar.tab"
+    },
+    {
+      "type": "UINavigationBar",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UINavigationBar.h:32",
+      "rule_id": "bar.navigation"
+    },
+    {
+      "type": "UIAlertController",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UIAlertController.h:43",
+      "rule_id": "dialog.alert"
+    },
+    {
+      "type": "UIProgressView / UIActivityIndicatorView",
+      "framework": "UIKit",
+      "status": "projected",
+      "evidence": "UIKit UIProgressView.h:23 / UIActivityIndicatorView.h:24",
+      "rule_id": "indicator.progress"
+    },
+    {
+      "type": "ProgressView",
+      "framework": "SwiftUI",
+      "status": "projected",
+      "evidence": "SwiftUI.swiftinterface:4951",
+      "rule_id": "indicator.progress"
+    },
+    {
+      "type": "UILabel / Text",
+      "framework": "UIKit / SwiftUI",
+      "status": "available_outside_10_roles",
+      "evidence": "UIKit UILabel.h:33",
+      "rule_id": "text.static"
+    }
+  ],
+  "removed_roles": {
+    "adjustable": "No tvOS framework type: UISlider, UIStepper, UIPickerView, UIColorWell, Slider, Stepper, DatePicker, ColorPicker are unavailable on tvOS.",
+    "container": "No tvOS framework type: WebKit is absent from the tvOS SDK."
+  }
+}

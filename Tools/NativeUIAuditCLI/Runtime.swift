@@ -66,8 +66,13 @@ actor ProductionBackend: AuditBackend {
             let manifest = try NativeUIModelAsset.requiredManifest(forTVOS: tv)
             let url = try NativeUIModelAsset.requiredModelURL(forTVOS: tv)
             let identity = try ArtifactIdentity.measure(url, modelID: manifest.modelId)
+            let compURL = effective.comparativeFocusDir.map {
+                $0.hasPrefix("/") ? URL(fileURLWithPath: $0) : URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent($0)
+            }
             let config = NativeUIDetectionConfiguration(minimumConfidence: effective.minConfidence,
-                includesTextRecognition: effective.ocr, platform: tv ? .tvOS : .iOS, recordTimings: true)
+                includesTextRecognition: effective.ocr, platform: tv ? .tvOS : .iOS, recordTimings: true,
+                comparativeFocusDirectory: compURL,
+                comparativeFocusGateThreshold: effective.comparativeGateThreshold)
             let session = NativeUIDetectionSession(configuration: config)
             try await session.warm(platforms: [tv ? .tvOS : .iOS])
             let after = try ArtifactIdentity.measure(url, modelID: manifest.modelId)

@@ -81,7 +81,11 @@ summary:hover{color:#c9d1d9}
 dialog{background:#161b22;color:#c9d1d9;width:92%;max-width:550px;border:1px solid #30363d;border-radius:6px;padding:10px}
 </style>
 <header id="top-bar">
-  <div id="brand"><h1 id="app-title">NUIAK Queue</h1><span id="run-mode" class="badge">Idle</span></div>
+  <div id="brand">
+    <h1 id="app-title">NUIAK Queue</h1>
+    <span id="run-mode" class="badge">Idle</span>
+    <a href="/graph" id="link-2d-graph" class="btn-toggle" style="background:#162b3d;border-color:#165b6d;color:#5ce1dc;text-decoration:none;font-size:11px;font-weight:600;padding:3px 8px;display:inline-flex;align-items:center;gap:4px">🕸️ 2D Experiment Graph</a>
+  </div>
   <div id="top-actions"><button id="toggle-run" class="btn-toggle btn-start">Start</button></div>
 </header>
 <p class="muted" id="accuracy-scope">Execution counts are not model accuracy. Real-app accuracy is not independently established. Dataset scores apply only to their stated evaluation scope.</p>
@@ -239,6 +243,8 @@ function renderGlance(){
  if(b&&b.readyJobs)step(b.readyJobs+' ready job'+(b.readyJobs===1?'':'s')+' will run next (about '+dur(b.readySeconds)+(b.readyUnknown?', '+b.readyUnknown+' without an estimate':'')+').');
  if(b&&b.reviewPending.length)step('Review completed results: '+b.reviewPending.slice(0,6).map(r=>r.id).join(', ')+(b.reviewPending.length>6?' and '+(b.reviewPending.length-6)+' more':'')+'. Run backlog_pipeline review, then confirm.');
  if(b&&b.awaitingApproval)step(b.awaitingApproval+' job'+(b.awaitingApproval===1?' passes':'s pass')+' every check except approval.');
+ const extendable=jobs.filter(j=>j.state==='exhausted'&&j.extension&&!j.extension.blocker);
+ if(extendable.length)step(extendable.length+' exhausted task'+(extendable.length===1?' is':'s are')+' eligible for more time/resources (1-button approval available in rows & 2D graph).');
  if(b&&b.blockedJobs)step(b.blockedJobs+' job'+(b.blockedJobs===1?' is':'s are')+' blocked or exhausted. Use the Blocked or Exhausted filter for the exact reason.');
  if(b&&b.refill)step('Fewer than 10 ready jobs. Run the backlog-grooming cycle: review, confirm, then expand planned records.');
  for(const g of (b?.topBlockers||[]).slice(0,3))
@@ -400,6 +406,10 @@ function render(){
   const elTime=j.state==='running'&&j.startedAt?Date.now()/1000-j.startedAt:j.wallSeconds;
   if(elTime!=null)add(tdAction,'div',Math.max(0,elTime).toFixed(1)+' s').className='small muted';
   if(j.eta)add(tdAction,'div','ETA '+etaText(j.eta)).className='small muted';
+  if(j.extension&&!j.extension.blocker&&TOKEN){
+   const btnExt=add(tdAction,'button','+ Give More Time');btnExt.className='btn-sm';btnExt.style.background='#2b220d';btnExt.style.borderColor='#ffc77e';btnExt.style.color='#ffc77e';btnExt.style.marginRight='4px';
+   btnExt.onclick=()=>extendOneClick(j.job);
+  }
   const btnInspect=add(tdAction,'button','Inspect');btnInspect.className='btn-sm';btnInspect.onclick=()=>show(j);
   if(j.supersededBy)add(item,'div','Answered by '+j.supersededBy+'.').className='small muted';
   $(stateOf(j)==='unselected'?'unselected-rows':stateOf(j)==='superseded'?'superseded-rows':isCompleted?'completed-rows':'rows').append(tr);
@@ -434,6 +444,17 @@ async function refresh(){if(!TOKEN||polling)return;polling=true;
   if(v.unchanged){const {unchanged,...live}=v;Object.assign(data,live);}else data=v;
   busy=data.busy;render();}
  catch(e){$('error').textContent=e.message;}finally{polling=false;}}
+async function extendOneClick(jobId){
+ const j=(data.jobs||[]).find(x=>x.job===jobId);
+ if(!j||!j.extension)return;
+ const to=j.extension.suggested?.timeoutSeconds||800;
+ const mb=j.extension.suggested?.maxOutputBytes||100000000;
+ try{
+  const v=await request('/api/extend',{job:jobId,timeoutSeconds:to,maxOutputBytes:mb,reason:'Maintainer 1-button extension approval for '+jobId});
+  alert('Restart saved: '+v.result.job+' ('+(v.result.approved?'Approved':'Not approved')+')');
+  await refresh();
+ }catch(err){alert('Extension error: '+err.message);}
+}
 async function action(name,body){try{$('error').textContent='';await request('/api/'+name,body);await refresh();}catch(e){$('error').textContent=e.message;}}
 $('toggle-run').onclick=()=>{if(busy||Boolean(data.current))action('stop',{});else action('start-all',{});};
 $('start').onclick=()=>action('start',{jobs:[...selected],retry:$('retry').checked});

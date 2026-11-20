@@ -122,6 +122,7 @@ func run(output: FileHandle) throws {
         if let classifier {
             let inferenceStart = ProcessInfo.processInfo.systemUptime
             let p: Float
+            var executedInputHash: String?
             if let visionModel {
                 let request = VNCoreMLRequest(model: visionModel)
                 request.imageCropAndScaleOption = .scaleFill
@@ -131,22 +132,24 @@ func run(output: FileHandle) throws {
                     let values = result.featureValue.multiArrayValue, values.count == 1 else { throw ToolError.invalidModel }
                 p = values[0].floatValue
             } else {
-                p = try classifier.classify(crop: crop).isFocusedProbability
+                p = try classifier.classify(crop: crop) { buffer in
+                    CVPixelBufferLockBaseAddress(buffer, .readOnly)
+                    defer { CVPixelBufferUnlockBaseAddress(buffer, .readOnly) }
+                    guard let base = CVPixelBufferGetBaseAddress(buffer) else { throw ToolError.invalidImage }
+                    let bytes = base.assumingMemoryBound(to: UInt8.self)
+                    var rgb = Data("(256, 256)".utf8); rgb.append(0)
+                    for y in 0..<256 { for x in 0..<256 {
+                        let i = y * CVPixelBufferGetBytesPerRow(buffer) + x * 4
+                        rgb.append(bytes[i + 2]); rgb.append(bytes[i + 1]); rgb.append(bytes[i])
+                    } }
+                    executedInputHash = SHA256.hash(data: rgb).map { String(format: "%02x", $0) }.joined()
+                }.isFocusedProbability
             }
             guard p.isFinite, (0...1).contains(p) else { throw ToolError.invalidModel }
             let inferenceTime = milliseconds(inferenceStart)
-            let buffer = try classifier.inputPixelBuffer(crop: crop)
-            CVPixelBufferLockBaseAddress(buffer, .readOnly)
-            defer { CVPixelBufferUnlockBaseAddress(buffer, .readOnly) }
-            guard let base = CVPixelBufferGetBaseAddress(buffer) else { throw ToolError.invalidImage }
-            let bytes = base.assumingMemoryBound(to: UInt8.self)
-            var rgb = Data("(256, 256)".utf8); rgb.append(0)
-            for y in 0..<256 { for x in 0..<256 {
-                let i = y * CVPixelBufferGetBytesPerRow(buffer) + x * 4
-                rgb.append(bytes[i + 2]); rgb.append(bytes[i + 1]); rgb.append(bytes[i])
-            } }
+            // Vision owns its preprocessing. No executed buffer hash is available there.
             results.append(ItemResult(id: item.id, png: nil, probability: p, cropMilliseconds: cropTime, inferenceMilliseconds: inferenceTime,
-                modelInputRGBSHA256: SHA256.hash(data: rgb).map { String(format: "%02x", $0) }.joined()))
+                modelInputRGBSHA256: executedInputHash))
         } else {
             let png = NSMutableData()
             guard let destination = CGImageDestinationCreateWithData(png, "public.png" as CFString, 1, nil) else { throw ToolError.invalidImage }

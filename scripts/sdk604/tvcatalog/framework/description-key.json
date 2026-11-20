@@ -1,0 +1,64 @@
+{
+  "route": "TVCatalog.ContentView.DescriptionView",
+  "developmentOnly": true,
+  "sourceRevision": "29221f427a4d43c42345baee0a4d6b50702e116a",
+  "sourceBasis": "Control identities, labels and owning views from source; expected native tab focus from prior independent route pilot; pixel geometry requires independent checks.",
+  "targets": [
+    {
+      "id": "navigation.tabbar",
+      "expectedClass": "bar",
+      "parent": null
+    },
+    {
+      "id": "art.backdrop",
+      "expectedClass": "picture",
+      "parent": null
+    },
+    {
+      "id": "btn.sign_up",
+      "expectedClass": "button",
+      "parent": null
+    },
+    {
+      "id": "btn.buy_or_rent",
+      "expectedClass": "button",
+      "parent": null
+    },
+    {
+      "id": "btn.add_to_up_next",
+      "expectedClass": "button",
+      "parent": null
+    },
+    {
+      "id": "btn.description_expand",
+      "expectedClass": "button",
+      "parent": null
+    }
+  ],
+  "ownedMetadata": {
+    "tab.stack": "navigation.tabbar",
+    "tab.buttons": "navigation.tabbar",
+    "tab.description": "navigation.tabbar",
+    "tab.search": "navigation.tabbar",
+    "txt.sign_up": "btn.sign_up",
+    "txt.buy_or_rent": "btn.buy_or_rent",
+    "txt.up_next": "btn.add_to_up_next",
+    "art.plus": "btn.add_to_up_next",
+    "txt.description": "btn.description_expand"
+  },
+  "staticText": [
+    "txt.title",
+    "txt.signup_info",
+    "txt.cast",
+    "txt.director"
+  ],
+  "expectedFocus": "tab.description",
+  "unmeasured": [
+    "material/gradient is a rendering effect of backdrop",
+    "absolute per-object edges"
+  ],
+  "budgets": {
+    "seconds": 800,
+    "bytes": 100000000
+  }
+}

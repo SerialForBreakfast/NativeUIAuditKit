@@ -6,6 +6,7 @@ import research_queue as q
 from experiment_templates import checked, pin
 from cached_selection405 import verified_report
 from sdk_episode529 import intake
+from sdk_semantics529 import visible_control as visible
 from detector_case_match411 import iou
 
 OUT = None
@@ -25,11 +26,6 @@ def selection(arm):
     positive = [b for b, s in zip(boxes, scores) if s >= .85]
     return positive[0] if len(positive) == 1 else None
 
-
-def visible(control):
-    state = control.get('observedState') or (control.get('semanticEvidence') or {}).get('observedState') or {}
-    return (state.get('hidden') is False and type(state.get('effectiveAlpha')) in (float, int) and state['effectiveAlpha'] > 0
-            and control.get('geometryAvailable') is True)
 
 
 def identity(control):

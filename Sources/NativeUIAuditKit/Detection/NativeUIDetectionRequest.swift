@@ -44,6 +44,11 @@ public struct NativeUIDetectionConfiguration: Sendable {
     /// When true, Stage 2 `FocusRingDetector` is used for tvOS focus if the compiled
     /// model is bundled. Missing weights fall back to `resolveTVOSFocus`.
     public var useFocusClassifier: Bool
+    /// Optional opt-in directory containing `ComparativeFocusScorer` and `ComparativeFocusGate`
+    /// Core ML models (`T4.2 Arm B`). Nil preserves the default `FocusRingDetector` path.
+    public var comparativeFocusDirectory: URL?
+    /// Decision threshold on `ComparativeFocusGate` `hasFocusProb` when comparative mode is active.
+    public var comparativeFocusGateThreshold: Double
 
     public init(
         minimumConfidence: Double = 0.5,
@@ -53,7 +58,9 @@ public struct NativeUIDetectionConfiguration: Sendable {
         minFocusScoreThreshold: Double = 0.25,
         minFocusMargin: Double = 0.12,
         recordTimings: Bool = false,
-        useFocusClassifier: Bool = true
+        useFocusClassifier: Bool = true,
+        comparativeFocusDirectory: URL? = nil,
+        comparativeFocusGateThreshold: Double = 0.28
     ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
@@ -63,6 +70,8 @@ public struct NativeUIDetectionConfiguration: Sendable {
         self.minFocusMargin = minFocusMargin
         self.recordTimings = recordTimings
         self.useFocusClassifier = useFocusClassifier
+        self.comparativeFocusDirectory = comparativeFocusDirectory
+        self.comparativeFocusGateThreshold = comparativeFocusGateThreshold
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
@@ -72,6 +81,7 @@ extension NativeUIDetectionConfiguration: Codable {
     private enum CodingKeys: String, CodingKey {
         case minimumConfidence, includesTextRecognition, platform, modalityPolicy
         case minFocusScoreThreshold, minFocusMargin, recordTimings, useFocusClassifier
+        case comparativeFocusDirectory, comparativeFocusGateThreshold
     }
 
     public init(from decoder: any Decoder) throws {
@@ -84,6 +94,8 @@ extension NativeUIDetectionConfiguration: Codable {
         minFocusMargin = try c.decodeIfPresent(Double.self, forKey: .minFocusMargin) ?? 0.12
         recordTimings = try c.decodeIfPresent(Bool.self, forKey: .recordTimings) ?? false
         useFocusClassifier = try c.decodeIfPresent(Bool.self, forKey: .useFocusClassifier) ?? true
+        comparativeFocusDirectory = try c.decodeIfPresent(URL.self, forKey: .comparativeFocusDirectory)
+        comparativeFocusGateThreshold = try c.decodeIfPresent(Double.self, forKey: .comparativeFocusGateThreshold) ?? 0.28
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -96,6 +108,8 @@ extension NativeUIDetectionConfiguration: Codable {
         try c.encode(minFocusMargin, forKey: .minFocusMargin)
         try c.encode(recordTimings, forKey: .recordTimings)
         try c.encode(useFocusClassifier, forKey: .useFocusClassifier)
+        try c.encodeIfPresent(comparativeFocusDirectory, forKey: .comparativeFocusDirectory)
+        try c.encode(comparativeFocusGateThreshold, forKey: .comparativeFocusGateThreshold)
     }
 }
 
@@ -267,52 +281,62 @@ public struct NativeUIDetectionRequest: Sendable {
             })
         if effectivePlatform == .tvOS {
             let startFocus = ContinuousClock.now
-            let load: FocusClassifierLoad
-            if configuration.useFocusClassifier {
-                if let preloadedFocusLoad {
-                    load = preloadedFocusLoad
-                } else if let preloadedFocusClassifier {
-                    load = FocusClassifierLoad(classifier: preloadedFocusClassifier, fallbackReason: nil)
-                } else {
-                    load = await modelProvider.loadFocusWithEvidence()
-                }
-            } else {
-                load = FocusClassifierLoad(classifier: nil, fallbackReason: "disabled")
-            }
-            if let classifier = load.classifier {
-                let resolution = Self.resolveTVOSFocusWithEvidence(in: screenshot, observations: observations,
-                    threshold: classifier.focusThreshold, ambiguityThreshold: classifier.ambiguityThreshold,
-                    modelDigest: classifier.artifactDigest, score: { try classifier.classify(crop: $0) })
+            if let compDir = configuration.comparativeFocusDirectory {
+                let selector = try ComparativeFocusSelector(
+                    directory: compDir,
+                    gateThreshold: Float(configuration.comparativeFocusGateThreshold)
+                )
+                let resolution = try selector.resolve(in: screenshot, observations: observations)
                 observations = resolution.0
                 focusExecution = resolution.1
-            } else if modelProvider.allowsHeuristicFocusFallback {
-                observations = Self.resolveTVOSFocus(
-                    in: screenshot,
-                    observations: observations,
-                    minScoreThreshold: configuration.minFocusScoreThreshold,
-                    minMargin: configuration.minFocusMargin
-                )
-                focusExecution = FocusExecutionReceipt(backend: .heuristic, fallbackReason: load.fallbackReason,
-                    policy: "legacy-visual-heuristic-v1", threshold: configuration.minFocusScoreThreshold,
-                    secondaryThreshold: configuration.minFocusMargin, candidates: observations.map {
-                        .init(observationID: $0.id,
-                            disposition: FocusRingClassifier.focusableTypes.contains($0.elementType) ? .heuristicResult : .unsupportedRole,
-                            probability: nil, isFocused: $0.state.isFocused)
-                    })
             } else {
-                focusExecution = FocusExecutionReceipt(
-                    backend: configuration.useFocusClassifier ? .unavailable : .notRequested,
-                    fallbackReason: load.fallbackReason, policy: "explicit-local-model-v1",
-                    candidates: observations.map {
-                        .init(observationID: $0.id,
-                            disposition: configuration.useFocusClassifier ? .policyRejected : .notRequested,
-                            probability: nil, isFocused: nil)
-                    })
+                let load: FocusClassifierLoad
+                if configuration.useFocusClassifier {
+                    if let preloadedFocusLoad {
+                        load = preloadedFocusLoad
+                    } else if let preloadedFocusClassifier {
+                        load = FocusClassifierLoad(classifier: preloadedFocusClassifier, fallbackReason: nil)
+                    } else {
+                        load = await modelProvider.loadFocusWithEvidence()
+                    }
+                } else {
+                    load = FocusClassifierLoad(classifier: nil, fallbackReason: "disabled")
+                }
+                if let classifier = load.classifier {
+                    let resolution = Self.resolveTVOSFocusWithEvidence(in: screenshot, observations: observations,
+                        threshold: classifier.focusThreshold, ambiguityThreshold: classifier.ambiguityThreshold,
+                        modelDigest: classifier.artifactDigest, score: { try classifier.classify(crop: $0) })
+                    observations = resolution.0
+                    focusExecution = resolution.1
+                } else if modelProvider.allowsHeuristicFocusFallback {
+                    observations = Self.resolveTVOSFocus(
+                        in: screenshot,
+                        observations: observations,
+                        minScoreThreshold: configuration.minFocusScoreThreshold,
+                        minMargin: configuration.minFocusMargin
+                    )
+                    focusExecution = FocusExecutionReceipt(backend: .heuristic, fallbackReason: load.fallbackReason,
+                        policy: "legacy-visual-heuristic-v1", threshold: configuration.minFocusScoreThreshold,
+                        secondaryThreshold: configuration.minFocusMargin, candidates: observations.map {
+                            .init(observationID: $0.id,
+                                disposition: FocusRingClassifier.focusableTypes.contains($0.elementType) ? .heuristicResult : .unsupportedRole,
+                                probability: nil, isFocused: $0.state.isFocused)
+                        })
+                } else {
+                    focusExecution = FocusExecutionReceipt(
+                        backend: configuration.useFocusClassifier ? .unavailable : .notRequested,
+                        fallbackReason: load.fallbackReason, policy: "explicit-local-model-v1",
+                        candidates: observations.map {
+                            .init(observationID: $0.id,
+                                disposition: configuration.useFocusClassifier ? .policyRejected : .notRequested,
+                                probability: nil, isFocused: nil)
+                        })
+                }
             }
             focusMs = Self.durationToMs(startFocus.duration(to: .now))
             health.focus = observations.contains(where: { $0.state.isFocused == true }) ? .available : .empty
             if focusExecution.backend == .unavailable {
-                health.focus = .failed(reason: load.fallbackReason ?? "model_unavailable")
+                health.focus = .failed(reason: focusExecution.fallbackReason ?? "model_unavailable")
             } else if focusExecution.backend == .notRequested {
                 health.focus = .notRequested
             }

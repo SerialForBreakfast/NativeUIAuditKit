@@ -11,13 +11,19 @@ OUT=None
 def rows(request):
     q.require(request['version']=='sdk-temporal-request-v1' and set(request['models'])=={'baseline','seed42','seed44'},'sdk_temporal_contract')
     q.require(0<len(request['pairs'])<=6 and len({p['path'] for p in request['pairs']})==len(request['pairs']),'sdk_temporal_scope')
+    policy=request.get('identityPolicy','producer')
+    q.require(policy in ('producer','manifest-sha256'),'sdk_temporal_identity_policy')
     result=[]
     for ref in request['pairs']:
         p=pair(ref);a,b=p['frames']
-        result.append(dict(id=p['id'],group=a['group'],role='review_only',split=a['split'],
+        if policy=='manifest-sha256':q.require(p['temporalEligible'],'sdk_temporal_unverified_transition')
+        ident=p['id'] if policy=='producer' else a['group']+'|'+ref['sha256']
+        result.append(dict(id=ident,group=a['group'],role='review_only',split=a['split'],
             expected=p['expected'],observed=p['observed'],issues=p['issues'],
             changed=int(a['focusID']!=b['focusID']),images=[a['image'],b['image']],
             endpoints=dict(before=a['focusID'],after=b['focusID'])))
+        if policy=='manifest-sha256':result[-1].update(producerID=p['id'],sourceManifest=ref)
+    q.require(len({r['id'] for r in result})==len(result),'sdk_temporal_duplicate_pair_id')
     for ref in request['models'].values():checked(ref)
     return result
 
@@ -48,6 +54,10 @@ def run():
         comparisons[name]=[dict(id=old['id'],baseline=old['outcome'],candidate=new['outcome'],
             gain=old['outcome']!='correct' and new['outcome']=='correct',loss=old['outcome']=='correct' and new['outcome']!='correct') for old,new in zip(results['baseline'],results[name])]
     q.save(OUT/'benchmark_summary.json',dict(version='sdk-temporal-comparison-v1',models=request['models'],results=results,comparisons=comparisons,
-        counts={n:dict(Counter(r['outcome'] for r in rr)) for n,rr in results.items()},modelAccepted=False,trainingEligible=False,
-        limitation='Native review-only endpoints from one group. Temporal change does not identify the destination. Content motion remains unverified.'))
+        counts={n:dict(Counter(r['outcome'] for r in rr)) for n,rr in results.items()},
+        perSplit={name:{split:dict(Counter(r['outcome'] for r in rr if r['split']==split)) for split in sorted({r['split'] for r in rr})} for name,rr in results.items()},
+        support=dict(pairOccurrences=len(data),constructionGroups=len({r['group'] for r in data}),
+            uniqueImages=len({im['sha256'] for r in data for im in r['images']}),observedTypes=dict(Counter(r['observed'] for r in data))),
+        modelAccepted=False,trainingEligible=False,
+        limitation='Native review-only endpoints. Construction groups do not establish independent applications. Temporal change does not identify the destination. Content motion remains unverified.'))
     q.save(OUT/'artifact-receipt.json',dict(version='research-artifact-v1',outputs=[dict(path='benchmark_summary.json',sha256=q.digest(OUT/'benchmark_summary.json'))]))

@@ -1785,6 +1785,341 @@ final class GenerateDatasetTests: XCTestCase {
         XCTAssertEqual(splitFor(templateFamily: "ModalDialogueFlow", index: 650), .test)
     }
 
+    func testSystemSheetAndAccessory609() async throws { try await captureAccessorySheets(inset: 0) }
+    func testSheetOcclusion610() async throws { try await captureAccessorySheets(inset: 40) }
+    func testInsetSheetOcclusion610() async throws { try await captureAccessorySheets(inset: 40, listMargin: 40) }
+
+    private func captureAccessorySheets(inset: CGFloat, listMargin: CGFloat = 0) async throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        for framework in ["UIKit", "SwiftUI"] {
+            for training in [false,true] {
+            let window = UIWindow(windowScene: scene)
+            let originalKey = scene.keyWindow
+            defer { window.isHidden = true; originalKey?.makeKey() }
+            var geometry: [Int:CGRect] = [:]
+            let table = AccessoryTable609(style: .plain)
+            table.training = training
+            table.accessoryInset = inset
+            final class StateBox: ObservableObject { @Published var open = false }
+            struct Wrapper: View {
+                let inset: CGFloat
+                let training: Bool
+                @ObservedObject var box: StateBox
+                let observe: ([Int:CGRect]) -> Void
+                var body: some View { AccessoryList609(accessoryInset: inset, training: training, presented: $box.open, observe: observe) }
+            }
+            let state = StateBox()
+            let host = UIHostingController(rootView: Wrapper(inset: inset, training: training, box: state) { geometry = $0 })
+            let root: UIViewController = framework == "UIKit" ? table : host
+            let outer = UIViewController()
+            if listMargin > 0 {
+                outer.view.backgroundColor = .systemBackground
+                window.rootViewController = outer
+                outer.addChild(root)
+                root.view.frame = outer.view.bounds.insetBy(dx: listMargin, dy: 0)
+                root.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                outer.view.addSubview(root.view)
+                root.didMove(toParent: outer)
+            } else {
+                window.rootViewController = root
+            }
+            window.makeKeyAndVisible()
+            table.action = {
+                let sheet = UIViewController()
+                sheet.view.backgroundColor = .white
+                sheet.modalPresentationStyle = .pageSheet
+                sheet.sheetPresentationController?.detents = [.medium()]
+                root.present(sheet, animated: false)
+            }
+            for stage in ["initial","presented","dismissed"] {
+                if stage == "presented" {
+                    if framework == "UIKit" {
+                        let cell = try XCTUnwrap(table.tableView.cellForRow(at: IndexPath(row: 0, section: 0)))
+                        try XCTUnwrap((cell.accessoryView as? UIButton) ?? cell.accessoryView?.subviews.first as? UIButton).sendActions(for: .touchUpInside)
+                    } else { state.open = true }
+                }
+                if stage == "dismissed" {
+                    if framework == "UIKit" { root.dismiss(animated: false) } else { state.open = false }
+                }
+                try await Task.sleep(for: .milliseconds(850))
+                window.layoutIfNeeded()
+                let modal = root.presentedViewController ?? outer.presentedViewController
+                XCTAssertEqual(modal != nil, stage == "presented")
+                var boxes: [(String,String,CGRect)] = []
+                for i in 0..<6 {
+                    let r: CGRect
+                    let a: CGRect
+                    if framework == "UIKit" {
+                        let cell = try XCTUnwrap(table.tableView.cellForRow(at: IndexPath(row:i,section:0)))
+                        let btn = try XCTUnwrap((cell.accessoryView as? UIButton) ?? cell.accessoryView?.subviews.first as? UIButton)
+                        r = cell.convert(cell.bounds,to:window); a = btn.convert(btn.bounds,to:window)
+                    } else {
+                        r = try XCTUnwrap(geometry[i]); a = try XCTUnwrap(geometry[100+i])
+                    }
+                    boxes.append(("r"+String(i),"cell",r))
+                    boxes.append(("a"+String(i),"button",a))
+                }
+                if let modal {
+                    let v = try XCTUnwrap(modal.presentationController?.presentedView)
+                    boxes.append(("sheet","dialog",v.convert(v.bounds,to:window)))
+                }
+                for scale in [2,3] {
+                    let fmt = UIGraphicsImageRendererFormat(); fmt.scale = CGFloat(scale)
+                    let png = UIGraphicsImageRenderer(bounds:window.bounds,format:fmt).pngData { _ in
+                        window.drawHierarchy(in:window.bounds,afterScreenUpdates:true)
+                    }
+                    let name = (training ? "train-" : "dev-")+framework+"-"+String(scale)+"-"+stage
+                    if inset > 0, let surface = modal?.presentationController?.presentedView {
+                        let probe = UIView(frame: surface.bounds)
+                        probe.isUserInteractionEnabled = false
+                        surface.addSubview(probe)
+                        defer { probe.removeFromSuperview() }
+                        for (suffix, color) in [("white", UIColor.white), ("black", UIColor.black)] {
+                            probe.backgroundColor = color
+                            let marker = UIGraphicsImageRenderer(bounds:window.bounds,format:fmt).pngData { _ in
+                                window.drawHierarchy(in:window.bounds,afterScreenUpdates:true)
+                            }
+                            let attachment = XCTAttachment(data: marker, uniformTypeIdentifier: "public.png")
+                            attachment.name = name + "-" + suffix
+                            attachment.lifetime = .keepAlways
+                            add(attachment)
+                        }
+                    }
+                    let rows: [[String:Any]] = boxes.map { id,role,frame in
+                        let b = frame.intersection(window.bounds), s = CGFloat(scale)
+                        return ["id":id,"role":role,"edges":[floor(b.minX*s),floor(b.minY*s),ceil(b.maxX*s),ceil(b.maxY*s)].map(Int.init)]
+                    }
+                    let doc:[String:Any] = ["framework":framework,"training":training,"stage":stage,"scale":scale,"rows":rows,
+                        "sha":SHA256.hash(data:png).map {String(format:"%02x",$0)}.joined()]
+                    for (data,type) in [(png,"public.png"),(try JSONSerialization.data(withJSONObject:doc),"public.json")] {
+                        let item = XCTAttachment(data:data,uniformTypeIdentifier:type);item.name=name;item.lifetime = .keepAlways;add(item)
+                    }
+                }
+            }
+            }
+        }
+    }
+
+    func testScrollingRows608() async throws {
+        for framework in ["UIKit", "SwiftUI"] {
+            for training in [false, true] {
+            for scale in [2, 3] {
+                let canvas = CGRect(x: 0, y: 0, width: 320, height: 320)
+                let viewport = training ? CGRect(x: 14, y: 32, width: 292, height: 215) : CGRect(x: 20, y: 40, width: 280, height: 200)
+                let window = UIWindow(frame: canvas)
+                let root = UIViewController()
+                window.rootViewController = root
+                window.isHidden = false
+                defer { window.isHidden = true }
+                root.view.frame = canvas
+                root.view.backgroundColor = .black
+                var swiftRects: [Int:CGRect] = [:]
+                let table = UIKitList608(style: .plain)
+                table.training = training
+                let list: UIViewController = framework == "UIKit" ? table :
+                    UIHostingController(rootView: SwiftList608(training: training, height: training ? 61 : 52) { swiftRects = $0 })
+                root.addChild(list)
+                list.view.frame = viewport
+                list.view.clipsToBounds = true
+                root.view.addSubview(list.view)
+                list.didMove(toParent: root)
+                root.view.layoutIfNeeded()
+                try await Task.sleep(for: .milliseconds(350))
+                func scrolls(_ v: UIView) -> [UIScrollView] {
+                    ((v as? UIScrollView).map { [$0] } ?? []) + v.subviews.flatMap(scrolls)
+                }
+                let views = scrolls(list.view).filter { $0.contentSize.height > 450 }
+                XCTAssertEqual(views.count, 1)
+                let scroll = try XCTUnwrap(views.first)
+                scroll.contentInsetAdjustmentBehavior = .never
+                let coverHost = UIHostingController(rootView: ListCover608())
+                let overlay = framework == "UIKit" ? UIView() : coverHost.view!
+                if framework == "SwiftUI" { root.addChild(coverHost); coverHost.didMove(toParent: root) }
+                overlay.frame = CGRect(x: viewport.minX, y: viewport.minY, width: viewport.width, height: training ? 96 : 89)
+                overlay.backgroundColor = .magenta
+                for stage in ["initial", "scroll", "covered", "restored"] {
+                    scroll.setContentOffset(CGPoint(x: 0, y: stage == "initial" ? 0 : (training ? 27 : 19)), animated: false)
+                    if stage == "covered" { root.view.addSubview(overlay) } else { overlay.removeFromSuperview() }
+                    root.view.layoutIfNeeded()
+                    try await Task.sleep(for: .milliseconds(200))
+                    var records: [ListRect608] = []
+                    if framework == "UIKit" {
+                        for cell in table.tableView.visibleCells {
+                            let index = try XCTUnwrap(table.tableView.indexPath(for: cell)).row
+                            let label = try XCTUnwrap(cell.textLabel)
+                            records.append(ListRect608(id: index, frame: cell.convert(cell.bounds, to: root.view),
+                                caption: label.convert(label.bounds, to: root.view)))
+                        }
+                    } else {
+                        for i in 0..<12 {
+                            guard let rect = swiftRects[i], let cap = swiftRects[100+i] else { continue }
+                            records.append(ListRect608(id: i, frame: rect, caption: cap))
+                        }
+                    }
+                    let fmt = UIGraphicsImageRendererFormat()
+                    fmt.scale = CGFloat(scale)
+                    let png = UIGraphicsImageRenderer(bounds: canvas, format: fmt).pngData { _ in
+                        root.view.drawHierarchy(in: canvas, afterScreenUpdates: true)
+                    }
+                    func edges(_ rect: CGRect) -> [Int] {
+                        [floor(rect.minX*fmt.scale), floor(rect.minY*fmt.scale),
+                         ceil(rect.maxX*fmt.scale), ceil(rect.maxY*fmt.scale)].map(Int.init)
+                    }
+                    let items: [[String:Any]] = records.map { r in
+                        ["id": r.id, "primitive": framework == "UIKit" ? "UITableViewCell" : "List.Row",
+                         "edges": edges(r.frame), "captionOwner": r.id, "caption": edges(r.caption)]
+                    }
+                    let name = (training ? "train-" : "cal-") + framework + "-" + String(scale) + "-" + stage
+                    let doc: [String:Any] = ["framework":framework,"training":training,"scale":scale,"stage":stage,
+                        "viewport":edges(list.view.frame),"overlay":overlay.superview == nil ? [] : edges(overlay.frame),
+                        "offset":scroll.contentOffset.y,"rows":items,"sha256":SHA256.hash(data:png).map { String(format:"%02x",$0) }.joined()]
+                    for (data, type) in [(png,"public.png"), (try JSONSerialization.data(withJSONObject: doc),"public.json")] {
+                        let item = XCTAttachment(data:data,uniformTypeIdentifier:type)
+                        item.name = name
+                        item.lifetime = .keepAlways
+                        add(item)
+                    }
+                }
+            }
+            }
+        }
+    }
+
+    func testNativeFormTaxonomy607() async throws {
+        for family in ["UIKitForm", "SwiftUIForm607"] {
+            let seed: UInt64 = family == "UIKitForm" ? 607101 : 607102
+            let config = makeConfig(seed: seed, index: 0, templateFamily: family, state: simulatorStates[0])
+            for variant in 0...1 {
+                let ids = (0..<9).map { "u" + String((($0 * 5 + variant * 7) % 13) + 30 * variant) }
+                let scene = UUID().uuidString
+                var facts: [FormObservation607] = []
+                let result: CaptureResult
+                if family == "UIKitForm" {
+                    let vc = UIKitFormViewController(seed: seed, config: config)
+                    result = try await ScreenshotCapture.captureUIKit(vc, config: config, nativePageConfiguration: { _ in
+                        facts = try vc.formObservations607(ids: ids)
+                    })
+                } else {
+                    var bar: CGRect?
+                    let form = InstrumentedLoginForm607(ids: ids, title: "Sign in") { facts = $0 }
+                    result = try await ScreenshotCapture.capture(form, config: config, nativePageConfiguration: { root in
+                        bar = ScreenshotCapture.detectChromeFrames(in: root)["navigationBar"]
+                    })
+                    facts.append(FormObservation607(id: ids[8], primitive: "UINavigationBar", framework: "UIKit",
+                        owner: nil, secure: false, frame: try XCTUnwrap(bar)))
+                }
+                XCTAssertEqual(Set(facts.map(\.id)), Set(ids))
+                XCTAssertEqual(facts.count, 9)
+                let records: [[String: Any]] = facts.map { fact in
+                    let box = fact.frame.intersection(CGRect(origin: .zero, size: result.pointSize))
+                    let scale = CGFloat(result.scale)
+                    return ["id": fact.id, "primitive": fact.primitive, "framework": fact.framework,
+                            "owner": fact.owner as Any, "secure": fact.secure, "scene": scene, "image": result.sha256,
+                            "edges": [floor(box.minX * scale), floor(box.minY * scale),
+                                      ceil(box.maxX * scale), ceil(box.maxY * scale)]]
+                }
+                let name = family + "-" + String(variant)
+                let doc: [String: Any] = ["version": "ios-form-facts-1", "family": family, "seed": seed,
+                    "scene": scene, "image": result.sha256, "objects": records, "width": result.pixelSize.width,
+                    "height": result.pixelSize.height]
+                for (data, uti) in [(result.png, "public.png"),
+                                    (try JSONSerialization.data(withJSONObject: doc), "public.json")] {
+                    let item = XCTAttachment(data: data, uniformTypeIdentifier: uti)
+                    item.name = name
+                    item.lifetime = .keepAlways
+                    add(item)
+                }
+            }
+        }
+    }
+
+    func testFormActionAndSecureInputBodies606() throws {
+        for family in ["UIKitForm", "UIKitList"] {
+            let seeds: [UInt64] = family == "UIKitForm" ? [606011, 606101, 606102] : [606012]
+            for seed in seeds {
+                for profile in [OSVisualProfile.ios17, .ios26] {
+                    var config = makeConfig(seed: seed, index: 0, templateFamily: family, state: simulatorStates[0])
+                    config.osProfile = profile
+                    let controller: UIViewController & UIKitAnnotatable = family == "UIKitForm"
+                        ? UIKitFormViewController(seed: seed, config: config)
+                        : UIKitListViewController(seed: seed, config: config)
+                    let window = UIWindow(frame: CGRect(origin: .zero, size: profile.screenSize))
+                    window.rootViewController = controller
+                    window.isHidden = false
+                    defer { window.isHidden = true; window.rootViewController = nil }
+                    window.layoutIfNeeded()
+                    controller.view.layoutIfNeeded()
+                    let subjects = controller.annotatedViews.filter {
+                        $0.elementType == "secondaryButton" || $0.elementType == "secureField"
+                    }
+                    XCTAssertEqual(subjects.count, family == "UIKitForm" ? 2 : 1)
+                    for subject in subjects {
+                        let view = try XCTUnwrap(subject.view)
+                        if subject.elementType == "secureField" {
+                            XCTAssertTrue(try XCTUnwrap(view as? UITextField).isSecureTextEntry)
+                        } else {
+                            XCTAssertTrue(view is UIButton)
+                        }
+                        let box = view.convert(view.bounds, to: controller.view)
+                        func owns(_ x: CGFloat, _ y: CGFloat) -> Bool {
+                            guard let hit = controller.view.hitTest(CGPoint(x: x, y: y), with: nil) else { return false }
+                            return hit === view || hit.isDescendant(of: view)
+                        }
+                        for (x, y) in [(box.minX + 1, box.midY), (box.maxX - 1, box.midY),
+                                       (box.midX, box.minY + 1), (box.midX, box.maxY - 1)] {
+                            XCTAssertTrue(owns(x, y), subject.id)
+                        }
+                        for (x, y) in [(box.minX - 1, box.midY), (box.maxX + 1, box.midY),
+                                       (box.midX, box.minY - 1), (box.midX, box.maxY + 1)] {
+                            XCTAssertFalse(owns(x, y), subject.id)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func testCompactToggleFormActionAndRows() async throws {
+        for appearance in [GeneratorColorScheme.light, .dark] {
+            for seed: UInt64 in [47701, 47702, 52] {
+                var config = makeConfig(seed: seed, index: 0, templateFamily: "UIKitToggleForm", state: simulatorStates[0])
+                config.osProfile = .ios17
+                config.deviceName = "iPhone SE (3rd generation)"
+                config.colorScheme = appearance
+                config.dynamicTypeSize = .large
+                config.pixelScale = 2
+                let fixedConfig = config
+                let capture = try await ScreenshotCapture.$rendersPresentationTraits.withValue(true) {
+                    try await ScreenshotCapture.$requestedColorScheme.withValue(appearance == .dark ? .dark : .light) {
+                        try await ScreenshotCapture.$repairsGeometry.withValue(true) {
+                            try await captureUIKit(templateFamily: "UIKitToggleForm", seed: seed, config: fixedConfig)
+                        }
+                    }
+                }
+                let canvas = CGRect(origin: .zero, size: capture.pointSize)
+                let button = try XCTUnwrap(capture.elements.first { $0.id == "ctaButton" })
+                XCTAssertTrue(canvas.contains(button.frame))
+                let switches = capture.elements.filter { $0.elementType == "toggle" }
+                XCTAssertFalse(switches.isEmpty)
+                for item in switches {
+                    XCTAssertTrue(canvas.contains(item.frame))
+                    XCTAssertLessThan(item.frame.maxY, button.frame.minY)
+                }
+                let receipt = XCTAttachment(data: capture.png, uniformTypeIdentifier: "public.png")
+                receipt.name = "IOS605-compact-" + String(seed) + "-" + appearance.rawValue
+                receipt.lifetime = .keepAlways
+                add(receipt)
+                let annotation = AnnotationWriter.buildJSON(result: capture, config: config,
+                    imageFileName: receipt.name! + ".png", templateFamily: "UIKitToggleForm",
+                    generatorVersion: "ios605-layout-development", schema: .legacy)
+                let labels = XCTAttachment(data: try JSONEncoder().encode(annotation), uniformTypeIdentifier: "public.json")
+                labels.name = receipt.name! + "-labels"
+                labels.lifetime = .keepAlways
+                add(labels)
+            }
+        }
+    }
+
     /// ACTIONS417 cover pass: content under the top strip or a tab bar is clipped or excluded; chrome is not.
     func testGeometryRepairCovers417() {
         let canvas = CGRect(x: 0, y: 0, width: 400, height: 800)

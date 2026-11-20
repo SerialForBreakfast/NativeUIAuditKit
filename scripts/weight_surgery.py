@@ -3,6 +3,33 @@ import math
 import torch
 
 
+def restore_batchnorm_buffers(model, base, donor):
+    """Copy donor parameters exactly. Restore only base BatchNorm buffers."""
+    # Validate both complete states with the existing parameter contract.
+    parameters = set(dict(model.named_parameters()))
+    edit_parameters(model, base, donor, parameters, 0)
+    buffers = set(dict(model.named_buffers()))
+    bn_buffers = {'.'.join(filter(None, (name, key)))
+                  for name, module in model.named_modules()
+                  if isinstance(module, torch.nn.modules.batchnorm._BatchNorm)
+                  for key, _ in module.named_buffers(recurse=False)}
+    if not buffers or buffers != bn_buffers:
+        raise ValueError('unsupported_non_batchnorm_buffers')
+    if parameters | buffers != set(base) or parameters & buffers:
+        raise ValueError('unclassified_state')
+    out = {key: value.detach().clone() for key, value in donor.items()}
+    for key in buffers:
+        out[key] = base[key].detach().clone()
+    if not all(torch.equal(out[key], donor[key]) for key in parameters):
+        raise ValueError('donor_parameter_changed')
+    return out, dict(allowedParameters=sorted(parameters),
+                    changedParameters=sorted(key for key in parameters if not torch.equal(base[key], out[key])),
+                    restoredBuffers=sorted(buffers),
+                    changedFromDonor=sorted(key for key in buffers if not torch.equal(donor[key], out[key])),
+                    parameterSource='exact-donor-copy', bufferSource='base-batchnorm',
+                    ancestryVerified=False, modelAccepted=False)
+
+
 def edit_parameters(model, base, donor, allowed, coefficient, bias_offset=0.0):
     """Return a new state and receipt; preserve every non-target state entry."""
     parameters = set(dict(model.named_parameters()))

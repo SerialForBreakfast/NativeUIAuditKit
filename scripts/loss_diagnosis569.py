@@ -63,7 +63,7 @@ def ios():
     rows=ios_rows(original,pairs)
     q.save(OUT/'benchmark_summary.json',dict(version='loss-diagnosis569-v1',rows=rows,counts=dict(Counter(row['diagnosis'] for row in rows)),
         metricsStatus='provisional',modelAccepted=False,trainingOrInferenceRepeated=False,
-        nextAction='If geometry losses remain, test preservation of original box predictions on training-only anchors. If classes dominate, inspect classification preservation. Do not change evaluation labels.'))
+        nextAction='Select one distinct correction from retained failure causes. Do not repeat a rejected preservation factor. Preserve evaluation labels, thresholds, and prior-success gates.'))
     receipt()
 
 

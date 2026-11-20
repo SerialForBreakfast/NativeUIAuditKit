@@ -166,6 +166,22 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(self.run_queue(), [('job-a', 'failed')])
         self.assertEqual(q.state(self.queue / 'jobs/job-b')[0], 'blocked')
 
+    def test_completed_replacement_unblocks_consumer(self):
+        producer = self.spec(adapter=dict(type='python-callable', steps=['rq_fixture.fail'], outputAttributes=[]))
+        self.submit(producer)
+        consumer = self.spec(id='job-b', dependencies=[dict(job='job-a',
+            specSHA256=q.text_digest(producer), outputs=['result.json'])])
+        self.submit(consumer)
+        rep = self.spec(id='job-a-r2', adapter=dict(type='python-callable', steps=['rq_fixture.produce'], outputAttributes=['rq_fixture.OUT']))
+        self.submit(rep)
+        self.run_queue()
+        self.run_queue()
+        from unittest.mock import patch
+        with patch('research_dashboard_states.successors', return_value={'job-a': ('job-a-r2', 'tested replacement')}):
+            deps = q.dependency_inputs(consumer, self.queue)
+            self.assertEqual(len(deps), 1)
+            self.assertEqual(deps[0]['job'], 'job-a-r2')
+
     def test_dependency_cycle_is_rejected(self):
         a = self.spec(dependencies=[dict(job='job-b', specSHA256='0'*64, outputs=['result.json'])])
         self.submit(a)

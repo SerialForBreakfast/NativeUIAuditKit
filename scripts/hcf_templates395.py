@@ -10,6 +10,7 @@ from experiment_templates import checked, pin
 CATALOG_FIELDS={'task','outcomes','hypothesis','controlledComparison'}
 
 CONTRACTS={
+ 'T107':({'configuration','initialization','membership'},set(),'train_detector604.queue_run','training','training'),
  'T105':({'model','manifest'},set(),'role_detector567.score','artifact','diagnostic'),
  'T106':({'baseline','candidate'},set(),'role_detector567.compare','artifact','diagnostic'),
  'T104':({'source','candidate','model'},set(),'focus_discrimination565.anchors','artifact','diagnostic'),
@@ -21,7 +22,7 @@ CONTRACTS={
  'T98':({'source'},set(),'weight_surgery_queue.detector_initializations','artifact','diagnostic'),
  'T94':({'base','donor','preflight','completion','recipe'},set(),'weight_surgery_queue.produce','artifact','diagnostic'),
  'T95':({'model','suite'},set(),'weight_surgery_queue.score','artifact','diagnostic'),
- 'T96':({'baseline','bias','classifier','head'},set(),'weight_surgery_queue.compare','artifact','diagnostic'),
+ 'T96':({'baseline','classifier','head'},set(),'weight_surgery_queue.compare','artifact','diagnostic'),
  'T97':({'plan'},set(),'weight_surgery_queue.prepare','artifact','diagnostic'),
  'T93':({'membership','original','suite'},set(),'training_anchors495.run','artifact','diagnostic'),
  'T91':({'membership','button','row','tab','tool'},{'arm'},'proposal_crop_training421.prepare','artifact','diagnostic'),
@@ -139,7 +140,7 @@ def build(doc):
     q.require(doc['version']=='hcf-template-description-v1','description_version')
     q.require(doc['template'] in CONTRACTS,'template_unknown')
     inputs,parameters,step,kind,authority=CONTRACTS[doc['template']]
-    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'},'T41':{'candidate'},'T47':{'prior','rule'},'T56':{'baseline'}}.get(doc['template'],set())
+    optional={'T03':{'staging'},'T10':{'sourceReport','sourcePackage'},'T18':{'membership'},'T21':{'membership'},'T41':{'candidate'},'T47':{'prior','rule'},'T56':{'baseline'},'T96':{'bias','donor-base-bn'}}.get(doc['template'],set())
     q.require(inputs<=set(doc['inputs']) and set(doc['inputs'])<=inputs|optional,'template_inputs')
     # T47 `scorer` is optional so that registered T47 specifications keep their identity.
     # B405-125/B405-119: T20 `taxonomy` and T25 `kernelSettings` are optional for the same reason.
@@ -206,10 +207,18 @@ def build(doc):
     if authority=='capture':
         q.require(doc['capture']['plan']==doc['inputs']['recipe'],'capture_recipe_binding')
     if authority=='training':
+        # TRAIN666 applies at compilation. Historical specs and their retries stay valid.
+        if doc['template'] in ('T89', 'T107'):
+            prediction = doc['training'].get('expectedScoreboardChange')
+            q.require(isinstance(prediction, str) and bool(prediction.strip()),
+                      'training_expected_scoreboard_change')
         q.require(doc['training']['initialization']==doc['inputs']['initialization'],'training_initialization_binding')
         q.require(doc['inputs']['membership'] in doc['training']['membership'],'training_membership_binding')
-        # T49 keeps the frozen 10-epoch FOCUS366 recipe. Other training templates use 30 epochs.
-        q.require(doc['training']['epochs']==(10 if doc['template']=='T49' else 30) and doc['training']['resume']=='restart','training_variant')
+        # T49 keeps the frozen 10-epoch FOCUS366 recipe. T107 allows 1-300 epochs (RESET604 100-epoch default). Other training templates use 30 epochs.
+        if doc['template']=='T107':
+            q.require(isinstance(doc['training']['epochs'],int) and 1<=doc['training']['epochs']<=300 and doc['training']['resume']=='restart','training_variant')
+        else:
+            q.require(doc['training']['epochs']==(10 if doc['template']=='T49' else 30) and doc['training']['resume']=='restart','training_variant')
         config=q.load(checked(doc['inputs']['configuration']))
         q.require(config['initialization']==doc['inputs']['initialization'],'training_configuration_binding')
     module=step.split('.')[0]
@@ -224,6 +233,8 @@ def build(doc):
     stage=[]
     if 'configuration' in doc['inputs']:stage=[dict(to='config.json',**{'from':doc['inputs']['configuration']})]
     pinned=[r for r in doc['inputs'].values() if 'path' in r]
+    if doc['template'] == 'T107':
+        sources.extend(pin(q.MODULES/name) for name in ('detector_training419.py', 'detector_native_inputs.py', 'roles559.py'))
     if doc['template'] == 'T89':
         sources.append(pin(q.MODULES/'train_yolo.py'))
         if config.get('verifyInitialization'):sources.append(pin(q.MODULES/'detector_initializer567.py'))
@@ -232,6 +243,8 @@ def build(doc):
         validate(config['teacherPreservation'], q.load(checked(doc['inputs']['membership'])))
         pinned += [config['teacherPreservation'][key] for key in ('model', 'anchors')]
         sources.append(pin(q.MODULES/'detector_preservation551.py'))
+        if 'geometryWeight' in config['teacherPreservation']:
+            sources.append(pin(q.MODULES/'detector_geometry570.py'))
     if doc['template'] == 'T06' and 'teacherPreservation' in config:
         from teacher_preservation495 import validate_config as teacher_config, validate_anchors
         teacher = teacher_config(config['teacherPreservation'])
@@ -240,6 +253,16 @@ def build(doc):
             pinned.append(teacher[key])
         validate_anchors(q.load(checked(doc['inputs']['membership']))['rows'],
                          q.load(checked(teacher['anchors']))['rows'])
+    if doc['template']=='T63':
+        q.require(doc['parameters']['backend'] in ('pytorch','vision'),'consumer_backend')
+        if 'path' in doc['inputs']['membership']:
+            data=q.load(checked(doc['inputs']['membership']))
+            if data.get('version')=='consumer-sdk-crops-v1':
+                q.require(doc['parameters']['backend']=='pytorch','consumer_sdk_backend')
+                from consumer_crop_comparison import sdk_input_pins
+                pinned+=sdk_input_pins(data,doc['inputs']['tool'])
+                sources.extend(pin(q.MODULES/name) for name in ('sdk_episode_labels530.py','sdk_episode529.py','sdk_packet502.py',
+                    'focus_runtime.py','train_focus_ring_detector.py','focus_ring_backbone.py'))
     reads=list(dict.fromkeys(r['path'] for r in pinned))
     evidence=dict(reads=reads,artifactReceipt='artifact-receipt.json')
     if kind=='aggregation':evidence=dict(reads=reads,citations='sources.json')

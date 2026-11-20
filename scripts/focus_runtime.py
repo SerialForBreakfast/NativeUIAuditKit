@@ -26,7 +26,7 @@ def identity():
             "hostOS": platform.mac_ver()[0], "architecture": platform.machine()}
 
 
-def invoke(items, model=None, *, experimental_aspect_fit=False, image_root=None):
+def invoke(items, model=None, *, experimental_aspect_fit=False, image_root=None, allow_out_of_frame=False):
     identity()
     if not items or len(items) > 128:
         raise FocusDataError("invalid_runtime_batch")
@@ -36,6 +36,8 @@ def invoke(items, model=None, *, experimental_aspect_fit=False, image_root=None)
     request = {"version": 1, "root": str(ROOT), "mode": "infer" if model else "crop",
                "model": str(local(model)) if model else None, "items": items,
                "experimentalAspectFit": experimental_aspect_fit}
+    if allow_out_of_frame:
+        request["allowOutOfFrameBounds"] = True
     if image_root is not None:
         # Opt-in for an explicitly authorized external corpus. Existing callers
         # retain the project-only boundary. The caller verifies mounted storage.

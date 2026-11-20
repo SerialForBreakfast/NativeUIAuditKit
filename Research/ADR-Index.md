@@ -6,6 +6,8 @@ Standard detection and focus remain primary. HCF remains optional.
 
 ## Quick wins
 
+[ADR-0034](ADR-0034-Artwork-Target-Localization-and-Role.md) proposes separate localization and exact-role evaluation for artwork controls.
+
 [ADR-0033](ADR-0033-Weight-Space-Programming-for-Perception-Models.md) establishes
 Weight-Space Programming (WSP) guidelines for UI element detection and FocusRing models
 (semantic head projection for taxonomy reduction, surgical output bias calibration,

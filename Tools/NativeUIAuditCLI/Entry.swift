@@ -11,6 +11,7 @@ struct CLIArguments: Sendable {
     nativeui-audit doctor [--root DIR]
     nativeui-audit scan IMAGE [--root DIR] [--platform auto|iOS|tvOS]
                          [--min-confidence 0.5] [--no-ocr] [--strict] [--format json|table]
+                         [--comparative-focus-dir DIR] [--comparative-gate-threshold 0.28]
     nativeui-audit scan-batch DIR [same options]
     nativeui-audit mcp --root DIR
 
@@ -30,7 +31,7 @@ struct CLIArguments: Sendable {
                 guard seen.insert(arg).inserted else { throw AuditError("usage", "Duplicate option \(arg)") }
                 if arg == "--no-ocr" { options.ocr = false }
                 else if arg == "--strict" { options.strict = true }
-                else if ["--root", "--platform", "--min-confidence", "--format"].contains(arg) {
+                else if ["--root", "--platform", "--min-confidence", "--format", "--comparative-focus-dir", "--comparative-gate-threshold"].contains(arg) {
                     i += 1
                     guard i < args.count else { throw AuditError("usage", "Missing value for \(arg)") }
                     switch arg {
@@ -39,6 +40,11 @@ struct CLIArguments: Sendable {
                     case "--min-confidence":
                         guard let n = Double(args[i]) else { throw AuditError("usage", "Invalid confidence") }
                         options.minConfidence = n
+                    case "--comparative-focus-dir":
+                        options.comparativeFocusDir = args[i]
+                    case "--comparative-gate-threshold":
+                        guard let th = Double(args[i]) else { throw AuditError("usage", "Invalid comparative threshold") }
+                        options.comparativeGateThreshold = th
                     default: format = args[i]
                     }
                 } else { throw AuditError("usage", "Unknown option \(arg)") }

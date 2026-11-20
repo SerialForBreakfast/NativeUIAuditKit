@@ -23,7 +23,7 @@ def validate_config(config):
 
 def prepare(config, rows, tensors, device):
     import research_queue as q
-    from experiment_templates import checked
+    from template_inputs398 import checked
     from focus_ring_backbone import mobilenetv4_conv_small
     validate_config(config)
     model_path, anchor_path = checked(config['model']), checked(config['anchors'])

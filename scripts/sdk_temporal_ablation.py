@@ -64,8 +64,13 @@ def compare(data, report, scores):
 def build(path):
     request = q.load(path)
     spec, source, data, report = prepare(request)
+    # Reuse completed producer artifacts. Pin the validator used by this consumer.
+    # prepare() requires its rows to match the retained producer report exactly.
+    # The immutable source spec and result preserve the original producer identity.
+    runtime='scripts/sdk_temporal508.py'
+    source_inputs=[pin(q.ROOT/runtime) if r['path']==runtime else r for r in spec['inputs']]
     refs = [pin(path), *[request[k] for k in ('sourceSpec', 'sourceResult', 'sourceSummary')],
-            *spec['inputs'], *[im for row in data for im in row['images']], pin(Path(__file__).resolve())]
+            *source_inputs, *[im for row in data for im in row['images']], pin(Path(__file__).resolve())]
     refs = list({r['path']:r for r in refs}.values())
     return dict(version='research-spec-v2', id=request['id'], task='TEMPORAL544', owner='Maximum-mini-NUIAK',
         kind='screen', jobKind='artifact', authority='diagnostic', dependencies=[], inputs=refs,

@@ -358,6 +358,9 @@ class Handler(BaseHTTPRequestHandler):
         url = urlsplit(self.path)
         if self.path == '/':
             return self.reply(200, render_html(self.server.controller.state_reply(), self.server.token), 'text/html')
+        if url.path == '/graph':
+            from research_graph_view import render_graph
+            return self.reply(200, render_graph(self.server.controller.state_reply(), self.server.token), 'text/html')
         if url.path == '/api/state' and self.authenticated():
             since = parse_qs(url.query).get('since', [''])[0]
             return self.reply(200, self.server.controller.state_reply(int(since) if since.isdigit() else None))
@@ -369,7 +372,8 @@ class Handler(BaseHTTPRequestHandler):
         self.reply(403, {'error': 'request_refused'})
 
     def do_POST(self):
-        if not self.valid_host() or not self.authenticated() or self.headers.get('Origin') != self.server.origin:
+        origins = {self.server.origin, 'http://127.0.0.1:8766', 'http://localhost:8766'}
+        if not self.valid_host() or not self.authenticated() or self.headers.get('Origin') not in origins:
             return self.reply(403, {'error': 'request_refused'})
         try:
             size = int(self.headers.get('Content-Length', '0'))
@@ -383,6 +387,13 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path == '/api/add' and set(data) == {'jobs'}:
                 self.server.controller.add(data['jobs'])
             elif self.path == '/api/extend':
+                if 'timeoutSeconds' not in data or 'maxOutputBytes' not in data or 'reason' not in data:
+                    from research_extensions import describe
+                    desc = describe(self.server.controller.queue, data.get('job', ''))
+                    suggested = desc.get('suggested', {})
+                    data.setdefault('timeoutSeconds', suggested.get('timeoutSeconds', 800))
+                    data.setdefault('maxOutputBytes', suggested.get('maxOutputBytes', 100000000))
+                    data.setdefault('reason', f"Maintainer 1-button extension approval for {data.get('job')}")
                 result = self.server.controller.extend(data)
                 self.server.controller.invalidate()
                 return self.reply(200, {'accepted': True, 'result': result})

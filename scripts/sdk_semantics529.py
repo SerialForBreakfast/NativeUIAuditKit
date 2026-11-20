@@ -93,3 +93,9 @@ def classify(control,rules):
     return dict(taxonomyClass=next(iter(classes)) if len(classes)==1 else None,
                 state='mapped' if len(classes)==1 else 'ambiguous' if classes else 'unmapped',
                 mappingIDs=[r['id'] for r in matches])
+
+
+def visible_control(control):
+    state = control.get('observedState') or (control.get('semanticEvidence') or {}).get('observedState') or {}
+    return (state.get('hidden') is False and type(state.get('effectiveAlpha')) in (float, int) and state['effectiveAlpha'] > 0
+            and control.get('geometryAvailable') is True)

@@ -57,10 +57,13 @@ struct ScanOptions: Codable, Sendable, Equatable, Hashable {
     var minConfidence = 0.5
     var ocr = true
     var strict = false
+    var comparativeFocusDir: String?
+    var comparativeGateThreshold = 0.28
     func validate() throws {
         guard ["auto", "iOS", "tvOS"].contains(platform),
-              minConfidence.isFinite, (0...1).contains(minConfidence) else {
-            throw AuditError("invalid_options", "platform must be auto/iOS/tvOS; minConfidence must be finite in [0,1].")
+              minConfidence.isFinite, (0...1).contains(minConfidence),
+              comparativeGateThreshold.isFinite, (0...1).contains(comparativeGateThreshold) else {
+            throw AuditError("invalid_options", "platform must be auto/iOS/tvOS; minConfidence and comparativeGateThreshold must be finite in [0,1].")
         }
     }
 }

@@ -2,7 +2,7 @@
 from collections import Counter
 from pathlib import Path
 import research_queue as q
-from experiment_templates import checked,pin
+from template_inputs398 import checked,pin
 from sdk_packet502 import review
 from sdk_semantics529 import semantics,transition
 OUT=None

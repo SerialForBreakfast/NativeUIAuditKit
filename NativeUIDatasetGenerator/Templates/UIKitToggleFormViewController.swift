@@ -260,9 +260,7 @@ public final class UIKitToggleFormViewController: UIViewController, UIKitAnnotat
         // Layout constants
         let sectionHPad: CGFloat  = 16   // insetGrouped horizontal inset
         let sectionWidth: CGFloat = width - sectionHPad * 2
-        let rowHeight: CGFloat    = 52
         let sectionHeaderH: CGFloat = 28
-        let sectionSpacing: CGFloat = 8  // between sections
         let headerToSection: CGFloat = 4
 
         // CTA button — fixed at bottom, 16pt insets, 52pt tall
@@ -274,6 +272,15 @@ public final class UIKitToggleFormViewController: UIViewController, UIKitAnnotat
 
         // Sections fill from navBar.maxY downward, stopping before ctaButton with spacing
         var currentY = navBar.frame.maxY + 16
+        // Keep the bottom action visible on compact profiles. Use the original spacing when it fits.
+        let sections = CGFloat(max(1, sectionContainers.count))
+        let minimumRows = CGFloat(rowLabels.count) * 31
+        let spacingBudget = ctaY - 16 - currentY - minimumRows - sections * (sectionHeaderH + headerToSection)
+        let sectionSpacing = max(0, min(8, floor(spacingBudget / sections)))
+        let sectionOverhead = sections * (sectionHeaderH + headerToSection + sectionSpacing)
+        let rowSpace = ctaY - 16 - currentY - sectionOverhead
+        let rowCount = CGFloat(max(1, rowLabels.count))
+        let rowHeight = min(52, max(31, floor(rowSpace / rowCount)))
 
         for (s, rowViews) in sectionContainers.enumerated() {
             guard s < sectionHeaderLabels.count else { continue }

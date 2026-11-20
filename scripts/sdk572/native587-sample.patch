@@ -1,0 +1,68 @@
+--- Examples/NavigationConsumer/NavigationConsumer.swift
++++ Examples/NavigationConsumer/NavigationConsumer.swift
+@@ -57,6 +57,12 @@
+         do { return try PilotScene.resolve(arguments: ProcessInfo.processInfo.arguments) }
+         catch { fatalError("Invalid or conflicting sample pilot scene configuration") }
+     }()
++    static let nativeCorpus = ProcessInfo.processInfo.arguments.contains("--nuiak572-native-corpus")
++    static let opaqueFocus = ProcessInfo.processInfo.arguments.contains("--nuiak572-opaque-focus")
++    static let ringFocus = ProcessInfo.processInfo.arguments.contains("--nuiak572-ring-focus")
++    static let movingContent = ProcessInfo.processInfo.arguments.contains("--nuiak572-moving-content")
++    static let noFocus = ProcessInfo.processInfo.arguments.contains("--nuiak572-no-focus")
++    var motionTick = 0
+     static let focusableList = ProcessInfo.processInfo.arguments.contains("--sample-focusable-list")
+     let identities = NavigationController.focusableList ? (0..<8).map { UIElementIdentity(id: "list.row.\($0)") } : NavigationController.pilot.map { $0.elements.map { UIElementIdentity(id: $0.id) } }
+         ?? [UIElementIdentity(id: "left"), UIElementIdentity(id: "right")]
+@@ -151,7 +157,14 @@
+                 button.isSelected = element.id == Self.pilot?.selectedElementID
+             }
+             button.addTarget(self, action: #selector(activated(_:)), for: .primaryActionTriggered)
+-            if evidenceScene { button.isEnabled = false }
++            if evidenceScene { button.isEnabled = Self.nativeCorpus && !Self.noFocus }
++            if Self.nativeCorpus {
++                precondition(!(Self.opaqueFocus && Self.ringFocus), "Conflicting native focus styles")
++                button.configuration = nil
++                button.layer.cornerRadius = 18
++                button.setTitleColor(.white, for: .normal)
++                button.backgroundColor = UIColor(white: 0.18, alpha: 1)
++            }
+             if Self.focusableList {
+                 button.setTitle("List row \(index + 1)", for: .normal)
+                 button.frame = CGRect(x: 80, y: 40 + index * 190, width: 920, height: 120)
+@@ -316,6 +329,19 @@
+     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+         super.didUpdateFocus(in: context, with: coordinator)
+         ui.didUpdateFocus(context) { ($0 as? UIView)?.accessibilityIdentifier }
++        if Self.nativeCorpus {
++            coordinator.addCoordinatedAnimations({
++                for button in self.buttons {
++                    button.backgroundColor = Self.opaqueFocus && button.isFocused ? .white : UIColor(white: 0.18, alpha: 1)
++                    button.setTitleColor(Self.opaqueFocus && button.isFocused ? .black : .white, for: .normal)
++                    button.layer.borderWidth = Self.ringFocus && button.isFocused ? 6 : 0
++                    button.layer.borderColor = UIColor.white.cgColor
++                }
++            }, completion: {
++                try? self.ui.timeline(.init(domain: .focus, action: "appearance_animation_completed", scope: "native572.focus"), source: .nativeCallback)
++            })
++        }
++
+         if timelineEnabled {
+             try? ui.timelineFocus(context,scope:timelineScope) { item in
+                 self.buttons.firstIndex(where: {$0 === item as? UIView}).map { self.identities[$0] }
+@@ -462,6 +488,16 @@
+         ui.declaredEvent(action: "application_active", id: nil)
+     }
+     @objc func sample() {
++        if Self.nativeCorpus && Self.movingContent && Self.pilot != nil {
++            motionTick += 1
++            let phase = motionTick % 24
++            let offset = phase <= 12 ? phase * 10 : (24-phase) * 10
++            pilotBackgroundPatch.frame.origin.x = 20 + CGFloat(offset)
++            pilotBackgroundPatch.backgroundColor = phase < 12 ? .blue : .systemTeal
++            if motionTick % 5 == 0 {
++                try? ui.timeline(.init(domain: .layout, action: "background_motion_sampled", scope: "native572.background"), source: .nativeCallback)
++            }
++        }
+         reconcilePresentationScope()
+         if let id = interruptedSetup, applicationActive, !layoutPending,
+            presentedViewController == nil, positioning?.confirmEffectsStopped(for: id) == true {

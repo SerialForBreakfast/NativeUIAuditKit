@@ -602,3 +602,89 @@ This contract does not authorize execution or widen the supported recipes.
 Submit and approve each exact specification through the existing queue tools.
 Legacy v1 specifications retain their existing campaign restrictions.
 See [WORKFLOW533](../../Research/Workflow533CampaignsAndResults.md).
+
+## Recovered native donors and paired transfer recipes
+
+T94 accepts the qualified recovered FOCUS568 donor through its existing `preflight` and `completion` inputs.
+Use its recovered `ancestry.json` and `model.json`. Preserve the original failed attempt and all outputs.
+The adapter checks the original specification, recorded initialization, known receipt failure, 30 epochs, output hashes, and checkpoint identity.
+Missing model-name metadata requires the recorded native run identity. Candidate creation still checks the complete tensor structure.
+These records establish retained ancestry. They do not provide execution attestation or model acceptance.
+
+T96 accepts baseline, classifier, and head reports. The historical bias report remains optional.
+Omitting that unused arm does not lower retained-success checks or qualification gates.
+Use T63 for matched native crop scoring. Use the existing cached consumer comparison for frame and crop outcomes.
+Reports count actual model inputs separately from crop presentations and related frames.
+Keep review-only roles and unknown profiles. Repeated inputs do not establish independent evidence.
+
+
+## Persistent campaign review trial — LANGGRAPH585
+
+The trial adds durable review state around existing campaign outputs.
+The detached runner still owns execution. Existing model templates remain unchanged.
+The trial supplies no promotion action or automated acceptance of metrics.
+
+Use `scripts/langgraph_trial585.py` to compile two campaign descriptions and their comparison.
+The description pins one iOS campaign, one focus campaign, and the software qualification measurements.
+Each campaign names its original compiled manifest and selected terminal outputs.
+The compiler writes standard queue specifications. It does not register, approve, or dispatch them.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/langgraph_trial585.py DESCRIPTION.json reports/work/TRIAL/compiled
+```
+
+Inspect the compiled manifest through `workflow_admission440` before exact registration and approval.
+Use the existing queue interfaces within the current assignment and budgets.
+The runtime adapter uses an isolated `.venv-langgraph585` environment.
+Dependency downloads require the applicable repository approval.
+`scripts/requirements-langgraph585.lock` pins package versions and wheel hashes.
+Remote tracing stays disabled. The trial makes no model-provider calls.
+
+Each queue stores controller state in `controller-state585/state.sqlite`.
+The state contains references and small review reports. Keep pixels and model weights in their existing artifact locations.
+The shared state budget is 32 MB, including SQLite sidecars.
+A pending review completes the report job and preserves its separate campaign state.
+The trial cannot record an approval or promote a model.
+
+Compare equivalent outputs, observed interventions, timing, recovery, and state size.
+Keep software fault tests separate from model evidence.
+A controller checkpoint does not restore model training or guarantee exactly-once external actions.
+See [the fixed trial protocol](../../Research/Plans/LangGraphTrial585.md).
+
+## Active campaign preparation
+
+Use `scripts/campaign_preparation586.py` for the bounded LANGGRAPH586 trial.
+The common command verifies source receipts, compiles existing templates, and admits exact diagnostic jobs.
+The existing detached runner owns execution. The command does not run models or accept metrics.
+
+A `campaign-preparation586-v2` description contains these fields:
+
+- `id`, `track`, and `scope` identify the fixed campaign.
+- `source` pins a verified terminal event from the preceding campaign.
+- `selection` fixes the source output, field path, and required value.
+- `requirements` name missing evidence, the responsible owner, and the release condition.
+- `recipe` pins an existing template batch, bounded artifact specifications, conditions, and cumulative limits.
+
+Each requirement applies to `jobs` or `training`.
+Missing training evidence does not stop an eligible diagnostic report.
+This trial admits diagnostic artifacts only. It grants no capture, training, export, or promotion authority.
+
+```sh
+PYTHONPATH=scripts .venv-yolo/bin/python -B scripts/campaign_preparation586.py CAMPAIGN.json --state reports/work/CAMPAIGN/controller-state --admit
+```
+
+Omit `--admit` to compile and record state without changing queue admissions.
+The same command uses both campaign descriptions. Configuration supplies the scientific question and exact fixed jobs.
+New evidence requires verified inputs and applicable role checks. Do not modify a submitted specification or frozen label file.
+If a contract changes, create an explicit successor.
+
+The isolated `.venv-langgraph585` process keeps one persistent identity per campaign and definition.
+Immutable events record queue changes under that identity. Repeated identical observations reuse the existing event.
+Existing queue checks reconcile partial registration and approval before another admission.
+A failed or revoked job requires review. The controller does not retry it automatically.
+
+`detector_training_batch478.py` emits new terminal jobs through `detector_completion586.finish`.
+That runtime module excludes authoring imports. Legacy specifications keep their original entry points.
+
+Results remain provisional for Joe. State agreement measures workflow behavior, not independent model accuracy.
+See [the preparation plan](../../Research/Plans/LangGraphPreparation586.md).

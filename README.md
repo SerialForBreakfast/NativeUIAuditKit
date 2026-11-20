@@ -12,6 +12,9 @@ See [user evidence approval](Research/UserEvidenceApproval.md). Experiment execu
 
 **Synthetic scores do not predict real-app accuracy.** Read the real-app rows first.
 
+The RC561 211/211 claim and its replacement comparison are invalid. The WSP 10/10 low-score diagnostic is not accepted recall.
+No independent multi-app result supports promotion. See the [metric audit](Research/MetricClaimsAudit571.md).
+
 ### Shipped models
 
 | Model | What it detects | Synthetic test | Real apps |
@@ -203,7 +206,7 @@ Requirements: macOS 15+, Xcode 26+, Swift 6.0+. No external Swift dependencies.
 ```
 
 This starts the loopback dashboard at http://127.0.0.1:8765/. It does not stop a running job unless you pass `--wait SECONDS` or `--cancel-running`.
-Guides: [experiment workflow](docs/experiment-workflow.md), [batch authoring](docs/experiment-batches/README.md), [queue design (ADR-0026)](Research/ADR-0026-Queued-Research-Experiments.md), [job restarts (EXTENSION408)](Research/Plans/Extension408.md).
+Guides: [experiment workflow](docs/experiment-workflow.md), [LangGraph findings](Research/LangGraphFindings.md), [batch authoring](docs/experiment-batches/README.md), [queue design (ADR-0026)](Research/ADR-0026-Queued-Research-Experiments.md), [job restarts (EXTENSION408)](Research/Plans/Extension408.md).
 
 ---
 

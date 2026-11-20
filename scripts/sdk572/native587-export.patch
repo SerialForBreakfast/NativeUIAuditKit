@@ -1,0 +1,45 @@
+--- Tools/export-evidence.rb
++++ Tools/export-evidence.rb
+@@ -115,22 +115,38 @@
+      text(o['focusSource']) if o['focusSource']
+      assert(o['focusObservedAt'].is_a?(Integer)&&o['focusObservedAt']>=0,'focus clock') if o['focusObservedAt']
+ if o['visualContext']
+- v=o['visualContext'];keys(v,%w[sampledAt reduceMotion contrast geometryStability hcf focusAppearance])
++ v=o['visualContext'];keys(v,%w[sampledAt reduceMotion contrast geometryStability hcf focusAppearance focusAppearanceSource])
+  assert(v['sampledAt'].is_a?(Integer)&&v['sampledAt']>=0,'visual clock')
+  assert(%w[on off].include?(v['reduceMotion'])&&%w[normal high unknown].include?(v['contrast']),'visual accessibility state')
+  assert(%w[stable changing unknown].include?(v['geometryStability']),'native geometry stability')
+  assert(v['hcf']=='unknown'&&v['focusAppearance']=='unknown','unsupported native appearance inference')
++ assert(v['focusAppearanceSource'].nil?||%w[unknown declared inferredFromType].include?(v['focusAppearanceSource']),'appearance source')
+ end
+      assert(o['appID']==source['appID'],'wrong app')
+      assert([true,false].include?(o['focusKnown'])&&[true,false].include?(o['interrupted']),'missing observation state')
+      assert(o['elements'].is_a?(Array)&&o['elements'].size<=2000,'element budget')
+      o['elements'].each do |el|
+-      keys(el,%w[identity parentID publicLabel accessibilityTraits hidden coordinateSpace bounds enabled selected observedState className typeDescriptor isAccessibilityElement publicAccessibilityActionIDs layoutContext publicAccessibility captureGeometry])
++      keys(el,%w[identity parentID publicLabel accessibilityTraits hidden coordinateSpace bounds enabled selected observedState className typeDescriptor isAccessibilityElement publicAccessibilityActionIDs layoutContext publicAccessibility captureGeometry focusStyle focusStyleSource])
++      assert(el['focusStyle'].nil? == el['focusStyleSource'].nil?,'focus style pair')
++      assert(el['focusStyle'].nil?||(%w[ring backgroundFill platterLift scaleOnly custom unknown].include?(el['focusStyle'])&&%w[declared inferredFromType unknown].include?(el['focusStyleSource'])),'focus style metadata')
+       if el['captureGeometry']
+-       g=el['captureGeometry'];keys(g,%w[schemaVersion windowID sceneID screenBounds displayScale toScreenPoints source])
+-       assert(g['schemaVersion']==1,'geometry version');%w[windowID sceneID source].each{|k|text(g[k])}
++       g=el['captureGeometry'];keys(g,%w[schemaVersion windowID sceneID screenBounds displayScale toScreenPoints source native])
++       assert([1,2].include?(g['schemaVersion']),'geometry version');%w[windowID sceneID source].each{|k|text(g[k])}
+        geometry_bounds(g['screenBounds']);geometry_affine(g['toScreenPoints'])
+        assert(g['displayScale'].is_a?(Numeric)&&g['displayScale'].finite?&&g['displayScale']>0,'display scale')
++       assert((g['schemaVersion']==2)==!g['native'].nil?,'native geometry version')
++       if g['native']
++        n=g['native'];keys(n,%w[nativeBounds nativeScale safeAreaInsets overscanCompensationInsets toNativePixels])
++        geometry_bounds(n['nativeBounds']);geometry_affine(n['toNativePixels'])
++        scale=n['nativeScale'];assert(scale.is_a?(Numeric)&&scale.finite?&&scale>0,'native scale')
++        %w[safeAreaInsets overscanCompensationInsets].each do |field|
++         insets=n[field];keys(insets,%w[top left bottom right]);assert(insets.size==4&&insets.values.all?{|v|v.is_a?(Numeric)&&v.finite?&&v>=0},'native insets')
++        end
++        assert(n['toNativePixels'].zip(g['toScreenPoints']).all?{|a,b|(a-b*scale).abs<=1e-6*[1,a.abs].max},'native transform disagreement')
++        w=g['screenBounds']['width']*scale;h=g['screenBounds']['height']*scale
++        close=->(a,b){(a-b).abs<=1e-6*[1,a.abs].max}
++        assert((close.call(n['nativeBounds']['width'],w)&&close.call(n['nativeBounds']['height'],h))||(close.call(n['nativeBounds']['width'],h)&&close.call(n['nativeBounds']['height'],w)),'native extent disagreement')
++       end
+       end
+             text(el['className']) if el['className']
+       type_descriptor(el['typeDescriptor']) if el['typeDescriptor']

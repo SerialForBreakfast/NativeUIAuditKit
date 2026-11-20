@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Experiment atlas · NUIAK</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f2e9;color:#183d39;font:15px/1.5 -apple-system,BlinkMacSystemFont,sans-serif}header{padding:24px 4vw 16px;border-bottom:1px solid #c4ccc0;display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}h1,h2{font-family:Georgia,serif;font-weight:500;margin:0}h1{font-size:clamp(32px,5vw,58px);letter-spacing:-.05em}small,label{font-size:12px;color:#455f56}header small{margin-left:auto}nav{padding:14px 4vw;display:flex;align-items:end;gap:12px;flex-wrap:wrap}label{display:grid;gap:3px}select,input,button{border:1px solid #aabbb0;background:#fffef9;color:inherit;padding:8px;border-radius:5px;font:inherit;max-width:100%}button{cursor:pointer}main{margin:0 3vw 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,29%);border:1px solid #bdcbbf;border-radius:12px;overflow:hidden;background:#fbfaf4}#canvas{height:67vh;min-height:400px;background-image:radial-gradient(#c5cec2 .85px,transparent .85px);background-size:16px 16px}aside{padding:24px;border-left:1px solid #bdcbbf;max-height:67vh;overflow:auto;overflow-wrap:anywhere}aside h2{font-size:24px;line-height:1.25}aside h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin:20px 0 4px}aside p{margin:4px 0}a{color:#086858}aside a{display:block}footer{margin:0 4vw 20px;color:#455f56}#hits{margin:0 4vw 10px;display:flex;flex-wrap:wrap;gap:6px}@media(max-width:760px){main{grid-template-columns:1fr}aside{border:0;border-top:1px solid #bdcbbf}#canvas{height:45vh;min-height:280px}}
+</style><header><h1>Experiment atlas</h1><span>Native UI Audit Kit</span><small>Snapshot · __STAMP__</small></header>
+<nav><label>Campaign<select id="group"></select></label><label>Search all experiments<input id="find" type="search" placeholder="Job ID or research question"></label><label>Inspect experiment<select id="picker"></select></label><button id="fit">Fit map</button></nav><div id="hits" aria-live="polite"></div>
+<main><div id="canvas" aria-label="Experiment dependencies"></div><aside id="detail" aria-live="polite"></aside></main><footer id="summary"></footer>
+<script>__LIB__</script><script>
+const rows=__ROWS__, byId=new Map(rows.map(r=>[r.id,r])), groups=new Map(), $=id=>document.getElementById(id);
+for(const r of rows){if(!groups.has(r.group))groups.set(r.group,[]);groups.get(r.group).push(r)}
+function add(parent,tag,value){const e=document.createElement(tag);e.textContent=value;parent.append(e);return e}
+for(const g of [...groups.keys()].sort())add($('group'),'option',g).value=g;
+const cy=cytoscape({container:$('canvas'),elements:[],layout:{name:'preset'},wheelSensitivity:.22,style:[
+{selector:'node',style:{shape:'round-rectangle',width:190,height:54,label:'data(title)','font-size':12,'text-valign':'center','text-wrap':'wrap','text-max-width':174,'background-color':'#d9e3da',color:'#183d39','border-color':'#9aaaa0','border-width':1}},
+{selector:'.supported',style:{'background-color':'#bbe4d0','border-color':'#398568'}},{selector:'.contradicted',style:{'background-color':'#f3cbb7','border-color':'#bd704d'}},{selector:'.external',style:{'border-style':'dashed'}},
+{selector:'edge',style:{width:1.5,'curve-style':'bezier','target-arrow-shape':'triangle','line-color':'#a0b3a8','target-arrow-color':'#849f90'}},{selector:'node:selected',style:{'border-color':'#124a41','border-width':4}}]});
+let shown=[];
+function inspect(id){const r=byId.get(id);if(!r)return;const panel=$('detail');panel.replaceChildren();add(panel,'small',r.id);add(panel,'h2',r.question);add(panel,'h3','Recorded result');add(panel,'p','Execution · '+r.status);
+const labels={outcome:'Outcome',decision:'Decision',reason:'Reason',gains:'Gained cases',lostPriorSuccesses:'Lost prior successes',nextAction:'Next action',limitation:'Scope',metrics:'Metrics'};
+for(const [key,v] of Object.entries(r.findings)){add(panel,'h3',labels[key]);add(panel,'p',typeof v==='object'?Object.entries(v).map(([k,n])=>k+' '+n).join(' · '):String(v))}
+if(!Object.keys(r.findings).length)add(panel,'p',r.files.length>1?'Open the report for detailed results.':'No scientific summary is available for this receipt.');
+if(r.rule){add(panel,'h3','Registered decision rule');add(panel,'p',typeof r.rule==='string'?r.rule:JSON.stringify(r.rule))}
+if(r.files.length)add(panel,'h3','Source evidence');for(const [name,url] of r.files){const a=add(panel,'a',name);a.href=url;a.target='_blank';a.rel='noopener'}
+cy.nodes().unselect();cy.getElementById(id).select();$('picker').value=id}
+function display(g,focus){$('group').value=g;const members=groups.get(g)||[],base=focus?[byId.get(focus),...members.filter(r=>r.id!==focus)]:members;
+const selected=new Set(base.slice(0,100).map(r=>r.id));for(const id of [...selected])for(const d of byId.get(id).deps)if(byId.has(d)&&selected.size<150)selected.add(d);
+shown=[...selected].map(id=>byId.get(id));cy.elements().remove();
+cy.add(shown.map(r=>({data:{id:r.id,title:r.id.replaceAll('-',' ')+'\n'+(r.findings.outcome||r.status)},classes:[r.group!==g?'external':'',r.findings.outcome].filter(x=>['external','supported','contradicted'].includes(x)).join(' ')})));
+for(const r of shown)for(const d of new Set(r.deps))if(selected.has(d))cy.add({data:{source:d,target:r.id}});
+cy.layout({name:'breadthfirst',directed:true,padding:28,spacingFactor:1.05,transform:(_,p)=>({x:p.y,y:p.x})}).run();
+$('picker').replaceChildren();for(const r of shown)add($('picker'),'option',r.id).value=r.id;
+$('summary').textContent=rows.length.toLocaleString()+' experiments · '+groups.size+' campaigns · '+shown.length+' visible · '+Math.min(100,members.length)+' of '+members.length+' campaign jobs. Arrows lead from prerequisites to dependent jobs. Dashed borders identify other campaigns.'+(__SKIPPED__?' Unreadable records: __SKIPPED__.':'');
+if(shown.length)inspect(focus||shown.find(r=>r.findings.outcome)?.id||shown[0].id)}
+cy.on('tap','node',e=>inspect(e.target.id()));$('picker').onchange=e=>inspect(e.target.value);$('group').onchange=e=>display(e.target.value);$('fit').onclick=()=>cy.fit(undefined,28);
+$('find').oninput=e=>{const q=e.target.value.trim().toLowerCase(),h=$('hits');h.replaceChildren();if(!q)return;const found=rows.filter(r=>(r.id+' '+r.question).toLowerCase().includes(q));add(h,'small',found.length+' matches');for(const r of found.slice(0,8)){const b=add(h,'button',r.id);b.onclick=()=>display(r.group,r.id)}};
+const first=byId.get('ios582-wide-teacher-decision')||rows.find(r=>r.findings.outcome)||rows[0];if(first)display(first.group,first.id);
+</script></html>

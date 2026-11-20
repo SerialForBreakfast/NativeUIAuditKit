@@ -194,16 +194,59 @@ def stop_app(udid, bundle, launched):
     return r.returncode
 
 
+def _rich_sdk_element(el):
+    """Preserve explicit SDK element identity, role, parent, transforms, bounds, and focus flags."""
+    ident = el.get('identity') or {}
+    td = el.get('typeDescriptor') or {}
+    role = el.get('role') or el.get('declaredTaxonomy') or el.get('taxonomy_class') or td.get('declaredRole') or td.get('role')
+    return dict(
+        id=ident.get('id') or el.get('id') or el.get('element_id'),
+        parentID=ident.get('parentID') or el.get('parentID') or el.get('parent_id'),
+        role=role,
+        declaredTaxonomy=el.get('declaredTaxonomy') or el.get('taxonomy_class') or td.get('declaredRole') or td.get('role'),
+        declaredSwiftUIType=td.get('declaredSwiftUIType'),
+        accessibilityTraits=el.get('accessibilityTraits'),
+        bounds=el.get('bounds') or el.get('full_pixel_bounds'),
+        visibleBounds=el.get('visibleBounds') or el.get('visible_pixel_bounds'),
+        clippedBounds=el.get('clippedBounds'),
+        transform=el.get('transform'),
+        captureGeometry=el.get('captureGeometry'),
+        coordinateSpace=el.get('coordinateSpace') or 'windowPoints',
+        hidden=bool(el.get('hidden') or el.get('is_hidden')),
+        focusable=el.get('focusable'),
+        focused=bool(el.get('focused') or el.get('is_focused')),
+        selected=el.get('selected'),
+        provenance='sdk-registered',
+    )
+
+
 def sdk_rows(launched, out, name):
     code, data = aatv('sdk', 'snapshot', '--endpoint', launched['identity']['endpoint'], '--enrollment', str(launched['enrollment']), out=out, name=name)
     inquiry = next(iter(data.get('data', {}).values()), {}).get('_0', {})
-    elements = sorted((e['identity']['id'], json.dumps(e['bounds'], sort_keys=True), e.get('selected')) for e in inquiry.get('elements') or [])
-    return dict(returnCode=code, success=data.get('success'), state=inquiry.get('state'), focusKnown=inquiry.get('currentFocusKnown'),
-                issues=sorted(i['code'] for i in inquiry.get('issues') or []), elements=elements, file=f'{name}.stdout')
+    raw_elements = inquiry.get('elements') or []
+    elements = sorted((e['identity']['id'], json.dumps(e['bounds'], sort_keys=True), e.get('selected')) for e in raw_elements)
+    rich_elements = sorted((_rich_sdk_element(e) for e in raw_elements), key=lambda r: str(r.get('id') or ''))
+    layout = inquiry.get('layout') or {}
+    return dict(
+        returnCode=code,
+        success=data.get('success'),
+        state=inquiry.get('state'),
+        focusKnown=bool(inquiry.get('currentFocusKnown') or layout.get('actualFocusKnown')),
+        focusID=inquiry.get('currentFocusID') or inquiry.get('focusID') or inquiry.get('focusedElementID') or layout.get('actualFocus'),
+        generation=inquiry.get('generation') or layout.get('generation'),
+        truncated=bool(inquiry.get('truncated') or layout.get('truncated')),
+        captureGeometry=layout.get('captureGeometry') or inquiry.get('captureGeometry') or next((e.get('captureGeometry') for e in raw_elements if e.get('captureGeometry')), None),
+        layout=layout or None,
+        accessibilityDrafts=inquiry.get('accessibilityDrafts'),
+        issues=sorted(i['code'] for i in inquiry.get('issues') or []),
+        elements=elements,
+        richElements=rich_elements,
+        file=f'{name}.stdout',
+    )
 
 
 def capture_case(plan, launched, out, case, since):
-    """Record 1 settled case: SDK before, screenshot, SDK after, and system scene state. No retry."""
+    """Record 1 settled case: SDK before, screenshot, SDK after, and system scene state. Flag transitional drift."""
     time.sleep(plan['settleSeconds'])
     udid, sdk = plan['udid'], launched['identity'] is not None
     before = sdk_rows(launched, out, f"{case['id']}-sdk-before") if sdk else None
@@ -211,26 +254,54 @@ def capture_case(plan, launched, out, case, since):
     image = local/f"{case['id']}.png"
     shot = subprocess.run(['xcrun', 'simctl', 'io', udid, 'screenshot', str(image)], capture_output=True, text=True, timeout=30)
     after = sdk_rows(launched, out, f"{case['id']}-sdk-after") if sdk else None
-    record = dict(id=case['id'], flow=case['flow'], group=case['group'], expectedScreen=case['expectedScreen'], inputs=case['inputs'],
-                  focus='unknown', focusSource='none: app hooks and remote observe do not report native focus identity')
+    record = dict(
+        id=case['id'], flow=case['flow'], group=case['group'], expectedScreen=case['expectedScreen'], inputs=case['inputs'],
+        focus='unknown', focusID=None, focusKnown=False, transitional=False,
+        focusSource='none: sdk focus unavailable',
+    )
     if shot.returncode != 0:
         return dict(record, status='failed', reason='screenshot_failed:'+shot.stderr[-300:])
     target = DATA/out.name/image.name; target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(image, target)
-    q.require(q.digest(target) == q.digest(image), 'capture_copy_changed')
+    img_sha = q.digest(target)
+    q.require(img_sha == q.digest(image), 'capture_copy_changed')
     system = alert_check(udid, since)
     app_scene = system.get('scenes', {}).get(plan['bundle']+'-default')
     scenes = [json.loads(l.split(' ', 1)[1]) for l in launched['lines'] if l.startswith('REAL543_SCENE ')]
-    record.update(image=str(target), sha256=q.digest(target), ttrCopy=str(image), sdkBefore=before, sdkAfter=after,
-                  appScene=scenes[-1] if scenes else None, systemScene=app_scene, alert=system['status'])
-    live = lambda r: r['success'] and r['elements'] and 'live_evidence_unavailable' not in r['issues']
-    stable = not sdk or (live(before) and live(after) and before['elements'] == after['elements'])
+    record.update(
+        image=str(target), sha256=img_sha, ttrCopy=str(image), sdkBefore=before, sdkAfter=after,
+        appScene=scenes[-1] if scenes else None, systemScene=app_scene, alert=system['status'],
+        screenshotSHA256=img_sha,
+    )
+    live = lambda r: r['success'] and (r['elements'] or r.get('accessibilityDrafts')) and 'live_evidence_unavailable' not in r['issues']
+    layout_same = not sdk or (
+        before['elements'] == after['elements']
+        and before.get('richElements') == after.get('richElements')
+    )
+    focus_same = not sdk or (
+        before.get('focusKnown') == after.get('focusKnown')
+        and before.get('focusID') == after.get('focusID')
+    )
+    gen_same = not sdk or (
+        before.get('generation') is None
+        or after.get('generation') is None
+        or before.get('generation') == after.get('generation')
+    )
+    stable = layout_same and focus_same and gen_same
+    if sdk and live(before) and before.get('focusKnown'):
+        record['focusKnown'] = True
+        record['focusID'] = before.get('focusID')
+        record['focus'] = 'focused' if before.get('focusID') else 'no_focus'
+        record['focusSource'] = 'sdk:uifocus_bracketed' if focus_same else 'transitional:focus_drift'
     active = system['status'] == 'clear' and app_scene is not None and app_scene['reasons'] == []
     ids = {e[0] for e in (before or {}).get('elements', [])}
-    if active and stable and not set(case.get('expectedSDK', [])) <= ids:
+    if active and live(before) and live(after) and stable and not set(case.get('expectedSDK', [])) <= ids:
         return dict(record, status='failed', reason='unexpected_screen')
-    reason = None if active and stable else ('system_alert' if system['status'] != 'clear' else 'scene_inactive' if not active else
-                                             'sdk_unavailable' if not (live(before) and live(after)) else 'sdk_changed_during_capture')
+    if active and live(before) and live(after) and not stable:
+        return dict(record, status='transitional', transitional=True, reason='bracket_drift:focus_or_layout_changed')
+    reason = None if active and (not sdk or (live(before) and live(after) and stable)) else (
+        'system_alert' if system['status'] != 'clear' else 'scene_inactive' if not active else 'sdk_unavailable'
+    )
     return dict(record, status='captured' if reason is None else 'failed', reason=reason)
 
 
