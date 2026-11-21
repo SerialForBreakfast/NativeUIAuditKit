@@ -14,7 +14,9 @@ require File.join(ttr, 'Scripts/lib/matched-fixture-benchmark')
 
 rows = ARGV.flat_map do |run|
   campaign = JSON.parse(File.read(File.join(run, 'campaign.json')))
-  ledger = JSON.parse(File.read(File.join(run, 'provider-ledger.json')))
+  # A campaign stopped by its parent process has no ledger. Tokens still come from each call's saved response.
+  ledger_path = File.join(run, 'provider-ledger.json')
+  ledger = File.exist?(ledger_path) ? JSON.parse(File.read(ledger_path)) : {}
   Dir[File.join(run, '*')].select { |p| File.directory?(p) && File.exist?(File.join(p, 'trajectory.json')) }.sort.map do |slot|
     t = JSON.parse(File.read(File.join(slot, 'trajectory.json')))
     again = MatchedFixtureBenchmark.evaluate(t['task'], observations: t['observations'], inputs: t['inputs'], decision: t['decision'])
@@ -25,7 +27,7 @@ rows = ARGV.flat_map do |run|
       'outputFormat' => responses.map { |r| r['outputFormat'] }.first, 'success' => again['success'],
       'verdictReproduced' => again == t['verdict'], 'modelInputs' => t['inputs'].size,
       'calls' => responses.size, 'tokens' => tokens, 'latencySeconds' => responses.sum { |r| r['latencySeconds'].to_f }.round(2),
-      'issue' => t['issue'], 'plan' => responses.map { |r| r['reply'].to_s.gsub(/\s+/, '') }.first,
+      'issue' => t['issue'], 'mode' => campaign['mode'] || 'plan', 'buttons' => t['inputs'].select { |i| i['state'] == 'delivered' }.map { |i| i['button'] }, 'plan' => responses.map { |r| r['reply'].to_s.gsub(/\s+/, '') }.first,
       'ledgerTokens' => ledger['tokens'], 'ledgerPresses' => ledger['presses']
     }
   end

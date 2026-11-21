@@ -54,6 +54,26 @@ class LocalOllamaSessionTest < Minitest::Test
     refute_includes seen.first[:format][:properties][:action][:enum], 'home'
   end
 
+  def test_check_schema_accepts_only_a_boolean
+    replies = [reply('{"complete":true}'), reply('{"complete":"yes"}')]
+    s = LocalOllamaSession.new(model: 'm', deadline: Time.now + 60, max_calls: 2, max_tokens: 20_000, schema: 'check', max_output: 1_000,
+                               http: ->(r, _) { assert_equal({ type: 'boolean' }, r[:format][:properties][:complete]); replies.shift })
+    Dir.mktmpdir(nil, File.expand_path('../../.build', __dir__)) do |d|
+      assert_equal({ 'complete' => true }, s.ask(d, 'x'))
+      assert_raises(RuntimeError) { s.ask(d, 'x') }
+    end
+  end
+
+  def test_output_limit_is_configurable_and_bounded
+    seen = []
+    s = LocalOllamaSession.new(model: 'm', deadline: Time.now + 60, max_calls: 2, max_tokens: 20_000, max_output: 4_000,
+                               http: ->(r, t) { seen << [r, t]; reply('{}') }, read_timeout: 600)
+    Dir.mktmpdir(nil, File.expand_path('../../.build', __dir__)) { |d| s.ask(d, 'x') }
+    assert_equal 4_000, seen.first[0][:options][:num_predict]
+    assert_operator seen.first[1], :<=, 60
+    assert_raises(RuntimeError) { LocalOllamaSession.new(model: 'm', deadline: Time.now, max_calls: 1, max_tokens: 9_000, max_output: 50_000) }
+  end
+
   def test_image_arm_sends_1_image
     s, seen = session([reply('{"steps":["done"]}')])
     Dir.mktmpdir(nil, File.expand_path('../../.build', __dir__)) do |d|

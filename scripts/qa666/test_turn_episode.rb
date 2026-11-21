@@ -11,13 +11,32 @@ class FakeProvider
   def ask(_dir, prompt, image = nil); @prompts << prompt; @images << image; { 'action' => @actions.shift }; end
 end
 
+class FakeChecker
+  attr_reader :prompts, :unknown
+  def initialize(answers); @answers = answers; @prompts = []; @unknown = false; end
+  def ask(_dir, prompt, _image = nil)
+    @prompts << prompt
+    a = @answers.shift
+    raise JSON::ParserError, "unexpected token at ''" if a == :empty
+    { 'complete' => a }
+  end
+end
+
+class FakeConfirmer
+  attr_reader :prompts, :unknown
+  def initialize(answers); @answers = answers; @prompts = []; @unknown = false; end
+  def ask(_dir, prompt, _image = nil); @prompts << prompt; { 'remaining' => @answers.shift }; end
+end
+
 class TurnEpisodeTest < Minitest::Test
-  def run_episode(actions, arm: 'image960', max_turns: 5)
+  def run_episode(actions, arm: 'image960', max_turns: 5, checker: nil, confirmer: nil)
     t = LocalTurnRun.allocate
     pressed = []
     Dir.mktmpdir(nil, File.expand_path('../../.build', __dir__)) do |out|
       t.instance_variable_set(:@out, out); t.instance_variable_set(:@run, 'r')
       t.instance_variable_set(:@max_turns, max_turns); t.instance_variable_set(:@provider, FakeProvider.new(actions))
+      t.instance_variable_set(:@checker, checker)
+      t.instance_variable_set(:@confirmer, confirmer)
       t.define_singleton_method(:restart) { |*_| nil }
       t.define_singleton_method(:survey) { |_| raise 'survey must not run' if arm == 'image960' }
       t.define_singleton_method(:sample) { { 'runID' => 'r' } }
@@ -60,5 +79,42 @@ class TurnEpisodeTest < Minitest::Test
     assert_includes text, 'up|down|left|right|select|back|done|abstain'
     refute_includes text, 'home'
     assert_includes text, 'oldest first: none.'
+  end
+
+  def test_completion_check_yes_ends_with_done_without_action_call
+    c = FakeChecker.new([false, true])
+    t, pressed = run_episode(%w[select select right], checker: c)
+    assert_equal %w[select select], pressed
+    assert_equal 'done', t.instance_variable_get(:@decision)
+    assert_equal 2, t.instance_variable_get(:@provider).prompts.size
+    assert_equal 2, c.prompts.size # No check before the first button.
+    assert_includes c.prompts.last, 'oldest first: select, select.'
+    refute_includes c.prompts.last, 'home'
+  end
+
+  def test_empty_check_reply_is_unconfirmed_and_the_episode_continues
+    c = FakeChecker.new([:empty, false])
+    t, pressed = run_episode(%w[select select done], checker: c)
+    assert_equal %w[select select], pressed
+    assert_equal 'done', t.instance_variable_get(:@decision)
+    assert_equal ['unconfirmed', false], t.instance_variable_get(:@checks).map { |x| x['complete'] }
+  end
+
+  def test_disagreeing_confirmation_continues_and_agreement_ends
+    c = FakeChecker.new([true, true])
+    k = FakeConfirmer.new([true, false])
+    t, pressed = run_episode(%w[up right select], checker: c, confirmer: k)
+    assert_equal %w[up right], pressed # Yes after up is rejected by the reversed question; yes after right agrees.
+    assert_equal 'done', t.instance_variable_get(:@decision)
+    assert_equal [false, true], t.instance_variable_get(:@checks).map { |x| x['agreed'] }
+    assert_includes k.prompts.first, 'still not done'
+    refute_includes k.prompts.first, 'home'
+  end
+
+  def test_progress_rule_is_off_by_default_and_precedes_history
+    refute_includes LocalTurnRun.turn_instruction('Do X.', %w[select], nil), 'Progress rule'
+    text = LocalTurnRun.turn_instruction('Do X.', %w[select], nil, progress_rule: true)
+    assert_operator text.index('Progress rule'), :<, text.index('oldest first: select.')
+    refute_includes text, 'home'
   end
 end
