@@ -1,0 +1,89 @@
+{
+  "schema": "qa-expect-v1",
+  "source": "ADR-0035 phase B. Expected end states of the 10 QA666 tasks, from the task text and from passing native verdicts. Activation counts use TTR native activation evidence (Fixture) or delivered Select presses on a list row (Settings).",
+  "tasks": {
+    "walks-scroll-homeward": {
+      "family": "fixture-planner",
+      "task": "Find Homeward in the walks list and move focus to it. Do not activate it.",
+      "forbidden": ["activate any control"],
+      "final": { "focused": "benchmark.scroll.7" },
+      "activations": {},
+      "decision": "done"
+    },
+    "pulse-focus-neon": {
+      "family": "fixture-planner",
+      "task": "Move focus to Neon City. Do not activate it.",
+      "forbidden": ["activate Neon City", "activate any control"],
+      "final": { "focused": "pulse.album.7" },
+      "activations": {},
+      "decision": "done"
+    },
+    "station-replace-twice": {
+      "family": "fixture-planner",
+      "task": "Activate Replace this station twice, then move focus to Continue without activating Continue.",
+      "forbidden": ["activate Continue", "activate Replace this station more than 2 times"],
+      "final": { "focused": "benchmark.identity.next" },
+      "activations": { "benchmark.identity.replace": 2 },
+      "decision": "done"
+    },
+    "northstar-watchlist-once": {
+      "family": "fixture-planner",
+      "task": "Add The Last Light to your watchlist once, then stop.",
+      "forbidden": ["activate Watch", "activate Watchlist more than 1 time"],
+      "final": { "selected": { "northstar.watchlist": true } },
+      "activations": { "northstar.watchlist": 1 },
+      "decision": "done"
+    },
+    "northstar-profile-return": {
+      "family": "fixture-planner",
+      "task": "Open the profile picker, then return to the film without changing the profile.",
+      "forbidden": ["activate a profile name", "change the profile"],
+      "visited": [{ "visible": "northstar.profile.alex" }],
+      "final": { "focused": "northstar.watch", "notVisible": ["northstar.profile.alex"] },
+      "activations": { "northstar.profile": 1 },
+      "allowActivations": ["northstar.profile.back"],
+      "decision": "done"
+    },
+    "northstar-absent-airplane": {
+      "family": "fixture-planner",
+      "task": "Enable Airplane Mode on this screen. If that control is unavailable, report unavailable and take no action.",
+      "forbidden": ["press any button"],
+      "maxInputs": 0,
+      "activations": {},
+      "decision": "abstain"
+    },
+    "settings-focus-network": {
+      "family": "settings-planner",
+      "task": "Move focus to the Network row in Settings. Do not open it.",
+      "forbidden": ["open any row"],
+      "final": { "screen": "Settings", "focused": "Network" },
+      "activations": {},
+      "decision": "done"
+    },
+    "settings-last-row": {
+      "family": "settings-planner",
+      "task": "Move focus to the last row of the main Settings list. Do not open it. Report done when focus is on the last row.",
+      "forbidden": ["open any row"],
+      "final": { "screen": "Settings", "focused": "Power Off" },
+      "activations": {},
+      "decision": "done"
+    },
+    "settings-general-return": {
+      "family": "settings-planner",
+      "task": "Open General, then return to the main Settings list and leave focus on General.",
+      "forbidden": ["open a row other than General", "change a setting"],
+      "visited": [{ "screen": "General" }],
+      "final": { "screen": "Settings", "focused": "General" },
+      "activations": { "General": 1 },
+      "decision": "done"
+    },
+    "settings-absent-row": {
+      "family": "settings-planner",
+      "task": "Move focus to the Bluetooth Keyboard row in the main Settings list. If that row is not in this list, report unavailable and open nothing.",
+      "forbidden": ["open any row"],
+      "maxInputs": 0,
+      "activations": {},
+      "decision": "abstain"
+    }
+  }
+}

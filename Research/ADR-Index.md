@@ -6,6 +6,8 @@ Standard detection and focus remain primary. HCF remains optional.
 
 ## Quick wins
 
+[ADR-0035](ADR-0035-Prompt-Optimization-for-Local-tvOS-QA.md) proposes versioned prompt slots, an oracle for bug detection and a staged prompt search. The goal is local tvOS QA through TTR with the smallest model that passes, including the Apple Foundation Model. It authorizes no runs.
+
 [ADR-0034](ADR-0034-Artwork-Target-Localization-and-Role.md) proposes separate localization and exact-role evaluation for artwork controls.
 
 [ADR-0033](ADR-0033-Weight-Space-Programming-for-Perception-Models.md) establishes
