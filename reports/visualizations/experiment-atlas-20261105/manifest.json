@@ -1,0 +1,27 @@
+{
+  "snapshotSHA256": "330212f846a44257e83434981e2213021565202aee7b7f7ac9d801b09fe4015c",
+  "sourceCounts": {
+    "jobs": 4757,
+    "dependencies": 7407,
+    "catalog": 278,
+    "unboundCampaigns": 213,
+    "pinnedReuseLinks": 16302,
+    "allLinks": 23709,
+    "attempts": 3973
+  },
+  "compressedBytes": 670972,
+  "jsonBytes": 6824411,
+  "issues": [],
+  "exportSeconds": 76.94,
+  "executionStarted": false,
+  "fragmentSHA256": "cb6b4aa52e3a9b8aa8ba8d586f79de566ce97cb761fd520ee5c438ffcd6c3b8e",
+  "fragmentBytes": 882373,
+  "dataChecks": "passed: identifiers, edges, ownership, non-execution, known rejections, native non-acceptance, compression, vendor integrity, no network data calls",
+  "browserInteractionChecks": 21,
+  "browserRuntimeErrors": 0,
+  "elapsedMinutes": 27.7,
+  "estimatedMinutes": [
+    30,
+    60
+  ]
+}

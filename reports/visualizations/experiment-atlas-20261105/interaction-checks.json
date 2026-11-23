@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "Full snapshot count",
+    "View dependencies",
+    "View lanes",
+    "View outcomes",
+    "View timeline",
+    "Timeline dates cannot be moved by dragging",
+    "Latest experiment scope",
+    "Native evidence is review-only",
+    "Experiment drill-down binds 8 member jobs",
+    "Latest batch contains 15 jobs",
+    "iOS recorded cause counts",
+    "Path tracing includes upstream reuse",
+    "Every execution job remains inspectable",
+    "Execution color is independent from outcomes",
+    "Independent HCF filter",
+    "HCF rejection is visible",
+    "Open paths contain recorded blockers",
+    "Dark theme",
+    "360 px layout has no overflow",
+    "320 px layout has no overflow",
+    "No browser runtime errors"
+  ],
+  "passed": 21,
+  "errors": [],
+  "verifiedAt": "2026-11-06T05:19:33.397Z"
+}

@@ -1,0 +1,261 @@
+<div id="nuiak-atlas">
+  <div class="atlas-heading"><h2>Experiment atlas</h2><div class="text-small text-muted" data-role="stamp">Reading the research snapshot…</div></div>
+  <div class="nav nav-pills" role="tablist" aria-label="Experiment views">
+    <button class="nav-link active" type="button" id="atlas-dependencies" role="tab" aria-selected="true" aria-controls="atlas-panel" data-view="dependencies">Dependencies</button>
+    <button class="nav-link" type="button" id="atlas-lanes" role="tab" aria-selected="false" aria-controls="atlas-panel" data-view="lanes">Model lanes</button>
+    <button class="nav-link" type="button" id="atlas-outcomes" role="tab" aria-selected="false" aria-controls="atlas-panel" data-view="outcomes">Outcomes</button>
+    <button class="nav-link" type="button" id="atlas-timeline" role="tab" aria-selected="false" aria-controls="atlas-panel" data-view="timeline">Timeline</button>
+  </div>
+  <div class="viz-controls">
+    <label class="form-label">Nodes<select class="form-select" data-control="level"><option value="experiments">Experiments and campaigns</option><option value="jobs">Execution jobs</option></select></label>
+    <label class="form-label">Scope<select class="form-select" data-control="scope"><option value="recent">Recent activity · 3 days</option><option value="week">Past week</option><option value="open">Open paths</option><option value="latest">Latest native and iOS batch</option><option value="all">Full recorded history</option><option value="members" disabled>Selected experiment’s jobs</option></select></label>
+  </div>
+  <div class="viz-controls">
+    <label class="form-label">Model<select class="form-select" data-control="model"><option value="all">All models</option></select></label>
+    <label class="form-label">Color<select class="form-select" data-control="color"><option value="outcome">Reported scientific outcome</option><option value="execution">Execution state</option></select></label>
+  </div>
+  <section id="atlas-panel" role="tabpanel" aria-labelledby="atlas-dependencies">
+    <div class="viz-row atlas-topline"><span class="tabular-nums" data-role="count"></span><span class="text-small text-muted" data-role="selection-state"></span></div>
+    <div class="atlas-bands text-small text-muted" data-role="bands"></div>
+    <div class="atlas-graph" data-role="graph" role="img" aria-label="Experiment graph. Select a node or use the inspection menu below."></div>
+    <div class="viz-row atlas-actions">
+      <button class="btn" type="button" data-action="fit">Fit view</button><button class="btn" type="button" data-action="in" aria-label="Zoom in">Zoom in</button><button class="btn" type="button" data-action="out" aria-label="Zoom out">Zoom out</button>
+      <button class="btn" type="button" data-action="path" aria-pressed="false" disabled>Trace selected path</button>
+      <span class="text-small text-muted" data-role="scale"></span>
+    </div>
+    <div class="viz-row atlas-legend text-small" data-role="legend"></div>
+    <label class="form-label atlas-inspection">Inspect any visible node<select class="form-select" data-control="inspect"><option value="">Select an experiment</option></select></label>
+    <div class="card atlas-detail" data-role="detail" aria-live="polite"><span class="text-muted">Select a node to inspect its question, execution, reported result and evidence.</span></div>
+    <div class="text-small text-muted atlas-note" data-role="coverage"></div>
+    <details class="text-small atlas-provenance"><summary>Scope and evidence</summary><div data-role="provenance"></div></details>
+  </section>
+  <script type="application/octet-stream" data-role="vendor">__ATLAS_VENDOR__</script>
+  <script type="application/octet-stream" data-role="payload">__ATLAS_PAYLOAD__</script>
+</div>
+<style>
+#nuiak-atlas {display:flex;flex-direction:column;gap:calc(var(--font-size-base)*1);min-width:0;color:var(--foreground)}
+#nuiak-atlas .atlas-heading{display:flex;flex-direction:column;gap:calc(var(--font-size-base)*.35);padding-inline-end:calc(var(--font-size-base)*6.5)}
+#nuiak-atlas #atlas-panel{display:flex;flex-direction:column;gap:calc(var(--font-size-base)*.65);min-width:0}
+#nuiak-atlas #atlas-panel[hidden]{display:none}
+#nuiak-atlas .atlas-graph{height:520px;width:100%;min-width:0;position:relative;touch-action:none}
+#nuiak-atlas .atlas-topline{justify-content:space-between;min-height:calc(var(--font-size-base)*1.5)}
+#nuiak-atlas .atlas-bands{display:flex;flex-wrap:wrap;gap:calc(var(--font-size-base)*.8);min-height:calc(var(--font-size-base)*1.25)}
+#nuiak-atlas .atlas-legend{gap:calc(var(--font-size-base)*.85)}
+#nuiak-atlas .atlas-legend>span{display:inline-flex;align-items:center;gap:calc(var(--font-size-base)*.35)}
+#nuiak-atlas .atlas-swatch{width:calc(var(--font-size-base)*.65);height:calc(var(--font-size-base)*.65);border-radius:50%;display:inline-block}
+#nuiak-atlas .atlas-detail{display:flex;flex-direction:column;gap:calc(var(--font-size-base)*.65);overflow-wrap:anywhere}
+#nuiak-atlas .atlas-detail .detail-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:calc(var(--font-size-base)*.7)}
+#nuiak-atlas .atlas-detail .detail-label{display:block;color:var(--muted-foreground);margin-block-end:calc(var(--font-size-base)*.2)}
+#nuiak-atlas .atlas-detail .detail-columns{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--font-size-base)*.8)}
+#nuiak-atlas .atlas-detail ul{margin:0;padding-inline-start:calc(var(--font-size-base)*1.3)}
+#nuiak-atlas .atlas-detail code{overflow-wrap:anywhere;white-space:normal}
+#nuiak-atlas .atlas-note{overflow-wrap:anywhere}
+#nuiak-atlas .atlas-provenance>div{display:flex;flex-direction:column;gap:calc(var(--font-size-base)*.5);margin-block-start:calc(var(--font-size-base)*.65)}
+#nuiak-atlas .atlas-actions{gap:calc(var(--font-size-base)*.45)}
+@media(max-width:560px){#nuiak-atlas .atlas-graph{height:450px}#nuiak-atlas .atlas-detail .detail-columns{grid-template-columns:1fr}}
+</style>
+
+<script>
+(async function(){
+'use strict';
+const root=document.getElementById('nuiak-atlas');
+const el=name=>root.querySelector('[data-role="'+name+'"]');
+const control=name=>root.querySelector('[data-control="'+name+'"]');
+const tracks=['Standard focus','tvOS detection','Optional HCF','Temporal focus','iOS detection','Data and SDK','Workflow and evidence'];
+const format=new Intl.NumberFormat('en-US');
+const date=t=>t?new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric'}).format(new Date(t*1000)):'No execution date';
+const longDate=t=>t?new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',dateStyle:'medium',timeStyle:'short'}).format(new Date(t*1000))+' Pacific':'No execution date';
+const seconds=s=>s==null?'Not measured':s>=3600?(s/3600).toFixed(1)+' h':s>=60?(s/60).toFixed(1)+' min':s.toFixed(1)+' s';
+const nice=s=>({'not-assessed':'Not assessed',supported:'Supported · provisional',contradicted:'Contradicted · provisional',inconclusive:'Inconclusive · provisional',mixed:'Mixed member outcomes',complete:'Execution complete',ready:'Ready',running:'Running',blocked:'Blocked',exhausted:'Budget exhausted',unselected:'Branch not selected',superseded:'Superseded',archived:'Archived catalog record',derived:'Recorded campaign'})[s]||s;
+let cy,data,views,edges,graphIndex,visible=[],visibleEdges=[],theme={},selection=null,focusPath=false;
+let state={version:1,view:'dependencies',level:'experiments',scope:'recent',model:'all',color:'outcome',selected:null,trace:false,campaign:null};
+const safeState=s=>{
+ if(!s||s.version!==1)return;
+ for(const [key,values]of Object.entries({view:['dependencies','lanes','outcomes','timeline'],level:['experiments','jobs'],scope:['recent','week','open','latest','all','members'],model:['all',...tracks],color:['outcome','execution']}))if(values.includes(s[key]))state[key]=s[key];
+ if(typeof s.selected==='string')state.selected=s.selected;
+ state.trace=s.trace===true;if(typeof s.campaign==='string')state.campaign=s.campaign;
+};
+function save(){if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{version:1,selected:selection?.id||null,level:state.level,view:state.view,model:state.model,scope:state.scope,color:state.color,trace:focusPath,campaign:state.campaign},privateContent:null}).catch(()=>{});}
+function escape(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function palette(){
+ const probe=document.createElement('span');probe.style.display='none';root.appendChild(probe);
+ const get=(k,fallback)=>{probe.style.color='var('+k+','+(fallback||'var(--foreground)')+')';return getComputedStyle(probe).color;};
+ const p={fg:get('--foreground'),muted:get('--muted-foreground'),border:get('--border'),primary:get('--blue'),supported:get('--green'),contradicted:get('--red'),inconclusive:get('--orange'),mixed:get('--purple'),bg:get('--background')};probe.remove();return p;
+}
+function color(n){if(state.color==='execution')return n.state==='running'?theme.primary:n.state==='ready'?theme.supported:['failed','exhausted','blocked','Needs adapter','Needs data','Needs decision','Waiting for dependency'].includes(n.state)?theme.inconclusive:theme.muted;return theme[n.outcome]||theme.muted;}
+function label(n){return n.id;}
+function base(){return state.level==='experiments'?data.experiments:data.jobs;}
+function allEdges(){return state.level==='experiments'?data.experimentEdges:data.edges;}
+function lineage(ix){
+ const result=new Set([ix]);
+ for(const direction of [0,1]){
+  const adjacency=new Map();
+  for(const edge of allEdges()){
+   if(!adjacency.has(edge[direction]))adjacency.set(edge[direction],[]);
+   adjacency.get(edge[direction]).push(edge[1-direction]);
+  }
+  const queue=[ix],seen=new Set([ix]);
+  for(let i=0;i<queue.length;i++){
+   for(const next of adjacency.get(queue[i])||[]){
+    if(!seen.has(next)){seen.add(next);result.add(next);queue.push(next);}
+   }
+  }
+ }
+ return result;
+}
+function open(n){return ['ready','running','blocked','failed','exhausted','interrupted','pending','unchecked','awaiting-approval','Needs adapter','Needs data','Needs decision','Conditional','Waiting for dependency','Awaiting review','Existing execution','Ready to register'].includes(n.state);}
+function choose(){
+ const rows=base();const selected=rows.findIndex(n=>n.id===state.selected);const path=focusPath&&selected>=0?lineage(selected):null;
+ visible=rows.map((n,i)=>({...n,_i:i})).filter(n=>{
+  if(path)return path.has(n._i);
+  if(state.model!=='all'&&n.track!==state.model)return false;
+  if(state.scope==='members'){const experiment=data.experiments.find(e=>e.id===state.campaign);return state.level==='jobs'&&experiment?.members.includes(n._i);}
+  if(state.scope==='recent')return (n.last||n.start||0)>=data.latestExecution-3*86400;
+  if(state.scope==='week')return (n.last||n.start||0)>=data.latestExecution-7*86400;
+  if(state.scope==='open')return open(n);
+  if(state.scope==='latest')return state.level==='jobs'?/^(native572-|ios575-)/.test(n.id):['B405-277','B405-279'].includes(n.id);
+  return true;
+ });
+ const ids=new Set(visible.map(n=>n._i));visibleEdges=allEdges().filter(e=>ids.has(e[0])&&ids.has(e[1]));
+ const undated=state.view==='timeline'?visible.filter(n=>!n.start).length:0;
+ if(undated){visible=visible.filter(n=>n.start);const kept=new Set(visible.map(n=>n._i));visibleEdges=visibleEdges.filter(e=>kept.has(e[0])&&kept.has(e[1]));}
+ return {undated,path:!!path};
+}
+function ranks(){
+ const incoming=new Map(visible.map(n=>[n._i,0])),outgoing=new Map(visible.map(n=>[n._i,[]])),rank=new Map();
+ for(const e of visibleEdges){incoming.set(e[1],incoming.get(e[1])+1);outgoing.get(e[0]).push(e[1]);}
+ const queue=visible.filter(n=>incoming.get(n._i)===0).map(n=>n._i);for(const id of queue)rank.set(id,0);
+ for(let i=0;i<queue.length;i++)for(const t of outgoing.get(queue[i])){rank.set(t,Math.max(rank.get(t)||0,(rank.get(queue[i])||0)+1));incoming.set(t,incoming.get(t)-1);if(incoming.get(t)===0)queue.push(t);}
+ const cyclic=visible.filter(n=>!rank.has(n._i));for(const n of cyclic)rank.set(n._i,0);
+ return {rank,cycles:cyclic.length};
+}
+function positions(){
+ const result=new Map(),isJobs=state.level==='jobs',dx=isJobs?180:225,dy=isJobs?90:104;let annotations=[];
+ const {rank,cycles}=ranks();let bands=[];
+ if(state.view==='dependencies'){
+  const ordered=[...visible].sort((a,b)=>tracks.indexOf(a.track)-tracks.indexOf(b.track)||(a.start||0)-(b.start||0)||a.id.localeCompare(b.id));
+  const columns=ordered.length<=80?Math.max(2,Math.floor(el('graph').clientWidth/(dx*.9))):Math.ceil(Math.sqrt(ordered.length*1.7));
+  ordered.forEach((n,i)=>result.set(n._i,{x:(i%columns)*dx,y:Math.floor(i/columns)*dy}));
+  bands=['Arrows: prerequisite → dependent','Dashed: condition · Dotted: pinned output reuse',cycles?'Grouped paths can loop; job mode shows exact execution order.':''];
+ }else if(state.view==='lanes'){
+  let y=0;for(const track of tracks){const group=visible.filter(n=>n.track===track).sort((a,b)=>(a.start||0)-(b.start||0));if(!group.length)continue;
+   group.forEach((n,i)=>result.set(n._i,{x:(i%7)*dx,y:y+Math.floor(i/7)*dy}));
+   bands.push(track+' · '+group.length);y+=(Math.ceil(group.length/7))*dy+90;
+  }
+ }else if(state.view==='outcomes'){
+  const categories=['contradicted','supported','inconclusive','mixed','not-assessed'];let x=0;
+  for(const status of categories){const group=visible.filter(n=>n.outcome===status).sort((a,b)=>tracks.indexOf(a.track)-tracks.indexOf(b.track));if(!group.length)continue;
+   const cols=group.length>4?2:1;
+   group.forEach((n,i)=>result.set(n._i,{x:x+(i%cols)*dx,y:Math.floor(i/cols)*dy}));x+=cols*dx+90;
+  }
+  bands=categories.map(c=>nice(c)+' · '+visible.filter(n=>n.outcome===c).length);
+ }else{
+  const ts=visible.map(n=>n.start);const min=Math.min(...ts),max=Math.max(...ts);let lane=0;
+  for(const track of tracks){const group=visible.filter(n=>n.track===track).sort((a,b)=>a.start-b.start);if(!group.length)continue;
+   group.forEach((n,i)=>result.set(n._i,{x:(n.start-min)/Math.max(1,max-min)*1600,y:lane*180+((i%3)-1)*48}));
+   annotations.push({id:'track-'+lane,text:track,x:-230,y:lane*180});lane++;
+  }
+  if(visible.length)for(let i=0;i<=4;i++){const t=min+(max-min)*i/4;annotations.push({id:'tick-'+i,text:date(t)+'\n'+new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'2-digit',minute:'2-digit'}).format(new Date(t*1000)),x:i*400,y:lane*180});}
+  bands=visible.length?[date(min),'→',date(max),'Horizontal position = first execution · Pacific time']:['No execution dates in this scope'];
+ }
+ return {positions:result,bands,annotations};
+}
+function style(){const isJobs=state.level==='jobs',point=state.view==='timeline';return [
+ {selector:'node',style:{'shape':isJobs||point?'ellipse':'round-rectangle','width':point?30:isJobs?30:185,'height':point?30:isJobs?30:70,'background-color':'data(color)','background-opacity':point?.6:.14,'border-width':.8,'border-color':theme.border,'color':theme.fg,'font-family':'system-ui, sans-serif','font-size':12,'font-weight':400,'label':'data(label)','text-wrap':'wrap','text-max-width':isJobs?148:155,'text-valign':isJobs?'bottom':'center','text-margin-y':isJobs?8:0,'text-background-color':theme.bg,'text-background-opacity':isJobs?.85:0,'text-background-padding':3}},
+ {selector:'node[state="running"]',style:{'border-width':3,'border-color':theme.primary,'background-opacity':.28}},
+ {selector:'node[state="unselected"],node[state="superseded"],node[state="archived"]',style:{'opacity':.4}},
+ {selector:'node:selected',style:{'border-width':2.5,'border-color':theme.primary,'background-opacity':.3,'z-index':20,'label':'data(fullLabel)'}},
+ {selector:'edge',style:{'width':1.1,'line-color':theme.border,'target-arrow-color':theme.border,'target-arrow-shape':'triangle','arrow-scale':.7,'curve-style':'bezier','opacity':.6}},
+ {selector:'edge[condition]',style:{'line-style':'dashed'}},
+ {selector:'edge[reuse]',style:{'line-style':'dotted','opacity':.45}},
+ {selector:'.dimmed',style:{'opacity':.12}},
+ {selector:'edge.highlight',style:{'width':2,'opacity':.9,'line-color':theme.primary,'target-arrow-color':theme.primary}},
+ {selector:'.quiet-label',style:{'label':''}},
+ {selector:'.axis-label',style:{'label':'data(groupLabel)','width':1,'height':1,'background-opacity':0,'border-width':0,'color':theme.muted,'font-size':14,'text-wrap':'wrap','text-max-width':250,'text-valign':'center','text-halign':'center'}},
+ {selector:'.lane-parent',style:{'label':'data(groupLabel)','background-opacity':0,'border-width':0,'padding':22,'text-valign':'top','text-halign':'center','font-size':14,'color':theme.muted}}
+ ];}
+function render(){
+ const choice=choose(),layout=positions();const current=cy?.pan(),zoom=cy?.zoom();theme=palette();
+ if(!cy){cy=cytoscape({container:el('graph'),elements:[],style:[],layout:{name:'preset'},minZoom:.03,maxZoom:4,wheelSensitivity:.2,boxSelectionEnabled:false,selectionType:'single',motionBlur:false});
+  cy.on('tap','node',event=>{if(event.target.data('sourceId'))select(event.target.data('sourceId'),true);});cy.on('zoom',()=>{el('scale').textContent=Math.round(cy.zoom()*100)+'%';quietLabels();});
+ }
+ cy.batch(()=>{cy.elements().remove();cy.style(style());cy.add(visible.map(n=>({group:'nodes',grabbable:state.view==='dependencies',data:{id:'n'+n._i,sourceId:n.id,label:state.level==='jobs'||n.title===n.id?n.id:n.id+'\n'+(n.title.length>32?n.title.slice(0,31)+'…':n.title),fullLabel:n.id,color:color(n),state:n.state},position:layout.positions.get(n._i)})));
+  if(['dependencies','lanes'].includes(state.view))cy.add(visibleEdges.map((e,i)=>({group:'edges',data:{id:'e'+i,source:'n'+e[0],target:'n'+e[1],...(e[2]==='reuse'?{reuse:true}:e[2]&&e[2]!=='dependency'&&e[2]!=='catalog'?{condition:e[2]}:{})}})));
+ });
+
+ if(['lanes','outcomes'].includes(state.view)&&visible.length){
+  const groups=[...new Set(visible.map(n=>state.view==='outcomes'?n.outcome:n.track))];
+  cy.batch(()=>{for(let i=0;i<groups.length;i++){const key=groups[i],id='group'+i;cy.add({group:'nodes',selectable:false,grabbable:false,data:{id,groupLabel:state.view==='outcomes'?nice(key):key},classes:'lane-parent'});for(const n of visible.filter(n=>(state.view==='outcomes'?n.outcome:n.track)===key))cy.getElementById('n'+n._i).move({parent:id});}});
+ }
+ if(layout.annotations.length)cy.add(layout.annotations.map(a=>({group:'nodes',selectable:false,grabbable:false,data:{id:'annotation-'+a.id,groupLabel:a.text},position:{x:a.x,y:a.y},classes:'axis-label'})));
+ if(visible.length)cy.fit(undefined,35);quietLabels();
+ el('count').textContent=format.format(visible.length)+' '+(state.level==='jobs'?'jobs':'experiment / campaign nodes')+' · '+format.format(visibleEdges.length)+(state.level==='jobs'?' recorded data links':' grouped data links');
+ el('selection-state').textContent=choice.path?'Selected prerequisites and descendants':'Snapshot · all reported results provisional';
+ el('bands').replaceChildren(...layout.bands.map(v=>{const s=document.createElement('span');s.textContent=v;return s;}));
+ const selected=control('inspect');selected.replaceChildren(new Option('Select a node to inspect',''),...visible.map(n=>new Option(n.id+' — '+n.title,n.id)));
+ const shown=new Set(visible.map(n=>n._i));const hidden=allEdges().filter(e=>shown.has(e[0])!==shown.has(e[1])).length;
+ el('coverage').textContent=(choice.undated?choice.undated+' undated nodes are outside the timeline. ':'')+(hidden?format.format(hidden)+' links cross the current filter. Trace a node to include its full path. ':'')+'Execution time and model tags are recorded or inferred as described below.';
+ if(state.selected&&visible.some(n=>n.id===state.selected))select(state.selected,false);else{selection=null;el('detail').innerHTML='<span class="text-muted">Select a node to inspect its question, execution, reported result and evidence.</span>';root.querySelector('[data-action="path"]').disabled=true;}
+ legend();
+}
+function quietLabels(){
+ if(!cy)return;const z=cy.zoom(),marks=cy.nodes().not('.lane-parent').not('.axis-label');
+ const quiet=state.view==='timeline'||visible.length>100&&z<.8;marks.toggleClass('quiet-label',quiet);
+ marks.style('font-size',Math.max(11,12/z));
+ if(!quiet)marks.style('label',n=>z<.75?n.data('fullLabel'):n.data('label'));
+ cy.$(':selected').removeClass('quiet-label');
+ cy.nodes('.lane-parent,.axis-label').style('font-size',14/z);
+ if(state.view==='timeline')marks.style({'width':20/z,'height':20/z,'text-valign':'bottom','text-margin-y':8/z});
+}
+function legend(){const states=state.color==='outcome'?['contradicted','supported','inconclusive','mixed','not-assessed']:['running','ready','blocked','complete'];el('legend').innerHTML=states.map(s=>'<span><i class="atlas-swatch" style="background:'+escape(state.color==='outcome'?(theme[s]||theme.muted):(s==='running'?theme.primary:s==='ready'?theme.supported:s==='blocked'?theme.inconclusive:theme.muted))+'"></i>'+escape(nice(s))+'</span>').join('');}
+function select(id,user){
+ selection=visible.find(n=>n.id===id);if(!selection)return;state.selected=id;control('inspect').value=id;
+ const node=cy.getElementById('n'+selection._i);cy.batch(()=>{cy.nodes().unselect();node.select();cy.elements().removeClass('dimmed highlight');if(visible.length<250){const related=node.closedNeighborhood();cy.edges().not(related.edges()).addClass('dimmed');related.edges().addClass('highlight');}});quietLabels();
+ const n=selection,jobcounts=n.jobCounts?Object.entries(n.jobCounts).map(([k,v])=>v+' '+nice(k).toLowerCase()).join(' · '):nice(n.state);
+ const blockers=n.blockers?.length?'<div><span class="detail-label">Recorded blockers</span><ul>'+n.blockers.map(b=>'<li>'+escape(b)+'</li>').join('')+'</ul></div>':'';
+ const facts=Object.keys(n.facts||{}).length?'<div><span class="detail-label">Recorded diagnostic fields</span><code>'+escape(JSON.stringify(n.facts))+'</code></div>':'';
+ const conditions=n.conditions?.length?'<div><span class="detail-label">Branch condition</span>'+escape(n.conditions.map(c=>c.job+' → '+c.outcome).join('; '))+'</div>':'';
+ el('detail').innerHTML='<div class="detail-head"><h3>'+escape(n.id)+'</h3><span class="text-small">'+escape(n.track)+'</span><span class="text-small text-muted">'+escape(n.recordType||'Execution job')+'</span></div>'+
+  '<div>'+escape(n.question||n.title)+'</div><div class="detail-columns"><div><span class="detail-label">Execution</span>'+escape(jobcounts||nice(n.state))+'<div class="text-small text-muted">'+escape(longDate(n.start))+' · '+escape(seconds(n.seconds))+'</div></div><div><span class="detail-label">Scientific result</span>'+escape(nice(n.outcome))+'<div class="text-small text-muted">No model promotion is inferred.</div></div></div>'+
+  (n.reason?'<div>'+escape(n.reason)+'</div>':'')+(n.warning?'<div class="text-destructive">'+escape(n.warning)+'</div>':'')+facts+conditions+blockers+
+  '<div><span class="detail-label">Decision rule</span>'+escape(n.decision||'No rule is recorded.')+'</div>'+
+  (n.next&&Object.keys(n.next).length?'<details><summary>Recorded follow-up branches</summary><ul>'+Object.entries(n.next).map(([k,v])=>'<li><strong>'+escape(k)+':</strong> '+escape(v)+'</li>').join('')+'</ul></details>':'')+
+  '<details><summary>Evidence and membership</summary><div class="text-small">'+(n.members?escape((n.owned?.length||0)+' owned jobs · '+n.members.length+' associated jobs including reused controls.'):'')+'</div><ul>'+(n.evidence||[]).map(p=>'<li><code>'+escape(p)+'</code></li>').join('')+(n.spec?'<li><code>'+escape(n.spec)+'</code></li>':'')+'</ul></details>'+
+  (n.members?.length?'<div class="viz-row"><button class="btn" data-action="jobs" type="button">Open execution jobs</button></div>':'')+
+  (n.history?.length?'<details><summary>Attempt history · '+n.history.length+'</summary><ul>'+n.history.map(r=>'<li>'+escape('Attempt '+r.attempt+' · '+r.status+' · '+longDate(r.start)+' · '+seconds(r.seconds)+(r.reason?' · '+r.reason:''))+'</li>').join('')+'</ul></details>':'')+
+  '<div class="viz-row"><button class="btn" data-action="discuss" type="button">Discuss this result</button></div>';
+ root.querySelector('[data-action="path"]').disabled=false;
+ el('graph').setAttribute('aria-label',visible.length+' experiment nodes. Selected '+n.id+': '+nice(n.state)+'. '+nice(n.outcome)+'. Use the inspection menu for all visible nodes.');
+ if(user)save();
+}
+function sync(){control('scope').querySelector('[value="members"]').disabled=!state.campaign;for(const key of ['level','scope','model','color'])control(key).value=state[key];for(const b of root.querySelectorAll('[data-view]')){const active=b.dataset.view===state.view;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));}document.getElementById('atlas-panel').setAttribute('aria-labelledby','atlas-'+state.view);root.querySelector('[data-action="path"]').setAttribute('aria-pressed',String(focusPath));}
+try{
+ const vendorBytes=Uint8Array.from(atob(el('vendor').textContent.trim()),c=>c.charCodeAt(0));const vendorCode=await new Response(new Blob([vendorBytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();const vendorScript=document.createElement('script');vendorScript.textContent=vendorCode;document.head.appendChild(vendorScript);
+ const encoded=el('payload').textContent.trim();const bytes=Uint8Array.from(atob(encoded),c=>c.charCodeAt(0));const decompressed=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));data=JSON.parse(await new Response(decompressed).text());
+ for(const track of tracks)control('model').add(new Option(track,track));
+ safeState(window.openai?.widgetState?.modelContent);focusPath=state.trace;theme=palette();
+ const when=new Date(data.generatedAt);el('stamp').textContent=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',dateStyle:'medium',timeStyle:'short'}).format(when)+' Pacific · '+format.format(data.catalogCount)+' catalog records · '+format.format(data.jobs.length)+' jobs';
+ el('provenance').innerHTML='<div>'+data.limitations.map(escape).join('<br>')+'</div><div>Experiment mode combines '+format.format(data.catalogCount)+' catalog records with '+format.format(data.experimentCount-data.catalogCount)+' unbound execution campaigns. Campaigns are not counted as independent experiments.</div><div>Timeline uses the first recorded execution time. Pending records have no invented execution date. Duration sums the latest attempts of owned jobs, not non-overlapping occupancy. Older attempts remain in job details.</div><div>Color shows reported outcomes or execution state. Provisional supported outcomes are not approved model improvements.</div><div>Model-track tags use record names and catalog descriptions. Cross-model producer work can serve several tracks.</div><div><strong>Sources</strong><br>'+data.sources.map(s=>'<code>'+escape(s)+'</code>').join('<br>')+'</div><div>Data warnings: '+escape(data.issues.length?data.issues.join('; '):'No missing dependency records or decision-digest mismatches detected.')+'</div>';
+ root.querySelectorAll('[data-control]').forEach(input=>input.addEventListener('change',()=>{
+  const key=input.dataset.control;if(key==='inspect'){if(input.value)select(input.value,true);return;}
+  state[key]=input.value;if(key==='level'&&state.level==='experiments'&&state.scope==='members')state.scope='recent';focusPath=false;state.trace=false;sync();render();save();
+ }));
+ root.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{state.view=button.dataset.view;sync();render();save();}));
+ root.addEventListener('click',async e=>{const button=e.target.closest('[data-action]');if(!button||!root.contains(button))return;const action=button.dataset.action;
+  if(action==='fit')cy.fit(undefined,35);
+  if(action==='in'||action==='out')cy.zoom({level:Math.min(4,Math.max(.03,cy.zoom()*(action==='in'?1.35:1/1.35))),renderedPosition:{x:el('graph').clientWidth/2,y:el('graph').clientHeight/2}});
+  if(action==='path'&&selection){focusPath=!focusPath;state.trace=focusPath;sync();render();save();}
+  if(action==='jobs'&&selection){state.campaign=selection.id;state.level='jobs';state.scope='members';state.model='all';state.selected=data.jobs[selection.members[0]].id;focusPath=false;sync();render();save();}
+  if(action==='discuss'&&selection){if(window.openai?.sendFollowUpMessage){await window.openai.sendFollowUpMessage({prompt:'Review NUIAK '+selection.id+' from the experiment atlas snapshot '+data.generatedAt+'. Explain its evidence, scientific limits, blockers, and the next useful controlled experiment. Preserve Standard. Do not infer metric or promotion approval.',title:'Discuss '+selection.id});}else{el('selection-state').textContent='Ask Codex about '+selection.id+'.';}}
+ });
+ window.addEventListener('openai:set_globals',event=>{const saved=event.detail?.globals?.widgetState?.modelContent;if(saved){safeState(saved);focusPath=state.trace;sync();render();}});
+ new ResizeObserver(()=>{if(cy){cy.resize();cy.fit(undefined,35);}}).observe(el('graph'));
+ let themeTimer;const recolor=()=>{theme=palette();if(cy){cy.style(style());legend();quietLabels();}};matchMedia('(prefers-color-scheme: dark)').addEventListener('change',recolor);
+ let lastWidth=0;new ResizeObserver(()=>{const w=el('graph').clientWidth;if(cy&&w!==lastWidth){lastWidth=w;cy.resize();render();}}).observe(root);
+ new MutationObserver(()=>{clearTimeout(themeTimer);themeTimer=setTimeout(()=>{theme=palette();if(cy){cy.style(style());legend();quietLabels();}},80);}).observe(document.documentElement,{attributes:true,attributeFilter:['class','style','data-theme']});
+ sync();render();root.dataset.ready='true';
+ // Public read-only diagnostics for offline interaction checks.
+ root.atlasDiagnostics=()=>({nodes:visible.length,links:visibleEdges.length,state:{...state},selected:selection?.id||null,totalJobs:data.jobs.length,catalogRecords:data.catalogCount,timelineLocked:state.view!=='timeline'||cy.nodes().filter(n=>n.data('sourceId')).every(n=>!n.grabbable()),modelNames:tracks,allNodeIds:visible.map(n=>n.id)});
+}catch(error){el('graph').textContent='The research snapshot could not load: '+error.message;el('graph').setAttribute('role','alert');root.dataset.error=error.message;}
+})();
+</script>
