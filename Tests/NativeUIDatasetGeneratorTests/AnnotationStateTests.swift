@@ -3,13 +3,15 @@ import Testing
 @testable import NativeUIDatasetGenerator
 
 struct AnnotationStateTests: Sendable {
-    private func document(_ schema: AnnotationWriter.Schema, enabled: Bool?, selected: Bool?, withBadge: Bool = false, outputURL: URL? = nil) throws -> AnnotationJSON {
+    private func document(_ schema: AnnotationWriter.Schema, enabled: Bool?, selected: Bool?, withBadge: Bool = false, extraType: String? = nil, outputURL: URL? = nil) throws -> AnnotationJSON {
         let element = AnnotatedElement(id: "button", elementType: "primaryButton",
             frame: CGRect(x: -2, y: 10, width: 20, height: 10),
             isEnabled: enabled, isSelected: selected)
         let result = CaptureResult(png: Data(), sha256: String(repeating: "0", count: 64),
             elements: [element] + (withBadge ? [AnnotatedElement(id: "badge", elementType: "badge",
-                frame: CGRect(x: 3, y: 11, width: 4, height: 4))] : []), pixelSize: CGSize(width: 100, height: 200),
+                frame: CGRect(x: 3, y: 11, width: 4, height: 4))] : [])
+                + (extraType.map { [AnnotatedElement(id: "extra", elementType: $0,
+                frame: CGRect(x: 3, y: 11, width: 4, height: 4))] } ?? []), pixelSize: CGSize(width: 100, height: 200),
             pointSize: CGSize(width: 50, height: 100), scale: 2)
         let state = SimulatorStateOverride(time: "09:41", batteryLevel: 100,
             batteryState: "charging", cellularBars: 5, wifiBars: 3,
@@ -85,6 +87,22 @@ struct AnnotationStateTests: Sendable {
             }
             #expect(!FileManager.default.fileExists(atPath: output.path))
         }
+    }
+
+    @Test func publicWriteRejectsDetectorRolesUnderEverySchemaWithoutOutput() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .deletingLastPathComponent().deletingLastPathComponent()
+        for role in AnnotationWriter.detectorRoleTypes.sorted() {
+            for schema in [AnnotationWriter.Schema.legacy, .measuredState, .badgeTaxonomy] {
+                let output = root.appendingPathComponent(".build/role-rejected-" + UUID().uuidString + ".json")
+                #expect(throws: AnnotationWriterError.self) {
+                    try document(schema, enabled: true, selected: false, extraType: role, outputURL: output)
+                }
+                #expect(!FileManager.default.fileExists(atPath: output.path))
+            }
+        }
+        // Legacy types that share a raw value with a role stay writable.
+        _ = try document(.legacy, enabled: nil, selected: nil, extraType: "toggle")
     }
 
     @Test func missingRequiredStateIsNotUnknown() throws {

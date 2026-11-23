@@ -118,6 +118,17 @@ public enum NativeUIElementType: String, Codable, Sendable, CaseIterable {
     // Special
     case webContent
     case unknown
+
+    // Coarse detector roles (taxonomy 1.2, IDs 42-49). Only explicitly bound 1.2 manifests emit them.
+    // A role covers several legacy types and does not claim the finer type.
+    case button
+    case picture
+    case adjustable
+    case cell
+    case bar
+    case dialog
+    case indicator
+    case container
 }
 
 // MARK: - Accessibility Traits

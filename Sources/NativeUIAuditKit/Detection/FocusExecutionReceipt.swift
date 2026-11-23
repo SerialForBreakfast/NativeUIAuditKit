@@ -29,7 +29,7 @@ public struct FocusExecutionReceipt: Sendable, Codable, Equatable {
     /// Only true for nonempty, fully scored model candidates. Never true for heuristics.
     public var modelScoringComplete: Bool {
         backend == .coreML && successfulPredictions > 0 &&
-        candidates.allSatisfy { [.scored, .unsupportedRole].contains($0.disposition) }
+        candidates.allSatisfy { [.scored, .unsupportedRole, .nestedCandidateRemoved].contains($0.disposition) }
     }
 
     /// Resolver selected by this request.
@@ -59,6 +59,8 @@ public struct FocusExecutionReceipt: Sendable, Codable, Equatable {
         case notRequested
         /// Invalid thresholds prevented inference; not a prediction attempt.
         case policyRejected
+        /// Focusable candidate inside a larger focusable candidate; removed before comparative scoring.
+        case nestedCandidateRemoved
     }
     /// One observation's execution outcome, with output values when actually available.
     public struct Candidate: Sendable, Codable, Equatable {
@@ -103,7 +105,7 @@ public struct FocusExecutionReceipt: Sendable, Codable, Equatable {
         let validCandidates = candidates.allSatisfy { candidate in
             let allowed: Bool
             switch backend {
-            case .coreML: allowed = [.scored, .predictionFailed, .cropRejected, .unsupportedRole].contains(candidate.disposition)
+            case .coreML: allowed = [.scored, .predictionFailed, .cropRejected, .unsupportedRole, .nestedCandidateRemoved].contains(candidate.disposition)
             case .heuristic: allowed = [.heuristicResult, .unsupportedRole].contains(candidate.disposition)
             case .notRequested: allowed = candidate.disposition == .notRequested
             case .unavailable: allowed = candidate.disposition == .policyRejected

@@ -258,6 +258,12 @@ exist verbatim in this package. Decision: **do not add either as a new type.**
 
 ## 5. Element Taxonomy v1
 
+**Role taxonomy 1.2 (2026-11-22, Joe: "Add role types"):** `NativeUIElementType` gets 8 coarse role cases:
+`button`, `picture`, `adjustable`, `cell`, `bar`, `dialog`, `indicator` and `container` (IDs 42–49).
+Only manifests that bind taxonomy 1.2 explicitly can emit them. Legacy manifests and IDs 0–41 do not change.
+`cell`, `button`, `adjustable` and `bar` are focus candidates. No annotation schema permits a role type.
+See [role-category-binding-v1](schemas/role-category-binding-v1.md).
+
 **October6 additive runtime extension:** `badge` is available only to explicitly
 bound new model manifests; existing nil-profile decoding retains its frozen label
 set. Taxonomy1.1 appends ID41 without changing the frozen IDs0–40. The strict

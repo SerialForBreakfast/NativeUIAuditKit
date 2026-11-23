@@ -49,6 +49,9 @@ public struct NativeUIDetectionConfiguration: Sendable {
     public var comparativeFocusDirectory: URL?
     /// Decision threshold on `ComparativeFocusGate` `hasFocusProb` when comparative mode is active.
     public var comparativeFocusGateThreshold: Double
+    /// When true and comparative mode is active, a focusable candidate that lies inside a larger
+    /// focusable candidate is removed before scoring (TRAIN666 H3 nested filter; provisional, off by default).
+    public var comparativeFocusDropsNestedCandidates: Bool
 
     public init(
         minimumConfidence: Double = 0.5,
@@ -60,7 +63,8 @@ public struct NativeUIDetectionConfiguration: Sendable {
         recordTimings: Bool = false,
         useFocusClassifier: Bool = true,
         comparativeFocusDirectory: URL? = nil,
-        comparativeFocusGateThreshold: Double = 0.28
+        comparativeFocusGateThreshold: Double = 0.28,
+        comparativeFocusDropsNestedCandidates: Bool = false
     ) {
         self.minimumConfidence = minimumConfidence
         self.includesTextRecognition = includesTextRecognition
@@ -72,6 +76,7 @@ public struct NativeUIDetectionConfiguration: Sendable {
         self.useFocusClassifier = useFocusClassifier
         self.comparativeFocusDirectory = comparativeFocusDirectory
         self.comparativeFocusGateThreshold = comparativeFocusGateThreshold
+        self.comparativeFocusDropsNestedCandidates = comparativeFocusDropsNestedCandidates
     }
 
     public static let `default` = NativeUIDetectionConfiguration()
@@ -81,7 +86,7 @@ extension NativeUIDetectionConfiguration: Codable {
     private enum CodingKeys: String, CodingKey {
         case minimumConfidence, includesTextRecognition, platform, modalityPolicy
         case minFocusScoreThreshold, minFocusMargin, recordTimings, useFocusClassifier
-        case comparativeFocusDirectory, comparativeFocusGateThreshold
+        case comparativeFocusDirectory, comparativeFocusGateThreshold, comparativeFocusDropsNestedCandidates
     }
 
     public init(from decoder: any Decoder) throws {
@@ -96,6 +101,7 @@ extension NativeUIDetectionConfiguration: Codable {
         useFocusClassifier = try c.decodeIfPresent(Bool.self, forKey: .useFocusClassifier) ?? true
         comparativeFocusDirectory = try c.decodeIfPresent(URL.self, forKey: .comparativeFocusDirectory)
         comparativeFocusGateThreshold = try c.decodeIfPresent(Double.self, forKey: .comparativeFocusGateThreshold) ?? 0.28
+        comparativeFocusDropsNestedCandidates = try c.decodeIfPresent(Bool.self, forKey: .comparativeFocusDropsNestedCandidates) ?? false
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -110,6 +116,7 @@ extension NativeUIDetectionConfiguration: Codable {
         try c.encode(useFocusClassifier, forKey: .useFocusClassifier)
         try c.encodeIfPresent(comparativeFocusDirectory, forKey: .comparativeFocusDirectory)
         try c.encode(comparativeFocusGateThreshold, forKey: .comparativeFocusGateThreshold)
+        try c.encode(comparativeFocusDropsNestedCandidates, forKey: .comparativeFocusDropsNestedCandidates)
     }
 }
 
@@ -255,9 +262,10 @@ public struct NativeUIDetectionRequest: Sendable {
 
         let startInfer = ContinuousClock.now
         let modelRef = activeModel
-        let raw: [RawPrediction] = try await Task.detached(priority: .userInitiated) {
+        // Blocking Core ML work runs off the cooperative pool (BlockingVisionWork, BP-120).
+        let raw: [RawPrediction] = try await BlockingVisionWork.run {
             try Self.runYOLO(screenshot, model: modelRef.model, manifest: modelRef.manifest, confFloor: confThreshold)
-        }.value
+        }
 
         // Greedy same-class NMS as a second pass
         let kept = Self.nms(raw, iouThreshold: nmsIoU)
@@ -284,7 +292,8 @@ public struct NativeUIDetectionRequest: Sendable {
             if let compDir = configuration.comparativeFocusDirectory {
                 let selector = try ComparativeFocusSelector(
                     directory: compDir,
-                    gateThreshold: Float(configuration.comparativeFocusGateThreshold)
+                    gateThreshold: Float(configuration.comparativeFocusGateThreshold),
+                    dropsNestedCandidates: configuration.comparativeFocusDropsNestedCandidates
                 )
                 let resolution = try selector.resolve(in: screenshot, observations: observations)
                 observations = resolution.0
@@ -446,7 +455,8 @@ public struct NativeUIDetectionRequest: Sendable {
         in screenshot: CGImage,
         regionOfInterest: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1)
     ) async throws -> [RecognizedTextRegion] {
-        try await Task.detached(priority: .userInitiated) {
+        // Blocking Vision OCR runs off the cooperative pool (BlockingVisionWork, BP-120).
+        try await BlockingVisionWork.run {
             let request = VNRecognizeTextRequest()
             request.recognitionLevel = .accurate
             request.usesLanguageCorrection = true
@@ -475,7 +485,7 @@ public struct NativeUIDetectionRequest: Sendable {
                     confidence: topCandidate.confidence
                 )
             }
-        }.value
+        }
     }
 }
 

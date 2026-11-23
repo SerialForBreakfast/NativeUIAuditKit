@@ -21,8 +21,17 @@ package struct ComparativeFocusSelector: @unchecked Sendable {
     package let gate: MLModel?
     package let gateThreshold: Float
     package let modelDigest: String?
+    /// Remove focusable candidates nested inside a larger focusable candidate before scoring.
+    package let dropsNestedCandidates: Bool
 
-    package init(directory: URL, gateThreshold: Float = 0.28) throws {
+    /// Nested filter: candidate i is removed when another candidate covers at least this fraction of it...
+    package static let nestedContainment = 0.9
+    /// ...and has at least this many times its area. Matches `scripts/nested_filter666.py`.
+    package static let nestedAreaRatio = 2.0
+
+    package var policy: String { dropsNestedCandidates ? "comparative-armb-v2-nested-v1" : "comparative-armb-v2" }
+
+    package init(directory: URL, gateThreshold: Float = 0.28, dropsNestedCandidates: Bool = false) throws {
         let fm = FileManager.default
         let scorerURL = try Self.resolveModelURL(named: "ComparativeFocusScorer", in: directory, fileManager: fm)
         let scorerCompiled = try Self.ensureCompiled(scorerURL)
@@ -36,6 +45,27 @@ package struct ComparativeFocusSelector: @unchecked Sendable {
         }
         self.gateThreshold = gateThreshold
         self.modelDigest = nil
+        self.dropsNestedCandidates = dropsNestedCandidates
+    }
+
+    /// Indices of boxes (top-left pixel rects) that lie at least `nestedContainment` inside another box
+    /// with at least `nestedAreaRatio` times their area. tvOS moves focus to the outer element, and a nested
+    /// box (for example a false `toggle` on a row chevron) inherits the row's focus highlight.
+    package static func nestedCandidateIndices(_ boxes: [CGRect]) -> Set<Int> {
+        func area(_ r: CGRect) -> Double { max(Double(r.width), 0) * max(Double(r.height), 0) }
+        var removed = Set<Int>()
+        for (i, inner) in boxes.enumerated() {
+            let a = area(inner)
+            for (j, outer) in boxes.enumerated() where j != i && area(outer) >= nestedAreaRatio * a {
+                let ix = max(0, min(Double(inner.maxX), Double(outer.maxX)) - max(Double(inner.minX), Double(outer.minX)))
+                let iy = max(0, min(Double(inner.maxY), Double(outer.maxY)) - max(Double(inner.minY), Double(outer.minY)))
+                if ix * iy / max(a, 1e-6) >= nestedContainment {
+                    removed.insert(i)
+                    break
+                }
+            }
+        }
+        return removed
     }
 
     private static func resolveModelURL(named stem: String, in directory: URL, fileManager: FileManager) throws -> URL {
@@ -273,15 +303,20 @@ package struct ComparativeFocusSelector: @unchecked Sendable {
         in screenshot: CGImage,
         observations: [NativeUIElementObservation]
     ) throws -> ([NativeUIElementObservation], FocusExecutionReceipt) {
-        let focusable = observations.enumerated().filter { FocusRingClassifier.focusableTypes.contains($0.element.elementType) }
+        let allFocusable = observations.enumerated().filter { FocusRingClassifier.focusableTypes.contains($0.element.elementType) }
+        let nested = dropsNestedCandidates
+            ? Self.nestedCandidateIndices(allFocusable.map { $0.element.boundingBoxPixels.cgRect }) : []
+        let nestedIDs = Set(nested.map { allFocusable[$0].element.id })
+        let focusable = allFocusable.enumerated().filter { !nested.contains($0.offset) }.map(\.element)
         guard !focusable.isEmpty else {
             let receipt = FocusExecutionReceipt(
                 backend: .coreML,
                 modelDigest: modelDigest,
-                policy: "comparative-armb-v2",
+                policy: policy,
                 threshold: Double(gateThreshold),
                 candidates: observations.map {
-                    .init(observationID: $0.id, disposition: .unsupportedRole, probability: nil, isFocused: nil)
+                    .init(observationID: $0.id, disposition: nestedIDs.contains($0.id) ? .nestedCandidateRemoved : .unsupportedRole,
+                          probability: nil, isFocused: nestedIDs.contains($0.id) ? false : nil)
                 }
             )
             return (observations, receipt)
@@ -373,11 +408,18 @@ package struct ComparativeFocusSelector: @unchecked Sendable {
         })
 
         let resolved = observations.map { obs in
-            guard let score = byObsID[obs.id] else { return obs }
             var st = obs.state
-            st.focusScore = Double(score.prob)
-            st.focusConfidence = Double(score.prob)
-            st.isFocused = score.focused
+            if let score = byObsID[obs.id] {
+                st.focusScore = Double(score.prob)
+                st.focusConfidence = Double(score.prob)
+                st.isFocused = score.focused
+            } else if nestedIDs.contains(obs.id) {
+                st.focusScore = nil
+                st.focusConfidence = nil
+                st.isFocused = false
+            } else {
+                return obs
+            }
             st.isAmbiguousFocus = false
             return NativeUIElementObservation(
                 id: obs.id,
@@ -395,11 +437,14 @@ package struct ComparativeFocusSelector: @unchecked Sendable {
         let receipt = FocusExecutionReceipt(
             backend: .coreML,
             modelDigest: modelDigest,
-            policy: "comparative-armb-v2",
+            policy: policy,
             threshold: Double(gateThreshold),
             candidates: resolved.map { obs in
                 if let score = byObsID[obs.id] {
                     return .init(observationID: obs.id, disposition: .scored, probability: Double(score.prob), isFocused: score.focused)
+                }
+                if nestedIDs.contains(obs.id) {
+                    return .init(observationID: obs.id, disposition: .nestedCandidateRemoved, probability: nil, isFocused: false)
                 }
                 return .init(observationID: obs.id, disposition: .unsupportedRole, probability: nil, isFocused: nil)
             }

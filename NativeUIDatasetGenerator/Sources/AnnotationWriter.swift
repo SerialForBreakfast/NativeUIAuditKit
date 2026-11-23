@@ -32,6 +32,11 @@ public enum AnnotationWriter {
         case badgeTaxonomy = "1.3"
     }
 
+    /// Taxonomy 1.2 detector roles. No annotation schema permits them (Research/schemas/role-category-binding-v1.md).
+    static let detectorRoleTypes: Set<String> = [
+        "button", "picture", "adjustable", "cell", "bar", "dialog", "indicator", "container"
+    ]
+
     // MARK: - Public API
 
     /// Write an annotation JSON file for a single captured image.
@@ -55,6 +60,9 @@ public enum AnnotationWriter {
     ) throws {
         if schema != .badgeTaxonomy, result.elements.contains(where: { $0.elementType == "badge" }) {
             throw AnnotationWriterError.badgeRequiresTaxonomySchema
+        }
+        if let role = result.elements.first(where: { Self.detectorRoleTypes.contains($0.elementType) }) {
+            throw AnnotationWriterError.detectorRoleHasNoAnnotationSchema(role.elementType)
         }
         let json = buildJSON(
             result: result,
@@ -202,6 +210,9 @@ public enum AnnotationWriterError: Error, CustomStringConvertible {
     /// Badge annotations require explicit schema1.3; no silent filtering or upgrade.
     case badgeRequiresTaxonomySchema
 
+    /// A taxonomy 1.2 detector role was supplied. No annotation schema permits role types.
+    case detectorRoleHasNoAnnotationSchema(String)
+
     /// A Vision-normalized coordinate fell outside [0, 1].
     case coordinateOutOfBounds(elementID: String, coord: String, value: Double)
 
@@ -209,6 +220,8 @@ public enum AnnotationWriterError: Error, CustomStringConvertible {
         switch self {
         case .badgeRequiresTaxonomySchema:
             return "Badge requires explicit badgeTaxonomy schema1.3."
+        case .detectorRoleHasNoAnnotationSchema(let role):
+            return "Detector role '\(role)' has no annotation schema."
         case .coordinateOutOfBounds(let id, let coord, let val):
             return "Element '\(id)': \(coord) = \(val) is outside [0, 1]."
         }

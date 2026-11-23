@@ -21,7 +21,8 @@ public enum AuditRules {
         .searchField,
         .menuButton,
         .link,
-        .colorWell
+        .colorWell,
+        .button
     ]
 
     /// Edge-to-edge chrome elements that naturally touch the screenshot boundary and are exempt from clipping.
@@ -31,7 +32,8 @@ public enum AuditRules {
         .statusBar,
         .toolbar,
         .homeIndicator,
-        .dynamicIsland
+        .dynamicIsland,
+        .bar
     ]
 
     /// Container element types that legitimately enclose nested child elements.
@@ -45,7 +47,11 @@ public enum AuditRules {
         .actionSheet,
         .sheet,
         .popover,
-        .disclosureGroup
+        .disclosureGroup,
+        .bar,
+        .cell,
+        .dialog,
+        .container
     ]
 
     /// Terminal punctuation characters that indicate a completed sentence or clause.

@@ -5385,3 +5385,19 @@ Correct approach: get construction-faithful tvOS frames from a tvOS host. The cu
 Do not train on macOS-rendered stand-ins for tvOS controls. Do not relabel them to look compliant.
 Why this matters: a frame drawn on macOS shows placeholders, not the tvOS control. Its construction facts would be true while its pixels are not the control. Joe decided on 2026-11-13 to rely on the TTR native route.
 
+
+### BP-120: Do not run blocking Vision or Core ML work on the Swift cooperative thread pool — TRAIN666, 2026-11-22
+
+**What went wrong:** the full `swift test` run hung with 0 % CPU (4 of 4 runs). Each suite passed alone. `recognizeText` and the YOLO inference ran synchronous `VNImageRequestHandler.perform` and Core ML calls inside `Task.detached`. Swift Testing runs tests in parallel. On a 10-core Mac, 2 OCR calls and 8 FrameSimilarity calls blocked all 10 cooperative threads. TextRecognition then waited on a semaphore for internal work that needed a free cooperative thread, and none was left. The stack sample showed `VNControlledCapacityTasksQueue dispatchGroupWait` and a TextRecognition `semaphore_wait_trap`.
+
+**Correct approach:** run blocking Vision and Core ML work on a dedicated GCD queue and resume the caller with a continuation (`BlockingVisionWork.run`). `Task.detached` does not leave the cooperative pool. After the change, the full suite passed 3 of 3 runs in about 34 s.
+
+**Why it matters:** library callers hit the same deadlock when about 1 concurrent detection per CPU core runs with OCR. A hang gives no error, so test runs and agent jobs look like slow work, not a failure. Synchronous APIs (`FrameSimilarity`) still block their caller's thread. Do not call them from many concurrent tasks without the same protection.
+
+### BP-121: Do not call `Process.waitUntilExit` from async code — TRAIN666, 2026-11-22
+
+**What went wrong:** a full `swift test` run hung once at 0 % CPU in `NativeModelInstallerTests.ownedProcessFailureTimeoutAndCancellationAreContained`. The cancel path of `NativeOwnedProcess.run` sent `SIGKILL` to the child and then called `process.waitUntilExit()`. The child was gone, but the stack sample showed the cooperative thread blocked in `waitUntilExit` → `CFRunLoopRun` → `mach_msg`. `waitUntilExit` checks `isRunning` and then waits in the current run loop. If the child exits between the check and the wait, no source wakes the run loop. The same test passed in the 3 earlier full runs, so this is a rare race.
+
+**Correct approach:** after `SIGKILL`, wait with a bounded `isRunning` check and `usleep` (1 ms steps, 5 s bound). Do not use `waitUntilExit` on a cooperative thread or any thread without a run loop that receives the termination notice. A `terminationHandler` with a continuation is also safe.
+
+**Why it matters:** the hang blocks a cooperative thread forever and shows no error. It also affects the model install path, which uses the same runner for the compile helper.

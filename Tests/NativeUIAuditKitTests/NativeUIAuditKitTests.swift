@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import CoreGraphics
 import NativeUIAuditKit
+import NativeUIAuditKitModels
 @testable import NativeUIAuditKitRuntime
 
 @Suite("NativeUIAuditKit Scaffold")
@@ -193,9 +194,10 @@ struct NativeUIAuditKitTests {
         #expect(decoded.confidenceSource == NativeUIConfidenceSource.pixelModel)
     }
 
-    @Test("All 42 element type rawValues survive Codable round-trip")
+    @Test("All 50 element type rawValues (taxonomy 1.2) survive Codable round-trip")
     func allElementTypesRoundTrip() throws {
-        #expect(NativeUIElementType.allCases.count == 42)
+        #expect(NativeUIElementType.allCases.count == 50)
+        #expect(Set(NativeUIElementType.allCases.map(\.rawValue)) == Set(try ModelTaxonomyBinding.labels(version: "1.2")))
         for type_ in NativeUIElementType.allCases {
             let encoded = try JSONEncoder().encode(type_)
             let decoded = try JSONDecoder().decode(NativeUIElementType.self, from: encoded)

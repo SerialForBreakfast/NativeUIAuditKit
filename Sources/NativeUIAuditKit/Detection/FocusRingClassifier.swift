@@ -46,6 +46,8 @@ package struct FocusRingClassifier: @unchecked Sendable {
         .collectionItem, .listRow, .primaryButton, .secondaryButton,
         .tabBar, .cancelAction, .toggle, .secureField, .textField,
         .segmentedControl, .stepperControl, .slider,
+        // Taxonomy 1.2 roles; matches tvbench role-model focusability. Legacy models never emit them.
+        .cell, .button, .adjustable, .bar,
     ]
 
     /// One crop classification.

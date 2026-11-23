@@ -67,7 +67,11 @@ enum NativeOwnedProcess {
         } catch {
             // This process belongs to this operation. Never target a shared service.
             if process.isRunning { Darwin.kill(process.processIdentifier, SIGKILL) }
-            process.waitUntilExit()
+            // Not waitUntilExit: it waits in a run loop, and a child that exits between its
+            // isRunning check and the wait leaves it blocked forever (BP-121). SIGKILL makes
+            // the exit fast; the 5 s bound only prevents a hang if the kill is not delivered.
+            let killDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+            while process.isRunning, ContinuousClock.now < killDeadline { usleep(1_000) }
             throw error
         }
     }

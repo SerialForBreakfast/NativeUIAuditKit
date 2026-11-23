@@ -46,10 +46,16 @@ public enum ModelTaxonomyBinding {
         "unknown",
         "webContent"
     ]
+    /// Coarse detector roles appended by taxonomy 1.2 (IDs 42-49), in ID order.
+    /// See Research/schemas/role-category-binding-v1.md.
+    public static let roleLabels: [String] = [
+        "button", "picture", "adjustable", "cell", "bar", "dialog", "indicator", "container"
+    ]
     public static func labels(version: String) throws -> [String] {
         switch version {
         case "1.0": return legacyLabels
         case "1.1": return legacyLabels + ["badge"]
+        case "1.2": return legacyLabels + ["badge"] + roleLabels
         default: throw ModelContractError("Unsupported explicit taxonomy version")
         }
     }
@@ -57,6 +63,7 @@ public enum ModelTaxonomyBinding {
         switch version {
         case "1.0": return "dfc38ffe3b9ee3434f9523e5ca91a6a700fbe32a00249c5cf90cf89885a30660"
         case "1.1": return "4debce8e33bd10aade0c7b7a1c1f625c6c5db8db5af542faffc9d4ab4187beef"
+        case "1.2": return "05c0f47c7d81d676271627ee85e0374fb99a57f408ca15a25d1642963be642c2"
         default: throw ModelContractError("Unsupported explicit taxonomy version")
         }
     }

@@ -44,6 +44,34 @@ struct TaxonomyBindingTests {
             if version == "1.1" { #expect(m.label(forChannel: 41) == "badge") }
         }
     }
+    @Test func roleTaxonomy12AppendsRolesAndKeepsOlderVersionsFrozen() throws {
+        let full = try ModelTaxonomyBinding.labels(version: "1.2")
+        #expect(full.count == 50)
+        #expect(Array(full.prefix(42)) == (try ModelTaxonomyBinding.labels(version: "1.1")))
+        #expect(Array(full.suffix(8)) == ModelTaxonomyBinding.roleLabels)
+        #expect(Set(full).count == full.count)
+        let strict = try manifest(strict: true, version: "1.2")
+        try strict.validateTaxonomyBinding()
+        #expect(strict.label(forChannel: 45) == "cell")
+        for role in ModelTaxonomyBinding.roleLabels {
+            #expect(strict.permitsObservationLabel(role))
+            #expect(!(try manifest(strict: true, version: "1.1")).permitsObservationLabel(role))
+            #expect(!(try manifest(strict: true, version: "1.0")).permitsObservationLabel(role))
+        }
+        let legacy = ModelManifest(modelId: "legacy", tensorChannelMapping: [.taxonomyClass("cell")])
+        #expect(!legacy.permitsObservationLabel("cell"))
+        // A role model's own channel order (D1: 10 role channels) is a valid 1.2 subset.
+        let d1 = ["button", "cell", "picture", "textField", "toggle", "segmentedControl", "pageControl", "bar", "dialog", "indicator"]
+        let roleModel = ModelManifest(modelId: "role-model", expectedOutputs: [.init(name: "confidence", dimensions: [-1, 10])],
+            tensorChannelMapping: d1.map { .taxonomyClass($0) }, taxonomyProfile: ModelTaxonomyBinding.profile,
+            taxonomyVersion: "1.2", categoryMapSHA256: try ModelTaxonomyBinding.identity(version: "1.2"))
+        try roleModel.validateTaxonomyBinding()
+        #expect(try JSONDecoder().decode(ModelManifest.self, from: JSONEncoder().encode(roleModel)) == roleModel)
+        #expect(d1.allSatisfy { roleModel.permitsObservationLabel($0) })
+        var wrong = try object(roleModel); wrong["categoryMapSHA256"] = try ModelTaxonomyBinding.identity(version: "1.1")
+        #expect(throws: (any Error).self) { try decode(wrong) }
+    }
+
     @Test func explicitSubsetsAndPaddingDoNotClaimFullTaxonomyCoverage() throws {
         for version in ["1.0", "1.1"] {
             var raw = try object(manifest(strict: true, version: version))
