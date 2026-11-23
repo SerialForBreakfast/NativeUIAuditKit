@@ -41,6 +41,20 @@ class AXDraftTests(unittest.TestCase):
                          [('cell', 'Apps', True, False), ('bar', '', False, False), ('button', 'Back', False, False), ('cell', 'Power Off', False, True)])
         self.assertEqual(d['objects'][2]['parentObject'], d['objects'][1]['id'])
 
+    def test_system_dialog_controls_and_focus_keep_owner(self):
+        d = snap([node(2, [0, 0, 1920, 1080]), node(7, [650, 350, 620, 390], parent=0),
+                  node(9, [680, 630, 270, 80], parent=1, focused=True, label="Don't Allow"),
+                  node(9, [970, 630, 270, 80], parent=1, label='Allow')])
+        d.update(annotationScope='system-overlay', captureOwnerBundleIdentifier='com.apple.TVSystemUIService')
+        result = ax.draft_from_snapshot(d)
+        self.assertEqual([o['class'] for o in result['objects']], ['dialog', 'button', 'button'])
+        self.assertEqual(result['focus']['box'], [1360, 1260, 540, 160])
+        self.assertEqual(result['annotationScope'], 'system-overlay')
+        self.assertEqual(result['captureOwnerBundleIdentifier'], 'com.apple.TVSystemUIService')
+        d['captureOwnerBundleIdentifier'] = d['bundleIdentifier']
+        with self.assertRaisesRegex(ValueError, 'capture_owner_scope'):
+            ax.draft_from_snapshot(d)
+
     def test_missing_or_unsettled_focus_is_unknown_never_no_focus(self):
         nodes = [node(2, [0, 0, 1920, 1080]), node(9, [500, 100, 200, 80], parent=0)]
         self.assertEqual(ax.draft_from_snapshot(snap(nodes, focus='none_observed'))['focus']['state'], 'unknown')

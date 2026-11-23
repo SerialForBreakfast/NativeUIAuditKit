@@ -108,6 +108,8 @@ final class NativeOSFocusTests: XCTestCase {
         let sourceKind = "tvos_simulator_xcuitest"
         let eligibility = "draft-review-required"
         let bundleIdentifier: String
+        let captureOwnerBundleIdentifier: String
+        let annotationScope: String
         let screenID: String
         let pngSHA256: String
         let pixelDimensions: [Int]
@@ -157,15 +159,74 @@ final class NativeOSFocusTests: XCTestCase {
         return (before.nodes, before.viewport, false)
     }
 
+    /// Match the hierarchy to the active screen layer. Never answer an interruption.
+    /// A system overlay must provide its own controls; background-app boxes are not a fallback.
+    @MainActor
+    private func activeScreenNodes(_ app: XCUIApplication, bundle: String) throws -> (nodes: [AXNode], viewport: CGRect, owner: String) {
+        var overlays: [(nodes: [AXNode], viewport: CGRect, owner: String)] = []
+        for owner in ["com.apple.PineBoard", "com.apple.TVSystemUIService"] {
+            let system = XCUIApplication(bundleIdentifier: owner)
+            guard system.state == .runningForeground else { continue }
+            let state = try axNodes(system)
+            let alerts = state.nodes.indices.filter { state.nodes[$0].kind == XCUIElement.ElementType.alert.rawValue }
+            guard alerts.count <= 1 else { throw ProbeError.context }
+            if let start = alerts.first {
+                let depth = state.nodes[start].depth
+                let end = state.nodes.indices.dropFirst(start + 1).first { state.nodes[$0].depth <= depth } ?? state.nodes.endIndex
+                let nodes = state.nodes[start..<end].map { n in
+                    AXNode(identifier: n.identifier, label: n.label, kind: n.kind, bounds: n.bounds,
+                           focused: n.focused, enabled: n.enabled, selected: n.selected,
+                           depth: n.depth - depth, parent: n.parent < start ? -1 : n.parent - start)
+                }
+                guard nodes.contains(where: { $0.kind == XCUIElement.ElementType.button.rawValue }) else { throw ProbeError.context }
+                overlays.append((nodes, state.viewport, owner))
+            }
+        }
+        guard overlays.count <= 1 else { throw ProbeError.context }
+        if let overlay = overlays.first { return overlay }
+        guard app.state == .runningForeground else { throw ProbeError.context }
+        let state = try axNodes(app)
+        return (state.nodes, state.viewport, bundle)
+    }
+
+    /// Static-text accessibility strings can change their ellipsis without any geometry change.
+    /// Keep every node, bound, focus, enabled flag, hierarchy link and control label in the comparison.
+    private func sameCaptureGeometry(_ a: [AXNode], _ b: [AXNode]) -> Bool {
+        func key(_ n: AXNode) -> AXNode {
+            AXNode(identifier: n.identifier, label: n.kind == XCUIElement.ElementType.staticText.rawValue ? "" : n.label,
+                   kind: n.kind, bounds: n.bounds, focused: n.focused, enabled: n.enabled,
+                   selected: n.selected, depth: n.depth, parent: n.parent)
+        }
+        return a.map(key) == b.map(key)
+    }
+
+    func testCaptureGeometryComparison() {
+        func node(_ label: String, kind: UInt = XCUIElement.ElementType.staticText.rawValue,
+                  focused: Bool = false, x: Double = 10) -> AXNode {
+            AXNode(identifier: "", label: label, kind: kind, bounds: [x, 20, 100, 40],
+                   focused: focused, enabled: true, selected: false, depth: 0, parent: -1)
+        }
+        XCTAssertTrue(sameCaptureGeometry([node("Title...")], [node("Title....")]))
+        XCTAssertFalse(sameCaptureGeometry([node("Title")], [node("Title", x: 11)]))
+        XCTAssertFalse(sameCaptureGeometry([node("Allow", kind: 9)], [node("Allow", kind: 9, focused: true)]))
+        XCTAssertFalse(sameCaptureGeometry([node("Allow", kind: 9)], [node("Don't Allow", kind: 9)]))
+        XCTAssertFalse(sameCaptureGeometry([], [node("Title")]))
+    }
+
     /// Settle, take 1 screenshot with a before/after accessibility bracket, and attach PNG + JSON. Returns the nodes.
     @MainActor
     @discardableResult
     private func axCapture(_ app: XCUIApplication, bundle: String, screenID: String) throws -> [AXNode] {
-        let before = try axSettle(app)
+        let before = try activeScreenNodes(app, bundle: bundle)
+        Thread.sleep(forTimeInterval: 0.3)
+        let stable = try activeScreenNodes(app, bundle: bundle)
+        guard before.owner == stable.owner, sameCaptureGeometry(before.nodes, stable.nodes) else { throw ProbeError.unsettled }
         let started = Date().timeIntervalSince1970
         let screenshot = XCUIScreen.main.screenshot()
         let ended = Date().timeIntervalSince1970
-        let after = try axNodes(app)
+        let after = try activeScreenNodes(app, bundle: bundle)
+        guard stable.owner == after.owner, sameCaptureGeometry(stable.nodes, after.nodes),
+              stable.viewport == after.viewport else { throw ProbeError.unsettled }
         let pixels = screenshot.pngRepresentation
         guard let cgImage = screenshot.image.cgImage else { throw ProbeError.context }
         let image = XCTAttachment(screenshot: screenshot)
@@ -174,12 +235,13 @@ final class NativeOSFocusTests: XCTestCase {
         add(image)
         let focusCount = after.nodes.filter(\.focused).count
         let record = AXSnapshot(
-            bundleIdentifier: bundle, screenID: screenID,
+            bundleIdentifier: bundle, captureOwnerBundleIdentifier: after.owner,
+            annotationScope: after.owner == bundle ? "application" : "system-overlay", screenID: screenID,
             pngSHA256: SHA256.hash(data: pixels).map { String(format: "%02x", $0) }.joined(),
             pixelDimensions: [cgImage.width, cgImage.height],
             viewportPoints: [after.viewport.minX, after.viewport.minY, after.viewport.width, after.viewport.height],
             captureStartedAt: started, captureEndedAt: ended,
-            settled: before.settled && before.nodes == after.nodes,
+            settled: true,
             focusState: focusCount == 1 ? "focused" : focusCount == 0 ? "none_observed" : "ambiguous",
             nodes: after.nodes)
         let sidecar = XCTAttachment(data: try JSONEncoder().encode(record), uniformTypeIdentifier: "public.json")
@@ -232,6 +294,7 @@ final class NativeOSFocusTests: XCTestCase {
         func press(_ button: XCUIRemote.Button) throws {
             guard inputs < maxInputs, Date() < deadline else { stop = "budget"; throw ProbeError.deadline }
             guard app.state == .runningForeground, app.alerts.count == 0 else { stop = "context"; throw ProbeError.context }
+            guard try activeScreenNodes(app, bundle: bundle).owner == bundle else { stop = "system_overlay"; throw ProbeError.context }
             XCUIRemote.shared.press(button)
             inputs += 1
         }
@@ -325,41 +388,7 @@ final class NativeOSFocusTests: XCTestCase {
         guard let bundle = env["AX_BUNDLE"], !bundle.isEmpty else { throw XCTSkip("AX_BUNDLE is not set") }
         let screenID = env["AX_SCREEN"] ?? "unnamed"
         let app = XCUIApplication(bundleIdentifier: bundle)
-        guard app.state == .runningForeground else { throw ProbeError.context }
-        var before = try axNodes(app)
-        var settled = false
-        let until = Date().addingTimeInterval(10)
-        while Date() < until {
-            Thread.sleep(forTimeInterval: 0.3)
-            let next = try axNodes(app)
-            if next.nodes == before.nodes { settled = true; break }
-            before = next
-        }
-        let started = Date().timeIntervalSince1970
-        let screenshot = XCUIScreen.main.screenshot()
-        let ended = Date().timeIntervalSince1970
-        let after = try axNodes(app)
-        let pixels = screenshot.pngRepresentation
-        guard let cgImage = screenshot.image.cgImage else { throw ProbeError.context }
-        let image = XCTAttachment(screenshot: screenshot)
-        image.name = screenID + ".png"
-        image.lifetime = .keepAlways
-        add(image)
-        let focusCount = after.nodes.filter(\.focused).count
-        let record = AXSnapshot(
-            bundleIdentifier: bundle, screenID: screenID,
-            pngSHA256: SHA256.hash(data: pixels).map { String(format: "%02x", $0) }.joined(),
-            pixelDimensions: [cgImage.width, cgImage.height],
-            viewportPoints: [after.viewport.minX, after.viewport.minY, after.viewport.width, after.viewport.height],
-            captureStartedAt: started, captureEndedAt: ended,
-            settled: settled && before.nodes == after.nodes,
-            focusState: focusCount == 1 ? "focused" : focusCount == 0 ? "none_observed" : "ambiguous",
-            nodes: after.nodes)
-        let sidecar = XCTAttachment(data: try JSONEncoder().encode(record), uniformTypeIdentifier: "public.json")
-        sidecar.name = screenID + ".json"
-        sidecar.lifetime = .keepAlways
-        add(sidecar)
-        XCTAssertEqual(app.state, .runningForeground)
+        _ = try axCapture(app, bundle: bundle, screenID: screenID)
     }
 
     @MainActor

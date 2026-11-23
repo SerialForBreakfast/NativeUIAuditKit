@@ -45,6 +45,11 @@ def _pixel_box(bounds, scale, width, height):
 def draft_from_snapshot(snap):
     """Return 1 draft document for 1 `tvos-ax-snapshot-v1` record."""
     q.require(snap.get('version') == 'tvos-ax-snapshot-v1', 'ax_snapshot_version')
+    scope = snap.get('annotationScope', 'legacy-app-only')
+    capture_owner = snap.get('captureOwnerBundleIdentifier', snap['bundleIdentifier'])
+    q.require(scope in ('legacy-app-only', 'application', 'system-overlay'), 'annotation_scope')
+    q.require((scope != 'application' or capture_owner == snap['bundleIdentifier']) and
+              (scope != 'system-overlay' or capture_owner in ('com.apple.PineBoard', 'com.apple.TVSystemUIService')), 'capture_owner_scope')
     width, height = snap['pixelDimensions']
     vp = snap['viewportPoints']
     scale = (width / vp[2], height / vp[3])
@@ -99,6 +104,7 @@ def draft_from_snapshot(snap):
             focus['reason'] = 'focused_element_is_not_a_draft_target'
     return dict(version='tvbench-ax-draft-v1', imageSHA256=snap['pngSHA256'], width=width, height=height,
                 bundleIdentifier=snap['bundleIdentifier'], screenID=snap['screenID'], settled=snap['settled'], inputsSent=snap['inputsSent'],
+                annotationScope=scope, captureOwnerBundleIdentifier=capture_owner,
                 complete=False, classes=classes, objects=objects, ownedContent=owned, focus=focus,
                 review=dict(status='draft', reviewer=None, note='Accessibility draft. A reviewer must confirm boxes, classes, missing controls and focus.'))
 

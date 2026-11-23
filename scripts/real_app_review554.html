@@ -226,7 +226,7 @@ async function openCase(i){
   source=resp.source||null;
   delete resp.hints;delete resp.source;
   $('sourceInfo').hidden=!source;
-  $('sourceInfo').textContent=source?`Source: XCUITest accessibility · ${source.bundleIdentifier} · ${source.screenID} · AX focus: ${source.focus?.observed||'unknown'}`:'';
+  $('sourceInfo').textContent=source?`Source: XCUITest accessibility · ${source.captureOwnerBundleIdentifier||source.bundleIdentifier} · ${source.annotationScope||"legacy app scope"} · ${source.screenID} · AX focus: ${source.focus?.observed||'unknown'}`:'';
   label=resp;
   label.objects.forEach(o=>o.flag=o.flag||null);
   label.missingSet=cur.status==='accepted'&&label.complete===false;
