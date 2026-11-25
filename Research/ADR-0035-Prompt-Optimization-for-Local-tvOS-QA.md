@@ -173,7 +173,7 @@ For the Foundation Model:
 |---|---|---|---|
 | A | Prompt record and slot templates in `scripts/qa666/`; token count of each variant; offline tests | Which variants fit 8,192 tokens. **Done 2026-11-22: all fit (section 7).** | Local code only |
 | B | Expected-result schema and host comparison; offline tests with saved QA666 observations | Does the oracle find the known differences in saved runs. **Done 2026-11-22: yes, 109 of 109 explained (section 7).** | Local code only |
-| C | Benchmark: 30 tasks on at least 5 screens or apps; development and held-out split | Benchmark frozen | Task authoring; TTR maps for new apps |
+| C | Benchmark: 30 tasks on at least 5 screens or apps; development and held-out split | Benchmark frozen. **Done 2026-11-25: 40 tasks frozen, 36 of 36 Fixture tasks validated (section 7).** | Task authoring; TTR maps for new apps |
 | D | Request seeded-bug Fixture variants from Sillycon-TTR | Bug tasks available | Joe's approval of the request; Sillycon-TTR work |
 | E | Stages 1–4 of the prompt search, smallest model first | Best prompt for each model on the development set | Joe's approval of each campaign and its budget |
 | F | Held-out check and report | Does a small model meet the acceptance rule | Joe's review |
@@ -232,6 +232,44 @@ Limits:
 - The expectations are task-level ground truth, not model expectations. No model has produced `qa-plan-schema-v1` output yet.
 - The differences in these runs are agent faults. The Fixture and Settings had no seeded bug, so bug recall is still not measured (phase D).
 - The step-level check (`check_step`) has only synthetic tests.
+
+### Foundation Model pilot (2026-11-24, provisional)
+
+This is a pilot of search stages 2 and 4 on the 6 QA666 Fixture tasks. It is not a phase E result, because the phase C benchmark does not exist yet.
+
+- The on-device Apple Foundation Model runs as the planner through `scripts/qa666/fm_bridge.swift`. Image input works. `tokenCount(for:)` fails for image prompts, so image tokens are not counted.
+- P0 live: 4 of 12 (`turns-28d`). gemma4:12b with P0: 12 of 12.
+- Best variant live: 6 of 12 (`turns-29`). It uses field descriptions in the guided-generation schema and 3 failure-driven rules (`op-by-verb`, `times-count`, `back-only-return`).
+- Remaining faults: no `activate` unless the task says "Activate", and no abstention. Prompt text changed these faults little in 15 screened variants.
+- The guided-generation schema is a prompt slot for this model. Its field descriptions changed the result more than the rule text.
+- Host yes/no question (`scripts/qa666/fm_press_screen.rb`, offline): the host asks "must the remote press select on this control?" for each planned target, and the answer sets the op. No question wording raised the first-plan screen above the 5 of 12 that the base plan got without questions. The model answers 7 to 9 of 13 distinct questions correctly, and each wording moves a yes or no bias. The model also says yes for a wrong target. Decision (provisional): a text yes/no question does not fix implicit activation for this model, so it gets no live run.
+
+### Phase C benchmark (frozen 2026-11-25, provisional until Joe reviews it)
+
+Files:
+- [benchmark666.json](../scripts/qa666/benchmark666.json) (`qa-bench-v1`), built by [bench666_build.rb](../scripts/qa666/bench666_build.rb). Frozen SHA-256: `1bbacd87df351320957b992fa47c0f3ae57048ada32c7f99634566e80c3c66a4`.
+- [bench666.rb](../scripts/qa666/bench666.rb): offline checks and the pinned hash.
+- [bench666_validate.rb](../scripts/qa666/bench666_validate.rb): oracle scoring of 1 or more runs.
+- [test_bench666.rb](../scripts/qa666/test_bench666.rb): 13 tests.
+
+Content:
+- 40 tasks on 14 screens: 13 Fixture screens and tvOS Settings.
+- Task kinds: 21 focus, 7 activate, 2 return and 10 absent tasks. Each task has a paraphrase.
+- Development set: 27 tasks on 8 screens. It holds every screen that QA666 or the Foundation Model pilot used.
+- Held-out set: 13 tasks on 6 screens (9 focus, 1 activate, 3 absent) that no prompt test has used.
+- The NUIAK oracle (phase B) decides each verdict. TTR's native evaluator knows only the 6 QA666 tasks.
+
+Rules found while building it:
+- Most benchmark-family screens record no native activation. Their tasks are focus or absent tasks, and a `maxSelects` expectation counts Select presses.
+- Some activations change only text that the SDK does not register. The planner host accepts such a press only when exactly 1 native activation event is new.
+- A screen with a running animation cannot be used: the Pulse play queue was removed, because its progress bar changes TTR's layout signature with no input.
+
+Reference validation (host plans, no model, compact arm): **36 of 36 Fixture tasks meet the oracle**, with no inventory error. The 4 Settings tasks keep their QA666 oracle passes.
+
+Costs and limits:
+- Each episode takes about 5 min, mostly for TTR's map survey. Scoring 1 prompt on 36 Fixture tasks with 2 input types needs about 6 h of Simulator time.
+- The held-out set has only 1 activation task.
+- The TTR app quit 3 times during the runs, each time while a remote session started. Each exit left a `retained_cleanup` record that needed an exclusive Simulator restart.
 
 ## 8. Open questions for Joe
 

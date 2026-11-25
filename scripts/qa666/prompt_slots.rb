@@ -55,7 +55,15 @@ module PromptSlots
         'off-screen' => ' The host can scroll and search: a target can be off the screen now. Name the final target directly;' \
                         ' do not plan intermediate controls. Abstain only if the task itself says to when its control is unavailable.',
         'abstain-absent' => ' If no control matches the task target, return abstain with no steps.',
-        'forbidden-list' => :forbidden
+        'forbidden-list' => :forbidden,
+        # Failure-driven rules (ADR-0035 stage 4), from the Foundation Model run turns-28d (2026-11-24).
+        # op-by-verb: the model used focus for every task, also for "Activate ... twice" and "Add ... to your watchlist".
+        'op-by-verb' => ' Choose op from the task verb. Add, open, enable, activate, select, choose and replace need activate.' \
+                        ' Find, go to and move focus need focus. focus never presses select.',
+        # times-count: times must equal the number of activations that the task asks for.
+        'times-count' => ' Set times to the number of activations that the task asks for: once is 1, twice is 2.',
+        # back-only-return: the model added back after tasks that do not ask to return.
+        'back-only-return' => ' Use back only if the task says to return or go back.'
       },
       'p0-rules' => %w[never-activate off-screen],
       'naming' => {
@@ -66,7 +74,11 @@ module PromptSlots
       'example' => {
         'none' => '',
         'one' => ' Example from another app: task "Open the Settings tab once." gives' \
-                 ' {"steps":[{"op":"activate","target":"tabs.settings","times":1}],"after":"replan"}.'
+                 ' {"steps":[{"op":"activate","target":"tabs.settings","times":1}],"after":"replan"}.',
+        # two: 1 activation with a return, and 1 focus-only task (turns-28d faults: no activate, extra back).
+        'two' => ' Examples from another app: task "Open Downloads, then go back." gives' \
+                 ' {"steps":[{"op":"activate","target":"tabs.downloads","times":1},{"op":"back","target":null,"times":1}],"after":"done"}.' \
+                 ' Task "Move focus to Search. Do not open it." gives {"steps":[{"op":"focus","target":"tabs.search","times":1}],"after":"done"}.'
       },
       'snapshot-label' => ' Snapshot: '
     },

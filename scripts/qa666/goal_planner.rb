@@ -82,6 +82,43 @@ module GoalPlanner
     PromptSlots.build('fixture-planner', { 'descriptor' => image ? 'image' : 'compact-p0' }.merge(variant),
                       task: prompt, done_steps: done_steps, projection: projection)[:text]
   end
+
+  # ADR-0035 host question (Joe, 2026-11-24): the host asks 1 yes/no question for each planned focus or activate target.
+  # The answer sets the op: press true gives activate, false gives focus. Text only; the screen is not sent.
+  # Modes: focus-only (ask only for focus steps; a planned activate stays) or all (ask for every non-back step).
+  PRESS_QUESTIONS = {
+    'bare' => 'Task: %<task>s Control: %<control>s. To do this task, must the remote press select on this control? ' \
+              'Answer with press true or press false.',
+    'verbs' => 'Task: %<task>s Control: %<control>s. To do this task, must the remote press select on this control? ' \
+               'Press select if the task adds, opens, enables, activates, selects, chooses, plays or replaces with this control. ' \
+               'Do not press select if the task only finds this control, goes to it or moves focus to it, or says not to activate it. ' \
+               'Answer with press true or press false.',
+    'verbs-not' => 'Task: %<task>s Control: %<control>s. To do this task, must the remote press select on this control? ' \
+                   'Press select if the task adds, opens, enables, activates, selects, chooses, plays or replaces with this control. ' \
+                   'Do not press select if the task only finds this control, goes to it or moves focus to it, or says not to activate it. ' \
+                   'If the task says "without activating" or "do not activate" this control, answer press false. ' \
+                   'If the task names a different control to press, answer press false. Answer with press true or press false.'
+  }.freeze
+  PRESS_MODES = %w[focus-only all].freeze
+
+  def self.press_question(kind, task, control)
+    format(PRESS_QUESTIONS.fetch(kind), task: task.to_s.strip, control: control.to_s.strip)
+  end
+
+  # Returns the indexes of the steps the host asks about.
+  def self.press_targets(plan, mode)
+    raise ArgumentError, "unknown press mode #{mode}" unless PRESS_MODES.include?(mode)
+    plan['steps'].each_index.select { |i| (s = plan['steps'][i])['target'] && (mode == 'all' ? s['op'] != 'back' : s['op'] == 'focus') }
+  end
+
+  # answers: { step index => true|false }. A changed step keeps its target and times; focus always has times 1.
+  def self.apply_press(plan, answers)
+    steps = plan['steps'].each_with_index.map do |s, i|
+      next s unless answers.key?(i)
+      answers[i] ? s.merge('op' => 'activate') : s.merge('op' => 'focus', 'times' => 1)
+    end
+    plan.merge('steps' => steps)
+  end
 end
 
 class LocalTurnRun
@@ -89,7 +126,7 @@ class LocalTurnRun
     @task, @arm = task, arm; @case_dir = File.join(@out, slot); Dir.mkdir(@case_dir)
     @public_focus_goal = nil; @plan_terminal = nil
     @node_ids = {}; @sample_index = 0; @inputs = []; @observations = []; @decision = nil; @issue = nil
-    args, initial = B::CASES.fetch(task); restart(args, initial); @edges = {}; @dead = Hash.new { |h, k| h[k] = [] }; @no_move_presses = 0
+    args, initial = @bench ? Bench666.case_for(@bench, task) : B::CASES.fetch(task); restart(args, initial); @edges = {}; @dead = Hash.new { |h, k| h[k] = [] }; @no_move_presses = 0
     survey(initial) unless arm == 'image960'
     @observations = [sample]; persist
     done_steps = []; @plan_log = []
@@ -110,7 +147,7 @@ class LocalTurnRun
       end
       @observations << sample; persist
       raise 'observation changed before model' unless B.signature(raw) == B.signature(@observations.last)
-      plan = @provider.ask(dir, GoalPlanner.instruction(prompt, done_steps, projection, image: arm == 'image960'), arm == 'image960' ? jpeg : nil)
+      plan = @provider.ask(dir, GoalPlanner.instruction(prompt, done_steps, projection, image: arm == 'image960', variant: @prompt_variant || {}), arm == 'image960' ? jpeg : nil)
       @plan_log << plan
       save(File.join(dir, 'plan.json'), plan)
       if plan['after'] == 'abstain'
@@ -154,7 +191,13 @@ class LocalTurnRun
       step['times'].times do
         id = navigate_to(step['target'])
         before = B.activation_events(@observations).size
-        execute_button('select')
+        begin
+          execute_button('select')
+        rescue RuntimeError => e
+          # Phase C: some activations change only text that the SDK does not register (Pulse, recommendations, queue).
+          # The press is delivered and observed; native activation evidence decides, as below.
+          raise unless e.message == 'no progress' && B.activation_events(@observations).size == before + 1
+        end
         raise "activation not observed: #{id}" unless B.activation_events(@observations).size == before + 1
       end
     end

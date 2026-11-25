@@ -6,9 +6,9 @@ require_relative 'run_local_pair'
 
 class FakeWorld
   attr_reader :pressed
-  def initialize(activate_handler: true)
+  def initialize(activate_handler: true, rebuild: true)
     @controls = { 'a' => { 'x' => 100, 'label' => 'Replace this station' }, 'b' => { 'x' => 900, 'label' => 'Continue' } }
-    @focus = 'a'; @life = { 'a' => 'L0', 'b' => 'M0' }; @events = []; @seq = 0; @pressed = []; @handler = activate_handler
+    @focus = 'a'; @life = { 'a' => 'L0', 'b' => 'M0' }; @events = []; @seq = 0; @pressed = []; @handler = activate_handler; @rebuild = rebuild
   end
 
   def ident(id)
@@ -36,7 +36,7 @@ class FakeWorld
     when 'select'
       if @handler
         @events << { 'eventID' => "e#{@events.size + 1}", 'sequence' => @events.size + 1, 'identity' => ident(@focus), 'handler' => 'replaceStation' }
-        @life[@focus] = @life[@focus].succ # Replace rebuilds the control with the same id.
+        @life[@focus] = @life[@focus].succ if @rebuild # Replace rebuilds the control with the same id.
       end
     end
   end
@@ -97,6 +97,13 @@ class GoalPlannerTest < Minitest::Test
     assert_empty w.pressed
     assert_equal 'abstain', t.instance_variable_get(:@decision)
     assert_nil t.instance_variable_get(:@issue)
+  end
+
+  def test_activation_that_changes_only_unregistered_text_counts_by_native_event
+    t, w = run_plan([{ 'steps' => [step('activate', 'Replace this station')], 'after' => 'done' }], FakeWorld.new(rebuild: false))
+    assert_equal %w[select], w.pressed
+    assert_nil t.instance_variable_get(:@issue)
+    assert_equal 'done', t.instance_variable_get(:@decision)
   end
 
   def test_activation_without_native_event_is_an_issue

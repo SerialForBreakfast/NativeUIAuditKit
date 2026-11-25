@@ -114,6 +114,9 @@ class ExpectationOracleTest < Minitest::Test
     paths = Dir.glob(File.join(ROOT, 'reports/work/QA666/runs/*/*/trajectory.json')).sort
     skip 'saved QA666 runs not present' if paths.empty?
     paths.each do |path|
+      # Phase C benchmark runs have no TTR native verdict for most tasks; bench666_validate.rb scores them.
+      campaign = File.join(File.dirname(File.dirname(path)), 'campaign.json')
+      next if File.exist?(campaign) && JSON.parse(File.read(campaign))['benchmarkSHA256']
       t = JSON.parse(File.read(path)); native = (t['verdict'] || {})['success']
       next if native.nil?
       r = O.evaluate(EXPECT.fetch(t['task']), t)

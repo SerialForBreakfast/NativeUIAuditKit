@@ -27,6 +27,9 @@ end
 
 require File.join(ttr, 'Scripts/run-agy-focus-pair')
 require_relative 'local_ollama_session'
+require_relative 'qa666_provider'
+require_relative 'prompt_slots'
+require_relative 'bench666'
 
 class LocalFocusPair < AGYFocusPair
   # Observation-only settle: after a press, native focus can be briefly unknown during the transition.
@@ -193,16 +196,33 @@ class LocalTurnRun < LocalTaskRun
     raise 'invalid completion check' unless check.nil? || (check.is_a?(Hash) && (check.keys - %w[confirm]).sort == %w[maxCalls maxOutputTokens maxTokens] &&
                                      [nil, true, false].include?(check['confirm']))
     @confirm = check && check['confirm'] == true
-    catalog = JSON.parse(File.read(@root + '/Docs/Plans/Benchmarks/fixture-token-tasks-v1.json')).fetch('tasks').to_h { |t| [t['id'], t] }
+    # ADR-0035: optional prompt variant (slots other than descriptor). P0 when absent. Checked for both arms before any input.
+    @prompt_variant = budget.fetch('promptVariant', {})
+    raise 'invalid prompt variant' unless @prompt_variant.is_a?(Hash) && !@prompt_variant.key?('descriptor') && (@planner || @prompt_variant.empty?)
+    prompt_ids = %w[image compact-p0].map { |d| [d, PromptSlots.prompt_id('fixture-planner', @prompt_variant.merge('descriptor' => d))] }.to_h
+    # ADR-0035 phase C: budget field "benchmark": true takes the Fixture tasks from benchmark666.json; "paraphrase": true sends the paraphrase.
+    @bench = budget.fetch('benchmark', false) ? Bench666.load : nil
+    raise 'benchmark tasks need the planner arm' if @bench && !@planner
+    raise 'invalid benchmark errors' if @bench && !Bench666.errors(@bench).empty?
+    catalog = if @bench
+                @bench['tasks'].reject { |t| @bench['screens'][t['screen']]['runner'] }
+                               .to_h { |t| [t['id'], { 'prompt' => budget.fetch('paraphrase', false) ? t['paraphrase'] : t['task'] }] }
+              else
+                JSON.parse(File.read(@root + '/Docs/Plans/Benchmarks/fixture-token-tasks-v1.json')).fetch('tasks').to_h { |t| [t['id'], t] }
+              end
     raise 'unknown task' unless (tasks - catalog.keys).empty?
+    reference = budget.fetch('provider', 'ollama') == 'reference'
+    raise 'reference provider needs the benchmark' if reference && !@bench
     save(@out + '/campaign.json', { 'schema' => 1, 'executor' => 'Maximum-mini-NUIAK QA666', 'mode' => @planner ? 'planner' : 'multi-turn', 'budget' => budget,
-                                   'tasks' => tasks, 'arms' => arms, 'provider' => 'ollama', 'model' => budget.fetch('model'),
+                                   'benchmarkSHA256' => @bench && Bench666.sha256,
+                                   'tasks' => tasks, 'arms' => arms, 'provider' => budget.fetch('provider', 'ollama'), 'promptIDs' => prompt_ids, 'model' => budget.fetch('model'),
                                    'fixtureDigest' => ENV.fetch('TTR_FRAMEWORK_DIGEST'), 'cliDigest' => Digest::SHA256.file(@cli).hexdigest,
                                    'ttrRevision' => `git -C #{@root} rev-parse HEAD`.strip })
-    @provider = LocalOllamaSession.new(model: budget.fetch('model'), deadline: @deadline, max_calls: max_calls, max_tokens: max_tokens,
+    bridge = reference ? nil : QA666Provider.http(budget, planner: @planner, checks: !check.nil?)
+    @provider = reference ? ReferencePlanner.new(@bench) : LocalOllamaSession.new(model: budget.fetch('model'), deadline: @deadline, max_calls: max_calls, max_tokens: max_tokens,
                                        schema: @planner ? 'plan' : 'turn', think: budget['think'],
                                        max_output: budget.fetch('maxOutputTokens', LocalOllamaSession::MAX_OUTPUT_TOKENS),
-                                       read_timeout: budget.fetch('readTimeoutSeconds', 300))
+                                       read_timeout: budget.fetch('readTimeoutSeconds', 300), http: bridge)
     @checker = check && LocalOllamaSession.new(model: budget.fetch('model'), deadline: @deadline, max_calls: check['maxCalls'],
                                                max_tokens: check['maxTokens'], schema: 'check', think: budget['think'],
                                                max_output: check['maxOutputTokens'], read_timeout: budget.fetch('readTimeoutSeconds', 300))
@@ -217,6 +237,7 @@ class LocalTurnRun < LocalTaskRun
         begin
           with_remote_session do
             prompt = catalog.fetch(task).fetch('prompt')
+            @provider.begin_task(task) if @provider.respond_to?(:begin_task)
             @planner ? plan_episode(task, arm, prompt, slot: slot) : turn_episode(task, arm, prompt, slot: slot)
           end
         rescue => error

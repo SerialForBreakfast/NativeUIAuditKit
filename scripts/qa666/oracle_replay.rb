@@ -15,6 +15,10 @@ Dir.glob(File.join(RUNS, '*', '*', 'trajectory.json')).sort.each do |path|
   t = JSON.parse(File.read(path))
   e = expectations[t['task']]
   rel = path.sub(RUNS + '/', '')
+  campaign = File.join(File.dirname(File.dirname(path)), 'campaign.json')
+  if File.exist?(campaign) && JSON.parse(File.read(campaign))['benchmarkSHA256']
+    rows << { 'trajectory' => rel, 'task' => t['task'], 'skipped' => 'phase C benchmark run (bench666_validate.rb)' }; next
+  end
   unless e
     rows << { 'trajectory' => rel, 'task' => t['task'], 'skipped' => 'no expectation record' }; next
   end

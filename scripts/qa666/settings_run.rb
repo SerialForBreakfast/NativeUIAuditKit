@@ -7,6 +7,7 @@ require 'digest'
 require 'time'
 require 'fileutils'
 require_relative 'local_ollama_session'
+require_relative 'qa666_provider'
 require_relative 'settings_planner'
 
 def save(path, value)
@@ -48,8 +49,9 @@ session = probe.command('simulator', 'remote', 'connect', '--simulator-udid', si
 ttr = SettingsTTR.new(cli: cli, project: project, sim: sim, session: session)
 provider = LocalOllamaSession.new(model: budget.fetch('model'), deadline: deadline, max_calls: budget.fetch('maxCalls'),
                                   max_tokens: budget.fetch('maxTokens'), schema: 'plan', think: budget['think'],
-                                  max_output: budget.fetch('maxOutputTokens', 1_500), read_timeout: budget.fetch('readTimeoutSeconds', 300))
-save(File.join(out, 'campaign.json'), { 'schema' => 1, 'executor' => 'Maximum-mini-NUIAK QA666', 'mode' => 'settings-planner',
+                                  max_output: budget.fetch('maxOutputTokens', 1_500), read_timeout: budget.fetch('readTimeoutSeconds', 300),
+                                  http: QA666Provider.http(budget, planner: true, checks: false))
+save(File.join(out, 'campaign.json'), { 'schema' => 1, 'executor' => 'Maximum-mini-NUIAK QA666', 'mode' => 'settings-planner', 'provider' => budget.fetch('provider', 'ollama'),
                                         'budget' => budget, 'session' => session, 'approved' => SettingsQA::APPROVED,
                                         'cliDigest' => Digest::SHA256.file(cli).hexdigest, 'ttrRevision' => `git -C #{project} rev-parse HEAD`.strip })
 begin

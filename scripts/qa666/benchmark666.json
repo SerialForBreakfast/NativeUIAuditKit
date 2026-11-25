@@ -1,0 +1,1762 @@
+{
+  "schema": "qa-bench-v1",
+  "name": "QA666 phase C benchmark",
+  "adr": "ADR-0035 section 3.4",
+  "source": "TTR qa-improvements a9cf3a88 Fixture views; QA666 task_expectations.json",
+  "frozen": true,
+  "validation": "reports/work/QA666/benchmark/reference-validation.json: 36 of 36 Fixture tasks met (bench-30, 30c, 31, 32); Settings tasks: QA666 oracle replay",
+  "screens": {
+    "pulse": {
+      "split": "development",
+      "args": [
+        "--fixture-pulse",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "pulse.album.1",
+      "activationEvidence": true,
+      "controls": [
+        {
+          "id": "pulse.album.1",
+          "label": "Midnight Drive, LUNA / Electronic"
+        },
+        {
+          "id": "pulse.album.2",
+          "label": "Golden Hour, Sol Collective / Soul"
+        },
+        {
+          "id": "pulse.album.3",
+          "label": "Blue Notes, Miles Away / Jazz"
+        },
+        {
+          "id": "pulse.album.4",
+          "label": "Afterglow, Violet / Indie"
+        },
+        {
+          "id": "pulse.album.5",
+          "label": "Slow Sunday, June / Acoustic"
+        },
+        {
+          "id": "pulse.album.6",
+          "label": "Deep Current, Drift / Ambient"
+        },
+        {
+          "id": "pulse.album.7",
+          "label": "Neon City, Arcade / Synthwave"
+        },
+        {
+          "id": "pulse.album.8",
+          "label": "Quiet Spaces, Still / Piano"
+        }
+      ]
+    },
+    "northstar": {
+      "split": "development",
+      "args": [
+        "--fixture-northstar",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "northstar.watch",
+      "activationEvidence": true,
+      "controls": [
+        {
+          "id": "northstar.exit",
+          "label": "Exit to Fixture"
+        },
+        {
+          "id": "northstar.film",
+          "label": "The Last Light  →"
+        },
+        {
+          "id": "northstar.home",
+          "label": "‹  Home"
+        },
+        {
+          "id": "northstar.profile",
+          "label": "Choose profile, Alex"
+        },
+        {
+          "id": "northstar.recommendation.1",
+          "label": "Quiet Earth"
+        },
+        {
+          "id": "northstar.recommendation.2",
+          "label": "Blue Meridian"
+        },
+        {
+          "id": "northstar.recommendation.3",
+          "label": "After the Rain"
+        },
+        {
+          "id": "northstar.recommendation.4",
+          "label": "Wild Coast"
+        },
+        {
+          "id": "northstar.watch",
+          "label": "▶  Watch"
+        },
+        {
+          "id": "northstar.watchlist",
+          "label": "＋  Watchlist",
+          "altLabels": [
+            "✓  In Watchlist"
+          ]
+        },
+        {
+          "id": "northstar.profile.alex",
+          "label": "Alex"
+        },
+        {
+          "id": "northstar.profile.sam",
+          "label": "Sam"
+        },
+        {
+          "id": "northstar.profile.back",
+          "label": "‹  Back to film"
+        }
+      ]
+    },
+    "walks": {
+      "split": "development",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "scroll",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.scroll.0",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.scroll.0",
+          "label": "River path"
+        },
+        {
+          "id": "benchmark.scroll.1",
+          "label": "Hilltop"
+        },
+        {
+          "id": "benchmark.scroll.2",
+          "label": "Old railway"
+        },
+        {
+          "id": "benchmark.scroll.3",
+          "label": "Lakeside"
+        },
+        {
+          "id": "benchmark.scroll.4",
+          "label": "Forest loop"
+        },
+        {
+          "id": "benchmark.scroll.5",
+          "label": "Coastal trail"
+        },
+        {
+          "id": "benchmark.scroll.6",
+          "label": "Village green"
+        },
+        {
+          "id": "benchmark.scroll.7",
+          "label": "Homeward"
+        }
+      ]
+    },
+    "station": {
+      "split": "development",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "identity",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.identity.replace",
+      "activationEvidence": true,
+      "controls": [
+        {
+          "id": "benchmark.identity.replace",
+          "label": "Replace this station"
+        },
+        {
+          "id": "benchmark.identity.next",
+          "label": "Continue"
+        }
+      ]
+    },
+    "reading-room": {
+      "split": "development",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "preferences",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.preferences.0",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.preferences.0",
+          "label": "Text size                         Medium"
+        },
+        {
+          "id": "benchmark.preferences.1",
+          "label": "Line spacing                  Comfortable"
+        },
+        {
+          "id": "benchmark.preferences.2",
+          "label": "Contrast                         Standard"
+        },
+        {
+          "id": "benchmark.preferences.3",
+          "label": "Restore defaults"
+        }
+      ]
+    },
+    "field-notes": {
+      "split": "development",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "editorial",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.editorial.a",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.editorial.a",
+          "label": "Read the cover story"
+        },
+        {
+          "id": "benchmark.editorial.b",
+          "label": "The city guide"
+        },
+        {
+          "id": "benchmark.editorial.c",
+          "label": "At the table"
+        }
+      ]
+    },
+    "download-queue": {
+      "split": "development",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "queue",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.queue.advance",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.queue.advance",
+          "label": "Continue"
+        }
+      ]
+    },
+    "settings": {
+      "split": "development",
+      "runner": "settings",
+      "note": "tvOS Settings on the Simulator; QA666 Settings tasks S1 to S4."
+    },
+    "daylight-radio": {
+      "split": "heldout",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "native",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.native.0",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.native.0",
+          "label": "Morning"
+        },
+        {
+          "id": "benchmark.native.1",
+          "label": "Ambient"
+        },
+        {
+          "id": "benchmark.native.2",
+          "label": "Jazz"
+        },
+        {
+          "id": "benchmark.native.3",
+          "label": "Classical"
+        }
+      ]
+    },
+    "program-guide": {
+      "split": "heldout",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "schedule",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.schedule.0",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.schedule.0",
+          "label": "Studio"
+        },
+        {
+          "id": "benchmark.schedule.1",
+          "label": "Coastline"
+        },
+        {
+          "id": "benchmark.schedule.2",
+          "label": "Evening"
+        },
+        {
+          "id": "benchmark.schedule.3",
+          "label": "Studio"
+        },
+        {
+          "id": "benchmark.schedule.4",
+          "label": "Coastline"
+        },
+        {
+          "id": "benchmark.schedule.5",
+          "label": "Evening"
+        },
+        {
+          "id": "benchmark.schedule.6",
+          "label": "Studio"
+        },
+        {
+          "id": "benchmark.schedule.7",
+          "label": "Coastline"
+        },
+        {
+          "id": "benchmark.schedule.8",
+          "label": "Evening"
+        }
+      ]
+    },
+    "guest-profiles": {
+      "split": "heldout",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "profiles",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.profiles.a",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.profiles.a",
+          "label": "Robin"
+        },
+        {
+          "id": "benchmark.profiles.b",
+          "label": "Taylor"
+        },
+        {
+          "id": "benchmark.profiles.c",
+          "label": "Manage profiles"
+        }
+      ]
+    },
+    "atlas": {
+      "split": "heldout",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "sidebar",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.sidebar.a",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.sidebar.a",
+          "label": "Saved places"
+        },
+        {
+          "id": "benchmark.sidebar.b",
+          "label": "Saved places"
+        },
+        {
+          "id": "benchmark.sidebar.card0",
+          "label": "Northern coast"
+        },
+        {
+          "id": "benchmark.sidebar.card1",
+          "label": "Forest trails"
+        },
+        {
+          "id": "benchmark.sidebar.card2",
+          "label": "Old town"
+        },
+        {
+          "id": "benchmark.sidebar.card3",
+          "label": "Open country"
+        }
+      ]
+    },
+    "lantern-search": {
+      "split": "heldout",
+      "args": [
+        "--fixture-benchmark",
+        "--benchmark-family",
+        "search",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "benchmark.search.advance",
+      "activationEvidence": false,
+      "controls": [
+        {
+          "id": "benchmark.search.advance",
+          "label": "Continue"
+        }
+      ]
+    },
+    "studio-shelf": {
+      "split": "heldout",
+      "args": [
+        "--fixture-studio-shelf",
+        "--fixture-sdk-layout"
+      ],
+      "initialFocus": "studio.card.1",
+      "activationEvidence": true,
+      "controls": [
+        {
+          "id": "studio.card.0",
+          "label": "Afterlight"
+        },
+        {
+          "id": "studio.card.1",
+          "label": "Meridian"
+        },
+        {
+          "id": "studio.card.2",
+          "label": "Foundry"
+        },
+        {
+          "id": "studio.card.3",
+          "label": "Tideland"
+        },
+        {
+          "id": "studio.card.4",
+          "label": "Highlands"
+        },
+        {
+          "id": "studio.card.5",
+          "label": "Fieldwork"
+        },
+        {
+          "id": "studio.card.6",
+          "label": "Night Signal"
+        },
+        {
+          "id": "studio.card.7",
+          "label": "Solstice"
+        }
+      ]
+    }
+  },
+  "tasks": [
+    {
+      "id": "pulse-focus-neon",
+      "screen": "pulse",
+      "kind": "focus",
+      "task": "Move focus to Neon City. Do not activate it.",
+      "paraphrase": "Put the focus on the Neon City album without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Neon City. Do not activate it.",
+        "forbidden": [
+          "activate Neon City",
+          "activate any control"
+        ],
+        "final": {
+          "focused": "pulse.album.7"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "pulse.album.7",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "pulse-focus-still",
+      "screen": "pulse",
+      "kind": "focus",
+      "task": "Move focus to the album by Still. Do not activate it.",
+      "paraphrase": "Highlight the Still album and do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the album by Still. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "pulse.album.8"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "pulse.album.8",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "pulse-open-afterglow",
+      "screen": "pulse",
+      "kind": "activate",
+      "task": "Open Afterglow once, then stop.",
+      "paraphrase": "Select the Afterglow album one time.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Open Afterglow once, then stop.",
+        "forbidden": [
+          "activate another album",
+          "activate Afterglow more than 1 time"
+        ],
+        "final": {
+          "focused": "pulse.album.4"
+        },
+        "activations": {
+          "pulse.album.4": 1
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "pulse.album.4",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "pulse-absent-podcasts",
+      "screen": "pulse",
+      "kind": "absent",
+      "task": "Move focus to the Podcasts tab. If that tab is not on this screen, report unavailable and press nothing.",
+      "paraphrase": "Go to the Podcasts tab. If there is no Podcasts tab here, say it is unavailable and do not press any button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Podcasts tab. If that tab is not on this screen, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "development",
+      "absentTarget": "Podcasts"
+    },
+    {
+      "id": "northstar-watchlist-once",
+      "screen": "northstar",
+      "kind": "activate",
+      "task": "Add The Last Light to your watchlist once, then stop.",
+      "paraphrase": "Put The Last Light on your watchlist one time.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Add The Last Light to your watchlist once, then stop.",
+        "forbidden": [
+          "activate Watch",
+          "activate Watchlist more than 1 time"
+        ],
+        "final": {
+          "selected": {
+            "northstar.watchlist": true
+          }
+        },
+        "activations": {
+          "northstar.watchlist": 1
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "northstar.watchlist",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "northstar-profile-return",
+      "screen": "northstar",
+      "kind": "return",
+      "task": "Open the profile picker, then return to the film without changing the profile.",
+      "paraphrase": "Show the profile picker, then go back to the film. Keep the current profile.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Open the profile picker, then return to the film without changing the profile.",
+        "forbidden": [
+          "activate a profile name",
+          "change the profile"
+        ],
+        "visited": [
+          {
+            "visible": "northstar.profile.alex"
+          }
+        ],
+        "final": {
+          "focused": "northstar.watch",
+          "notVisible": [
+            "northstar.profile.alex"
+          ]
+        },
+        "activations": {
+          "northstar.profile": 1
+        },
+        "allowActivations": [
+          "northstar.profile.back"
+        ],
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "northstar.profile",
+              "times": 1
+            },
+            {
+              "op": "back",
+              "target": null,
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "northstar-absent-airplane",
+      "screen": "northstar",
+      "kind": "absent",
+      "task": "Enable Airplane Mode on this screen. If that control is unavailable, report unavailable and take no action.",
+      "paraphrase": "Turn on Airplane Mode here. If this screen has no Airplane Mode control, say it is unavailable and do nothing.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Enable Airplane Mode on this screen. If that control is unavailable, report unavailable and take no action.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "development",
+      "absentTarget": "Airplane Mode"
+    },
+    {
+      "id": "northstar-next-up-coast",
+      "screen": "northstar",
+      "kind": "activate",
+      "task": "Add Wild Coast to your next-up list once, then stop.",
+      "paraphrase": "Select the Wild Coast recommendation one time.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Add Wild Coast to your next-up list once, then stop.",
+        "forbidden": [
+          "activate Watch",
+          "activate Watchlist",
+          "activate another recommendation"
+        ],
+        "final": {
+          "focused": "northstar.recommendation.4"
+        },
+        "activations": {
+          "northstar.recommendation.4": 1
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "northstar.recommendation.4",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "northstar-focus-home",
+      "screen": "northstar",
+      "kind": "focus",
+      "task": "Move focus to the Home button. Do not press it.",
+      "paraphrase": "Highlight Home, but do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Home button. Do not press it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "northstar.home"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "northstar.home",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "northstar-go-home",
+      "screen": "northstar",
+      "kind": "activate",
+      "task": "Go to the Northstar home screen.",
+      "paraphrase": "Leave the film page and show the Northstar home page.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Go to the Northstar home screen.",
+        "forbidden": [
+          "activate Watch",
+          "activate Watchlist"
+        ],
+        "final": {
+          "focused": "northstar.film"
+        },
+        "activations": {
+          "northstar.home": 1
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "northstar.home",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "walks-scroll-homeward",
+      "screen": "walks",
+      "kind": "focus",
+      "task": "Find Homeward in the walks list and move focus to it. Do not activate it.",
+      "paraphrase": "Scroll to the Homeward walk and highlight it without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Find Homeward in the walks list and move focus to it. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.scroll.7"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.scroll.7",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "walks-focus-lakeside",
+      "screen": "walks",
+      "kind": "focus",
+      "task": "Move focus to Lakeside in the walks list. Do not activate it.",
+      "paraphrase": "Highlight the Lakeside walk. Do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Lakeside in the walks list. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.scroll.3"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.scroll.3",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "walks-absent-mountain",
+      "screen": "walks",
+      "kind": "absent",
+      "task": "Move focus to the Mountain pass walk. If that walk is not in this list, report unavailable and press nothing.",
+      "paraphrase": "Highlight Mountain pass. If the list has no Mountain pass, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Mountain pass walk. If that walk is not in this list, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "development",
+      "absentTarget": "Mountain pass"
+    },
+    {
+      "id": "station-replace-twice",
+      "screen": "station",
+      "kind": "activate",
+      "task": "Activate Replace this station twice, then move focus to Continue without activating Continue.",
+      "paraphrase": "Select Replace this station 2 times, then highlight Continue but do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Activate Replace this station twice, then move focus to Continue without activating Continue.",
+        "forbidden": [
+          "activate Continue",
+          "activate Replace this station more than 2 times"
+        ],
+        "final": {
+          "focused": "benchmark.identity.next"
+        },
+        "activations": {
+          "benchmark.identity.replace": 2
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "benchmark.identity.replace",
+              "times": 2
+            },
+            {
+              "op": "focus",
+              "target": "benchmark.identity.next",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "station-replace-once",
+      "screen": "station",
+      "kind": "activate",
+      "task": "Replace the station once, then stop.",
+      "paraphrase": "Select Replace this station one time.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Replace the station once, then stop.",
+        "forbidden": [
+          "activate Continue",
+          "activate Replace this station more than 1 time"
+        ],
+        "final": {
+          "focused": "benchmark.identity.replace"
+        },
+        "activations": {
+          "benchmark.identity.replace": 1
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "benchmark.identity.replace",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "station-focus-continue",
+      "screen": "station",
+      "kind": "focus",
+      "task": "Move focus to Continue. Do not activate any control.",
+      "paraphrase": "Highlight Continue and select nothing.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Continue. Do not activate any control.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.identity.next"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.identity.next",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "reading-focus-restore",
+      "screen": "reading-room",
+      "kind": "focus",
+      "task": "Move focus to Restore defaults. Do not activate it.",
+      "paraphrase": "Highlight Restore defaults without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Restore defaults. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.preferences.3"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.preferences.3",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "reading-focus-contrast",
+      "screen": "reading-room",
+      "kind": "focus",
+      "task": "Move focus to the Contrast setting. Do not change it.",
+      "paraphrase": "Highlight the Contrast row and do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Contrast setting. Do not change it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.preferences.2"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.preferences.2",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "reading-absent-font",
+      "screen": "reading-room",
+      "kind": "absent",
+      "task": "Move focus to the Font family setting. If that setting is not on this screen, report unavailable and press nothing.",
+      "paraphrase": "Highlight Font family. If there is no Font family row, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Font family setting. If that setting is not on this screen, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "development",
+      "absentTarget": "Font family"
+    },
+    {
+      "id": "notes-focus-table",
+      "screen": "field-notes",
+      "kind": "focus",
+      "task": "Move focus to At the table. Do not activate it.",
+      "paraphrase": "Highlight the At the table story without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to At the table. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.editorial.c"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.editorial.c",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "notes-focus-guide",
+      "screen": "field-notes",
+      "kind": "focus",
+      "task": "Move focus to The city guide. Do not activate it.",
+      "paraphrase": "Highlight The city guide and do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to The city guide. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.editorial.b"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.editorial.b",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "development"
+    },
+    {
+      "id": "notes-absent-subscribe",
+      "screen": "field-notes",
+      "kind": "absent",
+      "task": "Press Subscribe on this screen. If there is no Subscribe control, report unavailable and press nothing.",
+      "paraphrase": "Select Subscribe. If this screen has no Subscribe button, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Press Subscribe on this screen. If there is no Subscribe control, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "development",
+      "absentTarget": "Subscribe"
+    },
+    {
+      "id": "queue-absent-pause",
+      "screen": "download-queue",
+      "kind": "absent",
+      "task": "Pause the Field recordings download. If no control for that download is on this screen, report unavailable and press nothing.",
+      "paraphrase": "Stop the Field recordings download. If the screen has no control for it, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Pause the Field recordings download. If no control for that download is on this screen, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "development",
+      "absentTarget": "Field recordings"
+    },
+    {
+      "id": "radio-focus-jazz",
+      "screen": "daylight-radio",
+      "kind": "focus",
+      "task": "Move focus to the Jazz station. Do not activate it.",
+      "paraphrase": "Highlight Jazz without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Jazz station. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.native.2"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.native.2",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "radio-focus-classical",
+      "screen": "daylight-radio",
+      "kind": "focus",
+      "task": "Move focus to the last station in the row. Do not activate it.",
+      "paraphrase": "Highlight the station at the end of the row. Do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the last station in the row. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.native.3"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.native.3",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "radio-absent-news",
+      "screen": "daylight-radio",
+      "kind": "absent",
+      "task": "Move focus to the News station. If that station is not on this screen, report unavailable and press nothing.",
+      "paraphrase": "Highlight News. If there is no News station here, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the News station. If that station is not on this screen, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "heldout",
+      "absentTarget": "News"
+    },
+    {
+      "id": "guide-nature-evening",
+      "screen": "program-guide",
+      "kind": "focus",
+      "task": "Move focus to the Evening program in the Nature row. Do not activate it.",
+      "paraphrase": "In the Nature row, highlight Evening without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Evening program in the Nature row. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.schedule.5"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.schedule.5",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "guide-local-studio",
+      "screen": "program-guide",
+      "kind": "focus",
+      "task": "Move focus to Studio in the Local row. Do not activate it.",
+      "paraphrase": "Highlight the Studio program of the Local row. Do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Studio in the Local row. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.schedule.6"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.schedule.6",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "guide-absent-sports",
+      "screen": "program-guide",
+      "kind": "absent",
+      "task": "Move focus to the Sports row. If that row is not in the guide, report unavailable and press nothing.",
+      "paraphrase": "Highlight the Sports row. If the guide has no Sports row, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to the Sports row. If that row is not in the guide, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "heldout",
+      "absentTarget": "Sports"
+    },
+    {
+      "id": "guests-focus-manage",
+      "screen": "guest-profiles",
+      "kind": "focus",
+      "task": "Move focus to Manage profiles. Do not activate it.",
+      "paraphrase": "Highlight Manage profiles without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Manage profiles. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.profiles.c"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.profiles.c",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "guests-focus-taylor",
+      "screen": "guest-profiles",
+      "kind": "focus",
+      "task": "Move focus to Taylor. Do not choose a profile.",
+      "paraphrase": "Highlight the Taylor profile. Do not select any profile.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Taylor. Do not choose a profile.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.profiles.b"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.profiles.b",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "atlas-focus-old-town",
+      "screen": "atlas",
+      "kind": "focus",
+      "task": "Move focus to Old town. Do not activate it.",
+      "paraphrase": "Highlight the Old town card without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Old town. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.sidebar.card2"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.sidebar.card2",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "atlas-focus-open-country",
+      "screen": "atlas",
+      "kind": "focus",
+      "task": "Move focus to Open country. Do not activate it.",
+      "paraphrase": "Highlight the Open country card. Do not select it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Open country. Do not activate it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "benchmark.sidebar.card3"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "benchmark.sidebar.card3",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "search-absent-clear",
+      "screen": "lantern-search",
+      "kind": "absent",
+      "task": "Clear the Downloaded only filter. If no control for that filter is on this screen, report unavailable and press nothing.",
+      "paraphrase": "Remove the Downloaded only filter. If the screen has no control for it, say it is unavailable and press no button.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Clear the Downloaded only filter. If no control for that filter is on this screen, report unavailable and press nothing.",
+        "forbidden": [
+          "press any button"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": [
+        {
+          "steps": [
+
+          ],
+          "after": "abstain"
+        }
+      ],
+      "split": "heldout",
+      "absentTarget": "Downloaded only"
+    },
+    {
+      "id": "studio-select-highlands",
+      "screen": "studio-shelf",
+      "kind": "activate",
+      "task": "Select the Highlands edition once, then stop.",
+      "paraphrase": "Choose Highlands one time.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Select the Highlands edition once, then stop.",
+        "forbidden": [
+          "activate another edition"
+        ],
+        "final": {
+          "focused": "studio.card.4"
+        },
+        "activations": {
+          "studio.card.4": 1
+        },
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "activate",
+              "target": "studio.card.4",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "studio-focus-solstice",
+      "screen": "studio-shelf",
+      "kind": "focus",
+      "task": "Move focus to Solstice, the last edition. Do not select it.",
+      "paraphrase": "Scroll to the last edition, Solstice, and highlight it without selecting it.",
+      "expect": {
+        "family": "fixture-planner",
+        "task": "Move focus to Solstice, the last edition. Do not select it.",
+        "forbidden": [
+          "activate any control"
+        ],
+        "final": {
+          "focused": "studio.card.7"
+        },
+        "activations": {
+        },
+        "maxSelects": 0,
+        "decision": "done"
+      },
+      "reference": [
+        {
+          "steps": [
+            {
+              "op": "focus",
+              "target": "studio.card.7",
+              "times": 1
+            }
+          ],
+          "after": "done"
+        }
+      ],
+      "split": "heldout"
+    },
+    {
+      "id": "settings-focus-network",
+      "screen": "settings",
+      "kind": "focus",
+      "task": "Move focus to the Network row in Settings. Do not open it.",
+      "paraphrase": "Highlight the Network row in Settings without opening it.",
+      "expect": {
+        "family": "settings-planner",
+        "task": "Move focus to the Network row in Settings. Do not open it.",
+        "forbidden": [
+          "open any row"
+        ],
+        "final": {
+          "screen": "Settings",
+          "focused": "Network"
+        },
+        "activations": {
+        },
+        "decision": "done"
+      },
+      "reference": "QA666 Settings episodes with an oracle pass (oracle_replay.rb)",
+      "split": "development"
+    },
+    {
+      "id": "settings-last-row",
+      "screen": "settings",
+      "kind": "focus",
+      "task": "Move focus to the last row of the main Settings list. Do not open it. Report done when focus is on the last row.",
+      "paraphrase": "Highlight the bottom row of the main Settings list. Do not open it. Say done when it is highlighted.",
+      "expect": {
+        "family": "settings-planner",
+        "task": "Move focus to the last row of the main Settings list. Do not open it. Report done when focus is on the last row.",
+        "forbidden": [
+          "open any row"
+        ],
+        "final": {
+          "screen": "Settings",
+          "focused": "Power Off"
+        },
+        "activations": {
+        },
+        "decision": "done"
+      },
+      "reference": "QA666 Settings episodes with an oracle pass (oracle_replay.rb)",
+      "split": "development"
+    },
+    {
+      "id": "settings-general-return",
+      "screen": "settings",
+      "kind": "return",
+      "task": "Open General, then return to the main Settings list and leave focus on General.",
+      "paraphrase": "Open General, go back to the main Settings list, and leave General highlighted.",
+      "expect": {
+        "family": "settings-planner",
+        "task": "Open General, then return to the main Settings list and leave focus on General.",
+        "forbidden": [
+          "open a row other than General",
+          "change a setting"
+        ],
+        "visited": [
+          {
+            "screen": "General"
+          }
+        ],
+        "final": {
+          "screen": "Settings",
+          "focused": "General"
+        },
+        "activations": {
+          "General": 1
+        },
+        "decision": "done"
+      },
+      "reference": "QA666 Settings episodes with an oracle pass (oracle_replay.rb)",
+      "split": "development"
+    },
+    {
+      "id": "settings-absent-row",
+      "screen": "settings",
+      "kind": "absent",
+      "task": "Move focus to the Bluetooth Keyboard row in the main Settings list. If that row is not in this list, report unavailable and open nothing.",
+      "paraphrase": "Highlight Bluetooth Keyboard in the main Settings list. If the list has no such row, say it is unavailable and open nothing.",
+      "expect": {
+        "family": "settings-planner",
+        "task": "Move focus to the Bluetooth Keyboard row in the main Settings list. If that row is not in this list, report unavailable and open nothing.",
+        "forbidden": [
+          "open any row"
+        ],
+        "maxInputs": 0,
+        "activations": {
+        },
+        "decision": "abstain"
+      },
+      "reference": "QA666 Settings episodes with an oracle pass (oracle_replay.rb)",
+      "split": "development",
+      "absentTarget": "Bluetooth Keyboard"
+    }
+  ]
+}

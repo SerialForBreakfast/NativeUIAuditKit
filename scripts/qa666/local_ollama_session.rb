@@ -43,6 +43,9 @@ class LocalOllamaSession
                                                                 target: { type: %w[string null] },
                                                                 times: { type: 'integer', minimum: 1, maximum: 3 } } } },
                                 after: { type: 'string', enum: %w[done replan abstain] } } }.freeze
+  # press-schema-v1 (host question, ADR-0035): must the remote press select on 1 planned target?
+  PRESS_SCHEMA = { type: 'object', required: %w[press], additionalProperties: false,
+                   properties: { press: { type: 'boolean' } } }.freeze
   attr_reader :unknown, :calls, :tokens, :model, :ledger
 
   def initialize(model:, deadline:, max_calls:, max_tokens:, num_ctx: 16_384, http: nil, schema: false, think: nil,
@@ -60,7 +63,7 @@ class LocalOllamaSession
     check_ceiling
     message = { role: 'user', content: prompt }
     message[:images] = [Base64.strict_encode64(File.binread(image))] if image
-    format = { 'v1' => STEP_SCHEMA, 'v2' => MOVES_SCHEMA, 'v3' => TASK_SCHEMA, 'turn' => TURN_SCHEMA, 'check' => CHECK_SCHEMA, 'confirm' => CONFIRM_SCHEMA, 'plan' => PLAN_SCHEMA }.fetch(@schema.to_s, 'json')
+    format = { 'v1' => STEP_SCHEMA, 'v2' => MOVES_SCHEMA, 'v3' => TASK_SCHEMA, 'turn' => TURN_SCHEMA, 'check' => CHECK_SCHEMA, 'confirm' => CONFIRM_SCHEMA, 'plan' => PLAN_SCHEMA, 'press' => PRESS_SCHEMA }.fetch(@schema.to_s, 'json')
     request = { model: @model, stream: false, format: format, keep_alive: '10m',
                 options: { temperature: 0, seed: 666, num_ctx: @num_ctx, num_predict: @max_output }, messages: [message] }
     request[:think] = @think unless @think.nil? # Reasoning models (qwen3.5): false disables the thinking pass.
@@ -78,6 +81,7 @@ class LocalOllamaSession
     text = reply.dig('message', 'content').to_s
     record.merge!('promptTokens' => prompt_tokens, 'outputTokens' => output_tokens, 'latencySeconds' => seconds.round(3),
                   'loadSeconds' => (reply['load_duration'].to_i / 1e9).round(3), 'replyBytes' => text.bytesize, 'reply' => text)
+    record['providerError'] = reply['error'].to_s[0, 2000] if reply['error'] # Keeps the cause of an empty reply.
     File.write(File.join(directory, 'response.json'), JSON.generate(record))
     @ledger << record.reject { |k, _| %w[reply].include?(k) }
     raise 'provider ceiling exceeded' if @tokens > @max_tokens
@@ -96,6 +100,8 @@ class LocalOllamaSession
           st.is_a?(Hash) && st.keys.sort == %w[op target times] && %w[focus activate back].include?(st['op']) &&
             st['times'].is_a?(Integer) && st['times'].between?(1, 3) &&
             (st['op'] == 'back' ? st['target'].nil? : st['target'].is_a?(String) && st['target'].bytesize.between?(1, 200)) }
+    elsif @schema.to_s == 'press'
+      raise 'reply does not match press-schema' unless parsed.keys == ['press'] && [true, false].include?(parsed['press'])
     elsif @schema.to_s == 'confirm'
       raise 'reply does not match confirm-schema' unless parsed.keys == ['remaining'] && [true, false].include?(parsed['remaining'])
     end

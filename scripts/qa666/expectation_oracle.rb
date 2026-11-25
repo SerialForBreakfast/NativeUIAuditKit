@@ -91,6 +91,10 @@ module ExpectationOracle
     if expect['maxInputs'] && inputs.size > expect['maxInputs']
       out << diff('unexpected_input', expect['maxInputs'], inputs.size)
     end
+    # Phase C: most benchmark screens give no native activation evidence, so a Select there is counted as a press.
+    if expect['maxSelects'] && (n = inputs.count { |i| i['button'] == 'select' }) > expect['maxSelects']
+      out << diff('unexpected_input', { 'maxSelects' => expect['maxSelects'] }, { 'selects' => n })
+    end
     fin = expect['final'] || {}
     if !fin.empty? && final.nil?
       out << diff('observation_missing', 'final observation', nil)
