@@ -70,3 +70,21 @@ reports/per_class_metrics_v*.csv
 reports/centroid_bias_v*.json
 /reports/visualizations/**/.browser-cache/
 /reports/visualizations/**/.browser-profile/
+
+# --- Old generated reports and one-off files (untracked 2026-11-25) ---
+/reports/diagnose_*.txt
+/reports/analyze_*.txt
+/reports/*.cache
+/reports/centroid_bias_*.json
+/reports/holdout_diagnosis_*.json
+/reports/phase6a_eval_summary.json
+/reports/pytorch_reference_metrics.json
+/reports/quantization_benchmark.json
+/reports/spotcheck_*.json
+/reports/batch_*_ingest.json
+/reports/frame_similarity_threshold_derivation.json
+/docs/*_debug.png
+/ChatGPT Image *.png
+# Third-party papers stay local: do not redistribute them in this public repository.
+/Research/*.pdf
+/CurrentBrainstorming.md

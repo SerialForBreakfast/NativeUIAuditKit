@@ -54,6 +54,23 @@ class TrainDetector604Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'train604_(output|receipt)_exists'):
                 td.run_training(mem_path, out_dir, weights=q.ROOT / 'yolo11n.pt', epochs=100, imgsz=640, seed=371)
 
+    def test_augmentation_profiles(self):
+        doc = q.load(q.ROOT / 'reports/work/RESET604/membership/membership-d1.json')
+        rows = [r for r in doc['rows'] if r['role'] == 'train'][:2] + [r for r in doc['rows'] if r['role'] == 'calibration'][:1]
+        for name, expected in (('none', dict(rect=True, mosaic=0)), ('mosaic', dict(rect=False, mosaic=1.0, close_mosaic=10))):
+            with tempfile.TemporaryDirectory(dir=q.ROOT / '.build', prefix='td604-aug-') as tmp:
+                root = Path(tmp); mem_path = root / 'mem.json'; q.save(mem_path, dict(doc, rows=rows))
+                fake_model = MagicMock()
+                with patch('ultralytics.YOLO', return_value=fake_model):
+                    receipt = td.run_training(mem_path, root / 'run', epochs=1, imgsz=640, seed=371, augmentation=name)
+                kwargs = fake_model.train.call_args.kwargs
+                for key, value in expected.items():
+                    self.assertEqual(kwargs[key], value)
+                self.assertEqual((kwargs['fliplr'], kwargs['flipud'], kwargs['degrees']), (0, 0, 0))
+                self.assertEqual(receipt['augmentation'], name)
+        with self.assertRaisesRegex(ValueError, 'train604_invalid_augmentation'):
+            td.run_training(mem_path, q.ROOT / '.build/td604-never', epochs=1, augmentation='flip')
+
     def test_training_watchdog_times_out_slow_fit(self):
         with self.assertRaisesRegex(TimeoutError, 'train604_timeout'):
             with td._training_watchdog(0.05):

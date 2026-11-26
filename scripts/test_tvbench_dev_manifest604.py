@@ -78,6 +78,11 @@ class TVBenchDevManifestTests(unittest.TestCase):
             q.save(pack / 'cases.json', doc, replace=True)
             with self.assertRaisesRegex(ValueError, 'case_or_app'):
                 tdm.freeze_ax_development(pack, pack / 'other')
+            # Joe added the media benchmark apps on 2026-11-25.
+            case['app'] = 'org.jellyfin.swiftfin'
+            q.save(pack / 'cases.json', doc, replace=True)
+            media = q.load(tdm.freeze_ax_development(pack, pack / 'media', {'qa': 'qa-layout'}))
+            self.assertEqual(media['cases'][0]['app'], 'org.jellyfin.swiftfin')
 
     def test_v2_dev_manifest_validates_with_zero_duplicates(self):
         m = q.load(q.ROOT / 'dataset/real_apps/tvbench-v1/dev-manifest-v2.json')

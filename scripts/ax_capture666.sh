@@ -10,7 +10,7 @@ mkdir -p "$OUT"
 R="$OUT/$2.xcresult"
 [ -e "$R" ] && { echo "exists: $R"; exit 2; }
 TMPDIR="$ROOT/.build/native-os-focus/tmp" TEST_RUNNER_AX_BUNDLE="$1" TEST_RUNNER_AX_SCREEN="$2" \
-TEST_RUNNER_AX_ROUTE="${3:-}" TEST_RUNNER_AX_SWEEP="${4:-}" TEST_RUNNER_AX_NO_RETURN="${AX_NO_RETURN:-0}" TEST_RUNNER_AX_MENU_FIRST="${AX_MENU_FIRST:-0}" \
+TEST_RUNNER_AX_ROUTE="${3:-}" TEST_RUNNER_AX_SWEEP="${4:-}" TEST_RUNNER_AX_NO_RETURN="${AX_NO_RETURN:-0}" TEST_RUNNER_AX_MENU_FIRST="${AX_MENU_FIRST:-0}" TEST_RUNNER_AX_ALLOW_SELECT="${AX_ALLOW_SELECT:-}" TEST_RUNNER_AX_SECRET_FILE="${AX_SECRET_FILE:-}" \
 xcodebuild test-without-building -project "$ROOT/NativeOSFocus/NativeOSFocus.xcodeproj" -scheme NativeOSFocus \
   -destination "platform=tvOS Simulator,id=$UDID" -derivedDataPath "$ROOT/.build/native-os-focus/DerivedData" \
   -only-testing:NativeOSFocusTests/NativeOSFocusTests/testRoutedSnapshot -parallel-testing-enabled NO \

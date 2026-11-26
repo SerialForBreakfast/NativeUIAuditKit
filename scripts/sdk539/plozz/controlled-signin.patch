@@ -1,0 +1,124 @@
+diff --git a/Sources/CoreSecureStore/Keychain.swift b/Sources/CoreSecureStore/Keychain.swift
+index d4a01f3..f74dba2 100644
+--- a/Sources/CoreSecureStore/Keychain.swift
++++ b/Sources/CoreSecureStore/Keychain.swift
+@@ -19,6 +19,63 @@ public protocol SecureStore: SecureStoring {
+ }
+ 
+ #if canImport(Security)
++// NUIAK controlled build: an unsigned Simulator build has no keychain entitlement (errSecMissingEntitlement, -34018).
++// These file-local wrappers call Security first. Only for -34018, they keep generic-password items in app-local
++// UserDefaults, keyed by service and account. A signed build never reaches the fallback.
++private enum UnsignedKeychainFallback {
++    static let status: OSStatus = -34018
++    static var defaults: UserDefaults { UserDefaults(suiteName: "nuiak.unsigned-keychain-fallback") ?? .standard }
++    static func key(_ query: CFDictionary) -> (service: String, account: String?) {
++        let q = query as NSDictionary
++        return (q[kSecAttrService as String] as? String ?? "", q[kSecAttrAccount as String] as? String)
++    }
++    static func name(_ service: String, _ account: String) -> String { "\(service)|\(account)" }
++}
++
++private func SecItemAdd(_ attributes: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus {
++    let status = Security.SecItemAdd(attributes, result)
++    guard status == UnsignedKeychainFallback.status else { return status }
++    let (service, account) = UnsignedKeychainFallback.key(attributes)
++    guard let account, let data = (attributes as NSDictionary)[kSecValueData as String] as? Data else { return errSecParam }
++    let name = UnsignedKeychainFallback.name(service, account)
++    guard UnsignedKeychainFallback.defaults.data(forKey: name) == nil else { return errSecDuplicateItem }
++    UnsignedKeychainFallback.defaults.set(data, forKey: name)
++    return errSecSuccess
++}
++
++private func SecItemUpdate(_ query: CFDictionary, _ attributesToUpdate: CFDictionary) -> OSStatus {
++    let status = Security.SecItemUpdate(query, attributesToUpdate)
++    guard status == UnsignedKeychainFallback.status else { return status }
++    let (service, account) = UnsignedKeychainFallback.key(query)
++    guard let account, let data = (attributesToUpdate as NSDictionary)[kSecValueData as String] as? Data else { return errSecParam }
++    let name = UnsignedKeychainFallback.name(service, account)
++    guard UnsignedKeychainFallback.defaults.data(forKey: name) != nil else { return errSecItemNotFound }
++    UnsignedKeychainFallback.defaults.set(data, forKey: name)
++    return errSecSuccess
++}
++
++private func SecItemCopyMatching(_ query: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus {
++    let status = Security.SecItemCopyMatching(query, result)
++    guard status == UnsignedKeychainFallback.status else { return status }
++    let (service, account) = UnsignedKeychainFallback.key(query)
++    guard let account else { return errSecParam }
++    guard let data = UnsignedKeychainFallback.defaults.data(forKey: UnsignedKeychainFallback.name(service, account)) else { return errSecItemNotFound }
++    result?.pointee = data as CFData
++    return errSecSuccess
++}
++
++private func SecItemDelete(_ query: CFDictionary) -> OSStatus {
++    let status = Security.SecItemDelete(query)
++    guard status == UnsignedKeychainFallback.status else { return status }
++    let (service, account) = UnsignedKeychainFallback.key(query)
++    let defaults = UnsignedKeychainFallback.defaults
++    let names = account.map { [UnsignedKeychainFallback.name(service, $0)] }
++        ?? defaults.dictionaryRepresentation().keys.filter { $0.hasPrefix(service + "|") }
++    let found = names.filter { defaults.object(forKey: $0) != nil }
++    found.forEach { defaults.removeObject(forKey: $0) }
++    return found.isEmpty ? errSecItemNotFound : errSecSuccess
++}
++
+ public enum KeychainError: Error, Equatable {
+     case unexpectedStatus(OSStatus)
+     case encodingFailed
+diff --git a/Sources/FeatureAuth/PasswordSignInView.swift b/Sources/FeatureAuth/PasswordSignInView.swift
+index bf0de2e..e43fa83 100644
+--- a/Sources/FeatureAuth/PasswordSignInView.swift
++++ b/Sources/FeatureAuth/PasswordSignInView.swift
+@@ -88,7 +88,16 @@ public struct PasswordSignInView: View {
+         #if os(tvOS)
+         .onExitCommand { back() }
+         #endif
+-        .onAppear { focusedField = .username }
++        .onAppear {
++            focusedField = .username
++            // NUIAK controlled build: sign in without text entry when the launch environment names a test user.
++            let env = ProcessInfo.processInfo.environment
++            if let user = env["NUIAK_USER"], let pass = env["NUIAK_PASSWORD"], !user.isEmpty {
++                viewModel.username = user
++                viewModel.password = pass
++                viewModel.submit()
++            }
++        }
+         .onDisappear { viewModel.cancel() }
+     }
+ 
+diff --git a/Sources/FeatureDiscovery/ServerPickerView.swift b/Sources/FeatureDiscovery/ServerPickerView.swift
+index dee4155..3e43211 100644
+--- a/Sources/FeatureDiscovery/ServerPickerView.swift
++++ b/Sources/FeatureDiscovery/ServerPickerView.swift
+@@ -160,6 +160,11 @@ public struct ServerPickerView: View {
+             let initialFocus = preferredInitialFocus
+             focusedControl = initialFocus
+             if isPageReady { viewModel.startScan() }
++            // NUIAK controlled build: connect without text entry when the launch environment names a server.
++            if let url = ProcessInfo.processInfo.environment["NUIAK_SERVER_URL"], !url.isEmpty {
++                viewModel.manualURLText = url
++                Task { await connectManually() }
++            }
+         }
+         .onChange(of: isPageReady) { _, ready in
+             if ready {
+diff --git a/Sources/FeatureSyncCloud/CloudConfigSyncService.swift b/Sources/FeatureSyncCloud/CloudConfigSyncService.swift
+index e823769..7cdb2b2 100644
+--- a/Sources/FeatureSyncCloud/CloudConfigSyncService.swift
++++ b/Sources/FeatureSyncCloud/CloudConfigSyncService.swift
+@@ -267,10 +267,12 @@ public actor CloudConfigSyncService {
+     private lazy var hasCloudKitEntitlement: Bool = {
+         let data = Bundle.main.url(forResource: "embedded", withExtension: "mobileprovision")
+             .flatMap { try? Data(contentsOf: $0) }
++        // NUIAK controlled build: an unsigned Simulator build has no profile and no iCloud entitlement.
++        // CKContainer(identifier:) traps there, so also require a signed-in iCloud identity.
+         return CloudSyncEntitlementPolicy.permits(
+             container: config.containerIdentifier, profileData: data,
+             requiresProof: config.installation.firstRunCaseID != nil
+-        )
++        ) && FileManager.default.ubiquityIdentityToken != nil
+     }()
+     private var engine: CKSyncEngine?
+     private var failures = CloudSyncFailures()

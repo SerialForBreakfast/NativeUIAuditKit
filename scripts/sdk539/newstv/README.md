@@ -50,3 +50,15 @@ The first pilot restricts navigation to the planned news, technology, and scienc
 
 Installation, launch, capture, and benchmark admission require their applicable authority and checks.
 No screenshots or model predictions accompany this patch.
+
+## Controlled-content repairs for capture — B405-298 (Joe: "Patch NewsTV", 2026-11-25)
+
+Apply after `instrumentation.patch`. Both change behavior only where the unmodified build cannot be captured. Rendered layouts stay the same.
+
+| Patch | SHA-256 | Change |
+|---|---|---|
+| `foryou-render-loop.patch` | `5a10ebb7be0bd93d1bb3718c627a1aca9b97e634ec8c284a50566905ff525561` | `PersonalizationEngine.personalizedFeed` returns the sorted list without writing `@Published personalizedArticles`. `ForYouView` called it from `body`, so every render re-published and the app never became idle. Nothing else reads that property. |
+| `watchlater-icloud-guard.patch` | `ae68816ffa99757c432c6dee47452397fe4da21541c19cf2898955ad5ff0dbd3` | Cloud sync, save and delete return early without an iCloud account (`ubiquityIdentityToken == nil`). The unsigned Simulator build has no iCloud entitlement, and `CKContainer(identifier:)` trapped when Watch Later opened. |
+
+Build: same command as RA554 (`-derivedDataPath .build/sdk539-newstv-derived`, `CODE_SIGNING_ALLOWED=NO`). `NewsTV.debug.dylib` SHA-256 `eecd3e7678490bd70a7b22e761b5399e7f7d7af19ce1b69050f94568b427b415`.
+Previous app kept for rollback in `.build/sdk539-newstv-pre-b405298/`.

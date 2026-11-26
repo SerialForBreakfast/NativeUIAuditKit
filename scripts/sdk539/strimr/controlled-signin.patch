@@ -1,0 +1,73 @@
+diff --git a/Shared/Features/Jellyfin/Auth/JellyfinAuthenticationView.swift b/Shared/Features/Jellyfin/Auth/JellyfinAuthenticationView.swift
+index de7c671..fd9cf77 100644
+--- a/Shared/Features/Jellyfin/Auth/JellyfinAuthenticationView.swift
++++ b/Shared/Features/Jellyfin/Auth/JellyfinAuthenticationView.swift
+@@ -10,6 +10,19 @@ struct JellyfinAuthenticationView: View {
+     var body: some View {
+         authenticationForm(viewModel)
+             .onDisappear { viewModel.cancelQuickConnect() }
++            // NUIAK controlled build: sign in without text entry when the launch environment names a server and test user.
++            .task {
++                let env = ProcessInfo.processInfo.environment
++                guard let url = env["NUIAK_SERVER_URL"], !url.isEmpty else { return }
++                if viewModel.step == .server {
++                    viewModel.serverURL = url
++                    await viewModel.validateServer()
++                }
++                guard viewModel.step == .credentials, let user = env["NUIAK_USER"], let pass = env["NUIAK_PASSWORD"] else { return }
++                viewModel.username = user
++                viewModel.password = pass
++                await viewModel.signIn()
++            }
+     }
+ 
+     private func authenticationForm(_ viewModel: JellyfinAuthenticationViewModel) -> some View {
+diff --git a/Shared/Storage/Keychain.swift b/Shared/Storage/Keychain.swift
+index 358f494..6ca9163 100644
+--- a/Shared/Storage/Keychain.swift
++++ b/Shared/Storage/Keychain.swift
+@@ -7,6 +7,12 @@ enum KeychainError: Error {
+ }
+ 
+ struct Keychain {
++    // NUIAK controlled build: an unsigned Simulator build has no keychain entitlement (errSecMissingEntitlement, -34018).
++    // Only for that status, values go to app-local UserDefaults. A signed build uses the keychain unchanged.
++    private static let missingEntitlement: OSStatus = -34018
++    private static var fallback: UserDefaults { UserDefaults(suiteName: "nuiak.unsigned-keychain-fallback") ?? .standard }
++    private func fallbackKey(_ key: String) -> String { "\(service)|\(accessGroup ?? "-")|\(key)" }
++
+     private let service: String
+     private let accessGroup: String?
+ 
+@@ -29,6 +35,10 @@ struct Keychain {
+ 
+         let attributes: [String: Any] = query.merging([kSecValueData as String: data]) { $1 }
+         let status = SecItemAdd(attributes as CFDictionary, nil)
++        if status == Self.missingEntitlement {
++            Self.fallback.set(value, forKey: fallbackKey(key))
++            return
++        }
+         guard status == errSecSuccess else {
+             throw KeychainError.unexpectedStatus(status)
+         }
+@@ -48,6 +58,9 @@ struct Keychain {
+         var item: CFTypeRef?
+         let status = SecItemCopyMatching(query as CFDictionary, &item)
+ 
++        if status == Self.missingEntitlement {
++            return Self.fallback.string(forKey: fallbackKey(key))
++        }
+         if status == errSecItemNotFound {
+             return nil
+         }
+@@ -70,6 +83,10 @@ struct Keychain {
+             query[kSecAttrAccessGroup as String] = accessGroup
+         }
+         let status = SecItemDelete(query as CFDictionary)
++        if status == Self.missingEntitlement {
++            Self.fallback.removeObject(forKey: fallbackKey(key))
++            return
++        }
+         guard status == errSecSuccess || status == errSecItemNotFound else {
+             throw KeychainError.unexpectedStatus(status)
+         }

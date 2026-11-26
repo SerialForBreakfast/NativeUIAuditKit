@@ -1,0 +1,79 @@
+diff --git a/Shared/Services/Keychain.swift b/Shared/Services/Keychain.swift
+index 6010172..a58129b 100644
+--- a/Shared/Services/Keychain.swift
++++ b/Shared/Services/Keychain.swift
+@@ -14,6 +14,40 @@ extension Container {
+ 
+     // TODO: take a look at all security options
+     var keychainService: Factory<KeychainSwift> {
+-        self { KeychainSwift() }.singleton
++        self { EntitlementFallbackKeychain() }.singleton
++    }
++}
++
++/// NUIAK controlled build: an unsigned Simulator build has no keychain entitlement (errSecMissingEntitlement, -34018).
++/// Only in that case, values go to app-local UserDefaults. A signed build uses the keychain unchanged.
++final class EntitlementFallbackKeychain: KeychainSwift {
++
++    private static let missingEntitlement: OSStatus = -34018
++    private let store = UserDefaults(suiteName: "nuiak.unsigned-keychain-fallback")!
++
++    override func set(_ value: Data, forKey key: String, withAccess access: KeychainSwiftAccessOptions? = nil) -> Bool {
++        if super.set(value, forKey: key, withAccess: access) { return true }
++        guard lastResultCode == Self.missingEntitlement else { return false }
++        store.set(value, forKey: key)
++        return true
++    }
++
++    override func getData(_ key: String, asReference: Bool = false) -> Data? {
++        if let data = super.getData(key, asReference: asReference) { return data }
++        return lastResultCode == Self.missingEntitlement ? store.data(forKey: key) : nil
++    }
++
++    override func delete(_ key: String) -> Bool {
++        let deleted = super.delete(key)
++        guard !deleted, lastResultCode == Self.missingEntitlement else { return deleted }
++        store.removeObject(forKey: key)
++        return true
++    }
++
++    override func clear() -> Bool {
++        let cleared = super.clear()
++        guard !cleared, lastResultCode == Self.missingEntitlement else { return cleared }
++        store.removePersistentDomain(forName: "nuiak.unsigned-keychain-fallback")
++        return true
+     }
+ }
+diff --git a/Shared/Views/ConnectToServerView/ConnectToServerView.swift b/Shared/Views/ConnectToServerView/ConnectToServerView.swift
+index 12ac475..2136f0b 100644
+--- a/Shared/Views/ConnectToServerView/ConnectToServerView.swift
++++ b/Shared/Views/ConnectToServerView/ConnectToServerView.swift
+@@ -155,6 +155,10 @@ struct ConnectToServerView: View {
+             .onFirstAppear {
+                 isURLFocused = true
+                 viewModel.searchForServers()
++                // NUIAK controlled build: connect without text entry when the launch environment names a server.
++                if let url = ProcessInfo.processInfo.environment["NUIAK_SERVER_URL"], !url.isEmpty {
++                    viewModel.connect(url: url)
++                }
+             }
+             .onReceive(timer) { _ in
+                 guard viewModel.state != .connecting else { return }
+diff --git a/Shared/Views/UserSignInView.swift b/Shared/Views/UserSignInView.swift
+index 8297fc0..6f7d44a 100644
+--- a/Shared/Views/UserSignInView.swift
++++ b/Shared/Views/UserSignInView.swift
+@@ -345,6 +345,13 @@ struct UserSignInView: View {
+             .onFirstAppear {
+                 focusedTextField = .username
+                 viewModel.getPublicData()
++                // NUIAK controlled build: sign in without text entry when the launch environment names a test user.
++                let env = ProcessInfo.processInfo.environment
++                if let user = env["NUIAK_USER"], let pass = env["NUIAK_PASSWORD"], !user.isEmpty {
++                    username = user
++                    password = pass
++                    viewModel.signIn(username: user, password: pass)
++                }
+             }
+             .alert(
+                 L10n.duplicateUser,

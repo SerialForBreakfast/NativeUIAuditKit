@@ -18,7 +18,8 @@ import research_queue as q
 
 PLAIN = {'media_shelf': (2, 7), 'grid_matrix': (3, 12), 'settings_list': (2, 4), 'action_dialog': (2, 5), 'hero_carousel': (2, 7), 'focus_maze': (4, 9)}
 THEMES, DENSITIES = ('dark', 'light', 'system', 'high_contrast'), ('compact', 'regular', 'spacious')
-HELD_OUT = {'plain:hero_carousel', 'canvas:nested_tabs_v1', 'canvas:photos_like:cards', 'composition:poster_grid'}
+# Joe, 2026-11-25: "Yes, train on posters" (H2). `composition:poster_grid` left the hold-out; see reports/work/user-approvals/train666-h2-poster-holdout-20261125.json.
+HELD_OUT = {'plain:hero_carousel', 'canvas:nested_tabs_v1', 'canvas:photos_like:cards'}
 WORDS = ('Home', 'Movies', 'Shows', 'Sports', 'Kids', 'Library', 'Search', 'Settings', 'Live', 'News', 'Music', 'Store', 'Resume', 'Play', 'Trailer',
          'Add to List', 'Details', 'Next Episode', 'Restart', 'Sign In', 'Profiles', 'Downloads', 'Favorites', 'Browse', 'Featured', 'New Releases',
          'Continue Watching', 'Top Picks', 'Comedy', 'Drama', 'Documentaries', 'Audio', 'Subtitles', 'Close', 'Cancel', 'Done', 'More', 'Share', 'Rate', 'Info')
@@ -103,6 +104,41 @@ def mutate_composition(source, rng, seed):
     return r
 
 
+POSTER_SHAPES = {'tall': (1.5, (200, 300)), 'wide': (0.5625, (300, 460)), 'square': (1.0, (220, 340))}
+
+
+def poster_variant(source, rng, seed, targets=6):
+    """H2: vary the qualified `grid-uniform-poster` geometry: card shape and size, columns, rows, gap and grid position.
+
+    Every card stays inside the 1920 x 1080 screen with a 60 px margin, because the capture audit needs fully visible cards.
+    The focused targets are sampled from the cards. The capture audit checks each frame against these expectations.
+    """
+    r = copy.deepcopy(source)
+    comp = r['appearance']['composition']
+    region = comp['regions'][0]; item = region['items'][0]; card = comp['definitions'][item['component']]
+    ratio, (lo, hi) = POSTER_SHAPES[rng.choice(sorted(POSTER_SHAPES))]
+    pad, gap = rng.choice((10, 20, 30)), rng.choice((24, 32, 40, 56))
+    left, top = rng.choice((60, 80, 120)), rng.choice((80, 120, 200, 300))
+    for _ in range(50):
+        w = rng.randrange(lo, hi + 1, 10); h = int(round(w * ratio / 10) * 10)
+        cols_max = (1920 - 60 - left - 2 * pad + gap) // (w + gap); rows_max = (1080 - 60 - top - 2 * pad + gap) // (h + gap)
+        if cols_max >= 2 and rows_max >= 1:
+            break
+    else:
+        raise ValueError('poster_variant_no_fit')
+    cols = rng.randint(max(2, min(7, cols_max) - 1), min(7, cols_max)); rows = rng.randint(1, min(3, rows_max))  # Media rows fill the width.
+    card.update(width=w, height=h)
+    region.update(columns=cols, gap=gap, content_insets=[pad, pad, pad, pad],
+                  frame=[left, top, cols * w + (cols - 1) * gap + 2 * pad, rows * h + (rows - 1) * gap + 2 * pad])
+    template = comp['contents'][item['content']]
+    region['items'] = [dict(item, id=f'poster-{i}', content=f'poster-{i}', selected=False) for i in range(cols * rows)]
+    comp['contents'] = {f'poster-{i}': dict(template) for i in range(cols * rows)}
+    r['element_count'] = cols * rows
+    chosen = rng.sample([f'poster-{i}' for i in range(cols * rows)], min(targets, cols * rows))
+    r['capture_selection'] = dict(version=1, target_element_ids=chosen, max_targets=len(chosen))
+    return mutate_composition(r, rng, seed)
+
+
 def _has_scroll(node):
     """Return True when any nested `scroll` flag is true; such recipes lack scroll-offset ground truth."""
     if isinstance(node, dict):
@@ -135,7 +171,7 @@ def _load_qualified_compositions(manifest_paths):
     return list(pool.values())
 
 
-def build(out, plain, canvas, seed, composition=0, composition_manifests=()):
+def build(out, plain, canvas, seed, composition=0, composition_manifests=(), poster=0):
     rng = random.Random(seed); out = Path(out); out.mkdir(parents=True, exist_ok=False); rows = []; seen = set()
     def add(recipe, origin):
         key = hashlib.sha256(json.dumps(recipe, sort_keys=True).encode()).hexdigest()
@@ -164,6 +200,11 @@ def build(out, plain, canvas, seed, composition=0, composition_manifests=()):
         for i in range(composition):
             origin, doc = comp_sources[i % len(comp_sources)]
             add(mutate_composition(doc, rng, seed * 1000 + 5000 + i), origin)
+    if poster > 0:
+        sources = [x for x in _load_qualified_compositions(composition_manifests) if x[0].endswith('grid-uniform-poster.json')]
+        q.require(sources, 'fixture_recipes604_no_qualified_poster')
+        for i in range(poster):
+            add(poster_variant(sources[0][1], rng, seed * 1000 + 8000 + i), sources[0][0])
     index = dict(version='fixture-recipes604-v1', seed=seed, recipes=len(rows), heldOutFamilies=sorted(HELD_OUT), rows=rows)
     q.save(out/'index.json', index)
     return index
@@ -175,8 +216,9 @@ def main():
     parser.add_argument('--canvas', type=int, default=190); parser.add_argument('--seed', type=int, default=604)
     parser.add_argument('--composition', type=int, default=0)
     parser.add_argument('--composition-manifest', action='append', default=[])
+    parser.add_argument('--poster', type=int, default=0, help='H2: varied poster-grid recipes from the qualified grid-uniform-poster source')
     args = parser.parse_args()
-    index = build(args.out, args.plain, args.canvas, args.seed, composition=args.composition, composition_manifests=args.composition_manifest)
+    index = build(args.out, args.plain, args.canvas, args.seed, composition=args.composition, composition_manifests=args.composition_manifest, poster=args.poster)
     families = {}
     for r in index['rows']:
         families[r['family']] = families.get(r['family'], 0) + 1

@@ -1,0 +1,16 @@
+diff --git a/NewsTV/Services/PersonalizationEngine.swift b/NewsTV/Services/PersonalizationEngine.swift
+index 08b496f..8b1d72d 100644
+--- a/NewsTV/Services/PersonalizationEngine.swift
++++ b/NewsTV/Services/PersonalizationEngine.swift
+@@ -68,8 +68,9 @@ class PersonalizationEngine: ObservableObject {
+         }
+ 
+         let sorted = scored.sorted { $0.1 > $1.1 }
+-        personalizedArticles = sorted.map { $0.0 }
+-        return personalizedArticles
++        // NUIAK B405-298: return without writing @Published state. ForYouView calls this from `body`;
++        // the write re-published on every render and the view never became idle (endless re-render).
++        return sorted.map { $0.0 }
+     }
+ 
+     func forYouFeed(from articles: [NewsArticle], count: Int = 20) -> [NewsArticle] {

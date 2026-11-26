@@ -1,0 +1,42 @@
+diff --git a/NewsTV/Services/WatchLaterManager.swift b/NewsTV/Services/WatchLaterManager.swift
+index ae5fe73..872bcee 100644
+--- a/NewsTV/Services/WatchLaterManager.swift
++++ b/NewsTV/Services/WatchLaterManager.swift
+@@ -23,6 +23,10 @@ class WatchLaterManager: ObservableObject {
+     }()
+     private let recordType = "WatchLaterItem"
+ 
++    /// NUIAK B405-298: an unsigned Simulator build has no iCloud entitlement, and `CKContainer(identifier:)` traps.
++    /// Without an iCloud account, skip cloud sync, as on an Apple TV that is not signed in to iCloud.
++    private static var iCloudAvailable: Bool { FileManager.default.ubiquityIdentityToken != nil }
++
+     private init() {
+         loadLocal()
+     }
+@@ -90,7 +94,7 @@ class WatchLaterManager: ObservableObject {
+     // MARK: - iCloud Sync
+ 
+     func syncFromCloud() async {
+-        guard SettingsManager.shared.settings.enableiCloudSync else { return }
++        guard SettingsManager.shared.settings.enableiCloudSync, Self.iCloudAvailable else { return }
+ 
+         isSyncing = true
+         defer { isSyncing = false }
+@@ -127,7 +131,7 @@ class WatchLaterManager: ObservableObject {
+     }
+ 
+     private func syncToCloud(_ item: WatchLaterItem) async {
+-        guard SettingsManager.shared.settings.enableiCloudSync else { return }
++        guard SettingsManager.shared.settings.enableiCloudSync, Self.iCloudAvailable else { return }
+ 
+         let database = container.privateCloudDatabase
+         let recordID = CKRecord.ID(recordName: item.id.uuidString)
+@@ -149,7 +153,7 @@ class WatchLaterManager: ObservableObject {
+     }
+ 
+     private func deleteFromCloud(_ item: WatchLaterItem) async {
+-        guard SettingsManager.shared.settings.enableiCloudSync else { return }
++        guard SettingsManager.shared.settings.enableiCloudSync, Self.iCloudAvailable else { return }
+ 
+         let database = container.privateCloudDatabase
+         let recordID = CKRecord.ID(recordName: item.id.uuidString)

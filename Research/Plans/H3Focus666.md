@@ -110,3 +110,70 @@ Arm S and the checks in steps 1–3 need no new authority. They are diagnostics 
 - **Arm S debug result:** the focused box does not cause the seed flips. A false nested `toggle` box inside the focused Settings row does. Box jitter is not used. A nested-candidate filter is scored as a separate variant (S0n, S1n). It was designed on AX-dev, so its AX-dev result is optimistic.
 - **Arm S gate:** the existing out-of-fold gate on train rows is used. D1's calibration rows have no `no_focus` frame.
 - **Arm S result:** [report](../../reports/work/TRAIN666/h3-arm-s/README.md). The refit (S1) is contradicted. The nested filter on the current selector (S0n) meets the arm S prediction. Arm F is compared against both S0 and S0n.
+
+## Amendment — arm G: a gate that predicts a wrong pick (plan, 2026-11-25)
+
+Joe, in chat on 2026-11-25: "Yes, plan it". Row H3 of "Active hypotheses". No new hypothesis. Plan only: nothing is admitted or started.
+
+### Why
+
+- On the 31-layout set ([H3 31-layout](../../reports/work/TRAIN666/h3-scoring-31layouts/README.md), evidence accepted by Joe), the current selector (S0, gate 0.28) gets 0.45–0.47 equal-app focus top-1.
+  It makes 16–22 wrong picks of 58 focused screens, and the 2 D1 seeds disagree on 16 of 60 cases.
+- The current gate (`comparative_focus604.fit_comparative_selector`) separates "screen has focus" from "no focus".
+  Its threshold keeps at least 85 % of focused screens and maximizes balanced accuracy. It never sees whether the top pick is the right control.
+  Therefore it cannot remove wrong picks on focused screens. This is the defect that arm G targets.
+- Arm S showed 1 known wrong-pick cause: a false nested box inside the focused Settings row. The nested filter (S0n) fixes it on AX-dev.
+  S0n, S1n and arm F (both seeds) are not yet scored on the 31-layout set.
+
+### Steps
+
+| Step | Work | Data | Compute |
+|---|---|---|---|
+| 0 | Score the existing variants S0n, S1n and arm F (s371, s372) on the 31-layout set | `manifest-31layouts.json` | CPU, about 10 min |
+| 1 | Classify every wrong pick of S0 and S0n: nested box, sibling control, focused control has no box, other | same | CPU, 10 min |
+| 2 | Fit the arm G gate | `fs-detections-s371/372.json` (both D1 seeds over the 7,413 `v3-focus-supervision` train rows, saved by arm S) | CPU, 30–60 min |
+| 3 | Freeze the gate; export Core ML; run the existing winner-parity check | — | 10 min |
+| 4 | Score arm G (S0 scorer + nested filter + new gate) with Standard and both D1 seeds | `manifest-31layouts.json` | CPU, 10 min |
+
+- **Step 0 caution:** S0n and S1n were designed after the AX-dev errors were seen. 35 of the 60 cases are AX-dev cases.
+  Report the 25 media cases (Swiftfin, Plozz, Strimr) separately as the unbiased part. They are 25 layouts, so that subset alone is not decision-eligible.
+- **Step 2, the arm G gate:**
+  - Use the frozen S0 scorer and the nested filter. Apply them to the saved D1 boxes. Pool both seeds; keep both copies of 1 row in 1 fold.
+  - Target: 1 if the top pick matches the reference focused box (IoU ≥ 0.5); 0 if the pick is wrong, or the screen is `no_focus`.
+    Frames whose focused control has no detector box are 0: any pick there is wrong.
+  - Features: the existing candidate-count-invariant gate vector (`_gate_vector`: winner score, margin to the runner-up, entropy, count).
+  - Fit out of fold (5 folds). Choose the threshold on these frames only: the lowest threshold where wrong picks are at most 10 % of focused frames.
+  - Freeze the threshold before any benchmark score. The 31-layout set takes no part in fitting or threshold choice.
+- **Known risk:** D1 trained on most `v3-focus-supervision` frames, so its boxes there are cleaner than on real apps.
+  The gate may therefore be too permissive on real apps. About 1,280 rows per seed were not in D1 training; report the gate's wrong-pick rate on those rows separately.
+
+### Expected scoreboard change (written before any arm G score)
+
+On the 31-layout set, for both D1 seeds:
+- wrong picks fall from 16–22 to at most 8 of 58;
+- correct picks fall by at most 4 against S0 on the same seed;
+- the 2 seeds disagree on at most 8 of 60 cases;
+- equal-app focus top-1 is at least S0 − 0.05.
+
+### Outcomes and stopping rules
+
+- **Supported:** all 4 predictions hold for both seeds.
+- **Contradicted:** wrong picks stay above 12 for either seed, or correct picks fall by more than 8 on either seed.
+- **Inconclusive:** the seeds disagree on the direction.
+- **Stop early:** if step 1 shows that most wrong picks have no detector box on the focused control, a gate cannot fix them. Report this, and do not fit arm G.
+- **Lost cases:** list every screen that changes from correct to wrong or abstention.
+- **Not measured:** false selection on no-focus screens. The benchmark has 2 such screens. A rate needs at least 10, in at least 3 apps.
+  Capturing no-focus screens (video playback without controls, launch and loading screens) is a separate benchmark task. It needs Joe's label review.
+
+### Budget and authority
+
+- Total about 1.5–2 h of CPU, no detector fit, output under 200 MB.
+- Steps 0–4 are diagnostics and CPU fits within the standing approval. No new authority is needed.
+- Results stay provisional until Joe reviews them. No selector or model is accepted or promoted.
+
+### Result of steps 0–1 (2026-11-25, provisional)
+
+Joe: "Yes, run it". [Report](../../reports/work/TRAIN666/h3-arm-g/README.md).
+- Step 0: D1 + S0n gets 42 and 40 of 58 correct (S0: 36 and 29). S1n gets 1–2 wrong picks with 14–18 abstentions. Arm F gets 33 and 37.
+- Step 1: most S0n wrong picks have no detector box on the focused control (7 of 10, 7 of 8 for D1). All are media grids and lists.
+- **The stop rule is met. Arm G steps 2–4 did not run.** The remaining focus errors are a detector gap on media-app cards (H1/H2).

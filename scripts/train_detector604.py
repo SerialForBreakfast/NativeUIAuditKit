@@ -64,13 +64,22 @@ def _training_watchdog(max_seconds):
         signal.signal(signal.SIGALRM, prev_handler)
 
 
+# TRAIN666 H2 arm B: Ultralytics HSV, scale and translate defaults are already on; `mosaic` adds mosaic and shuffled
+# square batches (`rect=True` disables both). Flips and rotation stay off: UI geometry has a fixed orientation.
+AUGMENTATION = {
+    'none': dict(rect=True, mosaic=0),
+    'mosaic': dict(rect=False, mosaic=1.0, close_mosaic=10),
+}
+
+
 def run_training(membership_path, out_dir, weights=q.ROOT / 'yolo11n.pt', epochs=100, imgsz=640,
                  seed=371, lr0=0.01, batch=8, patience=0, allow_non_pretrained=False, export_coreml=False,
-                 max_seconds=policy.TRAINING_SECONDS):
+                 max_seconds=policy.TRAINING_SECONDS, augmentation='none'):
     """Prepare validated YOLO dataset and execute training run with receipt + policy guard."""
     weights = Path(weights).resolve()
     membership_path = Path(membership_path).resolve()
     validate_config(weights, epochs, imgsz, seed, allow_non_pretrained=allow_non_pretrained)
+    q.require(augmentation in AUGMENTATION, f'train604_invalid_augmentation:{augmentation}')
     q.require(max_seconds is not None and float(max_seconds) > 0, f'train604_invalid_max_seconds:{max_seconds}')
     out_dir = Path(out_dir).resolve()
     q.require(not (out_dir / 'detector').exists(), f'train604_output_exists:{out_dir}')
@@ -108,15 +117,14 @@ def run_training(membership_path, out_dir, weights=q.ROOT / 'yolo11n.pt', epochs
             pretrained=True,
             plots=False,
             save=True,
-            rect=True,
             cache=False,
             amp=False,
-            mosaic=0,
             mixup=0,
             copy_paste=0,
             fliplr=0,
             flipud=0,
             degrees=0,
+            **AUGMENTATION[augmentation],
         )
     wall_seconds = round(time.monotonic() - t0, 3)
 
@@ -126,7 +134,7 @@ def run_training(membership_path, out_dir, weights=q.ROOT / 'yolo11n.pt', epochs
         loaded_args = yaml.safe_load(args_yaml.read_text()) or {}
         resolved_args = {
             k: loaded_args.get(k)
-            for k in ('epochs', 'imgsz', 'seed', 'optimizer', 'lr0', 'lrf', 'amp', 'batch', 'rect', 'deterministic')
+            for k in ('epochs', 'imgsz', 'seed', 'optimizer', 'lr0', 'lrf', 'amp', 'batch', 'rect', 'deterministic', 'mosaic', 'close_mosaic')
             if k in loaded_args
         }
 
@@ -142,6 +150,7 @@ def run_training(membership_path, out_dir, weights=q.ROOT / 'yolo11n.pt', epochs
         imgsz=imgsz,
         seed=seed,
         lr0=lr0,
+        augmentation=augmentation,
         policyMaxSeconds=policy.TRAINING_SECONDS,
         enforcedMaxSeconds=float(max_seconds),
         wallSeconds=wall_seconds,
@@ -184,6 +193,10 @@ def queue_run():
     batch = int(config.get('batch', 8))
     patience = int(config.get('patience', 0))
     export_coreml = bool(config.get('exportCoreML', False))
+    augmentation = config.get('augmentation', 'none')
+    # `best`: Ultralytics best.pt, chosen by calibration-split fitness (TRAIN666 W4). `last`: the D1 fixed-last rule.
+    selection = config.get('selection', 'last')
+    q.require(selection in ('last', 'best'), f'train604_invalid_selection:{selection}')
 
     init_path = q.ROOT / refs['initialization']['path']
     mem_path = q.ROOT / refs['membership']['path']
@@ -199,6 +212,7 @@ def queue_run():
         patience=patience,
         export_coreml=export_coreml,
         max_seconds=policy.TRAINING_SECONDS,
+        augmentation=augmentation,
     )
     results_csv = OUT / 'detector/results.csv'
     history = []
@@ -209,8 +223,8 @@ def queue_run():
             dict(epoch=int(r['epoch']), trainLoss=sum(float(r[k]) for k in ('train/box_loss', 'train/cls_loss', 'train/dfl_loss')))
             for r in rows
         ]
-    ckpt = OUT / 'detector/weights/last.pt'
-    if not ckpt.is_file():
+    ckpt = OUT / f'detector/weights/{selection}.pt'
+    if selection == 'last' and not ckpt.is_file():
         ckpt = OUT / 'detector/weights/best.pt'
     q.require(ckpt.is_file(), 'train604_checkpoint_missing')
     shutil.copyfile(ckpt, OUT / 'final.pt')
@@ -221,6 +235,8 @@ def queue_run():
         imgsz=imgsz,
         seed=seed,
         lr0=lr0,
+        augmentation=augmentation,
+        selection=selection,
         initialization=refs['initialization'],
         membership=refs['membership'],
         counts=receipt['counts'],

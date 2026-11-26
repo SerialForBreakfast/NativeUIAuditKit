@@ -178,8 +178,9 @@ def freeze_ax_development(pack, out_dir, layout_ids=None):
     classes = fp.tvos_classes()
     q.require(doc.get('version') == 'tvbench-ax-review-v1' and doc.get('labelMode') == 'contract'
               and doc.get('classes') == classes, 'ax_contract_pack_required')
-    # Only apps cleared for this first review packet; reserve designated training apps.
-    allowed = {'com.apple.HeadBoard', 'com.apple.TVSettings'}
+    # Only apps cleared for benchmark review; designated training apps (NewsTV, TVCatalog, Photo Guessing Game) stay out.
+    # Joe added the 3 media apps on 2026-11-25 ("Yes, add them"), after their B405-298 label and layout reviews.
+    allowed = {'com.apple.HeadBoard', 'com.apple.TVSettings', 'org.jellyfin.swiftfin', 'com.thatcube.Plozz', 'org.nuiak.rc561.strimr'}
     cases, labels, images, ids = [], {}, set(), set()
     for c in doc['cases']:
         key = c['id']

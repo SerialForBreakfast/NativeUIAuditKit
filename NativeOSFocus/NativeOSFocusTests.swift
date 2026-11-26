@@ -142,6 +142,20 @@ final class NativeOSFocusTests: XCTestCase {
         return (nodes, root.frame)
     }
 
+    /// Route label match. A label that starts with `^` matches by prefix (live content such as news titles changes);
+    /// any other label must match exactly.
+    static func routeMatch(_ actual: String, _ route: String) -> Bool {
+        route.hasPrefix("^") ? actual.hasPrefix(String(route.dropFirst())) && route.count > 1 : actual == route
+    }
+
+    func testRouteMatch() {
+        XCTAssertTrue(Self.routeMatch("CBS News, 6m ago, Title", "^CBS News"))
+        XCTAssertFalse(Self.routeMatch("ABC News, 2m ago", "^CBS News"))
+        XCTAssertTrue(Self.routeMatch("Beach", "Beach"))
+        XCTAssertFalse(Self.routeMatch("Beach house", "Beach"))
+        XCTAssertFalse(Self.routeMatch("anything", "^"))
+    }
+
     private static let forbiddenSelect = try! NSRegularExpression(
         pattern: #"\b(Reset|Erase|Format|Updates?|Delete|Remove|Pair|Learn|Bluetooth|Restrictions|Firewall|Sign Out|Sign In|Add Profile|Add New|Purchase|Buy|Restore|Terms|Agree|Offload|Restart|Sleep|Calibrate|Check HDMI|Connect|Log ?in|Subscribe)\b"#,
         options: [.caseInsensitive])
@@ -213,14 +227,38 @@ final class NativeOSFocusTests: XCTestCase {
         XCTAssertFalse(sameCaptureGeometry([], [node("Title")]))
     }
 
+    /// B405-298 diagnosis: name the nodes that moved between 2 bracket snapshots. Reporting only; the capture still refuses.
+    private func attachGeometryDiff(_ a: [AXNode], _ b: [AXNode]) {
+        func line(_ n: AXNode) -> String { "kind=\(n.kind) id=\(n.identifier) label=\(n.label.prefix(40)) box=\(n.bounds.map { Int($0) }) focused=\(n.focused)" }
+        var lines = ["count \(a.count) -> \(b.count)"]
+        for i in 0..<min(a.count, b.count) where !sameCaptureGeometry([a[i]], [b[i]]) {
+            lines.append("#\(i) before: \(line(a[i]))")
+            lines.append("#\(i) after:  \(line(b[i]))")
+            if lines.count > 40 { break }
+        }
+        let attachment = XCTAttachment(string: lines.joined(separator: "\n"))
+        attachment.name = "unsettled-diff"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
     /// Settle, take 1 screenshot with a before/after accessibility bracket, and attach PNG + JSON. Returns the nodes.
     @MainActor
     @discardableResult
     private func axCapture(_ app: XCUIApplication, bundle: String, screenID: String) throws -> [AXNode] {
-        let before = try activeScreenNodes(app, bundle: bundle)
+        // A presenting sheet or lazy content can still change after settle. Wait (no input) and re-check, at most 5 times.
+        var before = try activeScreenNodes(app, bundle: bundle)
         Thread.sleep(forTimeInterval: 0.3)
-        let stable = try activeScreenNodes(app, bundle: bundle)
-        guard before.owner == stable.owner, sameCaptureGeometry(before.nodes, stable.nodes) else { throw ProbeError.unsettled }
+        var stable = try activeScreenNodes(app, bundle: bundle)
+        var attempts = 1
+        while !(before.owner == stable.owner && sameCaptureGeometry(before.nodes, stable.nodes)) {
+            guard attempts < 5 else { attachGeometryDiff(before.nodes, stable.nodes); throw ProbeError.unsettled }
+            attempts += 1
+            Thread.sleep(forTimeInterval: 1.0)
+            before = try activeScreenNodes(app, bundle: bundle)
+            Thread.sleep(forTimeInterval: 0.3)
+            stable = try activeScreenNodes(app, bundle: bundle)
+        }
         let started = Date().timeIntervalSince1970
         let screenshot = XCUIScreen.main.screenshot()
         let ended = Date().timeIntervalSince1970
@@ -299,9 +337,13 @@ final class NativeOSFocusTests: XCTestCase {
             inputs += 1
         }
         // Check every route label before any input, so a refusal never leaves the app inside a submenu.
-        for label in route {
+        // `AX_ALLOW_SELECT` names exact labels that may pass the blacklist in 1 run (for example Swiftfin's server "Connect").
+        // The exception never applies to the Settings app.
+        let allowed = Set((env["AX_ALLOW_SELECT"] ?? "").split(separator: "|").map(String.init))
+        for label in route where !label.hasPrefix("=") {
             let range = NSRange(label.startIndex..., in: label)
-            guard Self.forbiddenSelect.firstMatch(in: label, range: range) == nil else { stop = "blacklisted:\(label)"; throw ProbeError.context }
+            let exempt = allowed.contains(label) && bundle != "com.apple.TVSettings"
+            guard exempt || Self.forbiddenSelect.firstMatch(in: label, range: range) == nil else { stop = "blacklisted:\(label)"; throw ProbeError.context }
         }
         // `AX_MENU_FIRST=n` (n <= 2): recover from an earlier stop inside a submenu. Menu at the root can background the app,
         // so the app is activated again afterwards. Never Home.
@@ -321,18 +363,80 @@ final class NativeOSFocusTests: XCTestCase {
             }
         }
         for label in route {
+            // `>left`, `>right`, `>up`, `>down`: press 1 direction once, then settle. Use it to open a collapsed sidebar
+            // when geometric steps from content cannot reach it (Swiftfin tvOS 26 sidebar tabs, 2026-11-25).
+            // `>select` selects the focused element when it has no label (media cells). The blacklist still applies.
+            if label.hasPrefix(">") {
+                let directions: [String: XCUIRemote.Button] = ["left": .left, "right": .right, "up": .up, "down": .down, "select": .select]
+                guard let button = directions[String(label.dropFirst())] else { stop = "bad_direction:\(label)"; throw ProbeError.context }
+                if button == .select {
+                    let focusLabel = try axSettle(app).nodes.first(where: \.focused)?.label ?? ""
+                    guard Self.forbiddenSelect.firstMatch(in: focusLabel, range: NSRange(focusLabel.startIndex..., in: focusLabel)) == nil else { stop = "forbidden_select:\(focusLabel)"; throw ProbeError.context }
+                    selects += 1
+                }
+                try press(button)
+                _ = try axSettle(app)
+                guard app.state == .runningForeground else { stop = "left_app_after_select:\(label)"; throw ProbeError.context }
+                continue
+            }
+            // `=text` types literal text; `=@key` types the value of `key` from the JSON file in AX_SECRET_FILE (never logged).
+            // Limitation (2026-11-25, tvOS 26.5 Simulator): `typeText` fails with "Neither element nor any descendant has keyboard focus"
+            // even with the app keyboard open. Kept for a future text-entry route; Swiftfin signs in through its controlled build instead.
+            if label.hasPrefix("=") {
+                let spec = String(label.dropFirst())
+                var text = spec
+                if spec.hasPrefix("@") {
+                    guard let path = env["AX_SECRET_FILE"], let data = FileManager.default.contents(atPath: path),
+                          let values = try JSONSerialization.jsonObject(with: data) as? [String: String],
+                          let value = values[String(spec.dropFirst())] else { stop = "secret_missing"; throw ProbeError.context }
+                    text = value
+                }
+                let focused = NSPredicate(format: "hasFocus == true")
+                let candidates = [app.textFields, app.secureTextFields, app.searchFields]
+                var field = candidates.map { $0.matching(focused).firstMatch }.first { $0.exists }
+                if field == nil {
+                    // Fallback: exactly 1 text-entry field on screen.
+                    let all = candidates.flatMap { $0.allElementsBoundByIndex }.filter(\.exists)
+                    if all.count == 1 { field = all[0] }
+                }
+                guard let field else { stop = "no_focused_text_field"; throw ProbeError.context }
+                guard inputs + 3 <= maxInputs, Date() < deadline else { stop = "budget"; throw ProbeError.deadline }
+                // tvOS: Select opens the system keyboard; type into it; Menu closes the keyboard and keeps the text.
+                _ = field
+                XCUIRemote.shared.press(.select)
+                var keyboard = app.keyboards.firstMatch
+                var host = "app"
+                let until = Date().addingTimeInterval(5)
+                while !keyboard.exists && Date() < until {
+                    for owner in ["com.apple.TVSystemUIService", "com.apple.PineBoard", "com.apple.TVKeyboard"] {
+                        let candidate = XCUIApplication(bundleIdentifier: owner).keyboards.firstMatch
+                        if candidate.exists { keyboard = candidate; host = owner; break }
+                    }
+                    if !keyboard.exists { Thread.sleep(forTimeInterval: 0.25); keyboard = app.keyboards.firstMatch; host = "app" }
+                }
+                let note = XCTAttachment(string: "keyboard host=\(host) exists=\(keyboard.exists)")
+                note.name = "keyboard-host"; note.lifetime = .keepAlways; add(note)
+                guard keyboard.exists else { stop = "keyboard_not_found"; throw ProbeError.context }
+                keyboard.typeText(text)
+                Thread.sleep(forTimeInterval: 0.5)
+                XCUIRemote.shared.press(.menu)
+                inputs += 3
+                Thread.sleep(forTimeInterval: 1.0)
+                _ = try axSettle(app)
+                continue
+            }
             var state = try axSettle(app)
             var steps = 0
             while true {
                 guard let focus = state.nodes.first(where: \.focused) else { stop = "no_focus_on_route"; throw ProbeError.missingFocus }
                 let focusedSubtree = state.nodes.enumerated().first(where: { $0.element.focused })?.offset ?? -1
-                let onTarget = focus.label == label || state.nodes.enumerated().contains { idx, n in
-                    n.label == label && n.parent == focusedSubtree && idx > focusedSubtree }
+                let onTarget = Self.routeMatch(focus.label, label) || state.nodes.enumerated().contains { idx, n in
+                    Self.routeMatch(n.label, label) && n.parent == focusedSubtree && idx > focusedSubtree }
                 if onTarget { guard focus.enabled else { stop = "disabled:\(label)"; throw ProbeError.context }; break }
                 guard steps < 25 else { stop = "route_label_not_reachable:\(label)"; throw ProbeError.context }
                 // A row below the visible area has no on-screen element yet: step down until it appears.
                 let button: XCUIRemote.Button
-                if let target = state.nodes.first(where: { $0.label == label }) {
+                if let target = state.nodes.first(where: { Self.routeMatch($0.label, label) }) {
                     let dy = target.bounds[1] - focus.bounds[1], dx = target.bounds[0] - focus.bounds[0]
                     button = abs(dy) >= 20 ? (dy < 0 ? .up : .down) : (dx < 0 ? .left : .right)
                 } else { button = .down }

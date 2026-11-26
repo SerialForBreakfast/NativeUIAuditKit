@@ -5401,3 +5401,22 @@ Why this matters: a frame drawn on macOS shows placeholders, not the tvOS contro
 **Correct approach:** after `SIGKILL`, wait with a bounded `isRunning` check and `usleep` (1 ms steps, 5 s bound). Do not use `waitUntilExit` on a cooperative thread or any thread without a run loop that receives the termination notice. A `terminationHandler` with a continuation is also safe.
 
 **Why it matters:** the hang blocks a cooperative thread forever and shows no error. It also affects the model install path, which uses the same runner for the compile helper.
+
+## XCUITest timeouts can come from the app under test — B405-298
+
+What went wrong: NewsTV captures timed out in `app.snapshot()` and were first blamed on host load. The For You view writes `@Published` state inside `body`,
+so SwiftUI re-renders endlessly and the app never goes idle; XCTest waits for idle before every query. The stuck state persisted and broke the next route too.
+Correct approach: reproduce once with no load. If the timeout repeats on 1 screen, inspect that screen's view code for state writes during render
+or `repeatForever` animations. Relaunch the app before the next capture, because the loop survives a Menu press.
+Why this matters: retries and load changes cannot fix an app that never idles; they waste capture budget and hide the real cause.
+
+### Unsigned tvOS Simulator builds lose keychain writes; sidebar tabs open with Menu (2026-11-25, B405-298)
+
+- What went wrong: the unsigned Swiftfin capture build signed in, then crashed at the token getter. `SecItemAdd` returned -34018 (`errSecMissingEntitlement`).
+  Separately, routes to sidebar tabs failed with `noFocusChange`: Left from a content cell does not open the tvOS 26 sidebar.
+- Correct approach: in a controlled capture build, fall back to app-local storage only for -34018. Reach sidebar tabs with Menu (`AX_MENU_FIRST=1`), not Left.
+  Rebuild the XCUITest bundle (`build-for-testing`) after a test change: `ax_capture666.sh` runs `test-without-building`.
+- Why it matters: unsigned builds can fail after login in ways a signed build never shows. A stale test bundle hides harness changes and wastes captures.
+- Also (Plozz, 2026-11-25): an app's own CloudKit entitlement check can pass for an unsigned build when it treats a missing provisioning profile as allowed.
+  Check for a signed-in iCloud identity (`ubiquityIdentityToken`) before `CKContainer(identifier:)` in controlled capture builds.
+  A lost-connection XCTest error (10009) at the first snapshot can be this launch crash; read the attached crash log first.
